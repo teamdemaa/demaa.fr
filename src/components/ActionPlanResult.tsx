@@ -31,7 +31,6 @@ import type {
 } from "@/lib/action-plan-contract";
 import {
   getActionPlanActions,
-  getActionPlanStrategyFields,
   type ActionPlanViewAction,
 } from "@/lib/action-plan-view-model";
 import {
@@ -40,7 +39,6 @@ import {
   type ActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
 
-type PlanSection = "tasks" | "strategy";
 type TaskView = "list" | "kanban";
 type TaskFilter = "week" | "all" | "overdue" | "done";
 
@@ -575,62 +573,6 @@ function ActionDrawer({
   );
 }
 
-function StrategyPanel({
-  plan,
-  workspace,
-  onWorkspaceChange,
-}: {
-  plan: PersistableActionPlan;
-  workspace: ActionPlanWorkspaceState;
-  onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
-}) {
-  const strategySections = getActionPlanStrategyFields(plan);
-
-  return (
-    <div className="grid gap-4 md:grid-cols-2">
-      {strategySections.map((section) => {
-        const overrides = workspace.strategyOverrides[section.overrideKey];
-        const answers = section.fields.map((field, index) =>
-          overrides?.[`answer${["One", "Two", "Three"][index]}` as keyof typeof overrides] ?? field.value,
-        );
-
-        return (
-          <article key={section.key} className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 shadow-[0_10px_30px_rgba(23,35,29,0.035)] sm:p-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">{section.label}</p>
-            <div className="mt-4 space-y-4">
-              {section.fields.map((field, index) => (
-                <div key={field.key}>
-                  <p className="text-sm font-medium text-brand-blue/70">{field.label}</p>
-                  <textarea
-                    value={answers[index]}
-                    onChange={(event) => {
-                      const answerKey = `answer${["One", "Two", "Three"][index]}` as "answerOne" | "answerTwo" | "answerThree";
-                      onWorkspaceChange((current) => ({
-                        ...current,
-                        strategyOverrides: {
-                          ...current.strategyOverrides,
-                          [section.overrideKey]: {
-                            ...current.strategyOverrides[section.overrideKey],
-                            [answerKey]: event.target.value,
-                          },
-                        },
-                      }));
-                    }}
-                    rows={2}
-                    maxLength={500}
-                    aria-label={field.label}
-                    className="mt-1.5 min-h-[3.75rem] w-full resize-none overflow-hidden rounded-lg bg-brand-blue/[0.035] px-2 py-1.5 text-sm leading-relaxed text-brand-blue/75 [field-sizing:content] outline-none transition focus:bg-dema-sage/40 focus:text-brand-blue"
-                  />
-                </div>
-              ))}
-            </div>
-          </article>
-        );
-      })}
-    </div>
-  );
-}
-
 export default function ActionPlanResult({
   plan,
   workspace,
@@ -652,7 +594,6 @@ export default function ActionPlanResult({
   onGeneratePlan?: (situation: string) => Promise<void>;
   commandDemoMode?: boolean;
 }) {
-  const [section, setSection] = useState<PlanSection>("tasks");
   const [view, setView] = useState<TaskView>("list");
   const [filter, setFilter] = useState<TaskFilter>("week");
   const [selectedActionId, setSelectedActionId] = useState<string | null>(null);
@@ -699,15 +640,7 @@ export default function ActionPlanResult({
 
   return (
     <div className="pb-24 xl:pb-20">
-      <div className="mb-7 flex items-end justify-between gap-1 border-b border-dema-line sm:gap-3">
-        <div className="flex items-center gap-1" role="tablist" aria-label="Plan d’action">
-          <button type="button" role="tab" aria-selected={section === "tasks"} onClick={() => setSection("tasks")} className={`-mb-px min-h-12 border-b-2 px-2.5 text-xs font-medium sm:px-4 sm:text-sm ${section === "tasks" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>Actions</button>
-          <button type="button" role="tab" aria-selected={section === "strategy"} onClick={() => setSection("strategy")} className={`-mb-px min-h-12 border-b-2 px-2.5 text-xs font-medium sm:px-4 sm:text-sm ${section === "strategy" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>Stratégie</button>
-        </div>
-      </div>
-
-      {section === "tasks" ? (
-        <section aria-labelledby="tasks-title">
+      <section aria-labelledby="tasks-title">
           <h2 id="tasks-title" className="sr-only">Actions du plan</h2>
           <div className="flex min-w-0 items-center gap-2">
             <div className="flex min-w-0 flex-1 items-center gap-2">
@@ -783,12 +716,7 @@ export default function ActionPlanResult({
               Ajouter une action
             </button>
           ) : null}
-        </section>
-      ) : (
-        <section aria-label="Stratégie">
-          <StrategyPanel plan={plan} workspace={workspace} onWorkspaceChange={onWorkspaceChange} />
-        </section>
-      )}
+      </section>
 
       <PwaInstallPrompt />
 

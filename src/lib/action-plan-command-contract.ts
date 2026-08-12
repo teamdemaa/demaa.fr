@@ -1,6 +1,5 @@
 import { z } from "zod";
 import {
-  actionPlanStrategyPillarSchema,
   actionPlanSupportTypeSchema,
   type PersistableActionPlan,
 } from "@/lib/action-plan-contract";
@@ -33,7 +32,6 @@ const actionFieldsSchema = z
     channelOrTool: z.string().trim().max(180),
     steps: z.array(stepSchema).max(7),
     support: actionPlanCommandSupportSchema,
-    strategyPillar: actionPlanStrategyPillarSchema,
   })
   .strict();
 
@@ -74,14 +72,6 @@ const draftOperationSchema = z.discriminatedUnion("type", [
       actionId: actionPlanWorkspaceActionIdSchema,
     })
     .strict(),
-  z
-    .object({
-      type: z.literal("updateStrategyAnswer"),
-      pillar: actionPlanStrategyPillarSchema,
-      answer: z.enum(["answerOne", "answerTwo", "answerThree"]),
-      value: z.string().trim().max(500),
-    })
-    .strict(),
 ]);
 
 export const actionPlanCommandDraftSchema = z
@@ -108,14 +98,6 @@ const finalizedOperationSchema = z.discriminatedUnion("type", [
     .object({
       type: z.literal("deleteAction"),
       actionId: actionPlanWorkspaceActionIdSchema,
-    })
-    .strict(),
-  z
-    .object({
-      type: z.literal("updateStrategyAnswer"),
-      pillar: actionPlanStrategyPillarSchema,
-      answer: z.enum(["answerOne", "answerTwo", "answerThree"]),
-      value: z.string().trim().max(500),
     })
     .strict(),
 ]);
@@ -208,7 +190,11 @@ export function applyActionPlanCommandOperations(
       if (next.addedActions.length >= 50) {
         throw new Error("Le nombre maximal d'actions ajoutees est atteint.");
       }
-      next.addedActions.push(operation.action);
+      next.addedActions.push({
+        ...operation.action,
+        // Legacy workspace metadata kept internal while Strategy is hidden.
+        strategyPillar: "alignement",
+      });
       next.tasks[operation.action.id] = emptyTaskState();
       knownIds.add(operation.action.id);
       continue;
@@ -229,10 +215,6 @@ export function applyActionPlanCommandOperations(
       continue;
     }
 
-    next.strategyOverrides[operation.pillar] = {
-      ...next.strategyOverrides[operation.pillar],
-      [operation.answer]: operation.value,
-    };
   }
 
   return {

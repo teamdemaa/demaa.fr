@@ -17,7 +17,6 @@ import {
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 import {
   getActionPlanActions,
-  getActionPlanStrategyFields,
   type ActionPlanViewAction,
 } from "@/lib/action-plan-view-model";
 
@@ -80,12 +79,6 @@ const generatedActionSchema = z
     channelOrTool: z.string().trim().max(180),
     steps: z.array(z.string().trim().min(1).max(360)).max(7),
     support: generatedSupportSchema.nullable(),
-    strategyPillar: z.enum([
-      "alignement",
-      "positionnement",
-      "offre",
-      "promotion",
-    ]),
   })
   .strict();
 
@@ -95,23 +88,13 @@ const generatedActionSchema = z
 // below. The deterministic parser still rejects incoherent operations.
 const generatedOperationSchema = z
   .object({
-    type: z.enum([
-      "addAction",
-      "updateAction",
-      "deleteAction",
-      "updateStrategyAnswer",
-    ]),
+    type: z.enum(["addAction", "updateAction", "deleteAction"]),
     actionId: z
       .string()
       .regex(/^(action|custom)-[A-Za-z0-9_-]{1,64}$/)
       .nullable(),
     action: generatedActionSchema.nullable(),
     changes: generatedChangesSchema.nullable(),
-    pillar: z
-      .enum(["alignement", "positionnement", "offre", "promotion"])
-      .nullable(),
-    answer: z.enum(["answerOne", "answerTwo", "answerThree"]).nullable(),
-    value: z.string().trim().max(500).nullable(),
   })
   .strict();
 
@@ -127,7 +110,7 @@ Regles :
 - Chaque operation utilise tous les champs du schema : mets null dans les champs qui ne concernent pas son type.
 - Utilise seulement les identifiants et contenus visibles fournis.
 - N'invente aucun fait, chiffre, client, prix, obligation ou resultat obtenu.
-- Une action ajoutee doit etre realiste, directement executable et rattachee a un pilier.
+- Une action ajoutee doit etre realiste et directement executable.
 - Pour updateAction, mets null dans title, objective ou steps lorsqu'ils ne changent pas.
 - Pour le support, utilise keep s'il ne change pas, remove pour le supprimer et replace avec un support complet pour le remplacer.
 - Ne change jamais de systeme, statut, date, note, identite ou information absente.
@@ -165,24 +148,6 @@ function normalizeGeneratedDraft(value: z.infer<typeof generatedDraftSchema>) {
           throw new Error("The generated deleteAction operation has no ID.");
         }
         return { type: operation.type, actionId: operation.actionId };
-      }
-
-      if (operation.type === "updateStrategyAnswer") {
-        if (
-          operation.pillar === null ||
-          operation.answer === null ||
-          operation.value === null
-        ) {
-          throw new Error(
-            "The generated strategy operation is incomplete.",
-          );
-        }
-        return {
-          type: operation.type,
-          pillar: operation.pillar,
-          answer: operation.answer,
-          value: operation.value,
-        };
       }
 
       if (operation.actionId === null || operation.changes === null) {
@@ -239,37 +204,14 @@ function getEffectiveActions(
           overrides && Object.hasOwn(overrides, "support")
             ? overrides.support ?? null
             : action.support,
-        strategyPillar: action.strategyPillar,
       };
     });
-}
-
-function getEffectiveStrategy(
-  plan: PersistableActionPlan,
-  workspace: ActionPlanWorkspaceState,
-) {
-  const positions = ["answerOne", "answerTwo", "answerThree"] as const;
-  return getActionPlanStrategyFields(plan).map((section) => {
-    const overrides = workspace.strategyOverrides[section.overrideKey];
-    return {
-      pillar: section.overrideKey,
-      answers: section.fields.map((field, index) => {
-        const position = positions[index];
-        if (!position) throw new Error("Unsupported strategy field position.");
-        return {
-          position,
-          label: field.label,
-          value: overrides?.[position] ?? field.value,
-        };
-      }),
-    };
-  });
 }
 
 /**
  * Exact future external payload, kept pure and inspectable for consent review.
  *
- * Included: the command, effective visible actions and effective Strategy.
+ * Included: the command and effective visible actions.
  * Excluded: notes, email, account/session identity, source situation, history,
  * selected systems, process checks, solution choices and the 115-system catalog.
  */
@@ -282,7 +224,6 @@ export function buildActionPlanCommandMinimalEnvelope(
     command,
     currentPlan: {
       actions: getEffectiveActions(plan, workspace),
-      strategy: getEffectiveStrategy(plan, workspace),
     },
   };
 }

@@ -82,18 +82,16 @@ function supportRepeatsSteps(action: ActionPlanAction) {
 }
 
 function containsUnrealisticSevenDayClaim(plan: ActionPlan) {
-  const strategyValues = Object.values(plan.strategy).flatMap((pillar) =>
-    Object.values(pillar),
-  );
   const text = normalizeText(
     [
-      plan.summary,
       ...plan.actions.flatMap((action) => [
         action.title,
         action.objective,
+        action.channelOrTool,
         ...action.steps,
+        action.support?.label ?? "",
+        action.support?.content ?? "",
       ]),
-      ...strategyValues,
     ].join(" "),
   );
 

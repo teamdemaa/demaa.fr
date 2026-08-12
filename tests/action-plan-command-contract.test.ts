@@ -13,8 +13,7 @@ if (!systemId) throw new Error("Missing action plan system fixture.");
 
 function plan(): ActionPlan {
   return {
-    version: "3",
-    summary: "Un plan concret pour choisir puis executer la prochaine priorite.",
+    version: "4",
     systemId,
     actions: [1, 2, 3].map((index) => ({
       id: `action-${index}` as `action-${1 | 2 | 3}`,
@@ -23,35 +22,12 @@ function plan(): ActionPlan {
       channelOrTool: "Document de suivi",
       steps: ["Preparer les informations.", "Realiser la premiere verification."],
       support: null,
-      strategyPillar: "alignement" as const,
     })),
-    strategy: {
-      alignment: {
-        direction: "Construire une entreprise claire et pilotable.",
-        startingPoint: "La prochaine priorite reste a choisir.",
-        decisionRules: "Traiter une priorite avant d'en ajouter une autre.",
-      },
-      positioning: {
-        preciseCustomer: "Le client dont le besoin est clairement formule.",
-        importantProblem: "Une decision utile reste bloquee.",
-        evidenceAndAlternatives: "Verifier les demandes et solutions existantes.",
-      },
-      offer: {
-        promisedOutcome: "Une prochaine etape claire.",
-        scope: "Un besoin prioritaire et sa prochaine etape.",
-        priceCommitmentAndRisk: "A clarifier avant tout engagement.",
-      },
-      promotion: {
-        attract: "S'appuyer sur les demandes existantes.",
-        facilitatePurchase: "Rendre la prochaine etape simple.",
-        retainAndStrengthen: "Tenir la promesse et demander un retour.",
-      },
-    },
   };
 }
 
 describe("action plan command contract", () => {
-  it("accepts only the four allowlisted draft operation types", () => {
+  it("accepts only the three action operation types", () => {
     expect(
       actionPlanCommandDraftSchema.parse({
         operations: [
@@ -60,15 +36,9 @@ describe("action plan command contract", () => {
             actionId: "action-1",
             changes: { title: "Verifier la priorite" },
           },
-          {
-            type: "updateStrategyAnswer",
-            pillar: "alignement",
-            answer: "answerTwo",
-            value: "Le point de depart a ete confirme.",
-          },
         ],
       }).operations,
-    ).toHaveLength(2);
+    ).toHaveLength(1);
 
     expect(
       actionPlanCommandDraftSchema.safeParse({
@@ -98,7 +68,7 @@ describe("action plan command contract", () => {
     ).toBe(false);
   });
 
-  it("applies additions, edits, deletions and strategy answers with an undo snapshot", () => {
+  it("applies additions, edits and deletions with an undo snapshot", () => {
     const currentPlan = plan();
     const initial = createActionPlanWorkspaceState(currentPlan);
     const operations = actionPlanCommandOperationsSchema.parse([
@@ -115,7 +85,6 @@ describe("action plan command contract", () => {
             label: "Questions d'entretien",
             content: "Quel resultat cherchez-vous ?",
           },
-          strategyPillar: "positionnement",
         },
       },
       {
@@ -124,12 +93,6 @@ describe("action plan command contract", () => {
         changes: { title: "Verifier la priorite" },
       },
       { type: "deleteAction", actionId: "action-2" },
-      {
-        type: "updateStrategyAnswer",
-        pillar: "alignement",
-        answer: "answerTwo",
-        value: "Le point de depart est maintenant documente.",
-      },
     ]);
 
     const result = applyActionPlanCommandOperations(
@@ -148,9 +111,7 @@ describe("action plan command contract", () => {
       "Verifier la priorite",
     );
     expect(result.workspace.deletedActionIds).toContain("action-2");
-    expect(result.workspace.strategyOverrides.alignement?.answerTwo).toBe(
-      "Le point de depart est maintenant documente.",
-    );
+    expect(result.workspace.strategyOverrides).toEqual({});
   });
 
   it("rejects unknown, deleted or duplicate action references", () => {

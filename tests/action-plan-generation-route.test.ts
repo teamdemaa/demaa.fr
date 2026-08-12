@@ -63,11 +63,9 @@ describe("action plan generation route", () => {
     mocks.recordAiUsage.mockResolvedValue(undefined);
     mocks.generateActionPlanWithMetadata.mockResolvedValue({
       plan: {
-        version: "3",
+        version: "4",
         systemId: "cabinet-comptable",
-        summary: "Un plan fiable.",
         actions: [],
-        strategy: {},
       },
       generation: {
         model: "openai/gpt-5-mini",
@@ -137,11 +135,9 @@ describe("action plan generation route", () => {
     );
     await expect(response.json()).resolves.toEqual({
       plan: {
-        version: "3",
+        version: "4",
         systemId: "cabinet-comptable",
-        summary: "Un plan fiable.",
         actions: [],
-        strategy: {},
       },
       generation: {
         model: "openai/gpt-5-mini",

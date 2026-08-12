@@ -170,6 +170,7 @@ function serializeWriteInput(input: ActionPlanWriteInput) {
 }
 
 function getPersistedSchemaVersion(plan: PersistableActionPlan) {
+  if (plan.version === "4") return "4";
   return plan.version === "3" ? "3" : "2";
 }
 
@@ -457,7 +458,7 @@ export async function updateActionPlanWorkspaceForAccess(input: {
         parsedPlan.data.version === "manual" && input.plan.version === "manual";
       const generatesFromBlankManual =
         parsedPlan.data.version === "manual"
-        && input.plan.version === "3"
+        && input.plan.version === "4"
         && isBlankManualActionPlan(parsedPlan.data, storedWorkspace);
       if (!keepsManualVersion && !generatesFromBlankManual) {
         throw new InvalidActionPlanMutationError();

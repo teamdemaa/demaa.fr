@@ -15,7 +15,7 @@ export type ActionPlanViewAction = {
     label: string;
     content: string;
   } | null;
-  strategyPillar: ActionPlanStrategyPillar;
+  strategyPillar?: ActionPlanStrategyPillar;
 };
 
 export type ActionPlanStrategyViewField = {
@@ -34,7 +34,7 @@ export type ActionPlanStrategyViewSection = {
 export function getActionPlanActions(
   plan: PersistableActionPlan,
 ): ActionPlanViewAction[] {
-  if (plan.version === "3") {
+  if (plan.version === "4" || plan.version === "3") {
     return plan.actions.map((action) => ({ ...action }));
   }
 
@@ -65,6 +65,8 @@ export function getAllActionPlanActionIds(
 export function getActionPlanStrategyFields(
   plan: PersistableActionPlan,
 ): readonly ActionPlanStrategyViewSection[] {
+  if (plan.version === "4") return [];
+
   if (plan.version === "3") {
     return [
       {

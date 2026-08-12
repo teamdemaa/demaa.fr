@@ -5,6 +5,7 @@ import {
   compatibleActionPlanSchema,
   legacyV2ActionPlanSchema,
   type ActionPlan,
+  type LegacyV3ActionPlan,
   type LegacyV2ActionPlan,
 } from "@/lib/action-plan-contract";
 import {
@@ -28,16 +29,26 @@ function action(index: number): ActionPlan["actions"][number] {
       label: "Checklist de contrôle",
       content: "1. Préparer\n2. Vérifier",
     } : null,
-    strategyPillar: "alignement",
   };
 }
 
 function validPlan(): ActionPlan {
   return {
+    version: "4",
+    systemId: "cabinet-comptable",
+    actions: [action(1), action(2), action(3)],
+  };
+}
+
+function validV3Plan(): LegacyV3ActionPlan {
+  return {
     version: "3",
     summary: "Le dirigeant doit clarifier sa priorité puis agir simplement.",
     systemId: "cabinet-comptable",
-    actions: [action(1), action(2), action(3)],
+    actions: validPlan().actions.map((item) => ({
+      ...item,
+      strategyPillar: "alignement",
+    })),
     strategy: {
       alignment: {
         direction: "Construire un cabinet rentable et pilotable.",
@@ -116,22 +127,30 @@ describe("action plan contract", () => {
     expect(new Set(actionPlanSystemOptions.map(({ id }) => id)).size).toBe(115);
   });
 
-  it("accepts the strict V3 plan and typed supports", () => {
+  it("accepts the strict actions-only V4 plan and typed supports", () => {
     expect(actionPlanSchema.parse(validPlan())).toEqual(validPlan());
     expect(isActionPlanSystemId("cabinet-comptable")).toBe(true);
   });
 
-  it("exposes V3 to structured-output providers without retired fields", () => {
+  it("exposes V4 to structured-output providers without Strategy or retired fields", () => {
     const jsonSchema = JSON.stringify(z.toJSONSchema(actionPlanSchema));
     expect(jsonSchema).toContain('"version"');
     expect(jsonSchema).toContain('"actions"');
-    expect(jsonSchema).toContain('"direction"');
-    expect(jsonSchema).toContain('"startingPoint"');
-    expect(jsonSchema).toContain('"decisionRules"');
     expect(jsonSchema).toContain('"checklist"');
     expect(jsonSchema).not.toMatch(
-      /weeklyActions|readyToUse|systemReason|assumptions|why|estimatedMinutes|deliverable|successCriterion|ethicalGuardrail/,
+      /summary|strategy|strategyPillar|weeklyActions|readyToUse|systemReason|assumptions|why|estimatedMinutes|deliverable|successCriterion|ethicalGuardrail/,
     );
+  });
+
+  it("reads V3 with its historical Strategy without exposing it as V4", () => {
+    const historical = validV3Plan();
+    const parsed = compatibleActionPlanSchema.parse(historical);
+    expect(parsed).toEqual(historical);
+    expect(getActionPlanStrategyFields(parsed)[0]?.fields.map(({ label }) => label)).toEqual([
+      "Le cap",
+      "Le point de départ",
+      "Les règles de décision",
+    ]);
   });
 
   it("reads V2 without relabelling its alignment as V3", () => {

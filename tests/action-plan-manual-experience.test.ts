@@ -44,7 +44,7 @@ describe("manual action plan experience", () => {
     expect(savedDetail).toContain("onAddAction={addAction}");
   });
 
-  it("keeps the four strategy sections editable through workspace overrides", () => {
+  it("keeps legacy strategy data isolated while hiding it from the plan UI", () => {
     const result = source("src/components/ActionPlanResult.tsx");
     const viewModel = source("src/lib/action-plan-view-model.ts");
 
@@ -52,6 +52,7 @@ describe("manual action plan experience", () => {
     expect(viewModel).toContain('label: "Positionnement"');
     expect(viewModel).toContain('label: "Offre"');
     expect(viewModel).toContain('label: "Promotion"');
-    expect(result).toContain("strategyOverrides");
+    expect(result).not.toContain("strategyOverrides");
+    expect(result).not.toContain("<StrategyPanel");
   });
 });

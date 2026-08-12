@@ -16,6 +16,10 @@
 > `Plan d’action / Système / Académie / Opportunités` est désormais visible dès
 > l'arrivée ; la première version Coaching existe via `Parler à un spécialiste`.
 
+> **Mise à jour D-079 :** le contrat courant V4 génère uniquement les Actions
+> et le `systemId`. La Stratégie V3 est temporairement masquée et non générée ;
+> sa lecture historique reste tolérante sans migration destructive.
+
 ## Contexte
 
 La homepage publique reproduit actuellement le hub des Systèmes. Demaa veut y
@@ -32,15 +36,15 @@ catalogue, ni rendre privées les destinations publiques existantes.
    exacte est : « Qu’est-ce qui freine votre entreprise ? »
 2. Avant connexion, cette entrée affiche Demaa, `Se connecter` et un grand
    champ libre. Aucun questionnaire structuré ne précède la génération.
-3. Une seule génération principale produit un JSON strict comprenant le plan,
-   les quatre piliers de stratégie et un `systemId` égal à un slug canonique.
+3. Une seule génération principale produit un JSON strict comprenant les
+   Actions et un `systemId` égal à un slug canonique.
 4. Le modèle reçoit uniquement le catalogue léger des 115 activités —
    identifiant, slug, libellé et alias validés — jamais leurs contenus complets.
-5. Le résultat présente `À faire cette semaine`, puis Alignement,
-   Positionnement, Offre et Promotion.
+5. Le résultat présente directement les Actions. La Stratégie est masquée sans
+   laisser d'onglet ou de zone vide.
 6. L'onglet Système charge les Process, Solutions et Ressources existants du
    Système sélectionné. Une dropdown permet de choisir l'un des 115 Systèmes
-   sans appel IA et sans réécriture de la stratégie.
+   sans appel IA et sans réécriture des Actions.
 7. Pour un visiteur, le résultat reste dans l'état de la page ou de la session
    courante. Aucun `localStorage` durable n'est utilisé comme source de vérité
    du plan. Seul le slug du Système choisi est mémorisé dans le navigateur.
@@ -60,7 +64,7 @@ catalogue, ni rendre privées les destinations publiques existantes.
 - La homepage ne peut plus réexporter silencieusement la page `/systemes`.
 - Le catalogue léger est dérivé de la source canonique existante ; il ne forme
   pas un nouveau registre métier.
-- Le moteur IA produit une stratégie, tandis que le contenu Système reste
+- Le moteur IA produit des Actions, tandis que le contenu Système reste
   déterministe et gouverné par ses catalogues actuels.
 - Le changement de Système n'invalide pas le plan déjà généré.
 - La persistance invitée et la persistance connectée ont une frontière nette :

@@ -484,7 +484,10 @@ describe("action plan Firebase persistence", () => {
     const plans = await getOwnedActionPlans("dirigeant@example.com");
     expect(plans[0]?.workspaceState.tasks["action-1"]?.status).toBe("done");
     expect(plans[0]?.workspaceState.tasks["action-1"]?.notes).toContain("équipe");
-    expect(plans[0]?.plan.summary).toBe(plan.summary);
+    const storedPlan = plans[0]?.plan;
+    expect(storedPlan && "summary" in storedPlan ? storedPlan.summary : null).toBe(
+      plan.summary,
+    );
     expect(
       firestore.documents.get(`action_plans/${created.id}`)?.retention_expires_at,
     ).toBe("2029-08-10T00:00:00.000Z");
@@ -532,7 +535,7 @@ describe("action plan Firebase persistence", () => {
     ).rejects.toBeInstanceOf(InvalidActionPlanMutationError);
   });
 
-  it("turns a pristine saved manual plan into V3 without changing its identity", async () => {
+  it("turns a pristine saved manual plan into V4 without changing its identity", async () => {
     const manualPlan = createManualActionPlan();
     const created = await createOwnedActionPlan("dirigeant@example.com", {
       plan: manualPlan,
@@ -562,7 +565,7 @@ describe("action plan Firebase persistence", () => {
     });
     expect(updated?.revision).toBe(created.revision + 1);
     expect(reopened?.id).toBe(created.id);
-    expect(reopened?.plan.version).toBe("3");
+    expect(reopened?.plan.version).toBe("4");
     expect(reopened?.sourceText).toBe(
       "Je veux rendre mon entreprise plus autonome.",
     );

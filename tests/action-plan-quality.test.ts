@@ -17,39 +17,15 @@ function action(overrides: Partial<ActionPlanAction> = {}): ActionPlanAction {
       label: "Checklist de verification",
       content: "Point teste :\nBlocage observe :\nCorrection prioritaire :",
     },
-    strategyPillar: "offre",
     ...overrides,
   };
 }
 
 function plan(actions: ActionPlanAction[]): ActionPlan {
   return {
-    version: "3",
-    summary: "Une premiere progression realiste est visee.",
+    version: "4",
     systemId: "cabinet-de-conseil",
     actions,
-    strategy: {
-      alignment: {
-        direction: "Construire une activite fiable.",
-        startingPoint: "Les ressources exactes restent a confirmer.",
-        decisionRules: "Proteger la qualite et la marge.",
-      },
-      positioning: {
-        preciseCustomer: "Un dirigeant avec une decision identifiee.",
-        importantProblem: "Une decision reste bloquee.",
-        evidenceAndAlternatives: "Verifier les faits disponibles.",
-      },
-      offer: {
-        promisedOutcome: "Une prochaine decision claire.",
-        scope: "Le besoin prioritaire.",
-        priceCommitmentAndRisk: "A confirmer avec le client.",
-      },
-      promotion: {
-        attract: "Recommandations ciblees.",
-        facilitatePurchase: "Une prochaine etape simple.",
-        retainAndStrengthen: "Un suivi utile et limite.",
-      },
-    },
   };
 }
 
@@ -110,20 +86,29 @@ describe("action plan deterministic quality controls", () => {
       action({ id: "action-2", title: "Choisir une priorite" }),
       action({ id: "action-3", title: "Faire un premier test" }),
     ]);
-    candidate.summary = "L'equipe sera totalement autonome en 7 jours.";
+    candidate.actions[1] = {
+      ...candidate.actions[1],
+      objective: "L'equipe sera totalement autonome en 7 jours.",
+    };
 
     expect(validateActionPlanQuality(candidate)).toContainEqual({
       code: "unrealistic_seven_day_claim",
     });
 
-    candidate.summary =
-      "Plan pragmatique pour rendre l'equipe BTP moins dependante du dirigeant en une semaine.";
+    candidate.actions[1] = {
+      ...candidate.actions[1],
+      objective:
+        "Rendre l'equipe BTP moins dependante du dirigeant en une semaine.",
+    };
     expect(validateActionPlanQuality(candidate)).toContainEqual({
       code: "unrealistic_seven_day_claim",
     });
 
-    candidate.summary =
-      "Commencer cette semaine a clarifier les responsabilites de l'equipe.";
+    candidate.actions[1] = {
+      ...candidate.actions[1],
+      objective:
+        "Commencer cette semaine a clarifier les responsabilites de l'equipe.",
+    };
     expect(validateActionPlanQuality(candidate)).not.toContainEqual({
       code: "unrealistic_seven_day_claim",
     });

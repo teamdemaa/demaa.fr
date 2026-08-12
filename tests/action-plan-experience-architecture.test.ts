@@ -61,7 +61,9 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("Que pourrais-je supprimer, simplifier, déléguer ou automatiser ?");
     expect(experience).toContain("Est-ce que la qualité reste constante lorsque je ne supervise pas directement ?");
     expect(experience).toContain("headerActions={(");
-    expect(result).toContain('type PlanSection = "tasks" | "strategy"');
+    expect(result).not.toContain('type PlanSection = "tasks" | "strategy"');
+    expect(result).not.toContain('>Stratégie</button>');
+    expect(result).not.toContain("<StrategyPanel");
     expect(result).toContain('type TaskView = "list" | "kanban"');
     expect(result).toContain("Notes personnelles");
     expect(result).not.toContain("demaa-accordion");

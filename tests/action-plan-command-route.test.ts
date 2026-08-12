@@ -38,8 +38,7 @@ if (!systemId) throw new Error("Missing action plan system fixture.");
 
 function plan(): ActionPlan {
   return {
-    version: "3",
-    summary: "Un plan simple.",
+    version: "4",
     systemId,
     actions: [1, 2, 3].map((index) => ({
       id: `action-${index}` as `action-${1 | 2 | 3}`,
@@ -48,30 +47,7 @@ function plan(): ActionPlan {
       channelOrTool: "Document de suivi",
       steps: ["Preparer.", "Verifier."],
       support: null,
-      strategyPillar: "alignement" as const,
     })),
-    strategy: {
-      alignment: {
-        direction: "Une entreprise pilotable.",
-        startingPoint: "Une priorite reste a choisir.",
-        decisionRules: "Finir avant d'ajouter.",
-      },
-      positioning: {
-        preciseCustomer: "Un client precis.",
-        importantProblem: "Un probleme important.",
-        evidenceAndAlternatives: "Une verification terrain.",
-      },
-      offer: {
-        promisedOutcome: "Un resultat clair.",
-        scope: "Un perimetre clair.",
-        priceCommitmentAndRisk: "Un engagement a clarifier.",
-      },
-      promotion: {
-        attract: "Attirer utilement.",
-        facilitatePurchase: "Faciliter la decision.",
-        retainAndStrengthen: "Tenir la promesse.",
-      },
-    },
   };
 }
 

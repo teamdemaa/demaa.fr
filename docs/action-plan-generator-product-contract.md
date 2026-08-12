@@ -56,7 +56,7 @@ texte libre final
 → génération IA principale
 → JSON strict du plan + systemId
 → validation déterministe
-→ rendu Actions + Stratégie
+→ rendu Actions
 → chargement déterministe du Système sélectionné
 ```
 
@@ -82,13 +82,12 @@ du catalogue. L'application
 charge ensuite uniquement le Système sélectionné depuis ses sources
 canoniques existantes.
 
-### Résultat minimal V3
+### Résultat courant V4
 
 Le schéma JSON est versionné. Il porte au minimum :
 
 ```text
-version = "3"
-summary
+version = "4"
 systemId
 actions[]
   id
@@ -100,21 +99,11 @@ actions[]
     type
     label
     content
-  strategyPillar
-strategy
-  alignment
-    direction
-    startingPoint
-    decisionRules
-  positioning
-  offer
-  promotion
 ```
 
-La V3 conserve le nettoyage V2 de `why`, `estimatedMinutes`, `deliverable`,
-`successCriterion` et `ethicalGuardrail`, remplace `weeklyActions` par
-`actions`, et remplace le support historique générique `readyToUse` par un
-support typé. Les types autorisés sont `message`, `email`, `script`,
+La V4 conserve le nettoyage de `why`, `estimatedMinutes`, `deliverable`,
+`successCriterion` et `ethicalGuardrail`, ainsi que les actions et supports
+typés introduits en V3. Les types autorisés sont `message`, `email`, `script`,
 `checklist`, `table`, `brief` et `template`.
 
 Le choix du type est déterministe par nature d'action :
@@ -129,30 +118,31 @@ Un support est immédiatement utilisable et ne recopie pas simplement les
 possible uniquement lorsqu'un support répéterait sans valeur les tâches déjà
 affichées.
 
-Le lecteur de persistance reste compatible avec les plans V1, V2 et `manual` :
+Le lecteur de persistance reste compatible avec les plans V1, V2, V3 et
+`manual` :
 
 - un plan V1 est normalisé en V2 en mémoire ;
 - un plan V2 conserve ses champs et libellés historiques ;
+- un plan V3 conserve sa stratégie et ses libellés historiques en stockage,
+  sans les afficher ni les réécrire ;
 - un plan manuel conserve ses champs éditables et peut rester vide ;
-- aucun ancien document n'est silencieusement réétiqueté V3 ou réécrit dans
+- aucun ancien document n'est silencieusement réétiqueté V4 ou réécrit dans
   Firebase à la lecture.
 
 Chaque action contient les éléments nécessaires à son exécution. Le message ou
 modèle prêt à l'emploi reste facultatif. Le nombre est adapté à la situation,
-entre trois et cinq en V3. Les lecteurs historiques continuent d'accepter
+entre trois et cinq en V4. Les lecteurs historiques continuent d'accepter
 jusqu'à sept actions pour ne pas invalider un ancien plan V1, V2 ou manuel.
 
-### Quatre piliers conservés
+### Stratégie temporairement retirée du Plan d'action
 
-1. **Alignement** : `direction` décrit le cap durable recherché,
-   `startingPoint` le point de départ réellement connu (forces, ressources,
-   contraintes et dépendances), et `decisionRules` les critères concrets pour
-   accepter, prioriser ou refuser une action.
-2. **Positionnement** : client précis, problème important, alternatives,
-   faits et hypothèses explicites.
-3. **Offre** : résultat, périmètre, prix, engagement et risques à clarifier.
-4. **Promotion** : attirer, faciliter l'achat, fidéliser et renforcer la
-   relation sans forcer.
+La génération courante ne demande plus de stratégie à partir d'une
+problématique ponctuelle. L'interface ne rend ni onglet `Stratégie`, ni cartes
+Alignement, Positionnement, Offre ou Promotion. Cette simplification ne
+supprime pas définitivement la Stratégie du produit : les schémas et lecteurs
+historiques restent isolés afin de pouvoir réactiver ultérieurement un contrat
+stratégique explicitement validé. Aucune migration destructive n'est créée
+pour les quelques anciens plans.
 
 Le MVP ne produit pas d'étude de marché automatique. Une information de marché
 non fournie et non établie reste une hypothèse à vérifier, jamais un fait
@@ -162,10 +152,8 @@ inventé.
 
 ### Accueil
 
-L'ordre principal est :
-
-1. **À faire cette semaine** ;
-2. **Stratégie**, avec les quatre piliers en dépliants.
+La surface principale affiche directement les Actions. Aucun espace vide ni
+onglet inactif n'est laissé à la place de la Stratégie masquée.
 
 Chaque action reste directement exécutable. La première lecture est courte ;
 les étapes et modèles se déplient à la demande.
@@ -193,7 +181,7 @@ réintroduisent ni page publique `Mon espace`, ni page publique `Mes plans`.
   technique historique `process` reste stable pour préserver les données et
   les anciennes URLs.
 - Il ne déclenche aucun appel IA.
-- Il ne réécrit pas la stratégie générée.
+- Il ne réécrit pas les Actions générées.
 
 Le Système n'est donc pas une deuxième recommandation générée : il est le
 contenu canonique existant chargé à partir du `systemId` courant.
@@ -201,8 +189,8 @@ contenu canonique existant chargé à partir du `systemId` courant.
 Un plan sauvegardé peut mémoriser plusieurs Systèmes consultés. L'espace de
 travail conserve leur liste sans doublon, le Système actif, ainsi que les
 coches d'Organisation et sélections Solutions séparément pour chaque Système. Ajouter
-ou sélectionner un Système ne déclenche pas d'appel IA et ne modifie pas la
-Stratégie.
+ou sélectionner un Système ne déclenche pas d'appel IA et ne modifie pas les
+Actions.
 
 ## Dictée centralisée
 
@@ -347,14 +335,16 @@ pas le contenu utilisateur en log de secours.
 
 ## Commande IA sur un plan existant — activée sous enveloppe minimale
 
-Le contrat de commande et l'application déterministe des opérations sont
-préparés pour ajouter, modifier ou supprimer une action et modifier une réponse
-de Stratégie. L'utilisatrice a explicitement autorisé le 12 août 2026 l'envoi
+Le contrat de commande et l'application déterministe des opérations permettent
+d'ajouter, modifier ou supprimer une action. L'utilisatrice a explicitement
+autorisé le 12 août 2026 l'envoi
 de l'enveloppe minimale suivante à Vercel AI Gateway et à son fournisseur :
 
 - la commande rédigée par la personne ;
 - les actions actuellement visibles et leurs modifications effectives ;
-- les réponses actuellement visibles des quatre piliers de Stratégie.
+
+La Stratégie n'étant plus visible ni générée dans le contrat courant, aucune
+donnée stratégique n'est transmise par cette commande.
 
 Sont exclus de cette enveloppe : notes, e-mail, identité de compte ou de
 session, situation source, historique, Systèmes sélectionnés, coches

@@ -67,7 +67,7 @@ const v2ActionPlanActionSchema = z
   })
   .strict();
 
-export const actionPlanActionSchema = z
+const legacyV3ActionPlanActionSchema = z
   .object({
     id: z.string().trim().regex(/^action-[1-5]$/),
     title: nonEmptyText(140),
@@ -76,6 +76,17 @@ export const actionPlanActionSchema = z
     steps: z.array(nonEmptyText(360)).min(2).max(7),
     support: actionPlanSupportSchema,
     strategyPillar: actionPlanStrategyPillarSchema,
+  })
+  .strict();
+
+export const actionPlanActionSchema = z
+  .object({
+    id: z.string().trim().regex(/^action-[1-5]$/),
+    title: nonEmptyText(140),
+    objective: nonEmptyText(260),
+    channelOrTool: nonEmptyText(180),
+    steps: z.array(nonEmptyText(360)).min(2).max(7),
+    support: actionPlanSupportSchema,
   })
   .strict();
 
@@ -194,13 +205,24 @@ function validateConsecutiveActionIds(
   }
 }
 
-export const actionPlanSchema = z
+const legacyV3ActionPlanSchema = z
   .object({
     version: z.literal("3"),
     summary: nonEmptyText(700),
     systemId: actionPlanSystemIdSchema,
-    actions: z.array(actionPlanActionSchema).min(3).max(5),
+    actions: z.array(legacyV3ActionPlanActionSchema).min(3).max(5),
     strategy: v3StrategySchema,
+  })
+  .strict()
+  .superRefine((plan, context) =>
+    validateConsecutiveActionIds(plan.actions, context, "actions"),
+  );
+
+export const actionPlanSchema = z
+  .object({
+    version: z.literal("4"),
+    systemId: actionPlanSystemIdSchema,
+    actions: z.array(actionPlanActionSchema).min(3).max(5),
   })
   .strict()
   .superRefine((plan, context) =>
@@ -298,12 +320,13 @@ function migrateLegacyV1ActionPlan(
 
 /**
  * Persistence/API reader. V1 is normalized to its V2 equivalent in memory.
- * V2 and manual plans retain their historical fields and labels; they are never
- * silently relabelled as V3 or rewritten in Firebase.
+ * V3, V2 and manual plans retain their historical fields and labels; they are
+ * never silently relabelled as V4 or rewritten in Firebase.
  */
 export const compatibleActionPlanSchema = z
   .union([
     actionPlanSchema,
+    legacyV3ActionPlanSchema,
     legacyV2ActionPlanSchema,
     legacyV1ActionPlanSchema,
     manualActionPlanSchema,
@@ -316,6 +339,8 @@ export type ActionPlan = z.infer<typeof actionPlanSchema>;
 export type ActionPlanAction = z.infer<typeof actionPlanActionSchema>;
 export type ActionPlanSupport = z.infer<typeof actionPlanSupportSchema>;
 export type ActionPlanSupportType = z.infer<typeof actionPlanSupportTypeSchema>;
+export type LegacyV3ActionPlan = z.infer<typeof legacyV3ActionPlanSchema>;
+export type LegacyV3ActionPlanAction = LegacyV3ActionPlan["actions"][number];
 export type LegacyV2ActionPlan = z.infer<typeof legacyV2ActionPlanSchema>;
 export type LegacyV2ActionPlanAction = LegacyV2ActionPlan["weeklyActions"][number];
 export type ManualActionPlan = z.infer<typeof manualActionPlanSchema>;
@@ -323,6 +348,7 @@ export type ManualActionPlanAction = ManualActionPlan["weeklyActions"][number];
 export type PersistableActionPlan = z.infer<typeof compatibleActionPlanSchema>;
 export type PersistableActionPlanAction =
   | ActionPlanAction
+  | LegacyV3ActionPlanAction
   | LegacyV2ActionPlanAction
   | ManualActionPlanAction;
 export type ActionPlanStrategyPillar = z.infer<

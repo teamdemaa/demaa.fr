@@ -1,4 +1,4 @@
-# ADR 0011 — Plan V3, commande préparée et gouvernance de l'usage IA
+# ADR 0011 — Plan versionné, commande et gouvernance de l'usage IA
 
 - Statut : `working`
 - Date : 2026-08-12
@@ -6,14 +6,15 @@
 
 ## Décisions validées du lot
 
-Le nouveau contrat généré porte la version `3`. Il conserve Actions et les
-quatre piliers, précise Alignement sous la forme `direction`, `startingPoint`
-et `decisionRules`, et remplace le support générique historique par un support
-typé dont la sélection suit des règles déterministes.
+Le contrat V3 a introduit les Actions, les supports typés et une Stratégie en
+quatre piliers. La décision la plus récente simplifie la génération courante :
+la V4 génère uniquement les Actions et le `systemId`. La Stratégie est masquée
+et n'est plus demandée au modèle à partir d'une problématique ponctuelle.
 
-La lecture reste non destructive : V1 est normalisé en V2 en mémoire ; V2 et
-`manual` conservent leurs formes historiques. Aucun document existant n'est
-réétiqueté ou réécrit silencieusement.
+La lecture reste non destructive : V1 est normalisé en V2 en mémoire ; V2, V3
+et `manual` conservent leurs formes historiques. Les stratégies V3 restent
+lisibles par le code de compatibilité mais ne sont pas affichées. Aucun
+document existant n'est réétiqueté ou réécrit silencieusement.
 
 L'application unique prend en charge plusieurs plans sauvegardés (titre,
 sélecteur, renommage, création et suppression) et plusieurs Systèmes par plan.
@@ -35,8 +36,11 @@ l'enveloppe externe minimale sont préparés. L'utilisatrice a explicitement
 autorisé le 12 août 2026 la transmission à AI Gateway et à son fournisseur de :
 
 1. la commande de la personne ;
-2. les actions visibles effectives ;
-3. la vue visible minimale des quatre piliers de Stratégie.
+2. les actions visibles effectives.
+
+La V4 n'affiche et ne génère plus de Stratégie. La commande courante transmet
+donc moins que l'enveloppe initialement autorisée : commande et Actions
+visibles uniquement.
 
 Notes, identité, e-mail, situation source, historique, Systèmes, Process,
 Solutions et catalogue des 115 activités restent exclus. Les opérations du
@@ -45,5 +49,5 @@ sans appel externe et aucun contenu n'entre dans le ledger.
 
 ## Statut `working`
 
-L'ADR reste `working` jusqu'à la recette complète du candidat V3, y compris la
+L'ADR reste `working` jusqu'à la recette complète du candidat V4, y compris la
 commande, son annulation, ses limites d'usage, le mode démo et la persistance.

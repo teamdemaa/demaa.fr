@@ -19,12 +19,11 @@ function buildShareText(
         (action) => !workspace.deletedActionIds.includes(action.id),
       )
     : actions;
+  const legacySummary = "summary" in plan ? plan.summary.trim() : "";
 
   return [
     "Mon plan d’action Demaa",
-    "",
-    plan.summary,
-    "",
+    ...(legacySummary ? ["", legacySummary, ""] : [""]),
     "À faire cette semaine",
     ...visibleActions.map(
       (action, index) => `${index + 1}. ${action.title}`,

@@ -16,9 +16,7 @@ import {
 
 function validPlan(): ActionPlan {
   return {
-    version: "3",
-    summary:
-      "Le dirigeant veut mieux choisir ses priorites commerciales sans desorganiser la production.",
+    version: "4",
     systemId: "cabinet-de-conseil",
     actions: [
       {
@@ -37,7 +35,6 @@ function validPlan(): ActionPlan {
           content:
             "Besoin formule :\nDecision attendue :\nUrgence reelle :\nProchaine etape :",
         },
-        strategyPillar: "positionnement",
       },
       {
         id: "action-2",
@@ -50,7 +47,6 @@ function validPlan(): ActionPlan {
           "Definir la prochaine decision concrete.",
         ],
         support: null,
-        strategyPillar: "alignement",
       },
       {
         id: "action-3",
@@ -63,38 +59,8 @@ function validPlan(): ActionPlan {
           "Fixer le prochain point de verification.",
         ],
         support: null,
-        strategyPillar: "offre",
       },
     ],
-    strategy: {
-      alignment: {
-        direction:
-          "Construire un cabinet concentre sur les missions qu'il sait bien livrer.",
-        startingPoint:
-          "Le cabinet recoit plusieurs demandes mais leur priorite n'est pas encore explicite.",
-        decisionRules:
-          "Prioriser une mission lorsqu'elle correspond au savoir-faire disponible et a une demande claire.",
-      },
-      positioning: {
-        preciseCustomer: "Le client dont le besoin et le decideur sont identifies.",
-        importantProblem: "Une decision importante reste bloquee faute de priorite claire.",
-        evidenceAndAlternatives:
-          "Verifier les demandes recentes et les solutions deja essayees par les clients.",
-      },
-      offer: {
-        promisedOutcome: "Une prochaine decision claire et applicable.",
-        scope: "Un besoin prioritaire, son diagnostic et la prochaine etape.",
-        priceCommitmentAndRisk:
-          "Le prix et l'engagement restent a confirmer avant toute proposition.",
-      },
-      promotion: {
-        attract: "S'appuyer sur les demandes et recommandations existantes.",
-        facilitatePurchase:
-          "Presenter une prochaine etape simple avant un engagement plus large.",
-        retainAndStrengthen:
-          "Faire un point utile apres chaque decision sans multiplier les relances.",
-      },
-    },
   };
 }
 
@@ -132,17 +98,11 @@ describe("action plan generation prompt", () => {
     expect(ACTION_PLAN_INSTRUCTIONS).not.toContain("recommendedToolSlugs");
   });
 
-  it("generates actions and Strategy together with the final Alignment fields", () => {
+  it("generates actions and the detected system without Strategy", () => {
     expect(ACTION_PLAN_INSTRUCTIONS).toContain("EN UNE SEULE REPONSE");
-    expect(ACTION_PLAN_INSTRUCTIONS).toContain("direction (Le cap)");
-    expect(ACTION_PLAN_INSTRUCTIONS).toContain(
-      "startingPoint (Le point de depart)",
-    );
-    expect(ACTION_PLAN_INSTRUCTIONS).toContain(
-      "decisionRules (Les regles de decision)",
-    );
-    expect(ACTION_PLAN_INSTRUCTIONS).toContain(
-      "N'utilise jamais le sigle APOP",
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain("actions prioritaires et le systemId");
+    expect(ACTION_PLAN_INSTRUCTIONS).not.toMatch(
+      /La Strategie|Alignement \/|Positionnement :|Offre :|Promotion :|APOP/,
     );
   });
 
@@ -195,12 +155,12 @@ describe("action plan structured generation", () => {
 
     const result = await generateActionPlanWithMetadata(
       "Je dirige un cabinet de conseil et je dois choisir mes priorites.",
-      { model, modelId: "mock/plan-v3" },
+      { model, modelId: "mock/plan-v4" },
     );
 
     expect(result.plan).toEqual(plan);
     expect(result.generation).toMatchObject({
-      model: "mock/plan-v3",
+      model: "mock/plan-v4",
       inputTokens: 10,
       outputTokens: 20,
       totalTokens: 30,
