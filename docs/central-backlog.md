@@ -23,7 +23,8 @@ de déploiement.
 - Les 115 fiches Système ont pour route canonique `/systemes/[slug]` ; les
   anciens espaces `/kit-operationnel`, `/systemes-operationnels` et
   `/kit-systeme` redirigent en permanent en conservant les paramètres.
-- Les 115 Systèmes exposent `Process / Solutions / Ressources` et Firebase est
+- Les 115 Systèmes exposent `Organisation / Solutions / Ressources` ; le slug
+  interne historique de l'onglet Organisation reste `process`. Firebase est
   la source distante active des Solutions.
 - Les Services canoniques sont publiés et composés au rendu dans les
   Systèmes, sans duplication dans Firebase.
@@ -59,7 +60,7 @@ l'ADR 0004 prévaut.
 - La navigation applicative contient `Plan d'action`, `Système`, `Académie` et
   `Opportunités`. Le produit Coaching est accessible par l'action
   `Parler à un spécialiste` et conserve les onglets Messages puis Formules.
-- Une fiche Système contient `Process`, `Solutions` et `Ressources`.
+- Une fiche Système contient `Organisation`, `Solutions` et `Ressources`.
 - Six Services canoniques existent : Automatisation des processus,
   Expert-comptable, Formalités juridiques, Sous-traitance de formalités
   juridiques, Plan marketing et prospection et Assistance facturation. La
@@ -168,7 +169,7 @@ l'ADR 0004 prévaut.
 - [ ] Recetter le multi-plans dans l'application unique : titre, sélecteur,
   nouveau plan, renommage, suppression révisionnée et retour au dernier plan.
 - [ ] Recetter les Systèmes sauvegardés par plan : liste sans doublon, Système
-  actif, coches Process et sélections Solutions isolées par Système, sans appel
+  actif, coches d'Organisation et sélections Solutions isolées par Système, sans appel
   IA lors du changement.
 - [ ] Recetter l'adaptateur microphone centralisé sur les champs concernés,
   avec erreurs accessibles, retour clavier et absence de conservation audio.
@@ -204,6 +205,14 @@ l'ADR 0004 prévaut.
   `unknown`, avec conditions d'éligibilité explicites.
 - [ ] Étendre les Fournisseurs aux autres familles de métiers après validation
   du premier lot ; aucun acteur universel par défaut.
+- [ ] Poursuivre l'enrichissement éditorial du catalogue Solutions sans réduire
+  artificiellement les choix : conserver toutes les recommandations placées
+  et pertinentes, afficher uniquement les détails réellement renseignés dans
+  la modale, et compléter progressivement description, usage, justification,
+  contraintes, tarif et interaction. Ne jamais inventer un champ manquant ni
+  masquer une recommandation utile uniquement parce que sa fiche riche reste
+  à compléter. Formation, expert-comptable et recrutement restent exclus des
+  ajouts transverses conformément à l'arbitrage produit.
 - [ ] Préparer l'internationalisation seulement après stabilisation France :
   locales, pays, contenu, Solutions et SEO. Conserver `Systèmes` comme libellé
   court de navigation en français et `Systèmes métier` comme nom développé ;

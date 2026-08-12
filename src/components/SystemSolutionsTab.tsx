@@ -225,11 +225,13 @@ function SolutionDialog({
 export default function SystemSolutionsTab({
   sections,
   initialResourceSlug,
+  onResourceSlugChange,
   selectedPlacementIds,
   onToggleSelection,
 }: {
   sections: readonly RenderableSolutionSectionDto[];
   initialResourceSlug?: string;
+  onResourceSlugChange?: (resourceSlug: string | undefined) => void;
   selectedPlacementIds?: ReadonlySet<string>;
   onToggleSelection?: (placementId: string) => void;
 }) {
@@ -243,13 +245,18 @@ export default function SystemSolutionsTab({
   const [railStates, setRailStates] = useState(() =>
     buildInitialRailState(visibleSections),
   );
-  const [selected, setSelected] = useState<RenderableSolutionPlacementDto | null>(() =>
+  const [localSelected, setLocalSelected] = useState<RenderableSolutionPlacementDto | null>(() =>
     initialResourceSlug
       ? visibleSections
           .flatMap((group) => group.placements)
           .find((placement) => placement.resource.resourceSlug === initialResourceSlug) ?? null
       : null,
   );
+  const selected = onResourceSlugChange
+    ? visibleSections
+        .flatMap((group) => group.placements)
+        .find((placement) => placement.resource.resourceSlug === initialResourceSlug) ?? null
+    : localSelected;
   const selectedPlacements = useMemo(
     () => visibleSections
       .flatMap((group) => group.placements)
@@ -288,8 +295,9 @@ export default function SystemSolutionsTab({
   }, [updateRailState, visibleSections]);
 
   const closeSolution = useCallback(() => {
-    setSelected(null);
-  }, []);
+    if (onResourceSlugChange) onResourceSlugChange(undefined);
+    else setLocalSelected(null);
+  }, [onResourceSlugChange]);
 
   function navigateRail(group: RenderableSolutionSectionDto, direction: -1 | 1) {
     const rail = railRefs.current[group.section];
@@ -358,7 +366,11 @@ export default function SystemSolutionsTab({
             onClick={() => {
               if (resource.interaction.interactionMode === "system_delivery") return;
               openEvent();
-              setSelected(placement);
+              if (onResourceSlugChange) {
+                onResourceSlugChange(resource.resourceSlug);
+              } else {
+                setLocalSelected(placement);
+              }
             }}
             className={cardClassName}
             aria-label={`Ouvrir ${resource.name}`}

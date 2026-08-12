@@ -35,9 +35,14 @@ type AcademyPayload = {
   liveTrainings: PublicLiveTraining[];
 };
 
-export default function ActionPlanAcademyPanel() {
+export default function ActionPlanAcademyPanel({
+  initialContentSlug,
+  onContentChange,
+}: {
+  initialContentSlug?: string;
+  onContentChange?: (contentSlug?: string) => void;
+}) {
   const [payload, setPayload] = useState<AcademyPayload | null>(null);
-  const [selectedContent, setSelectedContent] = useState<AcademyContentDefinition | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -100,6 +105,12 @@ export default function ActionPlanAcademyPanel() {
     );
   }
 
+  const selectedContent = initialContentSlug
+    ? payload.contents.find(
+      (content) => content.identity.slug === initialContentSlug,
+    ) ?? null
+    : null;
+
   if (selectedContent) {
     return (
       <div className="-mx-4 sm:-mx-6 lg:-mx-8">
@@ -107,7 +118,9 @@ export default function ActionPlanAcademyPanel() {
           key={selectedContent.identity.slug}
           content={selectedContent}
           embedded
-          onBack={() => setSelectedContent(null)}
+          onBack={() => {
+            onContentChange?.(undefined);
+          }}
         />
       </div>
     );
@@ -119,7 +132,9 @@ export default function ActionPlanAcademyPanel() {
         contents={payload.contents}
         liveTrainings={payload.liveTrainings}
         embedded
-        onOpenContent={setSelectedContent}
+        onOpenContent={(content) => {
+          onContentChange?.(content.identity.slug);
+        }}
       />
     </div>
   );

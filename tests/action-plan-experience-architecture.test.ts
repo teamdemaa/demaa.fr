@@ -168,9 +168,10 @@ describe("action plan experience architecture", () => {
     );
     expect(academyIndex).toContain('const ContentContainer = embedded ? "div" : "main"');
     expect(academyIndex).toContain("<ContentContainer");
-    expect(academyPanel).toContain("onOpenContent={setSelectedContent}");
+    expect(academyPanel).toContain("onContentChange?.(content.identity.slug)");
+    expect(academyPanel).toContain("onContentChange?.(undefined)");
     expect(academyPanel).toContain("<AcademyCoursePlayer");
-    expect(academyPanel).toContain("onBack={() => setSelectedContent(null)}");
+    expect(academyPanel).toContain("onBack={() => {");
     expect(academyIndex).toContain("onOpen?: (content: AcademyContentDefinition) => void");
     expect(coursePlayer).toContain('const CourseContainer = embedded ? "div" : "main"');
     expect(coursePlayer).toContain('if (activeScreen.type === "intro") return null');

@@ -506,7 +506,8 @@ describe("system Solutions UI", () => {
     const hookSource = await readSource("src/components/useAccessibleDialog.ts");
 
     expect(solutionsSource).toContain("DirectoryDetailDialogShell");
-    expect(solutionsSource).toContain("setSelected(null)");
+    expect(solutionsSource).toContain("onResourceSlugChange(undefined)");
+    expect(solutionsSource).toContain("setLocalSelected(null)");
     expect(dialogSource).toContain("useAccessibleDialog({ onClose })");
     expect(dialogSource).toContain("data-dialog-initial-focus");
     expect(hookSource).toContain('event.key === "Escape"');

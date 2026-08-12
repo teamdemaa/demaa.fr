@@ -148,13 +148,13 @@ export default function SystemeTabContent({
     return (
       <div className="demaa-surface rounded-[1.35rem] px-5 py-6 sm:px-6">
         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-muted">
-          Process
+          Organisation
         </p>
         <h2 className="mt-3 text-xl font-semibold tracking-tight text-brand-blue">
           Référentiel en cours de préparation
         </h2>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-dema-muted">
-          Les process opérationnels de {systemName} sont en cours de structuration.
+          L’organisation opérationnelle de {systemName} est en cours de structuration.
         </p>
       </div>
     );

@@ -1,7 +1,67 @@
 import { createMagicLinkToken } from "@/lib/customer-space-auth";
+import { parseCustomerAccessIntent } from "@/lib/customer-space-redirect";
 import { getTrustedRequestOrigin } from "@/lib/site-url";
 
-function renderMagicLinkEmail(input: { magicLink: string }) {
+type MagicLinkEmailPresentation = {
+  subject: string;
+  headline: string;
+  body: string;
+  cta: string;
+  textIntro: string;
+};
+
+export function getMagicLinkEmailPresentation(input: {
+  actionPlanClaim?: unknown;
+  returnTo?: string;
+}): MagicLinkEmailPresentation {
+  const isPlanAccess = Boolean(input.actionPlanClaim)
+    || input.returnTo === "/plans"
+    || input.returnTo?.startsWith("/plans/");
+
+  if (isPlanAccess) {
+    return {
+      subject: "Ouvrez votre plan Demaa",
+      headline: "Votre plan est prêt à être retrouvé",
+      body: "Ouvrez Demaa pour retrouver votre plan, le modifier et suivre vos actions.",
+      cta: "Ouvrir mon plan",
+      textIntro: "Voici votre lien sécurisé pour ouvrir votre plan Demaa :",
+    };
+  }
+
+  const intent = parseCustomerAccessIntent(input.returnTo);
+  if (intent?.kind === "coaching") {
+    return {
+      subject: "Continuez votre échange dans Demaa",
+      headline: "Continuez avec un spécialiste",
+      body: "Ouvrez Demaa pour écrire à un spécialiste ou poursuivre votre échange.",
+      cta: "Écrire à un spécialiste",
+      textIntro: "Voici votre lien sécurisé pour continuer avec un spécialiste dans Demaa :",
+    };
+  }
+
+  if (intent?.kind === "opportunity") {
+    return {
+      subject: "Continuez votre demande dans Demaa",
+      headline: "Votre opportunité vous attend",
+      body: "Ouvrez Demaa pour retrouver l’opportunité et continuer votre demande.",
+      cta: "Continuer ma demande",
+      textIntro: "Voici votre lien sécurisé pour continuer votre demande dans Demaa :",
+    };
+  }
+
+  return {
+    subject: "Votre lien sécurisé Demaa",
+    headline: "Votre lien sécurisé est prêt",
+    body: "Ouvrez Demaa pour reprendre exactement là où vous vous étiez arrêté.",
+    cta: "Ouvrir Demaa",
+    textIntro: "Voici votre lien sécurisé pour continuer dans Demaa :",
+  };
+}
+
+function renderMagicLinkEmail(input: {
+  magicLink: string;
+  presentation: MagicLinkEmailPresentation;
+}) {
   return `
     <!DOCTYPE html>
     <html lang="fr">
@@ -21,13 +81,13 @@ function renderMagicLinkEmail(input: { magicLink: string }) {
                       Demaa
                     </div>
                     <h1 style="margin:14px 0 14px;font-size:30px;line-height:1.15;font-weight:700;letter-spacing:-0.03em;color:#17231d;">
-                      Votre lien sécurisé est prêt
+                      ${input.presentation.headline}
                     </h1>
                     <p style="margin:0 0 14px;font-size:16px;line-height:1.7;color:#52606d;">
                       Bonjour,
                     </p>
                     <p style="margin:0 0 14px;font-size:16px;line-height:1.7;color:#52606d;">
-                      Votre plan est enregistré. Ouvrez-le pour le retrouver, le modifier et suivre vos actions.
+                      ${input.presentation.body}
                     </p>
                     <p style="margin:0 0 24px;font-size:16px;line-height:1.7;color:#52606d;">
                       Ce lien est personnel et expire dans <strong style="color:#17231d;">30 minutes</strong>.
@@ -36,7 +96,7 @@ function renderMagicLinkEmail(input: { magicLink: string }) {
                       <tr>
                         <td align="center" bgcolor="#315f46" style="border-radius:999px;">
                           <a href="${input.magicLink}" style="display:inline-block;padding:14px 22px;font-family:Arial,sans-serif;font-size:15px;line-height:1.2;font-weight:700;color:#ffffff;text-decoration:none;">
-                            Ouvrir mon plan
+                            ${input.presentation.cta}
                           </a>
                         </td>
                       </tr>
@@ -65,11 +125,14 @@ function renderMagicLinkEmail(input: { magicLink: string }) {
   `;
 }
 
-function renderMagicLinkText(input: { magicLink: string }) {
+function renderMagicLinkText(input: {
+  magicLink: string;
+  presentation: MagicLinkEmailPresentation;
+}) {
   return [
     "Bonjour,",
     "",
-    "Voici votre lien sécurisé pour ouvrir votre plan Demaa :",
+    input.presentation.textIntro,
     input.magicLink,
     "",
     "Ce lien expire dans 30 minutes.",
@@ -107,6 +170,7 @@ export async function sendCustomerMagicLinkEmail(input: {
   }
 
   const magicLink = magicLinkUrl.toString();
+  const presentation = getMagicLinkEmailPresentation(input);
 
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -117,9 +181,9 @@ export async function sendCustomerMagicLinkEmail(input: {
     body: JSON.stringify({
       from,
       to: input.email,
-      subject: "Ouvrez votre plan Demaa",
-      html: renderMagicLinkEmail({ magicLink }),
-      text: renderMagicLinkText({ magicLink }),
+      subject: presentation.subject,
+      html: renderMagicLinkEmail({ magicLink, presentation }),
+      text: renderMagicLinkText({ magicLink, presentation }),
     }),
     cache: "no-store",
   });

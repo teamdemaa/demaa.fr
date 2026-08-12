@@ -137,10 +137,14 @@ function OpportunityDetailsDialog({
 export default function PublicOpportunitiesClient({
   expertises,
   initialEmail = "",
+  initialOpportunityId,
+  onOpportunityChange,
   opportunities,
 }: {
   expertises: readonly ExpertiseCatalogEntry[];
   initialEmail?: string;
+  initialOpportunityId?: string;
+  onOpportunityChange?: (opportunityId?: string) => void;
   opportunities: readonly PublicOpportunity[];
 }) {
   const [query, setQuery] = useState("");
@@ -148,14 +152,23 @@ export default function PublicOpportunitiesClient({
     ALL_OPPORTUNITY_CATEGORIES,
   );
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
-  const [selected, setSelected] = useState<PublicOpportunity | null>(null);
+  const [localSelected, setLocalSelected] = useState<PublicOpportunity | null>(null);
   const [applicationOpportunity, setApplicationOpportunity] =
     useState<PublicOpportunity | null>(null);
-  const closeDetails = useCallback(() => setSelected(null), []);
+  const selected = initialOpportunityId
+    ? opportunities.find(
+      (entry) => entry.opportunityId === initialOpportunityId,
+    ) ?? null
+    : localSelected;
+  const closeDetails = useCallback(() => {
+    setLocalSelected(null);
+    onOpportunityChange?.(undefined);
+  }, [onOpportunityChange]);
   const openApplication = useCallback(() => {
     setApplicationOpportunity(selected);
-    setSelected(null);
-  }, [selected]);
+    setLocalSelected(null);
+    onOpportunityChange?.(undefined);
+  }, [onOpportunityChange, selected]);
   const categories = useMemo(
     () => [
       ALL_OPPORTUNITY_CATEGORIES,
@@ -231,7 +244,10 @@ export default function PublicOpportunitiesClient({
           <article key={opportunity.opportunityId}>
             <button
               type="button"
-              onClick={() => setSelected(opportunity)}
+              onClick={() => {
+                setLocalSelected(opportunity);
+                onOpportunityChange?.(opportunity.opportunityId);
+              }}
               aria-label={`Ouvrir l’opportunité : ${opportunity.title}`}
               className="group block w-full rounded-[1.2rem] border border-dema-line bg-white p-5 text-left shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/25 hover:bg-dema-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest sm:p-6"
             >

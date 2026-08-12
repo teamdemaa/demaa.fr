@@ -120,7 +120,7 @@ describe("system UX contract", () => {
     );
   });
 
-  it("keeps Process, Solutions and Resources as lightweight balanced tabs", async () => {
+  it("keeps Organisation, Solutions and Resources as lightweight balanced tabs", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );

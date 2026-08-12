@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
@@ -66,6 +67,7 @@ export default async function SystemPage({
   }
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
+  const normalizedInitialTab = normalizeSystemDetailTab(initialTab) ?? "process";
   const visibleSolutionSections = composeCanonicalServicesForSystem(
     slug,
     filterPublicSolutionSections(mergeRenderableSolutionSections(solutionSections)),
@@ -95,9 +97,17 @@ export default async function SystemPage({
             system={data.system}
             systeme={data.detail.systeme}
             intro={buildSystemPageIntro(data)}
-            initialActiveTab={normalizeSystemDetailTab(initialTab)}
+            initialActiveTab={normalizedInitialTab}
             headingAs="h1"
             solutionSections={visibleSolutionSections}
+            headerActions={(
+              <Link
+                href={`/?view=system&system=${encodeURIComponent(data.system.slug)}&systemTab=${normalizedInitialTab}`}
+                className="demaa-secondary-button min-h-11 w-full"
+              >
+                Ouvrir dans Demaa
+              </Link>
+            )}
           />
         </div>
       </main>

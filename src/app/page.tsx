@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import ActionPlanExperience from "@/components/ActionPlanExperience";
-import type { ActionPlanView } from "@/components/ActionPlanNavbar";
 import Navbar from "@/components/Navbar";
+import { parseActionPlanAppContext } from "@/lib/action-plan-app-context";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import {
   CUSTOMER_SPACE_COOKIE,
@@ -29,39 +29,33 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title, description },
 };
 
-const APP_VIEWS = new Set<ActionPlanView>([
-  "plan",
-  "system",
-  "academy",
-  "opportunities",
-]);
-
-function getInitialView(value: string | string[] | undefined): ActionPlanView {
-  const view = Array.isArray(value) ? value[0] : value;
-  return view && APP_VIEWS.has(view as ActionPlanView)
-    ? (view as ActionPlanView)
-    : "plan";
-}
-
 export default async function HomePage({
   searchParams,
 }: {
   searchParams: Promise<{
     intent?: string | string[];
+    academy?: string | string[];
     new?: string | string[];
+    opportunity?: string | string[];
+    opportunityId?: string | string[];
+    resource?: string | string[];
+    resourceSlug?: string | string[];
+    system?: string | string[];
+    systemSlug?: string | string[];
+    systemTab?: string | string[];
     view?: string | string[];
   }>;
 }) {
   const [cookieStore, query] = await Promise.all([cookies(), searchParams]);
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
   const email = await getEmailFromCustomerSessionToken(sessionToken);
-  const initialView = getInitialView(query.view);
+  const initialAppContext = parseActionPlanAppContext(query);
   const requestedIntent = Array.isArray(query.intent) ? query.intent[0] : query.intent;
   const requestedNewPlan = Array.isArray(query.new) ? query.new[0] : query.new;
 
   if (
     email
-    && initialView === "plan"
+    && initialAppContext.view === "plan"
     && !requestedIntent
     && requestedNewPlan !== "1"
   ) {
@@ -73,7 +67,7 @@ export default async function HomePage({
       <Navbar anonymousLanding isAuthenticated={Boolean(email)} minimal />
       <ActionPlanExperience
         initialEmail={email || ""}
-        initialView={initialView}
+        initialAppContext={initialAppContext}
         systemOptions={actionPlanSystemOptions}
       />
     </>
