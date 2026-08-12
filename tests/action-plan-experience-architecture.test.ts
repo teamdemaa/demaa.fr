@@ -72,8 +72,9 @@ describe("action plan experience architecture", () => {
     expect(result).not.toContain('aria-label="Ajouter une action"\n            />');
     expect(result).not.toContain("Générer un plan à partir de ma situation");
     expect(commandBar).toContain(
-      '"Décrivez votre situation pour générer un plan"',
+      '"Qu’est-ce qui freine votre entreprise ?"',
     );
+    expect(commandBar).toContain('"Que voulez-vous modifier ?"');
     expect(result).toContain('mode={isBlankManualPlan ? "generate" : "edit"}');
     expect(experience).toContain("createGeneratedActionPlanWorkspaceState");
     expect(experience).toContain("generatePlanFromSituation");

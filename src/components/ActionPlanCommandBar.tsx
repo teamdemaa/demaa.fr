@@ -112,7 +112,7 @@ export default function ActionPlanCommandBar({
       >
         <label htmlFor="action-plan-command" className="sr-only">
           {mode === "generate"
-            ? "Décrivez votre situation pour générer un plan"
+            ? "Qu’est-ce qui freine votre entreprise ?"
             : "Modifier le plan avec une commande"}
         </label>
         <input
@@ -125,7 +125,7 @@ export default function ActionPlanCommandBar({
             demoMode && mode === "edit"
               ? "Commande IA désactivée dans la démo"
               : mode === "generate"
-                ? "Décrivez votre situation pour générer un plan"
+                ? "Qu’est-ce qui freine votre entreprise ?"
                 : "Que voulez-vous modifier ?"
           }
           className="min-w-0 flex-1 bg-transparent text-sm text-brand-blue outline-none placeholder:text-dema-muted disabled:cursor-not-allowed"
