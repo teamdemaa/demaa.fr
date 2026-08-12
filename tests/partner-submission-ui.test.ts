@@ -93,6 +93,9 @@ describe("solution proposal UI contract", () => {
     expect(panel).toContain(
       'demoMode ? "/api/opportunities?demo=1" : "/api/opportunities"',
     );
+    expect(panel).toContain("publicOpportunitiesSnapshot");
+    expect(panel).not.toContain("Chargement des opportunités");
+    expect(panel).not.toContain("LoaderCircle");
     expect([page, catalog, modal, panel].join("\n")).not.toMatch(
       /freelance|Demaa recruteur/i,
     );

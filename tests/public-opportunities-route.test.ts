@@ -67,7 +67,9 @@ describe("public opportunities route", () => {
   it("returns open opportunities and only their referenced expertises", async () => {
     const response = await GET(new Request("https://demaa.co/api/opportunities"));
     expect(response.status).toBe(200);
-    expect(response.headers.get("Cache-Control")).toBe("private, no-store, max-age=0");
+    expect(response.headers.get("Cache-Control")).toBe(
+      "public, s-maxage=60, stale-while-revalidate=300",
+    );
     const payload = await response.json();
     expect(payload.opportunities).toHaveLength(2);
     expect(payload.expertises).toEqual([

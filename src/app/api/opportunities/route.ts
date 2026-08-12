@@ -32,7 +32,10 @@ export async function GET(request: Request) {
   );
 
   const response = NextResponse.json({ expertises, opportunities });
-  response.headers.set("Cache-Control", "private, no-store, max-age=0");
+  response.headers.set(
+    "Cache-Control",
+    "public, s-maxage=60, stale-while-revalidate=300",
+  );
   if (isDemo) response.headers.set("X-Demaa-Data-Source", "snapshot-demo");
   return response;
 }
