@@ -11,6 +11,9 @@ remplacé et la nouvelle référence à consulter.
 | ADR 0009 : `Coaching` comme quatrième onglet principal | `superseded` | navigation `Plan d’action / Système / Académie / Opportunités`; Coaching reste accessible par `Parler à un spécialiste`, voir ADR 0010 |
 | Portail distinct `Mon espace` ou `Mes plans` | `superseded` | lien magique puis retour direct à l'intention dans l'application unifiée; la session fournit ensuite l'identité e-mail |
 | Adresse e-mail redemandée dans chaque formulaire applicatif | `superseded` | saisie/vérification au lien magique uniquement, puis e-mail de session récupéré côté serveur |
+| Nouveau plan réécrit au format historique V1/V2 | `superseded` | génération V3 ; V1 est normalisé en V2 à la lecture, V2 et `manual` restent inchangés, voir ADR 0011 |
+| Support générique non typé pour les nouveaux plans | `superseded` | support V3 typé avec choix déterministe par nature d'action, voir ADR 0011 |
+| Commande IA considérée active parce que son contrat existe | `superseded` | préparation technique seulement ; export vers AI Gateway hard-disabled jusqu'à autorisation explicite |
 | Ressources dans `Solutions > Modèles` ou « Ressources héritées » | `superseded` | onglet autonome `Ressources`, sans cours de l'Académie |
 | Écosystème D-012 à quatre groupes | `superseded` | inventaire vers Solutions dans W2c-W3 |
 | Outils comme onglet autonome | `superseded` | sous-section de Solutions, libellé exact non figé |

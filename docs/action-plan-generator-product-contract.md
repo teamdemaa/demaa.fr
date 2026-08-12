@@ -1,10 +1,10 @@
 # D-076 — Contrat produit du générateur de plan d'action
 
 - Statut : `validated`
-- Date de consolidation : 10 août 2026
+- Date de consolidation : 12 août 2026
 - Propriétaires de décision : utilisatrice + Master Demaa
-- Portée : entrée libre, génération IA, résultat, sélection du Système métier,
-  persistance et garde-fous
+- Portée : entrée libre, génération IA V3, résultat, multi-plans,
+  multi-systèmes, dictée, persistance, mesure d'usage et garde-fous
 - Autorisation : implémentation MVP autorisée ; Preview, fusion et Production
   conservent leurs gates propres
 
@@ -81,45 +81,72 @@ du catalogue. L'application
 charge ensuite uniquement le Système sélectionné depuis ses sources
 canoniques existantes.
 
-### Résultat minimal
+### Résultat minimal V3
 
 Le schéma JSON est versionné. Il porte au minimum :
 
 ```text
-version
+version = "3"
 summary
 systemId
-systemReason
-weeklyActions[]
+actions[]
   id
   title
   objective
   channelOrTool
   steps[]
-  readyToUse
+  support
+    type
+    label
+    content
   strategyPillar
 strategy
   alignment
+    direction
+    startingPoint
+    decisionRules
   positioning
   offer
   promotion
-assumptions[]
 ```
 
-La V2 retire `why`, `estimatedMinutes`, `deliverable`, `successCriterion` et
-`ethicalGuardrail` du contrat généré. Le lecteur de persistance accepte les
-plans V1 déjà sauvegardés et les normalise en mémoire sans réécriture forcée du
-document Firebase.
+La V3 conserve le nettoyage V2 de `why`, `estimatedMinutes`, `deliverable`,
+`successCriterion` et `ethicalGuardrail`, remplace `weeklyActions` par
+`actions`, et remplace le support historique générique `readyToUse` par un
+support typé. Les types autorisés sont `message`, `email`, `script`,
+`checklist`, `table`, `brief` et `template`.
+
+Le choix du type est déterministe par nature d'action :
+
+- communication, prospection ou relance : `message`, `email` ou `script` ;
+- contrôle, audit ou analyse : `checklist`, `table` ou `template` ;
+- organisation ou pilotage : `table`, `checklist` ou `template` ;
+- création d'offre ou de contenu : `brief`, `template` ou `checklist`.
+
+Un support est immédiatement utilisable et ne recopie pas simplement les
+étapes. Le plan contient au moins un support concret ; `support: null` reste
+possible uniquement lorsqu'un support répéterait sans valeur les tâches déjà
+affichées.
+
+Le lecteur de persistance reste compatible avec les plans V1, V2 et `manual` :
+
+- un plan V1 est normalisé en V2 en mémoire ;
+- un plan V2 conserve ses champs et libellés historiques ;
+- un plan manuel conserve ses champs éditables et peut rester vide ;
+- aucun ancien document n'est silencieusement réétiqueté V3 ou réécrit dans
+  Firebase à la lecture.
 
 Chaque action contient les éléments nécessaires à son exécution. Le message ou
 modèle prêt à l'emploi reste facultatif. Le nombre est adapté à la situation,
-généralement trois à cinq ; la borne technique de sept protège le coût et la
-lisibilité sans imposer une réduction artificielle à trois actions.
+entre trois et cinq en V3. Les lecteurs historiques continuent d'accepter
+jusqu'à sept actions pour ne pas invalider un ancien plan V1, V2 ou manuel.
 
 ### Quatre piliers conservés
 
-1. **Alignement** : entreprise souhaitée, limites, valeurs, priorités et
-   renoncements.
+1. **Alignement** : `direction` décrit le cap durable recherché,
+   `startingPoint` le point de départ réellement connu (forces, ressources,
+   contraintes et dépendances), et `decisionRules` les critères concrets pour
+   accepter, prioriser ou refuser une action.
 2. **Positionnement** : client précis, problème important, alternatives,
    faits et hypothèses explicites.
 3. **Offre** : résultat, périmètre, prix, engagement et risques à clarifier.
@@ -142,6 +169,20 @@ L'ordre principal est :
 Chaque action reste directement exécutable. La première lecture est courte ;
 les étapes et modèles se déplient à la demande.
 
+### Plusieurs plans sauvegardés
+
+Une même identité peut conserver plusieurs plans sans créer de portail
+concurrent :
+
+- chaque plan possède un titre éditable ;
+- un sélecteur compact permet de passer d'un plan sauvegardé à un autre ;
+- `Nouveau plan`, `Renommer` et `Supprimer` restent des actions explicites ;
+- la suppression est révisionnée et ne réutilise pas un document actif ;
+- le dernier plan sauvegardé reste le retour par défaut de la session.
+
+Ces contrôles vivent dans l'interface unique de l'application. Ils ne
+réintroduisent ni page publique `Mon espace`, ni page publique `Mes plans`.
+
 ### Onglet Système
 
 - Le Système détecté est sélectionné par défaut.
@@ -152,6 +193,21 @@ les étapes et modèles se déplient à la demande.
 
 Le Système n'est donc pas une deuxième recommandation générée : il est le
 contenu canonique existant chargé à partir du `systemId` courant.
+
+Un plan sauvegardé peut mémoriser plusieurs Systèmes consultés. L'espace de
+travail conserve leur liste sans doublon, le Système actif, ainsi que les
+coches Process et sélections Solutions séparément pour chaque Système. Ajouter
+ou sélectionner un Système ne déclenche pas d'appel IA et ne modifie pas la
+Stratégie.
+
+## Dictée centralisée
+
+La dictée repose sur un seul adaptateur client partagé. Il centralise le cycle
+de vie du microphone, la langue, les transcriptions intermédiaires, l'arrêt,
+l'annulation, les erreurs et le retour au clavier. Les différents champs
+réutilisent ce même contrat au lieu de maintenir des implémentations
+concurrentes. La voix reste transformée en texte relisible ; aucun audio n'est
+envoyé ou conservé par Demaa dans ce lot.
 
 ## Navigation et compatibilité publique
 
@@ -260,6 +316,42 @@ Le pricing demeure `open`. Le prix de 5 EUR par génération est explicitement
 rejeté. Le futur prix doit être ancré sur la valeur du plan, pas sur le coût des
 tokens.
 
+### Ledger d'usage IA
+
+Chaque appel IA effectivement exécuté écrit un événement de mesure append-only
+contenant uniquement : type d'opération, sujet pseudonymisé lorsque possible,
+modèle, durée, nombres de tokens, nombre de requêtes et réparations, et date.
+Ce ledger permet de calculer et contrôler le coût sans journaliser le contenu.
+Il ne contient jamais la situation, le prompt, la commande, le plan, les
+supports, les notes, l'adresse e-mail en clair ni l'identité de session. Une
+indisponibilité du ledger est signalée opérationnellement mais ne transforme
+pas le contenu utilisateur en log de secours.
+
+## Commande IA sur un plan existant — préparée, non activée
+
+Le contrat de commande et l'application déterministe des opérations sont
+préparés pour ajouter, modifier ou supprimer une action et modifier une réponse
+de Stratégie. Cette fonctionnalité est toutefois **hard-disabled** : aucune
+commande et aucune vue du plan ne sont envoyées à AI Gateway ou à un
+fournisseur.
+
+Son activation exige une autorisation explicite de l'utilisatrice pour exporter
+exactement l'enveloppe minimale suivante :
+
+- la commande rédigée par la personne ;
+- les actions actuellement visibles et leurs modifications effectives ;
+- les réponses actuellement visibles des quatre piliers de Stratégie.
+
+Sont exclus de cette enveloppe : notes, e-mail, identité de compte ou de
+session, situation source, historique, Systèmes sélectionnés, coches Process,
+sélections Solutions et catalogue des 115 activités. Tant que cette
+autorisation d'export n'est pas validée et enregistrée, l'endpoint renvoie une
+indisponibilité contrôlée et la branche externe reste inatteignable.
+
+Si la commande est ultérieurement activée, le ledger n'enregistrera que ses
+métriques d'usage ; jamais le texte de commande, le prompt ou le contenu du
+plan.
+
 ## Décisions rejetées
 
 | Proposition | Règle active |
@@ -315,4 +407,12 @@ au backlog, sans modifier cette première version :
 - Aucun résultat invité n'est persisté durablement sans action de sauvegarde.
 - Firebase est l'unique source persistante après sauvegarde.
 - Le coût, la latence et les erreurs sont observables côté serveur.
+- Les plans V1, V2 et manuels restent lisibles sans migration destructive.
+- Les supports V3 sont typés et suivent les règles déterministes du contrat.
+- Plusieurs plans et plusieurs Systèmes peuvent être conservés sans mélanger
+  leurs états.
+- La dictée utilise l'adaptateur microphone partagé et ne conserve aucun audio.
+- Le ledger ne contient aucun prompt, commande ou contenu de plan.
+- La commande IA reste hard-disabled jusqu'à autorisation explicite de
+  l'enveloppe externe minimale.
 - `/systemes`, `/academie` et les fiches publiques existantes restent intactes.

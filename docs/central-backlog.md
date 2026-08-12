@@ -130,6 +130,24 @@ l'ADR 0004 prévaut.
   produit accessible par `Parler à un spécialiste`; les libellés humains
   emploient `spécialiste`, notamment `Écrire à un spécialiste`. Aucun onglet
   `Accueil`, portail `Mon espace`/`Mes plans` ou profil obligatoire n'est créé.
+- [ ] Recetter puis promouvoir le candidat D-079 Plan V3 : Alignement en
+  `direction / point de départ / règles de décision`, supports typés selon les
+  règles déterministes, et lecture non destructive des plans V1, V2 et
+  `manual`.
+- [ ] Recetter le multi-plans dans l'application unique : titre, sélecteur,
+  nouveau plan, renommage, suppression révisionnée et retour au dernier plan.
+- [ ] Recetter les Systèmes sauvegardés par plan : liste sans doublon, Système
+  actif, coches Process et sélections Solutions isolées par Système, sans appel
+  IA lors du changement.
+- [ ] Recetter l'adaptateur microphone centralisé sur les champs concernés,
+  avec erreurs accessibles, retour clavier et absence de conservation audio.
+- [ ] Vérifier le ledger d'usage IA : métriques techniques et sujet
+  pseudonymisé uniquement ; aucun prompt, situation, commande, plan, support,
+  note ou e-mail en clair.
+- [ ] Garder la commande IA hard-disabled. Son schéma et son application locale
+  déterministe peuvent être testés, mais aucun envoi externe ne doit être
+  activé avant une autorisation explicite distincte couvrant la commande et la
+  vue minimale du plan envoyées à AI Gateway et au fournisseur.
 - [ ] Cadrer le partage sécurisé d'un plan sauvegardé : accès en lecture seule,
   consentement, lien révocable, durée et protection contre l'indexation. Le MVP
   permet déjà de sauvegarder et retrouver un plan, mais ne crée aucun lien

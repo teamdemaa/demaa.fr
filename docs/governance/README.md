@@ -31,6 +31,7 @@ candidat exact W7/W8.
 - [ADR 0008 — Générateur de plan d'action](../decisions/0008-action-plan-generator-homepage.md)
 - [ADR 0009 — Coaching et accès unifié](../decisions/0009-coaching-and-unified-app-access.md)
 - [ADR 0010 — Plan vierge, Opportunités et navigation](../decisions/0010-blank-plan-opportunities-and-app-navigation.md)
+- [ADR 0011 — Plan V3, commande et usage IA](../decisions/0011-action-plan-v3-command-and-usage-governance.md)
 - [Contrat produit D-076](../action-plan-generator-product-contract.md)
 - [Catalogue Services V1](../services-v1-catalog.md)
 - [Inventaire des sources](./source-inventory.md)

@@ -2,7 +2,7 @@
 
 - Statut : `validated`
 - Date : 31 juillet 2026
-- Mise à jour d'état : 11 août 2026, application unifiée et identité e-mail
+- Mise à jour d'état : 12 août 2026, candidat Plan V3 et gouvernance IA
 
 Les seuls statuts autorisés sont `validated`, `working`, `deferred` et
 `superseded`. Le **scope** décrit la décision ; la **phase** décrit son niveau
@@ -29,6 +29,7 @@ produit.
 | D-076 | `validated` | Générateur de plan d'action, Système et Coaching | ADR 0008, ADR 0009 + contrat produit D-076 | La promesse exacte est « Qu’est-ce qui freine votre entreprise ? » Une génération principale produit Actions, quatre piliers et un `systemId` parmi 115 slugs canoniques ; le Système se change sans IA ; Firebase devient la source persistante après sauvegarde. Coaching propose Sessions et Messages dans la même application. Les libellés humains emploient `spécialiste`, dont `Écrire à un spécialiste`. Pricing de la génération ouvert. |
 | D-077 | `validated` | Plan vierge, Opportunités, navigation et identité applicatives | ADR 0010 | L’application affiche et rend utilisable `Plan d’action / Système / Académie / Opportunités` dès l'arrivée, conserve Coaching via `Parler à un spécialiste`, permet un plan vierge sans IA et réutilise les sources canoniques Opportunités, Team Demaa et `lead_requests` sans stockage parallèle. Le lien magique établit l'identité e-mail ; la session est ensuite réutilisée sans ressaisie et sans expérience `Mon espace` ou `Mes plans`. |
 | D-078 | `deferred` | Comptes possédant plusieurs entreprises | backlog post-lancement | Prévoir une identité `accountId`, des entreprises isolées côté serveur, des plans et progressions rattachés à une entreprise et une migration non destructive de `owner_email`. Le profil entreprise reste facultatif et aucun rôle ou système d'invitation n'est inclus. |
+| D-079 | `working` | Plan V3, multi-plans, multi-systèmes, dictée et mesure IA | candidat local, ADR 0011 | V3 précise Alignement (`direction`, `startingPoint`, `decisionRules`) et les supports typés déterministes, tout en lisant V1/V2/manual sans migration destructive. Une identité peut gérer plusieurs plans et chaque plan plusieurs Systèmes. Le microphone est centralisé. Le ledger conserve uniquement des métriques sans contenu. La commande IA est préparée mais hard-disabled : aucun export de la commande ou de la vue minimale du plan vers AI Gateway n'est autorisé à ce stade. |
 | Mesure client Services/Solutions | `deferred` | Événements de parcours et conversion sans PII | chantier ultérieur après contrat de mesure | La branche ne contient que l'attribution consent-aware jointe aux demandes et des logs opérationnels serveur ; aucun dispositif client spécifique n'est déclaré actif. |
 | Boutique en ligne | `superseded` | Offre Services | retirée avant implémentation | Aucune carte V1. |
 | Site 1 350 EUR + cadeaux | `deferred` | Hypothèse d'offre enrichie D-071 | revue commerciale ultérieure | Elle ne modifie pas l'offre active à 950 EUR HT. |
