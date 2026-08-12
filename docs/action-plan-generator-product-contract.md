@@ -290,7 +290,8 @@ sont implémentés derrière des limites conservatrices réversibles.
 ## Extensions explicitement différées
 
 La première version de Coaching fait partie de l'application conformément à
-l'ADR 0009 : Sessions, Messages et demandes coordonnées manuellement. Restent
+l'ADR 0009 : Messages ouverts par défaut, Sessions et demandes coordonnées
+manuellement. Restent
 au backlog, sans modifier cette première version :
 
 - une nouvelle frontière entre phase gratuite et phase payante ;

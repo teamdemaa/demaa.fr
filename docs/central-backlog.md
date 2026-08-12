@@ -36,8 +36,9 @@ de déploiement.
 - Les parcours guide, newsletter, Structure, Rejoindre Team Demaa, callback
   Services, Levier, Opportunités, sauvegarde de plan et lien magique ont été
   testés en Production. L'envoi direct à la boîte Gmail opérationnelle est
-  validé avec SPF, DKIM et DMARC ; le routage de l'alias `team@demaa.fr` vers
-  cette boîte doit encore être confirmé dans Google Workspace.
+  validé avec SPF, DKIM et DMARC. `team@demaa.fr` est une boîte distincte, pas
+  un alias ; sa réception opérationnelle doit être vérifiée séparément dans
+  Google Workspace.
 - Le runtime Firebase Production utilise l'identité sans clé
   `demaa-prod-app@demaa-dde32.iam.gserviceaccount.com`, limitée à
   `roles/datastore.user` et empruntable uniquement par le projet Vercel Demaa.
@@ -57,7 +58,7 @@ l'ADR 0004 prévaut.
   locale. L'internationalisation reste différée.
 - La navigation applicative contient `Plan d'action`, `Système`, `Académie` et
   `Opportunités`. Le produit Coaching est accessible par l'action
-  `Parler à un spécialiste` et conserve les onglets Sessions et Messages.
+  `Parler à un spécialiste` et conserve les onglets Messages puis Sessions.
 - Une fiche Système contient `Process`, `Solutions` et `Ressources`.
 - Six Services canoniques existent : Automatisation des processus,
   Expert-comptable, Formalités juridiques, Sous-traitance de formalités
@@ -92,8 +93,10 @@ l'ADR 0004 prévaut.
   Systèmes, puis sauvegarde Firebase. L'ADR 0008 et
   `docs/action-plan-generator-product-contract.md` sont les références ;
   `/systemes` et `/academie` publics restent inchangés.
-- [x] Livrer la première version Coaching dans l’application : Sessions,
-  Messages asynchrones, tarifs validés et demandes coordonnées manuellement.
+- [x] Livrer la première version Coaching dans l’application : Messages
+  asynchrones ouverts par défaut, Sessions à 150 EUR HT et parcours à
+  400 EUR HT, historique persistant et demandes coordonnées manuellement.
+  L'ancien échange préalable gratuit de 15 minutes est retiré.
 - [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
   `Plan d’action / Système / Académie / Opportunités`, Coaching accessible par
   `Parler à un spécialiste`, Opportunités au sens large et sauvegarde invitée
@@ -118,10 +121,10 @@ l'ADR 0004 prévaut.
   l'ouverture du plan.
 - [x] Permettre un nom d'organisation facultatif dans l'administration des
   Opportunités et ne l'afficher que lorsqu'il est explicitement publié.
-- [ ] Cadrer ensuite les évolutions Coaching : phase gratuite,
-  phase payante, capacité humaine, délais, messagerie, confidentialité,
-  conservation des échanges et prix. Aucun de ces éléments ne doit être promis
-  ou simulé dans le générateur courant.
+- [ ] Cadrer ensuite les évolutions Coaching : capacité humaine, notifications
+  de réponse, paiement/réservation, confidentialité, durée de conservation et
+  limites du service. L'historique Messages, sa persistance et la réponse sous
+  24 à 48 h appartiennent déjà à la première version.
 - [x] Conserver avant et après connexion la navigation applicative unique
   `Plan d’action / Système / Académie / Opportunités`. Coaching reste le
   produit accessible par `Parler à un spécialiste`; les libellés humains

@@ -1,20 +1,37 @@
 "use client";
 
-import { X } from "lucide-react";
+import { LoaderCircle, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import CoachingPanel from "@/components/CoachingPanel";
 import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
+import type { PersistableActionPlan } from "@/lib/action-plan-contract";
+import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
+
+type AccessPlan = {
+  plan: PersistableActionPlan;
+  sourceText: string;
+  workspace: ActionPlanWorkspaceState;
+};
 
 export default function ActionPlanCoachingControl({
+  accessPlan,
+  demoMode = false,
+  existingPlanId,
   initialEmail = "",
 }: {
+  accessPlan?: AccessPlan;
+  demoMode?: boolean;
+  existingPlanId?: string;
   initialEmail?: string;
 }) {
   const [target, setTarget] = useState<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
   const [accessOpen, setAccessOpen] = useState(false);
+  const [accessPlanId, setAccessPlanId] = useState(existingPlanId || "");
+  const [accessPreparing, setAccessPreparing] = useState(false);
+  const [accessError, setAccessError] = useState<string | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const closeAccessDialog = useCallback(() => setAccessOpen(false), []);
   const closePanel = useCallback(() => {
@@ -34,6 +51,69 @@ export default function ActionPlanCoachingControl({
     isOpen: accessOpen,
     onClose: closeAccessDialog,
   });
+
+  const prepareAccess = useCallback(async () => {
+    if (initialEmail) return;
+    setAccessError(null);
+
+    if (existingPlanId) {
+      setAccessPlanId(existingPlanId);
+      setAccessOpen(true);
+      return;
+    }
+
+    if (demoMode) {
+      setAccessOpen(true);
+      return;
+    }
+
+    if (!accessPlan || accessPreparing) return;
+    setAccessPreparing(true);
+
+    try {
+      const response = await fetch("/api/action-plans", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          plan: accessPlan.plan,
+          sourceText: accessPlan.sourceText,
+          workspaceState: accessPlan.workspace,
+        }),
+      });
+      const body = (await response.json().catch(() => null)) as
+        | {
+            actionPlan?: { id?: string };
+            actionPlanId?: string;
+            error?: string;
+            status?: "pending_claim" | "saved";
+          }
+        | null;
+      const actionPlanId =
+        body?.status === "saved" ? body.actionPlan?.id : body?.actionPlanId;
+
+      if (!response.ok || !actionPlanId) {
+        throw new Error(body?.error || "Impossible de préparer l’accès au spécialiste.");
+      }
+
+      if (body?.status === "saved") {
+        window.location.assign(
+          `/plans/${encodeURIComponent(actionPlanId)}?intent=coaching&tab=messages`,
+        );
+        return;
+      }
+
+      setAccessPlanId(actionPlanId);
+      setAccessOpen(true);
+    } catch (error) {
+      setAccessError(
+        error instanceof Error
+          ? error.message
+          : "Impossible de préparer l’accès au spécialiste.",
+      );
+    } finally {
+      setAccessPreparing(false);
+    }
+  }, [accessPlan, accessPreparing, demoMode, existingPlanId, initialEmail]);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -104,8 +184,19 @@ export default function ActionPlanCoachingControl({
                 </button>
               </div>
               <CoachingPanel
-                onRequireAccess={initialEmail ? undefined : () => setAccessOpen(true)}
+                onRequireAccess={initialEmail ? undefined : () => void prepareAccess()}
               />
+              {accessPreparing ? (
+                <div className="fixed inset-x-0 bottom-8 z-[135] mx-auto flex w-fit items-center gap-2 rounded-full bg-dema-paper px-4 py-2 text-sm text-dema-forest shadow-lg" role="status">
+                  <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+                  Préparation de votre accès…
+                </div>
+              ) : null}
+              {accessError ? (
+                <p className="fixed inset-x-4 bottom-8 z-[135] mx-auto max-w-md rounded-2xl bg-dema-paper px-4 py-3 text-center text-sm text-red-700 shadow-lg" role="alert">
+                  {accessError}
+                </p>
+              ) : null}
             </div>,
             document.body,
           )
@@ -143,7 +234,14 @@ export default function ActionPlanCoachingControl({
                   Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.
                 </p>
                 <div className="mt-6">
-                  <CustomerSpaceAccessForm returnTo="/?intent=coaching" compact simple />
+                  <CustomerSpaceAccessForm
+                    actionPlanClaim={accessPlanId ? { actionPlanId: accessPlanId } : null}
+                    returnTo={accessPlanId
+                      ? `/plans/${encodeURIComponent(accessPlanId)}?intent=coaching&tab=messages`
+                      : "/?intent=coaching"}
+                    compact
+                    simple
+                  />
                 </div>
               </div>
             </div>,

@@ -12,7 +12,7 @@ export default function CustomerSpaceAccessForm({
 }: {
   actionPlanClaim?: {
     actionPlanId: string;
-    actionPlanClaimSecret: string;
+    actionPlanClaimSecret?: string;
   } | null;
   compact?: boolean;
   returnTo?: string;

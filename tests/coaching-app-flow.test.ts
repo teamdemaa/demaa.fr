@@ -47,15 +47,37 @@ describe("unified app and coaching", () => {
     expect(coaching).toContain("400 € HT");
     expect(coaching).not.toContain("180 € TTC");
     expect(coaching).not.toContain("480 € TTC");
-    expect(coaching).toContain("15 minutes offertes");
+    expect(coaching).not.toContain("15 minutes offertes");
+    expect(coaching).not.toContain("Échange préalable");
+    expect(coaching).toContain('useState<CoachingTab>("messages")');
+    expect(coaching).toContain('(["messages", "sessions"] as const)');
+    expect(coaching).toContain("interimResults = true");
+    expect(coaching).toContain("Dictée en cours… le texte apparaît dans le message.");
+    expect(coaching).toContain("Identifiez-vous d’abord pour conserver la conversation");
+    expect(coaching).toContain("Continuer par e-mail");
     expect(coaching).not.toContain("disponible prochainement");
     expect(coachingControl).toContain("Parler à un spécialiste");
     expect(coachingControl).toContain("onClick={() => setOpen(true)}");
     expect(coachingControl).toContain('url.searchParams.delete("intent")');
     expect(coachingControl).toContain("window.history.replaceState");
     expect(coachingControl).toContain("onRequireAccess={initialEmail ? undefined");
+    expect(coachingControl).toContain("/api/action-plans");
+    expect(coachingControl).toContain("?intent=coaching&tab=messages");
     expect(appNavigation).toContain("Opportunités");
     expect(appNavigation).not.toContain('label: "Coaching"');
+  });
+
+  it("only exposes specialist access once a plan exists", () => {
+    const experience = read("src/components/ActionPlanExperience.tsx");
+    const noPlanBranch = experience.slice(
+      experience.indexOf("if (!plan)"),
+      experience.indexOf("if (!workspace)"),
+    );
+    const planBranch = experience.slice(experience.indexOf("if (!workspace)"));
+
+    expect(noPlanBranch).not.toContain("<ActionPlanCoachingControl");
+    expect(planBranch).toContain("<ActionPlanCoachingControl");
+    expect(planBranch).toContain("accessPlan={{ plan, sourceText: situation.trim(), workspace }}");
   });
 
   it("keeps magic-link consumption on POST", () => {
