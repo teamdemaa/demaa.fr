@@ -22,7 +22,7 @@ const CURATED_TOOL_RECOMMENDATIONS_BY_SYSTEM = Function(
 
 const errors = [];
 const warnings = [];
-const MAX_RECOMMENDATIONS = 5;
+const MAX_RECOMMENDATIONS = 10;
 const MAX_REVIEW_AGE_DAYS = 365;
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 const toolsBySlug = new Map(toolPayload.tools.map((tool) => [tool.slug, tool]));

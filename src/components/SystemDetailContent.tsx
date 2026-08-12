@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { type KeyboardEvent, type ReactNode, useMemo, useState } from "react";
-import SystemGuidesRail from "@/components/SystemGuidesRail";
 import SystemContextualCaseStudy from "@/components/SystemContextualCaseStudy";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
@@ -235,10 +234,6 @@ export default function SystemDetailContent({
             {contextualCaseStudy ? (
               <SystemContextualCaseStudy content={contextualCaseStudy} />
             ) : null}
-            <SystemGuidesRail
-              resources={scopedResources.filter((resource) => resource.format === "guide")}
-              systemSlug={system.slug}
-            />
             {!embedded ? <StructureNewsletterBlock /> : null}
           </div>
         ) : null}

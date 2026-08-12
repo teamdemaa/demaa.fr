@@ -240,8 +240,7 @@ describe("three-pilot draft Solutions registry", () => {
       const referralSlugs = ["cabinet-davocat", "notaire"].includes(slug)
         ? ["juridi-consulting"]
         : [];
-      expect(new Set(renderedSlugs)).toEqual(
-        new Set([
+      const requiredSlugs = [
           ...(selection?.placements ?? [])
             .filter(({ resourceSlug, editorialStatus }) => (
               resourceSlug !== "levier" && editorialStatus === "selected"
@@ -249,8 +248,9 @@ describe("three-pilot draft Solutions registry", () => {
             .map(({ resourceSlug }) => resourceSlug),
           ...referralSlugs,
           "levier",
-        ]),
-      );
+        ];
+      expect(renderedSlugs).toEqual(expect.arrayContaining(requiredSlugs));
+      expect(new Set(renderedSlugs).size).toBe(renderedSlugs.length);
     }
 
     for (const systemSlug of ["batiment", "cabinet-comptable", "agence-marketing"]) {

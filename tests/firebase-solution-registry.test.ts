@@ -54,10 +54,10 @@ describe("Firebase Solutions revision contract", () => {
 
     expect(revision.revisionStatus).toBe("published");
     expect(revision.knownSystemSlugs).toEqual(expectedSystemSlugs);
-    expect(revision.resources).toHaveLength(250);
-    expect(revision.placements).toHaveLength(643);
+    expect(revision.resources).toHaveLength(267);
+    expect(revision.placements).toHaveLength(722);
     expect(sectionCounts).toEqual({
-      software: 313,
+      software: 392,
       services: 0,
       providers: 125,
       models: 115,
@@ -142,8 +142,8 @@ describe("Firebase Solutions revision contract", () => {
     const revision = migrationRevision;
     const plan = modules.buildImportPlan(revision);
 
-    expect(plan.writes).toHaveLength(894);
-    expect(plan.writeBatches.map((batch) => batch.length)).toEqual([400, 400, 94]);
+    expect(plan.writes).toHaveLength(990);
+    expect(plan.writeBatches.map((batch) => batch.length)).toEqual([400, 400, 190]);
     expect(plan.activation).toEqual({
       path: "solution_registry_config/active",
       data: {

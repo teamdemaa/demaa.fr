@@ -17,7 +17,7 @@ produit.
 | D-063 | `validated` | Newsletter Structure | texte et formulaire actifs | Un même bloc est utilisé sous Ressources, sur la page Académie et sur `/sur-mesure`, jamais dans les cours. Le vocal reste différé. |
 | D-064 placement | `superseded` | Emplacement de l'aide à l'organisation | retiré du parcours média | Aucun CTA commercial ou de diagnostic n'est rendu dans Process ou Solutions. Le contact général reste dans le footer. |
 | D-064 copie | `superseded` | Texte de l'aide à l'organisation | retiré du parcours média | Le parcours Fillout n'est plus un élément des fiches Système. |
-| Académie D-033/D-036 | `validated` | Navigation réciproque et catalogue Académie | publié | La navigation principale contient uniquement `Système métier` et `Académie`. Les contenus pédagogiques restent dans l'Académie. |
+| Académie D-033/D-036 | `superseded` | Ancienne navigation réciproque et catalogue Académie | remplacé par D-077 et ADR 0004 | L'ancienne navigation limitée à `Système métier / Académie` ne guide plus l'application. Les contenus restent canoniques et sont présentés dans `Décryptages / Cours / En direct`. |
 | Académie cours 3 à 5 | `deferred` | Drafts éditoriaux et assets non publics | hors release Systèmes | Aucun draft ne devient public sans publication réelle et gate dédié. |
 | Vidéos | `deferred` | Production, casting et publication vidéo | chantier ultérieur | Les scripts, voix et assets locaux ne valent pas autorisation de publication. |
 | Tiimora D-049 à D-060 | `deferred` | Intégration Demaa-Tiimora et retargeting | backlog distinct | Ce chantier ne doit ni orienter ni ralentir la base Systèmes/Services. |

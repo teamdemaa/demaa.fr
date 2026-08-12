@@ -44,7 +44,10 @@ export default function ActionPlanAcademyPanel() {
   useEffect(() => {
     const controller = new AbortController();
 
-    void fetch("/api/action-plan/academy", { signal: controller.signal })
+    void fetch("/api/action-plan/academy", {
+      signal: controller.signal,
+      cache: "no-store",
+    })
       .then(async (response) => {
         const body = (await response.json().catch(() => null)) as
           | AcademyPayload

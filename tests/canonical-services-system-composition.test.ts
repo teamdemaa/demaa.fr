@@ -7,6 +7,8 @@ import {
   getCanonicalServiceSlugsForSystem,
 } from "@/lib/canonical-services-system-section.server";
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
+import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
+import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 
 const sectionsWithLegacyReferral = [
@@ -131,7 +133,7 @@ describe("canonical Services composition in every system", () => {
     expect(getCanonicalServiceSlugsForSystem("notaire")).toHaveLength(5);
   });
 
-  it("places Services between Outils and Fournisseurs without mutating registry data", () => {
+  it("places relevant catalog sections in order without mutating registry data", () => {
     const inputSnapshot = structuredClone(sectionsWithLegacyReferral);
     const sections = composeCanonicalServicesForSystem(
       "cabinet-comptable",
@@ -146,10 +148,37 @@ describe("canonical Services composition in every system", () => {
       "aids",
     ]);
     expect(sections.find(({ section }) => section === "financing")?.placements)
-      .toHaveLength(7);
+      .toHaveLength(getRecommendedFinanceForSystem("cabinet-comptable").length);
     expect(sections.find(({ section }) => section === "aids")?.placements.length)
-      .toBeGreaterThan(20);
+      .toBe(getRecommendedAidsForSystem(
+        "cabinet-comptable",
+        "Conseil & services aux entreprises",
+      ).length);
     expect(sectionsWithLegacyReferral).toEqual(inputSnapshot);
+  });
+
+  it("uses the existing recommendation engines instead of exposing whole catalogs", () => {
+    for (const system of enterpriseCatalog) {
+      const sections = composeCanonicalServicesForSystem(system.slug, []);
+      const financing = sections.find(({ section }) => section === "financing");
+      const aids = sections.find(({ section }) => section === "aids");
+
+      expect(financing?.placements.map(({ resource }) => resource.resourceSlug))
+        .toEqual(getRecommendedFinanceForSystem(system.slug).map(
+          ({ slug }) => `financing-${slug}`,
+        ));
+      expect(aids?.placements.map(({ resource }) => resource.resourceSlug))
+        .toEqual(getRecommendedAidsForSystem(system.slug, system.sectorLabel).map(
+          ({ slug }) => `aid-${slug}`,
+        ));
+      expect(financing?.placements.length ?? 0).toBeLessThanOrEqual(8);
+      expect(aids?.placements.length ?? 0).toBeLessThanOrEqual(6);
+    }
+
+    const restaurant = composeCanonicalServicesForSystem("restaurant", []);
+    const saas = composeCanonicalServicesForSystem("saas", []);
+    expect(restaurant.find(({ section }) => section === "aids"))
+      .not.toEqual(saas.find(({ section }) => section === "aids"));
   });
 
   it("replaces legacy service placements and removes duplicate referrals on Cabinet comptable", () => {

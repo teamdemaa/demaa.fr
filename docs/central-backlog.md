@@ -30,9 +30,9 @@ de déploiement.
 - `/contenus/facturation-electronique` est publié comme article et diaporama ;
   les deux présentations universelles ne sont plus rendues dans les Ressources
   des Systèmes.
-- Les guides métier annoncés restent visibles et leur liste d'attente est
-  opérationnelle. Les Formations en direct et les Cas concrets restent masqués
-  par des bascules éditoriales explicites.
+- Les guides métier sont retirés de Ressources pour simplifier l'application ;
+  leurs données historiques restent conservées. Académie présente désormais
+  `Décryptages / Cours / En direct` en réutilisant les contenus existants.
 - Les parcours guide, newsletter, Structure, Rejoindre Team Demaa, callback
   Services, Levier, Opportunités, sauvegarde de plan et lien magique ont été
   testés en Production. L'envoi direct à la boîte Gmail opérationnelle est
@@ -69,8 +69,9 @@ l'ADR 0004 prévaut.
   numéro WhatsApp), avec attribution silencieuse du service et du Système
   métier, stockage sécurisé puis notification Slack. Le suivi WhatsApp reste
   manuel : aucune API WhatsApp ni message automatique n'est promis.
-- Ressources contient les guides, modèles et documents contextualisés. Les
-  contenus pédagogiques globaux restent dans l'Académie.
+- Ressources contient les modèles et documents contextualisés en grille
+  verticale. Les contenus pédagogiques et éditoriaux globaux restent dans
+  l'Académie.
 - Firebase est la source distante autoritaire pour Solutions et le réseau de
   prestataires lorsque l'environnement est configuré.
 - Opportunités et Rejoindre Team Demaa sont intégrés à l'expérience
@@ -177,7 +178,10 @@ l'ADR 0004 prévaut.
   composé au rendu dans les 115 Systèmes.
 - [x] Créer `/contenus` et publier la fiche Facturation électronique comme
   article et diaporama avant la future vidéo.
-- [x] Réordonner les Ressources et conserver les guides métier annoncés.
+- [x] Simplifier Ressources : retirer les guides métier de la surface active et
+  afficher les modèles et documents en grille verticale responsive.
+- [x] Structurer Académie en `Décryptages / Cours / En direct`, avec
+  Décryptages ouvert par défaut, recherche partagée et navigation clavier.
 - [ ] Réactiver la section « Formations en direct » de l'Académie seulement
   après validation des créneaux, recette desktop/mobile et bascule explicite de
   `academyLiveTrainings` dans `src/lib/public-editorial-visibility.ts`.

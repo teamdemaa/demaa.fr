@@ -60,17 +60,15 @@ fiches Système.
 
 ### Ressources des Systèmes
 
-1. Modèles et documents ;
-2. cas concret contextuel, lorsqu'il existe ;
-3. Guides métier.
+Ressources affiche les modèles et documents contextualisés les uns après les
+autres, dans une grille verticale responsive. Les guides métier sont retirés
+de cette surface pour simplifier l'application ; leurs données et anciennes
+routes ne sont pas supprimées. Un cas concret contextuel peut être réactivé
+ultérieurement lorsqu'il existe et a été validé éditorialement.
 
 Les deux présentations universelles « Maîtriser les obligations et les finances
 de son entreprise » et « La facturation électronique » sont masquées dans les
 115 systèmes, sans supprimer leurs assets ni les anciennes livraisons.
-
-Les deux guides métier contextualisés « Bientôt disponible » restent visibles
-dans chacun des 115 systèmes. Leur CTA « Être informé(e) » et leur pipeline
-sécurisé sont conservés.
 
 ### Contenus
 
@@ -81,18 +79,21 @@ la même URL sans créer de doublon SEO.
 
 ### Académie
 
-L'ordre public est :
+La recherche est suivie de trois onglets applicatifs :
 
-1. Cours fondamentaux ;
-2. Formations en direct ;
-3. Modèles et documents.
+1. `Décryptages`, ouvert par défaut et alimenté par les cas éditoriaux publiés ;
+2. `Cours`, qui reprend le catalogue pédagogique existant ;
+3. `En direct`, qui expose les rendez-vous publiés ou un état vide explicite.
+
+Les modèles et documents restent rattachés aux Systèmes et ne sont pas
+dupliqués dans l'Académie.
 
 Les six formations en direct durent deux heures et coûtent 250 EUR HT. Les
 dates sont explicitement validées avant publication et aucune restauration de
 Stripe n'est prévue.
 
-L'index global « Cas concrets » disparaît de l'Académie, mais ses routes restent
-canoniques et les cas sont rattachés aux Systèmes concernés.
+Les anciennes routes des cas restent canoniques. Leur réutilisation dans
+`Décryptages` n'ajoute ni copie de contenu ni nouveau stockage.
 
 ### Dérogation temporaire de lancement
 

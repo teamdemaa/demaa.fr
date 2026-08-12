@@ -4,8 +4,9 @@ import {
   getCanonicalServices,
   type CanonicalServiceSlug,
 } from "@/lib/canonical-service-catalog";
-import { demaaAidItems } from "@/lib/aid-catalog";
-import { demaaFinanceItems } from "@/lib/finance-catalog";
+import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
+import { enterpriseCatalogBySlug } from "@/lib/enterprise-annuaire";
+import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
 import type { SolutionSection } from "@/lib/solution-registry-dto";
 import type {
   RenderableSolutionPlacementDto,
@@ -50,7 +51,7 @@ export function getCanonicalServiceSlugsForSystem(
 function buildFinancePlacements(
   systemSlug: string,
 ): readonly RenderableSolutionPlacementDto[] {
-  return demaaFinanceItems.map((item, index) => ({
+  return getRecommendedFinanceForSystem(systemSlug).map((item, index) => ({
     placementId: `catalog:${systemSlug}:financing:${item.slug}`,
     systemSlug,
     rank: index + 1,
@@ -75,7 +76,9 @@ function buildFinancePlacements(
 function buildAidPlacements(
   systemSlug: string,
 ): readonly RenderableSolutionPlacementDto[] {
-  return demaaAidItems.map((item, index) => ({
+  const sectorLabel = enterpriseCatalogBySlug[systemSlug]?.sectorLabel;
+
+  return getRecommendedAidsForSystem(systemSlug, sectorLabel).map((item, index) => ({
     placementId: `catalog:${systemSlug}:aids:${item.slug}`,
     systemSlug,
     rank: index + 1,
