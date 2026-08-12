@@ -90,7 +90,9 @@ describe("solution proposal UI contract", () => {
     expect(catalog).toContain("Rejoindre Team Demaa");
     expect(modal).toContain("Manifester mon intérêt");
     expect(modal).toContain("initialEmail");
-    expect(panel).toContain('fetch("/api/opportunities"');
+    expect(panel).toContain(
+      'demoMode ? "/api/opportunities?demo=1" : "/api/opportunities"',
+    );
     expect([page, catalog, modal, panel].join("\n")).not.toMatch(
       /freelance|Demaa recruteur/i,
     );

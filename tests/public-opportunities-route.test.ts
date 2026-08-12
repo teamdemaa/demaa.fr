@@ -1,15 +1,19 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
 const mocks = vi.hoisted(() => ({
   enforceAllowedHost: vi.fn(),
+  getPublicExpertiseSnapshot: vi.fn(),
   getPublicExpertises: vi.fn(),
+  getPublicOpportunitySnapshot: vi.fn(),
   getPublicOpenOpportunities: vi.fn(),
 }));
 
 vi.mock("@/lib/provider-network.server", () => ({
+  getPublicExpertiseSnapshot: mocks.getPublicExpertiseSnapshot,
   getPublicExpertises: mocks.getPublicExpertises,
+  getPublicOpportunitySnapshot: mocks.getPublicOpportunitySnapshot,
   getPublicOpenOpportunities: mocks.getPublicOpenOpportunities,
 }));
 vi.mock("@/lib/request-guard", () => ({
@@ -56,6 +60,10 @@ describe("public opportunities route", () => {
     ]);
   });
 
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   it("returns open opportunities and only their referenced expertises", async () => {
     const response = await GET(new Request("https://demaa.co/api/opportunities"));
     expect(response.status).toBe(200);
@@ -65,5 +73,43 @@ describe("public opportunities route", () => {
     expect(payload.expertises).toEqual([
       { expertiseId: "google-ads", label: "Spécialiste Google Ads" },
     ]);
+  });
+
+  it("serves the local snapshots immediately in demo mode", async () => {
+    mocks.getPublicOpportunitySnapshot.mockReturnValue([
+      {
+        expertiseId: "google-ads",
+        opportunityId: "demo-google",
+      },
+    ]);
+    mocks.getPublicExpertiseSnapshot.mockReturnValue([
+      { expertiseId: "google-ads", label: "Spécialiste Google Ads" },
+    ]);
+
+    const response = await GET(
+      new Request("https://demaa.co/api/opportunities?demo=1"),
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("X-Demaa-Data-Source")).toBe("snapshot-demo");
+    expect(mocks.getPublicOpportunitySnapshot).toHaveBeenCalledOnce();
+    expect(mocks.getPublicExpertiseSnapshot).toHaveBeenCalledOnce();
+    expect(mocks.getPublicOpenOpportunities).not.toHaveBeenCalled();
+    expect(mocks.getPublicExpertises).not.toHaveBeenCalled();
+  });
+
+  it("never exposes the demo snapshots in production", async () => {
+    vi.stubEnv("NODE_ENV", "production");
+
+    const response = await GET(
+      new Request("https://demaa.co/api/opportunities?demo=1"),
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("X-Demaa-Data-Source")).toBeNull();
+    expect(mocks.getPublicOpenOpportunities).toHaveBeenCalledOnce();
+    expect(mocks.getPublicExpertises).toHaveBeenCalledOnce();
+    expect(mocks.getPublicOpportunitySnapshot).not.toHaveBeenCalled();
+    expect(mocks.getPublicExpertiseSnapshot).not.toHaveBeenCalled();
   });
 });

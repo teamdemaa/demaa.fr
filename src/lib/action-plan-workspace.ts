@@ -295,6 +295,35 @@ export function createActionPlanWorkspaceState(
   };
 }
 
+/**
+ * Starts a generated plan while preserving only the deterministic System
+ * choices made before generation. Action and Strategy state always comes from
+ * the newly generated plan.
+ */
+export function createGeneratedActionPlanWorkspaceState(
+  plan: PersistableActionPlan,
+  previous: ActionPlanWorkspaceState,
+): ActionPlanWorkspaceState {
+  const generated = createActionPlanWorkspaceState(plan);
+  const selectedSystemId = previous.selectedSystemId ?? plan.systemId;
+  const savedSystemIds = Array.from(
+    new Set([
+      ...previous.savedSystemIds,
+      ...(selectedSystemId ? [selectedSystemId] : []),
+      ...(plan.systemId ? [plan.systemId] : []),
+    ]),
+  );
+
+  return actionPlanWorkspaceStateSchema.parse({
+    ...generated,
+    selectedSystemId,
+    savedSystemIds,
+    checkedProcessStepIdsBySystem: previous.checkedProcessStepIdsBySystem,
+    selectedSolutionPlacementIdsBySystem:
+      previous.selectedSolutionPlacementIdsBySystem,
+  });
+}
+
 export function normalizeActionPlanWorkspaceState(
   plan: PersistableActionPlan,
   value: unknown,

@@ -29,8 +29,17 @@ describe("manual action plan experience", () => {
 
     expect(experience).toContain("handleAddAction");
     expect(result).toContain("Ajouter une action");
-    expect(result).toContain("Générer un plan à partir de ma situation");
+    expect(result).toContain("addAndOpenAction");
+    expect(result).toContain("setSelectedActionId(actionId)");
+    expect(result).not.toContain("Générer un plan à partir de ma situation");
+    expect(result).not.toContain("Aucune action pour le moment");
+    expect(result).toContain('mode={isBlankManualPlan ? "generate" : "edit"}');
+    expect(result).toContain(
+      "onGeneratePlan={isBlankManualPlan ? onGeneratePlan : undefined}",
+    );
     expect(savedDetail).toContain("function addAction()");
+    expect(savedDetail).toContain("async function generateBlankPlan");
+    expect(savedDetail).toContain("createGeneratedActionPlanWorkspaceState");
     expect(savedDetail).toContain("plan: isManualActionPlan(nextSave.plan)");
     expect(savedDetail).toContain("onAddAction={addAction}");
   });

@@ -26,11 +26,13 @@ import {
   createManualActionPlan,
   createManualActionPlanWorkspaceState,
   type EditableActionPlan,
+  isBlankManualActionPlan,
   isManualActionPlan,
 } from "@/lib/action-plan-manual";
 import {
   addActionPlanWorkspaceAction,
   createActionPlanWorkspaceState,
+  createGeneratedActionPlanWorkspaceState,
   type ActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
 
@@ -43,16 +45,19 @@ const EXAMPLES = [
 
 const GENERATION_QUESTIONS = [
   {
-    question: "Quelle décision devez-vous pouvoir prendre plus facilement ?",
+    question: "Si je m’absente un mois, mon entreprise continue-t-elle de fonctionner ?",
   },
   {
-    question: "Qu’est-ce qui vous fait perdre le plus de temps aujourd’hui ?",
+    question: "Quelles décisions dépendent encore systématiquement de moi ?",
   },
   {
-    question: "Quel signe concret montrerait que la situation s’améliore ?",
+    question: "Mon équipe sait-elle quoi faire sans attendre mes instructions ?",
   },
   {
-    question: "Quelle action simple pouvez-vous réellement commencer cette semaine ?",
+    question: "Que pourrais-je supprimer, simplifier, déléguer ou automatiser ?",
+  },
+  {
+    question: "Est-ce que la qualité reste constante lorsque je ne supervise pas directement ?",
   },
 ] as const;
 
@@ -231,16 +236,22 @@ export default function ActionPlanExperience({
     };
   }, [isGenerating]);
 
-  async function handleGenerate(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const normalizedSituation = situation.trim();
+  async function generatePlanFromSituation(
+    rawSituation: string,
+    previousWorkspace: ActionPlanWorkspaceState,
+  ) {
+    const normalizedSituation = rawSituation.trim();
     if (normalizedSituation.length < 20 || isGenerating) {
       setError(
         normalizedSituation.length < 20
           ? "Décrivez votre situation en quelques phrases pour obtenir un plan utile."
           : null,
       );
-      return;
+      throw new Error(
+        normalizedSituation.length < 20
+          ? "Décrivez votre situation en quelques phrases pour obtenir un plan utile."
+          : "Une génération est déjà en cours.",
+      );
     }
 
     requestControllerRef.current?.abort();
@@ -250,10 +261,15 @@ export default function ActionPlanExperience({
     setError(null);
 
     if (isDemoMode) {
+      const nextWorkspace = createGeneratedActionPlanWorkspaceState(
+        ACTION_PLAN_DEMO,
+        previousWorkspace,
+      );
+      setSituation(normalizedSituation);
       setPlan(ACTION_PLAN_DEMO);
       setGeneration(null);
-      setWorkspace(createActionPlanWorkspaceState(ACTION_PLAN_DEMO));
-      setSelectedSystemId(ACTION_PLAN_DEMO.systemId);
+      setWorkspace(nextWorkspace);
+      setSelectedSystemId(nextWorkspace.selectedSystemId || ACTION_PLAN_DEMO.systemId);
       setActiveTab("plan");
       setIsGenerating(false);
       window.requestAnimationFrame(() => resultTitleRef.current?.focus());
@@ -279,19 +295,15 @@ export default function ActionPlanExperience({
         throw new Error(body?.error || "Impossible de générer le plan pour le moment.");
       }
 
-      const generatedWorkspace = createActionPlanWorkspaceState(body.plan);
-      const nextSelectedSystemId =
-        prePlanWorkspace.selectedSystemId || body.plan.systemId;
+      const generatedWorkspace = createGeneratedActionPlanWorkspaceState(
+        body.plan,
+        previousWorkspace,
+      );
+      const nextSelectedSystemId = generatedWorkspace.selectedSystemId || body.plan.systemId;
+      setSituation(normalizedSituation);
       setPlan(body.plan);
       setGeneration(body.generation ?? null);
-      setWorkspace({
-        ...generatedWorkspace,
-        selectedSystemId: nextSelectedSystemId,
-        checkedProcessStepIdsBySystem:
-          prePlanWorkspace.checkedProcessStepIdsBySystem,
-        selectedSolutionPlacementIdsBySystem:
-          prePlanWorkspace.selectedSolutionPlacementIdsBySystem,
-      });
+      setWorkspace(generatedWorkspace);
       setSelectedSystemId(nextSelectedSystemId);
       setActiveTab("plan");
       window.requestAnimationFrame(() => resultTitleRef.current?.focus());
@@ -302,11 +314,21 @@ export default function ActionPlanExperience({
           ? submitError.message
           : "Impossible de générer le plan pour le moment.",
       );
+      throw submitError;
     } finally {
       if (requestControllerRef.current === controller) {
         requestControllerRef.current = null;
         setIsGenerating(false);
       }
+    }
+  }
+
+  async function handleGenerate(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      await generatePlanFromSituation(situation, prePlanWorkspace);
+    } catch {
+      // The field-level error is already displayed by generatePlanFromSituation.
     }
   }
 
@@ -325,21 +347,23 @@ export default function ActionPlanExperience({
     window.requestAnimationFrame(() => resultTitleRef.current?.focus());
   }
 
-  function handleAddManualAction() {
-    if (!plan || !workspace || !isManualActionPlan(plan)) return;
+  function handleAddManualAction(): string | undefined {
+    if (!plan || !workspace || !isManualActionPlan(plan)) return undefined;
     const next = addActionToManualPlan(plan, workspace);
-    if (!next) return;
+    if (!next) return undefined;
     setPlan(next.plan);
     setWorkspace(next.workspace);
+    return next.actionId;
   }
 
-  function handleAddAction() {
-    if (!plan || !workspace) return;
+  function handleAddAction(): string | undefined {
+    if (!plan || !workspace) return undefined;
     if (isManualActionPlan(plan)) {
-      handleAddManualAction();
-      return;
+      return handleAddManualAction();
     }
-    setWorkspace(addActionPlanWorkspaceAction(workspace));
+    const nextWorkspace = addActionPlanWorkspaceAction(workspace);
+    setWorkspace(nextWorkspace);
+    return nextWorkspace.addedActions.at(-1)?.id;
   }
 
   function handleDeleteAction(actionId: string) {
@@ -351,7 +375,7 @@ export default function ActionPlanExperience({
     } : current);
   }
 
-  if (isGenerating && !plan) {
+  if (isGenerating) {
     const currentQuestion = GENERATION_QUESTIONS[quoteIndex];
 
     return (
@@ -469,7 +493,7 @@ export default function ActionPlanExperience({
           ) : null}
           {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
           {activeTab === "opportunities" ? (
-            <OpportunitiesPanel initialEmail={initialEmail} />
+            <OpportunitiesPanel initialEmail={initialEmail} demoMode={isDemoMode} />
           ) : null}
         </div>
       </main>
@@ -511,13 +535,9 @@ export default function ActionPlanExperience({
               manualMode={isManualActionPlan(plan)}
               onAddAction={handleAddAction}
               onDeleteAction={handleDeleteAction}
-              onGenerateLater={isManualActionPlan(plan) ? () => {
-                setPlan(null);
-                setGeneration(null);
-                setWorkspace(null);
-                setSelectedSystemId("");
-                setActiveTab("plan");
-              } : undefined}
+              onGeneratePlan={isBlankManualActionPlan(plan, workspace)
+                ? (nextSituation) => generatePlanFromSituation(nextSituation, workspace)
+                : undefined}
               commandDemoMode={isDemoMode}
               headerActions={(
                 <ActionPlanUtilityActions
@@ -554,7 +574,7 @@ export default function ActionPlanExperience({
           </div>
           {activeTab === "academy" ? <ActionPlanAcademyPanel /> : null}
           {activeTab === "opportunities" ? (
-            <OpportunitiesPanel initialEmail={initialEmail} />
+            <OpportunitiesPanel initialEmail={initialEmail} demoMode={isDemoMode} />
           ) : null}
         </div>
       </div>

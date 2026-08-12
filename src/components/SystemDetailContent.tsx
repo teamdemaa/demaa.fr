@@ -165,12 +165,14 @@ export default function SystemDetailContent({
           </Heading>
           {headerActions ? <div className="w-full sm:max-w-xs">{headerActions}</div> : null}
         </div>
-        <p className="mt-4 max-w-3xl text-base leading-relaxed text-dema-muted">
-          {intro}
-        </p>
+        {!embedded ? (
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-dema-muted">
+            {intro}
+          </p>
+        ) : null}
       </div>
 
-      <div className="mt-8 flex justify-start sm:mt-9">
+      <div className={`flex justify-start ${embedded ? "mt-1" : "mt-8 sm:mt-9"}`}>
         <div
           className="grid w-full grid-cols-3 border-b border-dema-line"
           role="tablist"

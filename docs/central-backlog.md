@@ -125,6 +125,23 @@ l'ADR 0004 prévaut.
   de réponse, paiement/réservation, confidentialité, durée de conservation et
   limites du service. L'historique Messages, sa persistance et la réponse sous
   24 à 48 h appartiennent déjà à la première version.
+- [ ] Ouvrir un chantier séparé « Abonnements spécialiste » sans modifier
+  l'offre active avant validation complète. Étudier trois niveaux mensuels :
+  `Échanges continus` à `149 EUR HT`, `Pilotage mensuel` à `350 EUR HT` et
+  `Pilotage rapproché` à `550 EUR HT`.
+  - Définir précisément ce qui est inclus, les délais de réponse, le rythme des
+    échanges, les limites raisonnables d'usage et les règles de report.
+  - Auditer la soutenabilité de l'hypothèse interne `50 % Demaa / 50 %
+    réalisation humaine` sur les montants HT réellement encaissés, sans
+    afficher cette répartition au client.
+  - Contractualiser avec chaque spécialiste une rémunération claire couvrant
+    le spécialiste principal et, si nécessaire, les expertises complémentaires.
+  - Dimensionner la capacité humaine, les indisponibilités, les remplacements,
+    la confidentialité et l'escalade avant toute mise en vente.
+  - Implémenter ensuite seulement paiement récurrent, facturation, résiliation,
+    droits d'accès, administration et suivi opérationnel.
+  - Tester sur une cohorte pilote puis mesurer charge réelle, délai de réponse,
+    marge, satisfaction et rétention avant le `GO` public.
 - [x] Conserver avant et après connexion la navigation applicative unique
   `Plan d’action / Système / Académie / Opportunités`. Coaching reste le
   produit accessible par `Parler à un spécialiste`; les libellés humains

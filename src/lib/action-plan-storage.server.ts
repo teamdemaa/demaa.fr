@@ -3,6 +3,7 @@ import "server-only";
 import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import { compatibleActionPlanSchema } from "@/lib/action-plan-contract";
+import { isBlankManualActionPlan } from "@/lib/action-plan-manual";
 import {
   createActionPlanWorkspaceState,
   normalizeActionPlanWorkspaceState,
@@ -361,9 +362,11 @@ export async function updateOwnedActionPlanWorkspace(
 
 export async function updateActionPlanWorkspaceForAccess(input: {
   email?: string | null;
+  generation?: Partial<ActionPlanGenerationMetadata> | null;
   id: string;
   expectedRevision: number;
   plan?: PersistableActionPlan;
+  sourceText?: string | null;
   title?: string;
   temporaryAccessToken?: string | null;
   workspaceState: ActionPlanWorkspaceState;
@@ -391,15 +394,24 @@ export async function updateActionPlanWorkspaceForAccess(input: {
 
     const parsedPlan = compatibleActionPlanSchema.safeParse(data.plan);
     if (!parsedPlan.success) return null;
+    const storedWorkspace = normalizeActionPlanWorkspaceState(
+      parsedPlan.data,
+      data.workspace_state,
+    );
     const nextPlan = input.plan ?? parsedPlan.data;
     const nextTitle = input.title === undefined
       ? normalizeActionPlanTitle(data.title)
       : normalizeActionPlanTitle(input.title);
-    if (
-      input.plan &&
-      (parsedPlan.data.version !== "manual" || input.plan.version !== "manual")
-    ) {
-      throw new InvalidActionPlanMutationError();
+    if (input.plan) {
+      const keepsManualVersion =
+        parsedPlan.data.version === "manual" && input.plan.version === "manual";
+      const generatesFromBlankManual =
+        parsedPlan.data.version === "manual"
+        && input.plan.version === "3"
+        && isBlankManualActionPlan(parsedPlan.data, storedWorkspace);
+      if (!keepsManualVersion && !generatesFromBlankManual) {
+        throw new InvalidActionPlanMutationError();
+      }
     }
     const revision = Number(data.revision);
     if (!Number.isInteger(revision) || revision !== input.expectedRevision) {
@@ -415,7 +427,18 @@ export async function updateActionPlanWorkspaceForAccess(input: {
     transaction.set(
       reference,
       {
-        ...(input.plan ? { plan: nextPlan } : {}),
+        ...(input.plan
+          ? {
+              plan: nextPlan,
+              schema_version: getPersistedSchemaVersion(nextPlan),
+            }
+          : {}),
+        ...(input.sourceText !== undefined
+          ? { source_text: normalizeSourceText(input.sourceText) }
+          : {}),
+        ...(input.generation !== undefined
+          ? { generation: normalizeGenerationMetadata(input.generation) }
+          : {}),
         ...(input.title !== undefined ? { title: nextTitle } : {}),
         workspace_state: normalizedWorkspace,
         revision: nextRevision,

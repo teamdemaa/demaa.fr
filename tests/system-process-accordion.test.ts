@@ -64,7 +64,7 @@ const systeme: SystemeDetail = {
 };
 
 describe("system process accordion", () => {
-  it("renders derived routines with the shared layout, collapsed by default", () => {
+  it("renders derived routines with the first one open by default", () => {
     const html = renderToStaticMarkup(
       createElement(SystemeTabContent, {
         systemName: "Bâtiment",
@@ -72,11 +72,9 @@ describe("system process accordion", () => {
       }),
     );
 
-    expect(html.match(/aria-expanded="false"/g)).toHaveLength(
-      systeme.routines.length,
-    );
-    expect(html).not.toContain('aria-expanded="true"');
-    expect(html).not.toContain("Mettre à jour les indicateurs");
+    expect(html.match(/aria-expanded="false"/g)).toHaveLength(1);
+    expect(html.match(/aria-expanded="true"/g)).toHaveLength(1);
+    expect(html).toContain("Mettre à jour les indicateurs");
     expect(html).not.toContain("Qualifier le besoin");
     expect(html).not.toContain("Dans le système");
     expect(html).not.toContain("Routines essentielles");
@@ -132,12 +130,12 @@ describe("system process accordion", () => {
       }),
     );
 
-    expect(html.match(/aria-expanded="false"/g)).toHaveLength(2);
-    expect(html).not.toContain('aria-expanded="true"');
+    expect(html.match(/aria-expanded="false"/g)).toHaveLength(1);
+    expect(html.match(/aria-expanded="true"/g)).toHaveLength(1);
     expect(html).toContain(">01<");
     expect(html).toContain(">02<");
     expect(html).not.toContain("01.01");
-    expect(html).not.toContain("Qualifier la demande</li>");
+    expect(html).toContain("Qualifier la demande");
     expect(html).not.toContain("Dans le système");
     expect(html).not.toContain("Planning chantier validé");
   });

@@ -55,19 +55,35 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("createManualActionPlan()");
     expect(experience).toContain("createManualActionPlanWorkspaceState()");
     expect(experience).toContain("onAddAction={handleAddAction}");
+    expect(experience).toContain("Si je m’absente un mois, mon entreprise continue-t-elle de fonctionner ?");
+    expect(experience).toContain("Quelles décisions dépendent encore systématiquement de moi ?");
+    expect(experience).toContain("Mon équipe sait-elle quoi faire sans attendre mes instructions ?");
+    expect(experience).toContain("Que pourrais-je supprimer, simplifier, déléguer ou automatiser ?");
+    expect(experience).toContain("Est-ce que la qualité reste constante lorsque je ne supervise pas directement ?");
     expect(experience).toContain("headerActions={(");
     expect(result).toContain('type PlanSection = "tasks" | "strategy"');
     expect(result).toContain('type TaskView = "list" | "kanban"');
     expect(result).toContain("Notes personnelles");
     expect(result).not.toContain("demaa-accordion");
     expect(result).toContain("Ajouter une action");
+    expect(result).not.toContain("Aucune action pour le moment");
+    expect(result).toContain('allActions.length < (manualMode ? 7 : 50)');
+    expect(result).toContain('h-[52px]');
+    expect(result).not.toContain('aria-label="Ajouter une action"\n            />');
+    expect(result).not.toContain("Générer un plan à partir de ma situation");
+    expect(commandBar).toContain(
+      '"Décrivez votre situation pour générer un plan"',
+    );
+    expect(result).toContain('mode={isBlankManualPlan ? "generate" : "edit"}');
+    expect(experience).toContain("createGeneratedActionPlanWorkspaceState");
+    expect(experience).toContain("generatePlanFromSituation");
     expect(result).toContain("Supprimer cette action ?");
     expect(result).toContain("Supprimer l’action");
     expect(result).toContain("function saveDraftsAndClose()");
     expect(result).toContain("onClick={saveDraftsAndClose}");
     expect(result).toContain("Supprimer la tâche");
     expect(result).toContain("workspace.deletedActionIds.includes(action.id)");
-    expect(result).toContain("Générer un plan à partir de ma situation");
+    expect(result).not.toContain("Générer un plan à partir de ma situation");
     expect(result).toContain("<ActionPlanCommandBar");
     expect(commandBar).toContain('fetch("/api/action-plan/command"');
     expect(commandBar).toContain("applyActionPlanCommandOperations");
@@ -111,7 +127,9 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("demoMode={isDemoMode}");
     const systemProcess = source("src/components/SystemeTabContent.tsx");
     expect(systemProcess).toContain('type="checkbox"');
+    expect(systemProcess).toContain("useState(index === 0)");
     expect(systemProcess).not.toContain("line-through");
+    expect(systemPanel).toContain("embedded");
   });
 
   it("keeps the application navigation usable before generation", () => {
@@ -126,6 +144,7 @@ describe("action plan experience architecture", () => {
     expect(guestExperience).toContain('activeTab === "system"');
     expect(guestExperience).toContain('activeTab === "academy"');
     expect(guestExperience).toContain('activeTab === "opportunities"');
+    expect(guestExperience).toContain("demoMode={isDemoMode}");
     expect(guestExperience).toContain("workspace={prePlanWorkspace}");
     expect(guestExperience).toContain("onWorkspaceChange={setPrePlanWorkspace}");
     expect(guestExperience).not.toContain("<ActionPlanSaveControl");

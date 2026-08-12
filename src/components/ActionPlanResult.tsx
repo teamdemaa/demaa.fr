@@ -2,7 +2,9 @@
 
 import {
   CalendarDays,
+  Check,
   CheckCircle2,
+  ChevronDown,
   ChevronRight,
   Circle,
   CircleDot,
@@ -17,10 +19,12 @@ import {
   type Dispatch,
   type ReactNode,
   type SetStateAction,
+  useEffect,
   useRef,
   useState,
 } from "react";
 import ActionPlanCommandBar from "@/components/ActionPlanCommandBar";
+import { isBlankManualActionPlan } from "@/lib/action-plan-manual";
 import type {
   PersistableActionPlan,
 } from "@/lib/action-plan-contract";
@@ -38,6 +42,102 @@ import {
 type PlanSection = "tasks" | "strategy";
 type TaskView = "list" | "kanban";
 type TaskFilter = "week" | "all" | "overdue" | "done";
+
+const taskFilterLabels: Record<TaskFilter, string> = {
+  week: "Cette semaine",
+  all: "Toutes les actions",
+  overdue: "En retard",
+  done: "Terminées",
+};
+
+function TaskFilterMenu({
+  value,
+  onChange,
+}: {
+  value: TaskFilter;
+  onChange: (value: TaskFilter) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    function closeOnOutsidePointer(event: PointerEvent) {
+      if (
+        event.target instanceof Node &&
+        !containerRef.current?.contains(event.target)
+      ) {
+        setOpen(false);
+      }
+    }
+
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      buttonRef.current?.focus();
+    }
+
+    document.addEventListener("pointerdown", closeOnOutsidePointer);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeOnOutsidePointer);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open]);
+
+  return (
+    <div ref={containerRef} className="relative min-w-0 flex-1 sm:flex-none">
+      <button
+        ref={buttonRef}
+        type="button"
+        onClick={() => setOpen((current) => !current)}
+        className="inline-flex min-h-10 w-full min-w-0 items-center justify-between gap-3 rounded-full border border-dema-line bg-dema-paper px-4 text-xs text-brand-blue transition hover:border-dema-forest/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 sm:w-40"
+        aria-haspopup="menu"
+        aria-expanded={open}
+      >
+        <span className="truncate">{taskFilterLabels[value]}</span>
+        <ChevronDown
+          className={`h-4 w-4 shrink-0 text-dema-forest transition-transform ${open ? "rotate-180" : ""}`}
+          aria-hidden="true"
+        />
+      </button>
+      {open ? (
+        <div
+          role="menu"
+          aria-label="Filtrer les actions"
+          className="absolute left-0 top-full z-50 mt-2 min-w-full overflow-hidden rounded-2xl border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
+        >
+          {(Object.keys(taskFilterLabels) as TaskFilter[]).map((option) => (
+            <button
+              key={option}
+              type="button"
+              role="menuitemradio"
+              aria-checked={value === option}
+              onClick={() => {
+                onChange(option);
+                setOpen(false);
+                buttonRef.current?.focus();
+              }}
+              className={`flex w-full items-center justify-between gap-4 rounded-xl px-3 py-2 text-left text-xs transition ${
+                value === option
+                  ? "bg-dema-sage text-dema-forest"
+                  : "text-brand-blue hover:bg-dema-soft"
+              }`}
+            >
+              <span className="whitespace-nowrap">{taskFilterLabels[option]}</span>
+              <Check
+                className={`h-3.5 w-3.5 ${value === option ? "opacity-100" : "opacity-0"}`}
+                aria-hidden="true"
+              />
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
 const statusMeta: Record<
   ActionPlanTaskStatus,
@@ -499,7 +599,7 @@ function StrategyPanel({
             <div className="mt-4 space-y-4">
               {section.fields.map((field, index) => (
                 <div key={field.key}>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-blue/70">{field.label}</p>
+                  <p className="text-sm font-medium text-brand-blue/70">{field.label}</p>
                   <textarea
                     value={answers[index]}
                     onChange={(event) => {
@@ -538,7 +638,7 @@ export default function ActionPlanResult({
   manualMode = false,
   onAddAction,
   onDeleteAction,
-  onGenerateLater,
+  onGeneratePlan,
   commandDemoMode = false,
 }: {
   plan: PersistableActionPlan;
@@ -546,9 +646,9 @@ export default function ActionPlanResult({
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   headerActions?: ReactNode;
   manualMode?: boolean;
-  onAddAction?: () => void;
+  onAddAction?: () => string | undefined;
   onDeleteAction: (actionId: string) => void;
-  onGenerateLater?: () => void;
+  onGeneratePlan?: (situation: string) => Promise<void>;
   commandDemoMode?: boolean;
 }) {
   const [section, setSection] = useState<PlanSection>("tasks");
@@ -576,7 +676,15 @@ export default function ActionPlanResult({
       }
       return !dueDate || dueDate <= endOfWeek;
     });
-  const selectedAction = visibleActions.find((action) => action.id === selectedActionId) || null;
+  const selectedAction = allActions
+    .filter((action) => !workspace.deletedActionIds.includes(action.id))
+    .find((action) => action.id === selectedActionId) || null;
+  const isBlankManualPlan = isBlankManualActionPlan(plan, workspace);
+
+  function addAndOpenAction() {
+    const actionId = onAddAction?.();
+    if (actionId) setSelectedActionId(actionId);
+  }
 
   function updateStatus(actionId: string, status: ActionPlanTaskStatus) {
     onWorkspaceChange((current) => ({
@@ -589,10 +697,10 @@ export default function ActionPlanResult({
   }
 
   return (
-    <div>
+    <div className="pb-24 xl:pb-20">
       <div className="mb-7 flex items-end justify-between gap-1 border-b border-dema-line sm:gap-3">
         <div className="flex items-center gap-1" role="tablist" aria-label="Plan d’action">
-          <button type="button" role="tab" aria-selected={section === "tasks"} onClick={() => setSection("tasks")} className={`-mb-px min-h-12 border-b-2 px-2.5 text-xs font-medium sm:px-4 sm:text-sm ${section === "tasks" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>À faire</button>
+          <button type="button" role="tab" aria-selected={section === "tasks"} onClick={() => setSection("tasks")} className={`-mb-px min-h-12 border-b-2 px-2.5 text-xs font-medium sm:px-4 sm:text-sm ${section === "tasks" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>Actions</button>
           <button type="button" role="tab" aria-selected={section === "strategy"} onClick={() => setSection("strategy")} className={`-mb-px min-h-12 border-b-2 px-2.5 text-xs font-medium sm:px-4 sm:text-sm ${section === "strategy" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>Stratégie</button>
         </div>
       </div>
@@ -600,45 +708,25 @@ export default function ActionPlanResult({
       {section === "tasks" ? (
         <section aria-labelledby="tasks-title">
           <h2 id="tasks-title" className="sr-only">Actions du plan</h2>
-          <div className="flex flex-wrap items-center gap-2">
-            {onAddAction ? (
-              <button type="button" onClick={onAddAction} disabled={allActions.length >= 50} className="demaa-secondary-button min-h-10 gap-2 px-4 text-xs disabled:cursor-not-allowed disabled:opacity-45">
-                <Plus className="h-4 w-4" aria-hidden="true" /> Ajouter une action
+          <div className="flex min-w-0 items-center gap-2">
+            <div className="flex min-w-0 flex-1 items-center gap-2">
+              <TaskFilterMenu value={filter} onChange={setFilter} />
+              <button
+                type="button"
+                onClick={() => setView((current) => current === "list" ? "kanban" : "list")}
+                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-forest transition hover:border-dema-forest/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
+                aria-label={view === "list" ? "Afficher en Kanban" : "Afficher en liste"}
+                title={view === "list" ? "Afficher en Kanban" : "Afficher en liste"}
+              >
+                {view === "list" ? (
+                  <Columns3 className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <LayoutList className="h-4 w-4" aria-hidden="true" />
+                )}
               </button>
-            ) : null}
-            <label className="sr-only" htmlFor="action-plan-filter">Filtrer les actions</label>
-            <select
-              id="action-plan-filter"
-              value={filter}
-              onChange={(event) => setFilter(event.target.value as TaskFilter)}
-              className="min-h-10 rounded-full border border-dema-line bg-dema-paper px-4 text-xs text-brand-blue outline-none focus:border-dema-forest/35"
-            >
-              <option value="week">Cette semaine</option>
-              <option value="all">Toutes les actions</option>
-              <option value="overdue">En retard</option>
-              <option value="done">Terminées</option>
-            </select>
-            <div className="inline-flex w-fit rounded-full border border-dema-line bg-dema-paper p-1" aria-label="Vue des actions">
-              <button type="button" onClick={() => setView("list")} aria-pressed={view === "list"} className={`inline-flex min-h-9 items-center gap-1.5 rounded-full px-3 text-xs font-medium ${view === "list" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><LayoutList className="h-4 w-4" aria-hidden="true" /> Liste</button>
-              <button type="button" onClick={() => setView("kanban")} aria-pressed={view === "kanban"} className={`inline-flex min-h-9 items-center gap-1.5 rounded-full px-3 text-xs font-medium ${view === "kanban" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><Columns3 className="h-4 w-4" aria-hidden="true" /> Kanban</button>
             </div>
-            {headerActions}
+            {headerActions ? <div className="flex shrink-0 items-center justify-end">{headerActions}</div> : null}
           </div>
-
-          {manualMode && allActions.length === 0 ? (
-            <div className="mt-6 rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper px-6 py-10 text-center">
-              {onAddAction ? (
-                <button type="button" onClick={onAddAction} className="demaa-secondary-button min-h-11 gap-2 px-5">
-                  <Plus className="h-4 w-4" aria-hidden="true" /> Ajouter une action
-                </button>
-              ) : null}
-              {onGenerateLater ? (
-                <button type="button" onClick={onGenerateLater} className="mx-auto mt-4 block text-sm text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest">
-                  Générer un plan à partir de ma situation
-                </button>
-              ) : null}
-            </div>
-          ) : null}
 
           {visibleActions.length > 0 && view === "list" ? (
             <div className="mt-6 overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper">
@@ -683,12 +771,16 @@ export default function ActionPlanResult({
             </div>
           ) : null}
 
-          {manualMode && visibleActions.length > 0 && onGenerateLater ? (
-            <div className="mt-5 text-center">
-              <button type="button" onClick={onGenerateLater} className="text-sm text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest">
-                Générer un plan à partir de ma situation
-              </button>
-            </div>
+          {onAddAction && allActions.length < (manualMode ? 7 : 50) ? (
+            <button
+              type="button"
+              onClick={addAndOpenAction}
+              className="mt-3 flex h-[52px] w-full items-center gap-2 rounded-[1.1rem] border border-dashed border-dema-line bg-dema-soft/35 px-5 text-left text-sm text-dema-muted transition hover:border-dema-forest/30 hover:bg-dema-soft/60 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
+              aria-label="Ajouter une action"
+            >
+              <Plus className="h-4 w-4" aria-hidden="true" />
+              Ajouter une action
+            </button>
           ) : null}
         </section>
       ) : (
@@ -702,6 +794,8 @@ export default function ActionPlanResult({
         workspace={workspace}
         onWorkspaceChange={onWorkspaceChange}
         demoMode={commandDemoMode}
+        mode={isBlankManualPlan ? "generate" : "edit"}
+        onGeneratePlan={isBlankManualPlan ? onGeneratePlan : undefined}
       />
 
       {selectedAction ? (

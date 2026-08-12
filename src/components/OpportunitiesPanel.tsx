@@ -13,8 +13,10 @@ type OpportunitiesPayload = {
 
 export default function OpportunitiesPanel({
   initialEmail = "",
+  demoMode = false,
 }: {
   initialEmail?: string;
+  demoMode?: boolean;
 }) {
   const [payload, setPayload] = useState<OpportunitiesPayload | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -24,10 +26,13 @@ export default function OpportunitiesPanel({
 
     async function load() {
       try {
-        const response = await fetch("/api/opportunities", {
-          cache: "no-store",
-          signal: controller.signal,
-        });
+        const response = await fetch(
+          demoMode ? "/api/opportunities?demo=1" : "/api/opportunities",
+          {
+            cache: "no-store",
+            signal: controller.signal,
+          },
+        );
         const nextPayload = await response.json().catch(() => null) as
           | OpportunitiesPayload
           | null;
@@ -45,7 +50,7 @@ export default function OpportunitiesPanel({
 
     void load();
     return () => controller.abort();
-  }, []);
+  }, [demoMode]);
 
   return (
     <section aria-labelledby="opportunities-panel-title">

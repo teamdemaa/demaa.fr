@@ -49,6 +49,20 @@ function parseOpportunitySnapshot() {
   );
 }
 
+export function getPublicExpertiseSnapshot() {
+  return parseExpertiseSnapshot().filter(
+    (entry) => entry.visibility === "public",
+  );
+}
+
+export function getPublicOpportunitySnapshot(now = new Date()) {
+  return parseOpportunitySnapshot()
+    .filter((opportunity) => isPublicOpenOpportunity(opportunity, now))
+    .sort((left, right) =>
+      Date.parse(right.publishedAt ?? "") - Date.parse(left.publishedAt ?? "")
+    );
+}
+
 async function loadExpertisesFromFirestore() {
   const snapshot = await getAdminFirestore()
     .collection(EXPERTISE_CATALOG_COLLECTION)

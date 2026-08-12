@@ -25,6 +25,8 @@ describe("action plan persistence boundaries", () => {
     expect(updateRoute).toContain("enforceSameOrigin(request)");
     expect(updateRoute).toContain("expectedRevision");
     expect(updateRoute).toContain("revision_conflict");
+    expect(updateRoute).toContain("sourceText: parsed.data.sourceText");
+    expect(updateRoute).toContain("generation: parsed.data.generation");
   });
 
   it("keeps the temporary plan credential in an HttpOnly cookie", () => {

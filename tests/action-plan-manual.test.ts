@@ -8,6 +8,7 @@ import {
   createManualAction,
   createManualActionPlan,
   createManualActionPlanWorkspaceState,
+  isBlankManualActionPlan,
   isManualActionPlan,
 } from "@/lib/action-plan-manual";
 import { actionPlanWorkspaceStateSchema } from "@/lib/action-plan-workspace";
@@ -55,6 +56,31 @@ describe("manual action plan", () => {
     expect(compatibleActionPlanSchema.safeParse(plan).success).toBe(true);
     expect(actionPlanWorkspaceStateSchema.safeParse(workspace).success).toBe(true);
     expect(workspace.selectedSystemId).toBeNull();
+    expect(isBlankManualActionPlan(plan, workspace)).toBe(true);
+  });
+
+  it("distinguishes a pristine manual plan from user-authored content", () => {
+    const blankPlan = createManualActionPlan();
+    const blankWorkspace = createManualActionPlanWorkspaceState();
+    const planWithAction = {
+      ...blankPlan,
+      weeklyActions: [createManualAction(1)],
+    };
+    const workspaceWithStrategy = {
+      ...blankWorkspace,
+      strategyOverrides: {
+        alignement: { answerOne: "Construire une entreprise autonome." },
+      },
+    };
+    const workspaceWithSystem = {
+      ...blankWorkspace,
+      selectedSystemId: "restaurant" as const,
+      savedSystemIds: ["restaurant" as const],
+    };
+
+    expect(isBlankManualActionPlan(planWithAction, blankWorkspace)).toBe(false);
+    expect(isBlankManualActionPlan(blankPlan, workspaceWithStrategy)).toBe(false);
+    expect(isBlankManualActionPlan(blankPlan, workspaceWithSystem)).toBe(true);
   });
 
   it("creates editable actions with consecutive identifiers", () => {
@@ -88,6 +114,7 @@ describe("manual action plan", () => {
 
     const next = addActionToManualPlan(plan, workspace);
 
+    expect(next?.actionId).toBe("action-1");
     expect(next?.plan.weeklyActions).toHaveLength(2);
     expect(next?.plan.weeklyActions[0]?.title).toBe("Nouvelle action");
     expect(next?.workspace.deletedActionIds).toEqual([]);

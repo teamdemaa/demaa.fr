@@ -13,14 +13,18 @@ import {
 } from "@/components/SavedActionPlanControls";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
-import type { PersistableActionPlan } from "@/lib/action-plan-contract";
+import type { ActionPlan, PersistableActionPlan } from "@/lib/action-plan-contract";
+import type { AiGenerationMetadata } from "@/lib/ai-generation-metadata";
+import { toPersistedAiGenerationMetadata } from "@/lib/ai-generation-metadata";
 import {
   addActionToManualPlan,
+  isBlankManualActionPlan,
   isManualActionPlan,
 } from "@/lib/action-plan-manual";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 import {
   addActionPlanWorkspaceAction,
+  createGeneratedActionPlanWorkspaceState,
   type ActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
 
@@ -55,6 +59,7 @@ export default function SavedActionPlanDetail({
   const confirmedTitleRef = useRef(initialTitle);
   const titleInputRef = useRef<HTMLInputElement>(null);
   const firstRenderRef = useRef(true);
+  const skipNextAutosaveRef = useRef(false);
   const pendingSaveRef = useRef<{
     plan: PersistableActionPlan;
     title: string;
@@ -122,6 +127,10 @@ export default function SavedActionPlanDetail({
       firstRenderRef.current = false;
       return;
     }
+    if (skipNextAutosaveRef.current) {
+      skipNextAutosaveRef.current = false;
+      return;
+    }
 
     pendingSaveRef.current = {
       plan: currentPlan,
@@ -165,20 +174,22 @@ export default function SavedActionPlanDetail({
     };
   }, [flushWorkspaceSave]);
 
-  function addManualAction() {
-    if (!isManualActionPlan(currentPlan)) return;
+  function addManualAction(): string | undefined {
+    if (!isManualActionPlan(currentPlan)) return undefined;
     const next = addActionToManualPlan(currentPlan, workspace);
-    if (!next) return;
+    if (!next) return undefined;
     setCurrentPlan(next.plan);
     setWorkspace(next.workspace);
+    return next.actionId;
   }
 
-  function addAction() {
+  function addAction(): string | undefined {
     if (isManualActionPlan(currentPlan)) {
-      addManualAction();
-      return;
+      return addManualAction();
     }
-    setWorkspace((current) => addActionPlanWorkspaceAction(current));
+    const nextWorkspace = addActionPlanWorkspaceAction(workspace);
+    setWorkspace(nextWorkspace);
+    return nextWorkspace.addedActions.at(-1)?.id;
   }
 
   function deleteAction(actionId: string) {
@@ -231,6 +242,69 @@ export default function SavedActionPlanDetail({
     }
   }
 
+  async function generateBlankPlan(sourceText: string) {
+    if (!isBlankManualActionPlan(currentPlan, workspace)) {
+      throw new Error("Ce plan contient déjà des informations à conserver.");
+    }
+
+    const existingSaved = await flushWorkspaceSave();
+    if (!existingSaved) {
+      throw new Error("Enregistrez les dernières modifications avant de générer le plan.");
+    }
+
+    const generationResponse = await fetch("/api/action-plan/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ situation: sourceText }),
+    });
+    const generationBody = (await generationResponse.json().catch(() => null)) as
+      | { plan?: ActionPlan; generation?: AiGenerationMetadata; error?: string }
+      | null;
+    if (!generationResponse.ok || !generationBody?.plan) {
+      throw new Error(
+        generationBody?.error || "Le plan n’a pas pu être généré pour le moment.",
+      );
+    }
+
+    const nextWorkspace = createGeneratedActionPlanWorkspaceState(
+      generationBody.plan,
+      workspace,
+    );
+    const updateResponse = await fetch(
+      `/api/action-plans/${encodeURIComponent(planId)}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          expectedRevision: revisionRef.current,
+          generation: toPersistedAiGenerationMetadata(
+            generationBody.generation ?? null,
+          ),
+          plan: generationBody.plan,
+          sourceText,
+          title: planTitle.trim() || confirmedTitleRef.current,
+          workspaceState: nextWorkspace,
+        }),
+      },
+    );
+    const updateBody = (await updateResponse.json().catch(() => null)) as
+      | { revision?: number; title?: string; error?: string }
+      | null;
+    if (!updateResponse.ok || !updateBody?.revision) {
+      throw new Error(
+        updateBody?.error || "Le plan généré n’a pas pu être enregistré.",
+      );
+    }
+
+    revisionRef.current = updateBody.revision;
+    confirmedTitleRef.current = updateBody.title || planTitle;
+    skipNextAutosaveRef.current = true;
+    setCurrentPlan(generationBody.plan);
+    setWorkspace(nextWorkspace);
+    setSaveState("saved");
+    setSaveError(null);
+  }
+
   return (
     <div className="contents">
       <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
@@ -265,6 +339,9 @@ export default function SavedActionPlanDetail({
             manualMode={isManualActionPlan(currentPlan)}
             onAddAction={addAction}
             onDeleteAction={deleteAction}
+            onGeneratePlan={isBlankManualActionPlan(currentPlan, workspace)
+              ? generateBlankPlan
+              : undefined}
             headerActions={(
               <SavedActionPlanMenu
                 deleting={isDeleting}

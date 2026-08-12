@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import {
+  getPublicExpertiseSnapshot,
   getPublicExpertises,
+  getPublicOpportunitySnapshot,
   getPublicOpenOpportunities,
 } from "@/lib/provider-network.server";
 import { enforceAllowedHost } from "@/lib/request-guard";
@@ -11,10 +13,15 @@ export async function GET(request: Request) {
   const blockedHost = enforceAllowedHost(request);
   if (blockedHost) return blockedHost;
 
-  const [allExpertises, opportunities] = await Promise.all([
-    getPublicExpertises(),
-    getPublicOpenOpportunities(),
-  ]);
+  const isDemo =
+    process.env.NODE_ENV !== "production" &&
+    new URL(request.url).searchParams.get("demo") === "1";
+  const [allExpertises, opportunities] = isDemo
+    ? [getPublicExpertiseSnapshot(), getPublicOpportunitySnapshot()]
+    : await Promise.all([
+        getPublicExpertises(),
+        getPublicOpenOpportunities(),
+      ]);
   const referencedExpertiseIds = new Set(
     opportunities.flatMap((opportunity) =>
       opportunity.expertiseId ? [opportunity.expertiseId] : []
@@ -26,5 +33,6 @@ export async function GET(request: Request) {
 
   const response = NextResponse.json({ expertises, opportunities });
   response.headers.set("Cache-Control", "private, no-store, max-age=0");
+  if (isDemo) response.headers.set("X-Demaa-Data-Source", "snapshot-demo");
   return response;
 }

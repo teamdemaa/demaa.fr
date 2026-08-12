@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { LegacyV2ActionPlan } from "@/lib/action-plan-contract";
+import { ACTION_PLAN_DEMO } from "@/lib/action-plan-demo";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import { createActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 import { createManualAction, createManualActionPlan } from "@/lib/action-plan-manual";
@@ -491,6 +492,67 @@ describe("action plan Firebase persistence", () => {
         expectedRevision: created.revision,
         plan: generated,
         workspaceState: createActionPlanWorkspaceState(generated),
+      }),
+    ).rejects.toBeInstanceOf(InvalidActionPlanMutationError);
+  });
+
+  it("turns a pristine saved manual plan into V3 without changing its identity", async () => {
+    const manualPlan = createManualActionPlan();
+    const created = await createOwnedActionPlan("dirigeant@example.com", {
+      plan: manualPlan,
+    });
+    const generatedWorkspace = createActionPlanWorkspaceState(ACTION_PLAN_DEMO);
+    generatedWorkspace.selectedSystemId = systemId;
+    generatedWorkspace.savedSystemIds = [systemId];
+
+    const updated = await updateActionPlanWorkspaceForAccess({
+      email: "dirigeant@example.com",
+      id: created.id,
+      expectedRevision: created.revision,
+      plan: ACTION_PLAN_DEMO,
+      sourceText: "Je veux rendre mon entreprise plus autonome.",
+      generation: {
+        model: "openai/gpt-5.6-terra",
+        inputTokens: 800,
+        outputTokens: 1_400,
+        totalTokens: 2_200,
+      },
+      workspaceState: generatedWorkspace,
+    });
+
+    const reopened = await getActionPlanForAccess({
+      email: "dirigeant@example.com",
+      id: created.id,
+    });
+    expect(updated?.revision).toBe(created.revision + 1);
+    expect(reopened?.id).toBe(created.id);
+    expect(reopened?.plan.version).toBe("3");
+    expect(reopened?.sourceText).toBe(
+      "Je veux rendre mon entreprise plus autonome.",
+    );
+    expect(reopened?.generation).toMatchObject({
+      model: "openai/gpt-5.6-terra",
+      inputTokens: 800,
+      outputTokens: 1_400,
+    });
+  });
+
+  it("refuses to overwrite a manual plan once the user has started it", async () => {
+    const startedPlan = {
+      ...createManualActionPlan(),
+      weeklyActions: [createManualAction(1)],
+    };
+    const created = await createOwnedActionPlan("dirigeant@example.com", {
+      plan: startedPlan,
+    });
+
+    await expect(
+      updateActionPlanWorkspaceForAccess({
+        email: "dirigeant@example.com",
+        id: created.id,
+        expectedRevision: created.revision,
+        plan: ACTION_PLAN_DEMO,
+        workspaceState: createActionPlanWorkspaceState(ACTION_PLAN_DEMO),
       }),
     ).rejects.toBeInstanceOf(InvalidActionPlanMutationError);
   });

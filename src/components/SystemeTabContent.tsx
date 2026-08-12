@@ -22,7 +22,7 @@ function RoutineItem({
   checkedStepIds?: ReadonlySet<string>;
   onToggleStep?: (stepId: string) => void;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(index === 0);
   const panelId = `system-routine-detail-${index}`;
   const routineNumber = String(index + 1).padStart(2, "0");
 
