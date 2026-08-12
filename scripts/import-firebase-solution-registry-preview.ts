@@ -18,7 +18,15 @@ import {
 } from "@/lib/firebase-solution-registry-firestore-plan";
 import { resolveFirebaseSolutionRegistryImportTarget } from "@/lib/firebase-solution-registry-import-gate";
 
-const SOLUTION_SECTIONS = ["software", "services", "providers", "models", "networks"] as const;
+const SOLUTION_SECTIONS = [
+  "software",
+  "services",
+  "providers",
+  "financing",
+  "aids",
+  "models",
+  "networks",
+] as const;
 
 type FirestoreValue =
   | { nullValue: null }

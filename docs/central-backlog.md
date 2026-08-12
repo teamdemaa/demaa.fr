@@ -58,7 +58,7 @@ l'ADR 0004 prévaut.
   locale. L'internationalisation reste différée.
 - La navigation applicative contient `Plan d'action`, `Système`, `Académie` et
   `Opportunités`. Le produit Coaching est accessible par l'action
-  `Parler à un spécialiste` et conserve les onglets Messages puis Sessions.
+  `Parler à un spécialiste` et conserve les onglets Messages puis Formules.
 - Une fiche Système contient `Process`, `Solutions` et `Ressources`.
 - Six Services canoniques existent : Automatisation des processus,
   Expert-comptable, Formalités juridiques, Sous-traitance de formalités
@@ -93,10 +93,12 @@ l'ADR 0004 prévaut.
   Systèmes, puis sauvegarde Firebase. L'ADR 0008 et
   `docs/action-plan-generator-product-contract.md` sont les références ;
   `/systemes` et `/academie` publics restent inchangés.
-- [x] Livrer la première version Coaching dans l’application : Messages
-  asynchrones ouverts par défaut, Sessions à 150 EUR HT et parcours à
-  400 EUR HT, historique persistant et demandes coordonnées manuellement.
-  L'ancien échange préalable gratuit de 15 minutes est retiré.
+- [x] Livrer la première version de `Parler à un spécialiste` : Messages
+  asynchrones ouverts par défaut, historique persistant, puis Formules avec
+  `Échanges avec Demaa` à 149 EUR HT/mois et une carte `Pilotage mensuel` dont
+  le sélecteur passe de 1 session à 350 EUR à 2 sessions à 550 EUR HT/mois.
+  Les CTA transmettent une intention ; aucun abonnement ou paiement n'est
+  déclenché dans cette version.
 - [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
   `Plan d’action / Système / Académie / Opportunités`, Coaching accessible par
   `Parler à un spécialiste`, Opportunités au sens large et sauvegarde invitée
@@ -125,10 +127,11 @@ l'ADR 0004 prévaut.
   de réponse, paiement/réservation, confidentialité, durée de conservation et
   limites du service. L'historique Messages, sa persistance et la réponse sous
   24 à 48 h appartiennent déjà à la première version.
-- [ ] Ouvrir un chantier séparé « Abonnements spécialiste » sans modifier
-  l'offre active avant validation complète. Étudier trois niveaux mensuels :
-  `Échanges continus` à `149 EUR HT`, `Pilotage mensuel` à `350 EUR HT` et
-  `Pilotage rapproché` à `550 EUR HT`.
+- [ ] Ouvrir un chantier séparé « Paiement des formules spécialiste » sans
+  modifier l'interface validée. Le contrat visible comporte `Échanges avec
+  Demaa` à 149 EUR HT/mois et une carte `Pilotage mensuel` avec sélecteur
+  1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois ; il n'existe pas de
+  troisième carte `Pilotage rapproché`.
   - Définir précisément ce qui est inclus, les délais de réponse, le rythme des
     échanges, les limites raisonnables d'usage et les règles de report.
   - Auditer la soutenabilité de l'hypothèse interne `50 % Demaa / 50 %

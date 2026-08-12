@@ -116,7 +116,6 @@ describe("canonical Services composition in every system", () => {
   it("applies the explicit eligibility matrix to regulated professions", () => {
     expect(getCanonicalServiceSlugsForSystem("restaurant")).toEqual([
       "automatisation-processus",
-      "expert-comptable",
       "formalites-juridiques",
       "marketing-vente",
       "assistance-facturation",
@@ -128,8 +127,8 @@ describe("canonical Services composition in every system", () => {
       "marketing-vente",
       "assistance-facturation",
     ]);
-    expect(getCanonicalServiceSlugsForSystem("cabinet-davocat")).toHaveLength(6);
-    expect(getCanonicalServiceSlugsForSystem("notaire")).toHaveLength(6);
+    expect(getCanonicalServiceSlugsForSystem("cabinet-davocat")).toHaveLength(5);
+    expect(getCanonicalServiceSlugsForSystem("notaire")).toHaveLength(5);
   });
 
   it("places Services between Outils and Fournisseurs without mutating registry data", () => {
@@ -143,7 +142,13 @@ describe("canonical Services composition in every system", () => {
       "software",
       "services",
       "providers",
+      "financing",
+      "aids",
     ]);
+    expect(sections.find(({ section }) => section === "financing")?.placements)
+      .toHaveLength(7);
+    expect(sections.find(({ section }) => section === "aids")?.placements.length)
+      .toBeGreaterThan(20);
     expect(sectionsWithLegacyReferral).toEqual(inputSnapshot);
   });
 

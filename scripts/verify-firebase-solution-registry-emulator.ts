@@ -17,7 +17,15 @@ import { buildPublishedSupplierExpansionRevision } from "@/lib/firebase-solution
 import { buildFirestoreSolutionRegistryImportPlan } from "@/lib/firebase-solution-registry-firestore-plan";
 
 const EMULATOR_PROJECT_ID = "demo-demaa-solutions";
-const SOLUTION_SECTIONS = ["software", "services", "providers", "models", "networks"] as const;
+const SOLUTION_SECTIONS = [
+  "software",
+  "services",
+  "providers",
+  "financing",
+  "aids",
+  "models",
+  "networks",
+] as const;
 
 if (!process.env.FIRESTORE_EMULATOR_HOST) {
   throw new Error("FIRESTORE_EMULATOR_HOST is required; remote Firestore is forbidden.");

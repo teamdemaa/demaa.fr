@@ -29,7 +29,17 @@ type CoachingRequestBody = {
   website?: unknown;
 };
 
-const OFFERS = new Set(["session", "parcours"]);
+const OFFERS = {
+  echanges: { label: "Échanges avec Demaa", price: "149 € HT / mois" },
+  pilotage_1: { label: "Pilotage mensuel · 1 session / mois", price: "350 € HT / mois" },
+  pilotage_2: { label: "Pilotage mensuel · 2 sessions / mois", price: "550 € HT / mois" },
+} as const;
+
+type OfferId = keyof typeof OFFERS;
+
+function isOfferId(value: string): value is OfferId {
+  return value in OFFERS;
+}
 
 function isValidPhone(value: string) {
   return /^\+?[0-9\s().-]+$/.test(value) && value.replace(/\D/g, "").length >= 8;
@@ -95,9 +105,10 @@ export async function POST(request: Request) {
     const idempotencyKey = normalizeIdempotencyKey(data?.idempotencyKey);
 
     const isMessage = requestKind === "message";
+    const isFormula = requestKind === "formula";
     const valid = isMessage
       ? message.length >= 2
-      : Boolean(company && isValidPhone(phone) && OFFERS.has(offer));
+      : Boolean(isFormula && company && isValidPhone(phone) && isOfferId(offer));
 
     if (!valid || !idempotencyKey) {
       return NextResponse.json(
@@ -107,7 +118,7 @@ export async function POST(request: Request) {
     }
 
     const context = await resolveLeadContext({
-      source: isMessage ? "Coaching - Messages" : "Coaching - Sessions",
+      source: isMessage ? "Spécialiste - Messages" : "Spécialiste - Formules",
       sourceUrl: request.headers.get("referer"),
     });
     if (!context) {
@@ -135,12 +146,13 @@ export async function POST(request: Request) {
       fields: isMessage
         ? [{ label: "Message", value: message }]
         : [
-            { label: "Formule", value: offer },
+            { label: "Formule", value: isOfferId(offer) ? OFFERS[offer].label : offer },
+            ...(isOfferId(offer) ? [{ label: "Tarif affiché", value: OFFERS[offer].price }] : []),
             ...(message ? [{ label: "Situation", value: message }] : []),
           ],
       idempotencyKey,
-      requestType: isMessage ? "coaching_message" : "coaching_session_request",
-      title: isMessage ? "Nouveau message Coaching" : "Nouvelle demande Coaching",
+      requestType: isMessage ? "coaching_message" : "specialist_formula_interest",
+      title: isMessage ? "Nouveau message spécialiste" : "Nouvelle demande de formule spécialiste",
     });
 
     return NextResponse.json(

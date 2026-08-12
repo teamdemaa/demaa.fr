@@ -38,11 +38,25 @@ sont pas copiées 460 fois dans Firebase.
 1. Outils ;
 2. Services ;
 3. Fournisseurs ;
-4. Réseaux professionnels.
+4. Financement ;
+5. Aides et subventions ;
+6. Réseaux professionnels.
 
 Les sections Fournisseurs et Réseaux restent conditionnelles à des placements
 Firebase réellement pertinents. Aucun fournisseur transversal n'est injecté
 aux 115 systèmes par défaut.
+
+Les catalogues canoniques Financement et Aides sont composés au rendu dans le
+même contrat Solutions et restent sélectionnables avec les autres placements ;
+ils ne créent ni seconde base de données ni copie par Système. L'interface ne
+limite pas arbitrairement le nombre de recommandations visibles ou sélectionnées.
+La pertinence éditoriale reste toutefois contrôlée : aucun acteur non relu n'est
+injecté universellement.
+
+Formation, annuaire de recrutement et prestation Expert-comptable ne sont pas
+ajoutés à ces recommandations Solutions. Le service Expert-comptable conserve
+sa route publique lorsqu'elle est applicable, mais n'est pas composé dans les
+fiches Système.
 
 ### Ressources des Systèmes
 

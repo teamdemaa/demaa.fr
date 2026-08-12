@@ -377,9 +377,12 @@ sont implémentés derrière des limites conservatrices réversibles.
 
 ## Extensions explicitement différées
 
-La première version de Coaching fait partie de l'application conformément à
-l'ADR 0009 : Messages ouverts par défaut, Sessions et demandes coordonnées
-manuellement. Restent
+La première version de l'accès à un spécialiste fait partie de l'application
+conformément à l'ADR 0009 : Messages ouverts par défaut, puis Formules. Les
+formules visibles sont Échanges avec Demaa à 149 EUR HT/mois et une seule carte
+Pilotage mensuel dont le sélecteur affiche 1 session à 350 EUR ou 2 sessions à
+550 EUR HT/mois. Les CTA transmettent une intention sans déclencher de paiement.
+Restent
 au backlog, sans modifier cette première version :
 
 - une nouvelle frontière entre phase gratuite et phase payante ;

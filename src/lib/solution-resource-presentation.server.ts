@@ -84,6 +84,8 @@ const DEFAULT_PRESENTATIONS: Readonly<Record<SolutionResource["resourceType"], R
   tool: { ctaLabel: "Voir l’outil", displayCategory: "Outil" },
   software: { ctaLabel: "Voir l’outil", displayCategory: "Logiciel" },
   provider: { ctaLabel: "Voir le fournisseur", displayCategory: "Fournisseur" },
+  financing: { ctaLabel: "Voir le financement", displayCategory: "Financement" },
+  aid: { ctaLabel: "Voir l’aide", displayCategory: "Aide et subvention" },
   directory: { ctaLabel: "Découvrir l’organisation", displayCategory: "Organisation professionnelle" },
   expertise: { ctaLabel: "Décrire mon besoin", displayCategory: "Prestation" },
 };

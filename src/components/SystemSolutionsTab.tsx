@@ -3,11 +3,13 @@
 import Link from "next/link";
 import {
   BriefcaseBusiness,
+  BadgeEuro,
   Building2,
   ChevronLeft,
   ChevronRight,
   ExternalLink,
   Gauge,
+  Landmark,
   Bookmark,
   BookmarkCheck,
   Wrench,
@@ -38,6 +40,8 @@ export const SOLUTION_UI_WORKING_LABELS: Readonly<
   software: "Outils",
   services: "Services clés",
   providers: "Fournisseurs",
+  financing: "Financement",
+  aids: "Aides et subventions",
   networks: "Réseaux professionnels",
 };
 
@@ -45,6 +49,8 @@ export const SOLUTION_RAIL_DISPLAY_ORDER: readonly VisibleSolutionSection[] = [
   "software",
   "services",
   "providers",
+  "financing",
+  "aids",
   "networks",
 ];
 
@@ -54,6 +60,8 @@ const RESOURCE_ICONS = {
   provider: BriefcaseBusiness,
   directory: Building2,
   expertise: BriefcaseBusiness,
+  financing: BadgeEuro,
+  aid: Landmark,
 } as const;
 
 const DEFAULT_RESOURCE_LABELS: Readonly<
@@ -64,6 +72,8 @@ const DEFAULT_RESOURCE_LABELS: Readonly<
   provider: "Fournisseur",
   directory: "Organisation professionnelle",
   expertise: "Prestation",
+  financing: "Financement",
+  aid: "Aide publique",
 };
 
 function buildInitialRailState(sections: readonly RenderableSolutionSectionDto[]) {

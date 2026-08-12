@@ -4,6 +4,8 @@ import {
   getCanonicalServices,
   type CanonicalServiceSlug,
 } from "@/lib/canonical-service-catalog";
+import { demaaAidItems } from "@/lib/aid-catalog";
+import { demaaFinanceItems } from "@/lib/finance-catalog";
 import type { SolutionSection } from "@/lib/solution-registry-dto";
 import type {
   RenderableSolutionPlacementDto,
@@ -14,6 +16,8 @@ const SECTION_ORDER: readonly SolutionSection[] = [
   "software",
   "services",
   "providers",
+  "financing",
+  "aids",
   "models",
   "networks",
 ];
@@ -29,7 +33,7 @@ export function getCanonicalServiceSlugsForSystem(
 ): readonly CanonicalServiceSlug[] {
   return getCanonicalServices()
     .filter((service) => {
-      if (systemSlug === "cabinet-comptable" && service.slug === "expert-comptable") {
+      if (service.slug === "expert-comptable") {
         return false;
       }
       if (
@@ -41,6 +45,56 @@ export function getCanonicalServiceSlugsForSystem(
       return true;
     })
     .map((service) => service.slug);
+}
+
+function buildFinancePlacements(
+  systemSlug: string,
+): readonly RenderableSolutionPlacementDto[] {
+  return demaaFinanceItems.map((item, index) => ({
+    placementId: `catalog:${systemSlug}:financing:${item.slug}`,
+    systemSlug,
+    rank: index + 1,
+    section: "financing",
+    usage: item.bestFor,
+    fitRationale: item.description,
+    fitConstraints: [
+      "Vérifier les critères d’éligibilité, le coût total et les garanties demandées avant de vous engager.",
+    ],
+    resource: {
+      resourceSlug: `financing-${item.slug}`,
+      resourceType: "financing",
+      name: item.name,
+      description: item.shortDescription,
+      displayCategory: item.family,
+      ctaLabel: item.cta,
+      interaction: { interactionMode: "external_link", href: item.href },
+    },
+  }));
+}
+
+function buildAidPlacements(
+  systemSlug: string,
+): readonly RenderableSolutionPlacementDto[] {
+  return demaaAidItems.map((item, index) => ({
+    placementId: `catalog:${systemSlug}:aids:${item.slug}`,
+    systemSlug,
+    rank: index + 1,
+    section: "aids",
+    usage: item.bestFor,
+    fitRationale: item.description,
+    fitConstraints: [
+      "Les conditions et montants peuvent évoluer : confirmer votre situation sur la source officielle.",
+    ],
+    resource: {
+      resourceSlug: `aid-${item.slug}`,
+      resourceType: "aid",
+      name: item.name,
+      description: item.shortDescription,
+      displayCategory: item.family,
+      ctaLabel: item.cta,
+      interaction: { interactionMode: "external_link", href: item.sourceUrl },
+    },
+  }));
 }
 
 function buildCanonicalServicePlacements(
@@ -102,6 +156,8 @@ export function composeCanonicalServicesForSystem(
     "services",
     [...buildCanonicalServicePlacements(systemSlug)],
   );
+  placementsBySection.set("financing", [...buildFinancePlacements(systemSlug)]);
+  placementsBySection.set("aids", [...buildAidPlacements(systemSlug)]);
 
   return SECTION_ORDER.flatMap((section) => {
     const placements = placementsBySection.get(section) ?? [];

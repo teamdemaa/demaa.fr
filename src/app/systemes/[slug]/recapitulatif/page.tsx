@@ -18,6 +18,8 @@ const SECTION_LABELS = {
   software: "Outils",
   services: "Services",
   providers: "Fournisseurs",
+  financing: "Financement",
+  aids: "Aides et subventions",
   models: "Modèles",
   networks: "Réseaux professionnels",
 } as const;

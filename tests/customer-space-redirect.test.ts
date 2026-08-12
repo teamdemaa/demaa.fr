@@ -23,6 +23,17 @@ describe("customer-space safe return intents", () => {
     });
     expect(getSafeCustomerReturnTo(guideReturnTo)).toBe(guideReturnTo);
 
+    const specialistReturnTo = buildCustomerIntentReturnTo({
+      kind: "coaching",
+      offer: "pilotage_2",
+    });
+    expect(specialistReturnTo).toBe("/?intent=coaching&offer=pilotage_2");
+    expect(parseCustomerAccessIntent(specialistReturnTo)).toEqual({
+      kind: "coaching",
+      offer: "pilotage_2",
+    });
+    expect(getSafeCustomerReturnTo(specialistReturnTo)).toBe(specialistReturnTo);
+
     const solutionReturnTo = buildCustomerIntentReturnTo({
       kind: "solution-referral",
       resourceSlug: "chartered-accountant",
@@ -49,9 +60,9 @@ describe("customer-space safe return intents", () => {
     expect(getSafeCustomerReturnTo("/plans")).toBe("/plans");
     expect(
       getSafeCustomerReturnTo(
-        "/plans/abc_123?intent=coaching&tab=messages",
+        "/plans/abc_123?intent=coaching&tab=formules&offer=pilotage_1",
       ),
-    ).toBe("/plans/abc_123?intent=coaching&tab=messages");
+    ).toBe("/plans/abc_123?intent=coaching&tab=formules&offer=pilotage_1");
   });
 
   it("canonicalizes legacy public intents back into the single app", () => {
