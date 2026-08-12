@@ -4,7 +4,7 @@ import { NextRequest } from "next/server";
 import { proxy } from "@/proxy";
 
 describe("proxy content security policy", () => {
-  it("allows only the active Fillout embed consumer while preserving the policy", () => {
+  it("allows the active embeds and Firebase Google Auth while preserving the policy", () => {
     const response = proxy(
       new NextRequest("https://demaa.co/cours/exemple", {
         headers: { host: "demaa.co" },
@@ -16,7 +16,12 @@ describe("proxy content security policy", () => {
       .map((directive) => directive.trim())
       .find((directive) => directive.startsWith("frame-src "));
 
-    expect(frameSource).toBe("frame-src https://embed.fillout.com");
+    expect(frameSource).toBe(
+      "frame-src https://embed.fillout.com https://*.firebaseapp.com https://accounts.google.com",
+    );
+    expect(policy).toContain("https://apis.google.com");
+    expect(policy).toContain("https://identitytoolkit.googleapis.com");
+    expect(policy).toContain("https://securetoken.googleapis.com");
     expect(policy).not.toContain("youtube");
     expect(policy).toContain("default-src 'self'");
     expect(policy).toContain("frame-ancestors 'none'");
@@ -78,8 +83,6 @@ describe("proxy content security policy", () => {
 
     expect(response.status).toBe(404);
     expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
-    expect(response.headers.get("x-middleware-rewrite")).toBe(
-      "https://demaa.co/_not-found",
-    );
+    expect(response.headers.get("x-middleware-rewrite")).toBeNull();
   });
 });

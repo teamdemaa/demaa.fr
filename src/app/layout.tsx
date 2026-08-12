@@ -72,6 +72,12 @@ export const metadata: Metadata = {
       "Demaa clarifie les responsabilités, formalise les processus et configure un espace de pilotage pour que votre entreprise dépende moins de vous.",
   },
   applicationName: "Demaa",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Demaa",
+  },
   formatDetection: {
     telephone: false,
   },

@@ -1,10 +1,17 @@
 import "server-only";
 
-import { applicationDefault, cert, getApps, initializeApp } from "firebase-admin/app";
+import {
+  applicationDefault,
+  cert,
+  getApps,
+  initializeApp,
+  type App,
+} from "firebase-admin/app";
 import { Firestore, getFirestore } from "firebase-admin/firestore";
 
 import {
   createFirebaseVercelWorkloadIdentityGoogleAuth,
+  createFirebaseVercelWorkloadIdentityCredential,
   hasFirebaseVercelWorkloadIdentityConfiguration,
 } from "@/lib/firebase-vercel-oidc-credential.server";
 
@@ -59,6 +66,18 @@ function getFirebaseCredential() {
   return applicationDefault();
 }
 
+export function getFirebaseAdminApp(): App {
+  const existing = getApps()[0];
+  if (existing) return existing;
+
+  return initializeApp({
+    credential: hasFirebaseVercelWorkloadIdentityConfiguration()
+      ? createFirebaseVercelWorkloadIdentityCredential()
+      : getFirebaseCredential(),
+    projectId: process.env.FIREBASE_PROJECT_ID,
+  });
+}
+
 export function getAdminFirestore() {
   if (hasFirebaseVercelWorkloadIdentityConfiguration()) {
     const projectId = process.env.FIREBASE_PROJECT_ID;
@@ -77,12 +96,5 @@ export function getAdminFirestore() {
     return workloadIdentityFirestore;
   }
 
-  if (!getApps().length) {
-    initializeApp({
-      credential: getFirebaseCredential(),
-      projectId: process.env.FIREBASE_PROJECT_ID,
-    });
-  }
-
-  return getFirestore();
+  return getFirestore(getFirebaseAdminApp());
 }

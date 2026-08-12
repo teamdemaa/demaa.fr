@@ -268,12 +268,16 @@ existe aucun, l'application ouvre explicitement `/?new=1`. Le paramètre
 `new=1` est donc réservé à la création volontaire d'un plan vierge et ne doit
 jamais remplacer silencieusement un plan déjà enregistré.
 
-Le lien magique est l'unique point d'établissement de l'identité e-mail dans
-l'application. Une fois la session créée, les formulaires fonctionnels
+L'identité e-mail est établie par un fournisseur vérifié puis matérialisée dans
+la session Demaa. Le lien magique reste le parcours universel. Google via
+Firebase Auth peut être proposé comme raccourci progressif, avec le même e-mail
+et la même session, uniquement lorsque sa configuration et ses domaines sont
+validés ; il reste sinon entièrement masqué. Aucun mot de passe, second compte
+ou portail parallèle n'est créé. Une fois la session créée, les formulaires fonctionnels
 (guides métier, Opportunités, Coaching, inscription et demandes) réutilisent
 l'e-mail vérifié côté serveur et ne le redemandent pas. Un visiteur non
-connecté qui déclenche l'une de ces actions passe d'abord par le lien magique,
-puis revient directement à son intention dans l'application. Il n'existe pas
+connecté qui déclenche l'une de ces actions passe d'abord par l'un de ces
+parcours vérifiés, puis revient directement à son intention dans l'application. Il n'existe pas
 d'expérience publique distincte `Mon espace` ou `Mes plans`.
 
 ## Marketing et prospection éthiques

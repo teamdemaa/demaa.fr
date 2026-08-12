@@ -110,6 +110,16 @@ l'ADR 0004 prévaut.
   demandes sans redemander l'adresse. Après connexion, reprendre directement
   l'intention autorisée dans l'application, sans page `Mon espace` ou
   `Mes plans`.
+- [ ] Recetter puis activer D-080 : connexion Google progressive via Firebase
+  Auth, même session Demaa et même identité e-mail que le lien magique. Le
+  bouton reste masqué tant que les quatre variables Web publiques, le
+  fournisseur Google et les domaines autorisés ne sont pas configurés. Le lien
+  magique reste disponible ; aucun compte mot de passe ou stockage parallèle
+  n'est introduit.
+- [ ] Recetter puis promouvoir D-081 : manifeste PWA, icônes 192/512/maskable,
+  lancement `standalone`, thème blanc et invitation d'installation uniquement
+  après un résultat. Garder `/sw.js` et `/offline` en 404 : aucun cache d'API,
+  plan hors ligne ou deuxième source persistante dans ce lot.
 - [x] Restaurer le dernier plan sauvegardé après connexion, depuis le profil et
   à l'ouverture normale de l'application. `/plans` résout le plan courant et
   `/?new=1` reste réservé à une nouvelle situation volontaire ; l'absence de

@@ -15,6 +15,26 @@ You can also provide the full service account JSON as `FIREBASE_SERVICE_ACCOUNT_
 instead of the three variables above. Do not prefix these variables with
 `NEXT_PUBLIC_`; they must stay server-side only.
 
+Google sign-in is an optional progressive enhancement. It remains hidden and
+the existing magic-link flow remains available until all four public Firebase
+Web configuration values are present:
+
+```bash
+NEXT_PUBLIC_FIREBASE_API_KEY=your-web-api-key
+NEXT_PUBLIC_FIREBASE_APP_ID=your-web-app-id
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
+```
+
+Enable the Google provider in Firebase Authentication and authorize each
+Production/Preview domain before exposing it. These public values identify the
+Firebase Web app; server credentials and service-account values must never use
+the `NEXT_PUBLIC_` prefix.
+
+Demaa also exposes `/manifest.webmanifest` and install icons for an installable
+PWA shell. It intentionally has no service worker or offline plan storage:
+Firebase stays the only durable source after a plan is saved.
+
 First, run the development server:
 
 ```bash

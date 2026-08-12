@@ -153,6 +153,7 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/oidc": "^3.8.2",
     "ai": "^7.0.58",
+    "firebase": "^12.17.1",
     "firebase-admin": "^14.2.0",
     "google-auth-library": "10.6.2",
     "html-to-image": "^1.11.13",
