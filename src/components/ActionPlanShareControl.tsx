@@ -4,16 +4,21 @@ import { Check, Share2 } from "lucide-react";
 import { useState } from "react";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
+import { getActionPlanActions } from "@/lib/action-plan-view-model";
 
 function buildShareText(
   plan: PersistableActionPlan,
   workspace?: ActionPlanWorkspaceState,
 ) {
+  const actions = [
+    ...getActionPlanActions(plan),
+    ...(workspace?.addedActions || []),
+  ];
   const visibleActions = workspace
-    ? plan.weeklyActions.filter(
+    ? actions.filter(
         (action) => !workspace.deletedActionIds.includes(action.id),
       )
-    : plan.weeklyActions;
+    : actions;
 
   return [
     "Mon plan d’action Demaa",

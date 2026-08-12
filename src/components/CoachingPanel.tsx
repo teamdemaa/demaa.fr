@@ -2,16 +2,13 @@
 
 import { Check, LoaderCircle, Mic, Send, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
 import { clearLeadSubmissionKey, getLeadSubmissionKey } from "@/lib/lead-submission-client";
 import type { CoachingMessage } from "@/lib/coaching-conversation";
 
 type CoachingTab = "messages" | "sessions";
 type Offer = "session" | "parcours";
-
-type SpeechRecognitionInstance = InstanceType<
-  NonNullable<Window["SpeechRecognition"]>
->;
 
 const offers = [
   {
@@ -181,11 +178,13 @@ function CoachingMessageForm() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<CoachingMessage[]>([]);
   const [status, setStatus] = useState<"idle" | "loading" | "sending" | "error">("loading");
-  const [isListening, setIsListening] = useState(false);
-  const [dictationError, setDictationError] = useState<string | null>(null);
-  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
-  const dictationBaseRef = useRef("");
   const historyRef = useRef<HTMLDivElement>(null);
+  const messageDictation = useSpeechDictation({
+    value: message,
+    onChange: setMessage,
+    continuous: true,
+    interimResults: true,
+  });
 
   const loadMessages = useCallback(async (quiet = false) => {
     if (!quiet) setStatus("loading");
@@ -231,65 +230,12 @@ function CoachingMessageForm() {
     });
   }, [messages]);
 
-  useEffect(() => () => {
-    recognitionRef.current?.stop();
-  }, []);
-
-  function dictate() {
-    if (recognitionRef.current) {
-      recognitionRef.current.stop();
-      return;
-    }
-
-    const SpeechRecognition =
-      window.SpeechRecognition ?? window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      setDictationError("La dictée n’est pas disponible dans ce navigateur.");
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = "fr-FR";
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    dictationBaseRef.current = message.trim();
-    setDictationError(null);
-    setIsListening(true);
-    recognition.onresult = (event) => {
-      let transcript = "";
-      for (let index = 0; index < event.results.length; index += 1) {
-        transcript += event.results[index]?.[0]?.transcript || "";
-      }
-      const spokenText = transcript.trim();
-      if (!spokenText) return;
-      setMessage(
-        `${dictationBaseRef.current}${dictationBaseRef.current ? " " : ""}${spokenText}`,
-      );
-    };
-    recognition.onerror = (event) => {
-      if (event.error !== "aborted" && event.error !== "no-speech") {
-        setDictationError("La dictée s’est interrompue. Vous pouvez continuer au clavier.");
-      }
-    };
-    recognition.onend = () => {
-      recognitionRef.current = null;
-      setIsListening(false);
-    };
-    recognitionRef.current = recognition;
-    try {
-      recognition.start();
-    } catch {
-      recognitionRef.current = null;
-      setIsListening(false);
-      setDictationError("La dictée n’a pas pu démarrer. Vous pouvez continuer au clavier.");
-    }
-  }
-
   async function submit(event: React.FormEvent) {
     event.preventDefault();
     if (message.trim().length < 2) {
       setStatus("error"); return;
     }
+    messageDictation.cancel();
     setStatus("sending");
     const flowKey = "coaching:message";
     try {
@@ -351,17 +297,17 @@ function CoachingMessageForm() {
           <textarea
             aria-label="Votre message"
             value={message}
-            onChange={(event) => setMessage(event.target.value)}
+            onChange={(event) => messageDictation.handleValueChange(event.target.value)}
             rows={2}
             placeholder="Écrivez votre message…"
             className="max-h-32 min-h-12 flex-1 resize-none bg-transparent px-2 py-2 text-sm outline-none"
           />
           <button
             type="button"
-            onClick={dictate}
-            className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-sage/50 ${isListening ? "bg-dema-sage ring-1 ring-dema-forest/30" : ""}`}
-            aria-label={isListening ? "Arrêter la dictée" : "Dicter le message"}
-            aria-pressed={isListening}
+            onClick={messageDictation.toggle}
+            className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-sage/50 ${messageDictation.isListening ? "bg-dema-sage ring-1 ring-dema-forest/30" : ""}`}
+            aria-label={messageDictation.isListening ? "Arrêter la dictée" : "Dicter le message"}
+            aria-pressed={messageDictation.isListening}
           >
             <Mic className="h-4 w-4" />
           </button>
@@ -369,8 +315,8 @@ function CoachingMessageForm() {
             {status === "sending" ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Send className="h-4 w-4" aria-hidden="true" />}
           </button>
         </div>
-        {isListening ? <p className="mt-2 px-2 text-xs text-dema-forest" role="status">Dictée en cours… le texte apparaît dans le message.</p> : null}
-        {dictationError ? <p className="mt-2 px-2 text-xs text-amber-800" role="alert">{dictationError}</p> : null}
+        {messageDictation.isListening ? <p className="mt-2 px-2 text-xs text-dema-forest" role="status">Dictée en cours… le texte apparaît dans le message.</p> : null}
+        {messageDictation.error ? <p className="mt-2 px-2 text-xs text-amber-800" role="alert">{messageDictation.error}</p> : null}
         {status === "error" ? <p className="mt-2 px-2 text-xs font-medium text-red-700">Le message n’a pas pu être envoyé. Réessayez.</p> : null}
       </form>
     </section>

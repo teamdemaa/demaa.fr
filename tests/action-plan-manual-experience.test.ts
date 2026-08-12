@@ -16,6 +16,8 @@ describe("manual action plan experience", () => {
     expect(experience).toContain("systemId: prePlanWorkspace.selectedSystemId");
     expect(experience).toContain("setWorkspace(prePlanWorkspace)");
     expect(experience).toContain('demo === "blank"');
+    expect(experience).toContain("const storedSystemId = readGuestSelectedSystemId() ?? \"\"");
+    expect(experience).toContain("savedSystemIds: storedSystemId ? [storedSystemId] : []");
     expect(systemPanel).toContain("Choisissez votre système métier");
     expect(systemPanel).toContain("if (!selectedSystemId)");
   });
@@ -25,21 +27,22 @@ describe("manual action plan experience", () => {
     const result = source("src/components/ActionPlanResult.tsx");
     const savedDetail = source("src/components/SavedActionPlanDetail.tsx");
 
-    expect(experience).toContain("handleAddManualAction");
+    expect(experience).toContain("handleAddAction");
     expect(result).toContain("Ajouter une action");
     expect(result).toContain("Générer un plan à partir de ma situation");
-    expect(savedDetail).toContain("function addManualAction()");
+    expect(savedDetail).toContain("function addAction()");
     expect(savedDetail).toContain("plan: isManualActionPlan(nextSave.plan)");
-    expect(savedDetail).toContain("onAddAction={isManualActionPlan(currentPlan)");
+    expect(savedDetail).toContain("onAddAction={addAction}");
   });
 
   it("keeps the four strategy sections editable through workspace overrides", () => {
     const result = source("src/components/ActionPlanResult.tsx");
+    const viewModel = source("src/lib/action-plan-view-model.ts");
 
-    expect(result).toContain('label: "Alignement"');
-    expect(result).toContain('label: "Positionnement"');
-    expect(result).toContain('label: "Offre"');
-    expect(result).toContain('label: "Promotion"');
+    expect(viewModel).toContain('label: "Alignement"');
+    expect(viewModel).toContain('label: "Positionnement"');
+    expect(viewModel).toContain('label: "Offre"');
+    expect(viewModel).toContain('label: "Promotion"');
     expect(result).toContain("strategyOverrides");
   });
 });

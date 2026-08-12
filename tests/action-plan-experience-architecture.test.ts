@@ -53,7 +53,7 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("Commencer avec un plan vierge");
     expect(experience).toContain("createManualActionPlan()");
     expect(experience).toContain("createManualActionPlanWorkspaceState()");
-    expect(experience).toContain("onAddAction={isManualActionPlan(plan)");
+    expect(experience).toContain("onAddAction={handleAddAction}");
     expect(experience).toContain("headerActions={(");
     expect(result).toContain('type PlanSection = "tasks" | "strategy"');
     expect(result).toContain('type TaskView = "list" | "kanban"');
@@ -72,7 +72,9 @@ describe("action plan experience architecture", () => {
   it("keeps the latest authenticated edit when the user leaves quickly", () => {
     const savedPlan = source("src/components/SavedActionPlanDetail.tsx");
 
-    expect(savedPlan).toContain("pendingSaveRef.current = { plan: currentPlan, workspace }");
+    expect(savedPlan).toContain("pendingSaveRef.current = {");
+    expect(savedPlan).toContain("plan: currentPlan");
+    expect(savedPlan).toContain("title: planTitle.trim() || confirmedTitleRef.current");
     expect(savedPlan).toContain('plan: isManualActionPlan(nextSave.plan) ? nextSave.plan : undefined');
     expect(savedPlan).toContain('window.addEventListener("pagehide", flushBeforeLeaving)');
     expect(savedPlan).toContain("keepalive: true");
@@ -92,7 +94,7 @@ describe("action plan experience architecture", () => {
     expect(systemPanel).toContain("if (!selectedSystemId)");
     expect(systemPanel).toContain("Choisissez votre système métier");
     expect(systemPanel).toContain("<ActionPlanSystemSelector");
-    expect(systemPanel).toContain("onChange={onSystemChange}");
+    expect(systemPanel).toContain("onChange={selectSystem}");
     expect(systemSelector).toContain('role="listbox"');
     expect(systemSelector).toContain('role="combobox"');
     expect(systemPanel).toContain("<SystemDetailContent");

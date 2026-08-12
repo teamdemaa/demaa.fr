@@ -1,0 +1,265 @@
+"use client";
+
+import { useCallback, useEffect, useRef, useState } from "react";
+
+type SpeechDictationResult = {
+  0?: { transcript?: string };
+};
+
+type SpeechDictationResultList = {
+  readonly length: number;
+  [index: number]: SpeechDictationResult | undefined;
+};
+
+type SpeechDictationResultEvent = {
+  results: SpeechDictationResultList;
+};
+
+type SpeechDictationErrorEvent = {
+  error?: string;
+};
+
+export type SpeechDictationRecognition = {
+  abort?: () => void;
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  onend: (() => void) | null;
+  onerror: ((event: SpeechDictationErrorEvent) => void) | null;
+  onresult: ((event: SpeechDictationResultEvent) => void) | null;
+  start: () => void;
+  stop: () => void;
+};
+
+export type SpeechDictationRecognitionConstructor =
+  new () => SpeechDictationRecognition;
+
+declare global {
+  interface Window {
+    SpeechRecognition?: SpeechDictationRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechDictationRecognitionConstructor;
+  }
+}
+
+const KEYBOARD_FALLBACK = " Vous pouvez continuer au clavier.";
+
+export function getSpeechDictationErrorMessage(error?: string) {
+  switch (error) {
+    case "not-allowed":
+    case "service-not-allowed":
+      return `Autorisez l’accès au microphone dans les réglages de votre navigateur.${KEYBOARD_FALLBACK}`;
+    case "audio-capture":
+      return `Aucun microphone disponible n’a pu être utilisé.${KEYBOARD_FALLBACK}`;
+    case "language-not-supported":
+    case "language-unavailable":
+      return `La dictée en français n’est pas disponible sur cet appareil.${KEYBOARD_FALLBACK}`;
+    case "network":
+      return `La dictée a été interrompue par un problème de connexion.${KEYBOARD_FALLBACK}`;
+    default:
+      return `La dictée vocale n’est pas disponible ici.${KEYBOARD_FALLBACK}`;
+  }
+}
+
+function appendTranscript(base: string, transcript: string, maxLength: number) {
+  const normalizedTranscript = transcript.trim();
+  if (!normalizedTranscript) return base.slice(0, maxLength);
+
+  const separator = base && !/\s$/.test(base) ? " " : "";
+  return `${base}${separator}${normalizedTranscript}`.slice(0, maxLength);
+}
+
+function readTranscript(results: SpeechDictationResultList) {
+  const parts: string[] = [];
+  for (let index = 0; index < results.length; index += 1) {
+    const transcript = results[index]?.[0]?.transcript?.trim();
+    if (transcript) parts.push(transcript);
+  }
+  return parts.join(" ");
+}
+
+export type SpeechDictationSession = {
+  cancel: () => void;
+  destroy: () => void;
+  start: () => void;
+  stop: () => void;
+};
+
+export function createSpeechDictationSession({
+  Recognition,
+  continuous,
+  initialValue,
+  interimResults,
+  language,
+  maxLength,
+  onEnd,
+  onError,
+  onListeningChange,
+  onText,
+}: {
+  Recognition: SpeechDictationRecognitionConstructor;
+  continuous: boolean;
+  initialValue: string;
+  interimResults: boolean;
+  language: string;
+  maxLength: number;
+  onEnd: () => void;
+  onError: (message: string | null) => void;
+  onListeningChange: (listening: boolean) => void;
+  onText: (value: string) => void;
+}): SpeechDictationSession {
+  const recognition = new Recognition();
+  let active = true;
+  let ended = false;
+
+  const finish = () => {
+    if (ended) return;
+    ended = true;
+    active = false;
+    onListeningChange(false);
+    onEnd();
+  };
+
+  recognition.lang = language;
+  recognition.continuous = continuous;
+  recognition.interimResults = interimResults;
+  recognition.onresult = (event) => {
+    if (!active) return;
+    const transcript = readTranscript(event.results);
+    if (!transcript) return;
+    onText(appendTranscript(initialValue, transcript, maxLength));
+  };
+  recognition.onerror = (event) => {
+    if (!active) return;
+    if (event.error !== "aborted" && event.error !== "no-speech") {
+      onError(getSpeechDictationErrorMessage(event.error));
+    }
+    finish();
+  };
+  recognition.onend = finish;
+
+  const cancel = () => {
+    if (!active) return;
+    active = false;
+    if (recognition.abort) recognition.abort();
+    else recognition.stop();
+    finish();
+  };
+
+  return {
+    cancel,
+    destroy: cancel,
+    start() {
+      onError(null);
+      onListeningChange(true);
+      try {
+        recognition.start();
+      } catch {
+        onError(getSpeechDictationErrorMessage());
+        finish();
+      }
+    },
+    stop() {
+      if (!active) return;
+      try {
+        recognition.stop();
+      } catch {
+        finish();
+      }
+    },
+  };
+}
+
+export function useSpeechDictation({
+  continuous = false,
+  interimResults = true,
+  language = "fr-FR",
+  maxLength = Number.MAX_SAFE_INTEGER,
+  onChange,
+  value,
+}: {
+  continuous?: boolean;
+  interimResults?: boolean;
+  language?: string;
+  maxLength?: number;
+  onChange: (value: string) => void;
+  value: string;
+}) {
+  const [isListening, setIsListening] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const valueRef = useRef(value);
+  const onChangeRef = useRef(onChange);
+  const sessionRef = useRef<SpeechDictationSession | null>(null);
+
+  useEffect(() => {
+    valueRef.current = value;
+    onChangeRef.current = onChange;
+  }, [onChange, value]);
+
+  const cancel = useCallback(() => {
+    sessionRef.current?.cancel();
+    sessionRef.current = null;
+  }, []);
+
+  const stop = useCallback(() => {
+    sessionRef.current?.stop();
+  }, []);
+
+  const start = useCallback(() => {
+    if (sessionRef.current || typeof window === "undefined") return;
+
+    const Recognition =
+      window.SpeechRecognition ?? window.webkitSpeechRecognition;
+    if (!Recognition) {
+      setError(getSpeechDictationErrorMessage("unsupported"));
+      return;
+    }
+
+    const session = createSpeechDictationSession({
+      Recognition,
+      continuous,
+      initialValue: valueRef.current,
+      interimResults,
+      language,
+      maxLength,
+      onEnd: () => {
+        if (sessionRef.current === session) sessionRef.current = null;
+      },
+      onError: setError,
+      onListeningChange: setIsListening,
+      onText: (nextValue) => {
+        valueRef.current = nextValue;
+        onChangeRef.current(nextValue);
+      },
+    });
+    sessionRef.current = session;
+    session.start();
+  }, [continuous, interimResults, language, maxLength]);
+
+  const toggle = useCallback(() => {
+    if (sessionRef.current) stop();
+    else start();
+  }, [start, stop]);
+
+  const handleValueChange = useCallback((nextValue: string) => {
+    // Stop first so a late recognition event cannot replace a manual edit.
+    cancel();
+    valueRef.current = nextValue;
+    setError(null);
+    onChangeRef.current(nextValue);
+  }, [cancel]);
+
+  useEffect(() => () => {
+    sessionRef.current?.destroy();
+    sessionRef.current = null;
+  }, []);
+
+  return {
+    cancel,
+    error,
+    handleValueChange,
+    isListening,
+    start,
+    stop,
+    toggle,
+  };
+}

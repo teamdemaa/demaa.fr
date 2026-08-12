@@ -6,6 +6,10 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
+import {
+  toPersistedAiGenerationMetadata,
+  type AiGenerationMetadata,
+} from "@/lib/ai-generation-metadata";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 
 type PendingClaim = {
@@ -24,11 +28,13 @@ export default function ActionPlanSaveControl({
   plan,
   sourceText,
   workspace,
+  generation = null,
   demoMode = false,
 }: {
   plan: PersistableActionPlan;
   sourceText: string;
   workspace: ActionPlanWorkspaceState;
+  generation?: AiGenerationMetadata | null;
   demoMode?: boolean;
 }) {
   const router = useRouter();
@@ -83,7 +89,12 @@ export default function ActionPlanSaveControl({
       const response = await fetch("/api/action-plans", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, sourceText, workspaceState: workspace }),
+        body: JSON.stringify({
+          plan,
+          sourceText,
+          workspaceState: workspace,
+          generation: toPersistedAiGenerationMetadata(generation),
+        }),
       });
       const body = (await response.json().catch(() => null)) as
         | {

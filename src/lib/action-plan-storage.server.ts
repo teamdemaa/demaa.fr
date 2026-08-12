@@ -18,7 +18,7 @@ export const ACTION_PLAN_ACCESS_COOKIE = "demaa_action_plan_access";
 const PENDING_CLAIM_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 const MAX_SOURCE_TEXT_LENGTH = 12_000;
 
-type ActionPlanStatus = "pending_claim" | "active";
+type ActionPlanStatus = "pending_claim" | "active" | "deleted";
 
 type ActionPlanGenerationMetadata = {
   model: string | null;
@@ -31,6 +31,7 @@ type ActionPlanDocument = {
   schema_version?: string | null;
   status?: ActionPlanStatus | null;
   plan?: unknown;
+  title?: string | null;
   workspace_state?: unknown;
   source_text?: string | null;
   generation?: Partial<ActionPlanGenerationMetadata> | null;
@@ -50,6 +51,7 @@ type ActionPlanDocument = {
 
 export type StoredActionPlan = {
   id: string;
+  title: string;
   plan: PersistableActionPlan;
   workspaceState: ActionPlanWorkspaceState;
   sourceText: string | null;
@@ -61,6 +63,7 @@ export type StoredActionPlan = {
 
 export type ActionPlanWriteInput = {
   plan: PersistableActionPlan;
+  title?: string | null;
   workspaceState?: ActionPlanWorkspaceState;
   sourceText?: string | null;
   generation?: Partial<ActionPlanGenerationMetadata> | null;
@@ -99,6 +102,12 @@ function normalizeSourceText(value?: string | null) {
   if (typeof value !== "string") return null;
   const normalized = value.replace(/\r\n?/g, "\n").trim();
   return normalized ? normalized.slice(0, MAX_SOURCE_TEXT_LENGTH) : null;
+}
+
+function normalizeActionPlanTitle(value?: string | null) {
+  if (typeof value !== "string") return "Plan principal";
+  const normalized = value.replace(/\s+/g, " ").trim().slice(0, 120);
+  return normalized || "Plan principal";
 }
 
 function normalizeTokenCount(value: unknown) {
@@ -151,11 +160,16 @@ function hasValidTemporaryAccess(
 function serializeWriteInput(input: ActionPlanWriteInput) {
   return {
     plan: input.plan,
+    title: normalizeActionPlanTitle(input.title),
     workspace_state:
       input.workspaceState ?? createActionPlanWorkspaceState(input.plan),
     source_text: normalizeSourceText(input.sourceText),
     generation: normalizeGenerationMetadata(input.generation),
   };
+}
+
+function getPersistedSchemaVersion(plan: PersistableActionPlan) {
+  return plan.version === "3" ? "3" : "2";
 }
 
 function parseStoredActionPlan(
@@ -177,6 +191,7 @@ function parseStoredActionPlan(
 
   return {
     id,
+    title: normalizeActionPlanTitle(document.title),
     plan: parsedPlan.data,
     workspaceState: normalizeActionPlanWorkspaceState(
       parsedPlan.data,
@@ -200,7 +215,7 @@ export async function createPendingActionPlan(
   const temporaryAccessExpiresAt = getClaimExpiry();
 
   await database.collection(ACTION_PLANS_COLLECTION).doc(id).create({
-    schema_version: "2",
+    schema_version: getPersistedSchemaVersion(input.plan),
     status: "pending_claim",
     ...serializeWriteInput(input),
     owner_email: null,
@@ -230,7 +245,7 @@ export async function createOwnedActionPlan(
   const ownerEmail = normalizeEmail(email);
 
   const document: ActionPlanDocument = {
-    schema_version: "2",
+    schema_version: getPersistedSchemaVersion(input.plan),
     status: "active",
     ...serializeWriteInput(input),
     owner_email: ownerEmail,
@@ -349,6 +364,7 @@ export async function updateActionPlanWorkspaceForAccess(input: {
   id: string;
   expectedRevision: number;
   plan?: PersistableActionPlan;
+  title?: string;
   temporaryAccessToken?: string | null;
   workspaceState: ActionPlanWorkspaceState;
 }) {
@@ -376,6 +392,9 @@ export async function updateActionPlanWorkspaceForAccess(input: {
     const parsedPlan = compatibleActionPlanSchema.safeParse(data.plan);
     if (!parsedPlan.success) return null;
     const nextPlan = input.plan ?? parsedPlan.data;
+    const nextTitle = input.title === undefined
+      ? normalizeActionPlanTitle(data.title)
+      : normalizeActionPlanTitle(input.title);
     if (
       input.plan &&
       (parsedPlan.data.version !== "manual" || input.plan.version !== "manual")
@@ -397,6 +416,7 @@ export async function updateActionPlanWorkspaceForAccess(input: {
       reference,
       {
         ...(input.plan ? { plan: nextPlan } : {}),
+        ...(input.title !== undefined ? { title: nextTitle } : {}),
         workspace_state: normalizedWorkspace,
         revision: nextRevision,
         updated_at: updatedAt,
@@ -411,6 +431,55 @@ export async function updateActionPlanWorkspaceForAccess(input: {
       revision: nextRevision,
       updatedAt,
       workspaceState: normalizedWorkspace,
+      title: nextTitle,
     };
+  });
+}
+
+export async function deleteActionPlanForAccess(input: {
+  email?: string | null;
+  id: string;
+  expectedRevision: number;
+  temporaryAccessToken?: string | null;
+}) {
+  const database = getAdminFirestore();
+  const ownerEmail = normalizeEmail(input.email || "");
+  const reference = database.collection(ACTION_PLANS_COLLECTION).doc(input.id);
+
+  return database.runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(reference);
+    const data = snapshot.data() as ActionPlanDocument | undefined;
+    const hasOwnedAccess = Boolean(
+      snapshot.exists &&
+        data?.status === "active" &&
+        ownerEmail &&
+        normalizeEmail(data.owner_email || "") === ownerEmail,
+    );
+    const hasTemporaryAccess =
+      snapshot.exists && hasValidTemporaryAccess(data, input.temporaryAccessToken);
+
+    if (!hasOwnedAccess && !hasTemporaryAccess) return null;
+    if (!data) return null;
+
+    const revision = Number(data.revision);
+    if (!Number.isInteger(revision) || revision !== input.expectedRevision) {
+      throw new ActionPlanRevisionConflictError();
+    }
+
+    const now = new Date().toISOString();
+    transaction.set(
+      reference,
+      {
+        status: "deleted",
+        revision: revision + 1,
+        updated_at: now,
+        retention_expires_at: getClaimExpiry(),
+        temporary_access_token_hash: null,
+        temporary_access_expires_at: null,
+      },
+      { merge: true },
+    );
+
+    return { deletedAt: now, revision: revision + 1 };
   });
 }

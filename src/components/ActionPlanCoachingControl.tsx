@@ -8,11 +8,16 @@ import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
+import {
+  toPersistedAiGenerationMetadata,
+  type AiGenerationMetadata,
+} from "@/lib/ai-generation-metadata";
 
 type AccessPlan = {
   plan: PersistableActionPlan;
   sourceText: string;
   workspace: ActionPlanWorkspaceState;
+  generation?: AiGenerationMetadata | null;
 };
 
 export default function ActionPlanCoachingControl({
@@ -78,6 +83,9 @@ export default function ActionPlanCoachingControl({
           plan: accessPlan.plan,
           sourceText: accessPlan.sourceText,
           workspaceState: accessPlan.workspace,
+          generation: toPersistedAiGenerationMetadata(
+            accessPlan.generation ?? null,
+          ),
         }),
       });
       const body = (await response.json().catch(() => null)) as

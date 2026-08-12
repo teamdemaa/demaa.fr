@@ -12,6 +12,7 @@ const nullableTokenCount = z.number().int().nonnegative().nullable().optional();
 export const actionPlanWriteRequestSchema = z
   .object({
     plan: compatibleActionPlanSchema,
+    title: z.string().trim().min(1).max(120).optional(),
     workspaceState: compatibleActionPlanWorkspaceStateSchema.optional(),
     sourceText: z.string().trim().max(12_000).nullable().optional(),
     generation: z
@@ -31,7 +32,14 @@ export const actionPlanUpdateRequestSchema = z
   .object({
     expectedRevision: z.number().int().min(1),
     plan: compatibleActionPlanSchema.optional(),
+    title: z.string().trim().min(1).max(120).optional(),
     workspaceState: compatibleActionPlanWorkspaceStateSchema,
+  })
+  .strict();
+
+export const actionPlanDeleteRequestSchema = z
+  .object({
+    expectedRevision: z.number().int().min(1),
   })
   .strict();
 

@@ -9,7 +9,9 @@ import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import ActionPlanUtilityActions from "@/components/ActionPlanUtilityActions";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
+import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import type { ActionPlan } from "@/lib/action-plan-contract";
+import type { AiGenerationMetadata } from "@/lib/ai-generation-metadata";
 import {
   ACTION_PLAN_DEMO,
   ACTION_PLAN_DEMO_SITUATION,
@@ -27,6 +29,7 @@ import {
   isManualActionPlan,
 } from "@/lib/action-plan-manual";
 import {
+  addActionPlanWorkspaceAction,
   createActionPlanWorkspaceState,
   type ActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
@@ -53,34 +56,6 @@ const GENERATION_QUESTIONS = [
   },
 ] as const;
 
-type BrowserSpeechRecognitionEvent = Event & {
-  results: SpeechRecognitionResultList;
-};
-
-type BrowserSpeechRecognitionErrorEvent = Event & {
-  error?: string;
-};
-
-type BrowserSpeechRecognition = {
-  continuous: boolean;
-  interimResults: boolean;
-  lang: string;
-  onend: (() => void) | null;
-  onerror: ((event: BrowserSpeechRecognitionErrorEvent) => void) | null;
-  onresult: ((event: BrowserSpeechRecognitionEvent) => void) | null;
-  start: () => void;
-  stop: () => void;
-};
-
-type BrowserSpeechRecognitionConstructor = new () => BrowserSpeechRecognition;
-
-declare global {
-  interface Window {
-    SpeechRecognition?: BrowserSpeechRecognitionConstructor;
-    webkitSpeechRecognition?: BrowserSpeechRecognitionConstructor;
-  }
-}
-
 export default function ActionPlanExperience({
   systemOptions,
   initialEmail = "",
@@ -94,6 +69,7 @@ export default function ActionPlanExperience({
   const [exampleIndex, setExampleIndex] = useState(0);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState("");
   const [plan, setPlan] = useState<EditableActionPlan | null>(null);
+  const [generation, setGeneration] = useState<AiGenerationMetadata | null>(null);
   const [workspace, setWorkspace] = useState<ActionPlanWorkspaceState | null>(null);
   const [prePlanWorkspace, setPrePlanWorkspace] = useState<ActionPlanWorkspaceState>(
     () => createManualActionPlanWorkspaceState(),
@@ -103,14 +79,19 @@ export default function ActionPlanExperience({
   const [activeTab, setActiveTab] = useState<ActionPlanView>(initialView);
   const [isGenerating, setIsGenerating] = useState(false);
   const [quoteIndex, setQuoteIndex] = useState(0);
-  const [isListening, setIsListening] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isDemoMode, setIsDemoMode] = useState(false);
   const resultTitleRef = useRef<HTMLHeadingElement | null>(null);
   const requestControllerRef = useRef<AbortController | null>(null);
-  const speechRecognitionRef = useRef<BrowserSpeechRecognition | null>(null);
   const accessIntentHandledRef = useRef(false);
   const guestSystemPreferenceHydratedRef = useRef(false);
+  const situationDictation = useSpeechDictation({
+    value: situation,
+    onChange: setSituation,
+    continuous: false,
+    interimResults: true,
+    maxLength: 4_000,
+  });
 
   useEffect(() => {
     if (guestSystemPreferenceHydratedRef.current) return;
@@ -196,7 +177,6 @@ export default function ActionPlanExperience({
   useEffect(
     () => () => {
       requestControllerRef.current?.abort();
-      speechRecognitionRef.current?.stop();
     },
     [],
   );
@@ -206,11 +186,17 @@ export default function ActionPlanExperience({
     const demo = new URLSearchParams(window.location.search).get("demo");
 
     if (demo === "blank") {
+      const storedSystemId = readGuestSelectedSystemId() ?? "";
       setIsDemoMode(true);
       setSituation("");
       setPlan(createManualActionPlan());
-      setWorkspace(createManualActionPlanWorkspaceState());
-      setSelectedSystemId("");
+      setGeneration(null);
+      setWorkspace({
+        ...createManualActionPlanWorkspaceState(),
+        selectedSystemId: storedSystemId,
+        savedSystemIds: storedSystemId ? [storedSystemId] : [],
+      });
+      setSelectedSystemId(storedSystemId);
       setActiveTab("plan");
       return;
     }
@@ -220,6 +206,7 @@ export default function ActionPlanExperience({
     setIsDemoMode(true);
     setSituation(ACTION_PLAN_DEMO_SITUATION);
     setPlan(ACTION_PLAN_DEMO);
+    setGeneration(null);
     setWorkspace(createActionPlanWorkspaceState(ACTION_PLAN_DEMO));
     setSelectedSystemId(ACTION_PLAN_DEMO.systemId);
     setActiveTab("plan");
@@ -244,83 +231,6 @@ export default function ActionPlanExperience({
     };
   }, [isGenerating]);
 
-  async function handleDictation() {
-    if (isListening) {
-      speechRecognitionRef.current?.stop();
-      return;
-    }
-
-    const SpeechRecognition =
-      window.SpeechRecognition ?? window.webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-      setError("La dictée vocale n’est pas disponible ici. Essayez depuis Chrome ou Safari.");
-      return;
-    }
-
-    try {
-      const mediaStream = await window.navigator.mediaDevices?.getUserMedia({ audio: true });
-      mediaStream?.getTracks().forEach((track) => track.stop());
-    } catch (permissionError) {
-      setError(
-        permissionError instanceof DOMException && permissionError.name === "NotFoundError"
-          ? "Aucun microphone n’a été détecté sur cet appareil."
-          : "Autorisez l’accès au microphone dans votre navigateur pour utiliser la dictée.",
-      );
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = "fr-FR";
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.onresult = (event) => {
-      let transcript = "";
-      for (let resultIndex = 0; resultIndex < event.results.length; resultIndex += 1) {
-        transcript += event.results[resultIndex][0]?.transcript ?? "";
-      }
-
-      const normalizedTranscript = transcript.trim();
-      if (!normalizedTranscript) return;
-
-      setSituation((current) =>
-        `${current.trim()}${current.trim() ? " " : ""}${normalizedTranscript}`.slice(0, 4_000),
-      );
-      setError(null);
-    };
-    recognition.onerror = (event) => {
-      if (event.error === "aborted" || event.error === "no-speech") return;
-
-      if (event.error === "not-allowed" || event.error === "service-not-allowed") {
-        setError("Autorisez l’accès au microphone dans votre navigateur pour utiliser la dictée.");
-        return;
-      }
-
-      if (event.error === "audio-capture") {
-        setError("Aucun microphone disponible n’a pu être utilisé.");
-        return;
-      }
-
-      setError("La dictée vocale n’est pas disponible ici. Essayez depuis Chrome ou Safari.");
-    };
-    recognition.onend = () => {
-      speechRecognitionRef.current = null;
-      setIsListening(false);
-    };
-
-    speechRecognitionRef.current = recognition;
-    setError(null);
-    setIsListening(true);
-
-    try {
-      recognition.start();
-    } catch {
-      speechRecognitionRef.current = null;
-      setIsListening(false);
-      setError("La dictée vocale n’est pas disponible ici. Essayez depuis Chrome ou Safari.");
-    }
-  }
-
   async function handleGenerate(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const normalizedSituation = situation.trim();
@@ -341,6 +251,7 @@ export default function ActionPlanExperience({
 
     if (isDemoMode) {
       setPlan(ACTION_PLAN_DEMO);
+      setGeneration(null);
       setWorkspace(createActionPlanWorkspaceState(ACTION_PLAN_DEMO));
       setSelectedSystemId(ACTION_PLAN_DEMO.systemId);
       setActiveTab("plan");
@@ -357,7 +268,11 @@ export default function ActionPlanExperience({
         signal: controller.signal,
       });
       const body = (await response.json().catch(() => null)) as
-        | { plan?: ActionPlan; error?: string }
+        | {
+            plan?: ActionPlan;
+            generation?: AiGenerationMetadata;
+            error?: string;
+          }
         | null;
 
       if (!response.ok || !body?.plan) {
@@ -368,6 +283,7 @@ export default function ActionPlanExperience({
       const nextSelectedSystemId =
         prePlanWorkspace.selectedSystemId || body.plan.systemId;
       setPlan(body.plan);
+      setGeneration(body.generation ?? null);
       setWorkspace({
         ...generatedWorkspace,
         selectedSystemId: nextSelectedSystemId,
@@ -401,6 +317,7 @@ export default function ActionPlanExperience({
       ...createManualActionPlan(),
       systemId: prePlanWorkspace.selectedSystemId,
     });
+    setGeneration(null);
     setWorkspace(prePlanWorkspace);
     setSelectedSystemId(prePlanWorkspace.selectedSystemId || "");
     setActiveTab("plan");
@@ -414,6 +331,15 @@ export default function ActionPlanExperience({
     if (!next) return;
     setPlan(next.plan);
     setWorkspace(next.workspace);
+  }
+
+  function handleAddAction() {
+    if (!plan || !workspace) return;
+    if (isManualActionPlan(plan)) {
+      handleAddManualAction();
+      return;
+    }
+    setWorkspace(addActionPlanWorkspaceAction(workspace));
   }
 
   function handleDeleteAction(actionId: string) {
@@ -480,7 +406,7 @@ export default function ActionPlanExperience({
                     <textarea
                       id="business-situation"
                       value={situation}
-                      onChange={(event) => setSituation(event.target.value)}
+                      onChange={(event) => situationDictation.handleValueChange(event.target.value)}
                       maxLength={4_000}
                       rows={5}
                       className="relative min-h-[9rem] w-full resize-none rounded-[1.25rem] bg-transparent px-5 py-5 text-base font-light leading-relaxed text-brand-blue outline-none sm:min-h-[10.5rem] sm:px-6 sm:py-6 sm:text-lg"
@@ -489,10 +415,10 @@ export default function ActionPlanExperience({
                   <div className="flex items-center justify-end gap-2 px-3 pb-2 sm:px-4">
                     <button
                       type="button"
-                      aria-label={isListening ? "Arrêter la dictée" : "Dicter ma situation"}
-                      aria-pressed={isListening}
-                      onClick={handleDictation}
-                      className={`inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border transition ${isListening ? "border-dema-forest bg-dema-sage text-dema-forest" : "border-dema-line bg-dema-paper text-dema-muted hover:border-dema-forest/25 hover:text-dema-forest"}`}
+                      aria-label={situationDictation.isListening ? "Arrêter la dictée" : "Dicter ma situation"}
+                      aria-pressed={situationDictation.isListening}
+                      onClick={situationDictation.toggle}
+                      className={`inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border transition ${situationDictation.isListening ? "border-dema-forest bg-dema-sage text-dema-forest" : "border-dema-line bg-dema-paper text-dema-muted hover:border-dema-forest/25 hover:text-dema-forest"}`}
                     >
                       <Mic className="h-4 w-4" aria-hidden="true" />
                     </button>
@@ -508,7 +434,7 @@ export default function ActionPlanExperience({
                   </div>
                 </div>
                 <div aria-live="polite" className="min-h-7 px-3 pt-3 text-center text-sm text-dema-forest">
-                  {error}
+                  {situationDictation.error ?? error}
                 </div>
                 <div className="mt-1 text-center">
                   <button
@@ -563,7 +489,12 @@ export default function ActionPlanExperience({
     <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
       <ActionPlanNavbar activeView={activeTab} onViewChange={setActiveTab} />
       <ActionPlanCoachingControl
-        accessPlan={{ plan, sourceText: situation.trim(), workspace }}
+        accessPlan={{
+          plan,
+          sourceText: situation.trim(),
+          workspace,
+          generation,
+        }}
         demoMode={isDemoMode}
         initialEmail={initialEmail}
       />
@@ -578,10 +509,11 @@ export default function ActionPlanExperience({
               workspace={workspace}
               onWorkspaceChange={updateWorkspace}
               manualMode={isManualActionPlan(plan)}
-              onAddAction={isManualActionPlan(plan) ? handleAddManualAction : undefined}
+              onAddAction={handleAddAction}
               onDeleteAction={handleDeleteAction}
               onGenerateLater={isManualActionPlan(plan) ? () => {
                 setPlan(null);
+                setGeneration(null);
                 setWorkspace(null);
                 setSelectedSystemId("");
                 setActiveTab("plan");
@@ -591,9 +523,11 @@ export default function ActionPlanExperience({
                   plan={plan}
                   sourceText={situation.trim()}
                   workspace={workspace}
+                  generation={generation}
                   demoMode={isDemoMode}
                   onReset={() => {
                     setPlan(null);
+                    setGeneration(null);
                     setWorkspace(null);
                     setError(null);
                   }}

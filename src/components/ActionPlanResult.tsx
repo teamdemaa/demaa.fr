@@ -21,9 +21,13 @@ import {
   useState,
 } from "react";
 import type {
-  PersistableActionPlanAction,
+  PersistableActionPlan,
 } from "@/lib/action-plan-contract";
-import type { EditableActionPlan } from "@/lib/action-plan-manual";
+import {
+  getActionPlanActions,
+  getActionPlanStrategyFields,
+  type ActionPlanViewAction,
+} from "@/lib/action-plan-view-model";
 import {
   compactActionPlanSteps,
   type ActionPlanTaskStatus,
@@ -32,6 +36,7 @@ import {
 
 type PlanSection = "tasks" | "strategy";
 type TaskView = "list" | "kanban";
+type TaskFilter = "week" | "all" | "overdue" | "done";
 
 const statusMeta: Record<
   ActionPlanTaskStatus,
@@ -41,49 +46,6 @@ const statusMeta: Record<
   in_progress: { label: "En cours", icon: CircleDot },
   done: { label: "Terminé", icon: CheckCircle2 },
 };
-
-const strategySections = [
-  {
-    key: "alignment" as const,
-    overrideKey: "alignement" as const,
-    label: "Alignement",
-    fields: [
-      ["L’entreprise que vous voulez construire", "desiredCompany" as const],
-      ["Vos limites et vos valeurs", "boundariesAndValues" as const],
-      ["Vos priorités et vos renoncements", "prioritiesAndTradeoffs" as const],
-    ],
-  },
-  {
-    key: "positioning" as const,
-    overrideKey: "positionnement" as const,
-    label: "Positionnement",
-    fields: [
-      ["Le client précis", "preciseCustomer" as const],
-      ["Le problème important", "importantProblem" as const],
-      ["Les preuves et les alternatives", "evidenceAndAlternatives" as const],
-    ],
-  },
-  {
-    key: "offer" as const,
-    overrideKey: "offre" as const,
-    label: "Offre",
-    fields: [
-      ["Le résultat proposé", "promisedOutcome" as const],
-      ["Le périmètre", "scope" as const],
-      ["Le prix, l’engagement et le risque", "priceCommitmentAndRisk" as const],
-    ],
-  },
-  {
-    key: "promotion" as const,
-    overrideKey: "promotion" as const,
-    label: "Promotion",
-    fields: [
-      ["Attirer", "attract" as const],
-      ["Faciliter l’achat", "facilitatePurchase" as const],
-      ["Fidéliser et renforcer", "retainAndStrengthen" as const],
-    ],
-  },
-] as const;
 
 function TaskStatusButton({
   status,
@@ -130,7 +92,7 @@ function ActionDrawer({
   onClose,
   onDelete,
 }: {
-  action: PersistableActionPlanAction;
+  action: ActionPlanViewAction;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   onClose: () => void;
@@ -141,12 +103,18 @@ function ActionDrawer({
   const effectiveObjective = taskState?.overrides.objective || action.objective;
   const effectiveSteps = taskState?.overrides.steps || action.steps;
   const effectiveSupport =
-    taskState?.overrides.readyToUse === undefined
-      ? action.readyToUse
-      : taskState.overrides.readyToUse;
+    taskState?.overrides.support === undefined
+      ? action.support
+      : taskState.overrides.support;
   const [draftTitle, setDraftTitle] = useState(effectiveTitle);
   const [draftObjective, setDraftObjective] = useState(effectiveObjective);
   const [draftSteps, setDraftSteps] = useState(effectiveSteps.join("\n"));
+  const [draftSupportLabel, setDraftSupportLabel] = useState(
+    effectiveSupport?.label || "",
+  );
+  const [draftSupportContent, setDraftSupportContent] = useState(
+    effectiveSupport?.content || "",
+  );
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const skipNextTaskBlur = useRef(false);
 
@@ -215,10 +183,25 @@ function ActionDrawer({
     setDraftSteps(nextSteps.join("\n"));
   }
 
+  function saveSupport() {
+    const label = draftSupportLabel.trim().slice(0, 100);
+    const content = draftSupportContent.trim().slice(0, 2_000);
+    updateTask((current) => ({
+      ...current,
+      overrides: {
+        ...current.overrides,
+        support: label && content
+          ? { type: effectiveSupport?.type || null, label, content }
+          : null,
+      },
+    }));
+  }
+
   function saveDraftsAndClose() {
     saveTitle();
     saveObjective();
     saveSteps();
+    saveSupport();
     onClose();
   }
 
@@ -275,8 +258,9 @@ function ActionDrawer({
   }
 
   async function copySupport() {
-    if (!effectiveSupport) return;
-    await navigator.clipboard.writeText(effectiveSupport.content);
+    const content = draftSupportContent.trim();
+    if (!content) return;
+    await navigator.clipboard.writeText(content);
   }
 
   return (
@@ -404,17 +388,38 @@ function ActionDrawer({
             </div>
           </div>
 
-          {effectiveSupport ? (
+          {effectiveSupport || draftSupportLabel || draftSupportContent ? (
             <div className="rounded-[1.1rem] border border-dema-line p-4">
               <div className="flex items-center justify-between gap-3">
-                <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">{effectiveSupport.label}</p>
+                <input
+                  value={draftSupportLabel}
+                  onChange={(event) => setDraftSupportLabel(event.target.value)}
+                  onBlur={saveSupport}
+                  aria-label="Titre du support"
+                  className="min-w-0 flex-1 bg-transparent text-xs font-medium uppercase tracking-[0.12em] text-dema-forest outline-none"
+                />
                 <button type="button" onClick={() => void copySupport()} className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-dema-line px-3 text-xs text-dema-forest">
                   <Copy className="h-3.5 w-3.5" aria-hidden="true" /> Copier
                 </button>
               </div>
-              <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-brand-blue">{effectiveSupport.content}</p>
+              <textarea
+                value={draftSupportContent}
+                onChange={(event) => setDraftSupportContent(event.target.value)}
+                onBlur={saveSupport}
+                rows={4}
+                aria-label="Contenu du support"
+                className="mt-3 min-h-[5rem] w-full resize-y whitespace-pre-wrap bg-transparent text-sm leading-relaxed text-brand-blue outline-none"
+              />
             </div>
-          ) : null}
+          ) : (
+            <button
+              type="button"
+              onClick={() => setDraftSupportLabel("Nouveau support")}
+              className="text-sm text-dema-muted underline decoration-dema-line underline-offset-4 hover:text-dema-forest"
+            >
+              Ajouter un support
+            </button>
+          )}
 
           <label className="block text-xs font-medium text-dema-muted">
             Notes personnelles
@@ -473,26 +478,27 @@ function StrategyPanel({
   workspace,
   onWorkspaceChange,
 }: {
-  plan: EditableActionPlan;
+  plan: PersistableActionPlan;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
 }) {
+  const strategySections = getActionPlanStrategyFields(plan);
+
   return (
     <div className="grid gap-4 md:grid-cols-2">
       {strategySections.map((section) => {
-        const pillar = plan.strategy[section.key] as unknown as Readonly<Record<string, string>>;
         const overrides = workspace.strategyOverrides[section.overrideKey];
-        const answers = section.fields.map(([, key], index) =>
-          overrides?.[`answer${["One", "Two", "Three"][index]}` as keyof typeof overrides] ?? pillar[key],
+        const answers = section.fields.map((field, index) =>
+          overrides?.[`answer${["One", "Two", "Three"][index]}` as keyof typeof overrides] ?? field.value,
         );
 
         return (
           <article key={section.key} className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 shadow-[0_10px_30px_rgba(23,35,29,0.035)] sm:p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">{section.label}</p>
             <div className="mt-4 space-y-4">
-              {section.fields.map(([label], index) => (
-                <div key={label}>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-blue/70">{label}</p>
+              {section.fields.map((field, index) => (
+                <div key={field.key}>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-blue/70">{field.label}</p>
                   <textarea
                     value={answers[index]}
                     onChange={(event) => {
@@ -510,7 +516,7 @@ function StrategyPanel({
                     }}
                     rows={2}
                     maxLength={500}
-                    aria-label={label}
+                    aria-label={field.label}
                     className="mt-1.5 min-h-[3.75rem] w-full resize-none overflow-hidden rounded-lg bg-brand-blue/[0.035] px-2 py-1.5 text-sm leading-relaxed text-brand-blue/75 [field-sizing:content] outline-none transition focus:bg-dema-sage/40 focus:text-brand-blue"
                   />
                 </div>
@@ -533,7 +539,7 @@ export default function ActionPlanResult({
   onDeleteAction,
   onGenerateLater,
 }: {
-  plan: EditableActionPlan;
+  plan: PersistableActionPlan;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   headerActions?: ReactNode;
@@ -544,10 +550,29 @@ export default function ActionPlanResult({
 }) {
   const [section, setSection] = useState<PlanSection>("tasks");
   const [view, setView] = useState<TaskView>("list");
+  const [filter, setFilter] = useState<TaskFilter>("week");
   const [selectedActionId, setSelectedActionId] = useState<string | null>(null);
-  const visibleActions = plan.weeklyActions.filter(
-    (action) => !workspace.deletedActionIds.includes(action.id),
-  );
+  const allActions: ActionPlanViewAction[] = [
+    ...getActionPlanActions(plan),
+    ...workspace.addedActions,
+  ];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const endOfWeek = new Date(today);
+  endOfWeek.setDate(today.getDate() + ((7 - today.getDay()) % 7));
+  const visibleActions = allActions
+    .filter((action) => !workspace.deletedActionIds.includes(action.id))
+    .filter((action) => {
+      const task = workspace.tasks[action.id];
+      if (!task) return false;
+      if (filter === "all") return true;
+      if (filter === "done") return task.status === "done";
+      const dueDate = task.dueDate ? new Date(`${task.dueDate}T00:00:00`) : null;
+      if (filter === "overdue") {
+        return task.status !== "done" && Boolean(dueDate && dueDate < today);
+      }
+      return !dueDate || dueDate <= endOfWeek;
+    });
   const selectedAction = visibleActions.find((action) => action.id === selectedActionId) || null;
 
   function updateStatus(actionId: string, status: ActionPlanTaskStatus) {
@@ -567,29 +592,37 @@ export default function ActionPlanResult({
           <button type="button" role="tab" aria-selected={section === "tasks"} onClick={() => setSection("tasks")} className={`-mb-px min-h-12 border-b-2 px-2.5 text-xs font-medium sm:px-4 sm:text-sm ${section === "tasks" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>À faire</button>
           <button type="button" role="tab" aria-selected={section === "strategy"} onClick={() => setSection("strategy")} className={`-mb-px min-h-12 border-b-2 px-2.5 text-xs font-medium sm:px-4 sm:text-sm ${section === "strategy" ? "border-dema-forest text-dema-forest" : "border-transparent text-dema-muted"}`}>Stratégie</button>
         </div>
-        {headerActions}
       </div>
 
       {section === "tasks" ? (
         <section aria-labelledby="tasks-title">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <h2 id="tasks-title" className="text-3xl font-light tracking-[-0.04em] text-brand-blue sm:text-4xl">Cette semaine</h2>
+          <h2 id="tasks-title" className="sr-only">Actions du plan</h2>
+          <div className="flex flex-wrap items-center gap-2">
+            {onAddAction ? (
+              <button type="button" onClick={onAddAction} disabled={allActions.length >= 50} className="demaa-secondary-button min-h-10 gap-2 px-4 text-xs disabled:cursor-not-allowed disabled:opacity-45">
+                <Plus className="h-4 w-4" aria-hidden="true" /> Ajouter une action
+              </button>
+            ) : null}
+            <label className="sr-only" htmlFor="action-plan-filter">Filtrer les actions</label>
+            <select
+              id="action-plan-filter"
+              value={filter}
+              onChange={(event) => setFilter(event.target.value as TaskFilter)}
+              className="min-h-10 rounded-full border border-dema-line bg-dema-paper px-4 text-xs text-brand-blue outline-none focus:border-dema-forest/35"
+            >
+              <option value="week">Cette semaine</option>
+              <option value="all">Toutes les actions</option>
+              <option value="overdue">En retard</option>
+              <option value="done">Terminées</option>
+            </select>
+            <div className="inline-flex w-fit rounded-full border border-dema-line bg-dema-paper p-1" aria-label="Vue des actions">
+              <button type="button" onClick={() => setView("list")} aria-pressed={view === "list"} className={`inline-flex min-h-9 items-center gap-1.5 rounded-full px-3 text-xs font-medium ${view === "list" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><LayoutList className="h-4 w-4" aria-hidden="true" /> Liste</button>
+              <button type="button" onClick={() => setView("kanban")} aria-pressed={view === "kanban"} className={`inline-flex min-h-9 items-center gap-1.5 rounded-full px-3 text-xs font-medium ${view === "kanban" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><Columns3 className="h-4 w-4" aria-hidden="true" /> Kanban</button>
             </div>
-            <div className="flex flex-wrap items-center gap-2">
-              {manualMode && onAddAction ? (
-                <button type="button" onClick={onAddAction} disabled={visibleActions.length >= 7} className="demaa-secondary-button min-h-10 gap-2 px-4 text-xs disabled:cursor-not-allowed disabled:opacity-45">
-                  <Plus className="h-4 w-4" aria-hidden="true" /> Ajouter une action
-                </button>
-              ) : null}
-              <div className="inline-flex w-fit rounded-full border border-dema-line bg-dema-paper p-1" aria-label="Vue des actions">
-                <button type="button" onClick={() => setView("list")} aria-pressed={view === "list"} className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-xs font-medium ${view === "list" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><LayoutList className="h-4 w-4" aria-hidden="true" /> Liste</button>
-                <button type="button" onClick={() => setView("kanban")} aria-pressed={view === "kanban"} className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-xs font-medium ${view === "kanban" ? "bg-dema-sage text-dema-forest" : "text-dema-muted"}`}><Columns3 className="h-4 w-4" aria-hidden="true" /> Kanban</button>
-              </div>
-            </div>
+            {headerActions}
           </div>
 
-          {manualMode && visibleActions.length === 0 ? (
+          {manualMode && allActions.length === 0 ? (
             <div className="mt-6 rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper px-6 py-10 text-center">
               {onAddAction ? (
                 <button type="button" onClick={onAddAction} className="demaa-secondary-button min-h-11 gap-2 px-5">
@@ -615,7 +648,7 @@ export default function ActionPlanResult({
                     <button type="button" onClick={() => setSelectedActionId(action.id)} className="flex min-w-0 flex-1 items-center gap-3 text-left focus-visible:outline-none">
                       <span className="min-w-0 flex-1">
                         <span className={`block text-sm font-medium leading-snug ${taskState.status === "done" ? "text-dema-muted" : "text-brand-blue"}`}>{title}</span>
-                        <span className="mt-1 block truncate text-xs text-dema-muted">{action.channelOrTool}{action.readyToUse ? ` · ${action.readyToUse.label}` : ""}</span>
+                        <span className="mt-1 block truncate text-xs text-dema-muted">{action.channelOrTool}{action.support ? ` · ${action.support.label}` : ""}</span>
                       </span>
                       <ChevronRight className="h-4 w-4 shrink-0 text-dema-muted" aria-hidden="true" />
                     </button>

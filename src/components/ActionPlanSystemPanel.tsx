@@ -43,6 +43,20 @@ export default function ActionPlanSystemPanel({
   const [error, setError] = useState<{ slug: string; message: string } | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
   const cacheKey = `${demoMode ? "demo" : "live"}:${selectedSystemId}`;
+  const savedSystems = workspace.savedSystemIds
+    .map((id) => options.find((option) => option.id === id))
+    .filter((option): option is ActionPlanSystemOption => Boolean(option));
+
+  function selectSystem(systemId: string) {
+    onSystemChange(systemId);
+    onWorkspaceChange((current) => ({
+      ...current,
+      selectedSystemId: systemId,
+      savedSystemIds: current.savedSystemIds.includes(systemId)
+        ? current.savedSystemIds
+        : [...current.savedSystemIds, systemId],
+    }));
+  }
 
   useEffect(() => {
     if (!selectedSystemId) {
@@ -104,8 +118,23 @@ export default function ActionPlanSystemPanel({
         <ActionPlanSystemSelector
           options={options}
           value={selectedSystemId}
-          onChange={onSystemChange}
+          onChange={selectSystem}
         />
+        {savedSystems.length > 1 ? (
+          <div className="mt-2 flex flex-wrap justify-center gap-1.5" aria-label="Systèmes enregistrés">
+            {savedSystems.map((system) => (
+              <button
+                key={system.id}
+                type="button"
+                onClick={() => selectSystem(system.id)}
+                aria-pressed={system.id === selectedSystemId}
+                className={`rounded-full px-3 py-1 text-xs transition ${system.id === selectedSystemId ? "bg-dema-sage text-dema-forest" : "text-dema-muted hover:text-dema-forest"}`}
+              >
+                {system.label}
+              </button>
+            ))}
+          </div>
+        ) : null}
       </div>
 
       {!selectedSystemId ? (

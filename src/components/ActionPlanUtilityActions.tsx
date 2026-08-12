@@ -6,17 +6,20 @@ import ActionPlanSaveControl from "@/components/ActionPlanSaveControl";
 import ActionPlanShareControl from "@/components/ActionPlanShareControl";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
+import type { AiGenerationMetadata } from "@/lib/ai-generation-metadata";
 
 export default function ActionPlanUtilityActions({
   plan,
   sourceText,
   workspace,
+  generation,
   demoMode,
   onReset,
 }: {
   plan: PersistableActionPlan;
   sourceText: string;
   workspace: ActionPlanWorkspaceState;
+  generation: AiGenerationMetadata | null;
   demoMode: boolean;
   onReset: () => void;
 }) {
@@ -56,6 +59,7 @@ export default function ActionPlanUtilityActions({
           plan={plan}
           sourceText={sourceText}
           workspace={workspace}
+          generation={generation}
           demoMode={demoMode}
         />
         <div ref={menuContainerRef} className="relative">

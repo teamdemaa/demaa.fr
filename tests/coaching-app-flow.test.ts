@@ -51,7 +51,8 @@ describe("unified app and coaching", () => {
     expect(coaching).not.toContain("Échange préalable");
     expect(coaching).toContain('useState<CoachingTab>("messages")');
     expect(coaching).toContain('(["messages", "sessions"] as const)');
-    expect(coaching).toContain("interimResults = true");
+    expect(coaching).toContain("interimResults: true");
+    expect(coaching).toContain("useSpeechDictation");
     expect(coaching).toContain("Dictée en cours… le texte apparaît dans le message.");
     expect(coaching).toContain("Identifiez-vous d’abord pour conserver la conversation");
     expect(coaching).toContain("Continuer par e-mail");
@@ -77,7 +78,9 @@ describe("unified app and coaching", () => {
 
     expect(noPlanBranch).not.toContain("<ActionPlanCoachingControl");
     expect(planBranch).toContain("<ActionPlanCoachingControl");
-    expect(planBranch).toContain("accessPlan={{ plan, sourceText: situation.trim(), workspace }}");
+    expect(planBranch).toContain("accessPlan={{");
+    expect(planBranch).toContain("sourceText: situation.trim()");
+    expect(planBranch).toContain("generation,");
   });
 
   it("keeps magic-link consumption on POST", () => {

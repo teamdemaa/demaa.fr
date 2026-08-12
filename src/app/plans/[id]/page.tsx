@@ -6,6 +6,7 @@ import SavedActionPlanDetail from "@/components/SavedActionPlanDetail";
 import {
   ACTION_PLAN_ACCESS_COOKIE,
   getActionPlanForAccess,
+  getOwnedActionPlans,
 } from "@/lib/action-plan-storage.server";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import {
@@ -44,6 +45,14 @@ export default async function ActionPlanPage({
   });
   if (!stored) notFound();
 
+  const availablePlans = email
+    ? (await getOwnedActionPlans(email)).map(({ id: availableId, title, updatedAt }) => ({
+        id: availableId,
+        title,
+        updatedAt,
+      }))
+    : [{ id: stored.id, title: stored.title, updatedAt: stored.updatedAt }];
+
   return (
     <div data-action-plan-workspace className="min-h-screen bg-dema-cream text-brand-blue">
       <Navbar anonymousLanding isAuthenticated minimal />
@@ -51,12 +60,15 @@ export default async function ActionPlanPage({
         <div className="mx-auto max-w-[68rem]">
           <h1 className="sr-only">Mon plan d’action</h1>
           <SavedActionPlanDetail
+            key={stored.id}
             initialEmail={email || ""}
             plan={stored.plan}
             planId={stored.id}
+            initialTitle={stored.title}
             initialRevision={stored.revision}
             initialWorkspace={stored.workspaceState}
             systemOptions={actionPlanSystemOptions}
+            availablePlans={availablePlans}
           />
         </div>
       </main>

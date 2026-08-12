@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { ActionPlan } from "@/lib/action-plan-contract";
+import type { LegacyV2ActionPlan } from "@/lib/action-plan-contract";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import { createActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 import { createManualAction, createManualActionPlan } from "@/lib/action-plan-manual";
@@ -98,6 +98,7 @@ import {
   InvalidActionPlanMutationError,
   createOwnedActionPlan,
   createPendingActionPlan,
+  deleteActionPlanForAccess,
   getActionPlanForAccess,
   getActionPlanAccessCookieOptions,
   getOwnedActionPlans,
@@ -114,7 +115,7 @@ import {
 const systemId = actionPlanSystemOptions[0]?.id;
 if (!systemId) throw new Error("Missing action plan system fixture.");
 
-function actionPlan(summary = "Un plan concret pour reprendre la main."): ActionPlan {
+function actionPlan(summary = "Un plan concret pour reprendre la main."): LegacyV2ActionPlan {
   const actions = [1, 2, 3].map((index) => ({
     id: `action-${index}` as `action-${1 | 2 | 3 | 4 | 5}`,
     title: `Action ${index}`,
@@ -215,6 +216,43 @@ describe("action plan Firebase persistence", () => {
         temporaryAccessToken: pending.temporaryAccessToken,
       }),
     ).toBeNull();
+  });
+
+  it("stores a distinct plan title and lets its owner rename it", async () => {
+    const created = await createOwnedActionPlan("dirigeant@example.com", {
+      plan: actionPlan(),
+      title: "  Priorités   commerciales  ",
+    });
+    expect(created.title).toBe("Priorités commerciales");
+
+    const updated = await updateActionPlanWorkspaceForAccess({
+      email: "dirigeant@example.com",
+      id: created.id,
+      expectedRevision: created.revision,
+      title: "Plan de rentrée",
+      workspaceState: created.workspaceState,
+    });
+    expect(updated?.title).toBe("Plan de rentrée");
+    expect((await getOwnedActionPlans("dirigeant@example.com"))[0]?.title).toBe(
+      "Plan de rentrée",
+    );
+  });
+
+  it("soft-deletes a plan and removes it from the active list", async () => {
+    const created = await createOwnedActionPlan("dirigeant@example.com", {
+      plan: actionPlan(),
+    });
+
+    await deleteActionPlanForAccess({
+      email: "dirigeant@example.com",
+      id: created.id,
+      expectedRevision: created.revision,
+    });
+
+    expect(await getOwnedActionPlans("dirigeant@example.com")).toEqual([]);
+    expect(firestore.documents.get(`action_plans/${created.id}`)?.status).toBe(
+      "deleted",
+    );
   });
 
   it("configures the temporary credential as a 30-day HttpOnly preview cookie", () => {
@@ -436,7 +474,7 @@ describe("action plan Firebase persistence", () => {
 
     const [reopened] = await getOwnedActionPlans("dirigeant@example.com");
     expect(reopened?.plan.version).toBe("manual");
-    expect(reopened?.plan.weeklyActions).toHaveLength(1);
+    expect(reopened?.plan.version === "manual" ? reopened.plan.weeklyActions : []).toHaveLength(1);
     expect(reopened?.workspaceState.tasks["action-1"]?.status).toBe("todo");
   });
 
@@ -494,8 +532,11 @@ describe("action plan Firebase persistence", () => {
 
     const [stored] = await getOwnedActionPlans("dirigeant@example.com");
     expect(stored?.plan.version).toBe("2");
-    expect(stored?.plan.weeklyActions[0]).not.toHaveProperty("why");
-    expect(stored?.plan.weeklyActions[0]).not.toHaveProperty("estimatedMinutes");
+    const legacyAction = stored?.plan.version === "2"
+      ? stored.plan.weeklyActions[0]
+      : undefined;
+    expect(legacyAction).not.toHaveProperty("why");
+    expect(legacyAction).not.toHaveProperty("estimatedMinutes");
     expect(stored?.workspaceState.tasks["action-1"].status).toBe("done");
     expect(stored?.workspaceState.tasks["action-1"].notes).toBe(
       "Progression historique",
