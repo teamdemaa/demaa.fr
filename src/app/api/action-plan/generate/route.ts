@@ -11,7 +11,10 @@ import { logOperationalError } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+// A generation can require one targeted repair after the initial structured
+// response. Keep the route above the two 55 s provider budgets so Vercel does
+// not terminate a valid repair at the former 60 s boundary.
+export const maxDuration = 120;
 
 const requestSchema = z
   .object({

@@ -30,7 +30,10 @@ vi.mock("@/lib/operational-log", () => ({
   logOperationalError: mocks.logOperationalError,
 }));
 
-import { POST } from "@/app/api/action-plan/generate/route";
+import {
+  maxDuration,
+  POST,
+} from "@/app/api/action-plan/generate/route";
 
 function request(
   body: Record<string, unknown>,
@@ -48,6 +51,10 @@ function request(
 }
 
 describe("action plan generation route", () => {
+  it("leaves enough runtime for one targeted repair", () => {
+    expect(maxDuration).toBe(120);
+  });
+
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.enforceRateLimit.mockResolvedValue(null);
