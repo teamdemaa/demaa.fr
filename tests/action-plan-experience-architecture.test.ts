@@ -46,7 +46,7 @@ describe("action plan experience architecture", () => {
     expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} workspace={workspace} variant="menu" />');
     expect(utilityActions).not.toContain('plan.version !== "manual"');
     expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} workspace={workspace} variant="menu" />');
-    expect(utilityActions).toContain("Nouvelle situation");
+    expect(utilityActions).toContain("Nouveau plan");
     expect(utilityActions.match(/<ActionPlanSaveControl/g)).toHaveLength(1);
     expect(experience).toContain('demo !== "plan"');
     expect(experience).toContain("ACTION_PLAN_DEMO");
@@ -88,6 +88,8 @@ describe("action plan experience architecture", () => {
     expect(result).toContain("<ActionPlanCommandBar");
     expect(commandBar).toContain('fetch("/api/action-plan/command"');
     expect(commandBar).toContain("applyActionPlanCommandOperations");
+    expect(commandBar).toContain("useSpeechDictation");
+    expect(commandBar).toContain("Dicter ma demande");
     expect(commandBar).toContain("Commande IA désactivée dans la démo");
     expect(commandBar).toContain("Annuler");
   });

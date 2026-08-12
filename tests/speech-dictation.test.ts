@@ -220,14 +220,21 @@ describe("speech dictation", () => {
       "src/components/ActionPlanExperience.tsx",
       "utf8",
     );
+    const commandBar = readFileSync(
+      "src/components/ActionPlanCommandBar.tsx",
+      "utf8",
+    );
     const coaching = readFileSync("src/components/CoachingPanel.tsx", "utf8");
 
     expect(actionPlan).toContain("useSpeechDictation");
     expect(actionPlan).toContain("continuous: false");
+    expect(commandBar).toContain("useSpeechDictation");
+    expect(commandBar).toContain("commandDictation.handleValueChange");
+    expect(commandBar).toContain('aria-label={commandDictation.isListening ? "Arrêter la dictée" : "Dicter ma demande"}');
     expect(coaching).toContain("useSpeechDictation");
     expect(coaching).toContain("continuous: true");
-    expect(`${actionPlan}\n${coaching}`).not.toContain("getUserMedia");
-    expect(`${actionPlan}\n${coaching}`).not.toContain("new SpeechRecognition");
+    expect(`${actionPlan}\n${commandBar}\n${coaching}`).not.toContain("getUserMedia");
+    expect(`${actionPlan}\n${commandBar}\n${coaching}`).not.toContain("new SpeechRecognition");
   });
 
   it("always gives an unavailable browser a keyboard fallback", () => {

@@ -82,7 +82,7 @@ export default function GoogleCustomerSignInButton({
       {isLoading ? (
         <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
       ) : (
-        <span aria-hidden="true" className="text-base font-semibold text-[#4285f4]">G</span>
+        <span aria-hidden="true" className="text-base font-semibold text-dema-forest">G</span>
       )}
       {isLoading ? "Connexion…" : "Continuer avec Google"}
     </button>

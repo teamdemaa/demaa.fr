@@ -35,14 +35,21 @@ describe("solution proposal UI contract", () => {
   });
 
   it("uses one shared short form without asking candidates to choose systems", async () => {
-    const [form, route] = await Promise.all([
+    const [form, googleSignIn, route] = await Promise.all([
       readSource("src/components/ProviderProfileModal.tsx"),
+      readSource("src/components/GoogleCustomerSignInButton.tsx"),
       readSource("src/app/api/provider-profile-submission/route.ts"),
     ]);
 
     expect(form).toContain("Vos expertises");
     expect(form).toContain("Pays ou zones couverts");
     expect(form).not.toContain("selectedSystemSlugs");
+    expect(form).not.toContain(
+      "Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.",
+    );
+    expect(googleSignIn).toContain("Continuer avec Google");
+    expect(googleSignIn).toContain("text-dema-forest");
+    expect(googleSignIn).not.toContain("#4285f4");
     expect(route).toContain('channels: { email: false, resend: false, slack: true }');
     expect(form).toContain('role="alert"');
     expect(form).toContain('aria-live="polite"');

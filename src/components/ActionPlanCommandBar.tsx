@@ -1,7 +1,8 @@
 "use client";
 
-import { ArrowUp, LoaderCircle, Undo2 } from "lucide-react";
+import { ArrowUp, LoaderCircle, Mic, Undo2 } from "lucide-react";
 import { type Dispatch, type FormEvent, type SetStateAction, useState } from "react";
+import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import {
   actionPlanCommandOperationsSchema,
@@ -29,9 +30,18 @@ export default function ActionPlanCommandBar({
   const [feedback, setFeedback] = useState("");
   const [undoSnapshot, setUndoSnapshot] =
     useState<ActionPlanWorkspaceState | null>(null);
+  const maximumLength = mode === "generate" ? 4_000 : 1_000;
+  const commandDictation = useSpeechDictation({
+    value: command,
+    onChange: setCommand,
+    continuous: false,
+    interimResults: true,
+    maxLength: maximumLength,
+  });
 
   async function submitCommand(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    commandDictation.cancel();
     const trimmedCommand = command.trim();
     const minimumLength = mode === "generate" ? 20 : 2;
     const editDisabled = demoMode && mode === "edit";
@@ -118,9 +128,9 @@ export default function ActionPlanCommandBar({
         <input
           id="action-plan-command"
           value={command}
-          onChange={(event) => setCommand(event.target.value)}
+          onChange={(event) => commandDictation.handleValueChange(event.target.value)}
           disabled={inputDisabled}
-          maxLength={mode === "generate" ? 4_000 : 1_000}
+          maxLength={maximumLength}
           placeholder={
             demoMode && mode === "edit"
               ? "Commande IA désactivée dans la démo"
@@ -130,6 +140,20 @@ export default function ActionPlanCommandBar({
           }
           className="min-w-0 flex-1 bg-transparent text-sm text-brand-blue outline-none placeholder:text-dema-muted disabled:cursor-not-allowed"
         />
+        <button
+          type="button"
+          onClick={commandDictation.toggle}
+          disabled={inputDisabled}
+          aria-label={commandDictation.isListening ? "Arrêter la dictée" : "Dicter ma demande"}
+          aria-pressed={commandDictation.isListening}
+          className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition disabled:cursor-not-allowed disabled:opacity-45 ${
+            commandDictation.isListening
+              ? "border-dema-forest bg-dema-forest text-white"
+              : "border-dema-line bg-white text-dema-forest hover:border-dema-forest/30 hover:bg-dema-soft"
+          }`}
+        >
+          <Mic className={`h-4 w-4 ${commandDictation.isListening ? "animate-pulse" : ""}`} aria-hidden="true" />
+        </button>
         <button
           type="submit"
           disabled={inputDisabled || command.trim().length < minimumLength}
@@ -143,9 +167,9 @@ export default function ActionPlanCommandBar({
           )}
         </button>
       </form>
-      {feedback || undoSnapshot ? (
+      {feedback || commandDictation.error || undoSnapshot ? (
         <div className="mt-1 flex min-h-6 items-center justify-center gap-3 px-4 text-xs text-dema-muted" aria-live="polite">
-          <span>{feedback}</span>
+          <span>{commandDictation.error || feedback}</span>
           {undoSnapshot ? (
             <button
               type="button"

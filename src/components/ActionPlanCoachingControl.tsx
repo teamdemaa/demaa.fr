@@ -260,9 +260,6 @@ export default function ActionPlanCoachingControl({
                 <h2 id="specialist-access-title" className="pr-12 text-2xl font-medium tracking-[-0.03em] text-brand-blue">
                   Écrire à un spécialiste
                 </h2>
-                <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-                  Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.
-                </p>
                 <div className="mt-6">
                   <CustomerSpaceAccessForm
                     actionPlanClaim={accessPlanId ? { actionPlanId: accessPlanId } : null}

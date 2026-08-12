@@ -248,10 +248,7 @@ export default function ProviderProfileModal({
 
             {!identityLoading && !authenticatedEmail ? (
               <div className="mt-7 rounded-[1.1rem] border border-dema-line bg-dema-cream/55 p-4 sm:p-5">
-                <p className="text-sm leading-relaxed text-dema-muted">
-                  Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.
-                </p>
-                <div className="mt-4">
+                <div>
                   <CustomerSpaceAccessForm compact returnTo={returnTo} simple />
                 </div>
               </div>

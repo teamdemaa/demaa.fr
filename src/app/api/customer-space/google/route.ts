@@ -72,6 +72,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  let claimedPendingPlan = false;
   if (actionPlanId) {
     const temporaryAccessToken = request.cookies.get(ACTION_PLAN_ACCESS_COOKIE)?.value;
     const claimed = temporaryAccessToken
@@ -88,6 +89,7 @@ export async function POST(request: NextRequest) {
         { status: 409, headers: { "Cache-Control": "private, no-store, max-age=0" } },
       );
     }
+    claimedPendingPlan = true;
   }
 
   const sessionToken = await createCustomerSession(email);
@@ -100,6 +102,8 @@ export async function POST(request: NextRequest) {
     sessionToken,
     getCustomerCookieOptions(),
   );
-  response.cookies.delete(ACTION_PLAN_ACCESS_COOKIE);
+  if (claimedPendingPlan) {
+    response.cookies.delete(ACTION_PLAN_ACCESS_COOKIE);
+  }
   return response;
 }

@@ -85,7 +85,7 @@ export default function ActionPlanUtilityActions({
                 }}
                 className="block w-full appearance-none whitespace-nowrap border-0 bg-transparent px-2 py-1.5 text-left text-sm font-normal leading-6 text-brand-blue transition-colors hover:text-dema-forest focus-visible:outline-none focus-visible:underline"
               >
-                Nouvelle situation
+                Nouveau plan
               </button>
             </div>
           ) : null}

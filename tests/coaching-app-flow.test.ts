@@ -70,6 +70,9 @@ describe("unified app and coaching", () => {
     expect(coachingControl).toContain("window.history.replaceState");
     expect(coachingControl).toContain("onRequireAccess={initialEmail ? undefined");
     expect(coachingControl).toContain("/api/action-plans");
+    expect(coachingControl).not.toContain(
+      "Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.",
+    );
     expect(coachingControl).toContain('new URLSearchParams({ intent: "coaching", tab: intent.tab })');
     expect(coachingControl).toContain('params.set("offer", intent.offer)');
     expect(appNavigation).toContain("Opportunités");

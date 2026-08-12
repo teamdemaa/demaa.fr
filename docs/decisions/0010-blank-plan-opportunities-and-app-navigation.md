@@ -21,7 +21,7 @@ implémentation.
 
 La sauvegarde est une action contextuelle du Plan d’action et n’encombre pas le
 header global. `Enregistrer` apparaît avec `Partager` et le menu contenant
-`Nouvelle situation`. Pour une personne connectée, les modifications sont
+`Nouveau plan`. Pour une personne connectée, les modifications sont
 persistées sans redemander son e-mail.
 
 Cette règle s'applique à toutes les actions fonctionnelles de l'application :

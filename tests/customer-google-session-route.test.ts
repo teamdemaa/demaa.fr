@@ -65,10 +65,13 @@ describe("Google customer session route", () => {
   });
 
   it("verifies Google, creates the existing Demaa session and keeps a safe return path", async () => {
-    const response = await POST(request({
-      idToken: "firebase-id-token",
-      returnTo: "/plans",
-    }));
+    const response = await POST(request(
+      {
+        idToken: "firebase-id-token",
+        returnTo: "/plans",
+      },
+      "demaa_action_plan_access=opaque-access-token",
+    ));
 
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual({ redirectTo: "/plans" });
@@ -76,6 +79,9 @@ describe("Google customer session route", () => {
     expect(mocks.createCustomerSession).toHaveBeenCalledWith("dirigeant@example.com");
     expect(response.headers.get("set-cookie")).toContain(
       "demaa_customer_session=session-token",
+    );
+    expect(response.headers.get("set-cookie")).not.toContain(
+      "demaa_action_plan_access=;",
     );
   });
 
