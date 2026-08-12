@@ -19,7 +19,7 @@ import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import { logOperationalEvent } from "@/lib/operational-log";
 
 export const ACTION_PLAN_MODEL_ID =
-  process.env.DEMAA_AI_MODEL?.trim() || "openai/gpt-5.6-terra";
+  process.env.DEMAA_AI_MODEL?.trim() || "openai/gpt-5-mini";
 
 const SYSTEM_CATALOG = JSON.stringify(
   actionPlanSystemOptions.map(({ id, label, aliases }) => [id, label, aliases]),

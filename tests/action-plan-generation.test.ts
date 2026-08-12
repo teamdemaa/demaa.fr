@@ -121,7 +121,7 @@ function mockResult(plan: ActionPlan, inputTokens = 10, outputTokens = 20) {
 
 describe("action plan generation prompt", () => {
   it("uses the model available on the current Vercel AI Gateway plan", () => {
-    expect(ACTION_PLAN_MODEL_ID).toBe("openai/gpt-5.6-terra");
+    expect(ACTION_PLAN_MODEL_ID).toBe("openai/gpt-5-mini");
   });
 
   it("contains all 115 lightweight systems but no full process payload", () => {
