@@ -135,6 +135,14 @@ l'ADR 0004 prévaut.
   l'ouverture du plan.
 - [x] Permettre un nom d'organisation facultatif dans l'administration des
   Opportunités et ne l'afficher que lorsqu'il est explicitement publié.
+- [ ] Synchroniser de manière contrôlée les champs facultatifs enrichis des
+  Opportunités déjà présentes dans Firebase (`cadence`, `startTiming` et
+  `expectations`). La Preview du 12 août 2026 expose encore les anciens
+  documents pour les trois Opportunités publiées, alors que le snapshot local
+  contient leurs détails complets. Préparer un plan de migration idempotent,
+  afficher le diff par document et exiger la confirmation du projet et de
+  l'empreinte avant écriture ; ne jamais écraser une modification éditoriale
+  plus récente effectuée depuis l'administration.
 - [ ] Cadrer ensuite les évolutions Coaching : capacité humaine, notifications
   de réponse, paiement/réservation, confidentialité, durée de conservation et
   limites du service. L'historique Messages, sa persistance et la réponse sous
