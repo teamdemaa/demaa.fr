@@ -2,6 +2,7 @@
 
 - Statut : `validated`
 - Date : 9 août 2026
+- Mise à jour : 13 août 2026, libellé Ateliers et deux onglets visibles
 - Portée : Services Demaa, composition de Solutions, Académie, Contenus et
   Ressources des 115 systèmes
 - Supersède : les passages incompatibles des ADR 0001, 0002 et 0003
@@ -82,14 +83,15 @@ la même URL sans créer de doublon SEO.
 La recherche est suivie de deux onglets applicatifs visibles :
 
 1. `Cours`, ouvert par défaut et alimenté par le catalogue pédagogique existant ;
-2. `Cas concrets`, qui reprend les études de cas éditoriales publiées sans les
-   présenter comme fictives.
+2. `Ateliers`, réservé aux démonstrations pratiques vidéo ou en direct : créer
+   une campagne Google Ads, une campagne Facebook Ads ou construire un système
+   marketing avec le dirigeant.
 
-Le troisième onglet validé est `Webinaires`. Il rassemble les événements à
-venir et leurs éventuels replays, mais reste temporairement masqué tant que les
-créneaux et contenus publiés ne sont pas prêts. Les identifiants techniques
-historiques `decryptions` et `live` sont conservés pour éviter une migration
-sans valeur produit.
+L'Académie n'affiche pas de troisième onglet. Le catalogue historique
+`Webinaires` reste masqué tant qu'une nouvelle décision de publication ne l'a
+pas réactivé. Tant qu'aucun atelier n'est publié, l'onglet affiche un état vide
+court et honnête. Les études de cas `case-study` conservent leurs données et
+leurs routes directes mais ne sont pas listées dans l'index Académie.
 
 Les modèles et documents restent rattachés aux Systèmes et ne sont pas
 dupliqués dans l'Académie.
@@ -98,13 +100,13 @@ Les six formations en direct durent deux heures et coûtent 250 EUR HT. Les
 dates sont explicitement validées avant publication et aucune restauration de
 Stripe n'est prévue.
 
-Les anciennes routes des cas restent canoniques. Leur réutilisation dans
-`Cas concrets` n'ajoute ni copie de contenu ni nouveau stockage.
+Les anciennes routes des cas restent canoniques. Elles ne sont ni renommées en
+Ateliers, ni supprimées, ni copiées dans un nouveau stockage.
 
 ### Dérogation temporaire de lancement
 
-Pour le lancement France, l'onglet `Webinaires` de l'Académie
-et « Cas concret » des Ressources Système sont masquées par les indicateurs
+L'onglet `Webinaires` de l'Académie et « Cas concret » des Ressources Système
+sont masqués par les indicateurs
 centralisés de `src/lib/public-editorial-visibility.ts`.
 
 Leurs catalogues, relations et routes sont conservés. Leur réactivation exige

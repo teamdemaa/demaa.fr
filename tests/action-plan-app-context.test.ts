@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildActionPlanAppHref,
+  buildPublicSystemAppHref,
   parseActionPlanAppContext,
 } from "@/lib/action-plan-app-context";
 
@@ -32,7 +33,7 @@ describe("action plan app context", () => {
     });
   });
 
-  it("builds a shareable app URL while preserving unrelated safe parameters", () => {
+  it("preserves the current plan pathname for ordinary in-app navigation", () => {
     expect(buildActionPlanAppHref({
       context: {
         view: "academy",
@@ -43,6 +44,15 @@ describe("action plan app context", () => {
     })).toBe(
       "/plans/plan-1?demo=plan&view=academy&academy=piloter-sa-tresorerie",
     );
+  });
+
+  it("builds system sharing on the public app entry, never on a saved plan", () => {
+    const href = buildPublicSystemAppHref({
+      systemId: "restaurant",
+    });
+
+    expect(href).toBe("/?view=system&system=restaurant");
+    expect(href).not.toContain("/plans/");
   });
 
   it("rejects unsafe context values", () => {

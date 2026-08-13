@@ -15,6 +15,7 @@ import {
 export type CoachingTab = "messages" | "formules";
 export type { SpecialistOffer } from "@/lib/specialist-offers";
 export type SpecialistAccessIntent = {
+  draftToken?: string;
   offer?: SpecialistOffer;
   tab: CoachingTab;
 };
@@ -40,18 +41,65 @@ async function submitCoachingRequest(payload: Record<string, unknown>) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
-  if (response.status !== 202) throw new Error("request_failed");
-  return response.json().catch(() => null) as Promise<{
+  const body = await response.json().catch(() => null) as {
+    draftMessage?: string;
+    error?: string;
     message?: CoachingMessage;
     ok?: boolean;
-  } | null>;
+  } | null;
+  if (response.status !== 202) {
+    throw new CoachingRequestError(
+      body?.error || "Le message n’a pas pu être envoyé.",
+      body?.draftMessage,
+    );
+  }
+  return body;
+}
+
+class CoachingRequestError extends Error {
+  readonly draftMessage?: string;
+
+  constructor(message: string, draftMessage?: string) {
+    super(message);
+    this.name = "CoachingRequestError";
+    this.draftMessage = draftMessage;
+  }
+}
+
+async function createCoachingDraft(message: string) {
+  const response = await fetch("/api/coaching-draft", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message }),
+  });
+  const body = await response.json().catch(() => null) as {
+    draftToken?: string;
+    error?: string;
+  } | null;
+  if (response.status !== 201 || !body?.draftToken) {
+    throw new Error(body?.error || "Le brouillon n’a pas pu être préparé.");
+  }
+  return body.draftToken;
+}
+
+function clearCoachingDraftFromUrl() {
+  const url = new URL(window.location.href);
+  if (!url.searchParams.has("draftToken")) return;
+  url.searchParams.delete("draftToken");
+  window.history.replaceState(
+    window.history.state,
+    "",
+    `${url.pathname}${url.search}${url.hash}`,
+  );
 }
 
 export default function CoachingPanel({
+  initialDraftToken,
   initialOffer,
   initialTab = "messages",
   onRequireAccess,
 }: {
+  initialDraftToken?: string;
   initialOffer?: SpecialistOffer;
   initialTab?: CoachingTab;
   onRequireAccess?: (intent: SpecialistAccessIntent) => void;
@@ -154,30 +202,11 @@ export default function CoachingPanel({
           </div>
         </section>
       ) : (
-        onRequireAccess ? (
-          <section className="mx-auto mt-7 max-w-[51.25rem] overflow-hidden rounded-[1.5rem] border border-dema-line bg-dema-paper">
-            <div className="flex min-h-[3.875rem] items-center justify-between gap-4 border-b border-dema-line px-5 py-3.5">
-              <h3 className="text-base font-medium text-brand-blue">Votre conversation</h3>
-              <span className="shrink-0 rounded-full bg-dema-sage px-3 py-1.5 text-xs font-medium text-dema-forest">Premier échange offert</span>
-            </div>
-            <div className="flex min-h-[14.375rem] items-center justify-center bg-dema-sage/30 p-6 text-center">
-              <div className="max-w-md">
-                <p className="text-sm leading-relaxed text-dema-muted">
-                  Identifiez-vous pour écrire votre message, conserver la conversation et retrouver la réponse du spécialiste.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => onRequireAccess({ tab: "messages" })}
-                  className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-[#284f3a]"
-                >
-                  Continuer par e-mail
-                </button>
-              </div>
-            </div>
-          </section>
-        ) : (
-          <CoachingMessageForm />
-        )
+        <CoachingMessageForm
+          initialDraftToken={initialDraftToken}
+          isAuthenticated={!onRequireAccess}
+          onRequireAccess={onRequireAccess}
+        />
       )}
 
       {selectedOffer ? <CoachingRequestDialog offer={selectedOffer} onClose={closeFormulaDialog} /> : null}
@@ -281,17 +310,39 @@ function CoachingRequestDialog({ offer, onClose }: { offer: SpecialistOffer; onC
   );
 }
 
-function CoachingMessageForm() {
+function CoachingMessageForm({
+  initialDraftToken,
+  isAuthenticated,
+  onRequireAccess,
+}: {
+  initialDraftToken?: string;
+  isAuthenticated: boolean;
+  onRequireAccess?: (intent: SpecialistAccessIntent) => void;
+}) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<CoachingMessage[]>([]);
-  const [status, setStatus] = useState<"idle" | "loading" | "sending" | "error">("loading");
+  const [pendingDraftToken, setPendingDraftToken] = useState(initialDraftToken || "");
+  const [status, setStatus] = useState<"idle" | "loading" | "sending" | "error">(
+    isAuthenticated ? "loading" : "idle",
+  );
   const historyRef = useRef<HTMLDivElement>(null);
+  const autoSubmissionRef = useRef("");
+  const updateMessage = useCallback((nextMessage: string) => {
+    if (pendingDraftToken) {
+      autoSubmissionRef.current = "";
+      setPendingDraftToken("");
+      clearCoachingDraftFromUrl();
+    }
+    setMessage(nextMessage);
+    setStatus((current) => current === "error" ? "idle" : current);
+  }, [pendingDraftToken]);
   const messageDictation = useSpeechDictation({
     value: message,
-    onChange: setMessage,
+    onChange: updateMessage,
     continuous: true,
     interimResults: true,
   });
+  const cancelMessageDictation = messageDictation.cancel;
 
   const loadMessages = useCallback(async (quiet = false) => {
     if (!quiet) setStatus("loading");
@@ -312,13 +363,15 @@ function CoachingMessageForm() {
   useEffect(() => {
     const draft = window.sessionStorage.getItem("demaa_coaching_message_draft");
     if (draft) setMessage(draft);
+    if (!isAuthenticated) return;
+
     void loadMessages();
 
     const interval = window.setInterval(() => {
       if (document.visibilityState === "visible") void loadMessages(true);
     }, 30_000);
     return () => window.clearInterval(interval);
-  }, [loadMessages]);
+  }, [isAuthenticated, loadMessages]);
 
   useEffect(() => {
     if (message) {
@@ -337,17 +390,20 @@ function CoachingMessageForm() {
     });
   }, [messages]);
 
-  async function submit(event: React.FormEvent) {
-    event.preventDefault();
-    if (message.trim().length < 2) {
-      setStatus("error"); return;
-    }
-    messageDictation.cancel();
+  const sendAuthenticatedMessage = useCallback(async (draftToken?: string) => {
+    cancelMessageDictation();
     setStatus("sending");
     const flowKey = "coaching:message";
     try {
-      const payload = await submitCoachingRequest({ attribution: getLeadAttributionPayload(), message, requestKind: "message", website: "", idempotencyKey: getLeadSubmissionKey(flowKey) });
-      clearLeadSubmissionKey(flowKey);
+      const payload = await submitCoachingRequest({
+        attribution: getLeadAttributionPayload(),
+        ...(draftToken
+          ? { draftToken }
+          : { idempotencyKey: getLeadSubmissionKey(flowKey), message }),
+        requestKind: "message",
+        website: "",
+      });
+      if (!draftToken) clearLeadSubmissionKey(flowKey);
       if (payload?.message) {
         setMessages((current) => current.some((entry) => entry.id === payload.message?.id)
           ? current
@@ -355,9 +411,55 @@ function CoachingMessageForm() {
       } else {
         await loadMessages(true);
       }
+      setPendingDraftToken("");
       setMessage("");
       setStatus("idle");
-    } catch { setStatus("error"); }
+      if (draftToken) clearCoachingDraftFromUrl();
+    } catch (error) {
+      if (error instanceof CoachingRequestError && error.draftMessage) {
+        setMessage(error.draftMessage);
+      }
+      setStatus("error");
+    }
+  }, [cancelMessageDictation, loadMessages, message]);
+
+  useEffect(() => {
+    if (
+      !isAuthenticated
+      || !pendingDraftToken
+      || autoSubmissionRef.current === pendingDraftToken
+    ) return;
+
+    autoSubmissionRef.current = pendingDraftToken;
+    void sendAuthenticatedMessage(pendingDraftToken);
+  }, [isAuthenticated, pendingDraftToken, sendAuthenticatedMessage]);
+
+  async function submit(event: React.FormEvent) {
+    event.preventDefault();
+    if (message.trim().length < 2 && !pendingDraftToken) {
+      setStatus("error");
+      return;
+    }
+
+    if (!isAuthenticated) {
+      cancelMessageDictation();
+      if (pendingDraftToken) {
+        onRequireAccess?.({ draftToken: pendingDraftToken, tab: "messages" });
+        return;
+      }
+      setStatus("sending");
+      try {
+        const draftToken = await createCoachingDraft(message);
+        setPendingDraftToken(draftToken);
+        setStatus("idle");
+        onRequireAccess?.({ draftToken, tab: "messages" });
+      } catch {
+        setStatus("error");
+      }
+      return;
+    }
+
+    await sendAuthenticatedMessage(pendingDraftToken || undefined);
   }
 
   return (
@@ -416,13 +518,13 @@ function CoachingMessageForm() {
           >
             <Mic className="h-4 w-4" />
           </button>
-          <button disabled={status === "sending" || message.trim().length < 2} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-forest text-white transition hover:bg-[#284f3a] disabled:opacity-40" aria-label="Envoyer le message">
+          <button disabled={status === "sending" || (message.trim().length < 2 && !pendingDraftToken)} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-forest text-white transition hover:bg-[#284f3a] disabled:opacity-40" aria-label="Envoyer le message">
             {status === "sending" ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Send className="h-4 w-4" aria-hidden="true" />}
           </button>
         </div>
         {messageDictation.isListening ? <p className="mt-2 px-2 text-xs text-dema-forest" role="status">Dictée en cours… le texte apparaît dans le message.</p> : null}
         {messageDictation.error ? <p className="mt-2 px-2 text-xs text-amber-800" role="alert">{messageDictation.error}</p> : null}
-        {status === "error" ? <p className="mt-2 px-2 text-xs font-medium text-red-700">Le message n’a pas pu être envoyé. Réessayez.</p> : null}
+        {status === "error" ? <p className="mt-2 px-2 text-xs font-medium text-red-700">Le message n’a pas pu être envoyé. Votre texte est conservé : réessayez.</p> : null}
       </form>
     </section>
   );

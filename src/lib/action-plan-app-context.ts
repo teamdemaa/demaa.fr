@@ -134,3 +134,15 @@ export function buildActionPlanAppHref(input: {
   const query = params.toString();
   return `${input.pathname ?? "/"}${query ? `?${query}` : ""}`;
 }
+
+export function buildPublicSystemAppHref(input: {
+  systemId: string;
+}) {
+  return buildActionPlanAppHref({
+    pathname: "/",
+    context: {
+      view: "system",
+      systemId: input.systemId,
+    },
+  });
+}

@@ -111,12 +111,16 @@ describe("action plan experience architecture", () => {
   it("changes the selected system deterministically without another AI call", () => {
     const experience = source("src/components/ActionPlanExperience.tsx");
     const systemPanel = source("src/components/ActionPlanSystemPanel.tsx");
+    const systemPayload = source(
+      "src/lib/action-plan-system-payload.client.ts",
+    );
     const systemSelector = source("src/components/ActionPlanSystemSelector.tsx");
 
     expect(experience).toContain('fetch("/api/action-plan/generate"');
-    expect(systemPanel).toContain("/api/action-plan/system/");
-    expect(systemPanel).toContain("systemPayloadCache");
-    expect(systemPanel).toContain('demoMode ? "?demo=1" : ""');
+    expect(systemPayload).toContain("/api/action-plan/system/");
+    expect(systemPayload).toContain("payloadCache");
+    expect(systemPayload).toContain('demoMode ? "?demo=1" : ""');
+    expect(systemPanel).toContain("loadActionPlanSystemPayload");
     expect(systemPanel).not.toContain("/api/action-plan/generate");
     expect(systemPanel).toContain("if (!selectedSystemId)");
     expect(systemPanel).toContain("Choisissez votre système métier");
@@ -124,17 +128,15 @@ describe("action plan experience architecture", () => {
     expect(systemPanel).toContain("onChange={selectSystem}");
     expect(systemSelector).toContain('role="listbox"');
     expect(systemSelector).toContain('role="combobox"');
-    expect(systemPanel).toContain("<SystemDetailContent");
-    expect(systemPanel).toContain("checkableProcess");
-    expect(systemPanel).toContain("checkedProcessStepIdsBySystem");
+    expect(systemPanel).toContain("<SystemSolutionsTab");
+    expect(systemPanel).not.toContain("<SystemDetailContent");
+    expect(systemPanel).not.toContain("checkableProcess");
+    expect(systemPanel).not.toContain("checkedProcessStepIdsBySystem");
     expect(systemPanel).toContain("selectedSolutionPlacementIdsBySystem");
     expect(systemPanel).not.toContain("Ouvrir la fiche complète");
     expect(experience).toContain("demoMode={isDemoMode}");
-    const systemProcess = source("src/components/SystemeTabContent.tsx");
-    expect(systemProcess).toContain('type="checkbox"');
-    expect(systemProcess).toContain("useState(index === 0)");
-    expect(systemProcess).not.toContain("line-through");
-    expect(systemPanel).toContain("embedded");
+    expect(systemPanel).not.toContain("Organisation");
+    expect(systemPanel).not.toContain("Ressources");
   });
 
   it("keeps the application navigation usable before generation", () => {

@@ -2,18 +2,27 @@
 
 - Statut : `validated`
 - Date : 2026-08-11
+- Mise à jour : 2026-08-13, libellé et ordre visuels de la navigation
 - Supersède : la composition de navigation de l’ADR 0009 et les passages de
   l’ADR 0008 qui imposaient un résultat IA avant l’accès à l’application
 
 ## Décision
 
-L’application conserve une seule navigation : `Plan d’action`, `Système`,
-`Académie`, `Opportunités`. Sur mobile, cette navigation reste fixée en bas.
+L’application conserve une seule navigation visuelle : `Plan d’action`,
+`Solutions`, `Opportunités`, `Académie`. Sur mobile, cette navigation reste
+fixée en bas.
 Cette navigation est visible et utilisable dès la première arrivée, avant toute
 génération et sans compte. `Plan d’action` affiche alors le grand champ libre ;
-`Système`, `Académie` et `Opportunités` restent consultables immédiatement.
-Les choix effectués dans `Système` restent uniquement en mémoire tant qu'aucun
-plan n'est volontairement enregistré.
+`Solutions`, `Opportunités` et `Académie` restent consultables immédiatement.
+`Solutions` ouvre uniquement les recommandations Solutions du Système métier
+sélectionné. L'application n'y affiche plus d'onglets Organisation ou
+Ressources : les routines et modèles pertinents sont proposés directement dans
+le détail d'une Action. Les fiches publiques `/systemes/[slug]` conservent
+leurs trois espaces `Organisation / Solutions / Ressources`. La clé technique
+`view=system`, les
+slugs Système et les routes publiques `/systemes` restent stables. Les choix
+effectués dans cet espace restent uniquement en mémoire tant qu'aucun plan
+n'est volontairement enregistré.
 Coaching demeure dans la même application, mais s’ouvre depuis l’action
 compacte `Parler à un spécialiste` du header. Le panneau, les offres, les
 messages et les règles de l’ADR 0009 sont conservés sans seconde

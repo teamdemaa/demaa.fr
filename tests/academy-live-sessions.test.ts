@@ -86,7 +86,7 @@ describe("Academy live sessions and contextual cases", () => {
     }
   });
 
-  it("shows Courses then Cas concrets while keeping Webinars dormant", async () => {
+  it("shows Courses then Ateliers while keeping Webinars dormant", async () => {
     const [clientSource, pageSource] = await Promise.all([
       readFile(
         new URL("../src/components/AcademyIndexClient.tsx", import.meta.url),
@@ -95,15 +95,23 @@ describe("Academy live sessions and contextual cases", () => {
       readFile(new URL("../src/app/academie/page.tsx", import.meta.url), "utf8"),
     ]);
     expect(clientSource).not.toContain("Cours fondamentaux");
-    expect(clientSource).toContain("<AcademyLiveTrainingSection");
+    expect(clientSource).not.toContain("<AcademyLiveTrainingSection");
     expect(clientSource).toContain('{ id: "courses", label: "Cours" }');
-    expect(clientSource).toContain('{ id: "decryptions", label: "Cas concrets" }');
-    expect(clientSource).toContain('label: "Webinaires"');
-    expect(clientSource).toContain("liveTrainings.length > 0");
+    expect(clientSource).toContain('{ id: "workshops", label: "Ateliers" }');
+    expect(clientSource).not.toContain('label: "Cas concrets"');
+    expect(clientSource).not.toContain("WEBINARS_ACADEMY_SECTION");
+    expect(clientSource).toContain("const academySections = CORE_ACADEMY_SECTIONS");
     expect(clientSource).toContain('useState<AcademySection>("courses")');
-    expect(clientSource).toContain('content.kind === "case-study"');
+    expect(clientSource).toContain("Les premiers ateliers arrivent bientôt.");
+    expect(clientSource).toContain('role="tablist"');
+    expect(clientSource).toContain('role="tab"');
+    expect(clientSource).toContain('aria-selected={activeSection === section.id}');
+    expect(clientSource).toContain('aria-controls={`academy-panel-${section.id}`}');
+    expect(clientSource).toContain('onKeyDown={(event) => handleSectionKeyDown(event, section.id)}');
+    expect(clientSource).toContain('className="mb-8 grid w-full grid-cols-2');
+    expect(clientSource).not.toContain('activeSection === "live"');
     expect(clientSource).not.toContain("Modèles et documents");
-    expect(pageSource).toContain("getVisibleAcademyLiveTrainings()");
+    expect(pageSource).not.toContain("getVisibleAcademyLiveTrainings()");
   });
 
   it("does not present published case studies as fictitious", () => {

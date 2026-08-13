@@ -1,6 +1,6 @@
 # Backlog central Demaa
 
-Dernière consolidation : 12 août 2026.
+Dernière consolidation : 13 août 2026.
 
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
@@ -33,8 +33,10 @@ de déploiement.
   des Systèmes.
 - Les guides métier sont retirés de Ressources pour simplifier l'application ;
   leurs données historiques restent conservées. Académie présente désormais
-  `Cours / Cas concrets` ; `Webinaires` est conservé mais masqué jusqu'à la
-  publication d'événements ou de replays validés.
+  uniquement `Cours / Ateliers`, avec Cours ouvert par défaut. `Ateliers` est
+  réservé aux démonstrations pratiques vidéo ou en direct et affiche un état
+  vide tant qu'aucun atelier n'est publié. Les Cas concrets gardent leurs
+  routes directes mais sont masqués de l'index ; `Webinaires` reste masqué.
 - Les parcours guide, newsletter, Structure, Rejoindre Team Demaa, callback
   Services, Levier, Opportunités, sauvegarde de plan et lien magique ont été
   testés en Production. L'envoi direct à la boîte Gmail opérationnelle est
@@ -58,9 +60,13 @@ l'ADR 0004 prévaut.
 
 - `demaa.co` est le domaine canonique du lancement France, sans préfixe de
   locale. L'internationalisation reste différée.
-- La navigation applicative contient `Plan d'action`, `Système`, `Académie` et
-  `Opportunités`. Le produit Coaching est accessible par l'action
-  `Parler à un spécialiste` et conserve les onglets Messages puis Formules.
+- La navigation applicative contient `Plan d'action`, `Solutions`,
+  `Opportunités` et `Académie`. `Solutions` conserve la clé technique
+  `view=system` et affiche uniquement les solutions du Système sélectionné.
+  Organisation et Ressources restent sur les fiches publiques et alimentent
+  de manière déterministe les aides affichées dans les Actions. Le produit Coaching est
+  accessible par l'action `Parler à un spécialiste` et conserve les onglets
+  Messages puis Formules.
 - Une fiche Système contient `Organisation`, `Solutions` et `Ressources`.
 - Six Services canoniques existent : Automatisation des processus,
   Expert-comptable, Formalités juridiques, Sous-traitance de formalités
@@ -103,7 +109,7 @@ l'ADR 0004 prévaut.
   Les CTA transmettent une intention ; aucun abonnement ou paiement n'est
   déclenché dans cette version.
 - [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
-  `Plan d’action / Système / Académie / Opportunités`, Coaching accessible par
+  `Plan d’action / Solutions / Opportunités / Académie`, Coaching accessible par
   `Parler à un spécialiste`, Opportunités au sens large et sauvegarde invitée
   sans secret exposé au JavaScript. L’ADR 0010 est la référence.
 - [x] Unifier l'identité e-mail des parcours applicatifs : le lien magique est
@@ -167,7 +173,8 @@ l'ADR 0004 prévaut.
   - Tester sur une cohorte pilote puis mesurer charge réelle, délai de réponse,
     marge, satisfaction et rétention avant le `GO` public.
 - [x] Conserver avant et après connexion la navigation applicative unique
-  `Plan d’action / Système / Académie / Opportunités`. Coaching reste le
+  `Plan d’action / Solutions / Opportunités / Académie`. La clé technique
+  `view=system` et les routes `/systemes` restent inchangées. Coaching reste le
   produit accessible par `Parler à un spécialiste`; les libellés humains
   emploient `spécialiste`, notamment `Écrire à un spécialiste`. Aucun onglet
   `Accueil`, portail `Mon espace`/`Mes plans` ou profil obligatoire n'est créé.
@@ -210,9 +217,11 @@ l'ADR 0004 prévaut.
   article et diaporama avant la future vidéo.
 - [x] Simplifier Ressources : retirer les guides métier de la surface active et
   afficher les modèles et documents en grille verticale responsive.
-- [x] Structurer Académie en `Cours / Cas concrets`, avec Cours ouvert par
-  défaut, recherche partagée et navigation clavier. Conserver le futur onglet
-  `Webinaires` masqué tant qu'aucun événement ou replay n'est publié.
+- [x] Structurer Académie avec uniquement `Cours / Ateliers`, avec Cours ouvert
+  par défaut, recherche partagée et navigation clavier. `Ateliers` est une
+  surface distincte des `case-study` et reste vide jusqu'à publication réelle.
+  Conserver les Cas concrets et `Webinaires` masqués dans l'index sans supprimer
+  leurs catalogues ni leurs routes.
 - [ ] Réactiver l'onglet `Webinaires` de l'Académie seulement
   après validation des créneaux, recette desktop/mobile et bascule explicite de
   `academyLiveTrainings` dans `src/lib/public-editorial-visibility.ts`.

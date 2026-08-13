@@ -102,7 +102,7 @@ export default async function SystemPage({
             solutionSections={visibleSolutionSections}
             headerActions={(
               <Link
-                href={`/?view=system&system=${encodeURIComponent(data.system.slug)}&systemTab=${normalizedInitialTab}`}
+                href={`/?view=system&system=${encodeURIComponent(data.system.slug)}`}
                 className="demaa-secondary-button min-h-11 w-full"
               >
                 Ouvrir dans Demaa

@@ -130,7 +130,6 @@ export default function ActionPlanAcademyPanel({
     <div className="-mx-4 sm:-mx-6 lg:-mx-8">
       <AcademyIndexClient
         contents={payload.contents}
-        liveTrainings={payload.liveTrainings}
         embedded
         onOpenContent={(content) => {
           onContentChange?.(content.identity.slug);

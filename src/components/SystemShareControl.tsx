@@ -2,16 +2,22 @@
 
 import { Check, Share2 } from "lucide-react";
 import { useState } from "react";
+import { buildPublicSystemAppHref } from "@/lib/action-plan-app-context";
 
 export default function SystemShareControl({
   systemName,
+  systemSlug,
 }: {
   systemName: string;
+  systemSlug: string;
 }) {
   const [copied, setCopied] = useState(false);
 
   async function shareSystem() {
-    const url = window.location.href;
+    const url = new URL(
+      buildPublicSystemAppHref({ systemId: systemSlug }),
+      window.location.origin,
+    ).toString();
     const title = `Système ${systemName} | Demaa`;
 
     try {

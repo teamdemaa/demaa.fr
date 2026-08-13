@@ -1,7 +1,7 @@
 # D-076 — Contrat produit du générateur de plan d'action
 
 - Statut : `validated`
-- Date de consolidation : 12 août 2026
+- Date de consolidation : 13 août 2026
 - Propriétaires de décision : utilisatrice + Master Demaa
 - Portée : entrée libre, génération IA V3, résultat, multi-plans,
   multi-systèmes, dictée, persistance, mesure d'usage et garde-fous
@@ -172,14 +172,15 @@ concurrent :
 Ces contrôles vivent dans l'interface unique de l'application. Ils ne
 réintroduisent ni page publique `Mon espace`, ni page publique `Mes plans`.
 
-### Onglet Système
+### Vue Solutions
 
 - Le Système détecté est sélectionné par défaut.
 - Une dropdown discrète permet de choisir l'un des 115 Systèmes.
-- Le changement charge son Organisation, ses Solutions et ses Ressources
-  existantes. `Organisation` est le libellé public de l'onglet ; le slug
-  technique historique `process` reste stable pour préserver les données et
-  les anciennes URLs.
+- Le changement charge uniquement ses Solutions dans l'application.
+- Les routines Organisation et les modèles Ressources restent dans les banques
+  canoniques du Système ; lorsqu'ils correspondent avec une confiance
+  suffisante à une Action, ils sont affichés directement dans son panneau de
+  détail, sans appel IA et sans dupliquer les données.
 - Il ne déclenche aucun appel IA.
 - Il ne réécrit pas les Actions générées.
 
@@ -188,7 +189,7 @@ contenu canonique existant chargé à partir du `systemId` courant.
 
 Un plan sauvegardé peut mémoriser plusieurs Systèmes consultés. L'espace de
 travail conserve leur liste sans doublon, le Système actif, ainsi que les
-coches d'Organisation et sélections Solutions séparément pour chaque Système. Ajouter
+sélections Solutions séparément pour chaque Système. Ajouter
 ou sélectionner un Système ne déclenche pas d'appel IA et ne modifie pas les
 Actions.
 
@@ -206,15 +207,19 @@ envoyé ou conservé par Demaa dans ce lot.
 ### Avant connexion
 
 La homepage conserve le grand champ comme entrée principale, mais la navigation
-`Plan d’action / Système / Académie / Opportunités` est visible et utilisable
-dès l'arrivée. Le visiteur peut donc consulter un Système, l'Académie ou les
-Opportunités sans générer de plan et sans créer de compte. Ses choix Système
-restent en mémoire de page jusqu'à une sauvegarde volontaire.
+`Plan d’action / Solutions / Opportunités / Académie` est visible et utilisable
+dès l'arrivée. Le visiteur peut donc consulter les Solutions de son Système,
+les Opportunités ou l'Académie sans générer de plan et sans créer de compte.
+Le libellé `Solutions` ne renomme ni la clé technique `view=system`, ni les
+routes publiques `/systemes`. Les fiches publiques conservent
+`Organisation / Solutions / Ressources`, tandis que la vue intégrée n'affiche
+que Solutions. Ses choix Système restent en mémoire
+de page jusqu'à une sauvegarde volontaire.
 
 Les univers publics `/systemes` et `/academie`, leur navigation et leur SEO
 restent accessibles. L'ADR 0008 ne transforme pas ces routes en espace privé.
 Une fiche publique Système propose une entrée explicite `Ouvrir dans Demaa`.
-Dans l'application, la vue, le Système, l'onglet, la ressource ouverte, le
+Dans l'application, la vue, le Système, la solution ouverte, le
 contenu Académie ou l'Opportunité sélectionnée sont encodés dans une URL
 partageable et restaurés par navigation arrière. L'URL publique canonique
 reste indexable ; l'URL applicative conserve le contexte de travail.

@@ -10,7 +10,9 @@ const mocks = vi.hoisted(() => ({
   resolveLeadAttribution: vi.fn(),
   resolveLeadContext: vi.fn(),
   appendCustomerCoachingMessage: vi.fn(),
+  claimPendingCoachingMessageDraft: vi.fn(),
   getCustomerCoachingMessages: vi.fn(),
+  markCoachingMessageDraftSent: vi.fn(),
   submitLeadRequest: vi.fn(),
 }));
 
@@ -30,6 +32,10 @@ vi.mock("@/lib/customer-space-session.server", () => ({
 vi.mock("@/lib/coaching-conversation.server", () => ({
   appendCustomerCoachingMessage: mocks.appendCustomerCoachingMessage,
   getCustomerCoachingMessages: mocks.getCustomerCoachingMessages,
+}));
+vi.mock("@/lib/coaching-message-draft.server", () => ({
+  claimPendingCoachingMessageDraft: mocks.claimPendingCoachingMessageDraft,
+  markCoachingMessageDraftSent: mocks.markCoachingMessageDraftSent,
 }));
 vi.mock("@/lib/lead-attribution-server", () => ({
   resolveLeadAttribution: mocks.resolveLeadAttribution,
@@ -93,6 +99,8 @@ describe("coaching request route", () => {
       },
     });
     mocks.getCustomerCoachingMessages.mockResolvedValue([]);
+    mocks.claimPendingCoachingMessageDraft.mockResolvedValue(null);
+    mocks.markCoachingMessageDraftSent.mockResolvedValue(true);
   });
 
   it("uses the authenticated session email and ignores a body email", async () => {
@@ -120,6 +128,103 @@ describe("coaching request route", () => {
 
     expect(response.status).toBe(401);
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
+  it("claims a server draft and ignores client-controlled message and idempotency", async () => {
+    mocks.claimPendingCoachingMessageDraft.mockResolvedValue({
+      alreadySent: false,
+      body: "Message conservé avant la connexion.",
+      idempotencyKey: "coaching:draft:server-owned-key",
+    });
+
+    const response = await POST(request({
+      draftToken: "a".repeat(43),
+      idempotencyKey: "coaching:forged-client-key",
+      message: "Message forgé côté client.",
+    }));
+
+    expect(response.status).toBe(202);
+    expect(mocks.claimPendingCoachingMessageDraft).toHaveBeenCalledWith({
+      draftToken: "a".repeat(43),
+      email: "owner@example.com",
+    });
+    expect(mocks.appendCustomerCoachingMessage).toHaveBeenCalledWith({
+      body: "Message conservé avant la connexion.",
+      email: "owner@example.com",
+      idempotencyKey: "coaching:draft:server-owned-key",
+    });
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      fields: [{ label: "Message", value: "Message conservé avant la connexion." }],
+      idempotencyKey: "coaching:draft:server-owned-key",
+    }));
+    expect(mocks.markCoachingMessageDraftSent).toHaveBeenCalledWith({
+      draftToken: "a".repeat(43),
+      email: "owner@example.com",
+    });
+  });
+
+  it("rejects an unavailable draft without accepting the client fallback", async () => {
+    const response = await POST(request({
+      draftToken: "a".repeat(43),
+      message: "Ce texte ne doit pas contourner le claim.",
+    }));
+
+    expect(response.status).toBe(409);
+    expect(mocks.appendCustomerCoachingMessage).not.toHaveBeenCalled();
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
+  it("accepts a sent-draft retry with the same server idempotency key", async () => {
+    mocks.claimPendingCoachingMessageDraft.mockResolvedValue({
+      alreadySent: true,
+      body: "Message déjà accepté lors du premier essai.",
+      idempotencyKey: "coaching:draft:stable-retry-key",
+    });
+    mocks.appendCustomerCoachingMessage.mockResolvedValue({
+      created: false,
+      message: {
+        author: "customer",
+        body: "Message déjà accepté lors du premier essai.",
+        createdAt: "2026-08-11T08:00:00.000Z",
+        id: "existing-message",
+      },
+    });
+    mocks.submitLeadRequest.mockResolvedValue({
+      duplicate: true,
+      leadId: "existing-lead",
+    });
+
+    const response = await POST(request({ draftToken: "a".repeat(43) }));
+
+    expect(response.status).toBe(202);
+    expect(mocks.appendCustomerCoachingMessage).toHaveBeenCalledWith(
+      expect.objectContaining({
+        idempotencyKey: "coaching:draft:stable-retry-key",
+      }),
+    );
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(
+      expect.objectContaining({
+        idempotencyKey: "coaching:draft:stable-retry-key",
+      }),
+    );
+    expect(mocks.markCoachingMessageDraftSent).toHaveBeenCalledOnce();
+  });
+
+  it("returns the claimed text when delivery fails so the composer can retry", async () => {
+    mocks.claimPendingCoachingMessageDraft.mockResolvedValue({
+      alreadySent: false,
+      body: "Message à conserver après l’échec.",
+      idempotencyKey: "coaching:draft:retry-key",
+    });
+    mocks.submitLeadRequest.mockRejectedValueOnce(new Error("delivery_failed"));
+
+    const response = await POST(request({ draftToken: "a".repeat(43) }));
+
+    expect(response.status).toBe(500);
+    await expect(response.json()).resolves.toMatchObject({
+      draftMessage: "Message à conserver après l’échec.",
+    });
+    expect(mocks.markCoachingMessageDraftSent).not.toHaveBeenCalled();
   });
 
   it("accepts only the current subscription formulas and records their displayed price", async () => {

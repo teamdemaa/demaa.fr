@@ -112,9 +112,20 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain("empty:hidden xl:block");
     expect(navbarSource).toContain("empty:hidden xl:hidden");
     expect(actionPlanNavSource).toContain("Plan d’action");
-    expect(actionPlanNavSource).toContain("Système");
+    expect(actionPlanNavSource).toContain("Solutions");
     expect(actionPlanNavSource).toContain("Académie");
     expect(actionPlanNavSource).toContain("Opportunités");
+    expect(actionPlanNavSource).not.toContain('label: "Système"');
+    expect(actionPlanNavSource.indexOf('label: "Plan d’action"')).toBeLessThan(
+      actionPlanNavSource.indexOf('label: "Solutions"'),
+    );
+    expect(actionPlanNavSource.indexOf('label: "Solutions"')).toBeLessThan(
+      actionPlanNavSource.indexOf('label: "Opportunités"'),
+    );
+    expect(actionPlanNavSource.indexOf('label: "Opportunités"')).toBeLessThan(
+      actionPlanNavSource.indexOf('label: "Académie"'),
+    );
+    expect(actionPlanNavSource).toContain('{ view: "system", label: "Solutions"');
     expect(actionPlanNavSource).not.toContain('label: "Accompagnement"');
     expect(actionPlanNavSource).not.toContain('label: "Coaching"');
     expect(actionPlanNavSource).toContain('{ view: "academy"');

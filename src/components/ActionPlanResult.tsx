@@ -2,6 +2,7 @@
 
 import {
   CalendarDays,
+  Building2,
   Check,
   CheckCircle2,
   ChevronDown,
@@ -10,6 +11,7 @@ import {
   CircleDot,
   Columns3,
   Copy,
+  FileText,
   LayoutList,
   Plus,
   Trash2,
@@ -25,7 +27,12 @@ import {
 } from "react";
 import ActionPlanCommandBar from "@/components/ActionPlanCommandBar";
 import PwaInstallPrompt from "@/components/PwaInstallPrompt";
+import { useActionPlanContextualAids } from "@/hooks/useActionPlanContextualAids";
 import { isBlankManualActionPlan } from "@/lib/action-plan-manual";
+import {
+  hasActionPlanContextualAid,
+  type ActionPlanContextualAid,
+} from "@/lib/action-plan-contextual-aids";
 import type {
   PersistableActionPlan,
 } from "@/lib/action-plan-contract";
@@ -191,12 +198,14 @@ function ActionDrawer({
   onWorkspaceChange,
   onClose,
   onDelete,
+  contextualAid,
 }: {
   action: ActionPlanViewAction;
   workspace: ActionPlanWorkspaceState;
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   onClose: () => void;
   onDelete: () => void;
+  contextualAid?: ActionPlanContextualAid;
 }) {
   const taskState = workspace.tasks[action.id];
   const effectiveTitle = taskState?.overrides.title || action.title;
@@ -521,6 +530,57 @@ function ActionDrawer({
             </button>
           )}
 
+          {hasActionPlanContextualAid(contextualAid) ? (
+            <section aria-label="Aides utiles dans votre système">
+              <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-muted">
+                Dans votre système
+              </p>
+              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                {contextualAid?.organisation ? (
+                  <article className="rounded-xl bg-dema-sage/45 px-3 py-3">
+                    <div className="flex items-start gap-3">
+                      <Building2 className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
+                      <div className="min-w-0">
+                        <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-dema-muted">
+                          Organisation
+                        </p>
+                        <p className="mt-0.5 text-sm text-brand-blue">
+                          {contextualAid.organisation.label}
+                        </p>
+                        <p className="mt-1 text-xs text-dema-muted">
+                          {contextualAid.organisation.cadence}
+                        </p>
+                      </div>
+                    </div>
+                    <ul className="mt-3 space-y-1.5 pl-7 text-xs leading-relaxed text-dema-muted">
+                      {contextualAid.organisation.bullets.slice(0, 3).map((bullet) => (
+                        <li key={bullet} className="list-disc">{bullet}</li>
+                      ))}
+                    </ul>
+                  </article>
+                ) : null}
+                {contextualAid?.model ? (
+                  <article className="rounded-xl bg-dema-sage/45 px-3 py-3">
+                    <div className="flex items-start gap-3">
+                      <FileText className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
+                      <div className="min-w-0">
+                        <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-dema-muted">
+                          {contextualAid.model.formatLabel}
+                        </p>
+                        <p className="mt-0.5 text-sm text-brand-blue">
+                          {contextualAid.model.label}
+                        </p>
+                        <p className="mt-1 text-xs leading-relaxed text-dema-muted">
+                          {contextualAid.model.description}
+                        </p>
+                      </div>
+                    </div>
+                  </article>
+                ) : null}
+              </div>
+            </section>
+          ) : null}
+
           <label className="block text-xs font-medium text-dema-muted">
             Notes personnelles
             <textarea
@@ -583,6 +643,7 @@ export default function ActionPlanResult({
   onDeleteAction,
   onGeneratePlan,
   commandDemoMode = false,
+  contextualSystemId = "",
 }: {
   plan: PersistableActionPlan;
   workspace: ActionPlanWorkspaceState;
@@ -593,10 +654,17 @@ export default function ActionPlanResult({
   onDeleteAction: (actionId: string) => void;
   onGeneratePlan?: (situation: string) => Promise<void>;
   commandDemoMode?: boolean;
+  contextualSystemId?: string;
 }) {
   const [view, setView] = useState<TaskView>("list");
   const [filter, setFilter] = useState<TaskFilter>("week");
   const [selectedActionId, setSelectedActionId] = useState<string | null>(null);
+  const contextualAids = useActionPlanContextualAids({
+    demoMode: commandDemoMode,
+    plan,
+    systemId: contextualSystemId,
+    workspace,
+  });
   const allActions: ActionPlanViewAction[] = [
     ...getActionPlanActions(plan),
     ...workspace.addedActions,
@@ -736,6 +804,7 @@ export default function ActionPlanResult({
           onWorkspaceChange={onWorkspaceChange}
           onClose={() => setSelectedActionId(null)}
           onDelete={() => onDeleteAction(selectedAction.id)}
+          contextualAid={contextualAids[selectedAction.id]}
         />
       ) : null}
     </div>

@@ -352,6 +352,9 @@ export default function SavedActionPlanDetail({
             onGeneratePlan={isBlankManualActionPlan(currentPlan, workspace)
               ? generateBlankPlan
               : undefined}
+            contextualSystemId={
+              appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || ""
+            }
             headerActions={(
               <SavedActionPlanMenu
                 deleting={isDeleting}
@@ -381,22 +384,12 @@ export default function SavedActionPlanDetail({
             }}
             workspace={workspace}
             onWorkspaceChange={setWorkspace}
-            activeTab={appContext.systemTab ?? "process"}
             initialResourceSlug={appContext.solutionResourceSlug}
-            onActiveTabChange={(systemTab) => navigateAppContext({
-              ...appContext,
-              view: "system",
-              systemId: appContext.systemId || workspace.selectedSystemId || undefined,
-              systemTab,
-              solutionResourceSlug: systemTab === "solutions"
-                ? appContext.solutionResourceSlug
-                : undefined,
-            })}
             onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
               ...appContext,
               view: "system",
               systemId: appContext.systemId || workspace.selectedSystemId || undefined,
-              systemTab: "solutions",
+              systemTab: undefined,
               solutionResourceSlug,
             })}
           />

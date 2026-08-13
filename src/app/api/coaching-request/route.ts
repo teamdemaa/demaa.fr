@@ -16,6 +16,11 @@ import {
   getCustomerCoachingMessages,
 } from "@/lib/coaching-conversation.server";
 import {
+  claimPendingCoachingMessageDraft,
+  markCoachingMessageDraftSent,
+  type ClaimedCoachingMessageDraft,
+} from "@/lib/coaching-message-draft.server";
+import {
   isSpecialistOffer,
   SPECIALIST_OFFERS,
 } from "@/lib/specialist-offers";
@@ -25,6 +30,7 @@ export const runtime = "nodejs";
 type CoachingRequestBody = {
   attribution?: unknown;
   company?: unknown;
+  draftToken?: unknown;
   idempotencyKey?: unknown;
   message?: unknown;
   offer?: unknown;
@@ -66,6 +72,8 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  let claimedDraft: ClaimedCoachingMessageDraft | null = null;
+
   try {
     const blockedHost = enforceAllowedHost(request);
     if (blockedHost) return blockedHost;
@@ -93,19 +101,37 @@ export async function POST(request: Request) {
     const company = normalizeText(data?.company, 160);
     const phone = normalizeText(data?.phone, 60);
     const message = normalizeText(data?.message, 2_000, { multiline: true });
+    const draftToken = normalizeText(data?.draftToken, 80);
     const offer = normalizeText(data?.offer, 30);
     const idempotencyKey = normalizeIdempotencyKey(data?.idempotencyKey);
 
     const isMessage = requestKind === "message";
     const isFormula = requestKind === "formula";
+    if (isMessage && draftToken) {
+      claimedDraft = await claimPendingCoachingMessageDraft({
+        draftToken,
+        email,
+      });
+      if (!claimedDraft) {
+        return NextResponse.json(
+          { error: "Ce brouillon n’est plus disponible. Réessayez depuis votre message." },
+          { status: 409, headers: PRIVATE_NO_STORE_HEADERS },
+        );
+      }
+    }
+    const effectiveMessage = claimedDraft?.body ?? message;
+    const effectiveIdempotencyKey = claimedDraft?.idempotencyKey ?? idempotencyKey;
     const valid = isMessage
-      ? message.length >= 2
+      ? effectiveMessage.length >= 2
       : Boolean(isFormula && company && isValidPhone(phone) && isSpecialistOffer(offer));
 
-    if (!valid || !idempotencyKey) {
+    if (!valid || !effectiveIdempotencyKey) {
       return NextResponse.json(
-        { error: "Les informations envoyées sont incomplètes." },
-        { status: 400 },
+        {
+          error: "Les informations envoyées sont incomplètes.",
+          ...(claimedDraft ? { draftMessage: claimedDraft.body } : {}),
+        },
+        { status: 400, headers: PRIVATE_NO_STORE_HEADERS },
       );
     }
 
@@ -114,14 +140,20 @@ export async function POST(request: Request) {
       sourceUrl: request.headers.get("referer"),
     });
     if (!context) {
-      return NextResponse.json({ error: "Contexte invalide." }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: "Contexte invalide.",
+          ...(claimedDraft ? { draftMessage: claimedDraft.body } : {}),
+        },
+        { status: 400, headers: PRIVATE_NO_STORE_HEADERS },
+      );
     }
 
     const conversationMessage = isMessage
       ? await appendCustomerCoachingMessage({
-          body: message,
+          body: effectiveMessage,
           email,
-          idempotencyKey,
+          idempotencyKey: effectiveIdempotencyKey,
         })
       : null;
 
@@ -136,16 +168,23 @@ export async function POST(request: Request) {
       context,
       emoji: isMessage ? "💬" : "📞",
       fields: isMessage
-        ? [{ label: "Message", value: message }]
+        ? [{ label: "Message", value: effectiveMessage }]
         : [
             { label: "Formule", value: isSpecialistOffer(offer) ? SPECIALIST_OFFERS[offer].title : offer },
             ...(isSpecialistOffer(offer) ? [{ label: "Tarif affiché", value: SPECIALIST_OFFERS[offer].price }] : []),
             ...(message ? [{ label: "Situation", value: message }] : []),
           ],
-      idempotencyKey,
+      idempotencyKey: effectiveIdempotencyKey,
       requestType: isMessage ? "coaching_message" : "specialist_formula_interest",
       title: isMessage ? "Nouveau message spécialiste" : "Nouvelle demande de formule spécialiste",
     });
+
+    if (
+      claimedDraft
+      && !await markCoachingMessageDraftSent({ draftToken, email })
+    ) {
+      throw new Error("Unable to mark the coaching draft as sent.");
+    }
 
     return NextResponse.json(
       {
@@ -157,8 +196,11 @@ export async function POST(request: Request) {
   } catch (error) {
     logOperationalError("coaching_request.failed", error);
     return NextResponse.json(
-      { error: "La demande n’a pas pu être envoyée." },
-      { status: 500 },
+      {
+        error: "La demande n’a pas pu être envoyée.",
+        ...(claimedDraft ? { draftMessage: claimedDraft.body } : {}),
+      },
+      { status: 500, headers: PRIVATE_NO_STORE_HEADERS },
     );
   }
 }

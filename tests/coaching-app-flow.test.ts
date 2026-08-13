@@ -70,15 +70,20 @@ describe("unified app and coaching", () => {
     expect(coaching).toContain("interimResults: true");
     expect(coaching).toContain("useSpeechDictation");
     expect(coaching).toContain("Dictée en cours… le texte apparaît dans le message.");
-    expect(coaching).toContain("Identifiez-vous pour écrire votre message, conserver la conversation");
+    expect(coaching).toContain('fetch("/api/coaching-draft"');
+    expect(coaching).toContain('onRequireAccess?.({ draftToken, tab: "messages" })');
+    expect(coaching).toContain("initialDraftToken");
+    expect(coaching).toContain("Votre texte est conservé : réessayez.");
     expect(coaching).toContain("Premier échange offert");
-    expect(coaching).toContain("Continuer par e-mail");
+    expect(coaching).not.toContain("Continuer par e-mail");
     expect(coaching).not.toContain("disponible prochainement");
     expect(coachingControl).toContain("Parler à un spécialiste");
     expect(coachingControl).toContain("onClick={() => setOpen(true)}");
     expect(coachingControl).toContain('url.searchParams.delete("intent")');
     expect(coachingControl).toContain("window.history.replaceState");
     expect(coachingControl).toContain("onRequireAccess={initialEmail ? undefined");
+    expect(coachingControl).toContain("Connectez-vous pour envoyer votre message et retrouver la réponse.");
+    expect(coachingControl).toContain('params.set("draftToken", accessIntent.draftToken)');
     expect(coachingControl).toContain("/api/action-plans");
     expect(coachingControl).not.toContain(
       "Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.",

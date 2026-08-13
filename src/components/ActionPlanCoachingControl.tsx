@@ -15,6 +15,7 @@ import {
   toPersistedAiGenerationMetadata,
   type AiGenerationMetadata,
 } from "@/lib/ai-generation-metadata";
+import { isCoachingMessageDraftToken } from "@/lib/coaching-message-draft";
 
 type AccessPlan = {
   plan: PersistableActionPlan;
@@ -113,6 +114,7 @@ export default function ActionPlanCoachingControl({
       if (body?.status === "saved") {
         const params = new URLSearchParams({ intent: "coaching", tab: intent.tab });
         if (intent.offer) params.set("offer", intent.offer);
+        if (intent.draftToken) params.set("draftToken", intent.draftToken);
         window.location.assign(
           `/plans/${encodeURIComponent(actionPlanId)}?${params.toString()}`,
         );
@@ -146,13 +148,21 @@ export default function ActionPlanCoachingControl({
     const search = new URLSearchParams(window.location.search);
     const requestedTab = search.get("tab") === "formules" ? "formules" : "messages";
     const requestedOffer = search.get("offer");
+    const rawDraftToken = search.get("draftToken");
+    const requestedDraftToken = isCoachingMessageDraftToken(rawDraftToken)
+      ? rawDraftToken
+      : undefined;
     const validOffer: SpecialistOffer | undefined = requestedOffer === "echanges"
       || requestedOffer === "pilotage_1"
       || requestedOffer === "pilotage_2"
       ? requestedOffer
       : undefined;
     const timeout = window.setTimeout(() => {
-      setAccessIntent({ offer: validOffer, tab: requestedTab });
+      setAccessIntent({
+        draftToken: requestedTab === "messages" ? requestedDraftToken : undefined,
+        offer: validOffer,
+        tab: requestedTab,
+      });
       setOpen(true);
     }, 0);
     return () => window.clearTimeout(timeout);
@@ -212,6 +222,7 @@ export default function ActionPlanCoachingControl({
                 </button>
               </div>
               <CoachingPanel
+                initialDraftToken={initialEmail ? accessIntent.draftToken : undefined}
                 initialOffer={initialEmail ? accessIntent.offer : undefined}
                 initialTab={accessIntent.tab}
                 onRequireAccess={initialEmail ? undefined : (intent) => void prepareAccess(intent)}
@@ -258,14 +269,20 @@ export default function ActionPlanCoachingControl({
                   <X className="h-4 w-4" aria-hidden="true" />
                 </button>
                 <h2 id="specialist-access-title" className="pr-12 text-2xl font-medium tracking-[-0.03em] text-brand-blue">
-                  Écrire à un spécialiste
+                  {accessIntent.draftToken ? "Connectez-vous pour envoyer" : "Écrire à un spécialiste"}
                 </h2>
+                {accessIntent.draftToken ? (
+                  <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+                    Connectez-vous pour envoyer votre message et retrouver la réponse. Votre brouillon est conservé.
+                  </p>
+                ) : null}
                 <div className="mt-6">
                   <CustomerSpaceAccessForm
                     actionPlanClaim={accessPlanId ? { actionPlanId: accessPlanId } : null}
                     returnTo={(() => {
                       const params = new URLSearchParams({ intent: "coaching", tab: accessIntent.tab });
                       if (accessIntent.offer) params.set("offer", accessIntent.offer);
+                      if (accessIntent.draftToken) params.set("draftToken", accessIntent.draftToken);
                       return accessPlanId
                         ? `/plans/${encodeURIComponent(accessPlanId)}?${params.toString()}`
                         : `/?${params.toString()}`;

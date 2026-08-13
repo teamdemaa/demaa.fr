@@ -59,7 +59,7 @@ export default function PolitiqueConfidentialitePage() {
               <li>entreprise, site ou page professionnelle et problématique proposés à la newsletter Structure, ainsi que la preuve de votre accord de publication lorsque vous le donnez ;</li>
               <li>enregistrement vocal et transcription associés à une proposition Structure, uniquement lorsque cette option est disponible et que vous choisissez de l&apos;utiliser ;</li>
               <li>contenu transmis à l&apos;assistant IA et plans générés ; lorsque vous choisissez de sauvegarder un plan, celui-ci est rattaché à l&apos;adresse email vérifiée par lien magique ou, lorsque cette option est proposée, par Google via Firebase Authentication ;</li>
-              <li>questions adressées à un spécialiste et réponses associées, rattachées à votre adresse email vérifiée afin de rendre l&apos;historique de la conversation visible dans l&apos;application ;</li>
+              <li>questions adressées à un spécialiste et réponses associées, rattachées à votre adresse email vérifiée afin de rendre l&apos;historique de la conversation visible dans l&apos;application ; lorsque vous rédigez avant de vous connecter, le brouillon du message est conservé temporairement pour permettre son envoi après vérification de votre adresse ;</li>
               <li>données techniques liées à la navigation et à la mesure d&apos;audience ;</li>
               <li>données agrégées d&apos;ouverture des systèmes : système concerné, date, page d&apos;origine et paramètres UTM éventuels, sans adresse email, adresse IP enregistrée ni identifiant visiteur ;</li>
               <li>données d&apos;attribution liées aux demandes : première et dernière source, paramètres UTM, campagne, page d&apos;entrée, référent, page de conversion et statut du consentement ;</li>
@@ -76,7 +76,7 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Étudier une problématique proposée à la newsletter Structure :</strong> traitement de votre demande et consentement explicite avant toute présentation de votre entreprise, de votre site ou de votre situation ; l&apos;équipe vous contacte avant toute publication.</li>
               <li><strong>Fournir l&apos;assistant IA :</strong> exécution du service demandé ; avant sauvegarde, le résultat reste uniquement dans la page ouverte.</li>
               <li><strong>Enregistrer et retrouver vos plans :</strong> exécution du service demandé lorsque vous cliquez sur « Enregistrer ». Un accès temporaire strictement limité à ce plan est alors protégé par un cookie essentiel ; le lien magique ou Google via Firebase Authentication vérifie ensuite votre adresse e-mail.</li>
-              <li><strong>Échanger avec un spécialiste :</strong> exécution du service demandé ; l&apos;historique est conservé pour permettre le suivi de la conversation dans l&apos;application.</li>
+              <li><strong>Échanger avec un spécialiste :</strong> exécution du service demandé ; avant votre connexion, votre brouillon est conservé temporairement afin de reprendre l&apos;envoi après vérification de votre adresse, puis l&apos;historique est conservé pour permettre le suivi de la conversation dans l&apos;application.</li>
               <li><strong>Gérer les listes d&apos;attente ou demandes d&apos;information sur un outil :</strong> consentement ou intérêt légitime selon le contexte de la demande.</li>
               <li><strong>Comprendre l&apos;origine d&apos;une demande et mesurer l&apos;efficacité des contenus et campagnes :</strong> intérêt légitime pour les informations rattachées à la demande, et consentement préalable pour les traceurs ou stockages optionnels.</li>
               <li><strong>Mesure d&apos;audience, sécurité et maintenance :</strong> intérêt légitime, et consentement si la réglementation l&apos;impose pour certains traceurs.</li>
@@ -89,7 +89,7 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Vercel</strong> pour l&apos;hébergement et la mesure d&apos;audience ;</li>
               <li><strong>Google Analytics</strong> pour la mesure des parcours lorsque vous l&apos;autorisez ;</li>
               <li><strong>Meta Pixel</strong> pour la mesure publicitaire lorsque vous l&apos;autorisez ;</li>
-              <li><strong>Google Firebase / Firestore et Firebase Authentication</strong> pour le stockage sécurisé des demandes, des plans que vous choisissez de sauvegarder, des conversations avec un spécialiste, de leur contexte d&apos;attribution, des compteurs agrégés d&apos;ouverture des systèmes et, lorsque la connexion Google est proposée, la vérification de votre identité e-mail ;</li>
+              <li><strong>Google Firebase / Firestore et Firebase Authentication</strong> pour le stockage sécurisé des demandes, des plans que vous choisissez de sauvegarder, des brouillons temporaires et conversations avec un spécialiste, de leur contexte d&apos;attribution, des compteurs agrégés d&apos;ouverture des systèmes et, lorsque la connexion Google est proposée, la vérification de votre identité e-mail ;</li>
               <li><strong>Resend</strong> pour l&apos;envoi des emails demandés et la gestion des contacts concernés ;</li>
               <li><strong>Vercel AI Gateway et le fournisseur de modèle sélectionné par Demaa, notamment OpenAI</strong>, pour la génération des réponses de l&apos;assistant IA ;</li>
               <li><strong>Slack</strong> pour la réception interne de notifications liées à certaines demandes ;</li>
@@ -111,6 +111,7 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Choix relatifs aux traceurs :</strong> 6 mois maximum avant une nouvelle demande de choix.</li>
               <li><strong>Plan en attente de vérification de l&apos;email :</strong> 30 jours maximum. Le jeton d&apos;accès temporaire est conservé uniquement sous forme hachée et ne donne accès qu&apos;au plan concerné.</li>
               <li><strong>Plans rattachés à une adresse e-mail vérifiée :</strong> jusqu&apos;à 3 ans après leur dernière mise à jour, puis suppression ou anonymisation.</li>
+              <li><strong>Brouillon de message destiné à un spécialiste avant connexion :</strong> utilisable pendant 60 minutes maximum, puis supprimé lors du prochain nettoyage technique des données expirées.</li>
               <li><strong>Conversations avec un spécialiste :</strong> jusqu&apos;à 3 ans après le dernier échange utile, puis suppression ou anonymisation.</li>
               <li><strong>Données techniques de sécurité et journaux :</strong> pendant la durée nécessaire à l&apos;exploitation et à la sécurité du site.</li>
               <li><strong>Compteurs agrégés d&apos;ouverture des systèmes :</strong> pendant la durée d&apos;exploitation du service, ces compteurs ne contenant ni adresse email, ni adresse IP enregistrée, ni identifiant visiteur.</li>

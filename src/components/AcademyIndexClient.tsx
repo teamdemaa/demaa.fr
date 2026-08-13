@@ -8,12 +8,9 @@ import AppLibrarySearch from "@/components/AppLibrarySearch";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { matchesSearchQuery } from "@/lib/search";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
-import AcademyLiveTrainingSection from "@/components/AcademyLiveTrainingSection";
-import type { PublicLiveTraining } from "@/lib/live-session-catalog";
 
 type AcademyIndexClientProps = {
   contents: AcademyContentDefinition[];
-  liveTrainings: readonly PublicLiveTraining[];
   embedded?: boolean;
   onOpenContent?: (content: AcademyContentDefinition) => void;
   backLink?: {
@@ -75,22 +72,17 @@ const COURSE_TITLES: Record<string, string> = {
 
 const ALL_ACADEMY_CATEGORIES = "Tous";
 
-type AcademySection = "decryptions" | "courses" | "live";
+export type AcademySection = "courses" | "workshops";
 
 const CORE_ACADEMY_SECTIONS: ReadonlyArray<{
   id: AcademySection;
   label: string;
 }> = [
   { id: "courses", label: "Cours" },
-  { id: "decryptions", label: "Cas concrets" },
+  { id: "workshops", label: "Ateliers" },
 ];
 
-const WEBINARS_ACADEMY_SECTION = {
-  id: "live",
-  label: "Webinaires",
-} as const satisfies { id: AcademySection; label: string };
-
-function getNextAcademySection(
+export function getNextAcademySection(
   sections: ReadonlyArray<{ id: AcademySection }>,
   current: AcademySection,
   key: string,
@@ -323,7 +315,6 @@ function AcademyCard({
 
 export default function AcademyIndexClient({
   contents,
-  liveTrainings,
   embedded = false,
   onOpenContent,
   backLink,
@@ -334,21 +325,12 @@ export default function AcademyIndexClient({
   const [activeCategory, setActiveCategory] = useState(ALL_ACADEMY_CATEGORIES);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
 
-  const academySections = useMemo(
-    () => liveTrainings.length > 0
-      ? [...CORE_ACADEMY_SECTIONS, WEBINARS_ACADEMY_SECTION]
-      : CORE_ACADEMY_SECTIONS,
-    [liveTrainings.length],
-  );
+  const academySections = CORE_ACADEMY_SECTIONS;
 
   const activeSectionContents = useMemo(
-    () => contents.filter((content) =>
-      activeSection === "decryptions"
-        ? content.kind === "case-study"
-        : activeSection === "courses"
-          ? content.kind === "course"
-          : false,
-    ),
+    () => activeSection === "courses"
+      ? contents.filter((content) => content.kind === "course")
+      : [],
     [activeSection, contents],
   );
 
@@ -380,7 +362,6 @@ export default function AcademyIndexClient({
     });
   }, [activeCategory, activeSectionContents, searchQuery]);
 
-  const decryptions = filteredContents.filter((content) => content.kind === "case-study");
   const fundamentals = filteredContents.filter((content) => content.kind === "course");
   const isSearching = searchQuery.trim().length > 0;
   const visibleFundamentals = embedded || isSearching || showAllFundamentals ? fundamentals : fundamentals.slice(0, 6);
@@ -519,9 +500,7 @@ export default function AcademyIndexClient({
 
       <ContentContainer className={`mx-auto max-w-7xl px-4 pb-16 md:pb-20 ${embedded ? "pt-0" : ""}`}>
         <div
-          className={`mb-8 grid w-full border-b border-dema-line md:mb-10 ${
-            academySections.length === 3 ? "grid-cols-3" : "grid-cols-2"
-          }`}
+          className="mb-8 grid w-full grid-cols-2 border-b border-dema-line md:mb-10"
           role="tablist"
           aria-label="Contenus de l’Académie"
         >
@@ -547,22 +526,14 @@ export default function AcademyIndexClient({
           ))}
         </div>
 
-        {activeSection === "decryptions" && decryptions.length ? (
+        {activeSection === "workshops" ? (
           <section
-            id="academy-panel-decryptions"
+            id="academy-panel-workshops"
             role="tabpanel"
-            aria-labelledby="academy-section-decryptions"
+            aria-labelledby="academy-section-workshops"
+            className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-12 text-center"
           >
-            <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-              {decryptions.map((content, index) => (
-                <AcademyCard
-                  key={content.identity.slug}
-                  content={content}
-                  eager={index < 3}
-                  onOpen={onOpenContent}
-                />
-              ))}
-            </div>
+            <p className="text-sm text-dema-muted">Les premiers ateliers arrivent bientôt.</p>
           </section>
         ) : null}
 
@@ -603,23 +574,7 @@ export default function AcademyIndexClient({
           </section>
         ) : null}
 
-        {activeSection === "live" ? (
-          <div
-            id="academy-panel-live"
-            role="tabpanel"
-            aria-labelledby="academy-section-live"
-          >
-            {liveTrainings.length ? (
-              <AcademyLiveTrainingSection trainings={liveTrainings} />
-            ) : (
-              <section className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-12 text-center">
-                <p className="text-sm text-dema-muted">Aucun direct n’est programmé pour le moment.</p>
-              </section>
-            )}
-          </div>
-        ) : null}
-
-        {activeSection !== "live" && filteredContents.length === 0 ? (
+        {activeSection === "courses" && filteredContents.length === 0 ? (
           <section className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-14 text-center">
             <h2 className="text-xl font-semibold text-brand-blue">Aucun contenu trouvé</h2>
             <p className="mt-2 text-sm text-dema-muted">Essayez un mot plus simple ou un autre sujet.</p>

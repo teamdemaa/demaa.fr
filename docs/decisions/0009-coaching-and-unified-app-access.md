@@ -7,8 +7,8 @@
 ## Décision
 
 La composition de navigation décrite initialement par cette ADR est supersédée
-par l'ADR 0010. La navigation active est `Plan d’action`, `Système`, `Académie`,
-`Opportunités` ; Coaching s'ouvre depuis l'action compacte
+par l'ADR 0010. La navigation active est `Plan d’action`, `Solutions`,
+`Opportunités`, `Académie` ; Coaching s'ouvre depuis l'action compacte
 `Parler à un spécialiste`. L’e-mail de connexion ouvre directement le plan ou
 l'intention demandée après consommation sécurisée du lien à usage unique. Il
 ne doit pas introduire une présentation concurrente « Espace membre ».

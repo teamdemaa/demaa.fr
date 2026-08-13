@@ -34,6 +34,24 @@ describe("customer-space safe return intents", () => {
     });
     expect(getSafeCustomerReturnTo(specialistReturnTo)).toBe(specialistReturnTo);
 
+    const draftToken = "a".repeat(43);
+    const specialistDraftReturnTo = buildCustomerIntentReturnTo({
+      draftToken,
+      kind: "coaching",
+      tab: "messages",
+    });
+    expect(specialistDraftReturnTo).toBe(
+      `/?intent=coaching&tab=messages&draftToken=${draftToken}`,
+    );
+    expect(parseCustomerAccessIntent(specialistDraftReturnTo)).toEqual({
+      draftToken,
+      kind: "coaching",
+      tab: "messages",
+    });
+    expect(getSafeCustomerReturnTo(specialistDraftReturnTo)).toBe(
+      specialistDraftReturnTo,
+    );
+
     const solutionReturnTo = buildCustomerIntentReturnTo({
       kind: "solution-referral",
       resourceSlug: "chartered-accountant",
@@ -52,6 +70,37 @@ describe("customer-space safe return intents", () => {
     expect(getSafeCustomerReturnTo("/?intent=opportunity&opportunityId=../admin")).toBe("/");
     expect(getSafeCustomerReturnTo("//evil.example/path")).toBe("/");
     expect(getSafeCustomerReturnTo("/\\evil.example/path")).toBe("/");
+    expect(getSafeCustomerReturnTo("/?intent=coaching&tab=unknown")).toBe("/");
+    expect(
+      getSafeCustomerReturnTo("/?intent=coaching&draftToken=too-short"),
+    ).toBe("/");
+    expect(
+      getSafeCustomerReturnTo(
+        `/?intent=coaching&tab=formules&draftToken=${"a".repeat(43)}`,
+      ),
+    ).toBe("/");
+    expect(
+      getSafeCustomerReturnTo(
+        "/plans/plan-123?intent=coaching&draftToken=too-short",
+      ),
+    ).toBe("/");
+  });
+
+  it("preserves a coaching tab without requiring a draft", () => {
+    const returnTo = buildCustomerIntentReturnTo({
+      kind: "coaching",
+      offer: "pilotage_1",
+      tab: "formules",
+    });
+
+    expect(returnTo).toBe(
+      "/?intent=coaching&offer=pilotage_1&tab=formules",
+    );
+    expect(parseCustomerAccessIntent(returnTo)).toEqual({
+      kind: "coaching",
+      offer: "pilotage_1",
+      tab: "formules",
+    });
   });
 
   it("keeps legacy plan links compatible", () => {
@@ -63,6 +112,14 @@ describe("customer-space safe return intents", () => {
         "/plans/abc_123?intent=coaching&tab=formules&offer=pilotage_1",
       ),
     ).toBe("/plans/abc_123?intent=coaching&tab=formules&offer=pilotage_1");
+    const draftToken = "a".repeat(43);
+    expect(
+      getSafeCustomerReturnTo(
+        `/plans/abc_123?intent=coaching&tab=messages&draftToken=${draftToken}`,
+      ),
+    ).toBe(
+      `/plans/abc_123?intent=coaching&tab=messages&draftToken=${draftToken}`,
+    );
   });
 
   it("canonicalizes legacy public intents back into the single app", () => {

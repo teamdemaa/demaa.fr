@@ -12,9 +12,9 @@ const tabClassName =
 
 const navigationItems = [
   { view: "plan", label: "Plan d’action", Icon: ListChecks },
-  { view: "system", label: "Système", Icon: Workflow },
-  { view: "academy", label: "Académie", Icon: BookOpen },
+  { view: "system", label: "Solutions", Icon: Workflow },
   { view: "opportunities", label: "Opportunités", Icon: BriefcaseBusiness },
+  { view: "academy", label: "Académie", Icon: BookOpen },
 ] as const;
 
 export default function ActionPlanNavbar({

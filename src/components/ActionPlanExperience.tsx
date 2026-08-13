@@ -536,22 +536,12 @@ export default function ActionPlanExperience({
               workspace={prePlanWorkspace}
               onWorkspaceChange={setPrePlanWorkspace}
               demoMode={isDemoMode}
-              activeTab={appContext.systemTab ?? "process"}
               initialResourceSlug={appContext.solutionResourceSlug}
-              onActiveTabChange={(systemTab) => navigateAppContext({
-                ...appContext,
-                view: "system",
-                systemId: selectedSystemId || appContext.systemId,
-                systemTab,
-                solutionResourceSlug: systemTab === "solutions"
-                  ? appContext.solutionResourceSlug
-                  : undefined,
-              })}
               onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
                 ...appContext,
                 view: "system",
                 systemId: selectedSystemId || appContext.systemId,
-                systemTab: "solutions",
+                systemTab: undefined,
                 solutionResourceSlug,
               })}
             />
@@ -622,6 +612,9 @@ export default function ActionPlanExperience({
                 ? (nextSituation) => generatePlanFromSituation(nextSituation, workspace)
                 : undefined}
               commandDemoMode={isDemoMode}
+              contextualSystemId={
+                selectedSystemId || workspace.selectedSystemId || plan.systemId || ""
+              }
               headerActions={(
                 <ActionPlanUtilityActions
                   plan={plan}
@@ -651,22 +644,12 @@ export default function ActionPlanExperience({
               workspace={workspace}
               onWorkspaceChange={updateWorkspace}
               demoMode={isDemoMode}
-              activeTab={appContext.systemTab ?? "process"}
               initialResourceSlug={appContext.solutionResourceSlug}
-              onActiveTabChange={(systemTab) => navigateAppContext({
-                ...appContext,
-                view: "system",
-                systemId: selectedSystemId || appContext.systemId,
-                systemTab,
-                solutionResourceSlug: systemTab === "solutions"
-                  ? appContext.solutionResourceSlug
-                  : undefined,
-              })}
               onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
                 ...appContext,
                 view: "system",
                 systemId: selectedSystemId || appContext.systemId,
-                systemTab: "solutions",
+                systemTab: undefined,
                 solutionResourceSlug,
               })}
             />
