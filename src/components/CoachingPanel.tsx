@@ -7,20 +7,18 @@ import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
 import { clearLeadSubmissionKey, getLeadSubmissionKey } from "@/lib/lead-submission-client";
 import type { CoachingMessage } from "@/lib/coaching-conversation";
+import {
+  SPECIALIST_OFFERS,
+  type SpecialistOffer,
+} from "@/lib/specialist-offers";
 
 export type CoachingTab = "messages" | "formules";
-export type SpecialistOffer = "echanges" | "pilotage_1" | "pilotage_2";
+export type { SpecialistOffer } from "@/lib/specialist-offers";
 export type SpecialistAccessIntent = {
   offer?: SpecialistOffer;
   tab: CoachingTab;
 };
 type PilotageRhythm = 1 | 2;
-
-const FORMULA_DETAILS: Record<SpecialistOffer, { price: string; title: string }> = {
-  echanges: { price: "149 € HT / mois", title: "Échanges avec Demaa" },
-  pilotage_1: { price: "350 € HT / mois", title: "Pilotage mensuel · 1 session / mois" },
-  pilotage_2: { price: "550 € HT / mois", title: "Pilotage mensuel · 2 sessions / mois" },
-};
 
 const COMMON_BENEFITS = [
   "Toute l’équipe Demaa mobilisable selon le besoin : structuration, développement commercial, marketing, finance et opérations",
@@ -93,8 +91,8 @@ export default function CoachingPanel({
       {tab === "formules" ? (
         <section className="mx-auto mt-7 max-w-[67.5rem]" aria-label="Abonnements avec un spécialiste">
           <div>
-            <h3 className="text-2xl font-medium tracking-[-0.03em] text-brand-blue">Être accompagné chaque mois</h3>
-            <p className="mt-1.5 text-sm leading-relaxed text-dema-muted">Choisissez simplement le niveau de contact humain dont vous avez besoin.</p>
+            <h3 className="text-2xl font-medium tracking-[-0.03em] text-brand-blue">Choisir votre formule</h3>
+            <p className="mt-1.5 text-sm leading-relaxed text-dema-muted">Clarté pour décider maintenant. Maestro pour reprendre durablement la direction de votre entreprise.</p>
           </div>
 
           <div className="mt-5 rounded-[1.1rem] bg-dema-sage/65 p-4 sm:px-5 sm:py-[1.125rem]">
@@ -108,25 +106,25 @@ export default function CoachingPanel({
 
           <div className="mt-5 grid gap-4 md:grid-cols-2">
             <FormulaCard
-              note="Sans appel"
-              title="Échanges avec Demaa"
-              audience="Pour être aidé au fil du mois par l’équipe Demaa."
+              note="Échanges écrits ou vocaux"
+              title="Clarté"
+              audience="Quand une situation vous bloque, obtenez un regard de terrain pour voir clair, décider et avancer."
               price="149 €"
               benefits={[
-                "Conversation écrite ou vocale avec l’équipe Demaa",
-                "Réponse sous 24 à 48 h ouvrées",
-                "Aide à décider, structurer et avancer",
-                "Jusqu’à deux chantiers actifs à la fois",
+                "Questions écrites ou vocales",
+                "Réponse d’un spécialiste sous 24 à 48 heures ouvrées",
+                "Second regard sur une décision, une offre, un document ou une action",
+                "Prochaine étape concrète",
               ]}
-              cta="Choisir les échanges"
+              cta="Choisir Clarté"
               onSelect={() => onRequireAccess ? onRequireAccess({ offer: "echanges", tab: "formules" }) : setSelectedOffer("echanges")}
             />
 
             <FormulaCard
               recommended
               note="Avec un spécialiste dédié"
-              title="Pilotage mensuel"
-              audience="Pour décider, agir et ajuster avec la même personne."
+              title="Maestro"
+              audience="Reprenez votre place de dirigeant. Donnez le cap, organisez l’exécution et faites avancer l’entreprise sans rester au centre de tout."
               price={pilotagePrice}
               selector={(
                 <div className="grid grid-cols-2 gap-1 rounded-full border border-dema-line bg-dema-sage/35 p-1" role="group" aria-label="Nombre de sessions mensuelles">
@@ -144,13 +142,13 @@ export default function CoachingPanel({
                 </div>
               )}
               benefits={[
-                `${pilotageRhythm} session${pilotageRhythm === 2 ? "s individuelles" : " individuelle"} de 60 min / mois`,
+                `${pilotageRhythm} session${pilotageRhythm === 2 ? "s individuelles" : " individuelle"} de 60 minutes par mois`,
                 "Échanges écrits ou vocaux avec votre spécialiste",
+                "Clarification et ajustement de votre stratégie avec la méthode ASOP",
+                "Priorisation et ajustement du plan d’action",
                 "Préparation et revue raisonnable de documents",
-                "Ajustement de votre plan d’action",
-                "Appui de l’équipe Demaa selon le besoin",
               ]}
-              cta={`Choisir avec ${pilotageRhythm} session${pilotageRhythm === 2 ? "s" : ""}`}
+              cta={`Choisir Maestro · ${pilotageRhythm} session${pilotageRhythm === 2 ? "s" : ""}`}
               onSelect={() => onRequireAccess ? onRequireAccess({ offer: pilotageOffer, tab: "formules" }) : setSelectedOffer(pilotageOffer)}
             />
           </div>
@@ -269,7 +267,7 @@ function CoachingRequestDialog({ offer, onClose }: { offer: SpecialistOffer; onC
         ) : (
           <form onSubmit={submit}>
             <h3 id="coaching-dialog-title" className="pr-12 text-2xl font-semibold text-brand-blue">Choisir cette formule</h3>
-            <p className="mt-2 text-sm text-dema-muted">{FORMULA_DETAILS[offer].title} · {FORMULA_DETAILS[offer].price}</p>
+            <p className="mt-2 text-sm text-dema-muted">{SPECIALIST_OFFERS[offer].title} · {SPECIALIST_OFFERS[offer].price}</p>
             <p className="mt-1 text-sm text-dema-muted">Indiquez simplement comment vous joindre. Aucun abonnement ni paiement n’est déclenché maintenant.</p>
             <label className="mt-6 block text-sm font-medium">Entreprise<input value={company} onChange={(event) => setCompany(event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest" /></label>
             <label className="mt-4 block text-sm font-medium">Téléphone<input type="tel" value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="+33 6 12 34 56 78" className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest" /></label>

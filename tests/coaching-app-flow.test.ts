@@ -37,17 +37,27 @@ describe("unified app and coaching", () => {
 
   it("publishes the validated coaching offer and tabs", () => {
     const coaching = read("src/components/CoachingPanel.tsx");
+    const offers = read("src/lib/specialist-offers.ts");
     const coachingControl = read("src/components/ActionPlanCoachingControl.tsx");
     const appNavigation = read("src/components/ActionPlanNavbar.tsx");
     expect(coaching).toContain("Formules");
     expect(coaching).toContain("Messages");
     expect(coaching).toContain("Parler à un spécialiste");
     expect(coaching).toContain("premier échange offert");
-    expect(coaching).toContain("Échanges avec Demaa");
-    expect(coaching).toContain("149 € HT / mois");
-    expect(coaching).toContain("Pilotage mensuel");
-    expect(coaching).toContain("350 € HT / mois");
-    expect(coaching).toContain("550 € HT / mois");
+    expect(coaching).toContain('title="Clarté"');
+    expect(coaching).toContain('title="Maestro"');
+    expect(coaching).toContain("Clarté pour décider maintenant. Maestro pour reprendre durablement");
+    expect(coaching).toContain("Clarification et ajustement de votre stratégie avec la méthode ASOP");
+    expect(coaching).toContain("Choisir Clarté");
+    expect(coaching).toContain("Choisir Maestro");
+    expect(coaching).not.toContain("Échanges avec Demaa");
+    expect(coaching).not.toContain("Pilotage mensuel");
+    expect(offers).toContain('title: "Clarté"');
+    expect(offers).toContain('title: "Maestro · 1 session / mois"');
+    expect(offers).toContain('title: "Maestro · 2 sessions / mois"');
+    expect(offers).toContain('price: "149 € HT / mois"');
+    expect(offers).toContain('price: "350 € HT / mois"');
+    expect(offers).toContain('price: "550 € HT / mois"');
     expect(coaching).not.toContain("150 € HT");
     expect(coaching).not.toContain("400 € HT");
     expect(coaching).not.toContain("Pilotage rapproché");

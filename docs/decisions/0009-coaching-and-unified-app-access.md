@@ -32,13 +32,16 @@ emploient `spécialiste`, notamment `Parler à un spécialiste` et
 `Écrire à un spécialiste`. L'interface ne parle pas de `coach` ni de
 `votre coach`.
 
-- `Échanges avec Demaa` : 149 EUR HT par mois, conversation écrite ou vocale
-  avec l'équipe Demaa, réponse sous 24 à 48 heures ouvrées et jusqu'à deux
-  chantiers actifs à la fois.
-- `Pilotage mensuel` : une seule carte avec un sélecteur interne. Une session
+- `Clarté` : 149 EUR HT par mois, questions écrites ou vocales, réponse d'un
+  spécialiste sous 24 à 48 heures ouvrées, second regard et prochaine étape
+  concrète.
+- `Maestro` : une seule carte avec un sélecteur interne. Une session
   individuelle de 60 minutes par mois coûte 350 EUR HT par mois ; deux sessions
   individuelles de 60 minutes par mois coûtent 550 EUR HT par mois. La même
-  carte, son prix, ses bénéfices et son CTA changent avec le sélecteur.
+  carte, son prix, ses bénéfices et son CTA changent avec le sélecteur. Le
+  spécialiste aide le dirigeant à clarifier sa stratégie avec la méthode ASOP,
+  prioriser son plan d'action et organiser l'exécution ; le dirigeant reste aux
+  commandes.
 
 Il n'existe ni carte distincte `Pilotage rapproché`, ni session ponctuelle à
 150 EUR, ni parcours historique à 400 EUR. Les montants TTC ne sont pas affichés

@@ -98,8 +98,8 @@ l'ADR 0004 prévaut.
   `/systemes` et `/academie` publics restent inchangés.
 - [x] Livrer la première version de `Parler à un spécialiste` : Messages
   asynchrones ouverts par défaut, historique persistant, puis Formules avec
-  `Échanges avec Demaa` à 149 EUR HT/mois et une carte `Pilotage mensuel` dont
-  le sélecteur passe de 1 session à 350 EUR à 2 sessions à 550 EUR HT/mois.
+  `Clarté` à 149 EUR HT/mois et une carte `Maestro` dont le sélecteur passe de
+  1 session à 350 EUR à 2 sessions à 550 EUR HT/mois.
   Les CTA transmettent une intention ; aucun abonnement ou paiement n'est
   déclenché dans cette version.
 - [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
@@ -149,8 +149,8 @@ l'ADR 0004 prévaut.
   limites du service. L'historique Messages, sa persistance et la réponse sous
   24 à 48 h appartiennent déjà à la première version.
 - [ ] Ouvrir un chantier séparé « Paiement des formules spécialiste » sans
-  modifier l'interface validée. Le contrat visible comporte `Échanges avec
-  Demaa` à 149 EUR HT/mois et une carte `Pilotage mensuel` avec sélecteur
+  modifier l'interface validée. Le contrat visible comporte `Clarté` à
+  149 EUR HT/mois et une carte `Maestro` avec sélecteur
   1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois ; il n'existe pas de
   troisième carte `Pilotage rapproché`.
   - Définir précisément ce qui est inclus, les délais de réponse, le rythme des
@@ -195,9 +195,11 @@ l'ADR 0004 prévaut.
   l'intitulé, les questions, le rôle du dirigeant et celui du spécialiste,
   puis décider du modèle de données et de l'interface sans réutiliser
   automatiquement les anciens piliers.
-- [ ] Arbitrer le nom commercial de l'offre spécialiste avant toute nouvelle
-  modification de sa carte : `Maestro`, `Appui au pilotage` ou maintien de
-  `Pilotage mensuel`. Ne pas publier plusieurs noms concurrents.
+- [x] Figer la gamme spécialiste : `Clarté` à 149 EUR HT/mois pour obtenir un
+  regard extérieur et décider, puis `Maestro` à 350 ou 550 EUR HT/mois pour
+  reprendre durablement la direction de l'entreprise. Les identifiants
+  techniques historiques restent internes et aucun nom concurrent n'est
+  publié.
 - [ ] Cadrer le partage sécurisé d'un plan sauvegardé : accès en lecture seule,
   consentement, lien révocable, durée et protection contre l'indexation. Le MVP
   permet déjà de sauvegarder et retrouver un plan, mais ne crée aucun lien

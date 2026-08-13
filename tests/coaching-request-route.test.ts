@@ -134,7 +134,7 @@ describe("coaching request route", () => {
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: expect.arrayContaining([
-        { label: "Formule", value: "Pilotage mensuel · 2 sessions / mois" },
+        { label: "Formule", value: "Maestro · 2 sessions / mois" },
         { label: "Tarif affiché", value: "550 € HT / mois" },
       ]),
       requestType: "specialist_formula_interest",
@@ -146,6 +146,19 @@ describe("coaching request route", () => {
       company: "Entreprise test",
       message: "",
       offer: "session",
+      phone: "+33 6 12 34 56 78",
+      requestKind: "formula",
+    }));
+
+    expect(response.status).toBe(400);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
+  it("rejects inherited object keys as formula identifiers", async () => {
+    const response = await POST(request({
+      company: "Entreprise test",
+      message: "",
+      offer: "toString",
       phone: "+33 6 12 34 56 78",
       requestKind: "formula",
     }));

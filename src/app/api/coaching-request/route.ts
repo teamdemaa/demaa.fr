@@ -15,6 +15,10 @@ import {
   appendCustomerCoachingMessage,
   getCustomerCoachingMessages,
 } from "@/lib/coaching-conversation.server";
+import {
+  isSpecialistOffer,
+  SPECIALIST_OFFERS,
+} from "@/lib/specialist-offers";
 
 export const runtime = "nodejs";
 
@@ -28,18 +32,6 @@ type CoachingRequestBody = {
   requestKind?: unknown;
   website?: unknown;
 };
-
-const OFFERS = {
-  echanges: { label: "Échanges avec Demaa", price: "149 € HT / mois" },
-  pilotage_1: { label: "Pilotage mensuel · 1 session / mois", price: "350 € HT / mois" },
-  pilotage_2: { label: "Pilotage mensuel · 2 sessions / mois", price: "550 € HT / mois" },
-} as const;
-
-type OfferId = keyof typeof OFFERS;
-
-function isOfferId(value: string): value is OfferId {
-  return value in OFFERS;
-}
 
 function isValidPhone(value: string) {
   return /^\+?[0-9\s().-]+$/.test(value) && value.replace(/\D/g, "").length >= 8;
@@ -108,7 +100,7 @@ export async function POST(request: Request) {
     const isFormula = requestKind === "formula";
     const valid = isMessage
       ? message.length >= 2
-      : Boolean(isFormula && company && isValidPhone(phone) && isOfferId(offer));
+      : Boolean(isFormula && company && isValidPhone(phone) && isSpecialistOffer(offer));
 
     if (!valid || !idempotencyKey) {
       return NextResponse.json(
@@ -146,8 +138,8 @@ export async function POST(request: Request) {
       fields: isMessage
         ? [{ label: "Message", value: message }]
         : [
-            { label: "Formule", value: isOfferId(offer) ? OFFERS[offer].label : offer },
-            ...(isOfferId(offer) ? [{ label: "Tarif affiché", value: OFFERS[offer].price }] : []),
+            { label: "Formule", value: isSpecialistOffer(offer) ? SPECIALIST_OFFERS[offer].title : offer },
+            ...(isSpecialistOffer(offer) ? [{ label: "Tarif affiché", value: SPECIALIST_OFFERS[offer].price }] : []),
             ...(message ? [{ label: "Situation", value: message }] : []),
           ],
       idempotencyKey,
