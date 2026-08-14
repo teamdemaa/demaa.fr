@@ -43,6 +43,7 @@ describe("Academy live sessions and contextual cases", () => {
 
   it("hides live trainings from the public Academy through a reversible gate", () => {
     expect(PUBLIC_EDITORIAL_VISIBILITY.academyLiveTrainings).toBe(false);
+    expect(PUBLIC_EDITORIAL_VISIBILITY.academyTutorials).toBe(false);
     expect(getVisibleAcademyLiveTrainings()).toEqual([]);
   });
 
@@ -86,7 +87,7 @@ describe("Academy live sessions and contextual cases", () => {
     }
   });
 
-  it("shows Tutorials then Courses while keeping cases and Webinars dormant as labels", async () => {
+  it("shows only Courses while keeping Tutorials and Webinars dormant", async () => {
     const [clientSource, pageSource] = await Promise.all([
       readFile(
         new URL("../src/components/AcademyIndexClient.tsx", import.meta.url),
@@ -96,22 +97,26 @@ describe("Academy live sessions and contextual cases", () => {
     ]);
     expect(clientSource).not.toContain("Cours fondamentaux");
     expect(clientSource).not.toContain("<AcademyLiveTrainingSection");
-    expect(clientSource.indexOf('{ id: "tutorials", label: "Tutoriels" }')).toBeLessThan(
-      clientSource.indexOf('{ id: "courses", label: "Cours" }'),
-    );
+    expect(clientSource).toContain('label: "Tutoriels"');
+    expect(clientSource).toContain('label: "Cours"');
+    expect(clientSource).toContain("visible: PUBLIC_EDITORIAL_VISIBILITY.academyTutorials");
+    expect(clientSource).toContain('{ id: "courses", label: "Cours", visible: true }');
     expect(clientSource).not.toContain('label: "Ateliers"');
     expect(clientSource).not.toContain('label: "Cas concrets"');
     expect(clientSource).not.toContain("WEBINARS_ACADEMY_SECTION");
-    expect(clientSource).toContain("const academySections = CORE_ACADEMY_SECTIONS");
-    expect(clientSource).toContain('useState<AcademySection>("tutorials")');
+    expect(clientSource).toContain("const academySections = VISIBLE_ACADEMY_SECTIONS");
+    expect(clientSource).toContain("const hasSectionNavigation = academySections.length > 1");
+    expect(clientSource).toContain("{hasSectionNavigation ? (");
+    expect(clientSource).toContain("VISIBLE_ACADEMY_SECTIONS[0].id");
     expect(clientSource).not.toContain("Les premiers ateliers arrivent bientôt.");
     expect(clientSource).not.toContain("overflow-x-auto");
     expect(clientSource).toContain('role="tablist"');
     expect(clientSource).toContain('role="tab"');
     expect(clientSource).toContain('aria-selected={activeSection === section.id}');
     expect(clientSource).toContain('aria-controls={`academy-panel-${section.id}`}');
-    expect(clientSource).toContain('onKeyDown={(event) => handleSectionKeyDown(event, section.id)}');
-    expect(clientSource).toContain('className="mb-8 grid w-full grid-cols-2');
+    expect(clientSource).toContain("onKeyDown={(event) => {");
+    expect(clientSource).toContain("const nextSection = getNextAcademySection(");
+    expect(clientSource).toContain(': { "aria-label": "Cours" })');
     expect(clientSource).not.toContain('activeSection === "live"');
     expect(clientSource).not.toContain("Modèles et documents");
     expect(pageSource).not.toContain("getVisibleAcademyLiveTrainings()");

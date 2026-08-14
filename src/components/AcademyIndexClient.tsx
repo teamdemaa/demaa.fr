@@ -3,9 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, ChevronUp, Play, Search, SlidersHorizontal } from "lucide-react";
-import { type KeyboardEvent, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import AppLibrarySearch from "@/components/AppLibrarySearch";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
+import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
 import { matchesSearchQuery } from "@/lib/search";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 
@@ -77,10 +78,19 @@ export type AcademySection = "tutorials" | "courses";
 const CORE_ACADEMY_SECTIONS: ReadonlyArray<{
   id: AcademySection;
   label: string;
+  visible: boolean;
 }> = [
-  { id: "tutorials", label: "Tutoriels" },
-  { id: "courses", label: "Cours" },
+  {
+    id: "tutorials",
+    label: "Tutoriels",
+    visible: PUBLIC_EDITORIAL_VISIBILITY.academyTutorials,
+  },
+  { id: "courses", label: "Cours", visible: true },
 ];
+
+const VISIBLE_ACADEMY_SECTIONS = CORE_ACADEMY_SECTIONS.filter(
+  (section) => section.visible,
+);
 
 export function getNextAcademySection(
   sections: ReadonlyArray<{ id: AcademySection }>,
@@ -326,11 +336,14 @@ export default function AcademyIndexClient({
 }: AcademyIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllFundamentals, setShowAllFundamentals] = useState(false);
-  const [activeSection, setActiveSection] = useState<AcademySection>("tutorials");
+  const [activeSection, setActiveSection] = useState<AcademySection>(
+    VISIBLE_ACADEMY_SECTIONS[0].id,
+  );
   const [activeCategory, setActiveCategory] = useState(ALL_ACADEMY_CATEGORIES);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
 
-  const academySections = CORE_ACADEMY_SECTIONS;
+  const academySections = VISIBLE_ACADEMY_SECTIONS;
+  const hasSectionNavigation = academySections.length > 1;
 
   const activeSectionContents = useMemo(
     () => contents.filter((content) =>
@@ -380,19 +393,6 @@ export default function AcademyIndexClient({
     setActiveSection(section);
     setActiveCategory(ALL_ACADEMY_CATEGORIES);
     setAreCategoryTagsVisible(false);
-  }
-
-  function handleSectionKeyDown(
-    event: KeyboardEvent<HTMLButtonElement>,
-    currentSection: AcademySection,
-  ) {
-    const nextSection = getNextAcademySection(academySections, currentSection, event.key);
-    if (!nextSection) return;
-    event.preventDefault();
-    selectSection(nextSection);
-    requestAnimationFrame(() => {
-      document.getElementById(`academy-section-${nextSection}`)?.focus();
-    });
   }
 
   const searchControl = embedded ? (
@@ -508,38 +508,58 @@ export default function AcademyIndexClient({
       ) : null}
 
       <ContentContainer className={`mx-auto max-w-7xl px-4 pb-16 md:pb-20 ${embedded ? "pt-0" : ""}`}>
-        <div
-          className="mb-8 grid w-full grid-cols-2 border-b border-dema-line md:mb-10"
-          role="tablist"
-          aria-label="Contenus de l’Académie"
-        >
-          {academySections.map((section) => (
-            <button
-              key={section.id}
-              id={`academy-section-${section.id}`}
-              type="button"
-              role="tab"
-              aria-selected={activeSection === section.id}
-              aria-controls={`academy-panel-${section.id}`}
-              tabIndex={activeSection === section.id ? 0 : -1}
-              onClick={() => selectSection(section.id)}
-              onKeyDown={(event) => handleSectionKeyDown(event, section.id)}
-              className={`-mb-px min-h-11 border-b-2 px-2 py-2.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:px-4 sm:text-sm ${
-                activeSection === section.id
-                  ? "border-dema-forest font-semibold text-dema-forest"
-                  : "border-transparent font-medium text-dema-muted hover:border-dema-forest/25 hover:text-brand-blue"
-              }`}
-            >
-              {section.label}
-            </button>
-          ))}
-        </div>
+        {hasSectionNavigation ? (
+          <div
+            className={`mb-8 grid w-full border-b border-dema-line md:mb-10 ${
+              academySections.length === 2 ? "grid-cols-2" : "grid-cols-3"
+            }`}
+            role="tablist"
+            aria-label="Contenus de l’Académie"
+          >
+            {academySections.map((section) => (
+              <button
+                key={section.id}
+                id={`academy-section-${section.id}`}
+                type="button"
+                role="tab"
+                aria-selected={activeSection === section.id}
+                aria-controls={`academy-panel-${section.id}`}
+                tabIndex={activeSection === section.id ? 0 : -1}
+                onClick={() => selectSection(section.id)}
+                onKeyDown={(event) => {
+                  const nextSection = getNextAcademySection(
+                    academySections,
+                    section.id,
+                    event.key,
+                  );
+                  if (!nextSection) return;
+                  event.preventDefault();
+                  selectSection(nextSection);
+                  requestAnimationFrame(() => {
+                    document.getElementById(`academy-section-${nextSection}`)?.focus();
+                  });
+                }}
+                className={`-mb-px min-h-11 border-b-2 px-2 py-2.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:px-4 sm:text-sm ${
+                  activeSection === section.id
+                    ? "border-dema-forest font-semibold text-dema-forest"
+                    : "border-transparent font-medium text-dema-muted hover:border-dema-forest/25 hover:text-brand-blue"
+                }`}
+              >
+                {section.label}
+              </button>
+            ))}
+          </div>
+        ) : null}
 
         {sectionContents.length ? (
           <section
-            id={`academy-panel-${activeSection}`}
-            role="tabpanel"
-            aria-labelledby={`academy-section-${activeSection}`}
+            {...(hasSectionNavigation
+              ? {
+                  id: `academy-panel-${activeSection}`,
+                  role: "tabpanel",
+                  "aria-labelledby": `academy-section-${activeSection}`,
+                }
+              : { "aria-label": "Cours" })}
           >
             <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
               {visibleContents.map((content, index) => (
@@ -562,9 +582,7 @@ export default function AcademyIndexClient({
                 >
                   {showAllFundamentals
                     ? "Voir moins"
-                    : activeSection === "tutorials"
-                      ? "Voir plus de tutoriels"
-                      : "Voir plus de cours"}
+                    : "Voir plus de cours"}
                   {showAllFundamentals ? (
                     <ChevronUp className="h-4 w-4" aria-hidden="true" />
                   ) : (
@@ -578,9 +596,13 @@ export default function AcademyIndexClient({
 
         {filteredContents.length === 0 ? (
           <section
-            id={`academy-panel-${activeSection}`}
-            role="tabpanel"
-            aria-labelledby={`academy-section-${activeSection}`}
+            {...(hasSectionNavigation
+              ? {
+                  id: `academy-panel-${activeSection}`,
+                  role: "tabpanel",
+                  "aria-labelledby": `academy-section-${activeSection}`,
+                }
+              : { "aria-label": "Cours" })}
             className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-14 text-center"
           >
             <h2 className="text-xl font-semibold text-brand-blue">Aucun contenu trouvé</h2>

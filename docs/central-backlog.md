@@ -32,10 +32,10 @@ de déploiement.
   les deux présentations universelles ne sont plus rendues dans les Ressources
   des Systèmes.
 - Les guides métier sont retirés de Ressources pour simplifier l'application ;
-  leurs données historiques restent conservées. Académie présente désormais
-  uniquement `Tutoriels / Cours`, avec Tutoriels ouvert par défaut. Les
-  identifiants techniques `case-study` alimentent les tutoriels guidés sans
-  quiz et conservent leurs routes ; `Webinaires` reste masqué.
+  leurs données historiques restent conservées. Académie présente
+  temporairement uniquement les `Cours`, sans onglet puisqu'une seule section
+  est publique. Les Tutoriels (`case-study`) et Webinaires restent conservés
+  avec leurs routes mais masqués jusqu'à réactivation explicite.
 - Les parcours guide, newsletter, Structure, Rejoindre Team Demaa, callback
   Services, Levier, Opportunités, sauvegarde de plan et lien magique ont été
   testés en Production. L'envoi direct à la boîte Gmail opérationnelle est
@@ -226,10 +226,12 @@ l'ADR 0004 prévaut.
   article et diaporama avant la future vidéo.
 - [x] Simplifier Ressources : retirer les guides métier de la surface active et
   afficher les modèles et documents en grille verticale responsive.
-- [x] Structurer Académie avec uniquement `Tutoriels / Cours`, avec Tutoriels
-  ouvert par défaut, recherche partagée et navigation clavier. Les contenus
-  techniques `case-study` deviennent les tutoriels guidés, sans quiz, tout en
-  conservant leurs slugs et routes. `Webinaires` reste masqué.
+- [x] Limiter temporairement Académie aux seuls `Cours`, sans onglet. Les
+  Tutoriels techniques `case-study`, leurs slugs et leurs routes restent
+  conservés mais masqués, comme les Webinaires.
+- [ ] Réactiver les `Tutoriels` de l'Académie par la bascule
+  `academyTutorials`, avec retour automatique de la navigation de sections et
+  recette desktop/mobile.
 - [ ] Réactiver l'onglet `Webinaires` de l'Académie seulement
   après validation des créneaux, recette desktop/mobile et bascule explicite de
   `academyLiveTrainings` dans `src/lib/public-editorial-visibility.ts`.

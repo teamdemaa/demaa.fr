@@ -10,6 +10,7 @@ remplacé et la nouvelle référence à consulter.
 | ADR 0008/D-076 : masquer la navigation applicative avant le résultat | `superseded` | navigation visible et utilisable dès l'arrivée, sans compte ni persistance avant sauvegarde, voir ADR 0010 et D-077 |
 | ADR 0009 : `Coaching` comme quatrième onglet principal | `superseded` | navigation `Plan d’action / Opportunités / Académie`, avec `Actions / Solutions` dans le Plan ; Coaching reste accessible par `Parler à un spécialiste`, voir ADR 0010 |
 | Académie `Cours / Ateliers`, Cours par défaut | `superseded` | `Tutoriels / Cours`, Tutoriels par défaut ; les slugs `case-study` sont conservés, voir ADR 0004 |
+| Académie `Tutoriels / Cours`, Tutoriels par défaut | `temporarily-superseded` | `Cours` uniquement, sans onglet ; Tutoriels et Webinaires conservés derrière les bascules éditoriales, voir ADR 0004 |
 | Onglets spécialiste `Messages / Formules` | `superseded` | conversation écrite ou dictée sans onglets ; Coach business devient une carte Services, voir ADR 0009 |
 | Portail distinct `Mon espace` ou `Mes plans` | `superseded` | lien magique puis retour direct à l'intention dans l'application unifiée; la session fournit ensuite l'identité e-mail |
 | Adresse e-mail redemandée dans chaque formulaire applicatif | `superseded` | saisie/vérification au lien magique uniquement, puis e-mail de session récupéré côté serveur |

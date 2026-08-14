@@ -2,7 +2,7 @@
 
 - Statut : `validated`
 - Date : 9 août 2026
-- Mise à jour : 14 août 2026, Tutoriels et Cours
+- Mise à jour : 14 août 2026, surface temporaire Cours uniquement
 - Portée : Services Demaa, composition de Solutions, Académie, Contenus et
   Ressources des 115 systèmes
 - Supersède : les passages incompatibles des ADR 0001, 0002 et 0003
@@ -80,17 +80,16 @@ la même URL sans créer de doublon SEO.
 
 ### Académie
 
-La recherche est suivie de deux onglets applicatifs visibles :
+La surface publique temporaire affiche uniquement les `Cours`, alimentés par
+le catalogue pédagogique structuré avec notions et quiz. Comme une seule
+section est visible, aucun onglet n'est rendu.
 
-1. `Tutoriels`, ouvert par défaut et réservé aux vidéos pratiques et aux
-   démonstrations guidées, avec une présentation à miniature ;
-2. `Cours`, alimenté par le catalogue pédagogique structuré avec notions et quiz.
-
-L'Académie n'affiche pas de troisième onglet. Le catalogue historique
-`Webinaires` reste masqué tant qu'une nouvelle décision de publication ne l'a
-pas réactivé. Les études de cas `case-study` conservent leurs données,
-identifiants et routes directes, mais sont présentées comme Tutoriels. Aucun
-quiz n'est affiché dans ce parcours.
+Les `Tutoriels`, alimentés par les études de cas techniques `case-study`, et le
+catalogue historique `Webinaires` restent masqués tant qu'une nouvelle décision
+de publication ne les a pas réactivés. Leurs données, identifiants, assets et
+routes directes sont conservés. Lors de la réactivation des Tutoriels, leur
+présentation à miniature et leur parcours sans quiz seront restaurés, ainsi que
+la navigation de sections.
 
 La liste est verticale sur mobile et devient une grille sur desktop. Les
 filtres reviennent à la ligne et aucun scroll horizontal n'est introduit.
@@ -108,8 +107,8 @@ ni supprimées, ni copiées dans un nouveau stockage.
 
 ### Dérogation temporaire de lancement
 
-L'onglet `Webinaires` de l'Académie et « Cas concret » des Ressources Système
-sont masqués par les indicateurs
+Les `Tutoriels`, les `Webinaires` de l'Académie et « Cas concret » des
+Ressources Système sont masqués par les indicateurs
 centralisés de `src/lib/public-editorial-visibility.ts`.
 
 Leurs catalogues, relations et routes sont conservés. Leur réactivation exige

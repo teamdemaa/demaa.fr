@@ -1,28 +1,23 @@
 import { describe, expect, it } from "vitest";
 import { getNextAcademySection } from "@/components/AcademyIndexClient";
+import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
 
 const visibleSections = [
-  { id: "tutorials" as const },
   { id: "courses" as const },
 ];
 
 describe("Academy section keyboard navigation", () => {
-  it("cycles only between Tutoriels and Cours", () => {
-    expect(getNextAcademySection(visibleSections, "tutorials", "ArrowRight")).toBe(
-      "courses",
-    );
+  it("keeps the temporary single-course surface without public tabs", () => {
+    expect(PUBLIC_EDITORIAL_VISIBILITY.academyTutorials).toBe(false);
     expect(getNextAcademySection(visibleSections, "courses", "ArrowRight")).toBe(
-      "tutorials",
-    );
-    expect(getNextAcademySection(visibleSections, "tutorials", "ArrowLeft")).toBe(
       "courses",
     );
     expect(getNextAcademySection(visibleSections, "courses", "Home")).toBe(
-      "tutorials",
-    );
-    expect(getNextAcademySection(visibleSections, "tutorials", "End")).toBe(
       "courses",
     );
-    expect(getNextAcademySection(visibleSections, "tutorials", "Enter")).toBeNull();
+    expect(getNextAcademySection(visibleSections, "courses", "End")).toBe(
+      "courses",
+    );
+    expect(getNextAcademySection(visibleSections, "courses", "Enter")).toBeNull();
   });
 });
