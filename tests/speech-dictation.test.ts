@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   createSpeechDictationSession,
   getSpeechDictationErrorMessage,
@@ -94,6 +94,10 @@ function setup(overrides: Partial<{
 }
 
 describe("speech dictation", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it("configures recognition and renders interim transcription without duplication", () => {
     const { errors, listening, recognition, session, text } = setup();
 
@@ -144,6 +148,66 @@ describe("speech dictation", () => {
     expect(getEndCalls()).toBe(1);
   });
 
+  it("restarts after an unexpected browser end and preserves prior text", () => {
+    vi.useFakeTimers();
+    const { getEndCalls, listening, recognition, session, text } = setup();
+
+    session.start();
+    recognition.emitResult("première partie");
+    recognition.emitEnd();
+
+    expect(listening).toEqual([true]);
+    expect(getEndCalls()).toBe(0);
+    expect(recognition.startCalls).toBe(1);
+
+    vi.advanceTimersByTime(250);
+    recognition.emitResult("deuxième partie");
+
+    expect(recognition.startCalls).toBe(2);
+    expect(text).toEqual([
+      "Texte existant première partie",
+      "Texte existant première partie deuxième partie",
+    ]);
+  });
+
+  it("keeps listening after a no-speech pause until the user stops", () => {
+    vi.useFakeTimers();
+    const { errors, getEndCalls, listening, recognition, session } = setup();
+
+    session.start();
+    recognition.emitError("no-speech");
+    recognition.emitEnd();
+    vi.advanceTimersByTime(250);
+
+    expect(errors).toEqual([null]);
+    expect(listening).toEqual([true]);
+    expect(recognition.startCalls).toBe(2);
+    expect(getEndCalls()).toBe(0);
+
+    session.stop();
+    recognition.emitEnd();
+    vi.runAllTimers();
+
+    expect(listening).toEqual([true, false]);
+    expect(recognition.startCalls).toBe(2);
+    expect(getEndCalls()).toBe(1);
+  });
+
+  it("stops immediately when the user acts during the restart delay", () => {
+    vi.useFakeTimers();
+    const { getEndCalls, listening, recognition, session } = setup();
+
+    session.start();
+    recognition.emitEnd();
+    session.stop();
+    vi.runAllTimers();
+
+    expect(recognition.startCalls).toBe(1);
+    expect(recognition.stopCalls).toBe(0);
+    expect(listening).toEqual([true, false]);
+    expect(getEndCalls()).toBe(1);
+  });
+
   it("aborts on destroy and ignores subsequent events", () => {
     const { getEndCalls, recognition, session, text } = setup();
 
@@ -175,11 +239,11 @@ describe("speech dictation", () => {
     expect(errors.at(-1)).toContain("continuer au clavier");
   });
 
-  it.each(["aborted", "no-speech"])("does not display an alert for %s", (error) => {
+  it("does not display an alert for an aborted recognition", () => {
     const { errors, recognition, session } = setup();
 
     session.start();
-    recognition.emitError(error);
+    recognition.emitError("aborted");
 
     expect(errors).toEqual([null]);
   });
@@ -227,8 +291,9 @@ describe("speech dictation", () => {
     const coaching = readFileSync("src/components/CoachingPanel.tsx", "utf8");
 
     expect(actionPlan).toContain("useSpeechDictation");
-    expect(actionPlan).toContain("continuous: false");
+    expect(actionPlan).toContain("continuous: true");
     expect(commandBar).toContain("useSpeechDictation");
+    expect(commandBar).toContain("continuous: true");
     expect(commandBar).toContain("commandDictation.handleValueChange");
     expect(commandBar).toContain('aria-label={commandDictation.isListening ? "Arrêter la dictée" : "Dicter ma demande"}');
     expect(coaching).toContain("useSpeechDictation");

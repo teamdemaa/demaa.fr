@@ -42,6 +42,7 @@ declare global {
 }
 
 const KEYBOARD_FALLBACK = " Vous pouvez continuer au clavier.";
+const RESTART_DELAY_MS = 250;
 
 export function getSpeechDictationErrorMessage(error?: string) {
   switch (error) {
@@ -110,13 +111,44 @@ export function createSpeechDictationSession({
   const recognition = new Recognition();
   let active = true;
   let ended = false;
+  let shouldListen = false;
+  let currentRunBase = initialValue.slice(0, maxLength);
+  let latestValue = currentRunBase;
+  let restartTimer: ReturnType<typeof setTimeout> | null = null;
+
+  const clearRestartTimer = () => {
+    if (restartTimer === null) return;
+    clearTimeout(restartTimer);
+    restartTimer = null;
+  };
 
   const finish = () => {
     if (ended) return;
     ended = true;
     active = false;
+    shouldListen = false;
+    clearRestartTimer();
     onListeningChange(false);
     onEnd();
+  };
+
+  const startRecognition = () => {
+    if (!active || !shouldListen) return;
+    try {
+      recognition.start();
+    } catch {
+      onError(getSpeechDictationErrorMessage());
+      finish();
+    }
+  };
+
+  const restartRecognition = () => {
+    if (!active || !shouldListen || restartTimer !== null) return;
+    currentRunBase = latestValue;
+    restartTimer = setTimeout(() => {
+      restartTimer = null;
+      startRecognition();
+    }, RESTART_DELAY_MS);
   };
 
   recognition.lang = language;
@@ -126,19 +158,29 @@ export function createSpeechDictationSession({
     if (!active) return;
     const transcript = readTranscript(event.results);
     if (!transcript) return;
-    onText(appendTranscript(initialValue, transcript, maxLength));
+    latestValue = appendTranscript(currentRunBase, transcript, maxLength);
+    onText(latestValue);
   };
   recognition.onerror = (event) => {
     if (!active) return;
-    if (event.error !== "aborted" && event.error !== "no-speech") {
-      onError(getSpeechDictationErrorMessage(event.error));
+    if (event.error === "aborted") return;
+    if (event.error === "no-speech" && shouldListen && continuous) return;
+    onError(getSpeechDictationErrorMessage(event.error));
+    finish();
+  };
+  recognition.onend = () => {
+    if (!active) return;
+    if (shouldListen && continuous) {
+      restartRecognition();
+      return;
     }
     finish();
   };
-  recognition.onend = finish;
 
   const cancel = () => {
     if (!active) return;
+    shouldListen = false;
+    clearRestartTimer();
     active = false;
     if (recognition.abort) recognition.abort();
     else recognition.stop();
@@ -149,17 +191,21 @@ export function createSpeechDictationSession({
     cancel,
     destroy: cancel,
     start() {
+      if (!active || shouldListen) return;
       onError(null);
+      shouldListen = true;
       onListeningChange(true);
-      try {
-        recognition.start();
-      } catch {
-        onError(getSpeechDictationErrorMessage());
-        finish();
-      }
+      startRecognition();
     },
     stop() {
       if (!active) return;
+      const wasWaitingToRestart = restartTimer !== null;
+      shouldListen = false;
+      clearRestartTimer();
+      if (wasWaitingToRestart) {
+        finish();
+        return;
+      }
       try {
         recognition.stop();
       } catch {

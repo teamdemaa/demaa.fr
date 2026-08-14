@@ -110,7 +110,7 @@ export default function ActionPlanExperience({
   const situationDictation = useSpeechDictation({
     value: situation,
     onChange: setSituation,
-    continuous: false,
+    continuous: true,
     interimResults: true,
     maxLength: 4_000,
   });
