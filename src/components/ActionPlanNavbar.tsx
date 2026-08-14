@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, BriefcaseBusiness, ListChecks, Workflow } from "lucide-react";
+import { BookOpen, BriefcaseBusiness, ListChecks } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -12,7 +12,6 @@ const tabClassName =
 
 const navigationItems = [
   { view: "plan", label: "Plan d’action", Icon: ListChecks },
-  { view: "system", label: "Solutions", Icon: Workflow },
   { view: "opportunities", label: "Opportunités", Icon: BriefcaseBusiness },
   { view: "academy", label: "Académie", Icon: BookOpen },
 ] as const;
@@ -45,11 +44,13 @@ export default function ActionPlanNavbar({
   function navigation() {
     return (
       <div
-        className="grid w-full grid-cols-4 gap-1 rounded-[1.45rem] border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.06)] lg:rounded-full"
+        className="grid w-full grid-cols-3 gap-1 rounded-[1.45rem] border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.06)] lg:rounded-full"
         aria-label="Navigation principale"
       >
         {navigationItems.map(({ view, label, Icon }) => {
-          const className = `${tabClassName} ${activeView === view ? "bg-dema-sage text-dema-forest" : "text-dema-muted hover:text-brand-blue"}`;
+          const activeNavigationView = activeView === "system" ? "plan" : activeView;
+          const isActive = activeNavigationView === view;
+          const className = `${tabClassName} ${isActive ? "bg-dema-sage text-dema-forest" : "text-dema-muted hover:text-brand-blue"}`;
           const content = (
             <>
               <Icon className="h-4 w-4 shrink-0 xl:hidden" aria-hidden="true" />
@@ -61,7 +62,7 @@ export default function ActionPlanNavbar({
             <Link
               key={view}
               href={`/?view=${view}`}
-              aria-current={activeView === view ? "page" : undefined}
+              aria-current={isActive ? "page" : undefined}
               className={className}
             >
               {content}
@@ -70,7 +71,7 @@ export default function ActionPlanNavbar({
             <button
               key={view}
               type="button"
-              aria-current={activeView === view ? "page" : undefined}
+              aria-current={isActive ? "page" : undefined}
               onClick={() => selectView(view)}
               className={className}
             >

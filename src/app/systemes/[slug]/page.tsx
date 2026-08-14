@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
+import { buildPublicSystemAppHref } from "@/lib/action-plan-app-context";
 import { composeCanonicalServicesForSystem } from "@/lib/canonical-services-system-section.server";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import {
@@ -102,7 +103,9 @@ export default async function SystemPage({
             solutionSections={visibleSolutionSections}
             headerActions={(
               <Link
-                href={`/?view=system&system=${encodeURIComponent(data.system.slug)}`}
+                href={buildPublicSystemAppHref({
+                  systemId: data.system.slug,
+                })}
                 className="demaa-secondary-button min-h-11 w-full"
               >
                 Ouvrir dans Demaa

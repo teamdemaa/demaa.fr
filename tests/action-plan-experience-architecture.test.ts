@@ -148,7 +148,11 @@ describe("action plan experience architecture", () => {
 
     expect(guestExperience).toContain("<ActionPlanNavbar");
     expect(guestExperience).toContain('activeTab === "plan"');
-    expect(guestExperience).toContain('activeTab === "system"');
+    expect(guestExperience).toContain("<ActionPlanWorkspaceTabs");
+    expect(guestExperience).toContain('activePlanTab !== "actions"');
+    expect(guestExperience).toContain('activePlanTab !== "solutions"');
+    expect(guestExperience).toContain("<ActionPlanSystemPanel");
+    expect(guestExperience).not.toContain('activeTab === "system"');
     expect(guestExperience).toContain('activeTab === "academy"');
     expect(guestExperience).toContain('activeTab === "opportunities"');
     expect(guestExperience).toContain("demoMode={isDemoMode}");

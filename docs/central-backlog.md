@@ -60,9 +60,10 @@ l'ADR 0004 prévaut.
 
 - `demaa.co` est le domaine canonique du lancement France, sans préfixe de
   locale. L'internationalisation reste différée.
-- La navigation applicative contient `Plan d'action`, `Solutions`,
-  `Opportunités` et `Académie`. `Solutions` conserve la clé technique
-  `view=system` et affiche uniquement les solutions du Système sélectionné.
+- La navigation applicative contient `Plan d'action`, `Opportunités` et
+  `Académie`. Le Plan contient les sous-onglets `Actions` et `Solutions`.
+  Les anciennes URLs `view=system` restent acceptées ; les nouveaux liens
+  utilisent `view=plan&planTab=solutions` et conservent le contexte Système.
   Organisation et Ressources restent sur les fiches publiques et alimentent
   de manière déterministe les aides affichées dans les Actions. Le produit Coaching est
   accessible par l'action `Parler à un spécialiste` et conserve les onglets
@@ -109,7 +110,8 @@ l'ADR 0004 prévaut.
   Les CTA transmettent une intention ; aucun abonnement ou paiement n'est
   déclenché dans cette version.
 - [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
-  `Plan d’action / Solutions / Opportunités / Académie`, Coaching accessible par
+  `Plan d’action / Opportunités / Académie`, sous-onglets `Actions / Solutions`
+  dans le Plan, Coaching accessible par
   `Parler à un spécialiste`, Opportunités au sens large et sauvegarde invitée
   sans secret exposé au JavaScript. L’ADR 0010 est la référence.
 - [x] Unifier l'identité e-mail des parcours applicatifs : le lien magique est
@@ -173,8 +175,10 @@ l'ADR 0004 prévaut.
   - Tester sur une cohorte pilote puis mesurer charge réelle, délai de réponse,
     marge, satisfaction et rétention avant le `GO` public.
 - [x] Conserver avant et après connexion la navigation applicative unique
-  `Plan d’action / Solutions / Opportunités / Académie`. La clé technique
-  `view=system` et les routes `/systemes` restent inchangées. Coaching reste le
+  `Plan d’action / Opportunités / Académie`, avec `Actions / Solutions` dans le
+  Plan. Les anciennes URLs `view=system` restent compatibles et sont
+  normalisées en `view=plan&planTab=solutions` pour les nouveaux liens ; les
+  routes `/systemes` restent inchangées. Coaching reste le
   produit accessible par `Parler à un spécialiste`; les libellés humains
   emploient `spécialiste`, notamment `Écrire à un spécialiste`. Aucun onglet
   `Accueil`, portail `Mon espace`/`Mes plans` ou profil obligatoire n'est créé.

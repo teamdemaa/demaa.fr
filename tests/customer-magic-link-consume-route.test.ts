@@ -78,6 +78,31 @@ describe("customer magic-link consumption route", () => {
     expect(response.headers.get("set-cookie")).toContain("demaa_customer_session=session-token");
   });
 
+  it("returns to the exact saved-plan specialist draft after consuming the link", async () => {
+    const draftToken = "a".repeat(43);
+    const returnTo =
+      `/plans/plan-123?intent=coaching&tab=messages&draftToken=${draftToken}`;
+    mocks.consumeCustomerMagicLink.mockResolvedValue("dirigeant@example.com");
+
+    const response = await POST(new Request(
+      "https://demaa.co/api/customer-space/consume",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Origin: "https://demaa.co",
+        },
+        body: JSON.stringify({ returnTo, token: "raw-token" }),
+      },
+    ));
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ redirectTo: returnTo });
+    expect(mocks.createCustomerSession).toHaveBeenCalledWith(
+      "dirigeant@example.com",
+    );
+  });
+
   it("returns a neutral expired-link error without creating a session", async () => {
     mocks.consumeCustomerMagicLink.mockResolvedValue(null);
     const response = await POST(new Request(

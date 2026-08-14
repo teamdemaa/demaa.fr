@@ -3,7 +3,11 @@ import type { LegacyV2ActionPlan } from "@/lib/action-plan-contract";
 import { ACTION_PLAN_DEMO } from "@/lib/action-plan-demo";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import { createActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
-import { createManualAction, createManualActionPlan } from "@/lib/action-plan-manual";
+import {
+  createManualAction,
+  createManualActionPlan,
+  createManualActionPlanWorkspaceState,
+} from "@/lib/action-plan-manual";
 
 type StoredDocument = Record<string, unknown>;
 
@@ -273,6 +277,41 @@ describe("action plan Firebase persistence", () => {
     expect((await getOwnedActionPlans("dirigeant@example.com"))[0]?.title).toBe(
       "Plan de rentrée",
     );
+  });
+
+  it("lists every plan for one canonical owner while preserving a blank plan", async () => {
+    const blank = await createOwnedActionPlan(" Dirigeant@Example.com ", {
+      plan: createManualActionPlan(),
+      title: "Plan vierge",
+      workspaceState: createManualActionPlanWorkspaceState(),
+    });
+    const generated = await createOwnedActionPlan("dirigeant@example.com", {
+      plan: actionPlan("Plan commercial"),
+      title: "Plan commercial",
+    });
+    await createOwnedActionPlan("autre@example.com", {
+      plan: actionPlan("Plan d’un autre compte"),
+      title: "Plan privé",
+    });
+
+    await firestore.database.collection("action_plans").doc(blank.id).set(
+      { updated_at: "2026-08-13T09:00:00.000Z" },
+      { merge: true },
+    );
+    await firestore.database.collection("action_plans").doc(generated.id).set(
+      { updated_at: "2026-08-13T10:00:00.000Z" },
+      { merge: true },
+    );
+
+    const plans = await getOwnedActionPlans("DIRIGEANT@example.com");
+
+    expect(plans.map(({ id }) => id)).toEqual([generated.id, blank.id]);
+    expect(plans[1]).toMatchObject({
+      id: blank.id,
+      title: "Plan vierge",
+      plan: { version: "manual", weeklyActions: [] },
+      workspaceState: { selectedSystemId: null, tasks: {} },
+    });
   });
 
   it("soft-deletes a plan and removes it from the active list", async () => {

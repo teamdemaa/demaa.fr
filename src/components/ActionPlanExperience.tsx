@@ -8,6 +8,9 @@ import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNa
 import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import ActionPlanUtilityActions from "@/components/ActionPlanUtilityActions";
+import ActionPlanWorkspaceTabs, {
+  type ActionPlanWorkspaceTab,
+} from "@/components/ActionPlanWorkspaceTabs";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
@@ -93,6 +96,7 @@ export default function ActionPlanExperience({
   const { context: appContext, navigate: navigateAppContext } =
     useActionPlanAppContext(initialAppContext);
   const activeTab = appContext.view;
+  const activePlanTab = appContext.planTab ?? "actions";
   const [isGenerating, setIsGenerating] = useState(false);
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [error, setError] = useState<string | null>(null);
@@ -110,14 +114,32 @@ export default function ActionPlanExperience({
   });
 
   function selectAppView(view: ActionPlanView) {
-    navigateAppContext({ ...appContext, view });
+    navigateAppContext({
+      ...appContext,
+      view: view === "system" ? "plan" : view,
+      planTab: view === "system" ? "solutions" : undefined,
+      solutionResourceSlug: undefined,
+    });
+  }
+
+  function selectPlanTab(planTab: ActionPlanWorkspaceTab) {
+    navigateAppContext({
+      ...appContext,
+      view: "plan",
+      planTab,
+      systemId: planTab === "solutions" ? selectedSystemId || undefined : undefined,
+      systemTab: planTab === "solutions" ? "solutions" : undefined,
+      solutionResourceSlug: undefined,
+    });
   }
 
   function selectAppSystem(systemId: string) {
     navigateAppContext({
       ...appContext,
-      view: "system",
+      view: "plan",
+      planTab: "solutions",
       systemId,
+      systemTab: "solutions",
       solutionResourceSlug: undefined,
     });
   }
@@ -186,7 +208,8 @@ export default function ActionPlanExperience({
       setPrePlanWorkspace((current) => ({ ...current, selectedSystemId: systemSlug }));
       navigateAppContext({
         ...appContext,
-        view: "system",
+        view: "plan",
+        planTab: "solutions",
         systemId: systemSlug,
         systemTab: "solutions",
         solutionResourceSlug: resourceSlug,
@@ -251,7 +274,7 @@ export default function ActionPlanExperience({
         savedSystemIds: storedSystemId ? [storedSystemId] : [],
       });
       setSelectedSystemId(storedSystemId);
-      navigateAppContext({ view: "plan" }, "replace");
+      navigateAppContext({ view: "plan", planTab: "actions" }, "replace");
       return;
     }
 
@@ -263,7 +286,7 @@ export default function ActionPlanExperience({
     setGeneration(null);
     setWorkspace(createActionPlanWorkspaceState(ACTION_PLAN_DEMO));
     setSelectedSystemId(ACTION_PLAN_DEMO.systemId);
-    navigateAppContext({ view: "plan" }, "replace");
+    navigateAppContext({ view: "plan", planTab: "actions" }, "replace");
   }, [navigateAppContext]);
 
   useEffect(() => {
@@ -319,7 +342,7 @@ export default function ActionPlanExperience({
       setGeneration(null);
       setWorkspace(nextWorkspace);
       setSelectedSystemId(nextWorkspace.selectedSystemId || ACTION_PLAN_DEMO.systemId);
-      navigateAppContext({ view: "plan" }, "replace");
+      navigateAppContext({ view: "plan", planTab: "actions" }, "replace");
       setIsGenerating(false);
       window.requestAnimationFrame(() => resultTitleRef.current?.focus());
       return;
@@ -354,7 +377,7 @@ export default function ActionPlanExperience({
       setGeneration(body.generation ?? null);
       setWorkspace(generatedWorkspace);
       setSelectedSystemId(nextSelectedSystemId);
-      navigateAppContext({ view: "plan" }, "replace");
+      navigateAppContext({ view: "plan", planTab: "actions" }, "replace");
       window.requestAnimationFrame(() => resultTitleRef.current?.focus());
     } catch (submitError) {
       if (submitError instanceof DOMException && submitError.name === "AbortError") return;
@@ -391,7 +414,7 @@ export default function ActionPlanExperience({
     setGeneration(null);
     setWorkspace(prePlanWorkspace);
     setSelectedSystemId(prePlanWorkspace.selectedSystemId || "");
-    navigateAppContext({ view: "plan" }, "replace");
+    navigateAppContext({ view: "plan", planTab: "actions" }, "replace");
     setError(null);
     window.requestAnimationFrame(() => resultTitleRef.current?.focus());
   }
@@ -456,95 +479,113 @@ export default function ActionPlanExperience({
         <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} />
         <div className="mx-auto max-w-[68rem] pt-1">
           {activeTab === "plan" ? (
-            <section className="mx-auto max-w-5xl pt-12 text-center sm:pt-16 lg:pt-20">
-              <h1 className="text-balance text-[clamp(2.45rem,7vw,5.2rem)] font-light leading-[0.98] tracking-[-0.055em] text-brand-blue/62">
-                Qu’est-ce qui{" "}
-                <span className="demaa-hero-title text-dema-forest">
-                  freine votre entreprise
-                </span>
-                &nbsp;?
-              </h1>
-              <form onSubmit={handleGenerate} className="mx-auto mt-9 max-w-4xl text-left sm:mt-11">
-                <div className="rounded-[1.7rem] border border-dema-line bg-dema-paper p-2 shadow-[0_18px_50px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">
-                  <label htmlFor="business-situation" className="sr-only">Décrivez la situation de votre entreprise</label>
-                  <div className="relative">
-                    {!situation ? (
-                      <div
-                        aria-hidden="true"
-                        className="pointer-events-none absolute inset-0 px-5 py-5 text-base font-light leading-relaxed text-brand-blue/28 sm:px-6 sm:py-6 sm:text-lg"
-                      >
-                        {animatedPlaceholder}
+            <>
+              <ActionPlanWorkspaceTabs
+                idPrefix="guest-plan"
+                value={activePlanTab}
+                onChange={selectPlanTab}
+              />
+              <div
+                id="guest-plan-actions-panel"
+                role="tabpanel"
+                aria-labelledby="guest-plan-actions-tab"
+                hidden={activePlanTab !== "actions"}
+              >
+                <section className="mx-auto max-w-5xl pt-6 text-center sm:pt-10 lg:pt-14">
+                  <h1 className="text-balance text-[clamp(2.45rem,7vw,5.2rem)] font-light leading-[0.98] tracking-[-0.055em] text-brand-blue/62">
+                    Qu’est-ce qui{" "}
+                    <span className="demaa-hero-title text-dema-forest">
+                      freine votre entreprise
+                    </span>
+                    &nbsp;?
+                  </h1>
+                  <form onSubmit={handleGenerate} className="mx-auto mt-9 max-w-4xl text-left sm:mt-11">
+                    <div className="rounded-[1.7rem] border border-dema-line bg-dema-paper p-2 shadow-[0_18px_50px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">
+                      <label htmlFor="business-situation" className="sr-only">Décrivez la situation de votre entreprise</label>
+                      <div className="relative">
+                        {!situation ? (
+                          <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 px-5 py-5 text-base font-light leading-relaxed text-brand-blue/28 sm:px-6 sm:py-6 sm:text-lg"
+                          >
+                            {animatedPlaceholder}
+                          </div>
+                        ) : null}
+                        <textarea
+                          id="business-situation"
+                          value={situation}
+                          onChange={(event) => situationDictation.handleValueChange(event.target.value)}
+                          maxLength={4_000}
+                          rows={5}
+                          className="relative min-h-[9rem] w-full resize-none rounded-[1.25rem] bg-transparent px-5 py-5 text-base font-light leading-relaxed text-brand-blue outline-none sm:min-h-[10.5rem] sm:px-6 sm:py-6 sm:text-lg"
+                        />
                       </div>
-                    ) : null}
-                    <textarea
-                      id="business-situation"
-                      value={situation}
-                      onChange={(event) => situationDictation.handleValueChange(event.target.value)}
-                      maxLength={4_000}
-                      rows={5}
-                      className="relative min-h-[9rem] w-full resize-none rounded-[1.25rem] bg-transparent px-5 py-5 text-base font-light leading-relaxed text-brand-blue outline-none sm:min-h-[10.5rem] sm:px-6 sm:py-6 sm:text-lg"
-                    />
-                  </div>
-                  <div className="flex items-center justify-end gap-2 px-3 pb-2 sm:px-4">
-                    <button
-                      type="button"
-                      aria-label={situationDictation.isListening ? "Arrêter la dictée" : "Dicter ma situation"}
-                      aria-pressed={situationDictation.isListening}
-                      onClick={situationDictation.toggle}
-                      className={`inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border transition ${situationDictation.isListening ? "border-dema-forest bg-dema-sage text-dema-forest" : "border-dema-line bg-dema-paper text-dema-muted hover:border-dema-forest/25 hover:text-dema-forest"}`}
-                    >
-                      <Mic className="h-4 w-4" aria-hidden="true" />
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isGenerating || situation.trim().length < 20}
-                      className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-dema-forest px-6 text-sm font-semibold text-white transition hover:bg-brand-blue disabled:cursor-not-allowed disabled:opacity-45 sm:flex-none"
-                    >
-                      {isGenerating ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-                      {isGenerating ? "Création du plan…" : "Créer mon plan d’action"}
-                      {!isGenerating ? <ArrowRight className="h-4 w-4" aria-hidden="true" /> : null}
-                    </button>
-                  </div>
-                </div>
-                <div aria-live="polite" className="min-h-7 px-3 pt-3 text-center text-sm text-dema-forest">
-                  {situationDictation.error ?? error}
-                </div>
-                <div className="mt-1 text-center">
-                  <button
-                    type="button"
-                    onClick={handleStartBlankPlan}
-                    className="text-sm font-medium text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest"
-                  >
-                    Commencer avec un plan vierge
-                  </button>
-                </div>
-              </form>
-            </section>
-          ) : null}
-          {activeTab === "system" ? (
-            <ActionPlanSystemPanel
-              options={systemOptions}
-              selectedSystemId={selectedSystemId}
-              onSystemChange={(systemId) => {
-                setSelectedSystemId(systemId);
-                selectAppSystem(systemId);
-                setPrePlanWorkspace((current) => ({
-                  ...current,
-                  selectedSystemId: systemId,
-                }));
-              }}
-              workspace={prePlanWorkspace}
-              onWorkspaceChange={setPrePlanWorkspace}
-              demoMode={isDemoMode}
-              initialResourceSlug={appContext.solutionResourceSlug}
-              onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
-                ...appContext,
-                view: "system",
-                systemId: selectedSystemId || appContext.systemId,
-                systemTab: undefined,
-                solutionResourceSlug,
-              })}
-            />
+                      <div className="flex items-center justify-end gap-2 px-3 pb-2 sm:px-4">
+                        <button
+                          type="button"
+                          aria-label={situationDictation.isListening ? "Arrêter la dictée" : "Dicter ma situation"}
+                          aria-pressed={situationDictation.isListening}
+                          onClick={situationDictation.toggle}
+                          className={`inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border transition ${situationDictation.isListening ? "border-dema-forest bg-dema-sage text-dema-forest" : "border-dema-line bg-dema-paper text-dema-muted hover:border-dema-forest/25 hover:text-dema-forest"}`}
+                        >
+                          <Mic className="h-4 w-4" aria-hidden="true" />
+                        </button>
+                        <button
+                          type="submit"
+                          disabled={isGenerating || situation.trim().length < 20}
+                          className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-dema-forest px-6 text-sm font-semibold text-white transition hover:bg-brand-blue disabled:cursor-not-allowed disabled:opacity-45 sm:flex-none"
+                        >
+                          {isGenerating ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
+                          {isGenerating ? "Création du plan…" : "Créer mon plan d’action"}
+                          {!isGenerating ? <ArrowRight className="h-4 w-4" aria-hidden="true" /> : null}
+                        </button>
+                      </div>
+                    </div>
+                    <div aria-live="polite" className="min-h-7 px-3 pt-3 text-center text-sm text-dema-forest">
+                      {situationDictation.error ?? error}
+                    </div>
+                    <div className="mt-1 text-center">
+                      <button
+                        type="button"
+                        onClick={handleStartBlankPlan}
+                        className="text-sm font-medium text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest"
+                      >
+                        Commencer avec un plan vierge
+                      </button>
+                    </div>
+                  </form>
+                </section>
+              </div>
+              <div
+                id="guest-plan-solutions-panel"
+                role="tabpanel"
+                aria-labelledby="guest-plan-solutions-tab"
+                hidden={activePlanTab !== "solutions"}
+              >
+                {activePlanTab === "solutions" ? (
+                  <ActionPlanSystemPanel
+                    options={systemOptions}
+                    selectedSystemId={selectedSystemId}
+                    onSystemChange={(systemId) => {
+                      setSelectedSystemId(systemId);
+                      selectAppSystem(systemId);
+                    }}
+                    workspace={prePlanWorkspace}
+                    onWorkspaceChange={setPrePlanWorkspace}
+                    demoMode={isDemoMode}
+                    initialResourceSlug={appContext.solutionResourceSlug}
+                    onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
+                      ...appContext,
+                      view: "plan",
+                      planTab: "solutions",
+                      systemId: selectedSystemId || appContext.systemId,
+                      systemTab: "solutions",
+                      solutionResourceSlug,
+                    })}
+                  />
+                ) : null}
+              </div>
+            </>
           ) : null}
           {activeTab === "academy" ? (
             <ActionPlanAcademyPanel
@@ -600,60 +641,81 @@ export default function ActionPlanExperience({
           Votre plan d’action
         </h1>
         <div className="pt-1">
-          <div hidden={activeTab !== "plan"}>
-            <ActionPlanResult
-              plan={plan}
-              workspace={workspace}
-              onWorkspaceChange={updateWorkspace}
-              manualMode={isManualActionPlan(plan)}
-              onAddAction={handleAddAction}
-              onDeleteAction={handleDeleteAction}
-              onGeneratePlan={isBlankManualActionPlan(plan, workspace)
-                ? (nextSituation) => generatePlanFromSituation(nextSituation, workspace)
-                : undefined}
-              commandDemoMode={isDemoMode}
-              contextualSystemId={
-                selectedSystemId || workspace.selectedSystemId || plan.systemId || ""
-              }
-              headerActions={(
-                <ActionPlanUtilityActions
+          {activeTab === "plan" ? (
+            <>
+              <ActionPlanWorkspaceTabs
+                idPrefix="current-plan"
+                value={activePlanTab}
+                onChange={selectPlanTab}
+              />
+              <div
+                id="current-plan-actions-panel"
+                role="tabpanel"
+                aria-labelledby="current-plan-actions-tab"
+                hidden={activePlanTab !== "actions"}
+              >
+                <ActionPlanResult
                   plan={plan}
-                  sourceText={situation.trim()}
                   workspace={workspace}
-                  generation={generation}
-                  demoMode={isDemoMode}
-                  onReset={() => {
-                    setPlan(null);
-                    setGeneration(null);
-                    setWorkspace(null);
-                    setError(null);
-                  }}
+                  onWorkspaceChange={updateWorkspace}
+                  manualMode={isManualActionPlan(plan)}
+                  onAddAction={handleAddAction}
+                  onDeleteAction={handleDeleteAction}
+                  onGeneratePlan={isBlankManualActionPlan(plan, workspace)
+                    ? (nextSituation) => generatePlanFromSituation(nextSituation, workspace)
+                    : undefined}
+                  commandDemoMode={isDemoMode}
+                  contextualSystemId={
+                    selectedSystemId || workspace.selectedSystemId || plan.systemId || ""
+                  }
+                  headerActions={(
+                    <ActionPlanUtilityActions
+                      plan={plan}
+                      sourceText={situation.trim()}
+                      workspace={workspace}
+                      generation={generation}
+                      demoMode={isDemoMode}
+                      onReset={() => {
+                        setPlan(null);
+                        setGeneration(null);
+                        setWorkspace(null);
+                        setError(null);
+                      }}
+                    />
+                  )}
                 />
-              )}
-            />
-          </div>
-          <div hidden={activeTab !== "system"}>
-            <ActionPlanSystemPanel
-              options={systemOptions}
-              selectedSystemId={selectedSystemId}
-              onSystemChange={(systemId) => {
-                setSelectedSystemId(systemId);
-                selectAppSystem(systemId);
-                setWorkspace((current) => current ? { ...current, selectedSystemId: systemId } : current);
-              }}
-              workspace={workspace}
-              onWorkspaceChange={updateWorkspace}
-              demoMode={isDemoMode}
-              initialResourceSlug={appContext.solutionResourceSlug}
-              onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
-                ...appContext,
-                view: "system",
-                systemId: selectedSystemId || appContext.systemId,
-                systemTab: undefined,
-                solutionResourceSlug,
-              })}
-            />
-          </div>
+              </div>
+              <div
+                id="current-plan-solutions-panel"
+                role="tabpanel"
+                aria-labelledby="current-plan-solutions-tab"
+                hidden={activePlanTab !== "solutions"}
+              >
+                {activePlanTab === "solutions" ? (
+                  <ActionPlanSystemPanel
+                    options={systemOptions}
+                    selectedSystemId={selectedSystemId}
+                    onSystemChange={(systemId) => {
+                      setSelectedSystemId(systemId);
+                      selectAppSystem(systemId);
+                    }}
+                    workspace={workspace}
+                    onWorkspaceChange={updateWorkspace}
+                    demoMode={isDemoMode}
+                    initialResourceSlug={appContext.solutionResourceSlug}
+                    onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
+                      ...appContext,
+                      view: "plan",
+                      planTab: "solutions",
+                      systemId: selectedSystemId || appContext.systemId,
+                      systemTab: "solutions",
+                      solutionResourceSlug,
+                    })}
+                  />
+                ) : null}
+              </div>
+            </>
+          ) : null}
           {activeTab === "academy" ? (
             <ActionPlanAcademyPanel
               initialContentSlug={appContext.academyContentSlug}

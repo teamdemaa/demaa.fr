@@ -207,11 +207,14 @@ envoyé ou conservé par Demaa dans ce lot.
 ### Avant connexion
 
 La homepage conserve le grand champ comme entrée principale, mais la navigation
-`Plan d’action / Solutions / Opportunités / Académie` est visible et utilisable
-dès l'arrivée. Le visiteur peut donc consulter les Solutions de son Système,
-les Opportunités ou l'Académie sans générer de plan et sans créer de compte.
-Le libellé `Solutions` ne renomme ni la clé technique `view=system`, ni les
-routes publiques `/systemes`. Les fiches publiques conservent
+`Plan d’action / Opportunités / Académie` est visible et utilisable dès
+l'arrivée. Le visiteur peut consulter les Actions ou les Solutions depuis les
+deux sous-onglets du Plan, ainsi que les Opportunités ou l'Académie, sans
+générer de plan et sans créer de compte. Les anciennes URLs utilisant
+`view=system` restent acceptées, mais tout nouveau lien applicatif vers les
+Solutions utilise `view=plan&planTab=solutions` et conserve le contexte
+`system`, `systemTab` et `resource`. Les routes publiques `/systemes` ne sont
+pas renommées. Les fiches publiques conservent
 `Organisation / Solutions / Ressources`, tandis que la vue intégrée n'affiche
 que Solutions. Ses choix Système restent en mémoire
 de page jusqu'à une sauvegarde volontaire.

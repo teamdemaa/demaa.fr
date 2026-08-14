@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import ActionPlanExperience from "@/components/ActionPlanExperience";
 import Navbar from "@/components/Navbar";
 import { parseActionPlanAppContext } from "@/lib/action-plan-app-context";
+import { shouldRedirectAuthenticatedHomeToPlans } from "@/lib/action-plan-home-routing";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import {
   CUSTOMER_SPACE_COOKIE,
@@ -38,6 +39,7 @@ export default async function HomePage({
     new?: string | string[];
     opportunity?: string | string[];
     opportunityId?: string | string[];
+    planTab?: string | string[];
     resource?: string | string[];
     resourceSlug?: string | string[];
     system?: string | string[];
@@ -53,12 +55,12 @@ export default async function HomePage({
   const requestedIntent = Array.isArray(query.intent) ? query.intent[0] : query.intent;
   const requestedNewPlan = Array.isArray(query.new) ? query.new[0] : query.new;
 
-  if (
-    email
-    && initialAppContext.view === "plan"
-    && !requestedIntent
-    && requestedNewPlan !== "1"
-  ) {
+  if (shouldRedirectAuthenticatedHomeToPlans({
+    isAuthenticated: Boolean(email),
+    appContext: initialAppContext,
+    requestedIntent,
+    requestedNewPlan,
+  })) {
     redirect("/plans");
   }
 

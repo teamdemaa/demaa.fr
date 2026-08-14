@@ -26,6 +26,9 @@ describe("Demaa application navbar", () => {
     expect(loadingSource).toContain("<Navbar minimal />");
     expect(pageSource.indexOf("<Navbar minimal />")).toBeLessThan(pageSource.indexOf("<main"));
     expect(loadingSource.indexOf("<Navbar minimal />")).toBeLessThan(loadingSource.indexOf("<main"));
+    expect(pageSource).toContain("buildPublicSystemAppHref");
+    expect(pageSource).not.toContain("systemTab: normalizedInitialTab");
+    expect(pageSource).not.toContain("/?view=system");
   });
 
   it("keeps a distinct canonical homepage and one URL for each public universe", async () => {
@@ -93,7 +96,8 @@ describe("Demaa application navbar", () => {
     ]);
 
     expect(homeSource).toContain('redirect("/plans")');
-    expect(homeSource).toContain('requestedNewPlan !== "1"');
+    expect(homeSource).toContain("shouldRedirectAuthenticatedHomeToPlans");
+    expect(homeSource).toContain("planTab?: string | string[]");
     expect(plansSource).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/?new=1")');
     expect(loginDialogSource).toContain('<CustomerSpaceAccessForm returnTo="/plans" simple />');
   });
@@ -112,20 +116,18 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain("empty:hidden xl:block");
     expect(navbarSource).toContain("empty:hidden xl:hidden");
     expect(actionPlanNavSource).toContain("Plan d’action");
-    expect(actionPlanNavSource).toContain("Solutions");
     expect(actionPlanNavSource).toContain("Académie");
     expect(actionPlanNavSource).toContain("Opportunités");
+    expect(actionPlanNavSource).not.toContain('label: "Solutions"');
     expect(actionPlanNavSource).not.toContain('label: "Système"');
     expect(actionPlanNavSource.indexOf('label: "Plan d’action"')).toBeLessThan(
-      actionPlanNavSource.indexOf('label: "Solutions"'),
-    );
-    expect(actionPlanNavSource.indexOf('label: "Solutions"')).toBeLessThan(
       actionPlanNavSource.indexOf('label: "Opportunités"'),
     );
     expect(actionPlanNavSource.indexOf('label: "Opportunités"')).toBeLessThan(
       actionPlanNavSource.indexOf('label: "Académie"'),
     );
-    expect(actionPlanNavSource).toContain('{ view: "system", label: "Solutions"');
+    expect(actionPlanNavSource).toContain("grid-cols-3");
+    expect(actionPlanNavSource).toContain('activeView === "system" ? "plan"');
     expect(actionPlanNavSource).not.toContain('label: "Accompagnement"');
     expect(actionPlanNavSource).not.toContain('label: "Coaching"');
     expect(actionPlanNavSource).toContain('{ view: "academy"');

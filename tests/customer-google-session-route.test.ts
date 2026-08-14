@@ -85,6 +85,23 @@ describe("Google customer session route", () => {
     );
   });
 
+  it("returns to the exact saved-plan specialist draft after Google authentication", async () => {
+    const draftToken = "a".repeat(43);
+    const returnTo =
+      `/plans/plan_123456789012?intent=coaching&tab=messages&draftToken=${draftToken}`;
+
+    const response = await POST(request({
+      idToken: "firebase-id-token",
+      returnTo,
+    }));
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ redirectTo: returnTo });
+    expect(mocks.createCustomerSession).toHaveBeenCalledWith(
+      "dirigeant@example.com",
+    );
+  });
+
   it("claims a pending plan with the HttpOnly temporary access cookie", async () => {
     const response = await POST(request(
       {

@@ -13,8 +13,9 @@
 
 > **Mise à jour :** les points 2 et 11 ainsi que les lignes Coaching du hors
 > périmètre sont supersédés par les ADR 0009 et 0010. La navigation
-> `Plan d’action / Solutions / Opportunités / Académie` est désormais visible dès
-> l'arrivée ; la première version Coaching existe via `Parler à un spécialiste`.
+> `Plan d’action / Opportunités / Académie` est désormais visible dès l'arrivée,
+> avec `Actions / Solutions` dans le Plan ; la première version Coaching existe
+> via `Parler à un spécialiste`.
 
 > **Mise à jour D-079 :** le contrat courant V4 génère uniquement les Actions
 > et le `systemId`. La Stratégie V3 est temporairement masquée et non générée ;

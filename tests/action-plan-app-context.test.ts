@@ -6,13 +6,26 @@ import {
 } from "@/lib/action-plan-app-context";
 
 describe("action plan app context", () => {
-  it("parses the canonical system context", () => {
+  it("normalizes the legacy system view into the plan solutions tab", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=system&system=restaurant&systemTab=solutions&resource=lightspeed",
     ))).toEqual({
-      view: "system",
+      view: "plan",
+      planTab: "solutions",
       systemId: "restaurant",
       systemTab: "solutions",
+      solutionResourceSlug: "lightspeed",
+    });
+  });
+
+  it("parses the canonical plan solutions context", () => {
+    expect(parseActionPlanAppContext(new URLSearchParams(
+      "view=plan&planTab=solutions&system=restaurant&systemTab=resources&resource=lightspeed",
+    ))).toEqual({
+      view: "plan",
+      planTab: "solutions",
+      systemId: "restaurant",
+      systemTab: "resources",
       solutionResourceSlug: "lightspeed",
     });
   });
@@ -21,7 +34,8 @@ describe("action plan app context", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "intent=solution-referral&systemSlug=restaurant&resourceSlug=lightspeed",
     ))).toEqual({
-      view: "system",
+      view: "plan",
+      planTab: "solutions",
       systemId: "restaurant",
       solutionResourceSlug: "lightspeed",
     });
@@ -51,13 +65,28 @@ describe("action plan app context", () => {
       systemId: "restaurant",
     });
 
-    expect(href).toBe("/?view=system&system=restaurant");
+    expect(href).toBe(
+      "/?view=plan&planTab=solutions&system=restaurant&systemTab=solutions",
+    );
     expect(href).not.toContain("/plans/");
   });
 
   it("rejects unsafe context values", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=system&system=https://example.com&academy=../../secret",
-    ))).toEqual({ view: "system" });
+    ))).toEqual({ view: "plan", planTab: "solutions" });
+  });
+
+  it("canonicalizes legacy system contexts when building application links", () => {
+    expect(buildActionPlanAppHref({
+      context: {
+        view: "system",
+        systemId: "restaurant",
+        systemTab: "solutions",
+        solutionResourceSlug: "lightspeed",
+      },
+    })).toBe(
+      "/?view=plan&planTab=solutions&system=restaurant&systemTab=solutions&resource=lightspeed",
+    );
   });
 });
