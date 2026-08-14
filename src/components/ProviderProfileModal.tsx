@@ -64,7 +64,7 @@ export default function ProviderProfileModal({
   const lockedExpertiseId = opportunity?.expertiseId ?? null;
   const defaultExpertiseId = opportunity
     ? (lockedExpertiseId ?? "")
-    : (initialExpertiseId ?? expertises[0]?.expertiseId ?? "");
+    : (initialExpertiseId ?? "");
   const [expertiseIds, setExpertiseIds] = useState<string[]>(
     defaultExpertiseId ? [defaultExpertiseId] : [],
   );
@@ -129,18 +129,6 @@ export default function ProviderProfileModal({
     }
     setReturnTo(`${url.pathname}${url.search}`);
   }, [initialExpertiseId, opportunity]);
-
-  function toggleExpertise(expertiseId: string) {
-    if (lockedExpertiseId) return;
-    setExpertiseIds((current) => {
-      if (current.includes(expertiseId)) {
-        return current.length === 1
-          ? current
-          : current.filter((entry) => entry !== expertiseId);
-      }
-      return current.length >= 3 ? current : [...current, expertiseId];
-    });
-  }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -277,25 +265,24 @@ export default function ProviderProfileModal({
               </div>
 
               {!opportunity ? (
-                <fieldset>
-                  <legend className="text-sm text-brand-blue">Vos expertises <span className="text-dema-muted">(3 maximum)</span></legend>
-                  <div className="mt-3 flex max-h-44 flex-wrap gap-2 overflow-y-auto rounded-xl border border-dema-line p-3">
-                    {expertises.map((expertise) => {
-                      const selected = expertiseIds.includes(expertise.expertiseId);
-                      return (
-                        <button
-                          key={expertise.expertiseId}
-                          type="button"
-                          aria-pressed={selected}
-                          onClick={() => toggleExpertise(expertise.expertiseId)}
-                          className={`rounded-full border px-3 py-2 text-left text-xs transition ${selected ? "border-dema-forest bg-dema-sage text-dema-forest" : "border-dema-line text-dema-muted hover:border-dema-forest/30"}`}
-                        >
-                          {expertise.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </fieldset>
+                <label className="block space-y-2 text-sm text-brand-blue">
+                  <span>Expertise principale</span>
+                  <select
+                    required
+                    value={expertiseIds[0] ?? ""}
+                    onChange={(event) => {
+                      setExpertiseIds(event.target.value ? [event.target.value] : []);
+                    }}
+                    className="min-h-12 w-full rounded-xl border border-dema-line bg-white px-4 outline-none focus:border-dema-forest"
+                  >
+                    <option value="">Choisir une expertise</option>
+                    {expertises.map((expertise) => (
+                      <option key={expertise.expertiseId} value={expertise.expertiseId}>
+                        {expertise.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
               ) : null}
 
               {!opportunity ? (

@@ -1,7 +1,8 @@
 "use client";
 
-import { LoaderCircle, Mic, Send } from "lucide-react";
+import { Check, ChevronRight, LoaderCircle, Mic, Send, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
 import { clearLeadSubmissionKey, getLeadSubmissionKey } from "@/lib/lead-submission-client";
@@ -15,6 +16,20 @@ export type SpecialistAccessIntent = {
   offer?: SpecialistOffer;
   tab: CoachingTab;
 };
+
+const CLARITY_INCLUDED = [
+  "Questions écrites ou vocales",
+  "Réponse d’un spécialiste sous 24 à 48 heures ouvrées",
+  "Second regard sur une décision, une offre, un document ou une action",
+  "Prochaine étape concrète pour avancer",
+] as const;
+
+const CLARITY_MEMBER_BENEFITS = [
+  "L’équipe Demaa mobilisable selon le besoin : structuration, développement commercial, marketing, finance et opérations",
+  "Mises en relation facilitées lorsque votre profil correspond au besoin",
+  "15 % de réduction sur les autres offres Demaa",
+  "Mise en avant prioritaire de votre profil pour les opportunités correspondant à votre expertise",
+] as const;
 const coachingMessageDateFormatter = new Intl.DateTimeFormat("fr-FR", {
   day: "2-digit",
   hour: "2-digit",
@@ -89,6 +104,8 @@ export default function CoachingPanel({
   initialTab?: CoachingTab;
   onRequireAccess?: (intent: SpecialistAccessIntent) => void;
 }) {
+  const [clarityDetailsOpen, setClarityDetailsOpen] = useState(false);
+
   return (
     <section className="mx-auto max-w-[68rem] pb-16 pt-3 sm:pt-5">
       <header className="mx-auto mb-8 max-w-[42.5rem] text-center">
@@ -96,15 +113,103 @@ export default function CoachingPanel({
         <p className="mx-auto mt-4 max-w-[35.625rem] text-base font-light leading-relaxed text-dema-muted sm:text-lg">
           Écrivez ou dictez votre situation. Votre message et les réponses du spécialiste restent réunis dans une conversation simple.
         </p>
-        <p className="mt-3 text-sm font-medium text-dema-forest">
-          Clarté · accompagnement asynchrone à 149 € HT / mois
-        </p>
+        <button
+          type="button"
+          onClick={() => setClarityDetailsOpen(true)}
+          aria-haspopup="dialog"
+          className="mx-auto mt-4 inline-flex min-h-11 items-center gap-2 rounded-full border border-dema-forest/15 bg-dema-paper px-4 text-sm font-medium text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
+        >
+          <span>Clarté · 149 € HT / mois</span>
+          <ChevronRight className="h-4 w-4" aria-hidden="true" />
+        </button>
       </header>
       <CoachingMessageForm
         initialDraftToken={initialDraftToken}
         isAuthenticated={!onRequireAccess}
         onRequireAccess={onRequireAccess}
       />
+      {clarityDetailsOpen ? (
+        <ClarityDetailsDialog onClose={() => setClarityDetailsOpen(false)} />
+      ) : null}
+    </section>
+  );
+}
+
+function ClarityDetailsDialog({ onClose }: { onClose: () => void }) {
+  const dialogRef = useAccessibleDialog({ onClose });
+
+  return (
+    <div
+      className="fixed inset-0 z-[150] flex items-end justify-center bg-brand-blue/30 backdrop-blur-sm sm:items-center sm:p-6"
+      onClick={onClose}
+    >
+      <section
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="clarity-details-title"
+        tabIndex={-1}
+        onClick={(event) => event.stopPropagation()}
+        className="relative max-h-[92dvh] w-full max-w-2xl overflow-y-auto rounded-t-[1.5rem] bg-dema-paper p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-2xl outline-none sm:rounded-[1.5rem] sm:p-8"
+      >
+        <button
+          type="button"
+          data-dialog-initial-focus
+          onClick={onClose}
+          aria-label="Fermer"
+          className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:bg-dema-sage"
+        >
+          <X className="h-4 w-4" aria-hidden="true" />
+        </button>
+
+        <p className="pr-12 text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
+          Accompagnement asynchrone
+        </p>
+        <h3 id="clarity-details-title" className="mt-2 pr-12 text-3xl font-light tracking-[-0.04em] text-brand-blue sm:text-4xl">
+          Clarté
+        </h3>
+        <p className="mt-3 max-w-xl text-sm leading-relaxed text-dema-muted sm:text-base">
+          Quand une situation vous bloque, obtenez un regard de terrain pour voir clair, décider et avancer sans attendre un rendez-vous.
+        </p>
+        <p className="mt-5 text-2xl font-medium tracking-[-0.03em] text-brand-blue">
+          149 € <span className="text-sm font-normal tracking-normal text-dema-muted">HT / mois</span>
+        </p>
+
+        <div className="mt-7 grid gap-6 sm:grid-cols-2">
+          <ClarityBenefitList title="Ce qui est inclus" benefits={CLARITY_INCLUDED} />
+          <ClarityBenefitList title="Avantages Clarté" benefits={CLARITY_MEMBER_BENEFITS} />
+        </div>
+
+        <button
+          type="button"
+          onClick={onClose}
+          className="mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-dema-forest px-6 text-sm font-semibold text-white transition hover:bg-brand-blue"
+        >
+          Poser ma question
+        </button>
+      </section>
+    </div>
+  );
+}
+
+function ClarityBenefitList({
+  benefits,
+  title,
+}: {
+  benefits: readonly string[];
+  title: string;
+}) {
+  return (
+    <section>
+      <h4 className="text-sm font-semibold text-brand-blue">{title}</h4>
+      <ul className="mt-3 space-y-3 text-sm leading-relaxed text-dema-muted">
+        {benefits.map((benefit) => (
+          <li key={benefit} className="flex gap-2.5">
+            <Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
+            <span>{benefit}</span>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

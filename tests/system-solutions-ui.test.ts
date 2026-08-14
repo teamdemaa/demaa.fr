@@ -523,10 +523,12 @@ describe("system Solutions UI", () => {
     expect(source).toContain("overflow-x-auto");
     expect(source).toContain("overscroll-x-contain");
     expect(source).toContain("auto-cols-[82%]");
-    expect(source).toContain("md:auto-cols-[calc((100%_-_2rem)_/_3)]");
-    expect(source).toContain("min-h-[248px]");
-    expect(source).toContain("md:aspect-square");
-    expect(source).toContain("md:min-h-0");
+    expect(source).toContain("md:auto-cols-[calc((100%_-_1rem)_/_2)]");
+    expect(source).toContain("lg:auto-cols-[calc((100%_-_2rem)_/_3)]");
+    expect(source).toContain("xl:auto-cols-[calc((100%_-_3rem)_/_4)]");
+    expect(source).toContain("min-h-[15rem]");
+    expect(source).toContain("md:min-h-[16rem]");
+    expect(source).not.toContain("aspect-square");
     expect(source).not.toContain("line-clamp-3");
     expect(source).not.toMatch(/\bposition\b/);
   });

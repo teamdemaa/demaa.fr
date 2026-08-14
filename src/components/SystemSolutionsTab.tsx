@@ -349,7 +349,7 @@ export default function SystemSolutionsTab({
       <div
         key={placement.placementId}
         data-solution-resource-card
-        className="relative min-h-[248px] min-w-0 snap-start md:aspect-square md:min-h-0"
+        className="relative min-h-[15rem] min-w-0 snap-start md:min-h-[16rem]"
       >
         {opensServicePage ? (
           <Link
@@ -423,7 +423,7 @@ export default function SystemSolutionsTab({
             >
               Votre sélection
             </h3>
-            <div className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_2rem)_/_3)] [&::-webkit-scrollbar]:hidden">
+            <div className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_1rem)_/_2)] lg:auto-cols-[calc((100%_-_2rem)_/_3)] xl:auto-cols-[calc((100%_-_3rem)_/_4)] [&::-webkit-scrollbar]:hidden">
               {selectedPlacements.map(renderPlacementCard)}
             </div>
           </section>
@@ -477,7 +477,7 @@ export default function SystemSolutionsTab({
                   railRefs.current[group.section] = node;
                 }}
                 onScroll={() => updateRailState(group)}
-                className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_2rem)_/_3)] [&::-webkit-scrollbar]:hidden"
+                className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_1rem)_/_2)] lg:auto-cols-[calc((100%_-_2rem)_/_3)] xl:auto-cols-[calc((100%_-_3rem)_/_4)] [&::-webkit-scrollbar]:hidden"
               >
                 {group.placements.map(renderPlacementCard)}
               </div>

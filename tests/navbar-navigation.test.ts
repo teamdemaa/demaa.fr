@@ -68,7 +68,8 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).not.toContain("<span>Mon espace</span>");
     expect(navbarSource).toContain('href="/plans"');
     expect(navbarSource).toContain('href="/connexion?returnTo=%2Fplans"');
-    expect(navbarSource).toContain("<span>Se connecter</span>");
+    expect(navbarSource).toContain("<span>Connexion</span>");
+    expect(navbarSource).not.toContain("<LogIn");
     expect(savedPlanSource).toContain("<Navbar anonymousLanding isAuthenticated minimal />");
   });
 
@@ -127,6 +128,8 @@ describe("Demaa application navbar", () => {
       actionPlanNavSource.indexOf('label: "Académie"'),
     );
     expect(actionPlanNavSource).toContain("grid-cols-3");
+    expect(actionPlanNavSource).toContain('<Icon className="h-4 w-4 shrink-0"');
+    expect(actionPlanNavSource).not.toContain("xl:hidden");
     expect(actionPlanNavSource).toContain('activeView === "system" ? "plan"');
     expect(actionPlanNavSource).not.toContain('label: "Accompagnement"');
     expect(actionPlanNavSource).not.toContain('label: "Coaching"');

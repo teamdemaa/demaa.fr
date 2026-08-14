@@ -235,12 +235,12 @@ continuer un autre parcours.
 ### Après connexion
 
 La même navigation applicative est conservée. Coaching reste accessible depuis
-l'action compacte `Parler à un spécialiste`, conformément aux ADR 0009 et
+l'action compacte `Échanger`, conformément aux ADR 0009 et
 0010, sans devenir un cinquième onglet.
 
 `Coaching` désigne le produit. Dans l'interface, la personne qui accompagne est
-toujours désignée comme un `spécialiste` : l'action de messagerie porte le
-libellé `Écrire à un spécialiste`. Les termes `coach` et `votre coach` ne sont
+toujours désignée comme un `spécialiste` : la surface porte le titre
+`Échanger avec un spécialiste`. Les termes `coach` et `votre coach` ne sont
 pas utilisés comme libellés humains.
 
 ## Persistance

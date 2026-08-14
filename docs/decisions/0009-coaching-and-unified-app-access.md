@@ -2,15 +2,14 @@
 
 - Statut : `validated`
 - Date : 2026-08-11
-- Mise à jour : 2026-08-14, conversation simple et Coach business dans Services
+- Mise à jour : 2026-08-14, entrée `Échanger`, détail Clarté et Coach business dans Services
 - Supersède : les passages de l’ADR 0008 et de D-076 qui reportaient intégralement Coaching
 
 ## Décision
 
 La composition de navigation décrite initialement par cette ADR est supersédée
-par l'ADR 0010. La navigation active est `Plan d’action`, `Solutions`,
-`Opportunités`, `Académie` ; Coaching s'ouvre depuis l'action compacte
-`Parler à un spécialiste`. L’e-mail de connexion ouvre directement le plan ou
+par l'ADR 0010. La navigation active est `Plan d’action`, `Opportunités`,
+`Académie` ; Coaching s'ouvre depuis l'action compacte `Échanger`. L’e-mail de connexion ouvre directement le plan ou
 l'intention demandée après consommation sécurisée du lien à usage unique. Il
 ne doit pas introduire une présentation concurrente « Espace membre ».
 
@@ -24,18 +23,19 @@ est uniquement conservée comme redirection de compatibilité vers `/plans`.
 Les historiques restent conservés dans les données sans créer de portail
 concurrent.
 
-Le produit accessible par `Parler à un spécialiste` est une conversation
+Le produit accessible par `Échanger` est une conversation
 simple écrite ou dictée. Il n'affiche aucun onglet `Sessions` ou `Formules`.
 
-Tous les libellés qui désignent la personne
-emploient `spécialiste`, notamment `Parler à un spécialiste` et
-`Écrire à un spécialiste`. Le mot `coach` est réservé à la carte distincte
+Tous les libellés qui désignent la personne emploient `spécialiste`, notamment
+le titre `Échanger avec un spécialiste`. Le mot `coach` est réservé à la carte distincte
 `Coach business` présentée dans Services.
 
 - `Clarté` : 149 EUR HT par mois, questions écrites ou vocales, réponse d'un
   spécialiste sous 24 à 48 heures ouvrées, second regard et prochaine étape
-  concrète. L'abonnement donne 15 % de réduction sur les autres offres. Les
-  autres avantages historiques ne sont pas republiés sans vérification.
+  concrète. Le résumé Clarté ouvre un détail qui présente aussi l'équipe Demaa
+  mobilisable selon le besoin, les mises en relation facilitées, 15 % de
+  réduction sur les autres offres Demaa et la mise en avant prioritaire du
+  profil pour les opportunités correspondant à son expertise.
 - `Coach business` : une seule carte conforme au design Services, avec matching
   guidé et sélecteur interne. Une session individuelle de 60 minutes par mois
   coûte 350 EUR HT par mois ; deux sessions individuelles de 60 minutes par

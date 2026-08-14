@@ -80,7 +80,11 @@ export default function ActionPlanCoachingControl({
       return;
     }
 
-    if (!accessPlan || accessPreparing) return;
+    if (!accessPlan) {
+      setAccessOpen(true);
+      return;
+    }
+    if (accessPreparing) return;
     setAccessPreparing(true);
 
     try {
@@ -193,11 +197,11 @@ export default function ActionPlanCoachingControl({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="demaa-primary-button min-h-10 px-3 text-xs sm:min-h-11 sm:px-4 sm:text-sm"
-          aria-label="Parler à un spécialiste"
-          title="Parler à un spécialiste"
+          className="inline-flex min-h-10 items-center px-1 text-xs font-medium text-dema-forest transition hover:text-brand-blue focus-visible:outline-none focus-visible:underline sm:min-h-11 sm:text-sm"
+          aria-label="Échanger avec un spécialiste"
+          title="Échanger avec un spécialiste"
         >
-          <span>Parler à un spécialiste</span>
+          <span>Échanger</span>
         </button>,
         target,
       )}
@@ -208,7 +212,7 @@ export default function ActionPlanCoachingControl({
               className="fixed inset-0 z-[130] overflow-y-auto bg-dema-cream/98 px-4 pb-24 pt-4 backdrop-blur-md sm:px-6 lg:px-8"
               role="dialog"
               aria-modal="true"
-              aria-label="Parler à un spécialiste"
+              aria-label="Échanger avec un spécialiste"
             >
               <div className="mx-auto flex max-w-[68rem] justify-end">
                 <button

@@ -21,6 +21,9 @@ describe("action plan workspace tabs", () => {
     expect(markup).toContain('aria-selected="true"');
     expect(markup).toContain("Actions");
     expect(markup).toContain("Solutions");
+    expect(markup).toContain("border-b");
+    expect(markup).not.toContain("<svg");
+    expect(markup).not.toContain("rounded-full");
   });
 
   it("supports wrapped arrow navigation plus Home and End", () => {

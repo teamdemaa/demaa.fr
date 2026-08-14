@@ -65,7 +65,7 @@ l'ADR 0004 prévaut.
   utilisent `view=plan&planTab=solutions` et conservent le contexte Système.
   Organisation et Ressources restent sur les fiches publiques et alimentent
   de manière déterministe les aides affichées dans les Actions. La messagerie
-  spécialiste est accessible par l'action `Parler à un spécialiste` sans
+  spécialiste est accessible par l'action `Échanger` sans
   onglets commerciaux. `Clarté` est un accompagnement asynchrone à
   149 EUR HT/mois. Le Coach business est présenté comme une carte Services.
 - Une fiche Système contient `Organisation`, `Solutions` et `Ressources`.
@@ -103,7 +103,7 @@ l'ADR 0004 prévaut.
   Systèmes, puis sauvegarde Firebase. L'ADR 0008 et
   `docs/action-plan-generator-product-contract.md` sont les références ;
   `/systemes` et `/academie` publics restent inchangés.
-- [x] Livrer la première version de `Parler à un spécialiste` : conversation
+- [x] Livrer la première version de `Échanger` : conversation
   asynchrone écrite ou dictée, historique persistant et brouillon conservé
   pendant l'authentification. Aucun onglet Formules n'est exposé dans cette
   surface. `Clarté` est affiché à 149 EUR HT/mois.
@@ -113,7 +113,7 @@ l'ADR 0004 prévaut.
 - [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
   `Plan d’action / Opportunités / Académie`, sous-onglets `Actions / Solutions`
   dans le Plan, Coaching accessible par
-  `Parler à un spécialiste`, Opportunités au sens large et sauvegarde invitée
+  `Échanger`, Opportunités au sens large et sauvegarde invitée
   sans secret exposé au JavaScript. L’ADR 0010 est la référence.
 - [x] Unifier l'identité e-mail des parcours applicatifs : le lien magique est
   le seul point de saisie et de vérification ; une session connectée alimente
@@ -185,8 +185,8 @@ l'ADR 0004 prévaut.
   Plan. Les anciennes URLs `view=system` restent compatibles et sont
   normalisées en `view=plan&planTab=solutions` pour les nouveaux liens ; les
   routes `/systemes` restent inchangées. Coaching reste le
-  produit accessible par `Parler à un spécialiste`; les libellés humains
-  emploient `spécialiste`, notamment `Écrire à un spécialiste`. Aucun onglet
+  produit accessible par `Échanger`; les libellés humains emploient
+  `spécialiste`, notamment `Échanger avec un spécialiste`. Aucun onglet
   `Accueil`, portail `Mon espace`/`Mes plans` ou profil obligatoire n'est créé.
 - [ ] Recetter puis promouvoir le candidat D-079 Plan V4 : génération limitée
   aux Actions et au `systemId`, supports typés selon les règles déterministes,

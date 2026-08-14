@@ -20,19 +20,22 @@ Les fichiers `*.snapshot.generated.json` sont des paquets d’amorçage versionn
 
 Les pages publiques attendent une requête avant de charger leurs données. En environnement déployé, l’absence de configuration Firebase provoque une erreur explicite : les snapshots ne sont jamais utilisés comme source publique de secours.
 
-## Deux parcours publics
+## Deux intentions dans une même surface
 
-- `/rejoindre-team-demaa` : inscription permanente d’un professionnel sur une à trois expertises ;
 - `/opportunites` : opportunités actuellement disponibles, avec une fiche et
   un formulaire de manifestation d'intérêt ;
+- `Rejoindre Team Demaa` est un lien simple sous le catalogue et ouvre une
+  modale de présentation de profil avec une seule expertise principale choisie
+  dans les 23 expertises canoniques ;
+- `/rejoindre-team-demaa` redirige vers la vue Opportunités avec cette modale
+  déjà ouverte ; il n'existe plus de page catalogue Team Demaa distincte ;
 - le panneau embarquable charge les données publiques à son ouverture depuis
-  `/api/opportunities` et conserve un bloc distinct vers
-  `Rejoindre Team Demaa`.
+  `/api/opportunities`.
 
 Les anciennes routes `/rejoindre-le-reseau`, `/partenaires` et `/opportunites-b2b` redirigent définitivement vers ces routes.
 L’ancien dossier public `/opportunites/0034` redirige également vers le catalogue dynamique.
 
-Les deux parcours réutilisent la même route sécurisée
+Les deux intentions réutilisent la même route sécurisée
 `/api/provider-profile-submission`. Une manifestation d'intérêt est stockée
 avec `requestType: opportunity_interest` et son `opportunityId`; un profil
 permanent conserve `requestType: provider_profile_submission`.

@@ -43,7 +43,14 @@ describe("unified app and coaching", () => {
     const coachingControl = read("src/components/ActionPlanCoachingControl.tsx");
     const appNavigation = read("src/components/ActionPlanNavbar.tsx");
     expect(coaching).toContain("Échanger avec un spécialiste");
-    expect(coaching).toContain("Clarté · accompagnement asynchrone à 149 € HT / mois");
+    expect(coaching).toContain("Clarté · 149 € HT / mois");
+    expect(coaching).toContain('aria-haspopup="dialog"');
+    expect(coaching).toContain("L’équipe Demaa mobilisable selon le besoin");
+    expect(coaching).toContain("Mises en relation facilitées");
+    expect(coaching).toContain("15 % de réduction sur les autres offres Demaa");
+    expect(coaching).toContain(
+      "Mise en avant prioritaire de votre profil pour les opportunités correspondant à votre expertise",
+    );
     expect(coaching).not.toContain('role="tablist"');
     expect(coaching).not.toContain("Choisir Clarté");
     expect(coaching).not.toContain("Choisir Maestro");
@@ -73,7 +80,7 @@ describe("unified app and coaching", () => {
     expect(coaching).toContain("Votre texte est conservé : réessayez.");
     expect(coaching).not.toContain("Continuer par e-mail");
     expect(coaching).not.toContain("disponible prochainement");
-    expect(coachingControl).toContain("Parler à un spécialiste");
+    expect(coachingControl).toContain("Échanger");
     expect(coachingControl).toContain("onClick={() => setOpen(true)}");
     expect(coachingControl).toContain('url.searchParams.delete("intent")');
     expect(coachingControl).toContain("window.history.replaceState");
@@ -89,7 +96,7 @@ describe("unified app and coaching", () => {
     expect(appNavigation).not.toContain('label: "Coaching"');
   });
 
-  it("only exposes specialist access once a plan exists", () => {
+  it("exposes specialist access before and after plan generation", () => {
     const experience = read("src/components/ActionPlanExperience.tsx");
     const noPlanBranch = experience.slice(
       experience.indexOf("if (!plan)"),
@@ -97,11 +104,14 @@ describe("unified app and coaching", () => {
     );
     const planBranch = experience.slice(experience.indexOf("if (!workspace)"));
 
-    expect(noPlanBranch).not.toContain("<ActionPlanCoachingControl");
+    expect(noPlanBranch).toContain("<ActionPlanCoachingControl");
     expect(planBranch).toContain("<ActionPlanCoachingControl");
     expect(planBranch).toContain("accessPlan={{");
     expect(planBranch).toContain("sourceText: situation.trim()");
     expect(planBranch).toContain("generation,");
+    expect(read("src/components/ActionPlanCoachingControl.tsx")).toContain(
+      "if (!accessPlan)",
+    );
   });
 
   it("keeps magic-link consumption on POST", () => {

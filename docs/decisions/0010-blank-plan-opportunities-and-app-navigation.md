@@ -2,7 +2,7 @@
 
 - Statut : `validated`
 - Date : 2026-08-11
-- Mise à jour : 2026-08-14, Solutions intégré au Plan et URLs normalisées
+- Mise à jour : 2026-08-14, hiérarchie visuelle, Échanger et Team Demaa unifié
 - Supersède : la composition de navigation de l’ADR 0009 et les passages de
   l’ADR 0008 qui imposaient un résultat IA avant l’accès à l’application
 
@@ -15,6 +15,10 @@ génération et sans compte. `Plan d’action` affiche alors le grand champ libr
 ses sous-onglets `Actions` et `Solutions`, ainsi que `Opportunités` et
 `Académie`, restent consultables immédiatement. Le sous-onglet `Solutions`
 ouvre uniquement les recommandations du Système métier sélectionné.
+La navigation principale conserve ses icônes. Les sous-onglets `Actions` et
+`Solutions` n'en ont pas et utilisent une présentation légère soulignée, afin
+de ne pas reproduire visuellement la barre principale. Dans le header,
+`Connexion` est un lien texte et non un bouton en forme de pilule.
 L'application n'y affiche plus d'onglets Organisation ou
 Ressources : les routines et modèles pertinents sont proposés directement dans
 le détail d'une Action. Les fiches publiques `/systemes/[slug]` conservent
@@ -26,7 +30,7 @@ publiques `/systemes` restent stables. Les choix
 effectués dans cet espace restent uniquement en mémoire tant qu'aucun plan
 n'est volontairement enregistré.
 Coaching demeure dans la même application, mais s’ouvre depuis l’action
-compacte `Parler à un spécialiste` du header. Cette surface est une
+compacte `Échanger` du header, y compris avant la génération d'un plan. Cette surface est une
 conversation simple sans onglets commerciaux ; la carte Coach business reste
 dans Services conformément à l’ADR 0009.
 
@@ -57,12 +61,17 @@ collaboration ou une autre opportunité professionnelle. La copie publique est :
 > Découvrez les opportunités actuellement disponibles.
 
 Une réponse à une opportunité précise est enregistrée dans `lead_requests` avec
-son `opportunityId`. `Rejoindre Team Demaa` reste le parcours permanent de
-présentation de profil, dans le même pipeline, sans `opportunityId`. Les
+son `opportunityId`. `Rejoindre Team Demaa` est un lien simple dans la vue
+Opportunités : il ouvre la même modale que les candidatures, sans carte ou page
+catalogue intermédiaire. Le formulaire générique propose une seule expertise
+principale parmi les 23 valeurs canoniques ; une opportunité précise peut
+imposer son expertise mappée. L'ancienne route `/rejoindre-team-demaa` redirige
+vers cette modale dans l'application. Ce parcours permanent reste dans le même pipeline, sans `opportunityId`. Les
 collections `expertise_catalog`, `opportunities` et `lead_requests` restent les
 sources canoniques ; aucun catalogue ou stockage parallèle n’est créé.
 
-Un bouton `+` compact près de la recherche permet aussi de proposer une
+Un bouton `+` compact, immédiatement adjacent à la recherche sur desktop,
+permet aussi de proposer une
 Opportunité. La personne remplit le formulaire avant connexion. Au clic sur
 Envoyer, un brouillon serveur opaque conserve exactement les champs, puis la
 session Google ou lien magique reprend et soumet automatiquement le brouillon.

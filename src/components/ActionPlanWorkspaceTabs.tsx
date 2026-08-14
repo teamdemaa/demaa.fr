@@ -1,17 +1,15 @@
 "use client";
 
-import { ListChecks, Workflow } from "lucide-react";
 import type { KeyboardEvent } from "react";
 
 export type ActionPlanWorkspaceTab = "actions" | "solutions";
 
 const tabs = [
-  { id: "actions", label: "Actions", Icon: ListChecks },
-  { id: "solutions", label: "Solutions", Icon: Workflow },
+  { id: "actions", label: "Actions" },
+  { id: "solutions", label: "Solutions" },
 ] as const satisfies readonly {
   id: ActionPlanWorkspaceTab;
   label: string;
-  Icon: typeof ListChecks;
 }[];
 
 export function getNextActionPlanWorkspaceTab(input: {
@@ -63,9 +61,9 @@ export default function ActionPlanWorkspaceTabs({
       <div
         role="tablist"
         aria-label="Contenu du plan"
-        className="inline-grid grid-cols-2 rounded-full border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.04)]"
+        className="inline-flex items-center gap-8 border-b border-dema-line"
       >
-        {tabs.map(({ id, label, Icon }, index) => (
+        {tabs.map(({ id, label }, index) => (
           <button
             key={id}
             id={`${idPrefix}-${id}-tab`}
@@ -76,13 +74,12 @@ export default function ActionPlanWorkspaceTabs({
             tabIndex={value === id ? 0 : -1}
             onClick={() => onChange(id)}
             onKeyDown={(event) => handleTabKeyDown(event, index)}
-            className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 ${
+            className={`-mb-px inline-flex min-h-10 items-center justify-center border-b-2 px-1 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 ${
               value === id
-                ? "bg-dema-sage text-dema-forest"
-                : "text-dema-muted hover:text-brand-blue"
+                ? "border-dema-forest text-dema-forest"
+                : "border-transparent text-dema-muted hover:border-dema-forest/25 hover:text-brand-blue"
             }`}
           >
-            <Icon className="h-4 w-4" aria-hidden="true" />
             {label}
           </button>
         ))}

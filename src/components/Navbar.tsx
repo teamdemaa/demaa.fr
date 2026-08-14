@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { CircleUserRound, LogIn } from "lucide-react";
+import { CircleUserRound } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
 export default function Navbar({
@@ -15,6 +15,8 @@ export default function Navbar({
 }) {
   const accountAccessClassName =
     "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
+  const connectionLinkClassName =
+    "inline-flex min-h-10 shrink-0 items-center px-1 text-xs font-medium text-dema-forest transition hover:text-brand-blue focus-visible:outline-none focus-visible:underline sm:min-h-11 sm:text-sm";
 
   return (
     <>
@@ -56,10 +58,9 @@ export default function Navbar({
                 ) : (
                   <Link
                     href="/connexion?returnTo=%2Fplans"
-                    className={accountAccessClassName}
+                    className={connectionLinkClassName}
                   >
-                    <LogIn className="hidden h-4 w-4 sm:block" aria-hidden="true" />
-                    <span>Se connecter</span>
+                    <span>Connexion</span>
                   </Link>
                 )}
               </div>

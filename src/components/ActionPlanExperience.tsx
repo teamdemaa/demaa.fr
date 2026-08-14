@@ -456,7 +456,7 @@ export default function ActionPlanExperience({
         <section className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center py-16 text-center">
           <p
             key={quoteIndex}
-            className="demaa-generation-quote w-full text-balance text-[clamp(2.25rem,6.5vw,5.7rem)] font-light leading-[1.02] tracking-[-0.045em] text-dema-paper"
+            className="demaa-generation-quote w-full text-balance text-[clamp(1.6rem,4.55vw,4rem)] font-light leading-[1.06] tracking-[-0.04em] text-dema-paper"
           >
             {currentQuestion.question}
           </p>
@@ -477,6 +477,10 @@ export default function ActionPlanExperience({
     return (
       <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
         <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} />
+        <ActionPlanCoachingControl
+          demoMode={isDemoMode}
+          initialEmail={initialEmail}
+        />
         <div className="mx-auto max-w-[68rem] pt-1">
           {activeTab === "plan" ? (
             <>

@@ -1,7 +1,6 @@
 "use client";
 
 import { Plus, X } from "lucide-react";
-import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AppLibrarySearch from "@/components/AppLibrarySearch";
 import OpportunitySubmissionDialog from "@/components/OpportunitySubmissionDialog";
@@ -156,6 +155,7 @@ export default function PublicOpportunitiesClient({
   const [localSelected, setLocalSelected] = useState<PublicOpportunity | null>(null);
   const [applicationOpportunity, setApplicationOpportunity] =
     useState<PublicOpportunity | null>(null);
+  const [profileOpen, setProfileOpen] = useState(false);
   const [submissionOpen, setSubmissionOpen] = useState(false);
   const [submissionNotice, setSubmissionNotice] = useState<string | null>(null);
   const autoSubmissionTokenRef = useRef("");
@@ -173,6 +173,18 @@ export default function PublicOpportunitiesClient({
     setLocalSelected(null);
     onOpportunityChange?.(undefined);
   }, [onOpportunityChange, selected]);
+  const closeProfile = useCallback(() => {
+    setProfileOpen(false);
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("intent") !== "team-demaa-profile") return;
+    url.searchParams.delete("intent");
+    url.searchParams.delete("expertiseId");
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `${url.pathname}${url.search}${url.hash}`,
+    );
+  }, []);
   const categories = useMemo(
     () => [
       ALL_OPPORTUNITY_CATEGORIES,
@@ -204,6 +216,13 @@ export default function PublicOpportunitiesClient({
     }),
     [activeCategory, opportunities, query],
   );
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get("intent") !== "team-demaa-profile") return;
+    const timeout = window.setTimeout(() => setProfileOpen(true), 0);
+    return () => window.clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     if (!initialEmail) return;
@@ -260,7 +279,7 @@ export default function PublicOpportunitiesClient({
 
   return (
     <>
-      <div className="flex items-center gap-2 pt-3">
+      <div className="mx-auto grid w-full max-w-[39.25rem] grid-cols-[minmax(0,1fr)_2.75rem] items-center gap-2 pt-3">
         <div className="min-w-0 flex-1">
           <AppLibrarySearch
             activeFilter={activeCategory}
@@ -278,6 +297,7 @@ export default function PublicOpportunitiesClient({
             }}
             placeholder="Rechercher un besoin ou une expertise…"
             query={query}
+            unconstrained
           />
         </div>
         <button
@@ -332,22 +352,15 @@ export default function PublicOpportunitiesClient({
         </p>
       ) : null}
 
-      <aside className="mt-12 rounded-[1.2rem] border border-dema-line bg-dema-paper px-5 py-6 sm:flex sm:items-center sm:justify-between sm:gap-8 sm:px-6">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">
-            Rejoindre Team Demaa
-          </p>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
-            Présentez votre profil une seule fois et soyez contacté lorsqu’un besoin correspond à votre expertise.
-          </p>
-        </div>
-        <Link
-          href="/rejoindre-team-demaa"
-          className="mt-5 inline-flex min-h-11 shrink-0 items-center justify-center rounded-full border border-dema-forest/20 bg-white px-5 text-sm font-medium text-dema-forest transition hover:bg-dema-sage sm:mt-0"
+      <div className="mt-10 text-center">
+        <button
+          type="button"
+          onClick={() => setProfileOpen(true)}
+          className="inline-flex min-h-11 items-center px-1 text-sm font-medium text-dema-forest underline decoration-dema-line underline-offset-4 transition hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
         >
-          Présenter mon profil
-        </Link>
-      </aside>
+          Rejoindre Team Demaa
+        </button>
+      </div>
 
       {selected ? (
         <OpportunityDetailsDialog
@@ -363,6 +376,14 @@ export default function PublicOpportunitiesClient({
           initialEmail={initialEmail}
           opportunity={applicationOpportunity}
           onClose={() => setApplicationOpportunity(null)}
+        />
+      ) : null}
+
+      {profileOpen ? (
+        <ProviderProfileModal
+          expertises={expertises}
+          initialEmail={initialEmail}
+          onClose={closeProfile}
         />
       ) : null}
 

@@ -18,8 +18,9 @@ describe("solution proposal UI contract", () => {
     ]);
 
     expect(footer).toContain('{ label: "Rejoindre Team Demaa", href: "/rejoindre-team-demaa" }');
-    expect(page).toContain("Rejoindre Team Demaa");
-    expect(page).toContain("lorsqu’un besoin correspond à votre expertise");
+    expect(page).toContain(
+      'redirect("/?view=opportunities&intent=team-demaa-profile")',
+    );
     expect(page).not.toMatch(/partenaire Demaa|devenir partenaire|partenariat garanti/i);
     await expect(
       access(path.join(root, "src/app/rejoindre-le-reseau/page.tsx")),
@@ -41,7 +42,9 @@ describe("solution proposal UI contract", () => {
       readSource("src/app/api/provider-profile-submission/route.ts"),
     ]);
 
-    expect(form).toContain("Vos expertises");
+    expect(form).toContain("Expertise principale");
+    expect(form).toContain("Choisir une expertise");
+    expect(form).toContain("<select");
     expect(form).toContain("Pays ou zones couverts");
     expect(form).not.toContain("selectedSystemSlugs");
     expect(form).not.toContain(
@@ -62,10 +65,14 @@ describe("solution proposal UI contract", () => {
       readSource("src/app/admin/opportunites/page.tsx"),
     ]);
 
-    for (const source of [networkPage, opportunitiesPage, adminPage]) {
+    expect(networkPage).toContain(
+      'redirect("/?view=opportunities&intent=team-demaa-profile")',
+    );
+    for (const source of [opportunitiesPage, adminPage]) {
       expect(source).toContain('import { connection } from "next/server"');
       expect(source).toContain("await connection()");
     }
+    expect(networkPage).not.toContain('import { connection } from "next/server"');
   });
 
   it("separates immediate opportunities from the permanent Team Demaa profile", async () => {
@@ -95,8 +102,11 @@ describe("solution proposal UI contract", () => {
       catalog.indexOf("<ProviderProfileModal"),
     );
     expect(catalog).toContain("Rejoindre Team Demaa");
+    expect(catalog).toContain("setProfileOpen(true)");
+    expect(catalog).toContain("profileOpen ? (");
     expect(modal).toContain("Manifester mon intérêt");
     expect(modal).toContain("initialEmail");
+    expect(modal).toContain("Expertise principale");
     expect(panel).toContain(
       'demoMode ? "/api/opportunities?demo=1" : "/api/opportunities"',
     );
