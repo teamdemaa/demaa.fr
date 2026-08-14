@@ -14,6 +14,7 @@ type AcademyIndexClientProps = {
   contents: AcademyContentDefinition[];
   embedded?: boolean;
   onOpenContent?: (content: AcademyContentDefinition) => void;
+  showStructureNewsletter?: boolean;
   backLink?: {
     href: string;
     label: string;
@@ -332,6 +333,7 @@ export default function AcademyIndexClient({
   contents,
   embedded = false,
   onOpenContent,
+  showStructureNewsletter = false,
   backLink,
 }: AcademyIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -610,7 +612,7 @@ export default function AcademyIndexClient({
           </section>
         ) : null}
 
-        {!embedded ? (
+        {!embedded || showStructureNewsletter ? (
           <div className="mt-12 md:mt-14">
             <StructureNewsletterBlock />
           </div>

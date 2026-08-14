@@ -70,10 +70,12 @@ export default function ActionPlanExperience({
   systemOptions,
   initialEmail = "",
   initialAppContext = { view: "plan" },
+  initialStructureIntent = false,
 }: {
   systemOptions: readonly ActionPlanSystemOption[];
   initialEmail?: string;
   initialAppContext?: ActionPlanAppContext;
+  initialStructureIntent?: boolean;
 }) {
   const [situation, setSituation] = useState("");
   const [exampleIndex, setExampleIndex] = useState(0);
@@ -594,6 +596,7 @@ export default function ActionPlanExperience({
           {activeTab === "academy" ? (
             <ActionPlanAcademyPanel
               initialContentSlug={appContext.academyContentSlug}
+              showStructureNewsletter={initialStructureIntent}
               onContentChange={(academyContentSlug) => navigateAppContext({
                 ...appContext,
                 view: "academy",
@@ -723,6 +726,7 @@ export default function ActionPlanExperience({
           {activeTab === "academy" ? (
             <ActionPlanAcademyPanel
               initialContentSlug={appContext.academyContentSlug}
+              showStructureNewsletter={initialStructureIntent}
               onContentChange={(academyContentSlug) => navigateAppContext({
                 ...appContext,
                 view: "academy",

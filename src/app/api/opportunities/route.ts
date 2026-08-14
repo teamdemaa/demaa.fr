@@ -16,20 +16,12 @@ export async function GET(request: Request) {
   const isDemo =
     process.env.NODE_ENV !== "production" &&
     new URL(request.url).searchParams.get("demo") === "1";
-  const [allExpertises, opportunities] = isDemo
+  const [expertises, opportunities] = isDemo
     ? [getPublicExpertiseSnapshot(), getPublicOpportunitySnapshot()]
     : await Promise.all([
         getPublicExpertises(),
         getPublicOpenOpportunities(),
       ]);
-  const referencedExpertiseIds = new Set(
-    opportunities.flatMap((opportunity) =>
-      opportunity.expertiseId ? [opportunity.expertiseId] : []
-    ),
-  );
-  const expertises = allExpertises.filter((expertise) =>
-    referencedExpertiseIds.has(expertise.expertiseId)
-  );
 
   const response = NextResponse.json({ expertises, opportunities });
   response.headers.set(

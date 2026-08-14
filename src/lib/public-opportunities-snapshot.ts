@@ -22,19 +22,11 @@ function buildPublicOpportunitiesSnapshot(): PublicOpportunitiesPayload {
     .sort((left, right) =>
       Date.parse(right.publishedAt ?? "") - Date.parse(left.publishedAt ?? "")
     );
-  const referencedExpertiseIds = new Set(
-    opportunities.flatMap((opportunity) =>
-      opportunity.expertiseId ? [opportunity.expertiseId] : []
-    ),
-  );
   const expertises = expertiseSnapshot
     .map((entry, index) =>
       parseExpertiseCatalogEntry(entry, `expertiseSnapshot[${index}]`)
     )
-    .filter((expertise) =>
-      expertise.visibility === "public"
-      && referencedExpertiseIds.has(expertise.expertiseId)
-    )
+    .filter((expertise) => expertise.visibility === "public")
     .sort((left, right) => left.rank - right.rank);
 
   return { expertises, opportunities };

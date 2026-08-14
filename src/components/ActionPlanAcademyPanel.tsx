@@ -38,9 +38,11 @@ type AcademyPayload = {
 export default function ActionPlanAcademyPanel({
   initialContentSlug,
   onContentChange,
+  showStructureNewsletter = false,
 }: {
   initialContentSlug?: string;
   onContentChange?: (contentSlug?: string) => void;
+  showStructureNewsletter?: boolean;
 }) {
   const [payload, setPayload] = useState<AcademyPayload | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -131,6 +133,7 @@ export default function ActionPlanAcademyPanel({
       <AcademyIndexClient
         contents={payload.contents}
         embedded
+        showStructureNewsletter={showStructureNewsletter}
         onOpenContent={(content) => {
           onContentChange?.(content.identity.slug);
         }}

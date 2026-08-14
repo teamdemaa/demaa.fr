@@ -45,6 +45,8 @@ describe("solution proposal UI contract", () => {
     expect(form).toContain("Expertise principale");
     expect(form).toContain("Choisir une expertise");
     expect(form).toContain("<select");
+    expect(form).toContain("useAccessibleDialog({ onClose })");
+    expect(form).toContain("data-dialog-initial-focus");
     expect(form).toContain("Pays ou zones couverts");
     expect(form).not.toContain("selectedSystemSlugs");
     expect(form).not.toContain(

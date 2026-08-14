@@ -1,8 +1,9 @@
 "use client";
 
 import { Check, LoaderCircle, X } from "lucide-react";
-import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useState } from "react";
 import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
+import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import {
   getLeadAttributionPayload,
   trackLeadConversion,
@@ -46,8 +47,7 @@ export default function ProviderProfileModal({
   onClose,
   opportunity = null,
 }: ProviderProfileModalProps) {
-  const dialogRef = useRef<HTMLElement>(null);
-  const firstFieldRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useAccessibleDialog({ onClose });
   const [fullName, setFullName] = useState("");
   const { email: authenticatedEmail, loading: identityLoading } =
     useCustomerIdentity(initialEmail);
@@ -75,46 +75,6 @@ export default function ProviderProfileModal({
       .map((expertise) => expertise.label),
     [expertiseIds, expertises],
   );
-
-  useEffect(() => {
-    const previousFocus = document.activeElement instanceof HTMLElement
-      ? document.activeElement
-      : null;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    firstFieldRef.current?.focus();
-
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        onClose();
-        return;
-      }
-      if (event.key !== "Tab") return;
-      const focusable = Array.from(
-        dialogRef.current?.querySelectorAll<HTMLElement>(
-          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
-        ) ?? [],
-      );
-      const first = focusable[0];
-      const last = focusable.at(-1);
-      if (!first || !last) return;
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", onKeyDown);
-      previousFocus?.focus();
-    };
-  }, [onClose]);
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -190,6 +150,7 @@ export default function ProviderProfileModal({
         <button
           type="button"
           onClick={onClose}
+          data-dialog-initial-focus
           className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full text-brand-blue transition hover:bg-dema-sage"
           aria-label="Fermer"
         >
@@ -252,7 +213,7 @@ export default function ProviderProfileModal({
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="space-y-2 text-sm text-brand-blue">
                   <span>Nom et prénom</span>
-                  <input ref={firstFieldRef} required value={fullName} onChange={(event) => setFullName(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                  <input required value={fullName} onChange={(event) => setFullName(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
                 </label>
                 <label className="space-y-2 text-sm text-brand-blue">
                   <span>{opportunity ? "Entreprise ou activité" : "Entreprise"}</span>

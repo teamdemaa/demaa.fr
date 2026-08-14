@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { parseOpportunitySubmissionFields } from "@/lib/opportunity-submission";
-import { preserveOpportunityEnrichment } from "@/lib/public-opportunities-snapshot";
+import {
+  preserveOpportunityEnrichment,
+  publicOpportunitiesSnapshot,
+} from "@/lib/public-opportunities-snapshot";
 import type { PublicOpportunity } from "@/lib/opportunity-contract";
 
 const opportunity: PublicOpportunity = {
@@ -24,6 +27,15 @@ const opportunity: PublicOpportunity = {
 };
 
 describe("opportunity submission", () => {
+  it("bundles the complete public expertise catalog for Team Demaa", () => {
+    expect(publicOpportunitiesSnapshot.expertises).toHaveLength(23);
+    expect(
+      publicOpportunitiesSnapshot.expertises.every(
+        (expertise) => expertise.visibility === "public",
+      ),
+    ).toBe(true);
+  });
+
   it("normalizes the complete public draft without inventing optional data", () => {
     expect(parseOpportunitySubmissionFields({
       cadence: " 3 mois ",

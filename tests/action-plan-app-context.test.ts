@@ -45,6 +45,18 @@ describe("action plan app context", () => {
       view: "opportunities",
       opportunityId: "mission-btp",
     });
+    expect(parseActionPlanAppContext(new URLSearchParams(
+      "intent=team-demaa-profile",
+    ))).toEqual({
+      view: "opportunities",
+    });
+    for (const intent of ["structure", "structure-problem"]) {
+      expect(parseActionPlanAppContext(new URLSearchParams(
+        `intent=${intent}`,
+      ))).toEqual({
+        view: "academy",
+      });
+    }
   });
 
   it("preserves the current plan pathname for ordinary in-app navigation", () => {

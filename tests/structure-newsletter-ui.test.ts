@@ -23,6 +23,13 @@ describe("Structure newsletter public contract", () => {
     expect(component).not.toContain("La lettre Demaa");
   });
 
+  it("resumes both Structure intents after authentication", () => {
+    expect(component).toContain('intent === "structure-problem"');
+    expect(component).toContain('intent !== "structure"');
+    expect(component).toContain("setIsProblemOpen(true)");
+    expect(component).toContain("void subscribe()");
+  });
+
   it("requires the versioned publication consent", () => {
     expect(STRUCTURE_PUBLICATION_CONSENT).toEqual({
       purpose: "structure_case_publication",
@@ -47,6 +54,12 @@ describe("Structure newsletter public contract", () => {
     for (const path of approved) {
       expect(read(path)).toContain("<StructureNewsletterBlock />");
     }
+
+    const academyIndex = read("src/components/AcademyIndexClient.tsx");
+    expect(academyIndex).toContain("!embedded || showStructureNewsletter");
+    expect(read("src/app/page.tsx")).toContain(
+      'requestedIntent === "structure" || requestedIntent === "structure-problem"',
+    );
 
     const academyCourseFiles = [
       "src/app/academie/[courseSlug]/page.tsx",

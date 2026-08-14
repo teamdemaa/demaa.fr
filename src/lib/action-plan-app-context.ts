@@ -60,7 +60,11 @@ export function parseActionPlanAppContext(
   const requestedPlanTab = readSearchValue(input, "planTab");
   const intentView = intent === "solution-referral"
     ? "system"
-    : intent === "opportunity" || intent === "opportunity-submit"
+    : intent === "structure" || intent === "structure-problem"
+      ? "academy"
+    : intent === "opportunity"
+        || intent === "opportunity-submit"
+        || intent === "team-demaa-profile"
       ? "opportunities"
       : undefined;
   const legacyView = isActionPlanView(requestedView)

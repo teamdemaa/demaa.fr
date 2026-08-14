@@ -70,6 +70,9 @@ export default async function HomePage({
       <ActionPlanExperience
         initialEmail={email || ""}
         initialAppContext={initialAppContext}
+        initialStructureIntent={
+          requestedIntent === "structure" || requestedIntent === "structure-problem"
+        }
         systemOptions={actionPlanSystemOptions}
       />
     </>

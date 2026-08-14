@@ -526,8 +526,10 @@ describe("system Solutions UI", () => {
     expect(source).toContain("md:auto-cols-[calc((100%_-_1rem)_/_2)]");
     expect(source).toContain("lg:auto-cols-[calc((100%_-_2rem)_/_3)]");
     expect(source).toContain("xl:auto-cols-[calc((100%_-_3rem)_/_4)]");
-    expect(source).toContain("min-h-[15rem]");
-    expect(source).toContain("md:min-h-[16rem]");
+    expect(source).toContain("items-start");
+    expect(source).toContain("self-start");
+    expect(source).not.toContain("min-h-[15rem]");
+    expect(source).not.toContain("md:min-h-[16rem]");
     expect(source).not.toContain("aspect-square");
     expect(source).not.toContain("line-clamp-3");
     expect(source).not.toMatch(/\bposition\b/);

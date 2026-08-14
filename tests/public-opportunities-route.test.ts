@@ -64,7 +64,7 @@ describe("public opportunities route", () => {
     vi.unstubAllEnvs();
   });
 
-  it("returns open opportunities and only their referenced expertises", async () => {
+  it("returns open opportunities and the complete public expertise catalog", async () => {
     const response = await GET(new Request("https://demaa.co/api/opportunities"));
     expect(response.status).toBe(200);
     expect(response.headers.get("Cache-Control")).toBe(
@@ -74,6 +74,7 @@ describe("public opportunities route", () => {
     expect(payload.opportunities).toHaveLength(2);
     expect(payload.expertises).toEqual([
       { expertiseId: "google-ads", label: "Spécialiste Google Ads" },
+      { expertiseId: "seo", label: "Spécialiste SEO" },
     ]);
   });
 
