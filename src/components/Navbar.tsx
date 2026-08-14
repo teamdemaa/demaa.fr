@@ -22,7 +22,7 @@ export default function Navbar({
     <>
       <nav
         data-minimal={minimal ? "true" : undefined}
-        className="sticky top-0 z-40 border-b border-dema-line/70 bg-dema-cream/92 py-1 backdrop-blur-md"
+        className="sticky top-0 z-40 bg-dema-cream/92 py-1 backdrop-blur-md"
       >
         <div className="mx-auto w-full px-3 sm:px-6 md:px-10 lg:px-24">
           <div className="relative flex items-center justify-between py-3 md:min-h-16 md:py-4">

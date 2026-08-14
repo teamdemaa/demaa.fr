@@ -21,7 +21,8 @@ describe("action plan workspace tabs", () => {
     expect(markup).toContain('aria-selected="true"');
     expect(markup).toContain("Actions");
     expect(markup).toContain("Solutions");
-    expect(markup).toContain("border-b");
+    expect(markup).toContain('class="mb-6 flex justify-center border-b border-dema-line"');
+    expect(markup).toContain('class="inline-flex items-center gap-8"');
     expect(markup).not.toContain("<svg");
     expect(markup).not.toContain("rounded-full");
   });

@@ -57,11 +57,11 @@ export default function ActionPlanWorkspaceTabs({
   }
 
   return (
-    <div className="mb-6 flex justify-center">
+    <div className="mb-6 flex justify-center border-b border-dema-line">
       <div
         role="tablist"
         aria-label="Contenu du plan"
-        className="inline-flex items-center gap-8 border-b border-dema-line"
+        className="inline-flex items-center gap-8"
       >
         {tabs.map(({ id, label }, index) => (
           <button
