@@ -5,11 +5,11 @@ export const SPECIALIST_OFFERS = {
   },
   pilotage_1: {
     price: "350 € HT / mois",
-    title: "Maestro · 1 session / mois",
+    title: "Coach business · 1 session / mois",
   },
   pilotage_2: {
     price: "550 € HT / mois",
-    title: "Maestro · 2 sessions / mois",
+    title: "Coach business · 2 sessions / mois",
   },
 } as const;
 

@@ -87,10 +87,6 @@ export async function POST(request: Request) {
     });
     if (limited) return limited;
 
-    const customer = await requireCurrentCustomerEmail();
-    if (customer.response) return customer.response;
-    const email = customer.email;
-
     const { data, response } = await readJsonBody<CoachingRequestBody>(request, 12 * 1024);
     if (response) return response;
 
@@ -107,6 +103,11 @@ export async function POST(request: Request) {
 
     const isMessage = requestKind === "message";
     const isFormula = requestKind === "formula";
+    const customer = isMessage
+      ? await requireCurrentCustomerEmail()
+      : { email: "", response: null };
+    if (customer.response) return customer.response;
+    const email = customer.email;
     if (isMessage && draftToken) {
       claimedDraft = await claimPendingCoachingMessageDraft({
         draftToken,

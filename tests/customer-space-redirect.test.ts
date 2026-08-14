@@ -52,6 +52,21 @@ describe("customer-space safe return intents", () => {
       specialistDraftReturnTo,
     );
 
+    const opportunityDraftReturnTo = buildCustomerIntentReturnTo({
+      draftToken,
+      kind: "opportunity-submit",
+    });
+    expect(opportunityDraftReturnTo).toBe(
+      `/?intent=opportunity-submit&draftToken=${draftToken}`,
+    );
+    expect(parseCustomerAccessIntent(opportunityDraftReturnTo)).toEqual({
+      draftToken,
+      kind: "opportunity-submit",
+    });
+    expect(getSafeCustomerReturnTo(opportunityDraftReturnTo)).toBe(
+      opportunityDraftReturnTo,
+    );
+
     const solutionReturnTo = buildCustomerIntentReturnTo({
       kind: "solution-referral",
       resourceSlug: "chartered-accountant",
@@ -73,6 +88,9 @@ describe("customer-space safe return intents", () => {
     expect(getSafeCustomerReturnTo("/?intent=coaching&tab=unknown")).toBe("/");
     expect(
       getSafeCustomerReturnTo("/?intent=coaching&draftToken=too-short"),
+    ).toBe("/");
+    expect(
+      getSafeCustomerReturnTo("/?intent=opportunity-submit&draftToken=too-short"),
     ).toBe("/");
     expect(
       getSafeCustomerReturnTo(

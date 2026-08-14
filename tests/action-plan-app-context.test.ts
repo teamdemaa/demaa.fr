@@ -54,7 +54,7 @@ describe("action plan app context", () => {
         academyContentSlug: "piloter-sa-tresorerie",
       },
       pathname: "/plans/plan-1",
-      search: "?demo=plan&intent=opportunity&opportunityId=old",
+      search: "?demo=plan&intent=opportunity-submit&draftToken=secret&tab=messages&opportunityId=old",
     })).toBe(
       "/plans/plan-1?demo=plan&view=academy&academy=piloter-sa-tresorerie",
     );

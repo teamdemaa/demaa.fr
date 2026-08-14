@@ -48,6 +48,7 @@ export async function cleanupExpiredOperationalData(limitPerCollection = 50) {
     { collection: "customer_magic_links", field: "expires_at", limit: limitPerCollection, value: now },
     { collection: "customer_sessions", field: "expires_at", limit: limitPerCollection, value: now },
     { collection: "coaching_message_drafts", field: "expires_at", limit: limitPerCollection, value: now },
+    { collection: "opportunity_submission_drafts", field: "expires_at", limit: limitPerCollection, value: now },
     { collection: "action_plans", field: "retention_expires_at", limit: limitPerCollection, value: now },
     { collection: "coaching_conversations", field: "retention_expires_at", limit: limitPerCollection, value: now },
   ];

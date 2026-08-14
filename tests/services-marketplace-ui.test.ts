@@ -92,19 +92,21 @@ describe("canonical Services marketplace", () => {
     });
   });
 
-  it("renders six linked cards without exposing retired catalog prices", () => {
+  it("renders six linked canonical services plus the coach business card", () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
 
-    expect(markup.match(/<article/g)).toHaveLength(6);
+    expect(markup.match(/<article/g)).toHaveLength(7);
     for (const slug of CANONICAL_SERVICE_SLUGS) {
       expect(markup).toContain(`/services/${slug}`);
     }
     expect(markup).toContain("550 € HT");
     expect(markup).toContain("500 € HT / jour");
     expect(markup).toContain("À partir de 250 € HT / mois");
-    expect(markup).not.toMatch(/750 €|350 €|600 €|490 €/);
+    expect(markup).toContain("Coach business");
+    expect(markup).toContain("À partir de 350 € HT / mois");
+    expect(markup).not.toMatch(/750 €|600 €|490 €/);
   });
 
   it("keeps the callback form strict to company and phone", async () => {

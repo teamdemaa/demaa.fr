@@ -89,7 +89,7 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Vercel</strong> pour l&apos;hébergement et la mesure d&apos;audience ;</li>
               <li><strong>Google Analytics</strong> pour la mesure des parcours lorsque vous l&apos;autorisez ;</li>
               <li><strong>Meta Pixel</strong> pour la mesure publicitaire lorsque vous l&apos;autorisez ;</li>
-              <li><strong>Google Firebase / Firestore et Firebase Authentication</strong> pour le stockage sécurisé des demandes, des plans que vous choisissez de sauvegarder, des brouillons temporaires et conversations avec un spécialiste, de leur contexte d&apos;attribution, des compteurs agrégés d&apos;ouverture des systèmes et, lorsque la connexion Google est proposée, la vérification de votre identité e-mail ;</li>
+              <li><strong>Google Firebase / Firestore et Firebase Authentication</strong> pour le stockage sécurisé des demandes, des plans que vous choisissez de sauvegarder, des brouillons temporaires de message ou de proposition d&apos;opportunité, des conversations avec un spécialiste, de leur contexte d&apos;attribution, des compteurs agrégés d&apos;ouverture des systèmes et, lorsque la connexion Google est proposée, la vérification de votre identité e-mail ;</li>
               <li><strong>Resend</strong> pour l&apos;envoi des emails demandés et la gestion des contacts concernés ;</li>
               <li><strong>Vercel AI Gateway et le fournisseur de modèle sélectionné par Demaa, notamment OpenAI</strong>, pour la génération des réponses de l&apos;assistant IA ;</li>
               <li><strong>Slack</strong> pour la réception interne de notifications liées à certaines demandes ;</li>
@@ -112,6 +112,7 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Plan en attente de vérification de l&apos;email :</strong> 30 jours maximum. Le jeton d&apos;accès temporaire est conservé uniquement sous forme hachée et ne donne accès qu&apos;au plan concerné.</li>
               <li><strong>Plans rattachés à une adresse e-mail vérifiée :</strong> jusqu&apos;à 3 ans après leur dernière mise à jour, puis suppression ou anonymisation.</li>
               <li><strong>Brouillon de message destiné à un spécialiste avant connexion :</strong> utilisable pendant 60 minutes maximum, puis supprimé lors du prochain nettoyage technique des données expirées.</li>
+              <li><strong>Brouillon de proposition d&apos;opportunité avant connexion :</strong> utilisable pendant 2 heures maximum, puis supprimé lors du prochain nettoyage technique des données expirées.</li>
               <li><strong>Conversations avec un spécialiste :</strong> jusqu&apos;à 3 ans après le dernier échange utile, puis suppression ou anonymisation.</li>
               <li><strong>Données techniques de sécurité et journaux :</strong> pendant la durée nécessaire à l&apos;exploitation et à la sécurité du site.</li>
               <li><strong>Compteurs agrégés d&apos;ouverture des systèmes :</strong> pendant la durée d&apos;exploitation du service, ces compteurs ne contenant ni adresse email, ni adresse IP enregistrée, ni identifiant visiteur.</li>
@@ -145,7 +146,7 @@ export default function PolitiqueConfidentialitePage() {
 
       <PrivacySection title="8. Cookies, traceurs et stockage local">
             <p>
-              Le site utilise des outils de mesure d&apos;audience et des traceurs marketing selon vos choix. Le plan affiché avant sauvegarde reste dans la mémoire de la page ouverte : Demaa n&apos;utilise ni localStorage ni sessionStorage pour le conserver durablement.
+              Le site utilise des outils de mesure d&apos;audience et des traceurs marketing selon vos choix. Le plan affiché avant sauvegarde reste dans la mémoire de la page ouverte : Demaa n&apos;utilise ni localStorage ni sessionStorage pour le conserver durablement. Un brouillon de proposition d&apos;opportunité peut être conservé temporairement dans la session du navigateur afin d&apos;éviter sa perte pendant la connexion ; il est supprimé après la soumission.
             </p>
             <p>
               Lorsqu&apos;un traceur nécessite votre consentement, notamment pour la mesure d&apos;audience, l&apos;attribution persistante ou la publicité, Demaa recueille ce consentement avant chargement via son bandeau cookies. Les choix « mesure d&apos;audience » et « publicité » peuvent être modifiés séparément à tout moment depuis la politique de cookies.

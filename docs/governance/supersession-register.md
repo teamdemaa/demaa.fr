@@ -9,6 +9,8 @@ remplacé et la nouvelle référence à consulter.
 | ADR 0003, point 3 : `/` peut reproduire le hub `/systemes` | `superseded` | `/` devient l'entrée du générateur de plan ; `/systemes` reste le hub public intact, voir ADR 0008 et D-076 |
 | ADR 0008/D-076 : masquer la navigation applicative avant le résultat | `superseded` | navigation visible et utilisable dès l'arrivée, sans compte ni persistance avant sauvegarde, voir ADR 0010 et D-077 |
 | ADR 0009 : `Coaching` comme quatrième onglet principal | `superseded` | navigation `Plan d’action / Opportunités / Académie`, avec `Actions / Solutions` dans le Plan ; Coaching reste accessible par `Parler à un spécialiste`, voir ADR 0010 |
+| Académie `Cours / Ateliers`, Cours par défaut | `superseded` | `Tutoriels / Cours`, Tutoriels par défaut ; les slugs `case-study` sont conservés, voir ADR 0004 |
+| Onglets spécialiste `Messages / Formules` | `superseded` | conversation écrite ou dictée sans onglets ; Coach business devient une carte Services, voir ADR 0009 |
 | Portail distinct `Mon espace` ou `Mes plans` | `superseded` | lien magique puis retour direct à l'intention dans l'application unifiée; la session fournit ensuite l'identité e-mail |
 | Adresse e-mail redemandée dans chaque formulaire applicatif | `superseded` | saisie/vérification au lien magique uniquement, puis e-mail de session récupéré côté serveur |
 | Nouveau plan réécrit au format historique V1/V2 | `superseded` | génération V3 ; V1 est normalisé en V2 à la lecture, V2 et `manual` restent inchangés, voir ADR 0011 |

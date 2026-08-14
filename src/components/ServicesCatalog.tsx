@@ -10,6 +10,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { CanonicalService } from "@/lib/canonical-service-catalog";
+import CoachBusinessServiceCard from "@/components/CoachBusinessServiceCard";
 
 const ICONS: Record<CanonicalService["slug"], LucideIcon> = {
   "automatisation-processus": Workflow,
@@ -73,6 +74,7 @@ export default function ServicesCatalog({
         {services.map((service) => (
           <ServiceCard key={service.slug} service={service} />
         ))}
+        <CoachBusinessServiceCard />
       </div>
     </section>
   );

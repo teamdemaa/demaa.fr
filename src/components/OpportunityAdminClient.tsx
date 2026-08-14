@@ -178,7 +178,11 @@ export default function OpportunityAdminClient({
                     <Pencil className="h-3.5 w-3.5" aria-hidden="true" /> Modifier
                   </button>
                   <button type="button" disabled={isLoading} onClick={() => changeStatus(opportunity.opportunityId, opportunity.status === "open" ? "closed" : "open")} className="rounded-full border border-dema-line px-3 py-2 text-xs font-medium text-dema-forest">
-                    {opportunity.status === "open" ? "Fermer" : "Rouvrir"}
+                    {opportunity.status === "draft"
+                      ? "Publier"
+                      : opportunity.status === "open"
+                        ? "Fermer"
+                        : "Rouvrir"}
                   </button>
                 </div>
               </div>

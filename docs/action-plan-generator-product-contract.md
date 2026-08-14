@@ -395,12 +395,13 @@ sont implémentés derrière des limites conservatrices réversibles.
 ## Extensions explicitement différées
 
 La première version de l'accès à un spécialiste fait partie de l'application
-conformément à l'ADR 0009 : Messages ouverts par défaut, puis Formules. Les
-formules visibles sont `Clarté` à 149 EUR HT/mois et une seule carte `Maestro`
-dont le sélecteur affiche 1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois.
-`Clarté` apporte un regard extérieur pour décider et avancer ; `Maestro` aide
-le dirigeant à donner le cap et organiser l'exécution sans rester au centre de
-tout. Les CTA transmettent une intention sans déclencher de paiement.
+conformément à l'ADR 0009 : une conversation écrite ou vocale simple, sans
+onglets Messages/Formules. `Clarté` est présenté à 149 EUR HT/mois dans cette
+conversation. L'offre `Coach business` est présentée séparément dans Services :
+son sélecteur affiche 1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois, avec
+15 % de réduction annoncée aux abonnés Clarté. Son CTA `Être rappelé(e)`
+transmet une intention sans déclencher de paiement. La durée exacte d'un
+éventuel essai Clarté reste un arbitrage ouvert et aucune gratuité n'est promise.
 Restent
 au backlog, sans modifier cette première version :
 

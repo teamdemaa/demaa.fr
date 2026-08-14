@@ -7,6 +7,7 @@ import {
   getPublicExpertises,
   getPublicOpenOpportunities,
 } from "@/lib/provider-network.server";
+import { preserveOpportunityEnrichment } from "@/lib/public-opportunities-snapshot";
 import {
   CUSTOMER_SPACE_COOKIE,
   getEmailFromCustomerSessionToken,
@@ -57,7 +58,7 @@ export default async function OpportunitiesPage() {
           <PublicOpportunitiesClient
             expertises={expertises}
             initialEmail={email ?? ""}
-            opportunities={opportunities}
+            opportunities={preserveOpportunityEnrichment(opportunities)}
           />
         </div>
       </main>

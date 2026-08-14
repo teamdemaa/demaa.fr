@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
-import { buildContentSecurityPolicy } from "./src/lib/content-security-policy";
-import { ACADEMY_PERMANENT_REDIRECTS } from "./src/lib/academy-course-routes";
+import { buildContentSecurityPolicy } from "./src/lib/content-security-policy.ts";
+import { ACADEMY_PERMANENT_REDIRECTS } from "./src/lib/academy-course-routes.ts";
 
 const securityHeaders = [
   {

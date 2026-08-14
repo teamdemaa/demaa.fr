@@ -86,7 +86,7 @@ describe("Academy live sessions and contextual cases", () => {
     }
   });
 
-  it("shows Courses then Ateliers while keeping Webinars dormant", async () => {
+  it("shows Tutorials then Courses while keeping cases and Webinars dormant as labels", async () => {
     const [clientSource, pageSource] = await Promise.all([
       readFile(
         new URL("../src/components/AcademyIndexClient.tsx", import.meta.url),
@@ -96,13 +96,16 @@ describe("Academy live sessions and contextual cases", () => {
     ]);
     expect(clientSource).not.toContain("Cours fondamentaux");
     expect(clientSource).not.toContain("<AcademyLiveTrainingSection");
-    expect(clientSource).toContain('{ id: "courses", label: "Cours" }');
-    expect(clientSource).toContain('{ id: "workshops", label: "Ateliers" }');
+    expect(clientSource.indexOf('{ id: "tutorials", label: "Tutoriels" }')).toBeLessThan(
+      clientSource.indexOf('{ id: "courses", label: "Cours" }'),
+    );
+    expect(clientSource).not.toContain('label: "Ateliers"');
     expect(clientSource).not.toContain('label: "Cas concrets"');
     expect(clientSource).not.toContain("WEBINARS_ACADEMY_SECTION");
     expect(clientSource).toContain("const academySections = CORE_ACADEMY_SECTIONS");
-    expect(clientSource).toContain('useState<AcademySection>("courses")');
-    expect(clientSource).toContain("Les premiers ateliers arrivent bientôt.");
+    expect(clientSource).toContain('useState<AcademySection>("tutorials")');
+    expect(clientSource).not.toContain("Les premiers ateliers arrivent bientôt.");
+    expect(clientSource).not.toContain("overflow-x-auto");
     expect(clientSource).toContain('role="tablist"');
     expect(clientSource).toContain('role="tab"');
     expect(clientSource).toContain('aria-selected={activeSection === section.id}');

@@ -26,9 +26,9 @@ publiques `/systemes` restent stables. Les choix
 effectués dans cet espace restent uniquement en mémoire tant qu'aucun plan
 n'est volontairement enregistré.
 Coaching demeure dans la même application, mais s’ouvre depuis l’action
-compacte `Parler à un spécialiste` du header. Le panneau, les offres, les
-messages et les règles de l’ADR 0009 sont conservés sans seconde
-implémentation.
+compacte `Parler à un spécialiste` du header. Cette surface est une
+conversation simple sans onglets commerciaux ; la carte Coach business reste
+dans Services conformément à l’ADR 0009.
 
 La sauvegarde est une action contextuelle du Plan d’action et n’encombre pas le
 header global. `Enregistrer` apparaît avec `Partager` et le menu contenant
@@ -61,6 +61,13 @@ son `opportunityId`. `Rejoindre Team Demaa` reste le parcours permanent de
 présentation de profil, dans le même pipeline, sans `opportunityId`. Les
 collections `expertise_catalog`, `opportunities` et `lead_requests` restent les
 sources canoniques ; aucun catalogue ou stockage parallèle n’est créé.
+
+Un bouton `+` compact près de la recherche permet aussi de proposer une
+Opportunité. La personne remplit le formulaire avant connexion. Au clic sur
+Envoyer, un brouillon serveur opaque conserve exactement les champs, puis la
+session Google ou lien magique reprend et soumet automatiquement le brouillon.
+Le document est créé dans `opportunities` avec le statut `draft` et ne devient
+public qu'après l'action explicite de l'administration.
 
 Le nom de l’organisation à l’origine d’une opportunité n’est pas affiché dans
 cette version. Un futur champ facultatif pourra être décidé séparément.

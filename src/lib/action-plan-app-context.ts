@@ -60,7 +60,7 @@ export function parseActionPlanAppContext(
   const requestedPlanTab = readSearchValue(input, "planTab");
   const intentView = intent === "solution-referral"
     ? "system"
-    : intent === "opportunity"
+    : intent === "opportunity" || intent === "opportunity-submit"
       ? "opportunities"
       : undefined;
   const legacyView = isActionPlanView(requestedView)
@@ -115,7 +115,9 @@ const CONTEXT_QUERY_KEYS = [
   "academy",
   "opportunity",
   "intent",
+  "tab",
   "offer",
+  "draftToken",
   "systemSlug",
   "resourceSlug",
   "opportunityId",

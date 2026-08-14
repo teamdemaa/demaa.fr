@@ -2,27 +2,27 @@ import { describe, expect, it } from "vitest";
 import { getNextAcademySection } from "@/components/AcademyIndexClient";
 
 const visibleSections = [
+  { id: "tutorials" as const },
   { id: "courses" as const },
-  { id: "workshops" as const },
 ];
 
 describe("Academy section keyboard navigation", () => {
-  it("cycles only between Cours and Ateliers", () => {
+  it("cycles only between Tutoriels and Cours", () => {
+    expect(getNextAcademySection(visibleSections, "tutorials", "ArrowRight")).toBe(
+      "courses",
+    );
     expect(getNextAcademySection(visibleSections, "courses", "ArrowRight")).toBe(
-      "workshops",
+      "tutorials",
     );
-    expect(getNextAcademySection(visibleSections, "workshops", "ArrowRight")).toBe(
+    expect(getNextAcademySection(visibleSections, "tutorials", "ArrowLeft")).toBe(
       "courses",
     );
-    expect(getNextAcademySection(visibleSections, "courses", "ArrowLeft")).toBe(
-      "workshops",
+    expect(getNextAcademySection(visibleSections, "courses", "Home")).toBe(
+      "tutorials",
     );
-    expect(getNextAcademySection(visibleSections, "workshops", "Home")).toBe(
+    expect(getNextAcademySection(visibleSections, "tutorials", "End")).toBe(
       "courses",
     );
-    expect(getNextAcademySection(visibleSections, "courses", "End")).toBe(
-      "workshops",
-    );
-    expect(getNextAcademySection(visibleSections, "courses", "Enter")).toBeNull();
+    expect(getNextAcademySection(visibleSections, "tutorials", "Enter")).toBeNull();
   });
 });

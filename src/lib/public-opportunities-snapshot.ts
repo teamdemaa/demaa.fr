@@ -45,3 +45,28 @@ function buildPublicOpportunitiesSnapshot(): PublicOpportunitiesPayload {
  * this payload in the background as soon as the public endpoint responds.
  */
 export const publicOpportunitiesSnapshot = buildPublicOpportunitiesSnapshot();
+
+export function preserveOpportunityEnrichment(
+  remote: readonly PublicOpportunity[],
+  bundled: readonly PublicOpportunity[] = publicOpportunitiesSnapshot.opportunities,
+) {
+  const bundledById = new Map(
+    bundled.map((opportunity) => [opportunity.opportunityId, opportunity]),
+  );
+  return remote.map((opportunity) => {
+    const fallback = bundledById.get(opportunity.opportunityId);
+    if (!fallback) return opportunity;
+    return {
+      ...opportunity,
+      cadence: opportunity.cadence ?? fallback.cadence,
+      companyName: opportunity.companyName ?? fallback.companyName,
+      compensation: opportunity.compensation ?? fallback.compensation,
+      expectations: opportunity.expectations.length > 0
+        ? opportunity.expectations
+        : fallback.expectations,
+      geography: opportunity.geography ?? fallback.geography,
+      startTiming: opportunity.startTiming ?? fallback.startTiming,
+      workMode: opportunity.workMode ?? fallback.workMode,
+    };
+  });
+}

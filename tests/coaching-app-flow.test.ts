@@ -35,38 +35,35 @@ describe("unified app and coaching", () => {
     expect(accountAccessForm).not.toContain("votre espace Demaa");
   });
 
-  it("publishes the validated coaching offer and tabs", () => {
+  it("keeps specialist messaging simple and moves coach business to Services", () => {
     const coaching = read("src/components/CoachingPanel.tsx");
     const offers = read("src/lib/specialist-offers.ts");
+    const coachBusiness = read("src/components/CoachBusinessServiceCard.tsx");
+    const services = read("src/components/ServicesCatalog.tsx");
     const coachingControl = read("src/components/ActionPlanCoachingControl.tsx");
     const appNavigation = read("src/components/ActionPlanNavbar.tsx");
-    expect(coaching).toContain("Formules");
-    expect(coaching).toContain("Messages");
-    expect(coaching).toContain("Parler à un spécialiste");
-    expect(coaching).toContain("premier échange offert");
-    expect(coaching).toContain('title="Clarté"');
-    expect(coaching).toContain('title="Maestro"');
-    expect(coaching).toContain("Clarté pour décider maintenant. Maestro pour reprendre durablement");
-    expect(coaching).toContain("Clarification et ajustement de votre stratégie avec la méthode ASOP");
-    expect(coaching).toContain("Choisir Clarté");
-    expect(coaching).toContain("Choisir Maestro");
-    expect(coaching).not.toContain("Échanges avec Demaa");
-    expect(coaching).not.toContain("Pilotage mensuel");
+    expect(coaching).toContain("Échanger avec un spécialiste");
+    expect(coaching).toContain("Clarté · accompagnement asynchrone à 149 € HT / mois");
+    expect(coaching).not.toContain('role="tablist"');
+    expect(coaching).not.toContain("Choisir Clarté");
+    expect(coaching).not.toContain("Choisir Maestro");
+    expect(coaching).not.toContain("premier échange offert");
+    expect(coachBusiness).toContain("Coach business");
+    expect(coachBusiness).toContain("Matching guidé avec le bon coach");
+    expect(coachBusiness).toContain("Être rappelé(e)");
+    expect(coachBusiness).toContain("350 €");
+    expect(coachBusiness).toContain("550 €");
+    expect(coachBusiness).toContain("15 % de réduction pour les abonnés Clarté");
+    expect(services).toContain("<CoachBusinessServiceCard />");
     expect(offers).toContain('title: "Clarté"');
-    expect(offers).toContain('title: "Maestro · 1 session / mois"');
-    expect(offers).toContain('title: "Maestro · 2 sessions / mois"');
+    expect(offers).toContain('title: "Coach business · 1 session / mois"');
+    expect(offers).toContain('title: "Coach business · 2 sessions / mois"');
     expect(offers).toContain('price: "149 € HT / mois"');
     expect(offers).toContain('price: "350 € HT / mois"');
     expect(offers).toContain('price: "550 € HT / mois"');
-    expect(coaching).not.toContain("150 € HT");
-    expect(coaching).not.toContain("400 € HT");
-    expect(coaching).not.toContain("Pilotage rapproché");
-    expect(coaching).not.toContain("180 € TTC");
-    expect(coaching).not.toContain("480 € TTC");
-    expect(coaching).not.toContain("15 minutes offertes");
-    expect(coaching).not.toContain("Échange préalable");
-    expect(coaching).toContain('useState<CoachingTab>(initialTab)');
-    expect(coaching).toContain('(["messages", "formules"] as const)');
+    expect(coachBusiness).not.toContain("150 € HT");
+    expect(coachBusiness).not.toContain("400 € HT");
+    expect(coachBusiness).not.toContain("Pilotage rapproché");
     expect(coaching).toContain("interimResults: true");
     expect(coaching).toContain("useSpeechDictation");
     expect(coaching).toContain("Dictée en cours… le texte apparaît dans le message.");
@@ -74,7 +71,6 @@ describe("unified app and coaching", () => {
     expect(coaching).toContain('onRequireAccess?.({ draftToken, tab: "messages" })');
     expect(coaching).toContain("initialDraftToken");
     expect(coaching).toContain("Votre texte est conservé : réessayez.");
-    expect(coaching).toContain("Premier échange offert");
     expect(coaching).not.toContain("Continuer par e-mail");
     expect(coaching).not.toContain("disponible prochainement");
     expect(coachingControl).toContain("Parler à un spécialiste");
@@ -89,7 +85,6 @@ describe("unified app and coaching", () => {
       "Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.",
     );
     expect(coachingControl).toContain('new URLSearchParams({ intent: "coaching", tab: intent.tab })');
-    expect(coachingControl).toContain('params.set("offer", intent.offer)');
     expect(appNavigation).toContain("Opportunités");
     expect(appNavigation).not.toContain('label: "Coaching"');
   });

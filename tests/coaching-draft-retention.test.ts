@@ -60,7 +60,14 @@ describe("coaching draft retention", () => {
       operator: "<=",
       value: "2026-08-13T10:00:00.000Z",
     });
-    expect(result).toEqual({ deleted: 0, operations: 15 });
+    expect(firestore.queries).toContainEqual({
+      collection: "opportunity_submission_drafts",
+      field: "expires_at",
+      limit: 7,
+      operator: "<=",
+      value: "2026-08-13T10:00:00.000Z",
+    });
+    expect(result).toEqual({ deleted: 0, operations: 16 });
   });
 
   it("documents the temporary draft and its retention without naming its access mechanism", () => {
@@ -74,8 +81,12 @@ describe("coaching draft retention", () => {
     );
     expect(privacy).toContain("utilisable pendant 60 minutes maximum");
     expect(privacy).toContain(
-      "brouillons temporaires et conversations avec un spécialiste",
+      "brouillons temporaires de message ou de proposition d&apos;opportunité",
     );
+    expect(privacy).toContain(
+      "Brouillon de proposition d&apos;opportunité avant connexion",
+    );
+    expect(privacy).toContain("utilisable pendant 2 heures maximum");
     expect(privacy).not.toContain("draftToken");
     expect(privacy).not.toContain("jeton du brouillon");
   });

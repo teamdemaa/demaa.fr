@@ -237,9 +237,10 @@ describe("coaching request route", () => {
     }));
 
     expect(response.status).toBe(202);
+    expect(mocks.requireCurrentCustomerEmail).not.toHaveBeenCalled();
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: expect.arrayContaining([
-        { label: "Formule", value: "Maestro · 2 sessions / mois" },
+        { label: "Formule", value: "Coach business · 2 sessions / mois" },
         { label: "Tarif affiché", value: "550 € HT / mois" },
       ]),
       requestType: "specialist_formula_interest",

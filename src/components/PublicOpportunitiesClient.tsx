@@ -1,9 +1,10 @@
 "use client";
 
-import { X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AppLibrarySearch from "@/components/AppLibrarySearch";
+import OpportunitySubmissionDialog from "@/components/OpportunitySubmissionDialog";
 import ProviderProfileModal from "@/components/ProviderProfileModal";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import type { ExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
@@ -155,6 +156,9 @@ export default function PublicOpportunitiesClient({
   const [localSelected, setLocalSelected] = useState<PublicOpportunity | null>(null);
   const [applicationOpportunity, setApplicationOpportunity] =
     useState<PublicOpportunity | null>(null);
+  const [submissionOpen, setSubmissionOpen] = useState(false);
+  const [submissionNotice, setSubmissionNotice] = useState<string | null>(null);
+  const autoSubmissionTokenRef = useRef("");
   const selected = initialOpportunityId
     ? opportunities.find(
       (entry) => entry.opportunityId === initialOpportunityId,
@@ -217,27 +221,81 @@ export default function PublicOpportunitiesClient({
     return () => window.clearTimeout(timeout);
   }, [initialEmail, opportunities]);
 
+  useEffect(() => {
+    if (!initialEmail) return;
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("intent") !== "opportunity-submit") return;
+    const draftToken = url.searchParams.get("draftToken") ?? "";
+    if (!/^[A-Za-z0-9_-]{43}$/.test(draftToken)) return;
+    if (autoSubmissionTokenRef.current === draftToken) return;
+    autoSubmissionTokenRef.current = draftToken;
+
+    void fetch("/api/opportunity-submissions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ draftToken }),
+    }).then(async (response) => {
+      const payload = await response.json().catch(() => null) as {
+        error?: string;
+        ok?: boolean;
+      } | null;
+      if (!response.ok || !payload?.ok) {
+        throw new Error(payload?.error || "L’opportunité n’a pas pu être envoyée.");
+      }
+      window.sessionStorage.removeItem("demaa_opportunity_submission_draft");
+      url.searchParams.delete("intent");
+      url.searchParams.delete("draftToken");
+      window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+      setSubmissionNotice("Votre opportunité a été transmise à l’équipe Demaa pour modération.");
+    }).catch((submissionError: unknown) => {
+      autoSubmissionTokenRef.current = "";
+      setSubmissionOpen(true);
+      setSubmissionNotice(
+        submissionError instanceof Error
+          ? submissionError.message
+          : "L’opportunité n’a pas pu être envoyée.",
+      );
+    });
+  }, [initialEmail]);
+
   return (
     <>
-      <div className="pt-3">
-        <AppLibrarySearch
-          activeFilter={activeCategory}
-          filters={categories}
-          isFilterOpen={areCategoryTagsVisible}
-          onFilterSelect={(category) => {
-            setActiveCategory(category);
-            setQuery("");
-            setAreCategoryTagsVisible(false);
-          }}
-          onFilterToggle={() => setAreCategoryTagsVisible((visible) => !visible)}
-          onQueryChange={(value) => {
-            setQuery(value);
-            setActiveCategory(ALL_OPPORTUNITY_CATEGORIES);
-          }}
-          placeholder="Rechercher un besoin ou une expertise…"
-          query={query}
-        />
+      <div className="flex items-center gap-2 pt-3">
+        <div className="min-w-0 flex-1">
+          <AppLibrarySearch
+            activeFilter={activeCategory}
+            filters={categories}
+            isFilterOpen={areCategoryTagsVisible}
+            onFilterSelect={(category) => {
+              setActiveCategory(category);
+              setQuery("");
+              setAreCategoryTagsVisible(false);
+            }}
+            onFilterToggle={() => setAreCategoryTagsVisible((visible) => !visible)}
+            onQueryChange={(value) => {
+              setQuery(value);
+              setActiveCategory(ALL_OPPORTUNITY_CATEGORIES);
+            }}
+            placeholder="Rechercher un besoin ou une expertise…"
+            query={query}
+          />
+        </div>
+        <button
+          type="button"
+          onClick={() => setSubmissionOpen(true)}
+          aria-label="Soumettre une opportunité"
+          title="Soumettre une opportunité"
+          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line bg-white text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
+        >
+          <Plus className="h-4 w-4" aria-hidden="true" />
+        </button>
       </div>
+
+      {submissionNotice ? (
+        <p className="mt-4 rounded-xl bg-dema-sage px-4 py-3 text-sm text-dema-forest" role="status">
+          {submissionNotice}
+        </p>
+      ) : null}
 
       <div className="mt-6 space-y-4">
         {filtered.map((opportunity) => (
@@ -305,6 +363,27 @@ export default function PublicOpportunitiesClient({
           initialEmail={initialEmail}
           opportunity={applicationOpportunity}
           onClose={() => setApplicationOpportunity(null)}
+        />
+      ) : null}
+
+      {submissionOpen ? (
+        <OpportunitySubmissionDialog
+          initialEmail={initialEmail}
+          onClose={() => setSubmissionOpen(false)}
+          onSubmitted={() => {
+            const url = new URL(window.location.href);
+            if (url.searchParams.get("intent") === "opportunity-submit") {
+              url.searchParams.delete("intent");
+              url.searchParams.delete("draftToken");
+              window.history.replaceState(
+                window.history.state,
+                "",
+                `${url.pathname}${url.search}${url.hash}`,
+              );
+            }
+            setSubmissionOpen(false);
+            setSubmissionNotice("Votre opportunité a été transmise à l’équipe Demaa pour modération.");
+          }}
         />
       ) : null}
     </>

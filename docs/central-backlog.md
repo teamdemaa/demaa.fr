@@ -1,6 +1,6 @@
 # Backlog central Demaa
 
-Dernière consolidation : 13 août 2026.
+Dernière consolidation : 14 août 2026.
 
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
@@ -33,10 +33,9 @@ de déploiement.
   des Systèmes.
 - Les guides métier sont retirés de Ressources pour simplifier l'application ;
   leurs données historiques restent conservées. Académie présente désormais
-  uniquement `Cours / Ateliers`, avec Cours ouvert par défaut. `Ateliers` est
-  réservé aux démonstrations pratiques vidéo ou en direct et affiche un état
-  vide tant qu'aucun atelier n'est publié. Les Cas concrets gardent leurs
-  routes directes mais sont masqués de l'index ; `Webinaires` reste masqué.
+  uniquement `Tutoriels / Cours`, avec Tutoriels ouvert par défaut. Les
+  identifiants techniques `case-study` alimentent les tutoriels guidés sans
+  quiz et conservent leurs routes ; `Webinaires` reste masqué.
 - Les parcours guide, newsletter, Structure, Rejoindre Team Demaa, callback
   Services, Levier, Opportunités, sauvegarde de plan et lien magique ont été
   testés en Production. L'envoi direct à la boîte Gmail opérationnelle est
@@ -65,9 +64,10 @@ l'ADR 0004 prévaut.
   Les anciennes URLs `view=system` restent acceptées ; les nouveaux liens
   utilisent `view=plan&planTab=solutions` et conservent le contexte Système.
   Organisation et Ressources restent sur les fiches publiques et alimentent
-  de manière déterministe les aides affichées dans les Actions. Le produit Coaching est
-  accessible par l'action `Parler à un spécialiste` et conserve les onglets
-  Messages puis Formules.
+  de manière déterministe les aides affichées dans les Actions. La messagerie
+  spécialiste est accessible par l'action `Parler à un spécialiste` sans
+  onglets commerciaux. `Clarté` est un accompagnement asynchrone à
+  149 EUR HT/mois. Le Coach business est présenté comme une carte Services.
 - Une fiche Système contient `Organisation`, `Solutions` et `Ressources`.
 - Six Services canoniques existent : Automatisation des processus,
   Expert-comptable, Formalités juridiques, Sous-traitance de formalités
@@ -103,12 +103,13 @@ l'ADR 0004 prévaut.
   Systèmes, puis sauvegarde Firebase. L'ADR 0008 et
   `docs/action-plan-generator-product-contract.md` sont les références ;
   `/systemes` et `/academie` publics restent inchangés.
-- [x] Livrer la première version de `Parler à un spécialiste` : Messages
-  asynchrones ouverts par défaut, historique persistant, puis Formules avec
-  `Clarté` à 149 EUR HT/mois et une carte `Maestro` dont le sélecteur passe de
-  1 session à 350 EUR à 2 sessions à 550 EUR HT/mois.
-  Les CTA transmettent une intention ; aucun abonnement ou paiement n'est
-  déclenché dans cette version.
+- [x] Livrer la première version de `Parler à un spécialiste` : conversation
+  asynchrone écrite ou dictée, historique persistant et brouillon conservé
+  pendant l'authentification. Aucun onglet Formules n'est exposé dans cette
+  surface. `Clarté` est affiché à 149 EUR HT/mois.
+- [x] Publier une carte `Coach business` dans Services, avec matching guidé,
+  sélecteur interne de 1 session de 60 minutes à 350 EUR HT/mois ou 2 sessions
+  à 550 EUR HT/mois et CTA `Être rappelé(e)`. Aucun paiement n'est déclenché.
 - [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
   `Plan d’action / Opportunités / Académie`, sous-onglets `Actions / Solutions`
   dans le Plan, Coaching accessible par
@@ -152,15 +153,20 @@ l'ADR 0004 prévaut.
   afficher le diff par document et exiger la confirmation du projet et de
   l'empreinte avant écriture ; ne jamais écraser une modification éditoriale
   plus récente effectuée depuis l'administration.
+- [x] Empêcher temporairement une réponse Firebase moins complète d'effacer à
+  l'écran les champs enrichis du snapshot local, sans écrire dans Firebase.
+- [x] Permettre de soumettre une Opportunité depuis le `+` de la recherche :
+  saisie complète avant connexion, brouillon serveur repris après connexion,
+  identité de session, idempotence et statut `draft` jusqu'à publication admin.
 - [ ] Cadrer ensuite les évolutions Coaching : capacité humaine, notifications
   de réponse, paiement/réservation, confidentialité, durée de conservation et
   limites du service. L'historique Messages, sa persistance et la réponse sous
   24 à 48 h appartiennent déjà à la première version.
-- [ ] Ouvrir un chantier séparé « Paiement des formules spécialiste » sans
-  modifier l'interface validée. Le contrat visible comporte `Clarté` à
-  149 EUR HT/mois et une carte `Maestro` avec sélecteur
-  1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois ; il n'existe pas de
-  troisième carte `Pilotage rapproché`.
+- [ ] Ouvrir un chantier séparé « Paiement des accompagnements » sans
+  modifier l'interface validée. La messagerie affiche `Clarté` à
+  149 EUR HT/mois sans onglet Formules. Services contient une carte
+  `Coach business` avec sélecteur 1 session à 350 EUR ou 2 sessions à
+  550 EUR HT/mois ; il n'existe pas de troisième carte.
   - Définir précisément ce qui est inclus, les délais de réponse, le rythme des
     échanges, les limites raisonnables d'usage et les règles de report.
   - Auditer la soutenabilité de l'hypothèse interne `50 % Demaa / 50 %
@@ -207,10 +213,9 @@ l'ADR 0004 prévaut.
   puis décider du modèle de données et de l'interface sans réutiliser
   automatiquement les anciens piliers.
 - [x] Figer la gamme spécialiste : `Clarté` à 149 EUR HT/mois pour obtenir un
-  regard extérieur et décider, puis `Maestro` à 350 ou 550 EUR HT/mois pour
-  reprendre durablement la direction de l'entreprise. Les identifiants
-  techniques historiques restent internes et aucun nom concurrent n'est
-  publié.
+  regard extérieur et décider, puis `Coach business` à 350 ou 550 EUR HT/mois
+  pour reprendre durablement la direction de l'entreprise. Les identifiants
+  techniques historiques restent internes.
 - [ ] Cadrer le partage sécurisé d'un plan sauvegardé : accès en lecture seule,
   consentement, lien révocable, durée et protection contre l'indexation. Le MVP
   permet déjà de sauvegarder et retrouver un plan, mais ne crée aucun lien
@@ -221,11 +226,10 @@ l'ADR 0004 prévaut.
   article et diaporama avant la future vidéo.
 - [x] Simplifier Ressources : retirer les guides métier de la surface active et
   afficher les modèles et documents en grille verticale responsive.
-- [x] Structurer Académie avec uniquement `Cours / Ateliers`, avec Cours ouvert
-  par défaut, recherche partagée et navigation clavier. `Ateliers` est une
-  surface distincte des `case-study` et reste vide jusqu'à publication réelle.
-  Conserver les Cas concrets et `Webinaires` masqués dans l'index sans supprimer
-  leurs catalogues ni leurs routes.
+- [x] Structurer Académie avec uniquement `Tutoriels / Cours`, avec Tutoriels
+  ouvert par défaut, recherche partagée et navigation clavier. Les contenus
+  techniques `case-study` deviennent les tutoriels guidés, sans quiz, tout en
+  conservant leurs slugs et routes. `Webinaires` reste masqué.
 - [ ] Réactiver l'onglet `Webinaires` de l'Académie seulement
   après validation des créneaux, recette desktop/mobile et bascule explicite de
   `academyLiveTrainings` dans `src/lib/public-editorial-visibility.ts`.

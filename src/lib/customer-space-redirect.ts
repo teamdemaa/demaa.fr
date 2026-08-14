@@ -1,4 +1,5 @@
 import { isCoachingMessageDraftToken } from "@/lib/coaching-message-draft";
+import { isOpportunitySubmissionDraftToken } from "@/lib/opportunity-submission";
 
 const INTENT_PARAM = "intent";
 const SAFE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -21,6 +22,7 @@ export type CustomerAccessIntent =
     }
   | { kind: "guide-notify"; resourceSlug: string; systemSlug: string }
   | { kind: "opportunity"; opportunityId: string }
+  | { kind: "opportunity-submit"; draftToken: string }
   | { kind: "solution-referral"; resourceSlug: string; systemSlug: string }
   | { kind: "structure" }
   | { kind: "structure-problem" }
@@ -83,6 +85,13 @@ export function buildCustomerIntentReturnTo(intent: CustomerAccessIntent) {
     params.set("opportunityId", intent.opportunityId);
   }
 
+  if (intent.kind === "opportunity-submit") {
+    if (!isOpportunitySubmissionDraftToken(intent.draftToken)) {
+      throw new Error("Invalid opportunity submission draft intent.");
+    }
+    params.set("draftToken", intent.draftToken);
+  }
+
   return `/?${params.toString()}`;
 }
 
@@ -140,6 +149,12 @@ export function parseCustomerAccessIntent(value?: string | null): CustomerAccess
     const opportunityId = url.searchParams.get("opportunityId");
     if (!isSafeId(opportunityId)) return null;
     return { kind, opportunityId: opportunityId! };
+  }
+
+  if (kind === "opportunity-submit") {
+    const draftToken = url.searchParams.get("draftToken");
+    if (!isOpportunitySubmissionDraftToken(draftToken)) return null;
+    return { kind, draftToken };
   }
 
   return null;

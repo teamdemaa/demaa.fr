@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import PublicOpportunitiesClient from "@/components/PublicOpportunitiesClient";
 import {
+  preserveOpportunityEnrichment,
   publicOpportunitiesSnapshot,
   type PublicOpportunitiesPayload,
 } from "@/lib/public-opportunities-snapshot";
@@ -40,7 +41,10 @@ export default function OpportunitiesPanel({
         if (!response.ok || !nextPayload) {
           throw new Error("Les opportunités ne sont pas disponibles pour le moment.");
         }
-        setPayload(nextPayload);
+        setPayload({
+          ...nextPayload,
+          opportunities: preserveOpportunityEnrichment(nextPayload.opportunities),
+        });
       } catch (loadError) {
         if (controller.signal.aborted) return;
         // The bundled snapshot remains visible. Firebase will be retried the

@@ -2,6 +2,7 @@
 
 - Statut : `validated`
 - Date : 2026-08-11
+- Mise à jour : 2026-08-14, conversation simple et Coach business dans Services
 - Supersède : les passages de l’ADR 0008 et de D-076 qui reportaient intégralement Coaching
 
 ## Décision
@@ -23,25 +24,24 @@ est uniquement conservée comme redirection de compatibilité vers `/plans`.
 Les historiques restent conservés dans les données sans créer de portail
 concurrent.
 
-Le produit accessible par `Parler à un spécialiste` contient deux onglets :
-`Messages` puis `Formules`. `Messages` est
-l'onglet ouvert par défaut afin de privilégier l'échange écrit ou dicté.
+Le produit accessible par `Parler à un spécialiste` est une conversation
+simple écrite ou dictée. Il n'affiche aucun onglet `Sessions` ou `Formules`.
 
-`Coaching` est le nom du produit. Tous les libellés qui désignent la personne
+Tous les libellés qui désignent la personne
 emploient `spécialiste`, notamment `Parler à un spécialiste` et
-`Écrire à un spécialiste`. L'interface ne parle pas de `coach` ni de
-`votre coach`.
+`Écrire à un spécialiste`. Le mot `coach` est réservé à la carte distincte
+`Coach business` présentée dans Services.
 
 - `Clarté` : 149 EUR HT par mois, questions écrites ou vocales, réponse d'un
   spécialiste sous 24 à 48 heures ouvrées, second regard et prochaine étape
-  concrète.
-- `Maestro` : une seule carte avec un sélecteur interne. Une session
-  individuelle de 60 minutes par mois coûte 350 EUR HT par mois ; deux sessions
-  individuelles de 60 minutes par mois coûtent 550 EUR HT par mois. La même
-  carte, son prix, ses bénéfices et son CTA changent avec le sélecteur. Le
-  spécialiste aide le dirigeant à clarifier sa stratégie avec la méthode ASOP,
-  prioriser son plan d'action et organiser l'exécution ; le dirigeant reste aux
-  commandes.
+  concrète. L'abonnement donne 15 % de réduction sur les autres offres. Les
+  autres avantages historiques ne sont pas republiés sans vérification.
+- `Coach business` : une seule carte conforme au design Services, avec matching
+  guidé et sélecteur interne. Une session individuelle de 60 minutes par mois
+  coûte 350 EUR HT par mois ; deux sessions individuelles de 60 minutes par
+  mois coûtent 550 EUR HT par mois. Le CTA est `Être rappelé(e)`. Le coach aide
+  le dirigeant à clarifier le cap, prioriser son plan d'action et organiser
+  l'exécution ; le dirigeant reste aux commandes.
 
 Il n'existe ni carte distincte `Pilotage rapproché`, ni session ponctuelle à
 150 EUR, ni parcours historique à 400 EUR. Les montants TTC ne sont pas affichés
@@ -51,10 +51,9 @@ Les CTA recueillent une intention et les demandes sont coordonnées manuellement
 Aucun abonnement, paiement ou agenda automatique n'est déclenché dans cette
 version. L'activation d'un paiement récurrent exige une décision et une recette
 distinctes.
-Messages est asynchrone. La dictée transforme la voix en texte relisible avant
+La conversation est asynchrone. La dictée transforme la voix en texte relisible avant
 envoi et affiche la transcription intermédiaire directement dans le champ ;
-aucun enregistrement audio n’est conservé dans cette version. L’onglet
-Messages est une conversation simple : les messages du dirigeant et les
+aucun enregistrement audio n’est conservé dans cette version. Les messages du dirigeant et les
 réponses du spécialiste restent visibles dans un historique chronologique lié
 à l’adresse e-mail vérifiée. Slack reste une alerte opérationnelle et ne devient
 pas une seconde source de vérité de la conversation.
@@ -76,3 +75,6 @@ Lorsqu'un plan existe seulement dans la page, l'ouverture de Messages prépare
 d'abord sa sauvegarde temporaire et le lien revient sur l'URL canonique de ce
 plan, avec l'intention Coaching. Le plan ne doit jamais être remplacé par un
 écran vierge au retour du lien.
+
+La durée et les limites d'un éventuel essai Clarté restent à arbitrer. Aucune
+promesse d'essai gratuit n'est publiée avant cette décision.

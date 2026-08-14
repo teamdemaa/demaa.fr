@@ -2,7 +2,7 @@
 
 - Statut : `validated`
 - Date : 9 août 2026
-- Mise à jour : 13 août 2026, libellé Ateliers et deux onglets visibles
+- Mise à jour : 14 août 2026, Tutoriels et Cours
 - Portée : Services Demaa, composition de Solutions, Académie, Contenus et
   Ressources des 115 systèmes
 - Supersède : les passages incompatibles des ADR 0001, 0002 et 0003
@@ -82,16 +82,19 @@ la même URL sans créer de doublon SEO.
 
 La recherche est suivie de deux onglets applicatifs visibles :
 
-1. `Cours`, ouvert par défaut et alimenté par le catalogue pédagogique existant ;
-2. `Ateliers`, réservé aux démonstrations pratiques vidéo ou en direct : créer
-   une campagne Google Ads, une campagne Facebook Ads ou construire un système
-   marketing avec le dirigeant.
+1. `Tutoriels`, ouvert par défaut et réservé aux vidéos pratiques et aux
+   démonstrations guidées, avec une présentation à miniature ;
+2. `Cours`, alimenté par le catalogue pédagogique structuré avec notions et quiz.
 
 L'Académie n'affiche pas de troisième onglet. Le catalogue historique
 `Webinaires` reste masqué tant qu'une nouvelle décision de publication ne l'a
-pas réactivé. Tant qu'aucun atelier n'est publié, l'onglet affiche un état vide
-court et honnête. Les études de cas `case-study` conservent leurs données et
-leurs routes directes mais ne sont pas listées dans l'index Académie.
+pas réactivé. Les études de cas `case-study` conservent leurs données,
+identifiants et routes directes, mais sont présentées comme Tutoriels. Aucun
+quiz n'est affiché dans ce parcours.
+
+La liste est verticale sur mobile et devient une grille sur desktop. Les
+filtres reviennent à la ligne et aucun scroll horizontal n'est introduit.
+Aucune vidéo ni aucun son ne démarre automatiquement.
 
 Les modèles et documents restent rattachés aux Systèmes et ne sont pas
 dupliqués dans l'Académie.
@@ -100,8 +103,8 @@ Les six formations en direct durent deux heures et coûtent 250 EUR HT. Les
 dates sont explicitement validées avant publication et aucune restauration de
 Stripe n'est prévue.
 
-Les anciennes routes des cas restent canoniques. Elles ne sont ni renommées en
-Ateliers, ni supprimées, ni copiées dans un nouveau stockage.
+Les anciennes routes des cas restent canoniques. Elles ne sont ni renommées,
+ni supprimées, ni copiées dans un nouveau stockage.
 
 ### Dérogation temporaire de lancement
 
