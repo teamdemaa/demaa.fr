@@ -280,8 +280,11 @@ jamais remplacer silencieusement un plan déjà enregistré.
 
 L'identité primaire est un compte e-mail et mot de passe Firebase, matérialisé
 par un cookie de session Firebase natif et son UID. Demaa ne reçoit ni ne
-stocke le mot de passe. Google utilise exactement la même session. L'UID est
-l'unique clé d'autorisation des plans, conversations et brouillons. Une fois la session Firebase créée, les formulaires fonctionnels
+stocke le mot de passe. Google utilise exactement la même session. L'UID reste
+l'identité racine des conversations et brouillons. Les plans sont rattachés à
+l'entreprise par défaut et leur autorisation exige une appartenance active à
+cette entreprise ; `owner_uid` reste uniquement une trace de compatibilité.
+Une fois la session Firebase créée, les formulaires fonctionnels
 (guides métier, Opportunités, Coaching, inscription et demandes) réutilisent
 l'e-mail de la session côté serveur et ne le redemandent pas. Un visiteur non
 connecté qui déclenche l'une de ces actions passe d'abord par l'un de ces

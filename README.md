@@ -43,11 +43,12 @@ Production never falls back to test credentials:
 ```bash
 STRIPE_SECRET_KEY=sk_live_...
 STRIPE_WEBHOOK_SECRET=whsec_...
-STRIPE_COACH_BUSINESS_PRICE_IDS=price_350...,price_550...
+STRIPE_COACH_BUSINESS_PRICE_IDS=price_750...
 ```
 
 Use the same names suffixed with `_TEST` outside Production. The configured
-prices must be recurring monthly EUR prices of 350 or 550 EUR. Forward signed
+prices must be recurring monthly EUR prices of 750 EUR. Multiple identifiers
+remain accepted during a controlled Stripe price rotation. Forward signed
 local events with `stripe listen --forward-to localhost:3000/api/webhooks/stripe`;
 the 12% entitlement changes only after the signed webhook is processed. The
 public callback never grants a discount and never creates a payment by itself.

@@ -166,8 +166,9 @@ l'ADR 0004 prévaut.
   `Mes plans`.
 - [x] Activer D-080 : compte e-mail et mot de passe Firebase principal, Google
   facultatif, un endpoint de session et un cookie Firebase Admin natif. Plans,
-  conversations et brouillons appartiennent uniquement à l'UID ; l'e-mail de
-  la session sert de contact sans devenir une clé d'autorisation. Aucun accès
+  conversations et brouillons partent de l'identité UID ; les plans exigent en
+  plus l'entreprise et l'appartenance active définies par D-078. L'e-mail de la
+  session sert de contact sans devenir une clé d'autorisation. Aucun accès
   historique ni migration par adresse e-mail n'est conservé.
 - [x] Intégrer D-081 : manifeste PWA, icônes 192/512/maskable,
   lancement `standalone`, thème blanc et invitation d'installation uniquement
@@ -447,12 +448,15 @@ les autorisations sensibles sont recalculées côté serveur dans une DAL marqu�
   worktree du MVP.
 - [ ] Partir d'un SHA propre dans une branche et un worktree dédiés ; ne jamais
   développer ce MVP dans le worktree d'un autre chat.
-- [ ] Prouver sur une Preview que l'identité Vercel possède les permissions
+- [x] Prouver sur une Preview que l'identité Vercel possède les permissions
   Firebase Auth minimales nécessaires aux cookies de session, à leur contrôle
-  de révocation et à `getUser` / `getUserByEmail`.
-- [ ] Conserver le contrôle de fraîcheur `auth_time`, la politique de mot de
+  de révocation et à `getUser` / `getUserByEmail`. Preuve du 15 août 2026 :
+  création de session e-mail/mot de passe, entreprise/appartenance et plan
+  persistés dans `demaa-preview-2026` avec le rôle sans clé minimal.
+- [x] Conserver le contrôle de fraîcheur `auth_time`, la politique de mot de
   passe Firebase et les domaines Google autorisés validés par le chantier
-  d'authentification en cours.
+  d'authentification en cours. Les variables Web publiques et l'identité
+  serveur Preview ciblent désormais le même projet isolé.
 - [ ] Créer puis vérifier le compte Firebase administrateur et configurer
   `DEMAA_ADMIN_UIDS` côté serveur, avec correspondance exacte des UID et refus
   par défaut.

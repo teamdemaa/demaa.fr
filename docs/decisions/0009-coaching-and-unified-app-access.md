@@ -66,12 +66,14 @@ devis et avant la création d'un paiement lorsque ces parcours seront automatis�
 E-mail/mot de passe et Google transmettent un jeton d'identité Firebase au même
 endpoint serveur. Firebase Admin le transforme en cookie de session HttpOnly,
 `SameSite=Lax`, vérifié avec contrôle de révocation. L'UID est l'unique clé
-d'autorisation ; l'e-mail sert seulement de contact.
+d'autorisation des conversations et brouillons ; l'e-mail sert seulement de
+contact. Les plans exigent en plus une appartenance active à leur `company_id`,
+conformément à D-078 et à l'ADR 0010.
 
 Si une action nécessitant une identité est déclenchée sans session, le parcours
 conserve uniquement l'intention autorisée et revient directement à cette action
 après connexion. Lorsqu'un plan existe seulement dans la page, l'ouverture
-d'Échanger conserve le plan en mémoire, l'enregistre sous l'UID après
+d'Échanger conserve le plan en mémoire, l'enregistre dans l'entreprise par défaut après
 authentification puis ouvre son URL canonique avec le brouillon de clarification.
 
 ## Conditions de recette
