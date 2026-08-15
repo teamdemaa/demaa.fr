@@ -106,10 +106,11 @@ describe("Demaa application navbar", () => {
   });
 
   it("shows application navigation before generation and fixes it at the bottom on mobile", async () => {
-    const [navbarSource, actionPlanNavSource, experienceSource] = await Promise.all([
+    const [navbarSource, actionPlanNavSource, experienceSource, layoutSource] = await Promise.all([
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanNavbar.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanExperience.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/layout.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(navbarSource).toContain('id="action-plan-navbar-desktop"');
@@ -150,7 +151,8 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain('{ view: "academy"');
     expect(actionPlanNavSource).toContain("onViewChange(view)");
     expect(actionPlanNavSource).toContain("xl:min-h-11");
-    expect(navbarSource).toContain("pb-[calc(0.75rem+env(safe-area-inset-bottom))]");
+    expect(navbarSource).toContain("pb-[calc(1rem+env(safe-area-inset-bottom))]");
+    expect(layoutSource).toContain('viewportFit: "cover"');
     expect(experienceSource).toContain("<ActionPlanNavbar");
     expect(experienceSource).toContain("workspace={prePlanWorkspace}");
     expect(experienceSource).toContain('activeTab === "opportunities"');
