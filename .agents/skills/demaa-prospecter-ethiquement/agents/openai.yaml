@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prospection éthique Demaa"
+  short_description: "Qualifier des cabinets Pennylane sans envoi automatique"
+  default_prompt: "Utilise $demaa-prospecter-ethiquement pour qualifier un cabinet comptable utilisant Pennylane, documenter les preuves, dédupliquer et préparer un brouillon sans envoi."
