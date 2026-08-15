@@ -6,7 +6,8 @@
   parcours de contact
 - Supersède : les décisions incompatibles des ADR 0004 et 0005 relatives au
   catalogue, à l'ordre, aux prix, à l'éligibilité et au parcours de rappel
-- Mise à jour : 15 août 2026, publication contextualisée de Formalités d'entreprise
+- Mise à jour : 15 août 2026, publication contextualisée de Formalités
+  d'entreprise et simplification visuelle des tarifs
 
 ## Catalogue canonique
 
@@ -17,7 +18,7 @@ sept accompagnements dans cet ordre :
 2. Expert-comptable — à partir de 250 EUR HT par mois ;
 3. Formalités d'entreprise — sur devis, facturation directe par le professionnel ;
 4. Automatisation des processus — 500 EUR HT par jour ;
-5. Gestion des réseaux sociaux — sur devis ;
+5. Gestion des réseaux sociaux — 800 EUR HT par mois ;
 6. Publicité en ligne — 750 EUR HT par mois, budget média exclu ;
 7. Prospection ciblée — sur devis.
 
@@ -30,6 +31,11 @@ Les cartes sont regroupées sous le titre public `Accompagnement`. La route
 technique `/services` reste canonique. Une carte entière est cliquable, de
 hauteur fixe, et ouvre la même fiche détaillée depuis le catalogue ou un
 Système. Aucun badge public n'indique « réalisé par Demaa » ou « partenaire ».
+Les cartes n'utilisent aucun séparateur horizontal entre le descriptif et le
+tarif. Le tarif reprend la couleur et le poids du texte courant. Seules les
+prestations éligibles affichent la mention courte
+`Avantage abonné : −12 %` ; Coach business et Expert-comptable n'affichent
+aucune mention d'avantage sur leur propre carte.
 
 ## Matrice d'éligibilité
 

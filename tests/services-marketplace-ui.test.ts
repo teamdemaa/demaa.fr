@@ -45,7 +45,11 @@ describe("canonical Accompagnement catalog", () => {
 
   it("locks the approved pricing and Coach business eligibility", () => {
     expect(getCanonicalServiceBySlug("publicite-en-ligne")?.pricing.label).toBe("750 € HT / mois");
-    expect(getCanonicalServiceBySlug("gestion-reseaux-sociaux")?.pricing.label).toBe("Sur devis");
+    expect(getCanonicalServiceBySlug("gestion-reseaux-sociaux")?.pricing).toMatchObject({
+      amountMinor: 80000,
+      label: "800 € HT / mois",
+      mode: "fixed",
+    });
     expect(getCanonicalServiceBySlug("prospection-ciblee")?.pricing.label).toBe("Sur devis");
     expect(getCanonicalServiceBySlug("coach-business")?.monthlyAccompanimentDiscountEligible).toBe(false);
     expect(getCanonicalServiceBySlug("automatisation-processus")?.monthlyAccompanimentDiscountEligible).toBe(true);
@@ -101,26 +105,37 @@ describe("canonical Accompagnement catalog", () => {
     });
   });
 
-  it("renders seven equal linked accompaniment cards", () => {
+  it("renders seven equal linked accompaniment cards without price dividers", async () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
+    const [catalogSource, systemSolutionsSource] = await Promise.all([
+      readSource("src/components/ServicesCatalog.tsx"),
+      readSource("src/components/SystemSolutionsTab.tsx"),
+    ]);
 
     expect(markup.match(/<article/g)).toHaveLength(7);
     for (const slug of CANONICAL_SERVICE_SLUGS) {
       expect(markup).toContain(`/services/${slug}`);
     }
     expect(markup).toContain("750 € HT / mois");
+    expect(markup).toContain("800 € HT / mois");
     expect(markup).toContain("500 € HT / jour");
     expect(markup).toContain("À partir de 250 € HT / mois");
     expect(markup).toContain("Coach business");
     expect(markup).toContain("À partir de 350 € HT / mois");
-    expect(markup).toContain("Inclut 12 % de réduction sur les accompagnements Demaa éligibles");
-    expect(markup).toContain("Avantage abonnés : −12 %");
+    expect(markup).not.toContain("Inclut 12 % de réduction sur les accompagnements Demaa éligibles");
+    expect(markup).toContain("Avantage abonné : −12 %");
+    expect(markup).not.toContain("border-t");
     expect(markup).not.toContain("−15 %");
-    expect(markup.indexOf("Avantage abonnés : −12 %"))
+    expect(markup.indexOf("Avantage abonné : −12 %"))
       .toBeGreaterThan(markup.indexOf("500 € HT / jour"));
     expect(markup).not.toContain("Découvrir le service");
+    for (const source of [catalogSource, systemSolutionsSource]) {
+      expect(source).toContain("text-sm font-normal text-dema-muted");
+      expect(source).not.toContain("mt-auto shrink-0 border-t");
+      expect(source).not.toContain("Inclut 12 % de réduction");
+    }
   });
 
   it("keeps the callback form strict to company and phone", async () => {

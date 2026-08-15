@@ -42,7 +42,7 @@ describe("unified app and coaching", () => {
     expect(coaching).toContain("L’équipe Demaa vous aide gratuitement à identifier le blocage");
     expect(coaching).toContain("Clarifier ma situation");
     expect(coaching).toContain("Découvrir Coach business");
-    expect(coaching).toContain("Inclut 12 % de réduction sur les accompagnements Demaa éligibles");
+    expect(coaching).not.toContain("Inclut 12 % de réduction sur les accompagnements Demaa éligibles");
     expect(coaching).not.toContain("149 €");
     expect(coaching).not.toContain('role="tablist"');
     expect(serviceCatalog).toContain('slug: "coach-business"');
