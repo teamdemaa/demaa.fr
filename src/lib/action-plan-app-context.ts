@@ -6,18 +6,15 @@ import {
 
 const ACTION_PLAN_VIEWS = [
   "plan",
-  "system",
+  "solutions",
   "academy",
   "opportunities",
 ] as const satisfies readonly ActionPlanView[];
 
 const SAFE_SLUG_PATTERN = /^[A-Za-z0-9_-]{1,160}$/;
 
-export type ActionPlanPlanTab = "actions" | "solutions";
-
 export type ActionPlanAppContext = {
   view: ActionPlanView;
-  planTab?: ActionPlanPlanTab;
   systemId?: string;
   systemTab?: SystemDetailTab;
   solutionResourceSlug?: string;
@@ -46,12 +43,6 @@ function isActionPlanView(value: string | undefined): value is ActionPlanView {
   return ACTION_PLAN_VIEWS.includes(value as ActionPlanView);
 }
 
-function isActionPlanPlanTab(
-  value: string | undefined,
-): value is ActionPlanPlanTab {
-  return value === "actions" || value === "solutions";
-}
-
 export function parseActionPlanAppContext(
   input: SearchInput,
 ): ActionPlanAppContext {
@@ -59,7 +50,7 @@ export function parseActionPlanAppContext(
   const requestedView = readSearchValue(input, "view");
   const requestedPlanTab = readSearchValue(input, "planTab");
   const intentView = intent === "solution-referral"
-    ? "system"
+    ? "solutions"
     : intent === "structure" || intent === "structure-problem"
       ? "academy"
     : intent === "opportunity"
@@ -67,15 +58,14 @@ export function parseActionPlanAppContext(
         || intent === "team-demaa-profile"
       ? "opportunities"
       : undefined;
-  const legacyView = isActionPlanView(requestedView)
-    ? requestedView
-    : intentView ?? "plan";
-  const view = legacyView === "system" ? "plan" : legacyView;
-  const planTab = legacyView === "system"
+  const requestedAppView = requestedView === "system"
     ? "solutions"
-    : view === "plan" && isActionPlanPlanTab(requestedPlanTab)
-      ? requestedPlanTab
+    : isActionPlanView(requestedView)
+      ? requestedView
       : undefined;
+  const view = requestedAppView === "plan" && requestedPlanTab === "solutions"
+    ? "solutions"
+    : requestedAppView ?? intentView ?? "plan";
   const systemId = safeSlug(
     readSearchValue(input, "system")
       ?? (intent === "solution-referral"
@@ -101,7 +91,6 @@ export function parseActionPlanAppContext(
 
   return {
     view,
-    ...(planTab ? { planTab } : {}),
     ...(systemId ? { systemId } : {}),
     ...(requestedSystemTab ? { systemTab: requestedSystemTab } : {}),
     ...(solutionResourceSlug ? { solutionResourceSlug } : {}),
@@ -137,17 +126,11 @@ export function buildActionPlanAppHref(input: {
     : new URLSearchParams(input.search ?? "");
 
   for (const key of CONTEXT_QUERY_KEYS) params.delete(key);
-  const view = input.context.view === "system" ? "plan" : input.context.view;
-  const planTab = input.context.view === "system"
-    ? "solutions"
-    : view === "plan"
-      ? input.context.planTab
-      : undefined;
+  const view = input.context.view;
 
   params.set("view", view);
-  if (planTab) params.set("planTab", planTab);
 
-  if (view === "plan" && planTab === "solutions") {
+  if (view === "solutions") {
     if (input.context.systemId) params.set("system", input.context.systemId);
     if (input.context.systemTab) params.set("systemTab", input.context.systemTab);
     if (input.context.solutionResourceSlug) {
@@ -175,8 +158,7 @@ export function buildPublicSystemAppHref(input: {
   return buildActionPlanAppHref({
     pathname: "/",
     context: {
-      view: "plan",
-      planTab: "solutions",
+      view: "solutions",
       systemId: input.systemId,
       systemTab: input.systemTab ?? "solutions",
       ...(input.solutionResourceSlug

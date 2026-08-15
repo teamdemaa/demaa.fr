@@ -88,10 +88,12 @@ l'ADR 0004 prévaut.
 
 - `demaa.co` est le domaine canonique du lancement France, sans préfixe de
   locale. L'internationalisation reste différée.
-- La navigation applicative contient `Plan d'action`, `Opportunités` et
-  `Académie`. Le Plan contient les sous-onglets `Actions` et `Solutions`.
-  Les anciennes URLs `view=system` restent acceptées ; les nouveaux liens
-  utilisent `view=plan&planTab=solutions` et conservent le contexte Système.
+- La navigation applicative contient `Plan d'action`, `Solutions`, `Académie`
+  et `Opportunités`, dans cet ordre. `Plan d'action` affiche directement les
+  actions et ne contient plus de sous-onglets. Les anciennes URLs `view=system`
+  et `view=plan&planTab=solutions` restent acceptées ; les nouveaux liens
+  utilisent `view=solutions` et conservent le contexte Système.
+  La vue Solutions présente `Outils`, `Accompagnement`, puis `Ressources`.
   Organisation et Ressources restent sur les fiches publiques et alimentent
   de manière déterministe les aides affichées dans les Actions. La messagerie
   spécialiste est accessible par l'action `Échanger` sans
@@ -110,8 +112,10 @@ l'ADR 0004 prévaut.
   métier, stockage sécurisé puis notification Slack. Le suivi WhatsApp reste
   manuel : aucune API WhatsApp ni message automatique n'est promis.
 - Ressources contient les modèles et documents contextualisés en grille
-  verticale. Les contenus pédagogiques et éditoriaux globaux restent dans
-  l'Académie.
+  verticale. Sa première carte, `Processus métier`, ouvre une liste imprimable
+  limitée aux processus du métier ; elle ne répète ni les Outils, ni les
+  Accompagnements, ni les autres Ressources. Les contenus pédagogiques et
+  éditoriaux globaux restent dans l'Académie.
 - Firebase est la source distante autoritaire pour Solutions et le réseau de
   prestataires lorsque l'environnement est configuré.
 - Opportunités et Rejoindre Team Demaa sont intégrés à l'expérience
@@ -149,7 +153,9 @@ l'ADR 0004 prévaut.
   `Plan d’action / Opportunités / Académie`, sous-onglets `Actions / Solutions`
   dans le Plan, Coaching accessible par
   `Échanger`, Opportunités au sens large et sauvegarde invitée
-  sans secret exposé au JavaScript. L’ADR 0010 est la référence.
+  sans secret exposé au JavaScript. Cette composition de navigation est
+  historique et remplacée par D-082 / ADR 0012 ; les autres éléments de
+  l’ADR 0010 restent actifs.
 - [x] Unifier l'identité des parcours applicatifs : le compte Firebase e-mail
   et mot de passe est le parcours principal ; une session connectée alimente
   côté serveur les guides métier, Opportunités, Coaching, inscriptions et
@@ -226,9 +232,10 @@ l'ADR 0004 prévaut.
   - Tester sur une cohorte pilote puis mesurer charge réelle, délai de réponse,
     marge, satisfaction et rétention avant le `GO` public.
 - [x] Conserver avant et après connexion la navigation applicative unique
-  `Plan d’action / Opportunités / Académie`, avec `Actions / Solutions` dans le
-  Plan. Les anciennes URLs `view=system` restent compatibles et sont
-  normalisées en `view=plan&planTab=solutions` pour les nouveaux liens ; les
+  `Plan d’action / Solutions / Académie / Opportunités`, sans sous-onglets dans
+  le Plan. Les anciennes URLs `view=system` et
+  `view=plan&planTab=solutions` restent compatibles et sont normalisées en
+  `view=solutions` pour les nouveaux liens ; les
   routes `/systemes` restent inchangées. Coaching reste le
   produit accessible par `Échanger`; la surface s'intitule
   `Échanger avec l'équipe Demaa`. Aucun onglet

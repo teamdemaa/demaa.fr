@@ -3,7 +3,10 @@ import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SavedActionPlanDetail from "@/components/SavedActionPlanDetail";
-import { parseActionPlanAppContext } from "@/lib/action-plan-app-context";
+import {
+  buildActionPlanAppHref,
+  parseActionPlanAppContext,
+} from "@/lib/action-plan-app-context";
 import {
   getActionPlanForAccess,
   getOwnedActionPlansForIdentity,
@@ -38,8 +41,12 @@ export default async function ActionPlanPage({
   const identity = await getIdentityFromCustomerSessionToken(sessionToken);
 
   if (!identity) {
+    const returnTo = buildActionPlanAppHref({
+      context: initialAppContext,
+      pathname: `/plans/${id}`,
+    });
     redirect(
-      `/connexion?message=${encodeURIComponent("Connectez-vous pour ouvrir ce plan.")}&returnTo=${encodeURIComponent(`/plans/${id}`)}`,
+      `/connexion?message=${encodeURIComponent("Connectez-vous pour ouvrir ce plan.")}&returnTo=${encodeURIComponent(returnTo)}`,
     );
   }
 

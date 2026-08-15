@@ -327,6 +327,15 @@ describe("free operational system delivery route", () => {
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
+  it("does not reopen the other historical resources through the public request API", async () => {
+    const response = await POST(buildRequest({
+      resourceSlug: "guide-facturation-electronique",
+    }));
+
+    expect(response.status).toBe(404);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
   it("fails closed when the private Levier Google Sheets config is missing", async () => {
     mocks.getPublishedSolutionPlacements.mockReturnValueOnce([{
       resource: {

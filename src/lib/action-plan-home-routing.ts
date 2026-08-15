@@ -8,7 +8,6 @@ export function shouldRedirectAuthenticatedHomeToPlans(input: {
 }) {
   return input.isAuthenticated
     && input.appContext.view === "plan"
-    && input.appContext.planTab !== "solutions"
     && !input.requestedIntent
     && input.requestedNewPlan !== "1";
 }
