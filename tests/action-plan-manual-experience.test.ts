@@ -13,6 +13,8 @@ describe("manual action plan experience", () => {
     expect(experience).toContain("Commencer avec un plan vierge");
     expect(experience).toContain("createManualActionPlan()");
     expect(experience).toContain("createManualActionPlanWorkspaceState()");
+    expect(experience).toContain("selectedSystemId: initialAppContext.systemId ?? null");
+    expect(experience).not.toContain("selectedSystemId: initialAppContext.systemId ?? \"\"");
     expect(experience).toContain("systemId: prePlanWorkspace.selectedSystemId");
     expect(experience).toContain("setWorkspace(prePlanWorkspace)");
     expect(experience).toContain('demo === "blank"');

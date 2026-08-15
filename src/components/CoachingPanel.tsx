@@ -96,10 +96,10 @@ function CoachBusinessPromo() {
           Besoin d’un accompagnement régulier pour avancer sur vos objectifs&nbsp;?
         </h3>
         <p className="mt-2 max-w-xl text-sm leading-relaxed text-dema-muted">
-          Avec Coach business, avancez avec des sessions régulières et un suivi écrit entre les séances sur les priorités travaillées.
+          Avec Coach business, bénéficiez d’un accompagnement mensuel comprenant deux sessions individuelles et un suivi écrit entre les séances.
         </p>
         <p className="mt-2 text-sm font-normal text-dema-muted">
-          À partir de 350 € HT / mois
+          750 € HT / mois
         </p>
       </div>
       <Link

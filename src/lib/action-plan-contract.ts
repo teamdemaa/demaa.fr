@@ -30,6 +30,17 @@ export const actionPlanSupportTypeSchema = z.enum([
   "template",
 ]);
 
+/**
+ * Supports that the AI is allowed to write from scratch. Tables, checklists,
+ * briefs and templates remain readable for backwards compatibility, but new
+ * generations must point to the curated Demaa resource bank instead.
+ */
+export const generatedActionPlanSupportTypeSchema = z.enum([
+  "message",
+  "email",
+  "script",
+]);
+
 const legacyReadyToUseSchema = z
   .object({
     label: nonEmptyText(100),
@@ -49,6 +60,15 @@ const editableLegacyReadyToUseSchema = z
 export const actionPlanSupportSchema = z
   .object({
     type: actionPlanSupportTypeSchema,
+    label: nonEmptyText(100),
+    content: nonEmptyText(2_000),
+  })
+  .strict()
+  .nullable();
+
+export const generatedActionPlanSupportSchema = z
+  .object({
+    type: generatedActionPlanSupportTypeSchema,
     label: nonEmptyText(100),
     content: nonEmptyText(2_000),
   })
@@ -88,6 +108,10 @@ export const actionPlanActionSchema = z
     steps: z.array(nonEmptyText(360)).min(2).max(7),
     support: actionPlanSupportSchema,
   })
+  .strict();
+
+const generatedActionPlanActionSchema = actionPlanActionSchema
+  .extend({ support: generatedActionPlanSupportSchema })
   .strict();
 
 const manualActionPlanActionSchema = z
@@ -228,6 +252,12 @@ export const actionPlanSchema = z
   .superRefine((plan, context) =>
     validateConsecutiveActionIds(plan.actions, context, "actions"),
   );
+
+export const generatedActionPlanSchema = actionPlanSchema
+  .safeExtend({
+    actions: z.array(generatedActionPlanActionSchema).min(3).max(5),
+  })
+  .strict();
 
 export const legacyV2ActionPlanSchema = z
   .object({

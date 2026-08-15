@@ -44,7 +44,11 @@ export async function POST(request: Request) {
   let session: Awaited<ReturnType<typeof createCustomerSession>>;
   try {
     session = await createCustomerSession(idToken);
-  } catch {
+  } catch (error) {
+    console.error(
+      "[customer-firebase-session] session creation failed",
+      error instanceof Error ? error.message : "Unknown error",
+    );
     return NextResponse.json(
       { error: "La connexion a expiré. Réessayez." },
       { status: 401, headers: { "Cache-Control": "private, no-store, max-age=0" } },

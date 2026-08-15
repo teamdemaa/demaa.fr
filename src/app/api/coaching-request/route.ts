@@ -102,7 +102,7 @@ export async function POST(request: Request) {
     const idempotencyKey = normalizeIdempotencyKey(data?.idempotencyKey);
 
     const isMessage = requestKind === "message";
-    const isFormula = requestKind === "formula";
+    const isAccompaniment = requestKind === "accompaniment";
     const customer = isMessage
       ? await requireCurrentCustomerIdentity()
       : { identity: null, response: null };
@@ -125,7 +125,7 @@ export async function POST(request: Request) {
     const effectiveIdempotencyKey = claimedDraft?.idempotencyKey ?? idempotencyKey;
     const valid = isMessage
       ? effectiveMessage.length >= 2
-      : Boolean(isFormula && company && isValidPhone(phone) && isSpecialistOffer(offer));
+      : Boolean(isAccompaniment && company && isValidPhone(phone) && isSpecialistOffer(offer));
 
     if (!valid || !effectiveIdempotencyKey) {
       return NextResponse.json(
@@ -138,7 +138,7 @@ export async function POST(request: Request) {
     }
 
     const context = await resolveLeadContext({
-      source: isMessage ? "Spécialiste - Messages" : "Spécialiste - Formules",
+      source: isMessage ? "Spécialiste - Messages" : "Coach business - Accompagnement",
       sourceUrl: request.headers.get("referer"),
     });
     if (!context) {
@@ -186,15 +186,15 @@ export async function POST(request: Request) {
             { label: "Message", value: effectiveMessage },
           ]
         : [
-            { label: "Formule", value: isSpecialistOffer(offer) ? SPECIALIST_OFFERS[offer].title : offer },
+            { label: "Accompagnement", value: isSpecialistOffer(offer) ? SPECIALIST_OFFERS[offer].title : offer },
             ...(isSpecialistOffer(offer) ? [{ label: "Tarif affiché", value: SPECIALIST_OFFERS[offer].price }] : []),
             ...(message ? [{ label: "Situation", value: message }] : []),
           ],
       idempotencyKey: effectiveIdempotencyKey,
-      requestType: isMessage ? "coaching_message" : "specialist_formula_interest",
+      requestType: isMessage ? "coaching_message" : "coach_business_callback",
       title: isMessage
         ? "Nouvelle clarification gratuite"
-        : "Nouvelle demande de formule spécialiste",
+        : "Nouvelle demande d’accompagnement Coach business",
     });
 
     if (

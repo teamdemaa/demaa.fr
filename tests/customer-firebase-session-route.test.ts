@@ -33,6 +33,7 @@ function request(body: Record<string, unknown>) {
 describe("Firebase customer session route", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
     process.env.SITE_URL = "https://demaa.co";
     mocks.enforceRateLimit.mockResolvedValue(null);
     mocks.createCustomerSession.mockResolvedValue({
@@ -58,5 +59,9 @@ describe("Firebase customer session route", () => {
     mocks.createCustomerSession.mockRejectedValue(new Error("expired"));
     const expired = await POST(request({ idToken: "expired" }));
     expect(expired.status).toBe(401);
+    expect(console.error).toHaveBeenCalledWith(
+      "[customer-firebase-session] session creation failed",
+      "expired",
+    );
   });
 });

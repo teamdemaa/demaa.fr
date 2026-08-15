@@ -59,7 +59,8 @@ describe("legacy Services and Courses retirement", () => {
 
     expect(publicMarketing).not.toMatch(/2\s*000\s*€/);
     expect(publicMarketing).not.toMatch(/service-catalog-v2|services-page-catalog/);
-    expect(publicMarketing).toContain("550 € HT");
+    expect(publicMarketing).not.toContain("550 € HT");
+    expect(publicMarketing).not.toContain("350 € HT");
     expect(publicMarketing).toContain("750 € HT / mois");
     expect(publicMarketing).not.toContain("950 € HT / mois");
     expect(publicMarketing).not.toContain('slug: "marketing-vente"');

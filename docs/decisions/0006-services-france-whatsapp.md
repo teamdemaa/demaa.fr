@@ -7,14 +7,14 @@
 - Supersède : les décisions incompatibles des ADR 0004 et 0005 relatives au
   catalogue, à l'ordre, aux prix, à l'éligibilité et au parcours de rappel
 - Mise à jour : 15 août 2026, publication contextualisée de Formalités
-  d'entreprise et simplification visuelle des tarifs
+  d'entreprise et accompagnement Coach business unifié
 
 ## Catalogue canonique
 
 Une seule source de vérité, `src/lib/canonical-service-catalog.ts`, publie les
 sept accompagnements dans cet ordre :
 
-1. Coach business — à partir de 350 EUR HT par mois ;
+1. Coach business — 750 EUR HT par mois ;
 2. Expert-comptable — à partir de 250 EUR HT par mois ;
 3. Formalités d'entreprise — sur devis, facturation directe par le professionnel ;
 4. Automatisation des processus — 500 EUR HT par jour ;
@@ -72,8 +72,10 @@ professionnel dans les Systèmes.
 ## Contact Coach business et WhatsApp
 
 Les sept fiches, y compris Coach business, utilisent le CTA
-`Être recontacté(e)` et un formulaire minimal. Pour Coach business, le rythme
-d'une ou deux sessions est choisi avant l'envoi de la demande :
+`Être recontacté(e)` et un formulaire minimal. Coach business est présenté
+comme un accompagnement mensuel unique incluant deux sessions individuelles de
+60 minutes et un suivi écrit entre les séances. Aucun sélecteur de rythme ou de
+prix n'est affiché avant l'envoi de la demande :
 
 - nom de l'entreprise ;
 - numéro WhatsApp.

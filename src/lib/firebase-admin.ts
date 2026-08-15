@@ -90,7 +90,6 @@ export function getAdminFirestore() {
     if (!workloadIdentityFirestore) {
       workloadIdentityFirestore = new Firestore({
         auth: createFirebaseVercelWorkloadIdentityGoogleAuth(),
-        preferRest: true,
         projectId,
       });
     }

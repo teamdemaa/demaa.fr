@@ -8,7 +8,10 @@ import {
   actionPlanWorkspaceStateSchema,
   type ActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
-import { getAllActionPlanActionIds } from "@/lib/action-plan-view-model";
+import {
+  getActionPlanActions,
+  getAllActionPlanActionIds,
+} from "@/lib/action-plan-view-model";
 
 const commandTextSchema = z.string().trim().min(2).max(1_000);
 const titleSchema = z.string().trim().min(1).max(140);
@@ -123,6 +126,46 @@ export type ActionPlanCommandOperation = z.infer<
 export type ActionPlanCommandOperations = z.infer<
   typeof actionPlanCommandOperationsSchema
 >;
+
+function joinFrenchList(items: readonly string[]) {
+  if (items.length <= 1) return items[0] ?? "";
+  return `${items.slice(0, -1).join(", ")} et ${items.at(-1)}`;
+}
+
+export function summarizeActionPlanCommandOperations(
+  plan: PersistableActionPlan,
+  workspace: ActionPlanWorkspaceState,
+  operations: ActionPlanCommandOperations,
+) {
+  const actionById = new Map(
+    [...getActionPlanActions(plan), ...workspace.addedActions]
+      .map((action) => [action.id, action] as const),
+  );
+  const titleById = new Map(
+    [...getAllActionPlanActionIds(plan, workspace.addedActions)].map((actionId) => {
+      const action = actionById.get(actionId);
+      const title = workspace.tasks[actionId]?.overrides.title || action?.title || "Action";
+      return [actionId, title] as const;
+    }),
+  );
+
+  return operations.map((operation) => {
+    if (operation.type === "addAction") {
+      return `Ajout de « ${operation.action.title} »`;
+    }
+    const title = titleById.get(operation.actionId) ?? "Action";
+    if (operation.type === "deleteAction") {
+      return `Suppression de « ${title} »`;
+    }
+    const labels = Object.keys(operation.changes).map((field) => ({
+      objective: "résultat attendu",
+      steps: "tâches",
+      support: "support",
+      title: "titre",
+    })[field] ?? field);
+    return `« ${title} » : ${joinFrenchList(labels)}`;
+  }).join(" · ");
+}
 
 export function finalizeActionPlanCommandDraft(
   draft: ActionPlanCommandDraft,

@@ -9,6 +9,11 @@ import {
   normalizeActionPlanWorkspaceState,
   type ActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
+import {
+  ensureDefaultCompanyForIdentity,
+  getActiveDefaultCompanyIdentity,
+  getActiveDefaultCompanyIdentityInTransaction,
+} from "@/lib/company-membership.server";
 import type { CustomerSessionIdentity } from "@/lib/customer-space-auth";
 import { getAdminFirestore } from "@/lib/firebase-admin";
 import { getLeadRetentionExpiry } from "@/lib/operational-maintenance";
@@ -32,7 +37,10 @@ type ActionPlanDocument = {
   workspace_state?: unknown;
   source_text?: string | null;
   generation?: Partial<ActionPlanGenerationMetadata> | null;
+  company_id?: string | null;
   owner_uid?: string | null;
+  created_by_uid?: string | null;
+  updated_by_uid?: string | null;
   revision?: number | null;
   created_at?: string | null;
   updated_at?: string | null;
@@ -139,11 +147,14 @@ function parseStoredActionPlan(
   };
 }
 
-function hasOwnerAccess(document: ActionPlanDocument | undefined, uid: string) {
+function belongsToCompany(
+  document: ActionPlanDocument | undefined,
+  companyId: string,
+) {
   return Boolean(
     document?.status === "active"
-    && uid
-    && document.owner_uid?.trim() === uid,
+    && companyId
+    && document.company_id?.trim() === companyId,
   );
 }
 
@@ -155,13 +166,17 @@ export async function createOwnedActionPlanForIdentity(
   if (!uid) throw new Error("A Firebase UID is required.");
 
   const database = getAdminFirestore();
+  const company = await ensureDefaultCompanyForIdentity(identity);
   const id = createActionPlanId();
   const now = new Date().toISOString();
   const document: ActionPlanDocument = {
     schema_version: getPersistedSchemaVersion(input.plan),
     status: "active",
     ...serializeWriteInput(input),
+    company_id: company.companyId,
     owner_uid: uid,
+    created_by_uid: uid,
+    updated_by_uid: uid,
     revision: 1,
     created_at: now,
     updated_at: now,
@@ -175,9 +190,12 @@ export async function createOwnedActionPlanForIdentity(
 }
 
 export async function getOwnedActionPlansForIdentity(identity: CustomerSessionIdentity) {
+  const company = await getActiveDefaultCompanyIdentity(identity.uid);
+  if (!company) return [];
+
   const snapshot = await getAdminFirestore()
     .collection(ACTION_PLANS_COLLECTION)
-    .where("owner_uid", "==", identity.uid)
+    .where("company_id", "==", company.companyId)
     .get();
 
   return snapshot.docs
@@ -190,12 +208,14 @@ export async function getOwnedActionPlansForIdentity(identity: CustomerSessionId
 }
 
 export async function getActionPlanForAccess(input: { id: string; uid: string }) {
+  const company = await getActiveDefaultCompanyIdentity(input.uid);
+  if (!company) return null;
   const snapshot = await getAdminFirestore()
     .collection(ACTION_PLANS_COLLECTION)
     .doc(input.id)
     .get();
   const data = snapshot.data() as ActionPlanDocument | undefined;
-  if (!snapshot.exists || !hasOwnerAccess(data, input.uid)) return null;
+  if (!snapshot.exists || !belongsToCompany(data, company.companyId)) return null;
   return parseStoredActionPlan(snapshot.id, data);
 }
 
@@ -227,9 +247,19 @@ export async function updateActionPlanWorkspaceForAccess(input: {
   const reference = database.collection(ACTION_PLANS_COLLECTION).doc(input.id);
 
   return database.runTransaction(async (transaction) => {
-    const snapshot = await transaction.get(reference);
+    const [company, snapshot] = await Promise.all([
+      getActiveDefaultCompanyIdentityInTransaction(transaction, input.uid),
+      transaction.get(reference),
+    ]);
     const data = snapshot.data() as ActionPlanDocument | undefined;
-    if (!snapshot.exists || !hasOwnerAccess(data, input.uid) || !data) return null;
+    if (
+      !company
+      || !snapshot.exists
+      || !belongsToCompany(data, company.companyId)
+      || !data
+    ) {
+      return null;
+    }
 
     const parsedPlan = compatibleActionPlanSchema.safeParse(data.plan);
     if (!parsedPlan.success) return null;
@@ -278,6 +308,7 @@ export async function updateActionPlanWorkspaceForAccess(input: {
       ...(input.title !== undefined ? { title: nextTitle } : {}),
       workspace_state: normalizedWorkspace,
       revision: nextRevision,
+      updated_by_uid: input.uid,
       retention_expires_at: getLeadRetentionExpiry(),
       updated_at: updatedAt,
     }, { merge: true });
@@ -300,9 +331,19 @@ export async function deleteActionPlanForAccess(input: {
   const reference = database.collection(ACTION_PLANS_COLLECTION).doc(input.id);
 
   return database.runTransaction(async (transaction) => {
-    const snapshot = await transaction.get(reference);
+    const [company, snapshot] = await Promise.all([
+      getActiveDefaultCompanyIdentityInTransaction(transaction, input.uid),
+      transaction.get(reference),
+    ]);
     const data = snapshot.data() as ActionPlanDocument | undefined;
-    if (!snapshot.exists || !hasOwnerAccess(data, input.uid) || !data) return null;
+    if (
+      !company
+      || !snapshot.exists
+      || !belongsToCompany(data, company.companyId)
+      || !data
+    ) {
+      return null;
+    }
 
     const revision = Number(data.revision);
     if (!Number.isInteger(revision) || revision !== input.expectedRevision) {
@@ -313,6 +354,7 @@ export async function deleteActionPlanForAccess(input: {
     transaction.set(reference, {
       status: "deleted",
       revision: revision + 1,
+      updated_by_uid: input.uid,
       retention_expires_at: getLeadRetentionExpiry(),
       updated_at: now,
     }, { merge: true });

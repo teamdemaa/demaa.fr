@@ -25,12 +25,10 @@ describe("customer-space safe return intents", () => {
 
     const specialistReturnTo = buildCustomerIntentReturnTo({
       kind: "coaching",
-      offer: "pilotage_2",
     });
-    expect(specialistReturnTo).toBe("/?intent=coaching&offer=pilotage_2");
+    expect(specialistReturnTo).toBe("/?intent=coaching");
     expect(parseCustomerAccessIntent(specialistReturnTo)).toEqual({
       kind: "coaching",
-      offer: "pilotage_2",
     });
     expect(getSafeCustomerReturnTo(specialistReturnTo)).toBe(specialistReturnTo);
 
@@ -82,6 +80,7 @@ describe("customer-space safe return intents", () => {
 
   it("rejects malformed intents and external redirects", () => {
     expect(getSafeCustomerReturnTo("/?intent=coaching&offer=unknown")).toBe("/");
+    expect(getSafeCustomerReturnTo("/?intent=coaching&offer=pilotage_2")).toBe("/");
     expect(getSafeCustomerReturnTo("/?intent=opportunity&opportunityId=../admin")).toBe("/");
     expect(getSafeCustomerReturnTo("//evil.example/path")).toBe("/");
     expect(getSafeCustomerReturnTo("/\\evil.example/path")).toBe("/");
@@ -94,7 +93,7 @@ describe("customer-space safe return intents", () => {
     ).toBe("/");
     expect(
       getSafeCustomerReturnTo(
-        `/?intent=coaching&tab=formules&draftToken=${"a".repeat(43)}`,
+        `/?intent=coaching&tab=unknown&draftToken=${"a".repeat(43)}`,
       ),
     ).toBe("/");
     expect(
@@ -104,20 +103,18 @@ describe("customer-space safe return intents", () => {
     ).toBe("/");
   });
 
-  it("preserves a coaching tab without requiring a draft", () => {
+  it("preserves the messaging tab without requiring a draft", () => {
     const returnTo = buildCustomerIntentReturnTo({
       kind: "coaching",
-      offer: "pilotage_1",
-      tab: "formules",
+      tab: "messages",
     });
 
     expect(returnTo).toBe(
-      "/?intent=coaching&offer=pilotage_1&tab=formules",
+      "/?intent=coaching&tab=messages",
     );
     expect(parseCustomerAccessIntent(returnTo)).toEqual({
       kind: "coaching",
-      offer: "pilotage_1",
-      tab: "formules",
+      tab: "messages",
     });
   });
 
@@ -127,9 +124,9 @@ describe("customer-space safe return intents", () => {
     expect(getSafeCustomerReturnTo("/plans")).toBe("/plans");
     expect(
       getSafeCustomerReturnTo(
-        "/plans/abc_123?intent=coaching&tab=formules&offer=pilotage_1",
+        "/plans/abc_123?intent=coaching&tab=messages",
       ),
-    ).toBe("/plans/abc_123?intent=coaching&tab=formules&offer=pilotage_1");
+    ).toBe("/plans/abc_123?intent=coaching&tab=messages");
     const draftToken = "a".repeat(43);
     expect(
       getSafeCustomerReturnTo(

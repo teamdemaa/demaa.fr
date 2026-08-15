@@ -8,6 +8,7 @@ vi.mock("server-only", () => ({}));
 
 import {
   ACTION_PLAN_COMMAND_EXTERNAL_GENERATION_ENABLED,
+  ACTION_PLAN_COMMAND_INSTRUCTIONS,
   buildActionPlanCommandMinimalEnvelope,
   generateActionPlanCommand,
 } from "@/lib/action-plan-command.server";
@@ -33,6 +34,12 @@ function plan(): ActionPlan {
 describe("action plan command external envelope", () => {
   it("is enabled after explicit minimal data-transfer consent", () => {
     expect(ACTION_PLAN_COMMAND_EXTERNAL_GENERATION_ENABLED).toBe(true);
+    expect(ACTION_PLAN_COMMAND_INSTRUCTIONS).toContain(
+      "uniquement creer ou remplacer un message, un email ou un script",
+    );
+    expect(ACTION_PLAN_COMMAND_INSTRUCTIONS).toContain(
+      "Ne genere jamais de tableau, checklist, brief ou template",
+    );
   });
 
   it("contains only the command and effective visible plan fields", () => {

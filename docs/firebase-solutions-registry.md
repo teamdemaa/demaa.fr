@@ -217,12 +217,28 @@ L’authentification distante utilise uniquement un jeton utilisateur éphémèr
 fourni au processus d’import. Aucune clé de compte de service n’est créée ou
 conservée, et l’ADC partagé avec un autre projet n’est pas utilisé.
 
-Les fonctions Vercel utilisent également une identité sans clé. Le fournisseur
+Les fonctions Vercel utilisent également des identités sans clé. Le fournisseur
 OIDC Google n’accepte que le projet Vercel `demaa-fr` dans l’environnement
-`preview`. Il peut seulement emprunter le compte
-`demaa-solutions-preview-reader`, limité au rôle `roles/datastore.viewer` sur
-`demaa-preview-2026`. Les jetons expirent après une heure ; aucune clé privée
-Firebase Preview n’est stockée dans Vercel.
+`preview`. La lecture historique du registre Solutions conserve le compte
+`demaa-solutions-preview-reader`, limité à `roles/datastore.viewer`.
+
+Depuis la recette applicative du 15 août 2026, le runtime applicatif des
+Previews emprunte séparément
+`demaa-app-preview-runtime@demaa-preview-2026.iam.gserviceaccount.com`. Cette
+identité possède `roles/datastore.user` et le rôle personnalisé
+`demaaFirebaseSessionManager`, limité à
+`firebaseauth.users.createSession` et `firebaseauth.users.get`. Le rôle large
+`roles/firebaseauth.admin` a été retiré après la recette. Les quatre variables
+Web publiques Firebase, l'identité serveur et les fournisseurs e-mail/mot de
+passe et Google ciblent tous `demaa-preview-2026` ; le domaine de la Preview de
+branche est autorisé dans Firebase Authentication. Les jetons expirent après
+une heure et aucune clé privée Firebase Preview n’est stockée dans Vercel.
+
+La preuve E2E a couvert la création de session, la création transactionnelle de
+l'entreprise et de l'appartenance propriétaire, la création d'un plan vierge,
+son autosauvegarde, son rechargement et sa restauration via `/plans`. Cette
+configuration reste isolée de Production et ne vaut pas promotion de
+`demaa.co`.
 
 ## Recette Firebase Preview du 5 août 2026
 

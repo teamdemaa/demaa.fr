@@ -77,6 +77,7 @@ export default async function ActionPlanPage({
             planId={stored.id}
             initialTitle={stored.title}
             initialRevision={stored.revision}
+            initialSourceText={stored.sourceText}
             initialWorkspace={stored.workspaceState}
             systemOptions={actionPlanSystemOptions}
             availablePlans={availablePlans}

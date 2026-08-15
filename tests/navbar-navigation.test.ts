@@ -136,6 +136,10 @@ describe("Demaa application navbar", () => {
     );
     expect(actionPlanNavSource).toContain("grid-cols-4");
     expect(actionPlanNavSource).toContain("h-4 w-4 shrink-0 transition");
+    expect(actionPlanNavSource).toContain("rounded-[1.1rem]");
+    expect(actionPlanNavSource).toContain("bg-dema-sage text-dema-forest xl:bg-transparent");
+    expect(actionPlanNavSource).toContain("hidden h-0.5");
+    expect(actionPlanNavSource).toContain("xl:block");
     expect(actionPlanNavSource).toContain("scale-x-100 opacity-100");
     expect(actionPlanNavSource).toContain("scale-x-0 opacity-0");
     expect(actionPlanNavSource).not.toContain("rounded-[1.45rem] border");
@@ -146,6 +150,7 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain('{ view: "academy"');
     expect(actionPlanNavSource).toContain("onViewChange(view)");
     expect(actionPlanNavSource).toContain("xl:min-h-11");
+    expect(navbarSource).toContain("pb-[calc(0.75rem+env(safe-area-inset-bottom))]");
     expect(experienceSource).toContain("<ActionPlanNavbar");
     expect(experienceSource).toContain("workspace={prePlanWorkspace}");
     expect(experienceSource).toContain('activeTab === "opportunities"');

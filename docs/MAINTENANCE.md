@@ -52,7 +52,7 @@ Variables serveur principales:
 - `RESEND_API_KEY`
 - `CRON_SECRET`
 - `STRIPE_SECRET_KEY` et `STRIPE_WEBHOOK_SECRET` en Production
-- `STRIPE_COACH_BUSINESS_PRICE_IDS` en Production (prix mensuels 350/550 EUR, séparés par une virgule)
+- `STRIPE_COACH_BUSINESS_PRICE_IDS` en Production (prix mensuel 750 EUR ; plusieurs identifiants restent acceptés pendant une éventuelle rotation)
 - variantes suffixées `_TEST` hors Production
 
 Variable publique:

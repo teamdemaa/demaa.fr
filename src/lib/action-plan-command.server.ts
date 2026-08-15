@@ -9,6 +9,7 @@ import {
 } from "ai";
 import { z } from "zod";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
+import { generatedActionPlanSupportTypeSchema } from "@/lib/action-plan-contract";
 import {
   actionPlanCommandDraftSchema,
   finalizeActionPlanCommandDraft,
@@ -28,15 +29,7 @@ export const ACTION_PLAN_COMMAND_MODEL_ID =
 
 const generatedSupportSchema = z
   .object({
-    type: z.enum([
-      "message",
-      "email",
-      "script",
-      "checklist",
-      "table",
-      "template",
-      "brief",
-    ]),
+    type: generatedActionPlanSupportTypeSchema,
     label: z.string().trim().min(1).max(100),
     content: z.string().trim().min(1).max(2_000),
   })
@@ -113,6 +106,7 @@ Regles :
 - Une action ajoutee doit etre realiste et directement executable.
 - Pour updateAction, mets null dans title, objective ou steps lorsqu'ils ne changent pas.
 - Pour le support, utilise keep s'il ne change pas, remove pour le supprimer et replace avec un support complet pour le remplacer.
+- Tu peux uniquement creer ou remplacer un message, un email ou un script. Ne genere jamais de tableau, checklist, brief ou template : Demaa fournit ces ressources separement.
 - Ne change jamais de systeme, statut, date, note, identite ou information absente.
 - Si la commande ne demande aucun changement exploitable, retourne operations vide.
 - Ecris en francais simple, concret et concis.

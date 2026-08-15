@@ -102,21 +102,20 @@ actions[]
 ```
 
 La V4 conserve le nettoyage de `why`, `estimatedMinutes`, `deliverable`,
-`successCriterion` et `ethicalGuardrail`, ainsi que les actions et supports
-typés introduits en V3. Les types autorisés sont `message`, `email`, `script`,
-`checklist`, `table`, `brief` et `template`.
+`successCriterion` et `ethicalGuardrail`, ainsi que la lecture des supports
+typés introduits en V3. Les anciens plans peuvent donc encore contenir
+`checklist`, `table`, `brief` ou `template` sans migration destructive.
 
-Le choix du type est déterministe par nature d'action :
+Une nouvelle génération IA peut seulement écrire un `message`, un `email` ou
+un `script`, lorsqu'une action de communication, de prospection ou de relance
+en a réellement besoin. Pour les tableaux, suivis, checklists, modèles et
+processus, l'action pointe vers la ressource Demaa contextualisée plutôt que de
+générer un contenu générique. `support: null` est donc valide, y compris pour
+toutes les actions d'un plan.
 
-- communication, prospection ou relance : `message`, `email` ou `script` ;
-- contrôle, audit ou analyse : `checklist`, `table` ou `template` ;
-- organisation ou pilotage : `table`, `checklist` ou `template` ;
-- création d'offre ou de contenu : `brief`, `template` ou `checklist`.
-
-Un support est immédiatement utilisable et ne recopie pas simplement les
-étapes. Le plan contient au moins un support concret ; `support: null` reste
-possible uniquement lorsqu'un support répéterait sans valeur les tâches déjà
-affichées.
+Un support généré reste immédiatement utilisable et ne recopie pas simplement
+les étapes. L'utilisateur peut toujours ajouter ou modifier manuellement un
+support personnel dans l'éditeur d'action.
 
 Le lecteur de persistance reste compatible avec les plans V1, V2, V3 et
 `manual` :
@@ -281,8 +280,11 @@ jamais remplacer silencieusement un plan déjà enregistré.
 
 L'identité primaire est un compte e-mail et mot de passe Firebase, matérialisé
 par un cookie de session Firebase natif et son UID. Demaa ne reçoit ni ne
-stocke le mot de passe. Google utilise exactement la même session. L'UID est
-l'unique clé d'autorisation des plans, conversations et brouillons. Une fois la session Firebase créée, les formulaires fonctionnels
+stocke le mot de passe. Google utilise exactement la même session. L'UID reste
+l'identité racine des conversations et brouillons. Les plans sont rattachés à
+l'entreprise par défaut et leur autorisation exige une appartenance active à
+cette entreprise ; `owner_uid` reste uniquement une trace de compatibilité.
+Une fois la session Firebase créée, les formulaires fonctionnels
 (guides métier, Opportunités, Coaching, inscription et demandes) réutilisent
 l'e-mail de la session côté serveur et ne le redemandent pas. Un visiteur non
 connecté qui déclenche l'une de ces actions passe d'abord par l'un de ces
@@ -397,12 +399,12 @@ La première version de l'accès à l'équipe Demaa fait partie de l'application
 conformément à l'ADR 0009 : une conversation écrite ou dictée simple, sans
 onglets Messages/Formules. Chaque UID Firebase dispose d'une première
 clarification offerte, clôturée manuellement par la Team Demaa avec sa réponse
-finale. L'offre `Coach business` est présentée séparément dans Services : son
-sélecteur affiche 1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois. Son CTA
-`Être rappelé(e)` transmet une intention sans connexion ni paiement public.
-La Team Demaa qualifie ensuite le besoin, le matching et le rythme avec le
-dirigeant. Le Coach inclut un suivi écrit entre les séances, limité aux
-priorités travaillées ; aucun accès illimité n'est promis.
+finale. L'offre `Coach business` est présentée séparément dans Services comme
+un accompagnement mensuel unique à 750 EUR HT/mois. Elle inclut deux sessions
+individuelles de 60 minutes et un suivi écrit entre les séances sur les sujets
+travaillés. Son CTA `Être rappelé(e)` transmet une intention sans connexion ni
+paiement public. La Team Demaa qualifie ensuite le besoin et le matching avec
+le dirigeant ; aucun accès illimité n'est promis.
 
 Un accompagnement mensuel actif ouvre 12 % de réduction sur les autres
 prestations directement facturées par Demaa. Coach business est confirmé par
@@ -420,7 +422,7 @@ au backlog, sans modifier cette première version :
 - les nouveaux canaux ou formats de messagerie ;
 - les évolutions de droits, confidentialité et conservation des échanges ;
 - les évolutions de tarification et de limites de service ;
-- le multi-tenant et le sélecteur d'entreprise ;
+- plusieurs entreprises par compte, le sélecteur d'entreprise et la collaboration ;
 - l'enrichissement facultatif du profil entreprise.
 
 ## Critères d'acceptation MVP
@@ -440,6 +442,9 @@ au backlog, sans modifier cette première version :
 - Les supports V3 sont typés et suivent les règles déterministes du contrat.
 - Plusieurs plans et plusieurs Systèmes peuvent être conservés sans mélanger
   leurs états.
+- Chaque compte dispose d'une entreprise par défaut et d'une appartenance
+  `owner`; les plans sont autorisés par cette appartenance active, jamais par
+  l'adresse e-mail ou par le seul champ historique `owner_uid`.
 - La dictée utilise l'adaptateur microphone partagé et ne conserve aucun audio.
 - Le ledger ne contient aucun prompt, commande ou contenu de plan.
 - La commande IA n'envoie que l'enveloppe externe minimale explicitement

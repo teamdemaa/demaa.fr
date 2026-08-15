@@ -6,15 +6,13 @@ import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
 import { clearLeadSubmissionKey, getLeadSubmissionKey } from "@/lib/lead-submission-client";
 import type { SpecialistOffer } from "@/lib/specialist-offers";
 
-type CoachRhythm = 1 | 2;
+const COACH_BUSINESS_OFFER: SpecialistOffer = "coach_business";
 
 export default function CoachBusinessCallbackForm() {
   const [company, setCompany] = useState("");
   const [phone, setPhone] = useState("");
   const [situation, setSituation] = useState("");
-  const [rhythm, setRhythm] = useState<CoachRhythm>(1);
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
-  const offer: SpecialistOffer = rhythm === 2 ? "pilotage_2" : "pilotage_1";
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -23,7 +21,7 @@ export default function CoachBusinessCallbackForm() {
       return;
     }
     setStatus("sending");
-    const flowKey = `coach-business:${offer}`;
+    const flowKey = `coach-business:${COACH_BUSINESS_OFFER}`;
     try {
       const response = await fetch("/api/coaching-request", {
         method: "POST",
@@ -33,9 +31,9 @@ export default function CoachBusinessCallbackForm() {
           company,
           idempotencyKey: getLeadSubmissionKey(flowKey),
           message: situation,
-          offer,
+          offer: COACH_BUSINESS_OFFER,
           phone,
-          requestKind: "formula",
+          requestKind: "accompaniment",
           website: "",
         }),
       });
@@ -59,18 +57,7 @@ export default function CoachBusinessCallbackForm() {
 
   return (
     <form onSubmit={submit} className="mt-5 border-t border-dema-line/80 pt-5">
-      <fieldset>
-        <legend className="text-sm font-medium text-brand-blue">Rythme envisagé</legend>
-        <div className="mt-2 grid grid-cols-2 gap-2">
-          {([1, 2] as const).map((value) => (
-            <button key={value} type="button" aria-pressed={rhythm === value} onClick={() => setRhythm(value)} className={`min-h-12 rounded-xl border px-2 text-xs font-medium ${rhythm === value ? "border-dema-forest bg-dema-sage text-dema-forest" : "border-dema-line text-dema-muted"}`}>
-              {value} session{value === 2 ? "s" : ""} / mois
-            </button>
-          ))}
-        </div>
-        <p className="mt-2 text-xs font-medium text-dema-forest">{rhythm === 2 ? "550 €" : "350 €"} HT / mois · 60 minutes par session</p>
-      </fieldset>
-      <label className="mt-4 block text-sm font-medium text-brand-blue">Entreprise
+      <label className="block text-sm font-medium text-brand-blue">Entreprise
         <input required value={company} onChange={(event) => setCompany(event.target.value)} className="mt-2 min-h-11 w-full rounded-xl border border-dema-line px-3 outline-none focus:border-dema-forest" />
       </label>
       <label className="mt-3 block text-sm font-medium text-brand-blue">Numéro WhatsApp

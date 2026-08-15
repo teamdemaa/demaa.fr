@@ -60,23 +60,32 @@ Cette séquence courte est la seule liste à utiliser pour préparer le prochain
 merge. Les checklists datées et les anciens lots conservés plus bas documentent
 l'historique et ne déclenchent aucune action par eux-mêmes.
 
-1. Fermer le candidat applicatif courant sur une branche dédiée : conserver les
-   fichiers PWA comme changements externes, vérifier le périmètre explicite,
-   relancer tests, lint, TypeScript, build et smoke tests, puis s'arrêter avant
-   tout merge ou déploiement.
-2. L'audit Firebase en lecture seule du 15 août confirme sept documents
-   historiques sans utilisateur Auth : six `customer_magic_links` et une
-   `customer_session`. Les laisser intacts tant qu'une nouvelle autorisation
-   destructive explicite ne vise pas exactement ces sept documents.
-3. L'optimisation Académie est implémentée : cache mémoire, Promise partagée,
-   préchargement idle, import direct de l'index et tests unitaires. Fermer sa
-   recette navigateur en prouvant une seule requête lors de deux ouvertures.
-4. Traiter ensuite D-082 comme un lot visuel indépendant ; ne pas mélanger la
-   stabilité du lecteur avec le cache de données.
-5. Garder le MVP Réseau Partenaire au cadrage jusqu'à validation de la fenêtre
+1. Le candidat intégré est porté par la PR 105. Sa recette locale couvre 217
+   fichiers et 1 187 tests, TypeScript, ESLint, données, Académie, PWA, audit
+   npm, build de 430 pages et l'isolation Firestore Emulator. La Preview a
+   validé e-mail/mot de passe, ouverture Google, entreprise/appartenance,
+   création, autosauvegarde, rechargement et restauration du plan. Production
+   et les DNS restent intacts pendant la propagation du domaine.
+2. Les sept derniers documents d'authentification historique ont été supprimés
+   le 15 août après autorisation explicite : six `customer_magic_links` et une
+   `customer_session`. Le post-audit confirme zéro document dans les deux
+   collections et zéro document actif Plans/Entreprises/Appartenances en
+   Production.
+3. L'optimisation Académie est fermée : cache mémoire, Promise partagée,
+   préchargement idle, import direct de l'index et réouverture immédiate sans
+   loader ont été validés. L'API et le catalogue n'ont pas été modifiés.
+4. D-082 est intégré au candidat : navigation principale Solutions, Actions
+   directement dans le Plan et Ressource processus imprimable. Il ne reste
+   aucun sous-onglet Actions/Solutions dans le Plan.
+5. Les données de recette synthétiques ont été supprimées après confirmation
+   destructive séparée : le compte Auth Production, le compte Auth Preview et
+   son unique plan, son entreprise et son appartenance. Le contrôle immédiat a
+   confirmé l'absence des cinq cibles et les permissions temporaires ont été
+   retirées.
+6. Garder le MVP Réseau Partenaire au cadrage jusqu'à validation de la fenêtre
    d'attribution, des clients existants, du conflit entre les avantages de 12 %,
    de la convention d'apport et du règlement des commissions.
-6. Ne déclencher ni console spécialiste ni portail partenaire tant qu'un
+7. Ne déclencher ni console spécialiste ni portail partenaire tant qu'un
    intervenant extérieur ne doit pas se connecter et agir lui-même dans Demaa.
 
 ## Mise à jour canonique du 9 août 2026
@@ -144,11 +153,11 @@ l'ADR 0004 prévaut.
   pendant l'authentification. Aucun onglet Formules n'est exposé dans cette
   surface. Une première clarification est offerte et la Team Demaa la clôture
   manuellement avec sa réponse finale.
-- [x] Publier une carte `Coach business` dans Services, avec matching guidé,
-  sélecteur interne de 1 session de 60 minutes à 350 EUR HT/mois ou 2 sessions
-  à 550 EUR HT/mois et CTA `Être rappelé(e)`. La demande transmet une intention
-  sans connexion ni paiement public ; la Team qualifie ensuite le besoin et le
-  matching.
+- [x] Publier une carte `Coach business` dans Services, avec matching guidé et
+  un accompagnement mensuel unique à 750 EUR HT/mois incluant deux sessions
+  individuelles de 60 minutes et un suivi écrit entre les séances. Le CTA
+  `Être rappelé(e)` transmet une intention sans connexion ni paiement public ;
+  la Team qualifie ensuite le besoin et le matching.
 - [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
   `Plan d’action / Opportunités / Académie`, sous-onglets `Actions / Solutions`
   dans le Plan, Coaching accessible par
@@ -164,24 +173,35 @@ l'ADR 0004 prévaut.
   `Mes plans`.
 - [x] Activer D-080 : compte e-mail et mot de passe Firebase principal, Google
   facultatif, un endpoint de session et un cookie Firebase Admin natif. Plans,
-  conversations et brouillons appartiennent uniquement à l'UID ; l'e-mail de
-  la session sert de contact sans devenir une clé d'autorisation. Aucun accès
+  conversations et brouillons partent de l'identité UID ; les plans exigent en
+  plus l'entreprise et l'appartenance active définies par D-078. L'e-mail de la
+  session sert de contact sans devenir une clé d'autorisation. Aucun accès
   historique ni migration par adresse e-mail n'est conservé.
-- [ ] Recetter puis promouvoir D-081 : manifeste PWA, icônes 192/512/maskable,
+- [x] Intégrer D-081 : manifeste PWA, icônes 192/512/maskable,
   lancement `standalone`, thème blanc et invitation d'installation uniquement
   après un résultat. Garder `/sw.js` et `/offline` en 404 : aucun cache d'API,
-  plan hors ligne ou deuxième source persistante dans ce lot.
+  plan hors ligne ou deuxième source persistante dans ce lot. La recette
+  automatisée est couverte ; la dictée et les safe areas doivent encore être
+  vérifiées sur une PWA réellement installée avant promotion Production.
 - [x] Restaurer le dernier plan sauvegardé après connexion, depuis le profil et
   à l'ouverture normale de l'application. `/plans` résout le plan courant et
   `/?new=1` reste réservé à une nouvelle situation volontaire ; l'absence de
   plan ouvre ce mode vierge sans boucle de redirection.
-- [ ] Cadrer D-078, multi-tenant simple : un compte peut posséder plusieurs
-  entreprises ; chaque plan et progression Système appartient à une entreprise
-  vérifiée côté serveur. Prévoir `accounts`, `companies` et un état Système par
-  entreprise, un rattachement depuis l'UID Firebase, un sélecteur compact
-  et des tests d'isolation inter-entreprises. Ne créer ni rôles, ni invitations,
-  ni gestion d'équipe dans ce lot. Le nom d'entreprise reste facultatif et
-  pourra être enrichi depuis le profil et ne bloque pas l'ouverture du plan.
+- [x] Livrer D-078 par transition compatible : Firebase UID reste l'identité,
+  sans collection `accounts`. Le socle contient uniquement `companies` et
+  `company_memberships`. Une entreprise sans nom et une appartenance `owner`
+  sont créées transactionnellement au premier plan authentifié. Les plans
+  reçoivent `company_id`, `created_by_uid` et `updated_by_uid` ; `owner_uid`
+  est conservé comme trace de compatibilité mais n'autorise plus aucun accès.
+  Liste, ouverture, modification et suppression exigent désormais une
+  entreprise active et une appartenance active correspondant à `company_id`.
+  Le rapport Firebase du 15 août 2026 a trouvé zéro plan à migrer, zéro conflit
+  et zéro document sans propriétaire. Le backfill reste disponible en dry-run
+  et exige projet, nombre et empreinte exacts avant toute écriture. Les tests
+  couvrent l'isolation inter-entreprises et la suspension d'une appartenance.
+  Aucun sélecteur, rôle supplémentaire, invitation ou gestion d'équipe dans ce
+  lot. Le nom d'entreprise reste facultatif et ne bloque jamais l'ouverture du
+  plan.
 - [x] Permettre un nom d'organisation facultatif dans l'administration des
   Opportunités et ne l'afficher que lorsqu'il est explicitement publié.
 - [ ] Synchroniser de manière contrôlée les champs facultatifs enrichis des
@@ -205,8 +225,9 @@ l'ADR 0004 prévaut.
   limites du service. L'historique Messages, sa persistance et la réponse sous
   24 à 48 h appartiennent déjà à la première version.
 - [ ] Recetter le candidat local Coach business. Services contient une carte
-  avec sélecteur 1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois ; il
-  n'existe pas de troisième carte. Un accompagnement mensuel actif ouvre 12 % sur
+  unique à 750 EUR HT/mois, sans sélecteur ni tarification par séance. Le prix
+  couvre l'accompagnement mensuel, qui inclut deux sessions individuelles de
+  60 minutes et un suivi écrit entre les séances. Un accompagnement mensuel actif ouvre 12 % sur
   les autres prestations directement facturées par Demaa, après contrôle
   serveur et avec exclusion du Coach, des partenaires, budgets et frais tiers.
   - [x] Inclure un suivi écrit entre les séances, limité aux priorités
@@ -265,7 +286,8 @@ l'ADR 0004 prévaut.
   puis décider du modèle de données et de l'interface sans réutiliser
   automatiquement les anciens piliers.
 - [x] Figer la gamme : une première clarification offerte, puis `Coach
-  business` à 350 ou 550 EUR HT/mois pour un accompagnement régulier. Un
+  business` à 750 EUR HT/mois pour un accompagnement régulier incluant deux
+  sessions individuelles et un suivi écrit entre les séances. Un
   accompagnement mensuel actif ouvre 12 % sur les autres prestations Demaa
   éligibles, sans cumul et après vérification serveur.
 - [ ] Cadrer le partage sécurisé d'un plan sauvegardé : accès en lecture seule,
@@ -433,12 +455,15 @@ les autorisations sensibles sont recalculées côté serveur dans une DAL marqu�
   worktree du MVP.
 - [ ] Partir d'un SHA propre dans une branche et un worktree dédiés ; ne jamais
   développer ce MVP dans le worktree d'un autre chat.
-- [ ] Prouver sur une Preview que l'identité Vercel possède les permissions
+- [x] Prouver sur une Preview que l'identité Vercel possède les permissions
   Firebase Auth minimales nécessaires aux cookies de session, à leur contrôle
-  de révocation et à `getUser` / `getUserByEmail`.
-- [ ] Conserver le contrôle de fraîcheur `auth_time`, la politique de mot de
+  de révocation et à `getUser` / `getUserByEmail`. Preuve du 15 août 2026 :
+  création de session e-mail/mot de passe, entreprise/appartenance et plan
+  persistés dans `demaa-preview-2026` avec le rôle sans clé minimal.
+- [x] Conserver le contrôle de fraîcheur `auth_time`, la politique de mot de
   passe Firebase et les domaines Google autorisés validés par le chantier
-  d'authentification en cours.
+  d'authentification en cours. Les variables Web publiques et l'identité
+  serveur Preview ciblent désormais le même projet isolé.
 - [ ] Créer puis vérifier le compte Firebase administrateur et configurer
   `DEMAA_ADMIN_UIDS` côté serveur, avec correspondance exacte des UID et refus
   par défaut.

@@ -198,7 +198,9 @@ export default function ActionPlanSystemPanel({
             }))}
           />
           <SystemResourcesTab
+            initialResourceSlug={initialResourceSlug}
             layout="rail"
+            onResourceSlugChange={onResourceSlugChange}
             resources={currentPayload.resources}
             systemSlug={currentPayload.system.slug}
           />

@@ -8,7 +8,7 @@ import { createPortal } from "react-dom";
 export type ActionPlanView = "plan" | "solutions" | "academy" | "opportunities";
 
 const tabClassName =
-  "group relative inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 px-1 text-[10px] font-medium leading-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:min-h-11 xl:flex-row xl:gap-2 xl:px-3 xl:text-sm";
+  "group relative inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:min-h-11 xl:flex-row xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
 
 const navigationItems = [
   { view: "plan", label: "Plan d’action", Icon: ListChecks },
@@ -50,7 +50,7 @@ export default function ActionPlanNavbar({
       >
         {navigationItems.map(({ view, label, Icon }) => {
           const isActive = activeView === view;
-          const className = `${tabClassName} ${isActive ? "font-semibold text-dema-forest" : "text-dema-muted hover:text-brand-blue"}`;
+          const className = `${tabClassName} ${isActive ? "bg-dema-sage text-dema-forest xl:bg-transparent xl:font-semibold" : "text-dema-muted hover:text-brand-blue"}`;
           const content = (
             <>
               <Icon
@@ -60,7 +60,7 @@ export default function ActionPlanNavbar({
               <span className="max-w-full truncate">{label}</span>
               <span
                 aria-hidden="true"
-                className={`pointer-events-none absolute inset-x-3 bottom-0 h-0.5 origin-center rounded-full bg-dema-forest transition-[transform,opacity] duration-200 ${
+                className={`pointer-events-none absolute inset-x-3 bottom-0 hidden h-0.5 origin-center rounded-full bg-dema-forest transition-[transform,opacity] duration-200 xl:block ${
                   isActive ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
                 }`}
               />

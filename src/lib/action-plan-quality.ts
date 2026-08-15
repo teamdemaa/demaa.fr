@@ -7,7 +7,6 @@ import type {
 export type ActionPlanQualityIssueCode =
   | "duplicate_action"
   | "missing_required_support"
-  | "missing_plan_support"
   | "repeated_support"
   | "unrealistic_seven_day_claim";
 
@@ -24,20 +23,6 @@ const SUPPORT_RULES: ReadonlyArray<{
     pattern:
       /\b(contact|prospect|relanc|message|email|e-mail|courriel|appel|invitation|recommandation)\w*/,
     allowedTypes: ["message", "email", "script"],
-  },
-  {
-    pattern:
-      /\b(audit|verif|control|diagnosti|analys|evalu|revue|checklist|inventair)\w*/,
-    allowedTypes: ["checklist", "table", "template"],
-  },
-  {
-    pattern:
-      /\b(organis|pilot|suiv|planif|rituel|tableau|process|procedur|prioris)\w*/,
-    allowedTypes: ["table", "checklist", "template"],
-  },
-  {
-    pattern: /\b(offre|contenu|publication|brief|proposition|argumentaire)\w*/,
-    allowedTypes: ["brief", "template", "checklist"],
   },
 ] as const;
 
@@ -130,10 +115,6 @@ export function validateActionPlanQuality(plan: ActionPlan) {
     if (supportRepeatsSteps(action)) {
       issues.push({ code: "repeated_support", actionId: action.id });
     }
-  }
-
-  if (!plan.actions.some(({ support }) => support !== null)) {
-    issues.push({ code: "missing_plan_support" });
   }
 
   if (containsUnrealisticSevenDayClaim(plan)) {

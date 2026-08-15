@@ -3,6 +3,7 @@ import { z } from "zod";
 import {
   actionPlanSchema,
   compatibleActionPlanSchema,
+  generatedActionPlanSchema,
   legacyV2ActionPlanSchema,
   type ActionPlan,
   type LegacyV3ActionPlan,
@@ -130,6 +131,27 @@ describe("action plan contract", () => {
   it("accepts the strict actions-only V4 plan and typed supports", () => {
     expect(actionPlanSchema.parse(validPlan())).toEqual(validPlan());
     expect(isActionPlanSystemId("cabinet-comptable")).toBe(true);
+  });
+
+  it("restricts new AI generations to messages while preserving historical supports", () => {
+    const historical = validPlan();
+    expect(actionPlanSchema.safeParse(historical).success).toBe(true);
+    expect(generatedActionPlanSchema.safeParse(historical).success).toBe(false);
+
+    const generated = validPlan();
+    generated.actions[0] = {
+      ...generated.actions[0],
+      channelOrTool: "Email",
+      support: {
+        type: "email",
+        label: "Email prêt à envoyer",
+        content: "Bonjour, pouvons-nous convenir de la prochaine étape ?",
+      },
+    };
+    expect(generatedActionPlanSchema.safeParse(generated).success).toBe(true);
+
+    generated.actions[0] = { ...generated.actions[0], support: null };
+    expect(generatedActionPlanSchema.safeParse(generated).success).toBe(true);
   });
 
   it("exposes V4 to structured-output providers without Strategy or retired fields", () => {
