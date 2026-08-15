@@ -127,12 +127,22 @@ function actionPlan(summary = "Un plan concret pour reprendre la main."): Legacy
 describe("UID-only action plan persistence", () => {
   beforeEach(() => firestore.documents.clear());
 
-  it("stores only owner_uid and never e-mail ownership or claim fields", async () => {
+  it("anchors new plans to the default company while keeping UID ownership during migration", async () => {
     const created = await createOwnedActionPlanForIdentity(identity("owner-uid"), {
       plan: actionPlan(),
     });
     const stored = firestore.documents.get(`action_plans/${created.id}`);
-    expect(stored).toMatchObject({ owner_uid: "owner-uid", status: "active" });
+    expect(stored).toMatchObject({
+      company_id: expect.stringMatching(/^cmp_/),
+      owner_uid: "owner-uid",
+      created_by_uid: "owner-uid",
+      updated_by_uid: "owner-uid",
+      status: "active",
+    });
+    expect(firestore.documents.get(`companies/${stored?.company_id}`)).toMatchObject({
+      status: "active",
+      created_by_uid: "owner-uid",
+    });
     expect(stored).not.toHaveProperty("owner_email");
     expect(stored).not.toHaveProperty("pending_owner_email");
     expect(stored).not.toHaveProperty("temporary_access_token_hash");

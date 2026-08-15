@@ -9,6 +9,7 @@ import {
   normalizeActionPlanWorkspaceState,
   type ActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
+import { ensureDefaultCompanyForIdentity } from "@/lib/company-membership.server";
 import type { CustomerSessionIdentity } from "@/lib/customer-space-auth";
 import { getAdminFirestore } from "@/lib/firebase-admin";
 import { getLeadRetentionExpiry } from "@/lib/operational-maintenance";
@@ -32,7 +33,10 @@ type ActionPlanDocument = {
   workspace_state?: unknown;
   source_text?: string | null;
   generation?: Partial<ActionPlanGenerationMetadata> | null;
+  company_id?: string | null;
   owner_uid?: string | null;
+  created_by_uid?: string | null;
+  updated_by_uid?: string | null;
   revision?: number | null;
   created_at?: string | null;
   updated_at?: string | null;
@@ -155,13 +159,17 @@ export async function createOwnedActionPlanForIdentity(
   if (!uid) throw new Error("A Firebase UID is required.");
 
   const database = getAdminFirestore();
+  const company = await ensureDefaultCompanyForIdentity(identity);
   const id = createActionPlanId();
   const now = new Date().toISOString();
   const document: ActionPlanDocument = {
     schema_version: getPersistedSchemaVersion(input.plan),
     status: "active",
     ...serializeWriteInput(input),
+    company_id: company.companyId,
     owner_uid: uid,
+    created_by_uid: uid,
+    updated_by_uid: uid,
     revision: 1,
     created_at: now,
     updated_at: now,
@@ -278,6 +286,7 @@ export async function updateActionPlanWorkspaceForAccess(input: {
       ...(input.title !== undefined ? { title: nextTitle } : {}),
       workspace_state: normalizedWorkspace,
       revision: nextRevision,
+      updated_by_uid: input.uid,
       retention_expires_at: getLeadRetentionExpiry(),
       updated_at: updatedAt,
     }, { merge: true });
@@ -313,6 +322,7 @@ export async function deleteActionPlanForAccess(input: {
     transaction.set(reference, {
       status: "deleted",
       revision: revision + 1,
+      updated_by_uid: input.uid,
       retention_expires_at: getLeadRetentionExpiry(),
       updated_at: now,
     }, { merge: true });
