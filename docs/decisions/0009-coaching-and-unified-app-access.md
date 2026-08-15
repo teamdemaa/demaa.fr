@@ -2,7 +2,7 @@
 
 - Statut : `validated`
 - Date : 2026-08-11
-- Mise à jour : 2026-08-15, suivi Coach cadré et alerte interne à trente jours
+- Mise à jour : 2026-08-15, accompagnement Coach business unifié à 750 EUR HT par mois
 - Supersède : les passages de l’ADR 0008 et de D-076 qui reportaient intégralement l’accompagnement
 
 ## Décision
@@ -33,13 +33,13 @@ Une fois la clarification terminée, le champ de réponse est remplacé par un
 lien vers `Coach business`. Il n'existe aucune facturation automatique et la
 clôture gratuite n'appelle jamais Stripe.
 
-`Coach business` reste une carte distincte dans Accompagnement. Une session
-individuelle de 60 minutes par mois est affichée à 350 EUR HT par mois ; deux
-sessions individuelles de 60 minutes par mois à 550 EUR HT par mois. Le CTA
-`Être rappelé(e)` transmet une demande de contact sans connexion ni paiement.
-Demaa qualifie ensuite le besoin, le matching et le rythme avec le dirigeant ;
-le suivi écrit entre les séances porte uniquement sur les priorités travaillées.
-La clôture de la clarification gratuite ne déclenche jamais Stripe.
+`Coach business` reste une carte distincte dans Accompagnement. Le produit
+vendu est un accompagnement mensuel unique à 750 EUR HT par mois, et non un
+forfait de séances. Il comprend deux sessions individuelles de 60 minutes, la
+préparation des priorités et un suivi écrit entre les séances sur les sujets
+travaillés. Le CTA `Être rappelé(e)` transmet une demande de contact sans
+connexion ni paiement. Demaa qualifie ensuite le besoin et le matching avec le
+dirigeant. La clôture de la clarification gratuite ne déclenche jamais Stripe.
 
 Tant qu'un accompagnement mensuel éligible est actif, le client bénéficie de
 12 % de réduction sur les autres prestations directement facturées par Demaa.
@@ -82,6 +82,8 @@ authentification puis ouvre son URL canonique avec le brouillon de clarification
 - une clarification terminée ne peut pas être contournée avec un abonnement ou
   une valeur envoyée par le navigateur ;
 - le CTA Coach business envoie uniquement une demande de rappel ;
+- le catalogue et la demande de rappel ne proposent aucun choix entre plusieurs
+  rythmes ou prix Coach business ;
 - aucun paiement Stripe n'est créé par l'interface publique ;
 - l'abonnement et l'avantage restent inactifs tant qu'un statut confirmé n'a
   pas été projeté côté serveur ;

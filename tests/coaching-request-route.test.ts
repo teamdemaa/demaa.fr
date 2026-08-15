@@ -253,23 +253,23 @@ describe("coaching request route", () => {
     expect(mocks.markCoachingMessageDraftSent).not.toHaveBeenCalled();
   });
 
-  it("accepts only the current subscription formulas and records their displayed price", async () => {
+  it("accepts only the current monthly accompaniment and records its displayed price", async () => {
     const response = await POST(request({
       company: "Entreprise test",
       message: "",
-      offer: "pilotage_2",
+      offer: "coach_business",
       phone: "+33 6 12 34 56 78",
-      requestKind: "formula",
+      requestKind: "accompaniment",
     }));
 
     expect(response.status).toBe(202);
     expect(mocks.requireCurrentCustomerIdentity).not.toHaveBeenCalled();
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: expect.arrayContaining([
-        { label: "Formule", value: "Coach business · 2 sessions / mois" },
-        { label: "Tarif affiché", value: "550 € HT / mois" },
+        { label: "Accompagnement", value: "Coach business · accompagnement mensuel" },
+        { label: "Tarif affiché", value: "750 € HT / mois" },
       ]),
-      requestType: "specialist_formula_interest",
+      requestType: "coach_business_callback",
     }));
   });
 
@@ -279,7 +279,7 @@ describe("coaching request route", () => {
       message: "",
       offer: "session",
       phone: "+33 6 12 34 56 78",
-      requestKind: "formula",
+      requestKind: "accompaniment",
     }));
 
     expect(response.status).toBe(400);
@@ -292,7 +292,7 @@ describe("coaching request route", () => {
       message: "",
       offer: "toString",
       phone: "+33 6 12 34 56 78",
-      requestKind: "formula",
+      requestKind: "accompaniment",
     }));
 
     expect(response.status).toBe(400);

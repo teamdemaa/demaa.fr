@@ -68,7 +68,11 @@ describe("canonical Accompagnement catalog", () => {
     expect(coach).toMatchObject({
       cta: { kind: "callback", label: "Être recontacté(e)" },
       monthlyAccompanimentDiscountEligible: false,
-      pricing: { label: "À partir de 350 € HT / mois" },
+      pricing: {
+        amountMinor: 75000,
+        label: "750 € HT / mois",
+        mode: "fixed",
+      },
     });
   });
 
@@ -76,8 +80,13 @@ describe("canonical Accompagnement catalog", () => {
     const callbackForm = await readSource("src/components/CoachBusinessCallbackForm.tsx");
     expect(callbackForm).toContain('fetch("/api/coaching-request"');
     expect(callbackForm).toContain("Être rappelé(e)");
+    expect(callbackForm).toContain('requestKind: "accompaniment"');
+    expect(callbackForm).toContain('offer: COACH_BUSINESS_OFFER');
     expect(callbackForm).toContain('type="tel"');
     expect(callbackForm).toContain("Entreprise");
+    expect(callbackForm).not.toContain("Rythme envisagé");
+    expect(callbackForm).not.toContain("pilotage_1");
+    expect(callbackForm).not.toContain("pilotage_2");
     expect(callbackForm).not.toContain("checkout.stripe.com");
     expect(callbackForm).not.toContain("CustomerSpaceAccessForm");
   });
@@ -123,7 +132,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).toContain("500 € HT / jour");
     expect(markup).toContain("À partir de 250 € HT / mois");
     expect(markup).toContain("Coach business");
-    expect(markup).toContain("À partir de 350 € HT / mois");
+    expect(markup.match(/750 € HT \/ mois/g)).toHaveLength(2);
     expect(markup).not.toContain("Inclut 12 % de réduction sur les accompagnements Demaa éligibles");
     expect(markup).toContain("Avantage abonné : −12 %");
     expect(markup).not.toContain("border-t");

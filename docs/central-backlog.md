@@ -146,11 +146,11 @@ l'ADR 0004 prévaut.
   pendant l'authentification. Aucun onglet Formules n'est exposé dans cette
   surface. Une première clarification est offerte et la Team Demaa la clôture
   manuellement avec sa réponse finale.
-- [x] Publier une carte `Coach business` dans Services, avec matching guidé,
-  sélecteur interne de 1 session de 60 minutes à 350 EUR HT/mois ou 2 sessions
-  à 550 EUR HT/mois et CTA `Être rappelé(e)`. La demande transmet une intention
-  sans connexion ni paiement public ; la Team qualifie ensuite le besoin et le
-  matching.
+- [x] Publier une carte `Coach business` dans Services, avec matching guidé et
+  un accompagnement mensuel unique à 750 EUR HT/mois incluant deux sessions
+  individuelles de 60 minutes et un suivi écrit entre les séances. Le CTA
+  `Être rappelé(e)` transmet une intention sans connexion ni paiement public ;
+  la Team qualifie ensuite le besoin et le matching.
 - [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
   `Plan d’action / Opportunités / Académie`, sous-onglets `Actions / Solutions`
   dans le Plan, Coaching accessible par
@@ -212,8 +212,9 @@ l'ADR 0004 prévaut.
   limites du service. L'historique Messages, sa persistance et la réponse sous
   24 à 48 h appartiennent déjà à la première version.
 - [ ] Recetter le candidat local Coach business. Services contient une carte
-  avec sélecteur 1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois ; il
-  n'existe pas de troisième carte. Un accompagnement mensuel actif ouvre 12 % sur
+  unique à 750 EUR HT/mois, sans sélecteur ni tarification par séance. Le prix
+  couvre l'accompagnement mensuel, qui inclut deux sessions individuelles de
+  60 minutes et un suivi écrit entre les séances. Un accompagnement mensuel actif ouvre 12 % sur
   les autres prestations directement facturées par Demaa, après contrôle
   serveur et avec exclusion du Coach, des partenaires, budgets et frais tiers.
   - [x] Inclure un suivi écrit entre les séances, limité aux priorités
@@ -272,7 +273,8 @@ l'ADR 0004 prévaut.
   puis décider du modèle de données et de l'interface sans réutiliser
   automatiquement les anciens piliers.
 - [x] Figer la gamme : une première clarification offerte, puis `Coach
-  business` à 350 ou 550 EUR HT/mois pour un accompagnement régulier. Un
+  business` à 750 EUR HT/mois pour un accompagnement régulier incluant deux
+  sessions individuelles et un suivi écrit entre les séances. Un
   accompagnement mensuel actif ouvre 12 % sur les autres prestations Demaa
   éligibles, sans cumul et après vérification serveur.
 - [ ] Cadrer le partage sécurisé d'un plan sauvegardé : accès en lecture seule,
