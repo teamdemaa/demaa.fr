@@ -30,12 +30,8 @@ function plan(actions: ActionPlanAction[]): ActionPlan {
 }
 
 describe("action plan deterministic quality controls", () => {
-  it("maps action families to allowed support types", () => {
-    expect(getExpectedSupportTypes(action())).toEqual([
-      "checklist",
-      "table",
-      "template",
-    ]);
+  it("only requires supports for ready-to-send communication", () => {
+    expect(getExpectedSupportTypes(action())).toBeNull();
     expect(
       getExpectedSupportTypes(
         action({
@@ -47,7 +43,7 @@ describe("action plan deterministic quality controls", () => {
     ).toEqual(["message", "email", "script"]);
   });
 
-  it("detects duplicates, missing supports and support copies", () => {
+  it("detects duplicates, missing communication supports and support copies", () => {
     const copiedSteps = ["Tester le parcours.", "Noter chaque point de blocage."];
     const issues = validateActionPlanQuality(
       plan([
@@ -74,9 +70,20 @@ describe("action plan deterministic quality controls", () => {
       expect.arrayContaining([
         { code: "repeated_support", actionId: "action-1" },
         { code: "duplicate_action", actionId: "action-2" },
-        { code: "missing_required_support", actionId: "action-2" },
         { code: "missing_required_support", actionId: "action-3" },
       ]),
+    );
+  });
+
+  it("accepts an execution plan without generated support", () => {
+    const issues = validateActionPlanQuality(plan([
+      action({ support: null }),
+      action({ id: "action-2", support: null, title: "Choisir une priorité" }),
+      action({ id: "action-3", support: null, title: "Faire un premier test" }),
+    ]));
+
+    expect(issues).not.toContainEqual(
+      expect.objectContaining({ code: "missing_required_support" }),
     );
   });
 

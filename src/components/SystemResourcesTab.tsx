@@ -8,11 +8,15 @@ import type { SystemResource } from "@/lib/system-resource-catalog";
 import SystemResourcePreviewModal from "@/components/SystemResourcePreviewModal";
 
 export default function SystemResourcesTab({
+  initialResourceSlug,
   layout = "grid",
+  onResourceSlugChange,
   resources,
   systemSlug,
 }: {
+  initialResourceSlug?: string;
   layout?: "grid" | "rail";
+  onResourceSlugChange?: (resourceSlug: string | undefined) => void;
   resources: readonly SystemResource[];
   systemSlug: string;
 }) {
@@ -20,7 +24,14 @@ export default function SystemResourcesTab({
     () => [...resources].sort((left, right) => left.rank - right.rank),
     [resources],
   );
-  const [previewResource, setPreviewResource] = useState<SystemResource | null>(null);
+  const [localPreviewResource, setLocalPreviewResource] = useState<SystemResource | null>(null);
+  const previewResource = onResourceSlugChange
+    ? orderedResources.find(
+        (resource) =>
+          resource.resourceSlug === initialResourceSlug &&
+          resource.resourceSlug !== "processus-metier",
+      ) ?? null
+    : localPreviewResource;
   const railRef = useRef<HTMLDivElement | null>(null);
   const [railState, setRailState] = useState({
     canNext: orderedResources.length > 1,
@@ -156,7 +167,13 @@ export default function SystemResourcesTab({
                 key={resource.resourceSlug}
                 type="button"
                 data-system-resource-card
-                onClick={() => setPreviewResource(resource)}
+                onClick={() => {
+                  if (onResourceSlugChange) {
+                    onResourceSlugChange(resource.resourceSlug);
+                  } else {
+                    setLocalPreviewResource(resource);
+                  }
+                }}
                 className={className}
                 aria-label={`Voir un aperçu de ${resource.title}`}
               >
@@ -170,7 +187,10 @@ export default function SystemResourcesTab({
         <SystemResourcePreviewModal
           resource={previewResource}
           trackingContext={systemSlug}
-          onClose={() => setPreviewResource(null)}
+          onClose={() => {
+            if (onResourceSlugChange) onResourceSlugChange(undefined);
+            else setLocalPreviewResource(null);
+          }}
         />
       ) : null}
     </>

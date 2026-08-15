@@ -87,7 +87,7 @@ export default function Navbar({
       </nav>
       <div
         id="action-plan-navbar-mobile"
-        className="fixed inset-x-0 bottom-0 z-50 border-t border-dema-line/70 bg-dema-cream/94 px-3 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_28px_rgba(23,35,29,0.06)] backdrop-blur-md empty:hidden xl:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-dema-line/70 bg-dema-cream/94 px-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_28px_rgba(23,35,29,0.06)] backdrop-blur-md empty:hidden xl:hidden"
       />
     </>
   );

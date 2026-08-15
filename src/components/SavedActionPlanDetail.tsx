@@ -37,6 +37,7 @@ export default function SavedActionPlanDetail({
   initialTitle,
   initialRevision,
   initialWorkspace,
+  initialSourceText = null,
   initialAppContext,
   systemOptions,
   availablePlans,
@@ -48,6 +49,7 @@ export default function SavedActionPlanDetail({
   initialTitle: string;
   initialRevision: number;
   initialWorkspace: ActionPlanWorkspaceState;
+  initialSourceText?: string | null;
   initialAppContext: ActionPlanAppContext;
   systemOptions: readonly ActionPlanSystemOption[];
   availablePlans: readonly SavedActionPlanOption[];
@@ -368,6 +370,14 @@ export default function SavedActionPlanDetail({
               contextualSystemId={
                 appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || ""
               }
+              sourceText={initialSourceText}
+              onOpenSolution={({ resourceSlug, systemId }) => navigateAppContext({
+                ...appContext,
+                view: "solutions",
+                systemId,
+                systemTab: "solutions",
+                solutionResourceSlug: resourceSlug,
+              })}
               headerActions={(
                 <SavedActionPlanMenu
                   availablePlans={availablePlans}

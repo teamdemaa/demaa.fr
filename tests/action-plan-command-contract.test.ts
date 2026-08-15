@@ -4,6 +4,7 @@ import {
   actionPlanCommandDraftSchema,
   actionPlanCommandOperationsSchema,
   applyActionPlanCommandOperations,
+  summarizeActionPlanCommandOperations,
 } from "@/lib/action-plan-command-contract";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import { createActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
@@ -112,6 +113,13 @@ describe("action plan command contract", () => {
     );
     expect(result.workspace.deletedActionIds).toContain("action-2");
     expect(result.workspace.strategyOverrides).toEqual({});
+    expect(summarizeActionPlanCommandOperations(
+      currentPlan,
+      initial,
+      operations,
+    )).toBe(
+      "Ajout de « Interroger un client » · « Action 1 » : titre · Suppression de « Action 2 »",
+    );
   });
 
   it("rejects unknown, deleted or duplicate action references", () => {

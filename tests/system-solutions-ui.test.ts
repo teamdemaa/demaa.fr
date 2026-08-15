@@ -487,6 +487,9 @@ describe("system Solutions UI", () => {
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).toContain("SystemResourcePreviewModal");
+    expect(resourcesSource).toContain("initialResourceSlug");
+    expect(resourcesSource).toContain("onResourceSlugChange(resource.resourceSlug)");
+    expect(resourcesSource).toContain("onResourceSlugChange(undefined)");
     expect(resourcesSource).toContain("/systemes/${systemSlug}/processus");
     expect(resourcePreviewSource).toContain("/api/systeme-kit/open/${resource.resourceSlug}");
     expect(resourcesSource).toContain("resources: readonly SystemResource[]");

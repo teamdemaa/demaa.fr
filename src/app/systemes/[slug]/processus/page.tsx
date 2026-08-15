@@ -68,7 +68,11 @@ export default async function SystemProcessesPage({
             </h2>
             <div className="mt-5 divide-y divide-dema-line border-y border-dema-line">
               {routines.map((routine, index) => (
-                <article key={routine.routineId} className="break-inside-avoid py-5">
+                <article
+                  key={routine.routineId}
+                  id={routine.routineId}
+                  className="scroll-mt-28 break-inside-avoid py-5 target:rounded-xl target:bg-dema-sage/35 target:px-3"
+                >
                   <div className="flex gap-4">
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dema-sage font-mono text-xs font-semibold text-dema-forest">
                       {String(index + 1).padStart(2, "0")}

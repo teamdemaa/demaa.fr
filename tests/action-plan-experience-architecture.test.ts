@@ -49,6 +49,8 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("toPersistedAiGenerationMetadata");
     expect(experience).toContain("isBlankManualActionPlan(plan, workspace)");
     expect(experience).toContain("manualAccessPromptHandledRef.current = true");
+    expect(experience).toContain("isActionEditorOpen");
+    expect(experience).toContain("onActionEditorOpenChange={setIsActionEditorOpen}");
     expect(experience).toContain("useAccessibleDialog({");
     expect(experience).toContain("data-dialog-initial-focus");
     expect(accessForm).toContain("createPasswordAccountAndGetIdToken");
@@ -92,6 +94,9 @@ describe("action plan experience architecture", () => {
     expect(result).toContain("Notes personnelles");
     expect(result).not.toContain("demaa-accordion");
     expect(result).toContain("Ajouter une action");
+    expect(result).toContain("Ajouter un support personnel");
+    expect(result).toContain("onActionEditorOpenChange?.(true)");
+    expect(result).toContain("onActionEditorOpenChange?.(false)");
     expect(result).not.toContain("Aucune action pour le moment");
     expect(result).toContain('allActions.length < (manualMode ? 7 : 50)');
     expect(result).toContain('h-[52px]');
@@ -114,6 +119,9 @@ describe("action plan experience architecture", () => {
     expect(result).toContain("<ActionPlanCommandBar");
     expect(commandBar).toContain('fetch("/api/action-plan/command"');
     expect(commandBar).toContain("applyActionPlanCommandOperations");
+    expect(commandBar).toContain("summarizeActionPlanCommandOperations");
+    expect(commandBar).toContain("Plan mis à jour :");
+    expect(result).toContain("closeAction();\n            onOpenSolution?.(input);");
     expect(commandBar).toContain("useSpeechDictation");
     expect(commandBar).toContain("Dicter ma demande");
     expect(commandBar).toContain("Commande IA désactivée dans la démo");
@@ -154,6 +162,8 @@ describe("action plan experience architecture", () => {
     expect(systemSelector).toContain('role="combobox"');
     expect(systemPanel).toContain("<SystemSolutionsTab");
     expect(systemPanel).toContain("<SystemResourcesTab");
+    expect(systemPanel).toContain("initialResourceSlug={initialResourceSlug}");
+    expect(systemPanel).toContain("onResourceSlugChange={onResourceSlugChange}");
     expect(systemPanel).not.toContain("<SystemDetailContent");
     expect(systemPanel).not.toContain("checkableProcess");
     expect(systemPanel).not.toContain("checkedProcessStepIdsBySystem");
@@ -190,6 +200,8 @@ describe("action plan experience architecture", () => {
     expect(savedPlan).toContain(
       "appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || undefined",
     );
+    expect(savedPlan).toContain("sourceText={initialSourceText}");
+    expect(savedPlan).toContain("solutionResourceSlug: resourceSlug");
   });
 
   it("embeds the Academy without nesting a second main landmark", () => {

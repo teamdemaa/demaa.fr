@@ -9,7 +9,7 @@ import {
   type LanguageModelUsage,
 } from "ai";
 import type { ActionPlan } from "@/lib/action-plan-contract";
-import { actionPlanSchema } from "@/lib/action-plan-contract";
+import { generatedActionPlanSchema } from "@/lib/action-plan-contract";
 import {
   type ActionPlanQualityIssue,
   validateActionPlanQuality,
@@ -45,11 +45,9 @@ Regles de fond :
 
 Supports directement utilisables :
 - Une action de communication, prospection ou relance exige un support de type message, email ou script.
-- Une action de controle, audit ou analyse exige un support de type checklist, table ou template.
-- Une action d'organisation ou pilotage exige un support de type table, checklist ou template.
-- Une action de creation d'offre ou de contenu exige un support de type brief, template ou checklist.
-- Le plan contient au moins un support concret. support vaut null uniquement lorsqu'un support repeterait exactement les taches deja affichees.
-- Un support doit etre immediatement utilisable et ne doit jamais recopier simplement les steps.
+- Pour toute autre action, support vaut null. Ne genere jamais de tableau, checklist, brief ou template : Demaa associe ensuite l'action a ses modeles et processus verifies.
+- Un plan sans support est valide lorsqu'aucune action ne necessite de message, email ou script.
+- Un support doit etre immediatement utilisable, adapte a la situation et ne doit jamais recopier simplement les steps.
 
 La prospection est autorisee lorsqu'elle est reellement pertinente. Elle doit etre ciblee et personnalisee, donner avant de demander, expliquer pourquoi la personne est contactee, respecter son canal et son refus, limiter strictement les relances puis s'arreter. Jamais d'envoi de masse, de harcelement ou de fausse urgence. Si un autre levier est plus adapte (partenariat, recommandation, contenu, fidelisation ou simplification du parcours d'achat), privilegie-le.
 
@@ -64,11 +62,10 @@ Codes possibles :
 - schema_invalid : corrige uniquement la structure ou les types invalides.
 - duplicate_action : remplace l'action dupliquee par une action distincte et utile.
 - missing_required_support : ajoute un support du type exige par la nature de l'action.
-- missing_plan_support : ajoute au moins un support concret au plan.
-- repeated_support : remplace le support qui recopie les taches par un outil directement utilisable.
+- repeated_support : reecris le message, l'email ou le script pour qu'il soit directement utilisable sans recopier les taches.
 - unrealistic_seven_day_claim : remplace la promesse par une premiere etape observable et realiste.
 
-Le support suit ces regles : communication/relance = message, email ou script ; controle/audit = checklist, table ou template ; organisation/pilotage = table, checklist ou template ; offre/contenu = brief, template ou checklist. N'ajoute aucun commentaire hors du schema.
+Le support suit cette regle unique : communication, prospection ou relance = message, email ou script. Pour toute autre action, support vaut null. Ne genere jamais de tableau, checklist, brief ou template. N'ajoute aucun commentaire hors du schema.
 `.trim();
 
 export type ActionPlanGenerationMetadata = AiGenerationMetadata;
@@ -154,7 +151,7 @@ async function generateStructuredPlan({
       name: "demaa_action_plan",
       description:
         "Actions prioritaires et systeme metier pour un dirigeant de TPE.",
-      schema: actionPlanSchema,
+      schema: generatedActionPlanSchema,
     }),
     providerOptions: {
       gateway: {

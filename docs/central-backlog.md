@@ -60,10 +60,12 @@ Cette séquence courte est la seule liste à utiliser pour préparer le prochain
 merge. Les checklists datées et les anciens lots conservés plus bas documentent
 l'historique et ne déclenchent aucune action par eux-mêmes.
 
-1. Fermer le candidat applicatif courant sur une branche dédiée : conserver les
-   fichiers PWA comme changements externes, vérifier le périmètre explicite,
-   relancer tests, lint, TypeScript, build et smoke tests, puis s'arrêter avant
-   tout merge ou déploiement.
+1. Fermer le candidat applicatif courant sur une branche dédiée : aides
+   contextuelles déterministes, demande d'accès après fermeture de l'éditeur,
+   résumé des commandes IA, focus mobile et marges PWA. Les icônes PWA sont
+   désormais des fichiers suivis du produit ; vérifier leur gabarit, relancer
+   tests, lint, TypeScript, build et smoke tests, puis s'arrêter avant tout
+   commit, merge ou déploiement.
 2. L'audit Firebase en lecture seule du 15 août confirme sept documents
    historiques sans utilisateur Auth : six `customer_magic_links` et une
    `customer_session`. Les laisser intacts tant qu'une nouvelle autorisation
@@ -167,10 +169,12 @@ l'ADR 0004 prévaut.
   conversations et brouillons appartiennent uniquement à l'UID ; l'e-mail de
   la session sert de contact sans devenir une clé d'autorisation. Aucun accès
   historique ni migration par adresse e-mail n'est conservé.
-- [ ] Recetter puis promouvoir D-081 : manifeste PWA, icônes 192/512/maskable,
+- [x] Intégrer D-081 : manifeste PWA, icônes 192/512/maskable,
   lancement `standalone`, thème blanc et invitation d'installation uniquement
   après un résultat. Garder `/sw.js` et `/offline` en 404 : aucun cache d'API,
-  plan hors ligne ou deuxième source persistante dans ce lot.
+  plan hors ligne ou deuxième source persistante dans ce lot. La recette
+  automatisée est couverte ; la dictée et les safe areas doivent encore être
+  vérifiées sur une PWA réellement installée avant promotion Production.
 - [x] Restaurer le dernier plan sauvegardé après connexion, depuis le profil et
   à l'ouverture normale de l'application. `/plans` résout le plan courant et
   `/?new=1` reste réservé à une nouvelle situation volontaire ; l'absence de

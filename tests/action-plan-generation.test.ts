@@ -21,19 +21,19 @@ function validPlan(): ActionPlan {
     actions: [
       {
         id: "action-1",
-        title: "Verifier les demandes recentes",
-        objective: "Identifier les demandes qui meritent une reponse prioritaire.",
-        channelOrTool: "Historique des demandes",
+        title: "Relancer les demandes prioritaires",
+        objective: "Obtenir une reponse ciblee sans relance de masse.",
+        channelOrTool: "Email",
         steps: [
-          "Rassembler les demandes des trente derniers jours.",
-          "Noter le besoin, l'urgence et la prochaine decision.",
-          "Choisir les trois demandes a traiter en premier.",
+          "Choisir les trois demandes prioritaires.",
+          "Adapter le message au besoin exprime.",
+          "Envoyer chaque message individuellement.",
         ],
         support: {
-          type: "checklist",
-          label: "Grille de verification",
+          type: "email",
+          label: "Email de relance",
           content:
-            "Besoin formule :\nDecision attendue :\nUrgence reelle :\nProchaine etape :",
+            "Bonjour, je reviens vers vous au sujet de votre demande. Souhaitez-vous que nous fixions la prochaine etape ?",
         },
       },
       {
@@ -116,19 +116,13 @@ describe("action plan generation prompt", () => {
     );
   });
 
-  it("makes concrete supports deterministic without forcing duplication", () => {
+  it("limits generated supports to ready-to-send communication", () => {
     expect(ACTION_PLAN_INSTRUCTIONS).toContain(
       "communication, prospection ou relance exige",
     );
-    expect(ACTION_PLAN_INSTRUCTIONS).toContain(
-      "controle, audit ou analyse exige",
-    );
-    expect(ACTION_PLAN_INSTRUCTIONS).toContain(
-      "au moins un support concret",
-    );
-    expect(ACTION_PLAN_INSTRUCTIONS).toContain(
-      "uniquement lorsqu'un support repeterait exactement",
-    );
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain("Ne genere jamais de tableau");
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain("Un plan sans support est valide");
+    expect(ACTION_PLAN_INSTRUCTIONS).not.toContain("au moins un support concret");
   });
 
   it("forbids market research while allowing targeted ethical outreach", () => {
@@ -171,21 +165,10 @@ describe("action plan structured generation", () => {
     expect(model.doGenerateCalls).toHaveLength(1);
   });
 
-  it("repairs a valid plan that fails deterministic support controls", async () => {
+  it("repairs a communication action that lacks its ready-to-send message", async () => {
     const invalid = validPlan();
     invalid.actions = invalid.actions.map((action) => ({
       ...action,
-      title: action.id === "action-1" ? "Recueillir les faits" : action.title,
-      objective:
-        action.id === "action-1"
-          ? "Rassembler les informations utiles."
-          : action.objective,
-      channelOrTool:
-        action.id === "action-1" ? "Documents existants" : action.channelOrTool,
-      steps:
-        action.id === "action-1"
-          ? ["Rassembler les documents.", "Noter les informations manquantes."]
-          : action.steps,
       support: null,
     }));
     const repaired = validPlan();
@@ -208,7 +191,7 @@ describe("action plan structured generation", () => {
     });
     expect(model.doGenerateCalls).toHaveLength(2);
     expect(JSON.stringify(model.doGenerateCalls[1].prompt)).toContain(
-      "missing_plan_support",
+      "missing_required_support",
     );
   });
 

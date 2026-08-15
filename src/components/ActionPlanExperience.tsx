@@ -154,6 +154,7 @@ export default function ActionPlanExperience({
   });
   const [autoSaveStatus, setAutoSaveStatus] = useState<"idle" | "saving" | "error">("idle");
   const [autoSaveRevision, setAutoSaveRevision] = useState(0);
+  const [isActionEditorOpen, setIsActionEditorOpen] = useState(false);
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [isDemoMode, setIsDemoMode] = useState(false);
@@ -432,6 +433,7 @@ export default function ActionPlanExperience({
       || !plan
       || !workspace
       || isDemoMode
+      || isActionEditorOpen
       || !isManualActionPlan(plan)
       || isBlankManualActionPlan(plan, workspace)
       || manualAccessPromptHandledRef.current
@@ -439,7 +441,7 @@ export default function ActionPlanExperience({
 
     manualAccessPromptHandledRef.current = true;
     setAccessPromptOpen(true);
-  }, [isAuthenticated, isDemoMode, plan, workspace]);
+  }, [isActionEditorOpen, isAuthenticated, isDemoMode, plan, workspace]);
 
   useEffect(() => {
     if (
@@ -982,14 +984,26 @@ export default function ActionPlanExperience({
               onWorkspaceChange={updateWorkspace}
               manualMode={isManualActionPlan(plan)}
               onAddAction={handleAddAction}
+              onActionEditorOpenChange={setIsActionEditorOpen}
               onDeleteAction={handleDeleteAction}
               onGeneratePlan={isBlankManualActionPlan(plan, workspace)
                 ? (nextSituation) => generatePlanFromSituation(nextSituation, workspace)
                 : undefined}
               commandDemoMode={isDemoMode}
+              sourceText={situation.trim()}
               contextualSystemId={
                 selectedSystemId || workspace.selectedSystemId || plan.systemId || ""
               }
+              onOpenSolution={({ resourceSlug, systemId }) => {
+                setSelectedSystemId(systemId);
+                navigateAppContext({
+                  ...appContext,
+                  view: "solutions",
+                  systemId,
+                  systemTab: "solutions",
+                  solutionResourceSlug: resourceSlug,
+                });
+              }}
               headerActions={(
                 <ActionPlanUtilityActions
                   plan={plan}

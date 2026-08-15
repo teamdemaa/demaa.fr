@@ -7,6 +7,7 @@ import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import {
   actionPlanCommandOperationsSchema,
   applyActionPlanCommandOperations,
+  summarizeActionPlanCommandOperations,
 } from "@/lib/action-plan-command-contract";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 
@@ -89,10 +90,15 @@ export default function ActionPlanCommandBar({
         workspace,
         operations,
       );
+      const summary = summarizeActionPlanCommandOperations(
+        plan,
+        workspace,
+        operations,
+      );
       onWorkspaceChange(applied.workspace);
       setUndoSnapshot(applied.undoSnapshot);
       setCommand("");
-      setFeedback("Plan mis à jour.");
+      setFeedback(`Plan mis à jour : ${summary}.`);
     } catch (error) {
       setFeedback(
         error instanceof Error
@@ -168,7 +174,7 @@ export default function ActionPlanCommandBar({
         </button>
       </form>
       {feedback || commandDictation.error || undoSnapshot ? (
-        <div className="mt-1 flex min-h-6 items-center justify-center gap-3 px-4 text-xs text-dema-muted" aria-live="polite">
+        <div className="mt-1 flex min-h-6 items-start justify-center gap-3 px-4 text-center text-xs leading-relaxed text-dema-muted" aria-live="polite">
           <span>{commandDictation.error || feedback}</span>
           {undoSnapshot ? (
             <button

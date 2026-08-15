@@ -6,6 +6,10 @@ import {
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 import type { SystemResource } from "@/lib/system-resource-catalog";
+import type {
+  RenderableSolutionPlacementDto,
+  RenderableSolutionSectionDto,
+} from "@/lib/system-solutions-ui-dto";
 
 export type ActionPlanOrganisationAid = Readonly<{
   bullets: readonly string[];
@@ -25,9 +29,21 @@ export type ActionPlanModelAid = Readonly<{
   systemId: string;
 }>;
 
+export type ActionPlanSolutionAid = Readonly<{
+  alreadySelected: boolean;
+  description: string;
+  kind: "accompaniment" | "tool";
+  label: string;
+  placementId: string;
+  resourceSlug: string;
+  systemId: string;
+}>;
+
 export type ActionPlanContextualAid = Readonly<{
+  accompaniment: ActionPlanSolutionAid | null;
   model: ActionPlanModelAid | null;
   organisation: ActionPlanOrganisationAid | null;
+  tool: ActionPlanSolutionAid | null;
 }>;
 
 export type ActionPlanContextualAidsByActionId = Readonly<
@@ -160,8 +176,10 @@ const CONCEPT_BY_TOKEN = new Map(
 );
 
 const EMPTY_AID: ActionPlanContextualAid = Object.freeze({
+  accompaniment: null,
   model: null,
   organisation: null,
+  tool: null,
 });
 
 export function getEffectiveActionPlanActionsForContextualAids(
@@ -354,6 +372,7 @@ function findModelAid(
     (resource) =>
       resource.availability === "available" &&
       resource.format === "template" &&
+      resource.resourceSlug !== "processus-metier" &&
       resource.resourceSlug !== "recapitulatif-systeme",
   );
   const best = selectUniqueBest(
@@ -380,13 +399,306 @@ function findModelAid(
     : null;
 }
 
+type ScoredSolutionAid = Readonly<{
+  actionId: string;
+  aid: ActionPlanSolutionAid;
+  score: number;
+}>;
+
+const DELEGATION_PATTERN =
+  /\b(aid|accompagn|confier|deleg|externalis|faire faire|mettre en place|prestataire|professionnel|sous trait|trouver quelqu)\w*/;
+
+const SOFTWARE_CAPABILITY_PATTERN =
+  /\b(automatis|centralis|connect|crm|en ligne|integr|logiciel|multi utilisateur|outil|planning|rendez vous|synchron|temps reel|workflow)\w*/;
+
+const FORMALITIES_SELF_SERVICE_SYSTEM_IDS = new Set([
+  "cabinet-comptable",
+  "expert-comptable",
+  "cabinet-davocat",
+  "notaire",
+]);
+
+const SERVICE_INTENT_PATTERNS: Readonly<Record<string, RegExp>> = {
+  "expert-comptable":
+    /\b(expert comptable|comptabil|bilan|liasse|fisc|tva|tenue comptable|cloture comptable)\w*/,
+  "formalites-entreprise":
+    /\b(creer (une |mon |son )?entreprise|creation d entreprise|cessation|fermeture|formal|immatricul|modifier (les )?statut|radiation)\w*/,
+  "automatisation-processus":
+    /\b(automatis|connecter? (les )?outil|integration|workflow|ressaisie|tache repetit)\w*/,
+  "gestion-reseaux-sociaux":
+    /\b(reseaux sociaux|publication|calendrier editorial|community management|contenu recurrent)\w*/,
+  "publicite-en-ligne":
+    /\b(publicite|campagne payante|google ads|meta ads|budget media|acquisition payante)\w*/,
+  "prospection-ciblee":
+    /\b(prospection|fichier prospect|recherche de prospect|qualification (des )?lead|prise de rendez vous)\w*/,
+};
+
+function getActionSearchText(action: ActionPlanViewAction) {
+  return normalizeText([
+    action.title,
+    action.objective,
+    action.channelOrTool,
+    ...action.steps,
+  ].join(" "));
+}
+
+function getPlacementParts(
+  placement: RenderableSolutionPlacementDto,
+): readonly WeightedPart[] {
+  return [
+    { text: placement.resource.name, weight: 4 },
+    { text: placement.resource.displayCategory, weight: 2 },
+    { text: placement.usage, weight: 4 },
+    { text: placement.resource.description, weight: 2 },
+    { text: placement.fitRationale, weight: 2 },
+    ...placement.fitConstraints.map((constraint) => ({ text: constraint, weight: 1 })),
+  ];
+}
+
+function sourceMentionsTool(
+  sourceText: string,
+  placement: RenderableSolutionPlacementDto,
+) {
+  const source = normalizeText(sourceText);
+  const name = normalizeText(placement.resource.name);
+  if (!source || name.length < 3 || !source.includes(name)) return false;
+
+  const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(
+    `\\b(avec|avons|deja|equip\\w*|notre outil|sur|travaill\\w* avec|utilise deja|utilise actuellement|utilisent|utilisons)(?: \\w+){0,6} ${escapedName}\\b|\\b${escapedName}\\b(?: \\w+){0,5} \\b(actuel|deja|utilise)\\w*`,
+  ).test(source);
+}
+
+function textMentionsTool(
+  text: string,
+  placement: RenderableSolutionPlacementDto,
+) {
+  const normalizedText = normalizeText(text);
+  const name = normalizeText(placement.resource.name);
+  return Boolean(normalizedText && name.length >= 3 && normalizedText.includes(name));
+}
+
+function toSolutionAid(input: {
+  alreadySelected: boolean;
+  kind: ActionPlanSolutionAid["kind"];
+  placement: RenderableSolutionPlacementDto;
+  systemId: string;
+}): ActionPlanSolutionAid {
+  return {
+    alreadySelected: input.alreadySelected,
+    description: input.placement.usage,
+    kind: input.kind,
+    label: input.placement.resource.name,
+    placementId: input.placement.placementId,
+    resourceSlug: input.placement.resource.resourceSlug,
+    systemId: input.systemId,
+  };
+}
+
+function findToolAid(
+  action: ActionPlanViewAction,
+  placements: readonly RenderableSolutionPlacementDto[],
+  input: {
+    hasModel: boolean;
+    mentionedCategories: ReadonlySet<string>;
+    mentionedPlacementIds: ReadonlySet<string>;
+    referencedPlacementIds: ReadonlySet<string>;
+    selectedPlacementIds: ReadonlySet<string>;
+    systemId: string;
+  },
+): ScoredSolutionAid | null {
+  const actionText = getActionSearchText(action);
+  const actionTokens = getActionTokens(action);
+  const scored = placements.flatMap((placement) => {
+    const category = normalizeText(placement.resource.displayCategory ?? "");
+    const mentioned = input.mentionedPlacementIds.has(placement.placementId);
+    if (!mentioned && category && input.mentionedCategories.has(category)) return [];
+    return [{
+      candidate: placement,
+      ...scoreParts(actionTokens, getPlacementParts(placement)),
+    }];
+  }).sort((left, right) => right.score - left.score);
+  const best = scored[0];
+  const second = scored[1];
+  const bestIsMentioned = best
+    ? input.mentionedPlacementIds.has(best.candidate.placementId)
+    : false;
+  const bestIsReferenced = best
+    ? input.referencedPlacementIds.has(best.candidate.placementId)
+    : false;
+  const bestIsSelected = best
+    ? input.selectedPlacementIds.has(best.candidate.placementId)
+    : false;
+  if (
+    !best ||
+    (!SOFTWARE_CAPABILITY_PATTERN.test(actionText) &&
+      !bestIsReferenced) ||
+    (input.hasModel && !bestIsReferenced && !bestIsSelected) ||
+    best.score < 14 ||
+    (!bestIsReferenced && !bestIsSelected && best.rawMatches < 2) ||
+    best.rawMatches + best.conceptMatches === 0 ||
+    (second && best.score - second.score < 4)
+  ) return null;
+
+  return {
+    actionId: action.id,
+    aid: toSolutionAid({
+      alreadySelected:
+        bestIsSelected || bestIsMentioned,
+      kind: "tool",
+      placement: best.candidate,
+      systemId: input.systemId,
+    }),
+    score: best.score,
+  };
+}
+
+function serviceMatchesAction(
+  placement: RenderableSolutionPlacementDto,
+  actionText: string,
+  systemId: string,
+) {
+  const slug = placement.resource.resourceSlug;
+  if (slug === "coach-business") return false;
+  if (
+    slug === "formalites-entreprise" &&
+    FORMALITIES_SELF_SERVICE_SYSTEM_IDS.has(systemId)
+  ) return false;
+  const intentPattern = SERVICE_INTENT_PATTERNS[slug];
+  if (!intentPattern?.test(actionText)) return false;
+
+  return slug === "expert-comptable" ||
+    slug === "formalites-entreprise" ||
+    DELEGATION_PATTERN.test(actionText);
+}
+
+function findAccompanimentAid(
+  action: ActionPlanViewAction,
+  placements: readonly RenderableSolutionPlacementDto[],
+  input: {
+    selectedPlacementIds: ReadonlySet<string>;
+    systemId: string;
+  },
+): ScoredSolutionAid | null {
+  const actionText = getActionSearchText(action);
+  const actionTokens = getActionTokens(action);
+  const scored = placements
+    .filter((placement) => serviceMatchesAction(
+      placement,
+      actionText,
+      input.systemId,
+    ))
+    .map((placement) => ({
+      candidate: placement,
+      ...scoreParts(actionTokens, getPlacementParts(placement)),
+    }))
+    .sort((left, right) => right.score - left.score);
+  const best = scored[0];
+  if (!best) return null;
+
+  return {
+    actionId: action.id,
+    aid: toSolutionAid({
+      alreadySelected: input.selectedPlacementIds.has(best.candidate.placementId),
+      kind: "accompaniment",
+      placement: best.candidate,
+      systemId: input.systemId,
+    }),
+    score: best.score,
+  };
+}
+
 export function buildActionPlanContextualAids(input: {
   actions: readonly ActionPlanViewAction[];
   resources: readonly SystemResource[];
+  selectedSolutionPlacementIds?: ReadonlySet<string>;
+  solutionSections?: readonly RenderableSolutionSectionDto[];
+  sourceText?: string | null;
   systemId: string;
   systeme: SystemeDetail | null;
 }): ActionPlanContextualAidsByActionId {
   if (!input.systemId) return {};
+
+  const selectedPlacementIds = input.selectedSolutionPlacementIds ?? new Set<string>();
+  const visibleSections = input.solutionSections ?? [];
+  const toolPlacements = visibleSections
+    .filter(({ section }) => section === "software")
+    .flatMap(({ placements }) => placements)
+    .filter((placement) =>
+      placement.systemSlug === input.systemId &&
+      (placement.resource.resourceType === "software" ||
+        placement.resource.resourceType === "tool"),
+    );
+  const servicePlacements = visibleSections
+    .filter(({ section }) => section === "services")
+    .flatMap(({ placements }) => placements)
+    .filter(({ systemSlug }) => systemSlug === input.systemId);
+  const mentionedTools = toolPlacements.filter((placement) =>
+    sourceMentionsTool(
+      [
+        input.sourceText ?? "",
+        ...input.actions.map(getActionSearchText),
+      ].join(" "),
+      placement,
+    ),
+  );
+  const mentionedPlacementIds = new Set(
+    mentionedTools.map(({ placementId }) => placementId),
+  );
+  const referencedPlacementIds = new Set(
+    toolPlacements
+      .filter((placement) => input.actions.some((action) =>
+        textMentionsTool(getActionSearchText(action), placement),
+      ))
+      .map(({ placementId }) => placementId),
+  );
+  const mentionedCategories = new Set(
+    mentionedTools
+      .map(({ resource }) => normalizeText(resource.displayCategory ?? ""))
+      .filter(Boolean),
+  );
+  const modelAidByActionId = new Map(
+    input.actions.map((action) => [
+      action.id,
+      findModelAid(getActionTokens(action), input.systemId, input.resources),
+    ]),
+  );
+  const toolCandidates = input.actions.flatMap((action) => {
+    const candidate = findToolAid(action, toolPlacements, {
+      hasModel: Boolean(modelAidByActionId.get(action.id)),
+      mentionedCategories,
+      mentionedPlacementIds,
+      referencedPlacementIds,
+      selectedPlacementIds,
+      systemId: input.systemId,
+    });
+    return candidate ? [candidate] : [];
+  }).sort((left, right) => right.score - left.score);
+  const selectedToolCandidates: ScoredSolutionAid[] = [];
+  const selectedToolSlugs = new Set<string>();
+  const selectedToolActionIds = new Set<string>();
+  for (const candidate of toolCandidates) {
+    if (
+      selectedToolCandidates.length >= 2 ||
+      selectedToolSlugs.has(candidate.aid.resourceSlug) ||
+      selectedToolActionIds.has(candidate.actionId)
+    ) continue;
+    selectedToolCandidates.push(candidate);
+    selectedToolSlugs.add(candidate.aid.resourceSlug);
+    selectedToolActionIds.add(candidate.actionId);
+  }
+  const toolAidByActionId = new Map(
+    selectedToolCandidates.map(({ actionId, aid }) => [actionId, aid]),
+  );
+  const accompanimentCandidate = input.actions
+    .flatMap((action) => {
+      const candidate = findAccompanimentAid(action, servicePlacements, {
+        selectedPlacementIds,
+        systemId: input.systemId,
+      });
+      return candidate ? [candidate] : [];
+    })
+    .sort((left, right) => right.score - left.score)[0] ?? null;
 
   return Object.fromEntries(
     input.actions.map((action) => {
@@ -394,14 +706,17 @@ export function buildActionPlanContextualAids(input: {
       if (actionTokens.length === 0) return [action.id, EMPTY_AID];
 
       return [action.id, {
-        model: action.support
-          ? null
-          : findModelAid(actionTokens, input.systemId, input.resources),
+        accompaniment:
+          accompanimentCandidate?.actionId === action.id
+            ? accompanimentCandidate.aid
+            : null,
+        model: modelAidByActionId.get(action.id) ?? null,
         organisation: findOrganisationAid(
           actionTokens,
           input.systemId,
           input.systeme,
         ),
+        tool: toolAidByActionId.get(action.id) ?? null,
       }];
     }),
   );
@@ -410,5 +725,7 @@ export function buildActionPlanContextualAids(input: {
 export function hasActionPlanContextualAid(
   aid: ActionPlanContextualAid | null | undefined,
 ) {
-  return Boolean(aid && (aid.organisation || aid.model));
+  return Boolean(
+    aid && (aid.accompaniment || aid.organisation || aid.model || aid.tool),
+  );
 }

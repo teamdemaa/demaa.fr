@@ -102,21 +102,20 @@ actions[]
 ```
 
 La V4 conserve le nettoyage de `why`, `estimatedMinutes`, `deliverable`,
-`successCriterion` et `ethicalGuardrail`, ainsi que les actions et supports
-typés introduits en V3. Les types autorisés sont `message`, `email`, `script`,
-`checklist`, `table`, `brief` et `template`.
+`successCriterion` et `ethicalGuardrail`, ainsi que la lecture des supports
+typés introduits en V3. Les anciens plans peuvent donc encore contenir
+`checklist`, `table`, `brief` ou `template` sans migration destructive.
 
-Le choix du type est déterministe par nature d'action :
+Une nouvelle génération IA peut seulement écrire un `message`, un `email` ou
+un `script`, lorsqu'une action de communication, de prospection ou de relance
+en a réellement besoin. Pour les tableaux, suivis, checklists, modèles et
+processus, l'action pointe vers la ressource Demaa contextualisée plutôt que de
+générer un contenu générique. `support: null` est donc valide, y compris pour
+toutes les actions d'un plan.
 
-- communication, prospection ou relance : `message`, `email` ou `script` ;
-- contrôle, audit ou analyse : `checklist`, `table` ou `template` ;
-- organisation ou pilotage : `table`, `checklist` ou `template` ;
-- création d'offre ou de contenu : `brief`, `template` ou `checklist`.
-
-Un support est immédiatement utilisable et ne recopie pas simplement les
-étapes. Le plan contient au moins un support concret ; `support: null` reste
-possible uniquement lorsqu'un support répéterait sans valeur les tâches déjà
-affichées.
+Un support généré reste immédiatement utilisable et ne recopie pas simplement
+les étapes. L'utilisateur peut toujours ajouter ou modifier manuellement un
+support personnel dans l'éditeur d'action.
 
 Le lecteur de persistance reste compatible avec les plans V1, V2, V3 et
 `manual` :

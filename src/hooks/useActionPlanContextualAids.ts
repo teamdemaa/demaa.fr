@@ -25,6 +25,7 @@ const EMPTY_AIDS: ActionPlanContextualAidsByActionId = Object.freeze({});
 export function useActionPlanContextualAids(input: {
   demoMode?: boolean;
   plan: PersistableActionPlan;
+  sourceText?: string | null;
   systemId: string;
   workspace: ActionPlanWorkspaceState;
 }) {
@@ -44,7 +45,10 @@ export function useActionPlanContextualAids(input: {
     title: action.title,
   })));
   const demoMode = input.demoMode ?? false;
-  const requestKey = `${demoMode ? "demo" : "live"}:${input.systemId}:${serializedActions}`;
+  const selectedPlacementIds = JSON.stringify(
+    input.workspace.selectedSolutionPlacementIdsBySystem[input.systemId] ?? [],
+  );
+  const requestKey = `${demoMode ? "demo" : "live"}:${input.systemId}:${input.sourceText ?? ""}:${selectedPlacementIds}:${serializedActions}`;
   const [state, setState] = useState<ContextualAidState>({
     aids: EMPTY_AIDS,
     requestKey: "",
@@ -70,6 +74,11 @@ export function useActionPlanContextualAids(input: {
       const aids = buildActionPlanContextualAids({
         actions: contextualActions,
         resources: getSystemResourcesForSystem(input.systemId),
+        selectedSolutionPlacementIds: new Set(
+          JSON.parse(selectedPlacementIds) as string[],
+        ),
+        solutionSections: payload.solutionSections,
+        sourceText: input.sourceText,
         systemId: input.systemId,
         systeme: payload.systeme,
       });
@@ -81,7 +90,7 @@ export function useActionPlanContextualAids(input: {
     return () => {
       active = false;
     };
-  }, [demoMode, input.systemId, requestKey, serializedActions]);
+  }, [demoMode, input.sourceText, input.systemId, requestKey, selectedPlacementIds, serializedActions]);
 
   return state.requestKey === requestKey ? state.aids : EMPTY_AIDS;
 }

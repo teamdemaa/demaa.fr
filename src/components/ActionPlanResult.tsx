@@ -1,6 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import {
+  ArrowRight,
+  BriefcaseBusiness,
   CalendarDays,
   Building2,
   Check,
@@ -15,6 +18,7 @@ import {
   LayoutList,
   Plus,
   Trash2,
+  Wrench,
   X,
 } from "lucide-react";
 import {
@@ -30,7 +34,6 @@ import PwaInstallPrompt from "@/components/PwaInstallPrompt";
 import { useActionPlanContextualAids } from "@/hooks/useActionPlanContextualAids";
 import { isBlankManualActionPlan } from "@/lib/action-plan-manual";
 import {
-  hasActionPlanContextualAid,
   type ActionPlanContextualAid,
 } from "@/lib/action-plan-contextual-aids";
 import type {
@@ -198,6 +201,7 @@ function ActionDrawer({
   onWorkspaceChange,
   onClose,
   onDelete,
+  onOpenSolution,
   contextualAid,
 }: {
   action: ActionPlanViewAction;
@@ -205,6 +209,7 @@ function ActionDrawer({
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   onClose: () => void;
   onDelete: () => void;
+  onOpenSolution?: (input: { resourceSlug: string; systemId: string }) => void;
   contextualAid?: ActionPlanContextualAid;
 }) {
   const taskState = workspace.tasks[action.id];
@@ -223,6 +228,9 @@ function ActionDrawer({
   );
   const [draftSupportContent, setDraftSupportContent] = useState(
     effectiveSupport?.content || "",
+  );
+  const [supportEditorOpen, setSupportEditorOpen] = useState(
+    Boolean(effectiveSupport),
   );
   const [confirmingDelete, setConfirmingDelete] = useState(false);
   const skipNextTaskBlur = useRef(false);
@@ -306,6 +314,11 @@ function ActionDrawer({
     }));
   }
 
+  function openSupportEditor() {
+    setDraftSupportLabel("Support personnel");
+    setSupportEditorOpen(true);
+  }
+
   function saveDraftsAndClose() {
     saveTitle();
     saveObjective();
@@ -371,6 +384,11 @@ function ActionDrawer({
     if (!content) return;
     await navigator.clipboard.writeText(content);
   }
+
+  const supportIsCopyable =
+    effectiveSupport?.type === "message" ||
+    effectiveSupport?.type === "email" ||
+    effectiveSupport?.type === "script";
 
   return (
     <div className="fixed inset-0 z-[110] flex justify-end bg-brand-blue/18 backdrop-blur-[2px]" role="presentation" onMouseDown={saveDraftsAndClose}>
@@ -497,7 +515,7 @@ function ActionDrawer({
             </div>
           </div>
 
-          {effectiveSupport || draftSupportLabel || draftSupportContent ? (
+          {supportEditorOpen || effectiveSupport || draftSupportLabel || draftSupportContent ? (
             <div className="rounded-[1.1rem] border border-dema-line p-4">
               <div className="flex items-center justify-between gap-3">
                 <input
@@ -507,9 +525,11 @@ function ActionDrawer({
                   aria-label="Titre du support"
                   className="min-w-0 flex-1 bg-transparent text-xs font-medium uppercase tracking-[0.12em] text-dema-forest outline-none"
                 />
-                <button type="button" onClick={() => void copySupport()} className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-dema-line px-3 text-xs text-dema-forest">
-                  <Copy className="h-3.5 w-3.5" aria-hidden="true" /> Copier
-                </button>
+                {supportIsCopyable ? (
+                  <button type="button" onClick={() => void copySupport()} className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-dema-line px-3 text-xs text-dema-forest">
+                    <Copy className="h-3.5 w-3.5" aria-hidden="true" /> Copier
+                  </button>
+                ) : null}
               </div>
               <textarea
                 value={draftSupportContent}
@@ -523,44 +543,29 @@ function ActionDrawer({
           ) : (
             <button
               type="button"
-              onClick={() => setDraftSupportLabel("Nouveau support")}
-              className="text-sm text-dema-muted underline decoration-dema-line underline-offset-4 hover:text-dema-forest"
+              onClick={openSupportEditor}
+              className="inline-flex min-h-10 items-center gap-2 rounded-full border border-dema-line px-4 text-sm text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
             >
-              Ajouter un support
+              <Plus className="h-4 w-4" aria-hidden="true" />
+              Ajouter un support personnel
             </button>
           )}
 
-          {hasActionPlanContextualAid(contextualAid) ? (
+          {contextualAid?.model || contextualAid?.organisation ? (
             <section aria-label="Aides utiles dans votre système">
               <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-muted">
                 Dans votre système
               </p>
               <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                {contextualAid?.organisation ? (
-                  <article className="rounded-xl bg-dema-sage/45 px-3 py-3">
-                    <div className="flex items-start gap-3">
-                      <Building2 className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
-                      <div className="min-w-0">
-                        <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-dema-muted">
-                          Organisation
-                        </p>
-                        <p className="mt-0.5 text-sm text-brand-blue">
-                          {contextualAid.organisation.label}
-                        </p>
-                        <p className="mt-1 text-xs text-dema-muted">
-                          {contextualAid.organisation.cadence}
-                        </p>
-                      </div>
-                    </div>
-                    <ul className="mt-3 space-y-1.5 pl-7 text-xs leading-relaxed text-dema-muted">
-                      {contextualAid.organisation.bullets.slice(0, 3).map((bullet) => (
-                        <li key={bullet} className="list-disc">{bullet}</li>
-                      ))}
-                    </ul>
-                  </article>
-                ) : null}
                 {contextualAid?.model ? (
-                  <article className="rounded-xl bg-dema-sage/45 px-3 py-3">
+                  <button
+                    type="button"
+                    onClick={() => onOpenSolution?.({
+                      resourceSlug: contextualAid.model!.resourceSlug,
+                      systemId: contextualAid.model!.systemId,
+                    })}
+                    className="group rounded-xl bg-dema-sage/45 px-3 py-3 text-left transition hover:bg-dema-sage/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30"
+                  >
                     <div className="flex items-start gap-3">
                       <FileText className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
                       <div className="min-w-0">
@@ -573,9 +578,94 @@ function ActionDrawer({
                         <p className="mt-1 text-xs leading-relaxed text-dema-muted">
                           {contextualAid.model.description}
                         </p>
+                        <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-dema-forest">
+                          Ouvrir le modèle
+                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                        </span>
                       </div>
                     </div>
-                  </article>
+                  </button>
+                ) : null}
+                {contextualAid?.organisation ? (
+                  <Link
+                    href={`/systemes/${contextualAid.organisation.systemId}/processus#${encodeURIComponent(contextualAid.organisation.routineId)}`}
+                    className="group rounded-xl bg-dema-sage/45 px-3 py-3 transition hover:bg-dema-sage/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30"
+                  >
+                    <div className="flex items-start gap-3">
+                      <Building2 className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
+                      <div className="min-w-0">
+                        <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-dema-muted">
+                          Processus associé
+                        </p>
+                        <p className="mt-0.5 text-sm text-brand-blue">
+                          {contextualAid.organisation.label}
+                        </p>
+                        <p className="mt-1 text-xs text-dema-muted">
+                          {contextualAid.organisation.cadence}
+                        </p>
+                        <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-dema-forest">
+                          Voir le processus
+                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                ) : null}
+              </div>
+            </section>
+          ) : null}
+
+          {contextualAid?.tool || contextualAid?.accompaniment ? (
+            <section aria-label="Solutions utiles pour cette action">
+              <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-muted">
+                Pour faciliter cette action
+              </p>
+              <div className="mt-3 space-y-2">
+                {contextualAid.tool ? (
+                  <button
+                    type="button"
+                    onClick={() => onOpenSolution?.({
+                      resourceSlug: contextualAid.tool!.resourceSlug,
+                      systemId: contextualAid.tool!.systemId,
+                    })}
+                    className="group flex w-full items-start gap-3 rounded-xl border border-dema-line bg-dema-paper px-4 py-3 text-left transition hover:border-dema-forest/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30"
+                  >
+                    <Wrench className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[10px] font-medium uppercase tracking-[0.12em] text-dema-muted">
+                        {contextualAid.tool.alreadySelected ? "Déjà dans vos Solutions" : "Peut faciliter cette action"}
+                      </span>
+                      <span className="mt-0.5 block text-sm text-brand-blue">{contextualAid.tool.label}</span>
+                      <span className="mt-1 line-clamp-2 block text-xs leading-relaxed text-dema-muted">{contextualAid.tool.description}</span>
+                      <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-dema-forest">
+                        Voir dans Solutions
+                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                      </span>
+                    </span>
+                  </button>
+                ) : null}
+                {contextualAid.accompaniment ? (
+                  <button
+                    type="button"
+                    onClick={() => onOpenSolution?.({
+                      resourceSlug: contextualAid.accompaniment!.resourceSlug,
+                      systemId: contextualAid.accompaniment!.systemId,
+                    })}
+                    className="group flex w-full items-start gap-3 rounded-xl border border-dema-line bg-dema-paper px-4 py-3 text-left transition hover:border-dema-forest/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30"
+                  >
+                    <BriefcaseBusiness className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[10px] font-medium uppercase tracking-[0.12em] text-dema-muted">
+                        {contextualAid.accompaniment.alreadySelected ? "Déjà dans vos Solutions" : "Vous souhaitez déléguer cette action ?"}
+                      </span>
+                      <span className="mt-0.5 block text-sm text-brand-blue">{contextualAid.accompaniment.label}</span>
+                      <span className="mt-1 line-clamp-2 block text-xs leading-relaxed text-dema-muted">{contextualAid.accompaniment.description}</span>
+                      <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-dema-forest">
+                        Voir l’accompagnement
+                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                      </span>
+                    </span>
+                  </button>
                 ) : null}
               </div>
             </section>
@@ -640,10 +730,13 @@ export default function ActionPlanResult({
   headerActions,
   manualMode = false,
   onAddAction,
+  onActionEditorOpenChange,
   onDeleteAction,
   onGeneratePlan,
   commandDemoMode = false,
   contextualSystemId = "",
+  sourceText = null,
+  onOpenSolution,
 }: {
   plan: PersistableActionPlan;
   workspace: ActionPlanWorkspaceState;
@@ -651,10 +744,13 @@ export default function ActionPlanResult({
   headerActions?: ReactNode;
   manualMode?: boolean;
   onAddAction?: () => string | undefined;
+  onActionEditorOpenChange?: (isOpen: boolean) => void;
   onDeleteAction: (actionId: string) => void;
   onGeneratePlan?: (situation: string) => Promise<void>;
   commandDemoMode?: boolean;
   contextualSystemId?: string;
+  sourceText?: string | null;
+  onOpenSolution?: (input: { resourceSlug: string; systemId: string }) => void;
 }) {
   const [view, setView] = useState<TaskView>("list");
   const [filter, setFilter] = useState<TaskFilter>("week");
@@ -662,6 +758,7 @@ export default function ActionPlanResult({
   const contextualAids = useActionPlanContextualAids({
     demoMode: commandDemoMode,
     plan,
+    sourceText,
     systemId: contextualSystemId,
     workspace,
   });
@@ -693,7 +790,20 @@ export default function ActionPlanResult({
 
   function addAndOpenAction() {
     const actionId = onAddAction?.();
-    if (actionId) setSelectedActionId(actionId);
+    if (actionId) {
+      setSelectedActionId(actionId);
+      onActionEditorOpenChange?.(true);
+    }
+  }
+
+  function openAction(actionId: string) {
+    setSelectedActionId(actionId);
+    onActionEditorOpenChange?.(true);
+  }
+
+  function closeAction() {
+    setSelectedActionId(null);
+    onActionEditorOpenChange?.(false);
   }
 
   function updateStatus(actionId: string, status: ActionPlanTaskStatus) {
@@ -738,7 +848,7 @@ export default function ActionPlanResult({
                 return (
                   <div key={action.id} className="flex items-center gap-3 border-b border-dema-line px-4 py-3 last:border-b-0 sm:px-5">
                     <TaskStatusButton status={taskState.status} onChange={(status) => updateStatus(action.id, status)} compact />
-                    <button type="button" onClick={() => setSelectedActionId(action.id)} className="flex min-w-0 flex-1 items-center gap-3 text-left focus-visible:outline-none">
+                    <button type="button" onClick={() => openAction(action.id)} className="flex min-w-0 flex-1 items-center gap-3 text-left focus-visible:outline-none">
                       <span className="min-w-0 flex-1">
                         <span className={`block text-sm font-medium leading-snug ${taskState.status === "done" ? "text-dema-muted" : "text-brand-blue"}`}>{title}</span>
                         <span className="mt-1 block truncate text-xs text-dema-muted">{action.channelOrTool}{action.support ? ` · ${action.support.label}` : ""}</span>
@@ -757,7 +867,7 @@ export default function ActionPlanResult({
                   <div className="space-y-2">
                     {visibleActions.filter((action) => workspace.tasks[action.id].status === status).map((action) => (
                       <article key={action.id} className="rounded-xl border border-dema-line bg-dema-paper p-4 shadow-[0_7px_18px_rgba(23,35,29,0.03)]">
-                        <button type="button" onClick={() => setSelectedActionId(action.id)} className="w-full text-left">
+                        <button type="button" onClick={() => openAction(action.id)} className="w-full text-left">
                           <span className="block text-sm font-medium leading-snug text-brand-blue">{workspace.tasks[action.id].overrides.title || action.title}</span>
                           <span className="mt-2 block text-xs text-dema-muted">{action.channelOrTool}</span>
                         </button>
@@ -802,8 +912,12 @@ export default function ActionPlanResult({
           action={selectedAction}
           workspace={workspace}
           onWorkspaceChange={onWorkspaceChange}
-          onClose={() => setSelectedActionId(null)}
+          onClose={closeAction}
           onDelete={() => onDeleteAction(selectedAction.id)}
+          onOpenSolution={(input) => {
+            closeAction();
+            onOpenSolution?.(input);
+          }}
           contextualAid={contextualAids[selectedAction.id]}
         />
       ) : null}
