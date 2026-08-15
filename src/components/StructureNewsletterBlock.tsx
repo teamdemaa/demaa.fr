@@ -1,7 +1,13 @@
 "use client";
 
 import { Check, LoaderCircle } from "lucide-react";
-import { type FormEvent, useState } from "react";
+import {
+  type FormEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
 import {
@@ -47,6 +53,7 @@ function responseError(response: Response, payload: ApiResponse, fallback: strin
 
 export default function StructureNewsletterBlock() {
   const { email, loading: identityLoading } = useCustomerIdentity();
+  const resumedSubscriptionRef = useRef(false);
   const [newsletterHoneypot, setNewsletterHoneypot] = useState("");
   const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
   const [newsletterError, setNewsletterError] = useState<string | null>(null);
@@ -57,8 +64,7 @@ export default function StructureNewsletterBlock() {
   const [problemError, setProblemError] = useState<string | null>(null);
   const [problemSent, setProblemSent] = useState(false);
 
-  async function subscribe(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const subscribe = useCallback(async () => {
     if (newsletterSubmitting) return;
 
     setNewsletterError(null);
@@ -90,7 +96,24 @@ export default function StructureNewsletterBlock() {
     } finally {
       setNewsletterSubmitting(false);
     }
-  }
+  }, [email, newsletterHoneypot, newsletterSubmitting]);
+
+  useEffect(() => {
+    if (identityLoading || !email) return;
+    const intent = new URLSearchParams(window.location.search).get("intent");
+
+    if (intent === "structure-problem") {
+      const timeout = window.setTimeout(() => {
+        setProblemSent(false);
+        setIsProblemOpen(true);
+      }, 0);
+      return () => window.clearTimeout(timeout);
+    }
+
+    if (intent !== "structure" || resumedSubscriptionRef.current) return;
+    resumedSubscriptionRef.current = true;
+    void subscribe();
+  }, [email, identityLoading, subscribe]);
 
   function updateProblemField<Field extends keyof ProblemForm>(
     field: Field,
@@ -181,7 +204,13 @@ export default function StructureNewsletterBlock() {
                 Merci, votre inscription à Structure est confirmée.
               </div>
             ) : email ? (
-              <form onSubmit={subscribe} aria-busy={newsletterSubmitting}>
+              <form
+                onSubmit={(event: FormEvent<HTMLFormElement>) => {
+                  event.preventDefault();
+                  void subscribe();
+                }}
+                aria-busy={newsletterSubmitting}
+              >
                 <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
                   <label htmlFor="structure-newsletter-website">Site internet</label>
                   <input

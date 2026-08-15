@@ -8,6 +8,7 @@ import {
   type App,
 } from "firebase-admin/app";
 import { Firestore, getFirestore } from "firebase-admin/firestore";
+import { getAuth } from "firebase-admin/auth";
 
 import {
   createFirebaseVercelWorkloadIdentityGoogleAuth,
@@ -97,4 +98,8 @@ export function getAdminFirestore() {
   }
 
   return getFirestore(getFirebaseAdminApp());
+}
+
+export function getAdminAuth() {
+  return getAuth(getFirebaseAdminApp());
 }

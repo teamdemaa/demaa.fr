@@ -13,8 +13,9 @@
 
 > **Mise à jour :** les points 2 et 11 ainsi que les lignes Coaching du hors
 > périmètre sont supersédés par les ADR 0009 et 0010. La navigation
-> `Plan d’action / Système / Académie / Opportunités` est désormais visible dès
-> l'arrivée ; la première version Coaching existe via `Parler à un spécialiste`.
+> `Plan d’action / Opportunités / Académie` est désormais visible dès l'arrivée,
+> avec `Actions / Solutions` dans le Plan ; la première version Coaching existe
+> via `Échanger`.
 
 > **Mise à jour D-079 :** le contrat courant V4 génère uniquement les Actions
 > et le `systemId`. La Stratégie V3 est temporairement masquée et non générée ;
@@ -34,7 +35,7 @@ catalogue, ni rendre privées les destinations publiques existantes.
 
 1. `/` devient l'entrée canonique du générateur de plan d'action. Sa promesse
    exacte est : « Qu’est-ce qui freine votre entreprise ? »
-2. Avant connexion, cette entrée affiche Demaa, `Se connecter` et un grand
+2. Avant connexion, cette entrée affiche Demaa, le lien texte `Connexion` et un grand
    champ libre. Aucun questionnaire structuré ne précède la génération.
 3. Une seule génération principale produit un JSON strict comprenant les
    Actions et un `systemId` égal à un slug canonique.

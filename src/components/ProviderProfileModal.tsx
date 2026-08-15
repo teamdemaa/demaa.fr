@@ -1,8 +1,9 @@
 "use client";
 
 import { Check, LoaderCircle, X } from "lucide-react";
-import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useState } from "react";
 import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
+import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import {
   getLeadAttributionPayload,
   trackLeadConversion,
@@ -46,8 +47,7 @@ export default function ProviderProfileModal({
   onClose,
   opportunity = null,
 }: ProviderProfileModalProps) {
-  const dialogRef = useRef<HTMLElement>(null);
-  const firstFieldRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useAccessibleDialog({ onClose });
   const [fullName, setFullName] = useState("");
   const { email: authenticatedEmail, loading: identityLoading } =
     useCustomerIdentity(initialEmail);
@@ -64,7 +64,7 @@ export default function ProviderProfileModal({
   const lockedExpertiseId = opportunity?.expertiseId ?? null;
   const defaultExpertiseId = opportunity
     ? (lockedExpertiseId ?? "")
-    : (initialExpertiseId ?? expertises[0]?.expertiseId ?? "");
+    : (initialExpertiseId ?? "");
   const [expertiseIds, setExpertiseIds] = useState<string[]>(
     defaultExpertiseId ? [defaultExpertiseId] : [],
   );
@@ -75,46 +75,6 @@ export default function ProviderProfileModal({
       .map((expertise) => expertise.label),
     [expertiseIds, expertises],
   );
-
-  useEffect(() => {
-    const previousFocus = document.activeElement instanceof HTMLElement
-      ? document.activeElement
-      : null;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    firstFieldRef.current?.focus();
-
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        onClose();
-        return;
-      }
-      if (event.key !== "Tab") return;
-      const focusable = Array.from(
-        dialogRef.current?.querySelectorAll<HTMLElement>(
-          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
-        ) ?? [],
-      );
-      const first = focusable[0];
-      const last = focusable.at(-1);
-      if (!first || !last) return;
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", onKeyDown);
-      previousFocus?.focus();
-    };
-  }, [onClose]);
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -129,18 +89,6 @@ export default function ProviderProfileModal({
     }
     setReturnTo(`${url.pathname}${url.search}`);
   }, [initialExpertiseId, opportunity]);
-
-  function toggleExpertise(expertiseId: string) {
-    if (lockedExpertiseId) return;
-    setExpertiseIds((current) => {
-      if (current.includes(expertiseId)) {
-        return current.length === 1
-          ? current
-          : current.filter((entry) => entry !== expertiseId);
-      }
-      return current.length >= 3 ? current : [...current, expertiseId];
-    });
-  }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -202,6 +150,7 @@ export default function ProviderProfileModal({
         <button
           type="button"
           onClick={onClose}
+          data-dialog-initial-focus
           className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full text-brand-blue transition hover:bg-dema-sage"
           aria-label="Fermer"
         >
@@ -264,7 +213,7 @@ export default function ProviderProfileModal({
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="space-y-2 text-sm text-brand-blue">
                   <span>Nom et prénom</span>
-                  <input ref={firstFieldRef} required value={fullName} onChange={(event) => setFullName(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                  <input required value={fullName} onChange={(event) => setFullName(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
                 </label>
                 <label className="space-y-2 text-sm text-brand-blue">
                   <span>{opportunity ? "Entreprise ou activité" : "Entreprise"}</span>
@@ -277,25 +226,24 @@ export default function ProviderProfileModal({
               </div>
 
               {!opportunity ? (
-                <fieldset>
-                  <legend className="text-sm text-brand-blue">Vos expertises <span className="text-dema-muted">(3 maximum)</span></legend>
-                  <div className="mt-3 flex max-h-44 flex-wrap gap-2 overflow-y-auto rounded-xl border border-dema-line p-3">
-                    {expertises.map((expertise) => {
-                      const selected = expertiseIds.includes(expertise.expertiseId);
-                      return (
-                        <button
-                          key={expertise.expertiseId}
-                          type="button"
-                          aria-pressed={selected}
-                          onClick={() => toggleExpertise(expertise.expertiseId)}
-                          className={`rounded-full border px-3 py-2 text-left text-xs transition ${selected ? "border-dema-forest bg-dema-sage text-dema-forest" : "border-dema-line text-dema-muted hover:border-dema-forest/30"}`}
-                        >
-                          {expertise.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </fieldset>
+                <label className="block space-y-2 text-sm text-brand-blue">
+                  <span>Expertise principale</span>
+                  <select
+                    required
+                    value={expertiseIds[0] ?? ""}
+                    onChange={(event) => {
+                      setExpertiseIds(event.target.value ? [event.target.value] : []);
+                    }}
+                    className="min-h-12 w-full rounded-xl border border-dema-line bg-white px-4 outline-none focus:border-dema-forest"
+                  >
+                    <option value="">Choisir une expertise</option>
+                    {expertises.map((expertise) => (
+                      <option key={expertise.expertiseId} value={expertise.expertiseId}>
+                        {expertise.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
               ) : null}
 
               {!opportunity ? (

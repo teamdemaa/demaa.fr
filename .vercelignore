@@ -13,3 +13,8 @@ tmp
 *.tsbuildinfo
 .DS_Store
 .env*
+studio/academy-video-prototype
+studio/cookie-video-01
+studio/cookie-video-02
+studio/academy-course-pack-v1/review
+studio/academy-course-pack-v1/sources

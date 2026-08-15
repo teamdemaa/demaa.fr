@@ -13,8 +13,11 @@ const ACTION_PLAN_VIEWS = [
 
 const SAFE_SLUG_PATTERN = /^[A-Za-z0-9_-]{1,160}$/;
 
+export type ActionPlanPlanTab = "actions" | "solutions";
+
 export type ActionPlanAppContext = {
   view: ActionPlanView;
+  planTab?: ActionPlanPlanTab;
   systemId?: string;
   systemTab?: SystemDetailTab;
   solutionResourceSlug?: string;
@@ -43,19 +46,36 @@ function isActionPlanView(value: string | undefined): value is ActionPlanView {
   return ACTION_PLAN_VIEWS.includes(value as ActionPlanView);
 }
 
+function isActionPlanPlanTab(
+  value: string | undefined,
+): value is ActionPlanPlanTab {
+  return value === "actions" || value === "solutions";
+}
+
 export function parseActionPlanAppContext(
   input: SearchInput,
 ): ActionPlanAppContext {
   const intent = readSearchValue(input, "intent");
   const requestedView = readSearchValue(input, "view");
+  const requestedPlanTab = readSearchValue(input, "planTab");
   const intentView = intent === "solution-referral"
     ? "system"
+    : intent === "structure" || intent === "structure-problem"
+      ? "academy"
     : intent === "opportunity"
+        || intent === "opportunity-submit"
+        || intent === "team-demaa-profile"
       ? "opportunities"
       : undefined;
-  const view = isActionPlanView(requestedView)
+  const legacyView = isActionPlanView(requestedView)
     ? requestedView
     : intentView ?? "plan";
+  const view = legacyView === "system" ? "plan" : legacyView;
+  const planTab = legacyView === "system"
+    ? "solutions"
+    : view === "plan" && isActionPlanPlanTab(requestedPlanTab)
+      ? requestedPlanTab
+      : undefined;
   const systemId = safeSlug(
     readSearchValue(input, "system")
       ?? (intent === "solution-referral"
@@ -81,6 +101,7 @@ export function parseActionPlanAppContext(
 
   return {
     view,
+    ...(planTab ? { planTab } : {}),
     ...(systemId ? { systemId } : {}),
     ...(requestedSystemTab ? { systemTab: requestedSystemTab } : {}),
     ...(solutionResourceSlug ? { solutionResourceSlug } : {}),
@@ -91,13 +112,16 @@ export function parseActionPlanAppContext(
 
 const CONTEXT_QUERY_KEYS = [
   "view",
+  "planTab",
   "system",
   "systemTab",
   "resource",
   "academy",
   "opportunity",
   "intent",
+  "tab",
   "offer",
+  "draftToken",
   "systemSlug",
   "resourceSlug",
   "opportunityId",
@@ -113,9 +137,17 @@ export function buildActionPlanAppHref(input: {
     : new URLSearchParams(input.search ?? "");
 
   for (const key of CONTEXT_QUERY_KEYS) params.delete(key);
-  params.set("view", input.context.view);
+  const view = input.context.view === "system" ? "plan" : input.context.view;
+  const planTab = input.context.view === "system"
+    ? "solutions"
+    : view === "plan"
+      ? input.context.planTab
+      : undefined;
 
-  if (input.context.view === "system") {
+  params.set("view", view);
+  if (planTab) params.set("planTab", planTab);
+
+  if (view === "plan" && planTab === "solutions") {
     if (input.context.systemId) params.set("system", input.context.systemId);
     if (input.context.systemTab) params.set("systemTab", input.context.systemTab);
     if (input.context.solutionResourceSlug) {
@@ -133,4 +165,23 @@ export function buildActionPlanAppHref(input: {
 
   const query = params.toString();
   return `${input.pathname ?? "/"}${query ? `?${query}` : ""}`;
+}
+
+export function buildPublicSystemAppHref(input: {
+  systemId: string;
+  systemTab?: SystemDetailTab;
+  solutionResourceSlug?: string;
+}) {
+  return buildActionPlanAppHref({
+    pathname: "/",
+    context: {
+      view: "plan",
+      planTab: "solutions",
+      systemId: input.systemId,
+      systemTab: input.systemTab ?? "solutions",
+      ...(input.solutionResourceSlug
+        ? { solutionResourceSlug: input.solutionResourceSlug }
+        : {}),
+    },
+  });
 }

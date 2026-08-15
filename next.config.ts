@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
-import { buildContentSecurityPolicy } from "./src/lib/content-security-policy";
-import { ACADEMY_PERMANENT_REDIRECTS } from "./src/lib/academy-course-routes";
+import { buildContentSecurityPolicy } from "./src/lib/content-security-policy.ts";
+import { ACADEMY_PERMANENT_REDIRECTS } from "./src/lib/academy-course-routes.ts";
 
 const securityHeaders = [
   {
@@ -35,6 +35,10 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ['127.0.0.1'],
   devIndicators: false,
   distDir: process.env.DEMAA_BUILD_DIST_DIR || '.next',
+  // Firebase Admin 14 depends on jwks-rsa 4 (CommonJS) which loads jose 6
+  // (ESM). Bundle the chain so Vercel does not execute that edge as a native
+  // CommonJS require at runtime.
+  transpilePackages: ['firebase-admin', 'jwks-rsa', 'jose'],
   experimental: {
     optimizePackageImports: ['lucide-react']
   },
@@ -43,7 +47,7 @@ const nextConfig: NextConfig = {
       ...ACADEMY_PERMANENT_REDIRECTS,
       {
         source: '/accompagnement',
-        destination: '/',
+        destination: '/services',
         permanent: true,
       },
       {
@@ -63,12 +67,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/systeme-marketing',
-        destination: '/services/marketing-vente',
+        destination: '/services/coach-business',
         permanent: true,
       },
       {
         source: '/marketing-ethique',
-        destination: '/services/marketing-vente',
+        destination: '/services/coach-business',
         permanent: true,
       },
       {
@@ -78,27 +82,17 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/annuaire-services/marketing-vente',
-        destination: '/services/marketing-vente',
+        destination: '/services/coach-business',
         permanent: true,
       },
       {
         source: '/annuaire-services/marketing-externalise',
-        destination: '/services/marketing-vente',
+        destination: '/services/coach-business',
         permanent: true,
       },
       {
-        source: '/annuaire-services/assistante-facturation',
-        destination: '/services/assistance-facturation',
-        permanent: true,
-      },
-      {
-        source: '/annuaire-services/assistance-facturation',
-        destination: '/services/assistance-facturation',
-        permanent: true,
-      },
-      {
-        source: '/annuaire-services/recrutement-assistante-facturation',
-        destination: '/services/assistance-facturation',
+        source: '/services/marketing-vente',
+        destination: '/services/coach-business',
         permanent: true,
       },
       {
@@ -219,11 +213,6 @@ const nextConfig: NextConfig = {
       {
         source: '/annuaire-fournisseurs/hygiene-nettoyage',
         destination: '/annuaire-fournisseurs/bernard',
-        permanent: true,
-      },
-      {
-        source: '/academy/:path*',
-        destination: '/',
         permanent: true,
       },
       {

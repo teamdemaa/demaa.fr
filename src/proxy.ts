@@ -21,6 +21,7 @@ const RETIRED_EXACT_PATHS = new Set([
   "/sw.js",
 ]);
 const RETIRED_PATH_PREFIXES = [
+  "/academy/",
   "/annuaire-services/",
   "/modeles-de-documents/",
   "/ressources/",

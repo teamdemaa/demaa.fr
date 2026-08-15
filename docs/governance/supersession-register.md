@@ -8,9 +8,14 @@ remplacé et la nouvelle référence à consulter.
 | Navigation web `Process / Outils / Écosystème` | `superseded` | `Process / Solutions / Ressources`, voir ADR 0001 |
 | ADR 0003, point 3 : `/` peut reproduire le hub `/systemes` | `superseded` | `/` devient l'entrée du générateur de plan ; `/systemes` reste le hub public intact, voir ADR 0008 et D-076 |
 | ADR 0008/D-076 : masquer la navigation applicative avant le résultat | `superseded` | navigation visible et utilisable dès l'arrivée, sans compte ni persistance avant sauvegarde, voir ADR 0010 et D-077 |
-| ADR 0009 : `Coaching` comme quatrième onglet principal | `superseded` | navigation `Plan d’action / Système / Académie / Opportunités`; Coaching reste accessible par `Parler à un spécialiste`, voir ADR 0010 |
-| Portail distinct `Mon espace` ou `Mes plans` | `superseded` | lien magique puis retour direct à l'intention dans l'application unifiée; la session fournit ensuite l'identité e-mail |
-| Adresse e-mail redemandée dans chaque formulaire applicatif | `superseded` | saisie/vérification au lien magique uniquement, puis e-mail de session récupéré côté serveur |
+| ADR 0009 : `Coaching` comme quatrième onglet principal | `superseded` | navigation `Plan d’action / Opportunités / Académie`, avec `Actions / Solutions` dans le Plan ; Coaching reste accessible par `Échanger`, voir ADR 0010 |
+| Page et cartes dédiées `Rejoindre Team Demaa` | `superseded` | lien simple dans Opportunités ouvrant la modale de profil à expertise principale unique ; l'ancienne route redirige vers cette intention, voir ADR 0010 |
+| Cartes Solutions carrées à trois colonnes desktop | `superseded` | cartes compactes à hauteur naturelle, avec quatre colonnes sur grand desktop, voir ADR 0010 |
+| Académie `Cours / Ateliers`, Cours par défaut | `superseded` | `Tutoriels / Cours`, Tutoriels par défaut ; les slugs `case-study` sont conservés, voir ADR 0004 |
+| Académie `Tutoriels / Cours`, Tutoriels par défaut | `temporarily-superseded` | `Cours` uniquement, sans onglet ; Tutoriels et Webinaires conservés derrière les bascules éditoriales, voir ADR 0004 |
+| Onglets spécialiste `Messages / Formules` | `superseded` | conversation écrite ou dictée sans onglets ; Coach business devient une carte Services, voir ADR 0009 |
+| Portail distinct `Mon espace` ou `Mes plans` | `superseded` | authentification Firebase puis retour direct à l'intention dans l'application unifiée ; la session fournit ensuite l'UID et l'e-mail de contact |
+| Adresse e-mail redemandée dans chaque formulaire applicatif | `superseded` | authentification Firebase unique, puis e-mail de contact récupéré côté serveur ; l'UID reste la clé d'autorisation |
 | Nouveau plan réécrit au format historique V1/V2 | `superseded` | génération V3 ; V1 est normalisé en V2 à la lecture, V2 et `manual` restent inchangés, voir ADR 0011 |
 | Support générique non typé pour les nouveaux plans | `superseded` | support V3 typé avec choix déterministe par nature d'action, voir ADR 0011 |
 | Commande IA considérée active parce que son contrat existe | `superseded` | activation seulement après l'autorisation explicite du 12 août 2026 ; enveloppe minimale et exclusions gouvernées par ADR 0011 |
@@ -39,8 +44,8 @@ remplacé et la nouvelle référence à consulter.
 
 - le référentiel Process et ses identifiants stables ;
 - le bouton `Voir le système` et sa modale ;
-- les patterns de rails, cartes carrées et modales issus de D-012, après
-  migration de leur contenu ;
+- les patterns de rails et modales issus de D-012, avec des cartes compactes à
+  hauteur naturelle après migration de leur contenu ;
 - le parcours de copie modifiable sécurisé ;
 - l'Académie et ses routes publiques déjà validées ;
 - les contrats D-061 de révision, idempotence et rollback.

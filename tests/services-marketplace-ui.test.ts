@@ -23,18 +23,18 @@ async function readSource(path: string) {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-describe("canonical Services marketplace", () => {
-  it("publishes exactly the six approved services from one immutable source", () => {
+describe("canonical Accompagnement catalog", () => {
+  it("publishes exactly the six approved offers from one immutable source", () => {
     const services = getCanonicalServices();
 
     expect(services.map((service) => service.slug)).toEqual(CANONICAL_SERVICE_SLUGS);
     expect(services.map((service) => service.name)).toEqual([
-      "Automatisation des processus",
+      "Coach business",
       "Expert-comptable",
-      "Formalités juridiques",
-      "Sous-traitance de formalités juridiques",
-      "Plan marketing et prospection",
-      "Assistance facturation",
+      "Automatisation des processus",
+      "Gestion des réseaux sociaux",
+      "Publicité en ligne",
+      "Prospection ciblée",
     ]);
     expect(generateStaticParams()).toEqual(CANONICAL_SERVICE_SLUGS.map((slug) => ({ slug })));
     expect(Object.isFrozen(services)).toBe(true);
@@ -42,57 +42,60 @@ describe("canonical Services marketplace", () => {
     expect(getCanonicalServiceBySlug("ancienne-offre")).toBeNull();
   });
 
-  it("locks the approved marketing commercial terms", () => {
-    const marketing = getCanonicalServiceBySlug("marketing-vente");
+  it("locks the approved pricing and Coach business eligibility", () => {
+    expect(getCanonicalServiceBySlug("publicite-en-ligne")?.pricing.label).toBe("750 € HT / mois");
+    expect(getCanonicalServiceBySlug("gestion-reseaux-sociaux")?.pricing.label).toBe("Sur devis");
+    expect(getCanonicalServiceBySlug("prospection-ciblee")?.pricing.label).toBe("Sur devis");
+    expect(getCanonicalServiceBySlug("coach-business")?.monthlyAccompanimentDiscountEligible).toBe(false);
+    expect(getCanonicalServiceBySlug("automatisation-processus")?.monthlyAccompanimentDiscountEligible).toBe(true);
+    expect(getCanonicalServiceBySlug("expert-comptable")?.monthlyAccompanimentDiscountEligible).toBe(false);
+    expect(getCanonicalServiceBySlug("expert-comptable")?.summary).toContain("inscrit à l’Ordre");
+  });
 
-    expect(marketing?.pricing).toEqual({
-      amountMinor: 55000,
-      currency: "EUR",
-      heading: "Forfait",
-      label: "550 € HT",
-      mode: "fixed-once",
-      note: "Paiement unique pour le cadrage, l’atelier et la restitution du plan.",
-    });
-    expect(marketing?.included).toContain("Plan d’action sur 90 jours");
-    expect(marketing?.conditions).not.toContain("Engagement initial de trois mois");
-    expect(marketing?.cta).toEqual({
-      kind: "callback",
-      label: "Être recontacté(e)",
+  it("places Coach business first without discounting the subscription itself", () => {
+    const coach = getCanonicalServiceBySlug("coach-business");
+    expect(getCanonicalServices()[0]).toBe(coach);
+    expect(coach).toMatchObject({
+      cta: { kind: "callback", label: "Être recontacté(e)" },
+      monthlyAccompanimentDiscountEligible: false,
+      pricing: { label: "À partir de 350 € HT / mois" },
     });
   });
 
-  it("places process automation first with the simple callback journey", () => {
+  it("keeps Coach business on the callback journey without public payment", async () => {
+    const callbackForm = await readSource("src/components/CoachBusinessCallbackForm.tsx");
+    expect(callbackForm).toContain('fetch("/api/coaching-request"');
+    expect(callbackForm).toContain("Être rappelé(e)");
+    expect(callbackForm).toContain('type="tel"');
+    expect(callbackForm).toContain("Entreprise");
+    expect(callbackForm).not.toContain("checkout.stripe.com");
+    expect(callbackForm).not.toContain("CustomerSpaceAccessForm");
+  });
+
+  it("keeps process automation on the simple callback journey", () => {
     const automation = getCanonicalServiceBySlug("automatisation-processus");
 
-    expect(getCanonicalServices()[0]).toBe(automation);
     expect(automation).toMatchObject({
       name: "Automatisation des processus",
       pricing: {
         amountMinor: 50000,
         label: "500 € HT / jour",
-        mode: "fixed-daily",
+        mode: "fixed",
       },
       cta: { kind: "callback", label: "Être recontacté(e)" },
     });
   });
 
-  it("publishes the validated billing and accounting price references", () => {
-    expect(getCanonicalServiceBySlug("assistance-facturation")?.pricing).toMatchObject({
-      amountMinor: 50000,
-      hourlyRateMinor: 2500,
-      includedHours: 20,
-      label: "500 € HT / mois",
-      mode: "fixed-monthly-hours",
-    });
+  it("publishes the validated accounting price reference", () => {
     expect(getCanonicalServiceBySlug("expert-comptable")?.pricing).toMatchObject({
       amountMinor: 25000,
       heading: "Honoraires du cabinet",
       label: "À partir de 250 € HT / mois",
-      mode: "third-party-starting-monthly",
+      mode: "starting",
     });
   });
 
-  it("renders six linked cards without exposing retired catalog prices", () => {
+  it("renders six equal linked accompaniment cards", () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
@@ -101,10 +104,17 @@ describe("canonical Services marketplace", () => {
     for (const slug of CANONICAL_SERVICE_SLUGS) {
       expect(markup).toContain(`/services/${slug}`);
     }
-    expect(markup).toContain("550 € HT");
+    expect(markup).toContain("750 € HT / mois");
     expect(markup).toContain("500 € HT / jour");
     expect(markup).toContain("À partir de 250 € HT / mois");
-    expect(markup).not.toMatch(/750 €|350 €|600 €|490 €/);
+    expect(markup).toContain("Coach business");
+    expect(markup).toContain("À partir de 350 € HT / mois");
+    expect(markup).toContain("−12 % sur les accompagnements Demaa");
+    expect(markup).toContain("−12 % avec un accompagnement mensuel");
+    expect(markup).not.toContain("−15 %");
+    expect(markup.indexOf("−12 % avec un accompagnement mensuel"))
+      .toBeGreaterThan(markup.indexOf("500 € HT / jour"));
+    expect(markup).not.toContain("Découvrir le service");
   });
 
   it("keeps the callback form strict to company and phone", async () => {
@@ -165,12 +175,13 @@ describe("canonical Services marketplace", () => {
   });
 
   it("implements the documented intercepted modal contract", async () => {
-    const [layout, modalDefault, modalPage, routeDialog, systemSolutions] = await Promise.all([
+    const [layout, modalDefault, modalPage, routeDialog, systemSolutions, serviceDetails] = await Promise.all([
       readSource("src/app/layout.tsx"),
       readSource("src/app/@modal/default.tsx"),
       readSource("src/app/@modal/(.)services/[slug]/page.tsx"),
       readSource("src/components/ServiceRouteDialog.tsx"),
       readSource("src/components/SystemSolutionsTab.tsx"),
+      readSource("src/components/CanonicalServiceDetails.tsx"),
     ]);
 
     expect(layout).toContain("modal: React.ReactNode");
@@ -178,9 +189,15 @@ describe("canonical Services marketplace", () => {
     expect(modalDefault).toContain("return null");
     expect(modalPage).toContain("ServiceRouteDialog");
     expect(modalPage).toContain('variant="modal"');
+    expect(modalPage).toContain("if (!service) notFound()");
+    expect(modalPage).not.toContain("dynamicParams = false");
     expect(routeDialog).toContain("router.back()");
     expect(routeDialog).toContain('maxWidthClassName="max-w-3xl"');
     expect(systemSolutions).toContain('placement.section === "services"');
     expect(systemSolutions).toContain('href={resource.interaction.href}');
+    expect(serviceDetails).toContain('className="mt-7 grid min-w-0 gap-6"');
+    expect(serviceDetails).not.toContain(
+      "lg:grid-cols-[minmax(0,1fr)_18rem]",
+    );
   });
 });

@@ -35,6 +35,7 @@ export type PublicOpportunity = Readonly<{
   companyName: string | null;
   compensation: string | null;
   createdAt: string;
+  domainLabel?: string | null;
   expertiseId: string | null;
   expiresAt: string | null;
   expectations: readonly string[];
@@ -113,6 +114,7 @@ export function parseOpportunity(
     companyName: nullableString("companyName"),
     compensation: nullableString("compensation"),
     createdAt: string("createdAt"),
+    domainLabel: nullableString("domainLabel"),
     expertiseId,
     expiresAt: nullableString("expiresAt"),
     expectations,

@@ -151,7 +151,7 @@ describe("Academy SEO, redirects and assets", () => {
     }
 
     expect(ACADEMY_PERMANENT_REDIRECTS).toHaveLength(
-      4 + ACADEMY_CONTENT_SLUGS.length + 2 * Object.keys(LEGACY_ACADEMY_SLUG_ALIASES).length,
+      5 + 2 * ACADEMY_CONTENT_SLUGS.length + 3 * Object.keys(LEGACY_ACADEMY_SLUG_ALIASES).length,
     );
     expect(redirects).not.toContainEqual(
       expect.objectContaining({ source: "/cours/:slug" }),
@@ -159,6 +159,21 @@ describe("Academy SEO, redirects and assets", () => {
     expect(redirects).not.toContainEqual(
       expect.objectContaining({ source: "/cours/:path*" }),
     );
+    expect(redirects).not.toContainEqual(
+      expect.objectContaining({ source: "/academy/:path*" }),
+    );
+    expect(redirects).toContainEqual({
+      source: "/academy",
+      destination: "/academie",
+      permanent: true,
+    });
+    for (const slug of ACADEMY_CONTENT_SLUGS) {
+      expect(redirects).toContainEqual({
+        source: `/academy/${slug}`,
+        destination: `/academie/${slug}`,
+        permanent: true,
+      });
+    }
     expect(redirects).toContainEqual(
       expect.objectContaining({
         source: "/cours/facture-electronique",

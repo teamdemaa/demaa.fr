@@ -77,10 +77,17 @@ describe("manual action plan", () => {
       selectedSystemId: "restaurant" as const,
       savedSystemIds: ["restaurant" as const],
     };
+    const workspaceWithSelection = {
+      ...workspaceWithSystem,
+      selectedSolutionPlacementIdsBySystem: {
+        restaurant: ["family:restaurant:outil:software:1"],
+      },
+    };
 
     expect(isBlankManualActionPlan(planWithAction, blankWorkspace)).toBe(false);
     expect(isBlankManualActionPlan(blankPlan, workspaceWithStrategy)).toBe(false);
     expect(isBlankManualActionPlan(blankPlan, workspaceWithSystem)).toBe(true);
+    expect(isBlankManualActionPlan(blankPlan, workspaceWithSelection)).toBe(false);
   });
 
   it("creates editable actions with consecutive identifiers", () => {

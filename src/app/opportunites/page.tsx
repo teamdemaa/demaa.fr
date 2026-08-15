@@ -7,9 +7,10 @@ import {
   getPublicExpertises,
   getPublicOpenOpportunities,
 } from "@/lib/provider-network.server";
+import { preserveOpportunityEnrichment } from "@/lib/public-opportunities-snapshot";
 import {
   CUSTOMER_SPACE_COOKIE,
-  getEmailFromCustomerSessionToken,
+  getIdentityFromCustomerSessionToken,
 } from "@/lib/customer-space-auth";
 
 const title = "Opportunités | Demaa";
@@ -33,10 +34,10 @@ export const metadata: Metadata = {
 export default async function OpportunitiesPage() {
   await connection();
   const cookieStore = await cookies();
-  const [expertises, opportunities, email] = await Promise.all([
+  const [expertises, opportunities, identity] = await Promise.all([
     getPublicExpertises(),
     getPublicOpenOpportunities(),
-    getEmailFromCustomerSessionToken(
+    getIdentityFromCustomerSessionToken(
       cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value ?? null,
     ),
   ]);
@@ -56,8 +57,8 @@ export default async function OpportunitiesPage() {
           </header>
           <PublicOpportunitiesClient
             expertises={expertises}
-            initialEmail={email ?? ""}
-            opportunities={opportunities}
+            initialEmail={identity?.email ?? ""}
+            opportunities={preserveOpportunityEnrichment(opportunities)}
           />
         </div>
       </main>

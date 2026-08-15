@@ -89,6 +89,12 @@ export default function CgvPage() {
             <p>
               Les offres, packs et conditions tarifaires peuvent être modifiés à tout moment pour l&apos;avenir, sans effet rétroactif sur une commande déjà acceptée.
             </p>
+            <p>
+              Une première clarification est offerte dans l&apos;application. Elle est clôturée manuellement par l&apos;équipe Demaa après sa réponse finale et ne déclenche aucune facturation automatique.
+            </p>
+            <p>
+              Tant qu&apos;un accompagnement mensuel éligible est actif, le client bénéficie de 12 % de réduction sur les autres prestations directement facturées par Demaa. Cet avantage ne se cumule pas et ne s&apos;applique ni à l&apos;accompagnement qui l&apos;ouvre, ni aux honoraires d&apos;un expert-comptable ou d&apos;un partenaire, ni aux budgets publicitaires, logiciels ou frais facturés par des tiers.
+            </p>
       </CgvSection>
 
       <CgvSection title="6. Modalités de paiement">
@@ -97,6 +103,9 @@ export default function CgvPage() {
             </p>
             <p>
               En cas de retard de paiement, Demaa se réserve le droit de suspendre l&apos;exécution des prestations jusqu&apos;à régularisation.
+            </p>
+            <p>
+              Lorsqu&apos;un abonnement ou une prestation est réglé via Stripe, la page de paiement sécurisée précise le prix, la périodicité et les conditions applicables avant toute validation. Demaa ne déclenche aucune facturation sans action explicite du client.
             </p>
       </CgvSection>
 

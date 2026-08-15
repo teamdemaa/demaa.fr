@@ -22,12 +22,12 @@ async function readSource(path: string) {
 describe("canonical Services SEO and redirects", () => {
   it("publishes only the six canonical detail routes", async () => {
     expect(generateStaticParams()).toEqual([
-      { slug: "automatisation-processus" },
+      { slug: "coach-business" },
       { slug: "expert-comptable" },
-      { slug: "formalites-juridiques" },
-      { slug: "sous-traitance-formalites-juridiques" },
-      { slug: "marketing-vente" },
-      { slug: "assistance-facturation" },
+      { slug: "automatisation-processus" },
+      { slug: "gestion-reseaux-sociaux" },
+      { slug: "publicite-en-ligne" },
+      { slug: "prospection-ciblee" },
     ]);
     expect(servicesIndexMetadata.alternates).toEqual({ canonical: "/services" });
     await expect(generateMetadata({
@@ -41,19 +41,16 @@ describe("canonical Services SEO and redirects", () => {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Accueil", item: "https://demaa.co" },
-        { "@type": "ListItem", position: 2, name: "Services", item: "https://demaa.co/services" },
+        { "@type": "ListItem", position: 2, name: "Accompagnement", item: "https://demaa.co/services" },
       ],
     });
   });
 
   it("emits direct Demaa offers without attributing third-party accounting fees to Demaa", () => {
     const automation = getCanonicalServiceBySlug("automatisation-processus");
-    const marketing = getCanonicalServiceBySlug("marketing-vente");
-    const billing = getCanonicalServiceBySlug("assistance-facturation");
+    const advertising = getCanonicalServiceBySlug("publicite-en-ligne");
     const expert = getCanonicalServiceBySlug("expert-comptable");
-    const legal = getCanonicalServiceBySlug("formalites-juridiques");
-    const legalSubcontracting = getCanonicalServiceBySlug("sous-traitance-formalites-juridiques");
-    if (!automation || !marketing || !billing || !expert || !legal || !legalSubcontracting) {
+    if (!automation || !advertising || !expert) {
       throw new Error("missing canonical service fixture");
     }
 
@@ -67,30 +64,18 @@ describe("canonical Services SEO and redirects", () => {
       },
     });
 
-    expect(buildServicePageJsonLd(marketing)[1]).toMatchObject({
+    expect(buildServicePageJsonLd(advertising)[1]).toMatchObject({
       "@type": "Service",
-      name: "Plan marketing et prospection",
+      name: "Publicité en ligne",
       provider: { "@type": "Organization", name: "Demaa" },
       offers: {
         "@type": "Offer",
-        price: "550.00",
+        price: "750.00",
         priceCurrency: "EUR",
-      },
-    });
-    expect(buildServicePageJsonLd(billing)[1]).toMatchObject({
-      offers: {
-        description: "20 heures incluses, puis 25 € HT par heure supplémentaire.",
-        price: "500.00",
-        priceSpecification: {
-          unitText: "MONTH",
-          valueAddedTaxIncluded: false,
-        },
       },
     });
     expect(JSON.stringify(buildServicePageJsonLd(expert))).not.toContain('"@type":"Offer"');
     expect(JSON.stringify(buildServicePageJsonLd(expert))).not.toContain('"provider":{"@type":"Organization","name":"Demaa"}');
-    expect(JSON.stringify(buildServicePageJsonLd(legal))).not.toContain('"@type":"Offer"');
-    expect(JSON.stringify(buildServicePageJsonLd(legalSubcontracting))).not.toContain('"@type":"Offer"');
   });
 
   it("escapes embedded JSON-LD", () => {
@@ -109,11 +94,13 @@ describe("canonical Services SEO and redirects", () => {
 
     expect(detailSource).toContain("alternates: { canonical }");
     expect(detailSource).toContain("url: canonical");
+    expect(detailSource).toContain("if (!service) notFound()");
+    expect(detailSource).not.toContain("dynamicParams = false");
     expect(nextConfig).toContain("source: '/systeme-marketing'");
     expect(nextConfig).toContain("source: '/marketing-ethique'");
-    expect(nextConfig).toContain("destination: '/services/marketing-vente'");
+    expect(nextConfig).toContain("destination: '/services/coach-business'");
     expect(nextConfig).toContain("destination: '/services/expert-comptable'");
-    expect(nextConfig).toContain("destination: '/services/assistance-facturation'");
+    expect(nextConfig).not.toContain("destination: '/services/assistance-administrative'");
     expect(proxy).not.toContain('"/services/"');
     expect(proxy).toContain('"/annuaire-services/"');
     expect(sitemap).toContain('`${base}/services/${service.slug}`');

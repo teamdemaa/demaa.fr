@@ -15,7 +15,7 @@ const mocks = vi.hoisted(() => ({
   logOperationalEvent: vi.fn(),
   RequestIdempotencyConflictError: class extends Error {},
   resolveLeadAttribution: vi.fn(),
-  requireCurrentCustomerEmail: vi.fn(),
+  requireCurrentCustomerIdentity: vi.fn(),
   scheduleServiceSolutionDeliveries: vi.fn(),
 }));
 
@@ -26,7 +26,7 @@ vi.mock("@/lib/lead-attribution-server", () => ({
   resolveLeadAttribution: mocks.resolveLeadAttribution,
 }));
 vi.mock("@/lib/customer-space-session.server", () => ({
-  requireCurrentCustomerEmail: mocks.requireCurrentCustomerEmail,
+  requireCurrentCustomerIdentity: mocks.requireCurrentCustomerIdentity,
 }));
 vi.mock("@/lib/operational-log", () => ({
   logOperationalError: mocks.logOperationalError,
@@ -111,8 +111,8 @@ describe("solution referral request route", () => {
     mocks.getExpertiseReferralDisclosure.mockReturnValue(null);
     mocks.getSolutionPlacements.mockReturnValue([]);
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
-    mocks.requireCurrentCustomerEmail.mockResolvedValue({
-      email: "owner@cabinet-martin.fr",
+    mocks.requireCurrentCustomerIdentity.mockResolvedValue({
+      identity: { email: "owner@cabinet-martin.fr", provider: "password", uid: "owner-uid" },
       response: null,
     });
     mocks.createSolutionReferral.mockImplementation(async (input) => ({
@@ -188,8 +188,8 @@ describe("solution referral request route", () => {
   });
 
   it("requires a session and ignores the email sent in the request body", async () => {
-    mocks.requireCurrentCustomerEmail.mockResolvedValueOnce({
-      email: null,
+    mocks.requireCurrentCustomerIdentity.mockResolvedValueOnce({
+      identity: null,
       response: Response.json({ error: "authentication_required" }, { status: 401 }),
     });
     expect((await submitSolution(request("/api/solution-referral", solutionBody()))).status).toBe(401);

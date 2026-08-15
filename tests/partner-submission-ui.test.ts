@@ -18,8 +18,9 @@ describe("solution proposal UI contract", () => {
     ]);
 
     expect(footer).toContain('{ label: "Rejoindre Team Demaa", href: "/rejoindre-team-demaa" }');
-    expect(page).toContain("Rejoindre Team Demaa");
-    expect(page).toContain("lorsqu’un besoin correspond à votre expertise");
+    expect(page).toContain(
+      'redirect("/?view=opportunities&intent=team-demaa-profile")',
+    );
     expect(page).not.toMatch(/partenaire Demaa|devenir partenaire|partenariat garanti/i);
     await expect(
       access(path.join(root, "src/app/rejoindre-le-reseau/page.tsx")),
@@ -41,13 +42,19 @@ describe("solution proposal UI contract", () => {
       readSource("src/app/api/provider-profile-submission/route.ts"),
     ]);
 
-    expect(form).toContain("Vos expertises");
+    expect(form).toContain("Expertise principale");
+    expect(form).toContain("Choisir une expertise");
+    expect(form).toContain("<select");
+    expect(form).toContain("useAccessibleDialog({ onClose })");
+    expect(form).toContain("data-dialog-initial-focus");
     expect(form).toContain("Pays ou zones couverts");
     expect(form).not.toContain("selectedSystemSlugs");
     expect(form).not.toContain(
       "Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.",
     );
     expect(googleSignIn).toContain("Continuer avec Google");
+    expect(googleSignIn).toContain('fetch("/api/customer-space/firebase-session"');
+    expect(googleSignIn).toContain("if (onAuthenticated)");
     expect(googleSignIn).toContain("text-dema-forest");
     expect(googleSignIn).not.toContain("#4285f4");
     expect(route).toContain('channels: { email: false, resend: false, slack: true }');
@@ -62,18 +69,23 @@ describe("solution proposal UI contract", () => {
       readSource("src/app/admin/opportunites/page.tsx"),
     ]);
 
-    for (const source of [networkPage, opportunitiesPage, adminPage]) {
+    expect(networkPage).toContain(
+      'redirect("/?view=opportunities&intent=team-demaa-profile")',
+    );
+    for (const source of [opportunitiesPage, adminPage]) {
       expect(source).toContain('import { connection } from "next/server"');
       expect(source).toContain("await connection()");
     }
+    expect(networkPage).not.toContain('import { connection } from "next/server"');
   });
 
   it("separates immediate opportunities from the permanent Team Demaa profile", async () => {
-    const [page, catalog, modal, panel] = await Promise.all([
+    const [page, catalog, modal, panel, submissionDialog] = await Promise.all([
       readSource("src/app/opportunites/page.tsx"),
       readSource("src/components/PublicOpportunitiesClient.tsx"),
       readSource("src/components/ProviderProfileModal.tsx"),
       readSource("src/components/OpportunitiesPanel.tsx"),
+      readSource("src/components/OpportunitySubmissionDialog.tsx"),
     ]);
 
     expect(page).toContain("Découvrez les opportunités actuellement disponibles.");
@@ -95,14 +107,23 @@ describe("solution proposal UI contract", () => {
       catalog.indexOf("<ProviderProfileModal"),
     );
     expect(catalog).toContain("Rejoindre Team Demaa");
+    expect(catalog).toContain('md:inline">Soumettre</span>');
+    expect(catalog).toContain("setProfileOpen(true)");
+    expect(catalog).toContain("profileOpen ? (");
     expect(modal).toContain("Manifester mon intérêt");
     expect(modal).toContain("initialEmail");
+    expect(modal).toContain("Expertise principale");
     expect(panel).toContain(
       'demoMode ? "/api/opportunities?demo=1" : "/api/opportunities"',
     );
     expect(panel).toContain("publicOpportunitiesSnapshot");
     expect(panel).not.toContain("Chargement des opportunités");
     expect(panel).not.toContain("LoaderCircle");
+    expect(submissionDialog).toContain("Ajouter des précisions");
+    expect(submissionDialog).toContain("<details");
+    expect(submissionDialog).toContain('Connexion demandée à l’envoi.');
+    expect(submissionDialog).not.toContain("Envoyer pour modération");
+    expect(submissionDialog).not.toContain("Vous pourrez tout remplir maintenant");
     expect([page, catalog, modal, panel].join("\n")).not.toMatch(
       /freelance|Demaa recruteur/i,
     );

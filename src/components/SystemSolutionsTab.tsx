@@ -38,7 +38,7 @@ export const SOLUTION_UI_WORKING_LABELS: Readonly<
   Record<VisibleSolutionSection, string>
 > = {
   software: "Outils",
-  services: "Services clés",
+  services: "Accompagnement",
   providers: "Fournisseurs",
   financing: "Financement",
   aids: "Aides et subventions",
@@ -313,20 +313,32 @@ export default function SystemSolutionsTab({
     const { resource } = placement;
     const ResourceIcon = RESOURCE_ICONS[resource.resourceType];
     const isSaved = selectedPlacementIds?.has(placement.placementId) ?? false;
-    const cardClassName = "group flex h-full w-full min-w-0 flex-col overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6";
+    const cardClassName = "group flex h-72 w-full min-w-0 flex-col overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6";
     const cardContent = (
       <span className="flex h-full min-h-0 flex-col">
-        <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+        <span className="flex items-center justify-between gap-3">
+          <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
           <ResourceIcon className="h-5 w-5" aria-hidden="true" />
+          </span>
         </span>
-        <span className="mt-4 block text-[10px] font-semibold uppercase tracking-[0.15em] text-dema-muted md:mt-5">
+        <span className="mt-4 line-clamp-2 min-h-[2.5em] block text-[10px] font-semibold uppercase leading-[1.25] tracking-[0.15em] text-dema-muted">
           {resource.displayCategory ?? DEFAULT_RESOURCE_LABELS[resource.resourceType]}
         </span>
-        <span className="mt-1.5 block text-lg font-semibold leading-snug text-brand-blue sm:text-xl md:mt-2">
+        <span className="mt-1.5 line-clamp-2 block min-h-[2.5em] text-lg font-semibold leading-tight text-brand-blue sm:text-xl">
           {resource.name}
         </span>
-        <span className="mt-2 text-[13px] leading-5 text-dema-muted md:mt-3 md:text-sm md:leading-relaxed">
+        <span className="mt-2 line-clamp-3 text-[13px] leading-5 text-dema-muted md:text-sm">
           {resource.description}
+        </span>
+        <span className="mt-auto border-t border-dema-line/80 pt-3">
+          {resource.indicativePricing ? (
+            <span className="block text-sm font-semibold text-dema-forest">{resource.indicativePricing}</span>
+          ) : null}
+          {resource.resourceSlug === "coach-business" || resource.resourceSlug === "expert-comptable" ? (
+            <span className="mt-1.5 block text-xs font-medium leading-snug text-dema-forest">−12 % sur les accompagnements Demaa</span>
+          ) : resource.monthlyAccompanimentDiscountEligible ? (
+            <span className="mt-1.5 block text-xs font-medium leading-snug text-dema-forest">−12 % avec un accompagnement mensuel</span>
+          ) : null}
         </span>
       </span>
     );
@@ -349,7 +361,7 @@ export default function SystemSolutionsTab({
       <div
         key={placement.placementId}
         data-solution-resource-card
-        className="relative min-h-[248px] min-w-0 snap-start md:aspect-square md:min-h-0"
+        className="relative h-72 min-w-0 snap-start"
       >
         {opensServicePage ? (
           <Link
@@ -423,7 +435,7 @@ export default function SystemSolutionsTab({
             >
               Votre sélection
             </h3>
-            <div className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_2rem)_/_3)] [&::-webkit-scrollbar]:hidden">
+            <div className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_1rem)_/_2)] lg:auto-cols-[calc((100%_-_2rem)_/_3)] xl:auto-cols-[calc((100%_-_3rem)_/_3.5)] [&::-webkit-scrollbar]:hidden">
               {selectedPlacements.map(renderPlacementCard)}
             </div>
           </section>
@@ -477,7 +489,7 @@ export default function SystemSolutionsTab({
                   railRefs.current[group.section] = node;
                 }}
                 onScroll={() => updateRailState(group)}
-                className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_2rem)_/_3)] [&::-webkit-scrollbar]:hidden"
+                className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col items-stretch auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_1rem)_/_2)] lg:auto-cols-[calc((100%_-_2rem)_/_3)] xl:auto-cols-[calc((100%_-_3rem)_/_3.5)] [&::-webkit-scrollbar]:hidden"
               >
                 {group.placements.map(renderPlacementCard)}
               </div>

@@ -120,13 +120,13 @@ describe("system UX contract", () => {
     );
   });
 
-  it("keeps Organisation, Solutions and Resources as lightweight balanced tabs", async () => {
+  it("keeps Organisation and unified Solutions as lightweight balanced tabs", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );
 
     expect(detailSource).toContain(
-      "grid w-full grid-cols-3 border-b border-dema-line",
+      "grid w-full grid-cols-2 border-b border-dema-line",
     );
     expect(detailSource).toContain("min-h-11");
     expect(detailSource).toContain(
@@ -136,7 +136,9 @@ describe("system UX contract", () => {
       "border-transparent font-medium text-dema-muted",
     );
     expect(detailSource).not.toContain(
-      "grid w-full grid-cols-3 gap-1 rounded-full",
+      "grid w-full grid-cols-2 gap-1 rounded-full",
     );
+    expect(detailSource).toContain("<SystemResourcesTab");
+    expect(detailSource).toContain('layout="rail"');
   });
 });

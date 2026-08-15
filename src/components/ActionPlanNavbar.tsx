@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, BriefcaseBusiness, ListChecks, Workflow } from "lucide-react";
+import { BookOpen, BriefcaseBusiness, ListChecks } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -8,13 +8,12 @@ import { createPortal } from "react-dom";
 export type ActionPlanView = "plan" | "system" | "academy" | "opportunities";
 
 const tabClassName =
-  "inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-none transition xl:min-h-11 xl:flex-row xl:gap-0 xl:rounded-full xl:px-3 xl:text-sm";
+  "group relative inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 px-1 text-[10px] font-medium leading-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:min-h-11 xl:flex-row xl:gap-2 xl:px-3 xl:text-sm";
 
 const navigationItems = [
   { view: "plan", label: "Plan d’action", Icon: ListChecks },
-  { view: "system", label: "Système", Icon: Workflow },
-  { view: "academy", label: "Académie", Icon: BookOpen },
   { view: "opportunities", label: "Opportunités", Icon: BriefcaseBusiness },
+  { view: "academy", label: "Académie", Icon: BookOpen },
 ] as const;
 
 export default function ActionPlanNavbar({
@@ -45,15 +44,26 @@ export default function ActionPlanNavbar({
   function navigation() {
     return (
       <div
-        className="grid w-full grid-cols-4 gap-1 rounded-[1.45rem] border border-dema-line bg-dema-paper p-1 shadow-[0_8px_24px_rgba(23,35,29,0.06)] lg:rounded-full"
+        className="grid w-full grid-cols-3 gap-1"
         aria-label="Navigation principale"
       >
         {navigationItems.map(({ view, label, Icon }) => {
-          const className = `${tabClassName} ${activeView === view ? "bg-dema-sage text-dema-forest" : "text-dema-muted hover:text-brand-blue"}`;
+          const activeNavigationView = activeView === "system" ? "plan" : activeView;
+          const isActive = activeNavigationView === view;
+          const className = `${tabClassName} ${isActive ? "font-semibold text-dema-forest" : "text-dema-muted hover:text-brand-blue"}`;
           const content = (
             <>
-              <Icon className="h-4 w-4 shrink-0 xl:hidden" aria-hidden="true" />
+              <Icon
+                className={`h-4 w-4 shrink-0 transition ${isActive ? "stroke-[2.3]" : "stroke-[1.8] group-hover:stroke-2"}`}
+                aria-hidden="true"
+              />
               <span className="max-w-full truncate">{label}</span>
+              <span
+                aria-hidden="true"
+                className={`pointer-events-none absolute inset-x-3 bottom-0 h-0.5 origin-center rounded-full bg-dema-forest transition-[transform,opacity] duration-200 ${
+                  isActive ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
+                }`}
+              />
             </>
           );
 
@@ -61,7 +71,7 @@ export default function ActionPlanNavbar({
             <Link
               key={view}
               href={`/?view=${view}`}
-              aria-current={activeView === view ? "page" : undefined}
+              aria-current={isActive ? "page" : undefined}
               className={className}
             >
               {content}
@@ -70,7 +80,7 @@ export default function ActionPlanNavbar({
             <button
               key={view}
               type="button"
-              aria-current={activeView === view ? "page" : undefined}
+              aria-current={isActive ? "page" : undefined}
               onClick={() => selectView(view)}
               className={className}
             >

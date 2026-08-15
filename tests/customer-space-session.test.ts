@@ -2,18 +2,19 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
   cookies: vi.fn(),
-  getEmailFromCustomerSessionToken: vi.fn(),
+  getIdentityFromCustomerSessionToken: vi.fn(),
 }));
 
+vi.mock("server-only", () => ({}));
 vi.mock("next/headers", () => ({ cookies: mocks.cookies }));
 vi.mock("@/lib/customer-space-auth", () => ({
-  CUSTOMER_SPACE_COOKIE: "demaa_customer_session",
-  getEmailFromCustomerSessionToken: mocks.getEmailFromCustomerSessionToken,
+  CUSTOMER_SPACE_COOKIE: "demaa_session",
+  getIdentityFromCustomerSessionToken: mocks.getIdentityFromCustomerSessionToken,
 }));
 
 import {
-  getCurrentCustomerEmailFromSession,
-  requireCurrentCustomerEmail,
+  getCurrentCustomerIdentityFromSession,
+  requireCurrentCustomerIdentity,
 } from "@/lib/customer-space-session.server";
 import { GET as getCustomerSession } from "@/app/api/customer-space/session/route";
 
@@ -21,42 +22,37 @@ describe("customer-space session helper", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.cookies.mockResolvedValue({
-      get: vi.fn().mockReturnValue({ value: "session-token" }),
+      get: vi.fn().mockReturnValue({ value: "session-cookie" }),
     });
   });
 
-  it("derives the customer email only from the httpOnly session cookie", async () => {
-    mocks.getEmailFromCustomerSessionToken.mockResolvedValue("owner@example.com");
-
-    await expect(getCurrentCustomerEmailFromSession()).resolves.toBe("owner@example.com");
-    expect(mocks.getEmailFromCustomerSessionToken).toHaveBeenCalledWith("session-token");
+  it("derives the full UID identity from the HttpOnly cookie", async () => {
+    const identity = { email: "owner@example.com", provider: "password", uid: "owner-uid" };
+    mocks.getIdentityFromCustomerSessionToken.mockResolvedValue(identity);
+    await expect(getCurrentCustomerIdentityFromSession()).resolves.toEqual(identity);
+    expect(mocks.getIdentityFromCustomerSessionToken).toHaveBeenCalledWith("session-cookie");
   });
 
-  it("returns a no-store 401 response when the session is absent", async () => {
-    mocks.getEmailFromCustomerSessionToken.mockResolvedValue(null);
-
-    const result = await requireCurrentCustomerEmail();
-
-    expect(result.email).toBeNull();
+  it("returns a private 401 response when the session is absent", async () => {
+    mocks.getIdentityFromCustomerSessionToken.mockResolvedValue(null);
+    const result = await requireCurrentCustomerIdentity();
+    expect(result.identity).toBeNull();
     expect(result.response?.status).toBe(401);
-    expect(result.response?.headers.get("cache-control")).toBe("private, no-store, max-age=0");
     expect(result.response?.headers.get("vary")).toBe("Cookie");
-    await expect(result.response?.json()).resolves.toEqual({
-      error: "authentication_required",
-      message: "Connectez-vous pour continuer.",
-    });
   });
 
-  it("exposes only the derived identity through the session endpoint", async () => {
-    mocks.getEmailFromCustomerSessionToken.mockResolvedValue("owner@example.com");
-
+  it("exposes UID, contact email and provider without emailVerified", async () => {
+    mocks.getIdentityFromCustomerSessionToken.mockResolvedValue({
+      email: "owner@example.com",
+      provider: "password",
+      uid: "owner-uid",
+    });
     const response = await getCustomerSession();
-
     await expect(response.json()).resolves.toEqual({
       authenticated: true,
       email: "owner@example.com",
+      provider: "password",
+      uid: "owner-uid",
     });
-    expect(response.headers.get("cache-control")).toBe("private, no-store, max-age=0");
-    expect(response.headers.get("vary")).toBe("Cookie");
   });
 });

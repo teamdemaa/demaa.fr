@@ -34,7 +34,7 @@ export default function ActionPlanCommandBar({
   const commandDictation = useSpeechDictation({
     value: command,
     onChange: setCommand,
-    continuous: false,
+    continuous: true,
     interimResults: true,
     maxLength: maximumLength,
   });

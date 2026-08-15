@@ -9,15 +9,31 @@ import {
   appendSpecialistCoachingMessage,
   getCoachingConversationForAdmin,
   getCoachingConversationSummaries,
+  reopenFreeCoachingClarification,
 } from "@/lib/coaching-conversation.server";
-import { logOperationalError } from "@/lib/operational-log";
+import { logOperationalError, logOperationalEvent } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
+import {
+  getExternalRecommendationBySlug,
+  getExternalRecommendationCatalog,
+  isValidExternalRecommendationNeed,
+} from "@/lib/external-recommendation-catalog.server";
+import {
+  getMonthlyAccompanimentBenefitForUid,
+  setExpertAccountantBenefitForUid,
+} from "@/lib/monthly-accompaniment-benefit.server";
 
 export const runtime = "nodejs";
 
 type ReplyBody = {
+  action?: unknown;
+  completeFreeClarification?: unknown;
   conversationId?: unknown;
   message?: unknown;
+  recommendationNeedKey?: unknown;
+  recommendationResourceSlug?: unknown;
+  systemSlug?: unknown;
+  benefitActive?: unknown;
 };
 
 const PRIVATE_NO_STORE_HEADERS = {
@@ -86,15 +102,34 @@ export async function GET(request: Request) {
           { status: 404, headers: PRIVATE_NO_STORE_HEADERS },
         );
       }
+      const monthlyBenefit = conversation.ownerUid
+        ? await getMonthlyAccompanimentBenefitForUid(conversation.ownerUid)
+        : { active: false, source: null, validUntil: null };
       return NextResponse.json(
-        { conversation },
+        {
+          conversation: { ...conversation, monthlyBenefit },
+          recommendationCatalog: getExternalRecommendationCatalog().map((item) => ({
+            category: item.category,
+            name: item.name,
+            needs: item.needs,
+            slug: item.slug,
+          })),
+        },
         { headers: PRIVATE_NO_STORE_HEADERS },
       );
     }
 
     const conversations = await getCoachingConversationSummaries();
     return NextResponse.json(
-      { conversations },
+      {
+        conversations,
+        recommendationCatalog: getExternalRecommendationCatalog().map((item) => ({
+          category: item.category,
+          name: item.name,
+          needs: item.needs,
+          slug: item.slug,
+        })),
+      },
       { headers: PRIVATE_NO_STORE_HEADERS },
     );
   } catch (error) {
@@ -120,17 +155,90 @@ export async function POST(request: Request) {
     const { data, response } = await readJsonBody<ReplyBody>(request, 8 * 1024);
     if (response) return response;
     const conversationId = normalizeText(data?.conversationId, 64);
+    const action = normalizeText(data?.action, 20) || "reply";
     const message = normalizeText(data?.message, 2_000, { multiline: true });
-    if (!/^[a-f0-9]{64}$/.test(conversationId) || message.length < 2) {
+    const recommendationResourceSlug = normalizeText(data?.recommendationResourceSlug, 120);
+    const recommendationNeedKey = normalizeText(data?.recommendationNeedKey, 40);
+    const systemSlug = normalizeText(data?.systemSlug, 120);
+    if (
+      !/^[a-f0-9]{64}$/.test(conversationId)
+      || !["benefit", "reply", "reopen"].includes(action)
+      || (action === "reply" && message.length < 2)
+    ) {
       return NextResponse.json(
         { error: "Réponse invalide." },
         { status: 400, headers: PRIVATE_NO_STORE_HEADERS },
       );
     }
 
+    const recommendationResource = recommendationResourceSlug
+      ? getExternalRecommendationBySlug(recommendationResourceSlug)
+      : null;
+    if (
+      recommendationResourceSlug
+      && (
+        !recommendationResource
+        || !recommendationResource.active
+        || !isValidExternalRecommendationNeed(recommendationResource, recommendationNeedKey)
+      )
+    ) {
+      return NextResponse.json(
+        { error: "Recommandation invalide." },
+        { status: 400, headers: PRIVATE_NO_STORE_HEADERS },
+      );
+    }
+
+    if (action === "reopen") {
+      const result = await reopenFreeCoachingClarification(conversationId);
+      if (!result) {
+        return NextResponse.json(
+          { error: "Conversation introuvable." },
+          { status: 404, headers: PRIVATE_NO_STORE_HEADERS },
+        );
+      }
+      logOperationalEvent("coaching.free_clarification_reopened", {
+        conversationId,
+        previousStatus: result.previousStatus,
+      });
+      return NextResponse.json(
+        { freeStatus: result.freeStatus, ok: true },
+        { status: 200, headers: PRIVATE_NO_STORE_HEADERS },
+      );
+    }
+
+    if (action === "benefit") {
+      const conversation = await getCoachingConversationForAdmin(conversationId);
+      if (!conversation?.ownerUid) {
+        return NextResponse.json(
+          { error: "Conversation introuvable." },
+          { status: 404, headers: PRIVATE_NO_STORE_HEADERS },
+        );
+      }
+      const benefit = await setExpertAccountantBenefitForUid({
+        active: data?.benefitActive === true,
+        uid: conversation.ownerUid,
+      });
+      logOperationalEvent("coaching.expert_accountant_benefit_updated", {
+        active: benefit.active,
+        conversationId,
+      });
+      return NextResponse.json(
+        { monthlyBenefit: benefit, ok: true },
+        { headers: PRIVATE_NO_STORE_HEADERS },
+      );
+    }
+
     const result = await appendSpecialistCoachingMessage({
       body: message,
+      completeFreeClarification: data?.completeFreeClarification === true,
       conversationId,
+      recommendation: recommendationResource
+        ? {
+            needKey: recommendationNeedKey || null,
+            resourceSlug: recommendationResource.slug,
+            systemSlug: systemSlug || null,
+          }
+        : null,
     });
     if (!result) {
       return NextResponse.json(
@@ -139,8 +247,17 @@ export async function POST(request: Request) {
       );
     }
 
+    if (data?.completeFreeClarification === true) {
+      logOperationalEvent("coaching.free_clarification_completed", { conversationId });
+    }
+
     return NextResponse.json(
-      { message: result.message, ok: true },
+      {
+        freeStatus: result.freeStatus,
+        message: result.message,
+        ok: true,
+        recommendation: result.recommendation,
+      },
       { status: 201, headers: PRIVATE_NO_STORE_HEADERS },
     );
   } catch (error) {

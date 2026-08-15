@@ -17,18 +17,13 @@ const PUBLIC_SOLUTION_SECTION_VISIBILITY = readJson(publicSolutionVisibilityPath
 const SOLUTION_SECTION_ORDER = ["software", "services", "providers", "networks"]
   .filter((section) => PUBLIC_SOLUTION_SECTION_VISIBILITY[section]);
 const CANONICAL_SERVICE_SLUGS = [
-  "automatisation-processus",
+  "coach-business",
   "expert-comptable",
-  "formalites-juridiques",
-  "sous-traitance-formalites-juridiques",
-  "marketing-vente",
-  "assistance-facturation",
+  "automatisation-processus",
+  "gestion-reseaux-sociaux",
+  "publicite-en-ligne",
+  "prospection-ciblee",
 ];
-const LEGAL_SUBCONTRACTING_SYSTEM_SLUGS = new Set([
-  "cabinet-comptable",
-  "cabinet-davocat",
-  "notaire",
-]);
 const FIREBASE_V2_REVISION_ID = "solutions-2026-08-08-active-v2";
 const TRANSVERSAL_PURCHASING_SECTORS = new Set([
   "Conseil & services aux entreprises",
@@ -99,12 +94,6 @@ export function buildExpectedSolutionOrders(options = {}) {
           if (enterprise.slug === "cabinet-comptable" && serviceSlug === "expert-comptable") {
             return false;
           }
-          if (
-            serviceSlug === "sous-traitance-formalites-juridiques" &&
-            !LEGAL_SUBCONTRACTING_SYSTEM_SLUGS.has(enterprise.slug)
-          ) {
-            return false;
-          }
           return true;
         });
       }
@@ -132,7 +121,7 @@ function countOccurrences(source, value) {
 }
 
 export function getTabs() {
-  return ["process", "solutions", "resources"];
+  return ["process", "solutions"];
 }
 
 export function getExpectedCallTexts(tab) {
@@ -356,8 +345,25 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
     if (renderedHtml.includes(">Prestations</h3>")) {
       errors.push("temporarily hidden Prestations section is visible");
     }
-    if (renderedHtml.includes("data-system-resource-card")) {
-      errors.push("Resource cards leaked into Solutions");
+    resourceCardCount = countOccurrences(
+      renderedHtml,
+      "data-system-resource-card",
+    );
+    if (resourceCardCount !== EXPECTED_TEMPLATE_TITLES.length) {
+      errors.push(
+        `expected ${EXPECTED_TEMPLATE_TITLES.length} Resource cards, found ${resourceCardCount}`,
+      );
+    }
+    for (const resourceTitle of EXPECTED_TEMPLATE_TITLES) {
+      const action = resourceTitle === "Récapitulatif du système"
+        ? "Ouvrir"
+        : "Voir un aperçu de";
+      if (!renderedHtml.includes(`aria-label="${action} ${resourceTitle}"`)) {
+        errors.push(`missing Resource card: ${resourceTitle}`);
+      }
+    }
+    if (renderedHtml.includes("data-guide-resource-card")) {
+      errors.push("Upcoming guides leaked into Resources");
     }
 
     const payload = getSerializedSolutionPayload(html);
@@ -366,55 +372,9 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
     } else if (FORBIDDEN_SOLUTION_RELATIONSHIP.test(payload)) {
       errors.push("forbidden Demaa/ODEMA/partner claim in Solution payload");
     }
-  }
-
-  if (tab === "resources") {
-    resourceCardCount = countOccurrences(
-      renderedHtml,
-      "data-system-resource-card",
-    );
-
-    guideCardCount = countOccurrences(
-      renderedHtml,
-      "data-guide-resource-card",
-    );
-
-    if (resourceCardCount !== EXPECTED_TEMPLATE_TITLES.length) {
-      errors.push(
-        `expected ${EXPECTED_TEMPLATE_TITLES.length} template cards, found ${resourceCardCount}`,
-      );
-    }
-    for (const resourceTitle of EXPECTED_TEMPLATE_TITLES) {
-      const action = resourceTitle === "Récapitulatif du système"
-        ? "Ouvrir"
-        : "Voir un aperçu de";
-      if (!renderedHtml.includes(`aria-label="${action} ${resourceTitle}"`)) {
-        errors.push(`missing template card: ${resourceTitle}`);
-      }
-    }
-    if (guideCardCount !== 2) {
-      errors.push(`expected 2 upcoming guide cards, found ${guideCardCount}`);
-    }
     for (const guideTitle of HIDDEN_UNIVERSAL_GUIDE_TITLES) {
       if (renderedHtml.includes(guideTitle)) {
         errors.push(`hidden universal guide is still visible: ${guideTitle}`);
-      }
-    }
-    if (countOccurrences(renderedHtml, "Bientôt disponible") !== 2) {
-      errors.push("expected exactly 2 upcoming guide labels");
-    }
-    if (countOccurrences(renderedHtml, "Être informé(e)") !== 2) {
-      errors.push("expected exactly 2 guide notification controls");
-    }
-    if (renderedHtml.includes("data-solution-resource-card")) {
-      errors.push("Solution cards leaked into Resources");
-    }
-    for (const callText of [
-      ...getExpectedCallTexts("process"),
-      ...getExpectedCallTexts("solutions"),
-    ]) {
-      if (renderedHtml.includes(callText)) {
-        errors.push(`custom offer leaked into Resources: ${callText}`);
       }
     }
   }
@@ -524,7 +484,6 @@ export async function runAudit(options = {}) {
   const results = await runPool(tasks, concurrency);
   const failures = results.filter((result) => result.errors.length);
   const solutionResults = results.filter((result) => result.tab === "solutions");
-  const resourceResults = results.filter((result) => result.tab === "resources");
 
   return {
     baseUrl,
@@ -535,16 +494,16 @@ export async function runAudit(options = {}) {
       (result) => result.tab === "process" && result.status === 200,
     ).length,
     solutionsStatus200: solutionResults.filter((result) => result.status === 200).length,
-    resourcesStatus200: resourceResults.filter((result) => result.status === 200).length,
+    resourcesStatus200: solutionResults.filter((result) => result.status === 200).length,
     solutionCards: solutionResults.reduce(
       (total, result) => total + result.solutionCardCount,
       0,
     ),
-    resourceCards: resourceResults.reduce(
+    resourceCards: solutionResults.reduce(
       (total, result) => total + result.resourceCardCount,
       0,
     ),
-    guideCards: resourceResults.reduce(
+    guideCards: solutionResults.reduce(
       (total, result) => total + result.guideCardCount,
       0,
     ),

@@ -197,6 +197,12 @@ export async function updateOpportunityStatus(
     .doc(opportunityId);
   const snapshot = await reference.get();
   if (!snapshot.exists) return false;
-  await reference.update({ status, updatedAt: new Date().toISOString() });
+  const now = new Date().toISOString();
+  const existing = snapshot.data() as { publishedAt?: unknown } | undefined;
+  await reference.update({
+    status,
+    updatedAt: now,
+    ...(status === "open" && !existing?.publishedAt ? { publishedAt: now } : {}),
+  });
   return true;
 }

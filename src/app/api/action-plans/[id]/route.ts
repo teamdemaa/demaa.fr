@@ -1,14 +1,12 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import {
   actionPlanUpdateRequestSchema,
   actionPlanDeleteRequestSchema,
-  getCurrentCustomerEmail,
+  getCurrentCustomerIdentity,
   noStoreHeaders,
   withNoStore,
 } from "@/lib/action-plan-api.server";
 import {
-  ACTION_PLAN_ACCESS_COOKIE,
   ActionPlanRevisionConflictError,
   InvalidActionPlanMutationError,
   deleteActionPlanForAccess,
@@ -36,10 +34,13 @@ export async function PATCH(
   });
   if (limited) return withNoStore(limited);
 
-  const email = await getCurrentCustomerEmail();
-  const cookieStore = await cookies();
-  const temporaryAccessToken =
-    cookieStore.get(ACTION_PLAN_ACCESS_COOKIE)?.value || null;
+  const identity = await getCurrentCustomerIdentity();
+  if (!identity) {
+    return NextResponse.json(
+      { error: "Authentification requise." },
+      { status: 401, headers: noStoreHeaders() },
+    );
+  }
 
   const { id } = await params;
   if (!/^[A-Za-z0-9_-]{12,64}$/.test(id)) {
@@ -61,14 +62,13 @@ export async function PATCH(
 
   try {
     const updated = await updateActionPlanWorkspaceForAccess({
-      email,
+      uid: identity.uid,
       id,
       expectedRevision: parsed.data.expectedRevision,
       generation: parsed.data.generation,
       plan: parsed.data.plan,
       sourceText: parsed.data.sourceText,
       title: parsed.data.title,
-      temporaryAccessToken,
       workspaceState: parsed.data.workspaceState,
     });
     if (!updated) {
@@ -137,17 +137,19 @@ export async function DELETE(
     );
   }
 
-  const email = await getCurrentCustomerEmail();
-  const cookieStore = await cookies();
-  const temporaryAccessToken =
-    cookieStore.get(ACTION_PLAN_ACCESS_COOKIE)?.value || null;
+  const identity = await getCurrentCustomerIdentity();
+  if (!identity) {
+    return NextResponse.json(
+      { error: "Authentification requise." },
+      { status: 401, headers: noStoreHeaders() },
+    );
+  }
 
   try {
     const deleted = await deleteActionPlanForAccess({
-      email,
+      uid: identity.uid,
       id,
       expectedRevision: parsed.data.expectedRevision,
-      temporaryAccessToken,
     });
     if (!deleted) {
       return NextResponse.json(
@@ -156,12 +158,10 @@ export async function DELETE(
       );
     }
 
-    const result = NextResponse.json(
+    return NextResponse.json(
       { status: "deleted", ...deleted },
       { headers: noStoreHeaders() },
     );
-    result.cookies.delete(ACTION_PLAN_ACCESS_COOKIE);
-    return result;
   } catch (error) {
     if (error instanceof ActionPlanRevisionConflictError) {
       return NextResponse.json(

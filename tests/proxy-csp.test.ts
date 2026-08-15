@@ -72,6 +72,7 @@ describe("proxy content security policy", () => {
   });
 
   it.each([
+    "/academy/contenu-inconnu",
     "/modeles-de-documents/ancien-modele",
     "/ressources/ancien-modele",
   ])("returns a real 404 for retired route %s", (pathname) => {

@@ -107,7 +107,9 @@ export default function AcademyCoursePlayer({
       ...(content.kind === "course" ? [{ type: "intro" as const }] : []),
       ...content.lessons.map((_, lessonIndex) => ({ type: "lesson" as const, lessonIndex })),
       { type: "recap" as const },
-      ...content.quiz.questions.map((_, questionIndex) => ({ type: "quiz" as const, questionIndex })),
+      ...(content.kind === "course"
+        ? content.quiz.questions.map((_, questionIndex) => ({ type: "quiz" as const, questionIndex }))
+        : []),
       { type: "finish" as const },
     ],
     [content.kind, content.lessons, content.quiz.questions],

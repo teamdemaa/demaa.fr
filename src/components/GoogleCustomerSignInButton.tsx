@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   hasFirebaseGoogleAuthConfiguration,
+  isFirebaseGoogleAuthAllowedOnCurrentHost,
   signInWithGoogleAndGetIdToken,
 } from "@/lib/firebase-client-auth";
 
@@ -22,37 +23,41 @@ function getGoogleErrorMessage(error: unknown) {
   if (code.includes("unauthorized-domain")) {
     return "La connexion Google n’est pas encore autorisée sur ce domaine.";
   }
+  if (code.includes("account-exists-with-different-credential")) {
+    return "Cette adresse utilise déjà un mot de passe. Connectez-vous avec celui-ci pour lier Google au même compte.";
+  }
   return error instanceof Error
     ? error.message
     : "La connexion Google n’a pas pu aboutir.";
 }
 
 export default function GoogleCustomerSignInButton({
-  actionPlanId,
   onAuthenticated,
   onError,
   returnTo = "/plans",
 }: {
-  actionPlanId?: string | null;
-  onAuthenticated?: (email: string) => Promise<void> | void;
+  onAuthenticated?: (result: { redirectTo: string }) => Promise<void> | void;
   onError?: (message: string | null) => void;
   returnTo?: string;
 }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  if (!hasFirebaseGoogleAuthConfiguration()) return null;
+  if (
+    !hasFirebaseGoogleAuthConfiguration()
+    || !isFirebaseGoogleAuthAllowedOnCurrentHost()
+  ) return null;
 
   async function signIn() {
     setIsLoading(true);
     onError?.(null);
 
     try {
-      const { email, idToken } = await signInWithGoogleAndGetIdToken();
-      const response = await fetch("/api/customer-space/google", {
+      const { idToken } = await signInWithGoogleAndGetIdToken();
+      const response = await fetch("/api/customer-space/firebase-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ actionPlanId, idToken, returnTo }),
+        body: JSON.stringify({ idToken, returnTo }),
       });
       const payload = (await response.json().catch(() => null)) as
         | { error?: string; redirectTo?: string }
@@ -62,9 +67,12 @@ export default function GoogleCustomerSignInButton({
         throw new Error(payload?.error || "La connexion Google n’a pas pu aboutir.");
       }
 
-      if (email) await onAuthenticated?.(email);
-      router.push(payload.redirectTo);
-      router.refresh();
+      if (onAuthenticated) {
+        await onAuthenticated({ redirectTo: payload.redirectTo });
+      } else {
+        router.push(payload.redirectTo);
+        router.refresh();
+      }
     } catch (error) {
       onError?.(getGoogleErrorMessage(error));
     } finally {

@@ -296,16 +296,16 @@ export function createActionPlanWorkspaceState(
 }
 
 /**
- * Starts a generated plan while preserving only the deterministic System
- * choices made before generation. Action and Strategy state always comes from
- * the newly generated plan.
+ * Starts a generated plan on the System identified by that plan while
+ * preserving the deterministic catalogue choices made before generation.
+ * Action and Strategy state always comes from the newly generated plan.
  */
 export function createGeneratedActionPlanWorkspaceState(
   plan: PersistableActionPlan,
   previous: ActionPlanWorkspaceState,
 ): ActionPlanWorkspaceState {
   const generated = createActionPlanWorkspaceState(plan);
-  const selectedSystemId = previous.selectedSystemId ?? plan.systemId;
+  const selectedSystemId = plan.systemId;
   const savedSystemIds = Array.from(
     new Set([
       ...previous.savedSystemIds,

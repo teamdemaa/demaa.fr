@@ -6,7 +6,41 @@ export type CoachingMessage = Readonly<{
   createdAt: string;
   id: string;
 }>;
+export type CoachingRecommendationStatus =
+  | "closed"
+  | "connected"
+  | "recommended"
+  | "requested"
+  | "withdrawn";
+export type CoachingRecommendation = Readonly<{
+  category: string;
+  connectionProcess: string;
+  createdAt: string;
+  description: string;
+  id: string;
+  included: readonly string[];
+  limits: readonly string[];
+  messageId: string;
+  name: string;
+  needKey: string | null;
+  needLabel: string | null;
+  requestedAt: string | null;
+  resourceVersion: string;
+  status: CoachingRecommendationStatus;
+}>;
+export type CoachingRecommendationCatalogOption = Readonly<{
+  category: string;
+  name: string;
+  needs: readonly Readonly<{ key: string; label: string }>[];
+  slug: string;
+}>;
+export type CoachingFreeStatus = "available" | "open" | "completed";
+export type CoachingAccess = Readonly<{
+  canSend: boolean;
+  freeStatus: CoachingFreeStatus;
+}>;
 export type CoachingConversationSummary = Readonly<{
+  freeStatus: CoachingFreeStatus;
   customerEmail: string;
   id: string;
   lastMessage: string;

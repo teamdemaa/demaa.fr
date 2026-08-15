@@ -1,9 +1,9 @@
 "use client";
 
-import { X } from "lucide-react";
-import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Plus, X } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AppLibrarySearch from "@/components/AppLibrarySearch";
+import OpportunitySubmissionDialog from "@/components/OpportunitySubmissionDialog";
 import ProviderProfileModal from "@/components/ProviderProfileModal";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import type { ExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
@@ -64,6 +64,7 @@ function OpportunityDetailsDialog({
   return (
     <div className="fixed inset-0 z-[100] flex items-end justify-center bg-brand-blue/35 p-0 backdrop-blur-[2px] sm:items-center sm:p-5">
       <div
+        id="opportunity-details-dialog"
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
@@ -155,6 +156,10 @@ export default function PublicOpportunitiesClient({
   const [localSelected, setLocalSelected] = useState<PublicOpportunity | null>(null);
   const [applicationOpportunity, setApplicationOpportunity] =
     useState<PublicOpportunity | null>(null);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [submissionOpen, setSubmissionOpen] = useState(false);
+  const [submissionNotice, setSubmissionNotice] = useState<string | null>(null);
+  const autoSubmissionTokenRef = useRef("");
   const selected = initialOpportunityId
     ? opportunities.find(
       (entry) => entry.opportunityId === initialOpportunityId,
@@ -169,6 +174,18 @@ export default function PublicOpportunitiesClient({
     setLocalSelected(null);
     onOpportunityChange?.(undefined);
   }, [onOpportunityChange, selected]);
+  const closeProfile = useCallback(() => {
+    setProfileOpen(false);
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("intent") !== "team-demaa-profile") return;
+    url.searchParams.delete("intent");
+    url.searchParams.delete("expertiseId");
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `${url.pathname}${url.search}${url.hash}`,
+    );
+  }, []);
   const categories = useMemo(
     () => [
       ALL_OPPORTUNITY_CATEGORIES,
@@ -185,6 +202,7 @@ export default function PublicOpportunitiesClient({
         opportunity.title,
         opportunity.summary,
         opportunity.category,
+        opportunity.domainLabel ?? "",
         OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
         opportunity.workMode
           ? OPPORTUNITY_WORK_MODE_LABELS[opportunity.workMode]
@@ -202,6 +220,13 @@ export default function PublicOpportunitiesClient({
   );
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get("intent") !== "team-demaa-profile") return;
+    const timeout = window.setTimeout(() => setProfileOpen(true), 0);
+    return () => window.clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
     if (!initialEmail) return;
     const searchParams = new URLSearchParams(window.location.search);
     if (searchParams.get("intent") !== "opportunity") return;
@@ -217,31 +242,87 @@ export default function PublicOpportunitiesClient({
     return () => window.clearTimeout(timeout);
   }, [initialEmail, opportunities]);
 
+  useEffect(() => {
+    if (!initialEmail) return;
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("intent") !== "opportunity-submit") return;
+    const draftToken = url.searchParams.get("draftToken") ?? "";
+    if (!/^[A-Za-z0-9_-]{43}$/.test(draftToken)) return;
+    if (autoSubmissionTokenRef.current === draftToken) return;
+    autoSubmissionTokenRef.current = draftToken;
+
+    void fetch("/api/opportunity-submissions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ draftToken }),
+    }).then(async (response) => {
+      const payload = await response.json().catch(() => null) as {
+        error?: string;
+        ok?: boolean;
+      } | null;
+      if (!response.ok || !payload?.ok) {
+        throw new Error(payload?.error || "L’opportunité n’a pas pu être envoyée.");
+      }
+      window.sessionStorage.removeItem("demaa_opportunity_submission_draft");
+      url.searchParams.delete("intent");
+      url.searchParams.delete("draftToken");
+      window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+      setSubmissionNotice("Votre opportunité a été transmise à l’équipe Demaa pour modération.");
+    }).catch((submissionError: unknown) => {
+      autoSubmissionTokenRef.current = "";
+      setSubmissionOpen(true);
+      setSubmissionNotice(
+        submissionError instanceof Error
+          ? submissionError.message
+          : "L’opportunité n’a pas pu être envoyée.",
+      );
+    });
+  }, [initialEmail]);
+
   return (
     <>
-      <div className="pt-3">
-        <AppLibrarySearch
-          activeFilter={activeCategory}
-          filters={categories}
-          isFilterOpen={areCategoryTagsVisible}
-          onFilterSelect={(category) => {
-            setActiveCategory(category);
-            setQuery("");
-            setAreCategoryTagsVisible(false);
-          }}
-          onFilterToggle={() => setAreCategoryTagsVisible((visible) => !visible)}
-          onQueryChange={(value) => {
-            setQuery(value);
-            setActiveCategory(ALL_OPPORTUNITY_CATEGORIES);
-          }}
-          placeholder="Rechercher un besoin ou une expertise…"
-          query={query}
-        />
+      <div className="mx-auto grid w-full max-w-[39.25rem] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 pt-3">
+        <div className="min-w-0 flex-1">
+          <AppLibrarySearch
+            activeFilter={activeCategory}
+            filters={categories}
+            isFilterOpen={areCategoryTagsVisible}
+            onFilterSelect={(category) => {
+              setActiveCategory(category);
+              setQuery("");
+              setAreCategoryTagsVisible(false);
+            }}
+            onFilterToggle={() => setAreCategoryTagsVisible((visible) => !visible)}
+            onQueryChange={(value) => {
+              setQuery(value);
+              setActiveCategory(ALL_OPPORTUNITY_CATEGORIES);
+            }}
+            placeholder="Rechercher un besoin ou une expertise…"
+            query={query}
+            unconstrained
+          />
+        </div>
+        <button
+          type="button"
+          onClick={() => setSubmissionOpen(true)}
+          aria-label="Soumettre une opportunité"
+          title="Soumettre une opportunité"
+          className="inline-flex h-11 w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-dema-line bg-white text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 md:w-auto md:px-4"
+        >
+          <Plus className="h-4 w-4" aria-hidden="true" />
+          <span className="hidden text-sm font-medium md:inline">Soumettre</span>
+        </button>
       </div>
 
-      <div className="mt-6 space-y-4">
+      {submissionNotice ? (
+        <p className="mt-4 rounded-xl bg-dema-sage px-4 py-3 text-sm text-dema-forest" role="status">
+          {submissionNotice}
+        </p>
+      ) : null}
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-2">
         {filtered.map((opportunity) => (
-          <article key={opportunity.opportunityId}>
+          <article key={opportunity.opportunityId} className="h-full">
             <button
               type="button"
               onClick={() => {
@@ -249,20 +330,28 @@ export default function PublicOpportunitiesClient({
                 onOpportunityChange?.(opportunity.opportunityId);
               }}
               aria-label={`Ouvrir l’opportunité : ${opportunity.title}`}
-              className="group block w-full rounded-[1.2rem] border border-dema-line bg-white p-5 text-left shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/25 hover:bg-dema-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest sm:p-6"
+              aria-haspopup="dialog"
+              aria-expanded={selected?.opportunityId === opportunity.opportunityId}
+              aria-controls="opportunity-details-dialog"
+              className={`group flex h-[20rem] w-full flex-col rounded-[1.2rem] border bg-white p-5 text-left shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/25 hover:bg-dema-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest sm:h-72 sm:p-6 ${selected?.opportunityId === opportunity.opportunityId ? "border-dema-forest/45" : "border-dema-line"}`}
             >
-              <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">
-                {[
-                  OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
-                  opportunity.category,
-                ].filter(Boolean).join(" · ")}
-              </p>
-              <h2 className="mt-2 text-lg font-normal tracking-[-0.015em] text-brand-blue sm:text-xl">
+              <h2 className="line-clamp-2 min-h-[2.75rem] text-lg font-medium leading-snug tracking-[-0.015em] text-brand-blue sm:text-xl">
                 {opportunity.title}
               </h2>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-dema-muted">
+              <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-dema-muted sm:line-clamp-2">
                 {opportunity.summary}
               </p>
+              <div className="mt-auto flex flex-wrap gap-2 pt-5" aria-label="Caractéristiques de l’opportunité">
+                {Array.from(new Set([
+                  opportunity.category,
+                  opportunity.domainLabel,
+                  OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
+                ].filter((value): value is string => Boolean(value)))).slice(0, 3).map((tag, index) => (
+                  <span key={tag} className={`inline-flex min-h-8 items-center rounded-[0.45rem] px-3 text-xs font-medium ${index === 0 ? "bg-dema-sage/70 text-dema-forest" : index === 1 ? "border border-dema-line bg-dema-paper text-brand-blue" : "bg-[#f3f3ef] text-dema-muted"}`}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </button>
           </article>
         ))}
@@ -274,22 +363,15 @@ export default function PublicOpportunitiesClient({
         </p>
       ) : null}
 
-      <aside className="mt-12 rounded-[1.2rem] border border-dema-line bg-dema-paper px-5 py-6 sm:flex sm:items-center sm:justify-between sm:gap-8 sm:px-6">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">
-            Rejoindre Team Demaa
-          </p>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-dema-muted">
-            Présentez votre profil une seule fois et soyez contacté lorsqu’un besoin correspond à votre expertise.
-          </p>
-        </div>
-        <Link
-          href="/rejoindre-team-demaa"
-          className="mt-5 inline-flex min-h-11 shrink-0 items-center justify-center rounded-full border border-dema-forest/20 bg-white px-5 text-sm font-medium text-dema-forest transition hover:bg-dema-sage sm:mt-0"
+      <div className="mt-10 text-center">
+        <button
+          type="button"
+          onClick={() => setProfileOpen(true)}
+          className="inline-flex min-h-11 items-center px-1 text-sm font-medium text-dema-forest underline decoration-dema-line underline-offset-4 transition hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
         >
-          Présenter mon profil
-        </Link>
-      </aside>
+          Rejoindre Team Demaa
+        </button>
+      </div>
 
       {selected ? (
         <OpportunityDetailsDialog
@@ -305,6 +387,35 @@ export default function PublicOpportunitiesClient({
           initialEmail={initialEmail}
           opportunity={applicationOpportunity}
           onClose={() => setApplicationOpportunity(null)}
+        />
+      ) : null}
+
+      {profileOpen ? (
+        <ProviderProfileModal
+          expertises={expertises}
+          initialEmail={initialEmail}
+          onClose={closeProfile}
+        />
+      ) : null}
+
+      {submissionOpen ? (
+        <OpportunitySubmissionDialog
+          initialEmail={initialEmail}
+          onClose={() => setSubmissionOpen(false)}
+          onSubmitted={() => {
+            const url = new URL(window.location.href);
+            if (url.searchParams.get("intent") === "opportunity-submit") {
+              url.searchParams.delete("intent");
+              url.searchParams.delete("draftToken");
+              window.history.replaceState(
+                window.history.state,
+                "",
+                `${url.pathname}${url.search}${url.hash}`,
+              );
+            }
+            setSubmissionOpen(false);
+            setSubmissionNotice("Votre opportunité a été transmise à l’équipe Demaa pour modération.");
+          }}
         />
       ) : null}
     </>

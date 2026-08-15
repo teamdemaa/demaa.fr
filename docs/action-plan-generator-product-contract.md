@@ -1,7 +1,7 @@
 # D-076 — Contrat produit du générateur de plan d'action
 
 - Statut : `validated`
-- Date de consolidation : 12 août 2026
+- Date de consolidation : 13 août 2026
 - Propriétaires de décision : utilisatrice + Master Demaa
 - Portée : entrée libre, génération IA V3, résultat, multi-plans,
   multi-systèmes, dictée, persistance, mesure d'usage et garde-fous
@@ -172,14 +172,15 @@ concurrent :
 Ces contrôles vivent dans l'interface unique de l'application. Ils ne
 réintroduisent ni page publique `Mon espace`, ni page publique `Mes plans`.
 
-### Onglet Système
+### Vue Solutions
 
 - Le Système détecté est sélectionné par défaut.
 - Une dropdown discrète permet de choisir l'un des 115 Systèmes.
-- Le changement charge son Organisation, ses Solutions et ses Ressources
-  existantes. `Organisation` est le libellé public de l'onglet ; le slug
-  technique historique `process` reste stable pour préserver les données et
-  les anciennes URLs.
+- Le changement charge uniquement ses Solutions dans l'application.
+- Les routines Organisation et les modèles Ressources restent dans les banques
+  canoniques du Système ; lorsqu'ils correspondent avec une confiance
+  suffisante à une Action, ils sont affichés directement dans son panneau de
+  détail, sans appel IA et sans dupliquer les données.
 - Il ne déclenche aucun appel IA.
 - Il ne réécrit pas les Actions générées.
 
@@ -188,7 +189,7 @@ contenu canonique existant chargé à partir du `systemId` courant.
 
 Un plan sauvegardé peut mémoriser plusieurs Systèmes consultés. L'espace de
 travail conserve leur liste sans doublon, le Système actif, ainsi que les
-coches d'Organisation et sélections Solutions séparément pour chaque Système. Ajouter
+sélections Solutions séparément pour chaque Système. Ajouter
 ou sélectionner un Système ne déclenche pas d'appel IA et ne modifie pas les
 Actions.
 
@@ -206,34 +207,39 @@ envoyé ou conservé par Demaa dans ce lot.
 ### Avant connexion
 
 La homepage conserve le grand champ comme entrée principale, mais la navigation
-`Plan d’action / Système / Académie / Opportunités` est visible et utilisable
-dès l'arrivée. Le visiteur peut donc consulter un Système, l'Académie ou les
-Opportunités sans générer de plan et sans créer de compte. Ses choix Système
-restent en mémoire de page jusqu'à une sauvegarde volontaire.
+`Plan d’action / Opportunités / Académie` est visible et utilisable dès
+l'arrivée. Le visiteur peut consulter les Actions ou les Solutions depuis les
+deux sous-onglets du Plan, ainsi que les Opportunités ou l'Académie, sans
+générer de plan et sans créer de compte. Les anciennes URLs utilisant
+`view=system` restent acceptées, mais tout nouveau lien applicatif vers les
+Solutions utilise `view=plan&planTab=solutions` et conserve le contexte
+`system`, `systemTab` et `resource`. Les routes publiques `/systemes` ne sont
+pas renommées. Les fiches publiques conservent
+`Organisation / Solutions / Ressources`, tandis que la vue intégrée n'affiche
+que Solutions. Ses choix Système restent en mémoire
+de page jusqu'à une sauvegarde volontaire.
 
 Les univers publics `/systemes` et `/academie`, leur navigation et leur SEO
 restent accessibles. L'ADR 0008 ne transforme pas ces routes en espace privé.
 Une fiche publique Système propose une entrée explicite `Ouvrir dans Demaa`.
-Dans l'application, la vue, le Système, l'onglet, la ressource ouverte, le
+Dans l'application, la vue, le Système, la solution ouverte, le
 contenu Académie ou l'Opportunité sélectionnée sont encodés dans une URL
 partageable et restaurés par navigation arrière. L'URL publique canonique
 reste indexable ; l'URL applicative conserve le contexte de travail.
 
-Le lien magique conserve le même `returnTo` sûr mais adapte son contenu au
-parcours : plan, spécialiste, Opportunité ou accès générique. Il ne prétend
-plus qu'un plan a été sauvegardé lorsque la personne cherchait uniquement à
-continuer un autre parcours.
+Le compte e-mail et mot de passe conserve un `returnTo` sûr adapté au parcours :
+plan, équipe Demaa, Opportunité ou accès générique. Google utilise le même
+endpoint de session et le même mécanisme de retour.
 
 ### Après connexion
 
 La même navigation applicative est conservée. Coaching reste accessible depuis
-l'action compacte `Parler à un spécialiste`, conformément aux ADR 0009 et
+l'action compacte `Échanger`, conformément aux ADR 0009 et
 0010, sans devenir un cinquième onglet.
 
-`Coaching` désigne le produit. Dans l'interface, la personne qui accompagne est
-toujours désignée comme un `spécialiste` : l'action de messagerie porte le
-libellé `Écrire à un spécialiste`. Les termes `coach` et `votre coach` ne sont
-pas utilisés comme libellés humains.
+La surface porte le titre `Échanger avec l’équipe Demaa`. La copie précise que
+l'équipe mobilise le spécialiste adapté ; les termes `coach` et `votre coach`
+ne sont pas utilisés comme libellés humains.
 
 ## Persistance
 
@@ -244,8 +250,11 @@ pas utilisés comme libellés humains.
 - Seul le slug du Système choisi est mémorisé dans ce navigateur pour éviter
   de redemander l'activité à chaque visite ; aucun contenu de plan, aucune
   situation et aucune donnée métier détaillée n'y sont stockés.
-- Une actualisation ou une fermeture peut faire perdre le résultat.
-- Le résultat est visible avant connexion.
+- Une actualisation ou une fermeture pendant la génération ou l'accès peut
+  faire perdre le résultat non sauvegardé.
+- Le résultat généré reste en mémoire et n'est révélé qu'après la création ou
+  la reprise d'un accès. Un plan vierge peut encore être préparé avant cette
+  étape.
 
 ### Après sauvegarde
 
@@ -255,14 +264,12 @@ pas utilisés comme libellés humains.
   seule, révocable, limité et non indexable.
 - Aucun miroir local durable concurrent n'est maintenu.
 
-Pour un invité, la sauvegarde crée un plan temporaire `pending_claim` avec un
-accès limité à trente jours par cookie HttpOnly et un secret non stocké en
-clair. Le lien magique associe le jeton, l'e-mail normalisé et ce plan ; sa
-consommation rattache atomiquement le plan à l'adresse vérifiée. Pour une
-personne déjà connectée, la sauvegarde crée directement le plan actif puis
-ouvre sa page persistée. Les modifications y sont enregistrées avec révision
-optimiste et prolongent la durée de conservation depuis la dernière mise à
-jour.
+Pendant la génération, l'invité voit uniquement l'écran de progression et les
+questions éditoriales. Lorsque le résultat est prêt, un écran d'accès compact
+est présenté avant toute révélation. Après création ou reprise de session, la
+sauvegarde crée directement le plan actif puis ouvre sa page persistée. Les
+modifications y sont enregistrées avec révision optimiste. Le plan vierge reste
+le seul parcours pouvant commencer temporairement avant une modification utile.
 
 Lorsqu'une session connectée revient dans l'application sans demander une
 nouvelle situation, `/plans` restaure le dernier plan sauvegardé. S'il n'en
@@ -270,14 +277,12 @@ existe aucun, l'application ouvre explicitement `/?new=1`. Le paramètre
 `new=1` est donc réservé à la création volontaire d'un plan vierge et ne doit
 jamais remplacer silencieusement un plan déjà enregistré.
 
-L'identité e-mail est établie par un fournisseur vérifié puis matérialisée dans
-la session Demaa. Le lien magique reste le parcours universel. Google via
-Firebase Auth peut être proposé comme raccourci progressif, avec le même e-mail
-et la même session, uniquement lorsque sa configuration et ses domaines sont
-validés ; il reste sinon entièrement masqué. Aucun mot de passe, second compte
-ou portail parallèle n'est créé. Une fois la session créée, les formulaires fonctionnels
+L'identité primaire est un compte e-mail et mot de passe Firebase, matérialisé
+par un cookie de session Firebase natif et son UID. Demaa ne reçoit ni ne
+stocke le mot de passe. Google utilise exactement la même session. L'UID est
+l'unique clé d'autorisation des plans, conversations et brouillons. Une fois la session Firebase créée, les formulaires fonctionnels
 (guides métier, Opportunités, Coaching, inscription et demandes) réutilisent
-l'e-mail vérifié côté serveur et ne le redemandent pas. Un visiteur non
+l'e-mail de la session côté serveur et ne le redemandent pas. Un visiteur non
 connecté qui déclenche l'une de ces actions passe d'abord par l'un de ces
 parcours vérifiés, puis revient directement à son intention dans l'application. Il n'existe pas
 d'expérience publique distincte `Mon espace` ou `Mes plans`.
@@ -386,17 +391,27 @@ sont implémentés derrière des limites conservatrices réversibles.
 
 ## Extensions explicitement différées
 
-La première version de l'accès à un spécialiste fait partie de l'application
-conformément à l'ADR 0009 : Messages ouverts par défaut, puis Formules. Les
-formules visibles sont `Clarté` à 149 EUR HT/mois et une seule carte `Maestro`
-dont le sélecteur affiche 1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois.
-`Clarté` apporte un regard extérieur pour décider et avancer ; `Maestro` aide
-le dirigeant à donner le cap et organiser l'exécution sans rester au centre de
-tout. Les CTA transmettent une intention sans déclencher de paiement.
+La première version de l'accès à l'équipe Demaa fait partie de l'application
+conformément à l'ADR 0009 : une conversation écrite ou vocale simple, sans
+onglets Messages/Formules. Chaque UID Firebase dispose d'une première
+clarification offerte, clôturée manuellement par la Team Demaa avec sa réponse
+finale. L'offre `Coach business` est présentée séparément dans Services : son
+sélecteur affiche 1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois. Son CTA
+`Être rappelé(e)` transmet une intention sans connexion ni paiement public.
+La Team Demaa qualifie ensuite le besoin, le matching et le rythme avec le
+dirigeant.
+
+Un accompagnement mensuel actif ouvre 12 % de réduction sur les autres
+prestations directement facturées par Demaa. Coach business est confirmé par
+Stripe ; une relation Expert-comptable est confirmée manuellement par la Team
+Demaa. Les avantages ne se cumulent pas. Les honoraires de partenaires ou
+d'experts-comptables, les budgets média, logiciels et frais de tiers restent
+exclus. Le droit est vérifié côté serveur à partir de l'UID avant devis ou
+paiement.
 Restent
 au backlog, sans modifier cette première version :
 
-- une nouvelle frontière entre phase gratuite et phase payante ;
+- les limites raisonnables d'usage et la capacité opérationnelle ;
 - les évolutions de capacité humaine et de promesse de délai ;
 - les nouveaux canaux ou formats de messagerie ;
 - les évolutions de droits, confidentialité et conservation des échanges ;

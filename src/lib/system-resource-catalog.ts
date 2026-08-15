@@ -365,3 +365,12 @@ export function getSystemResourcesForSystem(systemSlug: string): readonly System
 
   return [...sharedResources, ...plannedGuides];
 }
+
+export function getAvailableSystemTemplatesForSystem(
+  systemSlug: string,
+): readonly SystemResource[] {
+  return getSystemResourcesForSystem(systemSlug).filter(
+    (resource) =>
+      resource.availability === "available" && resource.format === "template",
+  );
+}

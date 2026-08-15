@@ -55,6 +55,7 @@ export default function PolitiqueCookiesPage() {
               <li><strong>un compteur serveur agrégé des ouvertures de systèmes</strong>, sans cookie, adresse email, adresse IP enregistrée ni identifiant visiteur ;</li>
               <li><strong>du stockage local navigateur</strong> pour mémoriser certaines informations utiles à l&apos;assistant et à l&apos;expérience utilisateur ;</li>
               <li><strong>des éléments techniques de session ou de sécurité</strong> nécessaires au bon fonctionnement du site.</li>
+              <li><strong>les éléments techniques strictement nécessaires de Stripe</strong> lorsque vous ouvrez sa page sécurisée de paiement ou son portail de facturation ;</li>
             </ul>
       </CookieSection>
 
@@ -97,7 +98,7 @@ export default function PolitiqueCookiesPage() {
               Le contexte d&apos;attribution conservé dans le navigateur expire après 90 jours. Le choix de consentement expire après 6 mois.
             </p>
             <p>
-              Lorsque vous choisissez d&apos;enregistrer un plan, un cookie essentiel, sécurisé et inaccessible au JavaScript, permet d&apos;ouvrir uniquement ce plan pendant 30 jours au maximum. Il est remplacé par la session vérifiée après ouverture du lien magique.
+              Après authentification par e-mail et mot de passe ou Google, un cookie de session Firebase essentiel, sécurisé et inaccessible au JavaScript maintient votre connexion pendant 14 jours au maximum. Le plan généré avant cette étape reste uniquement dans la mémoire de la page ouverte et n&apos;est révélé qu&apos;après l&apos;authentification.
             </p>
       </CookieSection>
 

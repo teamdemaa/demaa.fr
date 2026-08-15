@@ -4,6 +4,7 @@ vi.mock("server-only", () => ({}));
 
 import {
   composeCanonicalServicesForSystem,
+  composePublicSolutionSectionsForSystem,
   getCanonicalServiceSlugsForSystem,
 } from "@/lib/canonical-services-system-section.server";
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
@@ -117,20 +118,29 @@ describe("canonical Services composition in every system", () => {
 
   it("applies the explicit eligibility matrix to regulated professions", () => {
     expect(getCanonicalServiceSlugsForSystem("restaurant")).toEqual([
+      "coach-business",
+      "expert-comptable",
       "automatisation-processus",
-      "formalites-juridiques",
-      "marketing-vente",
-      "assistance-facturation",
+      "gestion-reseaux-sociaux",
+      "publicite-en-ligne",
+      "prospection-ciblee",
     ]);
     expect(getCanonicalServiceSlugsForSystem("cabinet-comptable")).toEqual([
+      "coach-business",
       "automatisation-processus",
-      "formalites-juridiques",
-      "sous-traitance-formalites-juridiques",
-      "marketing-vente",
-      "assistance-facturation",
+      "gestion-reseaux-sociaux",
+      "publicite-en-ligne",
+      "prospection-ciblee",
     ]);
-    expect(getCanonicalServiceSlugsForSystem("cabinet-davocat")).toHaveLength(5);
-    expect(getCanonicalServiceSlugsForSystem("notaire")).toHaveLength(5);
+    expect(getCanonicalServiceSlugsForSystem("cabinet-davocat")).toEqual([
+      "coach-business",
+      "expert-comptable",
+      "automatisation-processus",
+      "gestion-reseaux-sociaux",
+      "publicite-en-ligne",
+      "prospection-ciblee",
+    ]);
+    expect(getCanonicalServiceSlugsForSystem("notaire")).toHaveLength(6);
   });
 
   it("places relevant catalog sections in order without mutating registry data", () => {
@@ -181,6 +191,20 @@ describe("canonical Services composition in every system", () => {
       .not.toEqual(saas.find(({ section }) => section === "aids"));
   });
 
+  it("filters after composition so public payloads expose only Tools and Services", () => {
+    const inputSnapshot = structuredClone(sectionsWithLegacyReferral);
+    const sections = composePublicSolutionSectionsForSystem(
+      "cabinet-comptable",
+      sectionsWithLegacyReferral,
+    );
+
+    expect(sections.map(({ section }) => section)).toEqual(["software", "services"]);
+    expect(JSON.stringify(sections)).not.toMatch(
+      /Fournisseur Test|Financement|Aides et subventions|Réseaux professionnels|Anciens modèles/,
+    );
+    expect(sectionsWithLegacyReferral).toEqual(inputSnapshot);
+  });
+
   it("replaces legacy service placements and removes duplicate referrals on Cabinet comptable", () => {
     const sections = composeCanonicalServicesForSystem(
       "cabinet-comptable",
@@ -191,11 +215,11 @@ describe("canonical Services composition in every system", () => {
 
     expect(services?.placements.map(({ resource }) => resource.resourceSlug))
       .toEqual([
+        "coach-business",
         "automatisation-processus",
-        "formalites-juridiques",
-        "sous-traitance-formalites-juridiques",
-        "marketing-vente",
-        "assistance-facturation",
+        "gestion-reseaux-sociaux",
+        "publicite-en-ligne",
+        "prospection-ciblee",
       ]);
     expect(services?.placements.filter(({ resource }) =>
       resource.resourceSlug === "expert-comptable"

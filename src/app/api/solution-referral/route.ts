@@ -14,7 +14,7 @@ import { parseSolutionReferralPayload } from "@/lib/service-solution-request-con
 import { getSolutionReferralDisclosure } from "@/lib/solution-referral-disclosures.server";
 import { getExpertiseReferralDisclosure } from "@/lib/solution-referral-disclosures.server";
 import { getExpertiseReferralContext } from "@/lib/expertise-solutions.server";
-import { requireCurrentCustomerEmail } from "@/lib/customer-space-session.server";
+import { requireCurrentCustomerIdentity } from "@/lib/customer-space-session.server";
 import {
   getPublishedSolutionPlacementsForSystem,
   getPublishedSolutionResourceBySlug,
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     const blockedOrigin = enforceSameOrigin(request);
     if (blockedOrigin) return blockedOrigin;
 
-    const customer = await requireCurrentCustomerEmail();
+    const customer = await requireCurrentCustomerIdentity();
     if (customer.response) return customer.response;
 
     const limitedByIp = await enforceServiceRequestRateLimit(request, {
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     try {
       payload = {
         ...parseSolutionReferralPayload(data),
-        email: customer.email,
+        email: customer.identity.email,
       };
     } catch {
       return NextResponse.json(

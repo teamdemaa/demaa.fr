@@ -11,6 +11,7 @@ export default function AppLibrarySearch({
   onQueryChange,
   placeholder,
   query,
+  unconstrained = false,
 }: {
   activeFilter: string;
   filters: readonly string[];
@@ -20,9 +21,13 @@ export default function AppLibrarySearch({
   onQueryChange: (query: string) => void;
   placeholder: string;
   query: string;
+  unconstrained?: boolean;
 }) {
   return (
-    <div className="relative mx-auto w-full max-w-xl xl:w-[min(40vw,36rem)]">
+    <div className={unconstrained
+      ? "relative w-full"
+      : "relative mx-auto w-full max-w-xl xl:w-[min(40vw,36rem)]"}
+    >
       <div className="demaa-search-shell p-1">
         <div className="relative">
           <Search

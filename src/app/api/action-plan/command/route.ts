@@ -18,7 +18,7 @@ import {
   getAiUsageSubjectHash,
   recordAiUsage,
 } from "@/lib/ai-usage-ledger.server";
-import { getCurrentCustomerEmailFromSession } from "@/lib/customer-space-session.server";
+import { getCurrentCustomerIdentityFromSession } from "@/lib/customer-space-session.server";
 import { logOperationalError } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 
@@ -34,16 +34,16 @@ function json(data: unknown, status = 200) {
   return noStore(NextResponse.json(data, { status }));
 }
 
-function hashAccountIdentity(email: string) {
+function hashAccountIdentity(uid: string) {
   return createHash("sha256")
-    .update(`action-plan-command:${email.trim().toLowerCase()}`)
+    .update(`action-plan-command:${uid}`)
     .digest("hex");
 }
 
 async function enforceCommandRateLimits(request: Request) {
-  const email = await getCurrentCustomerEmailFromSession();
+  const identity = await getCurrentCustomerIdentityFromSession();
 
-  if (email) {
+  if (identity) {
     const accountLimit = await enforceRateLimit(
       request,
       {
@@ -51,14 +51,14 @@ async function enforceCommandRateLimits(request: Request) {
         limit: 30,
         windowMs: 10 * 60 * 1_000,
       },
-      hashAccountIdentity(email),
+      hashAccountIdentity(identity.uid),
     );
     if (accountLimit) return accountLimit;
   }
 
   return enforceRateLimit(request, {
     keyPrefix: "action-plan-command-ip",
-    limit: email ? 60 : 8,
+    limit: identity ? 60 : 8,
     windowMs: 10 * 60 * 1_000,
   });
 }
@@ -126,10 +126,10 @@ export async function POST(request: Request) {
     applyActionPlanCommandOperations(planResult.data, workspace, operations);
 
     try {
-      const accountEmail = await getCurrentCustomerEmailFromSession();
+      const identity = await getCurrentCustomerIdentityFromSession();
       await recordAiUsage({
         operation: "action_plan_command",
-        subjectHash: getAiUsageSubjectHash(request, accountEmail),
+        subjectHash: getAiUsageSubjectHash(request, identity?.uid ?? null),
         ...generation,
       });
     } catch {

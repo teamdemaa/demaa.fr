@@ -9,7 +9,7 @@ import SystemResourcesTab from "@/components/SystemResourcesTab";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
-import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
+import { getAvailableSystemTemplatesForSystem } from "@/lib/system-resource-catalog";
 import { getVisibleContextualAcademyCaseStudy } from "@/lib/academy-case-study-placement";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 import {
@@ -49,7 +49,6 @@ const systemTabDefinitions: ReadonlyArray<{
 }> = [
   { slug: "process", label: "Organisation" },
   { slug: "solutions", label: "Solutions" },
-  { slug: "resources", label: "Ressources" },
 ];
 
 const EMPTY_SOLUTION_SECTIONS: readonly RenderableSolutionSectionDto[] = [];
@@ -77,7 +76,7 @@ export default function SystemDetailContent({
 }: SystemDetailContentProps) {
   const router = useRouter();
   const scopedResources = useMemo(
-    () => getSystemResourcesForSystem(system.slug),
+    () => getAvailableSystemTemplatesForSystem(system.slug),
     [system.slug],
   );
   const contextualCaseStudy = useMemo(
@@ -183,7 +182,7 @@ export default function SystemDetailContent({
 
       <div className={`flex justify-start ${embedded ? "mt-1" : "mt-8 sm:mt-9"}`}>
         <div
-          className="grid w-full grid-cols-3 border-b border-dema-line"
+          className="grid w-full grid-cols-2 border-b border-dema-line"
           role="tablist"
           aria-label="Contenu du système métier"
           aria-orientation="horizontal"
@@ -227,19 +226,17 @@ export default function SystemDetailContent({
         ) : null}
 
         {activeTab === "solutions" ? (
-          <SystemSolutionsTab
-            sections={solutionSections}
-            initialResourceSlug={initialResourceSlug}
-            onResourceSlugChange={onResourceSlugChange}
-            selectedPlacementIds={selectableSolutions ? selectedSolutionIds : undefined}
-            onToggleSelection={selectableSolutions ? toggleSolution : undefined}
-          />
-        ) : null}
-
-        {activeTab === "resources" ? (
           <div className="space-y-10">
+            <SystemSolutionsTab
+              sections={solutionSections}
+              initialResourceSlug={initialResourceSlug}
+              onResourceSlugChange={onResourceSlugChange}
+              selectedPlacementIds={selectableSolutions ? selectedSolutionIds : undefined}
+              onToggleSelection={selectableSolutions ? toggleSolution : undefined}
+            />
             <SystemResourcesTab
-              resources={scopedResources.filter((resource) => resource.format === "template")}
+              layout="rail"
+              resources={scopedResources}
               systemSlug={system.slug}
             />
             {contextualCaseStudy ? (

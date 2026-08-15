@@ -5,6 +5,7 @@ import {
   compatibleActionPlanWorkspaceStateSchema,
   compactActionPlanSteps,
   createActionPlanWorkspaceState,
+  createGeneratedActionPlanWorkspaceState,
   normalizeActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
 
@@ -21,6 +22,29 @@ describe("action plan workspace state", () => {
     expect(workspace.addedActions).toEqual([]);
     expect(workspace.savedSystemIds).toEqual([ACTION_PLAN_DEMO.systemId]);
     expect(ACTION_PLAN_DEMO.actions[0]?.title).toBeTruthy();
+  });
+
+  it("opens a generated plan on its generated system while preserving earlier catalogue choices", () => {
+    const previous = createActionPlanWorkspaceState(ACTION_PLAN_DEMO);
+    previous.selectedSolutionPlacementIdsBySystem.restaurant = ["restaurant-solution"];
+    const generatedPlan = {
+      ...ACTION_PLAN_DEMO,
+      systemId: "cabinet-de-conseil" as const,
+    };
+
+    const workspace = createGeneratedActionPlanWorkspaceState(
+      generatedPlan,
+      previous,
+    );
+
+    expect(workspace.selectedSystemId).toBe("cabinet-de-conseil");
+    expect(workspace.savedSystemIds).toEqual([
+      "restaurant",
+      "cabinet-de-conseil",
+    ]);
+    expect(workspace.selectedSolutionPlacementIdsBySystem.restaurant).toEqual([
+      "restaurant-solution",
+    ]);
   });
 
   it("keeps valid user progress while dropping tasks that do not belong to the plan", () => {

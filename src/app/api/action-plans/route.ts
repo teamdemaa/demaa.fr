@@ -1,16 +1,13 @@
 import { NextResponse } from "next/server";
 import {
   actionPlanWriteRequestSchema,
-  getCurrentCustomerEmail,
+  getCurrentCustomerIdentity,
   noStoreHeaders,
   withNoStore,
 } from "@/lib/action-plan-api.server";
 import {
-  ACTION_PLAN_ACCESS_COOKIE,
-  createOwnedActionPlan,
-  createPendingActionPlan,
-  getActionPlanAccessCookieOptions,
-  getOwnedActionPlans,
+  createOwnedActionPlanForIdentity,
+  getOwnedActionPlansForIdentity,
 } from "@/lib/action-plan-storage.server";
 import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
@@ -22,15 +19,15 @@ export async function GET(request: Request) {
   const blockedHost = enforceAllowedHost(request);
   if (blockedHost) return withNoStore(blockedHost);
 
-  const email = await getCurrentCustomerEmail();
-  if (!email) {
+  const identity = await getCurrentCustomerIdentity();
+  if (!identity) {
     return NextResponse.json(
       { error: "Authentification requise." },
       { status: 401, headers: noStoreHeaders() },
     );
   }
 
-  const plans = await getOwnedActionPlans(email);
+  const plans = await getOwnedActionPlansForIdentity(identity);
   return NextResponse.json({ plans }, { headers: noStoreHeaders() });
 }
 
@@ -58,30 +55,17 @@ export async function POST(request: Request) {
     );
   }
 
-  const email = await getCurrentCustomerEmail();
-  if (email) {
-    const actionPlan = await createOwnedActionPlan(email, parsed.data);
-    const result = NextResponse.json(
-      { status: "saved", actionPlan },
-      { status: 201, headers: noStoreHeaders() },
+  const identity = await getCurrentCustomerIdentity();
+  if (!identity) {
+    return NextResponse.json(
+      { error: "Authentification requise." },
+      { status: 401, headers: noStoreHeaders() },
     );
-    result.cookies.delete(ACTION_PLAN_ACCESS_COOKIE);
-    return result;
   }
 
-  const pending = await createPendingActionPlan(parsed.data);
-  const result = NextResponse.json(
-    {
-      status: "pending_claim",
-      actionPlanId: pending.id,
-      revision: pending.revision,
-    },
+  const actionPlan = await createOwnedActionPlanForIdentity(identity, parsed.data);
+  return NextResponse.json(
+    { status: "saved", actionPlan },
     { status: 201, headers: noStoreHeaders() },
   );
-  result.cookies.set(
-    ACTION_PLAN_ACCESS_COOKIE,
-    pending.temporaryAccessToken,
-    getActionPlanAccessCookieOptions(),
-  );
-  return result;
 }

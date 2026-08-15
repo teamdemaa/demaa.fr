@@ -6,7 +6,7 @@ const mocks = vi.hoisted(() => ({
   enforceAllowedHost: vi.fn(),
   enforceRateLimit: vi.fn(),
   enforceSameOrigin: vi.fn(),
-  requireCurrentCustomerEmail: vi.fn(),
+  requireCurrentCustomerIdentity: vi.fn(),
   getExpertiseById: vi.fn(),
   getOpportunityById: vi.fn(),
   logOperationalError: vi.fn(),
@@ -36,7 +36,7 @@ vi.mock("@/lib/email", () => ({
   normalizeEmail: (value: string) => value.trim().toLowerCase(),
 }));
 vi.mock("@/lib/customer-space-session.server", () => ({
-  requireCurrentCustomerEmail: mocks.requireCurrentCustomerEmail,
+  requireCurrentCustomerIdentity: mocks.requireCurrentCustomerIdentity,
 }));
 vi.mock("@/lib/lead-attribution-server", () => ({
   resolveLeadAttribution: mocks.resolveLeadAttribution,
@@ -91,8 +91,8 @@ describe("provider profile submission route", () => {
     mocks.enforceAllowedHost.mockReturnValue(null);
     mocks.enforceSameOrigin.mockReturnValue(null);
     mocks.enforceRateLimit.mockResolvedValue(null);
-    mocks.requireCurrentCustomerEmail.mockResolvedValue({
-      email: "maya@example.com",
+    mocks.requireCurrentCustomerIdentity.mockResolvedValue({
+      identity: { email: "maya@example.com", provider: "password", uid: "maya-uid" },
       response: null,
     });
     mocks.getExpertiseById.mockResolvedValue({
@@ -125,8 +125,8 @@ describe("provider profile submission route", () => {
   });
 
   it("refuses guests before accepting a provider profile", async () => {
-    mocks.requireCurrentCustomerEmail.mockResolvedValue({
-      email: null,
+    mocks.requireCurrentCustomerIdentity.mockResolvedValue({
+      identity: null,
       response: Response.json({ error: "authentication_required" }, { status: 401 }),
     });
 

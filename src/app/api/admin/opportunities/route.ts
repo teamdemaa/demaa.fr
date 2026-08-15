@@ -32,6 +32,7 @@ type CreateBody = {
   category?: unknown;
   companyName?: unknown;
   compensation?: unknown;
+  domainLabel?: unknown;
   expertiseId?: unknown;
   expiresAt?: unknown;
   expectations?: unknown;
@@ -65,6 +66,7 @@ async function normalizeOpportunityFields(body: CreateBody | null) {
   const summary = normalizeText(body?.summary, 700, { multiline: true });
   const category = normalizeText(body?.category, 100);
   const expertiseId = normalizeText(body?.expertiseId, 100) || null;
+  const domainLabel = normalizeText(body?.domainLabel, 100) || null;
   const opportunityType = (
     normalizeText(body?.opportunityType, 40) || "mission"
   ) as OpportunityType;
@@ -96,6 +98,7 @@ async function normalizeOpportunityFields(body: CreateBody | null) {
       category,
       companyName,
       compensation,
+      domainLabel,
       expertiseId,
       expiresAt,
       expectations,

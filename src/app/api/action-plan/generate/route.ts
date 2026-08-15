@@ -6,7 +6,7 @@ import {
   getAiUsageSubjectHash,
   recordAiUsage,
 } from "@/lib/ai-usage-ledger.server";
-import { getCurrentCustomerEmailFromSession } from "@/lib/customer-space-session.server";
+import { getCurrentCustomerIdentityFromSession } from "@/lib/customer-space-session.server";
 import { logOperationalError } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 
@@ -86,8 +86,8 @@ export async function POST(request: Request) {
     );
 
     try {
-      const accountEmail = await getCurrentCustomerEmailFromSession();
-      const subjectHash = getAiUsageSubjectHash(request, accountEmail);
+      const identity = await getCurrentCustomerIdentityFromSession();
+      const subjectHash = getAiUsageSubjectHash(request, identity?.uid ?? null);
       await recordAiUsage({
         operation: "action_plan_generation",
         subjectHash,

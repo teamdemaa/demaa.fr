@@ -28,8 +28,18 @@ export const ACADEMY_PERMANENT_REDIRECTS = [
     destination: "/academie",
     permanent: true,
   },
+  {
+    source: "/academy",
+    destination: "/academie",
+    permanent: true,
+  },
   ...ACADEMY_CONTENT_SLUGS.map((slug) => ({
     source: `/cours/${slug}`,
+    destination: `/academie/${slug}`,
+    permanent: true,
+  })),
+  ...ACADEMY_CONTENT_SLUGS.map((slug) => ({
+    source: `/academy/${slug}`,
     destination: `/academie/${slug}`,
     permanent: true,
   })),
@@ -42,6 +52,11 @@ export const ACADEMY_PERMANENT_REDIRECTS = [
       },
       {
         source: `/academie/${legacySlug}`,
+        destination: `/academie/${canonicalSlug}`,
+        permanent: true,
+      },
+      {
+        source: `/academy/${legacySlug}`,
         destination: `/academie/${canonicalSlug}`,
         permanent: true,
       },

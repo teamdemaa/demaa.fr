@@ -1,3 +1,6 @@
+import { isCoachingMessageDraftToken } from "@/lib/coaching-message-draft";
+import { isOpportunitySubmissionDraftToken } from "@/lib/opportunity-submission";
+
 const INTENT_PARAM = "intent";
 const SAFE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const SAVED_PLAN_PATH_PATTERN = /^\/plans\/[A-Za-z0-9_-]{1,80}(?:\?[^\r\n]*)?$/;
@@ -8,11 +11,18 @@ const COACHING_OFFERS = [
   "pilotage_2",
 ] as const;
 type CoachingOffer = (typeof COACHING_OFFERS)[number];
+type CoachingTab = "formules" | "messages";
 
 export type CustomerAccessIntent =
-  | { kind: "coaching"; offer?: CoachingOffer }
+  | {
+      kind: "coaching";
+      draftToken?: string;
+      offer?: CoachingOffer;
+      tab?: CoachingTab;
+    }
   | { kind: "guide-notify"; resourceSlug: string; systemSlug: string }
   | { kind: "opportunity"; opportunityId: string }
+  | { kind: "opportunity-submit"; draftToken: string }
   | { kind: "solution-referral"; resourceSlug: string; systemSlug: string }
   | { kind: "structure" }
   | { kind: "structure-problem" }
@@ -45,6 +55,21 @@ export function buildCustomerIntentReturnTo(intent: CustomerAccessIntent) {
     params.set("offer", intent.offer);
   }
 
+  if (intent.kind === "coaching" && intent.tab) {
+    params.set("tab", intent.tab);
+  }
+
+  if (intent.kind === "coaching" && intent.draftToken) {
+    if (
+      intent.tab === "formules"
+      || !isCoachingMessageDraftToken(intent.draftToken)
+    ) {
+      throw new Error("Invalid coaching draft intent.");
+    }
+    params.set("tab", "messages");
+    params.set("draftToken", intent.draftToken);
+  }
+
   if (intent.kind === "guide-notify" || intent.kind === "solution-referral") {
     if (!isSafeId(intent.systemSlug) || !isSafeId(intent.resourceSlug)) {
       throw new Error("Invalid guide notification intent.");
@@ -58,6 +83,13 @@ export function buildCustomerIntentReturnTo(intent: CustomerAccessIntent) {
       throw new Error("Invalid opportunity intent.");
     }
     params.set("opportunityId", intent.opportunityId);
+  }
+
+  if (intent.kind === "opportunity-submit") {
+    if (!isOpportunitySubmissionDraftToken(intent.draftToken)) {
+      throw new Error("Invalid opportunity submission draft intent.");
+    }
+    params.set("draftToken", intent.draftToken);
   }
 
   return `/?${params.toString()}`;
@@ -87,9 +119,23 @@ export function parseCustomerAccessIntent(value?: string | null): CustomerAccess
 
   if (kind === "coaching") {
     const offer = url.searchParams.get("offer");
-    if (!offer) return { kind };
-    if (!COACHING_OFFERS.includes(offer as CoachingOffer)) return null;
-    return { kind, offer: offer as CoachingOffer };
+    const rawTab = url.searchParams.get("tab");
+    const draftToken = url.searchParams.get("draftToken");
+    const tab: CoachingTab | undefined = rawTab === "messages" || rawTab === "formules"
+      ? rawTab
+      : undefined;
+    if (rawTab && !tab) return null;
+    if (offer && !COACHING_OFFERS.includes(offer as CoachingOffer)) return null;
+    if (
+      draftToken
+      && (!isCoachingMessageDraftToken(draftToken) || tab === "formules")
+    ) return null;
+    return {
+      kind,
+      ...(offer ? { offer: offer as CoachingOffer } : {}),
+      ...(draftToken ? { draftToken } : {}),
+      ...(draftToken ? { tab: "messages" as const } : tab ? { tab } : {}),
+    };
   }
 
   if (kind === "guide-notify" || kind === "solution-referral") {
@@ -103,6 +149,12 @@ export function parseCustomerAccessIntent(value?: string | null): CustomerAccess
     const opportunityId = url.searchParams.get("opportunityId");
     if (!isSafeId(opportunityId)) return null;
     return { kind, opportunityId: opportunityId! };
+  }
+
+  if (kind === "opportunity-submit") {
+    const draftToken = url.searchParams.get("draftToken");
+    if (!isOpportunitySubmissionDraftToken(draftToken)) return null;
+    return { kind, draftToken };
   }
 
   return null;
@@ -122,8 +174,12 @@ export function getSafeCustomerReturnTo(value?: string | null) {
   }
 
   const candidate = normalizeLegacyCustomerPath(rawCandidate);
-  if (SAVED_PLAN_PATH_PATTERN.test(candidate)) return candidate;
   const parsedIntent = parseCustomerAccessIntent(candidate);
+  if (SAVED_PLAN_PATH_PATTERN.test(candidate)) {
+    return candidate.includes(`${INTENT_PARAM}=`) && !parsedIntent
+      ? "/"
+      : candidate;
+  }
 
   if (candidate.includes(`${INTENT_PARAM}=`)) {
     return parsedIntent ? buildCustomerIntentReturnTo(parsedIntent) : "/";

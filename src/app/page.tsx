@@ -4,10 +4,11 @@ import { redirect } from "next/navigation";
 import ActionPlanExperience from "@/components/ActionPlanExperience";
 import Navbar from "@/components/Navbar";
 import { parseActionPlanAppContext } from "@/lib/action-plan-app-context";
+import { shouldRedirectAuthenticatedHomeToPlans } from "@/lib/action-plan-home-routing";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import {
   CUSTOMER_SPACE_COOKIE,
-  getEmailFromCustomerSessionToken,
+  getIdentityFromCustomerSessionToken,
 } from "@/lib/customer-space-auth";
 
 const title = "Un plan d’action concret pour votre entreprise | Demaa";
@@ -38,6 +39,7 @@ export default async function HomePage({
     new?: string | string[];
     opportunity?: string | string[];
     opportunityId?: string | string[];
+    planTab?: string | string[];
     resource?: string | string[];
     resourceSlug?: string | string[];
     system?: string | string[];
@@ -48,26 +50,30 @@ export default async function HomePage({
 }) {
   const [cookieStore, query] = await Promise.all([cookies(), searchParams]);
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
-  const email = await getEmailFromCustomerSessionToken(sessionToken);
+  const identity = await getIdentityFromCustomerSessionToken(sessionToken);
   const initialAppContext = parseActionPlanAppContext(query);
   const requestedIntent = Array.isArray(query.intent) ? query.intent[0] : query.intent;
   const requestedNewPlan = Array.isArray(query.new) ? query.new[0] : query.new;
 
-  if (
-    email
-    && initialAppContext.view === "plan"
-    && !requestedIntent
-    && requestedNewPlan !== "1"
-  ) {
+  if (shouldRedirectAuthenticatedHomeToPlans({
+    isAuthenticated: Boolean(identity),
+    appContext: initialAppContext,
+    requestedIntent,
+    requestedNewPlan,
+  })) {
     redirect("/plans");
   }
 
   return (
     <>
-      <Navbar anonymousLanding isAuthenticated={Boolean(email)} minimal />
+      <Navbar anonymousLanding isAuthenticated={Boolean(identity)} minimal />
       <ActionPlanExperience
-        initialEmail={email || ""}
+        initialEmail={identity?.email ?? ""}
+        initialIsAuthenticated={Boolean(identity)}
         initialAppContext={initialAppContext}
+        initialStructureIntent={
+          requestedIntent === "structure" || requestedIntent === "structure-problem"
+        }
         systemOptions={actionPlanSystemOptions}
       />
     </>

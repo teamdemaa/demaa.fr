@@ -3,8 +3,12 @@
 import dynamic from "next/dynamic";
 import { LoaderCircle, RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { AcademyContentDefinition } from "@/lib/academy-course-content";
-import type { PublicLiveTraining } from "@/lib/live-session-catalog";
+import AcademyIndexClient from "@/components/AcademyIndexClient";
+import {
+  invalidateActionPlanAcademyPayload,
+  loadActionPlanAcademyPayload,
+  readCachedActionPlanAcademyPayload,
+} from "@/lib/action-plan-academy-payload.client";
 
 const AcademyCoursePlayer = dynamic(
   () => import("@/components/AcademyCoursePlayer"),
@@ -18,58 +22,32 @@ const AcademyCoursePlayer = dynamic(
   },
 );
 
-const AcademyIndexClient = dynamic(
-  () => import("@/components/AcademyIndexClient"),
-  {
-    loading: () => (
-      <div className="flex min-h-64 items-center justify-center text-sm text-dema-muted">
-        <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-        Chargement de l’Académie…
-      </div>
-    ),
-  },
-);
-
-type AcademyPayload = {
-  contents: AcademyContentDefinition[];
-  liveTrainings: PublicLiveTraining[];
-};
-
 export default function ActionPlanAcademyPanel({
   initialContentSlug,
   onContentChange,
+  showStructureNewsletter = false,
 }: {
   initialContentSlug?: string;
   onContentChange?: (contentSlug?: string) => void;
+  showStructureNewsletter?: boolean;
 }) {
-  const [payload, setPayload] = useState<AcademyPayload | null>(null);
+  const [payload, setPayload] = useState(
+    readCachedActionPlanAcademyPayload,
+  );
   const [error, setError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
-    const controller = new AbortController();
+    let active = true;
 
-    void fetch("/api/action-plan/academy", {
-      signal: controller.signal,
-      cache: "no-store",
-    })
-      .then(async (response) => {
-        const body = (await response.json().catch(() => null)) as
-          | AcademyPayload
-          | { error?: string }
-          | null;
-
-        if (!response.ok || !body || !("contents" in body)) {
-          throw new Error("Impossible de charger l’Académie.");
-        }
-
+    void loadActionPlanAcademyPayload()
+      .then((body) => {
+        if (!active) return;
         setPayload(body);
         setError(null);
       })
       .catch((fetchError: unknown) => {
-        if (fetchError instanceof DOMException && fetchError.name === "AbortError") {
-          return;
-        }
+        if (!active) return;
         setError(
           fetchError instanceof Error
             ? fetchError.message
@@ -77,7 +55,9 @@ export default function ActionPlanAcademyPanel({
         );
       });
 
-    return () => controller.abort();
+    return () => {
+      active = false;
+    };
   }, [reloadKey]);
 
   if (error) {
@@ -86,7 +66,12 @@ export default function ActionPlanAcademyPanel({
         <p className="text-sm text-dema-muted">{error}</p>
         <button
           type="button"
-          onClick={() => setReloadKey((value) => value + 1)}
+          onClick={() => {
+            invalidateActionPlanAcademyPayload();
+            setPayload(null);
+            setError(null);
+            setReloadKey((value) => value + 1);
+          }}
           className="demaa-secondary-button mt-4 min-h-11 gap-2"
         >
           <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -130,8 +115,8 @@ export default function ActionPlanAcademyPanel({
     <div className="-mx-4 sm:-mx-6 lg:-mx-8">
       <AcademyIndexClient
         contents={payload.contents}
-        liveTrainings={payload.liveTrainings}
         embedded
+        showStructureNewsletter={showStructureNewsletter}
         onOpenContent={(content) => {
           onContentChange?.(content.identity.slug);
         }}

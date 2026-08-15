@@ -12,6 +12,9 @@ import {
   SavedActionPlanSelector,
 } from "@/components/SavedActionPlanControls";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
+import ActionPlanWorkspaceTabs, {
+  type ActionPlanWorkspaceTab,
+} from "@/components/ActionPlanWorkspaceTabs";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
 import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
@@ -23,6 +26,7 @@ import {
   isBlankManualActionPlan,
   isManualActionPlan,
 } from "@/lib/action-plan-manual";
+import { scheduleActionPlanAcademyPayloadPreload } from "@/lib/action-plan-academy-preload.client";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 import {
   addActionPlanWorkspaceAction,
@@ -40,6 +44,7 @@ export default function SavedActionPlanDetail({
   systemOptions,
   availablePlans,
   initialEmail = "",
+  initialIsAuthenticated = true,
 }: {
   plan: PersistableActionPlan;
   planId: string;
@@ -50,11 +55,13 @@ export default function SavedActionPlanDetail({
   systemOptions: readonly ActionPlanSystemOption[];
   availablePlans: readonly SavedActionPlanOption[];
   initialEmail?: string;
+  initialIsAuthenticated?: boolean;
 }) {
   const router = useRouter();
   const { context: appContext, navigate: navigateAppContext } =
     useActionPlanAppContext(initialAppContext);
   const activeTab = appContext.view;
+  const activePlanTab = appContext.planTab ?? "actions";
   const [currentPlan, setCurrentPlan] = useState(plan);
   const [planTitle, setPlanTitle] = useState(initialTitle);
   const [workspace, setWorkspace] = useState(initialWorkspace);
@@ -75,8 +82,28 @@ export default function SavedActionPlanDetail({
   const saveTimeoutRef = useRef<number | null>(null);
   const mountedRef = useRef(true);
 
+  useEffect(() => scheduleActionPlanAcademyPayloadPreload(), []);
+
   function selectAppView(view: ActionPlanView) {
-    navigateAppContext({ ...appContext, view });
+    navigateAppContext({
+      ...appContext,
+      view: view === "system" ? "plan" : view,
+      planTab: view === "system" ? "solutions" : undefined,
+      solutionResourceSlug: undefined,
+    });
+  }
+
+  function selectPlanTab(planTab: ActionPlanWorkspaceTab) {
+    navigateAppContext({
+      ...appContext,
+      view: "plan",
+      planTab,
+      systemId: planTab === "solutions"
+        ? workspace.selectedSystemId || currentPlan.systemId || undefined
+        : undefined,
+      systemTab: planTab === "solutions" ? "solutions" : undefined,
+      solutionResourceSlug: undefined,
+    });
   }
 
   const flushWorkspaceSave = useCallback(() => {
@@ -321,86 +348,104 @@ export default function SavedActionPlanDetail({
       <ActionPlanCoachingControl
         existingPlanId={planId}
         initialEmail={initialEmail}
+        isAuthenticated={initialIsAuthenticated}
       />
       <div className="pt-1">
-        <div hidden={activeTab !== "plan"}>
-          <div className="mb-4 flex items-center justify-between gap-3">
-            <SavedActionPlanSelector
-              availablePlans={availablePlans}
-              inputRef={titleInputRef}
-              onResetTitle={() => setPlanTitle(confirmedTitleRef.current)}
-              onTitleChange={setPlanTitle}
-              planId={planId}
-              title={planTitle}
+        {activeTab === "plan" ? (
+          <>
+            <ActionPlanWorkspaceTabs
+              idPrefix="saved-plan"
+              value={activePlanTab}
+              onChange={selectPlanTab}
             />
-          </div>
-          <div className="sr-only" role="status" aria-live="polite">
-            <span className={saveState === "error" ? "text-red-700" : "text-dema-muted"}>
-              {saveState === "saving" ? "Enregistrement…" : saveState === "error" ? saveError : "Modifications enregistrées"}
-            </span>
-          </div>
-          {saveState === "error" ? (
-            <p className="mb-3 text-sm text-red-700" role="alert">{saveError}</p>
-          ) : null}
-          <ActionPlanResult
-            plan={currentPlan}
-            workspace={workspace}
-            onWorkspaceChange={setWorkspace}
-            manualMode={isManualActionPlan(currentPlan)}
-            onAddAction={addAction}
-            onDeleteAction={deleteAction}
-            onGeneratePlan={isBlankManualActionPlan(currentPlan, workspace)
-              ? generateBlankPlan
-              : undefined}
-            headerActions={(
-              <SavedActionPlanMenu
-                deleting={isDeleting}
-                onDelete={() => { void deletePlan(); }}
-                onRename={() => {
-                  titleInputRef.current?.focus();
-                  titleInputRef.current?.select();
-                }}
+            <div
+              id="saved-plan-actions-panel"
+              role="tabpanel"
+              aria-labelledby="saved-plan-actions-tab"
+              hidden={activePlanTab !== "actions"}
+            >
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <SavedActionPlanSelector
+                  inputRef={titleInputRef}
+                  onResetTitle={() => setPlanTitle(confirmedTitleRef.current)}
+                  onTitleChange={setPlanTitle}
+                  title={planTitle}
+                />
+              </div>
+              <div className="sr-only" role="status" aria-live="polite">
+                <span className={saveState === "error" ? "text-red-700" : "text-dema-muted"}>
+                  {saveState === "saving" ? "Enregistrement…" : saveState === "error" ? saveError : "Modifications enregistrées"}
+                </span>
+              </div>
+              {saveState === "error" ? (
+                <p className="mb-3 text-sm text-red-700" role="alert">{saveError}</p>
+              ) : null}
+              <ActionPlanResult
                 plan={currentPlan}
                 workspace={workspace}
+                onWorkspaceChange={setWorkspace}
+                manualMode={isManualActionPlan(currentPlan)}
+                onAddAction={addAction}
+                onDeleteAction={deleteAction}
+                onGeneratePlan={isBlankManualActionPlan(currentPlan, workspace)
+                  ? generateBlankPlan
+                  : undefined}
+                contextualSystemId={
+                  appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || ""
+                }
+                headerActions={(
+                  <SavedActionPlanMenu
+                    availablePlans={availablePlans}
+                    deleting={isDeleting}
+                    onDelete={() => { void deletePlan(); }}
+                    onRename={() => {
+                      titleInputRef.current?.focus();
+                      titleInputRef.current?.select();
+                    }}
+                    plan={currentPlan}
+                    planId={planId}
+                    title={planTitle}
+                    workspace={workspace}
+                  />
+                )}
               />
-            )}
-          />
-        </div>
-        <div hidden={activeTab !== "system"}>
-          <ActionPlanSystemPanel
-            options={systemOptions}
-            selectedSystemId={appContext.systemId || workspace.selectedSystemId || ""}
-            onSystemChange={(systemId) => {
-              setWorkspace((current) => ({ ...current, selectedSystemId: systemId }));
-              navigateAppContext({
-                ...appContext,
-                view: "system",
-                systemId,
-                solutionResourceSlug: undefined,
-              });
-            }}
-            workspace={workspace}
-            onWorkspaceChange={setWorkspace}
-            activeTab={appContext.systemTab ?? "process"}
-            initialResourceSlug={appContext.solutionResourceSlug}
-            onActiveTabChange={(systemTab) => navigateAppContext({
-              ...appContext,
-              view: "system",
-              systemId: appContext.systemId || workspace.selectedSystemId || undefined,
-              systemTab,
-              solutionResourceSlug: systemTab === "solutions"
-                ? appContext.solutionResourceSlug
-                : undefined,
-            })}
-            onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
-              ...appContext,
-              view: "system",
-              systemId: appContext.systemId || workspace.selectedSystemId || undefined,
-              systemTab: "solutions",
-              solutionResourceSlug,
-            })}
-          />
-        </div>
+            </div>
+            <div
+              id="saved-plan-solutions-panel"
+              role="tabpanel"
+              aria-labelledby="saved-plan-solutions-tab"
+              hidden={activePlanTab !== "solutions"}
+            >
+              {activePlanTab === "solutions" ? (
+                <ActionPlanSystemPanel
+                  options={systemOptions}
+                  selectedSystemId={
+                    appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || ""
+                  }
+                  onSystemChange={(systemId) => navigateAppContext({
+                    ...appContext,
+                    view: "plan",
+                    planTab: "solutions",
+                    systemId,
+                    systemTab: "solutions",
+                    solutionResourceSlug: undefined,
+                  })}
+                  workspace={workspace}
+                  onWorkspaceChange={setWorkspace}
+                  initialResourceSlug={appContext.solutionResourceSlug}
+                  onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
+                    ...appContext,
+                    view: "plan",
+                    planTab: "solutions",
+                    systemId: appContext.systemId || workspace.selectedSystemId || undefined,
+                    systemTab: "solutions",
+                    solutionResourceSlug,
+                  })}
+                />
+              ) : null}
+            </div>
+          </>
+        ) : null}
         {activeTab === "academy" ? (
           <ActionPlanAcademyPanel
             initialContentSlug={appContext.academyContentSlug}

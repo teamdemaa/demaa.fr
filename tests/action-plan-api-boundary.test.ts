@@ -29,26 +29,18 @@ describe("action plan persistence boundaries", () => {
     expect(updateRoute).toContain("generation: parsed.data.generation");
   });
 
-  it("keeps the temporary plan credential in an HttpOnly cookie", () => {
+  it("uses one native Firebase session and UID-only plan ownership", () => {
     const collectionRoute = source("src/app/api/action-plans/route.ts");
-    const magicRoute = source("src/app/api/customer-space/magic-link/route.ts");
     const auth = source("src/lib/customer-space-auth.ts");
     const storage = source("src/lib/action-plan-storage.server.ts");
-    const database = source("src/lib/generations-db.ts");
-    const consumeRoute = source("src/app/api/customer-space/consume/route.ts");
     const planPage = source("src/app/plans/[id]/page.tsx");
 
-    expect(collectionRoute).toContain("ACTION_PLAN_ACCESS_COOKIE");
-    expect(collectionRoute).not.toContain("actionPlanClaimSecret");
-    expect(storage).toContain("httpOnly: true");
-    expect(storage).toContain('sameSite: "lax"');
-    expect(storage).toContain('process.env.VERCEL_ENV === "preview"');
-    expect(magicRoute).toContain("temporaryAccessToken");
-    expect(auth).toContain("temporaryAccessTokenHash");
-    expect(database).toContain('status: "active"');
-    expect(database).toContain("claim_link_token_hashes");
-    expect(database).toContain("owner_email: email");
-    expect(consumeRoute).toContain("response.cookies.delete(ACTION_PLAN_ACCESS_COOKIE)");
+    expect(collectionRoute).toContain("if (!identity)");
+    expect(auth).toContain("createSessionCookie");
+    expect(auth).toContain("verifySessionCookie(token, true)");
+    expect(storage).toContain("owner_uid: uid");
+    expect(storage).not.toContain("owner_email");
+    expect(storage).not.toContain("pending_claim");
     expect(planPage).toContain("getActionPlanForAccess");
   });
 
@@ -61,6 +53,6 @@ describe("action plan persistence boundaries", () => {
     );
     expect(privacy).toContain("30 jours maximum");
     expect(privacy).toContain("jusqu&apos;à 3 ans");
-    expect(privacy).toContain("uniquement sous forme hachée");
+    expect(privacy).toContain("Firebase");
   });
 });

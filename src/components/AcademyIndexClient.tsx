@@ -2,20 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, ChevronUp, Search, SlidersHorizontal } from "lucide-react";
-import { type KeyboardEvent, useMemo, useState } from "react";
+import { ChevronDown, ChevronUp, Play, Search, SlidersHorizontal } from "lucide-react";
+import { useMemo, useState } from "react";
 import AppLibrarySearch from "@/components/AppLibrarySearch";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
+import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
 import { matchesSearchQuery } from "@/lib/search";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
-import AcademyLiveTrainingSection from "@/components/AcademyLiveTrainingSection";
-import type { PublicLiveTraining } from "@/lib/live-session-catalog";
 
 type AcademyIndexClientProps = {
   contents: AcademyContentDefinition[];
-  liveTrainings: readonly PublicLiveTraining[];
   embedded?: boolean;
   onOpenContent?: (content: AcademyContentDefinition) => void;
+  showStructureNewsletter?: boolean;
   backLink?: {
     href: string;
     label: string;
@@ -75,22 +74,26 @@ const COURSE_TITLES: Record<string, string> = {
 
 const ALL_ACADEMY_CATEGORIES = "Tous";
 
-type AcademySection = "decryptions" | "courses" | "live";
+export type AcademySection = "tutorials" | "courses";
 
 const CORE_ACADEMY_SECTIONS: ReadonlyArray<{
   id: AcademySection;
   label: string;
+  visible: boolean;
 }> = [
-  { id: "courses", label: "Cours" },
-  { id: "decryptions", label: "Cas concrets" },
+  {
+    id: "tutorials",
+    label: "Tutoriels",
+    visible: PUBLIC_EDITORIAL_VISIBILITY.academyTutorials,
+  },
+  { id: "courses", label: "Cours", visible: true },
 ];
 
-const WEBINARS_ACADEMY_SECTION = {
-  id: "live",
-  label: "Webinaires",
-} as const satisfies { id: AcademySection; label: string };
+const VISIBLE_ACADEMY_SECTIONS = CORE_ACADEMY_SECTIONS.filter(
+  (section) => section.visible,
+);
 
-function getNextAcademySection(
+export function getNextAcademySection(
   sections: ReadonlyArray<{ id: AcademySection }>,
   current: AcademySection,
   key: string,
@@ -257,7 +260,7 @@ function AcademyCard({
   const caseStudy = isCaseStudy ? CASE_STUDY_PRESENTATIONS[identity.slug] : undefined;
   const title = caseStudy?.title ?? COURSE_TITLES[identity.slug] ?? identity.card.title;
   const meta = caseStudy
-    ? `${caseStudy.sector} · ${identity.durationMinutes} min`
+    ? `Tutoriel guidé · ${caseStudy.sector} · ${identity.durationMinutes} min`
     : `${identity.durationMinutes} min`;
 
   const card = (
@@ -268,18 +271,23 @@ function AcademyCard({
           }`}
         >
           {caseStudy ? (
-            <div className="absolute inset-4 flex items-center justify-center overflow-hidden sm:inset-[1.125rem]">
-              <div className="relative aspect-square h-full overflow-hidden">
-                <Image
-                  src={caseStudy.character}
-                  alt={caseStudy.characterAlt}
-                  fill
-                  priority={eager}
-                  sizes="(max-width: 767px) 80vw, (max-width: 1199px) 40vw, 25vw"
-                  className={`object-contain ${caseStudy.characterClassName ?? ""}`}
-                />
+            <>
+              <div className="absolute inset-4 flex items-center justify-center overflow-hidden sm:inset-[1.125rem]">
+                <div className="relative aspect-square h-full overflow-hidden">
+                  <Image
+                    src={caseStudy.character}
+                    alt={caseStudy.characterAlt}
+                    fill
+                    priority={eager}
+                    sizes="(max-width: 767px) 92vw, (max-width: 1199px) 45vw, 30vw"
+                    className={`object-contain ${caseStudy.characterClassName ?? ""}`}
+                  />
+                </div>
               </div>
-            </div>
+              <span className="absolute bottom-3 left-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-dema-forest shadow-sm" aria-hidden="true">
+                <Play className="ml-0.5 h-4 w-4 fill-current" />
+              </span>
+            </>
           ) : (
             <CourseDiagram slug={identity.slug} />
           )}
@@ -323,31 +331,27 @@ function AcademyCard({
 
 export default function AcademyIndexClient({
   contents,
-  liveTrainings,
   embedded = false,
   onOpenContent,
+  showStructureNewsletter = false,
   backLink,
 }: AcademyIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllFundamentals, setShowAllFundamentals] = useState(false);
-  const [activeSection, setActiveSection] = useState<AcademySection>("courses");
+  const [activeSection, setActiveSection] = useState<AcademySection>(
+    VISIBLE_ACADEMY_SECTIONS[0].id,
+  );
   const [activeCategory, setActiveCategory] = useState(ALL_ACADEMY_CATEGORIES);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
 
-  const academySections = useMemo(
-    () => liveTrainings.length > 0
-      ? [...CORE_ACADEMY_SECTIONS, WEBINARS_ACADEMY_SECTION]
-      : CORE_ACADEMY_SECTIONS,
-    [liveTrainings.length],
-  );
+  const academySections = VISIBLE_ACADEMY_SECTIONS;
+  const hasSectionNavigation = academySections.length > 1;
 
   const activeSectionContents = useMemo(
     () => contents.filter((content) =>
-      activeSection === "decryptions"
+      activeSection === "tutorials"
         ? content.kind === "case-study"
-        : activeSection === "courses"
-          ? content.kind === "course"
-          : false,
+        : content.kind === "course"
     ),
     [activeSection, contents],
   );
@@ -380,29 +384,17 @@ export default function AcademyIndexClient({
     });
   }, [activeCategory, activeSectionContents, searchQuery]);
 
-  const decryptions = filteredContents.filter((content) => content.kind === "case-study");
-  const fundamentals = filteredContents.filter((content) => content.kind === "course");
+  const sectionContents = filteredContents;
   const isSearching = searchQuery.trim().length > 0;
-  const visibleFundamentals = embedded || isSearching || showAllFundamentals ? fundamentals : fundamentals.slice(0, 6);
-  const canToggleFundamentals = !embedded && !isSearching && fundamentals.length > 6;
+  const visibleContents = embedded || isSearching || showAllFundamentals
+    ? sectionContents
+    : sectionContents.slice(0, 6);
+  const canToggleContents = !embedded && !isSearching && sectionContents.length > 6;
   const ContentContainer = embedded ? "div" : "main";
   function selectSection(section: AcademySection) {
     setActiveSection(section);
     setActiveCategory(ALL_ACADEMY_CATEGORIES);
     setAreCategoryTagsVisible(false);
-  }
-
-  function handleSectionKeyDown(
-    event: KeyboardEvent<HTMLButtonElement>,
-    currentSection: AcademySection,
-  ) {
-    const nextSection = getNextAcademySection(academySections, currentSection, event.key);
-    if (!nextSection) return;
-    event.preventDefault();
-    selectSection(nextSection);
-    requestAnimationFrame(() => {
-      document.getElementById(`academy-section-${nextSection}`)?.focus();
-    });
   }
 
   const searchControl = embedded ? (
@@ -459,8 +451,8 @@ export default function AcademyIndexClient({
       </div>
 
       {areCategoryTagsVisible ? (
-        <div className="mt-4 overflow-x-auto pb-1 text-left soft-scroll" aria-label="Filtrer les cours par catégorie">
-          <div className="flex min-w-max gap-2 px-1">
+        <div className="mt-4 text-left" aria-label="Filtrer les contenus par catégorie">
+          <div className="flex flex-wrap gap-2 px-1">
             {categories.map((category) => (
               <button
                 key={category}
@@ -470,7 +462,7 @@ export default function AcademyIndexClient({
                   setActiveCategory(category);
                   setSearchQuery("");
                 }}
-                className={`demaa-chip shrink-0 whitespace-nowrap ${
+                className={`demaa-chip min-w-0 whitespace-normal ${
                   activeCategory === category ? "demaa-chip-active" : ""
                 }`}
               >
@@ -518,62 +510,61 @@ export default function AcademyIndexClient({
       ) : null}
 
       <ContentContainer className={`mx-auto max-w-7xl px-4 pb-16 md:pb-20 ${embedded ? "pt-0" : ""}`}>
-        <div
-          className={`mb-8 grid w-full border-b border-dema-line md:mb-10 ${
-            academySections.length === 3 ? "grid-cols-3" : "grid-cols-2"
-          }`}
-          role="tablist"
-          aria-label="Contenus de l’Académie"
-        >
-          {academySections.map((section) => (
-            <button
-              key={section.id}
-              id={`academy-section-${section.id}`}
-              type="button"
-              role="tab"
-              aria-selected={activeSection === section.id}
-              aria-controls={`academy-panel-${section.id}`}
-              tabIndex={activeSection === section.id ? 0 : -1}
-              onClick={() => selectSection(section.id)}
-              onKeyDown={(event) => handleSectionKeyDown(event, section.id)}
-              className={`-mb-px min-h-11 border-b-2 px-2 py-2.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:px-4 sm:text-sm ${
-                activeSection === section.id
-                  ? "border-dema-forest font-semibold text-dema-forest"
-                  : "border-transparent font-medium text-dema-muted hover:border-dema-forest/25 hover:text-brand-blue"
-              }`}
-            >
-              {section.label}
-            </button>
-          ))}
-        </div>
-
-        {activeSection === "decryptions" && decryptions.length ? (
-          <section
-            id="academy-panel-decryptions"
-            role="tabpanel"
-            aria-labelledby="academy-section-decryptions"
+        {hasSectionNavigation ? (
+          <div
+            className={`mb-8 grid w-full border-b border-dema-line md:mb-10 ${
+              academySections.length === 2 ? "grid-cols-2" : "grid-cols-3"
+            }`}
+            role="tablist"
+            aria-label="Contenus de l’Académie"
           >
-            <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-              {decryptions.map((content, index) => (
-                <AcademyCard
-                  key={content.identity.slug}
-                  content={content}
-                  eager={index < 3}
-                  onOpen={onOpenContent}
-                />
-              ))}
-            </div>
-          </section>
+            {academySections.map((section) => (
+              <button
+                key={section.id}
+                id={`academy-section-${section.id}`}
+                type="button"
+                role="tab"
+                aria-selected={activeSection === section.id}
+                aria-controls={`academy-panel-${section.id}`}
+                tabIndex={activeSection === section.id ? 0 : -1}
+                onClick={() => selectSection(section.id)}
+                onKeyDown={(event) => {
+                  const nextSection = getNextAcademySection(
+                    academySections,
+                    section.id,
+                    event.key,
+                  );
+                  if (!nextSection) return;
+                  event.preventDefault();
+                  selectSection(nextSection);
+                  requestAnimationFrame(() => {
+                    document.getElementById(`academy-section-${nextSection}`)?.focus();
+                  });
+                }}
+                className={`-mb-px min-h-11 border-b-2 px-2 py-2.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:px-4 sm:text-sm ${
+                  activeSection === section.id
+                    ? "border-dema-forest font-semibold text-dema-forest"
+                    : "border-transparent font-medium text-dema-muted hover:border-dema-forest/25 hover:text-brand-blue"
+                }`}
+              >
+                {section.label}
+              </button>
+            ))}
+          </div>
         ) : null}
 
-        {activeSection === "courses" && fundamentals.length ? (
+        {sectionContents.length ? (
           <section
-            id="academy-panel-courses"
-            role="tabpanel"
-            aria-labelledby="academy-section-courses"
+            {...(hasSectionNavigation
+              ? {
+                  id: `academy-panel-${activeSection}`,
+                  role: "tabpanel",
+                  "aria-labelledby": `academy-section-${activeSection}`,
+                }
+              : { "aria-label": "Cours" })}
           >
             <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-              {visibleFundamentals.map((content, index) => (
+              {visibleContents.map((content, index) => (
                 <AcademyCard
                   key={content.identity.slug}
                   content={content}
@@ -583,7 +574,7 @@ export default function AcademyIndexClient({
               ))}
             </div>
 
-            {canToggleFundamentals ? (
+            {canToggleContents ? (
               <div className="mt-7 flex justify-end">
                 <button
                   type="button"
@@ -591,7 +582,9 @@ export default function AcademyIndexClient({
                   className="inline-flex items-center gap-1.5 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
                   aria-expanded={showAllFundamentals}
                 >
-                  {showAllFundamentals ? "Voir moins" : "Voir plus de cours"}
+                  {showAllFundamentals
+                    ? "Voir moins"
+                    : "Voir plus de cours"}
                   {showAllFundamentals ? (
                     <ChevronUp className="h-4 w-4" aria-hidden="true" />
                   ) : (
@@ -603,30 +596,23 @@ export default function AcademyIndexClient({
           </section>
         ) : null}
 
-        {activeSection === "live" ? (
-          <div
-            id="academy-panel-live"
-            role="tabpanel"
-            aria-labelledby="academy-section-live"
+        {filteredContents.length === 0 ? (
+          <section
+            {...(hasSectionNavigation
+              ? {
+                  id: `academy-panel-${activeSection}`,
+                  role: "tabpanel",
+                  "aria-labelledby": `academy-section-${activeSection}`,
+                }
+              : { "aria-label": "Cours" })}
+            className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-14 text-center"
           >
-            {liveTrainings.length ? (
-              <AcademyLiveTrainingSection trainings={liveTrainings} />
-            ) : (
-              <section className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-12 text-center">
-                <p className="text-sm text-dema-muted">Aucun direct n’est programmé pour le moment.</p>
-              </section>
-            )}
-          </div>
-        ) : null}
-
-        {activeSection !== "live" && filteredContents.length === 0 ? (
-          <section className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-14 text-center">
             <h2 className="text-xl font-semibold text-brand-blue">Aucun contenu trouvé</h2>
             <p className="mt-2 text-sm text-dema-muted">Essayez un mot plus simple ou un autre sujet.</p>
           </section>
         ) : null}
 
-        {!embedded ? (
+        {!embedded || showStructureNewsletter ? (
           <div className="mt-12 md:mt-14">
             <StructureNewsletterBlock />
           </div>

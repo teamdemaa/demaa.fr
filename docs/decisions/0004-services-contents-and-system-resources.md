@@ -2,6 +2,7 @@
 
 - Statut : `validated`
 - Date : 9 août 2026
+- Mise à jour : 14 août 2026, surface temporaire Cours uniquement
 - Portée : Services Demaa, composition de Solutions, Académie, Contenus et
   Ressources des 115 systèmes
 - Supersède : les passages incompatibles des ADR 0001, 0002 et 0003
@@ -79,17 +80,20 @@ la même URL sans créer de doublon SEO.
 
 ### Académie
 
-La recherche est suivie de deux onglets applicatifs visibles :
+La surface publique temporaire affiche uniquement les `Cours`, alimentés par
+le catalogue pédagogique structuré avec notions et quiz. Comme une seule
+section est visible, aucun onglet n'est rendu.
 
-1. `Cours`, ouvert par défaut et alimenté par le catalogue pédagogique existant ;
-2. `Cas concrets`, qui reprend les études de cas éditoriales publiées sans les
-   présenter comme fictives.
+Les `Tutoriels`, alimentés par les études de cas techniques `case-study`, et le
+catalogue historique `Webinaires` restent masqués tant qu'une nouvelle décision
+de publication ne les a pas réactivés. Leurs données, identifiants, assets et
+routes directes sont conservés. Lors de la réactivation des Tutoriels, leur
+présentation à miniature et leur parcours sans quiz seront restaurés, ainsi que
+la navigation de sections.
 
-Le troisième onglet validé est `Webinaires`. Il rassemble les événements à
-venir et leurs éventuels replays, mais reste temporairement masqué tant que les
-créneaux et contenus publiés ne sont pas prêts. Les identifiants techniques
-historiques `decryptions` et `live` sont conservés pour éviter une migration
-sans valeur produit.
+La liste est verticale sur mobile et devient une grille sur desktop. Les
+filtres reviennent à la ligne et aucun scroll horizontal n'est introduit.
+Aucune vidéo ni aucun son ne démarre automatiquement.
 
 Les modèles et documents restent rattachés aux Systèmes et ne sont pas
 dupliqués dans l'Académie.
@@ -98,13 +102,13 @@ Les six formations en direct durent deux heures et coûtent 250 EUR HT. Les
 dates sont explicitement validées avant publication et aucune restauration de
 Stripe n'est prévue.
 
-Les anciennes routes des cas restent canoniques. Leur réutilisation dans
-`Cas concrets` n'ajoute ni copie de contenu ni nouveau stockage.
+Les anciennes routes des cas restent canoniques. Elles ne sont ni renommées,
+ni supprimées, ni copiées dans un nouveau stockage.
 
 ### Dérogation temporaire de lancement
 
-Pour le lancement France, l'onglet `Webinaires` de l'Académie
-et « Cas concret » des Ressources Système sont masquées par les indicateurs
+Les `Tutoriels`, les `Webinaires` de l'Académie et « Cas concret » des
+Ressources Système sont masqués par les indicateurs
 centralisés de `src/lib/public-editorial-visibility.ts`.
 
 Leurs catalogues, relations et routes sont conservés. Leur réactivation exige

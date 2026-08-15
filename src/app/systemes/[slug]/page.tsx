@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
-import { composeCanonicalServicesForSystem } from "@/lib/canonical-services-system-section.server";
+import { buildPublicSystemAppHref } from "@/lib/action-plan-app-context";
+import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import {
   getActivePublishedRenderableSolutionSectionsForSystem,
@@ -68,9 +69,9 @@ export default async function SystemPage({
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
   const normalizedInitialTab = normalizeSystemDetailTab(initialTab) ?? "process";
-  const visibleSolutionSections = composeCanonicalServicesForSystem(
+  const visibleSolutionSections = composePublicSolutionSectionsForSystem(
     slug,
-    filterPublicSolutionSections(mergeRenderableSolutionSections(solutionSections)),
+    mergeRenderableSolutionSections(solutionSections),
   );
   const visiblePublishedSolutionSections = filterPublicSolutionSections(
     publishedSolutionSections,
@@ -102,7 +103,9 @@ export default async function SystemPage({
             solutionSections={visibleSolutionSections}
             headerActions={(
               <Link
-                href={`/?view=system&system=${encodeURIComponent(data.system.slug)}&systemTab=${normalizedInitialTab}`}
+                href={buildPublicSystemAppHref({
+                  systemId: data.system.slug,
+                })}
                 className="demaa-secondary-button min-h-11 w-full"
               >
                 Ouvrir dans Demaa

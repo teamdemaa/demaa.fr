@@ -1,6 +1,7 @@
 import { Check, CircleAlert, ClipboardCheck } from "lucide-react";
 import { Suspense } from "react";
 import ServiceCallbackForm from "@/components/ServiceCallbackForm";
+import CoachBusinessCallbackForm from "@/components/CoachBusinessCallbackForm";
 import type { CanonicalService } from "@/lib/canonical-service-catalog";
 
 function DetailList({
@@ -62,14 +63,25 @@ function ServicePricingAndCta({
       <p className="mt-3 text-sm leading-relaxed text-dema-muted">
         {service.pricing.note}
       </p>
+      {service.monthlyAccompanimentDiscountEligible ? (
+        <p className="mt-3 rounded-md bg-dema-sage/70 px-3 py-2 text-xs font-medium text-dema-forest">
+          Un accompagnement mensuel actif ouvre 12 % de réduction sur les honoraires de cette prestation directement facturés par Demaa.
+        </p>
+      ) : null}
+      {service.slug === "coach-business" || service.slug === "expert-comptable" ? (
+        <p className="mt-3 rounded-md bg-dema-sage/70 px-3 py-2 text-xs font-medium text-dema-forest">
+          Tant que cet accompagnement mensuel est actif, vous bénéficiez de 12 % de réduction sur les autres prestations directement facturées par Demaa. Les honoraires des professionnels et les frais de tiers restent exclus.
+        </p>
+      ) : null}
 
       <Suspense fallback={<ServiceCtaFallback label={service.cta.label} />}>
-        <div className="mt-6 border-t border-dema-line/80 pt-1">
-          <ServiceCallbackForm
-            serviceName={service.name}
-            serviceSlug={service.slug}
-          />
-        </div>
+        {service.slug === "coach-business" ? (
+          <CoachBusinessCallbackForm />
+        ) : (
+          <div className="mt-6 border-t border-dema-line/80 pt-1">
+            <ServiceCallbackForm serviceName={service.name} serviceSlug={service.slug} />
+          </div>
+        )}
       </Suspense>
     </aside>
   );
@@ -94,10 +106,10 @@ function CompactServiceDetails({
         {service.result}
       </p>
 
-      <div className="mt-7 grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div className="mt-7 grid min-w-0 gap-6">
         <section className="min-w-0 border-t border-dema-line pt-5">
           <h3 className="text-base font-semibold text-brand-blue">
-            Ce que Demaa prend en charge
+            Ce qui est inclus
           </h3>
           <ul className="mt-4 space-y-3">
             {service.included.slice(0, 3).map((item) => (
@@ -130,7 +142,7 @@ export default function CanonicalServiceDetails({
 
   return (
     <div className="min-w-0 max-w-full">
-      <div className="grid min-w-0 gap-7 lg:grid-cols-[minmax(0,1fr)_20rem]">
+      <div className="grid min-w-0 gap-7">
         <section className="min-w-0">
           <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
             {service.eyebrow}

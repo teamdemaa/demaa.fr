@@ -5,7 +5,9 @@ import { compatibleActionPlanSchema } from "@/lib/action-plan-contract";
 import {
   compatibleActionPlanWorkspaceStateSchema,
 } from "@/lib/action-plan-workspace";
-import { getCurrentCustomerEmailFromSession } from "@/lib/customer-space-session.server";
+import {
+  getCurrentCustomerIdentityFromSession,
+} from "@/lib/customer-space-session.server";
 
 const nullableTokenCount = z.number().int().nonnegative().nullable().optional();
 const actionPlanGenerationMetadataSchema = z
@@ -45,8 +47,8 @@ export const actionPlanDeleteRequestSchema = z
   })
   .strict();
 
-export async function getCurrentCustomerEmail() {
-  return getCurrentCustomerEmailFromSession();
+export async function getCurrentCustomerIdentity() {
+  return getCurrentCustomerIdentityFromSession();
 }
 
 export function noStoreHeaders() {

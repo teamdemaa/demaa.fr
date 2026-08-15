@@ -1,78 +1,93 @@
-# ADR 0009 — Coaching et accès unifié à l’application
+# ADR 0009 — Clarification gratuite, Coach business et accès unifié
 
 - Statut : `validated`
 - Date : 2026-08-11
-- Supersède : les passages de l’ADR 0008 et de D-076 qui reportaient intégralement Coaching
+- Mise à jour : 2026-08-14, retrait de l'ancien abonnement de messagerie et avantage Coach business
+- Supersède : les passages de l’ADR 0008 et de D-076 qui reportaient intégralement l’accompagnement
 
 ## Décision
 
-La composition de navigation décrite initialement par cette ADR est supersédée
-par l'ADR 0010. La navigation active est `Plan d’action`, `Système`, `Académie`,
-`Opportunités` ; Coaching s'ouvre depuis l'action compacte
-`Parler à un spécialiste`. L’e-mail de connexion ouvre directement le plan ou
-l'intention demandée après consommation sécurisée du lien à usage unique. Il
-ne doit pas introduire une présentation concurrente « Espace membre ».
+La composition de navigation initiale est supersédée par l'ADR 0010. La
+navigation active est `Plan d’action`, `Opportunités`, `Académie` ; la
+clarification s'ouvre depuis l'action compacte `Échanger`. L'authentification
+Firebase ouvre directement le plan ou l'intention demandée sans introduire un
+portail concurrent `Mon espace`.
 
-Il n’existe pas de second écran public `Mon espace` ou `Mes plans`. Après
-connexion, `/plans` redirige vers le dernier plan sauvegardé dans l’application,
-ou vers une nouvelle situation vierge explicitement identifiée lorsqu’aucun
-plan n’existe. Une session connectée qui ouvre la racine sans intention
-explicite passe par `/plans` ; `/?new=1` reste l’entrée volontaire pour repartir
-avec un plan vierge. L’ancienne route `/mon-espace`
-est uniquement conservée comme redirection de compatibilité vers `/plans`.
-Les historiques restent conservés dans les données sans créer de portail
-concurrent.
+Le produit accessible par `Échanger` est une conversation simple, écrite ou
+dictée. Il ne comporte aucun onglet Sessions ou Formules. La surface s'intitule
+`Clarifier ma situation` et explique qu'une première clarification est offerte.
+Le brouillon est conservé pendant l'authentification puis envoyé sous l'UID
+Firebase. Aucun enregistrement audio n'est conservé.
 
-Le produit accessible par `Parler à un spécialiste` contient deux onglets :
-`Messages` puis `Formules`. `Messages` est
-l'onglet ouvert par défaut afin de privilégier l'échange écrit ou dicté.
+Chaque UID Firebase bénéficie d'une première clarification offerte. Le premier
+message ouvre ce droit. La Team Demaa peut demander des précisions sans fermer
+l'échange, puis clôture manuellement la clarification au moment de sa réponse
+finale. La réponse et la clôture sont atomiques. Une action secondaire permet
+de rouvrir une clarification clôturée par erreur. La suppression ultérieure des
+messages ne recrée jamais un droit gratuit.
 
-`Coaching` est le nom du produit. Tous les libellés qui désignent la personne
-emploient `spécialiste`, notamment `Parler à un spécialiste` et
-`Écrire à un spécialiste`. L'interface ne parle pas de `coach` ni de
-`votre coach`.
+Une fois la clarification terminée, le champ de réponse est remplacé par un
+lien vers `Coach business`. Il n'existe aucune facturation automatique et la
+clôture gratuite n'appelle jamais Stripe.
 
-- `Clarté` : 149 EUR HT par mois, questions écrites ou vocales, réponse d'un
-  spécialiste sous 24 à 48 heures ouvrées, second regard et prochaine étape
-  concrète.
-- `Maestro` : une seule carte avec un sélecteur interne. Une session
-  individuelle de 60 minutes par mois coûte 350 EUR HT par mois ; deux sessions
-  individuelles de 60 minutes par mois coûtent 550 EUR HT par mois. La même
-  carte, son prix, ses bénéfices et son CTA changent avec le sélecteur. Le
-  spécialiste aide le dirigeant à clarifier sa stratégie avec la méthode ASOP,
-  prioriser son plan d'action et organiser l'exécution ; le dirigeant reste aux
-  commandes.
+`Coach business` reste une carte distincte dans Accompagnement. Une session
+individuelle de 60 minutes par mois est affichée à 350 EUR HT par mois ; deux
+sessions individuelles de 60 minutes par mois à 550 EUR HT par mois. Le CTA
+`Être rappelé(e)` transmet une demande de contact sans connexion ni paiement.
+Demaa qualifie ensuite le besoin, le matching et le rythme avec le dirigeant ;
+la clôture de la clarification gratuite ne déclenche jamais Stripe.
 
-Il n'existe ni carte distincte `Pilotage rapproché`, ni session ponctuelle à
-150 EUR, ni parcours historique à 400 EUR. Les montants TTC ne sont pas affichés
-dans cette interface.
+Tant qu'un accompagnement mensuel éligible est actif, le client bénéficie de
+12 % de réduction sur les autres prestations directement facturées par Demaa.
+Coach business est confirmé par Stripe et la relation Expert-comptable par la
+Team Demaa. Les avantages ne se cumulent pas. La réduction ne s'applique pas :
 
-Les CTA recueillent une intention et les demandes sont coordonnées manuellement.
-Aucun abonnement, paiement ou agenda automatique n'est déclenché dans cette
-version. L'activation d'un paiement récurrent exige une décision et une recette
-distinctes.
-Messages est asynchrone. La dictée transforme la voix en texte relisible avant
-envoi et affiche la transcription intermédiaire directement dans le champ ;
-aucun enregistrement audio n’est conservé dans cette version. L’onglet
-Messages est une conversation simple : les messages du dirigeant et les
-réponses du spécialiste restent visibles dans un historique chronologique lié
-à l’adresse e-mail vérifiée. Slack reste une alerte opérationnelle et ne devient
-pas une seconde source de vérité de la conversation.
+- au prix du Coach business lui-même ;
+- aux honoraires d'un expert-comptable, d'un coach ou d'un autre partenaire ;
+- aux budgets publicitaires ;
+- aux logiciels, licences et frais facturés par des tiers.
 
-## Sécurité du lien magique
+Pour une prestation éligible, le navigateur affiche seulement l'avantage. Le
+serveur recalcule le droit à partir de l'UID Firebase, du catalogue canonique et
+du statut Stripe projeté. Seul un webhook Stripe signé peut activer ou retirer
+ce statut. Une valeur envoyée par le navigateur ne peut jamais accorder la
+réduction. Cette même résolution doit être réutilisée avant l'émission d'un
+devis et avant la création d'un paiement lorsque ces parcours seront automatisés.
 
-Le lien e-mail reste temporaire et à usage unique. Sa consommation demeure une
-requête POST déclenchée dans le navigateur : le jeton n’est pas consommé en GET,
-afin que les scanners de liens des messageries ne puissent pas l’invalider avant
-le clic de l’utilisateur. Le cookie de session persiste ensuite jusqu’à son
-expiration ou sa suppression.
+## Sécurité de la session Firebase
 
-L'adresse vérifiée par ce lien devient l'identité e-mail de la session. Les
-formulaires de l'application la récupèrent côté serveur et ne la redemandent
-pas. Si une action nécessitant une identité est déclenchée sans session, le
-parcours de lien magique conserve une intention autorisée et ramène directement
-à cette action après connexion, sans écran `Mon espace` ou `Mes plans`.
-Lorsqu'un plan existe seulement dans la page, l'ouverture de Messages prépare
-d'abord sa sauvegarde temporaire et le lien revient sur l'URL canonique de ce
-plan, avec l'intention Coaching. Le plan ne doit jamais être remplacé par un
-écran vierge au retour du lien.
+E-mail/mot de passe et Google transmettent un jeton d'identité Firebase au même
+endpoint serveur. Firebase Admin le transforme en cookie de session HttpOnly,
+`SameSite=Lax`, vérifié avec contrôle de révocation. L'UID est l'unique clé
+d'autorisation ; l'e-mail sert seulement de contact.
+
+Si une action nécessitant une identité est déclenchée sans session, le parcours
+conserve uniquement l'intention autorisée et revient directement à cette action
+après connexion. Lorsqu'un plan existe seulement dans la page, l'ouverture
+d'Échanger conserve le plan en mémoire, l'enregistre sous l'UID après
+authentification puis ouvre son URL canonique avec le brouillon de clarification.
+
+## Conditions de recette
+
+- une première clarification peut être envoyée après authentification ;
+- la Team peut demander une précision sans fermer l'échange ;
+- la réponse finale et la clôture sont atomiques ;
+- une clarification terminée ne peut pas être contournée avec un abonnement ou
+  une valeur envoyée par le navigateur ;
+- le CTA Coach business envoie uniquement une demande de rappel ;
+- aucun paiement Stripe n'est créé par l'interface publique ;
+- l'abonnement et l'avantage restent inactifs tant qu'un statut confirmé n'a
+  pas été projeté côté serveur ;
+- les cartes éligibles affichent `−12 % avec un accompagnement mensuel` sous le prix ;
+- le Coach et l'Expert-comptable affichent `−12 % sur les accompagnements Demaa` sous le prix ;
+- les exclusions de tiers et de budgets sont explicites dans la fiche ;
+- le serveur n'accorde la réduction qu'à un UID disposant d'un accompagnement
+  mensuel actif et non expiré.
+
+## Extensions différées
+
+- console dédiée aux coachs externes et attribution des dossiers ;
+- automatisation du devis et du paiement Coach business ;
+- quotas de conversation supplémentaires ;
+- multi-tenant et sélecteur d'entreprise ;
+- enrichissement facultatif du profil entreprise.

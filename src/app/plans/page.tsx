@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getOwnedActionPlans } from "@/lib/action-plan-storage.server";
+import { getOwnedActionPlansForIdentity } from "@/lib/action-plan-storage.server";
 import {
   CUSTOMER_SPACE_COOKIE,
-  getEmailFromCustomerSessionToken,
+  getIdentityFromCustomerSessionToken,
 } from "@/lib/customer-space-auth";
 
 export const dynamic = "force-dynamic";
@@ -17,10 +17,10 @@ export const metadata: Metadata = {
 export default async function LatestActionPlanPage() {
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
-  const email = await getEmailFromCustomerSessionToken(sessionToken);
+  const identity = await getIdentityFromCustomerSessionToken(sessionToken);
 
-  if (!email) redirect("/connexion?returnTo=%2Fplans");
+  if (!identity) redirect("/connexion?returnTo=%2Fplans");
 
-  const [latestPlan] = await getOwnedActionPlans(email);
+  const [latestPlan] = await getOwnedActionPlansForIdentity(identity);
   redirect(latestPlan ? `/plans/${latestPlan.id}` : "/?new=1");
 }

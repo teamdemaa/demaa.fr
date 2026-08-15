@@ -26,6 +26,9 @@ describe("Demaa application navbar", () => {
     expect(loadingSource).toContain("<Navbar minimal />");
     expect(pageSource.indexOf("<Navbar minimal />")).toBeLessThan(pageSource.indexOf("<main"));
     expect(loadingSource.indexOf("<Navbar minimal />")).toBeLessThan(loadingSource.indexOf("<main"));
+    expect(pageSource).toContain("buildPublicSystemAppHref");
+    expect(pageSource).not.toContain("systemTab: normalizedInitialTab");
+    expect(pageSource).not.toContain("/?view=system");
   });
 
   it("keeps a distinct canonical homepage and one URL for each public universe", async () => {
@@ -41,9 +44,9 @@ describe("Demaa application navbar", () => {
     expect(homeSource).toContain('canonical: "/"');
     expect(homeSource).toContain("<ActionPlanExperience");
     expect(homeSource).toContain(
-      "<Navbar anonymousLanding isAuthenticated={Boolean(email)} minimal />",
+      "<Navbar anonymousLanding isAuthenticated={Boolean(identity)} minimal />",
     );
-    expect(homeSource).toContain("getEmailFromCustomerSessionToken(sessionToken)");
+    expect(homeSource).toContain("getIdentityFromCustomerSessionToken(sessionToken)");
     expect(systemsSource).toContain('canonical: "/systemes"');
     expect(nextConfigSource).not.toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/',/,
@@ -59,13 +62,16 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/app/plans/[id]/page.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(navbarSource).toContain('aria-label="Ouvrir l’application"');
+    expect(navbarSource).toContain('aria-label="Ouvrir le menu du compte"');
     expect(navbarSource).not.toContain('window.location.assign("/")');
     expect(navbarSource).not.toContain("openAuthenticatedAccount");
     expect(navbarSource).not.toContain("<span>Mon espace</span>");
     expect(navbarSource).toContain('href="/plans"');
+    expect(navbarSource).toContain('action="/api/customer-space/logout?returnTo=%2F"');
+    expect(navbarSource).toContain("Se déconnecter");
     expect(navbarSource).toContain('href="/connexion?returnTo=%2Fplans"');
-    expect(navbarSource).toContain("<span>Se connecter</span>");
+    expect(navbarSource).toContain("<span>Connexion</span>");
+    expect(navbarSource).not.toContain("<LogIn");
     expect(savedPlanSource).toContain("<Navbar anonymousLanding isAuthenticated minimal />");
   });
 
@@ -93,7 +99,8 @@ describe("Demaa application navbar", () => {
     ]);
 
     expect(homeSource).toContain('redirect("/plans")');
-    expect(homeSource).toContain('requestedNewPlan !== "1"');
+    expect(homeSource).toContain("shouldRedirectAuthenticatedHomeToPlans");
+    expect(homeSource).toContain("planTab?: string | string[]");
     expect(plansSource).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/?new=1")');
     expect(loginDialogSource).toContain('<CustomerSpaceAccessForm returnTo="/plans" simple />');
   });
@@ -107,14 +114,30 @@ describe("Demaa application navbar", () => {
 
     expect(navbarSource).toContain('id="action-plan-navbar-desktop"');
     expect(navbarSource).toContain('id="action-plan-navbar-mobile"');
+    expect(navbarSource).toContain('className="sticky top-0 z-40 bg-dema-cream/92');
+    expect(navbarSource).not.toContain('className="sticky top-0 z-40 border-b');
     expect(navbarSource).toContain("fixed inset-x-0 bottom-0");
     expect(navbarSource).toContain("w-[min(40vw,36rem)]");
     expect(navbarSource).toContain("empty:hidden xl:block");
     expect(navbarSource).toContain("empty:hidden xl:hidden");
     expect(actionPlanNavSource).toContain("Plan d’action");
-    expect(actionPlanNavSource).toContain("Système");
     expect(actionPlanNavSource).toContain("Académie");
     expect(actionPlanNavSource).toContain("Opportunités");
+    expect(actionPlanNavSource).not.toContain('label: "Solutions"');
+    expect(actionPlanNavSource).not.toContain('label: "Système"');
+    expect(actionPlanNavSource.indexOf('label: "Plan d’action"')).toBeLessThan(
+      actionPlanNavSource.indexOf('label: "Opportunités"'),
+    );
+    expect(actionPlanNavSource.indexOf('label: "Opportunités"')).toBeLessThan(
+      actionPlanNavSource.indexOf('label: "Académie"'),
+    );
+    expect(actionPlanNavSource).toContain("grid-cols-3");
+    expect(actionPlanNavSource).toContain("h-4 w-4 shrink-0 transition");
+    expect(actionPlanNavSource).toContain("scale-x-100 opacity-100");
+    expect(actionPlanNavSource).toContain("scale-x-0 opacity-0");
+    expect(actionPlanNavSource).not.toContain("rounded-[1.45rem] border");
+    expect(actionPlanNavSource).not.toContain("xl:hidden");
+    expect(actionPlanNavSource).toContain('activeView === "system" ? "plan"');
     expect(actionPlanNavSource).not.toContain('label: "Accompagnement"');
     expect(actionPlanNavSource).not.toContain('label: "Coaching"');
     expect(actionPlanNavSource).toContain('{ view: "academy"');
