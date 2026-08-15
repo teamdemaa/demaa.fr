@@ -2,7 +2,7 @@
 
 - Statut : `validated`
 - Date : 2026-08-11
-- Mise à jour : 2026-08-14, retrait de l'ancien abonnement de messagerie et avantage Coach business
+- Mise à jour : 2026-08-15, suivi Coach cadré et alerte interne à trente jours
 - Supersède : les passages de l’ADR 0008 et de D-076 qui reportaient intégralement l’accompagnement
 
 ## Décision
@@ -23,8 +23,11 @@ Chaque UID Firebase bénéficie d'une première clarification offerte. Le premie
 message ouvre ce droit. La Team Demaa peut demander des précisions sans fermer
 l'échange, puis clôture manuellement la clarification au moment de sa réponse
 finale. La réponse et la clôture sont atomiques. Une action secondaire permet
-de rouvrir une clarification clôturée par erreur. La suppression ultérieure des
-messages ne recrée jamais un droit gratuit.
+de rouvrir uniquement une clarification déjà clôturée par erreur ; elle retire
+les marqueurs de clôture tout en conservant la date d'ouverture initiale. La suppression ultérieure des
+messages ne recrée jamais un droit gratuit. Après trente jours d'ouverture,
+l'administration signale la clarification à revoir, sans la fermer ni la
+facturer automatiquement.
 
 Une fois la clarification terminée, le champ de réponse est remplacé par un
 lien vers `Coach business`. Il n'existe aucune facturation automatique et la
@@ -35,12 +38,16 @@ individuelle de 60 minutes par mois est affichée à 350 EUR HT par mois ; deux
 sessions individuelles de 60 minutes par mois à 550 EUR HT par mois. Le CTA
 `Être rappelé(e)` transmet une demande de contact sans connexion ni paiement.
 Demaa qualifie ensuite le besoin, le matching et le rythme avec le dirigeant ;
-la clôture de la clarification gratuite ne déclenche jamais Stripe.
+le suivi écrit entre les séances porte uniquement sur les priorités travaillées.
+La clôture de la clarification gratuite ne déclenche jamais Stripe.
 
 Tant qu'un accompagnement mensuel éligible est actif, le client bénéficie de
 12 % de réduction sur les autres prestations directement facturées par Demaa.
 Coach business est confirmé par Stripe et la relation Expert-comptable par la
-Team Demaa. Les avantages ne se cumulent pas. La réduction ne s'applique pas :
+Team Demaa. Cette confirmation manuelle reste active jusqu'à sa désactivation
+par la Team ; une date d'expiration explicite peut être enregistrée si le cas
+l'exige, mais aucune échéance annuelle arbitraire n'est créée. Les avantages ne
+se cumulent pas. La réduction ne s'applique pas :
 
 - au prix du Coach business lui-même ;
 - aux honoraires d'un expert-comptable, d'un coach ou d'un autre partenaire ;
@@ -78,11 +85,13 @@ authentification puis ouvre son URL canonique avec le brouillon de clarification
 - aucun paiement Stripe n'est créé par l'interface publique ;
 - l'abonnement et l'avantage restent inactifs tant qu'un statut confirmé n'a
   pas été projeté côté serveur ;
-- les cartes éligibles affichent `−12 % avec un accompagnement mensuel` sous le prix ;
-- le Coach et l'Expert-comptable affichent `−12 % sur les accompagnements Demaa` sous le prix ;
+- les cartes éligibles affichent `Avantage abonnés : −12 %` sous le prix ;
+- le Coach et l'Expert-comptable indiquent qu'ils incluent 12 % de réduction
+  sur les accompagnements Demaa éligibles ;
 - les exclusions de tiers et de budgets sont explicites dans la fiche ;
 - le serveur n'accorde la réduction qu'à un UID disposant d'un accompagnement
-  mensuel actif et non expiré.
+  mensuel actif : période Stripe valide pour Coach business, ou confirmation
+  Team active et éventuellement non expirée pour Expert-comptable.
 
 ## Extensions différées
 

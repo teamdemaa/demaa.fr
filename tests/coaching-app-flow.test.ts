@@ -42,13 +42,15 @@ describe("unified app and coaching", () => {
     expect(coaching).toContain("L’équipe Demaa vous aide gratuitement à identifier le blocage");
     expect(coaching).toContain("Clarifier ma situation");
     expect(coaching).toContain("Découvrir Coach business");
-    expect(coaching).toContain("−12 % sur les autres accompagnements Demaa");
+    expect(coaching).toContain("Inclut 12 % de réduction sur les accompagnements Demaa éligibles");
     expect(coaching).not.toContain("149 €");
     expect(coaching).not.toContain('role="tablist"');
     expect(serviceCatalog).toContain('slug: "coach-business"');
-    expect(serviceCatalog).toContain("Matching avec un coach adapté");
+    expect(serviceCatalog).toContain("matching avec un coach adapté");
     expect(serviceCatalog).toContain("350 €");
     expect(serviceCatalog).toContain("550 €");
+    expect(serviceCatalog).toContain("Suivi écrit entre les séances sur les priorités travaillées");
+    expect(coaching).toContain("Écrivez ou dictez votre message.");
     expect(serviceCatalog).toMatch(/slug: "coach-business"[\s\S]*?monthlyAccompanimentDiscountEligible: false/);
     expect(services).not.toContain("CoachBusinessServiceCard");
     expect(offers).toContain('title: "Coach business · 1 session / mois"');

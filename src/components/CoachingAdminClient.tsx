@@ -2,12 +2,13 @@
 
 import { CheckCircle2, LoaderCircle, Plus, RotateCcw, Send, X } from "lucide-react";
 import { type FormEvent, useState } from "react";
-import type {
-  CoachingConversationSummary,
-  CoachingFreeStatus,
-  CoachingMessage,
-  CoachingRecommendation,
-  CoachingRecommendationCatalogOption,
+import {
+  isCoachingReviewOverdue,
+  type CoachingConversationSummary,
+  type CoachingFreeStatus,
+  type CoachingMessage,
+  type CoachingRecommendation,
+  type CoachingRecommendationCatalogOption,
 } from "@/lib/coaching-conversation";
 
 type Conversation = Readonly<{
@@ -21,6 +22,7 @@ type Conversation = Readonly<{
     source: "coach_business" | "expert_accountant" | null;
     validUntil: string | null;
   }>;
+  openedAt: string | null;
 }>;
 
 const coachingAdminDateFormatter = new Intl.DateTimeFormat("fr-FR", {
@@ -60,6 +62,7 @@ export default function CoachingAdminClient() {
       recommendation?: CoachingRecommendation;
       recommendationCatalog?: CoachingRecommendationCatalogOption[];
       monthlyBenefit?: Conversation["monthlyBenefit"];
+      openedAt?: string;
     } | null;
     if (!response.ok) throw new Error(payload?.error ?? "Une erreur est survenue.");
     return payload;
@@ -147,7 +150,11 @@ export default function CoachingAdminClient() {
         body: JSON.stringify({ action: "reopen", conversationId: selected.id }),
       });
       setSelected((current) => current
-        ? { ...current, freeStatus: payload?.freeStatus ?? "open" }
+        ? {
+            ...current,
+            freeStatus: payload?.freeStatus ?? "open",
+            openedAt: payload?.openedAt ?? new Date().toISOString(),
+          }
         : current);
       await loadConversations();
     } catch (submitError) {
@@ -218,6 +225,11 @@ export default function CoachingAdminClient() {
               <span className="mt-2 inline-flex rounded-md bg-dema-sage/70 px-2 py-1 text-[0.68rem] font-medium text-dema-forest">
                 {conversation.freeStatus === "completed" ? "Clarification terminée" : "Gratuit en cours"}
               </span>
+              {conversation.freeStatus === "open" && isCoachingReviewOverdue(conversation.openedAt) ? (
+                <span className="ml-1 mt-2 inline-flex rounded-md bg-amber-50 px-2 py-1 text-[0.68rem] font-medium text-amber-800">
+                  À revoir · plus de 30 jours
+                </span>
+              ) : null}
             </button>
           ))}
         </div>
@@ -230,6 +242,9 @@ export default function CoachingAdminClient() {
               <div>
                 <h2 className="font-medium text-brand-blue">{selected.customerEmail}</h2>
                 <p className="mt-1 text-xs text-dema-muted">{selected.freeStatus === "completed" ? "Clarification gratuite terminée" : "Clarification gratuite en cours"}</p>
+                {selected.freeStatus === "open" && isCoachingReviewOverdue(selected.openedAt) ? (
+                  <p className="mt-1 text-xs font-medium text-amber-800">Ouverte depuis plus de 30 jours · clôture manuelle à vérifier</p>
+                ) : null}
               </div>
               <div className="flex flex-wrap justify-end gap-2">
                 <button type="button" onClick={() => void toggleExpertAccountantBenefit()} disabled={isLoading || selected.monthlyBenefit.source === "coach_business"} className="inline-flex min-h-9 items-center rounded-full border border-dema-line px-3 text-xs font-medium text-dema-forest hover:bg-dema-sage/40 disabled:opacity-50">

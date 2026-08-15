@@ -66,6 +66,7 @@ type StoredRecommendationSnapshot = {
 
 type StoredCoachingAccess = {
   free_status?: unknown;
+  opened_at?: unknown;
 };
 
 
@@ -326,6 +327,7 @@ export async function getCoachingConversationForAdmin(conversationId: string) {
     customerEmail,
     id: snapshot.id,
     messages: parseMessages(data?.messages),
+    openedAt: cleanText(accessSnapshot?.data()?.opened_at, 40) || null,
     recommendations: parseRecommendations(data?.recommendations),
     ownerUid,
   } as const;
@@ -349,11 +351,13 @@ export async function getCoachingConversationSummaries(limit = 100) {
     const accessSnapshot = ownerUid
       ? await getAdminFirestore().collection(ACCESS_COLLECTION).doc(ownerUid).get()
       : null;
+    const storedAccess = accessSnapshot?.data() as StoredCoachingAccess | undefined;
     return {
       customerEmail,
-      freeStatus: parseFreeStatus(accessSnapshot?.data()?.free_status),
+      freeStatus: parseFreeStatus(storedAccess?.free_status),
       id: document.id,
       lastMessage: lastMessage.body,
+      openedAt: cleanText(storedAccess?.opened_at, 40) || null,
       updatedAt,
     } satisfies CoachingConversationSummary;
   }))).filter((value): value is CoachingConversationSummary => Boolean(value));
@@ -487,13 +491,28 @@ export async function reopenFreeCoachingClarification(conversationId: string) {
     const accessReference = database.collection(ACCESS_COLLECTION).doc(ownerUid);
     const accessSnapshot = await transaction.get(accessReference);
     const previousStatus = parseFreeStatus(accessSnapshot.data()?.free_status);
+    if (previousStatus !== "completed") {
+      return {
+        freeStatus: previousStatus,
+        openedAt: cleanText(accessSnapshot.data()?.opened_at, 40) || null,
+        previousStatus,
+        reopened: false as const,
+      };
+    }
     const now = new Date().toISOString();
     transaction.set(accessReference, {
+      completed_at: null,
+      completed_by: null,
       free_status: "open",
       reopened_at: now,
       reopened_by: "team_demaa",
       updated_at: now,
     }, { merge: true });
-    return { freeStatus: "open" as const, previousStatus };
+    return {
+      freeStatus: "open" as const,
+      openedAt: cleanText(accessSnapshot.data()?.opened_at, 40) || null,
+      previousStatus,
+      reopened: true as const,
+    };
   });
 }

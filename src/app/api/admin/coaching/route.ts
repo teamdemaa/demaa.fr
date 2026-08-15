@@ -196,12 +196,18 @@ export async function POST(request: Request) {
           { status: 404, headers: PRIVATE_NO_STORE_HEADERS },
         );
       }
+      if (!result.reopened) {
+        return NextResponse.json(
+          { error: "Seule une clarification terminée peut être réouverte." },
+          { status: 409, headers: PRIVATE_NO_STORE_HEADERS },
+        );
+      }
       logOperationalEvent("coaching.free_clarification_reopened", {
         conversationId,
         previousStatus: result.previousStatus,
       });
       return NextResponse.json(
-        { freeStatus: result.freeStatus, ok: true },
+        { freeStatus: result.freeStatus, ok: true, openedAt: result.openedAt },
         { status: 200, headers: PRIVATE_NO_STORE_HEADERS },
       );
     }

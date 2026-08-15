@@ -60,13 +60,17 @@ Cette séquence courte est la seule liste à utiliser pour préparer le prochain
 merge. Les checklists datées et les anciens lots conservés plus bas documentent
 l'historique et ne déclenchent aucune action par eux-mêmes.
 
-1. Fermer le candidat applicatif courant : vérifier le périmètre Git, conserver
-   les fichiers PWA comme changements externes, relancer tests, lint, TypeScript,
-   build et smoke tests sans commit, push, merge ou déploiement implicite.
-2. Laisser les deux documents Firebase historiques restants intacts tant
-   qu'une nouvelle autorisation destructive explicite ne les vise pas.
-3. Livrer séparément l'optimisation Académie : cache mémoire, Promise partagée,
-   préchargement idle, tests unitaires et E2E prouvant une seule requête.
+1. Fermer le candidat applicatif courant sur une branche dédiée : conserver les
+   fichiers PWA comme changements externes, vérifier le périmètre explicite,
+   relancer tests, lint, TypeScript, build et smoke tests, puis s'arrêter avant
+   tout merge ou déploiement.
+2. L'audit Firebase en lecture seule du 15 août confirme sept documents
+   historiques sans utilisateur Auth : six `customer_magic_links` et une
+   `customer_session`. Les laisser intacts tant qu'une nouvelle autorisation
+   destructive explicite ne vise pas exactement ces sept documents.
+3. L'optimisation Académie est implémentée : cache mémoire, Promise partagée,
+   préchargement idle, import direct de l'index et tests unitaires. Fermer sa
+   recette navigateur en prouvant une seule requête lors de deux ouvertures.
 4. Traiter ensuite D-082 comme un lot visuel indépendant ; ne pas mélanger la
    stabilité du lecteur avec le cache de données.
 5. Garder le MVP Réseau Partenaire au cadrage jusqu'à validation de la fenêtre
@@ -95,11 +99,12 @@ l'ADR 0004 prévaut.
   clôturée manuellement par la Team Demaa. Le Coach business est présenté
   comme l'accompagnement régulier distinct.
 - Une fiche Système contient `Organisation`, `Solutions` et `Ressources`.
-- Six accompagnements publics existent : Coach business, Expert-comptable,
-  Automatisation des processus, Gestion des réseaux sociaux, Publicité en
-  ligne et Prospection ciblée. Expert-comptable est absent de la fiche Cabinet
-  comptable. Trois prestations externes restent accessibles uniquement par
-  recommandation privée de la Team Demaa.
+- Sept accompagnements publics existent : Coach business, Expert-comptable,
+  Formalités d'entreprise, Automatisation des processus, Gestion des réseaux
+  sociaux, Publicité en ligne et Prospection ciblée. Expert-comptable est absent
+  des systèmes comptables. Formalités est absente des systèmes comptables,
+  cabinets d'avocats et notaires. Deux prestations externes restent accessibles
+  uniquement par recommandation privée de la Team Demaa.
 - Les Services utilisent le même formulaire de contact minimal (entreprise et
   numéro WhatsApp), avec attribution silencieuse du service et du Système
   métier, stockage sécurisé puis notification Slack. Le suivi WhatsApp reste
@@ -186,6 +191,9 @@ l'ADR 0004 prévaut.
 - [x] Permettre de soumettre une Opportunité depuis le `+` de la recherche :
   saisie complète avant connexion, brouillon serveur repris après connexion,
   identité de session, idempotence et statut `draft` jusqu'à publication admin.
+- [x] Afficher les Opportunités en lignes compactes pleine largeur : titre et
+  description limités à deux lignes, trois tags dédupliqués maximum alignés en
+  bas, même modale et même comportement de sélection sur desktop et mobile.
 - [ ] Cadrer ensuite les évolutions Coaching : capacité humaine, notifications
   de réponse, réservation, confidentialité, durée de conservation et
   limites du service. L'historique Messages, sa persistance et la réponse sous
@@ -195,8 +203,10 @@ l'ADR 0004 prévaut.
   n'existe pas de troisième carte. Un accompagnement mensuel actif ouvre 12 % sur
   les autres prestations directement facturées par Demaa, après contrôle
   serveur et avec exclusion du Coach, des partenaires, budgets et frais tiers.
-  - Définir précisément ce qui est inclus, les délais de réponse, le rythme des
-    échanges, les limites raisonnables d'usage et les règles de report.
+  - [x] Inclure un suivi écrit entre les séances, limité aux priorités
+    travaillées, sans promettre un accès illimité.
+  - Définir les délais de réponse, les limites raisonnables d'usage et les
+    règles de report.
   - Auditer la soutenabilité de l'hypothèse interne `50 % Demaa / 50 %
     réalisation humaine` sur les montants HT réellement encaissés, sans
     afficher cette répartition au client.
@@ -255,10 +265,11 @@ l'ADR 0004 prévaut.
   consentement, lien révocable, durée et protection contre l'indexation. Le MVP
   permet déjà de sauvegarder et retrouver un plan, mais ne crée aucun lien
   public tant que ces règles ne sont pas validées.
-- [x] Conserver six accompagnements publics composés au rendu dans les 115
-  Systèmes. Assistance administrative, Formalités d'entreprise et
-  Sous-traitance de formalités juridiques restent privées et accessibles
-  uniquement par recommandation de la Team Demaa.
+- [x] Conserver sept accompagnements publics composés au rendu dans les 115
+  Systèmes. Formalités d'entreprise est publique hors systèmes comptables,
+  cabinets d'avocats et notaires. Assistance administrative et Sous-traitance
+  de formalités juridiques restent privées et accessibles uniquement par
+  recommandation de la Team Demaa.
 - [x] D-083, lot 1 : limiter la surface publique Solutions à `Outils` et
   `Services`, sans suppression ni déplacement de données. Le filtre public
   s'applique après la composition pour empêcher Financement et Aides d'être
@@ -277,7 +288,7 @@ l'ADR 0004 prévaut.
 - [x] Limiter temporairement Académie aux seuls `Cours`, sans onglet. Les
   Tutoriels techniques `case-study`, leurs slugs et leurs routes restent
   conservés mais masqués, comme les Webinaires.
-- [ ] Optimiser le retour dans Académie avec un cache client mémoire, une
+- [x] Optimiser le retour dans Académie avec un cache client mémoire, une
   Promise de chargement partagée et un préchargement non bloquant au repos.
   Conserver l'API, le payload actuel et le cache Système sans modification ;
   le contrat détaillé et la recette sont définis ci-dessous.
@@ -564,60 +575,60 @@ règles éditoriales.
 
 **Cache client dédié**
 
-- [ ] Créer `src/lib/action-plan-academy-payload.client.ts`, sur le principe du
+- [x] Créer `src/lib/action-plan-academy-payload.client.ts`, sur le principe du
   cache Système existant, avec une seule valeur mémorisée et une seule Promise
   mémorisée pendant le chargement.
-- [ ] Exposer exactement `loadActionPlanAcademyPayload()`,
+- [x] Exposer exactement `loadActionPlanAcademyPayload()`,
   `readCachedActionPlanAcademyPayload()` et
   `invalidateActionPlanAcademyPayload()`.
-- [ ] Faire retourner directement la Promise mémorisée par le loader afin que
+- [x] Faire retourner directement la Promise mémorisée par le loader afin que
   deux appels simultanés partagent strictement la même Promise et la même
   requête. Mettre le payload en cache uniquement après une réponse valide et
   retirer la Promise en attente dans un `finally`.
-- [ ] Ne pas attacher d'`AbortController` à la requête partagée : le démontage
+- [x] Ne pas attacher d'`AbortController` à la requête partagée : le démontage
   d'un panneau ne doit pas annuler le chargement utilisé par un préchargement
   ou un autre panneau. La protection contre une mise à jour après démontage
   reste locale au composant.
 
 **Intégration dans l'expérience**
 
-- [ ] Dans `ActionPlanAcademyPanel`, initialiser l'état depuis
+- [x] Dans `ActionPlanAcademyPanel`, initialiser l'état depuis
   `readCachedActionPlanAcademyPayload()`, remplacer le `fetch` direct par le
   loader partagé et retirer `cache: "no-store"`.
-- [ ] Réutiliser immédiatement le payload lors du remontage. Le bouton
+- [x] Réutiliser immédiatement le payload lors du remontage. Le bouton
   `Réessayer` est la seule action qui invalide le cache ; il efface l'erreur et
   l'état local avant de relancer un chargement propre.
-- [ ] Précharger en arrière-plan après le premier rendu de
+- [x] Précharger en arrière-plan après le premier rendu de
   `ActionPlanExperience` et `SavedActionPlanDetail`, avec
   `requestIdleCallback` et annulation correspondante lorsque disponible, puis
   un fallback `setTimeout` / `clearTimeout`. Une erreur de préchargement reste
   silencieuse et une ouverture ultérieure doit pouvoir retenter la requête.
-- [ ] Importer `AcademyIndexClient` directement dans le panneau. Conserver
+- [x] Importer `AcademyIndexClient` directement dans le panneau. Conserver
   seulement `AcademyCoursePlayer` en import dynamique, car il n'est utile qu'à
   l'ouverture d'un cours.
 - [ ] Mesurer le bundle avant/après l'import direct afin de confirmer que le
   gain d'ouverture ne dégrade pas de manière disproportionnée le chargement du
   plan. Le cache de données reste le mécanisme principal qui supprime le loader
   au retour dans Académie.
-- [ ] Conserver le payload actuel d'environ 94 Ko, chargé une seule fois en
+- [x] Conserver le payload actuel d'environ 94 Ko, chargé une seule fois en
   arrière-plan puis gardé en mémoire. Ne pas modifier `/api/action-plan/academy`
   et ne pas découper les cours dans ce lot.
-- [ ] Ne modifier ni `action-plan-system-payload.client.ts`, ni son API, ni son
+- [x] Ne modifier ni `action-plan-system-payload.client.ts`, ni son API, ni son
   comportement de cache.
 
 **Tests et recette**
 
-- [ ] Prouver que deux ouvertures successives d'Académie effectuent un seul
+- [x] Prouver par test unitaire que deux ouvertures successives d'Académie effectuent un seul
   `fetch`.
-- [ ] Prouver que deux chargements simultanés reçoivent la même Promise et ne
+- [x] Prouver que deux chargements simultanés reçoivent la même Promise et ne
   déclenchent qu'une requête.
-- [ ] Prouver que le cache hydrate immédiatement un panneau remonté, sans
+- [x] Prouver que le cache hydrate immédiatement un panneau remonté, sans
   loader intermédiaire.
-- [ ] Prouver que `Réessayer` invalide le cache, puis recharge un payload neuf.
+- [x] Prouver que `Réessayer` invalide le cache, puis recharge un payload neuf.
 - [ ] Prouver qu'un échec du préchargement ne crée pas d'erreur visible et
   qu'une ouverture manuelle retente le chargement.
-- [ ] Conserver un test de non-régression explicite du cache Système métier.
-- [ ] En E2E desktop et mobile, intercepter
+- [x] Conserver un test de non-régression explicite du cache Système métier.
+- [x] En E2E desktop et mobile, intercepter
   `/api/action-plan/academy`, ouvrir Académie, revenir au plan puis rouvrir
   Académie : aucun loader ne réapparaît et une seule requête est observée.
 
@@ -2134,6 +2145,6 @@ ne sont pas confirmés, D-071 reste documenté sans effet sur le produit.
 ## Prochaine action
 
 Suivre exclusivement la `Séquence d'exécution active — 15 août 2026` placée en
-haut de ce document. La prochaine modification produit est l'optimisation du
-chargement Académie. Le MVP Réseau Partenaire reste un cadrage, et tous les lots
+haut de ce document. L'optimisation du chargement Académie est implémentée ; sa
+preuve navigateur finale appartient au contrôle du candidat courant. Le MVP Réseau Partenaire reste un cadrage, et tous les lots
 historiques exigent un nouveau GO explicite avant de redevenir exécutables.

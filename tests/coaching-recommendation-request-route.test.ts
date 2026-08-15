@@ -63,8 +63,8 @@ describe("private coaching recommendation request", () => {
       created: true,
       recommendation: {
         id: "11111111-1111-4111-8111-111111111111",
-        name: "Formalités d’entreprise",
-        needLabel: "Création",
+        name: "Assistance administrative",
+        needLabel: null,
       },
     });
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });

@@ -120,6 +120,7 @@ describe("canonical Services composition in every system", () => {
     expect(getCanonicalServiceSlugsForSystem("restaurant")).toEqual([
       "coach-business",
       "expert-comptable",
+      "formalites-entreprise",
       "automatisation-processus",
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
@@ -140,7 +141,15 @@ describe("canonical Services composition in every system", () => {
       "publicite-en-ligne",
       "prospection-ciblee",
     ]);
-    expect(getCanonicalServiceSlugsForSystem("notaire")).toHaveLength(6);
+    expect(getCanonicalServiceSlugsForSystem("notaire")).toEqual([
+      "coach-business",
+      "expert-comptable",
+      "automatisation-processus",
+      "gestion-reseaux-sociaux",
+      "publicite-en-ligne",
+      "prospection-ciblee",
+    ]);
+    expect(getCanonicalServiceSlugsForSystem("expert-comptable")).not.toContain("formalites-entreprise");
   });
 
   it("places relevant catalog sections in order without mutating registry data", () => {

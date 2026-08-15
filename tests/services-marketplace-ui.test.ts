@@ -24,13 +24,14 @@ async function readSource(path: string) {
 }
 
 describe("canonical Accompagnement catalog", () => {
-  it("publishes exactly the six approved offers from one immutable source", () => {
+  it("publishes exactly the seven approved offers from one immutable source", () => {
     const services = getCanonicalServices();
 
     expect(services.map((service) => service.slug)).toEqual(CANONICAL_SERVICE_SLUGS);
     expect(services.map((service) => service.name)).toEqual([
       "Coach business",
       "Expert-comptable",
+      "Formalités d’entreprise",
       "Automatisation des processus",
       "Gestion des réseaux sociaux",
       "Publicité en ligne",
@@ -50,6 +51,11 @@ describe("canonical Accompagnement catalog", () => {
     expect(getCanonicalServiceBySlug("automatisation-processus")?.monthlyAccompanimentDiscountEligible).toBe(true);
     expect(getCanonicalServiceBySlug("expert-comptable")?.monthlyAccompanimentDiscountEligible).toBe(false);
     expect(getCanonicalServiceBySlug("expert-comptable")?.summary).toContain("inscrit à l’Ordre");
+    expect(getCanonicalServiceBySlug("formalites-entreprise")).toMatchObject({
+      delivery: "third-party",
+      monthlyAccompanimentDiscountEligible: false,
+      pricing: { label: "Sur devis" },
+    });
   });
 
   it("places Coach business first without discounting the subscription itself", () => {
@@ -95,12 +101,12 @@ describe("canonical Accompagnement catalog", () => {
     });
   });
 
-  it("renders six equal linked accompaniment cards", () => {
+  it("renders seven equal linked accompaniment cards", () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
 
-    expect(markup.match(/<article/g)).toHaveLength(6);
+    expect(markup.match(/<article/g)).toHaveLength(7);
     for (const slug of CANONICAL_SERVICE_SLUGS) {
       expect(markup).toContain(`/services/${slug}`);
     }
@@ -109,10 +115,10 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).toContain("À partir de 250 € HT / mois");
     expect(markup).toContain("Coach business");
     expect(markup).toContain("À partir de 350 € HT / mois");
-    expect(markup).toContain("−12 % sur les accompagnements Demaa");
-    expect(markup).toContain("−12 % avec un accompagnement mensuel");
+    expect(markup).toContain("Inclut 12 % de réduction sur les accompagnements Demaa éligibles");
+    expect(markup).toContain("Avantage abonnés : −12 %");
     expect(markup).not.toContain("−15 %");
-    expect(markup.indexOf("−12 % avec un accompagnement mensuel"))
+    expect(markup.indexOf("Avantage abonnés : −12 %"))
       .toBeGreaterThan(markup.indexOf("500 € HT / jour"));
     expect(markup).not.toContain("Découvrir le service");
   });

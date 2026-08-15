@@ -71,7 +71,11 @@ async function main() {
     "action_plans",
     "coaching_conversations",
     "coaching_message_drafts",
+    "customer_coaching_access",
+    "customer_accompaniment_benefits",
     "customer_subscriptions",
+    "opportunity_submission_drafts",
+    "service_solution_requests",
     "stripe_webhook_events",
   ];
 

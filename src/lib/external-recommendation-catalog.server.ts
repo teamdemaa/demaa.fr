@@ -4,17 +4,11 @@ import { deepFreeze } from "@/lib/registry-contract-utils";
 
 export const EXTERNAL_RECOMMENDATION_SLUGS = [
   "assistance-administrative",
-  "formalites-entreprise",
   "sous-traitance-formalites-juridiques",
 ] as const;
 
 export type ExternalRecommendationSlug =
   (typeof EXTERNAL_RECOMMENDATION_SLUGS)[number];
-export type ExternalRecommendationNeedKey =
-  | "creation"
-  | "modification"
-  | "fermeture";
-
 export type ExternalRecommendationCatalogItem = Readonly<{
   active: boolean;
   category: string;
@@ -23,7 +17,7 @@ export type ExternalRecommendationCatalogItem = Readonly<{
   included: readonly string[];
   limits: readonly string[];
   name: string;
-  needs: readonly Readonly<{ key: ExternalRecommendationNeedKey; label: string }>[];
+  needs: readonly Readonly<{ key: string; label: string }>[];
   slug: ExternalRecommendationSlug;
   version: string;
   visibility: "recommendation_only";
@@ -38,25 +32,8 @@ const catalog = deepFreeze([
     included: ["Qualification des tâches et du volume", "Recherche d’un professionnel adapté", "Transmission du contexte utile"],
     limits: ["La mission est contractualisée avec le professionnel", "La tenue comptable n’est pas incluse"],
     name: "Assistance administrative",
-    needs: [],
+    needs: [] as readonly Readonly<{ key: string; label: string }>[],
     slug: "assistance-administrative",
-    version: "2026-08-14",
-    visibility: "recommendation_only",
-  },
-  {
-    active: true,
-    category: "Création, modification ou fermeture",
-    connectionProcess: "Demaa précise la formalité puis recherche un professionnel habilité. Vous restez libre d’accepter la mise en relation.",
-    description: "Un professionnel peut prendre en charge la formalité correspondant à votre situation.",
-    included: ["Qualification de la formalité", "Recherche d’un professionnel adapté", "Transmission du contexte utile"],
-    limits: ["Le conseil juridique individualisé n’est pas fourni par Demaa", "Les frais administratifs et de publication restent séparés"],
-    name: "Formalités d’entreprise",
-    needs: [
-      { key: "creation", label: "Création" },
-      { key: "modification", label: "Modification" },
-      { key: "fermeture", label: "Fermeture" },
-    ],
-    slug: "formalites-entreprise",
     version: "2026-08-14",
     visibility: "recommendation_only",
   },
@@ -68,7 +45,7 @@ const catalog = deepFreeze([
     included: ["Qualification du volume", "Recherche d’un prestataire spécialisé", "Cadrage de la confidentialité"],
     limits: ["Le conseil et la validation juridique ne sont pas fournis par Demaa", "La mission commence après validation du périmètre"],
     name: "Sous-traitance de formalités juridiques",
-    needs: [],
+    needs: [] as readonly Readonly<{ key: string; label: string }>[],
     slug: "sous-traitance-formalites-juridiques",
     version: "2026-08-14",
     visibility: "recommendation_only",

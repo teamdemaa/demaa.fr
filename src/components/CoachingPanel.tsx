@@ -96,11 +96,11 @@ function CoachBusinessPromo() {
           Besoin d’un accompagnement régulier pour avancer sur vos objectifs&nbsp;?
         </h3>
         <p className="mt-2 max-w-xl text-sm leading-relaxed text-dema-muted">
-          Avec Coach business, clarifiez le cap, définissez vos priorités et organisez l’exécution avec un coach adapté à votre situation.
+          Avec Coach business, avancez avec des sessions régulières et un suivi écrit entre les séances sur les priorités travaillées.
         </p>
         <p className="mt-2 text-sm font-medium text-dema-forest">
           À partir de 350 € HT / mois
-          <span className="mt-1 block text-xs">−12 % sur les autres accompagnements Demaa</span>
+          <span className="mt-1 block text-xs">Inclut 12 % de réduction sur les accompagnements Demaa éligibles</span>
         </p>
       </div>
       <Link
@@ -131,7 +131,7 @@ export default function CoachingPanel({
           Clarifier ma situation
         </h2>
         <p className="mx-auto mt-4 max-w-[35.625rem] text-base font-light leading-relaxed text-dema-muted sm:text-lg">
-          Décrivez votre situation par écrit ou à l’oral. L’équipe Demaa vous aide gratuitement à identifier le blocage et la prochaine étape.
+          Écrivez ou dictez votre message. L’équipe Demaa vous aide gratuitement à identifier le blocage et la prochaine étape.
         </p>
       </header>
       <CoachingMessageForm

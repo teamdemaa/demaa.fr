@@ -20,10 +20,11 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services SEO and redirects", () => {
-  it("publishes only the six canonical detail routes", async () => {
+  it("publishes only the seven canonical detail routes", async () => {
     expect(generateStaticParams()).toEqual([
       { slug: "coach-business" },
       { slug: "expert-comptable" },
+      { slug: "formalites-entreprise" },
       { slug: "automatisation-processus" },
       { slug: "gestion-reseaux-sociaux" },
       { slug: "publicite-en-ligne" },
@@ -50,7 +51,8 @@ describe("canonical Services SEO and redirects", () => {
     const automation = getCanonicalServiceBySlug("automatisation-processus");
     const advertising = getCanonicalServiceBySlug("publicite-en-ligne");
     const expert = getCanonicalServiceBySlug("expert-comptable");
-    if (!automation || !advertising || !expert) {
+    const formalities = getCanonicalServiceBySlug("formalites-entreprise");
+    if (!automation || !advertising || !expert || !formalities) {
       throw new Error("missing canonical service fixture");
     }
 
@@ -76,6 +78,8 @@ describe("canonical Services SEO and redirects", () => {
     });
     expect(JSON.stringify(buildServicePageJsonLd(expert))).not.toContain('"@type":"Offer"');
     expect(JSON.stringify(buildServicePageJsonLd(expert))).not.toContain('"provider":{"@type":"Organization","name":"Demaa"}');
+    expect(JSON.stringify(buildServicePageJsonLd(formalities))).not.toContain('"@type":"Offer"');
+    expect(JSON.stringify(buildServicePageJsonLd(formalities))).not.toContain('"provider":{"@type":"Organization","name":"Demaa"}');
   });
 
   it("escapes embedded JSON-LD", () => {
