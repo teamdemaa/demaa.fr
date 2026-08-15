@@ -33,7 +33,8 @@ export function isFirebaseGoogleAuthAllowedOnCurrentHost() {
   const hostname = window.location.hostname.toLowerCase();
   return hostname === "demaa.co"
     || hostname === "localhost"
-    || hostname === "127.0.0.1";
+    || hostname === "127.0.0.1"
+    || hostname.endsWith(".vercel.app");
 }
 
 function getDemaaAuth() {
