@@ -1,0 +1,25 @@
+{
+  "id": "cabinet-123456789",
+  "company": {
+    "name": "CABINET EXEMPLE",
+    "siren": "123456789",
+    "siret": "12345678900012",
+    "activityCode": "69.20Z",
+    "status": "active",
+    "website": "https://cabinet.example",
+    "domain": "cabinet.example",
+    "address": "1 rue Exemple, 75000 Paris"
+  },
+  "fit": {
+    "segment": "cabinet-expertise-comptable-pennylane",
+    "pennylaneEvidence": [],
+    "signals": []
+  },
+  "contact": {
+    "email": "contact@cabinet.example",
+    "type": "generic",
+    "sourceUrl": "https://cabinet.example/contact",
+    "checkedAt": "2026-08-08"
+  },
+  "sources": []
+}
