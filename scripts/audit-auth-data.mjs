@@ -69,6 +69,8 @@ async function main() {
     "customer_sessions",
     "customer_magic_links",
     "action_plans",
+    "companies",
+    "company_memberships",
     "coaching_conversations",
     "coaching_message_drafts",
     "customer_coaching_access",

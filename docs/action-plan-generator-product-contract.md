@@ -419,7 +419,7 @@ au backlog, sans modifier cette première version :
 - les nouveaux canaux ou formats de messagerie ;
 - les évolutions de droits, confidentialité et conservation des échanges ;
 - les évolutions de tarification et de limites de service ;
-- le multi-tenant et le sélecteur d'entreprise ;
+- plusieurs entreprises par compte, le sélecteur d'entreprise et la collaboration ;
 - l'enrichissement facultatif du profil entreprise.
 
 ## Critères d'acceptation MVP
@@ -439,6 +439,9 @@ au backlog, sans modifier cette première version :
 - Les supports V3 sont typés et suivent les règles déterministes du contrat.
 - Plusieurs plans et plusieurs Systèmes peuvent être conservés sans mélanger
   leurs états.
+- Chaque compte dispose d'une entreprise par défaut et d'une appartenance
+  `owner`; les plans sont autorisés par cette appartenance active, jamais par
+  l'adresse e-mail ou par le seul champ historique `owner_uid`.
 - La dictée utilise l'adaptateur microphone partagé et ne conserve aucun audio.
 - Le ledger ne contient aucun prompt, commande ou contenu de plan.
 - La commande IA n'envoie que l'enveloppe externe minimale explicitement

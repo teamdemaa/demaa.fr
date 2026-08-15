@@ -71,6 +71,10 @@ import {
   getOwnedActionPlansForIdentity,
   updateActionPlanWorkspaceForAccess,
 } from "@/lib/action-plan-storage.server";
+import {
+  buildCompanyMembershipId,
+  buildDefaultCompanyId,
+} from "@/lib/company-membership.server";
 
 const systemId = actionPlanSystemOptions[0]?.id;
 if (!systemId) throw new Error("Missing action plan system fixture.");
@@ -124,10 +128,10 @@ function actionPlan(summary = "Un plan concret pour reprendre la main."): Legacy
   };
 }
 
-describe("UID-only action plan persistence", () => {
+describe("company-scoped action plan persistence", () => {
   beforeEach(() => firestore.documents.clear());
 
-  it("anchors new plans to the default company while keeping UID ownership during migration", async () => {
+  it("anchors new plans to the active default company with UID audit fields", async () => {
     const created = await createOwnedActionPlanForIdentity(identity("owner-uid"), {
       plan: actionPlan(),
     });
@@ -159,6 +163,72 @@ describe("UID-only action plan persistence", () => {
       .resolves.toBeNull();
     await expect(getOwnedActionPlansForIdentity(identity("other-uid", "shared@example.com")))
       .resolves.toEqual([]);
+  });
+
+  it("lists by company scope and never falls back to a legacy owner field", async () => {
+    const created = await createOwnedActionPlanForIdentity(identity("owner-uid"), {
+      plan: actionPlan(),
+    });
+    firestore.documents.set("action_plans/legacy-owner-plan", {
+      ...firestore.documents.get(`action_plans/${created.id}`),
+      company_id: null,
+      owner_uid: "owner-uid",
+    });
+    firestore.documents.set("action_plans/foreign-company-plan", {
+      ...firestore.documents.get(`action_plans/${created.id}`),
+      company_id: buildDefaultCompanyId("other-uid"),
+      owner_uid: "owner-uid",
+    });
+
+    await expect(getOwnedActionPlansForIdentity(identity("owner-uid")))
+      .resolves.toEqual([expect.objectContaining({ id: created.id })]);
+    await expect(getActionPlanForAccess({ id: "legacy-owner-plan", uid: "owner-uid" }))
+      .resolves.toBeNull();
+  });
+
+  it("uses membership rather than the legacy owner field after company scoping", async () => {
+    const created = await createOwnedActionPlanForIdentity(identity("owner-uid"), {
+      plan: actionPlan(),
+    });
+    const path = `action_plans/${created.id}`;
+    firestore.documents.set(path, {
+      ...firestore.documents.get(path),
+      owner_uid: "historical-owner-value",
+    });
+
+    await expect(getActionPlanForAccess({ id: created.id, uid: "owner-uid" }))
+      .resolves.toMatchObject({ id: created.id });
+    await expect(getActionPlanForAccess({ id: created.id, uid: "historical-owner-value" }))
+      .resolves.toBeNull();
+  });
+
+  it("blocks every plan operation when the membership is suspended", async () => {
+    const created = await createOwnedActionPlanForIdentity(identity("owner-uid"), {
+      plan: actionPlan(),
+    });
+    const companyId = buildDefaultCompanyId("owner-uid");
+    const membershipId = buildCompanyMembershipId(companyId, "owner-uid");
+    const membershipPath = `company_memberships/${membershipId}`;
+    firestore.documents.set(membershipPath, {
+      ...firestore.documents.get(membershipPath),
+      status: "suspended",
+    });
+    const workspace = createActionPlanWorkspaceState(created.plan);
+
+    await expect(getOwnedActionPlansForIdentity(identity("owner-uid"))).resolves.toEqual([]);
+    await expect(getActionPlanForAccess({ id: created.id, uid: "owner-uid" }))
+      .resolves.toBeNull();
+    await expect(updateActionPlanWorkspaceForAccess({
+      uid: "owner-uid",
+      id: created.id,
+      expectedRevision: 1,
+      workspaceState: workspace,
+    })).resolves.toBeNull();
+    await expect(deleteActionPlanForAccess({
+      uid: "owner-uid",
+      id: created.id,
+      expectedRevision: 1,
+    })).resolves.toBeNull();
   });
 
   it("updates with optimistic revisions and rejects another UID", async () => {

@@ -10,6 +10,8 @@ describe("authentication and customer-data audit", () => {
   it.each([
     "customer_coaching_access",
     "customer_accompaniment_benefits",
+    "companies",
+    "company_memberships",
     "opportunity_submission_drafts",
     "service_solution_requests",
   ])("counts the current business collection %s", (collection) => {

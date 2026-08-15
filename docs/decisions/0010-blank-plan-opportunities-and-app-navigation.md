@@ -90,10 +90,11 @@ cette version. Un futur champ facultatif pourra être décidé séparément.
 Firebase Authentication gère l'adresse et le mot de passe ; Demaa ne reçoit
 jamais le mot de passe. Le serveur transforme le jeton d'identité en cookie de
 session Firebase natif, HttpOnly et vérifié avec contrôle de révocation.
-E-mail/mot de passe et Google alimentent la même identité. L'UID Firebase est
-l'unique clé d'autorisation des plans, conversations et brouillons ; l'e-mail
-de session reste une coordonnée de contact. Aucun accès historique ou système
-de réclamation par e-mail n'est maintenu.
+E-mail/mot de passe et Google alimentent la même identité. L'UID Firebase reste
+l'identité racine. Les conversations et brouillons restent attachés à cet UID ;
+les plans sont rattachés à l'entreprise par défaut et autorisés par une
+appartenance active. L'e-mail de session reste une coordonnée de contact. Aucun
+accès historique ou système de réclamation par e-mail n'est maintenu.
 
 ## Hors périmètre
 
@@ -102,5 +103,5 @@ de réclamation par e-mail n'est maintenu.
 - place de marché et publication automatique de profils ;
 - glisser-déposer Kanban, notifications ou collaboration multi-utilisateur ;
 - comptes possédant plusieurs entreprises, sélecteur d'entreprise et
-  progression partagée à l'échelle d'une entreprise ;
+  collaboration multi-membre ;
 - recherche web ou étude de marché automatique.

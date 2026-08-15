@@ -29,7 +29,7 @@ describe("action plan persistence boundaries", () => {
     expect(updateRoute).toContain("generation: parsed.data.generation");
   });
 
-  it("uses one native Firebase session and UID-only plan ownership", () => {
+  it("uses one Firebase identity and company-membership plan authorization", () => {
     const collectionRoute = source("src/app/api/action-plans/route.ts");
     const auth = source("src/lib/customer-space-auth.ts");
     const storage = source("src/lib/action-plan-storage.server.ts");
@@ -39,6 +39,10 @@ describe("action plan persistence boundaries", () => {
     expect(auth).toContain("createSessionCookie");
     expect(auth).toContain("verifySessionCookie(token, true)");
     expect(storage).toContain("owner_uid: uid");
+    expect(storage).toContain("getActiveDefaultCompanyIdentity");
+    expect(storage).toContain("getActiveDefaultCompanyIdentityInTransaction");
+    expect(storage).toContain('.where("company_id", "==", company.companyId)');
+    expect(storage).not.toContain('.where("owner_uid", "=="');
     expect(storage).not.toContain("owner_email");
     expect(storage).not.toContain("pending_claim");
     expect(planPage).toContain("getActionPlanForAccess");

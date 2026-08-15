@@ -43,6 +43,7 @@ import {
   buildCompanyMembershipId,
   buildDefaultCompanyId,
   ensureDefaultCompanyForIdentity,
+  getActiveDefaultCompanyIdentity,
   hasActiveCompanyMembership,
 } from "@/lib/company-membership.server";
 
@@ -96,6 +97,7 @@ describe("company membership foundation", () => {
       companyId: company.companyId,
       uid: "owner-uid",
     })).resolves.toBe(false);
+    await expect(getActiveDefaultCompanyIdentity("owner-uid")).resolves.toBeNull();
   });
 
   it("does not reactivate an archived company or suspended membership", async () => {
@@ -107,5 +109,11 @@ describe("company membership foundation", () => {
     });
     await expect(ensureDefaultCompanyForIdentity(identity("owner-uid")))
       .rejects.toThrow("not active");
+  });
+
+  it("resolves only an active default company for the authenticated UID", async () => {
+    const company = await ensureDefaultCompanyForIdentity(identity("owner-uid"));
+    await expect(getActiveDefaultCompanyIdentity("owner-uid")).resolves.toEqual(company);
+    await expect(getActiveDefaultCompanyIdentity("other-uid")).resolves.toBeNull();
   });
 });

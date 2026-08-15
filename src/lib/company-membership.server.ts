@@ -1,6 +1,7 @@
 import "server-only";
 
 import { createHash } from "node:crypto";
+import type { Transaction } from "firebase-admin/firestore";
 import type { CustomerSessionIdentity } from "@/lib/customer-space-auth";
 import { getAdminFirestore } from "@/lib/firebase-admin";
 
@@ -63,6 +64,45 @@ export function getDefaultCompanyIdentity(uid: string): CompanyIdentity {
     companyId,
     membershipId: buildCompanyMembershipId(companyId, uid),
   };
+}
+
+export async function getActiveDefaultCompanyIdentity(
+  uidValue: string,
+): Promise<CompanyIdentity | null> {
+  const uid = normalizeUid(uidValue);
+  const companyIdentity = getDefaultCompanyIdentity(uid);
+  const hasMembership = await hasActiveCompanyMembership({
+    companyId: companyIdentity.companyId,
+    uid,
+  });
+  return hasMembership ? companyIdentity : null;
+}
+
+export async function getActiveDefaultCompanyIdentityInTransaction(
+  transaction: Transaction,
+  uidValue: string,
+): Promise<CompanyIdentity | null> {
+  const uid = normalizeUid(uidValue);
+  const companyIdentity = getDefaultCompanyIdentity(uid);
+  const database = getAdminFirestore();
+  const companyReference = database
+    .collection(COMPANIES_COLLECTION)
+    .doc(companyIdentity.companyId);
+  const membershipReference = database
+    .collection(COMPANY_MEMBERSHIPS_COLLECTION)
+    .doc(companyIdentity.membershipId);
+  const [companySnapshot, membershipSnapshot] = await Promise.all([
+    transaction.get(companyReference),
+    transaction.get(membershipReference),
+  ]);
+
+  return isActiveCompany(companySnapshot.data() as CompanyDocument | undefined)
+    && isActiveMembership(
+      membershipSnapshot.data() as CompanyMembershipDocument | undefined,
+      { companyId: companyIdentity.companyId, uid },
+    )
+    ? companyIdentity
+    : null;
 }
 
 function isActiveCompany(document: CompanyDocument | undefined) {

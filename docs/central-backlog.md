@@ -179,16 +179,21 @@ l'ADR 0004 prévaut.
   à l'ouverture normale de l'application. `/plans` résout le plan courant et
   `/?new=1` reste réservé à une nouvelle situation volontaire ; l'absence de
   plan ouvre ce mode vierge sans boucle de redirection.
-- [ ] Livrer D-078 par transition compatible : Firebase UID reste l'identité,
+- [x] Livrer D-078 par transition compatible : Firebase UID reste l'identité,
   sans collection `accounts`. Le socle contient uniquement `companies` et
   `company_memberships`. Une entreprise sans nom et une appartenance `owner`
-  sont créées transactionnellement au premier plan authentifié ; les nouveaux
-  plans reçoivent `company_id`, `created_by_uid` et `updated_by_uid` tout en
-  conservant temporairement `owner_uid` comme autorisation pendant la migration.
-  Avant de basculer les lectures vers l'appartenance, produire un rapport de
-  backfill et tester l'isolation inter-entreprises. Aucun sélecteur, rôle
-  supplémentaire, invitation ou gestion d'équipe dans ce lot. Le nom
-  d'entreprise reste facultatif et ne bloque jamais l'ouverture du plan.
+  sont créées transactionnellement au premier plan authentifié. Les plans
+  reçoivent `company_id`, `created_by_uid` et `updated_by_uid` ; `owner_uid`
+  est conservé comme trace de compatibilité mais n'autorise plus aucun accès.
+  Liste, ouverture, modification et suppression exigent désormais une
+  entreprise active et une appartenance active correspondant à `company_id`.
+  Le rapport Firebase du 15 août 2026 a trouvé zéro plan à migrer, zéro conflit
+  et zéro document sans propriétaire. Le backfill reste disponible en dry-run
+  et exige projet, nombre et empreinte exacts avant toute écriture. Les tests
+  couvrent l'isolation inter-entreprises et la suspension d'une appartenance.
+  Aucun sélecteur, rôle supplémentaire, invitation ou gestion d'équipe dans ce
+  lot. Le nom d'entreprise reste facultatif et ne bloque jamais l'ouverture du
+  plan.
 - [x] Permettre un nom d'organisation facultatif dans l'administration des
   Opportunités et ne l'afficher que lorsqu'il est explicitement publié.
 - [ ] Synchroniser de manière contrôlée les champs facultatifs enrichis des
