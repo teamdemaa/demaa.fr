@@ -60,25 +60,30 @@ Cette séquence courte est la seule liste à utiliser pour préparer le prochain
 merge. Les checklists datées et les anciens lots conservés plus bas documentent
 l'historique et ne déclenchent aucune action par eux-mêmes.
 
-1. Fermer le candidat applicatif courant sur une branche dédiée : aides
-   contextuelles déterministes, demande d'accès après fermeture de l'éditeur,
-   résumé des commandes IA, focus mobile et marges PWA. Les icônes PWA sont
-   désormais des fichiers suivis du produit ; vérifier leur gabarit, relancer
-   tests, lint, TypeScript, build et smoke tests, puis s'arrêter avant tout
-   commit, merge ou déploiement.
-2. L'audit Firebase en lecture seule du 15 août confirme sept documents
-   historiques sans utilisateur Auth : six `customer_magic_links` et une
-   `customer_session`. Les laisser intacts tant qu'une nouvelle autorisation
-   destructive explicite ne vise pas exactement ces sept documents.
-3. L'optimisation Académie est implémentée : cache mémoire, Promise partagée,
-   préchargement idle, import direct de l'index et tests unitaires. Fermer sa
-   recette navigateur en prouvant une seule requête lors de deux ouvertures.
-4. Traiter ensuite D-082 comme un lot visuel indépendant ; ne pas mélanger la
-   stabilité du lecteur avec le cache de données.
-5. Garder le MVP Réseau Partenaire au cadrage jusqu'à validation de la fenêtre
+1. Le candidat intégré est porté par la PR 105. Sa recette locale couvre 217
+   fichiers et 1 187 tests, TypeScript, ESLint, données, Académie, PWA, audit
+   npm, build de 430 pages et l'isolation Firestore Emulator. La Preview a
+   validé e-mail/mot de passe, ouverture Google, entreprise/appartenance,
+   création, autosauvegarde, rechargement et restauration du plan. Production
+   et les DNS restent intacts pendant la propagation du domaine.
+2. Les sept derniers documents d'authentification historique ont été supprimés
+   le 15 août après autorisation explicite : six `customer_magic_links` et une
+   `customer_session`. Le post-audit confirme zéro document dans les deux
+   collections et zéro document actif Plans/Entreprises/Appartenances en
+   Production.
+3. L'optimisation Académie est fermée : cache mémoire, Promise partagée,
+   préchargement idle, import direct de l'index et réouverture immédiate sans
+   loader ont été validés. L'API et le catalogue n'ont pas été modifiés.
+4. D-082 est intégré au candidat : navigation principale Solutions, Actions
+   directement dans le Plan et Ressource processus imprimable. Il ne reste
+   aucun sous-onglet Actions/Solutions dans le Plan.
+5. Supprimer après confirmation destructive séparée les seules données de
+   recette synthétiques : un compte Auth dans Production, et dans Preview un
+   compte Auth avec son unique plan, son entreprise et son appartenance.
+6. Garder le MVP Réseau Partenaire au cadrage jusqu'à validation de la fenêtre
    d'attribution, des clients existants, du conflit entre les avantages de 12 %,
    de la convention d'apport et du règlement des commissions.
-6. Ne déclencher ni console spécialiste ni portail partenaire tant qu'un
+7. Ne déclencher ni console spécialiste ni portail partenaire tant qu'un
    intervenant extérieur ne doit pas se connecter et agir lui-même dans Demaa.
 
 ## Mise à jour canonique du 9 août 2026
