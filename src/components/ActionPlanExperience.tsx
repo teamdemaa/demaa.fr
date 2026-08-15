@@ -128,7 +128,7 @@ export default function ActionPlanExperience({
   const [prePlanWorkspace, setPrePlanWorkspace] = useState<ActionPlanWorkspaceState>(
     () => ({
       ...createManualActionPlanWorkspaceState(),
-      selectedSystemId: initialAppContext.systemId ?? "",
+      selectedSystemId: initialAppContext.systemId ?? null,
       savedSystemIds: initialAppContext.systemId
         ? [initialAppContext.systemId]
         : [],
