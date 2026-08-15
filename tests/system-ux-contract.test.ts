@@ -46,7 +46,7 @@ describe("system UX contract", () => {
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("SystemRecapRequestModal");
     expect(resourcesSource).toContain("SystemResourcePreviewModal");
-    expect(resourcesSource).toContain("/systemes/${systemSlug}/recapitulatif");
+    expect(resourcesSource).toContain("/systemes/${systemSlug}/processus");
     expect(resourcesSource).not.toContain("/api/systeme-kit/request");
     expect(resourcePreviewSource).toContain("/api/systeme-kit/open/${resource.resourceSlug}");
     expect(resourcePreviewSource).toContain('target="_blank"');
@@ -85,17 +85,20 @@ describe("system UX contract", () => {
     expect(academySource).not.toContain("SYSTEM_RESOURCES");
   });
 
-  it("provides a clear fallback when native printing is unavailable", async () => {
-    const [printButtonSource, recapSource, globalStyles] = await Promise.all([
+  it("provides a process-only printable page and a clear native-print fallback", async () => {
+    const [printButtonSource, processesSource, globalStyles] = await Promise.all([
       readSource("src/components/SystemRecapPrintButton.tsx"),
-      readSource("src/app/systemes/[slug]/recapitulatif/page.tsx"),
+      readSource("src/app/systemes/[slug]/processus/page.tsx"),
       readSource("src/app/globals.css"),
     ]);
 
     expect(printButtonSource).toContain('typeof window.print === "function"');
     expect(printButtonSource).toContain("Copier le lien");
     expect(printButtonSource).toContain("Chrome, Safari ou Firefox");
-    expect(recapSource).toContain("data-system-recap");
+    expect(processesSource).toContain("data-system-processes");
+    expect(processesSource).toContain("Liste des processus");
+    expect(processesSource).not.toContain("Solutions");
+    expect(processesSource).not.toContain("Ressources");
     expect(globalStyles).toContain("@page");
     expect(globalStyles).toContain("size: A4");
   });

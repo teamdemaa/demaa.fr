@@ -5,6 +5,8 @@
 - Mise à jour : 2026-08-14, hiérarchie visuelle, compte progressif et sauvegarde automatique
 - Supersède : la composition de navigation de l’ADR 0009 et les passages de
   l’ADR 0008 qui imposaient un résultat IA avant l’accès à l’application
+- Supersédé partiellement : la composition de navigation et les sous-onglets
+  locaux sont remplacés par l’ADR 0012 ; les autres décisions restent actives
 
 ## Décision
 

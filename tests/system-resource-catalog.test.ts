@@ -20,14 +20,14 @@ describe("system Resources catalog", () => {
     const guides = SYSTEM_RESOURCES.filter((resource) => resource.format === "guide");
 
     expect(templates.map(({ title }) => title)).toEqual([
-      "Récapitulatif du système",
+      "Processus métier",
       "Tableau de pilotage opérationnel",
       "Suivi et prévisionnel financier",
       "CRM - suivi commercial",
     ]);
     expect(templates.map(({ rank }) => rank)).toEqual([0, 1, 2, 3]);
     expect(templates.map(({ openLabel }) => openLabel)).toEqual([
-      "Voir le récapitulatif",
+      "Voir et imprimer",
       "Créer ma copie",
       "Créer ma copie",
       "Ouvrir le modèle",
@@ -117,7 +117,21 @@ describe("system Resources catalog", () => {
     })).toBeNull();
   });
 
-  it("resolves the system recap to the requested system only", () => {
+  it("resolves the public process list to the requested system only", () => {
+    const snapshot = getSystemResourceAssetSnapshot("processus-metier");
+    expect(snapshot).toEqual({
+      assetRevision: "processus-metier-v1-2026-08-15",
+      resourceId: "processus-metier",
+      workbookVersion: "1.0.0",
+    });
+    expect(resolveSystemResourceDelivery(snapshot!, "cabinet-comptable")).toEqual({
+      destination: "https://demaa.co/systemes/cabinet-comptable/processus",
+      resourceSlug: "processus-metier",
+    });
+    expect(resolveSystemResourceDelivery(snapshot!)).toBeNull();
+  });
+
+  it("keeps the replaced system recap resolvable for historical deliveries", () => {
     const snapshot = getSystemResourceAssetSnapshot("recapitulatif-systeme");
     expect(snapshot).toEqual({
       assetRevision: "recapitulatif-systeme-v1-2026-08-08",
@@ -129,6 +143,10 @@ describe("system Resources catalog", () => {
       resourceSlug: "recapitulatif-systeme",
     });
     expect(resolveSystemResourceDelivery(snapshot!)).toBeNull();
+    expect(getSystemResource("recapitulatif-systeme")).toBeNull();
+    expect(getHistoricalSystemResource("recapitulatif-systeme")?.title).toBe(
+      "Récapitulatif du système",
+    );
   });
 
   it("keeps the replaced guides resolvable for historical deliveries", () => {

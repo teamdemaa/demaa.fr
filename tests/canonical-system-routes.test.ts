@@ -24,6 +24,9 @@ describe("canonical system detail routes", () => {
     await expect(
       access(path.join(root, "src/app/systemes/[slug]/recapitulatif/page.tsx")),
     ).resolves.toBeUndefined();
+    await expect(
+      access(path.join(root, "src/app/systemes/[slug]/processus/page.tsx")),
+    ).resolves.toBeUndefined();
     await expect(access(path.join(root, "src/app/kit-operationnel/[slug]/page.tsx"))).rejects.toThrow();
   });
 

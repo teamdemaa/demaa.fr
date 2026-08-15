@@ -6,24 +6,22 @@ import {
 } from "@/lib/action-plan-app-context";
 
 describe("action plan app context", () => {
-  it("normalizes the legacy system view into the plan solutions tab", () => {
+  it("normalizes the legacy system view into the main Solutions view", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=system&system=restaurant&systemTab=solutions&resource=lightspeed",
     ))).toEqual({
-      view: "plan",
-      planTab: "solutions",
+      view: "solutions",
       systemId: "restaurant",
       systemTab: "solutions",
       solutionResourceSlug: "lightspeed",
     });
   });
 
-  it("parses the canonical plan solutions context", () => {
+  it("normalizes the former plan Solutions tab into the main Solutions view", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=plan&planTab=solutions&system=restaurant&systemTab=resources&resource=lightspeed",
     ))).toEqual({
-      view: "plan",
-      planTab: "solutions",
+      view: "solutions",
       systemId: "restaurant",
       systemTab: "solutions",
       solutionResourceSlug: "lightspeed",
@@ -34,8 +32,7 @@ describe("action plan app context", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "intent=solution-referral&systemSlug=restaurant&resourceSlug=lightspeed",
     ))).toEqual({
-      view: "plan",
-      planTab: "solutions",
+      view: "solutions",
       systemId: "restaurant",
       solutionResourceSlug: "lightspeed",
     });
@@ -78,7 +75,7 @@ describe("action plan app context", () => {
     });
 
     expect(href).toBe(
-      "/?view=plan&planTab=solutions&system=restaurant&systemTab=solutions",
+      "/?view=solutions&system=restaurant&systemTab=solutions",
     );
     expect(href).not.toContain("/plans/");
   });
@@ -86,19 +83,19 @@ describe("action plan app context", () => {
   it("rejects unsafe context values", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=system&system=https://example.com&academy=../../secret",
-    ))).toEqual({ view: "plan", planTab: "solutions" });
+    ))).toEqual({ view: "solutions" });
   });
 
-  it("canonicalizes legacy system contexts when building application links", () => {
+  it("builds canonical Solutions contexts without the former local tab", () => {
     expect(buildActionPlanAppHref({
       context: {
-        view: "system",
+        view: "solutions",
         systemId: "restaurant",
         systemTab: "solutions",
         solutionResourceSlug: "lightspeed",
       },
     })).toBe(
-      "/?view=plan&planTab=solutions&system=restaurant&systemTab=solutions&resource=lightspeed",
+      "/?view=solutions&system=restaurant&systemTab=solutions&resource=lightspeed",
     );
   });
 });

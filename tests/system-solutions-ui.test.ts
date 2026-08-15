@@ -98,7 +98,7 @@ describe("system Solutions UI", () => {
     expect(solutionsMarkup).not.toContain("Levier");
     expect(solutionsMarkup).not.toContain("Tableau de pilotage opérationnel");
     expect(resourcesMarkup).toContain("Tableau de pilotage opérationnel");
-    expect(resourcesMarkup).toContain("Récapitulatif du système");
+    expect(resourcesMarkup).toContain("Processus métier");
     expect(resourcesMarkup).toContain("Suivi et prévisionnel financier");
     expect(resourcesMarkup).toContain("CRM - suivi commercial");
     expect(guidesMarkup).not.toContain("La facturation électronique");
@@ -487,7 +487,7 @@ describe("system Solutions UI", () => {
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).toContain("SystemResourcePreviewModal");
-    expect(resourcesSource).toContain("/systemes/${systemSlug}/recapitulatif");
+    expect(resourcesSource).toContain("/systemes/${systemSlug}/processus");
     expect(resourcePreviewSource).toContain("/api/systeme-kit/open/${resource.resourceSlug}");
     expect(resourcesSource).toContain("resources: readonly SystemResource[]");
     expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");

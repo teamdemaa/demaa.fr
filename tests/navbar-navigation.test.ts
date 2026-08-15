@@ -121,23 +121,26 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain("empty:hidden xl:block");
     expect(navbarSource).toContain("empty:hidden xl:hidden");
     expect(actionPlanNavSource).toContain("Plan d’action");
+    expect(actionPlanNavSource).toContain("Solutions");
     expect(actionPlanNavSource).toContain("Académie");
     expect(actionPlanNavSource).toContain("Opportunités");
-    expect(actionPlanNavSource).not.toContain('label: "Solutions"');
     expect(actionPlanNavSource).not.toContain('label: "Système"');
     expect(actionPlanNavSource.indexOf('label: "Plan d’action"')).toBeLessThan(
-      actionPlanNavSource.indexOf('label: "Opportunités"'),
+      actionPlanNavSource.indexOf('label: "Solutions"'),
     );
-    expect(actionPlanNavSource.indexOf('label: "Opportunités"')).toBeLessThan(
+    expect(actionPlanNavSource.indexOf('label: "Solutions"')).toBeLessThan(
       actionPlanNavSource.indexOf('label: "Académie"'),
     );
-    expect(actionPlanNavSource).toContain("grid-cols-3");
+    expect(actionPlanNavSource.indexOf('label: "Académie"')).toBeLessThan(
+      actionPlanNavSource.indexOf('label: "Opportunités"'),
+    );
+    expect(actionPlanNavSource).toContain("grid-cols-4");
     expect(actionPlanNavSource).toContain("h-4 w-4 shrink-0 transition");
     expect(actionPlanNavSource).toContain("scale-x-100 opacity-100");
     expect(actionPlanNavSource).toContain("scale-x-0 opacity-0");
     expect(actionPlanNavSource).not.toContain("rounded-[1.45rem] border");
     expect(actionPlanNavSource).not.toContain("xl:hidden");
-    expect(actionPlanNavSource).toContain('activeView === "system" ? "plan"');
+    expect(actionPlanNavSource).not.toContain('activeView === "system" ? "plan"');
     expect(actionPlanNavSource).not.toContain('label: "Accompagnement"');
     expect(actionPlanNavSource).not.toContain('label: "Coaching"');
     expect(actionPlanNavSource).toContain('{ view: "academy"');

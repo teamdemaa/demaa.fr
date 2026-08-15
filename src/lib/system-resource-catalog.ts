@@ -2,7 +2,7 @@ import type { SystemKitPreview } from "@/lib/system-kit-previews";
 import { enterpriseCatalogBySlug } from "@/lib/enterprise-annuaire";
 
 export const SYSTEM_RESOURCE_SLUGS = [
-  "recapitulatif-systeme",
+  "processus-metier",
   "tableau-pilotage-operationnel",
   "suivi-previsionnel-financier",
   "crm-suivi-commercial",
@@ -10,6 +10,7 @@ export const SYSTEM_RESOURCE_SLUGS = [
 
 type AvailableSystemResourceSlug = (typeof SYSTEM_RESOURCE_SLUGS)[number];
 type HistoricalSystemResourceSlug =
+  | "recapitulatif-systeme"
   | "guide-obligations-fiscales-sociales-comptables"
   | "guide-facturation-electronique";
 type PlannedGuideKind = "lancer" | "gerer";
@@ -43,15 +44,15 @@ export type SystemResource = Readonly<{
 export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
   {
     availability: "available",
-    description: "Tous les process, solutions et ressources de ce métier réunis dans un récapitulatif facile à consulter.",
-    deliveryLabel: "Recevoir le récapitulatif",
+    description: "Les processus essentiels de ce métier, réunis dans une liste claire à consulter ou à imprimer.",
+    deliveryLabel: "Recevoir les processus",
     format: "template",
-    formatLabel: "Récapitulatif",
-    openLabel: "Voir le récapitulatif",
+    formatLabel: "Document imprimable",
+    openLabel: "Voir et imprimer",
     rank: 0,
-    resourceSlug: "recapitulatif-systeme",
-    successDescription: "Le lien vers votre récapitulatif vient de vous être envoyé. Pensez à vérifier vos courriers indésirables.",
-    title: "Récapitulatif du système",
+    resourceSlug: "processus-metier",
+    successDescription: "Le lien vers les processus métier vient de vous être envoyé. Pensez à vérifier vos courriers indésirables.",
+    title: "Processus métier",
   },
   {
     availability: "available",
@@ -118,6 +119,18 @@ export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
  * envoyés continuent de fonctionner.
  */
 const HISTORICAL_SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
+  {
+    availability: "available",
+    description: "Tous les process, solutions et ressources de ce métier réunis dans un récapitulatif facile à consulter.",
+    deliveryLabel: "Recevoir le récapitulatif",
+    format: "template",
+    formatLabel: "Récapitulatif",
+    openLabel: "Voir le récapitulatif",
+    rank: 0,
+    resourceSlug: "recapitulatif-systeme",
+    successDescription: "Le lien vers votre récapitulatif vient de vous être envoyé. Pensez à vérifier vos courriers indésirables.",
+    title: "Récapitulatif du système",
+  },
   {
     availability: "available",
     description: "La présentation d’origine pour comprendre les principales obligations et les finances de votre entreprise.",

@@ -172,17 +172,24 @@ describe("action plan experience architecture", () => {
 
     expect(guestExperience).toContain("<ActionPlanNavbar");
     expect(guestExperience).toContain('activeTab === "plan"');
-    expect(guestExperience).toContain("<ActionPlanWorkspaceTabs");
-    expect(guestExperience).toContain('activePlanTab !== "actions"');
-    expect(guestExperience).toContain('activePlanTab !== "solutions"');
+    expect(guestExperience).not.toContain("<ActionPlanWorkspaceTabs");
+    expect(guestExperience).not.toContain("activePlanTab");
     expect(guestExperience).toContain("<ActionPlanSystemPanel");
-    expect(guestExperience).not.toContain('activeTab === "system"');
+    expect(guestExperience).toContain('activeTab === "solutions"');
     expect(guestExperience).toContain('activeTab === "academy"');
     expect(guestExperience).toContain('activeTab === "opportunities"');
     expect(guestExperience).toContain("demoMode={isDemoMode}");
     expect(guestExperience).toContain("workspace={prePlanWorkspace}");
     expect(guestExperience).toContain("onWorkspaceChange={setPrePlanWorkspace}");
     expect(guestExperience).not.toContain("<ActionPlanSaveControl");
+  });
+
+  it("keeps a deep-linked system when a saved plan returns to Solutions", () => {
+    const savedPlan = source("src/components/SavedActionPlanDetail.tsx");
+
+    expect(savedPlan).toContain(
+      "appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || undefined",
+    );
   });
 
   it("embeds the Academy without nesting a second main landmark", () => {

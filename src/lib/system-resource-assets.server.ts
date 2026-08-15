@@ -11,9 +11,10 @@ import { getCanonicalOrigin } from "@/lib/site-url";
 
 type ExternalResourceSlug = Exclude<
   SystemResourceSlug,
-  "tableau-pilotage-operationnel" | "recapitulatif-systeme"
+  "tableau-pilotage-operationnel" | "processus-metier" | "recapitulatif-systeme"
 >;
 
+const SYSTEM_PROCESSES_ASSET_REVISION = "processus-metier-v1-2026-08-15";
 const SYSTEM_RECAP_ASSET_REVISION = "recapitulatif-systeme-v1-2026-08-08";
 
 type ResourceAssetRevision = Readonly<{
@@ -82,6 +83,13 @@ const RESOURCE_ASSET_REVISIONS: Readonly<Partial<Record<ExternalResourceSlug, re
 
 export function getSystemResourceAssetSnapshot(resourceSlug: string): LeadAssetSnapshot | null {
   if (!getSystemResourceForHistoricalDelivery(resourceSlug)) return null;
+  if (resourceSlug === "processus-metier") {
+    return {
+      assetRevision: SYSTEM_PROCESSES_ASSET_REVISION,
+      resourceId: resourceSlug,
+      workbookVersion: "1.0.0",
+    };
+  }
   if (resourceSlug === "recapitulatif-systeme") {
     return {
       assetRevision: SYSTEM_RECAP_ASSET_REVISION,
@@ -109,6 +117,13 @@ export function resolveSystemResourceDelivery(
   destination: string;
   resourceSlug: SystemResourceSlug;
 }> | null {
+  if (snapshot.assetRevision === SYSTEM_PROCESSES_ASSET_REVISION) {
+    if (!systemSlug || !/^[a-z0-9-]{2,120}$/.test(systemSlug)) return null;
+    return {
+      destination: `${getCanonicalOrigin()}/systemes/${systemSlug}/processus`,
+      resourceSlug: "processus-metier",
+    };
+  }
   if (snapshot.assetRevision === SYSTEM_RECAP_ASSET_REVISION) {
     if (!systemSlug || !/^[a-z0-9-]{2,120}$/.test(systemSlug)) return null;
     return {

@@ -28,6 +28,10 @@ describe("authenticated homepage routing", () => {
   it("preserves canonical and legacy Solutions deep-links when connected", () => {
     expect(shouldRedirect({
       isAuthenticated: true,
+      query: "view=solutions&system=restaurant",
+    })).toBe(false);
+    expect(shouldRedirect({
+      isAuthenticated: true,
       query: "view=plan&planTab=solutions&system=restaurant",
     })).toBe(false);
     expect(shouldRedirect({

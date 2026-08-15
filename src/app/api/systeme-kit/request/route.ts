@@ -27,7 +27,10 @@ import { sendOperationalSystemDeliveryEmail } from "@/lib/operational-system-del
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { getPublishedSolutionPlacementsForSystem } from "@/lib/solution-registry.server";
 import { getSystemResourceAssetSnapshot } from "@/lib/system-resource-assets.server";
-import { getSystemResource } from "@/lib/system-resource-catalog";
+import {
+  getHistoricalSystemResource,
+  getSystemResource,
+} from "@/lib/system-resource-catalog";
 
 export const runtime = "nodejs";
 
@@ -135,7 +138,12 @@ async function handlePost(request: Request) {
     );
   }
 
-  const requestedResource = resourceSlug ? getSystemResource(resourceSlug) : null;
+  const requestedResource = resourceSlug
+    ? getSystemResource(resourceSlug)
+      ?? (resourceSlug === "recapitulatif-systeme"
+        ? getHistoricalSystemResource(resourceSlug)
+        : null)
+    : null;
   if (resourceSlug && !requestedResource) {
     return NextResponse.json(
       { error: "La ressource demandée est introuvable." },
