@@ -14,6 +14,7 @@ export type RenderableSolutionResourceDto = Readonly<{
   displayCategory?: string;
   ctaLabel?: string;
   indicativePricing?: string;
+  monthlyAccompanimentDiscountEligible?: boolean;
   interaction: SupportedSolutionInteractionDto;
 }>;
 

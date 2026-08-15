@@ -64,6 +64,7 @@ function OpportunityDetailsDialog({
   return (
     <div className="fixed inset-0 z-[100] flex items-end justify-center bg-brand-blue/35 p-0 backdrop-blur-[2px] sm:items-center sm:p-5">
       <div
+        id="opportunity-details-dialog"
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
@@ -201,6 +202,7 @@ export default function PublicOpportunitiesClient({
         opportunity.title,
         opportunity.summary,
         opportunity.category,
+        opportunity.domainLabel ?? "",
         OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
         opportunity.workMode
           ? OPPORTUNITY_WORK_MODE_LABELS[opportunity.workMode]
@@ -279,7 +281,7 @@ export default function PublicOpportunitiesClient({
 
   return (
     <>
-      <div className="mx-auto grid w-full max-w-[39.25rem] grid-cols-[minmax(0,1fr)_2.75rem] items-center gap-2 pt-3">
+      <div className="mx-auto grid w-full max-w-[39.25rem] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 pt-3">
         <div className="min-w-0 flex-1">
           <AppLibrarySearch
             activeFilter={activeCategory}
@@ -305,9 +307,10 @@ export default function PublicOpportunitiesClient({
           onClick={() => setSubmissionOpen(true)}
           aria-label="Soumettre une opportunité"
           title="Soumettre une opportunité"
-          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line bg-white text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
+          className="inline-flex h-11 w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-dema-line bg-white text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 md:w-auto md:px-4"
         >
           <Plus className="h-4 w-4" aria-hidden="true" />
+          <span className="hidden text-sm font-medium md:inline">Soumettre</span>
         </button>
       </div>
 
@@ -317,9 +320,9 @@ export default function PublicOpportunitiesClient({
         </p>
       ) : null}
 
-      <div className="mt-6 space-y-4">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2">
         {filtered.map((opportunity) => (
-          <article key={opportunity.opportunityId}>
+          <article key={opportunity.opportunityId} className="h-full">
             <button
               type="button"
               onClick={() => {
@@ -327,20 +330,28 @@ export default function PublicOpportunitiesClient({
                 onOpportunityChange?.(opportunity.opportunityId);
               }}
               aria-label={`Ouvrir l’opportunité : ${opportunity.title}`}
-              className="group block w-full rounded-[1.2rem] border border-dema-line bg-white p-5 text-left shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/25 hover:bg-dema-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest sm:p-6"
+              aria-haspopup="dialog"
+              aria-expanded={selected?.opportunityId === opportunity.opportunityId}
+              aria-controls="opportunity-details-dialog"
+              className={`group flex h-[20rem] w-full flex-col rounded-[1.2rem] border bg-white p-5 text-left shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/25 hover:bg-dema-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest sm:h-72 sm:p-6 ${selected?.opportunityId === opportunity.opportunityId ? "border-dema-forest/45" : "border-dema-line"}`}
             >
-              <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">
-                {[
-                  OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
-                  opportunity.category,
-                ].filter(Boolean).join(" · ")}
-              </p>
-              <h2 className="mt-2 text-lg font-normal tracking-[-0.015em] text-brand-blue sm:text-xl">
+              <h2 className="line-clamp-2 min-h-[2.75rem] text-lg font-medium leading-snug tracking-[-0.015em] text-brand-blue sm:text-xl">
                 {opportunity.title}
               </h2>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-dema-muted">
+              <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-dema-muted sm:line-clamp-2">
                 {opportunity.summary}
               </p>
+              <div className="mt-auto flex flex-wrap gap-2 pt-5" aria-label="Caractéristiques de l’opportunité">
+                {Array.from(new Set([
+                  opportunity.category,
+                  opportunity.domainLabel,
+                  OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
+                ].filter((value): value is string => Boolean(value)))).slice(0, 3).map((tag, index) => (
+                  <span key={tag} className={`inline-flex min-h-8 items-center rounded-[0.45rem] px-3 text-xs font-medium ${index === 0 ? "bg-dema-sage/70 text-dema-forest" : index === 1 ? "border border-dema-line bg-dema-paper text-brand-blue" : "bg-[#f3f3ef] text-dema-muted"}`}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </button>
           </article>
         ))}

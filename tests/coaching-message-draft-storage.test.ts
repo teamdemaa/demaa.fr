@@ -102,7 +102,7 @@ describe("coaching message draft storage", () => {
     expect(created.expiresAt).toBe("2026-08-13T11:00:00.000Z");
     expect(stored).toMatchObject({
       body: "Je souhaite clarifier ma prochaine décision.",
-      claimed_email: null,
+      claimed_uid: null,
       delivery_idempotency_key: `coaching:draft:${tokenHash}`,
       expires_at: created.expiresAt,
       sent_at: null,
@@ -110,22 +110,22 @@ describe("coaching message draft storage", () => {
     expect(JSON.stringify(stored)).not.toContain(created.draftToken);
   });
 
-  it("lets only the first normalized email claim and retry the same draft", async () => {
+  it("lets only the first Firebase UID claim and retry the same draft", async () => {
     const created = await createPendingCoachingMessageDraft({
       body: "Comment mieux répartir les responsabilités ?",
     });
 
     const first = await claimPendingCoachingMessageDraft({
       draftToken: created.draftToken,
-      email: " Owner@Example.com ",
+      uid: "owner-uid",
     });
     const retry = await claimPendingCoachingMessageDraft({
       draftToken: created.draftToken,
-      email: "owner@example.com",
+      uid: "owner-uid",
     });
     const otherCustomer = await claimPendingCoachingMessageDraft({
       draftToken: created.draftToken,
-      email: "other@example.com",
+      uid: "other-uid",
     });
 
     expect(first).toEqual(retry);
@@ -145,39 +145,39 @@ describe("coaching message draft storage", () => {
 
     await expect(claimPendingCoachingMessageDraft({
       draftToken: created.draftToken,
-      email: "owner@example.com",
+      uid: "owner-uid",
     })).resolves.toBeNull();
     await expect(claimPendingCoachingMessageDraft({
       draftToken: "not-a-token",
-      email: "owner@example.com",
+      uid: "owner-uid",
     })).resolves.toBeNull();
   });
 
-  it("marks delivery only for the claiming email and remains idempotent", async () => {
+  it("marks delivery only for the claiming UID and remains idempotent", async () => {
     const created = await createPendingCoachingMessageDraft({
       body: "Je souhaite avancer sur ce point.",
     });
     await claimPendingCoachingMessageDraft({
       draftToken: created.draftToken,
-      email: "owner@example.com",
+      uid: "owner-uid",
     });
 
     await expect(markCoachingMessageDraftSent({
       draftToken: created.draftToken,
-      email: "other@example.com",
+      uid: "other-uid",
     })).resolves.toBe(false);
     await expect(markCoachingMessageDraftSent({
       draftToken: created.draftToken,
-      email: "OWNER@example.com",
+      uid: "owner-uid",
     })).resolves.toBe(true);
     await expect(markCoachingMessageDraftSent({
       draftToken: created.draftToken,
-      email: "owner@example.com",
+      uid: "owner-uid",
     })).resolves.toBe(true);
 
     await expect(claimPendingCoachingMessageDraft({
       draftToken: created.draftToken,
-      email: "owner@example.com",
+      uid: "owner-uid",
     })).resolves.toMatchObject({ alreadySent: true });
   });
 });

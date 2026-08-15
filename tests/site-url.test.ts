@@ -60,7 +60,7 @@ describe("Vercel preview hosts", () => {
     ).toBe(true);
     expect(
       getTrustedRequestOrigin(
-        new Request("https://demaa-git-feature.vercel.app/api/customer-space/magic-link"),
+        new Request("https://demaa-git-feature.vercel.app/api/customer-space/firebase-session"),
       ),
     ).toBe("https://demaa-git-feature.vercel.app");
   });
@@ -72,7 +72,7 @@ describe("Vercel preview hosts", () => {
     expect(isVercelPreviewHost("demaa-preview-123.vercel.app")).toBe(false);
     expect(
       getTrustedRequestOrigin(
-        new Request("https://demaa-preview-123.vercel.app/api/customer-space/magic-link"),
+        new Request("https://demaa-preview-123.vercel.app/api/customer-space/firebase-session"),
       ),
     ).toBe("https://demaa.co");
   });

@@ -2,7 +2,7 @@
 
 - Statut : `validated`
 - Date : 2026-08-11
-- Mise à jour : 2026-08-14, hiérarchie visuelle, Échanger et Team Demaa unifié
+- Mise à jour : 2026-08-14, hiérarchie visuelle, compte progressif et sauvegarde automatique
 - Supersède : la composition de navigation de l’ADR 0009 et les passages de
   l’ADR 0008 qui imposaient un résultat IA avant l’accès à l’application
 
@@ -15,9 +15,9 @@ génération et sans compte. `Plan d’action` affiche alors le grand champ libr
 ses sous-onglets `Actions` et `Solutions`, ainsi que `Opportunités` et
 `Académie`, restent consultables immédiatement. Le sous-onglet `Solutions`
 ouvre uniquement les recommandations du Système métier sélectionné.
-La navigation principale conserve ses icônes. Les sous-onglets `Actions` et
-`Solutions` n'en ont pas et utilisent une présentation légère soulignée, afin
-de ne pas reproduire visuellement la barre principale. Dans le header,
+La navigation principale conserve ses icônes mais n'est plus enfermée dans une
+grande capsule. Les sous-onglets `Actions` et `Solutions` n'ont pas d'icône et
+forment une capsule locale distincte. Dans le header,
 `Connexion` est un lien texte et non un bouton en forme de pilule.
 L'application n'y affiche plus d'onglets Organisation ou
 Ressources : les routines et modèles pertinents sont proposés directement dans
@@ -34,18 +34,20 @@ compacte `Échanger` du header, y compris avant la génération d'un plan. Cette
 conversation simple sans onglets commerciaux ; la carte Coach business reste
 dans Services conformément à l’ADR 0009.
 
-La sauvegarde est une action contextuelle du Plan d’action et n’encombre pas le
-header global. `Enregistrer` apparaît avec `Partager` et le menu contenant
-`Nouveau plan`. Pour une personne connectée, les modifications sont
-persistées sans redemander son e-mail.
+La sauvegarde est automatique et n'encombre ni le header ni le plan avec une
+action `Enregistrer`. Pendant la génération, l'invité voit seulement la
+progression. Lorsque le résultat est prêt, il crée ou reprend son accès avant
+que le plan soit révélé, puis celui-ci est sauvegardé automatiquement. Une
+personne déjà connectée voit directement son plan et ses modifications
+persistées. Un plan vierge n'est créé côté serveur qu'après sa première
+modification utile.
 
 Cette règle s'applique à toutes les actions fonctionnelles de l'application :
 une personne connectée ne ressaisit pas son adresse dans un guide métier, une
-Opportunité, Coaching, une inscription ou une demande. L'API déduit l'e-mail
-de la session vérifiée. Pour une personne non connectée, l'action ouvre le
-parcours de lien magique puis reprend l'intention exacte dans l'application.
-Le lien magique ne mène jamais vers un portail distinct `Mon espace` ou
-`Mes plans`.
+Opportunité, Coaching, une inscription ou une demande. L'API autorise l'action
+avec l'UID Firebase et utilise l'e-mail de la session uniquement comme contact.
+Pour une personne non connectée, l'action ouvre l'authentification e-mail et
+mot de passe ou Google, puis reprend l'intention exacte dans l'application.
 
 Sous le champ principal, `Commencer avec un plan vierge` permet d’entrer dans
 l’application sans appel IA. Le plan manuel accepte temporairement zéro action,
@@ -74,21 +76,22 @@ Un bouton `+` compact, immédiatement adjacent à la recherche sur desktop,
 permet aussi de proposer une
 Opportunité. La personne remplit le formulaire avant connexion. Au clic sur
 Envoyer, un brouillon serveur opaque conserve exactement les champs, puis la
-session Google ou lien magique reprend et soumet automatiquement le brouillon.
+session Firebase reprend et soumet automatiquement le brouillon.
 Le document est créé dans `opportunities` avec le statut `draft` et ne devient
 public qu'après l'action explicite de l'administration.
 
 Le nom de l’organisation à l’origine d’une opportunité n’est pas affiché dans
 cette version. Un futur champ facultatif pourra être décidé séparément.
 
-## Sauvegarde invitée
+## Identité et sauvegarde invitée
 
-Le clic manuel sur `Enregistrer` ouvre `Enregistrer mon plan`. Le navigateur ne
-reçoit plus le secret de rattachement historique. Un jeton opaque limité au
-plan est placé dans un cookie HttpOnly, SameSite Lax et Secure hors
-développement ; seul son hash est stocké. Le lien magique reste temporaire et à
-usage unique, puis crée la session normale et ouvre directement le plan dans
-l’application. Les anciens liens restent compatibles pendant leur validité.
+Firebase Authentication gère l'adresse et le mot de passe ; Demaa ne reçoit
+jamais le mot de passe. Le serveur transforme le jeton d'identité en cookie de
+session Firebase natif, HttpOnly et vérifié avec contrôle de révocation.
+E-mail/mot de passe et Google alimentent la même identité. L'UID Firebase est
+l'unique clé d'autorisation des plans, conversations et brouillons ; l'e-mail
+de session reste une coordonnée de contact. Aucun accès historique ou système
+de réclamation par e-mail n'est maintenu.
 
 ## Hors périmètre
 

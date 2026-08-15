@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, MoreVertical } from "lucide-react";
+import { Check, ChevronRight, MoreVertical } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
   type RefObject,
@@ -20,23 +20,16 @@ export type SavedActionPlanOption = {
 };
 
 export function SavedActionPlanSelector({
-  availablePlans,
   inputRef,
   onResetTitle,
   onTitleChange,
-  planId,
   title,
 }: {
-  availablePlans: readonly SavedActionPlanOption[];
   inputRef: RefObject<HTMLInputElement | null>;
   onResetTitle: () => void;
   onTitleChange: (title: string) => void;
-  planId: string;
   title: string;
 }) {
-  const router = useRouter();
-  const hasSeveralPlans = availablePlans.length > 1;
-
   return (
     <div className="flex w-full max-w-xl items-center rounded-full border border-dema-line bg-dema-paper px-1.5 py-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)] focus-within:border-dema-forest/30">
       <input
@@ -56,46 +49,31 @@ export function SavedActionPlanSelector({
         }}
         className="min-h-10 min-w-0 flex-1 bg-transparent px-3 text-base font-medium text-brand-blue outline-none sm:text-lg"
       />
-      <div className="relative h-10 w-10 shrink-0">
-        <ChevronDown
-          className={`pointer-events-none absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 ${hasSeveralPlans ? "text-dema-forest" : "text-dema-muted/45"}`}
-          aria-hidden="true"
-        />
-        <select
-          aria-label="Changer de plan"
-          value={planId}
-          disabled={!hasSeveralPlans}
-          onChange={(event) => {
-            if (event.target.value === planId) return;
-            router.push(`/plans/${encodeURIComponent(event.target.value)}`);
-          }}
-          className="absolute inset-0 h-full w-full cursor-pointer appearance-none opacity-0 disabled:cursor-default"
-        >
-          {availablePlans.map((availablePlan) => (
-            <option key={availablePlan.id} value={availablePlan.id}>
-              {availablePlan.id === planId ? title.trim() || availablePlan.title : availablePlan.title}
-            </option>
-          ))}
-        </select>
-      </div>
     </div>
   );
 }
 
 export function SavedActionPlanMenu({
+  availablePlans,
   deleting,
   onDelete,
   onRename,
   plan,
+  planId,
+  title,
   workspace,
 }: {
+  availablePlans: readonly SavedActionPlanOption[];
   deleting: boolean;
   onDelete: () => void;
   onRename: () => void;
   plan: PersistableActionPlan;
+  planId: string;
+  title: string;
   workspace: ActionPlanWorkspaceState;
 }) {
   const [open, setOpen] = useState(false);
+  const [showPlans, setShowPlans] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuId = useId();
@@ -116,6 +94,7 @@ export function SavedActionPlanMenu({
     function closeOnEscape(event: KeyboardEvent) {
       if (event.key !== "Escape") return;
       setOpen(false);
+      setShowPlans(false);
       triggerRef.current?.focus();
     }
 
@@ -148,6 +127,48 @@ export function SavedActionPlanMenu({
           id={menuId}
           className="absolute right-0 top-full z-50 mt-2 min-w-[11rem] rounded-2xl border border-dema-line bg-dema-paper px-3 py-2 shadow-[0_18px_46px_rgba(23,35,29,0.14)]"
         >
+          {availablePlans.length > 1 ? (
+            <>
+              <button
+                type="button"
+                onClick={() => setShowPlans((current) => !current)}
+                className={itemClassName}
+                aria-expanded={showPlans}
+              >
+                <span className="flex items-center justify-between gap-4">
+                  Changer de plan
+                  <ChevronRight className={`h-4 w-4 transition ${showPlans ? "rotate-90" : ""}`} aria-hidden="true" />
+                </span>
+              </button>
+              {showPlans ? (
+                <div className="my-1 w-[18rem] max-w-[calc(100vw-3rem)] border-y border-dema-line py-1">
+                  {availablePlans.map((availablePlan) => {
+                    const isCurrent = availablePlan.id === planId;
+                    const displayedTitle = isCurrent
+                      ? title.trim() || availablePlan.title
+                      : availablePlan.title;
+                    return (
+                      <button
+                        key={availablePlan.id}
+                        type="button"
+                        disabled={isCurrent}
+                        onClick={() => router.push(`/plans/${encodeURIComponent(availablePlan.id)}`)}
+                        className="flex w-full items-start gap-2 rounded-lg px-2 py-2 text-left transition hover:bg-dema-sage/45 disabled:opacity-100"
+                      >
+                        <Check className={`mt-0.5 h-4 w-4 shrink-0 text-dema-forest ${isCurrent ? "opacity-100" : "opacity-0"}`} aria-hidden="true" />
+                        <span className="min-w-0">
+                          <span className="block truncate text-sm font-medium text-brand-blue">{displayedTitle}</span>
+                          <span className="block text-[0.7rem] text-dema-muted">
+                            Modifié le {new Intl.DateTimeFormat("fr-FR", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(availablePlan.updatedAt))}
+                          </span>
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </>
+          ) : null}
           <div onClick={() => setOpen(false)}>
             <ActionPlanShareControl
               plan={plan}

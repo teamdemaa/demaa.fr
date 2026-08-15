@@ -25,7 +25,7 @@ describe("action plan app context", () => {
       view: "plan",
       planTab: "solutions",
       systemId: "restaurant",
-      systemTab: "resources",
+      systemTab: "solutions",
       solutionResourceSlug: "lightspeed",
     });
   });

@@ -6,7 +6,7 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
-import { requireCurrentCustomerEmail } from "@/lib/customer-space-session.server";
+import { requireCurrentCustomerIdentity } from "@/lib/customer-space-session.server";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
 import { submitLeadRequest } from "@/lib/lead-notifications";
@@ -100,9 +100,9 @@ async function handlePost(request: Request) {
   });
   if (limitedByIp) return limitedByIp;
 
-  const customer = await requireCurrentCustomerEmail();
+  const customer = await requireCurrentCustomerIdentity();
   if (customer.response) return customer.response;
-  const email = customer.email;
+  const email = customer.identity.email;
 
   const { data: body, response } = await readJsonBody<ProviderProfileSubmissionBody>(
     request,

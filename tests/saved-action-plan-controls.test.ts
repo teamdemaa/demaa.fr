@@ -6,7 +6,7 @@ function source(path: string) {
 }
 
 describe("saved action plan controls", () => {
-  it("loads every owned plan into one compact in-app selector", () => {
+  it("loads every owned plan into the compact three-point menu", () => {
     const page = source("src/app/plans/[id]/page.tsx");
     const detail = source("src/components/SavedActionPlanDetail.tsx");
     const controls = source("src/components/SavedActionPlanControls.tsx");
@@ -16,10 +16,12 @@ describe("saved action plan controls", () => {
     expect(page).toContain("initialTitle={stored.title}");
     expect(page).toContain("key={stored.id}");
     expect(detail).toContain("<SavedActionPlanSelector");
-    expect(controls).toContain('aria-label="Changer de plan"');
+    expect(controls).toContain("Changer de plan");
+    expect(controls).toContain("Modifié le");
+    expect(controls).toContain("availablePlan.id === planId");
     expect(controls).toContain("router.push(`/plans/");
     expect(controls).not.toContain("Mon espace");
-    expect(controls).not.toContain("Mes plans");
+    expect(controls).not.toContain("<select");
   });
 
   it("edits the title inline through the existing optimistic revision queue", () => {

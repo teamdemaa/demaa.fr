@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { composeCanonicalServicesForSystem } from "@/lib/canonical-services-system-section.server";
+import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
 import {
   getActiveRenderableSolutionSectionsForSystem,
   getLocalRenderableSolutionSectionsForSystem,
@@ -9,7 +9,6 @@ import {
   enterpriseCatalogBySlug,
   enterpriseToSystem,
 } from "@/lib/enterprise-annuaire";
-import { filterPublicSolutionSections } from "@/lib/public-solution-section-visibility";
 import {
   buildOperationalSystemPageDetail,
   buildSystemPageIntro,
@@ -17,6 +16,7 @@ import {
   type SystemDetailPageData,
 } from "@/lib/system-detail-page";
 import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
+import { getAvailableSystemTemplatesForSystem } from "@/lib/system-resource-catalog";
 
 export const runtime = "nodejs";
 
@@ -58,9 +58,9 @@ export async function GET(request: Request, { params }: RouteContext) {
     );
   }
 
-  const visibleSolutionSections = composeCanonicalServicesForSystem(
+  const visibleSolutionSections = composePublicSolutionSectionsForSystem(
     slug,
-    filterPublicSolutionSections(mergeRenderableSolutionSections(solutionSections)),
+    mergeRenderableSolutionSections(solutionSections),
   );
 
   return NextResponse.json(
@@ -68,6 +68,7 @@ export async function GET(request: Request, { params }: RouteContext) {
       system: data.system,
       systeme: data.detail.systeme,
       intro: buildSystemPageIntro(data),
+      resources: getAvailableSystemTemplatesForSystem(slug),
       solutionSections: visibleSolutionSections,
     },
     {

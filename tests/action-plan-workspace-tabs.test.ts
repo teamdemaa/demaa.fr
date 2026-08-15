@@ -21,10 +21,17 @@ describe("action plan workspace tabs", () => {
     expect(markup).toContain('aria-selected="true"');
     expect(markup).toContain("Actions");
     expect(markup).toContain("Solutions");
-    expect(markup).toContain('class="mb-6 flex justify-center border-b border-dema-line"');
-    expect(markup).toContain('class="inline-flex items-center gap-8"');
+    expect(markup).toContain("border-b border-dema-line/90");
+    expect(markup).not.toContain("bg-dema-sage/90");
+    expect(markup).toContain("rounded-full border border-dema-line");
+    expect(markup).toContain("rounded-[1rem]");
+    expect(markup).toContain("bg-dema-sage");
+    expect(markup).not.toContain("bg-dema-sage/35");
+    expect(markup).not.toContain("shadow-sm");
     expect(markup).not.toContain("<svg");
-    expect(markup).not.toContain("rounded-full");
+    expect(markup).toContain("w-full max-w-xl");
+    expect(markup).toContain("xl:w-[min(40vw,36rem)]");
+    expect(markup).toContain("flex-1");
   });
 
   it("supports wrapped arrow navigation plus Home and End", () => {
@@ -89,9 +96,10 @@ describe("action plan workspace tabs", () => {
     expect(guest.match(/<ActionPlanSystemPanel/g)).toHaveLength(2);
     expect(saved.match(/<ActionPlanSystemPanel/g)).toHaveLength(1);
     expect(systemPanel).toContain("<SystemSolutionsTab");
+    expect(systemPanel).toContain("<SystemResourcesTab");
+    expect(systemPanel).toContain('layout="rail"');
     expect(systemPanel).not.toContain("<SystemDetailContent");
     expect(systemPanel).not.toContain("Organisation");
-    expect(systemPanel).not.toContain("Ressources");
     expect(result).toContain("contextualAid?.organisation");
     expect(result).toContain("contextualAid?.model");
     expect(result).not.toContain("contextualAid?.solutions");

@@ -4,6 +4,7 @@ import { LoaderCircle, RotateCcw } from "lucide-react";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import ActionPlanSystemSelector from "@/components/ActionPlanSystemSelector";
 import SystemShareControl from "@/components/SystemShareControl";
+import SystemResourcesTab from "@/components/SystemResourcesTab";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 import {
@@ -24,6 +25,7 @@ export default function ActionPlanSystemPanel({
   demoMode = false,
   initialResourceSlug,
   onResourceSlugChange,
+  onToggleSolutionSelection,
 }: {
   options: readonly ActionPlanSystemOption[];
   selectedSystemId: string;
@@ -33,6 +35,7 @@ export default function ActionPlanSystemPanel({
   demoMode?: boolean;
   initialResourceSlug?: string;
   onResourceSlugChange?: (resourceSlug: string | undefined) => void;
+  onToggleSolutionSelection?: (placementId: string) => void;
 }) {
   const [payload, setPayload] = useState<ActionPlanSystemPayload | null>(null);
   const [error, setError] = useState<{ slug: string; message: string } | null>(null);
@@ -171,28 +174,35 @@ export default function ActionPlanSystemPanel({
       ) : null}
 
       {currentPayload ? (
-        <SystemSolutionsTab
-          sections={currentPayload.solutionSections}
-          initialResourceSlug={initialResourceSlug}
-          onResourceSlugChange={onResourceSlugChange}
-          selectedPlacementIds={
-            new Set(workspace.selectedSolutionPlacementIdsBySystem[selectedSystemId] || [])
-          }
-          onToggleSelection={(placementId) => onWorkspaceChange((current) => {
-            const selected = new Set(
-              current.selectedSolutionPlacementIdsBySystem[selectedSystemId] || [],
-            );
-            if (selected.has(placementId)) selected.delete(placementId);
-            else selected.add(placementId);
-            return {
-              ...current,
-              selectedSolutionPlacementIdsBySystem: {
-                ...current.selectedSolutionPlacementIdsBySystem,
-                [selectedSystemId]: [...selected],
-              },
-            };
-          })}
-        />
+        <div className="space-y-10">
+          <SystemSolutionsTab
+            sections={currentPayload.solutionSections}
+            initialResourceSlug={initialResourceSlug}
+            onResourceSlugChange={onResourceSlugChange}
+            selectedPlacementIds={
+              new Set(workspace.selectedSolutionPlacementIdsBySystem[selectedSystemId] || [])
+            }
+            onToggleSelection={onToggleSolutionSelection ?? ((placementId) => onWorkspaceChange((current) => {
+              const selected = new Set(
+                current.selectedSolutionPlacementIdsBySystem[selectedSystemId] || [],
+              );
+              if (selected.has(placementId)) selected.delete(placementId);
+              else selected.add(placementId);
+              return {
+                ...current,
+                selectedSolutionPlacementIdsBySystem: {
+                  ...current.selectedSolutionPlacementIdsBySystem,
+                  [selectedSystemId]: [...selected],
+                },
+              };
+            }))}
+          />
+          <SystemResourcesTab
+            layout="rail"
+            resources={currentPayload.resources}
+            systemSlug={currentPayload.system.slug}
+          />
+        </div>
       ) : null}
     </section>
   );

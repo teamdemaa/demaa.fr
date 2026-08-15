@@ -19,8 +19,9 @@ function hasText(value: string | undefined) {
 
 /**
  * A manual plan is considered blank only while it contains no user-authored
- * action or strategy answer. Selecting and checking a System does not make the
- * plan non-blank: those choices must survive a later generation.
+ * action, strategy answer or saved Solution. Selecting a System alone does not
+ * make the plan non-blank: that navigation choice must survive a later
+ * generation without forcing a save.
  */
 export function isBlankManualActionPlan(
   plan: EditableActionPlan,
@@ -42,6 +43,14 @@ export function isBlankManualActionPlan(
 
   if (!workspace) return true;
   if (workspace.addedActions.length > 0 || Object.keys(workspace.tasks).length > 0) {
+    return false;
+  }
+
+  if (
+    Object.values(workspace.selectedSolutionPlacementIdsBySystem).some(
+      (placementIds) => (placementIds?.length ?? 0) > 0,
+    )
+  ) {
     return false;
   }
 

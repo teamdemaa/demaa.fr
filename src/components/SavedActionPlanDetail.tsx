@@ -26,6 +26,7 @@ import {
   isBlankManualActionPlan,
   isManualActionPlan,
 } from "@/lib/action-plan-manual";
+import { scheduleActionPlanAcademyPayloadPreload } from "@/lib/action-plan-academy-preload.client";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 import {
   addActionPlanWorkspaceAction,
@@ -43,6 +44,7 @@ export default function SavedActionPlanDetail({
   systemOptions,
   availablePlans,
   initialEmail = "",
+  initialIsAuthenticated = true,
 }: {
   plan: PersistableActionPlan;
   planId: string;
@@ -53,6 +55,7 @@ export default function SavedActionPlanDetail({
   systemOptions: readonly ActionPlanSystemOption[];
   availablePlans: readonly SavedActionPlanOption[];
   initialEmail?: string;
+  initialIsAuthenticated?: boolean;
 }) {
   const router = useRouter();
   const { context: appContext, navigate: navigateAppContext } =
@@ -78,6 +81,8 @@ export default function SavedActionPlanDetail({
   const savePromiseRef = useRef<Promise<boolean> | null>(null);
   const saveTimeoutRef = useRef<number | null>(null);
   const mountedRef = useRef(true);
+
+  useEffect(() => scheduleActionPlanAcademyPayloadPreload(), []);
 
   function selectAppView(view: ActionPlanView) {
     navigateAppContext({
@@ -343,6 +348,7 @@ export default function SavedActionPlanDetail({
       <ActionPlanCoachingControl
         existingPlanId={planId}
         initialEmail={initialEmail}
+        isAuthenticated={initialIsAuthenticated}
       />
       <div className="pt-1">
         {activeTab === "plan" ? (
@@ -360,11 +366,9 @@ export default function SavedActionPlanDetail({
             >
               <div className="mb-4 flex items-center justify-between gap-3">
                 <SavedActionPlanSelector
-                  availablePlans={availablePlans}
                   inputRef={titleInputRef}
                   onResetTitle={() => setPlanTitle(confirmedTitleRef.current)}
                   onTitleChange={setPlanTitle}
-                  planId={planId}
                   title={planTitle}
                 />
               </div>
@@ -391,6 +395,7 @@ export default function SavedActionPlanDetail({
                 }
                 headerActions={(
                   <SavedActionPlanMenu
+                    availablePlans={availablePlans}
                     deleting={isDeleting}
                     onDelete={() => { void deletePlan(); }}
                     onRename={() => {
@@ -398,6 +403,8 @@ export default function SavedActionPlanDetail({
                       titleInputRef.current?.select();
                     }}
                     plan={currentPlan}
+                    planId={planId}
+                    title={planTitle}
                     workspace={workspace}
                   />
                 )}

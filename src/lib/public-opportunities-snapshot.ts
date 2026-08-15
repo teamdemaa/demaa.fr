@@ -53,6 +53,7 @@ export function preserveOpportunityEnrichment(
       cadence: opportunity.cadence ?? fallback.cadence,
       companyName: opportunity.companyName ?? fallback.companyName,
       compensation: opportunity.compensation ?? fallback.compensation,
+      domainLabel: opportunity.domainLabel ?? fallback.domainLabel,
       expectations: opportunity.expectations.length > 0
         ? opportunity.expectations
         : fallback.expectations,

@@ -7,7 +7,7 @@ const mocks = vi.hoisted(() => ({
   enforceAllowedHost: vi.fn(),
   enforceRateLimit: vi.fn(),
   enforceSameOrigin: vi.fn(),
-  requireCurrentCustomerEmail: vi.fn(),
+  requireCurrentCustomerIdentity: vi.fn(),
   revalidateTag: vi.fn(),
   submitPendingOpportunityDraft: vi.fn(),
 }));
@@ -23,7 +23,7 @@ vi.mock("@/lib/api-security", () => ({
   }),
 }));
 vi.mock("@/lib/customer-space-session.server", () => ({
-  requireCurrentCustomerEmail: mocks.requireCurrentCustomerEmail,
+  requireCurrentCustomerIdentity: mocks.requireCurrentCustomerIdentity,
 }));
 vi.mock("@/lib/opportunity-submission.server", () => ({
   createPendingOpportunitySubmissionDraft:
@@ -71,8 +71,8 @@ describe("opportunity submission routes", () => {
       draftToken: "a".repeat(43),
       expiresAt: "2026-08-14T12:00:00.000Z",
     });
-    mocks.requireCurrentCustomerEmail.mockResolvedValue({
-      email: "dirigeante@example.com",
+    mocks.requireCurrentCustomerIdentity.mockResolvedValue({
+      identity: { email: "dirigeante@example.com", provider: "password", uid: "owner-uid" },
       response: null,
     });
     mocks.submitPendingOpportunityDraft.mockResolvedValue({
@@ -87,7 +87,7 @@ describe("opportunity submission routes", () => {
       completeDraft,
     ));
     expect(response.status).toBe(201);
-    expect(mocks.requireCurrentCustomerEmail).not.toHaveBeenCalled();
+    expect(mocks.requireCurrentCustomerIdentity).not.toHaveBeenCalled();
     expect(mocks.createPendingOpportunitySubmissionDraft).toHaveBeenCalledWith(
       expect.objectContaining({
         cadence: "3 mois",
@@ -123,8 +123,8 @@ describe("opportunity submission routes", () => {
   });
 
   it("requires the Demaa session only at final submission", async () => {
-    mocks.requireCurrentCustomerEmail.mockResolvedValue({
-      email: "",
+    mocks.requireCurrentCustomerIdentity.mockResolvedValue({
+      identity: null,
       response: Response.json({ error: "Connexion requise." }, { status: 401 }),
     });
     const response = await submitDraft(post(

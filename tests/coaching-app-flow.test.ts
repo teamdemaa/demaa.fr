@@ -5,13 +5,10 @@ const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.ur
 
 describe("unified app and coaching", () => {
   it("opens saved plans on the canonical in-app route", () => {
-    const email = read("src/lib/customer-space-email.ts");
-    const saveControl = read("src/components/ActionPlanSaveControl.tsx");
+    const experience = read("src/components/ActionPlanExperience.tsx");
     const legacyPage = read("src/app/mon-espace/plans/[id]/page.tsx");
 
-    expect(email).toContain("Ouvrir mon plan");
-    expect(email).not.toContain("Accéder à mon espace Demaa");
-    expect(saveControl).toContain("/plans/");
+    expect(experience).toContain("/plans/");
     expect(legacyPage).toContain("redirect(`/plans/");
   });
 
@@ -38,39 +35,27 @@ describe("unified app and coaching", () => {
   it("keeps specialist messaging simple and moves coach business to Services", () => {
     const coaching = read("src/components/CoachingPanel.tsx");
     const offers = read("src/lib/specialist-offers.ts");
-    const coachBusiness = read("src/components/CoachBusinessServiceCard.tsx");
+    const serviceCatalog = read("src/lib/canonical-service-catalog.ts");
     const services = read("src/components/ServicesCatalog.tsx");
     const coachingControl = read("src/components/ActionPlanCoachingControl.tsx");
     const appNavigation = read("src/components/ActionPlanNavbar.tsx");
-    expect(coaching).toContain("Échanger avec un spécialiste");
-    expect(coaching).toContain("Clarté · 149 € HT / mois");
-    expect(coaching).toContain('aria-haspopup="dialog"');
-    expect(coaching).toContain("L’équipe Demaa mobilisable selon le besoin");
-    expect(coaching).toContain("Mises en relation facilitées");
-    expect(coaching).toContain("15 % de réduction sur les autres offres Demaa");
-    expect(coaching).toContain(
-      "Mise en avant prioritaire de votre profil pour les opportunités correspondant à votre expertise",
-    );
+    expect(coaching).toContain("L’équipe Demaa vous aide gratuitement à identifier le blocage");
+    expect(coaching).toContain("Clarifier ma situation");
+    expect(coaching).toContain("Découvrir Coach business");
+    expect(coaching).toContain("−12 % sur les autres accompagnements Demaa");
+    expect(coaching).not.toContain("149 €");
     expect(coaching).not.toContain('role="tablist"');
-    expect(coaching).not.toContain("Choisir Clarté");
-    expect(coaching).not.toContain("Choisir Maestro");
-    expect(coaching).not.toContain("premier échange offert");
-    expect(coachBusiness).toContain("Coach business");
-    expect(coachBusiness).toContain("Matching guidé avec le bon coach");
-    expect(coachBusiness).toContain("Être rappelé(e)");
-    expect(coachBusiness).toContain("350 €");
-    expect(coachBusiness).toContain("550 €");
-    expect(coachBusiness).toContain("15 % de réduction pour les abonnés Clarté");
-    expect(services).toContain("<CoachBusinessServiceCard />");
-    expect(offers).toContain('title: "Clarté"');
+    expect(serviceCatalog).toContain('slug: "coach-business"');
+    expect(serviceCatalog).toContain("Matching avec un coach adapté");
+    expect(serviceCatalog).toContain("350 €");
+    expect(serviceCatalog).toContain("550 €");
+    expect(serviceCatalog).toMatch(/slug: "coach-business"[\s\S]*?monthlyAccompanimentDiscountEligible: false/);
+    expect(services).not.toContain("CoachBusinessServiceCard");
     expect(offers).toContain('title: "Coach business · 1 session / mois"');
     expect(offers).toContain('title: "Coach business · 2 sessions / mois"');
-    expect(offers).toContain('price: "149 € HT / mois"');
+    expect(offers).not.toContain("149 €");
     expect(offers).toContain('price: "350 € HT / mois"');
     expect(offers).toContain('price: "550 € HT / mois"');
-    expect(coachBusiness).not.toContain("150 € HT");
-    expect(coachBusiness).not.toContain("400 € HT");
-    expect(coachBusiness).not.toContain("Pilotage rapproché");
     expect(coaching).toContain("interimResults: true");
     expect(coaching).toContain("useSpeechDictation");
     expect(coaching).toContain("Dictée en cours… le texte apparaît dans le message.");
@@ -84,14 +69,16 @@ describe("unified app and coaching", () => {
     expect(coachingControl).toContain("onClick={() => setOpen(true)}");
     expect(coachingControl).toContain('url.searchParams.delete("intent")');
     expect(coachingControl).toContain("window.history.replaceState");
-    expect(coachingControl).toContain("onRequireAccess={initialEmail ? undefined");
-    expect(coachingControl).toContain("Connectez-vous pour envoyer votre message et retrouver la réponse.");
+    expect(coachingControl).toContain("onRequireAccess={isAuthenticated ? undefined");
+    expect(coachingControl).toContain('"Connectez-vous pour envoyer"');
+    expect(coachingControl).not.toContain("Connectez-vous pour envoyer votre message et retrouver la réponse.");
     expect(coachingControl).toContain('params.set("draftToken", accessIntent.draftToken)');
+    expect(coachingControl).not.toContain("SpecialistOffer");
     expect(coachingControl).toContain("/api/action-plans");
     expect(coachingControl).not.toContain(
       "Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.",
     );
-    expect(coachingControl).toContain('new URLSearchParams({ intent: "coaching", tab: intent.tab })');
+    expect(coachingControl).toContain('new URLSearchParams({ intent: "coaching", tab: accessIntent.tab })');
     expect(appNavigation).toContain("Opportunités");
     expect(appNavigation).not.toContain('label: "Coaching"');
   });
@@ -109,15 +96,14 @@ describe("unified app and coaching", () => {
     expect(planBranch).toContain("accessPlan={{");
     expect(planBranch).toContain("sourceText: situation.trim()");
     expect(planBranch).toContain("generation,");
-    expect(read("src/components/ActionPlanCoachingControl.tsx")).toContain(
-      "if (!accessPlan)",
-    );
+    expect(read("src/components/ActionPlanCoachingControl.tsx")).toContain("handleAuthenticated");
   });
 
-  it("keeps magic-link consumption on POST", () => {
-    const consumeRoute = read("src/app/api/customer-space/consume/route.ts");
-    const email = read("src/lib/customer-space-email.ts");
-    expect(consumeRoute).toContain("export async function POST");
-    expect(email).toContain('"/connexion"');
+  it("uses one Firebase session endpoint for password and Google", () => {
+    const access = read("src/components/CustomerSpaceAccessForm.tsx");
+    const google = read("src/components/GoogleCustomerSignInButton.tsx");
+    expect(access).toContain('fetch("/api/customer-space/firebase-session"');
+    expect(google).toContain('fetch("/api/customer-space/firebase-session"');
+    expect(access).not.toContain("magic-link");
   });
 });

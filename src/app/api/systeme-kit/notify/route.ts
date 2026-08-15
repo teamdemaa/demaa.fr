@@ -6,7 +6,7 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
-import { requireCurrentCustomerEmail } from "@/lib/customer-space-session.server";
+import { requireCurrentCustomerIdentity } from "@/lib/customer-space-session.server";
 import { enterpriseToSystem } from "@/lib/enterprise-annuaire";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
@@ -79,9 +79,9 @@ async function handlePost(request: Request) {
   });
   if (limitedByIp) return limitedByIp;
 
-  const customer = await requireCurrentCustomerEmail();
+  const customer = await requireCurrentCustomerIdentity();
   if (customer.response) return customer.response;
-  const email = customer.email;
+  const email = customer.identity.email;
 
   const { data: body, response } = await readJsonBody<GuideNotifyRequestBody>(
     request,

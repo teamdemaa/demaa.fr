@@ -7,6 +7,7 @@ import {
 import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
 import { enterpriseCatalogBySlug } from "@/lib/enterprise-annuaire";
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
+import { filterPublicSolutionSections } from "@/lib/public-solution-section-visibility";
 import type { SolutionSection } from "@/lib/solution-registry-dto";
 import type {
   RenderableSolutionPlacementDto,
@@ -23,11 +24,7 @@ const SECTION_ORDER: readonly SolutionSection[] = [
   "networks",
 ];
 
-const LEGAL_SUBCONTRACTING_SYSTEM_SLUGS = new Set([
-  "cabinet-comptable",
-  "cabinet-davocat",
-  "notaire",
-]);
+const ACCOUNTING_FIRM_SYSTEM_SLUGS = new Set(["cabinet-comptable", "expert-comptable"]);
 
 export function getCanonicalServiceSlugsForSystem(
   systemSlug: string,
@@ -35,13 +32,7 @@ export function getCanonicalServiceSlugsForSystem(
   return getCanonicalServices()
     .filter((service) => {
       if (service.slug === "expert-comptable") {
-        return false;
-      }
-      if (
-        service.slug === "sous-traitance-formalites-juridiques" &&
-        !LEGAL_SUBCONTRACTING_SYSTEM_SLUGS.has(systemSlug)
-      ) {
-        return false;
+        return !ACCOUNTING_FIRM_SYSTEM_SLUGS.has(systemSlug);
       }
       return true;
     })
@@ -124,6 +115,7 @@ function buildCanonicalServicePlacements(
       displayCategory: service.eyebrow,
       ctaLabel: "Voir le service",
       indicativePricing: service.pricing.label,
+      monthlyAccompanimentDiscountEligible: service.monthlyAccompanimentDiscountEligible,
       interaction: {
         interactionMode: "detail",
         href: `/services/${service.slug}?systemSlug=${encodeURIComponent(systemSlug)}&source=solutions-systeme`,
@@ -171,4 +163,17 @@ export function composeCanonicalServicesForSystem(
         }]
       : [];
   });
+}
+
+/**
+ * Builds the public payload and applies visibility last so internally composed
+ * sections such as financing or aids cannot be reintroduced after filtering.
+ */
+export function composePublicSolutionSectionsForSystem(
+  systemSlug: string,
+  sections: readonly RenderableSolutionSectionDto[],
+): readonly RenderableSolutionSectionDto[] {
+  return filterPublicSolutionSections(
+    composeCanonicalServicesForSystem(systemSlug, sections),
+  );
 }

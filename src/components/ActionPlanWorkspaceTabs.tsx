@@ -57,11 +57,11 @@ export default function ActionPlanWorkspaceTabs({
   }
 
   return (
-    <div className="mb-6 flex justify-center border-b border-dema-line">
+    <div className="relative left-1/2 -mt-3 mb-6 flex w-[100dvw] max-w-[100dvw] -translate-x-1/2 justify-center border-b border-dema-line/90 px-3 pb-4 pt-3">
       <div
         role="tablist"
         aria-label="Contenu du plan"
-        className="inline-flex items-center gap-8"
+        className="flex w-full max-w-xl items-center rounded-full border border-dema-line bg-dema-paper/70 p-1 shadow-[0_5px_18px_rgba(23,35,29,0.05)] xl:w-[min(40vw,36rem)]"
       >
         {tabs.map(({ id, label }, index) => (
           <button
@@ -74,10 +74,10 @@ export default function ActionPlanWorkspaceTabs({
             tabIndex={value === id ? 0 : -1}
             onClick={() => onChange(id)}
             onKeyDown={(event) => handleTabKeyDown(event, index)}
-            className={`-mb-px inline-flex min-h-10 items-center justify-center border-b-2 px-1 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 ${
+            className={`inline-flex min-h-10 flex-1 items-center justify-center rounded-[1rem] px-8 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-dema-forest/25 sm:px-10 ${
               value === id
-                ? "border-dema-forest text-dema-forest"
-                : "border-transparent text-dema-muted hover:border-dema-forest/25 hover:text-brand-blue"
+                ? "bg-dema-sage text-dema-forest"
+                : "text-dema-muted hover:bg-dema-sage/40 hover:text-brand-blue"
             }`}
           >
             {label}

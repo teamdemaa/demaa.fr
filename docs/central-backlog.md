@@ -1,6 +1,6 @@
 # Backlog central Demaa
 
-Dernière consolidation : 14 août 2026.
+Dernière consolidation : 15 août 2026.
 
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
@@ -27,7 +27,9 @@ de déploiement.
   interne historique de l'onglet Organisation reste `process`. Firebase est
   la source distante active des Solutions.
 - Les Services canoniques sont publiés et composés au rendu dans les
-  Systèmes, sans duplication dans Firebase.
+  Systèmes, sans duplication dans Firebase. La surface publique Solutions
+  affiche uniquement `Outils` et `Services` ; Fournisseurs, Financement,
+  Aides, Réseaux et Modèles restent conservés dans le référentiel interne.
 - `/contenus/facturation-electronique` est publié comme article et diaporama ;
   les deux présentations universelles ne sont plus rendues dans les Ressources
   des Systèmes.
@@ -37,18 +39,41 @@ de déploiement.
   est publique. Les Tutoriels (`case-study`) et Webinaires restent conservés
   avec leurs routes mais masqués jusqu'à réactivation explicite.
 - Les parcours guide, newsletter, Structure, Rejoindre Team Demaa, callback
-  Services, Levier, Opportunités, sauvegarde de plan et lien magique ont été
+  Services, Levier, Opportunités, sauvegarde de plan et authentification Firebase ont été
   testés en Production. L'envoi direct à la boîte Gmail opérationnelle est
   validé avec SPF, DKIM et DMARC. `team@demaa.fr` est une boîte distincte, pas
   un alias ; sa réception opérationnelle doit être vérifiée séparément dans
   Google Workspace.
 - Le runtime Firebase Production utilise l'identité sans clé
   `demaa-prod-app@demaa-dde32.iam.gserviceaccount.com`, limitée à
-  `roles/datastore.user` et empruntable uniquement par le projet Vercel Demaa.
+  `roles/datastore.user` et au rôle personnalisé minimal de création et de
+  lecture des sessions Firebase Auth, et empruntable uniquement par le projet
+  Vercel Demaa.
 - `SLACK_WEBHOOK_URL`, le secret de rate limit, l'identité Firebase et la
   variable Levier sont classés Sensitive en Production. Le test Levier final a créé son lead,
   envoyé la notification Slack et accepté la livraison e-mail sans exposer le
   lien Google Sheets au navigateur.
+
+## Séquence d'exécution active — 15 août 2026
+
+Cette séquence courte est la seule liste à utiliser pour préparer le prochain
+merge. Les checklists datées et les anciens lots conservés plus bas documentent
+l'historique et ne déclenchent aucune action par eux-mêmes.
+
+1. Fermer le candidat applicatif courant : vérifier le périmètre Git, conserver
+   les fichiers PWA comme changements externes, relancer tests, lint, TypeScript,
+   build et smoke tests sans commit, push, merge ou déploiement implicite.
+2. Laisser les deux documents Firebase historiques restants intacts tant
+   qu'une nouvelle autorisation destructive explicite ne les vise pas.
+3. Livrer séparément l'optimisation Académie : cache mémoire, Promise partagée,
+   préchargement idle, tests unitaires et E2E prouvant une seule requête.
+4. Traiter ensuite D-082 comme un lot visuel indépendant ; ne pas mélanger la
+   stabilité du lecteur avec le cache de données.
+5. Garder le MVP Réseau Partenaire au cadrage jusqu'à validation de la fenêtre
+   d'attribution, des clients existants, du conflit entre les avantages de 12 %,
+   de la convention d'apport et du règlement des commissions.
+6. Ne déclencher ni console spécialiste ni portail partenaire tant qu'un
+   intervenant extérieur ne doit pas se connecter et agir lui-même dans Demaa.
 
 ## Mise à jour canonique du 9 août 2026
 
@@ -66,14 +91,15 @@ l'ADR 0004 prévaut.
   Organisation et Ressources restent sur les fiches publiques et alimentent
   de manière déterministe les aides affichées dans les Actions. La messagerie
   spécialiste est accessible par l'action `Échanger` sans
-  onglets commerciaux. `Clarté` est un accompagnement asynchrone à
-  149 EUR HT/mois. Le Coach business est présenté comme une carte Services.
+  onglets commerciaux. Une première clarification est offerte par UID et
+  clôturée manuellement par la Team Demaa. Le Coach business est présenté
+  comme l'accompagnement régulier distinct.
 - Une fiche Système contient `Organisation`, `Solutions` et `Ressources`.
-- Six Services canoniques existent : Automatisation des processus,
-  Expert-comptable, Formalités juridiques, Sous-traitance de formalités
-  juridiques, Plan marketing et prospection et Assistance facturation. La
-  sous-traitance est réservée aux professions qui traitent les dossiers de
-  leurs clients ; Expert-comptable est absent de la fiche Cabinet comptable.
+- Six accompagnements publics existent : Coach business, Expert-comptable,
+  Automatisation des processus, Gestion des réseaux sociaux, Publicité en
+  ligne et Prospection ciblée. Expert-comptable est absent de la fiche Cabinet
+  comptable. Trois prestations externes restent accessibles uniquement par
+  recommandation privée de la Team Demaa.
 - Les Services utilisent le même formulaire de contact minimal (entreprise et
   numéro WhatsApp), avec attribution silencieuse du service et du Système
   métier, stockage sécurisé puis notification Slack. Le suivi WhatsApp reste
@@ -93,7 +119,8 @@ l'ADR 0004 prévaut.
   `docs/legacy-route-retirement-matrix.md`.
 - Les endpoints, destinations privées et révisions historiques de livraison
   restent intacts pendant le retrait des pages publiques.
-- `/services` publie exactement les six offres canoniques. `/sur-mesure`
+- `/services` publie exactement les six offres canoniques sous le libellé
+  public Accompagnement. `/sur-mesure`
   reste une offre distincte, hors navigation principale.
 
 ### Lots restant réellement au backlog
@@ -106,27 +133,29 @@ l'ADR 0004 prévaut.
 - [x] Livrer la première version de `Échanger` : conversation
   asynchrone écrite ou dictée, historique persistant et brouillon conservé
   pendant l'authentification. Aucun onglet Formules n'est exposé dans cette
-  surface. `Clarté` est affiché à 149 EUR HT/mois.
+  surface. Une première clarification est offerte et la Team Demaa la clôture
+  manuellement avec sa réponse finale.
 - [x] Publier une carte `Coach business` dans Services, avec matching guidé,
   sélecteur interne de 1 session de 60 minutes à 350 EUR HT/mois ou 2 sessions
-  à 550 EUR HT/mois et CTA `Être rappelé(e)`. Aucun paiement n'est déclenché.
+  à 550 EUR HT/mois et CTA `Être rappelé(e)`. La demande transmet une intention
+  sans connexion ni paiement public ; la Team qualifie ensuite le besoin et le
+  matching.
 - [x] Livrer D-077 : entrée `Commencer avec un plan vierge`, navigation
   `Plan d’action / Opportunités / Académie`, sous-onglets `Actions / Solutions`
   dans le Plan, Coaching accessible par
   `Échanger`, Opportunités au sens large et sauvegarde invitée
   sans secret exposé au JavaScript. L’ADR 0010 est la référence.
-- [x] Unifier l'identité e-mail des parcours applicatifs : le lien magique est
-  le seul point de saisie et de vérification ; une session connectée alimente
+- [x] Unifier l'identité des parcours applicatifs : le compte Firebase e-mail
+  et mot de passe est le parcours principal ; une session connectée alimente
   côté serveur les guides métier, Opportunités, Coaching, inscriptions et
   demandes sans redemander l'adresse. Après connexion, reprendre directement
   l'intention autorisée dans l'application, sans page `Mon espace` ou
   `Mes plans`.
-- [ ] Recetter puis activer D-080 : connexion Google progressive via Firebase
-  Auth, même session Demaa et même identité e-mail que le lien magique. Le
-  bouton reste masqué tant que les quatre variables Web publiques, le
-  fournisseur Google et les domaines autorisés ne sont pas configurés. Le lien
-  magique reste disponible ; aucun compte mot de passe ou stockage parallèle
-  n'est introduit.
+- [x] Activer D-080 : compte e-mail et mot de passe Firebase principal, Google
+  facultatif, un endpoint de session et un cookie Firebase Admin natif. Plans,
+  conversations et brouillons appartiennent uniquement à l'UID ; l'e-mail de
+  la session sert de contact sans devenir une clé d'autorisation. Aucun accès
+  historique ni migration par adresse e-mail n'est conservé.
 - [ ] Recetter puis promouvoir D-081 : manifeste PWA, icônes 192/512/maskable,
   lancement `standalone`, thème blanc et invitation d'installation uniquement
   après un résultat. Garder `/sw.js` et `/offline` en 404 : aucun cache d'API,
@@ -138,11 +167,10 @@ l'ADR 0004 prévaut.
 - [ ] Cadrer D-078, multi-tenant simple : un compte peut posséder plusieurs
   entreprises ; chaque plan et progression Système appartient à une entreprise
   vérifiée côté serveur. Prévoir `accounts`, `companies` et un état Système par
-  entreprise, une migration progressive de `owner_email`, un sélecteur compact
+  entreprise, un rattachement depuis l'UID Firebase, un sélecteur compact
   et des tests d'isolation inter-entreprises. Ne créer ni rôles, ni invitations,
   ni gestion d'équipe dans ce lot. Le nom d'entreprise reste facultatif et
-  pourra être enrichi depuis le profil ; il ne bloque pas le lien magique ni
-  l'ouverture du plan.
+  pourra être enrichi depuis le profil et ne bloque pas l'ouverture du plan.
 - [x] Permettre un nom d'organisation facultatif dans l'administration des
   Opportunités et ne l'afficher que lorsqu'il est explicitement publié.
 - [ ] Synchroniser de manière contrôlée les champs facultatifs enrichis des
@@ -159,14 +187,14 @@ l'ADR 0004 prévaut.
   saisie complète avant connexion, brouillon serveur repris après connexion,
   identité de session, idempotence et statut `draft` jusqu'à publication admin.
 - [ ] Cadrer ensuite les évolutions Coaching : capacité humaine, notifications
-  de réponse, paiement/réservation, confidentialité, durée de conservation et
+  de réponse, réservation, confidentialité, durée de conservation et
   limites du service. L'historique Messages, sa persistance et la réponse sous
   24 à 48 h appartiennent déjà à la première version.
-- [ ] Ouvrir un chantier séparé « Paiement des accompagnements » sans
-  modifier l'interface validée. La messagerie affiche `Clarté` à
-  149 EUR HT/mois sans onglet Formules. Services contient une carte
-  `Coach business` avec sélecteur 1 session à 350 EUR ou 2 sessions à
-  550 EUR HT/mois ; il n'existe pas de troisième carte.
+- [ ] Recetter le candidat local Coach business. Services contient une carte
+  avec sélecteur 1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois ; il
+  n'existe pas de troisième carte. Un accompagnement mensuel actif ouvre 12 % sur
+  les autres prestations directement facturées par Demaa, après contrôle
+  serveur et avec exclusion du Coach, des partenaires, budgets et frais tiers.
   - Définir précisément ce qui est inclus, les délais de réponse, le rythme des
     échanges, les limites raisonnables d'usage et les règles de report.
   - Auditer la soutenabilité de l'hypothèse interne `50 % Demaa / 50 %
@@ -176,8 +204,15 @@ l'ADR 0004 prévaut.
     le spécialiste principal et, si nécessaire, les expertises complémentaires.
   - Dimensionner la capacité humaine, les indisponibilités, les remplacements,
     la confidentialité et l'escalade avant toute mise en vente.
-  - Implémenter ensuite seulement paiement récurrent, facturation, résiliation,
-    droits d'accès, administration et suivi opérationnel.
+  - Le parcours public reste exclusivement une demande de rappel : aucun
+    Checkout, paiement automatique ou abonnement n'est déclenché depuis le
+    site. La Team qualifie puis contractualise l'accompagnement hors de ce
+    parcours public.
+  - Le portail de facturation, l'automatisation d'un abonnement et sa projection
+    par webhooks signés restent différés. Avant leur éventuelle activation,
+    configurer l'identité fiscale, la TVA, les objets et secrets live, puis
+    valider le webhook en Preview et une transaction live contrôlée.
+  - L'administration et le suivi opérationnel restent à cadrer avant vente.
   - Tester sur une cohorte pilote puis mesurer charge réelle, délai de réponse,
     marge, satisfaction et rétention avant le `GO` public.
 - [x] Conserver avant et après connexion la navigation applicative unique
@@ -185,8 +220,8 @@ l'ADR 0004 prévaut.
   Plan. Les anciennes URLs `view=system` restent compatibles et sont
   normalisées en `view=plan&planTab=solutions` pour les nouveaux liens ; les
   routes `/systemes` restent inchangées. Coaching reste le
-  produit accessible par `Échanger`; les libellés humains emploient
-  `spécialiste`, notamment `Échanger avec un spécialiste`. Aucun onglet
+  produit accessible par `Échanger`; la surface s'intitule
+  `Échanger avec l'équipe Demaa`. Aucun onglet
   `Accueil`, portail `Mon espace`/`Mes plans` ou profil obligatoire n'est créé.
 - [ ] Recetter puis promouvoir le candidat D-079 Plan V4 : génération limitée
   aux Actions et au `systemId`, supports typés selon les règles déterministes,
@@ -212,16 +247,29 @@ l'ADR 0004 prévaut.
   l'intitulé, les questions, le rôle du dirigeant et celui du spécialiste,
   puis décider du modèle de données et de l'interface sans réutiliser
   automatiquement les anciens piliers.
-- [x] Figer la gamme spécialiste : `Clarté` à 149 EUR HT/mois pour obtenir un
-  regard extérieur et décider, puis `Coach business` à 350 ou 550 EUR HT/mois
-  pour reprendre durablement la direction de l'entreprise. Les identifiants
-  techniques historiques restent internes.
+- [x] Figer la gamme : une première clarification offerte, puis `Coach
+  business` à 350 ou 550 EUR HT/mois pour un accompagnement régulier. Un
+  accompagnement mensuel actif ouvre 12 % sur les autres prestations Demaa
+  éligibles, sans cumul et après vérification serveur.
 - [ ] Cadrer le partage sécurisé d'un plan sauvegardé : accès en lecture seule,
   consentement, lien révocable, durée et protection contre l'indexation. Le MVP
   permet déjà de sauvegarder et retrouver un plan, mais ne crée aucun lien
   public tant que ces règles ne sont pas validées.
-- [x] Conserver un catalogue Services canonique unique de six offres,
-  composé au rendu dans les 115 Systèmes.
+- [x] Conserver six accompagnements publics composés au rendu dans les 115
+  Systèmes. Assistance administrative, Formalités d'entreprise et
+  Sous-traitance de formalités juridiques restent privées et accessibles
+  uniquement par recommandation de la Team Demaa.
+- [x] D-083, lot 1 : limiter la surface publique Solutions à `Outils` et
+  `Services`, sans suppression ni déplacement de données. Le filtre public
+  s'applique après la composition pour empêcher Financement et Aides d'être
+  réinjectés dans les pages, récapitulatifs ou réponses API publiques.
+- [ ] D-083, lots 2 à 4 : maintenir l'accompagnement sous responsabilité de la
+  Team Demaa, clarifier le référentiel interne et préparer progressivement les
+  dossiers d'accompagnement sans créer de profil Coach.
+- [ ] D-083, lots 5 et 6 : conserver l'accès spécialiste comme lot
+  conditionnel. Le déclencher seulement lorsqu'un intervenant extérieur doit
+  se connecter et répondre lui-même dans Demaa, après les prérequis Firebase,
+  Git et sécurité détaillés dans le cadrage ci-dessous.
 - [x] Créer `/contenus` et publier la fiche Facturation électronique comme
   article et diaporama avant la future vidéo.
 - [x] Simplifier Ressources : retirer les guides métier de la surface active et
@@ -229,6 +277,17 @@ l'ADR 0004 prévaut.
 - [x] Limiter temporairement Académie aux seuls `Cours`, sans onglet. Les
   Tutoriels techniques `case-study`, leurs slugs et leurs routes restent
   conservés mais masqués, comme les Webinaires.
+- [ ] Optimiser le retour dans Académie avec un cache client mémoire, une
+  Promise de chargement partagée et un préchargement non bloquant au repos.
+  Conserver l'API, le payload actuel et le cache Système sans modification ;
+  le contrat détaillé et la recette sont définis ci-dessous.
+- [ ] D-082 — Rendre le lecteur Académie stable et adapté au viewport. P0 à
+  traiter après l'audit des cours existants et avant la production de nouveaux
+  cours. Aucun développement n'est autorisé avant la relecture de
+  `AcademyCoursePlayer` et de ses conteneurs, la mesure des hauteurs de
+  navigation, puis la validation explicite d'un plan d'implémentation et de ses
+  compromis responsive. Le contrat détaillé et les critères de recette sont
+  définis ci-dessous.
 - [ ] Réactiver les `Tutoriels` de l'Académie par la bascule
   `academyTutorials`, avec retour automatique de la navigation de sections et
   recette desktop/mobile.
@@ -239,6 +298,11 @@ l'ADR 0004 prévaut.
   concernés seulement après validation éditoriale, recette des liens et bascule
   explicite de `systemContextualCaseStudies`. Les relations et routes sont
   conservées pendant le masquage.
+- [ ] Cadrer puis livrer le MVP Réseau Partenaire à double sens : lien
+  d'apporteur opaque, page Demaa contextualisée, attribution serveur,
+  réduction client de 12 % sur les seules prestations Demaa éligibles et
+  commission manuelle de 8 % après encaissement. Le portail partenaire complet,
+  les paiements automatiques et le CRM restent différés.
 - [x] Curater le premier lot Fournisseurs pour Cabinet comptable et Cabinet de
   conseil : Orus, Alan, Swile et Amazon Business, en `draft`, relation
   `unknown`, avec conditions d'éligibilité explicites.
@@ -263,6 +327,485 @@ l'ADR 0004 prévaut.
   nouvelles routes publiques avant disponibilité réelle.
 - [ ] Activer le vocal de Structure uniquement avec stockage privé,
   transcription et politique de suppression validés.
+
+#### D-083 — Solutions publiques simples et accompagnement progressif
+
+Décision courante : la simplification `Outils + Services` ne crée aucun profil
+Coach. La Team Demaa reste l'opérateur unique des échanges tant que le volume
+peut être traité manuellement. Les coachs extérieurs ne reçoivent ni la clé
+d'administration globale, ni un accès direct aux conversations.
+
+**Lot 1 — Surface publique Solutions — P0 — terminé localement**
+
+- [x] Afficher publiquement uniquement `Outils` et `Services`.
+- [x] Masquer Fournisseurs, Financement, Aides, Réseaux et Modèles sans
+  supprimer leurs données.
+- [x] Ne déplacer aucune carte Fournisseur dans Services.
+- [x] Filtrer les réponses publiques après la composition afin qu'aucune
+  catégorie privée ne puisse être réinjectée.
+- [x] Appliquer le même contrat aux fiches Système, au récapitulatif et à
+  l'API utilisée par le Plan d'action.
+
+**Lot 2 — Accompagnement Team Demaa — P0/P1 — transitoire**
+
+- [ ] Conserver `Échanger` pour le dirigeant, limité à ses conversations.
+- [ ] Maintenir le traitement des demandes dans l'administration Team Demaa.
+- [ ] Coordonner manuellement tout intervenant extérieur et restituer sa
+  réponse au dirigeant sans lui ouvrir l'administration.
+
+**Lot 3 — Référentiel interne — P1**
+
+- [ ] Conserver Fournisseurs, aides, financements, réseaux et partenaires dans
+  une couche privée consultable par la Team Demaa.
+- [ ] Ajouter progressivement pays, langue, zone, validité et conditions.
+- [ ] Garantir que ces métadonnées privées ne sont jamais renvoyées par les
+  endpoints publics.
+
+**Lot 4 — Dossiers d'accompagnement — P2**
+
+- [ ] Enrichir les conversations avec statut, service concerné, système
+  métier, pays, priorité, responsable, prochaine action et historique des
+  attributions.
+- [ ] Utiliser initialement la Team Demaa comme responsable unique.
+
+**Lot 5 — Accès spécialiste — conditionnel, non déclenché**
+
+Lorsque le besoin réel d'assigner des accompagnements à des intervenants
+extérieurs qui se connectent eux-mêmes sera confirmé, créer une adhésion
+interne, pas un second profil client :
+
+```text
+Membre interne
+├── rôle : team_demaa | specialist
+├── spécialités : business_coach, finance, marketing…
+├── statut : invité | actif | suspendu
+└── dossiers attribués
+```
+
+- [ ] Autoriser `team_demaa` sur tous les dossiers et toutes les ressources.
+- [ ] Limiter `specialist` aux seuls dossiers explicitement attribués.
+- [ ] Maintenir `customer` sur ses seules conversations.
+- [ ] Enregistrer l'identité réelle de chaque auteur et vérifier toutes les
+  autorisations côté serveur.
+
+**Lot 6 — Console spécialiste et attribution — après le Lot 5**
+
+- [ ] Invitation sécurisée, dossiers attribués et contexte strictement utile.
+- [ ] Liste des accompagnements assignés et fiche mission minimale, sans
+  conversation globale, plan d'action complet ni données administratives.
+- [ ] Journal d'activité et révocation immédiate des accès.
+
+La messagerie prestataire-client, la recherche dans les ressources internes,
+le profil prestataire self-service, l'attribution multiple et
+l'internationalisation complète restent hors de ce MVP.
+
+**Cadrage du MVP administration clients et accès intervenants — validé pour le
+backlog, non commencé**
+
+Ce cadrage remplace toute lecture implicite selon laquelle il suffirait de
+réutiliser l'administration Coaching et son secret partagé. Le MVP réutilise
+Firebase Auth, le cookie `demaa_session` et l'application dirigeant, mais toutes
+les autorisations sensibles sont recalculées côté serveur dans une DAL marquée
+`server-only`.
+
+**Gate 0 — prérequis obligatoires avant tout développement**
+
+- [ ] Terminer, vérifier et commiter le chantier actif d'authentification,
+  clarification gratuite, Plans, Solutions et Académie avant de créer le
+  worktree du MVP.
+- [ ] Partir d'un SHA propre dans une branche et un worktree dédiés ; ne jamais
+  développer ce MVP dans le worktree d'un autre chat.
+- [ ] Prouver sur une Preview que l'identité Vercel possède les permissions
+  Firebase Auth minimales nécessaires aux cookies de session, à leur contrôle
+  de révocation et à `getUser` / `getUserByEmail`.
+- [ ] Conserver le contrôle de fraîcheur `auth_time`, la politique de mot de
+  passe Firebase et les domaines Google autorisés validés par le chantier
+  d'authentification en cours.
+- [ ] Créer puis vérifier le compte Firebase administrateur et configurer
+  `DEMAA_ADMIN_UIDS` côté serveur, avec correspondance exacte des UID et refus
+  par défaut.
+
+**Modèle de données corrigé**
+
+- [ ] Rendre `client_profiles` obligatoire, avec un document indexé par UID
+  Firebase et les champs minimaux `display_name`, `company_name`, `activity`,
+  `country`, `status`, `created_by_uid`, `created_at` et `updated_at`.
+- [ ] Permettre à un profil client existant de n'avoir encore aucun
+  accompagnement ; le bouton `Ajouter un client` crée ce profil uniquement
+  après résolution du compte par `getUserByEmail`.
+- [ ] Définir la `dernière activité` du MVP comme le maximum des dates de mise à
+  jour de ses accompagnements et documenter le statut dérivé de la liste.
+- [ ] Séparer les types d'accompagnement en offre Demaa, expertise canonique et
+  accompagnement personnalisé ; ne pas faire passer une offre interne pour un
+  identifiant du catalogue d'expertises.
+- [ ] Ajouter aux accompagnements les dates utiles à la fiche mission, au
+  minimum `starts_at`, `assigned_at`, `created_at` et `updated_at`. Utiliser le
+  libellé constant `Team Demaa` comme référente tant qu'aucune gestion de
+  plusieurs référentes n'est nécessaire.
+- [ ] Garantir l'unicité d'un membre par e-mail normalisé avec une réservation
+  transactionnelle dédiée, par exemple
+  `workspace_member_email_claims/{sha256(email_normalise)}` ; une requête
+  Firestore suivie d'une création ne suffit pas contre les accès concurrents.
+- [ ] Figer les transitions `invited -> active -> suspended` et distinguer
+  explicitement révocation d'invitation, désassignation, réassignation et
+  suspension du membre.
+- [ ] Faire de l'assignation, de la réassignation, de l'activation, de la
+  suspension et de leur événement d'audit une seule transaction atomique.
+
+**Invitation sans fuite de jeton**
+
+- [ ] Générer au moins 32 octets aléatoires, conserver uniquement le hash
+  SHA-256 et ne placer le secret ni dans un chemin ni dans une query.
+- [ ] Utiliser `/invitation#token=...`, puis conserver temporairement le secret
+  dans `sessionStorage` pendant la connexion ; `returnTo` reste
+  `/invitation` sans secret.
+- [ ] Accepter l'invitation uniquement par `POST` avec protections Host,
+  Origin, limite de taille, rate limit, session Firebase, adresse correspondante
+  et vérification atomique de l'expiration, la révocation et l'usage unique.
+- [ ] Ajouter à `CustomerSpaceAccessForm` un mode explicite de vérification
+  d'e-mail prestataire qui envoie la vérification Firebase avant la déconnexion
+  du SDK client. Un compte mot de passe non vérifié ne devient jamais actif.
+- [ ] Réutiliser le membre et l'invitation encore valides, réémettre seulement
+  après expiration ou révocation, et ne jamais créer une nouvelle invitation
+  pour un membre déjà actif.
+- [ ] Exclure réellement `/invitation` de Vercel Analytics, Google Analytics,
+  Meta Pixel et de toute attribution ; vérifier aussi l'absence de requêtes
+  réseau de mesure après une navigation interne.
+- [ ] Appliquer `Referrer-Policy: no-referrer`, `Cache-Control: private,
+  no-store`, `robots: noindex, nofollow` et l'origine canonique HTTPS.
+
+**DAL, DTO et révocation immédiate**
+
+- [ ] Centraliser `requireAdminIdentity`, `requireActiveProviderIdentity`, les
+  lectures administratrices, les lectures prestataires et la lecture support
+  dans une DAL `server-only` conforme au guide Next.js 16 local.
+- [ ] Recalculer l'adhésion active et l'assignation à chaque lecture sensible ;
+  ne jamais mettre en cache inter-requêtes une décision d'autorisation.
+- [ ] Utiliser `clientUid`, `memberId` et `assignedMemberId` seulement pour
+  identifier la ressource, puis vérifier la relation en base. Aucun rôle ou UID
+  envoyé par le navigateur ne constitue une preuve.
+- [ ] Limiter le DTO prestataire au nom d'affichage client, au titre, au brief,
+  au statut, à la date de début et au contact Team Demaa. Exclure e-mail client,
+  autres accompagnements, autres intervenants, paiements, conversations et
+  plan complet.
+- [ ] Étendre la validation stricte de `returnTo` uniquement à `/invitation`,
+  `/intervenant/accompagnements` et aux identifiants de mission conformes.
+
+**Contexte dirigeant administratrice réellement en lecture seule**
+
+- [ ] Ne pas monter `SavedActionPlanDetail` propriétaire tel quel avec quelques
+  boutons masqués : il contient autosave, `pagehide`, `PATCH`, `DELETE`,
+  génération et mutations du workspace.
+- [ ] Extraire une vue de présentation partagée et conserver deux contrôleurs :
+  propriétaire mutable et administratrice lecture seule. Le contrôleur support
+  n'importe ni callback ni hook de mutation.
+- [ ] Faire naviguer le sélecteur de plans support exclusivement dans
+  `/admin/clients/[clientUid]/plans/[planId]` et vérifier côté serveur que
+  `owner_uid === clientUid` avant de construire le DTO.
+- [ ] Masquer `Échanger` et rendre Opportunités et Solutions non mutables dans
+  le contexte support. Ne jamais utiliser l'UID administrateur comme UID du
+  client et ne jamais modifier le cookie pour impersonner le client.
+- [ ] Conserver sans changement les vérifications `owner_uid` des routes
+  clientes ; une administratrice appelant directement un endpoint client pour
+  le plan observé doit rester refusée.
+
+**Audit, rétention et absence de mutation par GET**
+
+- [ ] Rendre `actor_uid` nullable pour un refus non authentifié, ajouter un
+  résultat explicite et limiter les métadonnées à une liste blanche sans e-mail,
+  cookie, secret, jeton ni contenu client.
+- [ ] Journaliser les mutations métier dans leur transaction. Pour l'ouverture
+  réussie d'un contexte support, utiliser un `POST` authentifié et idempotent ;
+  ne pas écrire dans Firestore pendant le rendu GET d'une page.
+- [ ] Utiliser les logs opérationnels nettoyés pour les refus de lecture et
+  réserver les événements Firestore aux événements auditables sans créer une
+  possibilité de remplissage illimité.
+- [ ] Définir une durée de conservation et une tâche de nettoyage pour les
+  invitations expirées et les événements d'audit contenant des identifiants.
+
+**Ordre de livraison après Gate 0**
+
+1. Modèles, validateurs, réservations uniques, DAL, DTO, indexes et tests
+   Firestore Emulator.
+2. Administration Clients, profils, accompagnements, annuaire minimal,
+   assignation, désassignation, réassignation et suspension.
+3. Invitation, vérification d'e-mail, reprise après connexion et activation
+   atomique.
+4. `Mes accompagnements`, fiche mission, deep links et révocation immédiate.
+5. Refactor séparé du contexte dirigeant support en lecture seule.
+6. Remplacement du seul libellé public `Services` par `Accompagnements`, sans
+   renommer les routes, clés et collections techniques.
+7. Recette sécurité, accessibilité, responsive, Preview et smoke test Firebase
+   réel avant toute proposition de merge.
+
+**Recette minimale supplémentaire**
+
+- [ ] Tester les transactions concurrentes avec Firestore Emulator : double
+  création du même e-mail, double acceptation, réassignations concurrentes et
+  audit atomique.
+- [ ] Tester qu'aucun `PATCH`, `DELETE`, génération, autosave ou requête
+  `pagehide` n'est émis par le contexte support.
+- [ ] Tester la navigation après expiration de session, le `returnTo` interne,
+  la conservation sûre du fragment d'invitation et l'absence du jeton dans les
+  URL, logs, analytics et réponses d'erreur.
+- [ ] Tester par inspection des DTO qu'un intervenant A ne reçoit aucune donnée
+  de l'intervenant B ni aucune donnée client hors mission.
+- [ ] Effectuer un E2E Preview e-mail/mot de passe avec adresse vérifiée,
+  invitation valide, expiration, révocation, suspension, réassignation et accès
+  direct à une ancienne URL.
+- [ ] Ne pas considérer les checks d'une PR verte comme preuve pour des fichiers
+  encore non commités ou non déployés dans cette Preview.
+
+#### Optimisation Académie — cache client et préchargement non bloquant
+
+Priorité : P0. Ce lot améliore uniquement le temps d'ouverture et de retour
+dans Académie. Il ne modifie ni l'API, ni le catalogue, ni le lecteur, ni les
+règles éditoriales.
+
+**Cache client dédié**
+
+- [ ] Créer `src/lib/action-plan-academy-payload.client.ts`, sur le principe du
+  cache Système existant, avec une seule valeur mémorisée et une seule Promise
+  mémorisée pendant le chargement.
+- [ ] Exposer exactement `loadActionPlanAcademyPayload()`,
+  `readCachedActionPlanAcademyPayload()` et
+  `invalidateActionPlanAcademyPayload()`.
+- [ ] Faire retourner directement la Promise mémorisée par le loader afin que
+  deux appels simultanés partagent strictement la même Promise et la même
+  requête. Mettre le payload en cache uniquement après une réponse valide et
+  retirer la Promise en attente dans un `finally`.
+- [ ] Ne pas attacher d'`AbortController` à la requête partagée : le démontage
+  d'un panneau ne doit pas annuler le chargement utilisé par un préchargement
+  ou un autre panneau. La protection contre une mise à jour après démontage
+  reste locale au composant.
+
+**Intégration dans l'expérience**
+
+- [ ] Dans `ActionPlanAcademyPanel`, initialiser l'état depuis
+  `readCachedActionPlanAcademyPayload()`, remplacer le `fetch` direct par le
+  loader partagé et retirer `cache: "no-store"`.
+- [ ] Réutiliser immédiatement le payload lors du remontage. Le bouton
+  `Réessayer` est la seule action qui invalide le cache ; il efface l'erreur et
+  l'état local avant de relancer un chargement propre.
+- [ ] Précharger en arrière-plan après le premier rendu de
+  `ActionPlanExperience` et `SavedActionPlanDetail`, avec
+  `requestIdleCallback` et annulation correspondante lorsque disponible, puis
+  un fallback `setTimeout` / `clearTimeout`. Une erreur de préchargement reste
+  silencieuse et une ouverture ultérieure doit pouvoir retenter la requête.
+- [ ] Importer `AcademyIndexClient` directement dans le panneau. Conserver
+  seulement `AcademyCoursePlayer` en import dynamique, car il n'est utile qu'à
+  l'ouverture d'un cours.
+- [ ] Mesurer le bundle avant/après l'import direct afin de confirmer que le
+  gain d'ouverture ne dégrade pas de manière disproportionnée le chargement du
+  plan. Le cache de données reste le mécanisme principal qui supprime le loader
+  au retour dans Académie.
+- [ ] Conserver le payload actuel d'environ 94 Ko, chargé une seule fois en
+  arrière-plan puis gardé en mémoire. Ne pas modifier `/api/action-plan/academy`
+  et ne pas découper les cours dans ce lot.
+- [ ] Ne modifier ni `action-plan-system-payload.client.ts`, ni son API, ni son
+  comportement de cache.
+
+**Tests et recette**
+
+- [ ] Prouver que deux ouvertures successives d'Académie effectuent un seul
+  `fetch`.
+- [ ] Prouver que deux chargements simultanés reçoivent la même Promise et ne
+  déclenchent qu'une requête.
+- [ ] Prouver que le cache hydrate immédiatement un panneau remonté, sans
+  loader intermédiaire.
+- [ ] Prouver que `Réessayer` invalide le cache, puis recharge un payload neuf.
+- [ ] Prouver qu'un échec du préchargement ne crée pas d'erreur visible et
+  qu'une ouverture manuelle retente le chargement.
+- [ ] Conserver un test de non-régression explicite du cache Système métier.
+- [ ] En E2E desktop et mobile, intercepter
+  `/api/action-plan/academy`, ouvrir Académie, revenir au plan puis rouvrir
+  Académie : aucun loader ne réapparaît et une seule requête est observée.
+
+#### MVP Réseau Partenaire — double sens, sans portail complet
+
+Priorité : P1, après fermeture du lot applicatif courant. L'objectif est de
+livrer le résultat commercial minimal : Demaa peut orienter une demande vers
+un partenaire pertinent et un partenaire peut orienter son client vers Demaa.
+Il ne s'agit pas encore de construire l'espace partenaire complet des mockups.
+
+**Règles commerciales figées avant développement**
+
+- [ ] Référencer en interne trois rôles : `coach`, `expert_accountant` et
+  `administrative_assistant`. Un expert-comptable présenté au client doit être
+  inscrit à l'Ordre.
+- [ ] Accorder 12 % au client uniquement sur une prestation éligible,
+  directement facturée par Demaa. Accorder 8 % à l'apporteur seulement après
+  encaissement réel par Demaa.
+- [ ] Calculer la commission sur le montant HT réellement encaissé après la
+  réduction client, hors TVA, remboursement, budget média, logiciel, frais de
+  tiers et débours.
+- [ ] Exclure explicitement les honoraires et prestations facturés directement
+  par un expert-comptable ou un autre partenaire, ainsi que Coach business,
+  Assistance administrative et les recommandations externes tant que ces
+  prestations ne sont pas facturées par Demaa.
+- [ ] Ne jamais cumuler l'avantage partenaire avec l'avantage d'un abonnement
+  mensuel. Un résolveur serveur choisit l'avantage applicable et conserve sa
+  source, au lieu d'empiler plusieurs réductions.
+- [ ] Prévoir l'annulation ou la reprise proportionnelle d'une commission en
+  cas de remboursement total ou partiel.
+
+**Données et attribution fonctionnelle**
+
+- [ ] Créer une fiche partenaire interne avec identifiant stable, rôle,
+  expertise, nom public, statut `active | suspended`, code d'apporteur opaque,
+  dates et audit. Aucun annuaire public n'est créé.
+- [ ] Utiliser une URL permanente opaque, par exemple `/p/p_7K4P9M`, et non un
+  slug contenant le nom ou l'e-mail. Le nom affiché est résolu côté serveur.
+- [ ] Séparer cette attribution contractuelle de `lead-attribution`, des UTM et
+  du consentement analytics. Le lien partenaire est une donnée fonctionnelle
+  de premier niveau, validée et signée côté serveur, puis documentée dans la
+  politique cookies/confidentialité.
+- [ ] Figer la règle d'attribution : le premier partenaire valide avant la
+  création du compte ou de la demande est conservé ; il n'est pas écrasé par
+  un autre lien. Toute correction administrative est explicite et auditée.
+- [ ] Rendre le code révocable et rotatif. Refuser un code inconnu, suspendu ou
+  expiré, sans révéler l'existence d'un partenaire privé.
+- [ ] Enregistrer côté serveur au minimum `partner_id`, `partner_role`,
+  `referral_code_id`, `referred_customer_uid`, `lead_id`, `service_slug`,
+  `attributed_at`, `conversion_status`, les montants en centimes HT,
+  `paid_at`, `refunded_at` et les champs d'audit.
+- [ ] Ne jamais accepter du navigateur un rôle, un montant éligible, une
+  réduction, une commission ou un identifiant partenaire comme preuve.
+
+**Parcours client et catalogue**
+
+- [ ] Afficher une page Demaa légère et contextualisée : nom du partenaire,
+  `Clarifier ma situation`, `Créer mon plan d'action` et
+  `Voir les accompagnements`, avec la mention discrète `Partenaire × Demaa`.
+- [ ] Réutiliser les parcours Demaa existants et conserver l'attribution lors
+  de la création du compte, de la clarification ou de la demande de rappel.
+- [ ] Masquer dans le catalogue contextualisé l'expertise principale du
+  partenaire afin qu'il ne recommande pas un concurrent direct.
+- [ ] Distinguer clairement les prestations Demaa éligibles à 12 % des mises en
+  relation gratuites vers un tiers. Assistance administrative peut être
+  recommandée contextuellement, mais ne doit pas être présentée comme une
+  prestation Demaa éligible tant que le tiers facture directement.
+- [ ] Ne transmettre aucune coordonnée ou information client au partenaire sans
+  consentement explicite, contextualisé et journalisé.
+
+**Administration minimale et sens Demaa vers partenaire**
+
+- [ ] Dans l'administration, afficher le partenaire apporteur, la demande, la
+  prestation, son éligibilité, les 12 % client, les 8 % potentiels et le montant
+  réellement encaissé servant de base.
+- [ ] Faire valider manuellement la commission par la Team après encaissement ;
+  aucun paiement automatique de commission dans le MVP.
+- [ ] Séparer les états de conversion
+  `visited | lead_submitted | qualified | quote_sent | accepted | active |
+  cancelled` des états de commission
+  `not_eligible | pending_payment | pending_validation | validated | cancelled |
+  clawback`.
+- [ ] Dans l'autre sens, permettre à la Team de proposer manuellement une
+  mise en relation avec un partenaire depuis les outils de clarification et de
+  recommandation existants. Le partenaire ne reçoit que la demande consentie,
+  jamais l'accès aux conversations ou au catalogue interne complet.
+
+**Tests d'acceptation**
+
+- [ ] Refuser les codes invalides, expirés, révoqués ou suspendus et empêcher
+  l'écrasement d'une attribution existante.
+- [ ] Empêcher l'attribution rétroactive silencieuse d'un compte ou d'une
+  demande existante.
+- [ ] Vérifier le masquage de l'expertise du partenaire et l'absence d'accès au
+  catalogue privé.
+- [ ] Vérifier 12 % uniquement sur les prestations Demaa éligibles, sans cumul,
+  et 8 % sur le HT réellement encaissé après réduction.
+- [ ] Vérifier remboursement, annulation et reprise de commission.
+- [ ] Vérifier que le navigateur ne peut forger ni montant, ni rôle, ni
+  partenaire et qu'un partenaire ne voit aucune donnée d'un autre partenaire.
+- [ ] Vérifier le consentement avant tout partage de données client.
+
+**Hors MVP**
+
+- [ ] Différer le tableau de bord partenaire, les liens par client, le paiement
+  automatique des commissions, la synchronisation comptable, le CRM complet,
+  le catalogue personnalisable, la messagerie partenaire-client et le portail
+  d'un spécialiste externe. Les trois mockups restent la référence de phase 2,
+  pas le périmètre de ce premier lot.
+
+#### D-082 — Lecteur Académie stable et adapté au viewport
+
+Priorité : P0. Ordre obligatoire : après l'audit des cours existants et avant
+la production des nouveaux cours.
+
+Objectif : faire tenir chaque étape d'un cours Académie dans le viewport sur les
+écrans courants, sans obliger l'utilisateur à faire défiler le document pour
+retrouver le bouton de navigation.
+
+Expérience attendue :
+
+- conserver un en-tête stable avec retour, titre, étape et progression ;
+- garder l'action principale toujours visible en bas et utiliser autant que
+  possible le libellé `Continuer` ;
+- ne remplacer que la zone centrale lors du changement d'étape, sans remontée
+  de page ni mouvement important ;
+- autoriser, uniquement en secours sur les très petits écrans ou avec le zoom
+  d'accessibilité, le défilement de la zone centrale ;
+- ne tronquer ni rendre inaccessible aucun contenu.
+
+Contrat de conception :
+
+1. Construire le lecteur en trois zones : en-tête fixe, contenu adaptatif et
+   navigation fixe.
+2. Empêcher le défilement du document pendant la lecture d'un cours.
+3. Retirer le défilement animé déclenché entre les écrans et replacer
+   instantanément la zone de contenu en haut à chaque changement d'étape.
+4. Utiliser une hauteur stable tenant compte du lecteur autonome, du lecteur
+   intégré à l'application, des barres de navigation et du navigateur mobile.
+5. Limiter les animations à un fondu discret et respecter
+   `prefers-reduced-motion`.
+6. Réserver l'espace des réponses et explications de quiz afin d'éviter les
+   sauts de mise en page.
+
+Responsive :
+
+- sur desktop, utiliser davantage la largeur, proposer deux colonnes lorsque
+  pertinent — texte à gauche, visuel ou méthode à droite —, conserver
+  `À retenir` sous l'ensemble et réduire les grandes marges verticales sur les
+  écrans peu hauts ;
+- sur mobile, utiliser une colonne compacte, conserver une typographie lisible
+  et des boutons d'au moins 44 px, réduire les espacements avant la taille du
+  texte, permettre une icône pour `Précédent` et garder `Continuer` toujours
+  visible.
+
+Budget éditorial par écran : une seule idée, un titre court, un paragraphe
+principal concis, quatre éléments maximum dans un visuel, un enseignement à
+retenir en une ou deux lignes, ainsi que des réponses et explications de quiz
+concises. Une leçon trop longue doit être raccourcie ou divisée en deux étapes,
+jamais coupée automatiquement.
+
+Cas particuliers et navigation :
+
+- réduire la hauteur de l'introduction, n'afficher que les titres du programme
+  sans toutes les descriptions longues et garder visibles durée, quiz et bouton
+  `Commencer` ;
+- utiliser `Commencer` pour l'introduction, `Continuer` pour une leçon, un
+  récapitulatif et un quiz répondu, puis l'action du cours ou
+  `Retour à l'Académie` à la fin ;
+- déterminer explicitement, dans le plan préalable, le comportement du quiz
+  avant qu'une réponse soit sélectionnée.
+
+Recette minimale : 1440 × 900, 1366 × 768, 390 × 844, 375 × 667, 360 × 640,
+320 × 568 et zoom navigateur à 200 %.
+
+Critères d'acceptation :
+
+- aucun défilement de page sur les viewports courants ;
+- navigation toujours visible et en-tête/pied du lecteur stables ;
+- aucun texte tronqué ni saut brutal après une réponse au quiz ;
+- défilement interne accessible sur les écrans exceptionnellement petits ;
+- comportement identique dans l'Académie autonome et intégrée ;
+- navigation clavier et lecteurs d'écran préservés.
+
+Gate avant implémentation : relire `AcademyCoursePlayer` et ses conteneurs,
+identifier précisément la hauteur occupée par chaque navigation, présenter le
+plan d'implémentation et les compromis responsive, puis attendre sa validation.
+La présente inscription au backlog n'autorise aucune modification du code.
 
 ### Internationalisation — lot différé, à ouvrir avant le deuxième pays
 
@@ -1590,31 +2133,7 @@ ne sont pas confirmés, D-071 reste documenté sans effet sur le produit.
 
 ## Prochaine action
 
-D-009 est terminé. La prochaine séquence produit est D-024 puis D-022 :
-clarifier la promesse des supports, décider du commit, du push et de la Preview ;
-le déploiement de production reste une décision séparée. La recette réelle a
-confirmé la réponse `{"ok":true}` sans lien, un seul lead Firestore et un seul
-envoi malgré la répétition, la livraison Resend, le lien `/copy` uniquement dans
-l'e-mail, la création d'une copie Google Sheets personnelle et le
-déclenchement analytics uniquement lorsque la mesure d'audience est acceptée.
-Le serveur local doit être lancé avec Webpack pour cette recette : le mode
-Turbopack a retourné à tort des 404 sur les routes API dans cet environnement.
-En parallèle, D-023 a produit deux masters et attend leur validation humaine,
-puis leur upload YouTube. D-029 doit préserver ces masters tout en libérant
-l'espace disque après validation, et D-030 doit rendre la maquette Académie
-canonique partageable. D-016 et D-019 peuvent figer dès maintenant le contrat
-éditorial et les intentions de recherche ; D-017 implémentera ensuite les
-routes, D-031 leur contrat SEO, puis D-018 et D-028 le sitemap et le maillage.
-D-025 attend la sélection de la variante créative canonique. Ne produire les
-13 illustrations restantes qu'après validation explicite de la direction
-graphique. L'Écosystème reste un lot séparé. D-026 doit clarifier la cible du
-système `Création de contenu`, puis D-027 pourra lancer l'audit transversal des
-115 métiers.
-
-Le chantier D-049 à D-060 est désormais réservé dans la file, mais il ne devient
-pas automatiquement la prochaine action produit. Il commence uniquement après
-un GO de cadrage séparé, sur une base Git propre dérivée du candidat canonique.
-L'ordre interne obligatoire est : contrat D-049, mesure et consentement
-D-050 à D-053, vérité annuaire et pilote D-054 à D-056, SEO D-057/D-058, puis
-reporting et recette D-059/D-060. Aucun email, retargeting ou déploiement ne
-peut être lancé par la seule présence de ces entrées dans le backlog.
+Suivre exclusivement la `Séquence d'exécution active — 15 août 2026` placée en
+haut de ce document. La prochaine modification produit est l'optimisation du
+chargement Académie. Le MVP Réseau Partenaire reste un cadrage, et tous les lots
+historiques exigent un nouveau GO explicite avant de redevenir exécutables.

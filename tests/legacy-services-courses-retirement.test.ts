@@ -25,7 +25,7 @@ describe("legacy Services and Courses retirement", () => {
     for (const path of retiredPaths) expect(existsSync(path), path).toBe(false);
   });
 
-  it("keeps permanent redirects for historical public URLs", () => {
+  it("keeps public successors while refusing redirects to private recommendations", () => {
     const redirects = source("next.config.ts");
     for (const route of [
       "/cours",
@@ -34,11 +34,12 @@ describe("legacy Services and Courses retirement", () => {
       "/annuaire-services/expert-comptable",
       "/annuaire-services/marketing-vente",
       "/annuaire-services/marketing-externalise",
-      "/annuaire-services/assistante-facturation",
-      "/annuaire-services/assistance-facturation",
     ]) {
       expect(redirects).toContain(route);
     }
+    expect(redirects).not.toContain("/annuaire-services/assistante-facturation");
+    expect(redirects).not.toContain("/annuaire-services/assistance-facturation");
+    expect(redirects).not.toContain("/services/assistance-administrative");
   });
 
   it("does not expose redirected Courses entries in the sitemap", () => {
@@ -56,10 +57,11 @@ describe("legacy Services and Courses retirement", () => {
       source("src/app/services/page.tsx"),
     ].join("\n");
 
-    expect(publicMarketing).not.toMatch(/750\s*€/);
     expect(publicMarketing).not.toMatch(/2\s*000\s*€/);
     expect(publicMarketing).not.toMatch(/service-catalog-v2|services-page-catalog/);
     expect(publicMarketing).toContain("550 € HT");
+    expect(publicMarketing).toContain("750 € HT / mois");
     expect(publicMarketing).not.toContain("950 € HT / mois");
+    expect(publicMarketing).not.toContain('slug: "marketing-vente"');
   });
 });

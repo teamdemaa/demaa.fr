@@ -4,10 +4,21 @@ vi.mock("server-only", () => ({}));
 
 const mocks = vi.hoisted(() => ({
   enforceRateLimit: vi.fn(),
+  getCurrentCustomerIdentityFromSession: vi.fn(),
   logOperationalError: vi.fn(),
+  resolveMonthlyAccompanimentDiscount: vi.fn(),
   resolveLeadAttribution: vi.fn(),
   resolveLeadContext: vi.fn(),
   submitLeadRequest: vi.fn(),
+}));
+
+vi.mock("@/lib/monthly-accompaniment-benefit.server", () => ({
+  isMonthlyAccompanimentDiscountEligible: (service: { monthlyAccompanimentDiscountEligible: boolean; delivery: string; slug: string }) =>
+    service.monthlyAccompanimentDiscountEligible && service.delivery === "demaa" && service.slug !== "coach-business",
+  resolveMonthlyAccompanimentDiscount: mocks.resolveMonthlyAccompanimentDiscount,
+}));
+vi.mock("@/lib/customer-space-session.server", () => ({
+  getCurrentCustomerIdentityFromSession: mocks.getCurrentCustomerIdentityFromSession,
 }));
 
 vi.mock("@/lib/lead-attribution-server", () => ({
@@ -60,6 +71,14 @@ describe("service callback request route", () => {
     vi.clearAllMocks();
     process.env.SITE_URL = "https://demaa.co";
     mocks.enforceRateLimit.mockResolvedValue(null);
+    mocks.getCurrentCustomerIdentityFromSession.mockResolvedValue(null);
+    mocks.resolveMonthlyAccompanimentDiscount.mockResolvedValue({
+      apply: false,
+      eligible: false,
+      percent: 0,
+      source: null,
+      validUntil: null,
+    });
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
     mocks.resolveLeadContext.mockResolvedValue({
       sectorLabel: null,
@@ -94,6 +113,7 @@ describe("service callback request route", () => {
   it("rejects browser-supplied fields outside the allowlist", async () => {
     const response = await POST(request(validBody({
       email: "private@example.test",
+      monthlyAccompanimentDiscount: 12,
       price: "1 €",
     })));
 
@@ -101,14 +121,14 @@ describe("service callback request route", () => {
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
-  it("accepts the same callback journey for marketing and prospecting", async () => {
-    const response = await POST(request(validBody({ serviceSlug: "marketing-vente" })));
+  it("accepts the same callback journey for targeted prospecting", async () => {
+    const response = await POST(request(validBody({ serviceSlug: "prospection-ciblee" })));
 
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: [
-        { label: "Service", value: "Plan marketing et prospection" },
-        { label: "Slug du service", value: "marketing-vente" },
+        { label: "Service", value: "Prospection ciblée" },
+        { label: "Slug du service", value: "prospection-ciblee" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
       ],
       requestType: "service_callback_request",
@@ -116,6 +136,18 @@ describe("service callback request route", () => {
   });
 
   it("accepts the simple callback journey for process automation", async () => {
+    mocks.getCurrentCustomerIdentityFromSession.mockResolvedValue({
+      email: "owner@example.com",
+      provider: "password",
+      uid: "owner-uid",
+    });
+    mocks.resolveMonthlyAccompanimentDiscount.mockResolvedValue({
+      apply: true,
+      eligible: true,
+      percent: 12,
+      source: "coach_business",
+      validUntil: "2027-08-14T00:00:00.000Z",
+    });
     const response = await POST(request(validBody({
       serviceSlug: "automatisation-processus",
     })));
@@ -126,9 +158,42 @@ describe("service callback request route", () => {
         { label: "Service", value: "Automatisation des processus" },
         { label: "Slug du service", value: "automatisation-processus" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
+        {
+          label: "Avantage accompagnement mensuel",
+          value: "−12 % confirmé côté serveur sur les honoraires Demaa",
+        },
       ],
       requestType: "service_callback_request",
     }));
+    expect(mocks.resolveMonthlyAccompanimentDiscount).toHaveBeenCalledWith(expect.objectContaining({
+      uid: "owner-uid",
+    }));
+  });
+
+  it("fails closed on the discount without losing the callback when entitlement storage is unavailable", async () => {
+    mocks.getCurrentCustomerIdentityFromSession.mockResolvedValue({
+      email: "owner@example.com",
+      provider: "password",
+      uid: "owner-uid",
+    });
+    mocks.resolveMonthlyAccompanimentDiscount.mockRejectedValue(new Error("firestore_unavailable"));
+
+    const response = await POST(request(validBody({
+      serviceSlug: "automatisation-processus",
+    })));
+
+    expect(response.status).toBe(202);
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      fields: expect.arrayContaining([{
+        label: "Avantage accompagnement mensuel",
+        value: "Prestation éligible, accompagnement mensuel actif non confirmé",
+      }]),
+    }));
+    expect(mocks.logOperationalError).toHaveBeenCalledWith(
+      "service_callback_request.monthly_discount_verification_failed",
+      expect.any(Error),
+      { serviceSlug: "automatisation-processus" },
+    );
   });
 
   it("stores company and phone in Firebase before delivering to Slack", async () => {
@@ -164,19 +229,14 @@ describe("service callback request route", () => {
   });
 
   it.each([
+    "assistance-administrative",
     "formalites-juridiques",
     "sous-traitance-formalites-juridiques",
-  ])("accepts the WhatsApp callback journey for %s", async (serviceSlug) => {
+  ])("rejects a direct public callback for private recommendation %s", async (serviceSlug) => {
     const response = await POST(request(validBody({ serviceSlug })));
 
-    expect(response.status).toBe(202);
-    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
-      fields: expect.arrayContaining([
-        { label: "Slug du service", value: serviceSlug },
-        { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
-      ]),
-      requestType: "service_callback_request",
-    }));
+    expect(response.status).toBe(404);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
   it("preserves the originating system context without exposing another field", async () => {

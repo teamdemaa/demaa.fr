@@ -1,11 +1,10 @@
 "use client";
 
-import { LoaderCircle, X } from "lucide-react";
+import { LoaderCircle, MessageCircle, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import CoachingPanel, {
   type SpecialistAccessIntent,
-  type SpecialistOffer,
 } from "@/components/CoachingPanel";
 import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
@@ -29,17 +28,18 @@ export default function ActionPlanCoachingControl({
   demoMode = false,
   existingPlanId,
   initialEmail = "",
+  isAuthenticated = Boolean(initialEmail),
 }: {
   accessPlan?: AccessPlan;
   demoMode?: boolean;
   existingPlanId?: string;
   initialEmail?: string;
+  isAuthenticated?: boolean;
 }) {
   const [target, setTarget] = useState<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
   const [accessOpen, setAccessOpen] = useState(false);
   const [accessIntent, setAccessIntent] = useState<SpecialistAccessIntent>({ tab: "messages" });
-  const [accessPlanId, setAccessPlanId] = useState(existingPlanId || "");
   const [accessPreparing, setAccessPreparing] = useState(false);
   const [accessError, setAccessError] = useState<string | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -51,7 +51,6 @@ export default function ActionPlanCoachingControl({
     if (url.searchParams.get("intent") !== "coaching") return;
 
     url.searchParams.delete("intent");
-    url.searchParams.delete("offer");
     url.searchParams.delete("tab");
     window.history.replaceState(
       window.history.state,
@@ -65,78 +64,58 @@ export default function ActionPlanCoachingControl({
   });
 
   const prepareAccess = useCallback(async (intent: SpecialistAccessIntent) => {
-    if (initialEmail) return;
+    if (isAuthenticated) return;
     setAccessIntent(intent);
     setAccessError(null);
 
-    if (existingPlanId) {
-      setAccessPlanId(existingPlanId);
-      setAccessOpen(true);
-      return;
-    }
+    setAccessOpen(true);
+  }, [isAuthenticated]);
 
-    if (demoMode) {
-      setAccessOpen(true);
-      return;
-    }
-
-    if (!accessPlan) {
-      setAccessOpen(true);
-      return;
-    }
-    if (accessPreparing) return;
+  const handleAuthenticated = useCallback(async () => {
     setAccessPreparing(true);
-
+    setAccessError(null);
     try {
-      const response = await fetch("/api/action-plans", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          plan: accessPlan.plan,
-          sourceText: accessPlan.sourceText,
-          workspaceState: accessPlan.workspace,
-          generation: toPersistedAiGenerationMetadata(
-            accessPlan.generation ?? null,
-          ),
-        }),
-      });
-      const body = (await response.json().catch(() => null)) as
-        | {
-            actionPlan?: { id?: string };
-            actionPlanId?: string;
-            error?: string;
-            status?: "pending_claim" | "saved";
-          }
-        | null;
-      const actionPlanId =
-        body?.status === "saved" ? body.actionPlan?.id : body?.actionPlanId;
+      const params = new URLSearchParams({ intent: "coaching", tab: accessIntent.tab });
+      if (accessIntent.draftToken) params.set("draftToken", accessIntent.draftToken);
 
-      if (!response.ok || !actionPlanId) {
-        throw new Error(body?.error || "Impossible de préparer l’accès au spécialiste.");
+      let planId = existingPlanId || "";
+      if (!planId && accessPlan && !demoMode) {
+        const response = await fetch("/api/action-plans", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            plan: accessPlan.plan,
+            sourceText: accessPlan.sourceText,
+            workspaceState: accessPlan.workspace,
+            generation: toPersistedAiGenerationMetadata(accessPlan.generation ?? null),
+          }),
+        });
+        const body = await response.json().catch(() => null) as {
+          actionPlan?: { id?: string };
+          error?: string;
+          status?: string;
+        } | null;
+        planId = body?.actionPlan?.id || "";
+        if (!response.ok || body?.status !== "saved" || !planId) {
+          throw new Error(body?.error || "Impossible de sauvegarder le plan.");
+        }
       }
 
-      if (body?.status === "saved") {
-        const params = new URLSearchParams({ intent: "coaching", tab: intent.tab });
-        if (intent.offer) params.set("offer", intent.offer);
-        if (intent.draftToken) params.set("draftToken", intent.draftToken);
-        window.location.assign(
-          `/plans/${encodeURIComponent(actionPlanId)}?${params.toString()}`,
-        );
-        return;
-      }
-
-      setAccessPlanId(actionPlanId);
-      setAccessOpen(true);
-    } catch (error) {
-      setAccessError(
-        error instanceof Error
-          ? error.message
-          : "Impossible de préparer l’accès au spécialiste.",
+      window.location.assign(
+        planId
+          ? `/plans/${encodeURIComponent(planId)}?${params.toString()}`
+          : `/?${params.toString()}`,
       );
+    } catch (error) {
+      const message = error instanceof Error
+        ? error.message
+        : "Impossible de préparer l’accès au spécialiste.";
+      setAccessError(message);
+      throw error;
     } finally {
       setAccessPreparing(false);
     }
-  }, [accessPlan, accessPreparing, demoMode, existingPlanId, initialEmail]);
+  }, [accessIntent, accessPlan, demoMode, existingPlanId]);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -146,31 +125,23 @@ export default function ActionPlanCoachingControl({
   }, []);
 
   useEffect(() => {
-    if (!initialEmail) return;
+    if (!isAuthenticated) return;
     const intent = new URLSearchParams(window.location.search).get("intent");
     if (intent !== "coaching") return;
     const search = new URLSearchParams(window.location.search);
-    const requestedTab = search.get("tab") === "formules" ? "formules" : "messages";
-    const requestedOffer = search.get("offer");
     const rawDraftToken = search.get("draftToken");
     const requestedDraftToken = isCoachingMessageDraftToken(rawDraftToken)
       ? rawDraftToken
       : undefined;
-    const validOffer: SpecialistOffer | undefined = requestedOffer === "echanges"
-      || requestedOffer === "pilotage_1"
-      || requestedOffer === "pilotage_2"
-      ? requestedOffer
-      : undefined;
     const timeout = window.setTimeout(() => {
       setAccessIntent({
-        draftToken: requestedTab === "messages" ? requestedDraftToken : undefined,
-        offer: validOffer,
-        tab: requestedTab,
+        draftToken: requestedDraftToken,
+        tab: "messages",
       });
       setOpen(true);
     }, 0);
     return () => window.clearTimeout(timeout);
-  }, [initialEmail]);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (!open) return;
@@ -197,10 +168,11 @@ export default function ActionPlanCoachingControl({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="inline-flex min-h-10 items-center px-1 text-xs font-medium text-dema-forest transition hover:text-brand-blue focus-visible:outline-none focus-visible:underline sm:min-h-11 sm:text-sm"
-          aria-label="Échanger avec un spécialiste"
-          title="Échanger avec un spécialiste"
+          className="inline-flex min-h-10 items-center gap-2 rounded-full bg-dema-forest px-4 text-xs font-medium text-white shadow-[0_6px_18px_rgba(39,91,67,0.18)] transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:min-h-11 sm:px-5 sm:text-sm"
+          aria-label="Échanger avec l’équipe Demaa"
+          title="Échanger avec l’équipe Demaa"
         >
+          <MessageCircle className="h-4 w-4" aria-hidden="true" />
           <span>Échanger</span>
         </button>,
         target,
@@ -212,7 +184,7 @@ export default function ActionPlanCoachingControl({
               className="fixed inset-0 z-[130] overflow-y-auto bg-dema-cream/98 px-4 pb-24 pt-4 backdrop-blur-md sm:px-6 lg:px-8"
               role="dialog"
               aria-modal="true"
-              aria-label="Échanger avec un spécialiste"
+              aria-label="Échanger avec l’équipe Demaa"
             >
               <div className="mx-auto flex max-w-[68rem] justify-end">
                 <button
@@ -226,10 +198,8 @@ export default function ActionPlanCoachingControl({
                 </button>
               </div>
               <CoachingPanel
-                initialDraftToken={initialEmail ? accessIntent.draftToken : undefined}
-                initialOffer={initialEmail ? accessIntent.offer : undefined}
-                initialTab={accessIntent.tab}
-                onRequireAccess={initialEmail ? undefined : (intent) => void prepareAccess(intent)}
+                initialDraftToken={isAuthenticated ? accessIntent.draftToken : undefined}
+                onRequireAccess={isAuthenticated ? undefined : (intent) => void prepareAccess(intent)}
               />
               {accessPreparing ? (
                 <div className="fixed inset-x-0 bottom-8 z-[135] mx-auto flex w-fit items-center gap-2 rounded-full bg-dema-paper px-4 py-2 text-sm text-dema-forest shadow-lg" role="status">
@@ -273,24 +243,12 @@ export default function ActionPlanCoachingControl({
                   <X className="h-4 w-4" aria-hidden="true" />
                 </button>
                 <h2 id="specialist-access-title" className="pr-12 text-2xl font-medium tracking-[-0.03em] text-brand-blue">
-                  {accessIntent.draftToken ? "Connectez-vous pour envoyer" : "Écrire à un spécialiste"}
+                  {accessIntent.draftToken ? "Connectez-vous pour envoyer" : "Écrire à l’équipe Demaa"}
                 </h2>
-                {accessIntent.draftToken ? (
-                  <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-                    Connectez-vous pour envoyer votre message et retrouver la réponse. Votre brouillon est conservé.
-                  </p>
-                ) : null}
-                <div className="mt-6">
+                <div className="mt-4">
                   <CustomerSpaceAccessForm
-                    actionPlanClaim={accessPlanId ? { actionPlanId: accessPlanId } : null}
-                    returnTo={(() => {
-                      const params = new URLSearchParams({ intent: "coaching", tab: accessIntent.tab });
-                      if (accessIntent.offer) params.set("offer", accessIntent.offer);
-                      if (accessIntent.draftToken) params.set("draftToken", accessIntent.draftToken);
-                      return accessPlanId
-                        ? `/plans/${encodeURIComponent(accessPlanId)}?${params.toString()}`
-                        : `/?${params.toString()}`;
-                    })()}
+                    onAuthenticated={handleAuthenticated}
+                    returnTo="/"
                     compact
                     simple
                   />

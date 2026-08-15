@@ -138,6 +138,7 @@ export default function OpportunityAdminClient({
           {expertises.map((entry) => <option key={entry.expertiseId} value={entry.expertiseId}>{entry.label}</option>)}
         </select>
         <input aria-label="Catégorie affichée" name="category" required defaultValue={editingOpportunity?.category ?? ""} placeholder="Catégorie affichée" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
+        <input aria-label="Domaine affiché" name="domainLabel" defaultValue={editingOpportunity?.domainLabel ?? ""} placeholder="Domaine ou spécialité (facultatif)" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
         <select aria-label="Modalité" name="workMode" defaultValue={editingOpportunity?.workMode ?? ""} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 text-sm outline-none focus:border-dema-forest">
           <option value="">Modalité (facultatif)</option>
           {OPPORTUNITY_WORK_MODES.map((mode) => (

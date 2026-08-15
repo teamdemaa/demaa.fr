@@ -19,7 +19,7 @@ export function buildServicesIndexJsonLd() {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Services",
+        name: "Accompagnement",
         item: `${origin}/services`,
       },
     ],
@@ -31,12 +31,10 @@ export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
   const pageUrl = `${origin}/services/${serviceEntry.slug}`;
   const pricing = serviceEntry.pricing;
   const isDirectDemaaOffer = serviceEntry.delivery === "demaa";
-  const unitText = pricing.mode === "fixed-daily"
+  const unitText = pricing.label.includes("/ jour")
     ? "DAY"
-    : pricing.mode === "fixed-monthly-hours"
-    ? "MONTH"
-    : null;
-  const directOffer = isDirectDemaaOffer && "amountMinor" in pricing
+    : pricing.label.includes("/ mois") ? "MONTH" : null;
+  const directOffer = isDirectDemaaOffer && typeof pricing.amountMinor === "number"
     ? {
         "@type": "Offer",
         description: pricing.note,
@@ -88,7 +86,7 @@ export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
         {
           "@type": "ListItem",
           position: 2,
-          name: "Services",
+          name: "Accompagnement",
           item: `${origin}/services`,
         },
         {

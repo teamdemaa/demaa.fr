@@ -9,7 +9,7 @@ const mocks = vi.hoisted(() => ({
   logOperationalError: vi.fn(),
   resolveLeadAttribution: vi.fn(),
   resolveLeadContext: vi.fn(),
-  requireCurrentCustomerEmail: vi.fn(),
+  requireCurrentCustomerIdentity: vi.fn(),
   submitLeadRequest: vi.fn(),
 }));
 
@@ -34,7 +34,7 @@ vi.mock("@/lib/api-security", () => ({
   }),
 }));
 vi.mock("@/lib/customer-space-session.server", () => ({
-  requireCurrentCustomerEmail: mocks.requireCurrentCustomerEmail,
+  requireCurrentCustomerIdentity: mocks.requireCurrentCustomerIdentity,
 }));
 vi.mock("@/lib/lead-attribution-server", () => ({
   resolveLeadAttribution: mocks.resolveLeadAttribution,
@@ -84,8 +84,8 @@ describe("Structure problem submission route", () => {
     mocks.enforceSameOrigin.mockReturnValue(null);
     mocks.enforceRateLimit.mockResolvedValue(null);
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
-    mocks.requireCurrentCustomerEmail.mockResolvedValue({
-      email: "owner@example.com",
+    mocks.requireCurrentCustomerIdentity.mockResolvedValue({
+      identity: { email: "owner@example.com", provider: "password", uid: "owner-uid" },
       response: null,
     });
     mocks.resolveLeadContext.mockResolvedValue({
@@ -139,8 +139,8 @@ describe("Structure problem submission route", () => {
   });
 
   it("requires an authenticated session and ignores a body email", async () => {
-    mocks.requireCurrentCustomerEmail.mockResolvedValueOnce({
-      email: null,
+    mocks.requireCurrentCustomerIdentity.mockResolvedValueOnce({
+      identity: null,
       response: Response.json({ error: "authentication_required" }, { status: 401 }),
     });
     expect((await POST(request({ email: "spoofed@example.net" }))).status).toBe(401);

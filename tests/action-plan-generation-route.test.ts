@@ -6,7 +6,7 @@ const mocks = vi.hoisted(() => ({
   enforceRateLimit: vi.fn(),
   generateActionPlanWithMetadata: vi.fn(),
   getAiUsageSubjectHash: vi.fn(),
-  getCurrentCustomerEmailFromSession: vi.fn(),
+  getCurrentCustomerIdentityFromSession: vi.fn(),
   logOperationalError: vi.fn(),
   recordAiUsage: vi.fn(),
 }));
@@ -23,8 +23,8 @@ vi.mock("@/lib/ai-usage-ledger.server", () => ({
   recordAiUsage: mocks.recordAiUsage,
 }));
 vi.mock("@/lib/customer-space-session.server", () => ({
-  getCurrentCustomerEmailFromSession:
-    mocks.getCurrentCustomerEmailFromSession,
+  getCurrentCustomerIdentityFromSession:
+    mocks.getCurrentCustomerIdentityFromSession,
 }));
 vi.mock("@/lib/operational-log", () => ({
   logOperationalError: mocks.logOperationalError,
@@ -58,7 +58,7 @@ describe("action plan generation route", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.enforceRateLimit.mockResolvedValue(null);
-    mocks.getCurrentCustomerEmailFromSession.mockResolvedValue(null);
+    mocks.getCurrentCustomerIdentityFromSession.mockResolvedValue(null);
     mocks.getAiUsageSubjectHash.mockReturnValue("subject-hash");
     mocks.recordAiUsage.mockResolvedValue(undefined);
     mocks.generateActionPlanWithMetadata.mockResolvedValue({
@@ -171,9 +171,11 @@ describe("action plan generation route", () => {
   });
 
   it("pseudonymizes a connected account instead of relying on its network", async () => {
-    mocks.getCurrentCustomerEmailFromSession.mockResolvedValue(
-      "dirigeant@example.com",
-    );
+    mocks.getCurrentCustomerIdentityFromSession.mockResolvedValue({
+      email: "dirigeant@example.com",
+      provider: "password",
+      uid: "owner-uid",
+    });
 
     const generatedRequest = request({
       situation:
@@ -184,7 +186,7 @@ describe("action plan generation route", () => {
     expect(response.status).toBe(200);
     expect(mocks.getAiUsageSubjectHash).toHaveBeenCalledWith(
       generatedRequest,
-      "dirigeant@example.com",
+      "owner-uid",
     );
   });
 
@@ -213,7 +215,7 @@ describe("action plan generation route", () => {
   });
 
   it("keeps generation successful when session identity cannot be read", async () => {
-    mocks.getCurrentCustomerEmailFromSession.mockRejectedValue(
+    mocks.getCurrentCustomerIdentityFromSession.mockRejectedValue(
       new Error("session unavailable"),
     );
 

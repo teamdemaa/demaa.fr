@@ -5,6 +5,11 @@ import {
   readJsonBody,
 } from "@/lib/api-security";
 import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
+import {
+  isMonthlyAccompanimentDiscountEligible,
+  resolveMonthlyAccompanimentDiscount,
+} from "@/lib/monthly-accompaniment-benefit.server";
+import { getCurrentCustomerIdentityFromSession } from "@/lib/customer-space-session.server";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
 import { submitLeadRequest } from "@/lib/lead-notifications";
@@ -100,6 +105,31 @@ export async function POST(request: Request) {
       );
     }
 
+    let monthlyBenefitDiscount: {
+      apply: boolean;
+      eligible: boolean;
+      percent: number;
+      source: "coach_business" | "expert_accountant" | null;
+      validUntil: string | null;
+    } = {
+      apply: false,
+      eligible: isMonthlyAccompanimentDiscountEligible(service),
+      percent: 0,
+      source: null,
+      validUntil: null,
+    };
+    try {
+      const customer = await getCurrentCustomerIdentityFromSession();
+      monthlyBenefitDiscount = await resolveMonthlyAccompanimentDiscount({
+        service,
+        uid: customer?.uid,
+      });
+    } catch (error) {
+      logOperationalError("service_callback_request.monthly_discount_verification_failed", error, {
+        serviceSlug: service.slug,
+      });
+    }
+
     const limitedByPhone = await enforceServiceRequestRateLimit(request, {
       identity: phone,
       limit: 4,
@@ -133,6 +163,14 @@ export async function POST(request: Request) {
         { label: "Service", value: service.name },
         { label: "Slug du service", value: service.slug },
         { label: "Numéro WhatsApp", value: phone },
+        ...(monthlyBenefitDiscount.eligible
+          ? [{
+              label: "Avantage accompagnement mensuel",
+              value: monthlyBenefitDiscount.apply
+                ? "−12 % confirmé côté serveur sur les honoraires Demaa"
+                : "Prestation éligible, accompagnement mensuel actif non confirmé",
+            }]
+          : []),
         ...(context.systemName
           ? [{ label: "Système métier", value: context.systemName }]
           : []),

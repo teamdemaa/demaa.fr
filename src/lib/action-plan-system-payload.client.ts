@@ -1,11 +1,13 @@
 "use client";
 
 import type { SystemeDetail } from "@/lib/systeme-catalog";
+import type { SystemResource } from "@/lib/system-resource-catalog";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { System } from "@/lib/types";
 
 export type ActionPlanSystemPayload = Readonly<{
   intro: string;
+  resources: readonly SystemResource[];
   solutionSections: readonly RenderableSolutionSectionDto[];
   system: System;
   systeme: SystemeDetail | null;

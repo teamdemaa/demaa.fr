@@ -44,9 +44,9 @@ describe("Demaa application navbar", () => {
     expect(homeSource).toContain('canonical: "/"');
     expect(homeSource).toContain("<ActionPlanExperience");
     expect(homeSource).toContain(
-      "<Navbar anonymousLanding isAuthenticated={Boolean(email)} minimal />",
+      "<Navbar anonymousLanding isAuthenticated={Boolean(identity)} minimal />",
     );
-    expect(homeSource).toContain("getEmailFromCustomerSessionToken(sessionToken)");
+    expect(homeSource).toContain("getIdentityFromCustomerSessionToken(sessionToken)");
     expect(systemsSource).toContain('canonical: "/systemes"');
     expect(nextConfigSource).not.toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/',/,
@@ -62,11 +62,13 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/app/plans/[id]/page.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(navbarSource).toContain('aria-label="Ouvrir l’application"');
+    expect(navbarSource).toContain('aria-label="Ouvrir le menu du compte"');
     expect(navbarSource).not.toContain('window.location.assign("/")');
     expect(navbarSource).not.toContain("openAuthenticatedAccount");
     expect(navbarSource).not.toContain("<span>Mon espace</span>");
     expect(navbarSource).toContain('href="/plans"');
+    expect(navbarSource).toContain('action="/api/customer-space/logout?returnTo=%2F"');
+    expect(navbarSource).toContain("Se déconnecter");
     expect(navbarSource).toContain('href="/connexion?returnTo=%2Fplans"');
     expect(navbarSource).toContain("<span>Connexion</span>");
     expect(navbarSource).not.toContain("<LogIn");
@@ -130,7 +132,10 @@ describe("Demaa application navbar", () => {
       actionPlanNavSource.indexOf('label: "Académie"'),
     );
     expect(actionPlanNavSource).toContain("grid-cols-3");
-    expect(actionPlanNavSource).toContain('<Icon className="h-4 w-4 shrink-0"');
+    expect(actionPlanNavSource).toContain("h-4 w-4 shrink-0 transition");
+    expect(actionPlanNavSource).toContain("scale-x-100 opacity-100");
+    expect(actionPlanNavSource).toContain("scale-x-0 opacity-0");
+    expect(actionPlanNavSource).not.toContain("rounded-[1.45rem] border");
     expect(actionPlanNavSource).not.toContain("xl:hidden");
     expect(actionPlanNavSource).toContain('activeView === "system" ? "plan"');
     expect(actionPlanNavSource).not.toContain('label: "Accompagnement"');

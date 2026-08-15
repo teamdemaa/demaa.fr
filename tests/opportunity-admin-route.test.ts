@@ -106,6 +106,7 @@ describe("opportunity admin route", () => {
       cadence: "Deux jours par mois",
       companyName: "Entreprise Exemple",
       compensation: "Budget défini après cadrage",
+      domainLabel: "Google Ads",
       expertiseId: "google-ads",
       expectations: "Cadrer la campagne\nCréer les annonces\nSuivre les demandes",
       geography: "France",
@@ -124,6 +125,7 @@ describe("opportunity admin route", () => {
       startTiming: "Septembre 2026",
       companyName: "Entreprise Exemple",
       compensation: "Budget défini après cadrage",
+      domainLabel: "Google Ads",
       expectations: [
         "Cadrer la campagne",
         "Créer les annonces",

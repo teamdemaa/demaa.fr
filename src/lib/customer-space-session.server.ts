@@ -3,7 +3,7 @@ import "server-only";
 import { cookies } from "next/headers";
 import {
   CUSTOMER_SPACE_COOKIE,
-  getEmailFromCustomerSessionToken,
+  getIdentityFromCustomerSessionToken,
 } from "@/lib/customer-space-auth";
 
 const PRIVATE_NO_STORE_HEADERS = {
@@ -13,10 +13,10 @@ const PRIVATE_NO_STORE_HEADERS = {
   Vary: "Cookie",
 } as const;
 
-export async function getCurrentCustomerEmailFromSession() {
+export async function getCurrentCustomerIdentityFromSession() {
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
-  return getEmailFromCustomerSessionToken(sessionToken);
+  return getIdentityFromCustomerSessionToken(sessionToken);
 }
 
 export function customerAuthenticationRequiredResponse() {
@@ -29,15 +29,12 @@ export function customerAuthenticationRequiredResponse() {
   );
 }
 
-export async function requireCurrentCustomerEmail() {
-  const email = await getCurrentCustomerEmailFromSession();
-
-  if (email) {
-    return { email, response: null } as const;
-  }
+export async function requireCurrentCustomerIdentity() {
+  const identity = await getCurrentCustomerIdentityFromSession();
+  if (identity) return { identity, response: null } as const;
 
   return {
-    email: null,
+    identity: null,
     response: customerAuthenticationRequiredResponse(),
   } as const;
 }

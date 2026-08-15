@@ -53,6 +53,8 @@ describe("solution proposal UI contract", () => {
       "Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.",
     );
     expect(googleSignIn).toContain("Continuer avec Google");
+    expect(googleSignIn).toContain('fetch("/api/customer-space/firebase-session"');
+    expect(googleSignIn).toContain("if (onAuthenticated)");
     expect(googleSignIn).toContain("text-dema-forest");
     expect(googleSignIn).not.toContain("#4285f4");
     expect(route).toContain('channels: { email: false, resend: false, slack: true }');
@@ -78,11 +80,12 @@ describe("solution proposal UI contract", () => {
   });
 
   it("separates immediate opportunities from the permanent Team Demaa profile", async () => {
-    const [page, catalog, modal, panel] = await Promise.all([
+    const [page, catalog, modal, panel, submissionDialog] = await Promise.all([
       readSource("src/app/opportunites/page.tsx"),
       readSource("src/components/PublicOpportunitiesClient.tsx"),
       readSource("src/components/ProviderProfileModal.tsx"),
       readSource("src/components/OpportunitiesPanel.tsx"),
+      readSource("src/components/OpportunitySubmissionDialog.tsx"),
     ]);
 
     expect(page).toContain("Découvrez les opportunités actuellement disponibles.");
@@ -104,6 +107,7 @@ describe("solution proposal UI contract", () => {
       catalog.indexOf("<ProviderProfileModal"),
     );
     expect(catalog).toContain("Rejoindre Team Demaa");
+    expect(catalog).toContain('md:inline">Soumettre</span>');
     expect(catalog).toContain("setProfileOpen(true)");
     expect(catalog).toContain("profileOpen ? (");
     expect(modal).toContain("Manifester mon intérêt");
@@ -115,6 +119,11 @@ describe("solution proposal UI contract", () => {
     expect(panel).toContain("publicOpportunitiesSnapshot");
     expect(panel).not.toContain("Chargement des opportunités");
     expect(panel).not.toContain("LoaderCircle");
+    expect(submissionDialog).toContain("Ajouter des précisions");
+    expect(submissionDialog).toContain("<details");
+    expect(submissionDialog).toContain('Connexion demandée à l’envoi.');
+    expect(submissionDialog).not.toContain("Envoyer pour modération");
+    expect(submissionDialog).not.toContain("Vous pourrez tout remplir maintenant");
     expect([page, catalog, modal, panel].join("\n")).not.toMatch(
       /freelance|Demaa recruteur/i,
     );

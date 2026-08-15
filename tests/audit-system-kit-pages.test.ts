@@ -10,8 +10,8 @@ import {
 } from "../scripts/audit-system-kit-pages.mjs";
 
 describe("system kit page audit contract", () => {
-  it("audits Process, Solutions and Resources with all 115 expected orders", () => {
-    expect(getTabs()).toEqual(["process", "solutions", "resources"]);
+  it("audits Process and the unified Solutions view with all 115 expected orders", () => {
+    expect(getTabs()).toEqual(["process", "solutions"]);
 
     const enterprises = loadEnterprises();
     const orders = buildExpectedSolutionOrders();
@@ -24,52 +24,53 @@ describe("system kit page audit contract", () => {
       "costructor",
       "progbat",
       "vertuoza",
-      "automatisation-processus",
+      "coach-business",
       "expert-comptable",
-      "formalites-juridiques",
-      "marketing-vente",
-      "assistance-facturation",
-      "point-p",
-      "plateforme-du-batiment",
-      "kiloutou",
-      "wurth",
-      "capeb",
+      "automatisation-processus",
+      "gestion-reseaux-sociaux",
+      "publicite-en-ligne",
+      "prospection-ciblee",
     ]);
     expect(orders.get("marchand-de-biens")).toEqual([
       "apimo",
       "modelo",
       "pipedrive",
-      "automatisation-processus",
+      "coach-business",
       "expert-comptable",
-      "formalites-juridiques",
-      "marketing-vente",
-      "assistance-facturation",
-      "notaires",
-      "fnaim",
+      "automatisation-processus",
+      "gestion-reseaux-sociaux",
+      "publicite-en-ligne",
+      "prospection-ciblee",
     ]);
     expect(orders.get("chasseur-immobilier")).toEqual([
       "apimo",
       "modelo",
       "pipedrive",
-      "automatisation-processus",
+      "coach-business",
       "expert-comptable",
-      "formalites-juridiques",
-      "marketing-vente",
-      "assistance-facturation",
-      "fnaim",
-      "notaires",
+      "automatisation-processus",
+      "gestion-reseaux-sociaux",
+      "publicite-en-ligne",
+      "prospection-ciblee",
     ]);
     expect([...orders.values()].some((order) => order.includes("netty"))).toBe(false);
     expect(orders.get("cabinet-comptable")).not.toContain("legal-formalist");
+    expect(orders.get("cabinet-davocat")).not.toContain("formalites-juridiques");
+    expect(orders.get("cabinet-davocat")).toContain("automatisation-processus");
+    expect(orders.get("cabinet-davocat")).toContain("gestion-reseaux-sociaux");
+    expect(orders.get("cabinet-davocat")).toContain("prospection-ciblee");
     expect([...orders.entries()].filter(([, order]) => order.includes("chartered-accountant")))
       .toHaveLength(0);
   });
 
-  it("can audit the sealed V2 supplier augmentation explicitly", () => {
-    const orders = buildExpectedSolutionOrders({ expectCandidateV2: true });
-    expect(orders.get("agence-marketing")).toContain("amazon-business");
-    expect(orders.get("cabinet-davocat")).toContain("amazon-business");
-    expect(orders.get("batiment")).not.toContain("amazon-business");
+  it("keeps the sealed V2 supplier augmentation out of the public audit", () => {
+    const publicOrders = buildExpectedSolutionOrders();
+    const candidateV2Orders = buildExpectedSolutionOrders({ expectCandidateV2: true });
+
+    expect(candidateV2Orders).toEqual(publicOrders);
+    expect([...candidateV2Orders.values()].some((order) =>
+      order.includes("amazon-business")
+    )).toBe(false);
   });
 
   it("expects no contact CTA in any system tab", () => {

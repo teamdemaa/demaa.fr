@@ -67,7 +67,7 @@ describe("coaching draft retention", () => {
       operator: "<=",
       value: "2026-08-13T10:00:00.000Z",
     });
-    expect(result).toEqual({ deleted: 0, operations: 16 });
+    expect(result).toEqual({ deleted: 0, operations: 14 });
   });
 
   it("documents the temporary draft and its retention without naming its access mechanism", () => {
@@ -80,9 +80,7 @@ describe("coaching draft retention", () => {
       "Brouillon de message destiné à un spécialiste avant connexion",
     );
     expect(privacy).toContain("utilisable pendant 60 minutes maximum");
-    expect(privacy).toContain(
-      "brouillons temporaires de message ou de proposition d&apos;opportunité",
-    );
+    expect(privacy).toContain("des brouillons temporaires");
     expect(privacy).toContain(
       "Brouillon de proposition d&apos;opportunité avant connexion",
     );

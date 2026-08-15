@@ -6,7 +6,7 @@ import { createActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 vi.mock("server-only", () => ({}));
 
 const mocks = vi.hoisted(() => ({
-  email: null as string | null,
+  uid: null as string | null,
   enforceRateLimit: vi.fn(),
   generateCommand: vi.fn(),
   recordUsage: vi.fn(),
@@ -17,7 +17,9 @@ vi.mock("@/lib/api-security", async (importOriginal) => ({
   enforceRateLimit: mocks.enforceRateLimit,
 }));
 vi.mock("@/lib/customer-space-session.server", () => ({
-  getCurrentCustomerEmailFromSession: vi.fn(async () => mocks.email),
+  getCurrentCustomerIdentityFromSession: vi.fn(async () => mocks.uid
+    ? { email: "owner@example.com", provider: "password", uid: mocks.uid }
+    : null),
 }));
 vi.mock("@/lib/action-plan-command.server", () => ({
   ACTION_PLAN_COMMAND_EXTERNAL_GENERATION_ENABLED: true,
@@ -78,7 +80,7 @@ function validBody() {
 describe("action plan command route", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mocks.email = null;
+    mocks.uid = null;
     mocks.enforceRateLimit.mockResolvedValue(null);
     mocks.generateCommand.mockResolvedValue({
       operations: [
@@ -130,7 +132,7 @@ describe("action plan command route", () => {
   });
 
   it("uses account identity first and IP as a secondary safeguard", async () => {
-    mocks.email = "dirigeant@example.com";
+    mocks.uid = "owner-uid";
 
     const response = await POST(request(validBody()));
 

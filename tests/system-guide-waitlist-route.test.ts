@@ -8,7 +8,7 @@ const mocks = vi.hoisted(() => ({
   enforceSameOrigin: vi.fn(),
   getEnterpriseBySlug: vi.fn(),
   getSystemResource: vi.fn(),
-  requireCurrentCustomerEmail: vi.fn(),
+  requireCurrentCustomerIdentity: vi.fn(),
   resolveLeadAttribution: vi.fn(),
   resolveLeadContext: vi.fn(),
   submitLeadRequest: vi.fn(),
@@ -26,7 +26,7 @@ vi.mock("@/lib/email", () => ({
   normalizeEmail: (value: string) => value.toLowerCase(),
 }));
 vi.mock("@/lib/customer-space-session.server", () => ({
-  requireCurrentCustomerEmail: mocks.requireCurrentCustomerEmail,
+  requireCurrentCustomerIdentity: mocks.requireCurrentCustomerIdentity,
 }));
 vi.mock("@/lib/enterprise-annuaire", () => ({
   enterpriseToSystem: (enterprise: { name: string }) => enterprise,
@@ -72,8 +72,8 @@ describe("system guide waitlist route", () => {
     mocks.enforceAllowedHost.mockReturnValue(null);
     mocks.enforceSameOrigin.mockReturnValue(null);
     mocks.enforceRateLimit.mockResolvedValue(null);
-    mocks.requireCurrentCustomerEmail.mockResolvedValue({
-      email: "maya@example.com",
+    mocks.requireCurrentCustomerIdentity.mockResolvedValue({
+      identity: { email: "maya@example.com", provider: "password", uid: "maya-uid" },
       response: null,
     });
     mocks.getEnterpriseBySlug.mockResolvedValue({ name: "Cabinet comptable" });
@@ -122,8 +122,8 @@ describe("system guide waitlist route", () => {
   });
 
   it("requires an authenticated customer session", async () => {
-    mocks.requireCurrentCustomerEmail.mockResolvedValue({
-      email: null,
+    mocks.requireCurrentCustomerIdentity.mockResolvedValue({
+      identity: null,
       response: Response.json({ error: "authentication_required" }, { status: 401 }),
     });
 

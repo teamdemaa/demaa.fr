@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
 import { buildPublicSystemAppHref } from "@/lib/action-plan-app-context";
-import { composeCanonicalServicesForSystem } from "@/lib/canonical-services-system-section.server";
+import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import {
   getActivePublishedRenderableSolutionSectionsForSystem,
@@ -69,9 +69,9 @@ export default async function SystemPage({
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
   const normalizedInitialTab = normalizeSystemDetailTab(initialTab) ?? "process";
-  const visibleSolutionSections = composeCanonicalServicesForSystem(
+  const visibleSolutionSections = composePublicSolutionSectionsForSystem(
     slug,
-    filterPublicSolutionSections(mergeRenderableSolutionSections(solutionSections)),
+    mergeRenderableSolutionSections(solutionSections),
   );
   const visiblePublishedSolutionSections = filterPublicSolutionSections(
     publishedSolutionSections,

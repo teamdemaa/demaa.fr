@@ -1,6 +1,6 @@
 "use client";
 
-import { LoaderCircle, X } from "lucide-react";
+import { ChevronDown, LoaderCircle, X } from "lucide-react";
 import { useState } from "react";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import { buildCustomerIntentReturnTo } from "@/lib/customer-space-redirect";
@@ -40,6 +40,15 @@ export default function OpportunitySubmissionDialog({
       return {};
     }
   });
+  const hasRestoredOptionalDetails = [
+    "cadence",
+    "companyName",
+    "compensation",
+    "expectations",
+    "geography",
+    "startTiming",
+    "workMode",
+  ].some((key) => Boolean(restoredDraft[key]));
   const dialogRef = useAccessibleDialog({ onClose });
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
@@ -111,7 +120,7 @@ export default function OpportunitySubmissionDialog({
 
   return (
     <div
-      className="fixed inset-0 z-[130] flex items-end justify-center bg-brand-blue/30 backdrop-blur-sm sm:items-center sm:p-6"
+      className="fixed inset-0 z-[130] flex items-end justify-center bg-brand-blue/30 sm:items-center sm:p-6 sm:backdrop-blur-sm"
       onClick={onClose}
     >
       <section
@@ -121,7 +130,7 @@ export default function OpportunitySubmissionDialog({
         aria-labelledby="opportunity-submission-title"
         tabIndex={-1}
         onClick={(event) => event.stopPropagation()}
-        className="relative max-h-[92dvh] w-full overflow-y-auto rounded-t-[1.5rem] bg-dema-paper px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-7 shadow-2xl outline-none sm:max-w-2xl sm:rounded-[1.5rem] sm:p-8"
+        className="relative max-h-[92svh] w-full overscroll-contain overflow-y-auto rounded-t-[1.5rem] bg-dema-paper px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-7 shadow-2xl outline-none [scrollbar-gutter:stable] sm:max-w-2xl sm:rounded-[1.5rem] sm:p-8"
       >
         <button
           type="button"
@@ -136,27 +145,17 @@ export default function OpportunitySubmissionDialog({
           Soumettre une opportunité
         </h2>
         <p className="mt-2 text-sm leading-6 text-dema-muted">
-          Décrivez le besoin sans information confidentielle. L’équipe Demaa le
-          relira avant toute publication.
+          Décrivez le besoin. Demaa le vérifie avant publication.
         </p>
-        {initialEmail ? (
-          <p className="mt-3 text-xs text-dema-forest">
-            Envoi avec l’identité vérifiée {initialEmail}
-          </p>
-        ) : (
-          <p className="mt-3 text-xs text-dema-forest">
-            Vous pourrez tout remplir maintenant. La connexion sera demandée uniquement à l’envoi.
-          </p>
-        )}
 
-        <form onSubmit={submit} className="mt-6 grid gap-4 sm:grid-cols-2">
+        <form onSubmit={submit} className="mt-5 grid gap-4 sm:grid-cols-2">
           <label className="sm:col-span-2 text-sm font-medium text-brand-blue">
             Titre
             <input name="title" required minLength={5} maxLength={140} defaultValue={restoredDraft.title} className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest" />
           </label>
           <label className="sm:col-span-2 text-sm font-medium text-brand-blue">
             Description
-            <textarea name="summary" required minLength={30} maxLength={700} rows={4} defaultValue={restoredDraft.summary} className="mt-2 w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" />
+            <textarea name="summary" required minLength={30} maxLength={700} rows={3} defaultValue={restoredDraft.summary} className="mt-2 w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" />
           </label>
           <label className="text-sm font-medium text-brand-blue">
             Cadre
@@ -170,24 +169,38 @@ export default function OpportunitySubmissionDialog({
             Catégorie
             <input name="category" required maxLength={100} defaultValue={restoredDraft.category} placeholder="Ex. Marketing, BTP, Produit" className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest" />
           </label>
-          <label className="text-sm font-medium text-brand-blue">
-            Modalité <span className="font-normal text-dema-muted">(facultatif)</span>
-            <select name="workMode" defaultValue={restoredDraft.workMode || ""} className="mt-2 min-h-12 w-full rounded-xl border border-dema-line bg-white px-4 outline-none focus:border-dema-forest">
-              <option value="">À préciser</option>
-              {OPPORTUNITY_WORK_MODES.map((mode) => (
-                <option key={mode} value={mode}>{OPPORTUNITY_WORK_MODE_LABELS[mode]}</option>
-              ))}
-            </select>
-          </label>
-          <Field name="geography" label="Zone" placeholder="France, ville ou pays" value={restoredDraft.geography} />
-          <Field name="cadence" label="Rythme ou durée" placeholder="Ponctuel, 3 mois, récurrent…" value={restoredDraft.cadence} />
-          <Field name="startTiming" label="Démarrage" placeholder="Dès que possible, à convenir…" value={restoredDraft.startTiming} />
-          <Field name="compensation" label="Budget éventuel" placeholder="Seulement s’il est défini" value={restoredDraft.compensation} />
-          <Field name="companyName" label="Entreprise éventuelle" placeholder="Uniquement avec son accord" value={restoredDraft.companyName} />
-          <label className="sm:col-span-2 text-sm font-medium text-brand-blue">
-            Attentes principales <span className="font-normal text-dema-muted">(facultatif)</span>
-            <textarea name="expectations" rows={3} defaultValue={restoredDraft.expectations} placeholder="Une attente par ligne, 4 maximum" className="mt-2 w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" />
-          </label>
+          <details
+            className="group sm:col-span-2 rounded-xl border border-dema-line bg-dema-paper/55"
+            open={hasRestoredOptionalDetails}
+          >
+            <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 text-sm font-medium text-brand-blue [&::-webkit-details-marker]:hidden">
+              <span>
+                Ajouter des précisions
+                <span className="ml-1 font-normal text-dema-muted">(facultatif)</span>
+              </span>
+              <ChevronDown className="h-4 w-4 shrink-0 text-dema-muted transition group-open:rotate-180" aria-hidden="true" />
+            </summary>
+            <div className="hidden gap-4 border-t border-dema-line p-4 group-open:grid sm:grid-cols-2">
+              <label className="text-sm font-medium text-brand-blue">
+                Modalité
+                <select name="workMode" defaultValue={restoredDraft.workMode || ""} className="mt-2 min-h-12 w-full rounded-xl border border-dema-line bg-white px-4 outline-none focus:border-dema-forest">
+                  <option value="">À préciser</option>
+                  {OPPORTUNITY_WORK_MODES.map((mode) => (
+                    <option key={mode} value={mode}>{OPPORTUNITY_WORK_MODE_LABELS[mode]}</option>
+                  ))}
+                </select>
+              </label>
+              <Field name="geography" label="Zone" placeholder="France, ville ou pays" value={restoredDraft.geography} />
+              <Field name="cadence" label="Rythme ou durée" placeholder="Ponctuel, 3 mois, récurrent…" value={restoredDraft.cadence} />
+              <Field name="startTiming" label="Démarrage" placeholder="Dès que possible, à convenir…" value={restoredDraft.startTiming} />
+              <Field name="compensation" label="Budget" placeholder="Seulement s’il est défini" value={restoredDraft.compensation} />
+              <Field name="companyName" label="Entreprise" placeholder="Uniquement avec son accord" value={restoredDraft.companyName} />
+              <label className="text-sm font-medium text-brand-blue sm:col-span-2">
+                Attentes
+                <textarea name="expectations" rows={3} defaultValue={restoredDraft.expectations} placeholder="Une attente par ligne, 4 maximum" className="mt-2 w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" />
+              </label>
+            </div>
+          </details>
           {error ? (
             <p className="sm:col-span-2 text-sm text-red-700" role="alert">{error}</p>
           ) : null}
@@ -196,8 +209,13 @@ export default function OpportunitySubmissionDialog({
             className="sm:col-span-2 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-semibold text-white disabled:opacity-60"
           >
             {status === "sending" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-            {status === "sending" ? "Envoi…" : "Envoyer pour modération"}
+            {status === "sending" ? "Envoi…" : "Soumettre"}
           </button>
+          {!initialEmail ? (
+            <p className="text-center text-xs text-dema-muted sm:col-span-2">
+              Connexion demandée à l’envoi.
+            </p>
+          ) : null}
         </form>
       </section>
     </div>
@@ -217,7 +235,7 @@ function Field({
 }) {
   return (
     <label className="text-sm font-medium text-brand-blue">
-      {label} <span className="font-normal text-dema-muted">(facultatif)</span>
+      {label}
       <input name={name} maxLength={140} defaultValue={value} placeholder={placeholder} className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest" />
     </label>
   );

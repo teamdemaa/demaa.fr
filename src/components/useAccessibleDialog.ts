@@ -17,7 +17,11 @@ export function useAccessibleDialog(input: {
 }) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const isOpen = input.isOpen ?? true;
-  const onClose = input.onClose;
+  const onCloseRef = useRef(input.onClose);
+
+  useEffect(() => {
+    onCloseRef.current = input.onClose;
+  }, [input.onClose]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -28,6 +32,10 @@ export function useAccessibleDialog(input: {
         ? document.activeElement
         : null;
     const previousOverflow = document.body.style.overflow;
+    const previousBodyOverscroll = document.body.style.overscrollBehavior;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousHtmlOverscroll =
+      document.documentElement.style.overscrollBehavior;
 
     function isTopmostDialog() {
       const dialogs = Array.from(
@@ -52,7 +60,7 @@ export function useAccessibleDialog(input: {
       if (event.key === "Escape") {
         event.preventDefault();
         event.stopPropagation();
-        onClose();
+        onCloseRef.current();
         return;
       }
 
@@ -81,6 +89,9 @@ export function useAccessibleDialog(input: {
     }
 
     document.body.style.overflow = "hidden";
+    document.body.style.overscrollBehavior = "none";
+    document.documentElement.style.overflow = "hidden";
+    document.documentElement.style.overscrollBehavior = "none";
     document.addEventListener("keydown", handleKeyDown);
 
     const focusFrame = window.requestAnimationFrame(() => {
@@ -94,10 +105,13 @@ export function useAccessibleDialog(input: {
     return () => {
       window.cancelAnimationFrame(focusFrame);
       document.body.style.overflow = previousOverflow;
+      document.body.style.overscrollBehavior = previousBodyOverscroll;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.documentElement.style.overscrollBehavior = previousHtmlOverscroll;
       document.removeEventListener("keydown", handleKeyDown);
       previouslyFocused?.focus();
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   return dialogRef;
 }

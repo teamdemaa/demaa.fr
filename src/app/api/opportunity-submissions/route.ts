@@ -1,7 +1,7 @@
 import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 import { enforceRateLimit, normalizeText, readJsonBody } from "@/lib/api-security";
-import { requireCurrentCustomerEmail } from "@/lib/customer-space-session.server";
+import { requireCurrentCustomerIdentity } from "@/lib/customer-space-session.server";
 import { submitPendingOpportunityDraft } from "@/lib/opportunity-submission.server";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     windowMs: 10 * 60 * 1000,
   });
   if (limited) return limited;
-  const customer = await requireCurrentCustomerEmail();
+  const customer = await requireCurrentCustomerIdentity();
   if (customer.response) return customer.response;
   const { data, response } = await readJsonBody<{ draftToken?: unknown }>(
     request,
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
   const draftToken = normalizeText(data?.draftToken, 80);
   const result = await submitPendingOpportunityDraft({
     draftToken,
-    email: customer.email,
+    email: customer.identity.email,
   });
   if (!result) {
     return NextResponse.json(

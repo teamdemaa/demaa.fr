@@ -5,14 +5,13 @@ import Navbar from "@/components/Navbar";
 import SavedActionPlanDetail from "@/components/SavedActionPlanDetail";
 import { parseActionPlanAppContext } from "@/lib/action-plan-app-context";
 import {
-  ACTION_PLAN_ACCESS_COOKIE,
   getActionPlanForAccess,
-  getOwnedActionPlans,
+  getOwnedActionPlansForIdentity,
 } from "@/lib/action-plan-storage.server";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import {
   CUSTOMER_SPACE_COOKIE,
-  getEmailFromCustomerSessionToken,
+  getIdentityFromCustomerSessionToken,
 } from "@/lib/customer-space-auth";
 
 export const dynamic = "force-dynamic";
@@ -36,30 +35,25 @@ export default async function ActionPlanPage({
   ]);
   const initialAppContext = parseActionPlanAppContext(query);
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
-  const temporaryAccessToken =
-    cookieStore.get(ACTION_PLAN_ACCESS_COOKIE)?.value || null;
-  const email = await getEmailFromCustomerSessionToken(sessionToken);
+  const identity = await getIdentityFromCustomerSessionToken(sessionToken);
 
-  if (!email && !temporaryAccessToken) {
+  if (!identity) {
     redirect(
       `/connexion?message=${encodeURIComponent("Connectez-vous pour ouvrir ce plan.")}&returnTo=${encodeURIComponent(`/plans/${id}`)}`,
     );
   }
 
   const stored = await getActionPlanForAccess({
-    email,
+    uid: identity.uid,
     id,
-    temporaryAccessToken,
   });
   if (!stored) notFound();
 
-  const availablePlans = email
-    ? (await getOwnedActionPlans(email)).map(({ id: availableId, title, updatedAt }) => ({
+  const availablePlans = (await getOwnedActionPlansForIdentity(identity)).map(({ id: availableId, title, updatedAt }) => ({
         id: availableId,
         title,
         updatedAt,
-      }))
-    : [{ id: stored.id, title: stored.title, updatedAt: stored.updatedAt }];
+      }));
 
   return (
     <div data-action-plan-workspace className="min-h-screen bg-dema-cream text-brand-blue">
@@ -69,7 +63,8 @@ export default async function ActionPlanPage({
           <h1 className="sr-only">Mon plan d’action</h1>
           <SavedActionPlanDetail
             key={stored.id}
-            initialEmail={email || ""}
+            initialEmail={identity.email}
+            initialIsAuthenticated
             initialAppContext={initialAppContext}
             plan={stored.plan}
             planId={stored.id}

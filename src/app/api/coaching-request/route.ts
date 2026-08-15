@@ -10,10 +10,10 @@ import { submitLeadRequest } from "@/lib/lead-notifications";
 import { logOperationalError } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { enforceServiceRequestRateLimit } from "@/lib/service-request-security.server";
-import { requireCurrentCustomerEmail } from "@/lib/customer-space-session.server";
+import { requireCurrentCustomerIdentity } from "@/lib/customer-space-session.server";
 import {
   appendCustomerCoachingMessage,
-  getCustomerCoachingMessages,
+  getCustomerCoachingState,
 } from "@/lib/coaching-conversation.server";
 import {
   claimPendingCoachingMessageDraft,
@@ -54,12 +54,12 @@ export async function GET(request: Request) {
     const blockedHost = enforceAllowedHost(request);
     if (blockedHost) return blockedHost;
 
-    const customer = await requireCurrentCustomerEmail();
+    const customer = await requireCurrentCustomerIdentity();
     if (customer.response) return customer.response;
 
-    const messages = await getCustomerCoachingMessages(customer.email);
+    const state = await getCustomerCoachingState(customer.identity.uid);
     return NextResponse.json(
-      { messages },
+      state,
       { headers: PRIVATE_NO_STORE_HEADERS },
     );
   } catch (error) {
@@ -104,14 +104,15 @@ export async function POST(request: Request) {
     const isMessage = requestKind === "message";
     const isFormula = requestKind === "formula";
     const customer = isMessage
-      ? await requireCurrentCustomerEmail()
-      : { email: "", response: null };
+      ? await requireCurrentCustomerIdentity()
+      : { identity: null, response: null };
     if (customer.response) return customer.response;
-    const email = customer.email;
+    const email = customer.identity?.email ?? "";
+    const uid = customer.identity?.uid ?? "";
     if (isMessage && draftToken) {
       claimedDraft = await claimPendingCoachingMessageDraft({
         draftToken,
-        email,
+        uid,
       });
       if (!claimedDraft) {
         return NextResponse.json(
@@ -155,8 +156,20 @@ export async function POST(request: Request) {
           body: effectiveMessage,
           email,
           idempotencyKey: effectiveIdempotencyKey,
+          uid,
         })
       : null;
+
+    if (conversationMessage?.allowed === false) {
+      return NextResponse.json(
+        {
+          code: "free_clarification_completed",
+          draftMessage: effectiveMessage,
+          error: "Votre première clarification est terminée.",
+        },
+        { status: 409, headers: PRIVATE_NO_STORE_HEADERS },
+      );
+    }
 
     await submitLeadRequest({
       attribution: resolveLeadAttribution(request, data?.attribution),
@@ -169,7 +182,9 @@ export async function POST(request: Request) {
       context,
       emoji: isMessage ? "💬" : "📞",
       fields: isMessage
-        ? [{ label: "Message", value: effectiveMessage }]
+        ? [
+            { label: "Message", value: effectiveMessage },
+          ]
         : [
             { label: "Formule", value: isSpecialistOffer(offer) ? SPECIALIST_OFFERS[offer].title : offer },
             ...(isSpecialistOffer(offer) ? [{ label: "Tarif affiché", value: SPECIALIST_OFFERS[offer].price }] : []),
@@ -177,12 +192,14 @@ export async function POST(request: Request) {
           ],
       idempotencyKey: effectiveIdempotencyKey,
       requestType: isMessage ? "coaching_message" : "specialist_formula_interest",
-      title: isMessage ? "Nouveau message spécialiste" : "Nouvelle demande de formule spécialiste",
+      title: isMessage
+        ? "Nouvelle clarification gratuite"
+        : "Nouvelle demande de formule spécialiste",
     });
 
     if (
       claimedDraft
-      && !await markCoachingMessageDraftSent({ draftToken, email })
+      && !await markCoachingMessageDraftSent({ draftToken, uid })
     ) {
       throw new Error("Unable to mark the coaching draft as sent.");
     }
@@ -190,7 +207,9 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         ok: true,
-        ...(conversationMessage ? { message: conversationMessage.message } : {}),
+        ...(conversationMessage?.message
+          ? { access: conversationMessage.access, message: conversationMessage.message }
+          : {}),
       },
       { status: 202, headers: PRIVATE_NO_STORE_HEADERS },
     );

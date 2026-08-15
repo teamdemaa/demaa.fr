@@ -2,7 +2,6 @@ import "server-only";
 
 import { createHash, randomBytes } from "node:crypto";
 import { isCoachingMessageDraftToken } from "@/lib/coaching-message-draft";
-import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { getAdminFirestore } from "@/lib/firebase-admin";
 
 const COLLECTION = "coaching_message_drafts";
@@ -11,7 +10,7 @@ export const COACHING_MESSAGE_DRAFT_TTL_MS = 60 * 60 * 1000;
 type StoredCoachingMessageDraft = {
   body?: unknown;
   claimed_at?: unknown;
-  claimed_email?: unknown;
+  claimed_uid?: unknown;
   created_at?: unknown;
   delivery_idempotency_key?: unknown;
   expires_at?: unknown;
@@ -68,7 +67,7 @@ export async function createPendingCoachingMessageDraft(input: {
   await getAdminFirestore().collection(COLLECTION).doc(tokenHash).create({
     body,
     claimed_at: null,
-    claimed_email: null,
+    claimed_uid: null,
     created_at: now,
     delivery_idempotency_key: `coaching:draft:${tokenHash}`,
     expires_at: expiresAt,
@@ -81,11 +80,11 @@ export async function createPendingCoachingMessageDraft(input: {
 
 export async function claimPendingCoachingMessageDraft(input: {
   draftToken: string;
-  email: string;
+  uid: string;
 }): Promise<ClaimedCoachingMessageDraft | null> {
   if (!isCoachingMessageDraftToken(input.draftToken)) return null;
-  const email = normalizeEmail(input.email);
-  if (!isValidEmail(email)) return null;
+  const uid = input.uid.trim();
+  if (!uid) return null;
 
   const database = getAdminFirestore();
   const reference = database
@@ -100,21 +99,19 @@ export async function claimPendingCoachingMessageDraft(input: {
     const expiresAt = Date.parse(cleanStoredText(stored.expires_at, 40));
     if (!Number.isFinite(expiresAt) || expiresAt < Date.now()) return null;
 
-    const claimedEmail = normalizeEmail(
-      cleanStoredText(stored.claimed_email, 320),
-    );
-    if (claimedEmail && claimedEmail !== email) return null;
+    const claimedUid = cleanStoredText(stored.claimed_uid, 160);
+    if (claimedUid && claimedUid !== uid) return null;
 
     const parsed = parseClaimedDraft(stored);
     if (!parsed) return null;
 
-    if (!claimedEmail) {
+    if (!claimedUid) {
       const now = new Date().toISOString();
       transaction.set(
         reference,
         {
           claimed_at: now,
-          claimed_email: email,
+          claimed_uid: uid,
           updated_at: now,
         },
         { merge: true },
@@ -127,11 +124,11 @@ export async function claimPendingCoachingMessageDraft(input: {
 
 export async function markCoachingMessageDraftSent(input: {
   draftToken: string;
-  email: string;
+  uid: string;
 }) {
   if (!isCoachingMessageDraftToken(input.draftToken)) return false;
-  const email = normalizeEmail(input.email);
-  if (!isValidEmail(email)) return false;
+  const uid = input.uid.trim();
+  if (!uid) return false;
 
   const database = getAdminFirestore();
   const reference = database
@@ -144,7 +141,7 @@ export async function markCoachingMessageDraftSent(input: {
     if (
       !snapshot.exists
       || !stored
-      || normalizeEmail(cleanStoredText(stored.claimed_email, 320)) !== email
+      || cleanStoredText(stored.claimed_uid, 160) !== uid
     ) {
       return false;
     }

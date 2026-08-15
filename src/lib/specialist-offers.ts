@@ -1,8 +1,4 @@
 export const SPECIALIST_OFFERS = {
-  echanges: {
-    price: "149 € HT / mois",
-    title: "Clarté",
-  },
   pilotage_1: {
     price: "350 € HT / mois",
     title: "Coach business · 1 session / mois",

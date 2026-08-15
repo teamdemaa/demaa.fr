@@ -7,9 +7,9 @@ function source(path: string) {
 }
 
 describe("action plan experience architecture", () => {
-  it("keeps the guest result in page memory until the user explicitly saves", () => {
+  it("finishes generation before asking for access and reveals the saved result afterward", () => {
     const experience = source("src/components/ActionPlanExperience.tsx");
-    const saveControl = source("src/components/ActionPlanSaveControl.tsx");
+    const accessForm = source("src/components/CustomerSpaceAccessForm.tsx");
     const shareControl = source("src/components/ActionPlanShareControl.tsx");
     const utilityActions = source("src/components/ActionPlanUtilityActions.tsx");
     const result = source("src/components/ActionPlanResult.tsx");
@@ -18,21 +18,43 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("useState<EditableActionPlan | null>(null)");
     expect(experience).toContain("readGuestSelectedSystemId");
     expect(experience).toContain("writeGuestSelectedSystemId");
-    expect(saveControl).not.toMatch(/localStorage|sessionStorage/);
-    expect(saveControl).toContain('fetch("/api/action-plans"');
-    expect(saveControl).toContain("router.push(`/plans/");
-    expect(saveControl).toContain('"Enregistrer"');
-    expect(saveControl).toContain("if (demoMode)");
-    expect(saveControl).toContain("Enregistrer mon plan");
-    expect(saveControl).not.toContain("actionPlanClaimSecret");
-    expect(saveControl).not.toContain("Créer votre compte");
-    expect(saveControl).toContain("réponses aux problématiques de dirigeants, actualités entrepreneuriales et tarifs négociés");
-    expect(saveControl).toContain('fetch("/api/newsletter-subscribe"');
-    expect(saveControl).toContain("checked={subscribeToStructure}");
-    expect(saveControl).toContain('if (state === "saved")');
-    expect(saveControl).toContain("return null");
-    expect(saveControl).toContain("Aucun e-mail n’a été envoyé");
-    expect(saveControl).not.toContain('if (demoMode) {\n      setState("saved")');
+    expect(experience).toContain('fetch("/api/action-plans"');
+    expect(experience).toContain("Gardez votre plan");
+    expect(experience).toContain("type PendingGeneratedPlan");
+    expect(experience).toContain("setPendingGeneratedPlan({");
+    expect(experience).toContain("Votre plan d’action est prêt");
+    expect(experience).toContain("Créez votre accès pour le découvrir");
+    const generationScreen = experience.slice(
+      experience.lastIndexOf("if (isGenerating)"),
+      experience.lastIndexOf("if (pendingGeneratedPlan &&"),
+    );
+    expect(generationScreen).toContain("Génération de votre plan d’action");
+    expect(generationScreen).not.toContain("CustomerSpaceAccessForm");
+    expect(experience).toContain("draft={accessDraft}");
+    expect(experience).toContain("onDraftChange={setAccessDraft}");
+    expect(experience).toContain("onRetrySave={requestAutoSaveRetry}");
+    expect(experience).toContain("response.status === 401");
+    expect(experience).toContain("autoSaveRunningRef.current");
+    expect(experience).toContain("Sauvegarde de votre plan…");
+    expect(experience).not.toContain("return () => controller.abort();\n  }, [autoSaveRevision");
+    expect(accessForm).toContain("const activeDraft = draft ?? internalDraft");
+    expect(accessForm).toContain("onDraftChange?.(nextDraft)");
+    expect(experience).not.toContain("Continuer sans compte");
+    expect(experience).not.toContain("Connectez-vous pour rattacher cette sélection");
+    expect(experience).not.toContain("Créez votre accès pour conserver ce plan");
+    expect(experience).toContain("Continuer avec un plan temporaire");
+    expect(experience).toContain("Enregistrez votre sélection");
+    expect(experience).toContain("onToggleSolutionSelection={handleSolutionSelection}");
+    expect(experience).toContain("setPendingSolutionSelection(pending)");
+    expect(experience).toContain("toPersistedAiGenerationMetadata");
+    expect(experience).toContain("isBlankManualActionPlan(plan, workspace)");
+    expect(experience).toContain("manualAccessPromptHandledRef.current = true");
+    expect(experience).toContain("useAccessibleDialog({");
+    expect(experience).toContain("data-dialog-initial-focus");
+    expect(accessForm).toContain("createPasswordAccountAndGetIdToken");
+    expect(accessForm).toContain("signInWithPasswordAndGetIdToken");
+    expect(accessForm).toContain("onAuthenticated={onAuthenticated");
+    expect(accessForm).toContain("Créer mon accès");
     expect(shareControl).toContain("navigator.share");
     expect(shareControl).toContain("navigator.clipboard.writeText");
     expect(shareControl).toContain('aria-label={copied ? "Plan copié" : "Partager le plan"}');
@@ -42,12 +64,14 @@ describe("action plan experience architecture", () => {
     expect(shareControl).toContain("appearance-none whitespace-nowrap border-0 bg-transparent");
     expect(utilityActions).toContain("appearance-none whitespace-nowrap border-0 bg-transparent");
     expect(utilityActions).not.toContain('createPortal(');
-    expect(utilityActions).toContain("<ActionPlanSaveControl");
+    expect(utilityActions).not.toContain("ActionPlanSaveControl");
+    expect(utilityActions).not.toContain("Enregistrer");
+    expect(utilityActions).toContain("Plan temporaire");
+    expect(utilityActions).toContain("onClick={onRetrySave}");
     expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} workspace={workspace} variant="menu" />');
     expect(utilityActions).not.toContain('plan.version !== "manual"');
     expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} workspace={workspace} variant="menu" />');
     expect(utilityActions).toContain("Nouveau plan");
-    expect(utilityActions.match(/<ActionPlanSaveControl/g)).toHaveLength(1);
     expect(experience).toContain('demo !== "plan"');
     expect(experience).toContain("ACTION_PLAN_DEMO");
     expect(experience).toContain('demo === "blank"');
@@ -129,6 +153,7 @@ describe("action plan experience architecture", () => {
     expect(systemSelector).toContain('role="listbox"');
     expect(systemSelector).toContain('role="combobox"');
     expect(systemPanel).toContain("<SystemSolutionsTab");
+    expect(systemPanel).toContain("<SystemResourcesTab");
     expect(systemPanel).not.toContain("<SystemDetailContent");
     expect(systemPanel).not.toContain("checkableProcess");
     expect(systemPanel).not.toContain("checkedProcessStepIdsBySystem");
@@ -136,7 +161,6 @@ describe("action plan experience architecture", () => {
     expect(systemPanel).not.toContain("Ouvrir la fiche complète");
     expect(experience).toContain("demoMode={isDemoMode}");
     expect(systemPanel).not.toContain("Organisation");
-    expect(systemPanel).not.toContain("Ressources");
   });
 
   it("keeps the application navigation usable before generation", () => {
@@ -181,6 +205,19 @@ describe("action plan experience architecture", () => {
     expect(academyPanel).toContain("onContentChange?.(content.identity.slug)");
     expect(academyPanel).toContain("onContentChange?.(undefined)");
     expect(academyPanel).toContain("<AcademyCoursePlayer");
+    expect(academyPanel).toContain(
+      'import AcademyIndexClient from "@/components/AcademyIndexClient"',
+    );
+    expect(academyPanel).toContain("loadActionPlanAcademyPayload");
+    expect(academyPanel).toContain("invalidateActionPlanAcademyPayload");
+    expect(academyPanel).not.toContain('cache: "no-store"');
+    expect(academyPanel).not.toContain(
+      'dynamic(\n  () => import("@/components/AcademyIndexClient")',
+    );
+    expect(experience).toContain("scheduleActionPlanAcademyPayloadPreload");
+    expect(source("src/components/SavedActionPlanDetail.tsx")).toContain(
+      "scheduleActionPlanAcademyPayloadPreload",
+    );
     expect(academyPanel).toContain("onBack={() => {");
     expect(academyIndex).toContain("onOpen?: (content: AcademyContentDefinition) => void");
     expect(coursePlayer).toContain('const CourseContainer = embedded ? "div" : "main"');

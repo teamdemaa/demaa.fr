@@ -2,26 +2,28 @@
 
 import { MoreVertical } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import ActionPlanSaveControl from "@/components/ActionPlanSaveControl";
 import ActionPlanShareControl from "@/components/ActionPlanShareControl";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
-import type { AiGenerationMetadata } from "@/lib/ai-generation-metadata";
 
 export default function ActionPlanUtilityActions({
   plan,
-  sourceText,
   workspace,
-  generation,
   demoMode,
+  isAuthenticated,
+  onOpenAccess,
+  onRetrySave,
   onReset,
+  saveStatus,
 }: {
   plan: PersistableActionPlan;
-  sourceText: string;
   workspace: ActionPlanWorkspaceState;
-  generation: AiGenerationMetadata | null;
   demoMode: boolean;
+  isAuthenticated: boolean;
+  onOpenAccess: () => void;
+  onRetrySave: () => void;
   onReset: () => void;
+  saveStatus: "idle" | "saving" | "error";
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuContainerRef = useRef<HTMLDivElement>(null);
@@ -55,13 +57,27 @@ export default function ActionPlanUtilityActions({
 
   return (
     <div className="flex shrink-0 items-center justify-end gap-1 sm:gap-2">
-        <ActionPlanSaveControl
-          plan={plan}
-          sourceText={sourceText}
-          workspace={workspace}
-          generation={generation}
-          demoMode={demoMode}
-        />
+        {!isAuthenticated && !demoMode ? (
+          <button
+            type="button"
+            onClick={onOpenAccess}
+            className="inline-flex min-h-10 items-center rounded-full border border-dema-line bg-white/70 px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/35 hover:bg-dema-soft sm:min-h-11 sm:px-4 sm:text-sm"
+          >
+            Plan temporaire
+          </button>
+        ) : null}
+        {saveStatus === "saving" ? (
+          <span className="px-2 text-xs text-dema-muted" role="status">Sauvegarde…</span>
+        ) : null}
+        {saveStatus === "error" ? (
+          <button
+            type="button"
+            onClick={onRetrySave}
+            className="px-2 text-xs font-medium text-red-700 underline underline-offset-4"
+          >
+            Sauvegarde à reprendre
+          </button>
+        ) : null}
         <div ref={menuContainerRef} className="relative">
           <button
             ref={menuButtonRef}

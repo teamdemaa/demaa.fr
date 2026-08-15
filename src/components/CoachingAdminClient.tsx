@@ -1,16 +1,26 @@
 "use client";
 
-import { LoaderCircle, Send } from "lucide-react";
+import { CheckCircle2, LoaderCircle, Plus, RotateCcw, Send, X } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import type {
   CoachingConversationSummary,
+  CoachingFreeStatus,
   CoachingMessage,
+  CoachingRecommendation,
+  CoachingRecommendationCatalogOption,
 } from "@/lib/coaching-conversation";
 
 type Conversation = Readonly<{
   customerEmail: string;
+  freeStatus: CoachingFreeStatus;
   id: string;
   messages: readonly CoachingMessage[];
+  recommendations: readonly CoachingRecommendation[];
+  monthlyBenefit: Readonly<{
+    active: boolean;
+    source: "coach_business" | "expert_accountant" | null;
+    validUntil: string | null;
+  }>;
 }>;
 
 const coachingAdminDateFormatter = new Intl.DateTimeFormat("fr-FR", {
@@ -23,6 +33,10 @@ export default function CoachingAdminClient() {
   const [conversations, setConversations] = useState<CoachingConversationSummary[]>([]);
   const [selected, setSelected] = useState<Conversation | null>(null);
   const [reply, setReply] = useState("");
+  const [completeAfterReply, setCompleteAfterReply] = useState(false);
+  const [recommendationCatalog, setRecommendationCatalog] = useState<CoachingRecommendationCatalogOption[]>([]);
+  const [recommendationSlug, setRecommendationSlug] = useState("");
+  const [recommendationNeedKey, setRecommendationNeedKey] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,6 +56,10 @@ export default function CoachingAdminClient() {
       conversations?: CoachingConversationSummary[];
       error?: string;
       message?: CoachingMessage;
+      freeStatus?: CoachingFreeStatus;
+      recommendation?: CoachingRecommendation;
+      recommendationCatalog?: CoachingRecommendationCatalogOption[];
+      monthlyBenefit?: Conversation["monthlyBenefit"];
     } | null;
     if (!response.ok) throw new Error(payload?.error ?? "Une erreur est survenue.");
     return payload;
@@ -53,6 +71,7 @@ export default function CoachingAdminClient() {
     try {
       const payload = await request("/api/admin/coaching");
       setConversations(payload?.conversations ?? []);
+      setRecommendationCatalog(payload?.recommendationCatalog ?? []);
       setIsUnlocked(true);
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : "Accès refusé.");
@@ -67,6 +86,10 @@ export default function CoachingAdminClient() {
     try {
       const payload = await request(`/api/admin/coaching?conversationId=${encodeURIComponent(id)}`);
       setSelected(payload?.conversation ?? null);
+      setRecommendationCatalog((current) => payload?.recommendationCatalog ?? current);
+      setCompleteAfterReply(false);
+      setRecommendationSlug("");
+      setRecommendationNeedKey("");
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : "Chargement impossible.");
     } finally {
@@ -82,17 +105,78 @@ export default function CoachingAdminClient() {
     try {
       const payload = await request("/api/admin/coaching", {
         method: "POST",
-        body: JSON.stringify({ conversationId: selected.id, message: reply }),
+        body: JSON.stringify({
+          completeFreeClarification: completeAfterReply,
+          conversationId: selected.id,
+          message: reply,
+          recommendationNeedKey: recommendationNeedKey || undefined,
+          recommendationResourceSlug: recommendationSlug || undefined,
+        }),
       });
       if (payload?.message) {
         setSelected((current) => current
-          ? { ...current, messages: [...current.messages, payload.message as CoachingMessage] }
+          ? {
+              ...current,
+              freeStatus: payload.freeStatus ?? current.freeStatus,
+              messages: [...current.messages, payload.message as CoachingMessage],
+              recommendations: payload.recommendation
+                ? [...current.recommendations, payload.recommendation]
+                : current.recommendations,
+            }
           : current);
       }
       setReply("");
+      setCompleteAfterReply(false);
+      setRecommendationSlug("");
+      setRecommendationNeedKey("");
       await loadConversations();
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Envoi impossible.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function reopenClarification() {
+    if (!selected) return;
+    setIsLoading(true);
+    setError(null);
+    try {
+      const payload = await request("/api/admin/coaching", {
+        method: "POST",
+        body: JSON.stringify({ action: "reopen", conversationId: selected.id }),
+      });
+      setSelected((current) => current
+        ? { ...current, freeStatus: payload?.freeStatus ?? "open" }
+        : current);
+      await loadConversations();
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : "Réouverture impossible.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function toggleExpertAccountantBenefit() {
+    if (!selected || selected.monthlyBenefit.source === "coach_business") return;
+    setIsLoading(true);
+    setError(null);
+    try {
+      const payload = await request("/api/admin/coaching", {
+        method: "POST",
+        body: JSON.stringify({
+          action: "benefit",
+          benefitActive: !selected.monthlyBenefit.active,
+          conversationId: selected.id,
+        }),
+      });
+      if (payload?.monthlyBenefit) {
+        setSelected((current) => current
+          ? { ...current, monthlyBenefit: payload.monthlyBenefit as Conversation["monthlyBenefit"] }
+          : current);
+      }
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : "Mise à jour impossible.");
     } finally {
       setIsLoading(false);
     }
@@ -131,6 +215,9 @@ export default function CoachingAdminClient() {
             >
               <span className="block truncate text-sm font-medium text-brand-blue">{conversation.customerEmail}</span>
               <span className="mt-1 block truncate text-xs text-dema-muted">{conversation.lastMessage}</span>
+              <span className="mt-2 inline-flex rounded-md bg-dema-sage/70 px-2 py-1 text-[0.68rem] font-medium text-dema-forest">
+                {conversation.freeStatus === "completed" ? "Clarification terminée" : "Gratuit en cours"}
+              </span>
             </button>
           ))}
         </div>
@@ -139,26 +226,93 @@ export default function CoachingAdminClient() {
       <section className="flex min-h-[32rem] flex-col">
         {selected ? (
           <>
-            <header className="border-b border-dema-line px-5 py-4">
-              <h2 className="font-medium text-brand-blue">{selected.customerEmail}</h2>
+            <header className="flex flex-wrap items-center justify-between gap-4 border-b border-dema-line px-5 py-4">
+              <div>
+                <h2 className="font-medium text-brand-blue">{selected.customerEmail}</h2>
+                <p className="mt-1 text-xs text-dema-muted">{selected.freeStatus === "completed" ? "Clarification gratuite terminée" : "Clarification gratuite en cours"}</p>
+              </div>
+              <div className="flex flex-wrap justify-end gap-2">
+                <button type="button" onClick={() => void toggleExpertAccountantBenefit()} disabled={isLoading || selected.monthlyBenefit.source === "coach_business"} className="inline-flex min-h-9 items-center rounded-full border border-dema-line px-3 text-xs font-medium text-dema-forest hover:bg-dema-sage/40 disabled:opacity-50">
+                  {selected.monthlyBenefit.source === "coach_business"
+                    ? "Avantage actif · Coach business"
+                    : selected.monthlyBenefit.active
+                      ? "Désactiver l’avantage Expert-comptable"
+                      : "Activer l’avantage Expert-comptable"}
+                </button>
+                {selected.freeStatus === "completed" ? (
+                  <button type="button" onClick={() => void reopenClarification()} disabled={isLoading} className="inline-flex min-h-9 items-center gap-2 rounded-full border border-dema-line px-3 text-xs font-medium text-dema-forest hover:bg-dema-sage/40 disabled:opacity-50">
+                    <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
+                    Réouvrir
+                  </button>
+                ) : null}
+              </div>
             </header>
             <div className="flex flex-1 flex-col gap-3 overflow-y-auto bg-dema-sage/15 p-5">
-              {selected.messages.map((message) => (
-                <article key={message.id} className={`max-w-[82%] rounded-[1rem] px-4 py-3 text-sm leading-relaxed ${message.author === "specialist" ? "ml-auto bg-dema-forest text-white" : "mr-auto border border-dema-line bg-white text-brand-blue"}`}>
-                  <p className="whitespace-pre-wrap break-words">{message.body}</p>
-                  <p className={`mt-1 text-[0.68rem] ${message.author === "specialist" ? "text-white/70" : "text-dema-muted"}`}>
-                    {message.author === "specialist" ? "Spécialiste" : "Client"} · {coachingAdminDateFormatter.format(new Date(message.createdAt))}
-                  </p>
-                </article>
-              ))}
+              {selected.messages.map((message) => {
+                const attached = selected.recommendations.filter((item) => item.messageId === message.id);
+                return (
+                  <div key={message.id} className={message.author === "specialist" ? "ml-auto max-w-[82%]" : "mr-auto max-w-[82%]"}>
+                    <article className={`rounded-[1rem] px-4 py-3 text-sm leading-relaxed ${message.author === "specialist" ? "bg-dema-forest text-white" : "border border-dema-line bg-white text-brand-blue"}`}>
+                      <p className="whitespace-pre-wrap break-words">{message.body}</p>
+                      <p className={`mt-1 text-[0.68rem] ${message.author === "specialist" ? "text-white/70" : "text-dema-muted"}`}>
+                        {message.author === "specialist" ? "Équipe Demaa" : "Client"} · {coachingAdminDateFormatter.format(new Date(message.createdAt))}
+                      </p>
+                    </article>
+                    {attached.map((recommendation) => (
+                      <div key={recommendation.id} className="mt-2 rounded-xl border border-dema-forest/15 bg-white p-3 text-xs text-brand-blue">
+                        <span className="font-semibold">{recommendation.name}</span>
+                        {recommendation.needLabel ? <span className="text-dema-muted"> · {recommendation.needLabel}</span> : null}
+                        <span className="mt-1 block text-dema-forest">{recommendation.status === "requested" ? "Mise en relation demandée" : "Recommandation envoyée"}</span>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
             <form onSubmit={submitReply} className="border-t border-dema-line p-4">
               <div className="flex items-end gap-2 rounded-xl border border-dema-line p-2 focus-within:border-dema-forest">
                 <textarea aria-label="Réponse" value={reply} onChange={(event) => setReply(event.target.value)} rows={2} placeholder="Répondre…" className="min-h-11 flex-1 resize-none px-2 py-2 text-sm outline-none" />
-                <button disabled={isLoading || reply.trim().length < 2} className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-forest text-white disabled:opacity-40" aria-label="Envoyer la réponse">
+                <button disabled={isLoading || reply.trim().length < 2} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-dema-forest px-4 text-xs font-medium text-white disabled:opacity-40" aria-label={completeAfterReply ? "Envoyer et clôturer" : "Envoyer la réponse"}>
                   {isLoading ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Send className="h-4 w-4" aria-hidden="true" />}
+                  <span>{completeAfterReply ? "Envoyer et clôturer" : "Envoyer"}</span>
                 </button>
               </div>
+              {recommendationSlug ? (
+                <div className="mt-3 rounded-xl border border-dema-forest/15 bg-dema-sage/25 p-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-sm font-medium text-brand-blue">Ajouter une recommandation</p>
+                    <button type="button" onClick={() => { setRecommendationSlug(""); setRecommendationNeedKey(""); }} aria-label="Retirer la recommandation" className="inline-flex h-8 w-8 items-center justify-center rounded-full text-dema-muted"><X className="h-4 w-4" aria-hidden="true" /></button>
+                  </div>
+                  <select value={recommendationSlug} onChange={(event) => { setRecommendationSlug(event.target.value); setRecommendationNeedKey(""); }} className="mt-2 min-h-10 w-full rounded-lg border border-dema-line bg-white px-3 text-sm text-brand-blue">
+                    {recommendationCatalog.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}
+                  </select>
+                  {(recommendationCatalog.find((item) => item.slug === recommendationSlug)?.needs.length ?? 0) > 0 ? (
+                    <select required value={recommendationNeedKey} onChange={(event) => setRecommendationNeedKey(event.target.value)} className="mt-2 min-h-10 w-full rounded-lg border border-dema-line bg-white px-3 text-sm text-brand-blue">
+                      <option value="">Choisir le besoin</option>
+                      {recommendationCatalog.find((item) => item.slug === recommendationSlug)?.needs.map((need) => <option key={need.key} value={need.key}>{need.label}</option>)}
+                    </select>
+                  ) : null}
+                </div>
+              ) : (
+                <button type="button" onClick={() => setRecommendationSlug(recommendationCatalog[0]?.slug ?? "")} disabled={recommendationCatalog.length === 0} className="mt-3 inline-flex min-h-9 items-center gap-2 text-xs font-medium text-dema-forest disabled:opacity-40">
+                  <Plus className="h-4 w-4" aria-hidden="true" /> Ajouter une recommandation
+                </button>
+              )}
+              {selected.freeStatus !== "completed" ? (
+                <label className="mt-3 flex cursor-pointer items-start gap-3 rounded-xl bg-dema-sage/30 px-3 py-3 text-sm text-brand-blue">
+                  <input type="checkbox" checked={completeAfterReply} onChange={(event) => setCompleteAfterReply(event.target.checked)} className="mt-0.5 h-4 w-4 accent-dema-forest" />
+                  <span>
+                    <span className="block font-medium">Clôturer la clarification gratuite après cet envoi</span>
+                    <span className="mt-0.5 block text-xs text-dema-muted">Le client pourra relire la réponse ; Coach business lui sera proposé pour un accompagnement régulier.</span>
+                  </span>
+                </label>
+              ) : null}
+              {completeAfterReply ? (
+                <p className="mt-2 flex items-center gap-2 text-xs font-medium text-dema-forest">
+                  <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+                  La réponse et la clôture seront enregistrées ensemble.
+                </p>
+              ) : null}
               {error ? <p className="mt-2 text-xs text-red-700">{error}</p> : null}
             </form>
           </>

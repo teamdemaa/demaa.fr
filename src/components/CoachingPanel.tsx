@@ -1,35 +1,24 @@
 "use client";
 
-import { Check, ChevronRight, LoaderCircle, Mic, Send, X } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useAccessibleDialog } from "@/components/useAccessibleDialog";
+import { ChevronRight, LoaderCircle, Mic } from "lucide-react";
+import Link from "next/link";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
+import CoachingRecommendationCard from "@/components/CoachingRecommendationCard";
 import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
 import { clearLeadSubmissionKey, getLeadSubmissionKey } from "@/lib/lead-submission-client";
-import type { CoachingMessage } from "@/lib/coaching-conversation";
-import type { SpecialistOffer } from "@/lib/specialist-offers";
+import type {
+  CoachingAccess,
+  CoachingMessage,
+  CoachingRecommendation,
+} from "@/lib/coaching-conversation";
 
-export type CoachingTab = "messages" | "formules";
-export type { SpecialistOffer } from "@/lib/specialist-offers";
+export type CoachingTab = "messages";
 export type SpecialistAccessIntent = {
   draftToken?: string;
-  offer?: SpecialistOffer;
   tab: CoachingTab;
 };
 
-const CLARITY_INCLUDED = [
-  "Questions écrites ou vocales",
-  "Réponse d’un spécialiste sous 24 à 48 heures ouvrées",
-  "Second regard sur une décision, une offre, un document ou une action",
-  "Prochaine étape concrète pour avancer",
-] as const;
-
-const CLARITY_MEMBER_BENEFITS = [
-  "L’équipe Demaa mobilisable selon le besoin : structuration, développement commercial, marketing, finance et opérations",
-  "Mises en relation facilitées lorsque votre profil correspond au besoin",
-  "15 % de réduction sur les autres offres Demaa",
-  "Mise en avant prioritaire de votre profil pour les opportunités correspondant à votre expertise",
-] as const;
 const coachingMessageDateFormatter = new Intl.DateTimeFormat("fr-FR", {
   day: "2-digit",
   hour: "2-digit",
@@ -44,27 +33,31 @@ async function submitCoachingRequest(payload: Record<string, unknown>) {
     body: JSON.stringify(payload),
   });
   const body = await response.json().catch(() => null) as {
+    access?: CoachingAccess;
+    code?: string;
     draftMessage?: string;
     error?: string;
     message?: CoachingMessage;
-    ok?: boolean;
   } | null;
   if (response.status !== 202) {
     throw new CoachingRequestError(
       body?.error || "Le message n’a pas pu être envoyé.",
       body?.draftMessage,
+      body?.code,
     );
   }
   return body;
 }
 
 class CoachingRequestError extends Error {
+  readonly code?: string;
   readonly draftMessage?: string;
 
-  constructor(message: string, draftMessage?: string) {
+  constructor(message: string, draftMessage?: string, code?: string) {
     super(message);
     this.name = "CoachingRequestError";
     this.draftMessage = draftMessage;
+    this.code = code;
   }
 }
 
@@ -95,121 +88,58 @@ function clearCoachingDraftFromUrl() {
   );
 }
 
+function CoachBusinessPromo() {
+  return (
+    <section className="mx-auto mt-5 flex max-w-[51.25rem] flex-col gap-5 rounded-[1.25rem] border border-dema-forest/15 bg-dema-sage/30 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+      <div>
+        <h3 className="text-lg font-medium text-brand-blue">
+          Besoin d’un accompagnement régulier pour avancer sur vos objectifs&nbsp;?
+        </h3>
+        <p className="mt-2 max-w-xl text-sm leading-relaxed text-dema-muted">
+          Avec Coach business, clarifiez le cap, définissez vos priorités et organisez l’exécution avec un coach adapté à votre situation.
+        </p>
+        <p className="mt-2 text-sm font-medium text-dema-forest">
+          À partir de 350 € HT / mois
+          <span className="mt-1 block text-xs">−12 % sur les autres accompagnements Demaa</span>
+        </p>
+      </div>
+      <Link
+        href="/services/coach-business"
+        className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-brand-blue"
+      >
+        Découvrir Coach business
+        <ChevronRight className="h-4 w-4" aria-hidden="true" />
+      </Link>
+    </section>
+  );
+}
+
 export default function CoachingPanel({
   initialDraftToken,
   onRequireAccess,
 }: {
   initialDraftToken?: string;
-  initialOffer?: SpecialistOffer;
   initialTab?: CoachingTab;
   onRequireAccess?: (intent: SpecialistAccessIntent) => void;
 }) {
-  const [clarityDetailsOpen, setClarityDetailsOpen] = useState(false);
+  const isAuthenticated = !onRequireAccess;
 
   return (
     <section className="mx-auto max-w-[68rem] pb-16 pt-3 sm:pt-5">
       <header className="mx-auto mb-8 max-w-[42.5rem] text-center">
-        <h2 className="text-4xl font-light tracking-[-0.045em] text-brand-blue sm:text-5xl">Échanger avec un spécialiste</h2>
+        <h2 className="text-4xl font-light tracking-[-0.045em] text-brand-blue sm:text-5xl">
+          Clarifier ma situation
+        </h2>
         <p className="mx-auto mt-4 max-w-[35.625rem] text-base font-light leading-relaxed text-dema-muted sm:text-lg">
-          Écrivez ou dictez votre situation. Votre message et les réponses du spécialiste restent réunis dans une conversation simple.
+          Décrivez votre situation par écrit ou à l’oral. L’équipe Demaa vous aide gratuitement à identifier le blocage et la prochaine étape.
         </p>
-        <button
-          type="button"
-          onClick={() => setClarityDetailsOpen(true)}
-          aria-haspopup="dialog"
-          className="mx-auto mt-4 inline-flex min-h-11 items-center gap-2 rounded-full border border-dema-forest/15 bg-dema-paper px-4 text-sm font-medium text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
-        >
-          <span>Clarté · 149 € HT / mois</span>
-          <ChevronRight className="h-4 w-4" aria-hidden="true" />
-        </button>
       </header>
       <CoachingMessageForm
         initialDraftToken={initialDraftToken}
-        isAuthenticated={!onRequireAccess}
+        isAuthenticated={isAuthenticated}
         onRequireAccess={onRequireAccess}
       />
-      {clarityDetailsOpen ? (
-        <ClarityDetailsDialog onClose={() => setClarityDetailsOpen(false)} />
-      ) : null}
-    </section>
-  );
-}
-
-function ClarityDetailsDialog({ onClose }: { onClose: () => void }) {
-  const dialogRef = useAccessibleDialog({ onClose });
-
-  return (
-    <div
-      className="fixed inset-0 z-[150] flex items-end justify-center bg-brand-blue/30 backdrop-blur-sm sm:items-center sm:p-6"
-      onClick={onClose}
-    >
-      <section
-        ref={dialogRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="clarity-details-title"
-        tabIndex={-1}
-        onClick={(event) => event.stopPropagation()}
-        className="relative max-h-[92dvh] w-full max-w-2xl overflow-y-auto rounded-t-[1.5rem] bg-dema-paper p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-2xl outline-none sm:rounded-[1.5rem] sm:p-8"
-      >
-        <button
-          type="button"
-          data-dialog-initial-focus
-          onClick={onClose}
-          aria-label="Fermer"
-          className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:bg-dema-sage"
-        >
-          <X className="h-4 w-4" aria-hidden="true" />
-        </button>
-
-        <p className="pr-12 text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
-          Accompagnement asynchrone
-        </p>
-        <h3 id="clarity-details-title" className="mt-2 pr-12 text-3xl font-light tracking-[-0.04em] text-brand-blue sm:text-4xl">
-          Clarté
-        </h3>
-        <p className="mt-3 max-w-xl text-sm leading-relaxed text-dema-muted sm:text-base">
-          Quand une situation vous bloque, obtenez un regard de terrain pour voir clair, décider et avancer sans attendre un rendez-vous.
-        </p>
-        <p className="mt-5 text-2xl font-medium tracking-[-0.03em] text-brand-blue">
-          149 € <span className="text-sm font-normal tracking-normal text-dema-muted">HT / mois</span>
-        </p>
-
-        <div className="mt-7 grid gap-6 sm:grid-cols-2">
-          <ClarityBenefitList title="Ce qui est inclus" benefits={CLARITY_INCLUDED} />
-          <ClarityBenefitList title="Avantages Clarté" benefits={CLARITY_MEMBER_BENEFITS} />
-        </div>
-
-        <button
-          type="button"
-          onClick={onClose}
-          className="mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-dema-forest px-6 text-sm font-semibold text-white transition hover:bg-brand-blue"
-        >
-          Poser ma question
-        </button>
-      </section>
-    </div>
-  );
-}
-
-function ClarityBenefitList({
-  benefits,
-  title,
-}: {
-  benefits: readonly string[];
-  title: string;
-}) {
-  return (
-    <section>
-      <h4 className="text-sm font-semibold text-brand-blue">{title}</h4>
-      <ul className="mt-3 space-y-3 text-sm leading-relaxed text-dema-muted">
-        {benefits.map((benefit) => (
-          <li key={benefit} className="flex gap-2.5">
-            <Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
-            <span>{benefit}</span>
-          </li>
-        ))}
-      </ul>
+      <CoachBusinessPromo />
     </section>
   );
 }
@@ -225,6 +155,10 @@ function CoachingMessageForm({
 }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<CoachingMessage[]>([]);
+  const [recommendations, setRecommendations] = useState<CoachingRecommendation[]>([]);
+  const [access, setAccess] = useState<CoachingAccess | null>(
+    isAuthenticated ? null : { canSend: true, freeStatus: "available" },
+  );
   const [pendingDraftToken, setPendingDraftToken] = useState(initialDraftToken || "");
   const [status, setStatus] = useState<"idle" | "loading" | "sending" | "error">(
     isAuthenticated ? "loading" : "idle",
@@ -256,8 +190,14 @@ function CoachingMessageForm({
         credentials: "same-origin",
       });
       if (!response.ok) throw new Error("history_failed");
-      const payload = await response.json() as { messages?: CoachingMessage[] };
+      const payload = await response.json() as {
+        access?: CoachingAccess;
+        messages?: CoachingMessage[];
+        recommendations?: CoachingRecommendation[];
+      };
       setMessages(Array.isArray(payload.messages) ? payload.messages : []);
+      setRecommendations(Array.isArray(payload.recommendations) ? payload.recommendations : []);
+      if (payload.access) setAccess(payload.access);
       setStatus((current) => current === "sending" ? current : "idle");
     } catch {
       if (!quiet) setStatus("error");
@@ -270,7 +210,6 @@ function CoachingMessageForm({
     if (!isAuthenticated) return;
 
     void loadMessages();
-
     const interval = window.setInterval(() => {
       if (document.visibilityState === "visible") void loadMessages(true);
     }, 30_000);
@@ -278,11 +217,8 @@ function CoachingMessageForm({
   }, [isAuthenticated, loadMessages]);
 
   useEffect(() => {
-    if (message) {
-      window.sessionStorage.setItem("demaa_coaching_message_draft", message);
-    } else {
-      window.sessionStorage.removeItem("demaa_coaching_message_draft");
-    }
+    if (message) window.sessionStorage.setItem("demaa_coaching_message_draft", message);
+    else window.sessionStorage.removeItem("demaa_coaching_message_draft");
   }, [message]);
 
   useEffect(() => {
@@ -292,7 +228,20 @@ function CoachingMessageForm({
       behavior: messages.length > 1 ? "smooth" : "auto",
       top: history.scrollHeight,
     });
-  }, [messages]);
+  }, [messages, recommendations]);
+
+  const updateRecommendation = useCallback((next: CoachingRecommendation) => {
+    setRecommendations((current) => current.map((item) => item.id === next.id ? next : item));
+  }, []);
+  const recommendationsByMessage = useMemo(() => {
+    const grouped = new Map<string, CoachingRecommendation[]>();
+    for (const recommendation of recommendations) {
+      const group = grouped.get(recommendation.messageId) ?? [];
+      group.push(recommendation);
+      grouped.set(recommendation.messageId, group);
+    }
+    return grouped;
+  }, [recommendations]);
 
   const sendAuthenticatedMessage = useCallback(async (draftToken?: string) => {
     cancelMessageDictation();
@@ -315,6 +264,7 @@ function CoachingMessageForm({
       } else {
         await loadMessages(true);
       }
+      if (payload?.access) setAccess(payload.access);
       setPendingDraftToken("");
       setMessage("");
       setStatus("idle");
@@ -323,6 +273,12 @@ function CoachingMessageForm({
       if (error instanceof CoachingRequestError && error.draftMessage) {
         setMessage(error.draftMessage);
       }
+      if (
+        error instanceof CoachingRequestError
+        && error.code === "free_clarification_completed"
+      ) {
+        setAccess({ canSend: false, freeStatus: "completed" });
+      }
       setStatus("error");
     }
   }, [cancelMessageDictation, loadMessages, message]);
@@ -330,13 +286,13 @@ function CoachingMessageForm({
   useEffect(() => {
     if (
       !isAuthenticated
+      || !access?.canSend
       || !pendingDraftToken
       || autoSubmissionRef.current === pendingDraftToken
     ) return;
-
     autoSubmissionRef.current = pendingDraftToken;
     void sendAuthenticatedMessage(pendingDraftToken);
-  }, [isAuthenticated, pendingDraftToken, sendAuthenticatedMessage]);
+  }, [access?.canSend, isAuthenticated, pendingDraftToken, sendAuthenticatedMessage]);
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
@@ -363,6 +319,7 @@ function CoachingMessageForm({
       return;
     }
 
+    if (!access?.canSend) return;
     await sendAuthenticatedMessage(pendingDraftToken || undefined);
   }
 
@@ -370,7 +327,13 @@ function CoachingMessageForm({
     <section className="mx-auto mt-7 max-w-[51.25rem] overflow-hidden rounded-[1.5rem] border border-dema-line bg-dema-paper">
       <div className="flex min-h-[3.875rem] items-center justify-between gap-4 border-b border-dema-line px-5 py-3.5 sm:px-6">
         <h3 className="text-base font-medium text-brand-blue">Votre conversation</h3>
-        <span className="shrink-0 rounded-full bg-dema-sage px-3 py-1.5 text-xs font-medium text-dema-forest">Écrit ou vocal</span>
+        <span className="shrink-0 rounded-full bg-dema-sage px-3 py-1.5 text-xs font-medium text-dema-forest">
+          {access?.freeStatus === "completed"
+            ? "Clarification terminée"
+            : access?.freeStatus === "open"
+              ? "Réponse gratuite en préparation"
+              : "Première clarification offerte"}
+        </span>
       </div>
 
       <div
@@ -387,49 +350,77 @@ function CoachingMessageForm({
         ) : null}
         {status !== "loading" && messages.length === 0 ? (
           <p className="m-auto max-w-sm text-center text-sm leading-relaxed text-dema-muted">
-            Posez votre première question. Vos échanges resteront visibles ici.
+            Décrivez ce que vous souhaitez clarifier. Vous pourrez envoyer votre message après la connexion.
           </p>
         ) : null}
-        {messages.map((entry) => (
-          <article
-            key={entry.id}
-            className={`max-w-[85%] rounded-[1.1rem] px-4 py-3 text-sm leading-relaxed shadow-sm ${entry.author === "customer" ? "ml-auto bg-dema-forest text-white" : "mr-auto border border-dema-line bg-white text-brand-blue"}`}
-          >
-            <p className="whitespace-pre-wrap break-words">{entry.body}</p>
-            <p className={`mt-1.5 text-[0.68rem] ${entry.author === "customer" ? "text-white/70" : "text-dema-muted"}`}>
-              {entry.author === "customer" ? "Vous" : "Spécialiste"} · {coachingMessageDateFormatter.format(new Date(entry.createdAt))}
-            </p>
-          </article>
-        ))}
+        {messages.map((entry) => {
+          const attachedRecommendations = recommendationsByMessage.get(entry.id) ?? [];
+          return (
+            <div key={entry.id} className={entry.author === "customer" ? "ml-auto max-w-[85%]" : "mr-auto max-w-[85%]"}>
+              <article className={`rounded-[1.1rem] px-4 py-3 text-sm leading-relaxed shadow-sm ${entry.author === "customer" ? "bg-dema-forest text-white" : "border border-dema-line bg-white text-brand-blue"}`}>
+                <p className="whitespace-pre-wrap break-words">{entry.body}</p>
+                <p className={`mt-1.5 text-[0.68rem] ${entry.author === "customer" ? "text-white/70" : "text-dema-muted"}`}>
+                  {entry.author === "customer" ? "Vous" : "Équipe Demaa"} · {coachingMessageDateFormatter.format(new Date(entry.createdAt))}
+                </p>
+              </article>
+              {attachedRecommendations.map((recommendation) => (
+                <CoachingRecommendationCard key={recommendation.id} recommendation={recommendation} onRequested={updateRecommendation} />
+              ))}
+            </div>
+          );
+        })}
       </div>
 
-      <form onSubmit={submit} className="border-t border-dema-line p-3 sm:p-4">
-        <div className="flex items-end gap-2 rounded-[1.15rem] border border-dema-line bg-white p-2 focus-within:border-dema-forest">
-          <textarea
-            aria-label="Votre message"
-            value={message}
-            onChange={(event) => messageDictation.handleValueChange(event.target.value)}
-            rows={2}
-            placeholder="Écrivez votre message…"
-            className="max-h-32 min-h-12 flex-1 resize-none bg-transparent px-2 py-2 text-sm outline-none"
-          />
-          <button
-            type="button"
-            onClick={messageDictation.toggle}
-            className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-sage/50 ${messageDictation.isListening ? "bg-dema-sage ring-1 ring-dema-forest/30" : ""}`}
-            aria-label={messageDictation.isListening ? "Arrêter la dictée" : "Dicter le message"}
-            aria-pressed={messageDictation.isListening}
+      {access?.freeStatus === "completed" ? (
+        <div className="border-t border-dema-line p-4 text-center sm:p-5">
+          <p className="text-sm font-medium text-brand-blue">Clarification terminée</p>
+          <p className="mt-1 text-sm text-dema-muted">
+            Pour être accompagné régulièrement sur vos priorités et leur exécution, découvrez Coach business.
+          </p>
+          <Link
+            href="/services/coach-business"
+            className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-white hover:bg-brand-blue"
           >
-            <Mic className="h-4 w-4" />
-          </button>
-          <button disabled={status === "sending" || (message.trim().length < 2 && !pendingDraftToken)} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-forest text-white transition hover:bg-[#284f3a] disabled:opacity-40" aria-label="Envoyer le message">
-            {status === "sending" ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Send className="h-4 w-4" aria-hidden="true" />}
-          </button>
+            Découvrir Coach business
+          </Link>
         </div>
-        {messageDictation.isListening ? <p className="mt-2 px-2 text-xs text-dema-forest" role="status">Dictée en cours… le texte apparaît dans le message.</p> : null}
-        {messageDictation.error ? <p className="mt-2 px-2 text-xs text-amber-800" role="alert">{messageDictation.error}</p> : null}
-        {status === "error" ? <p className="mt-2 px-2 text-xs font-medium text-red-700">Le message n’a pas pu être envoyé. Votre texte est conservé : réessayez.</p> : null}
-      </form>
+      ) : (
+        <form onSubmit={submit} className="border-t border-dema-line p-3 sm:p-4">
+          <div className="flex items-end gap-2 rounded-[1.15rem] border border-dema-line bg-white p-2 focus-within:border-dema-forest">
+            <textarea
+              aria-label="Votre message"
+              value={message}
+              onChange={(event) => messageDictation.handleValueChange(event.target.value)}
+              rows={2}
+              placeholder="Décrivez la situation que vous souhaitez clarifier…"
+              className="max-h-32 min-h-12 flex-1 resize-none bg-transparent px-2 py-2 text-sm outline-none"
+            />
+            <button
+              type="button"
+              onClick={messageDictation.toggle}
+              className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-sage/50 ${messageDictation.isListening ? "bg-dema-sage ring-1 ring-dema-forest/30" : ""}`}
+              aria-label={messageDictation.isListening ? "Arrêter la dictée" : "Dicter le message"}
+              aria-pressed={messageDictation.isListening}
+            >
+              <Mic className="h-4 w-4" aria-hidden="true" />
+            </button>
+            <button
+              disabled={status === "sending" || (message.trim().length < 2 && !pendingDraftToken)}
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-forest text-white transition hover:bg-[#284f3a] disabled:opacity-40"
+              aria-label="Clarifier ma situation"
+            >
+              {status === "sending" ? (
+                <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+              ) : (
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+              )}
+            </button>
+          </div>
+          {messageDictation.isListening ? <p className="mt-2 px-2 text-xs text-dema-forest" role="status">Dictée en cours… le texte apparaît dans le message.</p> : null}
+          {messageDictation.error ? <p className="mt-2 px-2 text-xs text-amber-800" role="alert">{messageDictation.error}</p> : null}
+          {status === "error" ? <p className="mt-2 px-2 text-xs font-medium text-red-700">Le message n’a pas pu être envoyé. Votre texte est conservé : réessayez.</p> : null}
+        </form>
+      )}
     </section>
   );
 }

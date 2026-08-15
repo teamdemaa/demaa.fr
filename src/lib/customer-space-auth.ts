@@ -1,23 +1,13 @@
-import { createHash, randomBytes } from "node:crypto";
+import "server-only";
+
+import type { DecodedIdToken } from "firebase-admin/auth";
 import { normalizeEmail } from "@/lib/email";
-import {
-  getCustomerSessionEmail,
-  saveCustomerMagicLink,
-  saveCustomerSession,
-} from "@/lib/generations-db";
+import { getAdminAuth } from "@/lib/firebase-admin";
 
-export const CUSTOMER_SPACE_COOKIE = "demaa_customer_session";
+export const CUSTOMER_SPACE_COOKIE = "demaa_session";
 
-const MAGIC_LINK_TTL_MS = 30 * 60 * 1000;
-const CUSTOMER_SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000;
-
-export function hashToken(token: string) {
-  return createHash("sha256").update(token).digest("hex");
-}
-
-function createRawToken() {
-  return randomBytes(32).toString("base64url");
-}
+export const CUSTOMER_SESSION_TTL_MS = 14 * 24 * 60 * 60 * 1000;
+export const CUSTOMER_SESSION_MAX_AUTH_AGE_SECONDS = 5 * 60;
 
 export function getCustomerCookieOptions(maxAge = CUSTOMER_SESSION_TTL_MS / 1000) {
   return {
@@ -32,61 +22,56 @@ export function getCustomerCookieOptions(maxAge = CUSTOMER_SESSION_TTL_MS / 1000
   };
 }
 
-export class InvalidActionPlanClaimError extends Error {
-  constructor() {
-    super("The action plan claim is invalid or expired.");
-    this.name = "InvalidActionPlanClaimError";
+export type CustomerSessionIdentity = Readonly<{
+  email: string;
+  provider: "google" | "password";
+  uid: string;
+}>;
+
+function toCustomerIdentity(decoded: DecodedIdToken): CustomerSessionIdentity | null {
+  const provider = decoded.firebase?.sign_in_provider;
+  if (
+    !decoded.uid
+    || !decoded.email
+    || (provider !== "password" && provider !== "google.com")
+  ) return null;
+
+  return {
+    email: normalizeEmail(decoded.email),
+    provider: provider === "google.com" ? "google" : "password",
+    uid: decoded.uid,
+  };
+}
+
+export async function createCustomerSession(idToken: string) {
+  const auth = getAdminAuth();
+  const decoded = await auth.verifyIdToken(idToken, true);
+  const identity = toCustomerIdentity(decoded);
+  if (!identity) return null;
+
+  const authAgeSeconds = Math.floor(Date.now() / 1000) - decoded.auth_time;
+  if (
+    !Number.isFinite(authAgeSeconds)
+    || authAgeSeconds < 0
+    || authAgeSeconds > CUSTOMER_SESSION_MAX_AUTH_AGE_SECONDS
+  ) {
+    return null;
   }
+
+  const sessionCookie = await auth.createSessionCookie(idToken, {
+    expiresIn: CUSTOMER_SESSION_TTL_MS,
+  });
+  return { identity, sessionCookie } as const;
 }
 
-export async function createMagicLinkToken(
-  email: string,
-  actionPlanClaim?: {
-    actionPlanId: string;
-    claimSecret?: string | null;
-    temporaryAccessToken?: string | null;
-  } | null,
+export async function getIdentityFromCustomerSessionToken(
+  token?: string | null,
 ) {
-  const token = createRawToken();
-  const expiresAt = new Date(Date.now() + MAGIC_LINK_TTL_MS).toISOString();
-
-  const saved = await saveCustomerMagicLink({
-    actionPlanClaim: actionPlanClaim
-      ? {
-          actionPlanId: actionPlanClaim.actionPlanId,
-          claimSecretHash: actionPlanClaim.claimSecret
-            ? hashToken(actionPlanClaim.claimSecret)
-            : null,
-          temporaryAccessTokenHash: actionPlanClaim.temporaryAccessToken
-            ? hashToken(actionPlanClaim.temporaryAccessToken)
-            : null,
-        }
-      : null,
-    email: normalizeEmail(email),
-    expiresAt,
-    tokenHash: hashToken(token),
-  });
-
-  if (!saved) throw new InvalidActionPlanClaimError();
-
-  return token;
-}
-
-export async function createCustomerSession(email: string) {
-  const token = createRawToken();
-  const expiresAt = new Date(Date.now() + CUSTOMER_SESSION_TTL_MS).toISOString();
-
-  await saveCustomerSession({
-    email: normalizeEmail(email),
-    expiresAt,
-    sessionHash: hashToken(token),
-  });
-
-  return token;
-}
-
-export async function getEmailFromCustomerSessionToken(token?: string | null) {
   if (!token) return null;
-
-  return getCustomerSessionEmail(hashToken(token));
+  try {
+    const decoded = await getAdminAuth().verifySessionCookie(token, true);
+    return toCustomerIdentity(decoded);
+  } catch {
+    return null;
+  }
 }

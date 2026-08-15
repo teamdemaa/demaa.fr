@@ -6,12 +6,12 @@ const mocks = vi.hoisted(() => ({
   enforceAllowedHost: vi.fn(),
   enforceSameOrigin: vi.fn(),
   enforceServiceRequestRateLimit: vi.fn(),
-  requireCurrentCustomerEmail: vi.fn(),
+  requireCurrentCustomerIdentity: vi.fn(),
   resolveLeadAttribution: vi.fn(),
   resolveLeadContext: vi.fn(),
   appendCustomerCoachingMessage: vi.fn(),
   claimPendingCoachingMessageDraft: vi.fn(),
-  getCustomerCoachingMessages: vi.fn(),
+  getCustomerCoachingState: vi.fn(),
   markCoachingMessageDraftSent: vi.fn(),
   submitLeadRequest: vi.fn(),
 }));
@@ -27,11 +27,11 @@ vi.mock("@/lib/api-security", () => ({
   }),
 }));
 vi.mock("@/lib/customer-space-session.server", () => ({
-  requireCurrentCustomerEmail: mocks.requireCurrentCustomerEmail,
+  requireCurrentCustomerIdentity: mocks.requireCurrentCustomerIdentity,
 }));
 vi.mock("@/lib/coaching-conversation.server", () => ({
   appendCustomerCoachingMessage: mocks.appendCustomerCoachingMessage,
-  getCustomerCoachingMessages: mocks.getCustomerCoachingMessages,
+  getCustomerCoachingState: mocks.getCustomerCoachingState,
 }));
 vi.mock("@/lib/coaching-message-draft.server", () => ({
   claimPendingCoachingMessageDraft: mocks.claimPendingCoachingMessageDraft,
@@ -79,8 +79,8 @@ describe("coaching request route", () => {
     mocks.enforceAllowedHost.mockReturnValue(null);
     mocks.enforceSameOrigin.mockReturnValue(null);
     mocks.enforceServiceRequestRateLimit.mockResolvedValue(null);
-    mocks.requireCurrentCustomerEmail.mockResolvedValue({
-      email: "owner@example.com",
+    mocks.requireCurrentCustomerIdentity.mockResolvedValue({
+      identity: { email: "owner@example.com", provider: "password", uid: "owner-uid" },
       response: null,
     });
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
@@ -90,6 +90,8 @@ describe("coaching request route", () => {
     });
     mocks.submitLeadRequest.mockResolvedValue({ duplicate: false, leadId: "lead-1" });
     mocks.appendCustomerCoachingMessage.mockResolvedValue({
+      access: { canSend: true, freeStatus: "open" },
+      allowed: true,
       created: true,
       message: {
         author: "customer",
@@ -98,7 +100,10 @@ describe("coaching request route", () => {
         id: "message-1",
       },
     });
-    mocks.getCustomerCoachingMessages.mockResolvedValue([]);
+    mocks.getCustomerCoachingState.mockResolvedValue({
+      access: { canSend: true, freeStatus: "available" },
+      messages: [],
+    });
     mocks.claimPendingCoachingMessageDraft.mockResolvedValue(null);
     mocks.markCoachingMessageDraftSent.mockResolvedValue(true);
   });
@@ -115,12 +120,13 @@ describe("coaching request route", () => {
       body: "Je souhaite clarifier ma prochaine décision opérationnelle.",
       email: "owner@example.com",
       idempotencyKey: "coaching:12345678",
+      uid: "owner-uid",
     });
   });
 
   it("refuses a coaching request without an authenticated session", async () => {
-    mocks.requireCurrentCustomerEmail.mockResolvedValue({
-      email: null,
+    mocks.requireCurrentCustomerIdentity.mockResolvedValue({
+      identity: null,
       response: Response.json({ error: "authentication_required" }, { status: 401 }),
     });
 
@@ -128,6 +134,23 @@ describe("coaching request route", () => {
 
     expect(response.status).toBe(401);
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
+  it("blocks a new message after the free clarification is completed", async () => {
+    mocks.appendCustomerCoachingMessage.mockResolvedValue({
+      access: { canSend: false, freeStatus: "completed" },
+      allowed: false,
+    });
+
+    const response = await POST(request());
+
+    expect(response.status).toBe(409);
+    expect(mocks.appendCustomerCoachingMessage).toHaveBeenCalledOnce();
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+    await expect(response.json()).resolves.toMatchObject({
+      code: "free_clarification_completed",
+      draftMessage: "Je souhaite clarifier ma prochaine décision opérationnelle.",
+    });
   });
 
   it("claims a server draft and ignores client-controlled message and idempotency", async () => {
@@ -146,12 +169,13 @@ describe("coaching request route", () => {
     expect(response.status).toBe(202);
     expect(mocks.claimPendingCoachingMessageDraft).toHaveBeenCalledWith({
       draftToken: "a".repeat(43),
-      email: "owner@example.com",
+      uid: "owner-uid",
     });
     expect(mocks.appendCustomerCoachingMessage).toHaveBeenCalledWith({
       body: "Message conservé avant la connexion.",
       email: "owner@example.com",
       idempotencyKey: "coaching:draft:server-owned-key",
+      uid: "owner-uid",
     });
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: [{ label: "Message", value: "Message conservé avant la connexion." }],
@@ -159,7 +183,7 @@ describe("coaching request route", () => {
     }));
     expect(mocks.markCoachingMessageDraftSent).toHaveBeenCalledWith({
       draftToken: "a".repeat(43),
-      email: "owner@example.com",
+      uid: "owner-uid",
     });
   });
 
@@ -181,6 +205,8 @@ describe("coaching request route", () => {
       idempotencyKey: "coaching:draft:stable-retry-key",
     });
     mocks.appendCustomerCoachingMessage.mockResolvedValue({
+      access: { canSend: true, freeStatus: "open" },
+      allowed: true,
       created: false,
       message: {
         author: "customer",
@@ -237,7 +263,7 @@ describe("coaching request route", () => {
     }));
 
     expect(response.status).toBe(202);
-    expect(mocks.requireCurrentCustomerEmail).not.toHaveBeenCalled();
+    expect(mocks.requireCurrentCustomerIdentity).not.toHaveBeenCalled();
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: expect.arrayContaining([
         { label: "Formule", value: "Coach business · 2 sessions / mois" },
@@ -274,19 +300,23 @@ describe("coaching request route", () => {
   });
 
   it("returns only the authenticated customer's conversation without caching", async () => {
-    mocks.getCustomerCoachingMessages.mockResolvedValue([{
-      author: "specialist",
-      body: "Voici la prochaine étape.",
-      createdAt: "2026-08-11T09:00:00.000Z",
-      id: "reply-1",
-    }]);
+    mocks.getCustomerCoachingState.mockResolvedValue({
+      access: { canSend: false, freeStatus: "completed" },
+      messages: [{
+        author: "specialist",
+        body: "Voici la prochaine étape.",
+        createdAt: "2026-08-11T09:00:00.000Z",
+        id: "reply-1",
+      }],
+    });
 
     const response = await GET(request());
     const payload = await response.json();
 
     expect(response.status).toBe(200);
     expect(response.headers.get("cache-control")).toContain("no-store");
-    expect(mocks.getCustomerCoachingMessages).toHaveBeenCalledWith("owner@example.com");
+    expect(mocks.getCustomerCoachingState).toHaveBeenCalledWith("owner-uid");
     expect(payload.messages).toHaveLength(1);
+    expect(payload.access).toEqual({ canSend: false, freeStatus: "completed" });
   });
 });

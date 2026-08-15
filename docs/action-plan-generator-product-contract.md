@@ -227,10 +227,9 @@ contenu Académie ou l'Opportunité sélectionnée sont encodés dans une URL
 partageable et restaurés par navigation arrière. L'URL publique canonique
 reste indexable ; l'URL applicative conserve le contexte de travail.
 
-Le lien magique conserve le même `returnTo` sûr mais adapte son contenu au
-parcours : plan, spécialiste, Opportunité ou accès générique. Il ne prétend
-plus qu'un plan a été sauvegardé lorsque la personne cherchait uniquement à
-continuer un autre parcours.
+Le compte e-mail et mot de passe conserve un `returnTo` sûr adapté au parcours :
+plan, équipe Demaa, Opportunité ou accès générique. Google utilise le même
+endpoint de session et le même mécanisme de retour.
 
 ### Après connexion
 
@@ -238,10 +237,9 @@ La même navigation applicative est conservée. Coaching reste accessible depuis
 l'action compacte `Échanger`, conformément aux ADR 0009 et
 0010, sans devenir un cinquième onglet.
 
-`Coaching` désigne le produit. Dans l'interface, la personne qui accompagne est
-toujours désignée comme un `spécialiste` : la surface porte le titre
-`Échanger avec un spécialiste`. Les termes `coach` et `votre coach` ne sont
-pas utilisés comme libellés humains.
+La surface porte le titre `Échanger avec l’équipe Demaa`. La copie précise que
+l'équipe mobilise le spécialiste adapté ; les termes `coach` et `votre coach`
+ne sont pas utilisés comme libellés humains.
 
 ## Persistance
 
@@ -252,8 +250,11 @@ pas utilisés comme libellés humains.
 - Seul le slug du Système choisi est mémorisé dans ce navigateur pour éviter
   de redemander l'activité à chaque visite ; aucun contenu de plan, aucune
   situation et aucune donnée métier détaillée n'y sont stockés.
-- Une actualisation ou une fermeture peut faire perdre le résultat.
-- Le résultat est visible avant connexion.
+- Une actualisation ou une fermeture pendant la génération ou l'accès peut
+  faire perdre le résultat non sauvegardé.
+- Le résultat généré reste en mémoire et n'est révélé qu'après la création ou
+  la reprise d'un accès. Un plan vierge peut encore être préparé avant cette
+  étape.
 
 ### Après sauvegarde
 
@@ -263,14 +264,12 @@ pas utilisés comme libellés humains.
   seule, révocable, limité et non indexable.
 - Aucun miroir local durable concurrent n'est maintenu.
 
-Pour un invité, la sauvegarde crée un plan temporaire `pending_claim` avec un
-accès limité à trente jours par cookie HttpOnly et un secret non stocké en
-clair. Le lien magique associe le jeton, l'e-mail normalisé et ce plan ; sa
-consommation rattache atomiquement le plan à l'adresse vérifiée. Pour une
-personne déjà connectée, la sauvegarde crée directement le plan actif puis
-ouvre sa page persistée. Les modifications y sont enregistrées avec révision
-optimiste et prolongent la durée de conservation depuis la dernière mise à
-jour.
+Pendant la génération, l'invité voit uniquement l'écran de progression et les
+questions éditoriales. Lorsque le résultat est prêt, un écran d'accès compact
+est présenté avant toute révélation. Après création ou reprise de session, la
+sauvegarde crée directement le plan actif puis ouvre sa page persistée. Les
+modifications y sont enregistrées avec révision optimiste. Le plan vierge reste
+le seul parcours pouvant commencer temporairement avant une modification utile.
 
 Lorsqu'une session connectée revient dans l'application sans demander une
 nouvelle situation, `/plans` restaure le dernier plan sauvegardé. S'il n'en
@@ -278,14 +277,12 @@ existe aucun, l'application ouvre explicitement `/?new=1`. Le paramètre
 `new=1` est donc réservé à la création volontaire d'un plan vierge et ne doit
 jamais remplacer silencieusement un plan déjà enregistré.
 
-L'identité e-mail est établie par un fournisseur vérifié puis matérialisée dans
-la session Demaa. Le lien magique reste le parcours universel. Google via
-Firebase Auth peut être proposé comme raccourci progressif, avec le même e-mail
-et la même session, uniquement lorsque sa configuration et ses domaines sont
-validés ; il reste sinon entièrement masqué. Aucun mot de passe, second compte
-ou portail parallèle n'est créé. Une fois la session créée, les formulaires fonctionnels
+L'identité primaire est un compte e-mail et mot de passe Firebase, matérialisé
+par un cookie de session Firebase natif et son UID. Demaa ne reçoit ni ne
+stocke le mot de passe. Google utilise exactement la même session. L'UID est
+l'unique clé d'autorisation des plans, conversations et brouillons. Une fois la session Firebase créée, les formulaires fonctionnels
 (guides métier, Opportunités, Coaching, inscription et demandes) réutilisent
-l'e-mail vérifié côté serveur et ne le redemandent pas. Un visiteur non
+l'e-mail de la session côté serveur et ne le redemandent pas. Un visiteur non
 connecté qui déclenche l'une de ces actions passe d'abord par l'un de ces
 parcours vérifiés, puis revient directement à son intention dans l'application. Il n'existe pas
 d'expérience publique distincte `Mon espace` ou `Mes plans`.
@@ -394,18 +391,27 @@ sont implémentés derrière des limites conservatrices réversibles.
 
 ## Extensions explicitement différées
 
-La première version de l'accès à un spécialiste fait partie de l'application
+La première version de l'accès à l'équipe Demaa fait partie de l'application
 conformément à l'ADR 0009 : une conversation écrite ou vocale simple, sans
-onglets Messages/Formules. `Clarté` est présenté à 149 EUR HT/mois dans cette
-conversation. L'offre `Coach business` est présentée séparément dans Services :
-son sélecteur affiche 1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois, avec
-15 % de réduction annoncée aux abonnés Clarté. Son CTA `Être rappelé(e)`
-transmet une intention sans déclencher de paiement. La durée exacte d'un
-éventuel essai Clarté reste un arbitrage ouvert et aucune gratuité n'est promise.
+onglets Messages/Formules. Chaque UID Firebase dispose d'une première
+clarification offerte, clôturée manuellement par la Team Demaa avec sa réponse
+finale. L'offre `Coach business` est présentée séparément dans Services : son
+sélecteur affiche 1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois. Son CTA
+`Être rappelé(e)` transmet une intention sans connexion ni paiement public.
+La Team Demaa qualifie ensuite le besoin, le matching et le rythme avec le
+dirigeant.
+
+Un accompagnement mensuel actif ouvre 12 % de réduction sur les autres
+prestations directement facturées par Demaa. Coach business est confirmé par
+Stripe ; une relation Expert-comptable est confirmée manuellement par la Team
+Demaa. Les avantages ne se cumulent pas. Les honoraires de partenaires ou
+d'experts-comptables, les budgets média, logiciels et frais de tiers restent
+exclus. Le droit est vérifié côté serveur à partir de l'UID avant devis ou
+paiement.
 Restent
 au backlog, sans modifier cette première version :
 
-- une nouvelle frontière entre phase gratuite et phase payante ;
+- les limites raisonnables d'usage et la capacité opérationnelle ;
 - les évolutions de capacité humaine et de promesse de délai ;
 - les nouveaux canaux ou formats de messagerie ;
 - les évolutions de droits, confidentialité et conservation des échanges ;

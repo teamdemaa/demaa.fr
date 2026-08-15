@@ -1,55 +1,54 @@
 import Link from "next/link";
 import {
-  ArrowUpRight,
+  BadgePercent,
   Calculator,
-  FileCheck2,
-  Files,
+  Compass,
   Megaphone,
-  ReceiptText,
+  MessagesSquare,
+  SearchCheck,
   Workflow,
   type LucideIcon,
 } from "lucide-react";
 import type { CanonicalService } from "@/lib/canonical-service-catalog";
-import CoachBusinessServiceCard from "@/components/CoachBusinessServiceCard";
 
 const ICONS: Record<CanonicalService["slug"], LucideIcon> = {
+  "coach-business": Compass,
   "automatisation-processus": Workflow,
   "expert-comptable": Calculator,
-  "formalites-juridiques": FileCheck2,
-  "sous-traitance-formalites-juridiques": Files,
-  "marketing-vente": Megaphone,
-  "assistance-facturation": ReceiptText,
+  "gestion-reseaux-sociaux": MessagesSquare,
+  "publicite-en-ligne": Megaphone,
+  "prospection-ciblee": SearchCheck,
 };
 
 function ServiceCard({ service }: { service: CanonicalService }) {
   const Icon = ICONS[service.slug];
 
   return (
-    <article className="flex min-h-[25rem] min-w-0 flex-col rounded-[1.4rem] border border-dema-line bg-dema-paper p-6 shadow-[0_8px_24px_rgba(23,35,29,0.025)]">
-      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-        <Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
-      </span>
-
-      <p className="mt-7 text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-        {service.eyebrow}
-      </p>
-      <h3 className="mt-7 text-xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue">
-        {service.name}
-      </h3>
-      <p className="mt-3 text-sm leading-6 text-dema-muted">{service.summary}</p>
-
-      <div className="mt-auto border-t border-dema-line/80 pt-5">
-        <p className="text-sm font-semibold text-dema-forest">
-          {service.pricing.label}
-        </p>
-        <Link
-          href={`/services/${service.slug}`}
-          className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-blue transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
-        >
-          Découvrir le service
-          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
-      </div>
+    <article className="h-72 min-w-0">
+      <Link href={`/services/${service.slug}`} className="group flex h-full min-w-0 flex-col rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 shadow-[0_8px_24px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/30 hover:shadow-[0_10px_28px_rgba(23,35,29,0.055)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 sm:p-6">
+        <div className="flex items-center gap-4">
+          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+            <Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
+          </span>
+        </div>
+        <p className="mt-4 line-clamp-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">{service.eyebrow}</p>
+        <h3 className="mt-2 line-clamp-2 text-xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue">{service.name}</h3>
+        <p className="mt-2 line-clamp-3 text-sm leading-5 text-dema-muted">{service.summary}</p>
+        <div className="mt-auto border-t border-dema-line/80 pt-4">
+          <p className="text-sm font-semibold text-dema-forest">{service.pricing.label}</p>
+          {service.slug === "coach-business" || service.slug === "expert-comptable" ? (
+            <p className="mt-1.5 inline-flex items-center gap-1.5 text-xs font-medium leading-snug text-dema-forest">
+              <BadgePercent className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+              −12 % sur les accompagnements Demaa
+            </p>
+          ) : service.monthlyAccompanimentDiscountEligible ? (
+            <p className="mt-1.5 inline-flex items-center gap-1.5 text-xs font-medium leading-snug text-dema-forest">
+              <BadgePercent className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+              −12 % avec un accompagnement mensuel
+            </p>
+          ) : null}
+        </div>
+      </Link>
     </article>
   );
 }
@@ -68,13 +67,12 @@ export default function ServicesCatalog({
         id="services-catalog-title"
         className="mt-1.5 max-w-3xl text-2xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-3xl"
       >
-        Un périmètre lisible, sans catalogue à rallonge
+        L’accompagnement utile, au bon moment
       </h2>
       <div className="mt-7 grid min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {services.map((service) => (
           <ServiceCard key={service.slug} service={service} />
         ))}
-        <CoachBusinessServiceCard />
       </div>
     </section>
   );

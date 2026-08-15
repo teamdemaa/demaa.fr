@@ -44,17 +44,34 @@ export default function Navbar({
                   className="shrink-0 empty:hidden"
                 />
                 {isAuthenticated ? (
-                  <Link
-                    href="/plans"
-                    aria-label="Ouvrir l’application"
-                    className={accountAccessClassName}
-                    title="Ouvrir l’application"
-                  >
-                    <CircleUserRound
-                      className="h-4 w-4"
-                      aria-hidden="true"
-                    />
-                  </Link>
+                  <details className="group relative">
+                    <summary
+                      aria-label="Ouvrir le menu du compte"
+                      className={`${accountAccessClassName} cursor-pointer list-none [&::-webkit-details-marker]:hidden`}
+                      title="Compte"
+                    >
+                      <CircleUserRound
+                        className="h-4 w-4"
+                        aria-hidden="true"
+                      />
+                    </summary>
+                    <div className="absolute right-0 top-full z-50 mt-2 min-w-40 rounded-2xl border border-dema-line bg-dema-paper px-3 py-2 shadow-[0_18px_46px_rgba(23,35,29,0.14)]">
+                      <Link
+                        href="/plans"
+                        className="block whitespace-nowrap px-2 py-1.5 text-left text-sm text-brand-blue transition hover:text-dema-forest"
+                      >
+                        Mes plans
+                      </Link>
+                      <form action="/api/customer-space/logout?returnTo=%2F" method="post">
+                        <button
+                          type="submit"
+                          className="block w-full whitespace-nowrap px-2 py-1.5 text-left text-sm text-brand-blue transition hover:text-dema-forest"
+                        >
+                          Se déconnecter
+                        </button>
+                      </form>
+                    </div>
+                  </details>
                 ) : (
                   <Link
                     href="/connexion?returnTo=%2Fplans"

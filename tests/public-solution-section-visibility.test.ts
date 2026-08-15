@@ -8,7 +8,7 @@ import {
 import type { SolutionSection } from "@/lib/solution-registry-dto";
 
 describe("public Solution section visibility", () => {
-  it("shows canonical Services while keeping legacy models hidden", () => {
+  it("shows only Tools and canonical Services", () => {
     const sections = [
       { section: "software", value: "Outils" },
       { section: "services", value: "Prestations" },
@@ -27,11 +27,16 @@ describe("public Solution section visibility", () => {
     expect(filterPublicSolutionSections(sections).map(({ section }) => section)).toEqual([
       "software",
       "services",
-      "providers",
-      "financing",
-      "aids",
-      "networks",
     ]);
+    expect(PUBLIC_SOLUTION_SECTION_VISIBILITY).toEqual({
+      software: true,
+      services: true,
+      providers: false,
+      financing: false,
+      aids: false,
+      models: false,
+      networks: false,
+    });
     expect(sections.map(({ section }) => section)).toContain("services");
   });
 });
