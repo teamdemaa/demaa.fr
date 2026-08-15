@@ -98,9 +98,8 @@ function CoachBusinessPromo() {
         <p className="mt-2 max-w-xl text-sm leading-relaxed text-dema-muted">
           Avec Coach business, avancez avec des sessions régulières et un suivi écrit entre les séances sur les priorités travaillées.
         </p>
-        <p className="mt-2 text-sm font-medium text-dema-forest">
+        <p className="mt-2 text-sm font-normal text-dema-muted">
           À partir de 350 € HT / mois
-          <span className="mt-1 block text-xs">Inclut 12 % de réduction sur les accompagnements Demaa éligibles</span>
         </p>
       </div>
       <Link

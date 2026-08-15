@@ -330,14 +330,12 @@ export default function SystemSolutionsTab({
         <span className="mt-2 line-clamp-2 text-[13px] leading-5 text-dema-muted md:text-sm">
           {resource.description}
         </span>
-        <span className="mt-auto shrink-0 border-t border-dema-line/80 pt-3">
+        <span className="mt-auto shrink-0 pt-3">
           {resource.indicativePricing ? (
-            <span className="block text-sm font-semibold text-dema-forest">{resource.indicativePricing}</span>
+            <span className="block text-sm font-normal text-dema-muted">{resource.indicativePricing}</span>
           ) : null}
-          {resource.resourceSlug === "coach-business" || resource.resourceSlug === "expert-comptable" ? (
-            <span className="mt-1.5 block text-xs font-medium leading-snug text-dema-forest">Inclut 12 % de réduction sur les accompagnements Demaa éligibles</span>
-          ) : resource.monthlyAccompanimentDiscountEligible ? (
-            <span className="mt-1.5 block text-xs font-medium leading-snug text-dema-forest">Avantage abonnés : −12 %</span>
+          {resource.monthlyAccompanimentDiscountEligible ? (
+            <span className="mt-1.5 block text-xs font-normal leading-snug text-dema-muted">Avantage abonné : −12 %</span>
           ) : null}
         </span>
       </span>

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  BadgePercent,
   Calculator,
   Compass,
   FileCheck2,
@@ -36,17 +35,11 @@ function ServiceCard({ service }: { service: CanonicalService }) {
         <p className="mt-4 line-clamp-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">{service.eyebrow}</p>
         <h3 className="mt-2 line-clamp-2 text-xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue">{service.name}</h3>
         <p className="mt-2 line-clamp-2 text-sm leading-5 text-dema-muted">{service.summary}</p>
-        <div className="mt-auto shrink-0 border-t border-dema-line/80 pt-4">
-          <p className="text-sm font-semibold text-dema-forest">{service.pricing.label}</p>
-          {service.slug === "coach-business" || service.slug === "expert-comptable" ? (
-            <p className="mt-1.5 inline-flex items-center gap-1.5 text-xs font-medium leading-snug text-dema-forest">
-              <BadgePercent className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              Inclut 12 % de réduction sur les accompagnements Demaa éligibles
-            </p>
-          ) : service.monthlyAccompanimentDiscountEligible ? (
-            <p className="mt-1.5 inline-flex items-center gap-1.5 text-xs font-medium leading-snug text-dema-forest">
-              <BadgePercent className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              Avantage abonnés : −12 %
+        <div className="mt-auto shrink-0 pt-4">
+          <p className="text-sm font-normal text-dema-muted">{service.pricing.label}</p>
+          {service.monthlyAccompanimentDiscountEligible ? (
+            <p className="mt-1.5 text-xs font-normal leading-snug text-dema-muted">
+              Avantage abonné : −12 %
             </p>
           ) : null}
         </div>

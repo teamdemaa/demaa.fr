@@ -85,9 +85,9 @@ authentification puis ouvre son URL canonique avec le brouillon de clarification
 - aucun paiement Stripe n'est créé par l'interface publique ;
 - l'abonnement et l'avantage restent inactifs tant qu'un statut confirmé n'a
   pas été projeté côté serveur ;
-- les cartes éligibles affichent `Avantage abonnés : −12 %` sous le prix ;
-- le Coach et l'Expert-comptable indiquent qu'ils incluent 12 % de réduction
-  sur les accompagnements Demaa éligibles ;
+- les cartes éligibles affichent `Avantage abonné : −12 %` sous le prix ;
+- les cartes Coach business et Expert-comptable n'affichent aucune mention de
+  l'avantage qu'elles peuvent ouvrir ;
 - les exclusions de tiers et de budgets sont explicites dans la fiche ;
 - le serveur n'accorde la réduction qu'à un UID disposant d'un accompagnement
   mensuel actif : période Stripe valide pour Coach business, ou confirmation

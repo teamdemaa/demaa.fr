@@ -94,7 +94,7 @@ const canonicalServiceDefinitions = deepFreeze([
     description: "Le périmètre éditorial, le rythme, les formats et le circuit de validation sont définis avant la production récurrente.",
     result: "Une communication suivie, cohérente et compatible avec le temps réellement disponible dans l’entreprise.",
     delivery: "demaa", monthlyAccompanimentDiscountEligible: true,
-    pricing: { mode: "quote", heading: "Tarif", label: "Sur devis", note: "Le tarif dépend du nombre de réseaux, du rythme et des formats à produire." },
+    pricing: { mode: "fixed", amountMinor: 80000, currency: "EUR", heading: "Forfait", label: "800 € HT / mois", note: "Le périmètre éditorial, le nombre de réseaux et le rythme de publication sont confirmés avant le démarrage." },
     cta: callback,
     included: ["Cadrage éditorial", "Calendrier et production des contenus convenus", "Suivi des validations et publications"],
     conditions: ["Le rythme et les responsabilités sont validés avant démarrage", "Les accès restent sous votre contrôle"],

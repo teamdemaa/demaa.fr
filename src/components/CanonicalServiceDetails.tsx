@@ -57,20 +57,15 @@ function ServicePricingAndCta({
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-muted">
         {service.pricing.heading}
       </p>
-      <p className="mt-3 text-2xl font-medium tracking-[-0.025em] text-brand-blue">
+      <p className="mt-3 text-base font-normal text-dema-muted">
         {service.pricing.label}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-dema-muted">
         {service.pricing.note}
       </p>
       {service.monthlyAccompanimentDiscountEligible ? (
-        <p className="mt-3 rounded-md bg-dema-sage/70 px-3 py-2 text-xs font-medium text-dema-forest">
-          Avantage abonnés : 12 % de réduction sur les honoraires de cette prestation directement facturés par Demaa, après vérification de l’accompagnement mensuel actif.
-        </p>
-      ) : null}
-      {service.slug === "coach-business" || service.slug === "expert-comptable" ? (
-        <p className="mt-3 rounded-md bg-dema-sage/70 px-3 py-2 text-xs font-medium text-dema-forest">
-          Cet accompagnement mensuel inclut 12 % de réduction sur les autres prestations Demaa éligibles tant qu’il est actif. Les honoraires des professionnels et les frais de tiers restent exclus.
+        <p className="mt-3 text-xs font-normal text-dema-muted">
+          Avantage abonné : −12 % sur les honoraires Demaa éligibles.
         </p>
       ) : null}
 
