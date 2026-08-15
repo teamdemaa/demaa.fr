@@ -77,9 +77,11 @@ l'historique et ne déclenchent aucune action par eux-mêmes.
 4. D-082 est intégré au candidat : navigation principale Solutions, Actions
    directement dans le Plan et Ressource processus imprimable. Il ne reste
    aucun sous-onglet Actions/Solutions dans le Plan.
-5. Supprimer après confirmation destructive séparée les seules données de
-   recette synthétiques : un compte Auth dans Production, et dans Preview un
-   compte Auth avec son unique plan, son entreprise et son appartenance.
+5. Les données de recette synthétiques ont été supprimées après confirmation
+   destructive séparée : le compte Auth Production, le compte Auth Preview et
+   son unique plan, son entreprise et son appartenance. Le contrôle immédiat a
+   confirmé l'absence des cinq cibles et les permissions temporaires ont été
+   retirées.
 6. Garder le MVP Réseau Partenaire au cadrage jusqu'à validation de la fenêtre
    d'attribution, des clients existants, du conflit entre les avantages de 12 %,
    de la convention d'apport et du règlement des commissions.
