@@ -524,13 +524,14 @@ describe("system Solutions UI", () => {
     expect(source).toContain("lg:auto-cols-[calc((100%_-_2rem)_/_3)]");
     expect(source).toContain("xl:auto-cols-[calc((100%_-_3rem)_/_3.5)]");
     expect(source).toContain("items-stretch");
-    expect(source).toContain('className="relative h-72 min-w-0 snap-start"');
-    expect(source).toContain("group flex h-72 w-full");
+    expect(source).toContain('className="relative h-[19rem] min-w-0 snap-start"');
+    expect(source).toContain("group flex h-[19rem] w-full");
     expect(source).not.toContain("min-h-[15rem]");
     expect(source).not.toContain("md:min-h-[16rem]");
     expect(source).not.toContain("aspect-square");
     expect(source).toContain("line-clamp-2");
-    expect(source).toContain("line-clamp-3");
+    expect(source).not.toContain("line-clamp-3");
+    expect(source).toContain("mt-auto shrink-0");
     expect(source).not.toMatch(/\bposition\b/);
   });
 

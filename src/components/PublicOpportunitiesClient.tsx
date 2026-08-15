@@ -320,7 +320,7 @@ export default function PublicOpportunitiesClient({
         </p>
       ) : null}
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+      <div className="mt-6 grid gap-3">
         {filtered.map((opportunity) => (
           <article key={opportunity.opportunityId} className="h-full">
             <button
@@ -333,12 +333,12 @@ export default function PublicOpportunitiesClient({
               aria-haspopup="dialog"
               aria-expanded={selected?.opportunityId === opportunity.opportunityId}
               aria-controls="opportunity-details-dialog"
-              className={`group flex h-[20rem] w-full flex-col rounded-[1.2rem] border bg-white p-5 text-left shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/25 hover:bg-dema-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest sm:h-72 sm:p-6 ${selected?.opportunityId === opportunity.opportunityId ? "border-dema-forest/45" : "border-dema-line"}`}
+              className={`group flex h-[13rem] w-full flex-col rounded-[1.2rem] border bg-white p-4 text-left shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/25 hover:bg-dema-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest sm:h-44 sm:p-5 ${selected?.opportunityId === opportunity.opportunityId ? "border-dema-forest/45" : "border-dema-line"}`}
             >
               <h2 className="line-clamp-2 min-h-[2.75rem] text-lg font-medium leading-snug tracking-[-0.015em] text-brand-blue sm:text-xl">
                 {opportunity.title}
               </h2>
-              <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-dema-muted sm:line-clamp-2">
+              <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-dema-muted">
                 {opportunity.summary}
               </p>
               <div className="mt-auto flex flex-wrap gap-2 pt-5" aria-label="Caractéristiques de l’opportunité">
@@ -346,8 +346,8 @@ export default function PublicOpportunitiesClient({
                   opportunity.category,
                   opportunity.domainLabel,
                   OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
-                ].filter((value): value is string => Boolean(value)))).slice(0, 3).map((tag, index) => (
-                  <span key={tag} className={`inline-flex min-h-8 items-center rounded-[0.45rem] px-3 text-xs font-medium ${index === 0 ? "bg-dema-sage/70 text-dema-forest" : index === 1 ? "border border-dema-line bg-dema-paper text-brand-blue" : "bg-[#f3f3ef] text-dema-muted"}`}>
+                ].filter((value): value is string => Boolean(value)))).slice(0, 3).map((tag) => (
+                  <span key={tag} className="inline-flex min-h-8 items-center rounded-[0.45rem] bg-dema-sage/70 px-3 text-xs font-medium text-dema-forest">
                     {tag}
                   </span>
                 ))}

@@ -177,20 +177,51 @@ describe("coaching conversation storage", () => {
       completeFreeClarification: true,
       conversationId,
     });
-    await reopenFreeCoachingClarification(conversationId);
+    const result = await reopenFreeCoachingClarification(conversationId);
     const reopened = await appendCustomerCoachingMessage({
       body: "Merci, voici la précision.",
       email: "owner@example.com",
       idempotencyKey: "coaching:message:reopened",
       uid: "owner-uid",
     });
+    const access = firestore.documents.get("customer_coaching_access/owner-uid");
+    expect(result).toMatchObject({
+      freeStatus: "open",
+      previousStatus: "completed",
+      reopened: true,
+    });
+    expect(access).toMatchObject({
+      completed_at: null,
+      completed_by: null,
+      free_status: "open",
+      reopened_by: "team_demaa",
+    });
     expect(reopened).toMatchObject({ allowed: true, access: { freeStatus: "open" } });
+  });
 
+  it("does not reopen an active clarification", async () => {
+    await appendCustomerCoachingMessage({
+      body: "Première situation.",
+      email: "owner@example.com",
+      idempotencyKey: "coaching:message:first",
+      uid: "owner-uid",
+    });
+    const conversationId = (await getCoachingConversationSummaries())[0]?.id ?? "";
+    const before = firestore.documents.get("customer_coaching_access/owner-uid");
+    const result = await reopenFreeCoachingClarification(conversationId);
+    const after = firestore.documents.get("customer_coaching_access/owner-uid");
+
+    expect(result).toMatchObject({
+      freeStatus: "open",
+      previousStatus: "open",
+      reopened: false,
+    });
+    expect(after).toEqual(before);
   });
 
   it("stores a private recommendation with the reply and refuses another UID", async () => {
     await appendCustomerCoachingMessage({
-      body: "Je dois créer mon entreprise.",
+      body: "Je dois déléguer mon administratif.",
       email: "owner@example.com",
       idempotencyKey: "coaching:message:recommendation",
       uid: "owner-uid",
@@ -200,16 +231,15 @@ describe("coaching conversation storage", () => {
       body: "Voici la prochaine étape.",
       conversationId,
       recommendation: {
-        needKey: "creation",
-        resourceSlug: "formalites-entreprise",
+        resourceSlug: "assistance-administrative",
       },
     });
     const state = await getCustomerCoachingState("owner-uid");
     expect(state.recommendations).toHaveLength(1);
     expect(state.recommendations[0]).toMatchObject({
       messageId: reply?.message.id,
-      name: "Formalités d’entreprise",
-      needLabel: "Création",
+      name: "Assistance administrative",
+      needLabel: null,
       status: "recommended",
     });
 

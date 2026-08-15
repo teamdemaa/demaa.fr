@@ -25,6 +25,12 @@ const SECTION_ORDER: readonly SolutionSection[] = [
 ];
 
 const ACCOUNTING_FIRM_SYSTEM_SLUGS = new Set(["cabinet-comptable", "expert-comptable"]);
+const FORMALITIES_PROFESSIONAL_SYSTEM_SLUGS = new Set([
+  "cabinet-comptable",
+  "expert-comptable",
+  "cabinet-davocat",
+  "notaire",
+]);
 
 export function getCanonicalServiceSlugsForSystem(
   systemSlug: string,
@@ -33,6 +39,9 @@ export function getCanonicalServiceSlugsForSystem(
     .filter((service) => {
       if (service.slug === "expert-comptable") {
         return !ACCOUNTING_FIRM_SYSTEM_SLUGS.has(systemSlug);
+      }
+      if (service.slug === "formalites-entreprise") {
+        return !FORMALITIES_PROFESSIONAL_SYSTEM_SLUGS.has(systemSlug);
       }
       return true;
     })

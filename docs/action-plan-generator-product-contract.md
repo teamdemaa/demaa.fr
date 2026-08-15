@@ -392,19 +392,21 @@ sont implémentés derrière des limites conservatrices réversibles.
 ## Extensions explicitement différées
 
 La première version de l'accès à l'équipe Demaa fait partie de l'application
-conformément à l'ADR 0009 : une conversation écrite ou vocale simple, sans
+conformément à l'ADR 0009 : une conversation écrite ou dictée simple, sans
 onglets Messages/Formules. Chaque UID Firebase dispose d'une première
 clarification offerte, clôturée manuellement par la Team Demaa avec sa réponse
 finale. L'offre `Coach business` est présentée séparément dans Services : son
 sélecteur affiche 1 session à 350 EUR ou 2 sessions à 550 EUR HT/mois. Son CTA
 `Être rappelé(e)` transmet une intention sans connexion ni paiement public.
 La Team Demaa qualifie ensuite le besoin, le matching et le rythme avec le
-dirigeant.
+dirigeant. Le Coach inclut un suivi écrit entre les séances, limité aux
+priorités travaillées ; aucun accès illimité n'est promis.
 
 Un accompagnement mensuel actif ouvre 12 % de réduction sur les autres
 prestations directement facturées par Demaa. Coach business est confirmé par
 Stripe ; une relation Expert-comptable est confirmée manuellement par la Team
-Demaa. Les avantages ne se cumulent pas. Les honoraires de partenaires ou
+Demaa et reste active jusqu'à sa désactivation, sauf date d'expiration explicite.
+Aucune échéance annuelle automatique n'est appliquée. Les avantages ne se cumulent pas. Les honoraires de partenaires ou
 d'experts-comptables, les budgets média, logiciels et frais de tiers restent
 exclus. Le droit est vérifié côté serveur à partir de l'UID avant devis ou
 paiement.

@@ -81,7 +81,9 @@ describe("coaching admin route", () => {
     });
     mocks.reopenFreeCoachingClarification.mockResolvedValue({
       freeStatus: "open",
+      openedAt: "2026-08-15T09:00:00.000Z",
       previousStatus: "completed",
+      reopened: true,
     });
     mocks.getMonthlyAccompanimentBenefitForUid.mockResolvedValue({
       active: false,
@@ -155,14 +157,30 @@ describe("coaching admin route", () => {
     expect(mocks.reopenFreeCoachingClarification).toHaveBeenCalledWith(conversationId);
   });
 
+  it("refuses to reopen a clarification that is not completed", async () => {
+    mocks.reopenFreeCoachingClarification.mockResolvedValueOnce({
+      freeStatus: "open",
+      openedAt: "2026-08-15T09:00:00.000Z",
+      previousStatus: "open",
+      reopened: false,
+    });
+    const response = await POST(request("", {
+      method: "POST",
+      body: JSON.stringify({ action: "reopen", conversationId }),
+    }));
+    expect(response.status).toBe(409);
+    await expect(response.json()).resolves.toEqual({
+      error: "Seule une clarification terminée peut être réouverte.",
+    });
+  });
+
   it("attaches a validated private recommendation to the same reply", async () => {
     const response = await POST(request("", {
       method: "POST",
       body: JSON.stringify({
         conversationId,
         message: "Cette prestation correspond à votre situation.",
-        recommendationNeedKey: "creation",
-        recommendationResourceSlug: "formalites-entreprise",
+        recommendationResourceSlug: "assistance-administrative",
       }),
     }));
 
@@ -172,8 +190,8 @@ describe("coaching admin route", () => {
       completeFreeClarification: false,
       conversationId,
       recommendation: {
-        needKey: "creation",
-        resourceSlug: "formalites-entreprise",
+        needKey: null,
+        resourceSlug: "assistance-administrative",
         systemSlug: null,
       },
     });
@@ -186,7 +204,7 @@ describe("coaching admin route", () => {
         conversationId,
         message: "Réponse.",
         recommendationNeedKey: "autre",
-        recommendationResourceSlug: "formalites-entreprise",
+        recommendationResourceSlug: "assistance-administrative",
       }),
     }));
     expect(response.status).toBe(400);

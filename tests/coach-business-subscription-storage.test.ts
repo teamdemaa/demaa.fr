@@ -17,7 +17,16 @@ const firestore = vi.hoisted(() => {
   }
 
   function reference(path: string) {
-    return { path, async get() { return snapshot(path); } };
+    return {
+      path,
+      async get() { return snapshot(path); },
+      async set(value: StoredDocument, options?: { merge?: boolean }) {
+        documents.set(
+          path,
+          structuredClone(options?.merge ? { ...documents.get(path), ...value } : value),
+        );
+      },
+    };
   }
 
   const database = {
@@ -61,6 +70,7 @@ import {
 import {
   getMonthlyAccompanimentBenefitForUid,
   resolveMonthlyAccompanimentDiscount,
+  setExpertAccountantBenefitForUid,
 } from "@/lib/monthly-accompaniment-benefit.server";
 import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
 
@@ -124,13 +134,45 @@ describe("monthly accompaniment benefit", () => {
   it("accepts a current manually confirmed expert-accountant relationship", async () => {
     firestore.documents.set("customer_accompaniment_benefits/owner-uid", {
       expert_accountant_active: true,
-      expert_accountant_valid_until: "2099-01-01T00:00:00.000Z",
+      expert_accountant_valid_until: null,
     });
     await expect(getMonthlyAccompanimentBenefitForUid("owner-uid")).resolves.toEqual({
       active: true,
       source: "expert_accountant",
-      validUntil: "2099-01-01T00:00:00.000Z",
+      validUntil: null,
     });
+  });
+
+  it("keeps the manually confirmed relationship active until the Team disables it", async () => {
+    await expect(setExpertAccountantBenefitForUid({
+      active: true,
+      uid: "owner-uid",
+    })).resolves.toEqual({
+      active: true,
+      source: "expert_accountant",
+      validUntil: null,
+    });
+    await expect(getMonthlyAccompanimentBenefitForUid("owner-uid")).resolves.toEqual({
+      active: true,
+      source: "expert_accountant",
+      validUntil: null,
+    });
+
+    await setExpertAccountantBenefitForUid({ active: false, uid: "owner-uid" });
+    await expect(getMonthlyAccompanimentBenefitForUid("owner-uid")).resolves.toEqual({
+      active: false,
+      source: null,
+      validUntil: null,
+    });
+  });
+
+  it("refuses an invalid explicit expiration instead of granting an unlimited benefit", async () => {
+    await expect(setExpertAccountantBenefitForUid({
+      active: true,
+      uid: "owner-uid",
+      validUntil: "2020-01-01T00:00:00.000Z",
+    })).rejects.toThrow("The benefit expiration must be a future date.");
+    expect(firestore.documents.has("customer_accompaniment_benefits/owner-uid")).toBe(false);
   });
 
   it("fails closed for another offer or a non-active status", async () => {

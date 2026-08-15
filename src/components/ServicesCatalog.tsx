@@ -3,6 +3,7 @@ import {
   BadgePercent,
   Calculator,
   Compass,
+  FileCheck2,
   Megaphone,
   MessagesSquare,
   SearchCheck,
@@ -15,6 +16,7 @@ const ICONS: Record<CanonicalService["slug"], LucideIcon> = {
   "coach-business": Compass,
   "automatisation-processus": Workflow,
   "expert-comptable": Calculator,
+  "formalites-entreprise": FileCheck2,
   "gestion-reseaux-sociaux": MessagesSquare,
   "publicite-en-ligne": Megaphone,
   "prospection-ciblee": SearchCheck,
@@ -24,7 +26,7 @@ function ServiceCard({ service }: { service: CanonicalService }) {
   const Icon = ICONS[service.slug];
 
   return (
-    <article className="h-72 min-w-0">
+    <article className="h-[19rem] min-w-0">
       <Link href={`/services/${service.slug}`} className="group flex h-full min-w-0 flex-col rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 shadow-[0_8px_24px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/30 hover:shadow-[0_10px_28px_rgba(23,35,29,0.055)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 sm:p-6">
         <div className="flex items-center gap-4">
           <span className="flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
@@ -33,18 +35,18 @@ function ServiceCard({ service }: { service: CanonicalService }) {
         </div>
         <p className="mt-4 line-clamp-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">{service.eyebrow}</p>
         <h3 className="mt-2 line-clamp-2 text-xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue">{service.name}</h3>
-        <p className="mt-2 line-clamp-3 text-sm leading-5 text-dema-muted">{service.summary}</p>
-        <div className="mt-auto border-t border-dema-line/80 pt-4">
+        <p className="mt-2 line-clamp-2 text-sm leading-5 text-dema-muted">{service.summary}</p>
+        <div className="mt-auto shrink-0 border-t border-dema-line/80 pt-4">
           <p className="text-sm font-semibold text-dema-forest">{service.pricing.label}</p>
           {service.slug === "coach-business" || service.slug === "expert-comptable" ? (
             <p className="mt-1.5 inline-flex items-center gap-1.5 text-xs font-medium leading-snug text-dema-forest">
               <BadgePercent className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              −12 % sur les accompagnements Demaa
+              Inclut 12 % de réduction sur les accompagnements Demaa éligibles
             </p>
           ) : service.monthlyAccompanimentDiscountEligible ? (
             <p className="mt-1.5 inline-flex items-center gap-1.5 text-xs font-medium leading-snug text-dema-forest">
               <BadgePercent className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              −12 % avec un accompagnement mensuel
+              Avantage abonnés : −12 %
             </p>
           ) : null}
         </div>

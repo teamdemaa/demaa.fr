@@ -7,12 +7,16 @@ const source = readFileSync(
 );
 
 describe("public opportunity cards", () => {
-  it("keeps a fixed responsive height with aligned tags", () => {
-    expect(source).toContain('h-[20rem]');
-    expect(source).toContain("sm:h-72");
-    expect(source).toContain("line-clamp-2");
+  it("uses compact full-width rows with uniform tags", () => {
+    expect(source).toContain('className="mt-6 grid gap-3"');
+    expect(source).not.toContain("sm:grid-cols-2");
+    expect(source).toContain("h-[13rem]");
+    expect(source).toContain("sm:h-44");
+    expect(source).toContain('className="mt-2 line-clamp-2');
     expect(source).toContain("mt-auto flex flex-wrap gap-2");
-    expect(source).toContain(".slice(0, 3)");
+    expect(source).toContain(".slice(0, 3).map((tag) =>");
+    expect(source).toContain('className="inline-flex min-h-8 items-center rounded-[0.45rem] bg-dema-sage/70 px-3 text-xs font-medium text-dema-forest"');
+    expect(source).not.toContain("map((tag, index)");
   });
 
   it("keeps the detail dialog interaction accessible", () => {

@@ -6,23 +6,24 @@
   parcours de contact
 - Supersède : les décisions incompatibles des ADR 0004 et 0005 relatives au
   catalogue, à l'ordre, aux prix, à l'éligibilité et au parcours de rappel
-- Mise à jour : 14 août 2026, catalogue Accompagnement unifié
+- Mise à jour : 15 août 2026, publication contextualisée de Formalités d'entreprise
 
 ## Catalogue canonique
 
 Une seule source de vérité, `src/lib/canonical-service-catalog.ts`, publie les
-six accompagnements dans cet ordre :
+sept accompagnements dans cet ordre :
 
 1. Coach business — à partir de 350 EUR HT par mois ;
 2. Expert-comptable — à partir de 250 EUR HT par mois ;
-3. Automatisation des processus — 500 EUR HT par jour ;
-4. Gestion des réseaux sociaux — sur devis ;
-5. Publicité en ligne — 750 EUR HT par mois, budget média exclu ;
-6. Prospection ciblée — sur devis.
+3. Formalités d'entreprise — sur devis, facturation directe par le professionnel ;
+4. Automatisation des processus — 500 EUR HT par jour ;
+5. Gestion des réseaux sociaux — sur devis ;
+6. Publicité en ligne — 750 EUR HT par mois, budget média exclu ;
+7. Prospection ciblée — sur devis.
 
-Assistance administrative, Formalités d'entreprise et Sous-traitance de
-formalités juridiques sont conservées dans un catalogue serveur privé avec la
-visibilité `recommendation_only`.
+Assistance administrative et Sous-traitance de formalités juridiques sont
+conservées dans un catalogue serveur privé avec la visibilité
+`recommendation_only`.
 
 Ces Services sont composés au rendu et ne sont pas dupliqués dans Firebase.
 Les cartes sont regroupées sous le titre public `Accompagnement`. La route
@@ -32,8 +33,10 @@ Système. Aucun badge public n'indique « réalisé par Demaa » ou « partenair
 
 ## Matrice d'éligibilité
 
-- Un Système standard affiche les six accompagnements publics.
-- `cabinet-comptable` n'affiche pas Expert-comptable.
+- Un Système standard affiche les sept accompagnements publics.
+- `cabinet-comptable` et l'alias `expert-comptable` n'affichent ni
+  Expert-comptable ni Formalités d'entreprise.
+- `cabinet-davocat` et `notaire` n'affichent pas Formalités d'entreprise.
 - Coach business est disponible dans tous les Systèmes.
 
 La carte fournisseur historique JuridiConsulting n'est plus rendue lorsqu'elle
@@ -46,21 +49,23 @@ dépendent.
 Les offres directement tarifées par Demaa peuvent être publiées comme `Offer`
 Demaa dans les données structurées. L'avantage mensuel de 12 % s'applique
 uniquement à Automatisation, Gestion des réseaux sociaux, Publicité en ligne et
-Prospection ciblée. Il ne s'applique jamais au Coach, à l'Expert-comptable ou
-aux prestations recommandées. Pour Publicité en ligne, la
-remise porte uniquement sur les honoraires Demaa, jamais sur le budget média.
+Prospection ciblée. Il ne s'applique jamais au Coach, à l'Expert-comptable, à
+Formalités d'entreprise ou aux prestations recommandées. Pour Publicité en
+ligne, la remise porte uniquement sur les honoraires Demaa, jamais sur le
+budget média.
 Les logiciels, licences et autres frais facturés par des tiers sont également
 exclus. Le droit est recalculé côté serveur à partir de l'UID Firebase et d'un
 accompagnement mensuel actif avant tout devis ou paiement.
 
-Expert-comptable et les prestations privées recommandées sont délivrés par un
-tiers. Ils ne doivent jamais attribuer à Demaa le rôle de prestataire, le prix
-du tiers ou une relation de partenariat. Une mise en relation reste libre et
-sans publication automatique du professionnel dans les Systèmes.
+Expert-comptable, Formalités d'entreprise et les prestations privées
+recommandées sont délivrés par un tiers. Ils ne doivent jamais attribuer à
+Demaa le rôle de prestataire, le prix du tiers ou une relation de partenariat.
+Une mise en relation reste libre et sans publication automatique du
+professionnel dans les Systèmes.
 
 ## Contact Coach business et WhatsApp
 
-Les six fiches, y compris Coach business, utilisent le CTA
+Les sept fiches, y compris Coach business, utilisent le CTA
 `Être recontacté(e)` et un formulaire minimal. Pour Coach business, le rythme
 d'une ou deux sessions est choisi avant l'envoi de la demande :
 

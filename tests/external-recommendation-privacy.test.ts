@@ -4,29 +4,26 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("server-only", () => ({}));
 
 import {
+  getExternalRecommendationBySlug,
   getExternalRecommendationCatalog,
 } from "@/lib/external-recommendation-catalog.server";
 import { getCanonicalServices } from "@/lib/canonical-service-catalog";
 
 describe("private external recommendation catalog", () => {
-  it("keeps exactly three active recommendation-only services", () => {
+  it("keeps exactly two active recommendation-only services", () => {
     const catalog = getExternalRecommendationCatalog();
     expect(catalog.map((item) => item.slug)).toEqual([
       "assistance-administrative",
-      "formalites-entreprise",
       "sous-traitance-formalites-juridiques",
     ]);
     expect(catalog.every((item) => item.active && item.visibility === "recommendation_only")).toBe(true);
-    expect(catalog.find((item) => item.slug === "formalites-entreprise")?.needs.map((item) => item.key)).toEqual([
-      "creation",
-      "modification",
-      "fermeture",
-    ]);
+    expect(getExternalRecommendationBySlug("formalites-entreprise")).toBeNull();
   });
 
   it("never exposes a private slug through the public canonical catalog", () => {
     const serialized = JSON.stringify(getCanonicalServices());
-    expect(serialized).not.toMatch(/assistance-administrative|formalites-entreprise|sous-traitance-formalites-juridiques/);
+    expect(serialized).not.toMatch(/assistance-administrative|sous-traitance-formalites-juridiques/);
+    expect(serialized).toContain("formalites-entreprise");
   });
 
   it("keeps the private catalog out of public page and API modules", () => {

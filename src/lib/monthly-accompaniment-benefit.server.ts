@@ -46,7 +46,7 @@ export async function getMonthlyAccompanimentBenefitForUid(uid: string) {
   const manual = manualSnapshot.data() as StoredBenefit | undefined;
   const validUntil = cleanString(manual?.expert_accountant_valid_until, 40) || null;
   const active = manual?.expert_accountant_active === true
-    && isFutureDate(validUntil);
+    && (!validUntil || isFutureDate(validUntil));
   return {
     active,
     source: active ? "expert_accountant" as const : null,
@@ -63,12 +63,11 @@ export async function setExpertAccountantBenefitForUid(input: {
   if (!uid) throw new Error("A valid UID is required.");
   const now = new Date();
   const requestedExpiry = cleanString(input.validUntil, 40);
-  const validUntil = input.active
-    ? new Date(
-        isFutureDate(requestedExpiry, now.getTime())
-          ? requestedExpiry
-          : new Date(now).setUTCFullYear(now.getUTCFullYear() + 1),
-      ).toISOString()
+  if (input.active && requestedExpiry && !isFutureDate(requestedExpiry, now.getTime())) {
+    throw new Error("The benefit expiration must be a future date.");
+  }
+  const validUntil = input.active && isFutureDate(requestedExpiry, now.getTime())
+    ? new Date(requestedExpiry).toISOString()
     : null;
   await getAdminFirestore().collection(BENEFITS_COLLECTION).doc(uid).set({
     expert_accountant_active: input.active,

@@ -313,7 +313,7 @@ export default function SystemSolutionsTab({
     const { resource } = placement;
     const ResourceIcon = RESOURCE_ICONS[resource.resourceType];
     const isSaved = selectedPlacementIds?.has(placement.placementId) ?? false;
-    const cardClassName = "group flex h-72 w-full min-w-0 flex-col overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6";
+    const cardClassName = "group flex h-[19rem] w-full min-w-0 flex-col overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6";
     const cardContent = (
       <span className="flex h-full min-h-0 flex-col">
         <span className="flex items-center justify-between gap-3">
@@ -327,17 +327,17 @@ export default function SystemSolutionsTab({
         <span className="mt-1.5 line-clamp-2 block min-h-[2.5em] text-lg font-semibold leading-tight text-brand-blue sm:text-xl">
           {resource.name}
         </span>
-        <span className="mt-2 line-clamp-3 text-[13px] leading-5 text-dema-muted md:text-sm">
+        <span className="mt-2 line-clamp-2 text-[13px] leading-5 text-dema-muted md:text-sm">
           {resource.description}
         </span>
-        <span className="mt-auto border-t border-dema-line/80 pt-3">
+        <span className="mt-auto shrink-0 border-t border-dema-line/80 pt-3">
           {resource.indicativePricing ? (
             <span className="block text-sm font-semibold text-dema-forest">{resource.indicativePricing}</span>
           ) : null}
           {resource.resourceSlug === "coach-business" || resource.resourceSlug === "expert-comptable" ? (
-            <span className="mt-1.5 block text-xs font-medium leading-snug text-dema-forest">−12 % sur les accompagnements Demaa</span>
+            <span className="mt-1.5 block text-xs font-medium leading-snug text-dema-forest">Inclut 12 % de réduction sur les accompagnements Demaa éligibles</span>
           ) : resource.monthlyAccompanimentDiscountEligible ? (
-            <span className="mt-1.5 block text-xs font-medium leading-snug text-dema-forest">−12 % avec un accompagnement mensuel</span>
+            <span className="mt-1.5 block text-xs font-medium leading-snug text-dema-forest">Avantage abonnés : −12 %</span>
           ) : null}
         </span>
       </span>
@@ -361,7 +361,7 @@ export default function SystemSolutionsTab({
       <div
         key={placement.placementId}
         data-solution-resource-card
-        className="relative h-72 min-w-0 snap-start"
+        className="relative h-[19rem] min-w-0 snap-start"
       >
         {opensServicePage ? (
           <Link
