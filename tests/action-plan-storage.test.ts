@@ -493,6 +493,36 @@ describe("company-scoped action plan persistence", () => {
     })).rejects.toBeInstanceOf(ActionPlanRevisionConflictError);
   });
 
+  it("preserves retired Strategy workspace data without returning it to current clients", async () => {
+    const created = await createOwnedActionPlanForIdentity(identity("owner-uid"), {
+      plan: actionPlan(),
+    });
+    const path = `action_plans/${created.id}`;
+    const stored = firestore.documents.get(path)!;
+    firestore.documents.set(path, {
+      ...stored,
+      workspace_state: {
+        ...(stored.workspace_state as Record<string, unknown>),
+        strategyOverrides: {
+          alignement: { answerOne: "Réponse historique conservée." },
+        },
+      },
+    });
+    const workspace = createActionPlanWorkspaceState(created.plan);
+    const updated = await updateActionPlanWorkspaceForAccess({
+      uid: "owner-uid",
+      id: created.id,
+      expectedRevision: 1,
+      workspaceState: workspace,
+    });
+    expect(updated?.workspaceState).not.toHaveProperty("strategyOverrides");
+    expect(firestore.documents.get(path)?.workspace_state).toMatchObject({
+      strategyOverrides: {
+        alignement: { answerOne: "Réponse historique conservée." },
+      },
+    });
+  });
+
   it("soft-deletes only for the owner UID", async () => {
     const created = await createOwnedActionPlanForIdentity(identity("owner-uid"), {
       plan: actionPlan(),

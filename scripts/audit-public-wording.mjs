@@ -19,6 +19,25 @@ const generatedVisibleFiles = [
   "scripts/generate-meta-carousel.mjs",
   "scripts/generate-system-kit-previews.mjs",
 ];
+const pilotageEmDashExceptions = new Map([
+  ["src/components/CompanyFiguresPanel.tsx", [
+    'value === null ? "—"',
+    'affichés « — »',
+  ]],
+  ["src/components/CompanyStrategyHistory.tsx", [
+    "formatCompanyMonth(cycle.startMonth)} — ${formatCompanyMonth(cycle.endMonth)",
+    'cycle.answers[question.key] || "—"',
+  ]],
+  ["src/components/CompanyStrategyPanel.tsx", [
+    "${start} — ${end}",
+  ]],
+]);
+
+function isValidatedPilotageEmDash(relativePath, line) {
+  return pilotageEmDashExceptions.get(relativePath)?.some((fragment) =>
+    line.includes(fragment)
+  ) === true;
+}
 
 async function collectFiles(directory, extensions) {
   const entries = await readdir(path.join(repoRoot, directory), {
@@ -51,7 +70,7 @@ for (const relativePath of files) {
   const content = await readFile(path.join(repoRoot, relativePath), "utf8");
 
   content.split(/\r?\n/).forEach((line, index) => {
-    if (line.includes(emDash)) {
+    if (line.includes(emDash) && !isValidatedPilotageEmDash(relativePath, line)) {
       failures.push(`${relativePath}:${index + 1}: ${line.trim()}`);
     }
   });

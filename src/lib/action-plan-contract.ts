@@ -114,7 +114,7 @@ const generatedActionPlanActionSchema = actionPlanActionSchema
   .extend({ support: generatedActionPlanSupportSchema })
   .strict();
 
-const manualActionPlanActionSchema = z
+const legacyManualActionPlanActionSchema = z
   .object({
     id: z.string().trim().regex(/^action-[1-7]$/),
     title: editableText(140),
@@ -123,6 +123,17 @@ const manualActionPlanActionSchema = z
     steps: z.array(editableText(360)).max(7),
     readyToUse: editableLegacyReadyToUseSchema,
     strategyPillar: actionPlanStrategyPillarSchema,
+  })
+  .strict();
+
+const manualActionPlanActionSchema = z
+  .object({
+    id: z.string().trim().regex(/^action-[1-7]$/),
+    title: editableText(140),
+    objective: editableText(260),
+    channelOrTool: editableText(180),
+    steps: z.array(editableText(360)).max(7),
+    readyToUse: editableLegacyReadyToUseSchema,
   })
   .strict();
 
@@ -274,13 +285,13 @@ export const legacyV2ActionPlanSchema = z
     validateConsecutiveActionIds(plan.weeklyActions, context, "weeklyActions"),
   );
 
-const manualActionPlanSchema = z
+const legacyManualActionPlanSchema = z
   .object({
     version: z.literal("manual"),
     summary: editableText(700),
     systemId: actionPlanSystemIdSchema.nullable(),
     systemReason: editableText(300),
-    weeklyActions: z.array(manualActionPlanActionSchema).max(7),
+    weeklyActions: z.array(legacyManualActionPlanActionSchema).max(7),
     strategy: z
       .object({
         alignment: z.object({
@@ -314,6 +325,40 @@ const manualActionPlanSchema = z
   .superRefine((plan, context) =>
     validateConsecutiveActionIds(plan.weeklyActions, context, "weeklyActions"),
   );
+
+const manualActionPlanSchema = z
+  .object({
+    version: z.literal("manual"),
+    summary: editableText(700),
+    systemId: actionPlanSystemIdSchema.nullable(),
+    systemReason: editableText(300),
+    weeklyActions: z.array(manualActionPlanActionSchema).max(7),
+    assumptions: z.array(editableText(300)).max(8),
+  })
+  .strict()
+  .superRefine((plan, context) =>
+    validateConsecutiveActionIds(plan.weeklyActions, context, "weeklyActions"),
+  );
+
+function stripLegacyManualStrategy(
+  plan: z.infer<typeof legacyManualActionPlanSchema>,
+) {
+  return manualActionPlanSchema.parse({
+    version: "manual",
+    summary: plan.summary,
+    systemId: plan.systemId,
+    systemReason: plan.systemReason,
+    weeklyActions: plan.weeklyActions.map((action) => ({
+      id: action.id,
+      title: action.title,
+      objective: action.objective,
+      channelOrTool: action.channelOrTool,
+      steps: action.steps,
+      readyToUse: action.readyToUse,
+    })),
+    assumptions: plan.assumptions,
+  });
+}
 
 const legacyV1ActionPlanSchema = z
   .object({
@@ -360,9 +405,14 @@ export const compatibleActionPlanSchema = z
     legacyV2ActionPlanSchema,
     legacyV1ActionPlanSchema,
     manualActionPlanSchema,
+    legacyManualActionPlanSchema,
   ])
   .transform((plan) =>
-    plan.version === "1" ? migrateLegacyV1ActionPlan(plan) : plan,
+    plan.version === "1"
+      ? migrateLegacyV1ActionPlan(plan)
+      : plan.version === "manual" && "strategy" in plan
+        ? stripLegacyManualStrategy(plan)
+        : plan,
   );
 
 export type ActionPlan = z.infer<typeof actionPlanSchema>;

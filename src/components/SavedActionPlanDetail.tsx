@@ -14,6 +14,7 @@ import {
 } from "@/components/SavedActionPlanControls";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
+import CompanyPilotagePanel from "@/components/CompanyPilotagePanel";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
 import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
@@ -349,7 +350,20 @@ export default function SavedActionPlanDetail({
       />
       <div className="pt-1">
         {activeTab === "plan" ? (
-          <>
+          <CompanyPilotagePanel
+            available
+            section={appContext.planSection}
+            onSectionChange={(planSection) => navigateAppContext({
+              ...appContext,
+              view: "plan",
+              planSection,
+              systemId: undefined,
+              systemTab: undefined,
+              solutionResourceSlug: undefined,
+              academyContentSlug: undefined,
+              opportunityId: undefined,
+            })}
+          >
             <div className="mb-3 flex min-w-0 max-w-[40rem] items-center gap-2">
               <SavedActionPlanSelector
                 inputRef={titleInputRef}
@@ -442,7 +456,7 @@ export default function SavedActionPlanDetail({
                 solutionResourceSlug: resourceSlug,
               })}
             />
-          </>
+          </CompanyPilotagePanel>
         ) : null}
         {activeTab === "solutions" ? (
           <ActionPlanSystemPanel

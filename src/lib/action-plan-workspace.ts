@@ -1,7 +1,6 @@
 import { z } from "zod";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import {
-  actionPlanStrategyPillarSchema,
   actionPlanSupportTypeSchema,
   actionPlanSystemIdSchema,
 } from "@/lib/action-plan-contract";
@@ -60,16 +59,6 @@ const addedActionSchema = z
     channelOrTool: z.string().trim().max(180),
     steps: z.array(z.string().trim().min(1).max(360)).max(7),
     support: editableSupportSchema,
-    strategyPillar: actionPlanStrategyPillarSchema,
-  })
-  .strict();
-
-const strategyOverrideSchema = z
-  .object({
-    headline: optionalText(180),
-    answerOne: optionalText(500),
-    answerTwo: optionalText(500),
-    answerThree: optionalText(500),
   })
   .strict();
 
@@ -91,10 +80,6 @@ export const actionPlanWorkspaceStateSchema = z
     addedActions: z.array(addedActionSchema).max(50),
     deletedActionIds: z.array(actionPlanWorkspaceActionIdSchema).max(50),
     tasks: z.record(actionPlanWorkspaceActionIdSchema, actionPlanTaskStateSchema),
-    strategyOverrides: z.partialRecord(
-      actionPlanStrategyPillarSchema,
-      strategyOverrideSchema,
-    ),
     checkedProcessStepIdsBySystem: processChecksSchema,
     selectedSolutionPlacementIdsBySystem: solutionSelectionsSchema,
   })
@@ -144,10 +129,7 @@ const legacyWorkspaceSchema = z
     selectedSystemId: actionPlanSystemIdSchema.nullable(),
     deletedActionIds: z.array(baseActionIdSchema).max(7).default([]),
     tasks: z.record(baseActionIdSchema, legacyTaskSchema),
-    strategyOverrides: z.partialRecord(
-      actionPlanStrategyPillarSchema,
-      strategyOverrideSchema,
-    ),
+    strategyOverrides: z.unknown().optional(),
     checkedProcessStepIdsBySystem: processChecksSchema,
     selectedSolutionPlacementIdsBySystem: solutionSelectionsSchema,
   })
@@ -173,17 +155,25 @@ function migrateLegacyWorkspace(value: z.infer<typeof legacyWorkspaceSchema>) {
         return [id, { ...task, overrides }];
       }),
     ),
-    strategyOverrides: value.strategyOverrides,
     checkedProcessStepIdsBySystem: value.checkedProcessStepIdsBySystem,
     selectedSolutionPlacementIdsBySystem: value.selectedSolutionPlacementIdsBySystem,
   });
 }
 
-function stripRetiredEstimatedMinutes(value: unknown) {
+function stripRetiredWorkspaceFields(value: unknown) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return value;
-  const workspace = value as Record<string, unknown>;
+  const workspace = { ...(value as Record<string, unknown>) };
+  delete workspace.strategyOverrides;
+  if (Array.isArray(workspace.addedActions)) {
+    workspace.addedActions = workspace.addedActions.map((action) => {
+      if (!action || typeof action !== "object" || Array.isArray(action)) return action;
+      const sanitized = { ...(action as Record<string, unknown>) };
+      delete sanitized.strategyPillar;
+      return sanitized;
+    });
+  }
   if (!workspace.tasks || typeof workspace.tasks !== "object" || Array.isArray(workspace.tasks)) {
-    return value;
+    return workspace;
   }
   const tasks = Object.fromEntries(
     Object.entries(workspace.tasks as Record<string, unknown>).map(([id, taskValue]) => {
@@ -203,7 +193,7 @@ function stripRetiredEstimatedMinutes(value: unknown) {
 }
 
 export const compatibleActionPlanWorkspaceStateSchema = z.preprocess(
-  stripRetiredEstimatedMinutes,
+  stripRetiredWorkspaceFields,
   z.union([actionPlanWorkspaceStateSchema, legacyWorkspaceSchema])
     .transform((workspace) =>
       workspace.version === "1" ? migrateLegacyWorkspace(workspace) : workspace,
@@ -231,7 +221,6 @@ export function addActionPlanWorkspaceAction(
     channelOrTool: input.channelOrTool?.trim().slice(0, 180) || "",
     steps: input.steps?.slice(0, 7) || [],
     support: input.support ?? null,
-    strategyPillar: input.strategyPillar || "alignement",
   };
 
   return {
@@ -289,7 +278,6 @@ export function createActionPlanWorkspaceState(
     tasks: Object.fromEntries(
       getActionPlanActions(plan).map(({ id }) => [id, createEmptyTaskState()]),
     ),
-    strategyOverrides: {},
     checkedProcessStepIdsBySystem: {},
     selectedSolutionPlacementIdsBySystem: {},
   };

@@ -180,7 +180,6 @@ describe("action plan workspace state", () => {
       channelOrTool: "",
       steps: [],
       support: null,
-      strategyPillar: "alignement" as const,
     };
     const normalized = normalizeActionPlanWorkspaceState(ACTION_PLAN_DEMO, {
       ...base,
@@ -205,7 +204,6 @@ describe("action plan workspace state", () => {
       channelOrTool: "",
       steps: [],
       support: null,
-      strategyPillar: "alignement",
     };
     expect(actionPlanWorkspaceStateSchema.safeParse({
       ...base,

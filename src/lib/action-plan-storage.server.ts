@@ -823,6 +823,64 @@ export class InvalidActionPlanMutationError extends Error {
   }
 }
 
+function preserveRetiredWorkspaceStrategyFields(
+  storedValue: unknown,
+  nextValue: ActionPlanWorkspaceState,
+) {
+  const persisted = structuredClone(nextValue) as Record<string, unknown>;
+  if (!storedValue || typeof storedValue !== "object" || Array.isArray(storedValue)) {
+    return persisted;
+  }
+  const stored = storedValue as Record<string, unknown>;
+  if ("strategyOverrides" in stored) persisted.strategyOverrides = stored.strategyOverrides;
+  if (Array.isArray(stored.addedActions) && Array.isArray(persisted.addedActions)) {
+    const pillars = new Map(stored.addedActions.flatMap((action) => {
+      if (!action || typeof action !== "object" || Array.isArray(action)) return [];
+      const record = action as Record<string, unknown>;
+      return typeof record.id === "string" && "strategyPillar" in record
+        ? [[record.id, record.strategyPillar] as const]
+        : [];
+    }));
+    persisted.addedActions = persisted.addedActions.map((action) => {
+      if (!action || typeof action !== "object" || Array.isArray(action)) return action;
+      const record = action as Record<string, unknown>;
+      return typeof record.id === "string" && pillars.has(record.id)
+        ? { ...record, strategyPillar: pillars.get(record.id) }
+        : record;
+    });
+  }
+  return persisted;
+}
+
+function preserveRetiredManualStrategyFields(
+  storedValue: unknown,
+  nextValue: PersistableActionPlan,
+) {
+  if (nextValue.version !== "manual" || !storedValue || typeof storedValue !== "object" || Array.isArray(storedValue)) {
+    return nextValue;
+  }
+  const stored = storedValue as Record<string, unknown>;
+  const persisted = structuredClone(nextValue) as Record<string, unknown>;
+  if ("strategy" in stored) persisted.strategy = stored.strategy;
+  if (Array.isArray(stored.weeklyActions) && Array.isArray(persisted.weeklyActions)) {
+    const pillars = new Map(stored.weeklyActions.flatMap((action) => {
+      if (!action || typeof action !== "object" || Array.isArray(action)) return [];
+      const record = action as Record<string, unknown>;
+      return typeof record.id === "string" && "strategyPillar" in record
+        ? [[record.id, record.strategyPillar] as const]
+        : [];
+    }));
+    persisted.weeklyActions = persisted.weeklyActions.map((action) => {
+      if (!action || typeof action !== "object" || Array.isArray(action)) return action;
+      const record = action as Record<string, unknown>;
+      return typeof record.id === "string" && pillars.has(record.id)
+        ? { ...record, strategyPillar: pillars.get(record.id) }
+        : record;
+    });
+  }
+  return persisted;
+}
+
 export async function updateActionPlanWorkspaceForAccess(input: {
   uid: string;
   generation?: Partial<ActionPlanGenerationMetadata> | null;
@@ -884,9 +942,13 @@ export async function updateActionPlanWorkspaceForAccess(input: {
       nextPlan,
       input.workspaceState,
     );
+    const persistedWorkspace = preserveRetiredWorkspaceStrategyFields(
+      data.workspace_state,
+      normalizedWorkspace,
+    );
     transaction.set(reference, {
       ...(input.plan ? {
-        plan: nextPlan,
+        plan: preserveRetiredManualStrategyFields(data.plan, nextPlan),
         schema_version: getPersistedSchemaVersion(nextPlan),
       } : {}),
       ...(input.sourceText !== undefined
@@ -896,7 +958,7 @@ export async function updateActionPlanWorkspaceForAccess(input: {
         ? { generation: normalizeGenerationMetadata(input.generation) }
         : {}),
       ...(input.title !== undefined ? { title: nextTitle } : {}),
-      workspace_state: normalizedWorkspace,
+      workspace_state: persistedWorkspace,
       revision: nextRevision,
       updated_by_uid: input.uid,
       retention_expires_at: getLeadRetentionExpiry(),

@@ -233,11 +233,7 @@ export function applyActionPlanCommandOperations(
       if (next.addedActions.length >= 50) {
         throw new Error("Le nombre maximal d'actions ajoutees est atteint.");
       }
-      next.addedActions.push({
-        ...operation.action,
-        // Legacy workspace metadata kept internal while Strategy is hidden.
-        strategyPillar: "alignement",
-      });
+      next.addedActions.push(operation.action);
       next.tasks[operation.action.id] = emptyTaskState();
       knownIds.add(operation.action.id);
       continue;

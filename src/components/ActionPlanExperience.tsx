@@ -14,6 +14,7 @@ import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import ActionPlanUtilityActions from "@/components/ActionPlanUtilityActions";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
+import CompanyPilotagePanel from "@/components/CompanyPilotagePanel";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
 import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
@@ -95,7 +96,7 @@ export default function ActionPlanExperience({
   systemOptions,
   initialEmail = "",
   initialIsAuthenticated = false,
-  initialAppContext = { view: "plan" },
+  initialAppContext = { view: "plan", planSection: "actions" },
   initialGenerationIntent = false,
   initialStructureIntent = false,
 }: {
@@ -510,7 +511,7 @@ export default function ActionPlanExperience({
         savedSystemIds: storedSystemId ? [storedSystemId] : [],
       });
       setSelectedSystemId(storedSystemId);
-      navigateAppContext({ view: "plan" }, "replace");
+      navigateAppContext({ view: "plan", planSection: "actions" }, "replace");
       return;
     }
 
@@ -522,7 +523,7 @@ export default function ActionPlanExperience({
     setGeneration(null);
     setWorkspace(createActionPlanWorkspaceState(ACTION_PLAN_DEMO));
     setSelectedSystemId(ACTION_PLAN_DEMO.systemId);
-    navigateAppContext({ view: "plan" }, "replace");
+    navigateAppContext({ view: "plan", planSection: "actions" }, "replace");
   }, [navigateAppContext]);
 
   useEffect(() => {
@@ -614,7 +615,7 @@ export default function ActionPlanExperience({
       setGeneration(null);
       setWorkspace(nextWorkspace);
       setSelectedSystemId(nextWorkspace.selectedSystemId || ACTION_PLAN_DEMO.systemId);
-      navigateAppContext({ view: "plan" }, "replace");
+      navigateAppContext({ view: "plan", planSection: "actions" }, "replace");
       window.requestAnimationFrame(() => resultTitleRef.current?.focus());
       return;
     }
@@ -656,7 +657,7 @@ export default function ActionPlanExperience({
     setGeneration(null);
     setWorkspace(prePlanWorkspace);
     setSelectedSystemId(prePlanWorkspace.selectedSystemId || "");
-    navigateAppContext({ view: "plan" }, "replace");
+    navigateAppContext({ view: "plan", planSection: "actions" }, "replace");
     setError(null);
     window.requestAnimationFrame(() => resultTitleRef.current?.focus());
   }
@@ -904,7 +905,12 @@ export default function ActionPlanExperience({
         </h1>
         <div className="pt-1">
           {activeTab === "plan" ? (
-            <ActionPlanResult
+            <CompanyPilotagePanel
+              available={false}
+              section="actions"
+              onSectionChange={() => undefined}
+            >
+              <ActionPlanResult
               plan={plan}
               workspace={workspace}
               onWorkspaceChange={updateWorkspace}
@@ -953,7 +959,8 @@ export default function ActionPlanExperience({
                   }}
                 />
               )}
-            />
+              />
+            </CompanyPilotagePanel>
           ) : null}
           {activeTab === "solutions" ? (
             <ActionPlanSystemPanel
