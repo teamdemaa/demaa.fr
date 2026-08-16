@@ -35,8 +35,8 @@ clôture gratuite n'appelle jamais Stripe.
 
 `Coach business` reste une carte distincte dans Accompagnement. Le produit
 vendu est un accompagnement mensuel unique à 750 EUR HT par mois, et non un
-forfait de séances. Il comprend deux sessions individuelles de 60 minutes, la
-préparation des priorités et un suivi écrit entre les séances sur les sujets
+forfait de séances. Il comprend deux rendez-vous individuels de 60 minutes, la
+préparation des priorités et un suivi entre les rendez-vous sur les sujets
 travaillés. Le CTA `Être rappelé(e)` transmet une demande de contact sans
 connexion ni paiement. Demaa qualifie ensuite le besoin et le matching avec le
 dirigeant. La clôture de la clarification gratuite ne déclenche jamais Stripe.

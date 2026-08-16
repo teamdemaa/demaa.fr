@@ -1,8 +1,8 @@
 "use client";
 
-import { ChevronRight, LoaderCircle, Mic } from "lucide-react";
+import { ChevronDown, ChevronRight, LoaderCircle, Mic } from "lucide-react";
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import CoachingRecommendationCard from "@/components/CoachingRecommendationCard";
 import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
@@ -89,26 +89,56 @@ function clearCoachingDraftFromUrl() {
 }
 
 function CoachBusinessPromo() {
+  const [open, setOpen] = useState(false);
+  const contentId = useId();
+
   return (
-    <section className="mx-auto mt-5 flex max-w-[51.25rem] flex-col gap-5 rounded-[1.25rem] border border-dema-forest/15 bg-dema-sage/30 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-      <div>
-        <h3 className="text-lg font-medium text-brand-blue">
-          Besoin d’un accompagnement régulier pour avancer sur vos objectifs&nbsp;?
-        </h3>
-        <p className="mt-2 max-w-xl text-sm leading-relaxed text-dema-muted">
-          Avec Coach business, bénéficiez d’un accompagnement mensuel comprenant deux sessions individuelles et un suivi écrit entre les séances.
-        </p>
-        <p className="mt-2 text-sm font-normal text-dema-muted">
-          750 € HT / mois
-        </p>
-      </div>
-      <Link
-        href="/services/coach-business"
-        className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-brand-blue"
+    <section className="mx-auto mt-5 max-w-[51.25rem] overflow-hidden rounded-[1.25rem] border border-dema-forest/15 bg-dema-sage/30">
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={contentId}
+        onClick={() => setOpen((current) => !current)}
+        className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6"
       >
-        Découvrir Coach business
-        <ChevronRight className="h-4 w-4" aria-hidden="true" />
-      </Link>
+        <span className="text-base font-medium text-brand-blue sm:text-lg">
+          Besoin d’un accompagnement régulier&nbsp;?
+        </span>
+        <ChevronDown
+          className={`h-5 w-5 shrink-0 text-dema-forest transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          aria-hidden="true"
+        />
+      </button>
+      <div
+        id={contentId}
+        aria-hidden={!open}
+        inert={!open}
+        className={`grid transition-[grid-template-rows] duration-200 ease-out ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+      >
+        <div className="overflow-hidden">
+          <div className="border-t border-dema-forest/10 px-5 pb-5 pt-4 sm:flex sm:items-end sm:justify-between sm:gap-6 sm:px-6 sm:pb-6">
+            <div>
+              <p className="max-w-xl text-sm leading-relaxed text-dema-muted">
+                Un accompagnement mensuel pour faire évoluer votre entreprise, prendre du recul et avancer avec un interlocuteur régulier.
+              </p>
+              <ul className="mt-3 space-y-1 text-sm text-brand-blue">
+                <li>Deux rendez-vous individuels de 60 minutes par mois</li>
+                <li>Un suivi entre les rendez-vous</li>
+              </ul>
+              <p className="mt-3 text-sm font-normal text-dema-muted">
+                750 € HT / mois
+              </p>
+            </div>
+            <Link
+              href="/services/coach-business"
+              className="mt-4 inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-brand-blue sm:mt-0"
+            >
+              Découvrir Coach business
+              <ChevronRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
@@ -138,7 +168,6 @@ export default function CoachingPanel({
         isAuthenticated={isAuthenticated}
         onRequireAccess={onRequireAccess}
       />
-      <CoachBusinessPromo />
     </section>
   );
 }
@@ -323,7 +352,8 @@ function CoachingMessageForm({
   }
 
   return (
-    <section className="mx-auto mt-7 max-w-[51.25rem] overflow-hidden rounded-[1.5rem] border border-dema-line bg-dema-paper">
+    <>
+      <section className="mx-auto mt-7 max-w-[51.25rem] overflow-hidden rounded-[1.5rem] border border-dema-line bg-dema-paper">
       <div className="flex min-h-[3.875rem] items-center justify-between gap-4 border-b border-dema-line px-5 py-3.5 sm:px-6">
         <h3 className="text-base font-medium text-brand-blue">Votre conversation</h3>
         <span className="shrink-0 rounded-full bg-dema-sage px-3 py-1.5 text-xs font-medium text-dema-forest">
@@ -346,11 +376,6 @@ function CoachingMessageForm({
             <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
             Chargement de la conversation…
           </div>
-        ) : null}
-        {status !== "loading" && messages.length === 0 ? (
-          <p className="m-auto max-w-sm text-center text-sm leading-relaxed text-dema-muted">
-            Décrivez ce que vous souhaitez clarifier. Vous pourrez envoyer votre message après la connexion.
-          </p>
         ) : null}
         {messages.map((entry) => {
           const attachedRecommendations = recommendationsByMessage.get(entry.id) ?? [];
@@ -415,11 +440,12 @@ function CoachingMessageForm({
               )}
             </button>
           </div>
-          {messageDictation.isListening ? <p className="mt-2 px-2 text-xs text-dema-forest" role="status">Dictée en cours… le texte apparaît dans le message.</p> : null}
           {messageDictation.error ? <p className="mt-2 px-2 text-xs text-amber-800" role="alert">{messageDictation.error}</p> : null}
           {status === "error" ? <p className="mt-2 px-2 text-xs font-medium text-red-700">Le message n’a pas pu être envoyé. Votre texte est conservé : réessayez.</p> : null}
         </form>
       )}
-    </section>
+      </section>
+      {access && access.freeStatus !== "completed" ? <CoachBusinessPromo /> : null}
+    </>
   );
 }

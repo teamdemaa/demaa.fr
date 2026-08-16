@@ -416,8 +416,8 @@ conformément à l'ADR 0009 : une conversation écrite ou dictée simple, sans
 onglets Messages/Formules. Chaque UID Firebase dispose d'une première
 clarification offerte, clôturée manuellement par la Team Demaa avec sa réponse
 finale. L'offre `Coach business` est présentée séparément dans Services comme
-un accompagnement mensuel unique à 750 EUR HT/mois. Elle inclut deux sessions
-individuelles de 60 minutes et un suivi écrit entre les séances sur les sujets
+un accompagnement mensuel unique à 750 EUR HT/mois. Elle inclut deux rendez-vous
+individuels de 60 minutes et un suivi entre les rendez-vous sur les sujets
 travaillés. Son CTA `Être rappelé(e)` transmet une intention sans connexion ni
 paiement public. La Team Demaa qualifie ensuite le besoin et le matching avec
 le dirigeant ; aucun accès illimité n'est promis.
