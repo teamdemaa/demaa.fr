@@ -3,7 +3,7 @@ export const surMesurePageContent = {
     title: "Votre application métier, conçue autour de votre façon de travailler.",
     introduction:
       "Vous suivez encore une activité dans Excel, par e-mail ou avec des tâches manuelles ? Demaa simplifie le fonctionnement et crée une application adaptée à votre métier.",
-    ctaLabel: "Discutons de votre projet",
+    ctaLabel: "Voir les forfaits",
     reassurance: "Premier échange offert · Sans engagement",
   },
   startingPoint: {
@@ -87,56 +87,9 @@ export const surMesurePageContent = {
     ],
   },
   commercialFrame: {
-    title: "Une offre claire, sans abonnement obligatoire.",
-    pricing: {
-      label: "Votre application métier",
-      value: "2 500 €",
-      tax: "HT",
-      prefix: "À partir de",
-      notes: ["Paiement unique", "Aucun abonnement obligatoire"],
-    },
-    included: {
-      title: "Inclus dans votre application",
-      items: [
-        "Analyse de vos besoins",
-        "Prototype fonctionnel",
-        "Votre identité visuelle",
-        "Vos fonctionnalités métier",
-        "Automatisations essentielles",
-        "Mise en ligne et formation",
-        "30 jours de corrections après livraison",
-      ],
-    },
-    support: [
-      {
-        title: "Support à la demande",
-        description: "Interventions ponctuelles facturées à l’heure, sans engagement.",
-        price: "110 €/heure",
-      },
-      {
-        title: "Forfait mensuel (optionnel)",
-        description: "Maintenance, corrections et petites évolutions incluses.",
-        price: "99 €/mois",
-      },
-    ],
-    guarantees: [
-      {
-        title: "Hébergement sécurisé",
-        description: "Données sauvegardées et protégées.",
-      },
-      {
-        title: "Conformité RGPD",
-        description: "Respect de la réglementation et confidentialité garantie.",
-      },
-      {
-        title: "Application 100 % à vous",
-        description: "Vous êtes propriétaire de votre application et de vos données.",
-      },
-      {
-        title: "Support réactif",
-        description: "Une équipe disponible et à votre écoute.",
-      },
-    ],
+    title: "Deux forfaits clairs, avec un périmètre borné.",
+    description:
+      "Choisissez le niveau le plus proche de votre besoin. Nous confirmons le périmètre, les prérequis et les critères d’acceptation avant tout démarrage.",
   },
   faq: {
     title: "Questions fréquentes",
@@ -151,18 +104,18 @@ export const surMesurePageContent = {
       },
       {
         question: "Comment la réalisation est-elle estimée ?",
-        answer: "L’application métier est proposée à partir de 2 500 € HT, en paiement unique. Le périmètre exact est défini avant de commencer.",
+        answer: "Deux forfaits couvrent les projets bornés. Toute migration importante, intégration complexe ou évolution du périmètre fait l’objet d’un devis séparé.",
       },
       {
         question: "La maintenance est-elle incluse ?",
-        answer: "Trente jours de corrections après livraison sont inclus. Ensuite, vous choisissez entre le support à la demande et le forfait mensuel optionnel.",
+        answer: "Trente jours de correction des anomalies du périmètre signé sont inclus. Une évolution fonctionnelle ou un support récurrent est cadré séparément.",
       },
     ],
   },
   finalCta: {
     title: "Parlons du processus qui vous ralentit.",
     description: "Expliquez-nous où le travail se bloque. Nous vérifierons ensemble si une application sur mesure est la bonne réponse.",
-    label: "Discutons de votre projet",
+    label: "Envoyer ma demande",
     reassurance: "Premier échange offert · Sans engagement",
   },
 } as const;

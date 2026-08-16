@@ -123,11 +123,9 @@ function buildCanonicalServicePlacements(
       description: service.summary,
       displayCategory: service.eyebrow,
       ctaLabel: "Voir le service",
-      indicativePricing: service.pricing.label,
-      monthlyAccompanimentDiscountEligible: service.monthlyAccompanimentDiscountEligible,
       interaction: {
         interactionMode: "detail",
-        href: `/services/${service.slug}?systemSlug=${encodeURIComponent(systemSlug)}&source=solutions-systeme`,
+        href: `${service.detailHref}?systemSlug=${encodeURIComponent(systemSlug)}&source=solutions-systeme`,
       },
     },
   }));

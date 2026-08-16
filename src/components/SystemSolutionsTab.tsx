@@ -330,14 +330,6 @@ export default function SystemSolutionsTab({
         <span className="mt-2 line-clamp-2 text-[13px] leading-5 text-dema-muted md:text-sm">
           {resource.description}
         </span>
-        <span className="mt-auto shrink-0 pt-3">
-          {resource.indicativePricing ? (
-            <span className="block text-sm font-normal text-dema-muted">{resource.indicativePricing}</span>
-          ) : null}
-          {resource.monthlyAccompanimentDiscountEligible ? (
-            <span className="mt-1.5 block text-xs font-normal leading-snug text-dema-muted">Avantage abonné : −12 %</span>
-          ) : null}
-        </span>
       </span>
     );
     const openEvent = () => trackSystemSolutionEvent(
@@ -352,8 +344,7 @@ export default function SystemSolutionsTab({
     );
     const opensServicePage =
       placement.section === "services" &&
-      resource.interaction.interactionMode === "detail" &&
-      resource.interaction.href.startsWith("/services/");
+      resource.interaction.interactionMode === "detail";
 
     return (
       <div

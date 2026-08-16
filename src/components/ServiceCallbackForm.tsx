@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { type FormEvent, useRef, useState } from "react";
 import {
   getLeadAttributionPayload,
@@ -19,6 +19,13 @@ type CallbackFields = Readonly<{
 }>;
 
 type CallbackFieldErrors = Partial<Record<"company" | "phone", string>>;
+
+type CallbackPackage = Readonly<{
+  name: string;
+  pricing: Readonly<{ label: string; note: string }>;
+  slug: string;
+  summary: string;
+}>;
 
 const EMPTY_FIELDS: CallbackFields = {
   company: "",
@@ -79,18 +86,24 @@ export async function submitCallbackRequest(
 }
 
 export default function ServiceCallbackForm({
+  packages = [],
   serviceName,
   serviceSlug,
 }: {
+  packages?: readonly CallbackPackage[];
   serviceName: string;
   serviceSlug: string;
 }) {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const formRef = useRef<HTMLFormElement>(null);
   const submissionInFlightRef = useRef(false);
   const [fields, setFields] = useState<CallbackFields>(EMPTY_FIELDS);
   const [errors, setErrors] = useState<CallbackFieldErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [selectedPackageSlug, setSelectedPackageSlug] = useState(
+    packages[0]?.slug ?? "",
+  );
 
   function updateField(field: keyof CallbackFields, value: string) {
     setFields((current) => ({ ...current, [field]: value }));
@@ -119,16 +132,20 @@ export default function ServiceCallbackForm({
     setErrors({});
     setStatus("submitting");
 
-    const flowKey = `service-callback:${serviceSlug}`;
+    const flowKey = `service-callback:${serviceSlug}:${selectedPackageSlug || "default"}`;
     try {
       const idempotencyKey = getLeadSubmissionKey(flowKey);
       await submitCallbackRequest({
         attribution: getLeadAttributionPayload(),
         company: fields.company.trim(),
         idempotencyKey,
+        localeCode: "fr",
+        marketCode: "fr-fr",
+        packageSlug: selectedPackageSlug || undefined,
         phone: fields.phone.trim(),
         serviceSlug,
         source: searchParams.get("source") ?? undefined,
+        sourcePage: pathname,
         systemSlug: searchParams.get("systemSlug") ?? undefined,
         website: fields.website,
       });
@@ -148,6 +165,54 @@ export default function ServiceCallbackForm({
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
+      {packages.length > 0 ? (
+        <fieldset className="space-y-3">
+          <legend className="text-sm font-semibold text-brand-blue">
+            Choisissez le forfait à étudier
+          </legend>
+          {packages.map((servicePackage) => {
+            const selected = selectedPackageSlug === servicePackage.slug;
+            return (
+              <label
+                key={servicePackage.slug}
+                className={`block cursor-pointer rounded-[0.9rem] border p-4 transition ${
+                  selected
+                    ? "border-dema-forest/40 bg-dema-sage/45"
+                    : "border-dema-line bg-dema-paper hover:border-dema-forest/25"
+                }`}
+              >
+                <span className="flex items-start gap-3">
+                  <input
+                    type="radio"
+                    name="packageSlug"
+                    value={servicePackage.slug}
+                    checked={selected}
+                    onChange={() => {
+                      setSelectedPackageSlug(servicePackage.slug);
+                      if (status !== "idle") setStatus("idle");
+                    }}
+                    className="mt-1 h-4 w-4 accent-dema-forest"
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                      <span className="text-sm font-semibold text-brand-blue">
+                        {servicePackage.name}
+                      </span>
+                      <span className="text-sm font-normal text-dema-muted">
+                        {servicePackage.pricing.label}
+                      </span>
+                    </span>
+                    <span className="mt-1.5 block text-xs leading-relaxed text-dema-muted">
+                      {servicePackage.summary}
+                    </span>
+                  </span>
+                </span>
+              </label>
+            );
+          })}
+        </fieldset>
+      ) : null}
+
       <label className="block text-sm font-semibold text-brand-blue">
         Entreprise
         <input

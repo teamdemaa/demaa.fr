@@ -5,6 +5,7 @@ import {
   collectSerializedSolutionSlugs,
   getSerializedSolutionPayload,
   getExpectedCallTexts,
+  loadCanonicalServiceSlugs,
   getTabs,
   loadEnterprises,
 } from "../scripts/audit-system-kit-pages.mjs";
@@ -12,6 +13,16 @@ import {
 describe("system kit page audit contract", () => {
   it("audits Process and the unified Solutions view with all 115 expected orders", () => {
     expect(getTabs()).toEqual(["process", "solutions"]);
+    expect(loadCanonicalServiceSlugs()).toEqual([
+      "coach-business",
+      "expert-comptable",
+      "formalites-entreprise",
+      "automatisation-processus",
+      "application-metier",
+      "gestion-reseaux-sociaux",
+      "publicite-en-ligne",
+      "prospection-ciblee",
+    ]);
 
     const enterprises = loadEnterprises();
     const orders = buildExpectedSolutionOrders();
@@ -26,7 +37,9 @@ describe("system kit page audit contract", () => {
       "vertuoza",
       "coach-business",
       "expert-comptable",
+      "formalites-entreprise",
       "automatisation-processus",
+      "application-metier",
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
@@ -37,7 +50,9 @@ describe("system kit page audit contract", () => {
       "pipedrive",
       "coach-business",
       "expert-comptable",
+      "formalites-entreprise",
       "automatisation-processus",
+      "application-metier",
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
@@ -48,7 +63,9 @@ describe("system kit page audit contract", () => {
       "pipedrive",
       "coach-business",
       "expert-comptable",
+      "formalites-entreprise",
       "automatisation-processus",
+      "application-metier",
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",

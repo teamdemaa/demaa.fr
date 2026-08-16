@@ -108,7 +108,10 @@ describe("canonical Services composition in every system", () => {
       expect(services?.placements.every(({ resource }) =>
         resource.interaction.interactionMode === "detail" &&
         resource.interaction.href ===
-          `/services/${resource.resourceSlug}?systemSlug=${system.slug}&source=solutions-systeme`
+          `${resource.resourceSlug === "application-metier" ? "/sur-mesure" : `/services/${resource.resourceSlug}`}?systemSlug=${system.slug}&source=solutions-systeme`
+      )).toBe(true);
+      expect(services?.placements.every(({ resource }) =>
+        resource.indicativePricing === undefined
       )).toBe(true);
       expect(services?.placements.every(({ resource }) =>
         resource.displayCategory !== "Service Demaa"
@@ -122,6 +125,7 @@ describe("canonical Services composition in every system", () => {
       "expert-comptable",
       "formalites-entreprise",
       "automatisation-processus",
+      "application-metier",
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
@@ -129,6 +133,7 @@ describe("canonical Services composition in every system", () => {
     expect(getCanonicalServiceSlugsForSystem("cabinet-comptable")).toEqual([
       "coach-business",
       "automatisation-processus",
+      "application-metier",
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
@@ -137,6 +142,7 @@ describe("canonical Services composition in every system", () => {
       "coach-business",
       "expert-comptable",
       "automatisation-processus",
+      "application-metier",
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
@@ -145,6 +151,7 @@ describe("canonical Services composition in every system", () => {
       "coach-business",
       "expert-comptable",
       "automatisation-processus",
+      "application-metier",
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
@@ -226,6 +233,7 @@ describe("canonical Services composition in every system", () => {
       .toEqual([
         "coach-business",
         "automatisation-processus",
+        "application-metier",
         "gestion-reseaux-sociaux",
         "publicite-en-ligne",
         "prospection-ciblee",

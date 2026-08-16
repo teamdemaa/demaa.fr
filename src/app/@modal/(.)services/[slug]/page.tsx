@@ -3,7 +3,7 @@ import CanonicalServiceDetails from "@/components/CanonicalServiceDetails";
 import ServiceRouteDialog from "@/components/ServiceRouteDialog";
 import {
   getCanonicalServiceBySlug,
-  getCanonicalServices,
+  getCanonicalServiceDetailRouteParams,
 } from "@/lib/canonical-service-catalog";
 
 type ServiceModalPageProps = {
@@ -11,12 +11,12 @@ type ServiceModalPageProps = {
 };
 
 export function generateStaticParams() {
-  return getCanonicalServices().map((service) => ({ slug: service.slug }));
+  return getCanonicalServiceDetailRouteParams();
 }
 export default async function ServiceModalPage({ params }: ServiceModalPageProps) {
   const { slug } = await params;
   const service = getCanonicalServiceBySlug(slug);
-  if (!service) notFound();
+  if (!service || service.detailHref !== `/services/${service.slug}`) notFound();
 
   return (
     <ServiceRouteDialog ariaLabel={`Détails de ${service.name}`}>

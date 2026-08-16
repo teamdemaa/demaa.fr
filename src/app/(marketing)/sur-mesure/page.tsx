@@ -4,25 +4,33 @@ import {
   Check,
   ChevronDown,
   ClipboardList,
-  Cloud,
-  Headphones,
-  KeyRound,
   LayoutDashboard,
   ListChecks,
   Mail,
   MonitorSmartphone,
-  ShieldCheck,
   Workflow,
 } from "lucide-react";
-import { Suspense, type ComponentType } from "react";
+import type { ComponentType } from "react";
 import Navbar from "@/components/Navbar";
-import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
+import ServiceCallbackForm from "@/components/ServiceCallbackForm";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
+import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
+import {
+  buildServicePageJsonLd,
+  serializeServicesJsonLd,
+} from "@/lib/services-seo";
 import { surMesurePageContent as content } from "@/lib/sur-mesure-page-content";
 
 const title = "Application métier sur mesure | Demaa";
 const description =
   "Demaa simplifie un processus qui vous ralentit et crée une application adaptée à votre métier.";
+function requireApplicationService() {
+  const service = getCanonicalServiceBySlug("application-metier");
+  if (!service) throw new Error("Application métier must exist in the canonical catalog.");
+  return service;
+}
+
+const applicationService = requireApplicationService();
 
 export const metadata: Metadata = {
   title,
@@ -54,25 +62,11 @@ const benefitIcons: readonly IconType[] = [
 
 const exampleIcons: readonly IconType[] = [ClipboardList, Mail, LayoutDashboard];
 
-const guaranteeIcons: readonly IconType[] = [Cloud, ShieldCheck, KeyRound, Headphones];
-
-function BookingFallback({ className }: { className: string }) {
+function RequestLink({ label, className }: { label: string; className: string }) {
   return (
-    <button type="button" disabled className={`${className} opacity-60`}>
-      {content.hero.ctaLabel}
-    </button>
-  );
-}
-
-function BookingButton({ source, className }: { source: string; className: string }) {
-  return (
-    <Suspense fallback={<BookingFallback className={className} />}>
-      <OrganisationSessionBookingButton
-        className={className}
-        label={content.hero.ctaLabel}
-        source={source}
-      />
-    </Suspense>
+    <a className={className} href="#demande-application">
+      {label}
+    </a>
   );
 }
 
@@ -223,6 +217,12 @@ function ApplicationPreview() {
 export default function SurMesureLandingPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeServicesJsonLd(buildServicePageJsonLd(applicationService)),
+        }}
+      />
       <Navbar />
       <main className="overflow-x-clip bg-dema-cream text-brand-blue">
         <section className="px-4 pb-20 pt-14 sm:px-6 sm:pb-24 sm:pt-20 lg:px-8 lg:pb-28">
@@ -239,9 +239,9 @@ export default function SurMesureLandingPage() {
                 {content.hero.introduction}
               </p>
               <div className="mt-8 flex w-full flex-col items-center gap-2.5 lg:w-fit">
-                <BookingButton
+                <RequestLink
                   className="demaa-primary-button min-h-12 min-w-44 gap-2 px-8"
-                  source="Page sur mesure : Hero"
+                  label={content.hero.ctaLabel}
                 />
                 <span className="text-center text-xs text-dema-muted">{content.hero.reassurance}</span>
               </div>
@@ -366,60 +366,54 @@ export default function SurMesureLandingPage() {
               <h2 id="commercial-frame-heading" className="text-[2rem] font-medium leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]">
                 {content.commercialFrame.title}
               </h2>
+              <p className="mt-5 text-base leading-7 text-dema-paper/75">
+                {content.commercialFrame.description}
+              </p>
             </div>
-            <div className="mt-9 overflow-hidden rounded-[1.3rem] bg-dema-paper text-brand-blue shadow-[0_22px_60px_rgba(0,0,0,0.13)]">
-              <div className="grid lg:grid-cols-[0.82fr_1.18fr]">
-                <div className="border-b border-dema-line p-6 sm:p-8 lg:border-b-0 lg:border-r lg:p-10">
-                  <p className="text-2xl font-medium tracking-[-0.03em]">
-                    {content.commercialFrame.pricing.label}
-                  </p>
-                  <p className="mt-8 text-sm text-dema-muted">
-                    {content.commercialFrame.pricing.prefix}
-                  </p>
-                  <p className="mt-1 flex items-end gap-2 text-dema-forest">
-                    <span className="text-[3rem] font-normal leading-none tracking-[-0.045em] sm:text-[3.8rem]">
-                      {content.commercialFrame.pricing.value}
-                    </span>
-                    <span className="pb-1 text-sm font-medium">
-                      {content.commercialFrame.pricing.tax}
-                    </span>
-                  </p>
-                  <div className="mt-8 space-y-2 text-sm text-dema-muted">
-                    {content.commercialFrame.pricing.notes.map((note) => (
-                      <p key={note}>{note}</p>
-                    ))}
-                  </div>
-                </div>
-                <div className="p-6 sm:p-8 lg:p-10">
-                  <h3 className="text-lg font-medium">
-                    {content.commercialFrame.included.title}
-                  </h3>
-                  <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-                    {content.commercialFrame.included.items.map((item) => (
-                      <li key={item} className="flex items-start gap-3 text-sm leading-6 text-dema-muted">
-                        <Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-10 grid gap-4 sm:grid-cols-2">
-              {content.commercialFrame.guarantees.map((item, index) => {
-                const Icon = guaranteeIcons[index];
-                return (
+            <div className="mt-9 grid gap-5 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+              <div className="grid gap-4 sm:grid-cols-2">
+                {applicationService.packages.map((servicePackage) => (
                   <article
-                    key={item.title}
-                    className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 rounded-[1.1rem] border border-dema-paper/15 bg-dema-paper/7 p-5 text-dema-paper sm:p-6"
+                    key={servicePackage.slug}
+                    className="rounded-[1.3rem] bg-dema-paper p-6 text-brand-blue shadow-[0_22px_60px_rgba(0,0,0,0.11)] sm:p-7"
                   >
-                    <Icon className="row-span-2 mt-0.5 h-5 w-5 text-dema-paper/85" aria-hidden={true} />
-                    <h4 className="text-base font-medium">{item.title}</h4>
-                    <p className="text-sm leading-6 text-dema-paper/70">{item.description}</p>
+                    <p className="text-xl font-medium tracking-[-0.03em]">
+                      {servicePackage.name}
+                    </p>
+                    <p className="mt-4 text-2xl font-normal text-dema-muted">
+                      {servicePackage.pricing.label}
+                    </p>
+                    <p className="mt-3 text-sm leading-6 text-dema-muted">
+                      {servicePackage.summary}
+                    </p>
+                    <ul className="mt-6 space-y-3">
+                      {servicePackage.included.map((item) => (
+                        <li key={item} className="flex items-start gap-3 text-sm leading-6 text-dema-muted">
+                          <Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </article>
-                );
-              })}
+                ))}
+              </div>
+              <aside
+                id="demande-application"
+                className="rounded-[1.3rem] bg-dema-paper p-6 text-brand-blue shadow-[0_22px_60px_rgba(0,0,0,0.11)] sm:p-7"
+              >
+                <p className="text-xl font-medium tracking-[-0.03em]">
+                  Envoyer ma demande
+                </p>
+                <p className="mt-3 text-sm leading-6 text-dema-muted">
+                  Aucun paiement n’est déclenché. La Team confirme d’abord le forfait et le périmètre adaptés.
+                </p>
+                <ServiceCallbackForm
+                  key={applicationService.slug}
+                  packages={applicationService.packages}
+                  serviceName={applicationService.name}
+                  serviceSlug={applicationService.slug}
+                />
+              </aside>
             </div>
           </div>
         </section>
@@ -456,9 +450,9 @@ export default function SurMesureLandingPage() {
               <p className="mt-4 text-base leading-7 text-dema-muted">{content.finalCta.description}</p>
             </div>
             <div className="shrink-0">
-              <BookingButton
+              <RequestLink
                 className="demaa-primary-button min-h-12 w-full gap-2 px-6 lg:w-auto"
-                source="Page sur mesure : Final"
+                label={content.finalCta.label}
               />
               <p className="mt-3 text-center text-xs text-dema-muted">{content.finalCta.reassurance}</p>
             </div>

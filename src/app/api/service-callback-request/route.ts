@@ -1,10 +1,14 @@
+import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 import {
   normalizeIdempotencyKey,
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
-import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
+import {
+  getCanonicalServiceBySlug,
+  getCanonicalServicePackage,
+} from "@/lib/canonical-service-catalog";
 import {
   isMonthlyAccompanimentDiscountEligible,
   resolveMonthlyAccompanimentDiscount,
@@ -24,9 +28,13 @@ type ServiceCallbackRequestBody = Readonly<{
   attribution?: unknown;
   company?: unknown;
   idempotencyKey?: unknown;
+  localeCode?: unknown;
+  marketCode?: unknown;
+  packageSlug?: unknown;
   phone?: unknown;
   serviceSlug?: unknown;
   source?: unknown;
+  sourcePage?: unknown;
   systemSlug?: unknown;
   website?: unknown;
 }>;
@@ -35,6 +43,18 @@ function isValidPhone(phone: string) {
   if (!/^\+?[0-9\s().-]+$/.test(phone)) return false;
   const digitCount = phone.replace(/\D/g, "").length;
   return digitCount >= 8 && digitCount <= 15;
+}
+
+function normalizeInternalSourcePage(value: unknown, requestOrigin: string) {
+  const sourcePage = normalizeText(value, 240);
+  if (!sourcePage || sourcePage.startsWith("//")) return null;
+  try {
+    const parsed = new URL(sourcePage, requestOrigin);
+    if (parsed.origin !== requestOrigin) return null;
+    return `${parsed.pathname}${parsed.search}`;
+  } catch {
+    return null;
+  }
 }
 
 function success() {
@@ -67,9 +87,13 @@ export async function POST(request: Request) {
         "attribution",
         "company",
         "idempotencyKey",
+        "localeCode",
+        "marketCode",
+        "packageSlug",
         "phone",
         "serviceSlug",
         "source",
+        "sourcePage",
         "systemSlug",
         "website",
       ]) as ServiceCallbackRequestBody;
@@ -84,12 +108,24 @@ export async function POST(request: Request) {
     if (honeypot) return success();
 
     const company = normalizeText(body?.company, 160);
+    const localeCode = normalizeText(body?.localeCode, 20) || "fr";
+    const marketCode = normalizeText(body?.marketCode, 40) || "fr-fr";
+    const packageSlug = normalizeText(body?.packageSlug, 120);
     const phone = normalizeText(body?.phone, 60);
     const serviceSlug = normalizeText(body?.serviceSlug, 120);
     const requestedSource = normalizeText(body?.source, 80);
     const systemSlug = normalizeText(body?.systemSlug, 120);
     const idempotencyKey = normalizeIdempotencyKey(body?.idempotencyKey);
     const service = getCanonicalServiceBySlug(serviceSlug);
+    const requestOrigin = new URL(request.url).origin;
+    const requestedSourcePage = normalizeText(body?.sourcePage, 240);
+    const validatedSourcePage = normalizeInternalSourcePage(
+      requestedSourcePage,
+      requestOrigin,
+    );
+    const sourcePage = requestedSourcePage
+      ? validatedSourcePage
+      : normalizeInternalSourcePage(request.headers.get("referer"), requestOrigin);
 
     if (!company || !isValidPhone(phone) || !idempotencyKey) {
       return NextResponse.json(
@@ -104,6 +140,29 @@ export async function POST(request: Request) {
         { status: 404 },
       );
     }
+
+    if (localeCode !== "fr" || marketCode !== "fr-fr" || !sourcePage) {
+      return NextResponse.json(
+        { error: "Le contexte de la demande est invalide." },
+        { status: 400 },
+      );
+    }
+
+    const servicePackage = packageSlug
+      ? getCanonicalServicePackage(service, packageSlug)
+      : null;
+    if (
+      (service.packages.length > 0 && !servicePackage)
+      || (service.packages.length === 0 && Boolean(packageSlug))
+    ) {
+      return NextResponse.json(
+        { error: "Choisissez un forfait valide pour cette prestation." },
+        { status: 400 },
+      );
+    }
+    const scopedIdempotencyKey = createHash("sha256")
+      .update(`${idempotencyKey}:${service.slug}:${servicePackage?.slug ?? "default"}`)
+      .digest("hex");
 
     let monthlyBenefitDiscount: {
       apply: boolean;
@@ -162,7 +221,17 @@ export async function POST(request: Request) {
       fields: [
         { label: "Service", value: service.name },
         { label: "Slug du service", value: service.slug },
+        ...(servicePackage
+          ? [
+              { label: "Forfait", value: servicePackage.name },
+              { label: "Slug du forfait", value: servicePackage.slug },
+              { label: "Prix de référence", value: servicePackage.pricing.label },
+            ]
+          : []),
         { label: "Numéro WhatsApp", value: phone },
+        { label: "Locale", value: localeCode },
+        { label: "Marché", value: marketCode },
+        { label: "Page source", value: sourcePage },
         ...(monthlyBenefitDiscount.eligible
           ? [{
               label: "Avantage accompagnement mensuel",
@@ -175,9 +244,9 @@ export async function POST(request: Request) {
           ? [{ label: "Système métier", value: context.systemName }]
           : []),
       ],
-      idempotencyKey,
+      idempotencyKey: scopedIdempotencyKey,
       requestType: "service_callback_request",
-      title: `Demande de contact WhatsApp - ${service.name}`,
+      title: `Demande de contact WhatsApp - ${service.name}${servicePackage ? ` - ${servicePackage.name}` : ""}`,
     });
 
     return success();

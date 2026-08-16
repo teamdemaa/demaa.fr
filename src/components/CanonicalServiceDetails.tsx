@@ -54,18 +54,31 @@ function ServicePricingAndCta({
         ? "h-fit rounded-[1.1rem] bg-dema-sage/45 p-5 sm:p-6"
         : "h-fit rounded-[1.1rem] border border-dema-line bg-dema-paper p-5 sm:p-6"}
     >
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-muted">
-        {service.pricing.heading}
-      </p>
-      <p className="mt-3 text-base font-normal text-dema-muted">
-        {service.pricing.label}
-      </p>
-      <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-        {service.pricing.note}
-      </p>
+      {service.pricing ? (
+        <>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-muted">
+            {service.pricing.heading}
+          </p>
+          <p className="mt-3 text-base font-normal text-dema-muted">
+            {service.pricing.label}
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+            {service.pricing.note}
+          </p>
+        </>
+      ) : (
+        <>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-muted">
+            Forfaits
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+            Choisissez le périmètre le plus proche de votre besoin. La Team confirme son adéquation avant tout démarrage.
+          </p>
+        </>
+      )}
       {service.monthlyAccompanimentDiscountEligible ? (
         <p className="mt-3 text-xs font-normal text-dema-muted">
-          Avantage abonné : −12 % sur les honoraires Demaa éligibles.
+          Avantage accompagnement mensuel : −12 % sur les prestations Demaa éligibles.
         </p>
       ) : null}
 
@@ -73,9 +86,12 @@ function ServicePricingAndCta({
         {service.slug === "coach-business" ? (
           <CoachBusinessCallbackForm />
         ) : (
-          <div className="mt-6 border-t border-dema-line/80 pt-1">
-            <ServiceCallbackForm serviceName={service.name} serviceSlug={service.slug} />
-          </div>
+          <ServiceCallbackForm
+            key={service.slug}
+            packages={service.packages}
+            serviceName={service.name}
+            serviceSlug={service.slug}
+          />
         )}
       </Suspense>
     </aside>

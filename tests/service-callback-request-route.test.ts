@@ -130,6 +130,9 @@ describe("service callback request route", () => {
         { label: "Service", value: "Prospection ciblée" },
         { label: "Slug du service", value: "prospection-ciblee" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
+        { label: "Locale", value: "fr" },
+        { label: "Marché", value: "fr-fr" },
+        { label: "Page source", value: "/services/expert-comptable" },
       ],
       requestType: "service_callback_request",
     }));
@@ -149,15 +152,22 @@ describe("service callback request route", () => {
       validUntil: "2027-08-14T00:00:00.000Z",
     });
     const response = await POST(request(validBody({
+      packageSlug: "automatisation-avancee-ia",
       serviceSlug: "automatisation-processus",
     })));
 
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: [
-        { label: "Service", value: "Automatisation des processus" },
+        { label: "Service", value: "Automatisation des processus et IA" },
         { label: "Slug du service", value: "automatisation-processus" },
+        { label: "Forfait", value: "Automatisation avancée + IA" },
+        { label: "Slug du forfait", value: "automatisation-avancee-ia" },
+        { label: "Prix de référence", value: "3 000 € HT" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
+        { label: "Locale", value: "fr" },
+        { label: "Marché", value: "fr-fr" },
+        { label: "Page source", value: "/services/expert-comptable" },
         {
           label: "Avantage accompagnement mensuel",
           value: "−12 % confirmé côté serveur sur les honoraires Demaa",
@@ -179,6 +189,7 @@ describe("service callback request route", () => {
     mocks.resolveMonthlyAccompanimentDiscount.mockRejectedValue(new Error("firestore_unavailable"));
 
     const response = await POST(request(validBody({
+      packageSlug: "automatisation-essentielle",
       serviceSlug: "automatisation-processus",
     })));
 
@@ -194,6 +205,33 @@ describe("service callback request route", () => {
       expect.any(Error),
       { serviceSlug: "automatisation-processus" },
     );
+  });
+
+  it("accepts the canonical Application métier package and resolves its price server-side", async () => {
+    mocks.resolveMonthlyAccompanimentDiscount.mockResolvedValue({
+      apply: false,
+      eligible: true,
+      percent: 0,
+      source: null,
+      validUntil: null,
+    });
+    const response = await POST(request(validBody({
+      packageSlug: "application-metier-essentielle",
+      serviceSlug: "application-metier",
+      sourcePage: "/sur-mesure?source=solutions-systeme",
+    })));
+
+    expect(response.status).toBe(202);
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      fields: expect.arrayContaining([
+        { label: "Service", value: "Application métier" },
+        { label: "Forfait", value: "Application métier essentielle" },
+        { label: "Slug du forfait", value: "application-metier-essentielle" },
+        { label: "Prix de référence", value: "4 500 € HT" },
+        { label: "Page source", value: "/sur-mesure?source=solutions-systeme" },
+      ]),
+      title: "Demande de contact WhatsApp - Application métier - Application métier essentielle",
+    }));
   });
 
   it("stores company and phone in Firebase before delivering to Slack", async () => {
@@ -222,8 +260,11 @@ describe("service callback request route", () => {
         { label: "Service", value: "Expert-comptable" },
         { label: "Slug du service", value: "expert-comptable" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
+        { label: "Locale", value: "fr" },
+        { label: "Marché", value: "fr-fr" },
+        { label: "Page source", value: "/services/expert-comptable" },
       ],
-      idempotencyKey: "service:callback:12345678",
+      idempotencyKey: expect.stringMatching(/^[a-f0-9]{64}$/),
       requestType: "service_callback_request",
     }));
   });
@@ -236,6 +277,37 @@ describe("service callback request route", () => {
     const response = await POST(request(validBody({ serviceSlug })));
 
     expect(response.status).toBe(404);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    ["automatisation-processus", undefined],
+    ["automatisation-processus", "application-metier-essentielle"],
+    ["application-metier", "forfait-inconnu"],
+    ["expert-comptable", "automatisation-essentielle"],
+  ])("rejects a missing or cross-service package for %s", async (serviceSlug, packageSlug) => {
+    const response = await POST(request(validBody({ packageSlug, serviceSlug })));
+
+    expect(response.status).toBe(400);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
+  it("rejects an external source page", async () => {
+    const response = await POST(request(validBody({
+      sourcePage: "https://evil.example/services/expert-comptable",
+    })));
+
+    expect(response.status).toBe(400);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
+  it("rejects a locale and market not yet published by this French route", async () => {
+    const response = await POST(request(validBody({
+      localeCode: "en",
+      marketCode: "global-en-beta",
+    })));
+
+    expect(response.status).toBe(400);
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
