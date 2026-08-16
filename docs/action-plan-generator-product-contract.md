@@ -54,7 +54,7 @@ Le MVP utilise une seule opération de raisonnement principale :
 ```text
 texte libre final
 → génération IA principale
-→ JSON strict du plan + systemId
+→ enveloppe JSON stricte { title, plan }
 → validation déterministe
 → rendu Actions
 → chargement déterministe du Système sélectionné
@@ -77,8 +77,12 @@ La source actuelle est `src/lib/enterprise-annuaire.json`, exposée par
 Solutions et Ressources
 des 115 Systèmes ne sont jamais envoyés ensemble au modèle.
 
-La réponse contient un `systemId` dont la valeur est l'un des slugs canoniques
-du catalogue. L'application
+La réponse contient un titre concis de 3 à 7 mots, validé et normalisé côté
+serveur, ainsi qu'un plan contenant un `systemId` dont la valeur est l'un des
+slugs canoniques du catalogue. Le titre reste hors du modèle métier
+`ActionPlan` et aucun second appel IA n'est effectué pour le produire. En cas
+de titre invalide, un fallback déterministe utilise la première action. Un
+titre explicitement saisi par l'utilisateur reste prioritaire. L'application
 charge ensuite uniquement le Système sélectionné depuis ses sources
 canoniques existantes.
 

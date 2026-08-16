@@ -1,10 +1,10 @@
 # Programme directeur Demaa — stabilisation et Pilotage d'entreprise
 
-- Statut : `working`
+- Statut : `validated`
 - Date : 2026-08-16
 - Pilote produit et release : `MASTER DEMAA`
 - Branche Production : `main`
-- État Production vérifié : `4f0a589` (Lots 1, 2, 4, 5 et 7 fusionnés)
+- État Production vérifié : `8020e04` (programme 0 à 8 livré)
 
 ## Objectif
 
@@ -21,14 +21,16 @@ runtime exige un GO explicite d'Oumou et l'attribution de son workstream.
 
 | Unité | État | Lot propriétaire |
 | --- | --- | --- |
-| Documentation D-084 | isolée dans `codex/d084-program-docs`, complète et auditée, à publier dans une PR documentaire dédiée | Lot 0, unité documentaire dédiée |
+| Documentation D-084 | fusionnée par la PR 115 au commit `3ee6e0c` | Lot 0 livré |
 | Suppression de « Dictée en cours… » et expérience Coach | fusionnées par la PR 113 et vérifiées en Production au commit `4f0a589` | Lot 5 livré |
 | Runtime Plans | fusionné par la PR 110 et vérifié en Production au commit `6f9fed5` | Lot 1 livré |
+| Pilotage Chiffres + Stratégie | fusionné par la PR 116 et vérifié en Production au commit `8aa1cab` | Lot 3 livré |
+| Titre IA | fusionné par la PR 117 et vérifié en Production au commit `8020e04` | Lot 6 livré |
 
 Ces unités n'ont pas été placées dans le même commit. Le gate d'isolation du
-Lot 0 est franchi. Les Lots 1, 2, 4, 5 et 7 ont ensuite été livrés dans des PR
-indépendantes, chacun après ses tests, sa CI, son déploiement Vercel et son
-smoke test Production. Le Lot 3 Pilotage est désormais débloqué.
+Lot 0 est franchi. Les Lots 1 à 7 ont été livrés dans des PR indépendantes,
+chacun après ses tests, sa CI, son déploiement Vercel et son smoke test
+Production. Le Lot 8 a ensuite contrôlé l'ensemble intégré.
 
 ## Politique de branches, PR et Production
 
@@ -63,7 +65,7 @@ La tâche Pilotage ne commence pas l'implémentation avant le gate du Lot 1.
 
 ## Lots
 
-### Lot 0 — Assainissement et gouvernance — bloquant
+### Lot 0 — Assainissement et gouvernance — livré
 
 Responsable : MASTER DEMAA.
 
@@ -125,7 +127,7 @@ transitoire ; un rôle Firebase `team_demaa` appartient à un futur lot distinct
 
 Ce lot peut avancer après le Lot 0 dans une branche ou un worktree séparé.
 
-### Lot 3 — Pilotage d'entreprise : Chiffres + Stratégie — D-084
+### Lot 3 — Pilotage d'entreprise : Chiffres + Stratégie — D-084 — livré en Production
 
 Responsable exclusif : tâche `Vérifier la stratégie et le backlog`. Une seule
 branche et une seule PR complète sont publiées. Chiffres avait été omis lors
@@ -288,7 +290,7 @@ Responsable : workstream Coaching désigné par MASTER.
   `aria-expanded`, clavier et animation discrète ;
 - valider dictée, envoi, accessibilité, mobile, PWA et tests.
 
-### Lot 6 — Titre IA — P2
+### Lot 6 — Titre IA — P2 — livré en Production
 
 Responsable : workstream Plans/IA, après la fusion du Lot 3 complet. Les
 sous-lots 3A à 3D ne sont pas fusionnés séparément.
@@ -317,7 +319,7 @@ Responsable : workstream Plans/UI, après le Lot 1.
 - centrer parfaitement les trois points avec le titre ;
 - titres longs, clavier, mobile et PWA.
 
-### Lot 8 — Recette et release transverse
+### Lot 8 — Recette et release transverse — terminé
 
 Pilote : MASTER DEMAA.
 
@@ -359,8 +361,7 @@ supersédés ou volontairement différés. Ce programme ne modifie pas :
 - la resynchronisation du Google Sheet avant stabilisation et validation des
   documents locaux.
 
-Le Lot 0 est franchi et les Lots 1, 2, 4, 5 et 7 sont vérifiés en Production.
-Le GO programme et le GO PROD ont été donnés. La prochaine exécution runtime
-est le Lot 3 Pilotage complet dans la tâche dédiée, sur une branche et une PR
-uniques ; aucun sous-lot 3A–3D ne doit être fusionné séparément. Le Lot 6 reste
-bloqué jusqu'à la fusion et à la recette Production du Lot 3.
+Le programme 0 à 8 est livré et vérifié en Production au commit `8020e04`.
+Pilotage a été fusionné comme une seule unité complète par la PR 116 ; Titre IA
+a suivi dans la PR autonome 117. La suite n'est pas un reliquat de ce
+programme : tout nouveau chantier historique ou différé exige un nouveau GO.
