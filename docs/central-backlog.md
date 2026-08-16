@@ -353,22 +353,25 @@ l'ADR 0004 prévaut.
   déterministe, annulation, limites compte/IP, mode démo sans crédit et ledger
   sans contenu. Notes, identité, situation source, historique et Systèmes
   restent exclus.
-- [ ] D-084 — Implémenter la nouvelle Stratégie manuelle d'entreprise par
-  cycles selon l'ADR 0013, dans la tâche unique `Vérifier la stratégie et le
-  backlog`. Le cadrage produit des quatre piliers, des douze questions, de
-  l'historique en lecture seule et de l'exclusion totale de l'IA est intégré.
-  Le programme retient `/strategie`, un premier cycle automatique, une période
-  de trois mois calendaires à partir du mois civil de création en Europe/Paris,
-  un nouveau cycle vide et un historique paginé par 10. La cible de navigation
-  place Stratégie immédiatement après Plan d'action ; D-082 reste la réalité
-  Production jusqu'à la fusion complète. Les décisions produit restantes sont
-  fermées : exactement un pli ouvert avec Alignement par défaut, dernier
-  placeholder Alignement validé, archives conservées avec l'entreprise,
-  conflits résolus inline sans écrasement et suppression déclenchée uniquement
-  par la suppression effective de l'entreprise. Ne migrer, afficher, recopier
-  ou supprimer physiquement aucune ancienne réponse V3. L'implémentation attend
-  le gate du Lot 1 Plans et 3A/3B sont fusionnés dans une seule PR complète et
-  publiable.
+- [ ] D-084 — Implémenter le Pilotage d'entreprise `Chiffres + Stratégie`
+  selon l'ADR 0013, dans la tâche unique `Vérifier la stratégie et le backlog`.
+  Le périmètre Chiffres, omis lors d'une consolidation intermédiaire, est
+  restauré. D-082 reste la navigation principale cible. Après sauvegarde d'un
+  plan, la vue Plan expose la sous-navigation commune
+  `Plan d'action / Chiffres / Stratégie`, pilotée par
+  `section=actions|figures|strategy` et jamais visible sur le formulaire public.
+  Les deux domaines appartiennent à l'entreprise : changer ou supprimer un plan
+  ne les modifie pas. Chiffres stocke par mois CA, charges et trésorerie en
+  centimes, dérive le résultat, applique `expectedRevision`, agrège uniquement
+  des périodes bornées et ne cumule jamais la trésorerie. Le cadrage Stratégie
+  conserve intégralement les quatre piliers, douze questions, cycles de trois
+  mois calendaires Europe/Paris sans expiration, premier cycle automatique,
+  nouveau cycle vide, historique paginé par 10, exactement un pli ouvert avec
+  Alignement par défaut, placeholders validés, archives avec l'entreprise et
+  conflits inline sans écrasement. Aucun contenu Pilotage n'est transmis à
+  l'IA. Ne migrer, afficher, recopier ou supprimer physiquement aucune ancienne
+  réponse V3. L'implémentation attend le gate du Lot 1 et Chiffres + Stratégie
+  sont fusionnés dans une seule PR complète et publiable.
 - [ ] Resynchroniser le Google Sheet maître avec D-084, le registre de
   décisions et l'état Production du 16 août. Ne pas marquer Stratégie comme
   livrée avant l'implémentation et la recette.

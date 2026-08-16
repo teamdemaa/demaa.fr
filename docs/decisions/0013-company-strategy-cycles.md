@@ -1,4 +1,4 @@
-# ADR 0013 — Stratégie d'entreprise par cycles
+# ADR 0013 — Pilotage d'entreprise : Chiffres et Stratégie par cycles
 
 - Statut : `working`
 - Date : 2026-08-16
@@ -7,9 +7,10 @@
 
 ## Frontière de la décision
 
-La nouvelle `Stratégie` est un espace manuel rattaché à l'entreprise. Elle ne
-réactive pas la Stratégie historique des plans V3 et ne fait pas partie du
-Plan d'action.
+Le `Pilotage d'entreprise` réunit deux espaces rattachés à l'entreprise :
+`Chiffres` pour le suivi mensuel et la nouvelle `Stratégie` manuelle par
+cycles. Aucun des deux n'est stocké dans un plan. La nouvelle Stratégie ne
+réactive pas la Stratégie historique des plans V3.
 
 - `Plan d'action` reste limité aux Actions et à l'IA courante ;
 - `Stratégie` est commune aux membres autorisés de l'entreprise ;
@@ -21,12 +22,53 @@ Plan d'action.
 - aucune donnée de Stratégie n'est envoyée à l'IA, aux prompts, aux commandes
   d'édition ou aux logs IA.
 
+La navigation principale reste celle de D-082 : `Plan d'action`, `Solutions`,
+`Académie`, `Opportunités`. Après la sauvegarde effective d'un plan généré ou
+vierge, la vue Plan expose une sous-navigation commune : `Plan d'action`,
+`Chiffres`, `Stratégie`. Elle n'apparaît jamais sur le formulaire public
+initial. Changer ou supprimer un plan ne change ni ne supprime les données de
+Pilotage de l'entreprise.
+
+Le contexte URL accepte uniquement `section=actions|figures|strategy` lorsque
+`view=plan`. L'absence de section ouvre `actions`; une section est ignorée hors
+de la vue Plan et les paramètres incompatibles sont nettoyés. Un composant
+propriétaire commun doit être réutilisé par l'expérience de génération et celle
+des plans sauvegardés afin d'éviter toute duplication.
+
 Le lecteur de compatibilité V1/V2/V3 peut continuer à accepter silencieusement
 les anciens champs afin de ne pas casser les documents existants. Ces champs
 ne sont ni rendus ni édités. Leur suppression physique exige un audit Firebase
 et une autorisation séparée.
 
-## Contrat fonctionnel validé
+## Contrat fonctionnel validé — Chiffres
+
+Les données mensuelles utilisent un document par entreprise et par période
+`YYYY-MM`, avec `schemaVersion: 1`, devise `EUR`, révision optimiste, audit UID
+et timestamps. Les montants sont stockés en centimes entiers : chiffre
+d'affaires et charges sont nuls ou positifs ; la trésorerie peut être négative.
+Le résultat de pilotage est dérivé (`CA - charges`) et n'est jamais stocké. Il
+est présenté comme un indicateur de pilotage, pas comme un résultat comptable
+officiel. Le volume et son unité restent hors V1.
+
+Les lectures sont bornées par période et les mutations portent sur un mois.
+Session Demaa, entreprise active et appartenance sont résolues côté serveur ;
+aucun `companyId` du navigateur n'est accepté. Le format de période, les bornes,
+les montants et `expectedRevision` sont validés, sans accès inter-entreprises.
+
+Un sélecteur unique pilote récapitulatif et graphique : `Ce mois`, `3 mois`,
+`6 mois`, `12 mois`, `Période…`, avec bornes mensuelles inclusives. Le
+récapitulatif montre CA cumulé, charges cumulées, résultat cumulé et dernière
+trésorerie renseignée — jamais une somme de trésoreries. Un mois incomplet
+affiche `—` lorsque le calcul n'est pas fiable et le nombre de mois renseignés
+sur la période. Une période d'un mois ne produit pas de fausse courbe.
+
+Les comparaisons sont `CA / Charges`, `CA / Trésorerie` et
+`Résultat / Trésorerie`. Le détail mensuel est accessible au survol, au toucher
+et au clavier, sans débordement mobile. La saisie mensuelle est explicite, sans
+autosauvegarde : mois, CA, charges, trésorerie et action `Ajouter` ou
+`Mettre à jour`, avec préremplissage des valeurs existantes.
+
+## Contrat fonctionnel validé — Stratégie
 
 Chaque cycle contient quatre piliers, avec trois réponses manuelles par pilier.
 Chaque réponse est limitée à environ 500 caractères.
@@ -101,9 +143,13 @@ forfait, journée, commission ou autre.
 ## Contraintes minimales d'architecture
 
 Le contrat détaillé, le stockage, les handlers et l'implémentation appartiennent
-à la tâche unique `Vérifier la stratégie et le backlog`. Le chantier devra au
-minimum garantir :
+à la tâche unique `Vérifier la stratégie et le backlog`. Le chantier Pilotage
+devra au minimum garantir :
 
+- une résolution unique de l'entreprise et de l'appartenance côté serveur ;
+- un stockage mensuel Chiffres distinct du stockage des cycles Stratégie ;
+- une suppression d'entreprise qui nettoie les deux domaines ;
+- l'absence totale de Chiffres et Stratégie dans le périmètre IA ;
 - une autorisation fondée sur l'entreprise et une appartenance active ;
 - un cycle actif et un historique borné ou paginé en lecture seule ;
 - une sauvegarde automatique sérialisée avec révision attendue ;
@@ -138,9 +184,11 @@ considéré livré par la présente ADR.
 
 ## Décisions consolidées
 
-Le programme directeur retient la route `/strategie`, immédiatement après
-`Plan d'action` dans la navigation cible. D-082 reste la navigation Production
-jusqu'à la fusion complète du lot. Il retient aussi un premier cycle créé
+La décision antérieure de créer `/strategie` comme cinquième destination
+principale est supersédée : elle avait été prise sans le périmètre Chiffres.
+D-082 reste la navigation principale en Production comme dans la cible. Le
+Pilotage est une sous-navigation de la vue Plan et n'existe qu'après sauvegarde
+d'un plan. Le programme retient aussi un premier cycle Stratégie créé
 automatiquement par une commande idempotente, un nouveau cycle vide et un
 historique en lecture seule paginé par 10.
 
@@ -162,6 +210,7 @@ du lot D-084, pas d'un arbitrage produit restant.
 
 `MASTER DEMAA` conserve cette décision, le backlog et le registre. La tâche
 `Vérifier la stratégie et le backlog` possède seule l'architecture détaillée,
-la branche et l'implémentation du stockage jusqu'à la recette. Aucune seconde
-implémentation ne doit être commencée en parallèle. La fonctionnalité ne peut
-être marquée `livrée` qu'après implémentation, recette et décision de promotion.
+la branche et l'implémentation complète de Chiffres et Stratégie jusqu'à la
+recette. Aucune seconde implémentation ne doit être commencée en parallèle. La
+fonctionnalité ne peut être marquée `livrée` qu'après implémentation, recette et
+décision de promotion.
