@@ -52,7 +52,6 @@ export default function CustomerSpaceLoginDialog({
         <div className={message ? "mt-6" : ""}>
           <CustomerSpaceAccessForm
             choiceTitle="Connectez-vous"
-            onCancel={closeDialog}
             returnTo={returnTo}
           />
         </div>

@@ -708,7 +708,6 @@ export default function ActionPlanExperience({
             choiceTitle="Enregistrez votre plan"
             draft={accessDraft}
             initialMode="create"
-            onCancel={closeAccessPrompt}
             onDraftChange={setAccessDraft}
             onAuthenticated={handleAccessAuthenticated}
             returnTo={generationDraft ? "/plans/new?resume=generation" : "/plans"}

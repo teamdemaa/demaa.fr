@@ -90,19 +90,18 @@ prochain candidat. Elle ne réactive aucun lot produit différé.
 7. Avant promotion : suite complète, TypeScript, ESLint, validation des
    données, build, contrôle PWA et E2E desktop/mobile des parcours e-mail,
    Google, génération, dernier plan, historique, safe areas et dictée.
-8. Deux contrôles externes restent des gates de promotion et non des travaux
-   de code : confirmer dans Google Cloud l'URI OAuth
-   `https://demaa.co/__/auth/handler`, puis aligner la politique de mot de passe
-   Firebase avec le minimum de 8 caractères affiché par l'interface. L'audit du
-   16 août confirme Google et e-mail/mot de passe actifs, `demaa.co` autorisé,
-   l'anti-énumération actif, mais la politique Firebase encore à son minimum
-   par défaut de 6 caractères.
+8. Un contrôle externe reste une gate de promotion et non un travail de code :
+   confirmer dans Google Cloud l'URI OAuth
+   `https://demaa.co/__/auth/handler`. L'audit du 16 août confirme Google et
+   e-mail/mot de passe actifs, `demaa.co` autorisé, l'anti-énumération actif et
+   une politique Firebase de 8 caractères en mode `ENFORCE`.
 
 ## Séquence d'exécution historique — 15 août 2026
 
-Cette séquence courte est la seule liste à utiliser pour préparer le prochain
-merge. Les checklists datées et les anciens lots conservés plus bas documentent
-l'historique et ne déclenchent aucune action par eux-mêmes.
+Cette séquence est conservée uniquement comme journal. La séquence de
+stabilisation du 16 août ci-dessus est la seule liste à utiliser pour préparer
+le prochain merge. Les checklists datées et les anciens lots conservés plus bas
+ne déclenchent aucune action par eux-mêmes.
 
 1. Le candidat intégré est porté par la PR 105. Sa recette locale couvre 217
    fichiers et 1 187 tests, TypeScript, ESLint, données, Académie, PWA, audit

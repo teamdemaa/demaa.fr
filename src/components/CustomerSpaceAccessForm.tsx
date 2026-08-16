@@ -47,7 +47,6 @@ export default function CustomerSpaceAccessForm({
   initialMode = "signin",
   onDraftChange,
   onAuthenticated,
-  onCancel,
   returnTo,
 }: {
   choiceTitle?: string;
@@ -55,7 +54,6 @@ export default function CustomerSpaceAccessForm({
   initialMode?: AccessMode;
   onDraftChange?: (draft: CustomerSpaceAccessDraft) => void;
   onAuthenticated?: (result: { redirectTo: string }) => Promise<void> | void;
-  onCancel?: () => void;
   returnTo?: string;
 }) {
   const [internalDraft, setInternalDraft] = useState<CustomerSpaceAccessDraft>({
@@ -232,15 +230,6 @@ export default function CustomerSpaceAccessForm({
             >
               Continuer avec mon e-mail
             </button>
-            {onCancel ? (
-              <button
-                type="button"
-                onClick={onCancel}
-                className="mx-auto block min-h-10 px-3 text-xs text-dema-muted underline decoration-dema-line underline-offset-4 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
-              >
-                Annuler
-              </button>
-            ) : null}
           </div>
         ) : progressiveStep === "email" ? (
           <form className="space-y-4" onSubmit={handleProgressiveEmailSubmit} noValidate>
@@ -268,15 +257,6 @@ export default function CustomerSpaceAccessForm({
             >
               Continuer
             </button>
-            {onCancel ? (
-              <button
-                type="button"
-                onClick={onCancel}
-                className="mx-auto block min-h-10 px-3 text-xs text-dema-muted underline decoration-dema-line underline-offset-4 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
-              >
-                Annuler
-              </button>
-            ) : null}
           </form>
         ) : (
           <form className="space-y-4" onSubmit={handleSubmit}>

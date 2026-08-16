@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 const source = readFileSync("src/components/CustomerSpaceAccessForm.tsx", "utf8");
 const experience = readFileSync("src/components/ActionPlanExperience.tsx", "utf8");
 const googleButton = readFileSync("src/components/GoogleCustomerSignInButton.tsx", "utf8");
+const loginDialog = readFileSync("src/components/CustomerSpaceLoginDialog.tsx", "utf8");
 
 describe("progressive plan authentication", () => {
   it("starts with one Google option and one email action", () => {
@@ -46,6 +47,10 @@ describe("progressive plan authentication", () => {
     expect(experience).toContain("max-w-[430px]");
     expect(experience).toContain("useAccessibleDialog({");
     expect(source).toContain("min-h-[54px]");
+    expect(source).not.toContain("Annuler");
+    expect(source).not.toContain("onCancel");
+    expect(loginDialog).toContain('aria-label="Fermer"');
+    expect(experience).toContain('aria-label="Fermer"');
   });
 
   it("does not move generation or generated output into the access form", () => {
