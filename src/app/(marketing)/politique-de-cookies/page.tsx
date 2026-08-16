@@ -52,6 +52,7 @@ export default function PolitiqueCookiesPage() {
               <li><strong>Google Analytics</strong> pour l&apos;analyse de fréquentation et des parcours ;</li>
               <li><strong>Meta Pixel</strong> pour la mesure marketing et publicitaire ;</li>
               <li><strong>un stockage local d&apos;attribution Demaa</strong> pour mémoriser pendant 90 jours la première et la dernière source d&apos;acquisition lorsque la mesure d&apos;audience est autorisée ;</li>
+              <li><strong>un cookie fonctionnel de consentement et sa copie locale</strong> pour conserver séparément vos choix de mesure d&apos;audience et de publicité pendant 180 jours ;</li>
               <li><strong>un compteur serveur agrégé des ouvertures de systèmes</strong>, sans cookie, adresse email, adresse IP enregistrée ni identifiant visiteur ;</li>
               <li><strong>du stockage local navigateur</strong> pour mémoriser certaines informations utiles à l&apos;assistant et à l&apos;expérience utilisateur ;</li>
               <li><strong>des éléments techniques de session ou de sécurité</strong> nécessaires au bon fonctionnement du site.</li>
@@ -92,10 +93,10 @@ export default function PolitiqueCookiesPage() {
               et des paramètres techniques retenus par les services utilisés.
             </p>
             <p>
-              Votre choix de consentement est également mémorisé localement pour éviter de vous redemander votre préférence à chaque visite.
+              Votre choix de consentement est mémorisé pendant 180 jours dans un cookie fonctionnel et dans le stockage local du navigateur. Ces deux copies permettent de restaurer votre préférence si l&apos;un des stockages devient momentanément indisponible.
             </p>
             <p>
-              Le contexte d&apos;attribution conservé dans le navigateur expire après 90 jours. Le choix de consentement expire après 6 mois.
+              Le contexte d&apos;attribution conservé dans le navigateur expire après 90 jours. Le choix de consentement expire après 180 jours et vous est redemandé si sa version change.
             </p>
             <p>
               Après authentification par e-mail et mot de passe ou Google, un cookie de session Firebase essentiel, sécurisé et inaccessible au JavaScript maintient votre connexion pendant 14 jours au maximum. Avant cette étape, le texte saisi pour créer un plan et un identifiant technique de demande peuvent être conservés dans la session du navigateur pendant 2 heures au maximum afin de reprendre le parcours. Aucun plan n&apos;est généré avant l&apos;authentification.

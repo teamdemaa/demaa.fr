@@ -115,14 +115,6 @@ export default function CookieConsentManager() {
   }, []);
 
   useEffect(() => {
-    if (consentSnapshot === "accepted") {
-      writeCookieConsentPreferences({ analytics: true, marketing: true });
-    } else if (consentSnapshot === "rejected") {
-      writeCookieConsentPreferences({ analytics: false, marketing: false });
-    }
-  }, [consentSnapshot]);
-
-  useEffect(() => {
     const analytics = preferences?.analytics === true;
     const marketing = preferences?.marketing === true;
 
