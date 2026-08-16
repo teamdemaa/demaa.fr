@@ -23,13 +23,28 @@ const configuredClientConfig = {
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
 };
 
+function configuredAuthorizedHosts() {
+  return (process.env.NEXT_PUBLIC_FIREBASE_AUTHORIZED_DOMAINS ?? "")
+    .split(",")
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+function shouldUseSameOriginAuthHelper(hostname: string) {
+  return hostname === "demaa.co"
+    || (
+      hostname.endsWith(".vercel.app")
+      && configuredAuthorizedHosts().includes(hostname)
+    );
+}
+
 function clientConfig() {
   const currentHost = typeof window === "undefined"
     ? null
     : window.location.hostname.toLowerCase();
   return {
     ...configuredClientConfig,
-    authDomain: currentHost === "demaa.co"
+    authDomain: currentHost && shouldUseSameOriginAuthHelper(currentHost)
       ? currentHost
       : configuredClientConfig.authDomain,
   };
@@ -42,14 +57,10 @@ export function hasFirebaseGoogleAuthConfiguration() {
 export function isFirebaseGoogleAuthAllowedOnCurrentHost() {
   if (typeof window === "undefined") return false;
   const hostname = window.location.hostname.toLowerCase();
-  const configuredHosts = (process.env.NEXT_PUBLIC_FIREBASE_AUTHORIZED_DOMAINS ?? "")
-    .split(",")
-    .map((value) => value.trim().toLowerCase())
-    .filter(Boolean);
   return hostname === "demaa.co"
     || hostname === "localhost"
     || hostname === "127.0.0.1"
-    || configuredHosts.includes(hostname);
+    || configuredAuthorizedHosts().includes(hostname);
 }
 
 export function shouldUseGoogleRedirect() {

@@ -6,6 +6,8 @@ vi.hoisted(() => {
   process.env.NEXT_PUBLIC_FIREBASE_APP_ID = "test-app-id";
   process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN = "demaa-test.firebaseapp.com";
   process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID = "demaa-test";
+  process.env.NEXT_PUBLIC_FIREBASE_AUTHORIZED_DOMAINS =
+    "demaa-fr-git-auth-preview.vercel.app";
 });
 
 const mocks = vi.hoisted(() => ({
@@ -47,10 +49,15 @@ import {
   startGoogleRedirect,
 } from "@/lib/firebase-client-auth";
 
-function browser(options: { mobile?: boolean; standalone?: boolean } = {}) {
+function browser(options: {
+  hostname?: string;
+  mobile?: boolean;
+  standalone?: boolean;
+} = {}) {
   const storage = new Map<string, string>();
+  const hostname = options.hostname ?? "demaa.co";
   vi.stubGlobal("window", {
-    location: { hostname: "demaa.co", origin: "https://demaa.co" },
+    location: { hostname, origin: `https://${hostname}` },
     matchMedia: (query: string) => ({
       matches: query.includes("display-mode")
         ? Boolean(options.standalone)
@@ -72,6 +79,7 @@ describe("Firebase Google redirect", () => {
     vi.clearAllMocks();
     vi.unstubAllGlobals();
     mocks.getApps.mockReturnValue([{ name: "demaa-client-auth" }]);
+    mocks.initializeApp.mockReturnValue({ name: "demaa-client-auth" });
     mocks.getAuth.mockReturnValue({ languageCode: "" });
     mocks.setPersistence.mockResolvedValue(undefined);
     mocks.signInWithRedirect.mockResolvedValue(undefined);
@@ -121,6 +129,20 @@ describe("Firebase Google redirect", () => {
 
     await finishGoogleRedirect();
     expect(mocks.signOut).toHaveBeenCalledOnce();
+  });
+
+  it("uses the same-origin Firebase helper on an explicitly authorized Preview", async () => {
+    const hostname = "demaa-fr-git-auth-preview.vercel.app";
+    browser({ hostname, mobile: true });
+    mocks.getApps.mockReturnValue([]);
+
+    await startGoogleRedirect();
+
+    expect(mocks.initializeApp).toHaveBeenCalledWith(
+      expect.objectContaining({ authDomain: hostname }),
+      "demaa-client-auth",
+    );
+    expect(mocks.signInWithRedirect).toHaveBeenCalledOnce();
   });
 
   it("keeps the return destination out of Firebase client persistence", () => {
