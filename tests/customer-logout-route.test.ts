@@ -2,25 +2,25 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
-import { POST } from "@/app/api/customer-space/logout/route";
+import { DELETE } from "@/app/api/auth/session/route";
 
 describe("customer logout route", () => {
-  it("clears the native Firebase session and redirects with GET semantics", async () => {
-    const response = await POST(new Request(
-      "https://demaa.co/api/customer-space/logout?returnTo=%2F",
-      { method: "POST", headers: { Origin: "https://demaa.co" } },
+  it("clears the native Firebase session", async () => {
+    const response = await DELETE(new Request(
+      "https://demaa.co/api/auth/session",
+      { method: "DELETE", headers: { Origin: "https://demaa.co" } },
     ));
 
-    expect(response.status).toBe(303);
-    expect(response.headers.get("location")).toBe("https://demaa.co/");
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ signedOut: true });
     expect(response.headers.get("set-cookie")).toContain("demaa_session=");
     expect(response.headers.get("set-cookie")).toContain("Max-Age=0");
   });
 
   it("rejects a cross-site logout request", async () => {
-    const response = await POST(new Request(
-      "https://demaa.co/api/customer-space/logout?returnTo=%2F",
-      { method: "POST", headers: { Origin: "https://example.com" } },
+    const response = await DELETE(new Request(
+      "https://demaa.co/api/auth/session",
+      { method: "DELETE", headers: { Origin: "https://example.com" } },
     ));
 
     expect(response.status).toBe(403);

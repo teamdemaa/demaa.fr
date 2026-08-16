@@ -26,15 +26,12 @@ vi.mock("firebase/app", () => ({
 vi.mock("firebase/auth", () => ({
   GoogleAuthProvider: class {
     setCustomParameters() {}
-    static credentialFromError() { return null; }
-    static credential() { return {}; }
   },
   browserSessionPersistence: "browser-session",
   createUserWithEmailAndPassword: vi.fn(),
   getAuth: mocks.getAuth,
   getRedirectResult: mocks.getRedirectResult,
   inMemoryPersistence: "memory",
-  linkWithCredential: vi.fn(),
   sendPasswordResetEmail: vi.fn(),
   setPersistence: mocks.setPersistence,
   signInWithEmailAndPassword: vi.fn(),
@@ -46,7 +43,6 @@ vi.mock("firebase/auth", () => ({
 import {
   consumeGoogleRedirectAndGetIdToken,
   finishGoogleRedirect,
-  readPendingGoogleRedirect,
   shouldUseGoogleRedirect,
   startGoogleRedirect,
 } from "@/lib/firebase-client-auth";
@@ -93,36 +89,61 @@ describe("Firebase Google redirect", () => {
 
   it("proxies Firebase helpers on the app domain without blocking its own iframe", () => {
     const config = readFileSync("next.config.ts", "utf8");
+    const contentSecurityPolicy = readFileSync(
+      "src/lib/content-security-policy.ts",
+      "utf8",
+    );
     expect(config).toContain("source: '/__/auth/:path*'");
     expect(config).toContain("destination: `${firebaseAuthHelperOrigin}/__/auth/:path*`");
+    expect(config).not.toContain("source: '/__/firebase/init.json'");
     expect(config).toContain("headers: firebaseAuthHelperHeaders");
     expect(config).toContain("value: 'SAMEORIGIN'");
     expect(config).toContain("allowSameOriginFraming: true");
+    expect(contentSecurityPolicy).toContain('"frame-src \'self\'');
   });
 
-  it("preserves the safe application destination through the redirect", async () => {
+  it("starts and consumes the redirect only on the dedicated callback", async () => {
     browser({ mobile: true });
-    await startGoogleRedirect("/?intent=generate-plan");
+    await startGoogleRedirect();
 
     expect(mocks.setPersistence).toHaveBeenCalledWith(
       expect.anything(),
       "browser-session",
     );
     expect(mocks.signInWithRedirect).toHaveBeenCalledOnce();
-    expect(readPendingGoogleRedirect()).toEqual({
-      returnTo: "/?intent=generate-plan",
-    });
 
     mocks.getRedirectResult.mockResolvedValue({
       user: { getIdToken: vi.fn().mockResolvedValue("google-id-token") },
     });
     await expect(consumeGoogleRedirectAndGetIdToken()).resolves.toEqual({
       idToken: "google-id-token",
-      returnTo: "/?intent=generate-plan",
     });
 
     await finishGoogleRedirect();
-    expect(readPendingGoogleRedirect()).toBeNull();
     expect(mocks.signOut).toHaveBeenCalledOnce();
+  });
+
+  it("keeps the return destination out of Firebase client persistence", () => {
+    const callback = readFileSync(
+      "src/app/(auth)/auth/google/GoogleAuthCallbackClient.tsx",
+      "utf8",
+    );
+    const helper = readFileSync("src/lib/firebase-client-auth.ts", "utf8");
+    expect(callback).toContain("exchangeFirebaseIdTokenForSession");
+    expect(callback).toContain("window.location.replace(session.redirectTo)");
+    expect(helper).not.toContain("demaa:google-redirect:v1");
+    expect(helper).not.toContain("GOOGLE_LINK_KEY");
+    expect(helper).not.toContain("linkWithCredential");
+  });
+
+  it("bounds a blocked desktop popup and offers the dedicated redirect on retry", () => {
+    const button = readFileSync(
+      "src/components/GoogleCustomerSignInButton.tsx",
+      "utf8",
+    );
+    expect(button).toContain("GOOGLE_POPUP_TIMEOUT_MS = 30_000");
+    expect(button).toContain("setPreferRedirect(true)");
+    expect(button).toContain("shouldUseGoogleRedirect() || preferRedirect");
+    expect(button).toContain("window.location.assign(`/auth/google?");
   });
 });

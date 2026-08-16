@@ -277,10 +277,11 @@ enregistrées avec révision optimiste. Le plan vierge reste le seul parcours
 pouvant commencer temporairement avant une modification utile.
 
 Lorsqu'une session connectée revient dans l'application sans demander une
-nouvelle situation, `/plans/latest` ouvre l'entrée la plus récente. `/plans`
-affiche l'index authentifié, y compris les générations en cours ou interrompues,
-et `/plans/new` ouvre volontairement une nouvelle situation. S'il n'existe
-aucun plan, l'index affiche un état vide explicite.
+nouvelle situation, `/plans/latest` ouvre l'entrée la plus récente. S'il
+n'existe aucun plan, cette route ouvre directement `/plans/new`. `/plans`
+reste l'historique authentifié, y compris les générations en cours ou
+interrompues, et conserve un état vide explicite lorsqu'il est ouvert depuis le
+menu du profil.
 
 L'identité primaire est un compte e-mail et mot de passe Firebase, matérialisé
 par un cookie de session Firebase natif et son UID. Demaa ne reçoit ni ne
@@ -295,6 +296,16 @@ connecté qui déclenche l'une de ces actions passe d'abord par l'un de ces
 parcours vérifiés, puis revient directement à son intention dans l'application.
 Il n'existe pas de portail parallèle `Mon espace` ; `Mes plans` est une vue
 authentifiée de l'application unique.
+
+La session applicative est échangée uniquement par `/api/auth/session` : le
+serveur vérifie le jeton Firebase récent, garantit l'entreprise technique et
+l'appartenance propriétaire active, puis seulement pose le cookie HttpOnly.
+Google utilise une popup bornée sur desktop et le callback dédié `/auth/google`
+sur mobile/PWA ; une popup bloquée ou sans réponse propose cette redirection au
+nouvel essai. Aucun consommateur global ne s'exécute dans le layout. Le reverse
+proxy recommandé pour un hébergement hors Firebase sert le helper sur le
+domaine canonique pour `/__/auth/*` ; la configuration du SDK est fournie
+explicitement par l'application.
 
 ## Marketing et prospection éthiques
 

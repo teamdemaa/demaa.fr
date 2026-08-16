@@ -18,8 +18,8 @@ describe("Demaa application navbar", () => {
 
   it("keeps the navbar on system detail and loading states", async () => {
     const [pageSource, loadingSource] = await Promise.all([
-      readFile(new URL("../src/app/systemes/[slug]/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/systemes/[slug]/loading.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(marketing)/systemes/[slug]/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(marketing)/systemes/[slug]/loading.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(pageSource).toContain("<Navbar minimal />");
@@ -33,20 +33,20 @@ describe("Demaa application navbar", () => {
 
   it("keeps a distinct canonical homepage and one URL for each public universe", async () => {
     const [homeSource, systemsSource, nextConfigSource] = await Promise.all([
-      readFile(new URL("../src/app/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/systemes/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(application)/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(marketing)/systemes/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
     ]);
 
     expect(homeSource).not.toContain(
-      'export { default, metadata } from "@/app/systemes/page"',
+      'export { default, metadata } from "@/app/(marketing)/systemes/page"',
     );
     expect(homeSource).toContain('canonical: "/"');
     expect(homeSource).toContain("<ActionPlanExperience");
     expect(homeSource).toContain(
       "<Navbar anonymousLanding isAuthenticated={Boolean(identity)} minimal />",
     );
-    expect(homeSource).toContain("getIdentityFromCustomerSessionToken(sessionToken)");
+    expect(homeSource).toContain("getCurrentCustomerAppIdentityFromSession()");
     expect(systemsSource).toContain('canonical: "/systemes"');
     expect(nextConfigSource).not.toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/',/,
@@ -59,7 +59,7 @@ describe("Demaa application navbar", () => {
   it("replaces the sign-in action with account access once a session is active", async () => {
     const [navbarSource, savedPlanSource] = await Promise.all([
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/plans/[id]/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(application)/plans/[id]/page.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(navbarSource).toContain('aria-label="Ouvrir le menu du compte"');
@@ -67,8 +67,13 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).not.toContain("openAuthenticatedAccount");
     expect(navbarSource).not.toContain("<span>Mon espace</span>");
     expect(navbarSource).toContain('href="/plans"');
-    expect(navbarSource).toContain('action="/api/customer-space/logout?returnTo=%2F"');
-    expect(navbarSource).toContain("Se déconnecter");
+    expect(navbarSource).toContain("<CustomerLogoutButton />");
+    const logoutSource = await readFile(
+      new URL("../src/components/CustomerLogoutButton.tsx", import.meta.url),
+      "utf8",
+    );
+    expect(logoutSource).toContain("deleteCustomerSession");
+    expect(logoutSource).toContain("Se déconnecter");
     expect(navbarSource).toContain('href="/connexion?returnTo=%2Fplans%2Flatest"');
     expect(navbarSource).toContain("<span>Connexion</span>");
     expect(navbarSource).not.toContain("<LogIn");
@@ -77,15 +82,16 @@ describe("Demaa application navbar", () => {
 
   it("keeps sign-in minimal and intercepts it over the homepage", async () => {
     const [legacySource, loginSource, modalSource] = await Promise.all([
-      readFile(new URL("../src/app/mon-espace/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/connexion/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(auth)/connexion/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/@modal/(.)connexion/page.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(legacySource).toContain('redirect("/plans/latest")');
+    expect(legacySource).toContain("source: '/mon-espace'");
+    expect(legacySource).toContain("destination: '/plans/latest'");
     expect(loginSource).toContain("<Navbar minimal />");
-    expect(loginSource).toContain("<CustomerSpaceAccessForm returnTo={returnTo} simple />");
-    expect(loginSource).toContain("Se connecter");
+    expect(loginSource).toContain('choiceTitle="Connectez-vous"');
+    expect(loginSource).toContain('choiceTitle="Connectez-vous"');
     expect(loginSource).not.toContain("Mes plans");
     expect(loginSource).not.toContain("Mon espace");
     expect(modalSource).toContain("getSafeCustomerReturnTo");
@@ -95,9 +101,9 @@ describe("Demaa application navbar", () => {
 
   it("restores the latest saved plan unless a new situation is explicitly requested", async () => {
     const [homeSource, plansSource, latestSource, loginDialogSource] = await Promise.all([
-      readFile(new URL("../src/app/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/plans/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/plans/latest/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(application)/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(application)/plans/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(application)/plans/latest/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/CustomerSpaceLoginDialog.tsx", import.meta.url), "utf8"),
     ]);
 
@@ -107,16 +113,17 @@ describe("Demaa application navbar", () => {
     expect(plansSource).toContain("Mes plans");
     expect(plansSource).toContain('href="/plans/new"');
     expect(plansSource).toContain("getActionPlanIndexForIdentity");
-    expect(latestSource).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/plans")');
+    expect(latestSource).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/plans/new")');
     expect(loginDialogSource).toContain("returnTo={returnTo}");
   });
 
   it("shows application navigation before generation and fixes it at the bottom on mobile", async () => {
-    const [navbarSource, actionPlanNavSource, experienceSource, layoutSource] = await Promise.all([
+    const [navbarSource, actionPlanNavSource, experienceSource, layoutSource, marketingLayoutSource] = await Promise.all([
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanNavbar.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanExperience.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/layout.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(marketing)/layout.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(navbarSource).toContain('id="action-plan-navbar-desktop"');
@@ -159,6 +166,9 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain("xl:min-h-11");
     expect(navbarSource).toContain("pb-[calc(1rem+env(safe-area-inset-bottom))]");
     expect(layoutSource).toContain('viewportFit: "cover"');
+    expect(layoutSource).not.toContain("<Footer");
+    expect(layoutSource).not.toContain("GoogleRedirectSessionConsumer");
+    expect(marketingLayoutSource).toContain("<Footer />");
     expect(experienceSource).toContain("<ActionPlanNavbar");
     expect(experienceSource).toContain("workspace={prePlanWorkspace}");
     expect(experienceSource).toContain('activeTab === "opportunities"');

@@ -5,6 +5,7 @@ import {
   CUSTOMER_SPACE_COOKIE,
   getIdentityFromCustomerSessionToken,
 } from "@/lib/customer-space-auth";
+import { ensureDefaultCompanyForIdentity } from "@/lib/company-membership.server";
 
 const PRIVATE_NO_STORE_HEADERS = {
   "Cache-Control": "private, no-store, max-age=0",
@@ -17,6 +18,18 @@ export async function getCurrentCustomerIdentityFromSession() {
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
   return getIdentityFromCustomerSessionToken(sessionToken);
+}
+
+export async function getCurrentCustomerAppIdentityFromSession() {
+  const identity = await getCurrentCustomerIdentityFromSession();
+  if (!identity) return null;
+
+  // A session cookie can outlive the deployment that introduced company
+  // scoping. Repair only a missing deterministic company context here;
+  // ensureDefaultCompanyForIdentity deliberately refuses archived companies
+  // and suspended memberships.
+  await ensureDefaultCompanyForIdentity(identity);
+  return identity;
 }
 
 export function customerAuthenticationRequiredResponse() {

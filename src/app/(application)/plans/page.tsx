@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import ActionPlanNavbar from "@/components/ActionPlanNavbar";
 import Navbar from "@/components/Navbar";
 import { getActionPlanIndexForIdentity } from "@/lib/action-plan-storage.server";
-import {
-  CUSTOMER_SPACE_COOKIE,
-  getIdentityFromCustomerSessionToken,
-} from "@/lib/customer-space-auth";
+import { getCurrentCustomerAppIdentityFromSession } from "@/lib/customer-space-session.server";
 
 export const dynamic = "force-dynamic";
 
@@ -28,9 +25,7 @@ function formatUpdatedAt(value: string) {
 }
 
 export default async function ActionPlansPage() {
-  const cookieStore = await cookies();
-  const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
-  const identity = await getIdentityFromCustomerSessionToken(sessionToken);
+  const identity = await getCurrentCustomerAppIdentityFromSession();
 
   if (!identity) redirect("/connexion?returnTo=%2Fplans");
 
@@ -38,6 +33,7 @@ export default async function ActionPlansPage() {
   return (
     <div className="min-h-screen bg-dema-cream text-brand-blue">
       <Navbar anonymousLanding isAuthenticated minimal />
+      <ActionPlanNavbar activeView="plan" routeNavigation />
       <main className="px-4 pb-28 pt-8 sm:px-6 lg:px-8">
         <section className="mx-auto max-w-4xl">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">

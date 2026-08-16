@@ -33,7 +33,7 @@ describe("action plan persistence boundaries", () => {
     const collectionRoute = source("src/app/api/action-plans/route.ts");
     const auth = source("src/lib/customer-space-auth.ts");
     const storage = source("src/lib/action-plan-storage.server.ts");
-    const planPage = source("src/app/plans/[id]/page.tsx");
+    const planPage = source("src/app/(application)/plans/[id]/page.tsx");
 
     expect(collectionRoute).toContain("if (!identity)");
     expect(auth).toContain("createSessionCookie");
@@ -50,7 +50,7 @@ describe("action plan persistence boundaries", () => {
 
   it("registers action plan retention cleanup and documents the exact lifecycle", () => {
     const maintenance = source("src/lib/operational-maintenance.ts");
-    const privacy = source("src/app/politique-de-confidentialite/page.tsx");
+    const privacy = source("src/app/(marketing)/politique-de-confidentialite/page.tsx");
 
     expect(maintenance).toContain(
       '{ collection: "action_plans", field: "retention_expires_at"',

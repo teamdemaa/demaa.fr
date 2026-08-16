@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { readCustomerSession } from "@/lib/customer-auth-session.client";
 
 type CustomerIdentity = {
   email: string | null;
@@ -15,15 +16,9 @@ export function useCustomerIdentity(initialEmail = ""): CustomerIdentity {
     if (initialEmail) return;
 
     const controller = new AbortController();
-    fetch("/api/customer-space/session", {
-      cache: "no-store",
-      signal: controller.signal,
-    })
-      .then(async (response) => {
-        const body = await response.json().catch(() => null) as
-          | { authenticated?: boolean; email?: string | null }
-          | null;
-        setEmail(response.ok && body?.authenticated ? body.email ?? null : null);
+    readCustomerSession(controller.signal)
+      .then((session) => {
+        setEmail(session.authenticated && session.companyReady ? session.email : null);
       })
       .catch(() => setEmail(null))
       .finally(() => setLoading(false));

@@ -1,16 +1,13 @@
 "use client";
 
-import { getApps, initializeApp, type FirebaseError } from "firebase/app";
+import { getApps, initializeApp } from "firebase/app";
 import {
-  type AuthCredential,
   GoogleAuthProvider,
-  type OAuthCredential,
   browserSessionPersistence,
   createUserWithEmailAndPassword,
   getAuth,
   getRedirectResult,
   inMemoryPersistence,
-  linkWithCredential,
   sendPasswordResetEmail,
   setPersistence,
   signInWithEmailAndPassword,
@@ -18,11 +15,6 @@ import {
   signInWithRedirect,
   signOut,
 } from "firebase/auth";
-
-let pendingGoogleLink: { credential: AuthCredential; email: string } | null = null;
-const GOOGLE_REDIRECT_KEY = "demaa:google-redirect:v1";
-const GOOGLE_LINK_KEY = "demaa:google-link:v1";
-const GOOGLE_STATE_TTL_MS = 20 * 60 * 1_000;
 
 const configuredClientConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -84,59 +76,6 @@ function googleProvider() {
   return provider;
 }
 
-function rememberPendingGoogleLink(error: FirebaseError) {
-  const email = typeof error.customData?.email === "string"
-    ? error.customData.email.trim().toLowerCase()
-    : "";
-  const credential = GoogleAuthProvider.credentialFromError(error);
-  if (error.code !== "auth/account-exists-with-different-credential" || !email || !credential) {
-    return;
-  }
-  pendingGoogleLink = { credential, email };
-  const oauth = credential as OAuthCredential;
-  try {
-    window.sessionStorage.setItem(GOOGLE_LINK_KEY, JSON.stringify({
-      accessToken: oauth.accessToken ?? null,
-      createdAt: new Date().toISOString(),
-      email,
-      idToken: oauth.idToken ?? null,
-    }));
-  } catch {
-    // Linking still works without a reload through the in-memory credential.
-  }
-}
-
-function readPendingGoogleLink(email: string) {
-  if (pendingGoogleLink?.email === email) {
-    const value = pendingGoogleLink;
-    pendingGoogleLink = null;
-    return value.credential;
-  }
-  try {
-    const raw = window.sessionStorage.getItem(GOOGLE_LINK_KEY);
-    window.sessionStorage.removeItem(GOOGLE_LINK_KEY);
-    if (!raw) return null;
-    const value = JSON.parse(raw) as {
-      accessToken?: string | null;
-      createdAt?: string;
-      email?: string;
-      idToken?: string | null;
-    };
-    const createdAt = Date.parse(value.createdAt ?? "");
-    if (
-      value.email !== email
-      || !Number.isFinite(createdAt)
-      || Date.now() - createdAt > GOOGLE_STATE_TTL_MS
-    ) return null;
-    return GoogleAuthProvider.credential(
-      value.idToken ?? null,
-      value.accessToken ?? null,
-    );
-  } catch {
-    return null;
-  }
-}
-
 export async function signInWithGoogleAndGetIdToken() {
   if (!hasFirebaseGoogleAuthConfiguration()) {
     throw new Error("La connexion Google n’est pas configurée.");
@@ -150,68 +89,27 @@ export async function signInWithGoogleAndGetIdToken() {
     const email = result.user.email;
     const idToken = await result.user.getIdToken();
     return { email, idToken };
-  } catch (error) {
-    rememberPendingGoogleLink(error as FirebaseError);
-    throw error;
   } finally {
     await signOut(auth).catch(() => undefined);
   }
 }
 
-export async function startGoogleRedirect(returnTo: string) {
+export async function startGoogleRedirect() {
   const auth = getDemaaAuth();
   await setPersistence(auth, browserSessionPersistence);
-  window.sessionStorage.setItem(GOOGLE_REDIRECT_KEY, JSON.stringify({
-    createdAt: new Date().toISOString(),
-    returnTo,
-  }));
   await signInWithRedirect(auth, googleProvider());
 }
 
-export function readPendingGoogleRedirect() {
-  try {
-    const raw = window.sessionStorage.getItem(GOOGLE_REDIRECT_KEY);
-    if (!raw) return null;
-    const value = JSON.parse(raw) as { createdAt?: string; returnTo?: string };
-    const createdAt = Date.parse(value.createdAt ?? "");
-    if (
-      !Number.isFinite(createdAt)
-      || Date.now() - createdAt > GOOGLE_STATE_TTL_MS
-      || typeof value.returnTo !== "string"
-    ) {
-      window.sessionStorage.removeItem(GOOGLE_REDIRECT_KEY);
-      return null;
-    }
-    return { returnTo: value.returnTo };
-  } catch {
-    return null;
-  }
-}
-
 export async function consumeGoogleRedirectAndGetIdToken() {
-  const pending = readPendingGoogleRedirect();
-  if (!pending) return null;
   const auth = getDemaaAuth();
   await setPersistence(auth, browserSessionPersistence);
-  try {
-    const result = await getRedirectResult(auth);
-    if (!result) return null;
-    return {
-      idToken: await result.user.getIdToken(),
-      returnTo: pending.returnTo,
-    };
-  } catch (error) {
-    rememberPendingGoogleLink(error as FirebaseError);
-    throw error;
-  }
+  const result = await getRedirectResult(auth);
+  if (!result) return null;
+  return { idToken: await result.user.getIdToken() };
 }
 
 export async function finishGoogleRedirect() {
-  try {
-    window.sessionStorage.removeItem(GOOGLE_REDIRECT_KEY);
-  } finally {
-    await signOut(getDemaaAuth()).catch(() => undefined);
-  }
+  await signOut(getDemaaAuth()).catch(() => undefined);
 }
 
 
@@ -238,14 +136,8 @@ export async function signInWithPasswordAndGetIdToken(
   await setPersistence(auth, inMemoryPersistence);
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
-    let user = result.user;
-    const normalizedEmail = email.trim().toLowerCase();
-    const pendingLink = readPendingGoogleLink(normalizedEmail);
-    if (pendingLink) {
-      user = (await linkWithCredential(user, pendingLink)).user;
-    }
-    const idToken = await user.getIdToken(true);
-    return { email: user.email, idToken };
+    const idToken = await result.user.getIdToken(true);
+    return { email: result.user.email, idToken };
   } finally {
     await signOut(auth).catch(() => undefined);
   }

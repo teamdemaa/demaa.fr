@@ -3,9 +3,9 @@ import path from "node:path";
 import sectorTaxonomyPayload from "../src/lib/sector-taxonomy.json" with { type: "json" };
 
 const ROUTE_FILES = {
-  toolDirectoryIndex: "src/app/annuaire-outils/page.tsx",
-  toolSectorPage: "src/app/annuaire-outils/secteur/[slug]/page.tsx",
-  sectorHubPage: "src/app/secteurs/[slug]/page.tsx",
+  toolDirectoryIndex: "src/app/(marketing)/annuaire-outils/page.tsx",
+  toolSectorPage: "src/app/(marketing)/annuaire-outils/secteur/[slug]/page.tsx",
+  sectorHubPage: "src/app/(marketing)/secteurs/[slug]/page.tsx",
   redirectConfig: "next.config.ts",
   legacyResourcesDetail: "src/app/ressources/[slug]/page.tsx",
   legacyDocumentModelsIndex: "src/app/modeles-de-documents/page.tsx",

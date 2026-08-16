@@ -356,9 +356,6 @@ body::-webkit-scrollbar-thumb {
   background-clip: padding-box;
 }
 
-[data-action-plan-workspace] ~ [data-site-footer] {
-  display: none;
-}
 
 @media print {
   @page {

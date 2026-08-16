@@ -3,6 +3,7 @@
 import { useEffect, useId, useState } from "react";
 import { ArrowLeft, KeyRound, LoaderCircle, Mail } from "lucide-react";
 import GoogleCustomerSignInButton from "@/components/GoogleCustomerSignInButton";
+import { exchangeFirebaseIdTokenForSession } from "@/lib/customer-auth-session.client";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 import {
   createPasswordAccountAndGetIdToken,
@@ -41,25 +42,19 @@ function getFriendlyAuthError(error: unknown) {
 }
 
 export default function CustomerSpaceAccessForm({
-  compact = false,
+  choiceTitle = "Accédez à votre espace",
   draft,
   initialMode = "signin",
   onDraftChange,
   onAuthenticated,
-  onCancel,
-  progressivePlan = false,
   returnTo,
-  simple = false,
 }: {
-  compact?: boolean;
+  choiceTitle?: string;
   draft?: CustomerSpaceAccessDraft;
   initialMode?: AccessMode;
   onDraftChange?: (draft: CustomerSpaceAccessDraft) => void;
   onAuthenticated?: (result: { redirectTo: string }) => Promise<void> | void;
-  onCancel?: () => void;
-  progressivePlan?: boolean;
   returnTo?: string;
-  simple?: boolean;
 }) {
   const [internalDraft, setInternalDraft] = useState<CustomerSpaceAccessDraft>({
     email: "",
@@ -106,8 +101,8 @@ export default function CustomerSpaceAccessForm({
       setError("Indiquez votre mot de passe.");
       return;
     }
-    if (mode === "create" && password.length < 6) {
-      setError("Choisissez un mot de passe d’au moins 6 caractères.");
+    if (mode === "create" && password.length < 8) {
+      setError("Choisissez un mot de passe d’au moins 8 caractères.");
       return;
     }
 
@@ -117,23 +112,12 @@ export default function CustomerSpaceAccessForm({
       const authResult = mode === "create"
         ? await createPasswordAccountAndGetIdToken(normalizedEmail, password)
         : await signInWithPasswordAndGetIdToken(normalizedEmail, password);
-      const response = await fetch("/api/customer-space/firebase-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          idToken: authResult.idToken,
-          returnTo,
-        }),
+      const result = await exchangeFirebaseIdTokenForSession({
+        idToken: authResult.idToken,
+        returnTo: returnTo || "/",
       });
-      const payload = await response.json().catch(() => null) as {
-        error?: string;
-        redirectTo?: string;
-      } | null;
-      if (!response.ok || !payload?.redirectTo) {
-        throw new Error(payload?.error || "La connexion n’a pas abouti.");
-      }
-      if (onAuthenticated) await onAuthenticated({ redirectTo: payload.redirectTo });
-      else window.location.assign(payload.redirectTo);
+      if (onAuthenticated) await onAuthenticated(result);
+      else window.location.assign(result.redirectTo);
     } catch (submitError) {
       setError(getFriendlyAuthError(submitError));
     } finally {
@@ -179,18 +163,17 @@ export default function CustomerSpaceAccessForm({
     setProgressiveStep("password");
   }
 
-  if (progressivePlan) {
-    const normalizedEmail = normalizeEmail(email);
-    const emailReady = isValidEmail(normalizedEmail);
-    const title = progressiveStep === "choice"
-      ? "Enregistrez votre plan"
+  const normalizedEmail = normalizeEmail(email);
+  const emailReady = isValidEmail(normalizedEmail);
+  const title = progressiveStep === "choice"
+      ? choiceTitle
       : progressiveStep === "email"
         ? "Votre adresse e-mail"
         : mode === "create"
           ? "Créez votre accès"
           : "Bon retour";
 
-    return (
+  return (
       <div className="space-y-5">
         <div
           className={progressiveStep === "choice"
@@ -247,13 +230,6 @@ export default function CustomerSpaceAccessForm({
             >
               Continuer avec mon e-mail
             </button>
-            <button
-              type="button"
-              onClick={onCancel}
-              className="mx-auto block min-h-10 px-3 text-xs text-dema-muted underline decoration-dema-line underline-offset-4 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
-            >
-              Annuler
-            </button>
           </div>
         ) : progressiveStep === "email" ? (
           <form className="space-y-4" onSubmit={handleProgressiveEmailSubmit} noValidate>
@@ -281,13 +257,6 @@ export default function CustomerSpaceAccessForm({
             >
               Continuer
             </button>
-            <button
-              type="button"
-              onClick={onCancel}
-              className="mx-auto block min-h-10 px-3 text-xs text-dema-muted underline decoration-dema-line underline-offset-4 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
-            >
-              Annuler
-            </button>
           </form>
         ) : (
           <form className="space-y-4" onSubmit={handleSubmit}>
@@ -310,7 +279,7 @@ export default function CustomerSpaceAccessForm({
                   type="password"
                   autoComplete={mode === "create" ? "new-password" : "current-password"}
                   autoFocus
-                  minLength={mode === "create" ? 6 : undefined}
+                  minLength={mode === "create" ? 8 : undefined}
                   required
                   value={password}
                   onChange={(event) => updateDraft({ password: event.target.value })}
@@ -320,6 +289,17 @@ export default function CustomerSpaceAccessForm({
               </div>
             </div>
             {error ? <p role="alert" className="text-sm text-dema-forest">{error}</p> : null}
+            {notice ? <p role="status" className="text-sm text-dema-forest">{notice}</p> : null}
+            {mode === "signin" ? (
+              <button
+                type="button"
+                disabled={isSending}
+                onClick={() => void handlePasswordReset()}
+                className="block min-h-8 text-left text-xs text-dema-muted underline decoration-dema-line underline-offset-4 hover:text-dema-forest disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
+              >
+                Mot de passe oublié ?
+              </button>
+            ) : null}
             <button
               type="submit"
               disabled={isSending}
@@ -344,106 +324,5 @@ export default function CustomerSpaceAccessForm({
           </form>
         )}
       </div>
-    );
-  }
-
-  return (
-    <div className={compact ? "space-y-3" : "mx-auto max-w-md space-y-4"}>
-      <form className="space-y-3" onSubmit={handleSubmit}>
-      <div className="grid grid-cols-2 rounded-full bg-dema-sage/55 p-1 text-xs font-medium">
-        <button
-          type="button"
-          onClick={() => { updateDraft({ mode: "signin" }); setError(null); setNotice(null); }}
-          className={`min-h-9 rounded-full px-3 transition ${mode === "signin" ? "bg-dema-paper text-dema-forest shadow-sm" : "text-dema-muted"}`}
-        >
-          J’ai déjà un compte
-        </button>
-        <button
-          type="button"
-          onClick={() => { updateDraft({ mode: "create" }); setError(null); setNotice(null); }}
-          className={`min-h-9 rounded-full px-3 transition ${mode === "create" ? "bg-dema-paper text-dema-forest shadow-sm" : "text-dema-muted"}`}
-        >
-          Créer mon accès
-        </button>
-      </div>
-      <div className="text-left">
-        <label className={compact ? "sr-only" : "text-xs font-medium text-brand-blue/70"} htmlFor={emailId}>
-          {simple ? "Adresse e-mail" : "Email utilisé pour votre paiement, votre demande ou votre accès"}
-        </label>
-        <div className={compact ? "relative" : "relative mt-1.5"}>
-          <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/45" />
-          <input
-            id={emailId}
-            type="email"
-            value={email}
-            onChange={(event) => updateDraft({ email: event.target.value })}
-            placeholder="vous@entreprise.fr"
-            className="w-full rounded-full border border-dema-line bg-dema-paper py-3 pl-10 pr-4 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/35 focus:border-dema-forest/30"
-          />
-        </div>
-      </div>
-
-        <div className="text-left">
-          <label className={compact ? "sr-only" : "text-xs font-medium text-brand-blue/70"} htmlFor={passwordId}>
-            Mot de passe
-          </label>
-          <div className={compact ? "relative" : "relative mt-1.5"}>
-            <KeyRound className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/45" />
-            <input
-              id={passwordId}
-              type="password"
-              autoComplete={mode === "create" ? "new-password" : "current-password"}
-              minLength={mode === "create" ? 6 : undefined}
-              value={password}
-              onChange={(event) => updateDraft({ password: event.target.value })}
-              placeholder={mode === "create" ? "Choisissez un mot de passe" : "Votre mot de passe"}
-              className="w-full rounded-full border border-dema-line bg-dema-paper py-3 pl-10 pr-4 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/35 focus:border-dema-forest/30"
-            />
-          </div>
-          {mode === "signin" ? (
-            <button
-              type="button"
-              onClick={() => void handlePasswordReset()}
-              className="mt-2 text-xs text-dema-muted underline decoration-dema-line underline-offset-4 hover:text-dema-forest"
-            >
-              Mot de passe oublié ?
-            </button>
-          ) : !compact ? (
-            <p className="mt-2 text-xs leading-relaxed text-dema-muted">
-              Demaa ne stocke jamais votre mot de passe.
-            </p>
-          ) : null}
-        </div>
-
-      {error ? <p className="text-sm text-dema-forest">{error}</p> : null}
-      {notice ? <p className="text-sm text-dema-forest">{notice}</p> : null}
-
-      <button
-        type="submit"
-        disabled={isSending}
-        className="inline-flex w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {isSending ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
-        {isSending
-          ? "Connexion…"
-          : mode === "create" ? "Créer mon accès"
-          : "Se connecter"}
-      </button>
-      </form>
-      {googleEnabled ? (
-        <>
-          <div className="flex items-center gap-3" aria-hidden="true">
-            <span className="h-px flex-1 bg-dema-line" />
-            <span className="text-xs text-dema-muted">{compact ? "ou" : "ou continuer avec Google"}</span>
-            <span className="h-px flex-1 bg-dema-line" />
-          </div>
-          <GoogleCustomerSignInButton
-            onAuthenticated={onAuthenticated}
-            onError={setError}
-            returnTo={returnTo}
-          />
-        </>
-      ) : null}
-    </div>
   );
 }

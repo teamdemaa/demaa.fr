@@ -695,7 +695,7 @@ export async function createOwnedActionPlanForIdentity(
 
 export async function getOwnedActionPlansForIdentity(identity: CustomerSessionIdentity) {
   const company = await getActiveDefaultCompanyIdentity(identity.uid);
-  if (!company) return [];
+  if (!company) throw new Error("The active company context is unavailable.");
 
   const snapshot = await getAdminFirestore()
     .collection(ACTION_PLANS_COLLECTION)
@@ -715,7 +715,7 @@ export async function getActionPlanIndexForIdentity(
   identity: CustomerSessionIdentity,
 ): Promise<ActionPlanIndexEntry[]> {
   const company = await getActiveDefaultCompanyIdentity(identity.uid);
-  if (!company) return [];
+  if (!company) throw new Error("The active company context is unavailable.");
 
   const snapshot = await getAdminFirestore()
     .collection(ACTION_PLANS_COLLECTION)

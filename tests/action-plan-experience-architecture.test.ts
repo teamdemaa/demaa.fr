@@ -22,10 +22,11 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain('fetch("/api/action-plans"');
     expect(experience).toContain("createActionPlanGenerationDraft");
     expect(experience).toContain("writeActionPlanGenerationDraft(draft)");
+    expect(experience).toContain('window.location.assign("/plans/new?resume=generation")');
     expect(experience).toContain("runAuthenticatedActionPlanGeneration");
     expect(experience).toContain("setQueuedGenerationDraft(draft)");
     expect(experience).toContain('window.location.assign(`/plans/${encodeURIComponent(id)}`)');
-    expect(experience).toContain("progressivePlan");
+    expect(experience).toContain('choiceTitle="Enregistrez votre plan"');
     expect(experience).not.toContain("Votre plan sera généré et enregistré dans votre espace.");
     expect(experience).not.toContain("type PendingGeneratedPlan");
     expect(experience).not.toContain("setPendingGeneratedPlan({");
@@ -86,6 +87,10 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("ACTION_PLAN_DEMO");
     expect(experience).toContain('demo === "blank"');
     expect(experience).toContain("Commencer avec un plan vierge");
+    expect(experience).toContain(
+      "On vous aide à clarifier les priorités, à structurer une activité plus rentable et moins dépendante de vous.",
+    );
+    expect(experience).toContain("max-w-[760px]");
     expect(experience).toContain("createManualActionPlan()");
     expect(experience).toContain("createManualActionPlanWorkspaceState()");
     expect(experience).toContain("onAddAction={handleAddAction}");

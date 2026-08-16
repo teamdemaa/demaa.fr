@@ -48,7 +48,7 @@ describe("system navigation performance contract", () => {
 
   it("uses the validated system métier wording on the homepage", async () => {
     const [pageSource, searchSource] = await Promise.all([
-      readSource("src/app/systemes/page.tsx"),
+      readSource("src/app/(marketing)/systemes/page.tsx"),
       readSource("src/components/SystemSearchHero.tsx"),
     ]);
 

@@ -2,13 +2,52 @@
 
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
+import { exchangeFirebaseIdTokenForSession } from "@/lib/customer-auth-session.client";
 import {
   hasFirebaseGoogleAuthConfiguration,
   isFirebaseGoogleAuthAllowedOnCurrentHost,
   shouldUseGoogleRedirect,
   signInWithGoogleAndGetIdToken,
-  startGoogleRedirect,
 } from "@/lib/firebase-client-auth";
+
+const GOOGLE_POPUP_TIMEOUT_MS = 30_000;
+
+class GooglePopupTimeoutError extends Error {
+  readonly code = "auth/popup-timeout";
+
+  constructor() {
+    super("La fenêtre Google n’a pas répondu.");
+    this.name = "GooglePopupTimeoutError";
+  }
+}
+
+function withGooglePopupTimeout<T>(promise: Promise<T>) {
+  return new Promise<T>((resolve, reject) => {
+    const timeout = window.setTimeout(
+      () => reject(new GooglePopupTimeoutError()),
+      GOOGLE_POPUP_TIMEOUT_MS,
+    );
+    promise.then(
+      (value) => {
+        window.clearTimeout(timeout);
+        resolve(value);
+      },
+      (error) => {
+        window.clearTimeout(timeout);
+        reject(error);
+      },
+    );
+  });
+}
+
+function shouldOfferRedirectFallback(error: unknown) {
+  const code = typeof error === "object" && error && "code" in error
+    ? String(error.code)
+    : "";
+  return code.includes("popup-timeout")
+    || code.includes("popup-blocked")
+    || code.includes("operation-not-supported-in-this-environment");
+}
 
 function getGoogleErrorMessage(error: unknown) {
   const code = typeof error === "object" && error && "code" in error
@@ -19,13 +58,19 @@ function getGoogleErrorMessage(error: unknown) {
     return null;
   }
   if (code.includes("popup-blocked")) {
-    return "Autorisez la fenêtre Google dans votre navigateur, puis réessayez.";
+    return "La fenêtre Google a été bloquée. Réessayez pour continuer par redirection.";
+  }
+  if (
+    code.includes("popup-timeout")
+    || code.includes("operation-not-supported-in-this-environment")
+  ) {
+    return "La fenêtre Google n’a pas répondu. Réessayez pour continuer par redirection.";
   }
   if (code.includes("unauthorized-domain")) {
     return "La connexion Google n’est pas encore autorisée sur ce domaine.";
   }
   if (code.includes("account-exists-with-different-credential")) {
-    return "Cette adresse utilise déjà un mot de passe. Connectez-vous avec celui-ci pour lier Google au même compte.";
+    return "Cette adresse utilise déjà un mot de passe. Connectez-vous avec votre e-mail.";
   }
   return error instanceof Error
     ? error.message
@@ -44,6 +89,7 @@ export default function GoogleCustomerSignInButton({
   returnTo?: string;
 }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [preferRedirect, setPreferRedirect] = useState(false);
 
   if (
     !hasFirebaseGoogleAuthConfiguration()
@@ -55,30 +101,23 @@ export default function GoogleCustomerSignInButton({
     onError?.(null);
 
     try {
-      if (shouldUseGoogleRedirect()) {
-        await startGoogleRedirect(returnTo);
+      if (shouldUseGoogleRedirect() || preferRedirect) {
+        const params = new URLSearchParams({ returnTo });
+        window.location.assign(`/auth/google?${params.toString()}`);
         return;
       }
-      const { idToken } = await signInWithGoogleAndGetIdToken();
-      const response = await fetch("/api/customer-space/firebase-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idToken, returnTo }),
-      });
-      const payload = (await response.json().catch(() => null)) as
-        | { error?: string; redirectTo?: string }
-        | null;
-
-      if (!response.ok || !payload?.redirectTo) {
-        throw new Error(payload?.error || "La connexion Google n’a pas pu aboutir.");
-      }
+      const { idToken } = await withGooglePopupTimeout(
+        signInWithGoogleAndGetIdToken(),
+      );
+      const result = await exchangeFirebaseIdTokenForSession({ idToken, returnTo });
 
       if (onAuthenticated) {
-        await onAuthenticated({ redirectTo: payload.redirectTo });
+        await onAuthenticated(result);
       } else {
-        window.location.assign(payload.redirectTo);
+        window.location.assign(result.redirectTo);
       }
     } catch (error) {
+      if (shouldOfferRedirectFallback(error)) setPreferRedirect(true);
       onError?.(getGoogleErrorMessage(error));
     } finally {
       setIsLoading(false);

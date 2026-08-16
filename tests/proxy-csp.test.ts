@@ -1,8 +1,14 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { NextRequest } from "next/server";
 
 import { proxy } from "@/proxy";
 import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
+
+const originalVercelEnv = process.env.VERCEL_ENV;
+
+afterEach(() => {
+  process.env.VERCEL_ENV = originalVercelEnv;
+});
 
 describe("proxy content security policy", () => {
   it("allows the active embeds and Firebase Google Auth while preserving the policy", () => {
@@ -18,8 +24,9 @@ describe("proxy content security policy", () => {
       .find((directive) => directive.startsWith("frame-src "));
 
     expect(frameSource).toBe(
-      "frame-src https://embed.fillout.com https://*.firebaseapp.com https://accounts.google.com",
+      "frame-src 'self' https://embed.fillout.com https://*.firebaseapp.com https://accounts.google.com",
     );
+    expect(frameSource).toContain("'self'");
     expect(policy).toContain("https://apis.google.com");
     expect(policy).toContain("https://identitytoolkit.googleapis.com");
     expect(policy).toContain("https://securetoken.googleapis.com");
@@ -72,6 +79,25 @@ describe("proxy content security policy", () => {
     expect(response.headers.get("location")).toBe(
       "https://demaa.co/api/systeme-kit/request?source=legacy",
     );
+  });
+
+  it("lets Vercel production cron requests reach their secret-protected handlers", () => {
+    process.env.VERCEL_ENV = "production";
+    const response = proxy(
+      new NextRequest(
+        "https://demaa-fr-hiteamdemaa-2292s-projects.vercel.app/api/cron/system-kit-followups",
+        {
+          headers: {
+            host: "demaa-fr-hiteamdemaa-2292s-projects.vercel.app",
+            authorization: "Bearer cron-secret",
+          },
+        },
+      ),
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("location")).toBeNull();
+    expect(response.headers.get("x-middleware-next")).toBe("1");
   });
 
   it("redirects a retired legacy path before applying the canonical 404 policy", () => {

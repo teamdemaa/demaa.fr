@@ -12,7 +12,7 @@ import {
   submitCallbackRequest,
   validateCallbackFields,
 } from "@/components/ServiceCallbackForm";
-import { generateStaticParams } from "@/app/services/[slug]/page";
+import { generateStaticParams } from "@/app/(marketing)/services/[slug]/page";
 import {
   CANONICAL_SERVICE_SLUGS,
   getCanonicalServiceBySlug,
@@ -188,8 +188,8 @@ describe("canonical Accompagnement catalog", () => {
 
   it("keeps legacy catalogs out of every canonical public Services module", async () => {
     const publicModules = await Promise.all([
-      "src/app/services/page.tsx",
-      "src/app/services/[slug]/page.tsx",
+      "src/app/(marketing)/services/page.tsx",
+      "src/app/(marketing)/services/[slug]/page.tsx",
       "src/app/@modal/(.)services/[slug]/page.tsx",
       "src/components/CanonicalServiceDetails.tsx",
       "src/components/ServicesCatalog.tsx",

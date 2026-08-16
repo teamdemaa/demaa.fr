@@ -247,10 +247,9 @@ export default function ActionPlanCoachingControl({
                 </h2>
                 <div className="mt-4">
                   <CustomerSpaceAccessForm
+                    choiceTitle="Connectez-vous pour envoyer"
                     onAuthenticated={handleAuthenticated}
                     returnTo="/"
-                    compact
-                    simple
                   />
                 </div>
               </div>

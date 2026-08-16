@@ -6,26 +6,28 @@ const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.ur
 describe("unified app and coaching", () => {
   it("opens saved plans on the canonical in-app route", () => {
     const experience = read("src/components/ActionPlanExperience.tsx");
-    const legacyPage = read("src/app/mon-espace/plans/[id]/page.tsx");
+    const nextConfig = read("next.config.ts");
 
     expect(experience).toContain("/plans/");
-    expect(legacyPage).toContain("redirect(`/plans/");
+    expect(nextConfig).toContain("source: '/mon-espace/plans/:id'");
+    expect(nextConfig).toContain("destination: '/plans/:id'");
   });
 
   it("does not expose the generated summary as a saved-page hero", () => {
-    const canonicalPage = read("src/app/plans/[id]/page.tsx");
+    const canonicalPage = read("src/app/(application)/plans/[id]/page.tsx");
     expect(canonicalPage).not.toContain("stored.plan.summary");
     expect(canonicalPage).toContain("SavedActionPlanDetail");
   });
 
   it("returns authenticated access directly to the app instead of a parallel portal", () => {
-    const legacyAccountPage = read("src/app/mon-espace/page.tsx");
-    const plansPage = read("src/app/plans/page.tsx");
+    const nextConfig = read("next.config.ts");
+    const plansPage = read("src/app/(application)/plans/page.tsx");
     const accountAccessForm = read("src/components/CustomerSpaceAccessForm.tsx");
 
-    expect(legacyAccountPage).toContain('redirect("/plans/latest")');
+    expect(nextConfig).toContain("source: '/mon-espace'");
+    expect(nextConfig).toContain("destination: '/plans/latest'");
     expect(plansPage).toContain("getActionPlanIndexForIdentity");
-    expect(legacyAccountPage).not.toContain("Mon espace");
+    expect(nextConfig).not.toContain("Espace membre");
     expect(plansPage).toContain("Mes plans");
     expect(plansPage).not.toContain("Espace membre");
     expect(accountAccessForm).not.toContain("espace membre");
@@ -102,8 +104,10 @@ describe("unified app and coaching", () => {
   it("uses one Firebase session endpoint for password and Google", () => {
     const access = read("src/components/CustomerSpaceAccessForm.tsx");
     const google = read("src/components/GoogleCustomerSignInButton.tsx");
-    expect(access).toContain('fetch("/api/customer-space/firebase-session"');
-    expect(google).toContain('fetch("/api/customer-space/firebase-session"');
+    expect(access).toContain("exchangeFirebaseIdTokenForSession");
+    expect(google).toContain("exchangeFirebaseIdTokenForSession");
+    expect(access).not.toContain("/api/customer-space/firebase-session");
+    expect(google).not.toContain("/api/customer-space/firebase-session");
     expect(access).not.toContain("magic-link");
   });
 });

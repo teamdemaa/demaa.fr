@@ -196,7 +196,7 @@ export default function ActionPlanExperience({
 
   function handleAccessAuthenticated() {
     if (generationDraft) {
-      window.location.assign("/?intent=generate-plan");
+      window.location.assign("/plans/new?resume=generation");
       return;
     }
     if (pendingSolutionSelection) {
@@ -705,15 +705,12 @@ export default function ActionPlanExperience({
         </button>
         <div>
           <CustomerSpaceAccessForm
-            compact
+            choiceTitle="Enregistrez votre plan"
             draft={accessDraft}
             initialMode="create"
-            onCancel={closeAccessPrompt}
             onDraftChange={setAccessDraft}
             onAuthenticated={handleAccessAuthenticated}
-            progressivePlan
-            returnTo={generationDraft ? "/?intent=generate-plan" : "/plans"}
-            simple
+            returnTo={generationDraft ? "/plans/new?resume=generation" : "/plans"}
           />
         </div>
       </section>
@@ -745,6 +742,9 @@ export default function ActionPlanExperience({
                     </span>
                     &nbsp;?
                   </h1>
+                  <p className="mx-auto mt-6 max-w-[760px] text-balance text-[15px] font-normal leading-[1.5] text-dema-muted sm:text-lg">
+                    On vous aide à clarifier les priorités, à structurer une activité plus rentable et moins dépendante de vous.
+                  </p>
                   <form onSubmit={handleGenerate} className="mx-auto mt-7 max-w-[42rem] text-left sm:mt-8">
                     <div className="rounded-[1.45rem] border border-dema-line bg-dema-paper p-2 shadow-[0_14px_38px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">
                       <label htmlFor="business-situation" className="sr-only">Décrivez la situation de votre entreprise</label>

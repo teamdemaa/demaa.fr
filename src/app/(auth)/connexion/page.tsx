@@ -37,20 +37,13 @@ export default async function ConnexionPage({ searchParams }: ConnexionPageProps
         <Navbar minimal />
         <main className="px-4 py-12 md:px-8 md:py-20">
           <section className="mx-auto max-w-md rounded-[1.15rem] border border-dema-line bg-dema-paper p-6 text-center shadow-[0_12px_36px_rgba(23,35,29,0.04)] md:p-8">
-            <h1 className="text-3xl font-light tracking-[-0.04em] md:text-4xl">
-              Se connecter
-            </h1>
-            <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-dema-muted">
-              Retrouvez vos plans avec votre adresse e-mail et votre mot de passe.
-            </p>
+            <h1 className="sr-only">Connexion à Demaa</h1>
             {rawMessage ? (
-              <p className="mt-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
+              <p className="mb-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
                 {rawMessage.slice(0, 180)}
               </p>
             ) : null}
-            <div className="mt-6">
-              <CustomerSpaceAccessForm returnTo={returnTo} simple />
-            </div>
+            <CustomerSpaceAccessForm choiceTitle="Connectez-vous" returnTo={returnTo} />
           </section>
         </main>
       </div>

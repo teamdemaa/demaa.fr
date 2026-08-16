@@ -120,6 +120,13 @@ async function readIdentityPlatformConfig(app) {
     throw new Error(`Lecture du fournisseur Google impossible (${googleResponse.status}).`);
   }
   const google = googleResponse.ok ? await googleResponse.json() : null;
+  const passwordPolicyConfig = config.passwordPolicyConfig;
+  const passwordPolicyVersion = Array.isArray(passwordPolicyConfig?.passwordPolicyVersions)
+    ? passwordPolicyConfig.passwordPolicyVersions[0]
+    : null;
+  const configuredMinLength = passwordPolicyVersion?.customStrengthOptions?.minPasswordLength;
+  const passwordPolicyEnforcementState =
+    passwordPolicyConfig?.passwordPolicyEnforcementState ?? "OFF";
   return {
     anonymousEnabled: config.signIn?.anonymous?.enabled === true,
     authorizedDomains: Array.isArray(config.authorizedDomains)
@@ -130,10 +137,10 @@ async function readIdentityPlatformConfig(app) {
     googleClientConfigured: typeof google?.clientId === "string" && google.clientId.length > 0,
     googleEnabled: google?.enabled === true,
     passwordPolicy: {
-      effectiveMinLength: config.passwordPolicyConfig?.constraints?.minLength ?? 6,
-      enforcementState: config.passwordPolicyConfig?.enforcementState ?? "OFF",
-      minLength: config.passwordPolicyConfig?.constraints?.minLength ?? null,
-      source: config.passwordPolicyConfig?.enforcementState === "ENFORCE"
+      effectiveMinLength: configuredMinLength ?? 6,
+      enforcementState: passwordPolicyEnforcementState,
+      minLength: configuredMinLength ?? null,
+      source: passwordPolicyEnforcementState === "ENFORCE"
         ? "custom_enforced"
         : "firebase_default",
     },

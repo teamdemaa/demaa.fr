@@ -93,7 +93,7 @@ describe("Academy live sessions and contextual cases", () => {
         new URL("../src/components/AcademyIndexClient.tsx", import.meta.url),
         "utf8",
       ),
-      readFile(new URL("../src/app/academie/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(marketing)/academie/page.tsx", import.meta.url), "utf8"),
     ]);
     expect(clientSource).not.toContain("Cours fondamentaux");
     expect(clientSource).not.toContain("<AcademyLiveTrainingSection");

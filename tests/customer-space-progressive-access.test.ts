@@ -4,17 +4,19 @@ import { describe, expect, it } from "vitest";
 const source = readFileSync("src/components/CustomerSpaceAccessForm.tsx", "utf8");
 const experience = readFileSync("src/components/ActionPlanExperience.tsx", "utf8");
 const googleButton = readFileSync("src/components/GoogleCustomerSignInButton.tsx", "utf8");
+const loginDialog = readFileSync("src/components/CustomerSpaceLoginDialog.tsx", "utf8");
 
 describe("progressive plan authentication", () => {
   it("starts with one Google option and one email action", () => {
     expect(source).toContain('type ProgressiveAccessStep = "choice" | "email" | "password"');
     expect(source).toContain('useState<ProgressiveAccessStep>("choice")');
-    expect(source).toContain("Enregistrez votre plan");
+    expect(source).toContain('choiceTitle = "Accédez à votre espace"');
     expect(source).toContain("<GoogleCustomerSignInButton");
     expect(source).toContain("large");
     expect(googleButton).toContain("Continuer avec Google");
     expect(source).toContain("Continuer avec mon e-mail");
-    expect(experience).toContain("progressivePlan");
+    expect(experience).toContain('choiceTitle="Enregistrez votre plan"');
+    expect(source).not.toContain("J’ai déjà un compte");
     expect(experience).not.toContain("Votre plan sera généré et enregistré dans votre espace.");
   });
 
@@ -34,6 +36,7 @@ describe("progressive plan authentication", () => {
     expect(source).toContain("Modifier");
     expect(source).toContain("Retour aux options de connexion");
     expect(source).toContain("Retour à l’étape e-mail");
+    expect(source).toContain("Mot de passe oublié ?");
   });
 
   it("preserves the accessible bottom-sheet contract", () => {
@@ -44,6 +47,10 @@ describe("progressive plan authentication", () => {
     expect(experience).toContain("max-w-[430px]");
     expect(experience).toContain("useAccessibleDialog({");
     expect(source).toContain("min-h-[54px]");
+    expect(source).not.toContain("Annuler");
+    expect(source).not.toContain("onCancel");
+    expect(loginDialog).toContain('aria-label="Fermer"');
+    expect(experience).toContain('aria-label="Fermer"');
   });
 
   it("does not move generation or generated output into the access form", () => {

@@ -429,7 +429,7 @@ describe("system Solutions UI", () => {
   });
 
   it("keeps the registry server-side and crosses RSC with public DTOs only", async () => {
-    const pageSource = await readSource("src/app/systemes/[slug]/page.tsx");
+    const pageSource = await readSource("src/app/(marketing)/systemes/[slug]/page.tsx");
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const solutionsSource = await readSource("src/components/SystemSolutionsTab.tsx");
 
@@ -540,7 +540,7 @@ describe("system Solutions UI", () => {
 
   it("keeps the W6 SEO and JSON-LD integration gate explicit", async () => {
     const gate = await readSource("docs/system-solutions-ui-w6-integration-gate.md");
-    const pageSource = await readSource("src/app/systemes/[slug]/page.tsx");
+    const pageSource = await readSource("src/app/(marketing)/systemes/[slug]/page.tsx");
 
     expect(gate).toContain("bloqué avant W6");
     expect(gate).toContain("JSON-LD");

@@ -3,6 +3,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({
   createCustomerSession: vi.fn(),
   enforceRateLimit: vi.fn(),
+  ensureDefaultCompanyForIdentity: vi.fn(),
+  getActiveDefaultCompanyIdentity: vi.fn(),
 }));
 
 vi.mock("@/lib/customer-space-auth", () => ({
@@ -19,11 +21,15 @@ vi.mock("@/lib/api-security", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@/lib/api-security")>();
   return { ...actual, enforceRateLimit: mocks.enforceRateLimit };
 });
+vi.mock("@/lib/company-membership.server", () => ({
+  ensureDefaultCompanyForIdentity: mocks.ensureDefaultCompanyForIdentity,
+  getActiveDefaultCompanyIdentity: mocks.getActiveDefaultCompanyIdentity,
+}));
 
-import { POST } from "@/app/api/customer-space/firebase-session/route";
+import { POST } from "@/app/api/auth/session/route";
 
 function request(body: Record<string, unknown>) {
-  return new Request("https://demaa.co/api/customer-space/firebase-session", {
+  return new Request("https://demaa.co/api/auth/session", {
     method: "POST",
     headers: { "Content-Type": "application/json", Origin: "https://demaa.co" },
     body: JSON.stringify(body),
@@ -36,6 +42,10 @@ describe("Firebase customer session route", () => {
     vi.spyOn(console, "error").mockImplementation(() => undefined);
     process.env.SITE_URL = "https://demaa.co";
     mocks.enforceRateLimit.mockResolvedValue(null);
+    mocks.ensureDefaultCompanyForIdentity.mockResolvedValue({
+      companyId: "company-1",
+      membershipId: "membership-1",
+    });
     mocks.createCustomerSession.mockResolvedValue({
       identity: { email: "owner@example.com", provider: "password", uid: "owner-uid" },
       sessionCookie: "firebase-session-cookie",
@@ -47,6 +57,11 @@ describe("Firebase customer session route", () => {
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual({ redirectTo: "/plans" });
     expect(mocks.createCustomerSession).toHaveBeenCalledWith("id-token");
+    expect(mocks.ensureDefaultCompanyForIdentity).toHaveBeenCalledWith({
+      email: "owner@example.com",
+      provider: "password",
+      uid: "owner-uid",
+    });
     expect(response.headers.get("set-cookie")).toContain("demaa_session=firebase-session-cookie");
     expect(response.headers.get("set-cookie")).toContain("HttpOnly");
   });
@@ -60,8 +75,21 @@ describe("Firebase customer session route", () => {
     const expired = await POST(request({ idToken: "expired" }));
     expect(expired.status).toBe(401);
     expect(console.error).toHaveBeenCalledWith(
-      "[customer-firebase-session] session creation failed",
+      "[auth-session] Firebase session creation failed",
       "expired",
+    );
+  });
+
+  it("does not create a browser session when the company context fails", async () => {
+    mocks.ensureDefaultCompanyForIdentity.mockRejectedValue(new Error("firestore unavailable"));
+
+    const response = await POST(request({ idToken: "id-token", returnTo: "/plans" }));
+
+    expect(response.status).toBe(503);
+    expect(response.headers.get("set-cookie")).toBeNull();
+    expect(console.error).toHaveBeenCalledWith(
+      "[auth-session] Company provisioning failed",
+      "firestore unavailable",
     );
   });
 });

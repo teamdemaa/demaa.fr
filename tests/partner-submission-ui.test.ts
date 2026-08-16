@@ -12,7 +12,7 @@ describe("solution proposal UI contract", () => {
   it("exposes one neutral public entry without promising a partnership", async () => {
     const [footer, page, nextConfig, sitemap] = await Promise.all([
       readSource("src/components/Footer.tsx"),
-      readSource("src/app/rejoindre-team-demaa/page.tsx"),
+      readSource("src/app/(marketing)/rejoindre-team-demaa/page.tsx"),
       readSource("next.config.ts"),
       readSource("src/app/sitemap.ts"),
     ]);
@@ -53,7 +53,8 @@ describe("solution proposal UI contract", () => {
       "Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.",
     );
     expect(googleSignIn).toContain("Continuer avec Google");
-    expect(googleSignIn).toContain('fetch("/api/customer-space/firebase-session"');
+    expect(googleSignIn).toContain("exchangeFirebaseIdTokenForSession");
+    expect(googleSignIn).not.toContain("/api/customer-space/firebase-session");
     expect(googleSignIn).toContain("if (onAuthenticated)");
     expect(googleSignIn).toContain("text-dema-forest");
     expect(googleSignIn).not.toContain("#4285f4");
@@ -64,9 +65,9 @@ describe("solution proposal UI contract", () => {
 
   it("loads Firebase-backed pages at request time", async () => {
     const [networkPage, opportunitiesPage, adminPage] = await Promise.all([
-      readSource("src/app/rejoindre-team-demaa/page.tsx"),
-      readSource("src/app/opportunites/page.tsx"),
-      readSource("src/app/admin/opportunites/page.tsx"),
+      readSource("src/app/(marketing)/rejoindre-team-demaa/page.tsx"),
+      readSource("src/app/(marketing)/opportunites/page.tsx"),
+      readSource("src/app/(administration)/admin/opportunites/page.tsx"),
     ]);
 
     expect(networkPage).toContain(
@@ -81,7 +82,7 @@ describe("solution proposal UI contract", () => {
 
   it("separates immediate opportunities from the permanent Team Demaa profile", async () => {
     const [page, catalog, modal, panel, submissionDialog] = await Promise.all([
-      readSource("src/app/opportunites/page.tsx"),
+      readSource("src/app/(marketing)/opportunites/page.tsx"),
       readSource("src/components/PublicOpportunitiesClient.tsx"),
       readSource("src/components/ProviderProfileModal.tsx"),
       readSource("src/components/OpportunitiesPanel.tsx"),

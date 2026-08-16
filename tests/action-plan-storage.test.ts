@@ -83,6 +83,7 @@ import {
 import {
   buildCompanyMembershipId,
   buildDefaultCompanyId,
+  ensureDefaultCompanyForIdentity,
 } from "@/lib/company-membership.server";
 
 const systemId = actionPlanSystemOptions[0]?.id;
@@ -362,6 +363,7 @@ describe("company-scoped action plan persistence", () => {
       .resolves.toMatchObject({ id: created.id });
     await expect(getActionPlanForAccess({ id: created.id, uid: "other-uid" }))
       .resolves.toBeNull();
+    await ensureDefaultCompanyForIdentity(identity("other-uid", "shared@example.com"));
     await expect(getOwnedActionPlansForIdentity(identity("other-uid", "shared@example.com")))
       .resolves.toEqual([]);
   });
@@ -416,7 +418,8 @@ describe("company-scoped action plan persistence", () => {
     });
     const workspace = createActionPlanWorkspaceState(created.plan);
 
-    await expect(getOwnedActionPlansForIdentity(identity("owner-uid"))).resolves.toEqual([]);
+    await expect(getOwnedActionPlansForIdentity(identity("owner-uid")))
+      .rejects.toThrow("active company context is unavailable");
     await expect(getActionPlanForAccess({ id: created.id, uid: "owner-uid" }))
       .resolves.toBeNull();
     await expect(updateActionPlanWorkspaceForAccess({
