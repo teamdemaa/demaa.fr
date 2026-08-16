@@ -9,6 +9,12 @@
 - Mise à jour : 15 août 2026, publication contextualisée de Formalités
   d'entreprise et accompagnement Coach business unifié
 
+> Mise à jour canonique du 16 août 2026 : D-089 et l'ADR 0015 supersèdent le
+> nombre d'offres, le prix d'Automatisation, la présentation des prix sur les
+> cartes, le CTA et le positionnement séparé de `/sur-mesure`. Les règles de
+> contact WhatsApp, de composition serveur et d'exclusion des tiers restent
+> applicables lorsqu'elles ne contredisent pas l'ADR 0015.
+
 ## Catalogue canonique
 
 Une seule source de vérité, `src/lib/canonical-service-catalog.ts`, publie les

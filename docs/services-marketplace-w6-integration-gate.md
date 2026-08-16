@@ -1,10 +1,11 @@
 # Gate d’intégration Marketplace Services
 
 > Document historique supersédé le 9 août 2026 par l’ADR 0004, puis par l'ADR
-> 0006 pour le catalogue actif. La marketplace
+> 0006 et l'ADR 0015 pour le catalogue actif. La marketplace
 > V2, son catalogue à sept offres et `/api/service-request` ont été retirés.
-> Les six offres actives proviennent exclusivement de
-> `src/lib/canonical-service-catalog.ts`.
+> La composition courante provient exclusivement de
+> `src/lib/canonical-service-catalog.ts` et ne doit pas être déduite de ce
+> document historique.
 
 La publication reste volontairement fermée tant que le registre ne contient
 aucune offre `published`. Les sélecteurs publics et les routes ne doivent pas

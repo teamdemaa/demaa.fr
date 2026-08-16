@@ -82,7 +82,7 @@ une date injectée en test.
 
 Le catalogue V2 à sept offres et son formulaire ont été retirés. La source
 publique unique est désormais `src/lib/canonical-service-catalog.ts`. La
-composition et les tarifs actifs sont définis par l'ADR 0006.
+composition et les tarifs actifs sont définis par les ADR 0006 et 0015.
 
 ### W3c — registres Solutions serveur
 
