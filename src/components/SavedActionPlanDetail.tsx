@@ -180,6 +180,8 @@ export default function SavedActionPlanDetail({
   }, [currentPlan, flushWorkspaceSave, planTitle, workspace]);
 
   useEffect(() => {
+    mountedRef.current = true;
+
     function flushBeforeLeaving() {
       if (saveTimeoutRef.current !== null) {
         window.clearTimeout(saveTimeoutRef.current);

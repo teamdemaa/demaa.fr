@@ -37,6 +37,7 @@ describe("saved action plan controls", () => {
     expect(detail).toContain("confirmedTitleRef.current = body.title || nextSave.title");
     expect(detail).toContain("saveQueueRef.current.drain");
     expect(detail).toContain("saveQueueRef.current.enqueue");
+    expect(detail).toContain("mountedRef.current = true");
   });
 
   it("keeps plan lifecycle actions in a vertical three-point menu", () => {
