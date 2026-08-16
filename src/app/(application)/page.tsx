@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import ActionPlanExperience from "@/components/ActionPlanExperience";
 import Navbar from "@/components/Navbar";
-import { parseActionPlanAppContext } from "@/lib/action-plan-app-context";
+import {
+  buildLegacyOpportunitiesHref,
+  parseActionPlanAppContext,
+} from "@/lib/action-plan-app-context";
 import { shouldRedirectAuthenticatedHomeToPlans } from "@/lib/action-plan-home-routing";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import { getCurrentCustomerAppIdentityFromSession } from "@/lib/customer-space-session.server";
@@ -48,6 +51,8 @@ export default async function HomePage({
     getCurrentCustomerAppIdentityFromSession(),
     searchParams,
   ]);
+  const legacyOpportunitiesHref = buildLegacyOpportunitiesHref(query);
+  if (legacyOpportunitiesHref) redirect(legacyOpportunitiesHref);
   const initialAppContext = parseActionPlanAppContext(query);
   const requestedIntent = Array.isArray(query.intent) ? query.intent[0] : query.intent;
   const requestedNewPlan = Array.isArray(query.new) ? query.new[0] : query.new;

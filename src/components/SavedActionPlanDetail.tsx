@@ -13,7 +13,6 @@ import {
   SavedActionPlanSelector,
 } from "@/components/SavedActionPlanControls";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
-import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import CompanyPilotagePanel from "@/components/CompanyPilotagePanel";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
 import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
@@ -361,7 +360,6 @@ export default function SavedActionPlanDetail({
               systemTab: undefined,
               solutionResourceSlug: undefined,
               academyContentSlug: undefined,
-              opportunityId: undefined,
             })}
           >
             <div className="mb-3 flex min-w-0 max-w-[40rem] items-center gap-2">
@@ -490,17 +488,6 @@ export default function SavedActionPlanDetail({
               ...appContext,
               view: "academy",
               academyContentSlug,
-            })}
-          />
-        ) : null}
-        {activeTab === "opportunities" ? (
-          <OpportunitiesPanel
-            initialEmail={initialEmail}
-            initialOpportunityId={appContext.opportunityId}
-            onOpportunityChange={(opportunityId) => navigateAppContext({
-              ...appContext,
-              view: "opportunities",
-              opportunityId,
             })}
           />
         ) : null}

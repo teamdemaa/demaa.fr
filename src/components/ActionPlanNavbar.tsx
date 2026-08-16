@@ -1,11 +1,11 @@
 "use client";
 
-import { BookOpen, BriefcaseBusiness, ListChecks, Wrench } from "lucide-react";
+import { BookOpen, ListChecks, Wrench } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-export type ActionPlanView = "plan" | "solutions" | "academy" | "opportunities";
+export type ActionPlanView = "plan" | "solutions" | "academy";
 
 const tabClassName =
   "group relative inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:min-h-11 xl:flex-row xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
@@ -14,7 +14,6 @@ const navigationItems = [
   { view: "plan", label: "Plan d’action", Icon: ListChecks },
   { view: "solutions", label: "Solutions", Icon: Wrench },
   { view: "academy", label: "Académie", Icon: BookOpen },
-  { view: "opportunities", label: "Opportunités", Icon: BriefcaseBusiness },
 ] as const;
 
 export default function ActionPlanNavbar({
@@ -45,7 +44,7 @@ export default function ActionPlanNavbar({
   function navigation() {
     return (
       <div
-        className="grid w-full grid-cols-4 gap-1"
+        className="grid w-full grid-cols-3 gap-1"
         aria-label="Navigation principale"
       >
         {navigationItems.map(({ view, label, Icon }) => {

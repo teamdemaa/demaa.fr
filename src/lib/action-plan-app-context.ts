@@ -8,10 +8,10 @@ const ACTION_PLAN_VIEWS = [
   "plan",
   "solutions",
   "academy",
-  "opportunities",
 ] as const satisfies readonly ActionPlanView[];
 
 const SAFE_SLUG_PATTERN = /^[A-Za-z0-9_-]{1,160}$/;
+const OPPORTUNITY_DRAFT_TOKEN_PATTERN = /^[A-Za-z0-9_-]{43}$/;
 
 const ACTION_PLAN_SECTIONS = ["actions", "figures", "strategy"] as const;
 export type ActionPlanSection = (typeof ACTION_PLAN_SECTIONS)[number];
@@ -23,7 +23,6 @@ export type ActionPlanAppContext = {
   systemTab?: SystemDetailTab;
   solutionResourceSlug?: string;
   academyContentSlug?: string;
-  opportunityId?: string;
 };
 
 type SearchValue = string | string[] | undefined;
@@ -51,6 +50,39 @@ function isActionPlanSection(value: string | undefined): value is ActionPlanSect
   return ACTION_PLAN_SECTIONS.includes(value as ActionPlanSection);
 }
 
+export function buildLegacyOpportunitiesHref(input: SearchInput) {
+  const requestedView = readSearchValue(input, "view");
+  const intent = readSearchValue(input, "intent");
+  const opportunityId = safeSlug(
+    readSearchValue(input, "opportunityId")
+      ?? readSearchValue(input, "opportunity"),
+  );
+  const isOpportunityIntent = intent === "opportunity"
+    || intent === "opportunity-submit"
+    || intent === "team-demaa-profile";
+
+  if (requestedView !== "opportunities" && !isOpportunityIntent) return null;
+
+  const params = new URLSearchParams();
+  if (intent === "team-demaa-profile") {
+    params.set("intent", intent);
+    const expertiseId = safeSlug(readSearchValue(input, "expertiseId"));
+    if (expertiseId) params.set("expertiseId", expertiseId);
+  } else if ((intent === "opportunity" || opportunityId) && opportunityId) {
+    params.set("intent", "opportunity");
+    params.set("opportunityId", opportunityId);
+  } else if (intent === "opportunity-submit") {
+    const draftToken = readSearchValue(input, "draftToken");
+    if (draftToken && OPPORTUNITY_DRAFT_TOKEN_PATTERN.test(draftToken)) {
+      params.set("intent", intent);
+      params.set("draftToken", draftToken);
+    }
+  }
+
+  const query = params.toString();
+  return `/opportunites${query ? `?${query}` : ""}`;
+}
+
 export function parseActionPlanAppContext(
   input: SearchInput,
 ): ActionPlanAppContext {
@@ -62,10 +94,6 @@ export function parseActionPlanAppContext(
     ? "solutions"
     : intent === "structure" || intent === "structure-problem"
       ? "academy"
-    : intent === "opportunity"
-        || intent === "opportunity-submit"
-        || intent === "team-demaa-profile"
-      ? "opportunities"
       : undefined;
   const requestedAppView = requestedView === "system"
     ? "solutions"
@@ -88,12 +116,6 @@ export function parseActionPlanAppContext(
         : undefined),
   );
   const academyContentSlug = safeSlug(readSearchValue(input, "academy"));
-  const opportunityId = safeSlug(
-    readSearchValue(input, "opportunity")
-      ?? (intent === "opportunity"
-        ? readSearchValue(input, "opportunityId")
-        : undefined),
-  );
   const requestedSystemTab = normalizeSystemDetailTab(
     readSearchValue(input, "systemTab"),
   );
@@ -107,7 +129,6 @@ export function parseActionPlanAppContext(
     ...(requestedSystemTab ? { systemTab: requestedSystemTab } : {}),
     ...(solutionResourceSlug ? { solutionResourceSlug } : {}),
     ...(academyContentSlug ? { academyContentSlug } : {}),
-    ...(opportunityId ? { opportunityId } : {}),
   };
 }
 
@@ -157,10 +178,6 @@ export function buildActionPlanAppHref(input: {
 
   if (input.context.view === "academy" && input.context.academyContentSlug) {
     params.set("academy", input.context.academyContentSlug);
-  }
-
-  if (input.context.view === "opportunities" && input.context.opportunityId) {
-    params.set("opportunity", input.context.opportunityId);
   }
 
   const query = params.toString();

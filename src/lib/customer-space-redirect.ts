@@ -79,7 +79,12 @@ export function buildCustomerIntentReturnTo(intent: CustomerAccessIntent) {
     params.set("draftToken", intent.draftToken);
   }
 
-  return `/?${params.toString()}`;
+  const pathname = intent.kind === "opportunity"
+    || intent.kind === "opportunity-submit"
+    || intent.kind === "team-demaa-profile"
+    ? "/opportunites"
+    : "/";
+  return `${pathname}?${params.toString()}`;
 }
 
 export function parseCustomerAccessIntent(value?: string | null): CustomerAccessIntent | null {
@@ -167,6 +172,11 @@ export function getSafeCustomerReturnTo(value?: string | null) {
   }
 
   if (candidate === "/" || candidate.startsWith("/?")) return candidate;
+  if (candidate === "/opportunites" || candidate.startsWith("/opportunites?")) {
+    return candidate.includes(`${INTENT_PARAM}=`) && !parsedIntent
+      ? "/opportunites"
+      : candidate;
+  }
   if (candidate === "/plans") return candidate;
   return "/";
 }

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildActionPlanAppHref,
+  buildLegacyOpportunitiesHref,
   buildPublicSystemAppHref,
   parseActionPlanAppContext,
 } from "@/lib/action-plan-app-context";
@@ -30,7 +31,7 @@ describe("action plan app context", () => {
     });
   });
 
-  it("keeps legacy authentication intents compatible", () => {
+  it("keeps non-opportunity legacy authentication intents compatible", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "intent=solution-referral&systemSlug=restaurant&resourceSlug=lightspeed",
     ))).toEqual({
@@ -38,19 +39,6 @@ describe("action plan app context", () => {
       planSection: "actions",
       systemId: "restaurant",
       solutionResourceSlug: "lightspeed",
-    });
-    expect(parseActionPlanAppContext(new URLSearchParams(
-      "intent=opportunity&opportunityId=mission-btp",
-    ))).toMatchObject({
-      view: "opportunities",
-      planSection: "actions",
-      opportunityId: "mission-btp",
-    });
-    expect(parseActionPlanAppContext(new URLSearchParams(
-      "intent=team-demaa-profile",
-    ))).toEqual({
-      view: "opportunities",
-      planSection: "actions",
     });
     for (const intent of ["structure", "structure-problem"]) {
       expect(parseActionPlanAppContext(new URLSearchParams(
@@ -60,6 +48,30 @@ describe("action plan app context", () => {
         planSection: "actions",
       });
     }
+  });
+
+  it("does not expose Opportunities as an embedded application view", () => {
+    expect(parseActionPlanAppContext(new URLSearchParams(
+      "view=opportunities&opportunity=mission-btp",
+    ))).toEqual({
+      view: "plan",
+      planSection: "actions",
+    });
+  });
+
+  it("redirects historical Opportunities contexts to the direct route", () => {
+    expect(buildLegacyOpportunitiesHref(new URLSearchParams(
+      "view=opportunities&opportunity=mission-btp",
+    ))).toBe("/opportunites?intent=opportunity&opportunityId=mission-btp");
+    expect(buildLegacyOpportunitiesHref(new URLSearchParams(
+      "intent=team-demaa-profile&expertiseId=e-commerce",
+    ))).toBe("/opportunites?intent=team-demaa-profile&expertiseId=e-commerce");
+    expect(buildLegacyOpportunitiesHref(new URLSearchParams(
+      "view=opportunities&intent=opportunity-submit&draftToken=invalid",
+    ))).toBe("/opportunites");
+    expect(buildLegacyOpportunitiesHref(new URLSearchParams(
+      "view=academy",
+    ))).toBeNull();
   });
 
   it("preserves the current plan pathname for ordinary in-app navigation", () => {
