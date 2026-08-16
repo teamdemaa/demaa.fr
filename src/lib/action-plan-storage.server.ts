@@ -93,6 +93,11 @@ export type ActionPlanGenerationState =
   | { status: "active"; id: string; actionPlan: StoredActionPlan }
   | { status: "failed"; id: string; attemptCount: number; canRetry: boolean };
 
+export type ActionPlanWorkspacePageData = {
+  generationState: ActionPlanGenerationState | null;
+  plans: ActionPlanIndexEntry[];
+};
+
 export type ActionPlanGenerationClaim = {
   id: string;
   leaseOwner: string;
@@ -260,6 +265,49 @@ function parseGenerationState(
     };
   }
   return null;
+}
+
+function parseActionPlanIndexEntry(
+  id: string,
+  data: ActionPlanDocument | undefined,
+): ActionPlanIndexEntry | null {
+  if (!data || data.status === "deleted") return null;
+  if (data.status === "active") {
+    const plan = parseStoredActionPlan(id, data);
+    return plan ? {
+      id: plan.id,
+      status: "active",
+      title: plan.title,
+      updatedAt: plan.updatedAt,
+    } : null;
+  }
+  if (data.status !== "generating" && data.status !== "failed") return null;
+  const updatedAt = typeof data.updated_at === "string"
+    ? data.updated_at
+    : typeof data.created_at === "string"
+      ? data.created_at
+      : "";
+  return {
+    id,
+    status: data.status,
+    title: normalizeActionPlanTitle(data.title),
+    updatedAt,
+  };
+}
+
+function parseActionPlanIndex(
+  documents: readonly {
+    id: string;
+    data(): unknown;
+  }[],
+) {
+  return documents
+    .map((document) => parseActionPlanIndexEntry(
+      document.id,
+      document.data() as ActionPlanDocument | undefined,
+    ))
+    .filter((entry): entry is ActionPlanIndexEntry => Boolean(entry))
+    .sort((left, right) => Date.parse(right.updatedAt) - Date.parse(left.updatedAt));
 }
 
 export async function beginActionPlanGeneration(input: {
@@ -722,32 +770,31 @@ export async function getActionPlanIndexForIdentity(
     .where("company_id", "==", company.companyId)
     .get();
 
-  return snapshot.docs.map((document): ActionPlanIndexEntry | null => {
-    const data = document.data() as ActionPlanDocument | undefined;
-    if (!data || data.status === "deleted") return null;
-    if (data.status === "active") {
-      const plan = parseStoredActionPlan(document.id, data);
-      return plan ? {
-        id: plan.id,
-        status: "active",
-        title: plan.title,
-        updatedAt: plan.updatedAt,
-      } : null;
-    }
-    if (data.status !== "generating" && data.status !== "failed") return null;
-    const updatedAt = typeof data.updated_at === "string"
-      ? data.updated_at
-      : typeof data.created_at === "string"
-        ? data.created_at
-        : "";
-    return {
-      id: document.id,
-      status: data.status,
-      title: normalizeActionPlanTitle(data.title),
-      updatedAt,
-    };
-  }).filter((entry): entry is ActionPlanIndexEntry => Boolean(entry))
-    .sort((left, right) => Date.parse(right.updatedAt) - Date.parse(left.updatedAt));
+  return parseActionPlanIndex(snapshot.docs);
+}
+
+export async function getActionPlanWorkspacePageForIdentity(
+  identity: CustomerSessionIdentity,
+  id: string,
+): Promise<ActionPlanWorkspacePageData> {
+  const company = await getActiveDefaultCompanyIdentity(identity.uid);
+  if (!company) return { generationState: null, plans: [] };
+
+  const collection = getAdminFirestore().collection(ACTION_PLANS_COLLECTION);
+  const [planSnapshot, indexSnapshot] = await Promise.all([
+    collection.doc(id).get(),
+    collection.where("company_id", "==", company.companyId).get(),
+  ]);
+  const document = planSnapshot.data() as ActionPlanDocument | undefined;
+  const generationState = planSnapshot.exists
+    && belongsToCompany(document, company.companyId)
+    ? parseGenerationState(planSnapshot.id, document)
+    : null;
+
+  return {
+    generationState,
+    plans: parseActionPlanIndex(indexSnapshot.docs),
+  };
 }
 
 export async function getActionPlanForAccess(input: { id: string; uid: string }) {

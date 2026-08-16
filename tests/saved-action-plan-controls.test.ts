@@ -11,7 +11,7 @@ describe("saved action plan controls", () => {
     const detail = source("src/components/SavedActionPlanDetail.tsx");
     const controls = source("src/components/SavedActionPlanControls.tsx");
 
-    expect(page).toContain("getOwnedActionPlans");
+    expect(page).toContain("getActionPlanWorkspacePageForIdentity");
     expect(page).toContain("availablePlans={availablePlans}");
     expect(page).toContain("initialTitle={stored.title}");
     expect(page).toContain("key={stored.id}");
@@ -19,7 +19,9 @@ describe("saved action plan controls", () => {
     expect(controls).toContain("Changer de plan");
     expect(controls).toContain("Modifié le");
     expect(controls).toContain("availablePlan.id === planId");
-    expect(controls).toContain("router.push(`/plans/");
+    expect(controls).toContain("onNavigate(`/plans/");
+    expect(controls).toContain("Génération en cours");
+    expect(controls).toContain("Génération à reprendre");
     expect(controls).not.toContain("Mon espace");
     expect(controls).not.toContain("<select");
   });
@@ -33,7 +35,8 @@ describe("saved action plan controls", () => {
     expect(detail).toContain("title: nextSave.title");
     expect(detail).toContain("revisionRef.current = body.revision");
     expect(detail).toContain("confirmedTitleRef.current = body.title || nextSave.title");
-    expect(detail).toContain("savePromiseRef");
+    expect(detail).toContain("saveQueueRef.current.drain");
+    expect(detail).toContain("saveQueueRef.current.enqueue");
   });
 
   it("keeps plan lifecycle actions in a vertical three-point menu", () => {
@@ -44,9 +47,12 @@ describe("saved action plan controls", () => {
     expect(controls).toContain("<MoreVertical");
     expect(controls).toContain("ActionPlanShareControl");
     expect(controls).toContain("Nouveau plan");
-    expect(controls).toContain('router.push("/plans/new")');
+    expect(controls).toContain('onNavigate("/plans/new")');
     expect(controls).toContain("Renommer");
     expect(controls).toContain("Supprimer");
+    expect(controls.indexOf("Nouveau plan")).toBeLessThan(
+      controls.indexOf("ActionPlanShareControl", controls.indexOf("return (")),
+    );
   });
 
   it("requires confirmation and delegates soft deletion to the canonical API", () => {
@@ -59,5 +65,35 @@ describe("saved action plan controls", () => {
     expect(detail).toContain('router.replace("/plans")');
     expect(route).toContain("deleteActionPlanForAccess");
     expect(storage).toContain('status: "deleted"');
+  });
+
+  it("waits for the save queue and exposes explicit retry or conflict choices", () => {
+    const detail = source("src/components/SavedActionPlanDetail.tsx");
+    const route = source("src/app/api/action-plans/[id]/route.ts");
+
+    expect(detail).toContain("const saved = await flushWorkspaceSave()");
+    expect(detail).toContain("navigationTargetRef.current");
+    expect(detail).toContain("if (saveConflictRef.current) return false");
+    expect(detail).toContain("if (saveConflictRef.current) return;");
+    expect(detail).toContain("Garder mes modifications");
+    expect(detail).toContain("Utiliser la version récente");
+    expect(detail).toContain("Réessayer");
+    expect(route).toContain("export async function GET");
+    expect(route).toContain("revision: plan.revision");
+  });
+
+  it("keeps one creation CTA and a conditional return path", () => {
+    const plans = source("src/app/(application)/plans/page.tsx");
+    const newPlan = source("src/app/(application)/plans/new/page.tsx");
+    const error = source("src/app/(application)/plans/[id]/error.tsx");
+    const loading = source("src/app/(application)/plans/[id]/loading.tsx");
+
+    expect(plans).toContain("{plans.length ? (");
+    expect(plans).toContain("Créer mon premier plan");
+    expect(newPlan).toContain("← Retour à mes plans");
+    expect(newPlan).toContain("{plans.length ? (");
+    expect(error).toContain("Impossible d’ouvrir ce plan");
+    expect(error).toContain("unstable_retry()");
+    expect(loading).toContain("Ouverture du plan…");
   });
 });

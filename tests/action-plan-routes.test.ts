@@ -11,6 +11,7 @@ const routeState = vi.hoisted(() => ({
 const storage = vi.hoisted(() => ({
   create: vi.fn(),
   list: vi.fn(),
+  read: vi.fn(),
   update: vi.fn(),
   remove: vi.fn(),
 }));
@@ -23,6 +24,7 @@ vi.mock("@/lib/action-plan-storage.server", async (importOriginal) => ({
   ...await importOriginal<typeof import("@/lib/action-plan-storage.server")>(),
   createOwnedActionPlanForIdentity: storage.create,
   getOwnedActionPlansForIdentity: storage.list,
+  getActionPlanForAccess: storage.read,
   updateActionPlanWorkspaceForAccess: storage.update,
   deleteActionPlanForAccess: storage.remove,
 }));
@@ -32,7 +34,7 @@ vi.mock("@/lib/api-security", async (importOriginal) => ({
 }));
 
 import { GET, POST } from "@/app/api/action-plans/route";
-import { DELETE, PATCH } from "@/app/api/action-plans/[id]/route";
+import { DELETE, GET as GET_PLAN, PATCH } from "@/app/api/action-plans/[id]/route";
 
 const systemId = actionPlanSystemOptions[0]?.id;
 if (!systemId) throw new Error("Missing action plan system fixture.");
@@ -166,5 +168,33 @@ describe("action plan HTTP routes", () => {
       id: planId,
       expectedRevision: 2,
     });
+  });
+
+  it("reads only the current revision for explicit conflict resolution", async () => {
+    storage.read.mockResolvedValue({ id: planId, revision: 4 });
+
+    const response = await GET_PLAN(
+      request(`/api/action-plans/${planId}`),
+      { params: Promise.resolve({ id: planId }) },
+    );
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ id: planId, revision: 4 });
+    expect(storage.read).toHaveBeenCalledWith({
+      id: planId,
+      uid: "owner-uid",
+    });
+  });
+
+  it("does not reveal a plan revision without an authenticated session", async () => {
+    routeState.identity = null;
+
+    const response = await GET_PLAN(
+      request(`/api/action-plans/${planId}`),
+      { params: Promise.resolve({ id: planId }) },
+    );
+
+    expect(response.status).toBe(401);
+    expect(storage.read).not.toHaveBeenCalled();
   });
 });

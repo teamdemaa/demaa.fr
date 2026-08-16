@@ -45,12 +45,14 @@ export default async function ActionPlansPage() {
                 Mes plans
               </h1>
             </div>
-            <Link
-              href="/plans/new"
-              className="inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-semibold text-white transition hover:bg-brand-blue"
-            >
-              Nouveau plan
-            </Link>
+            {plans.length ? (
+              <Link
+                href="/plans/new"
+                className="inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-semibold text-white transition hover:bg-brand-blue"
+              >
+                Nouveau plan
+              </Link>
+            ) : null}
           </div>
 
           {plans.length ? (

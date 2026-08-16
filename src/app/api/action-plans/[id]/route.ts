@@ -10,6 +10,7 @@ import {
   ActionPlanRevisionConflictError,
   InvalidActionPlanMutationError,
   deleteActionPlanForAccess,
+  getActionPlanForAccess,
   updateActionPlanWorkspaceForAccess,
 } from "@/lib/action-plan-storage.server";
 import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
@@ -17,6 +18,50 @@ import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const blockedHost = enforceAllowedHost(request);
+  if (blockedHost) return withNoStore(blockedHost);
+
+  const limited = await enforceRateLimit(request, {
+    keyPrefix: "action-plan-read",
+    limit: 180,
+    windowMs: 60 * 60 * 1000,
+  });
+  if (limited) return withNoStore(limited);
+
+  const identity = await getCurrentCustomerIdentity();
+  if (!identity) {
+    return NextResponse.json(
+      { error: "Authentification requise." },
+      { status: 401, headers: noStoreHeaders() },
+    );
+  }
+
+  const { id } = await params;
+  if (!/^[A-Za-z0-9_-]{12,64}$/.test(id)) {
+    return NextResponse.json(
+      { error: "Plan introuvable." },
+      { status: 404, headers: noStoreHeaders() },
+    );
+  }
+
+  const plan = await getActionPlanForAccess({ id, uid: identity.uid });
+  if (!plan) {
+    return NextResponse.json(
+      { error: "Plan introuvable." },
+      { status: 404, headers: noStoreHeaders() },
+    );
+  }
+
+  return NextResponse.json(
+    { id: plan.id, revision: plan.revision },
+    { headers: noStoreHeaders() },
+  );
+}
 
 export async function PATCH(
   request: Request,

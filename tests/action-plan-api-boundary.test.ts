@@ -45,7 +45,8 @@ describe("action plan persistence boundaries", () => {
     expect(storage).not.toContain('.where("owner_uid", "=="');
     expect(storage).not.toContain("owner_email");
     expect(storage).not.toContain("pending_claim");
-    expect(planPage).toContain("getActionPlanGenerationForAccess");
+    expect(planPage).toContain("getActionPlanWorkspacePageForIdentity");
+    expect(planPage).not.toContain("getOwnedActionPlansForIdentity");
   });
 
   it("registers action plan retention cleanup and documents the exact lifecycle", () => {

@@ -144,13 +144,14 @@ describe("action plan experience architecture", () => {
   it("keeps the latest authenticated edit when the user leaves quickly", () => {
     const savedPlan = source("src/components/SavedActionPlanDetail.tsx");
 
-    expect(savedPlan).toContain("pendingSaveRef.current = {");
+    expect(savedPlan).toContain("saveQueueRef.current.enqueue({");
     expect(savedPlan).toContain("plan: currentPlan");
     expect(savedPlan).toContain("title: planTitle.trim() || confirmedTitleRef.current");
     expect(savedPlan).toContain('plan: isManualActionPlan(nextSave.plan) ? nextSave.plan : undefined');
     expect(savedPlan).toContain('window.addEventListener("pagehide", flushBeforeLeaving)');
     expect(savedPlan).toContain("keepalive: true");
     expect(savedPlan).toContain("flushBeforeLeaving();");
+    expect(savedPlan).toContain("saveQueueRef.current.drain");
   });
 
   it("changes the selected system deterministically without another AI call", () => {
