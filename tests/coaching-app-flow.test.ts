@@ -50,8 +50,8 @@ describe("unified app and coaching", () => {
     expect(serviceCatalog).toContain('slug: "coach-business"');
     expect(serviceCatalog).toContain("matching avec un coach adapté");
     expect(serviceCatalog).toContain("750 €");
-    expect(serviceCatalog).toContain("Deux sessions individuelles de 60 minutes par mois");
-    expect(serviceCatalog).toContain("suivi écrit entre les séances");
+    expect(serviceCatalog).toContain("Deux rendez-vous individuels de 60 minutes par mois");
+    expect(serviceCatalog).toContain("suivi entre les rendez-vous");
     expect(coaching).toContain("Écrivez ou dictez votre message.");
     expect(serviceCatalog).toMatch(/slug: "coach-business"[\s\S]*?monthlyAccompanimentDiscountEligible: false/);
     expect(services).not.toContain("CoachBusinessServiceCard");
@@ -61,6 +61,12 @@ describe("unified app and coaching", () => {
     expect(coaching).toContain("interimResults: true");
     expect(coaching).toContain("useSpeechDictation");
     expect(coaching).not.toContain("Dictée en cours… le texte apparaît dans le message.");
+    expect(coaching).not.toContain("Vous pourrez envoyer votre message après la connexion.");
+    expect(coaching).toContain('aria-expanded={open}');
+    expect(coaching).toContain('inert={!open}');
+    expect(coaching).toContain('access.freeStatus !== "completed"');
+    expect(coaching).toContain("Deux rendez-vous individuels de 60 minutes par mois");
+    expect(coaching).toContain("Un suivi entre les rendez-vous");
     expect(coaching).toContain('fetch("/api/coaching-draft"');
     expect(coaching).toContain('onRequireAccess?.({ draftToken, tab: "messages" })');
     expect(coaching).toContain("initialDraftToken");

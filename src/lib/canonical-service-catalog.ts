@@ -43,13 +43,13 @@ const canonicalServiceDefinitions = deepFreeze([
   {
     slug: "coach-business", name: "Coach business", eyebrow: "Accompagnement du dirigeant",
     summary: "Un accompagnement mensuel pour clarifier vos priorités, prendre les bonnes décisions et avancer dans leur mise en œuvre.",
-    description: "Demaa qualifie votre besoin et organise le matching avec un coach business pertinent. L’accompagnement comprend deux sessions individuelles de 60 minutes par mois, la préparation des priorités et un suivi écrit entre les séances sur les sujets travaillés.",
+    description: "Demaa qualifie votre besoin et organise le matching avec un coach business pertinent. L’accompagnement comprend deux rendez-vous individuels de 60 minutes par mois, la préparation des priorités et un suivi entre les rendez-vous sur les sujets travaillés.",
     result: "Un espace de recul régulier pour décider plus vite, garder vos priorités visibles et avancer sans perdre la maîtrise de votre entreprise.",
     delivery: "third-party", monthlyAccompanimentDiscountEligible: false,
-    pricing: { mode: "fixed", amountMinor: 75000, currency: "EUR", heading: "Tarif", label: "750 € HT / mois", note: "Deux sessions individuelles de 60 minutes et un suivi écrit entre les séances sont inclus. Aucun paiement n’est déclenché par la demande de rappel." },
+    pricing: { mode: "fixed", amountMinor: 75000, currency: "EUR", heading: "Tarif", label: "750 € HT / mois", note: "Deux rendez-vous individuels de 60 minutes et un suivi entre les rendez-vous sont inclus. Aucun paiement n’est déclenché par la demande de rappel." },
     cta: callback,
-    included: ["Qualification et matching avec un coach adapté", "Deux sessions individuelles de 60 minutes par mois", "Préparation des priorités et suivi écrit entre les séances"],
-    conditions: ["Le matching est validé avant le démarrage", "Le suivi écrit porte sur les sujets et priorités travaillés"],
+    included: ["Qualification et matching avec un coach adapté", "Deux rendez-vous individuels de 60 minutes par mois", "Préparation des priorités et suivi entre les rendez-vous"],
+    conditions: ["Le matching est validé avant le démarrage", "Le suivi porte sur les sujets et priorités travaillés"],
     notIncluded: ["La réalisation des actions à votre place", "Le suivi de sujets sans lien avec les priorités travaillées"],
   },
   {

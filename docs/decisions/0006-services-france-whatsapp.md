@@ -73,8 +73,8 @@ professionnel dans les Systèmes.
 
 Les sept fiches, y compris Coach business, utilisent le CTA
 `Être recontacté(e)` et un formulaire minimal. Coach business est présenté
-comme un accompagnement mensuel unique incluant deux sessions individuelles de
-60 minutes et un suivi écrit entre les séances. Aucun sélecteur de rythme ou de
+comme un accompagnement mensuel unique incluant deux rendez-vous individuels de
+60 minutes et un suivi entre les rendez-vous. Aucun sélecteur de rythme ou de
 prix n'est affiché avant l'envoi de la demande :
 
 - nom de l'entreprise ;
