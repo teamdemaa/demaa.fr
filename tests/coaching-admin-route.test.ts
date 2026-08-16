@@ -97,13 +97,70 @@ describe("coaching admin route", () => {
     });
   });
 
-  afterEach(() => delete process.env.COACHING_ADMIN_SECRET);
+  afterEach(() => {
+    delete process.env.COACHING_ADMIN_SECRET;
+    delete process.env.OPPORTUNITIES_ADMIN_SECRET;
+  });
 
-  it("refuses access without the private admin secret", async () => {
+  it("rate limits a bad GET secret before refusing access", async () => {
     const response = await GET(request("", {
       headers: { "x-demaa-admin-secret": "wrong-secret" },
     }));
     expect(response.status).toBe(401);
+    expect(mocks.enforceRateLimit).toHaveBeenCalledWith(expect.any(Request), {
+      keyPrefix: "coaching-admin-read",
+      limit: 180,
+      windowMs: 60 * 60 * 1000,
+    });
+    expect(mocks.getCoachingConversationSummaries).not.toHaveBeenCalled();
+  });
+
+  it("does not reuse the opportunities secret when coaching is not configured", async () => {
+    delete process.env.COACHING_ADMIN_SECRET;
+    process.env.OPPORTUNITIES_ADMIN_SECRET = secret;
+
+    const response = await GET(request());
+
+    expect(response.status).toBe(503);
+    expect(mocks.enforceRateLimit).toHaveBeenCalledOnce();
+    expect(mocks.getCoachingConversationSummaries).not.toHaveBeenCalled();
+  });
+
+  it("fails closed when the coaching secret is too short", async () => {
+    process.env.COACHING_ADMIN_SECRET = "too-short";
+
+    const response = await GET(request());
+
+    expect(response.status).toBe(503);
+    expect(mocks.getCoachingConversationSummaries).not.toHaveBeenCalled();
+  });
+
+  it("limits GET requests before reading private conversations", async () => {
+    mocks.enforceRateLimit.mockResolvedValueOnce(new Response(null, { status: 429 }));
+
+    const response = await GET(request());
+
+    expect(response.status).toBe(429);
+    expect(response.headers.get("cache-control")).toContain("no-store");
+    expect(mocks.getCoachingConversationSummaries).not.toHaveBeenCalled();
+  });
+
+  it("limits POST requests before validating a bad secret", async () => {
+    mocks.enforceRateLimit.mockResolvedValueOnce(new Response(null, { status: 429 }));
+
+    const response = await POST(request("", {
+      method: "POST",
+      headers: { "x-demaa-admin-secret": "wrong-secret" },
+      body: JSON.stringify({ conversationId, message: "Réponse." }),
+    }));
+
+    expect(response.status).toBe(429);
+    expect(mocks.enforceRateLimit).toHaveBeenCalledWith(expect.any(Request), {
+      keyPrefix: "coaching-admin-write",
+      limit: 60,
+      windowMs: 60 * 60 * 1000,
+    });
+    expect(mocks.appendSpecialistCoachingMessage).not.toHaveBeenCalled();
   });
 
   it("returns private conversation history and never caches it", async () => {
@@ -120,6 +177,11 @@ describe("coaching admin route", () => {
     }));
     expect(response.status).toBe(201);
     expect(mocks.enforceSameOrigin).toHaveBeenCalled();
+    expect(mocks.enforceRateLimit).toHaveBeenCalledWith(expect.any(Request), {
+      keyPrefix: "coaching-admin-write",
+      limit: 60,
+      windowMs: 60 * 60 * 1000,
+    });
     expect(mocks.appendSpecialistCoachingMessage).toHaveBeenCalledWith({
       body: "Voici ma réponse.",
       completeFreeClarification: false,

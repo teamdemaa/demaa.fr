@@ -42,10 +42,16 @@ const PRIVATE_NO_STORE_HEADERS = {
 } as const;
 
 function getAdminSecret() {
-  return process.env.COACHING_ADMIN_SECRET?.trim()
-    || process.env.OPPORTUNITIES_ADMIN_SECRET?.trim()
-    || "";
+  return process.env.COACHING_ADMIN_SECRET?.trim() || "";
 }
+
+function withPrivateNoStore<T extends NextResponse>(response: T) {
+  for (const [name, value] of Object.entries(PRIVATE_NO_STORE_HEADERS)) {
+    response.headers.set(name, value);
+  }
+  return response;
+}
+
 function hasValidSecret(request: Request) {
   const expected = getAdminSecret();
   const provided = request.headers.get("x-demaa-admin-secret") ?? "";
@@ -56,14 +62,29 @@ function hasValidSecret(request: Request) {
     && timingSafeEqual(expectedBuffer, providedBuffer);
 }
 
-function guard(request: Request, requireOrigin: boolean) {
+async function guard(
+  request: Request,
+  options: {
+    keyPrefix: string;
+    limit: number;
+    requireOrigin: boolean;
+  },
+) {
   const blockedHost = enforceAllowedHost(request);
-  if (blockedHost) return blockedHost;
-  if (requireOrigin) {
+  if (blockedHost) return withPrivateNoStore(blockedHost);
+  if (options.requireOrigin) {
     const blockedOrigin = enforceSameOrigin(request);
-    if (blockedOrigin) return blockedOrigin;
+    if (blockedOrigin) return withPrivateNoStore(blockedOrigin);
   }
-  if (!getAdminSecret()) {
+
+  const limited = await enforceRateLimit(request, {
+    keyPrefix: options.keyPrefix,
+    limit: options.limit,
+    windowMs: 60 * 60 * 1000,
+  });
+  if (limited) return withPrivateNoStore(limited);
+
+  if (getAdminSecret().length < 24) {
     return NextResponse.json(
       { error: "Administration non configurée." },
       { status: 503, headers: PRIVATE_NO_STORE_HEADERS },
@@ -80,7 +101,11 @@ function guard(request: Request, requireOrigin: boolean) {
 
 export async function GET(request: Request) {
   try {
-    const blocked = guard(request, false);
+    const blocked = await guard(request, {
+      keyPrefix: "coaching-admin-read",
+      limit: 180,
+      requireOrigin: false,
+    });
     if (blocked) return blocked;
 
     const conversationId = normalizeText(
@@ -143,17 +168,15 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const blocked = guard(request, true);
-    if (blocked) return blocked;
-    const limited = await enforceRateLimit(request, {
-      keyPrefix: "coaching-admin-reply",
+    const blocked = await guard(request, {
+      keyPrefix: "coaching-admin-write",
       limit: 60,
-      windowMs: 60 * 60 * 1000,
+      requireOrigin: true,
     });
-    if (limited) return limited;
+    if (blocked) return blocked;
 
     const { data, response } = await readJsonBody<ReplyBody>(request, 8 * 1024);
-    if (response) return response;
+    if (response) return withPrivateNoStore(response);
     const conversationId = normalizeText(data?.conversationId, 64);
     const action = normalizeText(data?.action, 20) || "reply";
     const message = normalizeText(data?.message, 2_000, { multiline: true });
