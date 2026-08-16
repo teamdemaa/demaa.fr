@@ -8,9 +8,16 @@ export type ActionPlanAcademyPayload = Readonly<{
   liveTrainings: PublicLiveTraining[];
 }>;
 
-let payloadCache: ActionPlanAcademyPayload | null = null;
-let pendingPayload: Promise<ActionPlanAcademyPayload> | null = null;
-let cacheVersion = 0;
+const payloadCache = new Map<string, ActionPlanAcademyPayload>();
+const pendingPayloads = new Map<string, Promise<ActionPlanAcademyPayload>>();
+const cacheVersions = new Map<string, number>();
+
+export function getActionPlanAcademyPayloadCacheKey(
+  localeCode: "fr" | "en" = "fr",
+  marketCode = localeCode === "en" ? "global-en-beta" : "fr-fr",
+) {
+  return `${localeCode}:${marketCode}`;
+}
 
 function isActionPlanAcademyPayload(
   value: unknown,
@@ -21,34 +28,56 @@ function isActionPlanAcademyPayload(
     && Array.isArray(candidate.liveTrainings);
 }
 
-export function readCachedActionPlanAcademyPayload() {
-  return payloadCache;
+export function readCachedActionPlanAcademyPayload(
+  cacheKey = getActionPlanAcademyPayloadCacheKey(),
+) {
+  return payloadCache.get(cacheKey) ?? null;
 }
 
-export function invalidateActionPlanAcademyPayload() {
-  cacheVersion += 1;
-  payloadCache = null;
-  pendingPayload = null;
+export function invalidateActionPlanAcademyPayload(
+  cacheKey = getActionPlanAcademyPayloadCacheKey(),
+) {
+  cacheVersions.set(cacheKey, (cacheVersions.get(cacheKey) ?? 0) + 1);
+  payloadCache.delete(cacheKey);
+  pendingPayloads.delete(cacheKey);
 }
 
-export function loadActionPlanAcademyPayload(): Promise<ActionPlanAcademyPayload> {
-  if (payloadCache) return Promise.resolve(payloadCache);
-  if (pendingPayload) return pendingPayload;
+export function loadActionPlanAcademyPayload(input: {
+  localeCode?: "fr" | "en";
+  marketCode?: string;
+} = {}): Promise<ActionPlanAcademyPayload> {
+  const localeCode = input.localeCode ?? "fr";
+  const marketCode = input.marketCode
+    ?? (localeCode === "en" ? "global-en-beta" : "fr-fr");
+  const cacheKey = getActionPlanAcademyPayloadCacheKey(localeCode, marketCode);
+  const cached = payloadCache.get(cacheKey);
+  if (cached) return Promise.resolve(cached);
+  const pending = pendingPayloads.get(cacheKey);
+  if (pending) return pending;
 
-  const requestVersion = cacheVersion;
-  const request = fetch("/api/action-plan/academy")
+  const requestVersion = cacheVersions.get(cacheKey) ?? 0;
+  const query = new URLSearchParams({ locale: localeCode, market: marketCode });
+  const request = fetch(`/api/action-plan/academy?${query.toString()}`)
     .then(async (response) => {
       const body = await response.json().catch(() => null) as unknown;
       if (!response.ok || !isActionPlanAcademyPayload(body)) {
-        throw new Error("Impossible de charger l’Académie.");
+        throw new Error(
+          localeCode === "en"
+            ? "Unable to load the Academy."
+            : "Impossible de charger l’Académie.",
+        );
       }
-      if (cacheVersion === requestVersion) payloadCache = body;
+      if ((cacheVersions.get(cacheKey) ?? 0) === requestVersion) {
+        payloadCache.set(cacheKey, body);
+      }
       return body;
     })
     .finally(() => {
-      if (pendingPayload === request) pendingPayload = null;
+      if (pendingPayloads.get(cacheKey) === request) {
+        pendingPayloads.delete(cacheKey);
+      }
     });
 
-  pendingPayload = request;
+  pendingPayloads.set(cacheKey, request);
   return request;
 }

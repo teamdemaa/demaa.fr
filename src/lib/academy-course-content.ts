@@ -68,6 +68,13 @@ export interface AcademyContentDefinition {
   version: "1.0";
   kind: AcademyContentKind;
   status: "draft" | "review" | "ready";
+  editorial?: {
+    courseId: string;
+    localeCode: "fr" | "en";
+    marketCodes: string[];
+    contentVersion: string;
+    publicationStatus: "published";
+  };
   identity: {
     slug: string;
     title: string;

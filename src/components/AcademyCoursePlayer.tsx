@@ -10,10 +10,16 @@ import {
   type AcademyContentDefinition,
   type AcademyQuizQuestion,
 } from "@/lib/academy-course-content";
+import {
+  getAcademyCourseProgressKey,
+  useAcademyCourseProgress,
+  writeAcademyCourseProgress,
+} from "@/lib/academy-course-progress.client";
 
 type AcademyCoursePlayerProps = {
   content: AcademyContentDefinition;
   embedded?: boolean;
+  localeCode?: "fr" | "en";
   onBack?: () => void;
 };
 
@@ -25,11 +31,13 @@ type PlayerScreen =
   | { type: "finish" };
 
 function QuizScreen({
+  localeCode,
   question,
   questionIndex,
   selectedChoiceId,
   onSelect,
 }: {
+  localeCode: "fr" | "en";
   question: AcademyQuizQuestion;
   questionIndex: number;
   selectedChoiceId?: string;
@@ -41,7 +49,9 @@ function QuizScreen({
   return (
     <div className="mx-auto w-full max-w-3xl">
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
-        Question {questionIndex + 1} sur 3
+        {localeCode === "en"
+          ? `Question ${questionIndex + 1} of 3`
+          : `Question ${questionIndex + 1} sur 3`}
       </p>
       <h2 className="mt-3 text-3xl font-semibold leading-tight text-brand-blue sm:text-4xl">
         {question.question}
@@ -86,7 +96,11 @@ function QuizScreen({
           }`}
           role="status"
         >
-          <p className="font-semibold text-brand-blue">{isCorrect ? "Oui, c’est ça." : "Pas tout à fait."}</p>
+          <p className="font-semibold text-brand-blue">
+            {localeCode === "en"
+              ? isCorrect ? "That’s right." : "Not quite."
+              : isCorrect ? "Oui, c’est ça." : "Pas tout à fait."}
+          </p>
           <p className="mt-1.5 text-sm leading-relaxed text-dema-muted">{question.explanation}</p>
         </div>
       ) : null}
@@ -97,10 +111,24 @@ function QuizScreen({
 export default function AcademyCoursePlayer({
   content,
   embedded = false,
+  localeCode = "fr",
   onBack,
 }: AcademyCoursePlayerProps) {
-  const [activeScreenIndex, setActiveScreenIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const progressKey = getAcademyCourseProgressKey({
+    contentVersion: content.editorial?.contentVersion ?? content.version,
+    courseId: content.editorial?.courseId ?? content.identity.slug,
+    localeCode,
+  });
+  const storedProgress = useAcademyCourseProgress(progressKey);
+  const [sessionProgress, setSessionProgress] = useState<{
+    answers: Record<string, string>;
+    screenIndex: number;
+  } | null>(null);
+  const courseProgress = sessionProgress ?? storedProgress ?? {
+    answers: {},
+    screenIndex: 0,
+  };
+  const answers = courseProgress.answers;
 
   const screens = useMemo<PlayerScreen[]>(
     () => [
@@ -115,6 +143,7 @@ export default function AcademyCoursePlayer({
     [content.kind, content.lessons, content.quiz.questions],
   );
 
+  const activeScreenIndex = Math.min(courseProgress.screenIndex, screens.length - 1);
   const activeScreen = screens[activeScreenIndex];
   const isFirstScreen = activeScreenIndex === 0;
   const isLastScreen = activeScreenIndex === screens.length - 1;
@@ -124,21 +153,39 @@ export default function AcademyCoursePlayer({
     if (activeScreen.type === "lesson") {
       if (content.kind === "case-study") {
         return activeScreen.lessonIndex === 0
-          ? "Situation"
-          : `Étape ${activeScreen.lessonIndex} / ${content.lessons.length - 1}`;
+          ? (localeCode === "en" ? "Situation" : "Situation")
+          : localeCode === "en"
+            ? `Step ${activeScreen.lessonIndex} / ${content.lessons.length - 1}`
+            : `Étape ${activeScreen.lessonIndex} / ${content.lessons.length - 1}`;
       }
-      return `Notion ${activeScreen.lessonIndex + 1} / ${content.lessons.length}`;
+      return localeCode === "en"
+        ? `Lesson ${activeScreen.lessonIndex + 1} / ${content.lessons.length}`
+        : `Notion ${activeScreen.lessonIndex + 1} / ${content.lessons.length}`;
     }
-    if (activeScreen.type === "recap") return "Récapitulatif";
+    if (activeScreen.type === "recap") return localeCode === "en" ? "Recap" : "Récapitulatif";
     if (activeScreen.type === "quiz") {
       return `Question ${activeScreen.questionIndex + 1} / ${content.quiz.questions.length}`;
     }
-    return "Terminé";
+    return localeCode === "en" ? "Complete" : "Terminé";
   })();
 
   function goToScreen(index: number) {
-    setActiveScreenIndex(Math.max(0, Math.min(index, screens.length - 1)));
+    const nextProgress = {
+      answers,
+      screenIndex: Math.max(0, Math.min(index, screens.length - 1)),
+    };
+    setSessionProgress(nextProgress);
+    writeAcademyCourseProgress(progressKey, nextProgress);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function selectAnswer(questionId: string, choiceId: string) {
+    const nextProgress = {
+      answers: { ...answers, [questionId]: choiceId },
+      screenIndex: activeScreenIndex,
+    };
+    setSessionProgress(nextProgress);
+    writeAcademyCourseProgress(progressKey, nextProgress);
   }
 
   const CourseContainer = embedded ? "div" : "main";
@@ -152,15 +199,15 @@ export default function AcademyCoursePlayer({
               type="button"
               onClick={onBack}
               className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-              aria-label="Retour à l’Académie"
+              aria-label={localeCode === "en" ? "Back to the Academy" : "Retour à l’Académie"}
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             </button>
           ) : (
             <Link
-              href="/academie"
+              href={localeCode === "en" ? "/en?view=academy" : "/academie"}
               className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-              aria-label="Retour à l’Académie"
+              aria-label={localeCode === "en" ? "Back to the Academy" : "Retour à l’Académie"}
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             </Link>
@@ -193,12 +240,12 @@ export default function AcademyCoursePlayer({
               <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs font-medium text-brand-blue sm:text-sm">
                 <span>{content.identity.durationMinutes} min</span>
                 <span aria-hidden="true" className="text-dema-line">•</span>
-                <span>Quiz de connaissances</span>
+                <span>{localeCode === "en" ? "Knowledge quiz" : "Quiz de connaissances"}</span>
               </div>
 
               <div className="mt-4 rounded-[1.25rem] bg-[#E7EEE8] px-4 py-4 sm:px-6 sm:py-5">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-dema-forest sm:text-xs">
-                  Contenu du cours
+                  {localeCode === "en" ? "Course content" : "Contenu du cours"}
                 </p>
                 <div className="mt-2 divide-y divide-dema-forest/10">
                   {(content.outline ?? content.lessons.slice(0, 3).map((lesson) => ({
@@ -246,7 +293,9 @@ export default function AcademyCoursePlayer({
                 }
               >
                 <p className="text-xs font-semibold uppercase tracking-[0.12em] text-dema-forest">
-                  {content.kind === "case-study" ? "L’idée à retenir" : "À retenir"}
+                  {localeCode === "en"
+                    ? content.kind === "case-study" ? "Key idea" : "Key takeaway"
+                    : content.kind === "case-study" ? "L’idée à retenir" : "À retenir"}
                 </p>
                 <p className="mt-1.5 font-medium leading-relaxed text-brand-blue">
                   {content.lessons[activeScreen.lessonIndex].takeaway}
@@ -257,7 +306,9 @@ export default function AcademyCoursePlayer({
 
           {activeScreen.type === "recap" ? (
             <section className="w-full">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">Récapitulatif</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
+                {localeCode === "en" ? "Recap" : "Récapitulatif"}
+              </p>
               <h2 className="mt-3 text-3xl font-semibold text-brand-blue sm:text-4xl">{content.recap.title}</h2>
               <div className="mt-8 divide-y divide-dema-line/70 border-y border-dema-line/70">
                 {content.recap.points.map((point, index) => (
@@ -274,13 +325,12 @@ export default function AcademyCoursePlayer({
             <QuizScreen
               question={content.quiz.questions[activeScreen.questionIndex]}
               questionIndex={activeScreen.questionIndex}
+              localeCode={localeCode}
               selectedChoiceId={answers[content.quiz.questions[activeScreen.questionIndex].id]}
-              onSelect={(choiceId) =>
-                setAnswers((current) => ({
-                  ...current,
-                  [content.quiz.questions[activeScreen.questionIndex].id]: choiceId,
-                }))
-              }
+              onSelect={(choiceId) => selectAnswer(
+                content.quiz.questions[activeScreen.questionIndex].id,
+                choiceId,
+              )}
             />
           ) : null}
 
@@ -289,15 +339,23 @@ export default function AcademyCoursePlayer({
               <span className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-dema-positive text-dema-forest">
                 <Check className="h-5 w-5" aria-hidden="true" />
               </span>
-              <p className="mt-5 text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">Cours terminé</p>
-              <h2 className="mt-3 text-3xl font-semibold text-brand-blue sm:text-4xl">Vous avez l’essentiel.</h2>
+              <p className="mt-5 text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
+                {localeCode === "en" ? "Course complete" : "Cours terminé"}
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-brand-blue sm:text-4xl">
+                {localeCode === "en" ? "You have the essentials." : "Vous avez l’essentiel."}
+              </h2>
               <p className="mx-auto mt-3 max-w-xl leading-relaxed text-dema-muted">
-                Vous pouvez revenir à l’Académie ou passer directement à l’action.
+                {localeCode === "en"
+                  ? "You can return to the Academy or put the course into practice."
+                  : "Vous pouvez revenir à l’Académie ou passer directement à l’action."}
               </p>
 
               {content.action ? (
                 <div className="mx-auto mt-8 max-w-xl border-y border-dema-line py-6 text-left">
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-dema-forest">Pour passer à l’action</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-dema-forest">
+                    {localeCode === "en" ? "Put it into practice" : "Pour passer à l’action"}
+                  </p>
                   <h2 className="mt-2 text-2xl font-semibold text-brand-blue">{content.action.title}</h2>
                   <p className="mt-2 text-sm leading-relaxed text-dema-muted">{content.action.description}</p>
                   <Link
@@ -315,14 +373,14 @@ export default function AcademyCoursePlayer({
                   onClick={onBack}
                   className={`${content.action ? "demaa-secondary-button" : "demaa-primary-button"} mt-5 min-h-11`}
                 >
-                  Retour à l’Académie
+                  {localeCode === "en" ? "Back to the Academy" : "Retour à l’Académie"}
                 </button>
               ) : (
                 <Link
-                  href="/academie"
+                  href={localeCode === "en" ? "/en?view=academy" : "/academie"}
                   className={`${content.action ? "demaa-secondary-button" : "demaa-primary-button"} mt-5 min-h-11`}
                 >
-                  Retour à l’Académie
+                  {localeCode === "en" ? "Back to the Academy" : "Retour à l’Académie"}
                 </Link>
               )}
             </section>
@@ -330,7 +388,7 @@ export default function AcademyCoursePlayer({
         </div>
 
         {!isLastScreen ? (
-          <nav className={`${activeScreen.type === "intro" ? "mt-4 pt-4" : "mt-10 pt-5"} flex items-center justify-between gap-3 border-t border-dema-line/70`} aria-label="Navigation du cours">
+          <nav className={`${activeScreen.type === "intro" ? "mt-4 pt-4" : "mt-10 pt-5"} flex items-center justify-between gap-3 border-t border-dema-line/70`} aria-label={localeCode === "en" ? "Course navigation" : "Navigation du cours"}>
             <button
               type="button"
               disabled={isFirstScreen}
@@ -338,7 +396,7 @@ export default function AcademyCoursePlayer({
               className="demaa-secondary-button min-h-11 gap-2 disabled:cursor-not-allowed disabled:opacity-35"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              <span className="hidden sm:inline">Précédent</span>
+              <span className="hidden sm:inline">{localeCode === "en" ? "Previous" : "Précédent"}</span>
             </button>
             <button
               type="button"
@@ -346,10 +404,10 @@ export default function AcademyCoursePlayer({
               className="demaa-primary-button min-h-11 gap-2"
             >
               {activeScreen.type === "intro"
-                ? "Commencer le cours"
+                ? localeCode === "en" ? "Start course" : "Commencer le cours"
                 : activeScreen.type === "quiz"
-                  ? "Question suivante"
-                  : "Suivant"}
+                  ? localeCode === "en" ? "Next question" : "Question suivante"
+                  : localeCode === "en" ? "Next" : "Suivant"}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </button>
           </nav>

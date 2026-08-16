@@ -12,6 +12,11 @@ export default function AppLibrarySearch({
   placeholder,
   query,
   unconstrained = false,
+  filterLabels = {
+    close: "Masquer les catégories",
+    group: "Filtrer par catégorie",
+    open: "Afficher les catégories",
+  },
 }: {
   activeFilter: string;
   filters: readonly string[];
@@ -22,6 +27,11 @@ export default function AppLibrarySearch({
   placeholder: string;
   query: string;
   unconstrained?: boolean;
+  filterLabels?: {
+    close: string;
+    group: string;
+    open: string;
+  };
 }) {
   return (
     <div className={unconstrained
@@ -46,7 +56,7 @@ export default function AppLibrarySearch({
             type="button"
             onClick={onFilterToggle}
             aria-expanded={isFilterOpen}
-            aria-label={isFilterOpen ? "Masquer les catégories" : "Afficher les catégories"}
+            aria-label={isFilterOpen ? filterLabels.close : filterLabels.open}
             className={`absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full transition ${
               isFilterOpen || activeFilter !== filters[0]
                 ? "bg-dema-sage text-dema-forest"
@@ -61,7 +71,7 @@ export default function AppLibrarySearch({
       {isFilterOpen ? (
         <div
           className="absolute left-0 right-0 top-full z-40 mt-2 rounded-2xl border border-dema-line bg-dema-paper p-2 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
-          aria-label="Filtrer par catégorie"
+          aria-label={filterLabels.group}
         >
           <div className="flex flex-wrap gap-2">
             {filters.map((filter) => (

@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
+  getActionPlanAcademyPayloadCacheKey,
   invalidateActionPlanAcademyPayload,
   loadActionPlanAcademyPayload,
   readCachedActionPlanAcademyPayload,
@@ -26,6 +27,9 @@ function jsonResponse(body: unknown, ok = true) {
 describe("action plan Academy client payload cache", () => {
   beforeEach(() => {
     invalidateActionPlanAcademyPayload();
+    invalidateActionPlanAcademyPayload(
+      getActionPlanAcademyPayloadCacheKey("en", "global-en-beta"),
+    );
     vi.restoreAllMocks();
   });
 
@@ -111,6 +115,43 @@ describe("action plan Academy client payload cache", () => {
       "Impossible de charger l’Académie.",
     );
     expect(readCachedActionPlanAcademyPayload()).toBeNull();
+  });
+
+  it("isolates English and French Academy payloads and requests", async () => {
+    const frenchPayload = { contents: [{ identity: { slug: "fr" } }], liveTrainings: [] };
+    const englishPayload = { contents: [{ identity: { slug: "en" } }], liveTrainings: [] };
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(jsonResponse(frenchPayload))
+      .mockResolvedValueOnce(jsonResponse(englishPayload));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await loadActionPlanAcademyPayload();
+    await loadActionPlanAcademyPayload({
+      localeCode: "en",
+      marketCode: "global-en-beta",
+    });
+
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      1,
+      "/api/action-plan/academy?locale=fr&market=fr-fr",
+    );
+    expect(fetchMock).toHaveBeenNthCalledWith(
+      2,
+      "/api/action-plan/academy?locale=en&market=global-en-beta",
+    );
+    expect(readCachedActionPlanAcademyPayload()).toEqual(frenchPayload);
+    expect(readCachedActionPlanAcademyPayload(
+      getActionPlanAcademyPayloadCacheKey("en", "global-en-beta"),
+    )).toEqual(englishPayload);
+  });
+
+  it("reports English Academy load failures in English", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(jsonResponse({ contents: [] })));
+
+    await expect(loadActionPlanAcademyPayload({
+      localeCode: "en",
+      marketCode: "global-en-beta",
+    })).rejects.toThrow("Unable to load the Academy.");
   });
 });
 

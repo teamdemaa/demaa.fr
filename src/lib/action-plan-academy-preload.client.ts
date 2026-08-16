@@ -10,9 +10,12 @@ type IdleWindow = Window & typeof globalThis & {
   ) => number;
 };
 
-export function scheduleActionPlanAcademyPayloadPreload() {
+export function scheduleActionPlanAcademyPayloadPreload(input: {
+  localeCode?: "fr" | "en";
+  marketCode?: string;
+} = {}) {
   const preload = () => {
-    void loadActionPlanAcademyPayload().catch(() => undefined);
+    void loadActionPlanAcademyPayload(input).catch(() => undefined);
   };
   const browserWindow = window as IdleWindow;
 

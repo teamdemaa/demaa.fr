@@ -41,7 +41,9 @@ export default async function EnglishActionPlanPage({
     searchParams,
   ]);
   const initialAppContext = parseActionPlanAppContext(query);
-  const englishView = initialAppContext.view === "solutions" ? "solutions" : "plan";
+  const englishView = initialAppContext.view === "solutions" || initialAppContext.view === "academy"
+    ? initialAppContext.view
+    : "plan";
   const requestedIntent = Array.isArray(query.intent) ? query.intent[0] : query.intent;
   const requestedNewPlan = Array.isArray(query.new) ? query.new[0] : query.new;
 
@@ -77,7 +79,7 @@ export default async function EnglishActionPlanPage({
         marketCodeAtCreation="global-en-beta"
         showCoaching
         systemOptions={englishActionPlanSystemOptions}
-        visibleViews={["plan", "solutions"]}
+        visibleViews={["plan", "solutions", "academy"]}
       />
     </>
   );
