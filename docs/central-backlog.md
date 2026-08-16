@@ -22,13 +22,15 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
 ## État courant Production — 16 août 2026
 
-- `origin/main` est alignée sur `ae5029d`. Les PR 110 à 118 ont été fusionnées
+- La référence Production constatée avant l'ouverture de D-085 est `ae5029d`.
+  Les PR 110 à 118 ont été fusionnées
   séparément et vérifiées en Production : fiabilité des plans, sécurité de
   l'administration Coaching, consentement aux traceurs, expérience Échanger,
   barre du titre, documentation D-084, Pilotage, Titre IA et clôture
   documentaire du programme 0 à 8. `8020e04` reste le dernier commit runtime
-  de ce programme ; `ae5029d` est la tête Production après sa clôture
-  documentaire.
+  de ce programme ; `ae5029d` est son état consolidé avant la PR documentaire
+  D-085. Les commits documentaires ultérieurs peuvent faire avancer `main`
+  sans modifier cette référence runtime.
 - L'application conserve un seul domaine canonique et des groupes de routes
   distincts pour le marketing, l'application, l'authentification et
   l'administration.
@@ -330,7 +332,8 @@ Le runtime est livré. Les actions restantes ne sont pas des correctifs produit 
 - [ ] Fusionner une PR documentaire contenant D-085 et le présent nettoyage,
   sans runtime.
 - [ ] Resynchroniser ensuite le Google Sheet maître avec D-084, D-085, les lots
-  0 à 8 et la tête Production `ae5029d`.
+  0 à 8, la référence runtime `8020e04` et la tête `main` obtenue après fusion
+  de la PR documentaire.
 - [ ] Préserver tout changement local attribué, puis réaligner le checkout
   principal sur `origin/main` et obtenir un worktree propre.
 - [ ] Retirer les worktrees et branches des lots fusionnés après vérification
