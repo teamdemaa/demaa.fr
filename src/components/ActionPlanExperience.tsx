@@ -436,6 +436,7 @@ export default function ActionPlanExperience({
       || !plan
       || !workspace
       || isDemoMode
+      || isActionEditorOpen
       || isBlankManualActionPlan(plan, workspace)
     ) return;
     const saveKey = `${plan.version}:${situation.trim()}:${workspace.selectedSystemId}`;
@@ -482,7 +483,16 @@ export default function ActionPlanExperience({
         setAutoSaveStatus("error");
       }
     })();
-  }, [autoSaveRevision, generation, isAuthenticated, isDemoMode, plan, situation, workspace]);
+  }, [
+    autoSaveRevision,
+    generation,
+    isActionEditorOpen,
+    isAuthenticated,
+    isDemoMode,
+    plan,
+    situation,
+    workspace,
+  ]);
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "development") return;

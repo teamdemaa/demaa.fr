@@ -154,6 +154,18 @@ describe("action plan experience architecture", () => {
     expect(savedPlan).toContain("saveQueueRef.current.drain");
   });
 
+  it("waits for the first manual action editor to close before persisting", () => {
+    const experience = source("src/components/ActionPlanExperience.tsx");
+    const autoSaveEffect = experience.slice(
+      experience.indexOf("if (\n      !isAuthenticated\n      || !plan"),
+      experience.indexOf("useEffect(() => {\n    if (process.env.NODE_ENV !== \"development\")"),
+    );
+
+    expect(autoSaveEffect).toContain("|| isActionEditorOpen");
+    expect(autoSaveEffect).toContain("isActionEditorOpen,");
+    expect(autoSaveEffect).toContain('fetch("/api/action-plans"');
+  });
+
   it("changes the selected system deterministically without another AI call", () => {
     const experience = source("src/components/ActionPlanExperience.tsx");
     const generationClient = source("src/lib/action-plan-generation.client.ts");
