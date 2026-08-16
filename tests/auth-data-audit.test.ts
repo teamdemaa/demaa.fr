@@ -27,6 +27,9 @@ describe("authentication and customer-data audit", () => {
     expect(source).toContain("planWithMissingActiveCompany");
     expect(source).toContain("planWithoutActiveOwnerMembership");
     expect(source).toContain("effectiveMinLength");
+    expect(source).toContain("passwordPolicyEnforcementState");
+    expect(source).toContain("passwordPolicyVersions");
+    expect(source).toContain("minPasswordLength");
     expect(source).toContain("googleClientConfigured");
     expect(source).toContain("googleEnabled");
     expect(source).toContain('"firebase_default"');
