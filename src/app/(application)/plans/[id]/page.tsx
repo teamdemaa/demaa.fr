@@ -9,8 +9,7 @@ import {
   parseActionPlanAppContext,
 } from "@/lib/action-plan-app-context";
 import {
-  getActionPlanGenerationForAccess,
-  getOwnedActionPlansForIdentity,
+  getActionPlanWorkspacePageForIdentity,
 } from "@/lib/action-plan-storage.server";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import { getCurrentCustomerAppIdentityFromSession } from "@/lib/customer-space-session.server";
@@ -46,10 +45,8 @@ export default async function ActionPlanPage({
     );
   }
 
-  const generationState = await getActionPlanGenerationForAccess({
-    uid: identity.uid,
-    id,
-  });
+  const { generationState, plans: availablePlans } =
+    await getActionPlanWorkspacePageForIdentity(identity, id);
   if (!generationState) notFound();
 
   if (generationState.status !== "active") {
@@ -67,12 +64,6 @@ export default async function ActionPlanPage({
   }
 
   const stored = generationState.actionPlan;
-
-  const availablePlans = (await getOwnedActionPlansForIdentity(identity)).map(({ id: availableId, title, updatedAt }) => ({
-        id: availableId,
-        title,
-        updatedAt,
-      }));
 
   return (
     <div data-action-plan-workspace className="min-h-screen bg-dema-cream text-brand-blue">

@@ -15,6 +15,7 @@ import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 
 export type SavedActionPlanOption = {
   id: string;
+  status: "active" | "failed" | "generating";
   title: string;
   updatedAt: string;
 };
@@ -56,8 +57,11 @@ export function SavedActionPlanSelector({
 export function SavedActionPlanMenu({
   availablePlans,
   deleting,
+  navigationPending,
+  onNavigate,
   onDelete,
   onRename,
+  openingPlanId,
   plan,
   planId,
   title,
@@ -65,8 +69,11 @@ export function SavedActionPlanMenu({
 }: {
   availablePlans: readonly SavedActionPlanOption[];
   deleting: boolean;
+  navigationPending: boolean;
+  onNavigate: (href: string) => void;
   onDelete: () => void;
   onRename: () => void;
+  openingPlanId: string | null;
   plan: PersistableActionPlan;
   planId: string;
   title: string;
@@ -105,6 +112,17 @@ export function SavedActionPlanMenu({
       document.removeEventListener("keydown", closeOnEscape);
     };
   }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    router.prefetch("/plans/new");
+    if (!showPlans) return;
+    for (const availablePlan of availablePlans) {
+      if (availablePlan.id !== planId) {
+        router.prefetch(`/plans/${encodeURIComponent(availablePlan.id)}`);
+      }
+    }
+  }, [availablePlans, open, planId, router, showPlans]);
 
   const itemClassName =
     "block w-full appearance-none whitespace-nowrap border-0 bg-transparent px-2 py-1.5 text-left text-sm font-normal leading-6 text-brand-blue transition-colors hover:text-dema-forest focus-visible:outline-none focus-visible:underline disabled:cursor-not-allowed disabled:opacity-50";
@@ -151,15 +169,25 @@ export function SavedActionPlanMenu({
                       <button
                         key={availablePlan.id}
                         type="button"
-                        disabled={isCurrent}
-                        onClick={() => router.push(`/plans/${encodeURIComponent(availablePlan.id)}`)}
+                        disabled={isCurrent || navigationPending}
+                        onClick={() => {
+                          setOpen(false);
+                          setShowPlans(false);
+                          onNavigate(`/plans/${encodeURIComponent(availablePlan.id)}`);
+                        }}
                         className="flex w-full items-start gap-2 rounded-lg px-2 py-2 text-left transition hover:bg-dema-sage/45 disabled:opacity-100"
                       >
                         <Check className={`mt-0.5 h-4 w-4 shrink-0 text-dema-forest ${isCurrent ? "opacity-100" : "opacity-0"}`} aria-hidden="true" />
                         <span className="min-w-0">
                           <span className="block truncate text-sm font-medium text-brand-blue">{displayedTitle}</span>
                           <span className="block text-[0.7rem] text-dema-muted">
-                            Modifié le {new Intl.DateTimeFormat("fr-FR", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(availablePlan.updatedAt))}
+                            {openingPlanId === availablePlan.id
+                              ? "Ouverture…"
+                              : availablePlan.status === "generating"
+                                ? "Génération en cours"
+                                : availablePlan.status === "failed"
+                                  ? "Génération à reprendre"
+                                  : `Modifié le ${new Intl.DateTimeFormat("fr-FR", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(availablePlan.updatedAt))}`}
                           </span>
                         </span>
                       </button>
@@ -169,6 +197,18 @@ export function SavedActionPlanMenu({
               ) : null}
             </>
           ) : null}
+          <button
+            type="button"
+            disabled={navigationPending}
+            onClick={() => {
+              setOpen(false);
+              setShowPlans(false);
+              onNavigate("/plans/new");
+            }}
+            className={itemClassName}
+          >
+            Nouveau plan
+          </button>
           <div onClick={() => setOpen(false)}>
             <ActionPlanShareControl
               plan={plan}
@@ -178,16 +218,7 @@ export function SavedActionPlanMenu({
           </div>
           <button
             type="button"
-            onClick={() => {
-              setOpen(false);
-              router.push("/plans/new");
-            }}
-            className={itemClassName}
-          >
-            Nouveau plan
-          </button>
-          <button
-            type="button"
+            disabled={navigationPending}
             onClick={() => {
               setOpen(false);
               onRename();
@@ -198,7 +229,7 @@ export function SavedActionPlanMenu({
           </button>
           <button
             type="button"
-            disabled={deleting}
+            disabled={deleting || navigationPending}
             onClick={() => {
               setOpen(false);
               onDelete();

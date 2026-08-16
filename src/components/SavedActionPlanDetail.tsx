@@ -24,6 +24,7 @@ import {
   isManualActionPlan,
 } from "@/lib/action-plan-manual";
 import { scheduleActionPlanAcademyPayloadPreload } from "@/lib/action-plan-academy-preload.client";
+import { ActionPlanSaveQueue } from "@/lib/action-plan-save-queue.client";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 import {
   addActionPlanWorkspaceAction,
@@ -66,18 +67,22 @@ export default function SavedActionPlanDetail({
   const [saveError, setSaveError] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
+  const [navigationTarget, setNavigationTarget] = useState<string | null>(null);
+  const [saveConflict, setSaveConflict] = useState(false);
   const revisionRef = useRef(initialRevision);
   const confirmedTitleRef = useRef(initialTitle);
   const titleInputRef = useRef<HTMLInputElement>(null);
   const firstRenderRef = useRef(true);
-  const pendingSaveRef = useRef<{
+  type PendingSave = {
     plan: PersistableActionPlan;
     title: string;
     workspace: ActionPlanWorkspaceState;
-  } | null>(null);
-  const savePromiseRef = useRef<Promise<boolean> | null>(null);
+  };
+  const saveQueueRef = useRef(new ActionPlanSaveQueue<PendingSave>());
   const saveTimeoutRef = useRef<number | null>(null);
   const mountedRef = useRef(true);
+  const navigationTargetRef = useRef<string | null>(null);
+  const saveConflictRef = useRef(false);
 
   useEffect(() => scheduleActionPlanAcademyPayloadPreload(), []);
 
@@ -93,57 +98,54 @@ export default function SavedActionPlanDetail({
     });
   }
 
-  const flushWorkspaceSave = useCallback(() => {
-    if (savePromiseRef.current) return savePromiseRef.current;
+  const flushWorkspaceSave = useCallback(async () => {
+    if (saveConflictRef.current) return false;
 
-    const savePromise = (async () => {
-      while (pendingSaveRef.current) {
-        const nextSave = pendingSaveRef.current;
-        pendingSaveRef.current = null;
+    const result = await saveQueueRef.current.drain(async (nextSave) => {
         if (mountedRef.current) {
           setSaveState("saving");
           setSaveError(null);
+          setSaveConflict(false);
         }
 
-        try {
-          const response = await fetch(`/api/action-plans/${encodeURIComponent(planId)}`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            keepalive: true,
-            body: JSON.stringify({
-              expectedRevision: revisionRef.current,
-              plan: isManualActionPlan(nextSave.plan) ? nextSave.plan : undefined,
-              title: nextSave.title,
-              workspaceState: nextSave.workspace,
-            }),
-          });
-          const body = (await response.json().catch(() => null)) as
-            | { revision?: number; title?: string; error?: string }
-            | null;
-          if (!response.ok || !body?.revision) {
-            throw new Error(body?.error || "Impossible d’enregistrer les modifications.");
-          }
-          revisionRef.current = body.revision;
-          confirmedTitleRef.current = body.title || nextSave.title;
-        } catch (error) {
-          pendingSaveRef.current = null;
-          if (mountedRef.current) {
-            setSaveState("error");
-            setSaveError(error instanceof Error ? error.message : "Impossible d’enregistrer les modifications.");
-          }
-          return false;
+        const response = await fetch(`/api/action-plans/${encodeURIComponent(planId)}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          keepalive: true,
+          body: JSON.stringify({
+            expectedRevision: revisionRef.current,
+            plan: isManualActionPlan(nextSave.plan) ? nextSave.plan : undefined,
+            title: nextSave.title,
+            workspaceState: nextSave.workspace,
+          }),
+        });
+        const body = (await response.json().catch(() => null)) as
+          | { revision?: number; title?: string; error?: string; code?: string }
+          | null;
+        if (!response.ok || !body?.revision) {
+          const error = new Error(body?.error || "Impossible d’enregistrer les modifications.") as Error & {
+            code?: string;
+          };
+          error.code = body?.code;
+          throw error;
         }
-      }
+        revisionRef.current = body.revision;
+        confirmedTitleRef.current = body.title || nextSave.title;
+    });
 
+    if (result.ok) {
       if (mountedRef.current) setSaveState("saved");
       return true;
-    })();
-
-    savePromiseRef.current = savePromise;
-    void savePromise.finally(() => {
-      if (savePromiseRef.current === savePromise) savePromiseRef.current = null;
-    });
-    return savePromise;
+    }
+    if (mountedRef.current) {
+      const error = result.error as (Error & { code?: string }) | null;
+      const conflict = error?.code === "revision_conflict";
+      saveConflictRef.current = conflict;
+      setSaveState("error");
+      setSaveError(error?.message || "Impossible d’enregistrer les modifications.");
+      setSaveConflict(conflict);
+    }
+    return false;
   }, [planId]);
 
   useEffect(() => {
@@ -151,11 +153,12 @@ export default function SavedActionPlanDetail({
       firstRenderRef.current = false;
       return;
     }
-    pendingSaveRef.current = {
+    saveQueueRef.current.enqueue({
       plan: currentPlan,
       title: planTitle.trim() || confirmedTitleRef.current,
       workspace,
-    };
+    });
+    if (saveConflictRef.current) return;
     if (mountedRef.current) {
       setSaveState("saving");
       setSaveError(null);
@@ -177,6 +180,8 @@ export default function SavedActionPlanDetail({
   }, [currentPlan, flushWorkspaceSave, planTitle, workspace]);
 
   useEffect(() => {
+    mountedRef.current = true;
+
     function flushBeforeLeaving() {
       if (saveTimeoutRef.current !== null) {
         window.clearTimeout(saveTimeoutRef.current);
@@ -192,6 +197,53 @@ export default function SavedActionPlanDetail({
       flushBeforeLeaving();
     };
   }, [flushWorkspaceSave]);
+
+  async function navigateAfterSave(href: string) {
+    if (navigationTargetRef.current) return;
+    navigationTargetRef.current = href;
+    setNavigationTarget(href);
+    if (saveTimeoutRef.current !== null) {
+      window.clearTimeout(saveTimeoutRef.current);
+      saveTimeoutRef.current = null;
+    }
+    const saved = await flushWorkspaceSave();
+    if (!saved) {
+      navigationTargetRef.current = null;
+      setNavigationTarget(null);
+      return;
+    }
+    router.push(href);
+  }
+
+  async function keepLocalChangesAfterConflict() {
+    try {
+      setSaveState("saving");
+      const response = await fetch(`/api/action-plans/${encodeURIComponent(planId)}`, {
+        method: "GET",
+        headers: { Accept: "application/json" },
+      });
+      const body = (await response.json().catch(() => null)) as
+        | { revision?: number; error?: string }
+        | null;
+      if (!response.ok || !body?.revision) {
+        throw new Error(body?.error || "Impossible de charger la version récente du plan.");
+      }
+      revisionRef.current = body.revision;
+      saveConflictRef.current = false;
+      setSaveConflict(false);
+      setSaveError(null);
+      await flushWorkspaceSave();
+    } catch (error) {
+      saveConflictRef.current = true;
+      setSaveConflict(true);
+      setSaveState("error");
+      setSaveError(
+        error instanceof Error
+          ? error.message
+          : "Impossible de charger la version récente du plan.",
+      );
+    }
+  }
 
   function addManualAction(): string | undefined {
     if (!isManualActionPlan(currentPlan)) return undefined;
@@ -312,7 +364,42 @@ export default function SavedActionPlanDetail({
               </span>
             </div>
             {saveState === "error" ? (
-              <p className="mb-3 text-sm text-red-700" role="alert">{saveError}</p>
+              <div className="mb-3 text-sm text-red-700" role="alert">
+                <p>{saveError}</p>
+                <div className="mt-2 flex flex-wrap gap-3">
+                  {saveConflict ? (
+                    <>
+                      <button
+                        type="button"
+                        className="font-semibold underline underline-offset-4"
+                        onClick={() => { void keepLocalChangesAfterConflict(); }}
+                      >
+                        Garder mes modifications
+                      </button>
+                      <button
+                        type="button"
+                        className="font-semibold underline underline-offset-4"
+                        onClick={() => window.location.reload()}
+                      >
+                        Utiliser la version récente
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      type="button"
+                      className="font-semibold underline underline-offset-4"
+                      onClick={() => { void flushWorkspaceSave(); }}
+                    >
+                      Réessayer
+                    </button>
+                  )}
+                </div>
+              </div>
+            ) : null}
+            {navigationTarget ? (
+              <p className="mb-3 text-sm text-dema-muted" role="status" aria-live="polite">
+                Ouverture…
+              </p>
             ) : null}
             <ActionPlanResult
               plan={currentPlan}
@@ -339,6 +426,8 @@ export default function SavedActionPlanDetail({
                 <SavedActionPlanMenu
                   availablePlans={availablePlans}
                   deleting={isDeleting}
+                  navigationPending={Boolean(navigationTarget)}
+                  onNavigate={(href) => { void navigateAfterSave(href); }}
                   onDelete={() => { void deletePlan(); }}
                   onRename={() => {
                     titleInputRef.current?.focus();
@@ -346,6 +435,10 @@ export default function SavedActionPlanDetail({
                   }}
                   plan={currentPlan}
                   planId={planId}
+                  openingPlanId={navigationTarget?.startsWith("/plans/")
+                    && navigationTarget !== "/plans/new"
+                    ? decodeURIComponent(navigationTarget.slice("/plans/".length))
+                    : null}
                   title={planTitle}
                   workspace={workspace}
                 />

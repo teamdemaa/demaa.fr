@@ -76,6 +76,7 @@ import {
   getActionPlanIndexForIdentity,
   getActionPlanGenerationForAccess,
   getActionPlanForAccess,
+  getActionPlanWorkspacePageForIdentity,
   getOwnedActionPlansForIdentity,
   resumeActionPlanGenerationForAccess,
   updateActionPlanWorkspaceForAccess,
@@ -268,6 +269,37 @@ describe("company-scoped action plan persistence", () => {
       requestId: "generation-request-1234",
       situation: "Je dois clarifier mes priorités commerciales cette semaine.",
     })).resolves.toMatchObject({ kind: "claimed" });
+  });
+
+  it("loads the requested plan and the complete company index through one page contract", async () => {
+    const owner = identity("owner-uid");
+    const active = await createOwnedActionPlanForIdentity(owner, {
+      plan: actionPlan("Plan actif"),
+      title: "Plan actif",
+    });
+    const started = await beginActionPlanGeneration({
+      identity: owner,
+      requestId: "generation-request-page-index",
+      situation: "Je dois préparer un second plan sans perdre le premier.",
+    });
+    if (started.kind !== "claimed") throw new Error("Expected a generation claim.");
+    await failActionPlanGeneration({
+      identity: owner,
+      claim: started.claim,
+      errorCode: "provider_failed",
+    });
+
+    await expect(getActionPlanWorkspacePageForIdentity(owner, active.id)).resolves.toMatchObject({
+      generationState: {
+        status: "active",
+        id: active.id,
+        actionPlan: { title: "Plan actif" },
+      },
+      plans: expect.arrayContaining([
+        expect.objectContaining({ id: active.id, status: "active" }),
+        expect.objectContaining({ id: started.claim.id, status: "failed" }),
+      ]),
+    });
   });
 
   it("resumes an expired generation from Firestore without a browser draft", async () => {

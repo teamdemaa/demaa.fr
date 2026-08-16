@@ -144,13 +144,26 @@ describe("action plan experience architecture", () => {
   it("keeps the latest authenticated edit when the user leaves quickly", () => {
     const savedPlan = source("src/components/SavedActionPlanDetail.tsx");
 
-    expect(savedPlan).toContain("pendingSaveRef.current = {");
+    expect(savedPlan).toContain("saveQueueRef.current.enqueue({");
     expect(savedPlan).toContain("plan: currentPlan");
     expect(savedPlan).toContain("title: planTitle.trim() || confirmedTitleRef.current");
     expect(savedPlan).toContain('plan: isManualActionPlan(nextSave.plan) ? nextSave.plan : undefined');
     expect(savedPlan).toContain('window.addEventListener("pagehide", flushBeforeLeaving)');
     expect(savedPlan).toContain("keepalive: true");
     expect(savedPlan).toContain("flushBeforeLeaving();");
+    expect(savedPlan).toContain("saveQueueRef.current.drain");
+  });
+
+  it("waits for the first manual action editor to close before persisting", () => {
+    const experience = source("src/components/ActionPlanExperience.tsx");
+    const autoSaveEffect = experience.slice(
+      experience.indexOf("if (\n      !isAuthenticated\n      || !plan"),
+      experience.indexOf("useEffect(() => {\n    if (process.env.NODE_ENV !== \"development\")"),
+    );
+
+    expect(autoSaveEffect).toContain("|| isActionEditorOpen");
+    expect(autoSaveEffect).toContain("isActionEditorOpen,");
+    expect(autoSaveEffect).toContain('fetch("/api/action-plans"');
   });
 
   it("changes the selected system deterministically without another AI call", () => {
