@@ -255,7 +255,11 @@ sous 24 à 48 heures.
 La demande peut enregistrer `localeCode`, `marketCode`, `countryCode`,
 `serviceSlug`, `systemId` et `sourcePage`. Aucun panier, checkout groupé,
 paiement anglais, marketplace, portail partenaire, WhatsApp ou second back
-office n'est créé.
+office n'est créé. Pour `scope: market=global-en-beta`, cette absence de
+WhatsApp supersède uniquement le canal de contact France défini par D-075 et
+l'ADR 0006 : la demande anglaise passe par l'identité e-mail existante et le
+suivi administratif partagé. Le formulaire et le suivi WhatsApp manuel restent
+inchangés pour `scope: market=fr-fr`.
 
 ### Talk to us
 

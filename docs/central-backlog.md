@@ -600,10 +600,16 @@ ne déclenchent aucune action par eux-mêmes.
 
 ## Mise à jour canonique du 9 août 2026
 
-Cette section, l'ADR 0003, l'ADR 0004 et l'ADR 0006 remplacent les décisions
-historiques incompatibles plus bas dans ce document. En cas de conflit sur les
-Services, l'ADR 0006 prévaut. Pour les Contenus, l'Académie et les Ressources,
-l'ADR 0004 prévaut.
+Cette section et les ADR 0003, 0004, 0006, 0014 et 0015 remplacent les décisions
+historiques incompatibles plus bas dans ce document. D-085/ADR 0014 prévaut
+pour le socle international, la résolution de langue et le périmètre
+`global-en-beta`. D-089/ADR 0015 prévaut pour le nom, les forfaits et le
+parcours de demande des accompagnements Automatisation/Application métier.
+Pour le catalogue et le contact France non modifiés par D-089, l'ADR 0006
+prévaut. Pour les Contenus, l'Académie et les Ressources, l'ADR 0004 prévaut.
+L'absence de WhatsApp dans l'English Beta est une exception explicitement
+limitée à `scope: market=global-en-beta` ; elle ne retire pas le suivi WhatsApp
+manuel du marché France.
 
 - `demaa.co` est le domaine canonique du lancement France, sans préfixe de
   locale. L'internationalisation reste différée.
