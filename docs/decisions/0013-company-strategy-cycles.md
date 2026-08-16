@@ -35,16 +35,31 @@ de la vue Plan et les paramètres incompatibles sont nettoyés. Un composant
 propriétaire commun doit être réutilisé par l'expérience de génération et celle
 des plans sauvegardés afin d'éviter toute duplication.
 
+`action-plan-app-context.ts` expose un type fermé
+`ActionPlanSection = "actions" | "figures" | "strategy"` et une valeur
+`planSection`. Les panneaux et sélecteurs locaux ne sont pas dupliqués entre
+`ActionPlanExperience.tsx` et `SavedActionPlanDetail.tsx`.
+
 Le lecteur de compatibilité V1/V2/V3 peut continuer à accepter silencieusement
 les anciens champs afin de ne pas casser les documents existants. Ces champs
 ne sont ni rendus ni édités. Leur suppression physique exige un audit Firebase
 et une autorisation séparée.
 
+Le fonctionnement courant retire notamment `getActionPlanStrategyFields`, les
+types de rendu historiques, `strategyOverrides` des nouveaux workspaces, la
+Stratégie vide des nouveaux plans manuels, les contrôles Stratégie de
+`isBlankManualActionPlan` et `strategyPillar` des nouvelles actions et
+commandes. Les tests qui créent encore ces champs sont adaptés sans rendre
+illisibles les documents V1/V2/V3 existants.
+
 ## Contrat fonctionnel validé — Chiffres
 
-Les données mensuelles utilisent un document par entreprise et par période
-`YYYY-MM`, avec `schemaVersion: 1`, devise `EUR`, révision optimiste, audit UID
-et timestamps. Les montants sont stockés en centimes entiers : chiffre
+Les données mensuelles utilisent la collection `company_monthly_metrics`, avec
+un document par entreprise et par période `YYYY-MM`. Chaque document contient
+`schema_version: "1"`, `company_id`, `period`, `revenue_cents`,
+`expenses_cents`, `cash_balance_cents`, `currency: "EUR"`, `revision`,
+`created_by_uid`, `updated_by_uid`, `created_at` et `updated_at`. Les montants
+sont stockés en centimes entiers : chiffre
 d'affaires et charges sont nuls ou positifs ; la trésorerie peut être négative.
 Le résultat de pilotage est dérivé (`CA - charges`) et n'est jamais stocké. Il
 est présenté comme un indicateur de pilotage, pas comme un résultat comptable
@@ -67,6 +82,18 @@ Les comparaisons sont `CA / Charges`, `CA / Trésorerie` et
 et au clavier, sans débordement mobile. La saisie mensuelle est explicite, sans
 autosauvegarde : mois, CA, charges, trésorerie et action `Ajouter` ou
 `Mettre à jour`, avec préremplissage des valeurs existantes.
+
+L'implémentation crée au minimum `CompanyFiguresPanel.tsx` et
+`CompanyMetricEntryDialog.tsx`. Le contrat HTTP prévu expose une lecture bornée
+`GET /api/company/pilotage/metrics?from=YYYY-MM&to=YYYY-MM` et une mutation
+mensuelle `PUT /api/company/pilotage/metrics/[period]`. Une adaptation aux
+conventions exactes de Next.js 16 est permise seulement si elle conserve les
+mêmes validations, autorisations et garanties métier.
+
+La couche métier comprend `src/lib/company-pilotage-contract.ts`,
+`src/lib/company-metrics.server.ts` et `src/lib/company-strategy.server.ts`.
+Les agrégations financières vivent dans une fonction pure et testable, jamais
+dans les composants React.
 
 ## Contrat fonctionnel validé — Stratégie
 
@@ -132,6 +159,13 @@ forfait, journée, commission ou autre.
 - une réponse ne devient jamais un titre ou un résumé ;
 - aucune carte imbriquée, modale d'édition ou paire permanente
   `Annuler / Enregistrer` ;
+- l'implémentation crée `CompanyStrategyPanel.tsx`,
+  `CompanyStrategyPillar.tsx`, `CompanyStrategyHistory.tsx` et
+  `CompanyStrategyCycleDialog.tsx` ;
+- les lectures et mutations authentifiées dédiées utilisent le préfixe
+  `/api/company/pilotage/strategy` lorsqu'elles sont exposées en HTTP ; elles
+  couvrent initialisation idempotente, modification avec `expectedRevision`,
+  nouveau cycle atomique et historique paginé, sans `companyId` client ;
 - l'en-tête présente `Stratégie` avec `Nouveau cycle`, puis le cycle actif avec
   `Historique des cycles` ;
 - un seul trait suit la ligne du cycle et un séparateur apparaît seulement
@@ -155,10 +189,17 @@ devra au minimum garantir :
 - une sauvegarde automatique sérialisée avec révision attendue ;
 - une résolution explicite des conflits, sans retraitement aveugle d'un `409` ;
 - la conservation locale du brouillon et une action `Réessayer` après échec ;
+- l'annonce accessible des sauvegardes sans statut `Enregistré` affiché
+  durablement ;
 - l'archivage de l'ancien cycle et l'activation du nouveau dans une seule
   opération atomique ;
 - le refus serveur de toute modification d'un cycle archivé ;
 - l'absence totale de données Stratégie dans le périmètre IA.
+
+La matrice de tests couvre explicitement session absente, appartenance inactive,
+autre entreprise refusée, rejet d'un `company_id` client, création et mise à
+jour d'un mois, conflit de révision, mutation d'un seul pilier et validation des
+douze réponses Stratégie.
 
 Les cycles archivés sont conservés tant que l'entreprise existe. Aucun TTL ou
 nettoyage automatique fondé sur l'âge du cycle n'est autorisé. L'historique est

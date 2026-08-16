@@ -336,8 +336,9 @@ l'ADR 0004 prévaut.
 - [ ] Recetter puis promouvoir le candidat D-079 Plan V4 : génération limitée
   aux Actions et au `systemId`, supports typés selon les règles déterministes,
   et lecture non destructive des plans V1, V2, V3 et `manual`. La Stratégie
-  reste masquée et non générée tant qu'un nouveau contrat stratégique n'est
-  pas explicitement validé.
+  historique reste définitivement masquée, non éditée et non générée. Le
+  contrat D-084 validé crée un Pilotage d'entreprise séparé ; il ne réactive
+  aucun champ stratégique des plans.
 - [ ] Recetter le multi-plans dans l'application unique : titre, sélecteur,
   nouveau plan, renommage, suppression révisionnée et retour au dernier plan.
 - [ ] Recetter les Systèmes sauvegardés par plan : liste sans doublon, Système
@@ -2267,9 +2268,11 @@ ne sont pas confirmés, D-071 reste documenté sans effet sur le produit.
 
 ## Prochaine action
 
-Pour Stratégie, verrouiller les neuf gates de l'ADR 0013 dans la tâche
-`Vérifier la stratégie et le backlog`, puis y conduire seule l'architecture
-détaillée, l'implémentation et la recette. MASTER DEMAA maintient uniquement la
-décision, le backlog, le registre et la resynchronisation du Google Sheet. Le
-MVP Réseau Partenaire reste un cadrage et tous les lots historiques exigent un
-nouveau GO explicite avant de redevenir exécutables.
+Le Lot 0 est isolé localement. Les décisions produit D-084 sont fermées et le
+périmètre inclut Chiffres et Stratégie. Attendre un nouveau GO pour reprendre
+et terminer le Lot 1 Plans, dont neuf fichiers partiels restent gelés dans son
+worktree. Après fusion et recette du Lot 1, conduire le Lot 3 Pilotage complet
+dans la tâche `Vérifier la stratégie et le backlog`. MASTER DEMAA maintient le
+programme, la décision, le backlog, le registre et la future resynchronisation
+du Google Sheet. Le MVP Réseau Partenaire reste un cadrage et tous les lots
+historiques exigent un nouveau GO explicite avant de redevenir exécutables.
