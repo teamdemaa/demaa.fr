@@ -137,7 +137,7 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain("Plan d’action");
     expect(actionPlanNavSource).toContain("Solutions");
     expect(actionPlanNavSource).toContain("Académie");
-    expect(actionPlanNavSource).toContain("Opportunités");
+    expect(actionPlanNavSource).not.toContain("Opportunités");
     expect(actionPlanNavSource).not.toContain('label: "Système"');
     expect(actionPlanNavSource.indexOf('label: "Plan d’action"')).toBeLessThan(
       actionPlanNavSource.indexOf('label: "Solutions"'),
@@ -145,10 +145,7 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource.indexOf('label: "Solutions"')).toBeLessThan(
       actionPlanNavSource.indexOf('label: "Académie"'),
     );
-    expect(actionPlanNavSource.indexOf('label: "Académie"')).toBeLessThan(
-      actionPlanNavSource.indexOf('label: "Opportunités"'),
-    );
-    expect(actionPlanNavSource).toContain("grid-cols-4");
+    expect(actionPlanNavSource).toContain("grid-cols-3");
     expect(actionPlanNavSource).toContain("h-4 w-4 shrink-0 transition");
     expect(actionPlanNavSource).toContain("rounded-[1.1rem]");
     expect(actionPlanNavSource).toContain("bg-dema-sage text-dema-forest xl:bg-transparent");
@@ -171,10 +168,10 @@ describe("Demaa application navbar", () => {
     expect(marketingLayoutSource).toContain("<Footer />");
     expect(experienceSource).toContain("<ActionPlanNavbar");
     expect(experienceSource).toContain("workspace={prePlanWorkspace}");
-    expect(experienceSource).toContain('activeTab === "opportunities"');
+    expect(experienceSource).not.toContain('activeTab === "opportunities"');
     expect(experienceSource).toContain("<ActionPlanAcademyPanel");
     expect(experienceSource).toContain("<ActionPlanCoachingControl");
-    expect(experienceSource).toContain("<OpportunitiesPanel");
+    expect(experienceSource).not.toContain("<OpportunitiesPanel");
     expect(experienceSource).not.toContain('aria-label="Votre résultat"');
   });
 });

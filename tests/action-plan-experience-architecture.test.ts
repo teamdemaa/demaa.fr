@@ -215,7 +215,8 @@ describe("action plan experience architecture", () => {
     expect(guestExperience).toContain("<ActionPlanSystemPanel");
     expect(guestExperience).toContain('activeTab === "solutions"');
     expect(guestExperience).toContain('activeTab === "academy"');
-    expect(guestExperience).toContain('activeTab === "opportunities"');
+    expect(guestExperience).not.toContain('activeTab === "opportunities"');
+    expect(guestExperience).not.toContain("<OpportunitiesPanel");
     expect(guestExperience).toContain("demoMode={isDemoMode}");
     expect(guestExperience).toContain("workspace={prePlanWorkspace}");
     expect(guestExperience).toContain("onWorkspaceChange={setPrePlanWorkspace}");

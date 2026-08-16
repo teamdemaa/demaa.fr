@@ -19,7 +19,7 @@ describe("solution proposal UI contract", () => {
 
     expect(footer).toContain('{ label: "Rejoindre Team Demaa", href: "/rejoindre-team-demaa" }');
     expect(page).toContain(
-      'redirect("/?view=opportunities&intent=team-demaa-profile")',
+      'redirect("/opportunites?intent=team-demaa-profile")',
     );
     expect(page).not.toMatch(/partenaire Demaa|devenir partenaire|partenariat garanti/i);
     await expect(
@@ -71,7 +71,7 @@ describe("solution proposal UI contract", () => {
     ]);
 
     expect(networkPage).toContain(
-      'redirect("/?view=opportunities&intent=team-demaa-profile")',
+      'redirect("/opportunites?intent=team-demaa-profile")',
     );
     for (const source of [opportunitiesPage, adminPage]) {
       expect(source).toContain('import { connection } from "next/server"');
@@ -81,11 +81,10 @@ describe("solution proposal UI contract", () => {
   });
 
   it("separates immediate opportunities from the permanent Team Demaa profile", async () => {
-    const [page, catalog, modal, panel, submissionDialog] = await Promise.all([
+    const [page, catalog, modal, submissionDialog] = await Promise.all([
       readSource("src/app/(marketing)/opportunites/page.tsx"),
       readSource("src/components/PublicOpportunitiesClient.tsx"),
       readSource("src/components/ProviderProfileModal.tsx"),
-      readSource("src/components/OpportunitiesPanel.tsx"),
       readSource("src/components/OpportunitySubmissionDialog.tsx"),
     ]);
 
@@ -114,18 +113,14 @@ describe("solution proposal UI contract", () => {
     expect(modal).toContain("Manifester mon intérêt");
     expect(modal).toContain("initialEmail");
     expect(modal).toContain("Expertise principale");
-    expect(panel).toContain(
-      'demoMode ? "/api/opportunities?demo=1" : "/api/opportunities"',
-    );
-    expect(panel).toContain("publicOpportunitiesSnapshot");
-    expect(panel).not.toContain("Chargement des opportunités");
-    expect(panel).not.toContain("LoaderCircle");
+    expect(page).toContain("getPublicOpenOpportunities()");
+    expect(page).toContain("preserveOpportunityEnrichment(opportunities)");
     expect(submissionDialog).toContain("Ajouter des précisions");
     expect(submissionDialog).toContain("<details");
     expect(submissionDialog).toContain('Connexion demandée à l’envoi.');
     expect(submissionDialog).not.toContain("Envoyer pour modération");
     expect(submissionDialog).not.toContain("Vous pourrez tout remplir maintenant");
-    expect([page, catalog, modal, panel].join("\n")).not.toMatch(
+    expect([page, catalog, modal].join("\n")).not.toMatch(
       /freelance|Demaa recruteur/i,
     );
   });

@@ -15,7 +15,6 @@ const directoryLinks = [
 ];
 
 const collaborationLinks = [
-  { label: "Opportunités", href: "/opportunites" },
   { label: "Rejoindre Team Demaa", href: "/rejoindre-team-demaa" },
   { label: "Nous contacter", href: "mailto:team@demaa.fr" },
 ];

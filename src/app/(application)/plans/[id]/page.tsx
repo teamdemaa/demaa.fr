@@ -6,6 +6,7 @@ import SavedActionPlanDetail from "@/components/SavedActionPlanDetail";
 import SavedActionPlanGenerationState from "@/components/SavedActionPlanGenerationState";
 import {
   buildActionPlanAppHref,
+  buildLegacyOpportunitiesHref,
   parseActionPlanAppContext,
 } from "@/lib/action-plan-app-context";
 import {
@@ -33,6 +34,8 @@ export default async function ActionPlanPage({
     searchParams,
     getCurrentCustomerAppIdentityFromSession(),
   ]);
+  const legacyOpportunitiesHref = buildLegacyOpportunitiesHref(query);
+  if (legacyOpportunitiesHref) redirect(legacyOpportunitiesHref);
   const initialAppContext = parseActionPlanAppContext(query);
 
   if (!identity) {
