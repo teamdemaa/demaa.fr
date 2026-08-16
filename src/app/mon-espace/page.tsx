@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function LegacyAccountRoute() {
-  redirect("/plans");
+  redirect("/plans/latest");
 }

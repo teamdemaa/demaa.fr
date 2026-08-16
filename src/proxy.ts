@@ -29,6 +29,10 @@ const RETIRED_PATH_PREFIXES = [
 const CONTENT_SECURITY_POLICY = buildContentSecurityPolicy({
   allowUnsafeEval: process.env.NODE_ENV === "development",
 });
+const FIREBASE_AUTH_HELPER_CONTENT_SECURITY_POLICY = buildContentSecurityPolicy({
+  allowSameOriginFraming: true,
+  allowUnsafeEval: process.env.NODE_ENV === "development",
+});
 
 function withContentSecurityPolicy(response: NextResponse) {
   response.headers.set("Content-Security-Policy", CONTENT_SECURITY_POLICY);
@@ -71,6 +75,15 @@ export function proxy(request: NextRequest) {
         },
       }),
     );
+  }
+
+  if (pathname.startsWith("/__/auth/")) {
+    const response = NextResponse.next();
+    response.headers.set(
+      "Content-Security-Policy",
+      FIREBASE_AUTH_HELPER_CONTENT_SECURITY_POLICY,
+    );
+    return response;
   }
 
   return withContentSecurityPolicy(NextResponse.next());

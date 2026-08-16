@@ -169,8 +169,8 @@ l'ADR 0004 prévaut.
   et mot de passe est le parcours principal ; une session connectée alimente
   côté serveur les guides métier, Opportunités, Coaching, inscriptions et
   demandes sans redemander l'adresse. Après connexion, reprendre directement
-  l'intention autorisée dans l'application, sans page `Mon espace` ou
-  `Mes plans`.
+  l'intention autorisée dans l'application, sans portail parallèle `Mon
+  espace`. `Mes plans` reste l'index compact et canonique des plans.
 - [x] Activer D-080 : compte e-mail et mot de passe Firebase principal, Google
   facultatif, un endpoint de session et un cookie Firebase Admin natif. Plans,
   conversations et brouillons partent de l'identité UID ; les plans exigent en
@@ -183,10 +183,11 @@ l'ADR 0004 prévaut.
   plan hors ligne ou deuxième source persistante dans ce lot. La recette
   automatisée est couverte ; la dictée et les safe areas doivent encore être
   vérifiées sur une PWA réellement installée avant promotion Production.
-- [x] Restaurer le dernier plan sauvegardé après connexion, depuis le profil et
-  à l'ouverture normale de l'application. `/plans` résout le plan courant et
-  `/?new=1` reste réservé à une nouvelle situation volontaire ; l'absence de
-  plan ouvre ce mode vierge sans boucle de redirection.
+- [x] Restaurer le dernier plan après connexion et à l'ouverture normale de
+  l'application. `/plans/latest` ouvre l'entrée la plus récente, y compris une
+  génération en cours ou interrompue ; `/plans` liste les plans et
+  `/plans/new` ouvre explicitement une nouvelle situation. L'absence de plan
+  affiche un état vide sans boucle de redirection.
 - [x] Livrer D-078 par transition compatible : Firebase UID reste l'identité,
   sans collection `accounts`. Le socle contient uniquement `companies` et
   `company_memberships`. Une entreprise sans nom et une appartenance `owner`
@@ -259,8 +260,9 @@ l'ADR 0004 prévaut.
   `view=solutions` pour les nouveaux liens ; les
   routes `/systemes` restent inchangées. Coaching reste le
   produit accessible par `Échanger`; la surface s'intitule
-  `Échanger avec l'équipe Demaa`. Aucun onglet
-  `Accueil`, portail `Mon espace`/`Mes plans` ou profil obligatoire n'est créé.
+  `Échanger avec l'équipe Demaa`. Aucun onglet `Accueil`, portail parallèle
+  `Mon espace` ou profil obligatoire n'est créé. `Mes plans` reste une vue
+  authentifiée de l'application unique.
 - [ ] Recetter puis promouvoir le candidat D-079 Plan V4 : génération limitée
   aux Actions et au `systemId`, supports typés selon les règles déterministes,
   et lecture non destructive des plans V1, V2, V3 et `manual`. La Stratégie

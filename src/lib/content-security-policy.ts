@@ -1,5 +1,6 @@
 export function buildContentSecurityPolicy(options?: {
   allowUnsafeEval?: boolean;
+  allowSameOriginFraming?: boolean;
 }) {
   const scriptSrcUnsafeEval = options?.allowUnsafeEval
     ? " 'unsafe-eval'"
@@ -9,7 +10,9 @@ export function buildContentSecurityPolicy(options?: {
     "default-src 'self'",
     "base-uri 'self'",
     "object-src 'none'",
-    "frame-ancestors 'none'",
+    options?.allowSameOriginFraming
+      ? "frame-ancestors 'self'"
+      : "frame-ancestors 'none'",
     `script-src 'self' 'unsafe-inline'${scriptSrcUnsafeEval} https://www.googletagmanager.com https://connect.facebook.net https://apis.google.com`,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://drive.google.com https://lh3.googleusercontent.com https://*.googleusercontent.com",

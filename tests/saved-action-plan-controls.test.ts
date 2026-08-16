@@ -44,7 +44,7 @@ describe("saved action plan controls", () => {
     expect(controls).toContain("<MoreVertical");
     expect(controls).toContain("ActionPlanShareControl");
     expect(controls).toContain("Nouveau plan");
-    expect(controls).toContain('router.push("/?new=1")');
+    expect(controls).toContain('router.push("/plans/new")');
     expect(controls).toContain("Renommer");
     expect(controls).toContain("Supprimer");
   });

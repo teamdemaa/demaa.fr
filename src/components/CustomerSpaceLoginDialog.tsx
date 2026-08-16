@@ -6,7 +6,13 @@ import { useCallback } from "react";
 import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 
-export default function CustomerSpaceLoginDialog() {
+export default function CustomerSpaceLoginDialog({
+  message,
+  returnTo = "/plans/latest",
+}: {
+  message?: string;
+  returnTo?: string;
+}) {
   const router = useRouter();
   const closeDialog = useCallback(() => router.back(), [router]);
   const dialogRef = useAccessibleDialog({ onClose: closeDialog });
@@ -40,12 +46,17 @@ export default function CustomerSpaceLoginDialog() {
             Se connecter
           </h2>
           <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-dema-muted">
-            Entrez votre adresse e-mail pour recevoir un lien sécurisé.
+            Retrouvez vos plans avec votre adresse e-mail et votre mot de passe.
           </p>
+          {message ? (
+            <p className="mt-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
+              {message.slice(0, 180)}
+            </p>
+          ) : null}
         </div>
 
         <div className="mt-6">
-          <CustomerSpaceAccessForm returnTo="/plans" simple />
+          <CustomerSpaceAccessForm returnTo={returnTo} simple />
         </div>
       </section>
     </div>

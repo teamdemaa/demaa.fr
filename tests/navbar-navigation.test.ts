@@ -69,7 +69,7 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain('href="/plans"');
     expect(navbarSource).toContain('action="/api/customer-space/logout?returnTo=%2F"');
     expect(navbarSource).toContain("Se déconnecter");
-    expect(navbarSource).toContain('href="/connexion?returnTo=%2Fplans"');
+    expect(navbarSource).toContain('href="/connexion?returnTo=%2Fplans%2Flatest"');
     expect(navbarSource).toContain("<span>Connexion</span>");
     expect(navbarSource).not.toContain("<LogIn");
     expect(savedPlanSource).toContain("<Navbar anonymousLanding isAuthenticated minimal />");
@@ -82,27 +82,33 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/app/@modal/(.)connexion/page.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(legacySource).toContain('redirect("/plans")');
+    expect(legacySource).toContain('redirect("/plans/latest")');
     expect(loginSource).toContain("<Navbar minimal />");
     expect(loginSource).toContain("<CustomerSpaceAccessForm returnTo={returnTo} simple />");
     expect(loginSource).toContain("Se connecter");
     expect(loginSource).not.toContain("Mes plans");
     expect(loginSource).not.toContain("Mon espace");
-    expect(modalSource).toContain("<CustomerSpaceLoginDialog />");
+    expect(modalSource).toContain("getSafeCustomerReturnTo");
+    expect(modalSource).toContain("<CustomerSpaceLoginDialog");
+    expect(modalSource).toContain("returnTo={getSafeCustomerReturnTo");
   });
 
   it("restores the latest saved plan unless a new situation is explicitly requested", async () => {
-    const [homeSource, plansSource, loginDialogSource] = await Promise.all([
+    const [homeSource, plansSource, latestSource, loginDialogSource] = await Promise.all([
       readFile(new URL("../src/app/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/plans/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/plans/latest/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/CustomerSpaceLoginDialog.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(homeSource).toContain('redirect("/plans")');
+    expect(homeSource).toContain('redirect("/plans/latest")');
     expect(homeSource).toContain("shouldRedirectAuthenticatedHomeToPlans");
     expect(homeSource).toContain("planTab?: string | string[]");
-    expect(plansSource).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/?new=1")');
-    expect(loginDialogSource).toContain('<CustomerSpaceAccessForm returnTo="/plans" simple />');
+    expect(plansSource).toContain("Mes plans");
+    expect(plansSource).toContain('href="/plans/new"');
+    expect(plansSource).toContain("getActionPlanIndexForIdentity");
+    expect(latestSource).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/plans")');
+    expect(loginDialogSource).toContain("returnTo={returnTo}");
   });
 
   it("shows application navigation before generation and fixes it at the bottom on mobile", async () => {

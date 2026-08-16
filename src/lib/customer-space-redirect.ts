@@ -13,6 +13,7 @@ export type CustomerAccessIntent =
       draftToken?: string;
       tab?: CoachingTab;
     }
+  | { kind: "generate-plan" }
   | { kind: "guide-notify"; resourceSlug: string; systemSlug: string }
   | { kind: "opportunity"; opportunityId: string }
   | { kind: "opportunity-submit"; draftToken: string }
@@ -98,7 +99,8 @@ export function parseCustomerAccessIntent(value?: string | null): CustomerAccess
 
   const kind = url.searchParams.get(INTENT_PARAM);
   if (
-    kind === "structure"
+    kind === "generate-plan"
+    || kind === "structure"
     || kind === "structure-problem"
     || kind === "team-demaa-profile"
   ) return { kind };

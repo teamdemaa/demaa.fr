@@ -98,7 +98,7 @@ export default function PolitiqueCookiesPage() {
               Le contexte d&apos;attribution conservé dans le navigateur expire après 90 jours. Le choix de consentement expire après 6 mois.
             </p>
             <p>
-              Après authentification par e-mail et mot de passe ou Google, un cookie de session Firebase essentiel, sécurisé et inaccessible au JavaScript maintient votre connexion pendant 14 jours au maximum. Le plan généré avant cette étape reste uniquement dans la mémoire de la page ouverte et n&apos;est révélé qu&apos;après l&apos;authentification.
+              Après authentification par e-mail et mot de passe ou Google, un cookie de session Firebase essentiel, sécurisé et inaccessible au JavaScript maintient votre connexion pendant 14 jours au maximum. Avant cette étape, le texte saisi pour créer un plan et un identifiant technique de demande peuvent être conservés dans la session du navigateur pendant 2 heures au maximum afin de reprendre le parcours. Aucun plan n&apos;est généré avant l&apos;authentification.
             </p>
       </CookieSection>
 

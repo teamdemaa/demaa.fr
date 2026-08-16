@@ -14,10 +14,16 @@ if (getApps().length === 0) initializeApp({ projectId: EMULATOR_PROJECT_ID });
 
 const database = getFirestore();
 const {
+  beginActionPlanGeneration,
+  completeActionPlanGeneration,
   createOwnedActionPlanForIdentity,
   deleteActionPlanForAccess,
+  failActionPlanGeneration,
+  getActionPlanGenerationForAccess,
+  getActionPlanIndexForIdentity,
   getActionPlanForAccess,
   getOwnedActionPlansForIdentity,
+  resumeActionPlanGenerationForAccess,
   updateActionPlanWorkspaceForAccess,
 } = await import("@/lib/action-plan-storage.server");
 const {
@@ -139,6 +145,92 @@ const deleted = await deleteActionPlanForAccess({
 assert.equal(deleted?.revision, 3);
 assert.deepEqual(await getOwnedActionPlansForIdentity(owner), []);
 
+const generation = await beginActionPlanGeneration({
+  identity: owner,
+  requestId: "e2e-generation-request-active",
+  situation: "Je veux structurer le suivi commercial et les priorités de mon entreprise.",
+});
+assert.equal(generation.kind, "claimed");
+if (generation.kind !== "claimed") throw new Error("The E2E generation was not claimed.");
+assert.equal(
+  (await getActionPlanIndexForIdentity(owner))[0]?.status,
+  "generating",
+);
+assert.equal(
+  (await database.collection("action_plans").doc(generation.claim.id).get()).get("plan"),
+  null,
+);
+const generatedPlan = await completeActionPlanGeneration({
+  identity: owner,
+  claim: generation.claim,
+  plan,
+  generation: {
+    model: "e2e-model",
+    durationMs: 100,
+    inputTokens: 10,
+    outputTokens: 20,
+    totalTokens: 30,
+    requestCount: 1,
+    repairCount: 0,
+  },
+});
+assert.equal(generatedPlan?.id, generation.claim.id);
+assert.equal(
+  (await getActionPlanGenerationForAccess({ id: generation.claim.id, uid: owner.uid }))?.status,
+  "active",
+);
+assert.equal(
+  await getActionPlanGenerationForAccess({ id: generation.claim.id, uid: outsider.uid }),
+  null,
+);
+
+const failedGeneration = await beginActionPlanGeneration({
+  identity: owner,
+  requestId: "e2e-generation-request-failed",
+  situation: "Je veux reprendre une génération interrompue sans créer un second plan.",
+});
+assert.equal(failedGeneration.kind, "claimed");
+if (failedGeneration.kind !== "claimed") throw new Error("The failed E2E generation was not claimed.");
+await failActionPlanGeneration({
+  identity: owner,
+  claim: failedGeneration.claim,
+  errorCode: "e2e_provider_failure",
+});
+assert.equal(
+  (await getActionPlanGenerationForAccess({ id: failedGeneration.claim.id, uid: owner.uid }))?.status,
+  "failed",
+);
+assert.equal(
+  await resumeActionPlanGenerationForAccess({
+    identity: outsider,
+    id: failedGeneration.claim.id,
+  }),
+  null,
+);
+const resumedGeneration = await resumeActionPlanGenerationForAccess({
+  identity: owner,
+  id: failedGeneration.claim.id,
+});
+assert.equal(resumedGeneration?.kind, "claimed");
+if (!resumedGeneration || resumedGeneration.kind !== "claimed") {
+  throw new Error("The persisted E2E generation was not resumed.");
+}
+assert.equal(
+  (await completeActionPlanGeneration({
+    identity: owner,
+    claim: resumedGeneration.claim,
+    plan,
+  }))?.id,
+  failedGeneration.claim.id,
+);
+
+await membership.ref.set({ status: "suspended" }, { merge: true });
+assert.deepEqual(await getActionPlanIndexForIdentity(owner), []);
+assert.equal(
+  await getActionPlanGenerationForAccess({ id: generation.claim.id, uid: owner.uid }),
+  null,
+);
+
 console.log(JSON.stringify({
   mode: "firestore-emulator-e2e",
   projectId: EMULATOR_PROJECT_ID,
@@ -146,5 +238,8 @@ console.log(JSON.stringify({
   ownerMembershipCreated: true,
   ownerReadWriteDelete: true,
   outsiderDenied: true,
+  persistentGenerationLifecycle: true,
+  failedGenerationVisible: true,
+  persistedGenerationResumedWithoutBrowserDraft: true,
   suspendedMembershipDenied: true,
 }, null, 2));

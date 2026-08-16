@@ -7,27 +7,35 @@ function source(path: string) {
 }
 
 describe("action plan experience architecture", () => {
-  it("finishes generation before asking for access and reveals the saved result afterward", () => {
+  it("authenticates before generation and opens only the persisted result", () => {
     const experience = source("src/components/ActionPlanExperience.tsx");
     const accessForm = source("src/components/CustomerSpaceAccessForm.tsx");
     const shareControl = source("src/components/ActionPlanShareControl.tsx");
     const utilityActions = source("src/components/ActionPlanUtilityActions.tsx");
     const result = source("src/components/ActionPlanResult.tsx");
     const commandBar = source("src/components/ActionPlanCommandBar.tsx");
+    const generationScreen = source("src/components/ActionPlanGenerationScreen.tsx");
 
     expect(experience).toContain("useState<EditableActionPlan | null>(null)");
     expect(experience).toContain("readGuestSelectedSystemId");
     expect(experience).toContain("writeGuestSelectedSystemId");
     expect(experience).toContain('fetch("/api/action-plans"');
-    expect(experience).toContain("Gardez votre plan");
-    expect(experience).toContain("type PendingGeneratedPlan");
-    expect(experience).toContain("setPendingGeneratedPlan({");
-    expect(experience).toContain("Votre plan d’action est prêt");
-    expect(experience).toContain("Créez votre accès pour le découvrir");
-    const generationScreen = experience.slice(
+    expect(experience).toContain("createActionPlanGenerationDraft");
+    expect(experience).toContain("writeActionPlanGenerationDraft(draft)");
+    expect(experience).toContain("runAuthenticatedActionPlanGeneration");
+    expect(experience).toContain("setQueuedGenerationDraft(draft)");
+    expect(experience).toContain('window.location.assign(`/plans/${encodeURIComponent(id)}`)');
+    expect(experience).toContain("progressivePlan");
+    expect(experience).not.toContain("Votre plan sera généré et enregistré dans votre espace.");
+    expect(experience).not.toContain("type PendingGeneratedPlan");
+    expect(experience).not.toContain("setPendingGeneratedPlan({");
+    expect(experience).not.toContain("Votre plan d’action est prêt");
+    expect(experience).not.toContain("Créez votre accès pour le découvrir");
+    const generationBranch = experience.slice(
       experience.lastIndexOf("if (isGenerating)"),
-      experience.lastIndexOf("if (pendingGeneratedPlan &&"),
+      experience.lastIndexOf("if (!plan)"),
     );
+    expect(generationBranch).toContain("<ActionPlanGenerationScreen />");
     expect(generationScreen).toContain("Génération de votre plan d’action");
     expect(generationScreen).not.toContain("CustomerSpaceAccessForm");
     expect(experience).toContain("draft={accessDraft}");
@@ -42,8 +50,8 @@ describe("action plan experience architecture", () => {
     expect(experience).not.toContain("Continuer sans compte");
     expect(experience).not.toContain("Connectez-vous pour rattacher cette sélection");
     expect(experience).not.toContain("Créez votre accès pour conserver ce plan");
-    expect(experience).toContain("Continuer avec un plan temporaire");
-    expect(experience).toContain("Enregistrez votre sélection");
+    expect(experience).not.toContain("Continuer avec un plan temporaire");
+    expect(experience).not.toContain("Enregistrez votre sélection");
     expect(experience).toContain("onToggleSolutionSelection={handleSolutionSelection}");
     expect(experience).toContain("setPendingSolutionSelection(pending)");
     expect(experience).toContain("toPersistedAiGenerationMetadata");
@@ -81,11 +89,11 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("createManualActionPlan()");
     expect(experience).toContain("createManualActionPlanWorkspaceState()");
     expect(experience).toContain("onAddAction={handleAddAction}");
-    expect(experience).toContain("Si je m’absente un mois, mon entreprise continue-t-elle de fonctionner ?");
-    expect(experience).toContain("Quelles décisions dépendent encore systématiquement de moi ?");
-    expect(experience).toContain("Mon équipe sait-elle quoi faire sans attendre mes instructions ?");
-    expect(experience).toContain("Que pourrais-je supprimer, simplifier, déléguer ou automatiser ?");
-    expect(experience).toContain("Est-ce que la qualité reste constante lorsque je ne supervise pas directement ?");
+    expect(generationScreen).toContain("Si je m’absente un mois, mon entreprise continue-t-elle de fonctionner ?");
+    expect(generationScreen).toContain("Quelles décisions dépendent encore systématiquement de moi ?");
+    expect(generationScreen).toContain("Mon équipe sait-elle quoi faire sans attendre mes instructions ?");
+    expect(generationScreen).toContain("Que pourrais-je supprimer, simplifier, déléguer ou automatiser ?");
+    expect(generationScreen).toContain("Est-ce que la qualité reste constante lorsque je ne supervise pas directement ?");
     expect(experience).toContain("headerActions={(");
     expect(result).not.toContain('type PlanSection = "tasks" | "strategy"');
     expect(result).not.toContain('>Stratégie</button>');
@@ -142,13 +150,15 @@ describe("action plan experience architecture", () => {
 
   it("changes the selected system deterministically without another AI call", () => {
     const experience = source("src/components/ActionPlanExperience.tsx");
+    const generationClient = source("src/lib/action-plan-generation.client.ts");
     const systemPanel = source("src/components/ActionPlanSystemPanel.tsx");
     const systemPayload = source(
       "src/lib/action-plan-system-payload.client.ts",
     );
     const systemSelector = source("src/components/ActionPlanSystemSelector.tsx");
 
-    expect(experience).toContain('fetch("/api/action-plan/generate"');
+    expect(experience).not.toContain('fetch("/api/action-plan/generate"');
+    expect(generationClient).toContain('fetch("/api/action-plans/generate"');
     expect(systemPayload).toContain("/api/action-plan/system/");
     expect(systemPayload).toContain("payloadCache");
     expect(systemPayload).toContain('demoMode ? "?demo=1" : ""');

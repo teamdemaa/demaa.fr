@@ -31,6 +31,25 @@ const securityHeaders = [
   },
 ];
 
+const firebaseAuthHelperHost = process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN?.trim();
+const firebaseAuthHelperOrigin = firebaseAuthHelperHost
+  && /^[a-z0-9-]+\.firebaseapp\.com$/i.test(firebaseAuthHelperHost)
+  ? `https://${firebaseAuthHelperHost}`
+  : null;
+const firebaseAuthHelperHeaders = [
+  {
+    key: 'X-Frame-Options',
+    value: 'SAMEORIGIN',
+  },
+  {
+    key: 'Content-Security-Policy',
+    value: buildContentSecurityPolicy({
+      allowSameOriginFraming: true,
+      allowUnsafeEval: process.env.NODE_ENV === "development",
+    }),
+  },
+];
+
 const nextConfig: NextConfig = {
   allowedDevOrigins: ['127.0.0.1'],
   devIndicators: false,
@@ -41,6 +60,14 @@ const nextConfig: NextConfig = {
   transpilePackages: ['firebase-admin', 'jwks-rsa', 'jose'],
   experimental: {
     optimizePackageImports: ['lucide-react']
+  },
+  async rewrites() {
+    return firebaseAuthHelperOrigin
+      ? [{
+          source: '/__/auth/:path*',
+          destination: `${firebaseAuthHelperOrigin}/__/auth/:path*`,
+        }]
+      : [];
   },
   async redirects() {
     return [
@@ -287,6 +314,10 @@ const nextConfig: NextConfig = {
       {
         source: '/(.*)',
         headers: securityHeaders,
+      },
+      {
+        source: '/__/auth/:path*',
+        headers: firebaseAuthHelperHeaders,
       },
     ];
   },

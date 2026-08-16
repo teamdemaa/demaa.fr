@@ -46,10 +46,12 @@ catalogue, ni rendre privées les destinations publiques existantes.
 6. L'onglet Système charge les Process, Solutions et Ressources existants du
    Système sélectionné. Une dropdown permet de choisir l'un des 115 Systèmes
    sans appel IA et sans réécriture des Actions.
-7. Pour un visiteur, le résultat reste dans l'état de la page ou de la session
-   courante. Aucun `localStorage` durable n'est utilisé comme source de vérité
-   du plan. Seul le slug du Système choisi est mémorisé dans le navigateur.
-8. Après sauvegarde, Firebase/cloud est l'unique source persistante.
+7. Pour un visiteur non connecté, la génération ne commence pas encore. Au
+   clic, la situation et un identifiant idempotent peuvent être conservés
+   temporairement dans `sessionStorage` afin de reprendre l'authentification.
+8. Après authentification, le serveur crée le document `generating` dans
+   l'entreprise active, puis enregistre le résultat `active`. Firebase/cloud
+   est l'unique source persistante du plan.
 9. Le MVP ne lance aucune étude de marché ni recherche web automatique. La
    prospection ciblée et éthique demeure un levier possible lorsqu'elle est
    adaptée à la situation.
@@ -69,8 +71,8 @@ catalogue, ni rendre privées les destinations publiques existantes.
   déterministe et gouverné par ses catalogues actuels.
 - Le changement de Système n'invalide pas le plan déjà généré.
 - La persistance invitée et la persistance connectée ont une frontière nette :
-  plan en mémoire éphémère et préférence locale du Système d'un côté, Firebase
-  comme source du plan enregistré de l'autre.
+  situation courte et préférence locale du Système d'un côté, Firebase comme
+  source du cycle `generating / active / failed` de l'autre.
 - La navigation connectée et l'espace de sauvegarde peuvent être livrés par
   lots, sans modifier la disponibilité des univers publics.
 
@@ -92,9 +94,9 @@ catalogue, ni rendre privées les destinations publiques existantes.
 2. chaque réponse valide référence l'un des 115 slugs canoniques via `systemId` ;
 3. Actions et quatre piliers sont présents dans le résultat ;
 4. le changement de Système ne déclenche aucun appel IA ;
-5. le résultat invité n'est pas dupliqué dans une persistance locale durable ;
-   seul le slug valide du Système choisi peut être restauré localement ;
-6. Firebase est l'unique source persistante après sauvegarde ;
+5. aucune génération n'est lancée avant authentification et aucun résultat
+   complet n'est stocké dans le navigateur ;
+6. Firebase est l'unique source persistante dès le démarrage authentifié ;
 7. aucune recherche web automatique n'est exécutée ;
 8. les garde-fous de prospection sont testables et appliqués ;
 9. `/systemes`, `/academie` et `/systemes/[slug]` gardent leur comportement,

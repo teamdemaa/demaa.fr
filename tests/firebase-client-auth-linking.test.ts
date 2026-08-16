@@ -9,9 +9,10 @@ describe("Firebase client provider linking", () => {
     ]);
 
     expect(authSource).toContain("GoogleAuthProvider.credentialFromError");
-    expect(authSource).toContain('firebaseError.code === "auth/account-exists-with-different-credential"');
-    expect(authSource).toContain("linkWithCredential(user, pendingLink.credential)");
-    expect(authSource).toContain("pendingLink?.email === email.trim().toLowerCase()");
+    expect(authSource).toContain('error.code !== "auth/account-exists-with-different-credential"');
+    expect(authSource).toContain("readPendingGoogleLink(normalizedEmail)");
+    expect(authSource).toContain("linkWithCredential(user, pendingLink)");
+    expect(authSource).toContain("value.email !== email");
     expect(googleButtonSource).toContain("pour lier Google au même compte");
   });
 });

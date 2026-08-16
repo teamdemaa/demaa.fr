@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { NextRequest } from "next/server";
 
 import { proxy } from "@/proxy";
+import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
 
 describe("proxy content security policy", () => {
   it("allows the active embeds and Firebase Google Auth while preserving the policy", () => {
@@ -26,6 +27,21 @@ describe("proxy content security policy", () => {
     expect(policy).toContain("default-src 'self'");
     expect(policy).toContain("frame-ancestors 'none'");
     expect(policy).toContain("object-src 'none'");
+  });
+
+  it("allows only the same-origin Firebase helper iframe on its dedicated path", () => {
+    const helperPolicy = buildContentSecurityPolicy({ allowSameOriginFraming: true });
+    expect(helperPolicy).toContain("frame-ancestors 'self'");
+    expect(helperPolicy).not.toContain("frame-ancestors 'none'");
+
+    const response = proxy(
+      new NextRequest("https://demaa.co/__/auth/iframe", {
+        headers: { host: "demaa.co" },
+      }),
+    );
+    expect(response.headers.get("content-security-policy")).toContain(
+      "frame-ancestors 'self'",
+    );
   });
 
   it.each(["demaa.fr", "www.demaa.fr", "www.demaa.co"])(

@@ -41,7 +41,9 @@ describe("manual action plan experience", () => {
     );
     expect(savedDetail).toContain("function addAction()");
     expect(savedDetail).toContain("async function generateBlankPlan");
-    expect(savedDetail).toContain("createGeneratedActionPlanWorkspaceState");
+    expect(savedDetail).toContain("runExistingBlankActionPlanGeneration");
+    expect(savedDetail).toContain("<ActionPlanGenerationScreen />");
+    expect(savedDetail).not.toContain('fetch("/api/action-plan/generate"');
     expect(savedDetail).toContain("plan: isManualActionPlan(nextSave.plan)");
     expect(savedDetail).toContain("onAddAction={addAction}");
   });

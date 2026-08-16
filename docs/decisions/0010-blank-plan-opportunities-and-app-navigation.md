@@ -37,11 +37,13 @@ conversation simple sans onglets commerciaux ; la carte Coach business reste
 dans Services conformément à l’ADR 0009.
 
 La sauvegarde est automatique et n'encombre ni le header ni le plan avec une
-action `Enregistrer`. Pendant la génération, l'invité voit seulement la
-progression. Lorsque le résultat est prêt, il crée ou reprend son accès avant
-que le plan soit révélé, puis celui-ci est sauvegardé automatiquement. Une
-personne déjà connectée voit directement son plan et ses modifications
-persistées. Un plan vierge n'est créé côté serveur qu'après sa première
+action `Enregistrer`. Au clic sur `Créer mon plan d’action`, une personne non
+connectée crée ou reprend d'abord son accès. L'écran vert apparaît ensuite :
+le serveur a déjà créé le document `generating` dans son entreprise et passe
+ce même document à `active` lorsque le résultat est enregistré. Une génération
+interrompue devient `failed`, reste visible dans `Mes plans` et peut être
+reprise sans doublon. Une personne déjà connectée passe directement à la
+génération. Un plan vierge n'est créé côté serveur qu'après sa première
 modification utile.
 
 Cette règle s'applique à toutes les actions fonctionnelles de l'application :

@@ -17,4 +17,19 @@ describe("authentication and customer-data audit", () => {
   ])("counts the current business collection %s", (collection) => {
     expect(source).toContain(`"${collection}"`);
   });
+
+  it("audits generation states and company membership integrity", () => {
+    for (const status of ["active", "generating", "failed", "deleted"]) {
+      expect(source).toContain(`"${status}"`);
+    }
+    expect(source).toContain("unexpected:");
+    expect(source).toContain("activeMembershipWithoutActiveCompany");
+    expect(source).toContain("planWithMissingActiveCompany");
+    expect(source).toContain("planWithoutActiveOwnerMembership");
+    expect(source).toContain("effectiveMinLength");
+    expect(source).toContain("googleClientConfigured");
+    expect(source).toContain("googleEnabled");
+    expect(source).toContain('"firebase_default"');
+    expect(source).not.toContain("pendingActionPlans");
+  });
 });
