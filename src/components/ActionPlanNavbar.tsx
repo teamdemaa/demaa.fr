@@ -4,6 +4,7 @@ import { BookOpen, ListChecks, Wrench } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 export type ActionPlanView = "plan" | "solutions" | "academy";
 
@@ -11,19 +12,23 @@ const tabClassName =
   "group relative inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:min-h-11 xl:flex-row xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
 
 const navigationItems = [
-  { view: "plan", label: "Plan d’action", Icon: ListChecks },
-  { view: "solutions", label: "Solutions", Icon: Wrench },
-  { view: "academy", label: "Académie", Icon: BookOpen },
+  { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
+  { view: "solutions", labels: { fr: "Solutions", en: "Solutions" }, Icon: Wrench },
+  { view: "academy", labels: { fr: "Académie", en: "Academy" }, Icon: BookOpen },
 ] as const;
 
 export default function ActionPlanNavbar({
   activeView,
   onViewChange,
   routeNavigation = false,
+  localeCode = "fr",
+  visibleViews,
 }: {
   activeView: ActionPlanView;
   onViewChange?: (view: ActionPlanView) => void;
   routeNavigation?: boolean;
+  localeCode?: InterfaceLocaleCode;
+  visibleViews?: readonly ActionPlanView[];
 }) {
   const [desktopTarget, setDesktopTarget] = useState<HTMLElement | null>(null);
   const [mobileTarget, setMobileTarget] = useState<HTMLElement | null>(null);
@@ -44,10 +49,14 @@ export default function ActionPlanNavbar({
   function navigation() {
     return (
       <div
-        className="grid w-full grid-cols-3 gap-1"
-        aria-label="Navigation principale"
+        className="grid w-full gap-1"
+        style={{
+          gridTemplateColumns: `repeat(${visibleViews?.length || navigationItems.length}, minmax(0, 1fr))`,
+        }}
+        aria-label={localeCode === "en" ? "Main navigation" : "Navigation principale"}
       >
-        {navigationItems.map(({ view, label, Icon }) => {
+        {navigationItems.filter(({ view }) => !visibleViews || visibleViews.includes(view)).map(({ view, labels, Icon }) => {
+          const label = labels[localeCode];
           const isActive = activeView === view;
           const className = `${tabClassName} ${isActive ? "bg-dema-sage text-dema-forest xl:bg-transparent xl:font-semibold" : "text-dema-muted hover:text-brand-blue"}`;
           const content = (
@@ -69,7 +78,7 @@ export default function ActionPlanNavbar({
           return routeNavigation ? (
             <Link
               key={view}
-              href={`/?view=${view}`}
+              href={`${localeCode === "en" ? "/en" : "/"}?view=${view}`}
               aria-current={isActive ? "page" : undefined}
               className={className}
             >
@@ -90,6 +99,8 @@ export default function ActionPlanNavbar({
       </div>
     );
   }
+
+  if (visibleViews?.length === 1) return null;
 
   return (
     <>

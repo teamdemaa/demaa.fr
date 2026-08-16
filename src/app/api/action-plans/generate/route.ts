@@ -9,6 +9,10 @@ import { executeClaimedActionPlanGeneration } from "@/lib/action-plan-generation
 import { getCurrentCustomerIdentity, noStoreHeaders, withNoStore } from "@/lib/action-plan-api.server";
 import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
+import {
+  authorizeActionPlanGenerationContext,
+  UnavailableActionPlanLocaleError,
+} from "@/lib/action-plan-localization.server";
 
 export const runtime = "nodejs";
 export const maxDuration = 120;
@@ -16,6 +20,8 @@ export const maxDuration = 120;
 const requestSchema = z.object({
   requestId: z.string().trim().regex(/^[A-Za-z0-9:_-]{16,160}$/),
   situation: z.string().trim().min(20).max(4_000),
+  contentLocaleCode: z.enum(["fr", "en"]).optional(),
+  marketCodeAtCreation: z.enum(["fr-fr", "global-en-beta"]).optional(),
 }).strict();
 
 function responseForState(state: Awaited<ReturnType<typeof getActionPlanGenerationForAccess>>) {
@@ -87,12 +93,20 @@ export async function POST(request: Request) {
 
   let started: Awaited<ReturnType<typeof beginActionPlanGeneration>>;
   try {
+    const generationContext = authorizeActionPlanGenerationContext(parsed.data);
     started = await beginActionPlanGeneration({
       identity,
       requestId: parsed.data.requestId,
       situation: parsed.data.situation,
+      ...generationContext,
     });
   } catch (error) {
+    if (error instanceof UnavailableActionPlanLocaleError) {
+      return NextResponse.json(
+        { error: "Cette langue n’est pas disponible pour le moment." },
+        { status: 404, headers: noStoreHeaders() },
+      );
+    }
     if (error instanceof ActionPlanGenerationRequestConflictError) {
       return NextResponse.json(
         { error: "Cette demande de génération a déjà été utilisée avec un autre contenu." },

@@ -5,11 +5,14 @@ import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
+import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 export default function CustomerSpaceLoginDialog({
+  localeCode = "fr",
   message,
   returnTo = "/plans/latest",
 }: {
+  localeCode?: InterfaceLocaleCode;
   message?: string;
   returnTo?: string;
 }) {
@@ -33,7 +36,7 @@ export default function CustomerSpaceLoginDialog({
       >
         <button
           type="button"
-          aria-label="Fermer"
+          aria-label={localeCode === "en" ? "Close" : "Fermer"}
           data-dialog-initial-focus
           onClick={closeDialog}
           className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
@@ -51,7 +54,8 @@ export default function CustomerSpaceLoginDialog({
 
         <div className={message ? "mt-6" : ""}>
           <CustomerSpaceAccessForm
-            choiceTitle="Connectez-vous"
+            choiceTitle={localeCode === "en" ? "Sign in" : "Connectez-vous"}
+            localeCode={localeCode}
             returnTo={returnTo}
           />
         </div>

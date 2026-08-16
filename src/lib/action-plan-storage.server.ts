@@ -15,6 +15,11 @@ import {
   getActiveDefaultCompanyIdentityInTransaction,
 } from "@/lib/company-membership.server";
 import type { CustomerSessionIdentity } from "@/lib/customer-space-auth";
+import {
+  normalizeActionPlanLocaleContext,
+  type ActionPlanContentLocaleCode,
+  type ActionPlanCreationMarketCode,
+} from "@/lib/action-plan-localization";
 import { getAdminFirestore } from "@/lib/firebase-admin";
 import { getLeadRetentionExpiry } from "@/lib/operational-maintenance";
 
@@ -59,6 +64,8 @@ type ActionPlanDocument = {
   lease_expires_at?: string | null;
   next_retry_at?: string | null;
   last_error_code?: string | null;
+  content_locale_code?: ActionPlanContentLocaleCode | null;
+  market_code_at_creation?: ActionPlanCreationMarketCode | null;
 };
 
 export type StoredActionPlan = {
@@ -71,6 +78,8 @@ export type StoredActionPlan = {
   revision: number;
   createdAt: string;
   updatedAt: string;
+  contentLocaleCode: ActionPlanContentLocaleCode;
+  marketCodeAtCreation: ActionPlanCreationMarketCode;
 };
 
 export type ActionPlanIndexEntry = {
@@ -78,6 +87,7 @@ export type ActionPlanIndexEntry = {
   status: "active" | "failed" | "generating";
   title: string;
   updatedAt: string;
+  contentLocaleCode: ActionPlanContentLocaleCode;
 };
 
 export type ActionPlanWriteInput = {
@@ -86,6 +96,8 @@ export type ActionPlanWriteInput = {
   workspaceState?: ActionPlanWorkspaceState;
   sourceText?: string | null;
   generation?: Partial<ActionPlanGenerationMetadata> | null;
+  contentLocaleCode?: ActionPlanContentLocaleCode;
+  marketCodeAtCreation?: ActionPlanCreationMarketCode;
 };
 
 export type ActionPlanGenerationState =
@@ -103,6 +115,8 @@ export type ActionPlanGenerationClaim = {
   leaseOwner: string;
   situation: string;
   title?: string;
+  contentLocaleCode: ActionPlanContentLocaleCode;
+  marketCodeAtCreation: ActionPlanCreationMarketCode;
 };
 
 export type ActionPlanGenerationStartResult =
@@ -130,8 +144,35 @@ export function buildActionPlanGenerationId(uid: string, requestId: string) {
   return `apl_${digest(`action-plan-generation:${uid.trim()}:${requestId.trim()}`).slice(0, 40)}`;
 }
 
-export function buildActionPlanGenerationFingerprint(situation: string) {
-  return digest(`action-plan-situation:${normalizeSourceText(situation) ?? ""}`);
+export function buildActionPlanGenerationFingerprint(
+  situation: string,
+  context?: {
+    contentLocaleCode?: unknown;
+    marketCodeAtCreation?: unknown;
+  },
+) {
+  const normalizedContext = normalizeActionPlanLocaleContext(context);
+  return digest([
+    "action-plan-situation",
+    normalizedContext.contentLocaleCode,
+    normalizedContext.marketCodeAtCreation,
+    normalizeSourceText(situation) ?? "",
+  ].join(":"));
+}
+
+function matchesActionPlanGenerationFingerprint(
+  document: ActionPlanDocument,
+  situation: string,
+) {
+  const current = buildActionPlanGenerationFingerprint(situation, {
+    contentLocaleCode: document.content_locale_code,
+    marketCodeAtCreation: document.market_code_at_creation,
+  });
+  if (document.request_fingerprint === current) return true;
+  if (document.content_locale_code || document.market_code_at_creation) return false;
+  return document.request_fingerprint === digest(
+    `action-plan-situation:${normalizeSourceText(situation) ?? ""}`,
+  );
 }
 
 function normalizeSourceText(value?: string | null) {
@@ -195,6 +236,10 @@ function parseStoredActionPlan(
   const updatedAt = document.updated_at || createdAt;
   if (!Number.isInteger(revision) || revision < 1 || !createdAt || !updatedAt) return null;
 
+  const localeContext = normalizeActionPlanLocaleContext({
+    contentLocaleCode: document.content_locale_code,
+    marketCodeAtCreation: document.market_code_at_creation,
+  });
   return {
     id,
     title: normalizeActionPlanTitle(document.title),
@@ -208,6 +253,7 @@ function parseStoredActionPlan(
     revision,
     createdAt,
     updatedAt,
+    ...localeContext,
   };
 }
 
@@ -279,6 +325,7 @@ function parseActionPlanIndexEntry(
       status: "active",
       title: plan.title,
       updatedAt: plan.updatedAt,
+      contentLocaleCode: plan.contentLocaleCode,
     } : null;
   }
   if (data.status !== "generating" && data.status !== "failed") return null;
@@ -292,6 +339,10 @@ function parseActionPlanIndexEntry(
     status: data.status,
     title: normalizeActionPlanTitle(data.title),
     updatedAt,
+    contentLocaleCode: normalizeActionPlanLocaleContext({
+      contentLocaleCode: data.content_locale_code,
+      marketCodeAtCreation: data.market_code_at_creation,
+    }).contentLocaleCode,
   };
 }
 
@@ -314,11 +365,14 @@ export async function beginActionPlanGeneration(input: {
   identity: CustomerSessionIdentity;
   requestId: string;
   situation: string;
+  contentLocaleCode?: ActionPlanContentLocaleCode;
+  marketCodeAtCreation?: ActionPlanCreationMarketCode;
   now?: Date;
 }): Promise<ActionPlanGenerationStartResult> {
   const uid = input.identity.uid.trim();
   const requestId = input.requestId.trim();
   const situation = normalizeSourceText(input.situation);
+  const localeContext = normalizeActionPlanLocaleContext(input);
   if (!uid || !/^[A-Za-z0-9:_-]{16,160}$/.test(requestId) || !situation) {
     throw new Error("A valid generation request is required.");
   }
@@ -327,7 +381,7 @@ export async function beginActionPlanGeneration(input: {
   const database = getAdminFirestore();
   const id = buildActionPlanGenerationId(uid, requestId);
   const reference = database.collection(ACTION_PLANS_COLLECTION).doc(id);
-  const fingerprint = buildActionPlanGenerationFingerprint(situation);
+  const fingerprint = buildActionPlanGenerationFingerprint(situation, localeContext);
   const now = input.now ?? new Date();
   const nowIso = now.toISOString();
 
@@ -386,7 +440,9 @@ export async function beginActionPlanGeneration(input: {
       schema_version: "generation-1",
       status: "generating",
       plan: null,
-      title: "Plan en cours de création",
+      title: localeContext.contentLocaleCode === "en"
+        ? "Plan being created"
+        : "Plan en cours de création",
       workspace_state: null,
       source_text: situation,
       generation: null,
@@ -406,11 +462,13 @@ export async function beginActionPlanGeneration(input: {
       lease_expires_at: leaseExpiresAt,
       next_retry_at: null,
       last_error_code: null,
+      content_locale_code: localeContext.contentLocaleCode,
+      market_code_at_creation: localeContext.marketCodeAtCreation,
     });
 
     return {
       kind: "claimed",
-      claim: { id, leaseOwner, situation },
+      claim: { id, leaseOwner, situation, ...localeContext },
     };
   });
 }
@@ -452,7 +510,7 @@ export async function resumeActionPlanGenerationForAccess(input: {
     const situation = normalizeSourceText(existing.source_text);
     if (
       !situation
-      || existing.request_fingerprint !== buildActionPlanGenerationFingerprint(situation)
+      || !matchesActionPlanGenerationFingerprint(existing, situation)
     ) {
       return null;
     }
@@ -482,6 +540,10 @@ export async function resumeActionPlanGenerationForAccess(input: {
     }
 
     const attemptCount = previousAttemptCount + 1;
+    const localeContext = normalizeActionPlanLocaleContext({
+      contentLocaleCode: existing.content_locale_code,
+      marketCodeAtCreation: existing.market_code_at_creation,
+    });
     const leaseOwner = randomBytes(18).toString("base64url");
     const nextLeaseExpiresAt = new Date(
       now.getTime() + ACTION_PLAN_GENERATION_LEASE_MS,
@@ -506,6 +568,7 @@ export async function resumeActionPlanGenerationForAccess(input: {
         id: input.id,
         leaseOwner,
         situation,
+        ...localeContext,
         ...(existing.generation_target_title
           ? { title: normalizeActionPlanTitle(existing.generation_target_title) }
           : {}),
@@ -529,14 +592,20 @@ export async function beginExistingBlankActionPlanGeneration(input: {
   const reference = database.collection(ACTION_PLANS_COLLECTION).doc(input.id);
   const now = input.now ?? new Date();
   const nowIso = now.toISOString();
-  const fingerprint = buildActionPlanGenerationFingerprint(situation);
-
   return database.runTransaction(async (transaction) => {
     const [company, snapshot] = await Promise.all([
       getActiveDefaultCompanyIdentityInTransaction(transaction, uid),
       transaction.get(reference),
     ]);
     const existing = snapshot.data() as ActionPlanDocument | undefined;
+    const existingLocaleContext = normalizeActionPlanLocaleContext({
+      contentLocaleCode: existing?.content_locale_code,
+      marketCodeAtCreation: existing?.market_code_at_creation,
+    });
+    const fingerprint = buildActionPlanGenerationFingerprint(
+      situation,
+      existingLocaleContext,
+    );
     if (
       !company
       || !snapshot.exists
@@ -593,7 +662,13 @@ export async function beginExistingBlankActionPlanGeneration(input: {
 
     return {
       kind: "claimed",
-      claim: { id: input.id, leaseOwner, situation, title },
+      claim: {
+        id: input.id,
+        leaseOwner,
+        situation,
+        title,
+        ...existingLocaleContext,
+      },
     };
   });
 }
@@ -722,6 +797,7 @@ export async function createOwnedActionPlanForIdentity(
   const company = await ensureDefaultCompanyForIdentity(identity);
   const id = createActionPlanId();
   const now = new Date().toISOString();
+  const localeContext = normalizeActionPlanLocaleContext(input);
   const document: ActionPlanDocument = {
     schema_version: getPersistedSchemaVersion(input.plan),
     status: "active",
@@ -734,6 +810,8 @@ export async function createOwnedActionPlanForIdentity(
     created_at: now,
     updated_at: now,
     retention_expires_at: getLeadRetentionExpiry(),
+    content_locale_code: localeContext.contentLocaleCode,
+    market_code_at_creation: localeContext.marketCodeAtCreation,
   };
 
   await database.collection(ACTION_PLANS_COLLECTION).doc(id).create(document);

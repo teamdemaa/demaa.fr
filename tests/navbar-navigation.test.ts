@@ -62,20 +62,20 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/app/(application)/plans/[id]/page.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(navbarSource).toContain('aria-label="Ouvrir le menu du compte"');
+    expect(navbarSource).toContain('"Ouvrir le menu du compte"');
     expect(navbarSource).not.toContain('window.location.assign("/")');
     expect(navbarSource).not.toContain("openAuthenticatedAccount");
     expect(navbarSource).not.toContain("<span>Mon espace</span>");
-    expect(navbarSource).toContain('href="/plans"');
-    expect(navbarSource).toContain("<CustomerLogoutButton />");
+    expect(navbarSource).toContain('getLocalizedActionPlanPath(localeCode, "/plans")');
+    expect(navbarSource).toContain("<CustomerLogoutButton localeCode={localeCode} />");
     const logoutSource = await readFile(
       new URL("../src/components/CustomerLogoutButton.tsx", import.meta.url),
       "utf8",
     );
     expect(logoutSource).toContain("deleteCustomerSession");
     expect(logoutSource).toContain("Se déconnecter");
-    expect(navbarSource).toContain('href="/connexion?returnTo=%2Fplans%2Flatest"');
-    expect(navbarSource).toContain("<span>Connexion</span>");
+    expect(navbarSource).toContain('getLocalizedActionPlanPath(localeCode, "/plans/latest")');
+    expect(navbarSource).toContain('"Connexion"');
     expect(navbarSource).not.toContain("<LogIn");
     expect(savedPlanSource).toContain("<Navbar anonymousLanding isAuthenticated minimal />");
   });
@@ -89,14 +89,15 @@ describe("Demaa application navbar", () => {
 
     expect(legacySource).toContain("source: '/mon-espace'");
     expect(legacySource).toContain("destination: '/plans/latest'");
-    expect(loginSource).toContain("<Navbar minimal />");
-    expect(loginSource).toContain('choiceTitle="Connectez-vous"');
-    expect(loginSource).toContain('choiceTitle="Connectez-vous"');
+    expect(loginSource).toContain("<Navbar minimal localeCode={localeCode} />");
+    expect(loginSource).toContain('localeCode === "en" ? "Sign in" : "Connectez-vous"');
     expect(loginSource).not.toContain("Mes plans");
     expect(loginSource).not.toContain("Mon espace");
     expect(modalSource).toContain("getSafeCustomerReturnTo");
     expect(modalSource).toContain("<CustomerSpaceLoginDialog");
-    expect(modalSource).toContain("returnTo={getSafeCustomerReturnTo");
+    expect(modalSource).toContain("const returnTo = getSafeCustomerReturnTo");
+    expect(modalSource).toContain("localeCode={localeCode}");
+    expect(modalSource).toContain("returnTo={returnTo}");
   });
 
   it("restores the latest saved plan unless a new situation is explicitly requested", async () => {
@@ -139,13 +140,14 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain("Académie");
     expect(actionPlanNavSource).not.toContain("Opportunités");
     expect(actionPlanNavSource).not.toContain('label: "Système"');
-    expect(actionPlanNavSource.indexOf('label: "Plan d’action"')).toBeLessThan(
-      actionPlanNavSource.indexOf('label: "Solutions"'),
+    expect(actionPlanNavSource.indexOf('{ view: "plan"')).toBeLessThan(
+      actionPlanNavSource.indexOf('{ view: "solutions"'),
     );
-    expect(actionPlanNavSource.indexOf('label: "Solutions"')).toBeLessThan(
-      actionPlanNavSource.indexOf('label: "Académie"'),
+    expect(actionPlanNavSource.indexOf('{ view: "solutions"')).toBeLessThan(
+      actionPlanNavSource.indexOf('{ view: "academy"'),
     );
-    expect(actionPlanNavSource).toContain("grid-cols-3");
+    expect(actionPlanNavSource).toContain("gridTemplateColumns");
+    expect(actionPlanNavSource).toContain("visibleViews.includes(view)");
     expect(actionPlanNavSource).toContain("h-4 w-4 shrink-0 transition");
     expect(actionPlanNavSource).toContain("rounded-[1.1rem]");
     expect(actionPlanNavSource).toContain("bg-dema-sage text-dema-forest xl:bg-transparent");

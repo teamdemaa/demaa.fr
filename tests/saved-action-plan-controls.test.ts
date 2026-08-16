@@ -19,7 +19,8 @@ describe("saved action plan controls", () => {
     expect(controls).toContain("Changer de plan");
     expect(controls).toContain("Modifié le");
     expect(controls).toContain("availablePlan.id === planId");
-    expect(controls).toContain("onNavigate(`/plans/");
+    expect(controls).toContain("onNavigate(getLocalizedActionPlanPath(");
+    expect(controls).toContain("`/plans/${encodeURIComponent(availablePlan.id)}`");
     expect(controls).toContain("Génération en cours");
     expect(controls).toContain("À reprendre");
     expect(controls).not.toContain("Mon espace");
@@ -30,7 +31,7 @@ describe("saved action plan controls", () => {
     const detail = source("src/components/SavedActionPlanDetail.tsx");
     const controls = source("src/components/SavedActionPlanControls.tsx");
 
-    expect(controls).toContain('aria-label="Nom du plan"');
+    expect(controls).toContain('"Nom du plan"');
     expect(detail).toContain("expectedRevision: revisionRef.current");
     expect(detail).toContain("title: nextSave.title");
     expect(detail).toContain("revisionRef.current = body.revision");
@@ -54,7 +55,7 @@ describe("saved action plan controls", () => {
     expect(controls).toContain('className="flex h-11 min-w-0 flex-1');
     expect(controls).toContain("ActionPlanShareControl");
     expect(controls).toContain("Nouveau plan");
-    expect(controls).toContain('onNavigate("/plans/new")');
+    expect(controls).toContain('getLocalizedActionPlanPath(localeCode, "/plans/new")');
     expect(controls).toContain("Renommer");
     expect(controls).toContain("Supprimer");
     expect(controls.indexOf("Nouveau plan")).toBeLessThan(
@@ -69,7 +70,7 @@ describe("saved action plan controls", () => {
 
     expect(detail).toContain("window.confirm");
     expect(detail).toContain('method: "DELETE"');
-    expect(detail).toContain('router.replace("/plans")');
+    expect(detail).toContain('router.replace(getLocalizedActionPlanPath(interfaceLocaleCode, "/plans"))');
     expect(route).toContain("deleteActionPlanForAccess");
     expect(storage).toContain('status: "deleted"');
   });

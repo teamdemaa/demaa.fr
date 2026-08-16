@@ -54,13 +54,12 @@ import {
   createGeneratedActionPlanWorkspaceState,
   type ActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
-
-const EXAMPLES = [
-  "Je dirige un cabinet comptable de 6 personnes. Les dossiers avancent, mais tout remonte encore vers moi et les échéances sont suivies dans plusieurs fichiers.",
-  "Mon restaurant fonctionne bien le midi, mais la marge baisse. Les achats, les plannings et les pertes ne sont pas suivis de façon régulière.",
-  "Je développe une entreprise de plomberie avec 4 techniciens. Je veux mieux organiser les interventions, les devis et les relances sans ajouter un outil compliqué.",
-  "Je suis consultante indépendante. J’ai des missions, mais mon offre manque de clarté et je veux trouver des clients de manière plus régulière sans démarchage de masse.",
-];
+import {
+  getLocalizedActionPlanPath,
+  type ActionPlanContentLocaleCode,
+  type ActionPlanCreationMarketCode,
+} from "@/lib/action-plan-localization";
+import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
 
 type PendingSolutionSelection = {
   createdPlan: boolean;
@@ -98,6 +97,10 @@ export default function ActionPlanExperience({
   initialAppContext = { view: "plan", planSection: "actions" },
   initialGenerationIntent = false,
   initialStructureIntent = false,
+  contentLocaleCode = "fr",
+  marketCodeAtCreation = "fr-fr",
+  visibleViews,
+  showCoaching = true,
 }: {
   systemOptions: readonly ActionPlanSystemOption[];
   initialEmail?: string;
@@ -105,7 +108,14 @@ export default function ActionPlanExperience({
   initialAppContext?: ActionPlanAppContext;
   initialGenerationIntent?: boolean;
   initialStructureIntent?: boolean;
+  contentLocaleCode?: ActionPlanContentLocaleCode;
+  marketCodeAtCreation?: ActionPlanCreationMarketCode;
+  visibleViews?: readonly ActionPlanView[];
+  showCoaching?: boolean;
 }) {
+  const uiCopy = getActionPlanUiCopy(contentLocaleCode);
+  const newPlanPath = getLocalizedActionPlanPath(contentLocaleCode, "/plans/new");
+  const plansPath = getLocalizedActionPlanPath(contentLocaleCode, "/plans");
   const [situation, setSituation] = useState("");
   const [exampleIndex, setExampleIndex] = useState(0);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState("");
@@ -156,7 +166,11 @@ export default function ActionPlanExperience({
   const manualAccessPromptHandledRef = useRef(false);
   const generationIntentHandledRef = useRef(false);
 
-  useEffect(() => scheduleActionPlanAcademyPayloadPreload(), []);
+  useEffect(() => {
+    if (!visibleViews || visibleViews.includes("academy")) {
+      return scheduleActionPlanAcademyPayloadPreload();
+    }
+  }, [visibleViews]);
 
   function closeAccessPrompt() {
     if (pendingSolutionSelection?.createdPlan) {
@@ -196,7 +210,7 @@ export default function ActionPlanExperience({
 
   function handleAccessAuthenticated() {
     if (generationDraft) {
-      window.location.assign("/plans/new?resume=generation");
+      window.location.assign(`${newPlanPath}?resume=generation`);
       return;
     }
     if (pendingSolutionSelection) {
@@ -218,6 +232,7 @@ export default function ActionPlanExperience({
     onChange: setSituation,
     continuous: true,
     interimResults: true,
+    language: contentLocaleCode === "en" ? "en-GB" : "fr-FR",
     maxLength: 4_000,
   });
 
@@ -376,14 +391,14 @@ export default function ActionPlanExperience({
   useEffect(() => {
     if (situation) return;
 
-    const example = EXAMPLES[exampleIndex];
+    const example = uiCopy.examples[exampleIndex];
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let timeout: number;
 
     if (prefersReducedMotion) {
       setAnimatedPlaceholder(example);
       timeout = window.setTimeout(() => {
-        setExampleIndex((current) => (current + 1) % EXAMPLES.length);
+        setExampleIndex((current) => (current + 1) % uiCopy.examples.length);
       }, 5_500);
       return () => window.clearTimeout(timeout);
     }
@@ -397,14 +412,14 @@ export default function ActionPlanExperience({
       timeout = window.setTimeout(
         cursor < example.length
           ? typeNextCharacter
-          : () => setExampleIndex((current) => (current + 1) % EXAMPLES.length),
+          : () => setExampleIndex((current) => (current + 1) % uiCopy.examples.length),
         cursor < example.length ? 34 : 2_600,
       );
     };
 
     timeout = window.setTimeout(typeNextCharacter, 180);
     return () => window.clearTimeout(timeout);
-  }, [exampleIndex, situation]);
+  }, [exampleIndex, situation, uiCopy.examples]);
 
   useEffect(
     () => () => {
@@ -457,6 +472,8 @@ export default function ActionPlanExperience({
             sourceText: situation.trim(),
             workspaceState: workspace,
             generation: toPersistedAiGenerationMetadata(generation),
+            contentLocaleCode,
+            marketCodeAtCreation,
           }),
           signal: controller.signal,
         });
@@ -473,9 +490,12 @@ export default function ActionPlanExperience({
             setAccessDraft((current) => ({ ...current, mode: "signin", password: "" }));
             setAccessPromptOpen(true);
           }
-          throw new Error(body?.error || "La sauvegarde automatique a échoué.");
+          throw new Error(body?.error || uiCopy.autoSaveFailed);
         }
-        window.location.assign(`/plans/${encodeURIComponent(id)}`);
+        window.location.assign(getLocalizedActionPlanPath(
+          contentLocaleCode,
+          `/plans/${encodeURIComponent(id)}`,
+        ));
       } catch (saveError) {
         autoSaveRunningRef.current = false;
         autoSaveControllerRef.current = null;
@@ -491,6 +511,9 @@ export default function ActionPlanExperience({
     isDemoMode,
     plan,
     situation,
+    contentLocaleCode,
+    marketCodeAtCreation,
+    uiCopy.autoSaveFailed,
     workspace,
   ]);
 
@@ -530,7 +553,7 @@ export default function ActionPlanExperience({
     generationIntentHandledRef.current = true;
     const draft = readActionPlanGenerationDraft();
     if (!draft) {
-      setError("Votre demande a expiré. Décrivez à nouveau votre situation.");
+      setError(uiCopy.expired);
       return;
     }
     setSituation(draft.situation);
@@ -541,7 +564,7 @@ export default function ActionPlanExperience({
       setAccessDraft((current) => ({ ...current, mode: "signin", password: "" }));
       setAccessPromptOpen(true);
     }
-  }, [initialGenerationIntent, isAuthenticated]);
+  }, [initialGenerationIntent, isAuthenticated, uiCopy.expired]);
 
   useEffect(() => {
     if (!queuedGenerationDraft || !isAuthenticated || isDemoMode) return;
@@ -557,7 +580,10 @@ export default function ActionPlanExperience({
     ).then((id) => {
       clearActionPlanGenerationDraft();
       setGenerationDraft(null);
-      window.location.assign(`/plans/${encodeURIComponent(id)}`);
+      window.location.assign(getLocalizedActionPlanPath(
+        contentLocaleCode,
+        `/plans/${encodeURIComponent(id)}`,
+      ));
     }).catch((generationError) => {
       if (generationError instanceof DOMException && generationError.name === "AbortError") {
         return;
@@ -571,7 +597,7 @@ export default function ActionPlanExperience({
       setError(
         generationError instanceof Error
           ? generationError.message
-          : "Impossible de générer le plan pour le moment.",
+          : uiCopy.generationFailed,
       );
     }).finally(() => {
       if (requestControllerRef.current === controller) {
@@ -582,7 +608,7 @@ export default function ActionPlanExperience({
     });
 
     return () => controller.abort();
-  }, [isAuthenticated, isDemoMode, queuedGenerationDraft]);
+  }, [contentLocaleCode, isAuthenticated, isDemoMode, queuedGenerationDraft, uiCopy.generationFailed]);
 
   async function generatePlanFromSituation(
     rawSituation: string,
@@ -592,13 +618,13 @@ export default function ActionPlanExperience({
     if (normalizedSituation.length < 20 || queuedGenerationDraft || isGenerating) {
       setError(
         normalizedSituation.length < 20
-          ? "Décrivez votre situation en quelques phrases pour obtenir un plan utile."
+          ? uiCopy.tooShort
           : null,
       );
       throw new Error(
         normalizedSituation.length < 20
-          ? "Décrivez votre situation en quelques phrases pour obtenir un plan utile."
-          : "Le plan est déjà en cours de création.",
+          ? uiCopy.tooShort
+          : uiCopy.alreadyGenerating,
       );
     }
 
@@ -622,7 +648,10 @@ export default function ActionPlanExperience({
     const cachedDraft = generationDraft ?? readActionPlanGenerationDraft();
     const draft = cachedDraft?.situation === normalizedSituation
       ? cachedDraft
-      : createActionPlanGenerationDraft(normalizedSituation);
+      : createActionPlanGenerationDraft(normalizedSituation, {
+          contentLocaleCode,
+          marketCodeAtCreation,
+        });
     writeActionPlanGenerationDraft(draft);
     setSituation(normalizedSituation);
     setGenerationDraft(draft);
@@ -709,18 +738,19 @@ export default function ActionPlanExperience({
           data-dialog-initial-focus
           onClick={closeAccessPrompt}
           className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:bg-dema-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
-          aria-label="Fermer"
+          aria-label={uiCopy.close}
         >
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
         <div>
           <CustomerSpaceAccessForm
-            choiceTitle="Enregistrez votre plan"
+            choiceTitle={uiCopy.savePlan}
             draft={accessDraft}
             initialMode="create"
             onDraftChange={setAccessDraft}
             onAuthenticated={handleAccessAuthenticated}
-            returnTo={generationDraft ? "/plans/new?resume=generation" : "/plans"}
+            returnTo={generationDraft ? `${newPlanPath}?resume=generation` : plansPath}
+            localeCode={contentLocaleCode}
           />
         </div>
       </section>
@@ -728,36 +758,38 @@ export default function ActionPlanExperience({
   ) : null;
 
   if (isGenerating) {
-    return <ActionPlanGenerationScreen />;
+    return <ActionPlanGenerationScreen localeCode={contentLocaleCode} />;
   }
 
   if (!plan) {
     return (
       <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
-        <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} />
-        <ActionPlanCoachingControl
-          demoMode={isDemoMode}
-          initialEmail={initialEmail}
-          isAuthenticated={isAuthenticated}
-        />
+        <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} localeCode={contentLocaleCode} visibleViews={visibleViews} />
+        {showCoaching ? (
+          <ActionPlanCoachingControl
+            demoMode={isDemoMode}
+            initialEmail={initialEmail}
+            isAuthenticated={isAuthenticated}
+          />
+        ) : null}
         {accessPromptDialog}
         <div className="mx-auto max-w-[68rem] pt-1">
           {activeTab === "plan" ? (
             <section className="mx-auto max-w-5xl pt-5 text-center sm:pt-7 lg:pt-10">
                   <h1 className="text-balance text-[clamp(2.1rem,5.25vw,3.9rem)] font-light leading-[0.98] tracking-[-0.055em] text-brand-blue/62">
-                    Qu’est-ce qui
+                    {uiCopy.heroLead}
                     <br />
                     <span className="demaa-hero-title text-dema-forest">
-                      freine votre entreprise
+                      {uiCopy.heroEmphasis}
                     </span>
                     &nbsp;?
                   </h1>
                   <p className="mx-auto mt-6 max-w-[760px] text-balance text-[15px] font-normal leading-[1.5] text-dema-muted sm:text-lg">
-                    On vous aide à clarifier les priorités, à structurer une activité plus rentable et moins dépendante de vous.
+                    {uiCopy.heroDescription}
                   </p>
                   <form onSubmit={handleGenerate} className="mx-auto mt-7 max-w-[42rem] text-left sm:mt-8">
                     <div className="rounded-[1.45rem] border border-dema-line bg-dema-paper p-2 shadow-[0_14px_38px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">
-                      <label htmlFor="business-situation" className="sr-only">Décrivez la situation de votre entreprise</label>
+                      <label htmlFor="business-situation" className="sr-only">{uiCopy.situationLabel}</label>
                       <div className="relative">
                         {!situation ? (
                           <div
@@ -779,7 +811,7 @@ export default function ActionPlanExperience({
                       <div className="flex items-center justify-end gap-2 px-2 pb-1 sm:px-3">
                         <button
                           type="button"
-                          aria-label={situationDictation.isListening ? "Arrêter la dictée" : "Dicter ma situation"}
+                          aria-label={situationDictation.isListening ? uiCopy.stopDictation : uiCopy.dictate}
                           aria-pressed={situationDictation.isListening}
                           onClick={situationDictation.toggle}
                           className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition ${situationDictation.isListening ? "border-dema-forest bg-dema-sage text-dema-forest" : "border-dema-line bg-dema-paper text-dema-muted hover:border-dema-forest/25 hover:text-dema-forest"}`}
@@ -792,7 +824,7 @@ export default function ActionPlanExperience({
                           className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full bg-dema-forest px-[1.125rem] text-[0.8125rem] font-semibold text-white transition hover:bg-brand-blue disabled:cursor-not-allowed disabled:opacity-45 sm:flex-none"
                         >
                           {isGenerating ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-                          {isGenerating ? "Création du plan…" : "Créer mon plan d’action"}
+                          {isGenerating ? uiCopy.creatingPlan : uiCopy.createPlan}
                           {!isGenerating ? <ArrowRight className="h-4 w-4" aria-hidden="true" /> : null}
                         </button>
                       </div>
@@ -806,7 +838,7 @@ export default function ActionPlanExperience({
                         onClick={handleStartBlankPlan}
                         className="text-sm font-medium text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest"
                       >
-                        Commencer avec un plan vierge
+                        {uiCopy.blankPlan}
                       </button>
                     </div>
                   </form>
@@ -861,8 +893,8 @@ export default function ActionPlanExperience({
 
   return (
     <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
-      <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} />
-      <ActionPlanCoachingControl
+      <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} localeCode={contentLocaleCode} visibleViews={visibleViews} />
+      {showCoaching ? <ActionPlanCoachingControl
         accessPlan={{
           plan,
           sourceText: situation.trim(),
@@ -872,7 +904,7 @@ export default function ActionPlanExperience({
         demoMode={isDemoMode}
         initialEmail={initialEmail}
         isAuthenticated={isAuthenticated}
-      />
+      /> : null}
       {accessPromptDialog}
       {autoSaveStatus === "saving" ? (
         <div
@@ -882,13 +914,13 @@ export default function ActionPlanExperience({
         >
           <div className="flex items-center gap-3 rounded-full bg-dema-paper px-5 py-3 text-sm font-medium text-dema-forest shadow-lg">
             <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
-            Sauvegarde de votre plan…
+            {contentLocaleCode === "en" ? "Saving your plan…" : "Sauvegarde de votre plan…"}
           </div>
         </div>
       ) : null}
       <div className="mx-auto max-w-[68rem]">
         <h1 ref={resultTitleRef} tabIndex={-1} className="sr-only outline-none">
-          Votre plan d’action
+          {contentLocaleCode === "en" ? "Your action plan" : "Votre plan d’action"}
         </h1>
         <div className="pt-1">
           {activeTab === "plan" ? (
@@ -941,8 +973,11 @@ export default function ActionPlanExperience({
                     setWorkspace(null);
                     setError(null);
                   }}
+                  localeCode={contentLocaleCode}
                 />
               )}
+              localeCode={contentLocaleCode}
+              contentLocaleCode={contentLocaleCode}
               />
             </CompanyPilotagePanel>
           ) : null}

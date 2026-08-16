@@ -24,6 +24,7 @@ const EMPTY_AIDS: ActionPlanContextualAidsByActionId = Object.freeze({});
 
 export function useActionPlanContextualAids(input: {
   demoMode?: boolean;
+  enabled?: boolean;
   plan: PersistableActionPlan;
   sourceText?: string | null;
   systemId: string;
@@ -45,17 +46,18 @@ export function useActionPlanContextualAids(input: {
     title: action.title,
   })));
   const demoMode = input.demoMode ?? false;
+  const enabled = input.enabled ?? true;
   const selectedPlacementIds = JSON.stringify(
     input.workspace.selectedSolutionPlacementIdsBySystem[input.systemId] ?? [],
   );
-  const requestKey = `${demoMode ? "demo" : "live"}:${input.systemId}:${input.sourceText ?? ""}:${selectedPlacementIds}:${serializedActions}`;
+  const requestKey = `${enabled ? "enabled" : "disabled"}:${demoMode ? "demo" : "live"}:${input.systemId}:${input.sourceText ?? ""}:${selectedPlacementIds}:${serializedActions}`;
   const [state, setState] = useState<ContextualAidState>({
     aids: EMPTY_AIDS,
     requestKey: "",
   });
 
   useEffect(() => {
-    if (!input.systemId || serializedActions === "[]") return;
+    if (!enabled || !input.systemId || serializedActions === "[]") return;
     let active = true;
     const contextualActions = JSON.parse(
       serializedActions,
@@ -90,7 +92,7 @@ export function useActionPlanContextualAids(input: {
     return () => {
       active = false;
     };
-  }, [demoMode, input.sourceText, input.systemId, requestKey, selectedPlacementIds, serializedActions]);
+  }, [demoMode, enabled, input.sourceText, input.systemId, requestKey, selectedPlacementIds, serializedActions]);
 
   return state.requestKey === requestKey ? state.aids : EMPTY_AIDS;
 }

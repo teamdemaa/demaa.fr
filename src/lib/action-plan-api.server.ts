@@ -30,6 +30,8 @@ export const actionPlanWriteRequestSchema = z
     workspaceState: compatibleActionPlanWorkspaceStateSchema.optional(),
     sourceText: z.string().trim().max(12_000).nullable().optional(),
     generation: actionPlanGenerationMetadataSchema.optional(),
+    contentLocaleCode: z.enum(["fr", "en"]).optional(),
+    marketCodeAtCreation: z.enum(["fr-fr", "global-en-beta"]).optional(),
   })
   .strict();
 

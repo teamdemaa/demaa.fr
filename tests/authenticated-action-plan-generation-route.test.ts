@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
@@ -66,6 +66,8 @@ const claim = {
   id: `apl_${"a".repeat(40)}`,
   leaseOwner: "lease-owner",
   situation: "Je dois mieux organiser le suivi commercial de mon entreprise.",
+  contentLocaleCode: "fr" as const,
+  marketCodeAtCreation: "fr-fr" as const,
 };
 
 describe("authenticated action plan generation route", () => {
@@ -98,6 +100,10 @@ describe("authenticated action plan generation route", () => {
     mocks.recordAiUsage.mockResolvedValue(undefined);
   });
 
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   it("authenticates before creating or paying for a generation", async () => {
     mocks.getCurrentCustomerIdentity.mockResolvedValue(null);
     const response = await POST(request({
@@ -123,8 +129,13 @@ describe("authenticated action plan generation route", () => {
       identity,
       requestId: "generation-request-1234",
       situation: claim.situation,
+      contentLocaleCode: "fr",
+      marketCodeAtCreation: "fr-fr",
     });
-    expect(mocks.generateActionPlanWithMetadata).toHaveBeenCalledWith(claim.situation);
+    expect(mocks.generateActionPlanWithMetadata).toHaveBeenCalledWith(
+      claim.situation,
+      { contentLocaleCode: "fr", marketCodeAtCreation: "fr-fr" },
+    );
     expect(mocks.completeActionPlanGeneration).toHaveBeenCalledWith(
       expect.objectContaining({
         identity,
@@ -132,6 +143,44 @@ describe("authenticated action plan generation route", () => {
         title: "Structurer le suivi commercial",
       }),
     );
+  });
+
+  it("authorizes the hidden English context only behind its server flag", async () => {
+    vi.stubEnv("DEMAA_ENGLISH_BETA_ENABLED", "true");
+    const englishClaim = {
+      ...claim,
+      situation: "Our SaaS is growing but every retention decision still depends on me.",
+      contentLocaleCode: "en" as const,
+      marketCodeAtCreation: "global-en-beta" as const,
+    };
+    mocks.beginActionPlanGeneration.mockResolvedValue({ kind: "claimed", claim: englishClaim });
+    const response = await POST(request({
+      contentLocaleCode: "en",
+      marketCodeAtCreation: "global-en-beta",
+      requestId: "english-generation-1234",
+      situation: "Our SaaS is growing but every retention decision still depends on me.",
+    }));
+    expect(response.status).toBe(201);
+    expect(mocks.beginActionPlanGeneration).toHaveBeenCalledWith(expect.objectContaining({
+      contentLocaleCode: "en",
+      marketCodeAtCreation: "global-en-beta",
+    }));
+    expect(mocks.generateActionPlanWithMetadata).toHaveBeenCalledWith(
+      englishClaim.situation,
+      { contentLocaleCode: "en", marketCodeAtCreation: "global-en-beta" },
+    );
+  });
+
+  it("rejects English generation when the hidden Beta flag is closed", async () => {
+    vi.stubEnv("DEMAA_ENGLISH_BETA_ENABLED", "false");
+    const response = await POST(request({
+      contentLocaleCode: "en",
+      marketCodeAtCreation: "global-en-beta",
+      requestId: "english-generation-1234",
+      situation: "Our SaaS is growing but every retention decision still depends on me.",
+    }));
+    expect(response.status).toBe(404);
+    expect(mocks.beginActionPlanGeneration).not.toHaveBeenCalled();
   });
 
   it("returns an existing in-flight generation without another AI call", async () => {

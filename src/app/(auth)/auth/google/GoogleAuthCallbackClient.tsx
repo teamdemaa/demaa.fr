@@ -54,10 +54,16 @@ function writeMarker(returnTo: string) {
   }
 }
 
-function withTimeout<T>(promise: Promise<T>, timeoutMs: number) {
+function withTimeout<T>(
+  promise: Promise<T>,
+  timeoutMs: number,
+  localeCode: InterfaceLocaleCode,
+) {
   return new Promise<T>((resolve, reject) => {
     const timeout = window.setTimeout(
-      () => reject(new Error("La connexion Google prend trop de temps. Réessayez.")),
+      () => reject(new Error(localeCode === "en"
+        ? "Google sign-in is taking too long. Try again."
+        : "La connexion Google prend trop de temps. Réessayez.")),
       timeoutMs,
     );
     promise.then(
@@ -73,19 +79,25 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number) {
   });
 }
 
-function friendlyGoogleError(error: unknown) {
+function friendlyGoogleError(error: unknown, localeCode: InterfaceLocaleCode) {
   const code = typeof error === "object" && error && "code" in error
     ? String(error.code)
     : "";
   if (code.includes("unauthorized-domain")) {
-    return "Google n’est pas autorisé sur ce domaine.";
+    return localeCode === "en"
+      ? "Google is not authorised on this domain."
+      : "Google n’est pas autorisé sur ce domaine.";
   }
   if (code.includes("account-exists-with-different-credential")) {
-    return "Cette adresse utilise déjà un mot de passe. Connectez-vous avec votre e-mail.";
+    return localeCode === "en"
+      ? "This address already uses a password. Sign in with your email."
+      : "Cette adresse utilise déjà un mot de passe. Connectez-vous avec votre e-mail.";
   }
   return error instanceof Error
     ? error.message
-    : "La connexion Google n’a pas pu aboutir.";
+    : localeCode === "en"
+      ? "Google sign-in could not be completed."
+      : "La connexion Google n’a pas pu aboutir.";
 }
 
 export default function GoogleAuthCallbackClient({
@@ -107,6 +119,7 @@ export default function GoogleAuthCallbackClient({
         const result = await withTimeout(
           consumeGoogleRedirectAndGetIdToken(localeCode),
           15_000,
+          localeCode,
         );
         if (result) {
           const session = await withTimeout(
@@ -115,6 +128,7 @@ export default function GoogleAuthCallbackClient({
               returnTo,
             }),
             15_000,
+            localeCode,
           );
           clearMarker();
           await finishGoogleRedirect(localeCode);
@@ -125,7 +139,9 @@ export default function GoogleAuthCallbackClient({
         const marker = readMarker();
         if (marker?.returnTo === returnTo) {
           clearMarker();
-          throw new Error("La connexion Google n’a pas été finalisée. Réessayez.");
+          throw new Error(localeCode === "en"
+            ? "Google sign-in was not completed. Try again."
+            : "La connexion Google n’a pas été finalisée. Réessayez.");
         }
 
         writeMarker(returnTo);
@@ -137,7 +153,7 @@ export default function GoogleAuthCallbackClient({
           "[google-auth-callback] flow failed",
           callbackError instanceof Error ? callbackError.message : "Unknown error",
         );
-        setError(friendlyGoogleError(callbackError));
+        setError(friendlyGoogleError(callbackError, localeCode));
       }
     })();
   }, [localeCode, returnTo]);
@@ -149,7 +165,7 @@ export default function GoogleAuthCallbackClient({
       await startGoogleRedirect(localeCode);
     } catch (retryError) {
       clearMarker();
-      setError(friendlyGoogleError(retryError));
+      setError(friendlyGoogleError(retryError, localeCode));
     }
   }
 
@@ -158,27 +174,33 @@ export default function GoogleAuthCallbackClient({
       <section className="w-full max-w-[430px] rounded-[1.5rem] border border-dema-line bg-white p-7 text-center shadow-[0_24px_70px_rgba(23,35,29,0.12)]">
         {error ? (
           <>
-            <h1 className="text-2xl font-medium text-brand-blue">Connexion interrompue</h1>
+            <h1 className="text-2xl font-medium text-brand-blue">
+              {localeCode === "en" ? "Sign-in interrupted" : "Connexion interrompue"}
+            </h1>
             <p className="mt-3 text-sm leading-relaxed text-dema-gray">{error}</p>
             <button
               type="button"
               onClick={() => void retry()}
               className="mt-6 inline-flex min-h-[54px] w-full items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-dema-forest/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
             >
-              Réessayer avec Google
+              {localeCode === "en" ? "Try again with Google" : "Réessayer avec Google"}
             </button>
             <Link
               href={`/connexion?returnTo=${encodeURIComponent(returnTo)}`}
               className="mt-4 inline-flex min-h-10 items-center text-sm text-dema-gray underline-offset-4 hover:underline"
             >
-              Continuer avec mon e-mail
+              {localeCode === "en" ? "Continue with my email" : "Continuer avec mon e-mail"}
             </Link>
           </>
         ) : (
           <div role="status" aria-live="polite">
             <LoaderCircle className="mx-auto h-6 w-6 animate-spin text-dema-forest" aria-hidden="true" />
-            <h1 className="mt-5 text-2xl font-medium text-brand-blue">Connexion avec Google</h1>
-            <p className="mt-3 text-sm text-dema-gray">Finalisation de votre accès…</p>
+            <h1 className="mt-5 text-2xl font-medium text-brand-blue">
+              {localeCode === "en" ? "Signing in with Google" : "Connexion avec Google"}
+            </h1>
+            <p className="mt-3 text-sm text-dema-gray">
+              {localeCode === "en" ? "Finishing your sign-in…" : "Finalisation de votre accès…"}
+            </p>
           </div>
         )}
       </section>

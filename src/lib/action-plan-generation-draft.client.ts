@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  normalizeActionPlanLocaleContext,
+  type ActionPlanContentLocaleCode,
+  type ActionPlanCreationMarketCode,
+} from "@/lib/action-plan-localization";
+
 const STORAGE_KEY = "demaa:action-plan-generation:v1";
 const DRAFT_TTL_MS = 2 * 60 * 60 * 1_000;
 
@@ -7,6 +13,8 @@ export type ActionPlanGenerationDraft = Readonly<{
   createdAt: string;
   requestId: string;
   situation: string;
+  contentLocaleCode?: ActionPlanContentLocaleCode;
+  marketCodeAtCreation?: ActionPlanCreationMarketCode;
 }>;
 
 function normalizeSituation(value: unknown) {
@@ -27,6 +35,10 @@ function storage() {
 
 export function createActionPlanGenerationDraft(
   situation: string,
+  context?: {
+    contentLocaleCode?: ActionPlanContentLocaleCode;
+    marketCodeAtCreation?: ActionPlanCreationMarketCode;
+  },
 ): ActionPlanGenerationDraft {
   const normalizedSituation = normalizeSituation(situation);
   if (!normalizedSituation) throw new Error("La situation à générer est invalide.");
@@ -34,6 +46,7 @@ export function createActionPlanGenerationDraft(
     createdAt: new Date().toISOString(),
     requestId: `plan:${crypto.randomUUID()}`,
     situation: normalizedSituation,
+    ...normalizeActionPlanLocaleContext(context),
   };
 }
 
@@ -68,6 +81,7 @@ export function readActionPlanGenerationDraft(): ActionPlanGenerationDraft | nul
       createdAt: new Date(createdAt).toISOString(),
       requestId: parsed.requestId,
       situation,
+      ...normalizeActionPlanLocaleContext(parsed),
     };
   } catch {
     clearActionPlanGenerationDraft();

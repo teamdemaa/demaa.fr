@@ -15,7 +15,7 @@ describe("progressive plan authentication", () => {
     expect(source).toContain("large");
     expect(googleButton).toContain("Continuer avec Google");
     expect(source).toContain("Continuer avec mon e-mail");
-    expect(experience).toContain('choiceTitle="Enregistrez votre plan"');
+    expect(experience).toContain("choiceTitle={uiCopy.savePlan}");
     expect(source).not.toContain("J’ai déjà un compte");
     expect(experience).not.toContain("Votre plan sera généré et enregistré dans votre espace.");
   });
@@ -29,9 +29,10 @@ describe("progressive plan authentication", () => {
   });
 
   it("keeps account creation and sign-in as an explicit reversible choice", () => {
-    expect(source).toContain('? "Créez votre accès"');
-    expect(source).toContain(': "Bon retour"');
-    expect(source).toContain('mode === "create" ? "Se connecter" : "Créer mon accès"');
+    expect(source).toContain('"Créez votre accès"');
+    expect(source).toContain('"Bon retour"');
+    expect(source).toContain('"Se connecter"');
+    expect(source).toContain('"Créer mon accès"');
     expect(source).toContain('mode: mode === "create" ? "signin" : "create"');
     expect(source).toContain("Modifier");
     expect(source).toContain("Retour aux options de connexion");
@@ -49,8 +50,8 @@ describe("progressive plan authentication", () => {
     expect(source).toContain("min-h-[54px]");
     expect(source).not.toContain("Annuler");
     expect(source).not.toContain("onCancel");
-    expect(loginDialog).toContain('aria-label="Fermer"');
-    expect(experience).toContain('aria-label="Fermer"');
+    expect(loginDialog).toContain('localeCode === "en" ? "Close" : "Fermer"');
+    expect(experience).toContain("aria-label={uiCopy.close}");
   });
 
   it("does not move generation or generated output into the access form", () => {

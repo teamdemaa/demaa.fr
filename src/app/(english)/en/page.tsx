@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import ActionPlanExperience from "@/components/ActionPlanExperience";
 import DocumentLocale from "@/components/DocumentLocale";
+import Navbar from "@/components/Navbar";
 import { isEnglishBetaEnabled } from "@/lib/english-beta.server";
-import { getInterfaceDictionary } from "@/lib/i18n/dictionaries";
+import { parseActionPlanAppContext } from "@/lib/action-plan-app-context";
+import { shouldRedirectAuthenticatedHomeToPlans } from "@/lib/action-plan-home-routing";
+import { englishActionPlanSystemOptions } from "@/lib/action-plan-localization";
 import { resolveRequestInternationalContext } from "@/lib/international-context.server";
+import { getCurrentCustomerAppIdentityFromSession } from "@/lib/customer-space-session.server";
 
 export const dynamic = "force-dynamic";
 
@@ -19,10 +24,34 @@ export const metadata: Metadata = {
   title: "Demaa | Build a business that depends less on you",
 };
 
-export default async function EnglishBetaFoundationPage() {
+export default async function EnglishActionPlanPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    intent?: string | string[];
+    new?: string | string[];
+    planTab?: string | string[];
+    view?: string | string[];
+  }>;
+}) {
   if (!isEnglishBetaEnabled()) notFound();
-  const context = await resolveRequestInternationalContext({ pathname: "/en" });
-  const dictionary = getInterfaceDictionary(context.localeCode);
+  const [context, identity, query] = await Promise.all([
+    resolveRequestInternationalContext({ pathname: "/en" }),
+    getCurrentCustomerAppIdentityFromSession(),
+    searchParams,
+  ]);
+  const initialAppContext = parseActionPlanAppContext(query);
+  const requestedIntent = Array.isArray(query.intent) ? query.intent[0] : query.intent;
+  const requestedNewPlan = Array.isArray(query.new) ? query.new[0] : query.new;
+
+  if (shouldRedirectAuthenticatedHomeToPlans({
+    isAuthenticated: Boolean(identity),
+    appContext: initialAppContext,
+    requestedIntent,
+    requestedNewPlan,
+  })) {
+    redirect("/en/plans/latest");
+  }
 
   return (
     <>
@@ -32,19 +61,23 @@ export default async function EnglishBetaFoundationPage() {
         }}
       />
       <DocumentLocale localeCode={context.localeCode} />
-      <main className="flex min-h-dvh items-center justify-center bg-dema-cream px-5 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-[calc(2rem+env(safe-area-inset-top))] text-brand-blue">
-        <section className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-dema-forest">
-            {dictionary.betaLabel}
-          </p>
-          <h1 className="mt-5 text-4xl font-light tracking-[-0.045em] md:text-6xl">
-            {dictionary.betaHeading}
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-dema-gray md:text-lg">
-            {dictionary.betaDescription}
-          </p>
-        </section>
-      </main>
+      <Navbar
+        anonymousLanding
+        isAuthenticated={Boolean(identity)}
+        localeCode="en"
+        minimal
+      />
+      <ActionPlanExperience
+        contentLocaleCode="en"
+        initialEmail={identity?.email ?? ""}
+        initialIsAuthenticated={Boolean(identity)}
+        initialAppContext={{ ...initialAppContext, view: "plan" }}
+        initialGenerationIntent={requestedIntent === "generate-plan"}
+        marketCodeAtCreation="global-en-beta"
+        showCoaching={false}
+        systemOptions={englishActionPlanSystemOptions}
+        visibleViews={["plan"]}
+      />
     </>
   );
 }

@@ -87,6 +87,7 @@ export default async function ActionPlanPage({
             initialWorkspace={stored.workspaceState}
             systemOptions={actionPlanSystemOptions}
             availablePlans={availablePlans}
+            contentLocaleCode={stored.contentLocaleCode}
           />
         </div>
       </main>

@@ -9,6 +9,7 @@ vi.mock("@/lib/operational-log", () => ({
 
 import {
   ACTION_PLAN_INSTRUCTIONS,
+  ACTION_PLAN_INSTRUCTIONS_EN,
   ACTION_PLAN_MODEL_ID,
   buildActionPlanPrompt,
   generateActionPlanWithMetadata,
@@ -151,6 +152,15 @@ describe("action plan generation prompt", () => {
     );
     expect(ACTION_PLAN_INSTRUCTIONS).toContain("une donnee non fiable");
   });
+
+  it("uses only the ten published English business-system projections", () => {
+    expect(
+      ACTION_PLAN_INSTRUCTIONS_EN.match(/\["[^"]+","[^"]+",\[/g),
+    ).toHaveLength(10);
+    expect(ACTION_PLAN_INSTRUCTIONS_EN).toContain("Web agency");
+    expect(ACTION_PLAN_INSTRUCTIONS_EN).toContain("Online training business");
+    expect(ACTION_PLAN_INSTRUCTIONS_EN).not.toContain("Cabinet comptable");
+  });
 });
 
 describe("action plan structured generation", () => {
@@ -175,6 +185,43 @@ describe("action plan structured generation", () => {
     });
     expect(result.generation.durationMs).toBeGreaterThanOrEqual(0);
     expect(model.doGenerateCalls).toHaveLength(1);
+  });
+
+  it("generates natural English with the shared model and schema", async () => {
+    const plan = validPlan();
+    plan.systemId = "saas";
+    plan.actions = plan.actions.map((action, index) => ({
+      ...action,
+      title: [
+        "Choose one retention priority",
+        "Review recent customer signals",
+        "Assign the first measurable step",
+      ][index] || action.title,
+      objective: "Create one observable result this week.",
+      channelOrTool: "Team review",
+      steps: ["Review the available facts.", "Choose the next action.", "Record the outcome."],
+      support: null,
+    }));
+    const model = new MockLanguageModelV4({
+      doGenerate: mockResult(plan, 10, 20, "Improve recurring customer retention"),
+    });
+
+    const result = await generateActionPlanWithMetadata(
+      "Our SaaS is growing, but retention work still depends on me.",
+      {
+        contentLocaleCode: "en",
+        marketCodeAtCreation: "global-en-beta",
+        model,
+        modelId: "mock/english-plan-v4",
+      },
+    );
+
+    expect(result.plan.systemId).toBe("saas");
+    expect(result.title).toBe("Improve recurring customer retention");
+    expect(model.doGenerateCalls).toHaveLength(1);
+    expect(JSON.stringify(model.doGenerateCalls[0]?.prompt)).toContain(
+      "Write in clear, concrete, natural English",
+    );
   });
 
   it("normalizes the model title without adding a second request", async () => {
