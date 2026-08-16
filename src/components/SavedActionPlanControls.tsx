@@ -32,7 +32,7 @@ export function SavedActionPlanSelector({
   title: string;
 }) {
   return (
-    <div className="flex w-full max-w-xl items-center rounded-full border border-dema-line bg-dema-paper px-1.5 py-1 shadow-[0_8px_24px_rgba(23,35,29,0.035)] focus-within:border-dema-forest/30">
+    <div className="flex h-11 min-w-0 flex-1 items-center rounded-full border border-dema-line bg-dema-paper px-1.5 shadow-[0_8px_24px_rgba(23,35,29,0.035)] focus-within:border-dema-forest/30 focus-within:ring-2 focus-within:ring-dema-forest/20">
       <input
         ref={inputRef}
         aria-label="Nom du plan"
@@ -48,7 +48,7 @@ export function SavedActionPlanSelector({
             event.currentTarget.blur();
           }
         }}
-        className="min-h-10 min-w-0 flex-1 bg-transparent px-3 text-base font-medium text-brand-blue outline-none sm:text-lg"
+        className="h-full min-w-0 flex-1 bg-transparent px-3 text-base font-medium text-brand-blue outline-none sm:text-lg"
       />
     </div>
   );
@@ -133,7 +133,7 @@ export function SavedActionPlanMenu({
         ref={triggerRef}
         type="button"
         onClick={() => setOpen((current) => !current)}
-        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted transition hover:border-dema-forest/30 hover:text-dema-forest sm:h-11 sm:w-11"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted transition hover:border-dema-forest/30 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
         aria-label="Actions du plan"
         aria-expanded={open}
         aria-controls={menuId}

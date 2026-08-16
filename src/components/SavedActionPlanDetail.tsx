@@ -350,12 +350,31 @@ export default function SavedActionPlanDetail({
       <div className="pt-1">
         {activeTab === "plan" ? (
           <>
-            <div className="mb-4 flex items-center justify-between gap-3">
+            <div className="mb-3 flex min-w-0 max-w-[40rem] items-center gap-2">
               <SavedActionPlanSelector
                 inputRef={titleInputRef}
                 onResetTitle={() => setPlanTitle(confirmedTitleRef.current)}
                 onTitleChange={setPlanTitle}
                 title={planTitle}
+              />
+              <SavedActionPlanMenu
+                availablePlans={availablePlans}
+                deleting={isDeleting}
+                navigationPending={Boolean(navigationTarget)}
+                onNavigate={(href) => { void navigateAfterSave(href); }}
+                onDelete={() => { void deletePlan(); }}
+                onRename={() => {
+                  titleInputRef.current?.focus();
+                  titleInputRef.current?.select();
+                }}
+                plan={currentPlan}
+                planId={planId}
+                openingPlanId={navigationTarget?.startsWith("/plans/")
+                  && navigationTarget !== "/plans/new"
+                  ? decodeURIComponent(navigationTarget.slice("/plans/".length))
+                  : null}
+                title={planTitle}
+                workspace={workspace}
               />
             </div>
             <div className="sr-only" role="status" aria-live="polite">
@@ -422,27 +441,6 @@ export default function SavedActionPlanDetail({
                 systemTab: "solutions",
                 solutionResourceSlug: resourceSlug,
               })}
-              headerActions={(
-                <SavedActionPlanMenu
-                  availablePlans={availablePlans}
-                  deleting={isDeleting}
-                  navigationPending={Boolean(navigationTarget)}
-                  onNavigate={(href) => { void navigateAfterSave(href); }}
-                  onDelete={() => { void deletePlan(); }}
-                  onRename={() => {
-                    titleInputRef.current?.focus();
-                    titleInputRef.current?.select();
-                  }}
-                  plan={currentPlan}
-                  planId={planId}
-                  openingPlanId={navigationTarget?.startsWith("/plans/")
-                    && navigationTarget !== "/plans/new"
-                    ? decodeURIComponent(navigationTarget.slice("/plans/".length))
-                    : null}
-                  title={planTitle}
-                  workspace={workspace}
-                />
-              )}
             />
           </>
         ) : null}
