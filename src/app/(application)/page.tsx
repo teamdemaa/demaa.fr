@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import ActionPlanExperience from "@/components/ActionPlanExperience";
 import Navbar from "@/components/Navbar";
 import { parseActionPlanAppContext } from "@/lib/action-plan-app-context";
 import { shouldRedirectAuthenticatedHomeToPlans } from "@/lib/action-plan-home-routing";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
-import {
-  CUSTOMER_SPACE_COOKIE,
-  getIdentityFromCustomerSessionToken,
-} from "@/lib/customer-space-auth";
+import { getCurrentCustomerAppIdentityFromSession } from "@/lib/customer-space-session.server";
 
 const title = "Un plan d’action concret pour votre entreprise | Demaa";
 const description =
@@ -48,9 +44,10 @@ export default async function HomePage({
     view?: string | string[];
   }>;
 }) {
-  const [cookieStore, query] = await Promise.all([cookies(), searchParams]);
-  const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
-  const identity = await getIdentityFromCustomerSessionToken(sessionToken);
+  const [identity, query] = await Promise.all([
+    getCurrentCustomerAppIdentityFromSession(),
+    searchParams,
+  ]);
   const initialAppContext = parseActionPlanAppContext(query);
   const requestedIntent = Array.isArray(query.intent) ? query.intent[0] : query.intent;
   const requestedNewPlan = Array.isArray(query.new) ? query.new[0] : query.new;

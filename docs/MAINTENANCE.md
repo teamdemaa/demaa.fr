@@ -88,7 +88,9 @@ Helpers utiles:
 
 - `src/lib/firebase-admin.ts`: initialisation Firebase unique.
 - `src/lib/generations-db.ts`: acces Firestore pour les suivis de kits et les historiques commerciaux sauvegardes.
-- `src/lib/customer-space-auth.ts`: verification des sessions Firebase client.
+- `src/lib/customer-space-auth.ts`: vérification Firebase et création du cookie
+  natif ; `/api/auth/session` est l'unique frontière HTTP de création, lecture
+  et suppression de la session applicative.
 - `src/lib/coach-business-subscription.server.ts`: projection Stripe idempotente de l'abonnement Coach business.
 - `src/lib/monthly-accompaniment-benefit.server.ts`: résolution serveur du droit non cumulable aux 12 % par UID.
 - `src/lib/slack.ts`: envoi Slack commun.

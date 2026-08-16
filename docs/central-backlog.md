@@ -1,6 +1,6 @@
 # Backlog central Demaa
 
-Dernière consolidation : 15 août 2026.
+Dernière consolidation : 16 août 2026.
 
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
@@ -54,7 +54,51 @@ de déploiement.
   envoyé la notification Slack et accepté la livraison e-mail sans exposer le
   lien Google Sheets au navigateur.
 
-## Séquence d'exécution active — 15 août 2026
+## Séquence de stabilisation active — 16 août 2026
+
+Cette séquence remplace celle du 15 août comme état technique courant du
+prochain candidat. Elle ne réactive aucun lot produit différé.
+
+1. Conserver un seul domaine canonique, `https://demaa.co`. La séparation entre
+   site public, application, authentification et administration est réalisée
+   par des groupes de routes Next.js sans modifier les URL et sans créer
+   `app.demaa.co`.
+2. Le layout racine ne contient plus de pied de page ni de consommateur Google.
+   Seul le groupe marketing rend le pied de page ; application,
+   authentification et administration ne peuvent donc plus l'afficher par
+   accident ou par une règle CSS de masquage.
+3. `/api/auth/session` est l'unique API de session : `POST` échange le jeton
+   Firebase, garantit l'entreprise et l'appartenance active avant de poser le
+   cookie HttpOnly ; `GET` contrôle explicitement le contexte entreprise ;
+   `DELETE` déconnecte. Une indisponibilité de ce contexte ne doit jamais être
+   rendue comme une liste vide de plans.
+4. E-mail/mot de passe et Google utilisent la même modale progressive et la
+   même API. Google reste en popup sur desktop et utilise `/auth/google` comme
+   callback dédié sur mobile/PWA. Une popup desktop bloquée ou sans réponse est
+   bornée et le nouvel essai bascule vers cette redirection dédiée. Le reverse
+   proxy de l'option 3 recommandée par Firebase sert uniquement `/__/auth/*`
+   depuis le helper Firebase ; la configuration de l'application reste fournie
+   explicitement au SDK.
+5. La génération reste strictement postérieure à l'authentification. Seuls la
+   situation et l'identifiant idempotent sont conservés temporairement ; la
+   reprise canonique est `/plans/new?resume=generation`, puis le plan durable
+   passe de `generating` à `active` ou `failed` côté serveur.
+6. Pour une session active, `/` et le logo ouvrent `/plans/latest`. Le dernier
+   plan est ouvert directement ; sans plan, `/plans/new` est ouvert. `/plans`
+   reste uniquement l'historique. Les anciennes routes `/mon-espace` sont des
+   redirections permanentes et leur runtime a été retiré.
+7. Avant promotion : suite complète, TypeScript, ESLint, validation des
+   données, build, contrôle PWA et E2E desktop/mobile des parcours e-mail,
+   Google, génération, dernier plan, historique, safe areas et dictée.
+8. Deux contrôles externes restent des gates de promotion et non des travaux
+   de code : confirmer dans Google Cloud l'URI OAuth
+   `https://demaa.co/__/auth/handler`, puis aligner la politique de mot de passe
+   Firebase avec le minimum de 8 caractères affiché par l'interface. L'audit du
+   16 août confirme Google et e-mail/mot de passe actifs, `demaa.co` autorisé,
+   l'anti-énumération actif, mais la politique Firebase encore à son minimum
+   par défaut de 6 caractères.
+
+## Séquence d'exécution historique — 15 août 2026
 
 Cette séquence courte est la seule liste à utiliser pour préparer le prochain
 merge. Les checklists datées et les anciens lots conservés plus bas documentent

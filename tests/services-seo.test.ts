@@ -6,8 +6,8 @@ vi.mock("server-only", () => ({}));
 import {
   generateMetadata,
   generateStaticParams,
-} from "@/app/services/[slug]/page";
-import { metadata as servicesIndexMetadata } from "@/app/services/page";
+} from "@/app/(marketing)/services/[slug]/page";
+import { metadata as servicesIndexMetadata } from "@/app/(marketing)/services/page";
 import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
 import {
   buildServicePageJsonLd,
@@ -90,7 +90,7 @@ describe("canonical Services SEO and redirects", () => {
 
   it("owns canonical metadata and the relevant permanent redirects", async () => {
     const [detailSource, nextConfig, proxy, sitemap] = await Promise.all([
-      readSource("src/app/services/[slug]/page.tsx"),
+      readSource("src/app/(marketing)/services/[slug]/page.tsx"),
       readSource("next.config.ts"),
       readSource("src/proxy.ts"),
       readSource("src/app/sitemap.ts"),

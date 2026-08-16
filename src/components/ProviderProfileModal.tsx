@@ -198,7 +198,7 @@ export default function ProviderProfileModal({
             {!identityLoading && !authenticatedEmail ? (
               <div className="mt-7 rounded-[1.1rem] border border-dema-line bg-dema-cream/55 p-4 sm:p-5">
                 <div>
-                  <CustomerSpaceAccessForm compact returnTo={returnTo} simple />
+                  <CustomerSpaceAccessForm choiceTitle="Connectez-vous" returnTo={returnTo} />
                 </div>
               </div>
             ) : null}

@@ -44,10 +44,18 @@ export function proxy(request: NextRequest) {
   const host = request.headers.get("host")?.toLowerCase();
 
   if (host) {
+    const isVercelProductionCronRequest =
+      process.env.VERCEL_ENV === "production"
+      && host.endsWith(".vercel.app")
+      && pathname.startsWith("/api/cron/");
     const shouldRedirect =
       host === "www.demaa.co" ||
       LEGACY_HOSTS.has(host) ||
-      (host.endsWith(".vercel.app") && !isVercelPreviewHost(host));
+      (
+        host.endsWith(".vercel.app")
+        && !isVercelPreviewHost(host)
+        && !isVercelProductionCronRequest
+      );
 
     if (shouldRedirect) {
       const url = request.nextUrl.clone();

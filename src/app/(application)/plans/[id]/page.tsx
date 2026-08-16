@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
+import ActionPlanNavbar from "@/components/ActionPlanNavbar";
 import SavedActionPlanDetail from "@/components/SavedActionPlanDetail";
 import SavedActionPlanGenerationState from "@/components/SavedActionPlanGenerationState";
 import {
@@ -13,10 +13,7 @@ import {
   getOwnedActionPlansForIdentity,
 } from "@/lib/action-plan-storage.server";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
-import {
-  CUSTOMER_SPACE_COOKIE,
-  getIdentityFromCustomerSessionToken,
-} from "@/lib/customer-space-auth";
+import { getCurrentCustomerAppIdentityFromSession } from "@/lib/customer-space-session.server";
 
 export const dynamic = "force-dynamic";
 
@@ -32,14 +29,12 @@ export default async function ActionPlanPage({
   params: Promise<{ id: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const [{ id }, query, cookieStore] = await Promise.all([
+  const [{ id }, query, identity] = await Promise.all([
     params,
     searchParams,
-    cookies(),
+    getCurrentCustomerAppIdentityFromSession(),
   ]);
   const initialAppContext = parseActionPlanAppContext(query);
-  const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
-  const identity = await getIdentityFromCustomerSessionToken(sessionToken);
 
   if (!identity) {
     const returnTo = buildActionPlanAppHref({
@@ -61,6 +56,7 @@ export default async function ActionPlanPage({
     return (
       <div data-action-plan-workspace className="min-h-screen bg-dema-cream text-brand-blue">
         <Navbar anonymousLanding isAuthenticated minimal />
+        <ActionPlanNavbar activeView="plan" routeNavigation />
         <SavedActionPlanGenerationState
           canRetry={generationState.status === "failed" && generationState.canRetry}
           planId={generationState.id}

@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import ActionPlanExperience from "@/components/ActionPlanExperience";
 import Navbar from "@/components/Navbar";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
-import {
-  CUSTOMER_SPACE_COOKIE,
-  getIdentityFromCustomerSessionToken,
-} from "@/lib/customer-space-auth";
+import { getCurrentCustomerAppIdentityFromSession } from "@/lib/customer-space-session.server";
 
 export const dynamic = "force-dynamic";
 
@@ -16,10 +12,15 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function NewActionPlanPage() {
-  const cookieStore = await cookies();
-  const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
-  const identity = await getIdentityFromCustomerSessionToken(sessionToken);
+export default async function NewActionPlanPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ resume?: string | string[] }>;
+}) {
+  const [identity, params] = await Promise.all([
+    getCurrentCustomerAppIdentityFromSession(),
+    searchParams,
+  ]);
   if (!identity) redirect("/connexion?returnTo=%2Fplans%2Fnew");
 
   return (
@@ -28,6 +29,9 @@ export default async function NewActionPlanPage() {
       <ActionPlanExperience
         initialEmail={identity.email}
         initialIsAuthenticated
+        initialGenerationIntent={
+          (Array.isArray(params.resume) ? params.resume[0] : params.resume) === "generation"
+        }
         systemOptions={actionPlanSystemOptions}
       />
     </>

@@ -242,7 +242,7 @@ export default function StructureNewsletterBlock() {
               </form>
             ) : !identityLoading ? (
               <div className="rounded-xl border border-dema-line bg-dema-paper p-4">
-                <CustomerSpaceAccessForm compact returnTo="/academie?intent=structure" simple />
+                <CustomerSpaceAccessForm choiceTitle="Connectez-vous" returnTo="/academie?intent=structure" />
               </div>
             ) : null}
 
@@ -310,7 +310,7 @@ export default function StructureNewsletterBlock() {
                   <p className="mb-4 text-sm leading-relaxed text-dema-muted">
                     Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer.
                   </p>
-                  <CustomerSpaceAccessForm compact returnTo="/academie?intent=structure-problem" simple />
+                  <CustomerSpaceAccessForm choiceTitle="Connectez-vous" returnTo="/academie?intent=structure-problem" />
                 </div>
               ) : null}
 

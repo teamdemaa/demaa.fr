@@ -7,7 +7,7 @@ function source(path: string) {
 
 describe("saved action plan controls", () => {
   it("loads every owned plan into the compact three-point menu", () => {
-    const page = source("src/app/plans/[id]/page.tsx");
+    const page = source("src/app/(application)/plans/[id]/page.tsx");
     const detail = source("src/components/SavedActionPlanDetail.tsx");
     const controls = source("src/components/SavedActionPlanControls.tsx");
 

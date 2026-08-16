@@ -26,7 +26,7 @@ export default function CustomerSpaceLoginDialog({
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="customer-login-title"
+        aria-labelledby="action-plan-access-title"
         tabIndex={-1}
         onClick={(event) => event.stopPropagation()}
         className="relative w-full max-w-md rounded-t-[1.4rem] border border-dema-line bg-dema-paper px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-16 shadow-[0_24px_70px_rgba(23,35,29,0.16)] outline-none sm:rounded-[1.4rem] sm:p-8 sm:pt-16"
@@ -41,22 +41,20 @@ export default function CustomerSpaceLoginDialog({
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
 
-        <div className="text-center">
-          <h2 id="customer-login-title" className="text-3xl font-light tracking-[-0.04em] text-brand-blue">
-            Se connecter
-          </h2>
-          <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-dema-muted">
-            Retrouvez vos plans avec votre adresse e-mail et votre mot de passe.
-          </p>
-          {message ? (
+        {message ? (
+          <div className="text-center">
             <p className="mt-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
               {message.slice(0, 180)}
             </p>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
 
-        <div className="mt-6">
-          <CustomerSpaceAccessForm returnTo={returnTo} simple />
+        <div className={message ? "mt-6" : ""}>
+          <CustomerSpaceAccessForm
+            choiceTitle="Connectez-vous"
+            onCancel={closeDialog}
+            returnTo={returnTo}
+          />
         </div>
       </section>
     </div>

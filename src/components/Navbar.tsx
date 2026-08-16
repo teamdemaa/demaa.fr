@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { CircleUserRound } from "lucide-react";
+import CustomerLogoutButton from "@/components/CustomerLogoutButton";
 import DemaaWordmark from "@/components/DemaaWordmark";
 
 export default function Navbar({
@@ -62,14 +63,7 @@ export default function Navbar({
                       >
                         Mes plans
                       </Link>
-                      <form action="/api/customer-space/logout?returnTo=%2F" method="post">
-                        <button
-                          type="submit"
-                          className="block w-full whitespace-nowrap px-2 py-1.5 text-left text-sm text-brand-blue transition hover:text-dema-forest"
-                        >
-                          Se déconnecter
-                        </button>
-                      </form>
+                      <CustomerLogoutButton />
                     </div>
                   </details>
                 ) : (

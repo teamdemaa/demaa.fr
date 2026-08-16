@@ -2,8 +2,6 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import CookieConsentManager from "@/components/CookieConsentManager";
-import Footer from "@/components/Footer";
-import GoogleRedirectSessionConsumer from "@/components/GoogleRedirectSessionConsumer";
 import { getCanonicalOrigin } from "@/lib/site-url";
 
 const satoshi = localFont({
@@ -111,10 +109,8 @@ export default function RootLayout({
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-background text-foreground font-sans"
       >
-        <GoogleRedirectSessionConsumer />
         {children}
         {modal}
-        <Footer />
         <CookieConsentManager />
       </body>
     </html>

@@ -9,12 +9,13 @@ describe("progressive plan authentication", () => {
   it("starts with one Google option and one email action", () => {
     expect(source).toContain('type ProgressiveAccessStep = "choice" | "email" | "password"');
     expect(source).toContain('useState<ProgressiveAccessStep>("choice")');
-    expect(source).toContain("Enregistrez votre plan");
+    expect(source).toContain('choiceTitle = "Accédez à votre espace"');
     expect(source).toContain("<GoogleCustomerSignInButton");
     expect(source).toContain("large");
     expect(googleButton).toContain("Continuer avec Google");
     expect(source).toContain("Continuer avec mon e-mail");
-    expect(experience).toContain("progressivePlan");
+    expect(experience).toContain('choiceTitle="Enregistrez votre plan"');
+    expect(source).not.toContain("J’ai déjà un compte");
     expect(experience).not.toContain("Votre plan sera généré et enregistré dans votre espace.");
   });
 
@@ -34,6 +35,7 @@ describe("progressive plan authentication", () => {
     expect(source).toContain("Modifier");
     expect(source).toContain("Retour aux options de connexion");
     expect(source).toContain("Retour à l’étape e-mail");
+    expect(source).toContain("Mot de passe oublié ?");
   });
 
   it("preserves the accessible bottom-sheet contract", () => {

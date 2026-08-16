@@ -28,8 +28,8 @@ describe("private external recommendation catalog", () => {
 
   it("keeps the private catalog out of public page and API modules", () => {
     const paths = [
-      "src/app/services/page.tsx",
-      "src/app/services/[slug]/page.tsx",
+      "src/app/(marketing)/services/page.tsx",
+      "src/app/(marketing)/services/[slug]/page.tsx",
       "src/lib/canonical-services-system-section.server.ts",
       "src/app/api/action-plan/system/[slug]/route.ts",
     ];

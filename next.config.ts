@@ -63,15 +63,27 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     return firebaseAuthHelperOrigin
-      ? [{
+      ? [
+        {
           source: '/__/auth/:path*',
           destination: `${firebaseAuthHelperOrigin}/__/auth/:path*`,
-        }]
+        },
+      ]
       : [];
   },
   async redirects() {
     return [
       ...ACADEMY_PERMANENT_REDIRECTS,
+      {
+        source: '/mon-espace',
+        destination: '/plans/latest',
+        permanent: true,
+      },
+      {
+        source: '/mon-espace/plans/:id',
+        destination: '/plans/:id',
+        permanent: true,
+      },
       {
         source: '/accompagnement',
         destination: '/services',

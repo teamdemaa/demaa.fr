@@ -48,7 +48,7 @@ describe("Structure newsletter public contract", () => {
     const approved = [
       "src/components/SystemDetailContent.tsx",
       "src/components/AcademyIndexClient.tsx",
-      "src/app/sur-mesure/page.tsx",
+      "src/app/(marketing)/sur-mesure/page.tsx",
     ];
 
     for (const path of approved) {
@@ -57,12 +57,12 @@ describe("Structure newsletter public contract", () => {
 
     const academyIndex = read("src/components/AcademyIndexClient.tsx");
     expect(academyIndex).toContain("!embedded || showStructureNewsletter");
-    expect(read("src/app/page.tsx")).toContain(
+    expect(read("src/app/(application)/page.tsx")).toContain(
       'requestedIntent === "structure" || requestedIntent === "structure-problem"',
     );
 
     const academyCourseFiles = [
-      "src/app/academie/[courseSlug]/page.tsx",
+      "src/app/(marketing)/academie/[courseSlug]/page.tsx",
       "src/components/AcademyCourseReader.tsx",
     ].filter((path) => {
       try {

@@ -72,7 +72,7 @@ describe("coaching draft retention", () => {
 
   it("documents the temporary draft and its retention without naming its access mechanism", () => {
     const privacy = readFileSync(
-      "src/app/politique-de-confidentialite/page.tsx",
+      "src/app/(marketing)/politique-de-confidentialite/page.tsx",
       "utf8",
     );
 

@@ -20,12 +20,12 @@ async function collectSourceFiles(directory: string): Promise<string[]> {
 
 describe("canonical system detail routes", () => {
   it("serves system pages from the public Système métier namespace", async () => {
-    await expect(access(path.join(root, "src/app/systemes/[slug]/page.tsx"))).resolves.toBeUndefined();
+    await expect(access(path.join(root, "src/app/(marketing)/systemes/[slug]/page.tsx"))).resolves.toBeUndefined();
     await expect(
-      access(path.join(root, "src/app/systemes/[slug]/recapitulatif/page.tsx")),
+      access(path.join(root, "src/app/(marketing)/systemes/[slug]/recapitulatif/page.tsx")),
     ).resolves.toBeUndefined();
     await expect(
-      access(path.join(root, "src/app/systemes/[slug]/processus/page.tsx")),
+      access(path.join(root, "src/app/(marketing)/systemes/[slug]/processus/page.tsx")),
     ).resolves.toBeUndefined();
     await expect(access(path.join(root, "src/app/kit-operationnel/[slug]/page.tsx"))).rejects.toThrow();
   });

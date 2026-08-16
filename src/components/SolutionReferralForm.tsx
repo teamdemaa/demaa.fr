@@ -194,8 +194,7 @@ export default function SolutionReferralForm({
           Connectez-vous pour envoyer votre demande sans renseigner de nouveau votre adresse e-mail.
         </p>
         <CustomerSpaceAccessForm
-          compact
-          simple
+          choiceTitle="Connectez-vous pour envoyer"
           returnTo={buildCustomerIntentReturnTo({
             kind: "solution-referral",
             resourceSlug,

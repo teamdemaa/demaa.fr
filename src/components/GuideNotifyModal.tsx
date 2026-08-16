@@ -245,7 +245,7 @@ export default function GuideNotifyModal({
 
               {!identityLoading && !email ? (
                 <div className="mt-6">
-                  <CustomerSpaceAccessForm compact returnTo={returnTo} simple />
+                  <CustomerSpaceAccessForm choiceTitle="Connectez-vous" returnTo={returnTo} />
                 </div>
               ) : null}
 

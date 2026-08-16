@@ -581,7 +581,7 @@ describe("action plan contextual aid integration", () => {
     );
     const result = readFileSync("src/components/ActionPlanResult.tsx", "utf8");
     const processPage = readFileSync(
-      "src/app/systemes/[slug]/processus/page.tsx",
+      "src/app/(marketing)/systemes/[slug]/processus/page.tsx",
       "utf8",
     );
 
