@@ -51,11 +51,13 @@ describe("manual action plan experience", () => {
   it("keeps legacy strategy data isolated while hiding it from the plan UI", () => {
     const result = source("src/components/ActionPlanResult.tsx");
     const viewModel = source("src/lib/action-plan-view-model.ts");
+    const contract = source("src/lib/action-plan-contract.ts");
+    const storage = source("src/lib/action-plan-storage.server.ts");
 
-    expect(viewModel).toContain('label: "Alignement"');
-    expect(viewModel).toContain('label: "Positionnement"');
-    expect(viewModel).toContain('label: "Offre"');
-    expect(viewModel).toContain('label: "Promotion"');
+    expect(contract).toContain("legacyStrategySchema");
+    expect(viewModel).not.toContain("getActionPlanStrategyFields");
+    expect(storage).toContain("preserveRetiredManualStrategyFields");
+    expect(storage).toContain("preserveRetiredWorkspaceStrategyFields");
     expect(result).not.toContain("strategyOverrides");
     expect(result).not.toContain("<StrategyPanel");
   });

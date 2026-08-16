@@ -1,0 +1,130 @@
+"use client";
+
+import { LoaderCircle, Plus } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import CompanyMetricEntryDialog from "@/components/CompanyMetricEntryDialog";
+import {
+  enumerateCompanyMonths,
+  formatCompanyMonth,
+  getCompanyMetricResult,
+  getCurrentCompanyMonth,
+  shiftCompanyMonth,
+  summarizeCompanyMetrics,
+  type CompanyMonth,
+  type CompanyMonthlyMetric,
+} from "@/lib/company-pilotage-contract";
+
+type RangePreset = "current" | "3" | "6" | "12" | "custom";
+type Comparison = "revenue-expenses" | "revenue-cash" | "result-cash";
+
+const euro = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+const formatCents = (value: number | null) => value === null ? "—" : euro.format(value / 100);
+
+function getSeries(metric: CompanyMonthlyMetric | undefined, comparison: Comparison) {
+  if (comparison === "revenue-expenses") return [metric?.revenueCents ?? null, metric?.expensesCents ?? null] as const;
+  if (comparison === "revenue-cash") return [metric?.revenueCents ?? null, metric?.cashBalanceCents ?? null] as const;
+  return [metric ? getCompanyMetricResult(metric) : null, metric?.cashBalanceCents ?? null] as const;
+}
+
+export default function CompanyFiguresPanel() {
+  const currentMonth = useMemo(() => getCurrentCompanyMonth(), []);
+  const [preset, setPreset] = useState<RangePreset>("6");
+  const [from, setFrom] = useState<CompanyMonth>(shiftCompanyMonth(currentMonth, -5));
+  const [to, setTo] = useState<CompanyMonth>(currentMonth);
+  const [metrics, setMetrics] = useState<CompanyMonthlyMetric[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [comparison, setComparison] = useState<Comparison>("revenue-expenses");
+  const [selectedPeriod, setSelectedPeriod] = useState<CompanyMonth>(currentMonth);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [focusedPeriod, setFocusedPeriod] = useState<CompanyMonth | null>(null);
+  const periods = useMemo(() => {
+    try { return enumerateCompanyMonths(from, to); } catch { return []; }
+  }, [from, to]);
+
+  const loadMetrics = useCallback(async () => {
+    if (!periods.length) {
+      setError("Choisissez une période valide de 24 mois maximum.");
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`/api/company/pilotage/metrics?from=${from}&to=${to}`, { cache: "no-store" });
+      const body = await response.json().catch(() => null) as { metrics?: CompanyMonthlyMetric[]; error?: string } | null;
+      if (!response.ok || !body?.metrics) throw new Error(body?.error || "Impossible de charger les chiffres.");
+      setMetrics(body.metrics);
+    } catch (loadError) {
+      setError(loadError instanceof Error ? loadError.message : "Impossible de charger les chiffres.");
+    } finally {
+      setLoading(false);
+    }
+  }, [from, periods.length, to]);
+
+  useEffect(() => { void loadMetrics(); }, [loadMetrics]);
+
+  function changePreset(value: RangePreset) {
+    setPreset(value);
+    if (value === "custom") return;
+    const count = value === "current" ? 1 : Number(value);
+    setFrom(shiftCompanyMonth(currentMonth, -(count - 1)));
+    setTo(currentMonth);
+  }
+
+  const byPeriod = useMemo(() => new Map(metrics.map((metric) => [metric.period, metric])), [metrics]);
+  const summary = useMemo(() => summarizeCompanyMetrics(periods, metrics), [metrics, periods]);
+  const allValues = periods.flatMap((period) => getSeries(byPeriod.get(period), comparison)).filter((value): value is number => value !== null);
+  const chartMinimum = Math.min(0, ...allValues);
+  const chartMaximum = Math.max(0, ...allValues);
+  const chartRange = Math.max(1, chartMaximum - chartMinimum);
+  const zeroFromTop = chartMaximum / chartRange * 100;
+  const labels = comparison === "revenue-expenses" ? ["CA", "Charges"] : comparison === "revenue-cash" ? ["CA", "Trésorerie"] : ["Résultat", "Trésorerie"];
+  const focusedMetric = focusedPeriod ? byPeriod.get(focusedPeriod) : undefined;
+  const focusedValues = focusedPeriod ? getSeries(focusedMetric, comparison) : null;
+
+  return (
+    <div className="mx-auto max-w-[68rem] pb-12">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div><h1 className="text-2xl font-semibold text-dema-ink">Chiffres</h1><p className="mt-1 text-sm text-dema-muted">Un suivi mensuel simple pour piloter votre entreprise.</p></div>
+        <button type="button" onClick={() => { setSelectedPeriod(currentMonth); setDialogOpen(true); }} className="inline-flex items-center gap-2 rounded-full bg-dema-forest px-4 py-2.5 text-sm font-semibold text-white"><Plus className="h-4 w-4" aria-hidden="true" />Saisir un mois</button>
+      </div>
+      <div className="mt-6 flex flex-wrap items-end gap-3">
+        <label className="text-sm font-medium text-dema-ink">Période<select value={preset} onChange={(event) => changePreset(event.target.value as RangePreset)} className="mt-1 block rounded-xl border border-dema-line bg-white px-3 py-2 text-sm"><option value="current">Ce mois</option><option value="3">3 mois</option><option value="6">6 mois</option><option value="12">12 mois</option><option value="custom">Période…</option></select></label>
+        {preset === "custom" ? <><label className="text-sm font-medium text-dema-ink">Du<input type="month" value={from} onChange={(event) => setFrom(event.target.value as CompanyMonth)} className="mt-1 block rounded-xl border border-dema-line bg-white px-3 py-2 text-sm" /></label><label className="text-sm font-medium text-dema-ink">Au<input type="month" value={to} onChange={(event) => setTo(event.target.value as CompanyMonth)} className="mt-1 block rounded-xl border border-dema-line bg-white px-3 py-2 text-sm" /></label></> : null}
+      </div>
+      {error ? <div role="alert" className="mt-5 rounded-xl bg-red-50 p-4 text-sm text-red-700"><p>{error}</p><button type="button" onClick={() => void loadMetrics()} className="mt-2 font-semibold underline">Réessayer</button></div> : null}
+      {loading ? <div role="status" className="mt-8 flex items-center gap-2 text-sm text-dema-muted"><LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />Chargement des chiffres…</div> : null}
+      {!loading && periods.length ? (
+        <>
+          <p className="mt-6 text-sm text-dema-muted">{summary.completedMonthCount} mois renseignés sur {summary.monthCount}. Les totaux incomplets restent affichés « — ».</p>
+          <dl className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[['Chiffre d’affaires', summary.revenueCents], ['Charges', summary.expensesCents], ['Résultat de pilotage', summary.resultCents], ['Dernière trésorerie', summary.cashBalanceCents]].map(([label, value]) => <div key={String(label)} className="rounded-2xl border border-dema-line bg-dema-paper p-4"><dt className="text-sm text-dema-muted">{label}</dt><dd className="mt-1 text-xl font-semibold text-dema-ink">{formatCents(value as number | null)}</dd>{label === 'Résultat de pilotage' ? <p className="mt-1 text-xs text-dema-muted">Indicateur de pilotage, non comptable.</p> : null}</div>)}
+          </dl>
+          <section className="mt-8 border-t border-dema-line pt-6" aria-labelledby="company-metrics-chart-title">
+            <div className="flex flex-wrap items-end justify-between gap-3"><div><h2 id="company-metrics-chart-title" className="text-lg font-semibold text-dema-ink">Évolution mensuelle</h2><p id="company-metrics-chart-instructions" className="text-sm text-dema-muted">Même période que le récapitulatif. Parcourez les mois pour entendre leur détail.</p></div><label className="text-sm font-medium text-dema-ink">Comparer<select value={comparison} onChange={(event) => setComparison(event.target.value as Comparison)} className="mt-1 block rounded-xl border border-dema-line bg-white px-3 py-2 text-sm"><option value="revenue-expenses">CA / Charges</option><option value="revenue-cash">CA / Trésorerie</option><option value="result-cash">Résultat / Trésorerie</option></select></label></div>
+            {periods.length === 1 ? <p className="mt-5 rounded-xl bg-dema-cream p-4 text-sm text-dema-muted">Une seule valeur mensuelle : aucune tendance n’est tracée.</p> : (
+              <div className="mt-5 min-w-0 rounded-2xl border border-dema-line bg-dema-paper p-4" role="group" aria-label={`Graphique ${labels[0]} et ${labels[1]} sur ${periods.length} mois`} aria-describedby="company-metrics-chart-instructions">
+                <div className="flex h-48 min-w-0 gap-2">
+                  <div className="relative w-16 shrink-0 text-right text-[10px] text-dema-muted" aria-hidden="true"><span className="absolute right-0 top-0">{formatCents(chartMaximum)}</span>{chartMinimum < 0 ? <span className="absolute right-0 -translate-y-1/2" style={{ top: `${zeroFromTop}%` }}>0 €</span> : null}<span className="absolute bottom-0 right-0">{formatCents(chartMinimum)}</span></div>
+                  <div className="relative flex min-w-0 flex-1 items-stretch gap-1 border-b border-dema-line sm:gap-2">
+                    <span className="pointer-events-none absolute inset-x-0 border-t border-dema-line" style={{ top: `${zeroFromTop}%` }} aria-hidden="true" />
+                    {periods.map((period) => {
+                      const values = getSeries(byPeriod.get(period), comparison);
+                      return <button key={period} type="button" onFocus={() => setFocusedPeriod(period)} onMouseEnter={() => setFocusedPeriod(period)} onClick={() => setFocusedPeriod(period)} aria-label={`${formatCompanyMonth(period)} : ${labels[0]} ${formatCents(values[0])}, ${labels[1]} ${formatCents(values[1])}`} className="group relative min-w-0 flex-1 rounded-t outline-none focus-visible:ring-2 focus-visible:ring-dema-forest">{values.map((value, index) => value === null ? null : <span key={index} className={`absolute w-[32%] min-w-[3px] transition-opacity group-hover:opacity-75 ${index === 0 ? "left-[16%] bg-dema-forest" : "right-[16%] bg-brand-blue"} ${value >= 0 ? "rounded-t" : "rounded-b"}`} style={{ height: `${Math.max(2, Math.abs(value) / chartRange * 100)}%`, ...(value >= 0 ? { bottom: `${100 - zeroFromTop}%` } : { top: `${zeroFromTop}%` }) }} />)}</button>;
+                    })}
+                  </div>
+                </div>
+                <div className="mt-2 ml-[4.5rem] flex gap-1 text-center text-[10px] text-dema-muted sm:gap-2">{periods.map((period) => <span key={period} className="min-w-0 flex-1 truncate">{period.slice(5)}</span>)}</div>
+                <div className="mt-4 flex flex-wrap gap-4 text-xs text-dema-muted"><span><i className="mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-dema-forest" />{labels[0]}</span><span><i className="mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-brand-blue" />{labels[1]}</span></div>
+                {focusedPeriod && focusedValues ? <p className="mt-3 text-sm text-dema-ink" role="status">{formatCompanyMonth(focusedPeriod)} · {labels[0]} {formatCents(focusedValues[0])} · {labels[1]} {formatCents(focusedValues[1])}</p> : null}
+              </div>
+            )}
+          </section>
+          <section className="mt-8 border-t border-dema-line pt-6"><h2 className="text-lg font-semibold text-dema-ink">Détail mensuel</h2><div className="mt-3 divide-y divide-dema-line border-y border-dema-line">{periods.map((period) => { const metric = byPeriod.get(period); return <button key={period} type="button" onClick={() => { setSelectedPeriod(period); setDialogOpen(true); }} className="grid w-full grid-cols-[1fr_auto] gap-3 py-4 text-left"><span><strong className="block font-medium text-dema-ink">{formatCompanyMonth(period)}</strong><span className="text-sm text-dema-muted">CA {formatCents(metric?.revenueCents ?? null)} · Charges {formatCents(metric?.expensesCents ?? null)} · Trésorerie {formatCents(metric?.cashBalanceCents ?? null)}</span></span><span className="self-center text-sm font-semibold text-dema-forest">{metric ? "Modifier" : "Ajouter"}</span></button>; })}</div></section>
+        </>
+      ) : null}
+      <CompanyMetricEntryDialog open={dialogOpen} initialPeriod={selectedPeriod} metricsByPeriod={byPeriod} onClose={() => setDialogOpen(false)} onSaved={(metric) => { setMetrics((current) => [...current.filter((item) => item.period !== metric.period), metric].sort((a, b) => a.period.localeCompare(b.period))); }} />
+    </div>
+  );
+}

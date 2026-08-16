@@ -13,13 +13,9 @@ export function isManualActionPlan(
   return plan.version === "manual";
 }
 
-function hasText(value: string | undefined) {
-  return Boolean(value?.trim());
-}
-
 /**
  * A manual plan is considered blank only while it contains no user-authored
- * action, strategy answer or saved Solution. Selecting a System alone does not
+ * action or saved Solution. Selecting a System alone does not
  * make the plan non-blank: that navigation choice must survive a later
  * generation without forcing a save.
  */
@@ -29,15 +25,7 @@ export function isBlankManualActionPlan(
 ): plan is ManualActionPlan {
   if (!isManualActionPlan(plan) || plan.weeklyActions.length > 0) return false;
 
-  const strategyHasContent = Object.values(plan.strategy).some((pillar) =>
-    Object.values(pillar).some((value) => hasText(value)),
-  );
-  if (
-    hasText(plan.summary)
-    || hasText(plan.systemReason)
-    || plan.assumptions.some(hasText)
-    || strategyHasContent
-  ) {
+  if (plan.summary.trim() || plan.systemReason.trim() || plan.assumptions.some((value) => value.trim())) {
     return false;
   }
 
@@ -54,11 +42,7 @@ export function isBlankManualActionPlan(
     return false;
   }
 
-  return !Object.values(workspace.strategyOverrides).some((override) =>
-    override
-      ? Object.values(override).some((value) => hasText(value))
-      : false,
-  );
+  return true;
 }
 
 export function createManualActionPlan(): ManualActionPlan {
@@ -68,32 +52,6 @@ export function createManualActionPlan(): ManualActionPlan {
     systemId: null,
     systemReason: "",
     weeklyActions: [],
-    strategy: {
-      alignment: {
-        headline: "",
-        desiredCompany: "",
-        boundariesAndValues: "",
-        prioritiesAndTradeoffs: "",
-      },
-      positioning: {
-        headline: "",
-        preciseCustomer: "",
-        importantProblem: "",
-        evidenceAndAlternatives: "",
-      },
-      offer: {
-        headline: "",
-        promisedOutcome: "",
-        scope: "",
-        priceCommitmentAndRisk: "",
-      },
-      promotion: {
-        headline: "",
-        attract: "",
-        facilitatePurchase: "",
-        retainAndStrengthen: "",
-      },
-    },
     assumptions: [],
   };
 }
@@ -106,7 +64,6 @@ export function createManualAction(index: number): ManualActionPlanAction {
     channelOrTool: "",
     steps: [""],
     readyToUse: null,
-    strategyPillar: "alignement",
   };
 }
 
@@ -118,7 +75,6 @@ export function createManualActionPlanWorkspaceState(): ActionPlanWorkspaceState
     addedActions: [],
     deletedActionIds: [],
     tasks: {},
-    strategyOverrides: {},
     checkedProcessStepIdsBySystem: {},
     selectedSolutionPlacementIdsBySystem: {},
   };

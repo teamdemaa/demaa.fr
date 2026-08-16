@@ -157,6 +157,8 @@ async function main() {
     "action_plans",
     "companies",
     "company_memberships",
+    "company_monthly_metrics",
+    "company_strategies",
     "coaching_conversations",
     "coaching_message_drafts",
     "customer_coaching_access",

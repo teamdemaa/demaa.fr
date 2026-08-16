@@ -14,38 +14,13 @@ import {
 import { actionPlanWorkspaceStateSchema } from "@/lib/action-plan-workspace";
 
 describe("manual action plan", () => {
-  it("starts with no action, no selected system and four empty editable pillars", () => {
+  it("starts with no action, no selected system and no plan-level Strategy", () => {
     const plan = createManualActionPlan();
 
     expect(isManualActionPlan(plan)).toBe(true);
     expect(plan.weeklyActions).toEqual([]);
     expect(plan.systemId).toBeNull();
-    expect(plan.strategy).toEqual({
-      alignment: {
-        headline: "",
-        desiredCompany: "",
-        boundariesAndValues: "",
-        prioritiesAndTradeoffs: "",
-      },
-      positioning: {
-        headline: "",
-        preciseCustomer: "",
-        importantProblem: "",
-        evidenceAndAlternatives: "",
-      },
-      offer: {
-        headline: "",
-        promisedOutcome: "",
-        scope: "",
-        priceCommitmentAndRisk: "",
-      },
-      promotion: {
-        headline: "",
-        attract: "",
-        facilitatePurchase: "",
-        retainAndStrengthen: "",
-      },
-    });
+    expect(plan).not.toHaveProperty("strategy");
   });
 
   it("keeps the AI contract strict while allowing the blank state to persist", () => {
@@ -66,7 +41,7 @@ describe("manual action plan", () => {
       ...blankPlan,
       weeklyActions: [createManualAction(1)],
     };
-    const workspaceWithStrategy = {
+    const legacyWorkspaceWithStrategy = {
       ...blankWorkspace,
       strategyOverrides: {
         alignement: { answerOne: "Construire une entreprise autonome." },
@@ -85,7 +60,13 @@ describe("manual action plan", () => {
     };
 
     expect(isBlankManualActionPlan(planWithAction, blankWorkspace)).toBe(false);
-    expect(isBlankManualActionPlan(blankPlan, workspaceWithStrategy)).toBe(false);
+    const normalizedLegacyWorkspace = actionPlanWorkspaceStateSchema.parse(
+      // The current strict schema rejects retired fields; the compatibility
+      // reader is covered in action-plan-workspace.test.ts.
+      blankWorkspace,
+    );
+    expect(legacyWorkspaceWithStrategy).toHaveProperty("strategyOverrides");
+    expect(isBlankManualActionPlan(blankPlan, normalizedLegacyWorkspace)).toBe(true);
     expect(isBlankManualActionPlan(blankPlan, workspaceWithSystem)).toBe(true);
     expect(isBlankManualActionPlan(blankPlan, workspaceWithSelection)).toBe(false);
   });

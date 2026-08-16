@@ -15,7 +15,6 @@ import {
 } from "@/lib/action-plan-system-catalog";
 import {
   getActionPlanActions,
-  getActionPlanStrategyFields,
 } from "@/lib/action-plan-view-model";
 
 function action(index: number): ActionPlan["actions"][number] {
@@ -164,26 +163,18 @@ describe("action plan contract", () => {
     );
   });
 
-  it("reads V3 with its historical Strategy without exposing it as V4", () => {
+  it("reads V3 with its historical Strategy without exposing it through the view model", () => {
     const historical = validV3Plan();
     const parsed = compatibleActionPlanSchema.parse(historical);
     expect(parsed).toEqual(historical);
-    expect(getActionPlanStrategyFields(parsed)[0]?.fields.map(({ label }) => label)).toEqual([
-      "Le cap",
-      "Le point de départ",
-      "Les règles de décision",
-    ]);
+    expect(getActionPlanActions(parsed)[0]).not.toHaveProperty("strategyPillar");
   });
 
   it("reads V2 without relabelling its alignment as V3", () => {
     const historical = validV2Plan();
     const parsed = compatibleActionPlanSchema.parse(historical);
     expect(parsed).toEqual(historical);
-    expect(getActionPlanStrategyFields(parsed)[0]?.fields.map(({ label }) => label)).toEqual([
-      "L’entreprise que vous voulez construire",
-      "Vos limites et vos valeurs",
-      "Vos priorités et vos renoncements",
-    ]);
+    expect(getActionPlanActions(parsed)[0]).not.toHaveProperty("strategyPillar");
     expect(getActionPlanActions(parsed)[0]?.support).toEqual({
       type: null,
       label: "Support historique",

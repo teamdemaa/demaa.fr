@@ -26,6 +26,12 @@ Les catalogues publics ont une source canonique par univers:
 
 Regle pragmatique: avant d'ajouter un outil, un service ou un kit, verifier quelle page le consomme. Ne pas recreer de catalogue Services concurrent ni persister les services dans Firebase 115 fois.
 
+Les données de Pilotage d'entreprise ne sont pas nettoyées selon leur âge :
+`company_monthly_metrics` et `company_strategies/{companyId}/cycles` restent
+liés à l'entreprise. Le workflow de suppression effective d'une entreprise
+doit appeler `deleteCompanyPilotageData(companyId)` ; le départ ou la
+suppression du compte d'un membre ne déclenche jamais ce nettoyage.
+
 Pour `src/lib/enterprise-annuaire.json`, Git est la source de verite editoriale. Firestore sert de base de lecture runtime et doit rester synchronise via:
 
 ```bash

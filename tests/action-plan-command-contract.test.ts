@@ -112,7 +112,7 @@ describe("action plan command contract", () => {
       "Verifier la priorite",
     );
     expect(result.workspace.deletedActionIds).toContain("action-2");
-    expect(result.workspace.strategyOverrides).toEqual({});
+    expect(result.workspace).not.toHaveProperty("strategyOverrides");
     expect(summarizeActionPlanCommandOperations(
       currentPlan,
       initial,

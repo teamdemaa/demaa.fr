@@ -13,8 +13,12 @@ const ACTION_PLAN_VIEWS = [
 
 const SAFE_SLUG_PATTERN = /^[A-Za-z0-9_-]{1,160}$/;
 
+const ACTION_PLAN_SECTIONS = ["actions", "figures", "strategy"] as const;
+export type ActionPlanSection = (typeof ACTION_PLAN_SECTIONS)[number];
+
 export type ActionPlanAppContext = {
   view: ActionPlanView;
+  planSection: ActionPlanSection;
   systemId?: string;
   systemTab?: SystemDetailTab;
   solutionResourceSlug?: string;
@@ -43,12 +47,17 @@ function isActionPlanView(value: string | undefined): value is ActionPlanView {
   return ACTION_PLAN_VIEWS.includes(value as ActionPlanView);
 }
 
+function isActionPlanSection(value: string | undefined): value is ActionPlanSection {
+  return ACTION_PLAN_SECTIONS.includes(value as ActionPlanSection);
+}
+
 export function parseActionPlanAppContext(
   input: SearchInput,
 ): ActionPlanAppContext {
   const intent = readSearchValue(input, "intent");
   const requestedView = readSearchValue(input, "view");
   const requestedPlanTab = readSearchValue(input, "planTab");
+  const requestedSection = readSearchValue(input, "section");
   const intentView = intent === "solution-referral"
     ? "solutions"
     : intent === "structure" || intent === "structure-problem"
@@ -91,6 +100,9 @@ export function parseActionPlanAppContext(
 
   return {
     view,
+    planSection: view === "plan" && isActionPlanSection(requestedSection)
+      ? requestedSection
+      : "actions",
     ...(systemId ? { systemId } : {}),
     ...(requestedSystemTab ? { systemTab: requestedSystemTab } : {}),
     ...(solutionResourceSlug ? { solutionResourceSlug } : {}),
@@ -101,6 +113,7 @@ export function parseActionPlanAppContext(
 
 const CONTEXT_QUERY_KEYS = [
   "view",
+  "section",
   "planTab",
   "system",
   "systemTab",
@@ -129,6 +142,10 @@ export function buildActionPlanAppHref(input: {
   const view = input.context.view;
 
   params.set("view", view);
+
+  if (view === "plan" && input.context.planSection !== "actions") {
+    params.set("section", input.context.planSection);
+  }
 
   if (view === "solutions") {
     if (input.context.systemId) params.set("system", input.context.systemId);
@@ -159,6 +176,7 @@ export function buildPublicSystemAppHref(input: {
     pathname: "/",
     context: {
       view: "solutions",
+      planSection: "actions",
       systemId: input.systemId,
       systemTab: input.systemTab ?? "solutions",
       ...(input.solutionResourceSlug
