@@ -27,6 +27,66 @@ async function countCollection(database, name) {
   return result.data().count;
 }
 
+async function auditActionPlanCompanyScope(database) {
+  const [companies, memberships, actionPlans] = await Promise.all([
+    database.collection("companies").select("status").get(),
+    database.collection("company_memberships")
+      .select("company_id", "member_uid", "role", "status")
+      .get(),
+    database.collection("action_plans")
+      .select("company_id", "owner_uid", "status")
+      .get(),
+  ]);
+  const activeCompanyIds = new Set(
+    companies.docs
+      .filter((document) => document.data().status === "active")
+      .map((document) => document.id),
+  );
+  const activeOwnerMemberships = new Set(
+    memberships.docs.flatMap((document) => {
+      const data = document.data();
+      return data.status === "active"
+        && data.role === "owner"
+        && typeof data.company_id === "string"
+        && typeof data.member_uid === "string"
+        ? [`${data.company_id}\u0000${data.member_uid}`]
+        : [];
+    }),
+  );
+  const relevantActionPlans = actionPlans.docs.filter(
+    (document) => document.data().status !== "deleted",
+  );
+  const statuses = Object.fromEntries(
+    ["active", "generating", "failed", "deleted"].map((status) => [
+      status,
+      actionPlans.docs.filter((document) => document.data().status === status).length,
+    ]),
+  );
+  const knownStatuses = Object.values(statuses).reduce((total, count) => total + count, 0);
+
+  return {
+    actionPlanStatuses: {
+      ...statuses,
+      unexpected: actionPlans.size - knownStatuses,
+    },
+    activeMembershipWithoutActiveCompany: memberships.docs.filter((document) => {
+      const data = document.data();
+      return data.status === "active"
+        && (typeof data.company_id !== "string" || !activeCompanyIds.has(data.company_id));
+    }).length,
+    planWithMissingActiveCompany: relevantActionPlans.filter((document) => {
+      const companyId = document.data().company_id;
+      return typeof companyId !== "string" || !activeCompanyIds.has(companyId);
+    }).length,
+    planWithoutActiveOwnerMembership: relevantActionPlans.filter((document) => {
+      const data = document.data();
+      return typeof data.company_id !== "string"
+        || typeof data.owner_uid !== "string"
+        || !activeOwnerMemberships.has(`${data.company_id}\u0000${data.owner_uid}`);
+    }).length,
+  };
+}
+
 async function readIdentityPlatformConfig(app) {
   const projectId = process.env.FIREBASE_PROJECT_ID;
   const credential = app.options.credential;
@@ -47,6 +107,19 @@ async function readIdentityPlatformConfig(app) {
     throw new Error(`Lecture de la configuration Firebase impossible (${response.status}).`);
   }
   const config = await response.json();
+  const googleResponse = await fetch(
+    `https://identitytoolkit.googleapis.com/admin/v2/projects/${encodeURIComponent(projectId)}/defaultSupportedIdpConfigs/google.com`,
+    {
+      headers: {
+        Authorization: `Bearer ${token.access_token}`,
+        "X-Goog-User-Project": projectId,
+      },
+    },
+  );
+  if (!googleResponse.ok && googleResponse.status !== 404) {
+    throw new Error(`Lecture du fournisseur Google impossible (${googleResponse.status}).`);
+  }
+  const google = googleResponse.ok ? await googleResponse.json() : null;
   return {
     anonymousEnabled: config.signIn?.anonymous?.enabled === true,
     authorizedDomains: Array.isArray(config.authorizedDomains)
@@ -54,9 +127,15 @@ async function readIdentityPlatformConfig(app) {
       : [],
     emailPasswordEnabled: config.signIn?.email?.enabled === true,
     emailEnumerationProtection: config.emailPrivacyConfig?.enableImprovedEmailPrivacy === true,
+    googleClientConfigured: typeof google?.clientId === "string" && google.clientId.length > 0,
+    googleEnabled: google?.enabled === true,
     passwordPolicy: {
+      effectiveMinLength: config.passwordPolicyConfig?.constraints?.minLength ?? 6,
       enforcementState: config.passwordPolicyConfig?.enforcementState ?? "OFF",
       minLength: config.passwordPolicyConfig?.constraints?.minLength ?? null,
+      source: config.passwordPolicyConfig?.enforcementState === "ENFORCE"
+        ? "custom_enforced"
+        : "firebase_default",
     },
   };
 }
@@ -84,11 +163,7 @@ async function main() {
   const entries = await Promise.all(
     collectionNames.map(async (name) => [name, await countCollection(database, name)]),
   );
-  const pendingClaims = await database
-    .collection("action_plans")
-    .where("status", "==", "pending_claim")
-    .count()
-    .get();
+  const companyScope = await auditActionPlanCompanyScope(database);
   let authAudit;
   try {
     const authUsers = await getAuth(app).listUsers(1);
@@ -109,8 +184,8 @@ async function main() {
   console.log(JSON.stringify({
     auth: authAudit,
     collections: Object.fromEntries(entries),
+    companyScope,
     identityPlatform,
-    pendingActionPlans: pendingClaims.data().count,
   }, null, 2));
 }
 

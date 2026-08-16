@@ -16,6 +16,9 @@ const actionPlanGenerationMetadataSchema = z
     inputTokens: nullableTokenCount,
     outputTokens: nullableTokenCount,
     totalTokens: nullableTokenCount,
+    durationMs: nullableTokenCount,
+    requestCount: nullableTokenCount,
+    repairCount: nullableTokenCount,
   })
   .strict()
   .nullable();

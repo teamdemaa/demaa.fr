@@ -14,7 +14,6 @@ describe("Firebase Google auth hosts", () => {
     "demaa.co",
     "localhost",
     "127.0.0.1",
-    "demaa-fr-git-codex-integration-ready-hiteamdemaa-2292s-projects.vercel.app",
   ])("allows %s", (hostname) => {
     useHostname(hostname);
     expect(isFirebaseGoogleAuthAllowedOnCurrentHost()).toBe(true);
@@ -22,10 +21,18 @@ describe("Firebase Google auth hosts", () => {
 
   it.each([
     "demaa.fr",
+    "demaa-fr-git-unknown-preview.vercel.app",
     "vercel.app.example.com",
     "example.com",
   ])("rejects %s", (hostname) => {
     useHostname(hostname);
     expect(isFirebaseGoogleAuthAllowedOnCurrentHost()).toBe(false);
+  });
+
+  it("allows only explicitly configured preview domains", () => {
+    const preview = "demaa-fr-git-auth-preview.vercel.app";
+    vi.stubEnv("NEXT_PUBLIC_FIREBASE_AUTHORIZED_DOMAINS", preview);
+    useHostname(preview);
+    expect(isFirebaseGoogleAuthAllowedOnCurrentHost()).toBe(true);
   });
 });

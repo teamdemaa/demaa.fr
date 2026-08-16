@@ -49,5 +49,16 @@ describe("authenticated homepage routing", () => {
       isAuthenticated: true,
       requestedNewPlan: "1",
     })).toBe(false);
+    expect(shouldRedirect({
+      isAuthenticated: true,
+      requestedIntent: "generate-plan",
+    })).toBe(false);
+  });
+
+  it("does not let an unknown intent bypass the latest-plan entry", () => {
+    expect(shouldRedirect({
+      isAuthenticated: true,
+      requestedIntent: "unknown-intent",
+    })).toBe(true);
   });
 });

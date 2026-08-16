@@ -180,7 +180,7 @@ export function SavedActionPlanMenu({
             type="button"
             onClick={() => {
               setOpen(false);
-              router.push("/?new=1");
+              router.push("/plans/new");
             }}
             className={itemClassName}
           >

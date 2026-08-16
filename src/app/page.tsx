@@ -61,7 +61,7 @@ export default async function HomePage({
     requestedIntent,
     requestedNewPlan,
   })) {
-    redirect("/plans");
+    redirect("/plans/latest");
   }
 
   return (
@@ -71,6 +71,7 @@ export default async function HomePage({
         initialEmail={identity?.email ?? ""}
         initialIsAuthenticated={Boolean(identity)}
         initialAppContext={initialAppContext}
+        initialGenerationIntent={requestedIntent === "generate-plan"}
         initialStructureIntent={
           requestedIntent === "structure" || requestedIntent === "structure-problem"
         }

@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { LegacyV2ActionPlan } from "@/lib/action-plan-contract";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 import { createActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
+import { createManualActionPlan } from "@/lib/action-plan-manual";
 
 vi.mock("server-only", () => ({}));
 
@@ -64,11 +65,19 @@ vi.mock("@/lib/operational-maintenance", () => ({
 }));
 
 import {
+  ActionPlanGenerationRequestConflictError,
   ActionPlanRevisionConflictError,
+  beginActionPlanGeneration,
+  beginExistingBlankActionPlanGeneration,
+  completeActionPlanGeneration,
   createOwnedActionPlanForIdentity,
   deleteActionPlanForAccess,
+  failActionPlanGeneration,
+  getActionPlanIndexForIdentity,
+  getActionPlanGenerationForAccess,
   getActionPlanForAccess,
   getOwnedActionPlansForIdentity,
+  resumeActionPlanGenerationForAccess,
   updateActionPlanWorkspaceForAccess,
 } from "@/lib/action-plan-storage.server";
 import {
@@ -150,6 +159,198 @@ describe("company-scoped action plan persistence", () => {
     expect(stored).not.toHaveProperty("owner_email");
     expect(stored).not.toHaveProperty("pending_owner_email");
     expect(stored).not.toHaveProperty("temporary_access_token_hash");
+  });
+
+  it("creates a durable generation before the AI result and reuses the active lease", async () => {
+    const now = new Date("2026-08-15T20:00:00.000Z");
+    const first = await beginActionPlanGeneration({
+      identity: identity("owner-uid"),
+      requestId: "generation-request-1234",
+      situation: "Je dois clarifier mes priorités commerciales cette semaine.",
+      now,
+    });
+    expect(first.kind).toBe("claimed");
+    if (first.kind !== "claimed") throw new Error("Expected a generation claim.");
+    expect(firestore.documents.get(`action_plans/${first.claim.id}`)).toMatchObject({
+      status: "generating",
+      attempt_count: 1,
+      owner_uid: "owner-uid",
+      plan: null,
+    });
+
+    await expect(beginActionPlanGeneration({
+      identity: identity("owner-uid"),
+      requestId: "generation-request-1234",
+      situation: "Je dois clarifier mes priorités commerciales cette semaine.",
+      now: new Date("2026-08-15T20:01:00.000Z"),
+    })).resolves.toMatchObject({
+      kind: "existing",
+      state: { status: "generating", id: first.claim.id, attemptCount: 1 },
+    });
+    await expect(getActionPlanIndexForIdentity(identity("owner-uid"))).resolves.toEqual([
+      expect.objectContaining({
+        id: first.claim.id,
+        status: "generating",
+        title: "Plan en cours de création",
+      }),
+    ]);
+  });
+
+  it("rejects an idempotency key reused with another situation", async () => {
+    await beginActionPlanGeneration({
+      identity: identity("owner-uid"),
+      requestId: "generation-request-1234",
+      situation: "Je dois clarifier mes priorités commerciales cette semaine.",
+    });
+    await expect(beginActionPlanGeneration({
+      identity: identity("owner-uid"),
+      requestId: "generation-request-1234",
+      situation: "Je dois maintenant réorganiser complètement mon équipe.",
+    })).rejects.toBeInstanceOf(ActionPlanGenerationRequestConflictError);
+  });
+
+  it("activates only the claimed generation and exposes it to its company", async () => {
+    const started = await beginActionPlanGeneration({
+      identity: identity("owner-uid"),
+      requestId: "generation-request-1234",
+      situation: "Je dois clarifier mes priorités commerciales cette semaine.",
+    });
+    if (started.kind !== "claimed") throw new Error("Expected a generation claim.");
+    const completed = await completeActionPlanGeneration({
+      identity: identity("owner-uid"),
+      claim: started.claim,
+      plan: actionPlan(),
+      generation: {
+        model: "test-model",
+        durationMs: 1200,
+        inputTokens: 100,
+        outputTokens: 200,
+        totalTokens: 300,
+        requestCount: 1,
+        repairCount: 0,
+      },
+    });
+    expect(completed).toMatchObject({
+      id: started.claim.id,
+      generation: { model: "test-model", durationMs: 1200, totalTokens: 300 },
+    });
+    await expect(getActionPlanGenerationForAccess({
+      id: started.claim.id,
+      uid: "owner-uid",
+    })).resolves.toMatchObject({ status: "active", id: started.claim.id });
+    await expect(getActionPlanGenerationForAccess({
+      id: started.claim.id,
+      uid: "other-uid",
+    })).resolves.toBeNull();
+    await expect(getActionPlanIndexForIdentity(identity("owner-uid"))).resolves.toEqual([
+      expect.objectContaining({ id: started.claim.id, status: "active" }),
+    ]);
+  });
+
+  it("marks a failed attempt and allows the same request to retry", async () => {
+    const started = await beginActionPlanGeneration({
+      identity: identity("owner-uid"),
+      requestId: "generation-request-1234",
+      situation: "Je dois clarifier mes priorités commerciales cette semaine.",
+    });
+    if (started.kind !== "claimed") throw new Error("Expected a generation claim.");
+    await expect(failActionPlanGeneration({
+      identity: identity("owner-uid"),
+      claim: started.claim,
+      errorCode: "provider_failed",
+    })).resolves.toMatchObject({ status: "failed", attemptCount: 1, canRetry: true });
+    await expect(getActionPlanIndexForIdentity(identity("owner-uid"))).resolves.toEqual([
+      expect.objectContaining({ id: started.claim.id, status: "failed" }),
+    ]);
+    await expect(beginActionPlanGeneration({
+      identity: identity("owner-uid"),
+      requestId: "generation-request-1234",
+      situation: "Je dois clarifier mes priorités commerciales cette semaine.",
+    })).resolves.toMatchObject({ kind: "claimed" });
+  });
+
+  it("resumes an expired generation from Firestore without a browser draft", async () => {
+    const started = await beginActionPlanGeneration({
+      identity: identity("owner-uid"),
+      requestId: "generation-request-1234",
+      situation: "Je dois clarifier mes priorités commerciales cette semaine.",
+      now: new Date("2026-08-15T20:00:00.000Z"),
+    });
+    if (started.kind !== "claimed") throw new Error("Expected a generation claim.");
+
+    await expect(resumeActionPlanGenerationForAccess({
+      identity: identity("owner-uid"),
+      id: started.claim.id,
+      now: new Date("2026-08-15T20:04:00.000Z"),
+    })).resolves.toMatchObject({
+      kind: "claimed",
+      claim: {
+        id: started.claim.id,
+        situation: "Je dois clarifier mes priorités commerciales cette semaine.",
+      },
+    });
+    expect(firestore.documents.get(`action_plans/${started.claim.id}`)).toMatchObject({
+      status: "generating",
+      attempt_count: 2,
+      updated_by_uid: "owner-uid",
+    });
+  });
+
+  it("converts an existing blank plan into the same durable generation lifecycle", async () => {
+    const owner = identity("owner-uid");
+    const manualPlan = createManualActionPlan();
+    const created = await createOwnedActionPlanForIdentity(owner, {
+      plan: manualPlan,
+      title: "Plan croissance",
+    });
+
+    const started = await beginExistingBlankActionPlanGeneration({
+      identity: owner,
+      id: created.id,
+      expectedRevision: created.revision,
+      situation: "Je dois structurer le suivi commercial de mon entreprise cette semaine.",
+      now: new Date("2026-08-15T20:00:00.000Z"),
+    });
+    expect(started).toMatchObject({
+      kind: "claimed",
+      claim: { id: created.id, title: "Plan croissance" },
+    });
+    if (!started || started.kind !== "claimed") throw new Error("Expected a generation claim.");
+    expect(firestore.documents.get(`action_plans/${created.id}`)).toMatchObject({
+      status: "generating",
+      attempt_count: 1,
+      generation_target_title: "Plan croissance",
+    });
+
+    await expect(completeActionPlanGeneration({
+      identity: owner,
+      claim: started.claim,
+      plan: actionPlan(),
+    })).resolves.toMatchObject({
+      id: created.id,
+      title: "Plan croissance",
+    });
+    expect(firestore.documents.get(`action_plans/${created.id}`)).toMatchObject({
+      status: "active",
+      generation_target_title: null,
+      title: "Plan croissance",
+    });
+  });
+
+  it("refuses to resume another company generation", async () => {
+    const started = await beginActionPlanGeneration({
+      identity: identity("owner-uid"),
+      requestId: "generation-request-1234",
+      situation: "Je dois clarifier mes priorités commerciales cette semaine.",
+      now: new Date("2026-08-15T20:00:00.000Z"),
+    });
+    if (started.kind !== "claimed") throw new Error("Expected a generation claim.");
+
+    await expect(resumeActionPlanGenerationForAccess({
+      identity: identity("other-uid"),
+      id: started.claim.id,
+      now: new Date("2026-08-15T20:04:00.000Z"),
+    })).resolves.toBeNull();
   });
 
   it("isolates read access between Firebase UIDs even with the same email", async () => {

@@ -244,39 +244,43 @@ ne sont pas utilisés comme libellés humains.
 
 ## Persistance
 
-### Invité
+### Avant connexion
 
-- Le plan vit dans l'état de la page ou de la session courante.
-- Aucun `localStorage` durable n'est une seconde source de vérité.
-- Seul le slug du Système choisi est mémorisé dans ce navigateur pour éviter
-  de redemander l'activité à chaque visite ; aucun contenu de plan, aucune
-  situation et aucune donnée métier détaillée n'y sont stockés.
-- Une actualisation ou une fermeture pendant la génération ou l'accès peut
-  faire perdre le résultat non sauvegardé.
-- Le résultat généré reste en mémoire et n'est révélé qu'après la création ou
-  la reprise d'un accès. Un plan vierge peut encore être préparé avant cette
-  étape.
+- La personne peut écrire ou dicter sa situation et préparer un plan vierge.
+- La génération ne commence pas avant l'authentification.
+- Au clic sur `Créer mon plan d’action`, seuls la situation et un identifiant
+  idempotent sont conservés dans `sessionStorage`, pendant 2 heures au maximum,
+  afin de reprendre le parcours après e-mail/mot de passe ou Google.
+- Aucun contenu généré, aucune autorisation et aucun plan complet ne sont
+  stockés dans le navigateur.
+- Le slug du Système choisi peut rester mémorisé pour éviter de redemander
+  l'activité à chaque visite.
 
-### Après sauvegarde
+### Après authentification
 
 - Firebase/cloud devient l'unique source persistante.
-- Le compte sert dans le MVP à conserver et retrouver le plan.
+- Le serveur crée d'abord le plan dans l'entreprise active avec l'état
+  `generating`, puis le passe à `active` lorsque le résultat est enregistré.
+- Une génération interrompue passe à `failed` et peut être reprise avec la même
+  demande, sans créer un second document.
+- Les états `generating` et `failed` restent visibles dans `Mes plans` afin
+  qu'une fermeture de page ne donne jamais l'impression d'avoir perdu le plan.
 - Le partage par lien reste différé jusqu'à validation d'un accès en lecture
   seule, révocable, limité et non indexable.
 - Aucun miroir local durable concurrent n'est maintenu.
 
-Pendant la génération, l'invité voit uniquement l'écran de progression et les
-questions éditoriales. Lorsque le résultat est prêt, un écran d'accès compact
-est présenté avant toute révélation. Après création ou reprise de session, la
-sauvegarde crée directement le plan actif puis ouvre sa page persistée. Les
-modifications y sont enregistrées avec révision optimiste. Le plan vierge reste
-le seul parcours pouvant commencer temporairement avant une modification utile.
+Au clic sur `Créer mon plan d’action`, une personne non connectée voit d'abord
+la modale d'accès. Après création ou reprise de session, l'écran vert de
+progression apparaît pendant que le serveur génère et persiste le plan. Le plan
+actif est ensuite ouvert depuis son URL canonique. Les modifications y sont
+enregistrées avec révision optimiste. Le plan vierge reste le seul parcours
+pouvant commencer temporairement avant une modification utile.
 
 Lorsqu'une session connectée revient dans l'application sans demander une
-nouvelle situation, `/plans` restaure le dernier plan sauvegardé. S'il n'en
-existe aucun, l'application ouvre explicitement `/?new=1`. Le paramètre
-`new=1` est donc réservé à la création volontaire d'un plan vierge et ne doit
-jamais remplacer silencieusement un plan déjà enregistré.
+nouvelle situation, `/plans/latest` ouvre l'entrée la plus récente. `/plans`
+affiche l'index authentifié, y compris les générations en cours ou interrompues,
+et `/plans/new` ouvre volontairement une nouvelle situation. S'il n'existe
+aucun plan, l'index affiche un état vide explicite.
 
 L'identité primaire est un compte e-mail et mot de passe Firebase, matérialisé
 par un cookie de session Firebase natif et son UID. Demaa ne reçoit ni ne
@@ -288,8 +292,9 @@ Une fois la session Firebase créée, les formulaires fonctionnels
 (guides métier, Opportunités, Coaching, inscription et demandes) réutilisent
 l'e-mail de la session côté serveur et ne le redemandent pas. Un visiteur non
 connecté qui déclenche l'une de ces actions passe d'abord par l'un de ces
-parcours vérifiés, puis revient directement à son intention dans l'application. Il n'existe pas
-d'expérience publique distincte `Mon espace` ou `Mes plans`.
+parcours vérifiés, puis revient directement à son intention dans l'application.
+Il n'existe pas de portail parallèle `Mon espace` ; `Mes plans` est une vue
+authentifiée de l'application unique.
 
 ## Marketing et prospection éthiques
 

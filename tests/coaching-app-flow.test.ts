@@ -23,10 +23,10 @@ describe("unified app and coaching", () => {
     const plansPage = read("src/app/plans/page.tsx");
     const accountAccessForm = read("src/components/CustomerSpaceAccessForm.tsx");
 
-    expect(legacyAccountPage).toContain('redirect("/plans")');
-    expect(plansPage).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/?new=1")');
+    expect(legacyAccountPage).toContain('redirect("/plans/latest")');
+    expect(plansPage).toContain("getActionPlanIndexForIdentity");
     expect(legacyAccountPage).not.toContain("Mon espace");
-    expect(plansPage).not.toContain("Mes plans");
+    expect(plansPage).toContain("Mes plans");
     expect(plansPage).not.toContain("Espace membre");
     expect(accountAccessForm).not.toContain("espace membre");
     expect(accountAccessForm).not.toContain("votre espace Demaa");

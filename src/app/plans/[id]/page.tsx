@@ -3,12 +3,13 @@ import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SavedActionPlanDetail from "@/components/SavedActionPlanDetail";
+import SavedActionPlanGenerationState from "@/components/SavedActionPlanGenerationState";
 import {
   buildActionPlanAppHref,
   parseActionPlanAppContext,
 } from "@/lib/action-plan-app-context";
 import {
-  getActionPlanForAccess,
+  getActionPlanGenerationForAccess,
   getOwnedActionPlansForIdentity,
 } from "@/lib/action-plan-storage.server";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
@@ -50,11 +51,26 @@ export default async function ActionPlanPage({
     );
   }
 
-  const stored = await getActionPlanForAccess({
+  const generationState = await getActionPlanGenerationForAccess({
     uid: identity.uid,
     id,
   });
-  if (!stored) notFound();
+  if (!generationState) notFound();
+
+  if (generationState.status !== "active") {
+    return (
+      <div data-action-plan-workspace className="min-h-screen bg-dema-cream text-brand-blue">
+        <Navbar anonymousLanding isAuthenticated minimal />
+        <SavedActionPlanGenerationState
+          canRetry={generationState.status === "failed" && generationState.canRetry}
+          planId={generationState.id}
+          status={generationState.status}
+        />
+      </div>
+    );
+  }
+
+  const stored = generationState.actionPlan;
 
   const availablePlans = (await getOwnedActionPlansForIdentity(identity)).map(({ id: availableId, title, updatedAt }) => ({
         id: availableId,

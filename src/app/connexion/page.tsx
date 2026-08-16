@@ -25,7 +25,7 @@ export default async function ConnexionPage({ searchParams }: ConnexionPageProps
   const params = await searchParams;
   const rawReturnTo = Array.isArray(params.returnTo) ? params.returnTo[0] : params.returnTo;
   const rawMessage = Array.isArray(params.message) ? params.message[0] : params.message;
-  const returnTo = getSafeCustomerReturnTo(rawReturnTo || "/plans");
+  const returnTo = getSafeCustomerReturnTo(rawReturnTo || "/plans/latest");
 
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;

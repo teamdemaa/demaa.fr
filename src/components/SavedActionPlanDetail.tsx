@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
 import ActionPlanCoachingControl from "@/components/ActionPlanCoachingControl";
+import ActionPlanGenerationScreen from "@/components/ActionPlanGenerationScreen";
 import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNavbar";
 import ActionPlanResult from "@/components/ActionPlanResult";
 import {
@@ -15,9 +16,8 @@ import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
 import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
-import type { ActionPlan, PersistableActionPlan } from "@/lib/action-plan-contract";
-import type { AiGenerationMetadata } from "@/lib/ai-generation-metadata";
-import { toPersistedAiGenerationMetadata } from "@/lib/ai-generation-metadata";
+import type { PersistableActionPlan } from "@/lib/action-plan-contract";
+import { runExistingBlankActionPlanGeneration } from "@/lib/action-plan-generation.client";
 import {
   addActionToManualPlan,
   isBlankManualActionPlan,
@@ -27,7 +27,6 @@ import { scheduleActionPlanAcademyPayloadPreload } from "@/lib/action-plan-acade
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 import {
   addActionPlanWorkspaceAction,
-  createGeneratedActionPlanWorkspaceState,
   type ActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
 
@@ -66,11 +65,11 @@ export default function SavedActionPlanDetail({
   const [saveState, setSaveState] = useState<"saved" | "saving" | "error">("saved");
   const [saveError, setSaveError] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
   const revisionRef = useRef(initialRevision);
   const confirmedTitleRef = useRef(initialTitle);
   const titleInputRef = useRef<HTMLInputElement>(null);
   const firstRenderRef = useRef(true);
-  const skipNextAutosaveRef = useRef(false);
   const pendingSaveRef = useRef<{
     plan: PersistableActionPlan;
     title: string;
@@ -152,11 +151,6 @@ export default function SavedActionPlanDetail({
       firstRenderRef.current = false;
       return;
     }
-    if (skipNextAutosaveRef.current) {
-      skipNextAutosaveRef.current = false;
-      return;
-    }
-
     pendingSaveRef.current = {
       plan: currentPlan,
       title: planTitle.trim() || confirmedTitleRef.current,
@@ -277,58 +271,21 @@ export default function SavedActionPlanDetail({
       throw new Error("Enregistrez les dernières modifications avant de générer le plan.");
     }
 
-    const generationResponse = await fetch("/api/action-plan/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ situation: sourceText }),
-    });
-    const generationBody = (await generationResponse.json().catch(() => null)) as
-      | { plan?: ActionPlan; generation?: AiGenerationMetadata; error?: string }
-      | null;
-    if (!generationResponse.ok || !generationBody?.plan) {
-      throw new Error(
-        generationBody?.error || "Le plan n’a pas pu être généré pour le moment.",
-      );
+    setIsGeneratingPlan(true);
+    try {
+      const generatedPlanId = await runExistingBlankActionPlanGeneration({
+        expectedRevision: revisionRef.current,
+        id: planId,
+        situation: sourceText,
+      }, new AbortController().signal);
+      window.location.replace(`/plans/${encodeURIComponent(generatedPlanId)}`);
+    } catch (error) {
+      setIsGeneratingPlan(false);
+      throw error;
     }
-
-    const nextWorkspace = createGeneratedActionPlanWorkspaceState(
-      generationBody.plan,
-      workspace,
-    );
-    const updateResponse = await fetch(
-      `/api/action-plans/${encodeURIComponent(planId)}`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          expectedRevision: revisionRef.current,
-          generation: toPersistedAiGenerationMetadata(
-            generationBody.generation ?? null,
-          ),
-          plan: generationBody.plan,
-          sourceText,
-          title: planTitle.trim() || confirmedTitleRef.current,
-          workspaceState: nextWorkspace,
-        }),
-      },
-    );
-    const updateBody = (await updateResponse.json().catch(() => null)) as
-      | { revision?: number; title?: string; error?: string }
-      | null;
-    if (!updateResponse.ok || !updateBody?.revision) {
-      throw new Error(
-        updateBody?.error || "Le plan généré n’a pas pu être enregistré.",
-      );
-    }
-
-    revisionRef.current = updateBody.revision;
-    confirmedTitleRef.current = updateBody.title || planTitle;
-    skipNextAutosaveRef.current = true;
-    setCurrentPlan(generationBody.plan);
-    setWorkspace(nextWorkspace);
-    setSaveState("saved");
-    setSaveError(null);
   }
+
+  if (isGeneratingPlan) return <ActionPlanGenerationScreen />;
 
   return (
     <div className="contents">

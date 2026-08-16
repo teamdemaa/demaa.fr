@@ -1,12 +1,13 @@
 "use client";
 
 import { LoaderCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   hasFirebaseGoogleAuthConfiguration,
   isFirebaseGoogleAuthAllowedOnCurrentHost,
+  shouldUseGoogleRedirect,
   signInWithGoogleAndGetIdToken,
+  startGoogleRedirect,
 } from "@/lib/firebase-client-auth";
 
 function getGoogleErrorMessage(error: unknown) {
@@ -32,15 +33,16 @@ function getGoogleErrorMessage(error: unknown) {
 }
 
 export default function GoogleCustomerSignInButton({
+  large = false,
   onAuthenticated,
   onError,
   returnTo = "/plans",
 }: {
+  large?: boolean;
   onAuthenticated?: (result: { redirectTo: string }) => Promise<void> | void;
   onError?: (message: string | null) => void;
   returnTo?: string;
 }) {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   if (
@@ -53,6 +55,10 @@ export default function GoogleCustomerSignInButton({
     onError?.(null);
 
     try {
+      if (shouldUseGoogleRedirect()) {
+        await startGoogleRedirect(returnTo);
+        return;
+      }
       const { idToken } = await signInWithGoogleAndGetIdToken();
       const response = await fetch("/api/customer-space/firebase-session", {
         method: "POST",
@@ -70,8 +76,7 @@ export default function GoogleCustomerSignInButton({
       if (onAuthenticated) {
         await onAuthenticated({ redirectTo: payload.redirectTo });
       } else {
-        router.push(payload.redirectTo);
-        router.refresh();
+        window.location.assign(payload.redirectTo);
       }
     } catch (error) {
       onError?.(getGoogleErrorMessage(error));
@@ -85,7 +90,7 @@ export default function GoogleCustomerSignInButton({
       type="button"
       onClick={() => void signIn()}
       disabled={isLoading}
-      className="inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full border border-dema-line bg-white px-5 text-sm font-medium text-brand-blue transition hover:border-dema-forest/30 hover:bg-dema-soft disabled:cursor-wait disabled:opacity-60"
+      className={`inline-flex w-full items-center justify-center gap-3 rounded-full border border-dema-line bg-white px-5 text-sm font-medium text-brand-blue transition hover:border-dema-forest/30 hover:bg-dema-soft disabled:cursor-wait disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 ${large ? "min-h-[54px]" : "min-h-12"}`}
     >
       {isLoading ? (
         <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />

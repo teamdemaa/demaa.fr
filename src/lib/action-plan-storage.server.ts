@@ -1,6 +1,6 @@
 import "server-only";
 
-import { randomBytes } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import { compatibleActionPlanSchema } from "@/lib/action-plan-contract";
 import { isBlankManualActionPlan } from "@/lib/action-plan-manual";
@@ -20,13 +20,19 @@ import { getLeadRetentionExpiry } from "@/lib/operational-maintenance";
 
 export const ACTION_PLANS_COLLECTION = "action_plans";
 
-type ActionPlanStatus = "active" | "deleted";
+export type ActionPlanStatus = "generating" | "active" | "failed" | "deleted";
+
+const ACTION_PLAN_GENERATION_LEASE_MS = 3 * 60 * 1_000;
+export const MAX_ACTION_PLAN_GENERATION_ATTEMPTS = 3;
 
 type ActionPlanGenerationMetadata = {
   model: string | null;
   inputTokens: number | null;
   outputTokens: number | null;
   totalTokens: number | null;
+  durationMs: number | null;
+  requestCount: number | null;
+  repairCount: number | null;
 };
 
 type ActionPlanDocument = {
@@ -45,6 +51,14 @@ type ActionPlanDocument = {
   created_at?: string | null;
   updated_at?: string | null;
   retention_expires_at?: string | null;
+  request_fingerprint?: string | null;
+  attempt_count?: number | null;
+  generation_started_at?: string | null;
+  generation_target_title?: string | null;
+  lease_owner?: string | null;
+  lease_expires_at?: string | null;
+  next_retry_at?: string | null;
+  last_error_code?: string | null;
 };
 
 export type StoredActionPlan = {
@@ -59,6 +73,13 @@ export type StoredActionPlan = {
   updatedAt: string;
 };
 
+export type ActionPlanIndexEntry = {
+  id: string;
+  status: "active" | "failed" | "generating";
+  title: string;
+  updatedAt: string;
+};
+
 export type ActionPlanWriteInput = {
   plan: PersistableActionPlan;
   title?: string | null;
@@ -67,10 +88,45 @@ export type ActionPlanWriteInput = {
   generation?: Partial<ActionPlanGenerationMetadata> | null;
 };
 
+export type ActionPlanGenerationState =
+  | { status: "generating"; id: string; attemptCount: number; leaseExpiresAt: string }
+  | { status: "active"; id: string; actionPlan: StoredActionPlan }
+  | { status: "failed"; id: string; attemptCount: number; canRetry: boolean };
+
+export type ActionPlanGenerationClaim = {
+  id: string;
+  leaseOwner: string;
+  situation: string;
+  title?: string;
+};
+
+export type ActionPlanGenerationStartResult =
+  | { kind: "claimed"; claim: ActionPlanGenerationClaim }
+  | { kind: "existing"; state: ActionPlanGenerationState };
+
+export class ActionPlanGenerationRequestConflictError extends Error {
+  constructor() {
+    super("action_plan_generation_request_conflict");
+    this.name = "ActionPlanGenerationRequestConflictError";
+  }
+}
+
 const MAX_SOURCE_TEXT_LENGTH = 12_000;
 
 function createActionPlanId() {
   return randomBytes(18).toString("base64url");
+}
+
+function digest(value: string) {
+  return createHash("sha256").update(value).digest("base64url");
+}
+
+export function buildActionPlanGenerationId(uid: string, requestId: string) {
+  return `apl_${digest(`action-plan-generation:${uid.trim()}:${requestId.trim()}`).slice(0, 40)}`;
+}
+
+export function buildActionPlanGenerationFingerprint(situation: string) {
+  return digest(`action-plan-situation:${normalizeSourceText(situation) ?? ""}`);
 }
 
 function normalizeSourceText(value?: string | null) {
@@ -100,6 +156,9 @@ function normalizeGenerationMetadata(
     inputTokens: normalizeTokenCount(value?.inputTokens),
     outputTokens: normalizeTokenCount(value?.outputTokens),
     totalTokens: normalizeTokenCount(value?.totalTokens),
+    durationMs: normalizeTokenCount(value?.durationMs),
+    requestCount: normalizeTokenCount(value?.requestCount),
+    repairCount: normalizeTokenCount(value?.repairCount),
   };
 }
 
@@ -152,10 +211,455 @@ function belongsToCompany(
   companyId: string,
 ) {
   return Boolean(
-    document?.status === "active"
-    && companyId
-    && document.company_id?.trim() === companyId,
+    companyId
+    && document?.company_id?.trim() === companyId,
   );
+}
+
+function isActivePlanForCompany(
+  document: ActionPlanDocument | undefined,
+  companyId: string,
+) {
+  return document?.status === "active" && belongsToCompany(document, companyId);
+}
+
+function normalizeAttemptCount(value: unknown) {
+  return typeof value === "number" && Number.isInteger(value) && value >= 0
+    ? value
+    : 0;
+}
+
+function getGenerationRetentionExpiry(now: Date) {
+  return new Date(now.getTime() + 30 * 24 * 60 * 60 * 1_000).toISOString();
+}
+
+function parseGenerationState(
+  id: string,
+  document: ActionPlanDocument | undefined,
+): ActionPlanGenerationState | null {
+  if (!document) return null;
+  const attemptCount = normalizeAttemptCount(document.attempt_count);
+  if (document.status === "active") {
+    const actionPlan = parseStoredActionPlan(id, document);
+    return actionPlan ? { status: "active", id, actionPlan } : null;
+  }
+  if (document.status === "generating" && document.lease_expires_at) {
+    return {
+      status: "generating",
+      id,
+      attemptCount,
+      leaseExpiresAt: document.lease_expires_at,
+    };
+  }
+  if (document.status === "failed") {
+    return {
+      status: "failed",
+      id,
+      attemptCount,
+      canRetry: attemptCount < MAX_ACTION_PLAN_GENERATION_ATTEMPTS,
+    };
+  }
+  return null;
+}
+
+export async function beginActionPlanGeneration(input: {
+  identity: CustomerSessionIdentity;
+  requestId: string;
+  situation: string;
+  now?: Date;
+}): Promise<ActionPlanGenerationStartResult> {
+  const uid = input.identity.uid.trim();
+  const requestId = input.requestId.trim();
+  const situation = normalizeSourceText(input.situation);
+  if (!uid || !/^[A-Za-z0-9:_-]{16,160}$/.test(requestId) || !situation) {
+    throw new Error("A valid generation request is required.");
+  }
+
+  const company = await ensureDefaultCompanyForIdentity(input.identity);
+  const database = getAdminFirestore();
+  const id = buildActionPlanGenerationId(uid, requestId);
+  const reference = database.collection(ACTION_PLANS_COLLECTION).doc(id);
+  const fingerprint = buildActionPlanGenerationFingerprint(situation);
+  const now = input.now ?? new Date();
+  const nowIso = now.toISOString();
+
+  return database.runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(reference);
+    const existing = snapshot.data() as ActionPlanDocument | undefined;
+    const previousAttemptCount = normalizeAttemptCount(existing?.attempt_count);
+
+    if (snapshot.exists) {
+      if (
+        !belongsToCompany(existing, company.companyId)
+        || existing?.owner_uid !== uid
+        || existing.request_fingerprint !== fingerprint
+        || existing.status === "deleted"
+      ) {
+        throw new ActionPlanGenerationRequestConflictError();
+      }
+
+      if (existing.status === "active") {
+        const state = parseGenerationState(id, existing);
+        if (!state) throw new Error("The stored action plan is invalid.");
+        return { kind: "existing", state };
+      }
+
+      const leaseExpiresAt = Date.parse(existing.lease_expires_at ?? "");
+      if (
+        existing.status === "generating"
+        && existing.lease_owner
+        && Number.isFinite(leaseExpiresAt)
+        && leaseExpiresAt > now.getTime()
+      ) {
+        const state = parseGenerationState(id, existing);
+        if (!state) throw new Error("The action plan generation state is invalid.");
+        return { kind: "existing", state };
+      }
+
+      if (previousAttemptCount >= MAX_ACTION_PLAN_GENERATION_ATTEMPTS) {
+        return {
+          kind: "existing",
+          state: {
+            status: "failed",
+            id,
+            attemptCount: previousAttemptCount,
+            canRetry: false,
+          },
+        };
+      }
+    }
+
+    const attemptCount = previousAttemptCount + 1;
+    const leaseOwner = randomBytes(18).toString("base64url");
+    const leaseExpiresAt = new Date(
+      now.getTime() + ACTION_PLAN_GENERATION_LEASE_MS,
+    ).toISOString();
+    transaction.set(reference, {
+      schema_version: "generation-1",
+      status: "generating",
+      plan: null,
+      title: "Plan en cours de création",
+      workspace_state: null,
+      source_text: situation,
+      generation: null,
+      company_id: company.companyId,
+      owner_uid: uid,
+      created_by_uid: uid,
+      updated_by_uid: uid,
+      revision: 0,
+      created_at: existing?.created_at || nowIso,
+      updated_at: nowIso,
+      retention_expires_at: getGenerationRetentionExpiry(now),
+      request_fingerprint: fingerprint,
+      attempt_count: attemptCount,
+      generation_started_at: nowIso,
+      generation_target_title: null,
+      lease_owner: leaseOwner,
+      lease_expires_at: leaseExpiresAt,
+      next_retry_at: null,
+      last_error_code: null,
+    });
+
+    return {
+      kind: "claimed",
+      claim: { id, leaseOwner, situation },
+    };
+  });
+}
+
+export async function resumeActionPlanGenerationForAccess(input: {
+  identity: CustomerSessionIdentity;
+  id: string;
+  now?: Date;
+}): Promise<ActionPlanGenerationStartResult | null> {
+  const uid = input.identity.uid.trim();
+  if (!uid) return null;
+
+  const database = getAdminFirestore();
+  const reference = database.collection(ACTION_PLANS_COLLECTION).doc(input.id);
+  const now = input.now ?? new Date();
+  const nowIso = now.toISOString();
+
+  return database.runTransaction(async (transaction) => {
+    const [company, snapshot] = await Promise.all([
+      getActiveDefaultCompanyIdentityInTransaction(transaction, uid),
+      transaction.get(reference),
+    ]);
+    const existing = snapshot.data() as ActionPlanDocument | undefined;
+    if (
+      !company
+      || !snapshot.exists
+      || !existing
+      || !belongsToCompany(existing, company.companyId)
+      || existing.status === "deleted"
+    ) {
+      return null;
+    }
+
+    if (existing.status === "active") {
+      const state = parseGenerationState(input.id, existing);
+      return state ? { kind: "existing", state } : null;
+    }
+
+    const situation = normalizeSourceText(existing.source_text);
+    if (
+      !situation
+      || existing.request_fingerprint !== buildActionPlanGenerationFingerprint(situation)
+    ) {
+      return null;
+    }
+
+    const previousAttemptCount = normalizeAttemptCount(existing.attempt_count);
+    const leaseExpiresAt = Date.parse(existing.lease_expires_at ?? "");
+    if (
+      existing.status === "generating"
+      && existing.lease_owner
+      && Number.isFinite(leaseExpiresAt)
+      && leaseExpiresAt > now.getTime()
+    ) {
+      const state = parseGenerationState(input.id, existing);
+      return state ? { kind: "existing", state } : null;
+    }
+
+    if (previousAttemptCount >= MAX_ACTION_PLAN_GENERATION_ATTEMPTS) {
+      return {
+        kind: "existing",
+        state: {
+          status: "failed",
+          id: input.id,
+          attemptCount: previousAttemptCount,
+          canRetry: false,
+        },
+      };
+    }
+
+    const attemptCount = previousAttemptCount + 1;
+    const leaseOwner = randomBytes(18).toString("base64url");
+    const nextLeaseExpiresAt = new Date(
+      now.getTime() + ACTION_PLAN_GENERATION_LEASE_MS,
+    ).toISOString();
+    transaction.set(reference, {
+      ...existing,
+      status: "generating",
+      updated_by_uid: uid,
+      updated_at: nowIso,
+      retention_expires_at: getGenerationRetentionExpiry(now),
+      attempt_count: attemptCount,
+      generation_started_at: nowIso,
+      lease_owner: leaseOwner,
+      lease_expires_at: nextLeaseExpiresAt,
+      next_retry_at: null,
+      last_error_code: null,
+    });
+
+    return {
+      kind: "claimed",
+      claim: {
+        id: input.id,
+        leaseOwner,
+        situation,
+        ...(existing.generation_target_title
+          ? { title: normalizeActionPlanTitle(existing.generation_target_title) }
+          : {}),
+      },
+    };
+  });
+}
+
+export async function beginExistingBlankActionPlanGeneration(input: {
+  identity: CustomerSessionIdentity;
+  id: string;
+  expectedRevision: number;
+  situation: string;
+  now?: Date;
+}): Promise<ActionPlanGenerationStartResult | null> {
+  const uid = input.identity.uid.trim();
+  const situation = normalizeSourceText(input.situation);
+  if (!uid || !situation) throw new Error("A valid generation request is required.");
+
+  const database = getAdminFirestore();
+  const reference = database.collection(ACTION_PLANS_COLLECTION).doc(input.id);
+  const now = input.now ?? new Date();
+  const nowIso = now.toISOString();
+  const fingerprint = buildActionPlanGenerationFingerprint(situation);
+
+  return database.runTransaction(async (transaction) => {
+    const [company, snapshot] = await Promise.all([
+      getActiveDefaultCompanyIdentityInTransaction(transaction, uid),
+      transaction.get(reference),
+    ]);
+    const existing = snapshot.data() as ActionPlanDocument | undefined;
+    if (
+      !company
+      || !snapshot.exists
+      || !existing
+      || !belongsToCompany(existing, company.companyId)
+      || existing.status === "deleted"
+    ) return null;
+
+    if (existing.request_fingerprint === fingerprint) {
+      const existingState = parseGenerationState(input.id, existing);
+      if (existingState) return { kind: "existing", state: existingState };
+    }
+
+    if (existing.status !== "active") {
+      throw new ActionPlanGenerationRequestConflictError();
+    }
+    const parsedPlan = compatibleActionPlanSchema.safeParse(existing.plan);
+    if (!parsedPlan.success) return null;
+    const workspace = normalizeActionPlanWorkspaceState(
+      parsedPlan.data,
+      existing.workspace_state,
+    );
+    if (!isBlankManualActionPlan(parsedPlan.data, workspace)) {
+      throw new InvalidActionPlanMutationError();
+    }
+
+    const revision = Number(existing.revision);
+    if (!Number.isInteger(revision) || revision !== input.expectedRevision) {
+      throw new ActionPlanRevisionConflictError();
+    }
+
+    const leaseOwner = randomBytes(18).toString("base64url");
+    const leaseExpiresAt = new Date(
+      now.getTime() + ACTION_PLAN_GENERATION_LEASE_MS,
+    ).toISOString();
+    const title = normalizeActionPlanTitle(existing.title);
+    transaction.set(reference, {
+      ...existing,
+      status: "generating",
+      source_text: situation,
+      generation: null,
+      updated_by_uid: uid,
+      updated_at: nowIso,
+      retention_expires_at: getGenerationRetentionExpiry(now),
+      request_fingerprint: fingerprint,
+      attempt_count: 1,
+      generation_started_at: nowIso,
+      generation_target_title: title,
+      lease_owner: leaseOwner,
+      lease_expires_at: leaseExpiresAt,
+      next_retry_at: null,
+      last_error_code: null,
+    });
+
+    return {
+      kind: "claimed",
+      claim: { id: input.id, leaseOwner, situation, title },
+    };
+  });
+}
+
+export async function completeActionPlanGeneration(input: {
+  identity: CustomerSessionIdentity;
+  claim: ActionPlanGenerationClaim;
+  plan: PersistableActionPlan;
+  generation?: Partial<ActionPlanGenerationMetadata> | null;
+  now?: Date;
+}) {
+  const uid = input.identity.uid.trim();
+  const database = getAdminFirestore();
+  const reference = database.collection(ACTION_PLANS_COLLECTION).doc(input.claim.id);
+  const now = (input.now ?? new Date()).toISOString();
+
+  return database.runTransaction(async (transaction) => {
+    const [company, snapshot] = await Promise.all([
+      getActiveDefaultCompanyIdentityInTransaction(transaction, uid),
+      transaction.get(reference),
+    ]);
+    const document = snapshot.data() as ActionPlanDocument | undefined;
+    if (
+      !company
+      || !snapshot.exists
+      || !belongsToCompany(document, company.companyId)
+      || document?.status !== "generating"
+      || document.lease_owner !== input.claim.leaseOwner
+    ) {
+      return null;
+    }
+
+    const serialized = serializeWriteInput({
+      plan: input.plan,
+      title: input.claim.title,
+      sourceText: input.claim.situation,
+      generation: input.generation,
+    });
+    const nextDocument: ActionPlanDocument = {
+      ...document,
+      ...serialized,
+      schema_version: getPersistedSchemaVersion(input.plan),
+      status: "active",
+      updated_by_uid: uid,
+      revision: 1,
+      updated_at: now,
+      retention_expires_at: getLeadRetentionExpiry(),
+      generation_target_title: null,
+      lease_owner: null,
+      lease_expires_at: null,
+      next_retry_at: null,
+      last_error_code: null,
+    };
+    transaction.set(reference, nextDocument);
+    return parseStoredActionPlan(input.claim.id, nextDocument);
+  });
+}
+
+export async function failActionPlanGeneration(input: {
+  identity: CustomerSessionIdentity;
+  claim: ActionPlanGenerationClaim;
+  errorCode: string;
+  now?: Date;
+}) {
+  const uid = input.identity.uid.trim();
+  const database = getAdminFirestore();
+  const reference = database.collection(ACTION_PLANS_COLLECTION).doc(input.claim.id);
+  const now = (input.now ?? new Date()).toISOString();
+
+  return database.runTransaction(async (transaction) => {
+    const [company, snapshot] = await Promise.all([
+      getActiveDefaultCompanyIdentityInTransaction(transaction, uid),
+      transaction.get(reference),
+    ]);
+    const document = snapshot.data() as ActionPlanDocument | undefined;
+    if (
+      !company
+      || !snapshot.exists
+      || !belongsToCompany(document, company.companyId)
+      || document?.status !== "generating"
+      || document.lease_owner !== input.claim.leaseOwner
+    ) {
+      return null;
+    }
+
+    const attemptCount = normalizeAttemptCount(document.attempt_count);
+    const nextDocument: ActionPlanDocument = {
+      ...document,
+      status: "failed",
+      updated_by_uid: uid,
+      updated_at: now,
+      lease_owner: null,
+      lease_expires_at: null,
+      next_retry_at: attemptCount < MAX_ACTION_PLAN_GENERATION_ATTEMPTS ? now : null,
+      last_error_code: input.errorCode.trim().slice(0, 80) || "generation_failed",
+    };
+    transaction.set(reference, nextDocument);
+    return parseGenerationState(input.claim.id, nextDocument);
+  });
+}
+
+export async function getActionPlanGenerationForAccess(input: {
+  id: string;
+  uid: string;
+}) {
+  const company = await getActiveDefaultCompanyIdentity(input.uid);
+  if (!company) return null;
+  const snapshot = await getAdminFirestore()
+    .collection(ACTION_PLANS_COLLECTION)
+    .doc(input.id)
+    .get();
+  const document = snapshot.data() as ActionPlanDocument | undefined;
+  if (!snapshot.exists || !belongsToCompany(document, company.companyId)) return null;
+  return parseGenerationState(snapshot.id, document);
 }
 
 export async function createOwnedActionPlanForIdentity(
@@ -207,6 +711,45 @@ export async function getOwnedActionPlansForIdentity(identity: CustomerSessionId
     .sort((left, right) => Date.parse(right.updatedAt) - Date.parse(left.updatedAt));
 }
 
+export async function getActionPlanIndexForIdentity(
+  identity: CustomerSessionIdentity,
+): Promise<ActionPlanIndexEntry[]> {
+  const company = await getActiveDefaultCompanyIdentity(identity.uid);
+  if (!company) return [];
+
+  const snapshot = await getAdminFirestore()
+    .collection(ACTION_PLANS_COLLECTION)
+    .where("company_id", "==", company.companyId)
+    .get();
+
+  return snapshot.docs.map((document): ActionPlanIndexEntry | null => {
+    const data = document.data() as ActionPlanDocument | undefined;
+    if (!data || data.status === "deleted") return null;
+    if (data.status === "active") {
+      const plan = parseStoredActionPlan(document.id, data);
+      return plan ? {
+        id: plan.id,
+        status: "active",
+        title: plan.title,
+        updatedAt: plan.updatedAt,
+      } : null;
+    }
+    if (data.status !== "generating" && data.status !== "failed") return null;
+    const updatedAt = typeof data.updated_at === "string"
+      ? data.updated_at
+      : typeof data.created_at === "string"
+        ? data.created_at
+        : "";
+    return {
+      id: document.id,
+      status: data.status,
+      title: normalizeActionPlanTitle(data.title),
+      updatedAt,
+    };
+  }).filter((entry): entry is ActionPlanIndexEntry => Boolean(entry))
+    .sort((left, right) => Date.parse(right.updatedAt) - Date.parse(left.updatedAt));
+}
+
 export async function getActionPlanForAccess(input: { id: string; uid: string }) {
   const company = await getActiveDefaultCompanyIdentity(input.uid);
   if (!company) return null;
@@ -215,7 +758,7 @@ export async function getActionPlanForAccess(input: { id: string; uid: string })
     .doc(input.id)
     .get();
   const data = snapshot.data() as ActionPlanDocument | undefined;
-  if (!snapshot.exists || !belongsToCompany(data, company.companyId)) return null;
+  if (!snapshot.exists || !isActivePlanForCompany(data, company.companyId)) return null;
   return parseStoredActionPlan(snapshot.id, data);
 }
 
@@ -255,7 +798,7 @@ export async function updateActionPlanWorkspaceForAccess(input: {
     if (
       !company
       || !snapshot.exists
-      || !belongsToCompany(data, company.companyId)
+      || !isActivePlanForCompany(data, company.companyId)
       || !data
     ) {
       return null;
@@ -339,7 +882,7 @@ export async function deleteActionPlanForAccess(input: {
     if (
       !company
       || !snapshot.exists
-      || !belongsToCompany(data, company.companyId)
+      || !isActivePlanForCompany(data, company.companyId)
       || !data
     ) {
       return null;

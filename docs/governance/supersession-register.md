@@ -15,7 +15,7 @@ remplacé et la nouvelle référence à consulter.
 | Académie `Cours / Ateliers`, Cours par défaut | `superseded` | `Tutoriels / Cours`, Tutoriels par défaut ; les slugs `case-study` sont conservés, voir ADR 0004 |
 | Académie `Tutoriels / Cours`, Tutoriels par défaut | `temporarily-superseded` | `Cours` uniquement, sans onglet ; Tutoriels et Webinaires conservés derrière les bascules éditoriales, voir ADR 0004 |
 | Onglets spécialiste `Messages / Formules` | `superseded` | conversation écrite ou dictée sans onglets ; Coach business devient une carte Services, voir ADR 0009 |
-| Portail distinct `Mon espace` ou `Mes plans` | `superseded` | authentification Firebase puis retour direct à l'intention dans l'application unifiée ; la session fournit ensuite l'UID et l'e-mail de contact |
+| Portail distinct `Mon espace` | `superseded` | authentification Firebase puis retour direct à l'intention dans l'application unifiée ; `Mes plans` est uniquement l'index authentifié des plans actifs, en cours ou interrompus |
 | Adresse e-mail redemandée dans chaque formulaire applicatif | `superseded` | authentification Firebase unique, puis e-mail de contact récupéré côté serveur ; l'UID reste l'identité racine et les plans utilisent l'appartenance d'entreprise dérivée de cet UID |
 | Nouveau plan réécrit au format historique V1/V2 | `superseded` | génération V3 ; V1 est normalisé en V2 à la lecture, V2 et `manual` restent inchangés, voir ADR 0011 |
 | Support générique non typé pour les nouveaux plans | `superseded` | support V3 typé avec choix déterministe par nature d'action, voir ADR 0011 |

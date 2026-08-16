@@ -4,6 +4,7 @@ import { ArrowRight, LoaderCircle, Mic, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
 import ActionPlanCoachingControl from "@/components/ActionPlanCoachingControl";
+import ActionPlanGenerationScreen from "@/components/ActionPlanGenerationScreen";
 import CustomerSpaceAccessForm, {
   type CustomerSpaceAccessDraft,
 } from "@/components/CustomerSpaceAccessForm";
@@ -16,9 +17,19 @@ import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
 import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
-import type { ActionPlan } from "@/lib/action-plan-contract";
 import type { AiGenerationMetadata } from "@/lib/ai-generation-metadata";
 import { toPersistedAiGenerationMetadata } from "@/lib/ai-generation-metadata";
+import {
+  ActionPlanAuthenticationRequiredError,
+  runAuthenticatedActionPlanGeneration,
+} from "@/lib/action-plan-generation.client";
+import {
+  clearActionPlanGenerationDraft,
+  createActionPlanGenerationDraft,
+  readActionPlanGenerationDraft,
+  writeActionPlanGenerationDraft,
+  type ActionPlanGenerationDraft,
+} from "@/lib/action-plan-generation-draft.client";
 import {
   ACTION_PLAN_DEMO,
   ACTION_PLAN_DEMO_SITUATION,
@@ -51,37 +62,11 @@ const EXAMPLES = [
   "Je suis consultante indépendante. J’ai des missions, mais mon offre manque de clarté et je veux trouver des clients de manière plus régulière sans démarchage de masse.",
 ];
 
-const GENERATION_QUESTIONS = [
-  {
-    question: "Si je m’absente un mois, mon entreprise continue-t-elle de fonctionner ?",
-  },
-  {
-    question: "Quelles décisions dépendent encore systématiquement de moi ?",
-  },
-  {
-    question: "Mon équipe sait-elle quoi faire sans attendre mes instructions ?",
-  },
-  {
-    question: "Que pourrais-je supprimer, simplifier, déléguer ou automatiser ?",
-  },
-  {
-    question: "Est-ce que la qualité reste constante lorsque je ne supervise pas directement ?",
-  },
-] as const;
-
 type PendingSolutionSelection = {
   createdPlan: boolean;
   placementId: string;
   selected: boolean;
   systemId: string;
-};
-
-type PendingGeneratedPlan = {
-  generation: AiGenerationMetadata | null;
-  plan: EditableActionPlan;
-  selectedSystemId: string;
-  situation: string;
-  workspace: ActionPlanWorkspaceState;
 };
 
 function updateSolutionSelection(
@@ -111,12 +96,14 @@ export default function ActionPlanExperience({
   initialEmail = "",
   initialIsAuthenticated = false,
   initialAppContext = { view: "plan" },
+  initialGenerationIntent = false,
   initialStructureIntent = false,
 }: {
   systemOptions: readonly ActionPlanSystemOption[];
   initialEmail?: string;
   initialIsAuthenticated?: boolean;
   initialAppContext?: ActionPlanAppContext;
+  initialGenerationIntent?: boolean;
   initialStructureIntent?: boolean;
 }) {
   const [situation, setSituation] = useState("");
@@ -145,8 +132,10 @@ export default function ActionPlanExperience({
   const [accessPromptOpen, setAccessPromptOpen] = useState(false);
   const [pendingSolutionSelection, setPendingSolutionSelection] =
     useState<PendingSolutionSelection | null>(null);
-  const [pendingGeneratedPlan, setPendingGeneratedPlan] =
-    useState<PendingGeneratedPlan | null>(null);
+  const [generationDraft, setGenerationDraft] =
+    useState<ActionPlanGenerationDraft | null>(null);
+  const [queuedGenerationDraft, setQueuedGenerationDraft] =
+    useState<ActionPlanGenerationDraft | null>(null);
   const [accessDraft, setAccessDraft] = useState<CustomerSpaceAccessDraft>({
     email: "",
     mode: "create",
@@ -155,7 +144,6 @@ export default function ActionPlanExperience({
   const [autoSaveStatus, setAutoSaveStatus] = useState<"idle" | "saving" | "error">("idle");
   const [autoSaveRevision, setAutoSaveRevision] = useState(0);
   const [isActionEditorOpen, setIsActionEditorOpen] = useState(false);
-  const [quoteIndex, setQuoteIndex] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [isDemoMode, setIsDemoMode] = useState(false);
   const resultTitleRef = useRef<HTMLHeadingElement | null>(null);
@@ -166,6 +154,7 @@ export default function ActionPlanExperience({
   const guestSystemPreferenceHydratedRef = useRef(false);
   const autoSaveAttemptRef = useRef("");
   const manualAccessPromptHandledRef = useRef(false);
+  const generationIntentHandledRef = useRef(false);
 
   useEffect(() => scheduleActionPlanAcademyPayloadPreload(), []);
 
@@ -184,11 +173,15 @@ export default function ActionPlanExperience({
         solutionResourceSlug: undefined,
       }, "replace");
     }
+    if (generationDraft && !pendingSolutionSelection) {
+      clearActionPlanGenerationDraft();
+      setGenerationDraft(null);
+    }
     setPendingSolutionSelection(null);
     setAccessPromptOpen(false);
   }
   const accessDialogRef = useAccessibleDialog({
-    isOpen: accessPromptOpen && !isGenerating && Boolean(plan) && !isAuthenticated && !isDemoMode,
+    isOpen: accessPromptOpen && !isGenerating && !isAuthenticated && !isDemoMode,
     onClose: closeAccessPrompt,
   });
 
@@ -202,15 +195,9 @@ export default function ActionPlanExperience({
   }
 
   function handleAccessAuthenticated() {
-    if (pendingGeneratedPlan) {
-      setSituation(pendingGeneratedPlan.situation);
-      setPlan(pendingGeneratedPlan.plan);
-      setGeneration(pendingGeneratedPlan.generation);
-      setWorkspace(pendingGeneratedPlan.workspace);
-      setSelectedSystemId(pendingGeneratedPlan.selectedSystemId);
-      setPendingGeneratedPlan(null);
-      navigateAppContext({ view: "plan" }, "replace");
-      window.requestAnimationFrame(() => resultTitleRef.current?.focus());
+    if (generationDraft) {
+      window.location.assign("/?intent=generate-plan");
+      return;
     }
     if (pendingSolutionSelection) {
       setWorkspace((current) =>
@@ -529,30 +516,70 @@ export default function ActionPlanExperience({
   }, [navigateAppContext]);
 
   useEffect(() => {
-    if (!isGenerating) return;
+    if (!initialGenerationIntent || generationIntentHandledRef.current) return;
+    generationIntentHandledRef.current = true;
+    const draft = readActionPlanGenerationDraft();
+    if (!draft) {
+      setError("Votre demande a expiré. Décrivez à nouveau votre situation.");
+      return;
+    }
+    setSituation(draft.situation);
+    setGenerationDraft(draft);
+    if (isAuthenticated) {
+      setQueuedGenerationDraft(draft);
+    } else {
+      setAccessDraft((current) => ({ ...current, mode: "signin", password: "" }));
+      setAccessPromptOpen(true);
+    }
+  }, [initialGenerationIntent, isAuthenticated]);
 
-    const previousBodyOverflow = document.body.style.overflow;
-    const previousDocumentOverflow = document.documentElement.style.overflow;
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
-    setQuoteIndex(0);
-    const interval = window.setInterval(() => {
-      setQuoteIndex((current) => (current + 1) % GENERATION_QUESTIONS.length);
-    }, 4_800);
+  useEffect(() => {
+    if (!queuedGenerationDraft || !isAuthenticated || isDemoMode) return;
+    requestControllerRef.current?.abort();
+    const controller = new AbortController();
+    requestControllerRef.current = controller;
+    setIsGenerating(true);
+    setError(null);
 
-    return () => {
-      window.clearInterval(interval);
-      document.body.style.overflow = previousBodyOverflow;
-      document.documentElement.style.overflow = previousDocumentOverflow;
-    };
-  }, [isGenerating]);
+    void runAuthenticatedActionPlanGeneration(
+      queuedGenerationDraft,
+      controller.signal,
+    ).then((id) => {
+      clearActionPlanGenerationDraft();
+      setGenerationDraft(null);
+      window.location.assign(`/plans/${encodeURIComponent(id)}`);
+    }).catch((generationError) => {
+      if (generationError instanceof DOMException && generationError.name === "AbortError") {
+        return;
+      }
+      if (generationError instanceof ActionPlanAuthenticationRequiredError) {
+        setIsAuthenticated(false);
+        setAccessDraft((current) => ({ ...current, mode: "signin", password: "" }));
+        setAccessPromptOpen(true);
+        return;
+      }
+      setError(
+        generationError instanceof Error
+          ? generationError.message
+          : "Impossible de générer le plan pour le moment.",
+      );
+    }).finally(() => {
+      if (requestControllerRef.current === controller) {
+        requestControllerRef.current = null;
+        setQueuedGenerationDraft(null);
+        setIsGenerating(false);
+      }
+    });
+
+    return () => controller.abort();
+  }, [isAuthenticated, isDemoMode, queuedGenerationDraft]);
 
   async function generatePlanFromSituation(
     rawSituation: string,
     previousWorkspace: ActionPlanWorkspaceState,
   ) {
     const normalizedSituation = rawSituation.trim();
-    if (normalizedSituation.length < 20 || isGenerating) {
+    if (normalizedSituation.length < 20 || queuedGenerationDraft || isGenerating) {
       setError(
         normalizedSituation.length < 20
           ? "Décrivez votre situation en quelques phrases pour obtenir un plan utile."
@@ -565,11 +592,6 @@ export default function ActionPlanExperience({
       );
     }
 
-    requestControllerRef.current?.abort();
-    const controller = new AbortController();
-    requestControllerRef.current = controller;
-    setIsGenerating(true);
-    setPendingGeneratedPlan(null);
     setError(null);
 
     if (isDemoMode) {
@@ -583,68 +605,25 @@ export default function ActionPlanExperience({
       setWorkspace(nextWorkspace);
       setSelectedSystemId(nextWorkspace.selectedSystemId || ACTION_PLAN_DEMO.systemId);
       navigateAppContext({ view: "plan" }, "replace");
-      setIsGenerating(false);
       window.requestAnimationFrame(() => resultTitleRef.current?.focus());
       return;
     }
 
-    try {
-      const response = await fetch("/api/action-plan/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ situation: normalizedSituation }),
-        signal: controller.signal,
-      });
-      const body = (await response.json().catch(() => null)) as
-        | {
-            plan?: ActionPlan;
-            generation?: AiGenerationMetadata;
-            error?: string;
-          }
-        | null;
+    const cachedDraft = generationDraft ?? readActionPlanGenerationDraft();
+    const draft = cachedDraft?.situation === normalizedSituation
+      ? cachedDraft
+      : createActionPlanGenerationDraft(normalizedSituation);
+    writeActionPlanGenerationDraft(draft);
+    setSituation(normalizedSituation);
+    setGenerationDraft(draft);
 
-      if (!response.ok || !body?.plan) {
-        throw new Error(body?.error || "Impossible de générer le plan pour le moment.");
-      }
-
-      const generatedWorkspace = createGeneratedActionPlanWorkspaceState(
-        body.plan,
-        previousWorkspace,
-      );
-      const nextSelectedSystemId = generatedWorkspace.selectedSystemId || body.plan.systemId;
-
-      if (!isAuthenticated) {
-        setPendingGeneratedPlan({
-          generation: body.generation ?? null,
-          plan: body.plan,
-          selectedSystemId: nextSelectedSystemId,
-          situation: normalizedSituation,
-          workspace: generatedWorkspace,
-        });
-        return;
-      }
-
-      setSituation(normalizedSituation);
-      setPlan(body.plan);
-      setGeneration(body.generation ?? null);
-      setWorkspace(generatedWorkspace);
-      setSelectedSystemId(nextSelectedSystemId);
-      navigateAppContext({ view: "plan" }, "replace");
-      window.requestAnimationFrame(() => resultTitleRef.current?.focus());
-    } catch (submitError) {
-      if (submitError instanceof DOMException && submitError.name === "AbortError") return;
-      setError(
-        submitError instanceof Error
-          ? submitError.message
-          : "Impossible de générer le plan pour le moment.",
-      );
-      throw submitError;
-    } finally {
-      if (requestControllerRef.current === controller) {
-        requestControllerRef.current = null;
-        setIsGenerating(false);
-      }
+    if (!isAuthenticated) {
+      setAccessDraft((current) => ({ ...current, mode: "create", password: "" }));
+      setAccessPromptOpen(true);
+      return;
     }
+
+    setQueuedGenerationDraft(draft);
   }
 
   async function handleGenerate(event: React.FormEvent<HTMLFormElement>) {
@@ -700,64 +679,49 @@ export default function ActionPlanExperience({
     } : current);
   }
 
+  const accessPromptDialog = accessPromptOpen && !isAuthenticated && !isDemoMode ? (
+    <div
+      className="fixed inset-0 z-[140] flex items-end justify-center overflow-y-auto bg-brand-blue/25 p-0 backdrop-blur-sm sm:items-center sm:p-6"
+      onMouseDown={closeAccessPrompt}
+      role="presentation"
+    >
+      <section
+        ref={accessDialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="action-plan-access-title"
+        tabIndex={-1}
+        onMouseDown={(event) => event.stopPropagation()}
+        className="relative w-full max-w-[430px] rounded-t-[1.5rem] bg-dema-paper p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-[0_24px_70px_rgba(23,35,29,0.14)] sm:rounded-[1.5rem] sm:p-7"
+      >
+        <button
+          type="button"
+          data-dialog-initial-focus
+          onClick={closeAccessPrompt}
+          className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:bg-dema-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
+          aria-label="Fermer"
+        >
+          <X className="h-4 w-4" aria-hidden="true" />
+        </button>
+        <div>
+          <CustomerSpaceAccessForm
+            compact
+            draft={accessDraft}
+            initialMode="create"
+            onCancel={closeAccessPrompt}
+            onDraftChange={setAccessDraft}
+            onAuthenticated={handleAccessAuthenticated}
+            progressivePlan
+            returnTo={generationDraft ? "/?intent=generate-plan" : "/plans"}
+            simple
+          />
+        </div>
+      </section>
+    </div>
+  ) : null;
+
   if (isGenerating) {
-    const currentQuestion = GENERATION_QUESTIONS[quoteIndex];
-
-    return (
-      <main className="fixed inset-0 z-[100] flex min-h-dvh flex-col overflow-y-auto overscroll-contain bg-dema-forest px-6 py-8 text-dema-paper sm:px-10 sm:py-10 lg:px-14">
-        <div className="flex items-center justify-between gap-4">
-          <p className="demaa-hero-title text-3xl text-dema-paper sm:text-4xl">Demaa</p>
-          <div className="flex items-center justify-center gap-2 text-sm text-dema-paper/70" role="status" aria-live="polite">
-            <span>Génération de votre plan d’action</span>
-            <span className="inline-flex items-center gap-1" aria-hidden="true">
-              <span className="demaa-generation-dot h-1 w-1 rounded-full bg-current" />
-              <span className="demaa-generation-dot h-1 w-1 rounded-full bg-current [animation-delay:180ms]" />
-              <span className="demaa-generation-dot h-1 w-1 rounded-full bg-current [animation-delay:360ms]" />
-            </span>
-          </div>
-        </div>
-        <section className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center py-10 text-center sm:py-12">
-          <p
-            key={quoteIndex}
-            className="demaa-generation-quote w-full text-balance text-[clamp(1.6rem,4.55vw,4rem)] font-light leading-[1.06] tracking-[-0.04em] text-dema-paper"
-          >
-            {currentQuestion.question}
-          </p>
-        </section>
-      </main>
-    );
-  }
-
-  if (pendingGeneratedPlan && !isAuthenticated && !isDemoMode) {
-    return (
-      <main className="fixed inset-0 z-[100] flex min-h-dvh overflow-y-auto bg-dema-cream px-6 py-8 sm:px-10 sm:py-10">
-        <div className="mx-auto flex w-full max-w-md flex-col">
-          <p className="demaa-hero-title text-3xl text-dema-forest sm:text-4xl">Demaa</p>
-          <section className="my-auto py-10 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
-              Votre plan d’action est prêt
-            </p>
-            <h1 className="mt-3 text-balance text-3xl font-light leading-tight tracking-[-0.045em] text-brand-blue sm:text-4xl">
-              Créez votre accès pour le découvrir
-            </h1>
-            <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-dema-muted">
-              Il sera enregistré automatiquement pour que vous puissiez le retrouver et le modifier à tout moment.
-            </p>
-            <div className="mt-7 rounded-[1.4rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_18px_50px_rgba(23,35,29,0.07)] sm:p-6">
-              <CustomerSpaceAccessForm
-                compact
-                draft={accessDraft}
-                initialMode="create"
-                onDraftChange={setAccessDraft}
-                onAuthenticated={handleAccessAuthenticated}
-                returnTo="/plans"
-                simple
-              />
-            </div>
-          </section>
-        </div>
-      </main>
-    );
+    return <ActionPlanGenerationScreen />;
   }
 
   if (!plan) {
@@ -769,6 +733,7 @@ export default function ActionPlanExperience({
           initialEmail={initialEmail}
           isAuthenticated={isAuthenticated}
         />
+        {accessPromptDialog}
         <div className="mx-auto max-w-[68rem] pt-1">
           {activeTab === "plan" ? (
             <section className="mx-auto max-w-5xl pt-5 text-center sm:pt-7 lg:pt-10">
@@ -910,56 +875,7 @@ export default function ActionPlanExperience({
         initialEmail={initialEmail}
         isAuthenticated={isAuthenticated}
       />
-      {accessPromptOpen && !isAuthenticated && !isDemoMode ? (
-        <div
-          className="fixed inset-0 z-[140] flex items-end justify-center overflow-y-auto bg-brand-blue/25 p-0 backdrop-blur-sm sm:items-center sm:p-6"
-          onMouseDown={closeAccessPrompt}
-          role="presentation"
-        >
-          <section
-            ref={accessDialogRef}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="keep-generated-plan-title"
-            tabIndex={-1}
-            onMouseDown={(event) => event.stopPropagation()}
-            className="w-full max-w-md rounded-t-[1.5rem] bg-dema-paper p-6 shadow-2xl sm:rounded-[1.5rem] sm:p-7"
-          >
-            <button
-              type="button"
-              data-dialog-initial-focus
-              onClick={closeAccessPrompt}
-              className="float-right inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:bg-dema-sage"
-              aria-label="Fermer"
-            >
-              <X className="h-4 w-4" aria-hidden="true" />
-            </button>
-            <h2 id="keep-generated-plan-title" className="pr-12 text-2xl font-medium tracking-[-0.03em] text-brand-blue">
-              {pendingSolutionSelection ? "Enregistrez votre sélection" : "Gardez votre plan"}
-            </h2>
-            <div className="mt-4">
-              <CustomerSpaceAccessForm
-                compact
-                draft={accessDraft}
-                initialMode="create"
-                onDraftChange={setAccessDraft}
-                onAuthenticated={handleAccessAuthenticated}
-                returnTo="/plans"
-                simple
-              />
-            </div>
-            <button
-              type="button"
-              onClick={closeAccessPrompt}
-              className="mx-auto mt-5 block text-xs text-dema-muted underline decoration-dema-line underline-offset-4 hover:text-dema-forest"
-            >
-              {pendingSolutionSelection
-                ? "Continuer sans enregistrer"
-                : "Continuer avec un plan temporaire"}
-            </button>
-          </section>
-        </div>
-      ) : null}
+      {accessPromptDialog}
       {autoSaveStatus === "saving" ? (
         <div
           className="fixed inset-0 z-[160] flex items-center justify-center bg-dema-cream/82 px-6 backdrop-blur-sm"

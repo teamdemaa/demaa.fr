@@ -74,7 +74,7 @@ export default function Navbar({
                   </details>
                 ) : (
                   <Link
-                    href="/connexion?returnTo=%2Fplans"
+                    href="/connexion?returnTo=%2Fplans%2Flatest"
                     className={connectionLinkClassName}
                   >
                     <span>Connexion</span>
