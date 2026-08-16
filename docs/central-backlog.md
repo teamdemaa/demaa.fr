@@ -22,8 +22,10 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
 ## État courant Production — 16 août 2026
 
-- `main` et `origin/main` sont alignées sur `2e5cac0` ; les PR 108 et 109 sont
-  fusionnées et la Production est stable sur `demaa.co`.
+- `main` et `origin/main` sont alignées sur `4f0a589`. Les PR 110 à 114 ont été
+  fusionnées séparément et vérifiées en Production : fiabilité des plans,
+  sécurité de l'administration Coaching, consentement aux traceurs, expérience
+  Échanger et barre du titre.
 - L'application conserve un seul domaine canonique et des groupes de routes
   distincts pour le marketing, l'application, l'authentification et
   l'administration.
@@ -2268,11 +2270,12 @@ ne sont pas confirmés, D-071 reste documenté sans effet sur le produit.
 
 ## Prochaine action
 
-Le Lot 0 est isolé localement. Les décisions produit D-084 sont fermées et le
-périmètre inclut Chiffres et Stratégie. Attendre un nouveau GO pour reprendre
-et terminer le Lot 1 Plans, dont neuf fichiers partiels restent gelés dans son
-worktree. Après fusion et recette du Lot 1, conduire le Lot 3 Pilotage complet
-dans la tâche `Vérifier la stratégie et le backlog`. MASTER DEMAA maintient le
-programme, la décision, le backlog, le registre et la future resynchronisation
-du Google Sheet. Le MVP Réseau Partenaire reste un cadrage et tous les lots
-historiques exigent un nouveau GO explicite avant de redevenir exécutables.
+Le Lot 0 est isolé et les Lots 1, 2, 4, 5 et 7 sont fusionnés, déployés et
+recettés en Production. Les décisions produit D-084 sont fermées et le
+périmètre inclut Chiffres et Stratégie. La prochaine action est le Lot 3
+Pilotage complet dans la tâche `Vérifier la stratégie et le backlog`, sous la
+forme d'une seule PR publiable. Le Lot 6 Titre IA attend la recette Production
+du Lot 3. MASTER DEMAA maintient le programme, la décision, le backlog, le
+registre et la future resynchronisation du Google Sheet. Le MVP Réseau
+Partenaire reste un cadrage et tous les lots historiques exigent un nouveau GO
+explicite avant de redevenir exécutables.

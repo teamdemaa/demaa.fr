@@ -4,7 +4,7 @@
 - Date : 2026-08-16
 - Pilote produit et release : `MASTER DEMAA`
 - Branche Production : `main`
-- Base de référence avant changements locaux : `2e5cac0`
+- État Production vérifié : `4f0a589` (Lots 1, 2, 4, 5 et 7 fusionnés)
 
 ## Objectif
 
@@ -21,14 +21,14 @@ runtime exige un GO explicite d'Oumou et l'attribution de son workstream.
 
 | Unité | État | Lot propriétaire |
 | --- | --- | --- |
-| Documentation D-084 | isolée dans `codex/d084-program-docs`, commits locaux `509010b` puis `6ff19ae`, avec corrections d'exhaustivité non committées en cours d'audit, non publiée | Lot 0, unité documentaire dédiée |
-| Suppression de « Dictée en cours… » et test | isolée dans `codex/exchange-polish`, commit local `c4c0da5`, non publié | Lot 5 ou micro-PR dédiée |
-| Runtime Plans | neuf fichiers partiels, non stagés et non committés dans `codex/plan-reliability` ; travail gelé | Lot 1 après nouveau GO |
+| Documentation D-084 | isolée dans `codex/d084-program-docs`, complète et auditée, à publier dans une PR documentaire dédiée | Lot 0, unité documentaire dédiée |
+| Suppression de « Dictée en cours… » et expérience Coach | fusionnées par la PR 113 et vérifiées en Production au commit `4f0a589` | Lot 5 livré |
+| Runtime Plans | fusionné par la PR 110 et vérifié en Production au commit `6f9fed5` | Lot 1 livré |
 
-Ces unités ne doivent jamais être placées dans le même commit. Le gate
-d'isolation du Lot 0 est franchi : `main` reste propre à `2e5cac0`. Les fichiers
-partiels du Lot 1 sont préservés sans être considérés terminés ni autorisés à
-reprendre.
+Ces unités n'ont pas été placées dans le même commit. Le gate d'isolation du
+Lot 0 est franchi. Les Lots 1, 2, 4, 5 et 7 ont ensuite été livrés dans des PR
+indépendantes, chacun après ses tests, sa CI, son déploiement Vercel et son
+smoke test Production. Le Lot 3 Pilotage est désormais débloqué.
 
 ## Politique de branches, PR et Production
 
@@ -76,7 +76,7 @@ Responsable : MASTER DEMAA.
 Gate : chaque modification est attribuée et isolée ; aucun commit ou PR ne
 mélange documentation D-084, Dictée et runtime Plans.
 
-### Lot 1 — Fiabilité Plans — P0
+### Lot 1 — Fiabilité Plans — P0 — livré en Production
 
 Responsable : workstream Plans désigné par MASTER.
 
@@ -108,7 +108,7 @@ qu'au moins un plan existe, quelle que soit la provenance de navigation.
 Gate : sauvegarde lente, sauvegarde en attente, échec réseau, conflit `409`,
 changements successifs, retour arrière, mobile et PWA validés.
 
-### Lot 2 — Sécurité administration — P0
+### Lot 2 — Sécurité administration — P0 — livré en Production
 
 Responsable : MASTER ou workstream explicitement désigné.
 
@@ -251,7 +251,7 @@ effective de l'entreprise nettoie les métriques, la racine Stratégie et ses
 cycles via le workflow de maintenance. La politique de confidentialité décrit
 cette règle.
 
-### Lot 4 — Consentement aux traceurs — P1
+### Lot 4 — Consentement aux traceurs — P1 — livré en Production
 
 Responsable : workstream dédié par MASTER.
 
@@ -269,7 +269,7 @@ connexion/déconnexion, Safari iPhone, stockage local indisponible, refus,
 acceptation, préférences personnalisées, expiration, changement de version et
 synchronisation cookie/miroir.
 
-### Lot 5 — Échanger — P1
+### Lot 5 — Échanger — P1 — livré en Production
 
 Responsable : workstream Coaching désigné par MASTER.
 
@@ -307,7 +307,7 @@ Exemples de forme attendue : `Retrouver une marge rentable`,
 `Structurer le suivi des chantiers`, `Développer les ventes récurrentes` ou
 `Sortir le dirigeant de l'opérationnel`.
 
-### Lot 7 — Barre du titre — P2
+### Lot 7 — Barre du titre — P2 — livré en Production
 
 Responsable : workstream Plans/UI, après le Lot 1.
 
@@ -359,7 +359,8 @@ supersédés ou volontairement différés. Ce programme ne modifie pas :
 - la resynchronisation du Google Sheet avant stabilisation et validation des
   documents locaux.
 
-Le Lot 0 est franchi localement. Aucun runtime supplémentaire ne reprend sans
-nouveau GO et attribution explicite. Les neuf fichiers partiels du Lot 1 ne
-constituent pas un gate validé : D-084 attend toujours la finalisation, la
-fusion et la recette du Lot 1 Plans avant de commencer son implémentation.
+Le Lot 0 est franchi et les Lots 1, 2, 4, 5 et 7 sont vérifiés en Production.
+Le GO programme et le GO PROD ont été donnés. La prochaine exécution runtime
+est le Lot 3 Pilotage complet dans la tâche dédiée, sur une branche et une PR
+uniques ; aucun sous-lot 3A–3D ne doit être fusionné séparément. Le Lot 6 reste
+bloqué jusqu'à la fusion et à la recette Production du Lot 3.
