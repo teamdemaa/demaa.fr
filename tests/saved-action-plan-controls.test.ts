@@ -44,8 +44,14 @@ describe("saved action plan controls", () => {
     const detail = source("src/components/SavedActionPlanDetail.tsx");
     const controls = source("src/components/SavedActionPlanControls.tsx");
 
-    expect(detail).toContain("headerActions={(");
+    expect(detail).toContain('className="mb-3 flex min-w-0 max-w-[40rem] items-center gap-2"');
+    expect(detail).toContain("<SavedActionPlanSelector");
+    expect(detail).toContain("<SavedActionPlanMenu");
+    expect(detail).not.toContain("headerActions={(\n                <SavedActionPlanMenu");
     expect(controls).toContain("<MoreVertical");
+    expect(controls).toContain('className="inline-flex h-11 w-11');
+    expect(controls).toContain("focus-visible:ring-2");
+    expect(controls).toContain('className="flex h-11 min-w-0 flex-1');
     expect(controls).toContain("ActionPlanShareControl");
     expect(controls).toContain("Nouveau plan");
     expect(controls).toContain('onNavigate("/plans/new")');
