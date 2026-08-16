@@ -22,10 +22,10 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
 ## État courant Production — 16 août 2026
 
-- `main` et `origin/main` sont alignées sur `4f0a589`. Les PR 110 à 114 ont été
-  fusionnées séparément et vérifiées en Production : fiabilité des plans,
-  sécurité de l'administration Coaching, consentement aux traceurs, expérience
-  Échanger et barre du titre.
+- `origin/main` est alignée sur `8020e04`. Les PR 110 à 117 ont été fusionnées
+  séparément et vérifiées en Production : fiabilité des plans, sécurité de
+  l'administration Coaching, consentement aux traceurs, expérience Échanger,
+  barre du titre, documentation D-084, Pilotage et Titre IA.
 - L'application conserve un seul domaine canonique et des groupes de routes
   distincts pour le marketing, l'application, l'authentification et
   l'administration.
@@ -34,9 +34,9 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
   afin d'éviter les blocages de popup ; local et Preview peuvent conserver la
   popup desktop. Le parcours Production a été vérifié jusqu'à la création du
   contexte entreprise et au retour vers `/plans/new` pour un compte sans plan.
-- Le périmètre Plan d'action V4 reste `Actions + systemId`. La nouvelle
-  Stratégie d'entreprise D-084 est cadrée mais non implémentée ; elle ne doit
-  pas être annoncée comme livrée.
+- Le périmètre Plan d'action V4 reste `Actions + systemId`. Le Pilotage
+  d'entreprise D-084 est livré : Chiffres et Stratégie sont rattachés à
+  l'entreprise, séparés des plans et exclus du périmètre IA.
 
 ## État de clôture historique — 12 août 2026
 
@@ -356,11 +356,10 @@ l'ADR 0004 prévaut.
   déterministe, annulation, limites compte/IP, mode démo sans crédit et ledger
   sans contenu. Notes, identité, situation source, historique et Systèmes
   restent exclus.
-- [ ] D-084 — Implémenter le Pilotage d'entreprise `Chiffres + Stratégie`
-  selon l'ADR 0013, dans la tâche unique `Vérifier la stratégie et le backlog`.
-  Le périmètre Chiffres, omis lors d'une consolidation intermédiaire, est
-  restauré. D-082 reste la navigation principale cible. Après sauvegarde d'un
-  plan, la vue Plan expose la sous-navigation commune
+- [x] D-084 — Pilotage d'entreprise `Chiffres + Stratégie` livré selon l'ADR
+  0013 par la PR 116. Le périmètre Chiffres, omis lors d'une consolidation
+  intermédiaire, a été restauré. D-082 reste la navigation principale cible.
+  Après sauvegarde d'un plan, la vue Plan expose la sous-navigation commune
   `Plan d'action / Chiffres / Stratégie`, pilotée par
   `section=actions|figures|strategy` et jamais visible sur le formulaire public.
   Les deux domaines appartiennent à l'entreprise : changer ou supprimer un plan
@@ -372,12 +371,12 @@ l'ADR 0004 prévaut.
   nouveau cycle vide, historique paginé par 10, exactement un pli ouvert avec
   Alignement par défaut, placeholders validés, archives avec l'entreprise et
   conflits inline sans écrasement. Aucun contenu Pilotage n'est transmis à
-  l'IA. Ne migrer, afficher, recopier ou supprimer physiquement aucune ancienne
-  réponse V3. L'implémentation attend le gate du Lot 1 et Chiffres + Stratégie
-  sont fusionnés dans une seule PR complète et publiable.
+  l'IA. Aucune ancienne réponse V3 n'est migrée, affichée, recopiée ou supprimée
+  physiquement. Chiffres et Stratégie ont été fusionnés ensemble comme une
+  seule unité complète et publiable.
 - [ ] Resynchroniser le Google Sheet maître avec D-084, le registre de
-  décisions et l'état Production du 16 août. Ne pas marquer Stratégie comme
-  livrée avant l'implémentation et la recette.
+  décisions et l'état Production du 16 août. D-084 peut désormais y être
+  marqué livré ; cette écriture externe reste une opération séparée.
 - [x] Figer la gamme : une première clarification offerte, puis `Coach
   business` à 750 EUR HT/mois pour un accompagnement régulier incluant deux
   sessions individuelles et un suivi écrit entre les séances. Un
@@ -2270,12 +2269,10 @@ ne sont pas confirmés, D-071 reste documenté sans effet sur le produit.
 
 ## Prochaine action
 
-Le Lot 0 est isolé et les Lots 1, 2, 4, 5 et 7 sont fusionnés, déployés et
-recettés en Production. Les décisions produit D-084 sont fermées et le
-périmètre inclut Chiffres et Stratégie. La prochaine action est le Lot 3
-Pilotage complet dans la tâche `Vérifier la stratégie et le backlog`, sous la
-forme d'une seule PR publiable. Le Lot 6 Titre IA attend la recette Production
-du Lot 3. MASTER DEMAA maintient le programme, la décision, le backlog, le
-registre et la future resynchronisation du Google Sheet. Le MVP Réseau
-Partenaire reste un cadrage et tous les lots historiques exigent un nouveau GO
-explicite avant de redevenir exécutables.
+Le programme 0 à 8 est fusionné, déployé et recetté en Production au commit
+`8020e04`. Pilotage Chiffres + Stratégie a été livré par la PR 116 et Titre IA
+par la PR 117. Il ne reste aucun lot runtime ouvert dans ce programme. MASTER
+DEMAA maintient la décision, le backlog, le registre et la future
+resynchronisation séparée du Google Sheet. Le MVP Réseau Partenaire reste un
+cadrage et tous les lots historiques exigent un nouveau GO explicite avant de
+redevenir exécutables.

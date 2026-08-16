@@ -1,6 +1,6 @@
 # ADR 0013 — Pilotage d'entreprise : Chiffres et Stratégie par cycles
 
-- Statut : `working`
+- Statut : `validated`
 - Date : 2026-08-16
 - Décision produit : D-084
 - Complète : ADR 0008, ADR 0011 et ADR 0012
@@ -220,8 +220,10 @@ maintenance ; si la suppression du seul propriétaire entraîne celle de
 l'entreprise, ce même workflow réalise le nettoyage. La politique de
 confidentialité doit être alignée.
 
-Aucun code, stockage, API, composant ou test de cette fonctionnalité n'est
-considéré livré par la présente ADR.
+Cette ADR seule ne constituait pas une livraison. Son implémentation complète a
+ensuite été fusionnée par la PR 116 au commit `8aa1cab`, avec stockage, API,
+interface, maintenance, confidentialité et tests réunis dans la même unité
+publiable.
 
 ## Décisions consolidées
 
@@ -250,8 +252,8 @@ du lot D-084, pas d'un arbitrage produit restant.
 ## Coordination
 
 `MASTER DEMAA` conserve cette décision, le backlog et le registre. La tâche
-`Vérifier la stratégie et le backlog` possède seule l'architecture détaillée,
-la branche et l'implémentation complète de Chiffres et Stratégie jusqu'à la
-recette. Aucune seconde implémentation ne doit être commencée en parallèle. La
-fonctionnalité ne peut être marquée `livrée` qu'après implémentation, recette et
-décision de promotion.
+`Vérifier la stratégie et le backlog` a livré l'architecture et
+l'implémentation complètes de Chiffres et Stratégie dans la PR 116. Les gates
+serveur, interface, concurrence, suppression, desktop, mobile et PWA ont été
+franchis avant la promotion Production. Aucune seconde implémentation
+concurrente ne doit être créée.
