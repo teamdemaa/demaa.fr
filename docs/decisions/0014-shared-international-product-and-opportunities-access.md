@@ -73,10 +73,16 @@ countryCode
 currencyCode
 ```
 
-- `localeCode` détermine la langue de l'interface et du contenu ;
+- `localeCode` détermine la langue de l'interface active ;
 - `marketCode` détermine les fonctionnalités et le catalogue disponibles ;
 - `countryCode` décrit la localisation de l'entreprise et les règles locales ;
 - `currencyCode` détermine la devise et le format des prix.
+
+La langue du contenu d'un plan est distincte de la locale de l'interface. Un
+plan enregistre `contentLocaleCode` et `marketCodeAtCreation`. Changer la
+langue des menus ne traduit jamais un plan existant et ne modifie jamais son
+marché de création. Les commandes IA utilisent `contentLocaleCode`, pas la
+locale courante de l'interface.
 
 Configuration française initiale :
 
@@ -106,6 +112,75 @@ Les nouveaux plans enregistrent explicitement leur langue et leur marché. Les
 plans historiques qui ne possèdent pas encore ces champs sont lus comme
 `fr/fr-fr` afin de préserver leur comportement ; aucun backfill global n'est
 autorisé avant audit des documents et plan de migration idempotent.
+
+## Résolution de la langue
+
+Demaa conserve une seule identité Firebase, une seule entreprise et un seul
+espace de plans pour toutes les langues.
+
+La locale de l'interface est résolue dans cet ordre :
+
+1. route explicitement localisée ;
+2. choix manuel enregistré ;
+3. préférence `preferredLocale` du membre connecté ;
+4. cookie du visiteur ;
+5. langue du navigateur lors de la première visite ;
+6. français par défaut.
+
+`/` reste la route française canonique et `/en` la route anglaise canonique.
+Une route explicitement ouverte n'est jamais remplacée silencieusement par une
+autre langue. Lors de la première visite, la langue du navigateur peut proposer
+l'anglais, mais ne force pas une redirection depuis une URL explicitement
+française.
+
+Après un choix manuel, la préférence est enregistrée dans un cookie puis, pour
+un membre connecté, dans son profil. L'authentification conserve la locale et
+un `returnTo` interne validé. Un parcours Google commencé sous `/en` doit
+revenir dans le contexte anglais, jamais à la racine française.
+
+Le runtime actuel ne possède pas encore de document de préférences membre. La
+fondation internationale introduit `customer_preferences/{uid}` avec
+`schema_version`, `preferred_locale`, `created_at` et `updated_at`. Ce document
+ne duplique ni e-mail ni identité Firebase, ne place pas la préférence sur
+l'entreprise et ne la rattache pas à une seule appartenance. Sa rétention et sa
+suppression suivent le membre.
+
+La locale active contrôle l'interface autour d'un plan ;
+`contentLocaleCode` contrôle la langue du contenu et des commandes IA. Les
+routes `latest` ouvrent le dernier plan accessible sans filtrer les plans d'une
+autre langue. `Mes plans` / `My plans` réunit tous les plans accessibles et
+indique leur langue d'origine avec un repère `FR` ou `EN`.
+
+Les responsabilités restent séparées :
+
+- `preferredLocale` appartient au membre ;
+- `countryCode`, `marketCode` et `currencyCode` appartiennent à l'entreprise ;
+- `contentLocaleCode` et `marketCodeAtCreation` appartiennent au plan pour
+  préserver son historique.
+
+Les e-mails liés à une demande ou une conversation utilisent la langue de
+cette demande ou conversation. Les e-mails génériques utilisent la préférence
+du membre.
+
+Les champs `contentLocaleCode` et `marketCodeAtCreation` appartiennent à
+l'enveloppe Firestore et à l'index du plan, jamais au JSON métier produit par
+l'IA. Ils sont initialisés à la création puis conservés pendant les écritures.
+
+Dans Firestore, les noms persistés sont `preferred_locale` pour la préférence,
+`country_code`, `market_code` et `currency_code` pour l'entreprise, puis
+`content_locale_code` et `market_code_at_creation` pour le plan. Les champs
+entreprise restent optionnels pour les documents historiques et aucun backfill
+des plans n'est requis pour lire les valeurs françaises par défaut.
+
+Les caches de contenus et de projections sont indexés par `localeCode` et
+`marketCode`, puis par `systemId`, `courseId` ou `contentVersion` lorsqu'ils
+s'appliquent. Le cache Académie global et les caches Système qui ne connaissent
+que le slug ne peuvent pas être partagés entre marchés.
+
+La PWA reste une seule application et réutilise les mêmes icônes et le même
+runtime. Ses manifestes sont toutefois projetés par locale afin que le point
+d'entrée français reste `/` et le point d'entrée anglais `/en`. Aucun manifeste
+anglais ne doit ramener silencieusement l'utilisateur à la racine française.
 
 ## Périmètre English Beta
 
@@ -159,8 +234,12 @@ une fiche française et les caches sont isolés par langue et marché.
 Les accompagnements utilisent le même catalogue, les mêmes modales, les mêmes
 demandes et la même administration que la France. Seules les prestations
 réalisables à distance et en anglais sont publiées : Business coaching,
-Process automation, Targeted B2B prospecting et Paid acquisition uniquement si
-la capacité réelle est validée.
+Process automation and AI, Targeted B2B prospecting et Paid acquisition
+uniquement si la capacité réelle est validée. `Business application` reste
+masquée tant que Demaa ne peut pas assurer cadrage, livraison et support en
+anglais. `Process automation and AI` reste une seule prestation : l'IA est
+intégrée à l'automatisation et ne crée pas une offre parallèle. Les forfaits et
+le parcours de demande suivent D-089 sans contrat anglais parallèle.
 
 Sont masqués : Expert-comptable, aides, financements, formalités et assistance
 locales, prestations réglementées, partenaires non qualifiés et ressources
@@ -168,9 +247,10 @@ françaises.
 
 Le CTA canonique est `Envoyer ma demande` en français et `Send my request` en
 anglais. Il ne déclenche aucun paiement. Il conserve la prestation et sa
-source, reprend le contexte après authentification, rattache la demande à
-l'UID et à l'entreprise, utilise l'administration et les notifications
-existantes et confirme un retour sous 24 à 48 heures.
+source, reprend le contexte lorsqu'une authentification est nécessaire,
+rattache la demande à l'UID et à l'entreprise lorsqu'ils sont disponibles,
+utilise l'administration et les notifications existantes et confirme un retour
+sous 24 à 48 heures.
 
 La demande peut enregistrer `localeCode`, `marketCode`, `countryCode`,
 `serviceSlug`, `systemId` et `sourcePage`. Aucun panier, checkout groupé,
@@ -198,6 +278,13 @@ Le contrat éditorial contient `courseId`, `localeCode`, `marketCodes`,
 `contentVersion` et `publicationStatus`. La progression distingue au minimum
 `courseId + localeCode + contentVersion`. Les contenus et caches ne retombent
 jamais silencieusement sur le français.
+
+Le runtime français ne possède pas encore de progression Académie persistante
+entre deux visites. English Beta ne doit pas introduire silencieusement cette
+nouvelle fonctionnalité. Le `courseId` stable est distinct du slug localisé ;
+le lecteur conserve sa progression de session actuelle. Une progression
+persistante commune aux langues reste un chantier ultérieur soumis à une
+décision dédiée.
 
 ## Opportunités
 
@@ -234,12 +321,13 @@ Chaque étape est une PR autonome, testée, compatible avec la France et non
 fusionnée sans GO explicite :
 
 1. alignement documentaire ;
-2. masquage de navigation Opportunités et accès direct conservé ;
-3. fondation internationale cachée et `/en` sous flag/noindex ;
-4. Action Plan anglais complet ;
-5. Solutions, Accompaniment et Talk to us ;
-6. Academy anglaise ;
-7. recette English Beta intégrée puis activation publique sous GO séparé.
+2. offre Accompagnement France D-089 unifiée ;
+3. masquage de navigation Opportunités et accès direct conservé ;
+4. fondation internationale cachée et `/en` sous flag/noindex ;
+5. Action Plan anglais complet ;
+6. Solutions, Accompaniment et Talk to us ;
+7. Academy anglaise ;
+8. recette English Beta intégrée puis activation publique sous GO séparé.
 
 ## Gates de recette
 
@@ -249,7 +337,11 @@ d'intégration, build Production, E2E desktop/mobile/PWA, clavier, lecteur
 d'écran, auth e-mail/Google, génération et réouverture, demandes visibles dans
 l'administration, Talk to us, huit cours, progression, caches, `html lang`,
 canonical, `hreflang`, sitemap, absence d'Opportunities/Resources en anglais et
-absence de fallback français.
+absence de fallback français. Elle couvre également la priorité de résolution
+de locale, la persistance du choix manuel, le retour Google sous `/en`,
+`latest` à travers plusieurs langues, l'indicateur `FR`/`EN`, l'absence de
+traduction automatique d'un plan et l'usage de `contentLocaleCode` par l'IA et
+les notifications contextuelles.
 
 La France ne doit subir aucune régression. Aucun runtime ne commence avant un
 audit des écarts, des fichiers partagés, des migrations, des collisions et des

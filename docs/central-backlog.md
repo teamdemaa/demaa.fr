@@ -7,8 +7,11 @@ Backlog de pilotage :
 
 Le Google Sheet a été resynchronisé le 16 août 2026 avec D-083 à D-088,
 DEC-023/024, le runtime de référence `8020e04` et la tête documentaire
-`10a9067`. Ce document, le registre ADR et le Sheet décrivent désormais le
-même état. Aucun chantier ne doit être déclaré livré avant sa recette réelle.
+`10a9067`. La clôture documentaire complémentaire a ensuite été fusionnée par
+la PR 121 au commit `a47d844`, sans changement runtime. Le Sheet devra recevoir
+la résolution de langue de D-085, la nouvelle décision D-089 et cette nouvelle
+tête documentaire après fusion de la prochaine PR documentaire. Aucun chantier
+ne doit être déclaré livré avant sa recette réelle.
 
 Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
@@ -31,7 +34,7 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
   D-085. Les commits documentaires ultérieurs peuvent faire avancer `main`
   sans modifier cette référence runtime.
 - La tête Production et `origin/main` après la clôture documentaire sont
-  `10a9067`. Aucun runtime n'a été modifié entre `ae5029d` et `10a9067`.
+  `a47d844`. Aucun runtime n'a été modifié entre `ae5029d` et `a47d844`.
 - L'application conserve un seul domaine canonique et des groupes de routes
   distincts pour le marketing, l'application, l'authentification et
   l'administration.
@@ -78,6 +81,23 @@ D-085 supersède les anciens cadrages « English Beta = Action Plan uniquement �
   sans scope, le comportement appartient au socle commun.
 - [ ] Centraliser `localeCode`, `marketCode`, `countryCode` et `currencyCode`.
 - [ ] Conserver le français sans préfixe et utiliser `/en` pour English Beta.
+- [ ] Séparer la locale de l'interface de la langue du contenu :
+  `preferredLocale` appartient au membre, tandis que chaque plan conserve
+  `contentLocaleCode` et `marketCodeAtCreation`.
+- [ ] Résoudre la locale de l'interface dans l'ordre canonique : route
+  explicite, choix manuel, préférence membre, cookie visiteur, langue du
+  navigateur à la première visite, puis français.
+- [ ] Ne jamais rediriger silencieusement une route explicitement française ou
+  anglaise ; préserver locale et `returnTo` interne validé pendant
+  l'authentification, notamment Google depuis `/en`.
+- [ ] Enregistrer un choix manuel dans un cookie puis dans le profil du membre
+  connecté, sans créer d'identité, d'entreprise ou d'espace Plans distinct.
+- [ ] Afficher tous les plans dans `Mes plans` / `My plans` avec un indicateur
+  `FR` ou `EN`; `latest` ne filtre pas par langue et changer l'interface ne
+  traduit jamais un plan existant.
+- [ ] Faire utiliser `contentLocaleCode` aux commandes IA et la langue de la
+  demande/conversation aux e-mails contextuels ; les e-mails génériques
+  utilisent `preferredLocale`.
 - [ ] Ne déduire ni États-Unis, ni droit américain, ni USD de la seule langue
   anglaise.
 - [ ] Interdire composant, API, générateur, conversation, administration ou
@@ -105,6 +125,9 @@ financements, formalités locales et partenaires strictement français.
   par système, langue et marché.
 - [ ] Publier `Accompaniment` uniquement pour les prestations réellement
   réalisables à distance en anglais.
+- [ ] Conserver une seule prestation `Automatisation des processus et IA`
+  (`Process automation and AI` en anglais) : l'IA est un levier intégré à
+  l'automatisation, jamais une carte ou une offre d'accompagnement séparée.
 - [ ] Utiliser `Envoyer ma demande` / `Send my request` avec le système actuel,
   sans paiement, panier, WhatsApp, marketplace ni dépendance à la future
   messagerie par sujets.
@@ -115,6 +138,63 @@ financements, formalités locales et partenaires strictement français.
   validés, avec progression et caches séparés par langue/version.
 - [ ] Ne laisser apparaître aucun texte, écran, fiche ou contenu français comme
   fallback dans le parcours anglais.
+
+### Accompagnement — Automatisation des processus et IA
+
+Référence : D-089 et [ADR 0015](decisions/0015-packaged-automation-and-business-application.md).
+
+Alignement France à livrer dans une PR autonome avant les projections
+anglaises :
+
+- [ ] Conserver le slug, la route et les attributions existants
+  `automatisation-processus` ; ne créer ni deuxième prestation IA, ni migration
+  de demande, ni nouvelle catégorie.
+- [ ] Remplacer le nom public par `Automatisation des processus et IA`, puis
+  mettre à jour catalogue, cartes, modale, SEO, données structurées,
+  notifications et tests qui affichent le nom.
+- [ ] Promesse courte recommandée : réduire les tâches manuelles grâce à des
+  workflows fiables et à des usages IA ciblés, intégrés aux outils existants.
+- [ ] Description recommandée : simplifier d'abord le processus, automatiser
+  les étapes répétitives, puis intégrer l'IA uniquement lorsqu'elle apporte un
+  gain concret, avec validation humaine, tests et documentation.
+- [ ] Livrables à cadrer : analyse et priorisation du processus ; intégrations,
+  automatisations et usages IA validés ; tests, points de contrôle humains,
+  documentation et prise en main.
+- [ ] Exclusions à rendre explicites : refonte indistincte de tous les
+  processus, licences et consommations d'outils ou de modèles tiers, promesse
+  d'autonomie totale de l'IA ou résultat métier garanti sans mesure préalable.
+- [ ] Remplacer le prix 500 EUR HT/jour par les forfaits validés
+  Automatisation essentielle à 1 500 EUR HT et Automatisation avancée + IA à
+  3 000 EUR HT, avec les limites de D-089.
+- [ ] Ajouter `Application métier` immédiatement après Automatisation, avec le
+  forfait essentiel à 4 500 EUR HT et le forfait avancé à 7 500 EUR HT. Conserver
+  `/sur-mesure` comme unique page canonique et supprimer toute occurrence
+  publique de l'ancien prix 2 500 EUR.
+- [ ] Faire consommer une seule source de forfaits au catalogue, aux modales,
+  à `/sur-mesure`, aux données structurées et aux notifications ; ne pas créer
+  de page SEO concurrente `/services/application-metier`.
+- [ ] Retirer les montants et mentions d'avantage de toutes les cartes
+  Accompagnement. Afficher les prix dès le haut des modales/fiches, sans
+  séparateur qui traverse ou masque le texte.
+- [ ] Conserver l'éligibilité de ces deux prestations à l'avantage
+  accompagnement mensuel de 12 %, vérifié côté serveur, sans paiement ni
+  checkout.
+- [ ] Remplacer le CTA `Être recontacté(e)` par `Envoyer ma demande` et étendre
+  le contrat/API avec `packageSlug`, `localeCode`, `marketCode` et une source
+  de page validée. `packageSlug` est obligatoire uniquement pour les deux
+  prestations à forfaits. Le serveur retrouve le montant et refuse tout
+  forfait qui n'appartient pas au service.
+- [ ] Retirer ou revalider contractuellement le support à 110 EUR/heure, la
+  maintenance à 99 EUR/mois et les promesses absolues RGPD, propriété et
+  hébergement de l'ancienne page `/sur-mesure`.
+- [ ] Ajouter ensuite la projection anglaise `Process automation and AI` au
+  même service, avec disponibilité par marché et aucune fiche française en
+  fallback.
+
+Gate : nom, promesse, livrables, exclusions, forfaits et avantage cohérents sur
+la carte, la modale, `/sur-mesure`, la demande reçue par la Team et la projection
+anglaise, sans changement du slug Automatisation ni régression des placements
+par Système.
 
 ### Opportunités — décision immédiate
 
@@ -129,6 +209,9 @@ financements, formalités locales et partenaires strictement français.
 - [ ] Ne pas publier Opportunities dans English Beta.
 - [ ] Différer la réservation aux entreprises clientes jusqu'à une décision et
   un lot distincts.
+- [ ] Normaliser les anciennes URLs `/?view=opportunities` vers
+  `/opportunites` et reprendre les intentions/brouillons d'authentification sur
+  cette route canonique plutôt que dans une vue applicative cachée.
 
 ### Audit du code au 16 août 2026
 
@@ -150,10 +233,36 @@ financements, formalités locales et partenaires strictement français.
 - [ ] Aucune couche i18n ni contexte `localeCode/marketCode` transversal
   n'existe encore ; choisir une solution compatible avec le Next.js 16
   installé après lecture de sa documentation locale.
+- [ ] Aucun profil ou document de préférences membre n'existe encore. Créer
+  `customer_preferences/{uid}` avec `schema_version`, `preferred_locale`,
+  `created_at` et `updated_at`, sans e-mail ni identité dupliquée. Sa rétention,
+  sa suppression et son audit suivent le membre, jamais l'entreprise ou une
+  appartenance particulière.
 - [ ] La navigation et les libellés applicatifs sont codés en français ;
   `ActionPlanNavbar` contient encore Opportunités et suppose quatre colonnes.
 - [ ] Le prompt de génération est français et les contrats de génération et de
-  stockage ne transportent pas encore langue, marché, pays ou devise.
+  stockage ne transportent pas encore langue, marché, pays ou devise. Le
+  document Plan et son index compact ne possèdent pas encore
+  `contentLocaleCode` ni `marketCodeAtCreation`.
+- [ ] `getSafeCustomerReturnTo` valide aujourd'hui une liste de routes
+  françaises limitée. L'étendre de manière centralisée aux routes localisées
+  sans affaiblir la protection contre les redirections externes ; conserver le
+  contexte `/en` pendant Google et l'authentification e-mail.
+- [x] `/plans/latest` sélectionne déjà le dernier plan accessible sans filtre
+  de langue. Préserver cette requête et enrichir seulement l'index avec le
+  repère de langue.
+- [ ] Les champs de langue du plan appartiennent à son enveloppe Firestore et à
+  l'index compact, jamais au JSON `ActionPlan` produit par l'IA.
+- [ ] Le cache Académie est encore global et le cache Système n'est indexé que
+  par mode + `systemId`. Les payloads et projections doivent intégrer locale,
+  marché et version afin d'interdire tout mélange français/anglais.
+- [ ] Le lecteur Académie ne persiste actuellement aucune progression entre
+  deux visites. Ajouter `courseId` stable et `contentVersion` aux contrats et
+  caches, mais ne pas introduire une progression persistante dans English Beta
+  sans nouvelle décision produit.
+- [ ] Le manifeste PWA courant démarre sur la racine française. Projeter un
+  manifeste anglais avec `start_url=/en` en réutilisant le même runtime et les
+  mêmes assets, sans créer une deuxième application.
 - [ ] Les plans existants sans contexte international devront être lus comme
   `fr/fr-fr` ; aucun backfill global ne sera exécuté avant audit et migration
   idempotente.
@@ -173,16 +282,22 @@ résolus par duplication du runtime français.
 
 Carte initiale des fichiers et collisions à confirmer au début de chaque PR :
 
+- PR Accompagnement France : contrat tarifaire et forfaits, catalogue,
+  `ServicesCatalog`, `SystemSolutionsTab`, modales interceptées, `/sur-mesure`,
+  SEO, formulaire/API de demande, avantage mensuel et tests. Cette PR précède
+  toute projection anglaise de Services.
 - PR Opportunités : `ActionPlanNavbar.tsx`, `ActionPlanExperience.tsx`,
   `SavedActionPlanDetail.tsx`, `Footer.tsx`, `sitemap.ts`, metadata de
-  `/opportunites`, contexte URL et tests de navigation ; conserver les contrats
-  de données et la route directe.
+  `/opportunites`, contexte URL, compatibilité `?view=opportunities`, intentions
+  de retour et tests de navigation ; conserver les contrats de données et la
+  route directe.
 - PR fondation internationale : dépendance i18n choisie, `src/proxy.ts`,
   layouts/métadonnées, helpers d'URL et `returnTo`, auth Google/e-mail, contexte
-  applicatif et types internationaux centraux.
+  applicatif, préférence membre/cookie et types internationaux centraux.
 - PR Action Plan : contrat, génération, stockage, routes de génération,
-  brouillon client et composants Plan. Cette PR partage des fichiers critiques
-  avec toute future évolution IA et doit rester seule sur cette zone.
+  brouillon client, `contentLocaleCode`, `marketCodeAtCreation`, index
+  multilingue et composants Plan. Cette PR partage des fichiers critiques avec
+  toute future évolution IA et doit rester seule sur cette zone.
 - PR Solutions/Talk : catalogue Services, formulaires et API de demande,
   stockage/notifications existants, Coaching et dictionnaires. Ne pas y
   introduire le modèle de sujets M ni le back office A.
@@ -212,6 +327,9 @@ Les tests partagés sont rejoués en `fr/fr-fr` et `en/global-en-beta` et
 couvrent TypeScript, ESLint, build, E2E desktop/mobile/PWA, clavier, lecteur
 d'écran, auth e-mail/Google, génération/réouverture, demandes dans
 l'administration, conversations, cours, caches, SEO et absence de fallback.
+Ils couvrent aussi l'ordre de résolution de langue, le choix manuel persistant,
+le retour Google sous `/en`, `latest` et l'index de plans multilingues,
+l'absence de traduction automatique et la langue des commandes IA et e-mails.
 
 ## Programmes différés préservés
 
@@ -502,9 +620,12 @@ l'ADR 0004 prévaut.
   clôturée manuellement par la Team Demaa. Le Coach business est présenté
   comme l'accompagnement régulier distinct.
 - Une fiche Système contient `Organisation`, `Solutions` et `Ressources`.
-- Sept accompagnements publics existent : Coach business, Expert-comptable,
-  Formalités d'entreprise, Automatisation des processus, Gestion des réseaux
-  sociaux, Publicité en ligne et Prospection ciblée. Expert-comptable est absent
+- Huit accompagnements publics existent après livraison de D-089 : Coach
+  business, Expert-comptable, Formalités d'entreprise, Automatisation des
+  processus et IA, Application métier, Gestion des réseaux sociaux, Publicité
+  en ligne et Prospection ciblée. L'IA appartient à la prestation
+  d'automatisation et ne crée pas un accompagnement distinct. `/sur-mesure`
+  reste la page canonique d'Application métier. Expert-comptable est absent
   des systèmes comptables. Formalités est absente des systèmes comptables,
   cabinets d'avocats et notaires. Deux prestations externes restent accessibles
   uniquement par recommandation privée de la Team Demaa.
@@ -529,9 +650,9 @@ l'ADR 0004 prévaut.
   `docs/legacy-route-retirement-matrix.md`.
 - Les endpoints, destinations privées et révisions historiques de livraison
   restent intacts pendant le retrait des pages publiques.
-- `/services` publie exactement les six offres canoniques sous le libellé
-  public Accompagnement. `/sur-mesure`
-  reste une offre distincte, hors navigation principale.
+- `/services` publie les huit offres canoniques sous le libellé public
+  Accompagnement après D-089. `/sur-mesure` reste la page canonique détaillée
+  d'Application métier, sans deuxième offre ou prix parallèle.
 
 ### Lots restant réellement au backlog
 
@@ -706,11 +827,10 @@ l'ADR 0004 prévaut.
   consentement, lien révocable, durée et protection contre l'indexation. Le MVP
   permet déjà de sauvegarder et retrouver un plan, mais ne crée aucun lien
   public tant que ces règles ne sont pas validées.
-- [x] Conserver sept accompagnements publics composés au rendu dans les 115
-  Systèmes. Formalités d'entreprise est publique hors systèmes comptables,
-  cabinets d'avocats et notaires. Assistance administrative et Sous-traitance
-  de formalités juridiques restent privées et accessibles uniquement par
-  recommandation de la Team Demaa.
+- [x] Le catalogue de sept accompagnements a été livré et reste l'état
+  Production avant D-089. D-089 porte la cible à huit avec Application métier,
+  sans modifier les exclusions de Formalités ni les deux prestations privées
+  accessibles uniquement par recommandation de la Team Demaa.
 - [x] D-083, lot 1 : limiter la surface publique Solutions à `Outils` et
   `Services`, sans suppression ni déplacement de données. Le filtre public
   s'applique après la composition pour empêcher Financement et Aides d'être
@@ -2443,9 +2563,9 @@ de l'audit.
   ne modifie ni les groupes, ni les cartes, ni les modales de l'ancien
   Écosystème. La migration future vers Services reste un chantier séparé.
 - **Services** : une prestation réalisée par Demaa n'est pas un outil tiers.
-  Les sept offres Services ne doivent pas entrer dans la matrice Outils ; toute
-  relation ou intégration technique peut être citée comme prérequis, jamais
-  comme recommandation commerciale automatique.
+  Les accompagnements du catalogue canonique ne doivent pas entrer dans la
+  matrice Outils ; toute relation ou intégration technique peut être citée
+  comme prérequis, jamais comme recommandation commerciale automatique.
 - **Tiimora / D-049 à D-060** : Tiimora est audité avec le même niveau de
   preuve que les autres outils. Son statut ODEMA/Demaa doit être transparent.
   D-068 à D-070 n'activent ni instrumentation, retargeting, passerelle,
@@ -2587,10 +2707,28 @@ ne sont pas confirmés, D-071 reste documenté sans effet sur le produit.
 
 ## Prochaine action
 
-Le programme 0 à 8 est fusionné, déployé et recetté en Production au commit
-`8020e04`. Pilotage Chiffres + Stratégie a été livré par la PR 116 et Titre IA
-par la PR 117. Il ne reste aucun lot runtime ouvert dans ce programme. MASTER
-DEMAA maintient la décision, le backlog, le registre et leur synchronisation
-avec le Google Sheet. Le MVP Réseau Partenaire reste un cadrage et tous les
-lots historiques exigent un nouveau GO explicite avant de redevenir
-exécutables.
+Le programme 0 à 8 est fusionné, déployé et recetté. `8020e04` reste son dernier
+commit runtime et `a47d844` la tête Production documentaire courante. Il ne
+reste aucun lot runtime ouvert dans ce programme.
+
+Ordre recommandé :
+
+1. terminer la surveillance Production de 24 à 48 heures et, dès qu'un compte
+   possédant des plans est disponible, rejouer sans créer de données
+   artificielles le parcours authentifié Plan → Chiffres → Stratégie →
+   reconnexion ;
+2. fusionner une PR documentaire D-085/D-089 contenant la résolution de langue
+   et les forfaits Accompagnement, puis resynchroniser le Google Sheet ;
+3. livrer la PR Accompagnement France D-089 afin que le catalogue, les modales,
+   `/sur-mesure` et les demandes partagent les mêmes forfaits ;
+4. retirer ensuite Opportunités des navigations tout en conservant
+   `/opportunites` directement accessible et `noindex` ;
+5. seulement après ces PR, construire la fondation internationale cachée
+   sous flag, sans publier `/en` ;
+6. livrer ensuite Action Plan anglais, Solutions/Talk to us, Academy puis la
+   recette intégrée, chaque étape dans une PR autonome et sous GO explicite.
+
+Les programmes Échanger par sujets, administration enrichie, Réseau Partenaire,
+invitations multi-membres, suppression d'entreprise, paiement et marketplace
+restent différés. Ils ne doivent pas interrompre D-085 sans signal utilisateur,
+obligation opérationnelle ou risque de sécurité nouveau.
