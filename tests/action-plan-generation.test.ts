@@ -12,6 +12,7 @@ import {
   ACTION_PLAN_MODEL_ID,
   buildActionPlanPrompt,
   generateActionPlanWithMetadata,
+  normalizeGeneratedActionPlanTitle,
 } from "@/lib/action-plan-generation.server";
 
 function validPlan(): ActionPlan {
@@ -64,9 +65,17 @@ function validPlan(): ActionPlan {
   };
 }
 
-function mockResult(plan: ActionPlan, inputTokens = 10, outputTokens = 20) {
+function mockResult(
+  plan: ActionPlan,
+  inputTokens = 10,
+  outputTokens = 20,
+  title: string | null = "Structurer le suivi commercial",
+) {
   return {
-    content: [{ type: "text" as const, text: JSON.stringify(plan) }],
+    content: [{
+      type: "text" as const,
+      text: JSON.stringify({ title, plan }),
+    }],
     finishReason: { unified: "stop" as const, raw: undefined },
     usage: {
       inputTokens: {
@@ -100,7 +109,9 @@ describe("action plan generation prompt", () => {
 
   it("generates actions and the detected system without Strategy", () => {
     expect(ACTION_PLAN_INSTRUCTIONS).toContain("EN UNE SEULE REPONSE");
-    expect(ACTION_PLAN_INSTRUCTIONS).toContain("actions prioritaires et le systemId");
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain("un titre court, les actions prioritaires et le systemId");
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain("3 a 7 mots");
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain("60 caracteres");
     expect(ACTION_PLAN_INSTRUCTIONS).not.toMatch(
       /La Strategie|Alignement \/|Positionnement :|Offre :|Promotion :|APOP/,
     );
@@ -153,6 +164,7 @@ describe("action plan structured generation", () => {
     );
 
     expect(result.plan).toEqual(plan);
+    expect(result.title).toBe("Structurer le suivi commercial");
     expect(result.generation).toMatchObject({
       model: "mock/plan-v4",
       inputTokens: 10,
@@ -163,6 +175,38 @@ describe("action plan structured generation", () => {
     });
     expect(result.generation.durationMs).toBeGreaterThanOrEqual(0);
     expect(model.doGenerateCalls).toHaveLength(1);
+  });
+
+  it("normalizes the model title without adding a second request", async () => {
+    const plan = validPlan();
+    const model = new MockLanguageModelV4({
+      doGenerate: mockResult(
+        plan,
+        10,
+        20,
+        "Plan d’action pour retrouver une marge rentable rapidement et durablement",
+      ),
+    });
+
+    const result = await generateActionPlanWithMetadata("Situation test", {
+      model,
+      modelId: "mock/title-normalization",
+    });
+
+    expect(result.title).toBe("Retrouver une marge rentable rapidement et durablement");
+    expect(result.title.split(/\s+/)).toHaveLength(7);
+    expect(result.title.length).toBeLessThanOrEqual(60);
+    expect(model.doGenerateCalls).toHaveLength(1);
+  });
+
+  it("falls back deterministically to the first action for an unusable title", () => {
+    const plan = validPlan();
+    expect(normalizeGeneratedActionPlanTitle(null, plan)).toBe(
+      "Relancer les demandes prioritaires",
+    );
+    expect(normalizeGeneratedActionPlanTitle("Ventes", plan)).toBe(
+      "Relancer les demandes prioritaires",
+    );
   });
 
   it("repairs a communication action that lacks its ready-to-send message", async () => {
@@ -199,7 +243,7 @@ describe("action plan structured generation", () => {
     const repaired = validPlan();
     const structurallyInvalid = {
       ...mockResult(repaired, 3, 2),
-      content: [{ type: "text" as const, text: '{"version":"3"}' }],
+      content: [{ type: "text" as const, text: '{"title":null,"plan":{"version":"3"}}' }],
     };
     const model = new MockLanguageModelV4({
       doGenerate: [structurallyInvalid, mockResult(repaired, 4, 7)],

@@ -75,6 +75,7 @@ describe("authenticated action plan generation route", () => {
     mocks.enforceRateLimit.mockResolvedValue(null);
     mocks.beginActionPlanGeneration.mockResolvedValue({ kind: "claimed", claim });
     mocks.generateActionPlanWithMetadata.mockResolvedValue({
+      title: "Structurer le suivi commercial",
       plan: { version: "4", systemId: "cabinet-comptable", actions: [] },
       generation: {
         model: "openai/gpt-5-mini",
@@ -125,7 +126,11 @@ describe("authenticated action plan generation route", () => {
     });
     expect(mocks.generateActionPlanWithMetadata).toHaveBeenCalledWith(claim.situation);
     expect(mocks.completeActionPlanGeneration).toHaveBeenCalledWith(
-      expect.objectContaining({ identity, claim }),
+      expect.objectContaining({
+        identity,
+        claim,
+        title: "Structurer le suivi commercial",
+      }),
     );
   });
 
