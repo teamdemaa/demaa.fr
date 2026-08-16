@@ -331,7 +331,50 @@ Ils couvrent aussi l'ordre de résolution de langue, le choix manuel persistant,
 le retour Google sous `/en`, `latest` et l'index de plans multilingues,
 l'absence de traduction automatique et la langue des commandes IA et e-mails.
 
+### Décision de livraison resserrée du 17 août 2026
+
+Pour préserver la stabilité de la Production et terminer d'abord la proposition
+commerciale France, la vague immédiatement publiable est volontairement
+limitée à trois PR, dans cet ordre :
+
+1. alignement documentaire D-085/D-089 ;
+2. forfaits France Automatisation des processus et IA / Application métier ;
+3. retrait d'Opportunités des navigations, avec `/opportunites` accessible par
+   lien et les parcours historiques de détail/authentification préservés.
+
+Les lots Fondation internationale, Action Plan anglais, Solutions/Talk to us,
+Academy anglaise et recette English Beta restent planifiés mais sont remis au
+backlog après cette vague. Ils ne doivent ni être fusionnés partiellement, ni
+activer `/en`, tant que leurs remarques de revue, leur recette cumulative, leur
+politique de confidentialité anglaise et leur E2E Google authentifié ne sont
+pas fermés. Cette pause ne supersède pas D-085 : elle en modifie uniquement le
+calendrier de livraison.
+
 ## Programmes différés préservés
+
+### R — Recommandations contextuelles d'outils dans les Actions
+
+Ce lot reste séparé de l'internationalisation et ne bloque pas la vague France.
+Il réutilisera le registre `SolutionPlacement` et remplacera uniquement la
+résolution des recommandations d'outils ; les aides Organisation, Modèle et
+Accompagnement conservent leur moteur actuel.
+
+- [ ] Introduire une résolution serveur versionnée, sans seconde source de
+  vérité, avec `recommendationResolutionVersion: 1` même lorsque la liste de
+  recommandations est vide.
+- [ ] Enregistrer dans le snapshot `placementId`, sa version,
+  `actionContentFingerprint` et `countryCodeAtResolution` afin de pouvoir
+  expliquer et reproduire la recommandation.
+- [ ] Ne jamais recalculer l'éligibilité dans le navigateur et masquer un
+  snapshot devenu obsolète après une modification matérielle de l'Action.
+- [ ] Tester d'abord le moteur avec des fixtures et en dark launch : les outils
+  réels restent `a_verifier` jusqu'à validation métier distincte.
+- [ ] Conserver un maximum de deux outils pertinents et ne jamais remplacer les
+  modèles opérationnels ou accompagnements quand ils répondent mieux à
+  l'Action.
+- [ ] Préparer contrats, tests d'étanchéité par entreprise, observabilité et
+  activation progressive dans une PR runtime autonome, après stabilisation de
+  la pile internationale.
 
 ### M — Échanger par sujets et continuité client
 
@@ -2723,16 +2766,15 @@ Ordre recommandé :
    possédant des plans est disponible, rejouer sans créer de données
    artificielles le parcours authentifié Plan → Chiffres → Stratégie →
    reconnexion ;
-2. fusionner une PR documentaire D-085/D-089 contenant la résolution de langue
-   et les forfaits Accompagnement, puis resynchroniser le Google Sheet ;
+2. fusionner la PR documentaire D-085/D-089 contenant la résolution de langue
+   et la décision de livraison resserrée, puis resynchroniser le Google Sheet ;
 3. livrer la PR Accompagnement France D-089 afin que le catalogue, les modales,
    `/sur-mesure` et les demandes partagent les mêmes forfaits ;
 4. retirer ensuite Opportunités des navigations tout en conservant
    `/opportunites` directement accessible et `noindex` ;
-5. seulement après ces PR, construire la fondation internationale cachée
-   sous flag, sans publier `/en` ;
-6. livrer ensuite Action Plan anglais, Solutions/Talk to us, Academy puis la
-   recette intégrée, chaque étape dans une PR autonome et sous GO explicite.
+5. arrêter la vague Production après la recette de ces trois PR ; conserver au
+   backlog la fondation internationale cachée, Action Plan anglais,
+   Solutions/Talk to us, Academy et la recette intégrée jusqu'à un nouveau GO.
 
 Les programmes Échanger par sujets, administration enrichie, Réseau Partenaire,
 invitations multi-membres, suppression d'entreprise, paiement et marketplace
