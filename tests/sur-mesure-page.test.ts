@@ -7,11 +7,18 @@ vi.mock("@/components/Navbar", () => ({
   default: () => createElement("nav", { "aria-label": "Navigation principale" }),
 }));
 
-vi.mock("@/components/OrganisationSessionBookingButton", () => ({
-  default: (props: Record<string, unknown>) => createElement(
-    "button",
-    { type: "button", "data-source": props.source },
-    String(props.label),
+vi.mock("server-only", () => ({}));
+
+vi.mock("@/components/ServiceCallbackForm", () => ({
+  default: (props: { packages?: readonly { slug: string }[]; serviceSlug: string }) => createElement(
+    "form",
+    { "data-service": props.serviceSlug },
+    props.packages?.map(({ slug }) => createElement("input", {
+      key: slug,
+      name: "packageSlug",
+      type: "radio",
+      value: slug,
+    })),
   ),
 }));
 
@@ -27,7 +34,7 @@ describe("Sur mesure commercial page", () => {
     });
   });
 
-  it("renders the concise eight-section journey and both booking actions", () => {
+  it("renders the concise journey, package request and canonical structured data", () => {
     const markup = renderToStaticMarkup(createElement(SurMesurePage));
 
     expect(markup).toContain("<h1");
@@ -47,59 +54,37 @@ describe("Sur mesure commercial page", () => {
     expect(markup).toContain(content.faq.title);
     expect(markup.match(/<section/g)).toHaveLength(9);
     expect(markup.match(/<details/g)).toHaveLength(4);
-    expect(markup.match(/>Discutons de votre projet</g)).toHaveLength(2);
-    expect(markup).toContain('data-source="Page sur mesure : Hero"');
-    expect(markup).toContain('data-source="Page sur mesure : Final"');
+    expect(markup).toContain(">Voir les forfaits<");
+    expect(markup).toContain(">Envoyer ma demande<");
+    expect(markup).toContain('data-service="application-metier"');
+    expect(markup).toContain('value="application-metier-essentielle"');
+    expect(markup).toContain('value="application-metier-avancee"');
     expect(markup).toContain('aria-label="Navigation principale"');
     expect(markup).not.toContain("Exemple d’interface");
     expect(markup).not.toMatch(/marketplace|partenariat|200 dirigeants|30 000 €|1 500 €/i);
-    expect(markup).not.toContain('type="application/ld+json"');
+    expect(markup).toContain('type="application/ld+json"');
   });
 
-  it("contains only the explicitly approved price, support and guarantee copy", () => {
-    expect(content.commercialFrame.pricing).toEqual({
-      label: "Votre application métier",
-      value: "2 500 €",
-      tax: "HT",
-      prefix: "À partir de",
-      notes: ["Paiement unique", "Aucun abonnement obligatoire"],
-    });
-    expect(content.commercialFrame.included.items).toEqual([
-      "Analyse de vos besoins",
-      "Prototype fonctionnel",
-      "Votre identité visuelle",
-      "Vos fonctionnalités métier",
-      "Automatisations essentielles",
-      "Mise en ligne et formation",
-      "30 jours de corrections après livraison",
-    ]);
-    expect(content.commercialFrame.support.map(({ price }) => price)).toEqual([
-      "110 €/heure",
-      "99 €/mois",
-    ]);
-    expect(content.commercialFrame.guarantees.map(({ title }) => title)).toEqual([
-      "Hébergement sécurisé",
-      "Conformité RGPD",
-      "Application 100 % à vous",
-      "Support réactif",
-    ]);
+  it("publishes only the two approved packages and removes obsolete promises", () => {
+    const markup = renderToStaticMarkup(createElement(SurMesurePage));
+
+    expect(markup).toContain("4 500 € HT");
+    expect(markup).toContain("7 500 € HT");
+    expect(markup).not.toMatch(/2 500 €|110 €\/heure|99 €\/mois/);
+    expect(markup).not.toMatch(/Conformité RGPD|Application 100 % à vous|confidentialité garantie/);
+    expect(content.commercialFrame.title).toBe("Deux forfaits clairs, avec un périmètre borné.");
   });
 
   it("keeps attribution, the sitemap and legacy redirects aligned", async () => {
-    const [pageSource, buttonSource, sitemapSource, nextConfigSource] = await Promise.all([
+    const [pageSource, sitemapSource, nextConfigSource] = await Promise.all([
       readFile(new URL("../src/app/(marketing)/sur-mesure/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/components/OrganisationSessionBookingButton.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/sitemap.ts", import.meta.url), "utf8"),
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
     ]);
 
-    expect(pageSource).toContain("<OrganisationSessionBookingButton");
-    expect(pageSource).toContain('source="Page sur mesure : Hero"');
-    expect(pageSource).toContain('source="Page sur mesure : Final"');
-    expect(pageSource).not.toContain("sourceIsAuthoritative");
-    expect(buttonSource).toContain('searchParams.get("source") || source');
-    expect(buttonSource).toContain("getFilloutAttributionParameters");
-    expect(buttonSource).toContain('searchParams.get("systemSlug")');
+    expect(pageSource).toContain("<ServiceCallbackForm");
+    expect(pageSource).toContain('href="#demande-application"');
+    expect(pageSource).not.toContain("OrganisationSessionBookingButton");
     expect(sitemapSource).toContain("`${base}/sur-mesure`");
     expect(sitemapSource).toContain("`${base}/systemes`");
     expect(nextConfigSource).toMatch(

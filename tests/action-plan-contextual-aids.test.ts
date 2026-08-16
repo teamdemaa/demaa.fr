@@ -154,7 +154,7 @@ const solutionSections: readonly RenderableSolutionSectionDto[] = [
       }),
       placement({
         category: "Automatisation",
-        name: "Automatisation des processus",
+        name: "Automatisation des processus et IA",
         resourceSlug: "automatisation-processus",
         section: "services",
         usage: "Déléguer la mise en place de workflows et supprimer les ressaisies.",

@@ -12,18 +12,21 @@ const publicSolutionVisibilityPath = resolve(
   currentDir,
   "../src/lib/public-solution-section-visibility.json",
 );
+const canonicalServiceCatalogPath = resolve(
+  currentDir,
+  "../src/lib/canonical-service-catalog.ts",
+);
 
 const PUBLIC_SOLUTION_SECTION_VISIBILITY = readJson(publicSolutionVisibilityPath);
 const SOLUTION_SECTION_ORDER = ["software", "services", "providers", "networks"]
   .filter((section) => PUBLIC_SOLUTION_SECTION_VISIBILITY[section]);
-const CANONICAL_SERVICE_SLUGS = [
-  "coach-business",
+const ACCOUNTING_FIRM_SYSTEM_SLUGS = new Set(["cabinet-comptable", "expert-comptable"]);
+const FORMALITIES_PROFESSIONAL_SYSTEM_SLUGS = new Set([
+  "cabinet-comptable",
   "expert-comptable",
-  "automatisation-processus",
-  "gestion-reseaux-sociaux",
-  "publicite-en-ligne",
-  "prospection-ciblee",
-];
+  "cabinet-davocat",
+  "notaire",
+]);
 const FIREBASE_V2_REVISION_ID = "solutions-2026-08-08-active-v2";
 const TRANSVERSAL_PURCHASING_SECTORS = new Set([
   "Conseil & services aux entreprises",
@@ -31,7 +34,7 @@ const TRANSVERSAL_PURCHASING_SECTORS = new Set([
 ]);
 
 const EXPECTED_TEMPLATE_TITLES = [
-  "Récapitulatif du système",
+  "Processus métier",
   "Tableau de pilotage opérationnel",
   "Suivi et prévisionnel financier",
   "CRM - suivi commercial",
@@ -60,6 +63,15 @@ function readJson(path) {
   return JSON.parse(fs.readFileSync(path, "utf8"));
 }
 
+export function loadCanonicalServiceSlugs() {
+  const source = fs.readFileSync(canonicalServiceCatalogPath, "utf8");
+  const declaration = source.match(
+    /export const CANONICAL_SERVICE_SLUGS = \[([\s\S]*?)\] as const;/,
+  )?.[1];
+  if (!declaration) throw new Error("Invalid canonical service slug declaration");
+  return Array.from(declaration.matchAll(/"([^"]+)"/g), (match) => match[1]);
+}
+
 export function loadEnterprises() {
   const payload = readJson(enterpriseCatalogPath);
 
@@ -72,6 +84,7 @@ export function loadEnterprises() {
 
 export function buildExpectedSolutionOrders(options = {}) {
   const enterprises = loadEnterprises();
+  const canonicalServiceSlugs = loadCanonicalServiceSlugs();
   const revision = readJson(firebaseSolutionSnapshotPath);
   if (!Array.isArray(revision?.placements)) {
     throw new Error("Invalid Firebase Solution registry snapshot");
@@ -90,9 +103,12 @@ export function buildExpectedSolutionOrders(options = {}) {
       ));
     const order = SOLUTION_SECTION_ORDER.flatMap((section) => {
       if (section === "services") {
-        return CANONICAL_SERVICE_SLUGS.filter((serviceSlug) => {
-          if (enterprise.slug === "cabinet-comptable" && serviceSlug === "expert-comptable") {
-            return false;
+        return canonicalServiceSlugs.filter((serviceSlug) => {
+          if (serviceSlug === "expert-comptable") {
+            return !ACCOUNTING_FIRM_SYSTEM_SLUGS.has(enterprise.slug);
+          }
+          if (serviceSlug === "formalites-entreprise") {
+            return !FORMALITIES_PROFESSIONAL_SYSTEM_SLUGS.has(enterprise.slug);
           }
           return true;
         });
@@ -176,7 +192,7 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
     }
   }
 
-  for (const expectedTab of ["Process", "Solutions", "Ressources"]) {
+  for (const expectedTab of ["Organisation", "Solutions"]) {
     if (!renderedHtml.includes(`>${expectedTab}</button>`)) {
       errors.push(`missing direct tab: ${expectedTab}`);
     }
@@ -191,9 +207,9 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
     renderedHtml,
     'aria-controls="kit-content-panel"',
   );
-  if (controlledPanelCount !== 3) {
+  if (controlledPanelCount !== 2) {
     errors.push(
-      `expected 3 tab controls for the shared panel, found ${controlledPanelCount}`,
+      `expected 2 tab controls for the shared panel, found ${controlledPanelCount}`,
     );
   }
   if (!renderedHtml.includes('id="kit-content-panel"')) {
@@ -267,9 +283,6 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
   }
 
   if (tab === "process") {
-    if (renderedHtml.includes('aria-expanded="true"')) {
-      errors.push("a Process routine is expanded by default");
-    }
     if (
       renderedHtml.includes("Routines essentielles") ||
       renderedHtml.includes(
@@ -355,7 +368,7 @@ export function inspectPage({ response, html, tab, expectedSolutionOrder }) {
       );
     }
     for (const resourceTitle of EXPECTED_TEMPLATE_TITLES) {
-      const action = resourceTitle === "Récapitulatif du système"
+      const action = resourceTitle === "Processus métier"
         ? "Ouvrir"
         : "Voir un aperçu de";
       if (!renderedHtml.includes(`aria-label="${action} ${resourceTitle}"`)) {

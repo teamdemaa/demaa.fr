@@ -55,9 +55,14 @@ describe("legacy Services and Courses retirement", () => {
       source("src/components/ServicesCatalog.tsx"),
       source("src/components/ServicesLandingPage.tsx"),
       source("src/app/(marketing)/services/page.tsx"),
+      source("src/app/(marketing)/sur-mesure/page.tsx"),
+      source("src/lib/sur-mesure-page-content.ts"),
     ].join("\n");
 
     expect(publicMarketing).not.toMatch(/2\s*000\s*€/);
+    expect(publicMarketing).not.toMatch(/2\s*500\s*€/);
+    expect(publicMarketing).not.toMatch(/500\s*€\s*HT\s*\/\s*jour/);
+    expect(publicMarketing).not.toMatch(/110\s*€\s*\/\s*heure|99\s*€\s*\/\s*mois/);
     expect(publicMarketing).not.toMatch(/service-catalog-v2|services-page-catalog/);
     expect(publicMarketing).not.toContain("550 € HT");
     expect(publicMarketing).not.toContain("350 € HT");

@@ -534,7 +534,9 @@ describe("system Solutions UI", () => {
     expect(source).not.toContain("aspect-square");
     expect(source).toContain("line-clamp-2");
     expect(source).not.toContain("line-clamp-3");
-    expect(source).toContain("mt-auto shrink-0");
+    expect(source).not.toContain("mt-auto shrink-0");
+    expect(source).not.toContain("Tarif abonné");
+    expect(source).not.toContain("Avantage abonné");
     expect(source).not.toMatch(/\bposition\b/);
   });
 

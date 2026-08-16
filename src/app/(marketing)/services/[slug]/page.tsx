@@ -6,7 +6,7 @@ import CanonicalServiceDetails from "@/components/CanonicalServiceDetails";
 import Navbar from "@/components/Navbar";
 import {
   getCanonicalServiceBySlug,
-  getCanonicalServices,
+  getCanonicalServiceDetailRouteParams,
 } from "@/lib/canonical-service-catalog";
 import {
   buildServicePageJsonLd,
@@ -18,17 +18,17 @@ type ServicePageProps = {
 };
 
 export function generateStaticParams() {
-  return getCanonicalServices().map((service) => ({ slug: service.slug }));
+  return getCanonicalServiceDetailRouteParams();
 }
 
 export async function generateMetadata({ params }: ServicePageProps): Promise<Metadata> {
   const { slug } = await params;
   const service = getCanonicalServiceBySlug(slug);
 
-  if (!service) notFound();
+  if (!service || service.detailHref !== `/services/${service.slug}`) notFound();
 
   const title = `${service.name} | Services Demaa`;
-  const canonical = `/services/${service.slug}`;
+  const canonical = service.detailHref;
 
   return {
     title,
@@ -49,7 +49,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const { slug } = await params;
   const service = getCanonicalServiceBySlug(slug);
 
-  if (!service) notFound();
+  if (!service || service.detailHref !== `/services/${service.slug}`) notFound();
 
   return (
     <>

@@ -113,8 +113,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const serviceEntries: MetadataRoute.Sitemap = getCanonicalServices()
+    .filter((service) => service.detailHref.startsWith("/services/"))
     .map((service) => ({
-      url: `${base}/services/${service.slug}`,
+      url: `${base}${service.detailHref}`,
       lastModified: siteUpdatedAt,
       changeFrequency: "monthly" as const,
       priority: 0.7,

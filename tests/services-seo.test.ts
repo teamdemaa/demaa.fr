@@ -20,7 +20,7 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services SEO and redirects", () => {
-  it("publishes only the seven canonical detail routes", async () => {
+  it("publishes seven generic detail routes and keeps Application on /sur-mesure", async () => {
     expect(generateStaticParams()).toEqual([
       { slug: "coach-business" },
       { slug: "expert-comptable" },
@@ -33,6 +33,9 @@ describe("canonical Services SEO and redirects", () => {
     expect(servicesIndexMetadata.alternates).toEqual({ canonical: "/services" });
     await expect(generateMetadata({
       params: Promise.resolve({ slug: "ancienne-offre" }),
+    })).rejects.toMatchObject({ digest: "NEXT_HTTP_ERROR_FALLBACK;404" });
+    await expect(generateMetadata({
+      params: Promise.resolve({ slug: "application-metier" }),
     })).rejects.toMatchObject({ digest: "NEXT_HTTP_ERROR_FALLBACK;404" });
   });
 
@@ -52,18 +55,43 @@ describe("canonical Services SEO and redirects", () => {
     const advertising = getCanonicalServiceBySlug("publicite-en-ligne");
     const expert = getCanonicalServiceBySlug("expert-comptable");
     const formalities = getCanonicalServiceBySlug("formalites-entreprise");
-    if (!automation || !advertising || !expert || !formalities) {
+    const application = getCanonicalServiceBySlug("application-metier");
+    if (!automation || !advertising || !expert || !formalities || !application) {
       throw new Error("missing canonical service fixture");
     }
 
     expect(buildServicePageJsonLd(automation)[1]).toMatchObject({
-      offers: {
-        price: "500.00",
-        priceSpecification: {
-          unitText: "DAY",
-          valueAddedTaxIncluded: false,
+      offers: [
+        {
+          name: "Automatisation essentielle",
+          price: "1500.00",
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price: "1500.00",
+            priceCurrency: "EUR",
+            valueAddedTaxIncluded: false,
+          },
         },
-      },
+        {
+          name: "Automatisation avancée + IA",
+          price: "3000.00",
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price: "3000.00",
+            priceCurrency: "EUR",
+            valueAddedTaxIncluded: false,
+          },
+        },
+      ],
+    });
+
+    expect(buildServicePageJsonLd(application)[1]).toMatchObject({
+      name: "Application métier",
+      url: "https://demaa.co/sur-mesure",
+      offers: [
+        { name: "Application métier essentielle", price: "4500.00" },
+        { name: "Application métier avancée", price: "7500.00" },
+      ],
     });
 
     expect(buildServicePageJsonLd(advertising)[1]).toMatchObject({
@@ -98,7 +126,7 @@ describe("canonical Services SEO and redirects", () => {
 
     expect(detailSource).toContain("alternates: { canonical }");
     expect(detailSource).toContain("url: canonical");
-    expect(detailSource).toContain("if (!service) notFound()");
+    expect(detailSource).toContain("if (!service || service.detailHref");
     expect(detailSource).not.toContain("dynamicParams = false");
     expect(nextConfig).toContain("source: '/systeme-marketing'");
     expect(nextConfig).toContain("source: '/marketing-ethique'");
@@ -107,7 +135,8 @@ describe("canonical Services SEO and redirects", () => {
     expect(nextConfig).not.toContain("destination: '/services/assistance-administrative'");
     expect(proxy).not.toContain('"/services/"');
     expect(proxy).toContain('"/annuaire-services/"');
-    expect(sitemap).toContain('`${base}/services/${service.slug}`');
+    expect(sitemap).toContain('`${base}${service.detailHref}`');
+    expect(sitemap).toContain('service.detailHref.startsWith("/services/")');
     expect(sitemap).not.toContain('`${base}/annuaire-services/${service.slug}`');
   });
 });
