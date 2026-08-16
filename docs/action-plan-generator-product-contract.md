@@ -386,9 +386,8 @@ sélections Solutions et catalogue des 115 activités. Les opérations retourné
 sont validées et appliquées déterministiquement ; le mode démo n'effectue aucun
 appel externe. Le ledger conserve uniquement les métriques techniques.
 
-Si la commande est ultérieurement activée, le ledger n'enregistrera que ses
-métriques d'usage ; jamais le texte de commande, le prompt ou le contenu du
-plan.
+Pour chaque commande exécutée, le ledger n'enregistre que ses métriques
+d'usage ; jamais le texte de commande, le prompt ou le contenu du plan.
 
 ## Décisions rejetées
 
@@ -397,7 +396,7 @@ plan.
 | Questionnaire en quatre champs avant génération | Un grand champ libre |
 | Prix ferme de 5 EUR | Pricing ouvert |
 | Trois actions maximum | Nombre adapté à la situation |
-| Un seul pilier stratégique développé | Quatre piliers visibles |
+| Stratégie intégrée au Plan d'action | Plan limité aux Actions ; Stratégie manuelle séparée dans le Pilotage d'entreprise |
 | Prospection interdite | Prospection ciblée et éthique possible |
 | Étude de marché automatique | Hors MVP |
 | Contenu complet des 115 Systèmes envoyé au modèle | Catalogue léger uniquement |
