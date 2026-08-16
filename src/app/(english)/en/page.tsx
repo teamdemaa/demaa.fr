@@ -4,6 +4,11 @@ import ActionPlanExperience from "@/components/ActionPlanExperience";
 import DocumentLocale from "@/components/DocumentLocale";
 import Navbar from "@/components/Navbar";
 import { isEnglishBetaEnabled } from "@/lib/english-beta.server";
+import {
+  ENGLISH_BETA_DESCRIPTION,
+  ENGLISH_BETA_SOCIAL_IMAGE_ALT,
+  ENGLISH_BETA_TITLE,
+} from "@/lib/english-beta-metadata";
 import { parseActionPlanAppContext } from "@/lib/action-plan-app-context";
 import { shouldRedirectAuthenticatedHomeToPlans } from "@/lib/action-plan-home-routing";
 import { englishActionPlanSystemOptions } from "@/lib/action-plan-localization";
@@ -14,14 +19,33 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/en", languages: { fr: "/", en: "/en" } },
-  description:
-    "Clarify your priorities and build a more profitable business that depends less on you.",
+  description: ENGLISH_BETA_DESCRIPTION,
   openGraph: {
+    description: ENGLISH_BETA_DESCRIPTION,
+    images: [
+      {
+        alt: ENGLISH_BETA_SOCIAL_IMAGE_ALT,
+        url: "/opengraph-image",
+      },
+    ],
     locale: "en",
-    title: "Demaa | Build a business that depends less on you",
+    siteName: "Demaa",
+    title: ENGLISH_BETA_TITLE,
+    type: "website",
   },
   robots: { follow: false, index: false },
-  title: "Demaa | Build a business that depends less on you",
+  title: ENGLISH_BETA_TITLE,
+  twitter: {
+    card: "summary_large_image",
+    description: ENGLISH_BETA_DESCRIPTION,
+    images: [
+      {
+        alt: ENGLISH_BETA_SOCIAL_IMAGE_ALT,
+        url: "/twitter-image",
+      },
+    ],
+    title: ENGLISH_BETA_TITLE,
+  },
 };
 
 export default async function EnglishActionPlanPage({
