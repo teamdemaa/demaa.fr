@@ -22,10 +22,13 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
 ## État courant Production — 16 août 2026
 
-- `origin/main` est alignée sur `8020e04`. Les PR 110 à 117 ont été fusionnées
+- `origin/main` est alignée sur `ae5029d`. Les PR 110 à 118 ont été fusionnées
   séparément et vérifiées en Production : fiabilité des plans, sécurité de
   l'administration Coaching, consentement aux traceurs, expérience Échanger,
-  barre du titre, documentation D-084, Pilotage et Titre IA.
+  barre du titre, documentation D-084, Pilotage, Titre IA et clôture
+  documentaire du programme 0 à 8. `8020e04` reste le dernier commit runtime
+  de ce programme ; `ae5029d` est la tête Production après sa clôture
+  documentaire.
 - L'application conserve un seul domaine canonique et des groupes de routes
   distincts pour le marketing, l'application, l'authentification et
   l'administration.
@@ -37,6 +40,311 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 - Le périmètre Plan d'action V4 reste `Actions + systemId`. Le Pilotage
   d'entreprise D-084 est livré : Chiffres et Stratégie sont rattachés à
   l'entreprise, séparés des plans et exclus du périmètre IA.
+
+## Lecture canonique du backlog
+
+Les statuts exécutables sont ceux des sections placées avant les journaux
+historiques :
+
+- **Livré** : présent sur `origin/main` et vérifié en Production ;
+- **Validé, non commencé** : décision fermée, audit préalable encore requis ;
+- **Planifié** : ordre et gates connus, runtime non autorisé implicitement ;
+- **Différé** : conservé sans date ni déclenchement automatique ;
+- **Supersédé** : ancienne décision conservée uniquement pour traçabilité.
+
+Les cases non cochées des sections explicitement nommées « historique »,
+« ancien », « candidat local » ou « cadrage » ne constituent pas une liste de
+travail active. Une action n'est exécutable que si elle est reprise dans une
+section canonique courante avec un GO explicite. Cette règle évite de
+réintroduire Plan V4, l'ancienne Stratégie, l'ancien portail, les anciens lots
+d'authentification ou d'autres chantiers déjà livrés ou supersédés.
+
+## D-085 — Produit international commun — validé, non commencé
+
+Référence : [ADR 0014](decisions/0014-shared-international-product-and-opportunities-access.md).
+
+D-085 supersède les anciens cadrages « English Beta = Action Plan uniquement »,
+« Solutions et Academy après la bêta », « Échanger absent de l'anglais » et
+« Opportunités réservé immédiatement aux entreprises clientes ».
+
+### Architecture commune
+
+- [ ] Réutiliser une seule application, les mêmes contrats, composants, API,
+  permissions et parcours dans toutes les langues.
+- [ ] Déclarer toute exception avec un scope `locale` ou `market` explicite ;
+  sans scope, le comportement appartient au socle commun.
+- [ ] Centraliser `localeCode`, `marketCode`, `countryCode` et `currencyCode`.
+- [ ] Conserver le français sans préfixe et utiliser `/en` pour English Beta.
+- [ ] Ne déduire ni États-Unis, ni droit américain, ni USD de la seule langue
+  anglaise.
+- [ ] Interdire composant, API, générateur, conversation, administration ou
+  système commercial anglais parallèles, ainsi que tout fallback silencieux
+  vers le français.
+
+### English Beta
+
+La cible complète est :
+
+```text
+Action Plan
++ Solutions
++ Academy
++ Talk to us
+```
+
+Elle exclut Opportunities, Resources, modèles non internationalisés, aides,
+financements, formalités locales et partenaires strictement français.
+
+- [ ] Réutiliser le parcours Action Plan français, son schéma, ses statuts, sa
+  propriété entreprise, sa reprise et le même appel IA, avec génération en
+  anglais naturel et `systemId` universels.
+- [ ] Publier `Tools` avec projections anglaises validées et filtrage serveur
+  par système, langue et marché.
+- [ ] Publier `Accompaniment` uniquement pour les prestations réellement
+  réalisables à distance en anglais.
+- [ ] Utiliser `Envoyer ma demande` / `Send my request` avec le système actuel,
+  sans paiement, panier, WhatsApp, marketplace ni dépendance à la future
+  messagerie par sujets.
+- [ ] Réutiliser Échanger comme `Talk to us`, avec les mêmes conversations,
+  brouillons, statuts, dictée, administration, notifications et règles de
+  clarification gratuite.
+- [ ] Réutiliser Academy et publier uniquement les huit fondamentaux anglais
+  validés, avec progression et caches séparés par langue/version.
+- [ ] Ne laisser apparaître aucun texte, écran, fiche ou contenu français comme
+  fallback dans le parcours anglais.
+
+### Opportunités — décision immédiate
+
+- [ ] Retirer Opportunités des navbars desktop, mobile et PWA ainsi que des
+  navigations générales.
+- [ ] Conserver `/opportunites` accessible directement aux personnes possédant
+  le lien, avec `noindex` pendant cette phase contrôlée.
+- [ ] Préserver cartes, filtres, modales, soumissions et protections serveur
+  actuelles.
+- [ ] Ne créer ni droit client supplémentaire, ni abonnement obligatoire, ni
+  `403` commercial, ni teaser Solutions, ni entrée Profil.
+- [ ] Ne pas publier Opportunities dans English Beta.
+- [ ] Différer la réservation aux entreprises clientes jusqu'à une décision et
+  un lot distincts.
+
+### Audit du code au 16 août 2026
+
+Éléments existants à réutiliser :
+
+- `ActionPlanExperience` et `SavedActionPlanDetail` portent déjà les deux
+  expériences Plan ; `CustomerSpaceAccessForm` centralise l'authentification ;
+- `ActionPlanAcademyPanel` et `AcademyIndexClient` partagent déjà l'Académie et
+  son cache ;
+- `CoachingPanel` et l'administration Coaching portent déjà Échanger ;
+- `ServiceCallbackForm`, `/api/service-callback-request`, `service_requests`
+  et les notifications existantes fournissent un socle de demande à faire
+  évoluer, sans nouvelle administration ;
+- `/opportunites` existe comme page publique et les données affichées sont
+  limitées aux opportunités publiées.
+
+Écarts réels confirmés avant runtime :
+
+- [ ] Aucune couche i18n ni contexte `localeCode/marketCode` transversal
+  n'existe encore ; choisir une solution compatible avec le Next.js 16
+  installé après lecture de sa documentation locale.
+- [ ] La navigation et les libellés applicatifs sont codés en français ;
+  `ActionPlanNavbar` contient encore Opportunités et suppose quatre colonnes.
+- [ ] Le prompt de génération est français et les contrats de génération et de
+  stockage ne transportent pas encore langue, marché, pays ou devise.
+- [ ] Les plans existants sans contexte international devront être lus comme
+  `fr/fr-fr` ; aucun backfill global ne sera exécuté avant audit et migration
+  idempotente.
+- [ ] `/opportunites` est encore présent dans la navigation applicative, le
+  footer et le sitemap, et sa metadata ne déclare pas encore `noindex`.
+- [ ] Le formulaire Service utilise déjà `Envoyer ma demande`, mais le
+  catalogue canonique et Coach business conservent des libellés de rappel ; le
+  parcours actuel demande entreprise et WhatsApp et ne rattache pas
+  systématiquement la demande à une session et une entreprise.
+- [ ] Les contenus, quiz, progression et caches Académie ne possèdent pas
+  encore le contrat éditorial localisé D-085.
+- [ ] Les dictionnaires, `html lang`, canoniques, `hreflang`, sitemap et
+  isolement des caches par langue/marché restent à construire.
+
+Ces écarts justifient les PR distinctes ci-dessous. Ils ne doivent pas être
+résolus par duplication du runtime français.
+
+Carte initiale des fichiers et collisions à confirmer au début de chaque PR :
+
+- PR Opportunités : `ActionPlanNavbar.tsx`, `ActionPlanExperience.tsx`,
+  `SavedActionPlanDetail.tsx`, `Footer.tsx`, `sitemap.ts`, metadata de
+  `/opportunites`, contexte URL et tests de navigation ; conserver les contrats
+  de données et la route directe.
+- PR fondation internationale : dépendance i18n choisie, `src/proxy.ts`,
+  layouts/métadonnées, helpers d'URL et `returnTo`, auth Google/e-mail, contexte
+  applicatif et types internationaux centraux.
+- PR Action Plan : contrat, génération, stockage, routes de génération,
+  brouillon client et composants Plan. Cette PR partage des fichiers critiques
+  avec toute future évolution IA et doit rester seule sur cette zone.
+- PR Solutions/Talk : catalogue Services, formulaires et API de demande,
+  stockage/notifications existants, Coaching et dictionnaires. Ne pas y
+  introduire le modèle de sujets M ni le back office A.
+- PR Academy : catalogue, API, lecteur, quiz, progression, cache et composants
+  Académie. Préserver l'optimisation de cache déjà livrée.
+
+Avant chaque runtime : actualiser `origin/main`, inventorier worktrees et
+changements non committés, relire la documentation Next.js 16 locale, confirmer
+les migrations et indexes éventuels, puis présenter le diff prévu et les tests
+de la PR. Aucune de ces listes ne vaut GO code.
+
+### Séquencement D-085
+
+Chaque PR est autonome, compatible avec la France, vérifiée en Preview et non
+fusionnée sans GO explicite :
+
+1. PR documentaire : ADR, registre et backlog ;
+2. PR Opportunités : navigation masquée, route directe conservée ;
+3. PR fondation internationale cachée : contexte central, `/en` sous flag et
+   `noindex`, auth/returnTo/PWA/métadonnées compatibles ;
+4. PR Action Plan anglais de bout en bout ;
+5. PR Solutions, Accompaniment et Talk to us ;
+6. PR Academy anglaise ;
+7. PR de recette intégrée et activation publique sous GO Production séparé.
+
+Les tests partagés sont rejoués en `fr/fr-fr` et `en/global-en-beta` et
+couvrent TypeScript, ESLint, build, E2E desktop/mobile/PWA, clavier, lecteur
+d'écran, auth e-mail/Google, génération/réouverture, demandes dans
+l'administration, conversations, cours, caches, SEO et absence de fallback.
+
+## Programmes différés préservés
+
+### M — Échanger par sujets et continuité client
+
+Planifié après la bêta, sans bloquer `Talk to us`. L'objectif est de
+centraliser clarification, demandes commerciales, propositions et continuité
+de l'accompagnement sans reproduire Slack, Fiverr ou une messagerie temps réel.
+
+#### M.1 — Fondation invisible
+
+- [ ] Créer derrière un flag un modèle `sujet + messages` compatible avec la
+  conversation existante.
+- [ ] Employer `sujet` ou `échange` côté client et `dossier` côté
+  administration.
+- [ ] Conserver au minimum entreprise, créateur, type, service éventuel,
+  statut, responsable interne, dates et dernière activité.
+- [ ] Fermer avant code la visibilité entre membres d'une même entreprise ;
+  recommandation : propriété entreprise, trace `created_by_uid` et
+  autorisation explicite des membres actifs.
+- [ ] Adapter silencieusement la clarification existante en sujet
+  `Clarification initiale`, sans perte de messages, brouillons,
+  recommandations ou statut gratuit.
+- [ ] Attacher le statut de clarification gratuite à ce sujet uniquement, pas
+  à toute la messagerie.
+- [ ] Sérialiser les écritures, garantir l'idempotence et empêcher l'accès
+  inter-entreprises.
+
+Gate M.1 : aucune différence visible en Production et lecture intégrale de la
+conversation historique.
+
+#### M.2 — Interface client
+
+- [ ] Afficher une liste compacte de sujets et la conversation sélectionnée.
+- [ ] Desktop : liste à gauche, conversation à droite. Mobile/PWA : liste puis
+  ouverture du sujet.
+- [ ] Créer automatiquement un sujet pour une clarification ou une demande
+  d'accompagnement ; ne jamais demander à l'utilisateur de créer un canal.
+- [ ] Conserver `En attente`, `En cours`, `Proposition prête` et `Terminé`.
+- [ ] Garder dictée, historique, brouillon, reprise après authentification,
+  clavier, focus et accessibilité.
+- [ ] Autoriser clôture et réouverture sans créer de doublon.
+
+Gate M.2 : clarification existante utilisable de bout en bout sur desktop,
+mobile et PWA avant d'ajouter les demandes commerciales.
+
+#### M.3 — Demandes d'accompagnement
+
+- [ ] Conserver les cartes comme espace de découverte et renommer
+  `Votre sélection` en `Solutions enregistrées` afin d'éviter l'idée d'un
+  panier.
+- [ ] Le CTA `Envoyer ma demande` existe indépendamment de M ; lorsque M est
+  prêt, rattacher la demande existante au sujet sans créer un second parcours.
+- [ ] Demander la connexion uniquement au moment de l'envoi et reprendre
+  automatiquement le contexte après authentification.
+- [ ] Transmettre silencieusement service, Système et source, puis créer un
+  sujet portant le nom de l'accompagnement.
+- [ ] Afficher dans le sujet une carte de contexte structurée et poursuivre
+  qualification et prestation dans le même sujet.
+- [ ] Ne créer ni panier, ni canaux, ni checkout groupé dans ce lot.
+- [ ] Garder Assistance administrative et Sous-traitance de formalités
+  juridiques en `recommendation_only` tant que leur offre et la capacité de
+  réalisation ne sont pas stabilisées.
+- [ ] Conserver Expert-comptable, Formalités d'entreprise et autres frais de
+  tiers en facturation directe par le professionnel ; ne jamais attribuer à
+  Demaa leurs honoraires, budgets média, logiciels, frais administratifs ou
+  débours.
+
+Gate M.3 : carte d'accompagnement → authentification éventuelle → sujet créé →
+contexte intact → réponse client possible, sans paiement implicite.
+
+### A — Administration des dossiers et notifications
+
+Différé après M.3.
+
+#### A.1 — Administration
+
+- [ ] Étendre l'administration existante, sans deuxième dashboard, avec liste
+  de dossiers, recherche minimale, statut, service, entreprise, dernière
+  activité et responsable interne.
+- [ ] Permettre de répondre, attribuer ou transférer, joindre une proposition,
+  clôturer et rouvrir.
+- [ ] Conserver le même sujet côté client pendant le passage du commercial à
+  la personne chargée de l'accompagnement ; les transferts internes restent
+  invisibles pour le client.
+- [ ] Enregistrer l'identité réelle de chaque auteur et journaliser les
+  changements sensibles.
+- [ ] Vérifier les autorisations côté serveur et limiter les accès avant
+  comparaison du secret tant que l'identité Team Demaa n'a pas remplacé le
+  mécanisme transitoire.
+
+Gate A.1 : demande client → dossier admin → attribution → réponse → affichage
+dans le bon sujet, avec refus inter-entreprises et inter-dossiers.
+
+#### A.2 — Notifications e-mail
+
+- [ ] Envoyer un e-mail uniquement lorsqu'une nouvelle réponse Team Demaa est
+  disponible et éviter doublons ou tempêtes de notifications.
+- [ ] Utiliser l'e-mail comme notification, jamais comme copie complète ni
+  nouvelle source de conversation.
+- [ ] Renvoyer vers le sujet exact après authentification.
+- [ ] Prévoir préférences, désinscription des notifications non essentielles,
+  reprise sur erreur et journal de livraison.
+- [ ] Valider d'abord que le parcours fonctionne entièrement sans e-mail ; la
+  notification reste une amélioration séparée.
+
+Gate A.2 : réponse admin → un seul e-mail → lien vers le bon sujet → historique
+complet dans Demaa.
+
+Restent également différés : CRM avancé, panier, checkout groupé, marketplace,
+portail partenaire, paiement automatique de commission, catalogue US,
+adaptation réglementaire pays par pays, ressources anglaises complètes et
+titre animé entreprise/agence/startup.
+
+## Clôture administrative de la release 0 à 8
+
+Le runtime est livré. Les actions restantes ne sont pas des correctifs produit :
+
+- [ ] Fusionner une PR documentaire contenant D-085 et le présent nettoyage,
+  sans runtime.
+- [ ] Resynchroniser ensuite le Google Sheet maître avec D-084, D-085, les lots
+  0 à 8 et la tête Production `ae5029d`.
+- [ ] Préserver tout changement local attribué, puis réaligner le checkout
+  principal sur `origin/main` et obtenir un worktree propre.
+- [ ] Retirer les worktrees et branches des lots fusionnés après vérification
+  de leur propreté.
+- [ ] Rejouer une dernière recette authentifiée Production : Google, dernier
+  plan, Mes plans, changement de plan, Chiffres, Stratégie, déconnexion,
+  reconnexion et données retrouvées.
+- [ ] Surveiller pendant 24 à 48 heures les erreurs Firebase/session,
+  génération, sauvegarde, conflits, Pilotage et Vercel 5xx.
+
+Le futur parcours de suppression effective d'une entreprise reste différé :
+aucune interface ou API de suppression n'existe aujourd'hui. Lorsqu'il sera
+créé, il devra appeler le nettoyage Pilotage déjà testé. Le départ d'un membre
+ne supprime jamais les données de l'entreprise.
 
 ## État de clôture historique — 12 août 2026
 
@@ -335,13 +643,13 @@ l'ADR 0004 prévaut.
   `Échanger avec l'équipe Demaa`. Aucun onglet `Accueil`, portail parallèle
   `Mon espace` ou profil obligatoire n'est créé. `Mes plans` reste une vue
   authentifiée de l'application unique.
-- [ ] Recetter puis promouvoir le candidat D-079 Plan V4 : génération limitée
+- [x] Plan V4 de D-079 livré : génération limitée
   aux Actions et au `systemId`, supports typés selon les règles déterministes,
   et lecture non destructive des plans V1, V2, V3 et `manual`. La Stratégie
   historique reste définitivement masquée, non éditée et non générée. Le
   contrat D-084 validé crée un Pilotage d'entreprise séparé ; il ne réactive
   aucun champ stratégique des plans.
-- [ ] Recetter le multi-plans dans l'application unique : titre, sélecteur,
+- [x] Multi-plans livré dans l'application unique : titre, sélecteur,
   nouveau plan, renommage, suppression révisionnée et retour au dernier plan.
 - [ ] Recetter les Systèmes sauvegardés par plan : liste sans doublon, Système
   actif, coches d'Organisation et sélections Solutions isolées par Système, sans appel
@@ -448,13 +756,11 @@ l'ADR 0004 prévaut.
   masquer une recommandation utile uniquement parce que sa fiche riche reste
   à compléter. Formation, expert-comptable et recrutement restent exclus des
   ajouts transverses conformément à l'arbitrage produit.
-- [ ] Préparer l'internationalisation seulement après stabilisation France :
-  locales, pays, contenu, Solutions et SEO. Conserver `Systèmes` comme libellé
-  court de navigation en français et `Systèmes métier` comme nom développé ;
-  employer `Business systems` en anglais, jamais la traduction littérale
-  `Operational systems`. Adapter les titres à l'usage (`Trouvez le système
-  adapté à votre entreprise` / `Find the right system for your business`) et
-  traduire le concept plutôt que les mots ou les slugs historiques.
+- [x] Cadrage international historique supersédé par D-085. Conserver
+  `Systèmes` comme libellé court en français, `Systèmes métier` comme nom
+  développé et `Business systems` en anglais, jamais la traduction littérale
+  `Operational systems`. D-085 fixe désormais le socle commun, le périmètre
+  English Beta et le séquencement exécutable.
 - [ ] Produire les guides annoncés et les vidéos Restaurant sans créer de
   nouvelles routes publiques avant disponibilité réelle.
 - [ ] Activer le vocal de Structure uniquement avec stockage privé,
