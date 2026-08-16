@@ -5,11 +5,10 @@ Dernière consolidation : 16 août 2026.
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
 
-Le Google Sheet reste à resynchroniser : sa dernière modification connue est
-du 14 août 2026, mais son contenu annonce encore une consolidation au 29
-juillet. Jusqu'à cette resynchronisation, les décisions datées du 16 août dans
-ce document et le registre ADR sont la référence la plus récente. Aucun
-chantier ne doit être déclaré livré dans le Sheet avant sa recette réelle.
+Le Google Sheet a été resynchronisé le 16 août 2026 avec D-083 à D-088,
+DEC-023/024, le runtime de référence `8020e04` et la tête documentaire
+`10a9067`. Ce document, le registre ADR et le Sheet décrivent désormais le
+même état. Aucun chantier ne doit être déclaré livré avant sa recette réelle.
 
 Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
@@ -31,6 +30,8 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
   de ce programme ; `ae5029d` est son état consolidé avant la PR documentaire
   D-085. Les commits documentaires ultérieurs peuvent faire avancer `main`
   sans modifier cette référence runtime.
+- La tête Production et `origin/main` après la clôture documentaire sont
+  `10a9067`. Aucun runtime n'a été modifié entre `ae5029d` et `10a9067`.
 - L'application conserve un seul domaine canonique et des groupes de routes
   distincts pour le marketing, l'application, l'authentification et
   l'administration.
@@ -340,11 +341,17 @@ Le runtime est livré. Les actions restantes ne sont pas des correctifs produit 
   de leur propreté.
 - [ ] Rejouer une dernière recette authentifiée Production : Google, dernier
   plan, Mes plans, changement de plan, Chiffres, Stratégie, déconnexion,
-  reconnexion et données retrouvées. La redirection Google est vérifiée jusqu'au
-  sélecteur de compte ; la recette authentifiée reste à terminer.
+  reconnexion et données retrouvées. Google, la création de session Demaa,
+  l'état vide de Mes plans, la déconnexion et la reconnexion ont été vérifiés
+  avec le compte Team. Ce compte ne possède aucun plan : `/plans/latest`
+  redirige correctement vers `/plans/new`. Le parcours dépendant d'un plan
+  reste à vérifier avec des données existantes, sans fabriquer de données de
+  Production pour la recette.
 - [ ] Surveiller pendant 24 à 48 heures les erreurs Firebase/session,
   génération, sauvegarde, conflits, Pilotage et Vercel 5xx. Le contrôle initial
-  ne remonte aucune erreur ni 5xx sur les 24 dernières heures.
+  ne remonte aucun 5xx. Une génération antérieure sur un ancien déploiement a
+  échoué au contrôle qualité IA puis a suivi le parcours prévu `failed`, sans
+  crash HTTP ; le déploiement `10a9067` ne remonte aucune erreur.
 
 Le futur parcours de suppression effective d'une entreprise reste différé :
 aucune interface ou API de suppression n'existe aujourd'hui. Lorsqu'il sera
@@ -687,9 +694,9 @@ l'ADR 0004 prévaut.
   l'IA. Aucune ancienne réponse V3 n'est migrée, affichée, recopiée ou supprimée
   physiquement. Chiffres et Stratégie ont été fusionnés ensemble comme une
   seule unité complète et publiable.
-- [ ] Resynchroniser le Google Sheet maître avec D-084, le registre de
-  décisions et l'état Production du 16 août. D-084 peut désormais y être
-  marqué livré ; cette écriture externe reste une opération séparée.
+- [x] Resynchroniser le Google Sheet maître avec D-084, le registre de
+  décisions et l'état Production du 16 août. D-084, D-085 et la clôture du
+  programme 0 à 8 y sont alignés avec la tête `10a9067`.
 - [x] Figer la gamme : une première clarification offerte, puis `Coach
   business` à 750 EUR HT/mois pour un accompagnement régulier incluant deux
   sessions individuelles et un suivi écrit entre les séances. Un
@@ -2583,7 +2590,7 @@ ne sont pas confirmés, D-071 reste documenté sans effet sur le produit.
 Le programme 0 à 8 est fusionné, déployé et recetté en Production au commit
 `8020e04`. Pilotage Chiffres + Stratégie a été livré par la PR 116 et Titre IA
 par la PR 117. Il ne reste aucun lot runtime ouvert dans ce programme. MASTER
-DEMAA maintient la décision, le backlog, le registre et la future
-resynchronisation séparée du Google Sheet. Le MVP Réseau Partenaire reste un
-cadrage et tous les lots historiques exigent un nouveau GO explicite avant de
-redevenir exécutables.
+DEMAA maintient la décision, le backlog, le registre et leur synchronisation
+avec le Google Sheet. Le MVP Réseau Partenaire reste un cadrage et tous les
+lots historiques exigent un nouveau GO explicite avant de redevenir
+exécutables.
