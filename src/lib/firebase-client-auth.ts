@@ -54,6 +54,11 @@ export function isFirebaseGoogleAuthAllowedOnCurrentHost() {
 
 export function shouldUseGoogleRedirect() {
   if (typeof window === "undefined") return false;
+  // The same-origin Firebase helper used on the canonical production domain
+  // does not reliably complete the popup message channel in every browser.
+  // Redirect authentication uses the same verified handler without leaving a
+  // pending popup promise, so prefer it immediately in production.
+  if (window.location.hostname.toLowerCase() === "demaa.co") return true;
   const standalone = window.matchMedia("(display-mode: standalone)").matches
     || Boolean((window.navigator as Navigator & { standalone?: boolean }).standalone);
   return standalone || window.matchMedia("(max-width: 767px)").matches;

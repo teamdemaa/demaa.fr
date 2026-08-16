@@ -47,10 +47,15 @@ import {
   startGoogleRedirect,
 } from "@/lib/firebase-client-auth";
 
-function browser(options: { mobile?: boolean; standalone?: boolean } = {}) {
+function browser(options: {
+  hostname?: string;
+  mobile?: boolean;
+  standalone?: boolean;
+} = {}) {
   const storage = new Map<string, string>();
+  const hostname = options.hostname ?? "demaa.co";
   vi.stubGlobal("window", {
-    location: { hostname: "demaa.co", origin: "https://demaa.co" },
+    location: { hostname, origin: `https://${hostname}` },
     matchMedia: (query: string) => ({
       matches: query.includes("display-mode")
         ? Boolean(options.standalone)
@@ -78,12 +83,14 @@ describe("Firebase Google redirect", () => {
     mocks.signOut.mockResolvedValue(undefined);
   });
 
-  it("uses redirect in a mobile browser or an installed PWA", () => {
-    browser({ mobile: true });
-    expect(shouldUseGoogleRedirect()).toBe(true);
-    browser({ standalone: true });
-    expect(shouldUseGoogleRedirect()).toBe(true);
+  it("uses redirect on the production domain, mobile, or an installed PWA", () => {
     browser();
+    expect(shouldUseGoogleRedirect()).toBe(true);
+    browser({ hostname: "preview.demaa.test", mobile: true });
+    expect(shouldUseGoogleRedirect()).toBe(true);
+    browser({ hostname: "preview.demaa.test", standalone: true });
+    expect(shouldUseGoogleRedirect()).toBe(true);
+    browser({ hostname: "preview.demaa.test" });
     expect(shouldUseGoogleRedirect()).toBe(false);
   });
 
