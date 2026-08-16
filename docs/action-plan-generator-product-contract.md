@@ -133,15 +133,19 @@ modèle prêt à l'emploi reste facultatif. Le nombre est adapté à la situatio
 entre trois et cinq en V4. Les lecteurs historiques continuent d'accepter
 jusqu'à sept actions pour ne pas invalider un ancien plan V1, V2 ou manuel.
 
-### Stratégie temporairement retirée du Plan d'action
+### Stratégie définitivement séparée du Plan d'action
 
 La génération courante ne demande plus de stratégie à partir d'une
-problématique ponctuelle. L'interface ne rend ni onglet `Stratégie`, ni cartes
-Alignement, Positionnement, Offre ou Promotion. Cette simplification ne
-supprime pas définitivement la Stratégie du produit : les schémas et lecteurs
-historiques restent isolés afin de pouvoir réactiver ultérieurement un contrat
-stratégique explicitement validé. Aucune migration destructive n'est créée
-pour les quelques anciens plans.
+problématique ponctuelle. L'interface du Plan d'action ne rend ni onglet
+`Stratégie`, ni cartes Alignement, Positionnement, Offre ou Promotion. La
+nouvelle Stratégie définie par D-084 est un espace manuel rattaché à
+l'entreprise, séparé des plans et de leur IA. Elle ne réactive, ne recopie et
+n'initialise rien depuis les anciens champs stratégiques.
+
+Les schémas et lecteurs historiques restent provisoirement tolérants afin de
+ne pas casser les anciens plans, mais ces champs ne sont ni affichés ni édités.
+Aucune migration destructive n'est créée avant un audit Firebase et une
+autorisation séparée.
 
 Le MVP ne produit pas d'étude de marché automatique. Une information de marché
 non fournie et non établie reste une hypothèse à vérifier, jamais un fait
@@ -445,9 +449,10 @@ au backlog, sans modifier cette première version :
 
 - Aucun questionnaire ne précède le premier résultat.
 - Le moteur choisit un `systemId` parmi les 115 slugs canoniques.
-- Le résultat comporte des actions exécutables et les quatre piliers.
-- Le changement de Système ne consomme aucune génération et ne change pas la
-  stratégie.
+- Le résultat comporte des actions exécutables et un `systemId` canonique ; il
+  ne contient aucune donnée de Stratégie.
+- Le changement de Système ne consomme aucune génération et ne modifie pas les
+  Actions.
 - Aucun contenu détaillé des 114 autres Systèmes n'est chargé inutilement.
 - Aucun fait de marché n'est inventé.
 - La prospection éventuelle respecte les garde-fous éthiques.
