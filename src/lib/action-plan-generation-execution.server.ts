@@ -35,7 +35,7 @@ export async function executeClaimedActionPlanGeneration(input: {
   request: Request;
 }): Promise<ActionPlanGenerationState | null> {
   try {
-    const { plan, generation } = await generateActionPlanWithMetadata(
+    const { title, plan, generation } = await generateActionPlanWithMetadata(
       input.claim.situation,
     );
 
@@ -55,6 +55,7 @@ export async function executeClaimedActionPlanGeneration(input: {
     const stored = await persistGeneratedPlan({
       identity: input.identity,
       claim: input.claim,
+      title,
       plan,
       generation,
     });

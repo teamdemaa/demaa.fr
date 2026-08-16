@@ -601,6 +601,7 @@ export async function beginExistingBlankActionPlanGeneration(input: {
 export async function completeActionPlanGeneration(input: {
   identity: CustomerSessionIdentity;
   claim: ActionPlanGenerationClaim;
+  title?: string;
   plan: PersistableActionPlan;
   generation?: Partial<ActionPlanGenerationMetadata> | null;
   now?: Date;
@@ -628,7 +629,7 @@ export async function completeActionPlanGeneration(input: {
 
     const serialized = serializeWriteInput({
       plan: input.plan,
-      title: input.claim.title,
+      title: input.claim.title ?? input.title,
       sourceText: input.claim.situation,
       generation: input.generation,
     });

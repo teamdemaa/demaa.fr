@@ -221,6 +221,7 @@ describe("company-scoped action plan persistence", () => {
     const completed = await completeActionPlanGeneration({
       identity: identity("owner-uid"),
       claim: started.claim,
+      title: "Clarifier les priorités commerciales",
       plan: actionPlan(),
       generation: {
         model: "test-model",
@@ -234,6 +235,7 @@ describe("company-scoped action plan persistence", () => {
     });
     expect(completed).toMatchObject({
       id: started.claim.id,
+      title: "Clarifier les priorités commerciales",
       generation: { model: "test-model", durationMs: 1200, totalTokens: 300 },
     });
     await expect(getActionPlanGenerationForAccess({
@@ -358,6 +360,7 @@ describe("company-scoped action plan persistence", () => {
     await expect(completeActionPlanGeneration({
       identity: owner,
       claim: started.claim,
+      title: "Titre généré à ignorer",
       plan: actionPlan(),
     })).resolves.toMatchObject({
       id: created.id,
