@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
 import { isVercelPreviewHost } from "@/lib/site-url";
+import { getExplicitInterfaceLocaleFromPathname } from "@/lib/international-context";
 
 const CANONICAL_HOST = "demaa.co";
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
@@ -34,14 +35,19 @@ const FIREBASE_AUTH_HELPER_CONTENT_SECURITY_POLICY = buildContentSecurityPolicy(
   allowUnsafeEval: process.env.NODE_ENV === "development",
 });
 
-function withContentSecurityPolicy(response: NextResponse) {
+function withContentSecurityPolicy(
+  response: NextResponse,
+  localeCode?: "fr" | "en",
+) {
   response.headers.set("Content-Security-Policy", CONTENT_SECURITY_POLICY);
+  if (localeCode) response.headers.set("Content-Language", localeCode);
   return response;
 }
 
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const host = request.headers.get("host")?.toLowerCase();
+  const localeCode = getExplicitInterfaceLocaleFromPathname(pathname) ?? "fr";
 
   if (host) {
     const isVercelProductionCronRequest =
@@ -67,8 +73,22 @@ export function proxy(request: NextRequest) {
           `${CANONICAL_ORIGIN}${url.pathname}${url.search}`,
           308,
         ),
+        localeCode,
       );
     }
+  }
+
+  if (
+    localeCode === "en"
+    && process.env.DEMAA_ENGLISH_BETA_ENABLED !== "true"
+  ) {
+    return withContentSecurityPolicy(
+      new NextResponse(null, {
+        status: 404,
+        headers: { "X-Robots-Tag": "noindex, nofollow" },
+      }),
+      localeCode,
+    );
   }
 
   if (
@@ -91,10 +111,16 @@ export function proxy(request: NextRequest) {
       "Content-Security-Policy",
       FIREBASE_AUTH_HELPER_CONTENT_SECURITY_POLICY,
     );
+    response.headers.set("Content-Language", localeCode);
     return response;
   }
 
-  return withContentSecurityPolicy(NextResponse.next());
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-demaa-locale", localeCode);
+  return withContentSecurityPolicy(
+    NextResponse.next({ request: { headers: requestHeaders } }),
+    localeCode,
+  );
 }
 
 export const config = {

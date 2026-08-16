@@ -5,12 +5,40 @@ import { proxy } from "@/proxy";
 import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
 
 const originalVercelEnv = process.env.VERCEL_ENV;
+const originalEnglishBetaEnabled = process.env.DEMAA_ENGLISH_BETA_ENABLED;
 
 afterEach(() => {
   process.env.VERCEL_ENV = originalVercelEnv;
+  process.env.DEMAA_ENGLISH_BETA_ENABLED = originalEnglishBetaEnabled;
 });
 
 describe("proxy content security policy", () => {
+  it("keeps the English beta disabled by default and marks its response", () => {
+    delete process.env.DEMAA_ENGLISH_BETA_ENABLED;
+    const response = proxy(new NextRequest("https://demaa.co/en", {
+      headers: { host: "demaa.co" },
+    }));
+    expect(response.status).toBe(404);
+    expect(response.headers.get("content-language")).toBe("en");
+    expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+  });
+
+  it("forwards the centrally resolved locale only when the beta flag is enabled", () => {
+    process.env.DEMAA_ENGLISH_BETA_ENABLED = "true";
+    const english = proxy(new NextRequest("https://demaa.co/en", {
+      headers: { host: "demaa.co" },
+    }));
+    expect(english.status).toBe(200);
+    expect(english.headers.get("content-language")).toBe("en");
+    expect(english.headers.get("x-middleware-request-x-demaa-locale")).toBe("en");
+
+    const french = proxy(new NextRequest("https://demaa.co/", {
+      headers: { host: "demaa.co", "x-demaa-locale": "en" },
+    }));
+    expect(french.headers.get("content-language")).toBe("fr");
+    expect(french.headers.get("x-middleware-request-x-demaa-locale")).toBe("fr");
+  });
+
   it("allows the active embeds and Firebase Google Auth while preserving the policy", () => {
     const response = proxy(
       new NextRequest("https://demaa.co/cours/exemple", {

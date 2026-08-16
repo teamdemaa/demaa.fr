@@ -12,6 +12,7 @@ describe("authentication and customer-data audit", () => {
     "customer_accompaniment_benefits",
     "companies",
     "company_memberships",
+    "member_preferences",
     "company_monthly_metrics",
     "company_strategies",
     "opportunity_submission_drafts",

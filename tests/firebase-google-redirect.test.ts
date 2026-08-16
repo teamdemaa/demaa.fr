@@ -111,22 +111,25 @@ describe("Firebase Google redirect", () => {
 
   it("starts and consumes the redirect only on the dedicated callback", async () => {
     browser({ mobile: true });
-    await startGoogleRedirect();
+    const auth = { languageCode: "" };
+    mocks.getAuth.mockReturnValue(auth);
+    await startGoogleRedirect("en");
 
     expect(mocks.setPersistence).toHaveBeenCalledWith(
       expect.anything(),
       "browser-session",
     );
     expect(mocks.signInWithRedirect).toHaveBeenCalledOnce();
+    expect(auth.languageCode).toBe("en");
 
     mocks.getRedirectResult.mockResolvedValue({
       user: { getIdToken: vi.fn().mockResolvedValue("google-id-token") },
     });
-    await expect(consumeGoogleRedirectAndGetIdToken()).resolves.toEqual({
+    await expect(consumeGoogleRedirectAndGetIdToken("en")).resolves.toEqual({
       idToken: "google-id-token",
     });
 
-    await finishGoogleRedirect();
+    await finishGoogleRedirect("en");
     expect(mocks.signOut).toHaveBeenCalledOnce();
   });
 
@@ -152,5 +155,6 @@ describe("Firebase Google redirect", () => {
     expect(button).toContain("setPreferRedirect(true)");
     expect(button).toContain("shouldUseGoogleRedirect() || preferRedirect");
     expect(button).toContain("window.location.assign(`/auth/google?");
+    expect(button).toContain("locale: localeCode");
   });
 });

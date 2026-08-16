@@ -1,9 +1,11 @@
 import { isCoachingMessageDraftToken } from "@/lib/coaching-message-draft";
 import { isOpportunitySubmissionDraftToken } from "@/lib/opportunity-submission";
+import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 const INTENT_PARAM = "intent";
 const SAFE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const SAVED_PLAN_PATH_PATTERN = /^\/plans\/[A-Za-z0-9_-]{1,80}(?:\?[^\r\n]*)?$/;
+const ENGLISH_APP_PATH_PATTERN = /^\/en(?:\/plans(?:\/(?:latest|new|[A-Za-z0-9_-]{1,80}))?)?(?:\?[^\r\n]*)?$/;
 
 type CoachingTab = "messages";
 
@@ -42,7 +44,10 @@ function normalizeLegacyCustomerPath(candidate: string) {
   return candidate;
 }
 
-export function buildCustomerIntentReturnTo(intent: CustomerAccessIntent) {
+export function buildCustomerIntentReturnTo(
+  intent: CustomerAccessIntent,
+  localeCode: InterfaceLocaleCode = "fr",
+) {
   const params = new URLSearchParams({ [INTENT_PARAM]: intent.kind });
 
   if (intent.kind === "coaching" && intent.tab) {
@@ -83,7 +88,9 @@ export function buildCustomerIntentReturnTo(intent: CustomerAccessIntent) {
     || intent.kind === "opportunity-submit"
     || intent.kind === "team-demaa-profile"
     ? "/opportunites"
-    : "/";
+    : localeCode === "en"
+      ? "/en"
+      : "/";
   return `${pathname}?${params.toString()}`;
 }
 
@@ -167,8 +174,19 @@ export function getSafeCustomerReturnTo(value?: string | null) {
       : candidate;
   }
 
+  if (ENGLISH_APP_PATH_PATTERN.test(candidate)) {
+    return candidate.includes(`${INTENT_PARAM}=`) && !parsedIntent
+      ? "/"
+      : candidate;
+  }
+
   if (candidate.includes(`${INTENT_PARAM}=`)) {
-    return parsedIntent ? buildCustomerIntentReturnTo(parsedIntent) : "/";
+    return parsedIntent
+      ? buildCustomerIntentReturnTo(
+          parsedIntent,
+          candidate === "/en" || candidate.startsWith("/en?") ? "en" : "fr",
+        )
+      : "/";
   }
 
   if (candidate === "/" || candidate.startsWith("/?")) return candidate;

@@ -32,6 +32,17 @@ route is kept. These public values identify the Firebase Web app;
 server credentials and service-account values must never use the `NEXT_PUBLIC_`
 prefix.
 
+The English beta route is fail-closed. It returns a non-indexable 404 unless
+the server-only flag below is explicitly enabled for a controlled Preview:
+
+```bash
+DEMAA_ENGLISH_BETA_ENABLED=true
+```
+
+Do not expose this flag in `NEXT_PUBLIC_*`. The French application remains the
+default and `/en` must stay disabled in Production until the integrated beta
+gate (Action Plan, Solutions, Academy, and Talk to us) is complete.
+
 The runtime service account also needs Firestore access plus the two Firebase
 Auth permissions `firebaseauth.users.createSession` and
 `firebaseauth.users.get`. Keep the latter in a minimal custom IAM role rather

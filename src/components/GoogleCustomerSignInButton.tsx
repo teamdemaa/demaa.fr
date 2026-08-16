@@ -9,6 +9,7 @@ import {
   shouldUseGoogleRedirect,
   signInWithGoogleAndGetIdToken,
 } from "@/lib/firebase-client-auth";
+import { getReturnToInterfaceLocale } from "@/lib/international-context";
 
 const GOOGLE_POPUP_TIMEOUT_MS = 30_000;
 
@@ -101,13 +102,14 @@ export default function GoogleCustomerSignInButton({
     onError?.(null);
 
     try {
+      const localeCode = getReturnToInterfaceLocale(returnTo);
       if (shouldUseGoogleRedirect() || preferRedirect) {
-        const params = new URLSearchParams({ returnTo });
+        const params = new URLSearchParams({ locale: localeCode, returnTo });
         window.location.assign(`/auth/google?${params.toString()}`);
         return;
       }
       const { idToken } = await withGooglePopupTimeout(
-        signInWithGoogleAndGetIdToken(),
+        signInWithGoogleAndGetIdToken(localeCode),
       );
       const result = await exchangeFirebaseIdTokenForSession({ idToken, returnTo });
 

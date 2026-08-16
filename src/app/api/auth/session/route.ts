@@ -12,6 +12,11 @@ import {
   getActiveDefaultCompanyIdentity,
 } from "@/lib/company-membership.server";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
+import {
+  LOCALE_PREFERENCE_COOKIE,
+  normalizeInterfaceLocaleCode,
+} from "@/lib/international-context";
+import { saveMemberLocalePreference } from "@/lib/member-locale-preference.server";
 
 export const runtime = "nodejs";
 
@@ -24,6 +29,21 @@ type SessionBody = {
   idToken?: unknown;
   returnTo?: unknown;
 };
+
+function readCookie(request: Request, name: string) {
+  const cookies = request.headers.get("cookie")?.split(";") ?? [];
+  for (const cookie of cookies) {
+    const [rawName, ...rawValue] = cookie.trim().split("=");
+    if (rawName === name) {
+      try {
+        return decodeURIComponent(rawValue.join("="));
+      } catch {
+        return null;
+      }
+    }
+  }
+  return null;
+}
 
 export async function POST(request: Request) {
   const blockedHost = enforceAllowedHost(request);
@@ -83,6 +103,25 @@ export async function POST(request: Request) {
       { error: "Votre espace n’a pas pu être préparé. Réessayez dans un instant." },
       { status: 503, headers: PRIVATE_NO_STORE_HEADERS },
     );
+  }
+
+  const localeCode = normalizeInterfaceLocaleCode(
+    readCookie(request, LOCALE_PREFERENCE_COOKIE),
+  );
+  if (localeCode) {
+    try {
+      await saveMemberLocalePreference({
+        localeCode,
+        uid: session.identity.uid,
+      });
+    } catch (error) {
+      // Locale persistence is useful but must never prevent a valid Firebase
+      // identity from opening its existing Demaa session.
+      console.error(
+        "[auth-session] Locale preference persistence failed",
+        error instanceof Error ? error.message : "Unknown error",
+      );
+    }
   }
 
   const response = NextResponse.json(

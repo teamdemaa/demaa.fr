@@ -4,6 +4,11 @@ import { createHash } from "node:crypto";
 import type { Transaction } from "firebase-admin/firestore";
 import type { CustomerSessionIdentity } from "@/lib/customer-space-auth";
 import { getAdminFirestore } from "@/lib/firebase-admin";
+import {
+  FRANCE_CONTEXT,
+  type InternationalContext,
+  type MarketCode,
+} from "@/lib/international-context";
 
 export const COMPANIES_COLLECTION = "companies";
 export const COMPANY_MEMBERSHIPS_COLLECTION = "company_memberships";
@@ -22,9 +27,17 @@ type CompanyDocument = {
   display_name?: unknown;
   status?: unknown;
   created_by_uid?: unknown;
+  country_code?: unknown;
+  currency_code?: unknown;
+  market_code?: unknown;
   created_at?: unknown;
   updated_at?: unknown;
 };
+
+export type CompanyInternationalContext = Pick<
+  InternationalContext,
+  "countryCode" | "currencyCode" | "marketCode"
+>;
 
 type CompanyMembershipDocument = {
   schema_version?: unknown;
@@ -109,6 +122,22 @@ function isActiveCompany(document: CompanyDocument | undefined) {
   return document?.status === "active";
 }
 
+export function readCompanyInternationalContext(
+  document: CompanyDocument | undefined,
+): CompanyInternationalContext {
+  const marketCode: MarketCode = document?.market_code === "global-en-beta"
+    ? "global-en-beta"
+    : "fr-fr";
+  return {
+    countryCode: typeof document?.country_code === "string"
+      && /^[A-Z]{2}$/.test(document.country_code)
+      ? document.country_code
+      : null,
+    currencyCode: "EUR",
+    marketCode,
+  };
+}
+
 function isActiveMembership(
   document: CompanyMembershipDocument | undefined,
   input: { companyId: string; uid: string },
@@ -158,6 +187,9 @@ export async function ensureDefaultCompanyForIdentity(
       transaction.set(companyReference, {
         schema_version: "1",
         display_name: null,
+        country_code: FRANCE_CONTEXT.countryCode,
+        currency_code: FRANCE_CONTEXT.currencyCode,
+        market_code: FRANCE_CONTEXT.marketCode,
         status: "active",
         created_by_uid: uid,
         created_at: now,

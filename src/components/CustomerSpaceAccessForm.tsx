@@ -12,6 +12,7 @@ import {
   requestPasswordReset,
   signInWithPasswordAndGetIdToken,
 } from "@/lib/firebase-client-auth";
+import { getReturnToInterfaceLocale } from "@/lib/international-context";
 
 type AccessMode = "create" | "signin";
 type ProgressiveAccessStep = "choice" | "email" | "password";
@@ -109,9 +110,10 @@ export default function CustomerSpaceAccessForm({
     setIsSending(true);
 
     try {
+      const localeCode = getReturnToInterfaceLocale(returnTo || "/");
       const authResult = mode === "create"
-        ? await createPasswordAccountAndGetIdToken(normalizedEmail, password)
-        : await signInWithPasswordAndGetIdToken(normalizedEmail, password);
+        ? await createPasswordAccountAndGetIdToken(normalizedEmail, password, localeCode)
+        : await signInWithPasswordAndGetIdToken(normalizedEmail, password, localeCode);
       const result = await exchangeFirebaseIdTokenForSession({
         idToken: authResult.idToken,
         returnTo: returnTo || "/",
@@ -135,7 +137,12 @@ export default function CustomerSpaceAccessForm({
     }
     setIsSending(true);
     try {
-      await requestPasswordReset(normalizedEmail);
+      const target = returnTo || "/plans/latest";
+      await requestPasswordReset(
+        normalizedEmail,
+        getReturnToInterfaceLocale(target),
+        target,
+      );
       setNotice("Si un compte correspond à cette adresse, les instructions ont été envoyées.");
     } catch (resetError) {
       setError(getFriendlyAuthError(resetError));
