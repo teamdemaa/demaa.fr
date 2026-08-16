@@ -116,7 +116,7 @@ function cleanTitleText(value: string) {
     .replace(/\s+/g, " ")
     .trim()
     .replace(/^["'«»]+|["'«»]+$/g, "")
-    .replace(/^plan\s+d['’]action(?:\s+pour|\s*[:—-])?\s*/i, "")
+    .replace(/^plan\s+d['’]action(?:\s+pour|\s*[:\u2014-])?\s*/i, "")
     .replace(/[.,;:!?]+$/g, "")
     .trim();
 }
