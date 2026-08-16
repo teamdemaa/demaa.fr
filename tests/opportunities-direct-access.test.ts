@@ -21,6 +21,8 @@ describe("Opportunities direct-link access", () => {
     expect(page).toContain("export default async function OpportunitiesPage");
     expect(page).toContain("<PublicOpportunitiesClient");
     expect(page).toContain("robots: { index: false, follow: true }");
+    expect(await readSource("src/components/PublicOpportunitiesClient.tsx"))
+      .toMatch(/\.get\(\s*"opportunity"/);
   });
 
   it("keeps authentication return flows on the canonical direct route", async () => {

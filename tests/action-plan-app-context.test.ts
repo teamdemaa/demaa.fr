@@ -62,6 +62,9 @@ describe("action plan app context", () => {
   it("redirects historical Opportunities contexts to the direct route", () => {
     expect(buildLegacyOpportunitiesHref(new URLSearchParams(
       "view=opportunities&opportunity=mission-btp",
+    ))).toBe("/opportunites?opportunity=mission-btp");
+    expect(buildLegacyOpportunitiesHref(new URLSearchParams(
+      "intent=opportunity&opportunityId=mission-btp",
     ))).toBe("/opportunites?intent=opportunity&opportunityId=mission-btp");
     expect(buildLegacyOpportunitiesHref(new URLSearchParams(
       "intent=team-demaa-profile&expertiseId=e-commerce",

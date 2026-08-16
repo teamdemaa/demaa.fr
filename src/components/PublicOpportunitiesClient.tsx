@@ -168,6 +168,14 @@ export default function PublicOpportunitiesClient({
   const closeDetails = useCallback(() => {
     setLocalSelected(null);
     onOpportunityChange?.(undefined);
+    const url = new URL(window.location.href);
+    if (!url.searchParams.has("opportunity")) return;
+    url.searchParams.delete("opportunity");
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `${url.pathname}${url.search}${url.hash}`,
+    );
   }, [onOpportunityChange]);
   const openApplication = useCallback(() => {
     setApplicationOpportunity(selected);
@@ -225,6 +233,19 @@ export default function PublicOpportunitiesClient({
     const timeout = window.setTimeout(() => setProfileOpen(true), 0);
     return () => window.clearTimeout(timeout);
   }, []);
+
+  useEffect(() => {
+    const opportunityId = new URLSearchParams(window.location.search).get(
+      "opportunity",
+    );
+    if (!opportunityId) return;
+    const opportunity = opportunities.find(
+      (entry) => entry.opportunityId === opportunityId,
+    );
+    if (!opportunity) return;
+    const timeout = window.setTimeout(() => setLocalSelected(opportunity), 0);
+    return () => window.clearTimeout(timeout);
+  }, [opportunities]);
 
   useEffect(() => {
     if (!initialEmail) return;

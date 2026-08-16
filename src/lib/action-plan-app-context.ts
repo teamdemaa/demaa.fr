@@ -68,9 +68,11 @@ export function buildLegacyOpportunitiesHref(input: SearchInput) {
     params.set("intent", intent);
     const expertiseId = safeSlug(readSearchValue(input, "expertiseId"));
     if (expertiseId) params.set("expertiseId", expertiseId);
-  } else if ((intent === "opportunity" || opportunityId) && opportunityId) {
+  } else if (intent === "opportunity" && opportunityId) {
     params.set("intent", "opportunity");
     params.set("opportunityId", opportunityId);
+  } else if (requestedView === "opportunities" && opportunityId) {
+    params.set("opportunity", opportunityId);
   } else if (intent === "opportunity-submit") {
     const draftToken = readSearchValue(input, "draftToken");
     if (draftToken && OPPORTUNITY_DRAFT_TOKEN_PATTERN.test(draftToken)) {
