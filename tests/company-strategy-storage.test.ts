@@ -65,4 +65,46 @@ describe("company strategy storage", () => {
     const history = await getCompanyStrategyHistoryForIdentity({ identity: identity("owner") });
     expect(history.cycles.map(({ id }) => id)).toEqual([cycle.id]);
   });
+
+  it("paginates more than ten archives in descending creation order", async () => {
+    let active = await initializeCompanyStrategyForIdentity({
+      identity: identity("owner"),
+      now: new Date("2026-08-01T10:00:00.000Z"),
+    });
+    const archivedIds: string[] = [];
+
+    for (let index = 0; index < 12; index += 1) {
+      archivedIds.push(active.id);
+      const next = await createNextCompanyStrategyCycleForIdentity({
+        identity: identity("owner"),
+        expectedRevision: active.revision,
+        now: new Date(`2026-08-${String(index + 2).padStart(2, "0")}T10:00:00.000Z`),
+      });
+      if (!next) throw new Error("Expected the next company strategy cycle.");
+      active = next;
+    }
+
+    const expectedDescendingIds = [...archivedIds].reverse();
+    const firstPage = await getCompanyStrategyHistoryForIdentity({
+      identity: identity("owner"),
+    });
+    expect(firstPage.cycles).toHaveLength(10);
+    expect(firstPage.cycles.map(({ id }) => id)).toEqual(expectedDescendingIds.slice(0, 10));
+    expect(firstPage.nextCursor).toBe(expectedDescendingIds[9]);
+
+    const secondPage = await getCompanyStrategyHistoryForIdentity({
+      identity: identity("owner"),
+      cursor: firstPage.nextCursor ?? undefined,
+    });
+    expect(secondPage.cycles.map(({ id }) => id)).toEqual(expectedDescendingIds.slice(10));
+    expect(secondPage.nextCursor).toBeNull();
+
+    const allArchives = [...firstPage.cycles, ...secondPage.cycles];
+    expect(allArchives).toHaveLength(12);
+    expect(allArchives.every(({ startMonth, endMonth }) => startMonth === "2026-08" && endMonth === "2026-10")).toBe(true);
+    expect(new Set(allArchives.map(({ createdAt }) => createdAt)).size).toBe(12);
+    expect(allArchives.map(({ createdAt }) => createdAt)).toEqual(
+      allArchives.map(({ createdAt }) => createdAt).toSorted().reverse(),
+    );
+  });
 });

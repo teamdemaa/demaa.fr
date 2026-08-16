@@ -8,10 +8,10 @@ import {
   type CompanyMonth,
   type CompanyMonthlyMetric,
 } from "@/lib/company-pilotage-contract";
-
-function centsToInput(value: number | null | undefined) {
-  return value == null ? "" : (value / 100).toFixed(2).replace(".", ",");
-}
+import {
+  companyMetricCentsToInput,
+  getCompanyMetricEntryDraft,
+} from "@/lib/company-metric-entry";
 
 function inputToCents(value: string, allowNegative: boolean) {
   const normalized = value.trim().replace(/\s/g, "").replace(",", ".");
@@ -27,13 +27,13 @@ function inputToCents(value: string, allowNegative: boolean) {
 export default function CompanyMetricEntryDialog({
   open,
   initialPeriod,
-  initialMetric,
+  metricsByPeriod,
   onClose,
   onSaved,
 }: {
   open: boolean;
   initialPeriod: CompanyMonth;
-  initialMetric: CompanyMonthlyMetric | null;
+  metricsByPeriod: ReadonlyMap<CompanyMonth, CompanyMonthlyMetric>;
   onClose: () => void;
   onSaved: (metric: CompanyMonthlyMetric) => void;
 }) {
@@ -50,14 +50,18 @@ export default function CompanyMetricEntryDialog({
 
   useEffect(() => {
     if (!open) return;
-    setPeriod(initialPeriod);
-    setRevenue(centsToInput(initialMetric?.revenueCents));
-    setExpenses(centsToInput(initialMetric?.expensesCents));
-    setCash(centsToInput(initialMetric?.cashBalanceCents));
-    setExpectedRevision(initialMetric?.revision ?? 0);
+    const draft = getCompanyMetricEntryDraft(
+      initialPeriod,
+      metricsByPeriod,
+    );
+    setPeriod(draft.period);
+    setRevenue(draft.revenue);
+    setExpenses(draft.expenses);
+    setCash(draft.cash);
+    setExpectedRevision(draft.expectedRevision);
     setConflictCurrent(null);
     setError(null);
-  }, [initialMetric, initialPeriod, open]);
+  }, [initialPeriod, metricsByPeriod, open]);
 
   if (!open) return null;
 
@@ -109,14 +113,14 @@ export default function CompanyMetricEntryDialog({
           <button data-dialog-initial-focus type="button" onClick={onClose} aria-label="Fermer" className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line text-dema-forest"><X className="h-4 w-4" aria-hidden="true" /></button>
         </div>
         <form className="mt-6 space-y-4" onSubmit={submit}>
-          <label className="block text-sm font-medium text-dema-ink">Mois<input type="month" value={period} onChange={(event) => { const nextPeriod = event.target.value as CompanyMonth; setPeriod(nextPeriod); setExpectedRevision(nextPeriod === initialMetric?.period ? initialMetric.revision : 0); setConflictCurrent(null); setError(null); }} className={inputClass} /></label>
+          <label className="block text-sm font-medium text-dema-ink">Mois<input type="month" value={period} onChange={(event) => { const nextPeriod = event.target.value as CompanyMonth; const draft = getCompanyMetricEntryDraft(nextPeriod, metricsByPeriod); setPeriod(draft.period); setRevenue(draft.revenue); setExpenses(draft.expenses); setCash(draft.cash); setExpectedRevision(draft.expectedRevision); setConflictCurrent(null); setError(null); }} className={inputClass} /></label>
           <label className="block text-sm font-medium text-dema-ink">Chiffre d’affaires (€)<input inputMode="decimal" value={revenue} onChange={(event) => setRevenue(event.target.value)} placeholder="0,00" className={inputClass} /></label>
           <label className="block text-sm font-medium text-dema-ink">Charges (€)<input inputMode="decimal" value={expenses} onChange={(event) => setExpenses(event.target.value)} placeholder="0,00" className={inputClass} /></label>
           <label className="block text-sm font-medium text-dema-ink">Trésorerie en fin de mois (€)<input inputMode="decimal" value={cash} onChange={(event) => setCash(event.target.value)} placeholder="0,00" className={inputClass} /></label>
-          {error ? <div role="alert" className="rounded-xl bg-red-50 px-3 py-2 text-sm text-red-700"><p>{error}</p>{conflictCurrent ? <div className="mt-2 flex flex-wrap gap-3"><button type="button" className="font-semibold underline" onClick={() => { setExpectedRevision(conflictCurrent.revision); setConflictCurrent(null); setError(null); }}>Garder mes valeurs</button><button type="button" className="font-semibold underline" onClick={() => { setRevenue(centsToInput(conflictCurrent.revenueCents)); setExpenses(centsToInput(conflictCurrent.expensesCents)); setCash(centsToInput(conflictCurrent.cashBalanceCents)); setExpectedRevision(conflictCurrent.revision); setConflictCurrent(null); setError(null); }}>Utiliser la version récente</button></div> : <button type="button" className="mt-1 font-semibold underline" onClick={() => setError(null)}>Réessayer</button>}</div> : null}
+          {error ? <div role="alert" className="rounded-xl bg-red-50 px-3 py-2 text-sm text-red-700"><p>{error}</p>{conflictCurrent ? <div className="mt-2 flex flex-wrap gap-3"><button type="button" className="font-semibold underline" onClick={() => { setExpectedRevision(conflictCurrent.revision); setConflictCurrent(null); setError(null); }}>Garder mes valeurs</button><button type="button" className="font-semibold underline" onClick={() => { setRevenue(companyMetricCentsToInput(conflictCurrent.revenueCents)); setExpenses(companyMetricCentsToInput(conflictCurrent.expensesCents)); setCash(companyMetricCentsToInput(conflictCurrent.cashBalanceCents)); setExpectedRevision(conflictCurrent.revision); setConflictCurrent(null); setError(null); }}>Utiliser la version récente</button></div> : <button type="button" className="mt-1 font-semibold underline" onClick={() => setError(null)}>Réessayer</button>}</div> : null}
           <button disabled={saving} type="submit" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-white disabled:opacity-60">
             {saving ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-            {initialMetric && initialMetric.period === period ? "Mettre à jour" : "Ajouter"}
+            {metricsByPeriod.has(period) ? "Mettre à jour" : "Ajouter"}
           </button>
         </form>
       </div>

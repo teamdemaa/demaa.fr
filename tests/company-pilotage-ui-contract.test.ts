@@ -27,6 +27,20 @@ describe("company Pilotage UI contract", () => {
     expect(strategy).toContain('aria-live="polite"');
   });
 
+  it("keeps chart month controls exposed to assistive technologies", () => {
+    const figures = source("CompanyFiguresPanel.tsx");
+    expect(figures).toContain('role="group"');
+    expect(figures).toContain('aria-describedby="company-metrics-chart-instructions"');
+    expect(figures).not.toContain('role="img"');
+  });
+
+  it("loads the selected month from the parent metric map", () => {
+    const dialog = source("CompanyMetricEntryDialog.tsx");
+    const figures = source("CompanyFiguresPanel.tsx");
+    expect(figures).toContain("metricsByPeriod={byPeriod}");
+    expect(dialog).toContain("getCompanyMetricEntryDraft(nextPeriod, metricsByPeriod)");
+  });
+
   it("contains exactly four pillars and twelve questions in the canonical contract", () => {
     const contract = readFileSync(new URL("../src/lib/company-pilotage-contract.ts", import.meta.url), "utf8");
     for (const framing of ["Vos ambitions, vos forces et votre rôle.", "Pour qui et avec quel angle ?", "Quel résultat est vendu et comment gagne-t-on de l’argent ?", "Comment attirer, convertir et fidéliser ?"]) expect(contract).toContain(framing);
