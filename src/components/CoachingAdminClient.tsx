@@ -221,6 +221,7 @@ export default function CoachingAdminClient() {
               className={`w-full rounded-xl px-3 py-3 text-left transition hover:bg-dema-sage/35 ${selected?.id === conversation.id ? "bg-dema-sage/55" : ""}`}
             >
               <span className="block truncate text-sm font-medium text-brand-blue">{conversation.customerEmail}</span>
+              <span className="mt-0.5 block text-[11px] uppercase tracking-wide text-dema-muted">{conversation.localeCode === "en" ? "English" : "Français"} · {conversation.marketCode ?? "fr-fr"}</span>
               <span className="mt-1 block truncate text-xs text-dema-muted">{conversation.lastMessage}</span>
               <span className="mt-2 inline-flex rounded-md bg-dema-sage/70 px-2 py-1 text-[0.68rem] font-medium text-dema-forest">
                 {conversation.freeStatus === "completed" ? "Clôturée" : "Ouverte"}

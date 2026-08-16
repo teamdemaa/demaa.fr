@@ -19,12 +19,14 @@ export type SpecialistAccessIntent = {
   tab: CoachingTab;
 };
 
-const coachingMessageDateFormatter = new Intl.DateTimeFormat("fr-FR", {
+function createCoachingMessageDateFormatter(localeCode: "fr" | "en") {
+  return new Intl.DateTimeFormat(localeCode === "en" ? "en-GB" : "fr-FR", {
   day: "2-digit",
   hour: "2-digit",
   minute: "2-digit",
   month: "short",
-});
+  });
+}
 
 async function submitCoachingRequest(payload: Record<string, unknown>) {
   const response = await fetch("/api/coaching-request", {
@@ -88,7 +90,7 @@ function clearCoachingDraftFromUrl() {
   );
 }
 
-function CoachBusinessPromo() {
+function CoachBusinessPromo({ localeCode }: { localeCode: "fr" | "en" }) {
   const [open, setOpen] = useState(false);
   const contentId = useId();
 
@@ -102,7 +104,7 @@ function CoachBusinessPromo() {
         className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6"
       >
         <span className="text-base font-medium text-brand-blue sm:text-lg">
-          Besoin d’un accompagnement régulier&nbsp;?
+          {localeCode === "en" ? "Need ongoing support?" : <>Besoin d’un accompagnement régulier&nbsp;?</>}
         </span>
         <ChevronDown
           className={`h-5 w-5 shrink-0 text-dema-forest transition-transform duration-200 ${open ? "rotate-180" : ""}`}
@@ -119,21 +121,21 @@ function CoachBusinessPromo() {
           <div className="border-t border-dema-forest/10 px-5 pb-5 pt-4 sm:flex sm:items-end sm:justify-between sm:gap-6 sm:px-6 sm:pb-6">
             <div>
               <p className="max-w-xl text-sm leading-relaxed text-dema-muted">
-                Un accompagnement mensuel pour faire évoluer votre entreprise, prendre du recul et avancer avec un interlocuteur régulier.
+                {localeCode === "en" ? "Monthly support to develop your business, step back from day-to-day pressure and move forward with a regular thinking partner." : "Un accompagnement mensuel pour faire évoluer votre entreprise, prendre du recul et avancer avec un interlocuteur régulier."}
               </p>
               <ul className="mt-3 space-y-1 text-sm text-brand-blue">
-                <li>Deux rendez-vous individuels de 60 minutes par mois</li>
-                <li>Un suivi entre les rendez-vous</li>
+                <li>{localeCode === "en" ? "Two individual 60-minute meetings each month" : "Deux rendez-vous individuels de 60 minutes par mois"}</li>
+                <li>{localeCode === "en" ? "Follow-up between meetings" : "Un suivi entre les rendez-vous"}</li>
               </ul>
               <p className="mt-3 text-sm font-normal text-dema-muted">
-                750 € HT / mois
+                {localeCode === "en" ? "€750 excl. VAT / month" : "750 € HT / mois"}
               </p>
             </div>
             <Link
-              href="/services/coach-business"
+              href={localeCode === "en" ? "/en?view=solutions" : "/services/coach-business"}
               className="mt-4 inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-brand-blue sm:mt-0"
             >
-              Découvrir Coach business
+              {localeCode === "en" ? "Discover Business coaching" : "Découvrir Coach business"}
               <ChevronRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
@@ -146,10 +148,14 @@ function CoachBusinessPromo() {
 export default function CoachingPanel({
   initialDraftToken,
   onRequireAccess,
+  localeCode = "fr",
+  marketCode = "fr-fr",
 }: {
   initialDraftToken?: string;
   initialTab?: CoachingTab;
   onRequireAccess?: (intent: SpecialistAccessIntent) => void;
+  localeCode?: "fr" | "en";
+  marketCode?: string;
 }) {
   const isAuthenticated = !onRequireAccess;
 
@@ -157,16 +163,18 @@ export default function CoachingPanel({
     <section className="mx-auto max-w-[68rem] pb-16 pt-3 sm:pt-5">
       <header className="mx-auto mb-8 max-w-[42.5rem] text-center">
         <h2 className="text-4xl font-light tracking-[-0.045em] text-brand-blue sm:text-5xl">
-          Clarifier ma situation
+          {localeCode === "en" ? "Clarify my situation" : "Clarifier ma situation"}
         </h2>
         <p className="mx-auto mt-4 max-w-[35.625rem] text-base font-light leading-relaxed text-dema-muted sm:text-lg">
-          Décrivez votre situation. L’équipe Demaa vous répond ici.
+          {localeCode === "en" ? "Describe your situation. The Demaa team will reply here." : "Décrivez votre situation. L’équipe Demaa vous répond ici."}
         </p>
       </header>
       <CoachingMessageForm
         initialDraftToken={initialDraftToken}
         isAuthenticated={isAuthenticated}
         onRequireAccess={onRequireAccess}
+        localeCode={localeCode}
+        marketCode={marketCode}
       />
     </section>
   );
@@ -176,10 +184,14 @@ function CoachingMessageForm({
   initialDraftToken,
   isAuthenticated,
   onRequireAccess,
+  localeCode,
+  marketCode,
 }: {
   initialDraftToken?: string;
   isAuthenticated: boolean;
   onRequireAccess?: (intent: SpecialistAccessIntent) => void;
+  localeCode: "fr" | "en";
+  marketCode: string;
 }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<CoachingMessage[]>([]);
@@ -207,7 +219,9 @@ function CoachingMessageForm({
     onChange: updateMessage,
     continuous: true,
     interimResults: true,
+    language: localeCode === "en" ? "en-GB" : "fr-FR",
   });
+  const dateFormatter = useMemo(() => createCoachingMessageDateFormatter(localeCode), [localeCode]);
   const cancelMessageDictation = messageDictation.cancel;
 
   const loadMessages = useCallback(async (quiet = false) => {
@@ -282,6 +296,9 @@ function CoachingMessageForm({
           ? { draftToken }
           : { idempotencyKey: getLeadSubmissionKey(flowKey), message }),
         requestKind: "message",
+        localeCode,
+        marketCode,
+        source: localeCode === "en" ? "english-talk-to-us" : "echange",
         website: "",
       });
       if (!draftToken) clearLeadSubmissionKey(flowKey);
@@ -309,7 +326,7 @@ function CoachingMessageForm({
       }
       setStatus("error");
     }
-  }, [cancelMessageDictation, loadMessages, message]);
+  }, [cancelMessageDictation, loadMessages, localeCode, marketCode, message]);
 
   useEffect(() => {
     if (
@@ -355,19 +372,19 @@ function CoachingMessageForm({
     <>
       <section className="mx-auto mt-7 max-w-[51.25rem] overflow-hidden rounded-[1.5rem] border border-dema-line bg-dema-paper">
       <div className="flex min-h-[3.875rem] items-center border-b border-dema-line px-5 py-3.5 sm:px-6">
-        <h3 className="text-base font-medium text-brand-blue">Votre conversation</h3>
+        <h3 className="text-base font-medium text-brand-blue">{localeCode === "en" ? "Your conversation" : "Votre conversation"}</h3>
       </div>
 
       <div
         ref={historyRef}
         className="flex min-h-[14.375rem] max-h-[32rem] flex-col gap-3 overflow-y-auto bg-dema-sage/30 px-4 py-5 sm:px-6"
         aria-live="polite"
-        aria-label="Historique de la conversation"
+        aria-label={localeCode === "en" ? "Conversation history" : "Historique de la conversation"}
       >
         {status === "loading" ? (
           <div className="m-auto flex items-center gap-2 text-sm text-dema-muted">
             <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
-            Chargement de la conversation…
+            {localeCode === "en" ? "Loading the conversation…" : "Chargement de la conversation…"}
           </div>
         ) : null}
         {messages.map((entry) => {
@@ -377,12 +394,14 @@ function CoachingMessageForm({
               <article className={`rounded-[1.1rem] px-4 py-3 text-sm leading-relaxed shadow-sm ${entry.author === "customer" ? "bg-dema-forest text-white" : "border border-dema-line bg-white text-brand-blue"}`}>
                 <p className="whitespace-pre-wrap break-words">{entry.body}</p>
                 <p className={`mt-1.5 text-[0.68rem] ${entry.author === "customer" ? "text-white/70" : "text-dema-muted"}`}>
-                  {entry.author === "customer" ? "Vous" : "Équipe Demaa"} · {coachingMessageDateFormatter.format(new Date(entry.createdAt))}
+                  {entry.author === "customer" ? (localeCode === "en" ? "You" : "Vous") : (localeCode === "en" ? "Demaa team" : "Équipe Demaa")} · {dateFormatter.format(new Date(entry.createdAt))}
                 </p>
               </article>
-              {attachedRecommendations.map((recommendation) => (
-                <CoachingRecommendationCard key={recommendation.id} recommendation={recommendation} onRequested={updateRecommendation} />
-              ))}
+              {localeCode === "fr"
+                ? attachedRecommendations.map((recommendation) => (
+                    <CoachingRecommendationCard key={recommendation.id} recommendation={recommendation} onRequested={updateRecommendation} />
+                  ))
+                : null}
             </div>
           );
         })}
@@ -390,33 +409,33 @@ function CoachingMessageForm({
 
       {access?.freeStatus === "completed" ? (
         <div className="border-t border-dema-line p-4 text-center sm:p-5">
-          <p className="text-sm font-medium text-brand-blue">Besoin d’un accompagnement régulier ?</p>
+          <p className="text-sm font-medium text-brand-blue">{localeCode === "en" ? "Need ongoing support?" : "Besoin d’un accompagnement régulier ?"}</p>
           <p className="mt-1 text-sm text-dema-muted">
-            Coach business vous aide à faire avancer vos priorités dans la durée.
+            {localeCode === "en" ? "Business coaching helps you move your priorities forward over time." : "Coach business vous aide à faire avancer vos priorités dans la durée."}
           </p>
           <Link
-            href="/services/coach-business"
+            href={localeCode === "en" ? "/en?view=solutions" : "/services/coach-business"}
             className="mt-4 inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-white hover:bg-brand-blue"
           >
-            Découvrir Coach business
+            {localeCode === "en" ? "Discover Business coaching" : "Découvrir Coach business"}
           </Link>
         </div>
       ) : (
         <form onSubmit={submit} className="border-t border-dema-line p-3 sm:p-4">
           <div className="flex items-end gap-2 rounded-[1.15rem] border border-dema-line bg-white p-2 focus-within:border-dema-forest">
             <textarea
-              aria-label="Votre message"
+              aria-label={localeCode === "en" ? "Your message" : "Votre message"}
               value={message}
               onChange={(event) => messageDictation.handleValueChange(event.target.value)}
               rows={2}
-              placeholder="Décrivez la situation que vous souhaitez clarifier…"
+              placeholder={localeCode === "en" ? "Describe the situation you would like to clarify…" : "Décrivez la situation que vous souhaitez clarifier…"}
               className="max-h-32 min-h-12 flex-1 resize-none bg-transparent px-2 py-2 text-sm outline-none"
             />
             <button
               type="button"
               onClick={messageDictation.toggle}
               className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-dema-forest transition hover:bg-dema-sage/50 ${messageDictation.isListening ? "bg-dema-sage ring-1 ring-dema-forest/30" : ""}`}
-              aria-label={messageDictation.isListening ? "Arrêter la dictée" : "Dicter le message"}
+              aria-label={messageDictation.isListening ? (localeCode === "en" ? "Stop dictation" : "Arrêter la dictée") : (localeCode === "en" ? "Dictate the message" : "Dicter le message")}
               aria-pressed={messageDictation.isListening}
             >
               <Mic className="h-4 w-4" aria-hidden="true" />
@@ -424,7 +443,7 @@ function CoachingMessageForm({
             <button
               disabled={status === "sending" || (message.trim().length < 2 && !pendingDraftToken)}
               className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-dema-forest text-white transition hover:bg-[#284f3a] disabled:opacity-40"
-              aria-label="Clarifier ma situation"
+              aria-label={localeCode === "en" ? "Clarify my situation" : "Clarifier ma situation"}
             >
               {status === "sending" ? (
                 <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
@@ -434,14 +453,14 @@ function CoachingMessageForm({
             </button>
           </div>
           {access?.freeStatus === "available" ? (
-            <p className="mt-2 px-2 text-xs text-dema-muted">Ce premier échange est gratuit.</p>
+            <p className="mt-2 px-2 text-xs text-dema-muted">{localeCode === "en" ? "Your first exchange is free." : "Ce premier échange est gratuit."}</p>
           ) : null}
           {messageDictation.error ? <p className="mt-2 px-2 text-xs text-amber-800" role="alert">{messageDictation.error}</p> : null}
-          {status === "error" ? <p className="mt-2 px-2 text-xs font-medium text-red-700">Le message n’a pas été envoyé. Réessayez.</p> : null}
+          {status === "error" ? <p className="mt-2 px-2 text-xs font-medium text-red-700">{localeCode === "en" ? "The message was not sent. Try again." : "Le message n’a pas été envoyé. Réessayez."}</p> : null}
         </form>
       )}
       </section>
-      {access && access.freeStatus !== "completed" ? <CoachBusinessPromo /> : null}
+      {access && access.freeStatus !== "completed" ? <CoachBusinessPromo localeCode={localeCode} /> : null}
     </>
   );
 }

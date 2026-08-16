@@ -40,13 +40,13 @@ export function isValidCallbackPhone(value: string) {
   return digitCount >= 8 && digitCount <= 15;
 }
 
-export function validateCallbackFields(fields: CallbackFields): CallbackFieldErrors {
+export function validateCallbackFields(fields: CallbackFields, localeCode: "fr" | "en" = "fr"): CallbackFieldErrors {
   const errors: CallbackFieldErrors = {};
   if (!fields.company.trim()) {
-    errors.company = "Indiquez le nom de votre entreprise.";
+    errors.company = localeCode === "en" ? "Enter your company name." : "Indiquez le nom de votre entreprise.";
   }
   if (!isValidCallbackPhone(fields.phone)) {
-    errors.phone = "Indiquez un numéro WhatsApp valide.";
+    errors.phone = localeCode === "en" ? "Enter a valid contact number." : "Indiquez un numéro WhatsApp valide.";
   }
   return errors;
 }
@@ -89,10 +89,18 @@ export default function ServiceCallbackForm({
   packages = [],
   serviceName,
   serviceSlug,
+  localeCode = "fr",
+  marketCode = "fr-fr",
+  source,
+  systemSlug,
 }: {
   packages?: readonly CallbackPackage[];
   serviceName: string;
   serviceSlug: string;
+  localeCode?: "fr" | "en";
+  marketCode?: string;
+  source?: string;
+  systemSlug?: string;
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -115,7 +123,7 @@ export default function ServiceCallbackForm({
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const nextErrors = validateCallbackFields(fields);
+    const nextErrors = validateCallbackFields(fields, localeCode);
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       setStatus("error");
@@ -138,15 +146,15 @@ export default function ServiceCallbackForm({
       await submitCallbackRequest({
         attribution: getLeadAttributionPayload(),
         company: fields.company.trim(),
+        localeCode,
+        marketCode,
         idempotencyKey,
-        localeCode: "fr",
-        marketCode: "fr-fr",
         packageSlug: selectedPackageSlug || undefined,
         phone: fields.phone.trim(),
         serviceSlug,
-        source: searchParams.get("source") ?? undefined,
+        source: source ?? searchParams.get("source") ?? undefined,
         sourcePage: pathname,
-        systemSlug: searchParams.get("systemSlug") ?? undefined,
+        systemSlug: systemSlug ?? searchParams.get("systemSlug") ?? undefined,
         website: fields.website,
       });
       clearLeadSubmissionKey(flowKey);
@@ -218,7 +226,7 @@ export default function ServiceCallbackForm({
       ) : null}
 
       <label className="block text-sm font-semibold text-brand-blue">
-        Entreprise
+        {localeCode === "en" ? "Company" : "Entreprise"}
         <input
           name="company"
           autoComplete="organization"
@@ -237,13 +245,13 @@ export default function ServiceCallbackForm({
       </label>
 
       <label className="block text-sm font-semibold text-brand-blue">
-        Numéro WhatsApp
+        {localeCode === "en" ? "Contact number" : "Numéro WhatsApp"}
         <input
           name="phone"
           type="tel"
           inputMode="tel"
           autoComplete="tel"
-          placeholder="+33 6 12 34 56 78"
+          placeholder={localeCode === "en" ? "+44 20 1234 5678" : "+33 6 12 34 56 78"}
           maxLength={60}
           value={fields.phone}
           onChange={(event) => updateField("phone", event.target.value)}
@@ -254,7 +262,7 @@ export default function ServiceCallbackForm({
           className={fieldClassName}
         />
         <span id="callback-phone-help" className="mt-1.5 block text-xs font-normal leading-relaxed text-dema-muted">
-          Nous vous recontacterons sur WhatsApp, uniquement au sujet de cette demande.
+          {localeCode === "en" ? "We will contact you about this request within 24 to 48 hours." : "Nous vous recontacterons sur WhatsApp, uniquement au sujet de cette demande."}
         </span>
         {errors.phone ? (
           <span id="callback-phone-error" className="mt-1.5 block text-xs font-medium text-red-700">
@@ -280,29 +288,29 @@ export default function ServiceCallbackForm({
         aria-busy={status === "submitting"}
         className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-60"
       >
-        {status === "submitting" ? "Envoi…" : "Envoyer ma demande"}
+        {status === "submitting" ? (localeCode === "en" ? "Sending…" : "Envoi…") : (localeCode === "en" ? "Send my request" : "Envoyer ma demande")}
       </button>
 
       <p className="text-xs leading-relaxed text-dema-muted">
-        En envoyant cette demande, vous acceptez que Demaa vous contacte sur WhatsApp au sujet de {serviceName}.{" "}
+        {localeCode === "en" ? `By sending this request, you agree that Demaa may contact you about ${serviceName}.` : `En envoyant cette demande, vous acceptez que Demaa vous contacte sur WhatsApp au sujet de ${serviceName}.`}{" "}
         <Link
           href="/politique-de-confidentialite"
           className="font-medium text-dema-forest underline underline-offset-2"
         >
-          Politique de confidentialité
+          {localeCode === "en" ? "Privacy policy (French)" : "Politique de confidentialité"}
         </Link>
       </p>
 
       {status === "success" ? (
         <p role="status" className="text-sm font-medium text-dema-forest">
-          Demande reçue. Nous vous contacterons prochainement sur WhatsApp.
+          {localeCode === "en" ? "Request received. We will contact you within 24 to 48 hours." : "Demande reçue. Nous vous contacterons prochainement sur WhatsApp."}
         </p>
       ) : null}
       {status === "error" ? (
         <p role="alert" className="text-sm font-medium text-red-700">
           {Object.keys(errors).length > 0
-            ? "Corrigez les champs signalés avant de réessayer."
-            : "La demande n’a pas pu être envoyée. Merci de réessayer."}
+            ? (localeCode === "en" ? "Correct the highlighted fields and try again." : "Corrigez les champs signalés avant de réessayer.")
+            : (localeCode === "en" ? "Your request could not be sent. Please try again." : "La demande n’a pas pu être envoyée. Merci de réessayer.")}
         </p>
       ) : null}
     </form>

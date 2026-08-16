@@ -33,6 +33,10 @@ type CoachingRequestBody = {
   draftToken?: unknown;
   idempotencyKey?: unknown;
   message?: unknown;
+  localeCode?: unknown;
+  marketCode?: unknown;
+  countryCode?: unknown;
+  source?: unknown;
   offer?: unknown;
   phone?: unknown;
   requestKind?: unknown;
@@ -100,6 +104,13 @@ export async function POST(request: Request) {
     const draftToken = normalizeText(data?.draftToken, 80);
     const offer = normalizeText(data?.offer, 30);
     const idempotencyKey = normalizeIdempotencyKey(data?.idempotencyKey);
+    const localeCode = normalizeText(data?.localeCode, 10) || "fr";
+    const marketCode = normalizeText(data?.marketCode, 40) || "fr-fr";
+    const countryCode = normalizeText(data?.countryCode, 2).toUpperCase();
+    const source = normalizeText(data?.source, 80) || (localeCode === "en" ? "english-talk-to-us" : "echange");
+    if (!((localeCode === "fr" && marketCode === "fr-fr") || (localeCode === "en" && marketCode === "global-en-beta"))) {
+      return NextResponse.json({ error: "Contexte international invalide." }, { status: 400, headers: PRIVATE_NO_STORE_HEADERS });
+    }
 
     const isMessage = requestKind === "message";
     const isAccompaniment = requestKind === "accompaniment";
@@ -156,6 +167,10 @@ export async function POST(request: Request) {
           body: effectiveMessage,
           email,
           idempotencyKey: effectiveIdempotencyKey,
+          localeCode,
+          marketCode,
+          countryCode: countryCode || null,
+          source,
           uid,
         })
       : null;
@@ -184,6 +199,10 @@ export async function POST(request: Request) {
       fields: isMessage
         ? [
             { label: "Message", value: effectiveMessage },
+            { label: "Langue", value: localeCode },
+            { label: "Marché", value: marketCode },
+            ...(countryCode ? [{ label: "Pays", value: countryCode }] : []),
+            { label: "Source", value: source },
           ]
         : [
             { label: "Accompagnement", value: isSpecialistOffer(offer) ? SPECIALIST_OFFERS[offer].title : offer },

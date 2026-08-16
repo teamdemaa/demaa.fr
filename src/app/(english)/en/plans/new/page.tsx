@@ -44,9 +44,9 @@ export default async function NewEnglishActionPlanPage({
         initialGenerationIntent={(Array.isArray(params.resume) ? params.resume[0] : params.resume) === "generation"}
         initialIsAuthenticated
         marketCodeAtCreation="global-en-beta"
-        showCoaching={false}
+        showCoaching
         systemOptions={englishActionPlanSystemOptions}
-        visibleViews={["plan"]}
+        visibleViews={["plan", "solutions"]}
       />
     </>
   );

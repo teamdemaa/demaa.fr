@@ -126,16 +126,46 @@ describe("service callback request route", () => {
 
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
-      fields: [
+      fields: expect.arrayContaining([
         { label: "Service", value: "Prospection ciblée" },
         { label: "Slug du service", value: "prospection-ciblee" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
         { label: "Locale", value: "fr" },
         { label: "Marché", value: "fr-fr" },
         { label: "Page source", value: "/services/expert-comptable" },
-      ],
+      ]),
       requestType: "service_callback_request",
     }));
+  });
+
+  it("preserves the English locale and market in the existing request pipeline", async () => {
+    const response = await POST(request(validBody({
+      localeCode: "en",
+      marketCode: "global-en-beta",
+      serviceSlug: "coach-business",
+      source: "english-solutions",
+      systemSlug: "saas",
+    })));
+
+    expect(response.status).toBe(202);
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      fields: expect.arrayContaining([
+        { label: "Contact number", value: "+33 6 12 34 56 78" },
+        { label: "Langue", value: "en" },
+        { label: "Marché", value: "global-en-beta" },
+      ]),
+      title: "Service request - Coach business",
+    }));
+  });
+
+  it("rejects an unsupported locale and market pairing", async () => {
+    const response = await POST(request(validBody({
+      localeCode: "en",
+      marketCode: "fr-fr",
+    })));
+
+    expect(response.status).toBe(400);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
   it("accepts the simple callback journey for process automation", async () => {
@@ -256,14 +286,14 @@ describe("service callback request route", () => {
         company: "Atelier Martin",
         phone: "+33 6 12 34 56 78",
       },
-      fields: [
+      fields: expect.arrayContaining([
         { label: "Service", value: "Expert-comptable" },
         { label: "Slug du service", value: "expert-comptable" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
         { label: "Locale", value: "fr" },
         { label: "Marché", value: "fr-fr" },
         { label: "Page source", value: "/services/expert-comptable" },
-      ],
+      ]),
       idempotencyKey: expect.stringMatching(/^[a-f0-9]{64}$/),
       requestType: "service_callback_request",
     }));
@@ -306,16 +336,6 @@ describe("service callback request route", () => {
   it("rejects an external source page", async () => {
     const response = await POST(request(validBody({
       sourcePage: "https://evil.example/services/expert-comptable",
-    })));
-
-    expect(response.status).toBe(400);
-    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
-  });
-
-  it("rejects a locale and market not yet published by this French route", async () => {
-    const response = await POST(request(validBody({
-      localeCode: "en",
-      marketCode: "global-en-beta",
     })));
 
     expect(response.status).toBe(400);

@@ -36,6 +36,10 @@ type StoredCoachingConversation = {
   messages?: unknown;
   recommendations?: unknown;
   updated_at?: unknown;
+  locale_code?: unknown;
+  market_code?: unknown;
+  country_code?: unknown;
+  source?: unknown;
 };
 
 type StoredCoachingRecommendation = {
@@ -254,6 +258,10 @@ export function appendCustomerCoachingMessage(input: {
   email: string;
   idempotencyKey: string;
   uid: string;
+  localeCode?: "fr" | "en";
+  marketCode?: string;
+  countryCode?: string | null;
+  source?: string;
 }) {
   const database = getAdminFirestore();
   const normalizedUid = cleanText(input.uid, 160);
@@ -285,6 +293,10 @@ export function appendCustomerCoachingMessage(input: {
     transaction.set(conversationReference, {
       created_at: typeof existing?.created_at === "string" ? existing.created_at : now,
       customer_email: normalizeEmail(input.email),
+      locale_code: input.localeCode ?? "fr",
+      market_code: cleanText(input.marketCode, 40) || "fr-fr",
+      country_code: cleanText(input.countryCode, 2) || null,
+      source: cleanText(input.source, 80) || "echange",
       owner_uid: normalizedUid,
       messages: [...messages, message].slice(-MAX_MESSAGES).map(serializeMessage),
       retention_expires_at: getLeadRetentionExpiry(),
@@ -330,6 +342,10 @@ export async function getCoachingConversationForAdmin(conversationId: string) {
     openedAt: cleanText(accessSnapshot?.data()?.opened_at, 40) || null,
     recommendations: parseRecommendations(data?.recommendations),
     ownerUid,
+    localeCode: cleanText(data?.locale_code, 10) === "en" ? "en" : "fr",
+    marketCode: cleanText(data?.market_code, 40) || "fr-fr",
+    countryCode: cleanText(data?.country_code, 2) || null,
+    source: cleanText(data?.source, 80) || "echange",
   } as const;
 }
 
@@ -359,6 +375,10 @@ export async function getCoachingConversationSummaries(limit = 100) {
       lastMessage: lastMessage.body,
       openedAt: cleanText(storedAccess?.opened_at, 40) || null,
       updatedAt,
+      localeCode: cleanText(data.locale_code, 10) === "en" ? "en" : "fr",
+      marketCode: cleanText(data.market_code, 40) || "fr-fr",
+      countryCode: cleanText(data.country_code, 2) || null,
+      source: cleanText(data.source, 80) || "echange",
     } satisfies CoachingConversationSummary;
   }))).filter((value): value is CoachingConversationSummary => Boolean(value));
 }
@@ -405,6 +425,10 @@ export async function appendSpecialistCoachingMessage(input: {
     transaction.set(conversationReference, {
       created_at: typeof existing?.created_at === "string" ? existing.created_at : now,
       customer_email: cleanText(existing?.customer_email, 320).toLowerCase(),
+      locale_code: cleanText(existing?.locale_code, 10) === "en" ? "en" : "fr",
+      market_code: cleanText(existing?.market_code, 40) || "fr-fr",
+      country_code: cleanText(existing?.country_code, 2) || null,
+      source: cleanText(existing?.source, 80) || "echange",
       owner_uid: ownerUid,
       messages: [...parseMessages(existing?.messages), message]
         .slice(-MAX_MESSAGES)

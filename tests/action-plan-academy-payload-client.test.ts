@@ -5,6 +5,7 @@ import {
   readCachedActionPlanAcademyPayload,
 } from "@/lib/action-plan-academy-payload.client";
 import {
+  getActionPlanSystemPayloadCacheKey,
   invalidateActionPlanSystemPayload,
   loadActionPlanSystemPayload,
   readCachedActionPlanSystemPayload,
@@ -114,6 +115,11 @@ describe("action plan Academy client payload cache", () => {
 });
 
 describe("action plan System payload cache regression", () => {
+  it("isolates cached payloads by locale and market", () => {
+    expect(getActionPlanSystemPayloadCacheKey("saas", false, "fr", "fr-fr"))
+      .not.toBe(getActionPlanSystemPayloadCacheKey("saas", false, "en", "global-en-beta"));
+  });
+
   it("keeps deduplicating requests and exposing the cached System payload", async () => {
     const cacheKey = "test:academy-regression";
     const systemPayload = { system: { id: "test" } };
@@ -128,6 +134,41 @@ describe("action plan System payload cache regression", () => {
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(readCachedActionPlanSystemPayload(cacheKey)).toEqual(systemPayload);
+    invalidateActionPlanSystemPayload(cacheKey);
+  });
+
+  it("forwards locale and market once while concurrent callers share the request", async () => {
+    const cacheKey = getActionPlanSystemPayloadCacheKey(
+      "saas",
+      false,
+      "en",
+      "global-en-beta",
+    );
+    invalidateActionPlanSystemPayload(cacheKey);
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse({ system: { id: "saas" } }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await Promise.all([
+      loadActionPlanSystemPayload({
+        cacheKey,
+        demoMode: false,
+        localeCode: "en",
+        marketCode: "global-en-beta",
+        systemId: "saas",
+      }),
+      loadActionPlanSystemPayload({
+        cacheKey,
+        demoMode: false,
+        localeCode: "en",
+        marketCode: "global-en-beta",
+        systemId: "saas",
+      }),
+    ]);
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/action-plan/system/saas?locale=en&market=global-en-beta",
+    );
     invalidateActionPlanSystemPayload(cacheKey);
   });
 });

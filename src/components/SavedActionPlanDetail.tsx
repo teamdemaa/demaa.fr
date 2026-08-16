@@ -49,6 +49,7 @@ export default function SavedActionPlanDetail({
   initialIsAuthenticated = true,
   contentLocaleCode = "fr",
   interfaceLocaleCode = "fr",
+  marketCodeAtCreation = "fr-fr",
   visibleViews,
   showCoaching = true,
 }: {
@@ -65,6 +66,7 @@ export default function SavedActionPlanDetail({
   initialIsAuthenticated?: boolean;
   contentLocaleCode?: ActionPlanContentLocaleCode;
   interfaceLocaleCode?: ActionPlanContentLocaleCode;
+  marketCodeAtCreation?: string;
   visibleViews?: readonly ActionPlanView[];
   showCoaching?: boolean;
 }) {
@@ -381,6 +383,8 @@ export default function SavedActionPlanDetail({
     <div className="contents">
       <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} localeCode={interfaceLocaleCode} visibleViews={visibleViews} />
       {showCoaching ? <ActionPlanCoachingControl
+        localeCode={interfaceLocaleCode}
+        marketCode={marketCodeAtCreation}
         existingPlanId={planId}
         initialEmail={initialEmail}
         isAuthenticated={initialIsAuthenticated}
@@ -504,6 +508,8 @@ export default function SavedActionPlanDetail({
         ) : null}
         {activeTab === "solutions" ? (
           <ActionPlanSystemPanel
+            localeCode={interfaceLocaleCode}
+            marketCode={marketCodeAtCreation}
             options={systemOptions}
             selectedSystemId={
               appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || ""

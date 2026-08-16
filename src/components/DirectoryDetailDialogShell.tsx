@@ -8,6 +8,7 @@ type DirectoryDetailDialogShellProps = {
   children: React.ReactNode;
   maxWidthClassName?: string;
   onClose: () => void;
+  closeLabel?: string;
 };
 
 export default function DirectoryDetailDialogShell({
@@ -15,6 +16,7 @@ export default function DirectoryDetailDialogShell({
   children,
   maxWidthClassName = "max-w-5xl",
   onClose,
+  closeLabel = "Fermer",
 }: DirectoryDetailDialogShellProps) {
   const dialogRef = useAccessibleDialog({ onClose });
 
@@ -37,7 +39,7 @@ export default function DirectoryDetailDialogShell({
           onClick={onClose}
           data-dialog-initial-focus
           className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
-          aria-label="Fermer"
+          aria-label={closeLabel}
         >
           <X className="h-4 w-4" aria-hidden="true" />
         </button>

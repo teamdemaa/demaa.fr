@@ -7,18 +7,20 @@ import { buildPublicSystemAppHref } from "@/lib/action-plan-app-context";
 export default function SystemShareControl({
   systemName,
   systemSlug,
+  localeCode = "fr",
 }: {
   systemName: string;
   systemSlug: string;
+  localeCode?: "fr" | "en";
 }) {
   const [copied, setCopied] = useState(false);
 
   async function shareSystem() {
     const url = new URL(
-      buildPublicSystemAppHref({ systemId: systemSlug }),
+      `${localeCode === "en" ? "/en" : ""}${buildPublicSystemAppHref({ systemId: systemSlug })}`,
       window.location.origin,
     ).toString();
-    const title = `Système ${systemName} | Demaa`;
+    const title = `${localeCode === "en" ? "Business type" : "Système"} ${systemName} | Demaa`;
 
     try {
       if (navigator.share) {
@@ -47,8 +49,8 @@ export default function SystemShareControl({
       type="button"
       onClick={() => void shareSystem()}
       className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted transition hover:border-dema-forest/30 hover:text-dema-forest"
-      aria-label={copied ? "Lien du système copié" : "Partager ce système"}
-      title={copied ? "Lien copié" : "Partager ce système"}
+      aria-label={copied ? (localeCode === "en" ? "Business type link copied" : "Lien du système copié") : (localeCode === "en" ? "Share this business type" : "Partager ce système")}
+      title={copied ? (localeCode === "en" ? "Link copied" : "Lien copié") : (localeCode === "en" ? "Share this business type" : "Partager ce système")}
       aria-live="polite"
     >
       {copied ? (
