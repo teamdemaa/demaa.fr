@@ -60,7 +60,7 @@ describe("unified app and coaching", () => {
     expect(offers).toContain('price: "750 € HT / mois"');
     expect(coaching).toContain("interimResults: true");
     expect(coaching).toContain("useSpeechDictation");
-    expect(coaching).toContain("Dictée en cours… le texte apparaît dans le message.");
+    expect(coaching).not.toContain("Dictée en cours… le texte apparaît dans le message.");
     expect(coaching).toContain('fetch("/api/coaching-draft"');
     expect(coaching).toContain('onRequireAccess?.({ draftToken, tab: "messages" })');
     expect(coaching).toContain("initialDraftToken");
