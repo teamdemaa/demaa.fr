@@ -61,6 +61,12 @@ export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
         description: servicePackage.summary,
         price: (servicePackage.pricing.amountMinor / 100).toFixed(2),
         priceCurrency: servicePackage.pricing.currency,
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: (servicePackage.pricing.amountMinor / 100).toFixed(2),
+          priceCurrency: servicePackage.pricing.currency,
+          valueAddedTaxIncluded: false,
+        },
         url: pageUrl,
       }))
     : [];

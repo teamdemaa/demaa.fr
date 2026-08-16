@@ -62,8 +62,26 @@ describe("canonical Services SEO and redirects", () => {
 
     expect(buildServicePageJsonLd(automation)[1]).toMatchObject({
       offers: [
-        { name: "Automatisation essentielle", price: "1500.00" },
-        { name: "Automatisation avancée + IA", price: "3000.00" },
+        {
+          name: "Automatisation essentielle",
+          price: "1500.00",
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price: "1500.00",
+            priceCurrency: "EUR",
+            valueAddedTaxIncluded: false,
+          },
+        },
+        {
+          name: "Automatisation avancée + IA",
+          price: "3000.00",
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price: "3000.00",
+            priceCurrency: "EUR",
+            valueAddedTaxIncluded: false,
+          },
+        },
       ],
     });
 

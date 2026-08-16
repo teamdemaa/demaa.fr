@@ -176,6 +176,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(formSource).not.toContain('name="email"');
     expect(formSource).not.toContain('name="firstName"');
     expect(formSource).toContain('name="packageSlug"');
+    expect(formSource).toContain('disabled={status === "submitting"}');
     expect(formSource).toContain('sourcePage: pathname');
   });
 

@@ -166,7 +166,11 @@ export default function ServiceCallbackForm({
   return (
     <form ref={formRef} onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
       {packages.length > 0 ? (
-        <fieldset className="space-y-3">
+        <fieldset
+          disabled={status === "submitting"}
+          aria-busy={status === "submitting"}
+          className="space-y-3 disabled:pointer-events-none disabled:opacity-70"
+        >
           <legend className="text-sm font-semibold text-brand-blue">
             Choisissez le forfait à étudier
           </legend>
@@ -179,7 +183,7 @@ export default function ServiceCallbackForm({
                   selected
                     ? "border-dema-forest/40 bg-dema-sage/45"
                     : "border-dema-line bg-dema-paper hover:border-dema-forest/25"
-                }`}
+                } has-[:disabled]:cursor-wait`}
               >
                 <span className="flex items-start gap-3">
                   <input
