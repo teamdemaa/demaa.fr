@@ -112,7 +112,7 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Enregistrements vocaux Structure, lorsque cette option sera activée :</strong> 30 jours maximum ; leur transcription suit ensuite la durée applicable à la proposition écrite.</li>
               <li><strong>Données d&apos;attribution rattachées à une demande :</strong> même durée que la demande concernée, avec suppression ou anonymisation lors de sa suppression.</li>
               <li><strong>Attribution enregistrée dans le navigateur après consentement :</strong> 90 jours maximum.</li>
-              <li><strong>Choix relatifs aux traceurs :</strong> 6 mois maximum avant une nouvelle demande de choix.</li>
+              <li><strong>Choix relatifs aux traceurs :</strong> 180 jours maximum avant une nouvelle demande de choix, ou plus tôt si la version du consentement change.</li>
               <li><strong>Plans sauvegardés :</strong> jusqu&apos;à 3 ans après leur dernière mise à jour, puis suppression ou anonymisation.</li>
               <li><strong>Demandes de génération interrompues ou inachevées :</strong> 30 jours maximum afin de permettre une reprise et le diagnostic technique, puis suppression.</li>
               <li><strong>Texte préparé avant authentification pour créer un plan :</strong> 2 heures maximum dans la session du navigateur, puis suppression automatique ; il est supprimé plus tôt lorsque le plan est créé ou lorsque vous annulez.</li>

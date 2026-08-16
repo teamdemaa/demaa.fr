@@ -15,6 +15,7 @@ describe("customer logout route", () => {
     await expect(response.json()).resolves.toEqual({ signedOut: true });
     expect(response.headers.get("set-cookie")).toContain("demaa_session=");
     expect(response.headers.get("set-cookie")).toContain("Max-Age=0");
+    expect(response.headers.get("set-cookie")).not.toContain("demaa_cookie_consent");
   });
 
   it("rejects a cross-site logout request", async () => {
