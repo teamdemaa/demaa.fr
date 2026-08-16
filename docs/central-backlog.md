@@ -329,20 +329,22 @@ titre animé entreprise/agence/startup.
 
 Le runtime est livré. Les actions restantes ne sont pas des correctifs produit :
 
-- [ ] Fusionner une PR documentaire contenant D-085 et le présent nettoyage,
-  sans runtime.
-- [ ] Resynchroniser ensuite le Google Sheet maître avec D-084, D-085, les lots
+- [x] Fusionner une PR documentaire contenant D-085 et le présent nettoyage,
+  sans runtime : PR 119, fusionnée le 16 août 2026.
+- [x] Resynchroniser ensuite le Google Sheet maître avec D-084, D-085, les lots
   0 à 8, la référence runtime `8020e04` et la tête `main` obtenue après fusion
-  de la PR documentaire.
-- [ ] Préserver tout changement local attribué, puis réaligner le checkout
+  de la PR documentaire : D-083 à D-088 et DEC-023/024 ajoutés.
+- [x] Préserver tout changement local attribué, puis réaligner le checkout
   principal sur `origin/main` et obtenir un worktree propre.
-- [ ] Retirer les worktrees et branches des lots fusionnés après vérification
+- [x] Retirer les worktrees et branches des lots fusionnés après vérification
   de leur propreté.
 - [ ] Rejouer une dernière recette authentifiée Production : Google, dernier
   plan, Mes plans, changement de plan, Chiffres, Stratégie, déconnexion,
-  reconnexion et données retrouvées.
+  reconnexion et données retrouvées. La redirection Google est vérifiée jusqu'au
+  sélecteur de compte ; la recette authentifiée reste à terminer.
 - [ ] Surveiller pendant 24 à 48 heures les erreurs Firebase/session,
-  génération, sauvegarde, conflits, Pilotage et Vercel 5xx.
+  génération, sauvegarde, conflits, Pilotage et Vercel 5xx. Le contrôle initial
+  ne remonte aucune erreur ni 5xx sur les 24 dernières heures.
 
 Le futur parcours de suppression effective d'une entreprise reste différé :
 aucune interface ou API de suppression n'existe aujourd'hui. Lorsqu'il sera
