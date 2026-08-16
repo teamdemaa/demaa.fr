@@ -17,9 +17,11 @@
 > `Plan d’action / Solutions / Académie / Opportunités`, sans sous-onglets dans
 > le Plan. La première version Coaching existe via `Échanger`.
 
-> **Mise à jour D-079 :** le contrat courant V4 génère uniquement les Actions
-> et le `systemId`. La Stratégie V3 est temporairement masquée et non générée ;
-> sa lecture historique reste tolérante sans migration destructive.
+> **Mises à jour D-079 et D-084 :** le contrat courant V4 génère uniquement les
+> Actions et le `systemId`. Les anciens champs Stratégie V3 sont tolérés par le
+> lecteur de compatibilité, mais restent invisibles, non éditables et non
+> générés. La nouvelle Stratégie D-084 est un espace manuel d'entreprise
+> séparé ; elle ne réactive ni ne recopie ces champs historiques.
 
 ## Contexte
 
@@ -92,7 +94,8 @@ catalogue, ni rendre privées les destinations publiques existantes.
 1. `/` propose un champ libre et ne demande aucune information structurée avant
    le premier résultat ;
 2. chaque réponse valide référence l'un des 115 slugs canoniques via `systemId` ;
-3. Actions et quatre piliers sont présents dans le résultat ;
+3. les Actions et le `systemId` sont présents dans le résultat ; aucune donnée
+   de Stratégie n'est générée ou transmise à l'IA ;
 4. le changement de Système ne déclenche aucun appel IA ;
 5. aucune génération n'est lancée avant authentification et aucun résultat
    complet n'est stocké dans le navigateur ;

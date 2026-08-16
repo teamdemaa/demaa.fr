@@ -11,6 +11,10 @@ quatre piliers. La décision la plus récente simplifie la génération courante
 la V4 génère uniquement les Actions et le `systemId`. La Stratégie est masquée
 et n'est plus demandée au modèle à partir d'une problématique ponctuelle.
 
+La nouvelle Stratégie d'entreprise définie par D-084 et l'ADR 0013 est un
+produit séparé, manuel et rattaché à l'entreprise. Elle ne réactive pas les
+champs V3, ne les migre pas et ne modifie pas le périmètre IA défini ici.
+
 La lecture reste non destructive : V1 est normalisé en V2 en mémoire ; V2, V3
 et `manual` conservent leurs formes historiques. Les stratégies V3 restent
 lisibles par le code de compatibilité mais ne sont pas affichées. Aucun

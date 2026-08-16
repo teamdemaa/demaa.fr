@@ -5,15 +5,44 @@ Dernière consolidation : 16 août 2026.
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
 
+Le Google Sheet reste à resynchroniser : sa dernière modification connue est
+du 14 août 2026, mais son contenu annonce encore une consolidation au 29
+juillet. Jusqu'à cette resynchronisation, les décisions datées du 16 août dans
+ce document et le registre ADR sont la référence la plus récente. Aucun
+chantier ne doit être déclaré livré dans le Sheet avant sa recette réelle.
+
 Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
 à réaliser.
 
-## État de clôture Production — 12 août 2026
+Plan directeur actif :
+[`Programme stabilisation et Stratégie — 16 août 2026`](governance/program-director-2026-08-16.md).
+Il fixe l'ordre des lots, leurs responsables, les branches/PR et les gates de
+release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
-Cette section est l'état exécutable courant. Toutes les sections historiques
-datées plus bas sont conservées comme journal et ne doivent plus servir de plan
-de déploiement.
+## État courant Production — 16 août 2026
+
+- `main` et `origin/main` sont alignées sur `4f0a589`. Les PR 110 à 114 ont été
+  fusionnées séparément et vérifiées en Production : fiabilité des plans,
+  sécurité de l'administration Coaching, consentement aux traceurs, expérience
+  Échanger et barre du titre.
+- L'application conserve un seul domaine canonique et des groupes de routes
+  distincts pour le marketing, l'application, l'authentification et
+  l'administration.
+- L'authentification Firebase e-mail/mot de passe et Google partage la même
+  session Demaa. Sur `demaa.co`, Google utilise immédiatement la redirection
+  afin d'éviter les blocages de popup ; local et Preview peuvent conserver la
+  popup desktop. Le parcours Production a été vérifié jusqu'à la création du
+  contexte entreprise et au retour vers `/plans/new` pour un compte sans plan.
+- Le périmètre Plan d'action V4 reste `Actions + systemId`. La nouvelle
+  Stratégie d'entreprise D-084 est cadrée mais non implémentée ; elle ne doit
+  pas être annoncée comme livrée.
+
+## État de clôture historique — 12 août 2026
+
+Cette section conserve l'état du 12 août comme journal. L'état courant du 16
+août placé juste au-dessus le remplace et guide désormais les décisions de
+déploiement.
 
 - La release runtime Production vérifiée est `cdcb415`. Le correctif isolé
   `0919acf` sur `codex/global-audit-release` est prêt sur une Preview Vercel,
@@ -54,10 +83,11 @@ de déploiement.
   envoyé la notification Slack et accepté la livraison e-mail sans exposer le
   lien Google Sheets au navigateur.
 
-## Séquence de stabilisation active — 16 août 2026
+## Séquence de stabilisation clôturée — 16 août 2026
 
-Cette séquence remplace celle du 15 août comme état technique courant du
-prochain candidat. Elle ne réactive aucun lot produit différé.
+Cette séquence a remplacé celle du 15 août et décrit la stabilisation désormais
+fusionnée. Elle ne réactive aucun lot produit différé et ne constitue plus une
+liste d'actions à exécuter.
 
 1. Conserver un seul domaine canonique, `https://demaa.co`. La séparation entre
    site public, application, authentification et administration est réalisée
@@ -73,9 +103,9 @@ prochain candidat. Elle ne réactive aucun lot produit différé.
    `DELETE` déconnecte. Une indisponibilité de ce contexte ne doit jamais être
    rendue comme une liste vide de plans.
 4. E-mail/mot de passe et Google utilisent la même modale progressive et la
-   même API. Google reste en popup sur desktop et utilise `/auth/google` comme
-   callback dédié sur mobile/PWA. Une popup desktop bloquée ou sans réponse est
-   bornée et le nouvel essai bascule vers cette redirection dédiée. Le reverse
+   même API. Sur le domaine Production canonique, Google utilise directement
+   `/auth/google` afin de ne pas dépendre d'une popup ; local et Preview
+   conservent la popup desktop. Le reverse
    proxy de l'option 3 recommandée par Firebase sert uniquement `/__/auth/*`
    depuis le helper Firebase ; la configuration de l'application reste fournie
    explicitement au SDK.
@@ -90,9 +120,8 @@ prochain candidat. Elle ne réactive aucun lot produit différé.
 7. Avant promotion : suite complète, TypeScript, ESLint, validation des
    données, build, contrôle PWA et E2E desktop/mobile des parcours e-mail,
    Google, génération, dernier plan, historique, safe areas et dictée.
-8. Un contrôle externe reste une gate de promotion et non un travail de code :
-   confirmer dans Google Cloud l'URI OAuth
-   `https://demaa.co/__/auth/handler`. L'audit du 16 août confirme Google et
+8. Le contrôle OAuth Production a été franchi : le parcours Google réel a été
+   validé dans Chrome sur `demaa.co`. L'audit du 16 août confirme Google et
    e-mail/mot de passe actifs, `demaa.co` autorisé, l'anti-énumération actif et
    une politique Firebase de 8 caractères en mode `ENFORCE`.
 
@@ -187,7 +216,7 @@ l'ADR 0004 prévaut.
 ### Lots restant réellement au backlog
 
 - [x] Livrer le MVP D-076 : grand champ libre, génération JSON
-  unique, Actions + quatre piliers, sélection déterministe parmi les 115
+  unique, Actions + `systemId`, sélection déterministe parmi les 115
   Systèmes, puis sauvegarde Firebase. L'ADR 0008 et
   `docs/action-plan-generator-product-contract.md` sont les références ;
   `/systemes` et `/academie` publics restent inchangés.
@@ -309,8 +338,9 @@ l'ADR 0004 prévaut.
 - [ ] Recetter puis promouvoir le candidat D-079 Plan V4 : génération limitée
   aux Actions et au `systemId`, supports typés selon les règles déterministes,
   et lecture non destructive des plans V1, V2, V3 et `manual`. La Stratégie
-  reste masquée et non générée tant qu'un nouveau contrat stratégique n'est
-  pas explicitement validé.
+  historique reste définitivement masquée, non éditée et non générée. Le
+  contrat D-084 validé crée un Pilotage d'entreprise séparé ; il ne réactive
+  aucun champ stratégique des plans.
 - [ ] Recetter le multi-plans dans l'application unique : titre, sélecteur,
   nouveau plan, renommage, suppression révisionnée et retour au dernier plan.
 - [ ] Recetter les Systèmes sauvegardés par plan : liste sans doublon, Système
@@ -326,10 +356,28 @@ l'ADR 0004 prévaut.
   déterministe, annulation, limites compte/IP, mode démo sans crédit et ledger
   sans contenu. Notes, identité, situation source, historique et Systèmes
   restent exclus.
-- [ ] Cadrer séparément la réactivation future de la Stratégie/ASOP : finaliser
-  l'intitulé, les questions, le rôle du dirigeant et celui du spécialiste,
-  puis décider du modèle de données et de l'interface sans réutiliser
-  automatiquement les anciens piliers.
+- [ ] D-084 — Implémenter le Pilotage d'entreprise `Chiffres + Stratégie`
+  selon l'ADR 0013, dans la tâche unique `Vérifier la stratégie et le backlog`.
+  Le périmètre Chiffres, omis lors d'une consolidation intermédiaire, est
+  restauré. D-082 reste la navigation principale cible. Après sauvegarde d'un
+  plan, la vue Plan expose la sous-navigation commune
+  `Plan d'action / Chiffres / Stratégie`, pilotée par
+  `section=actions|figures|strategy` et jamais visible sur le formulaire public.
+  Les deux domaines appartiennent à l'entreprise : changer ou supprimer un plan
+  ne les modifie pas. Chiffres stocke par mois CA, charges et trésorerie en
+  centimes, dérive le résultat, applique `expectedRevision`, agrège uniquement
+  des périodes bornées et ne cumule jamais la trésorerie. Le cadrage Stratégie
+  conserve intégralement les quatre piliers, douze questions, cycles de trois
+  mois calendaires Europe/Paris sans expiration, premier cycle automatique,
+  nouveau cycle vide, historique paginé par 10, exactement un pli ouvert avec
+  Alignement par défaut, placeholders validés, archives avec l'entreprise et
+  conflits inline sans écrasement. Aucun contenu Pilotage n'est transmis à
+  l'IA. Ne migrer, afficher, recopier ou supprimer physiquement aucune ancienne
+  réponse V3. L'implémentation attend le gate du Lot 1 et Chiffres + Stratégie
+  sont fusionnés dans une seule PR complète et publiable.
+- [ ] Resynchroniser le Google Sheet maître avec D-084, le registre de
+  décisions et l'état Production du 16 août. Ne pas marquer Stratégie comme
+  livrée avant l'implémentation et la recette.
 - [x] Figer la gamme : une première clarification offerte, puis `Coach
   business` à 750 EUR HT/mois pour un accompagnement régulier incluant deux
   sessions individuelles et un suivi écrit entre les séances. Un
@@ -1044,9 +1092,10 @@ Cette section remplace les états historiques plus bas lorsqu'ils divergent.
 
 ## Mise à jour canonique du 28 juillet 2026
 
-Le Google Sheet ci-dessus est la source de vérité opérationnelle. Les sections
-historiques détaillées plus bas restent utiles comme journal des anciens lots,
-mais les décisions suivantes les remplacent lorsqu'elles divergent :
+Cette section décrit l'état historique du 28 juillet. Le Google Sheet était
+alors la source de vérité opérationnelle ; les décisions datées du 16 août en
+haut de ce document et le registre ADR les remplacent désormais lorsqu'elles
+divergent :
 
 - Le candidat staging prêt à publier est le SHA
   `5d5379ecc79f4dbe96801b62b9c8119ac6119f21`, déploiement Preview
@@ -2221,7 +2270,12 @@ ne sont pas confirmés, D-071 reste documenté sans effet sur le produit.
 
 ## Prochaine action
 
-Suivre exclusivement la `Séquence d'exécution active — 15 août 2026` placée en
-haut de ce document. L'optimisation du chargement Académie est implémentée ; sa
-preuve navigateur finale appartient au contrôle du candidat courant. Le MVP Réseau Partenaire reste un cadrage, et tous les lots
-historiques exigent un nouveau GO explicite avant de redevenir exécutables.
+Le Lot 0 est isolé et les Lots 1, 2, 4, 5 et 7 sont fusionnés, déployés et
+recettés en Production. Les décisions produit D-084 sont fermées et le
+périmètre inclut Chiffres et Stratégie. La prochaine action est le Lot 3
+Pilotage complet dans la tâche `Vérifier la stratégie et le backlog`, sous la
+forme d'une seule PR publiable. Le Lot 6 Titre IA attend la recette Production
+du Lot 3. MASTER DEMAA maintient le programme, la décision, le backlog, le
+registre et la future resynchronisation du Google Sheet. Le MVP Réseau
+Partenaire reste un cadrage et tous les lots historiques exigent un nouveau GO
+explicite avant de redevenir exécutables.
