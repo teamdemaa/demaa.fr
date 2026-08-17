@@ -12,6 +12,7 @@ const ACTION_PLAN_VIEWS = [
 
 const SAFE_SLUG_PATTERN = /^[A-Za-z0-9_-]{1,160}$/;
 const OPPORTUNITY_DRAFT_TOKEN_PATTERN = /^[A-Za-z0-9_-]{43}$/;
+const COMPANY_STRATEGY_VISIBLE = false;
 
 const ACTION_PLAN_SECTIONS = ["actions", "figures", "strategy"] as const;
 export type ActionPlanSection = (typeof ACTION_PLAN_SECTIONS)[number];
@@ -47,7 +48,8 @@ function isActionPlanView(value: string | undefined): value is ActionPlanView {
 }
 
 function isActionPlanSection(value: string | undefined): value is ActionPlanSection {
-  return ACTION_PLAN_SECTIONS.includes(value as ActionPlanSection);
+  return ACTION_PLAN_SECTIONS.includes(value as ActionPlanSection)
+    && (value !== "strategy" || COMPANY_STRATEGY_VISIBLE);
 }
 
 export function buildLegacyOpportunitiesHref(input: SearchInput) {
@@ -166,8 +168,13 @@ export function buildActionPlanAppHref(input: {
 
   params.set("view", view);
 
-  if (view === "plan" && input.context.planSection !== "actions") {
-    params.set("section", input.context.planSection);
+  const planSection = input.context.planSection === "strategy"
+    && !COMPANY_STRATEGY_VISIBLE
+    ? "actions"
+    : input.context.planSection;
+
+  if (view === "plan" && planSection !== "actions") {
+    params.set("section", planSection);
   }
 
   if (view === "solutions") {
