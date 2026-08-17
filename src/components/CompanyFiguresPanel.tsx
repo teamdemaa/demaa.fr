@@ -85,12 +85,10 @@ export default function CompanyFiguresPanel() {
 
   return (
     <div className="mx-auto max-w-[68rem] pb-12">
-      <div className="flex justify-end">
-        <button type="button" onClick={() => { setSelectedPeriod(currentMonth); setDialogOpen(true); }} className="inline-flex items-center gap-2 rounded-full bg-dema-forest px-4 py-2.5 text-sm font-semibold text-white"><Plus className="h-4 w-4" aria-hidden="true" />Saisir un mois</button>
-      </div>
-      <div className="mt-6 flex flex-wrap items-end gap-3">
+      <div className="flex flex-wrap items-end justify-between gap-3">
         <label className="text-sm font-medium text-dema-ink">Période<select value={preset} onChange={(event) => changePreset(event.target.value as RangePreset)} className="mt-1 block rounded-xl border border-dema-line bg-white px-3 py-2 text-sm"><option value="current">Ce mois</option><option value="3">3 mois</option><option value="6">6 mois</option><option value="12">12 mois</option><option value="custom">Période…</option></select></label>
         {preset === "custom" ? <><label className="text-sm font-medium text-dema-ink">Du<input type="month" value={from} onChange={(event) => setFrom(event.target.value as CompanyMonth)} className="mt-1 block rounded-xl border border-dema-line bg-white px-3 py-2 text-sm" /></label><label className="text-sm font-medium text-dema-ink">Au<input type="month" value={to} onChange={(event) => setTo(event.target.value as CompanyMonth)} className="mt-1 block rounded-xl border border-dema-line bg-white px-3 py-2 text-sm" /></label></> : null}
+        <button type="button" onClick={() => { setSelectedPeriod(currentMonth); setDialogOpen(true); }} className="inline-flex items-center gap-2 rounded-full bg-dema-forest px-4 py-2.5 text-sm font-semibold text-white"><Plus className="h-4 w-4" aria-hidden="true" />Saisir un mois</button>
       </div>
       {error ? <div role="alert" className="mt-5 rounded-xl bg-red-50 p-4 text-sm text-red-700"><p>{error}</p><button type="button" onClick={() => void loadMetrics()} className="mt-2 font-semibold underline">Réessayer</button></div> : null}
       {loading ? <div role="status" className="mt-8 flex items-center gap-2 text-sm text-dema-muted"><LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />Chargement des chiffres…</div> : null}
