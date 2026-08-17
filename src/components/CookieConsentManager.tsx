@@ -16,6 +16,9 @@ import {
 
 const GOOGLE_ANALYTICS_ID = "G-V1V4EX55K6";
 const META_PIXEL_ID = "2790127321387849";
+const subscribeToHydration = () => () => {};
+const getClientHydrationSnapshot = () => true;
+const getServerHydrationSnapshot = () => false;
 
 function ensureGtagQueue() {
   window.dataLayer = window.dataLayer || [];
@@ -124,9 +127,14 @@ export default function CookieConsentManager() {
   const [showSettings, setShowSettings] = useState(false);
   const [analyticsChoice, setAnalyticsChoice] = useState(true);
   const [marketingChoice, setMarketingChoice] = useState(false);
+  const hasHydrated = useSyncExternalStore(
+    subscribeToHydration,
+    getClientHydrationSnapshot,
+    getServerHydrationSnapshot,
+  );
 
   const hasAnalyticsConsent = preferences?.analytics === true;
-  const shouldShowBanner = preferences === null;
+  const shouldShowBanner = hasHydrated && preferences === null;
 
   function saveConsent(input: { analytics: boolean; marketing: boolean }) {
     writeCookieConsentPreferences(input);
