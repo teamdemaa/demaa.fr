@@ -186,7 +186,7 @@ export function SavedActionPlanMenu({
                               : availablePlan.status === "generating"
                                 ? "Génération en cours"
                                 : availablePlan.status === "failed"
-                                  ? "Génération à reprendre"
+                                  ? "À reprendre"
                                   : `Modifié le ${new Intl.DateTimeFormat("fr-FR", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(availablePlan.updatedAt))}`}
                           </span>
                         </span>

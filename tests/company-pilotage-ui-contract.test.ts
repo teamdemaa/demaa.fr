@@ -34,6 +34,15 @@ describe("company Pilotage UI contract", () => {
     expect(figures).not.toContain('role="img"');
   });
 
+  it("keeps the Figures summary compact without noisy completeness copy", () => {
+    const figures = source("CompanyFiguresPanel.tsx");
+    expect(figures).toContain('className="mt-6 grid grid-cols-2 gap-3"');
+    expect(figures).not.toContain("mois renseignés sur");
+    expect(figures).not.toContain("Les totaux incomplets restent affichés");
+    expect(figures).not.toContain("Même période que le récapitulatif");
+    expect(figures).not.toContain("Une seule valeur mensuelle");
+  });
+
   it("loads the selected month from the parent metric map", () => {
     const dialog = source("CompanyMetricEntryDialog.tsx");
     const figures = source("CompanyFiguresPanel.tsx");
@@ -46,6 +55,21 @@ describe("company Pilotage UI contract", () => {
     for (const framing of ["Vos ambitions, vos forces et votre rôle.", "Pour qui et avec quel angle ?", "Quel résultat est vendu et comment gagne-t-on de l’argent ?", "Comment attirer, convertir et fidéliser ?"]) expect(contract).toContain(framing);
     expect(COMPANY_STRATEGY_PILLARS).toHaveLength(4);
     expect(COMPANY_STRATEGY_PILLARS.reduce((count, { questions }) => count + questions.length, 0)).toBe(12);
+    expect(COMPANY_STRATEGY_PILLARS.every(({ questions }) =>
+      questions.every((question) => !("placeholder" in question))
+    )).toBe(true);
+  });
+
+  it("keeps Strategy focused on its content and makes cycle creation explicit", () => {
+    const panel = source("CompanyStrategyPanel.tsx");
+    const pillar = source("CompanyStrategyPillar.tsx");
+    const dialog = source("CompanyStrategyCycleDialog.tsx");
+    expect(panel).not.toContain("Cycle actuel ·");
+    expect(panel).not.toContain('aria-expanded={historyOpen}');
+    expect(panel).toContain("<CompanyStrategyHistory");
+    expect(dialog).toContain("Prochaine période ·");
+    expect(pillar).not.toContain("placeholder={question.placeholder}");
+    expect(pillar).toContain("window.scrollBy(0, offset)");
   });
 
   it("limits the global em-dash audit exception to canonical Pilotage semantics", () => {

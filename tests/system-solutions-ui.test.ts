@@ -97,7 +97,7 @@ describe("system Solutions UI", () => {
     expect(solutionsMarkup).not.toContain("Modèles");
     expect(solutionsMarkup).not.toContain("Levier");
     expect(solutionsMarkup).not.toContain("Tableau de pilotage opérationnel");
-    expect(resourcesMarkup).toContain("Tableau de pilotage opérationnel");
+    expect(resourcesMarkup).not.toContain("Tableau de pilotage opérationnel");
     expect(resourcesMarkup).toContain("Processus métier");
     expect(resourcesMarkup).toContain("Suivi et prévisionnel financier");
     expect(resourcesMarkup).toContain("CRM - suivi commercial");

@@ -166,10 +166,17 @@ forfait, journée, commission ou autre.
   `/api/company/pilotage/strategy` lorsqu'elles sont exposées en HTTP ; elles
   couvrent initialisation idempotente, modification avec `expectedRevision`,
   nouveau cycle atomique et historique paginé, sans `companyId` client ;
-- l'en-tête présente `Stratégie` avec `Nouveau cycle`, puis le cycle actif avec
-  `Historique des cycles` ;
-- un seul trait suit la ligne du cycle et un séparateur apparaît seulement
-  entre les piliers ; aucun trait ne traverse du texte ;
+- l'en-tête présente uniquement `Stratégie` avec `Nouveau cycle` ; la modale
+  annonce la période exacte du prochain cycle avant confirmation ;
+- le libellé du cycle actif et le bouton d'historique intermédiaire sont retirés
+  afin de ne pas répéter une information de stockage dans la lecture courante ;
+- l'historique apparaît directement en bas uniquement lorsqu'un cycle archivé
+  existe ; un séparateur apparaît seulement entre les piliers et aucun trait ne
+  traverse du texte ;
+- les champs ne contiennent plus d'exemples en placeholder ; les questions
+  portent seules le sens attendu afin de préserver une lecture calme ;
+- le changement de pilier conserve la position visuelle du déclencheur pour
+  éviter un saut de page lorsque le contenu précédent se replie ;
 - sur mobile, `Nouveau cycle` peut devenir `+` avec un nom accessible, les
   cadrages reviennent naturellement sur deux lignes et les questions ne sont
   pas rapetissées.

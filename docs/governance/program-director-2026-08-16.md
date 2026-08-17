@@ -198,10 +198,11 @@ seul pilier et validation des douze réponses Stratégie.
 Le récapitulatif et le graphique utilisent toujours la même période. Pour une
 période personnalisée, début et fin sont des mois inclusifs — novembre 2025 à
 août 2026 représente dix mois. Les mois incomplets affichent `—` lorsqu'un
-calcul n'est pas fiable et une mention du type `5 mois renseignés sur 6` ; un
-total incomplet n'est jamais présenté comme définitif. Le détail mensuel du
-graphique indique le mois et les deux valeurs comparées au survol, au toucher
-et au focus clavier, avec axes lisibles et sans débordement horizontal.
+calcul n'est pas fiable ; les diagnostics techniques du type `5 mois
+renseignés sur 6` ne sont pas affichés dans l'interface courante. Le détail
+mensuel du graphique indique le mois et les deux valeurs comparées au survol,
+au toucher et au focus clavier, avec axes lisibles et sans débordement
+horizontal.
 
 #### 3C — Stratégie
 

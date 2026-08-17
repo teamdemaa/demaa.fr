@@ -9,28 +9,33 @@
 - Mise à jour : 15 août 2026, publication contextualisée de Formalités
   d'entreprise et accompagnement Coach business unifié
 
-> Mise à jour canonique du 16 août 2026 : D-089 et l'ADR 0015 supersèdent le
-> nombre d'offres, le prix d'Automatisation, la présentation des prix sur les
-> cartes, le CTA et le positionnement séparé de `/sur-mesure`. Les règles de
-> contact WhatsApp, de composition serveur et d'exclusion des tiers restent
-> applicables lorsqu'elles ne contredisent pas l'ADR 0015.
+> Mise à jour canonique du 17 août 2026 : D-089 et l'ADR 0015 supersèdent le
+> nombre d'offres, leur ordre, les forfaits Automatisation/Application métier,
+> la présentation des prix sur les cartes, le CTA et le positionnement séparé
+> de `/sur-mesure`. Assistante administrative est désormais une mise en
+> relation publique facturée par la professionnelle. Les règles de contact
+> WhatsApp et de composition serveur restent applicables lorsqu'elles ne
+> contredisent pas l'ADR 0015.
 
 ## Catalogue canonique
 
 Une seule source de vérité, `src/lib/canonical-service-catalog.ts`, publie les
-sept accompagnements dans cet ordre :
+neuf accompagnements dans cet ordre :
 
-1. Coach business — 750 EUR HT par mois ;
-2. Expert-comptable — à partir de 250 EUR HT par mois ;
-3. Formalités d'entreprise — sur devis, facturation directe par le professionnel ;
-4. Automatisation des processus — 500 EUR HT par jour ;
-5. Gestion des réseaux sociaux — 800 EUR HT par mois ;
-6. Publicité en ligne — 750 EUR HT par mois, budget média exclu ;
-7. Prospection ciblée — sur devis.
+1. Automatisation des processus et IA ;
+2. Application métier ;
+3. Coach business ;
+4. Expert-comptable ;
+5. Assistante administrative ;
+6. Formalités d'entreprise ;
+7. Gestion des réseaux sociaux ;
+8. Publicité en ligne ;
+9. Prospection ciblée.
 
-Assistance administrative et Sous-traitance de formalités juridiques sont
-conservées dans un catalogue serveur privé avec la visibilité
-`recommendation_only`.
+Sous-traitance de formalités juridiques reste conservée dans un catalogue
+serveur privé avec la visibilité `recommendation_only`. Assistante
+administrative reste recommandable par la Team tout en étant publique dans le
+catalogue Accompagnement.
 
 Ces Services sont composés au rendu et ne sont pas dupliqués dans Firebase.
 Les cartes sont regroupées sous le titre public `Accompagnement`. La route
@@ -45,7 +50,8 @@ aucune mention d'avantage sur leur propre carte.
 
 ## Matrice d'éligibilité
 
-- Un Système standard affiche les sept accompagnements publics.
+- Un Système standard peut afficher les neuf accompagnements publics selon la
+  matrice d'éligibilité.
 - `cabinet-comptable` et l'alias `expert-comptable` n'affichent ni
   Expert-comptable ni Formalités d'entreprise.
 - `cabinet-davocat` et `notaire` n'affichent pas Formalités d'entreprise.
@@ -60,11 +66,12 @@ dépendent.
 
 Les offres directement tarifées par Demaa peuvent être publiées comme `Offer`
 Demaa dans les données structurées. L'avantage mensuel de 12 % s'applique
-uniquement à Automatisation, Gestion des réseaux sociaux, Publicité en ligne et
-Prospection ciblée. Il ne s'applique jamais au Coach, à l'Expert-comptable, à
-Formalités d'entreprise ou aux prestations recommandées. Pour Publicité en
-ligne, la remise porte uniquement sur les honoraires Demaa, jamais sur le
-budget média.
+uniquement à Automatisation, Application métier, Gestion des réseaux sociaux,
+Publicité en ligne et Prospection ciblée. Il ne s'applique jamais au Coach, à
+l'Expert-comptable, à Assistante administrative, à Formalités d'entreprise ou
+aux prestations recommandées facturées par un tiers. Pour Publicité en ligne,
+la remise porte uniquement sur les honoraires Demaa, jamais sur le budget
+média.
 Les logiciels, licences et autres frais facturés par des tiers sont également
 exclus. Le droit est recalculé côté serveur à partir de l'UID Firebase et d'un
 accompagnement mensuel actif avant tout devis ou paiement.
@@ -77,8 +84,8 @@ professionnel dans les Systèmes.
 
 ## Contact Coach business et WhatsApp
 
-Les sept fiches, y compris Coach business, utilisent le CTA
-`Être recontacté(e)` et un formulaire minimal. Coach business est présenté
+Les neuf fiches, y compris Coach business, utilisent le CTA
+`Envoyer ma demande` et un formulaire minimal. Coach business est présenté
 comme un accompagnement mensuel unique incluant deux rendez-vous individuels de
 60 minutes et un suivi entre les rendez-vous. Aucun sélecteur de rythme ou de
 prix n'est affiché avant l'envoi de la demande :

@@ -21,7 +21,7 @@ describe("saved action plan controls", () => {
     expect(controls).toContain("availablePlan.id === planId");
     expect(controls).toContain("onNavigate(`/plans/");
     expect(controls).toContain("Génération en cours");
-    expect(controls).toContain("Génération à reprendre");
+    expect(controls).toContain("À reprendre");
     expect(controls).not.toContain("Mon espace");
     expect(controls).not.toContain("<select");
   });

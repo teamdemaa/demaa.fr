@@ -25,7 +25,7 @@ describe("legacy Services and Courses retirement", () => {
     for (const path of retiredPaths) expect(existsSync(path), path).toBe(false);
   });
 
-  it("keeps public successors while refusing redirects to private recommendations", () => {
+  it("keeps public successors without reviving retired redirects", () => {
     const redirects = source("next.config.ts");
     for (const route of [
       "/cours",
@@ -39,7 +39,7 @@ describe("legacy Services and Courses retirement", () => {
     }
     expect(redirects).not.toContain("/annuaire-services/assistante-facturation");
     expect(redirects).not.toContain("/annuaire-services/assistance-facturation");
-    expect(redirects).not.toContain("/services/assistance-administrative");
+    expect(redirects).not.toContain("destination: '/services/assistance-administrative'");
   });
 
   it("does not expose redirected Courses entries in the sitemap", () => {

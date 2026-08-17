@@ -35,10 +35,9 @@ describe("manual action plan experience", () => {
     expect(result).toContain("setSelectedActionId(actionId)");
     expect(result).not.toContain("Générer un plan à partir de ma situation");
     expect(result).not.toContain("Aucune action pour le moment");
-    expect(result).toContain('mode={isBlankManualPlan ? "generate" : "edit"}');
-    expect(result).toContain(
-      "onGeneratePlan={isBlankManualPlan ? onGeneratePlan : undefined}",
-    );
+    expect(result).toContain("isBlankManualPlan && onGeneratePlan");
+    expect(result).toContain("<ActionPlanGenerationBar onGeneratePlan={onGeneratePlan} />");
+    expect(result).not.toContain('mode="edit"');
     expect(savedDetail).toContain("function addAction()");
     expect(savedDetail).toContain("async function generateBlankPlan");
     expect(savedDetail).toContain("runExistingBlankActionPlanGeneration");

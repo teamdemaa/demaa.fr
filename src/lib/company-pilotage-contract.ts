@@ -179,9 +179,9 @@ export const COMPANY_STRATEGY_PILLARS = [
     label: "Alignement",
     framing: "Vos ambitions, vos forces et votre rôle.",
     questions: [
-      { key: "alignment_1", label: "Qu’est-ce que vous voulez que cette entreprise vous apporte ?", placeholder: "revenu, liberté, stabilité, impact, équipe" },
-      { key: "alignment_2", label: "Qu’est-ce que vous faites particulièrement bien, et comment le savez-vous ?", placeholder: "résultats obtenus, retours reçus, demandes récurrentes" },
-      { key: "alignment_3", label: "Qu’est-ce que vous voulez continuer à faire vous-même, et qu’est-ce qui doit fonctionner sans vous ?", placeholder: "décisions, relation client, production, management, délégation" },
+      { key: "alignment_1", label: "Qu’est-ce que vous voulez que cette entreprise vous apporte ?" },
+      { key: "alignment_2", label: "Qu’est-ce que vous faites particulièrement bien, et comment le savez-vous ?" },
+      { key: "alignment_3", label: "Qu’est-ce que vous voulez continuer à faire vous-même, et qu’est-ce qui doit fonctionner sans vous ?" },
     ],
   },
   {
@@ -201,7 +201,7 @@ export const COMPANY_STRATEGY_PILLARS = [
     questions: [
       { key: "offer_1", label: "Quel résultat concret le client vient-il chercher ?" },
       { key: "offer_2", label: "Que comprend exactement l’offre ?" },
-      { key: "offer_3", label: "À quel prix et comment est-elle facturée ?", placeholder: "abonnement, forfait, journée, commission ou autre" },
+      { key: "offer_3", label: "À quel prix et comment est-elle facturée ?" },
     ],
   },
   {
@@ -218,7 +218,7 @@ export const COMPANY_STRATEGY_PILLARS = [
   key: CompanyStrategyPillar;
   label: string;
   framing: string;
-  questions: readonly { key: CompanyStrategyAnswerKey; label: string; placeholder?: string }[];
+  questions: readonly { key: CompanyStrategyAnswerKey; label: string }[];
 }[];
 
 export const companyStrategyCycleSchema = z.object({

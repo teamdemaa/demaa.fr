@@ -15,24 +15,24 @@ import {
 } from "@/lib/system-resource-assets.server";
 
 describe("system Resources catalog", () => {
-  it("publishes only the four models and documents in the shared catalog", () => {
+  it("publishes only the three useful models and documents in the shared catalog", () => {
     const templates = SYSTEM_RESOURCES.filter((resource) => resource.format === "template");
     const guides = SYSTEM_RESOURCES.filter((resource) => resource.format === "guide");
 
     expect(templates.map(({ title }) => title)).toEqual([
       "Processus métier",
-      "Tableau de pilotage opérationnel",
       "Suivi et prévisionnel financier",
       "CRM - suivi commercial",
     ]);
-    expect(templates.map(({ rank }) => rank)).toEqual([0, 1, 2, 3]);
+    expect(templates.map(({ rank }) => rank)).toEqual([0, 1, 2]);
     expect(templates.map(({ openLabel }) => openLabel)).toEqual([
       "Voir et imprimer",
-      "Créer ma copie",
       "Créer ma copie",
       "Ouvrir le modèle",
     ]);
     expect(templates.slice(1).every((resource) => Boolean(resource.preview))).toBe(true);
+    expect(getSystemResource("tableau-pilotage-operationnel")).toBeNull();
+    expect(getHistoricalSystemResource("tableau-pilotage-operationnel")?.title).toBe("Tableau de pilotage opérationnel");
 
     expect(guides).toEqual([]);
     expect(JSON.stringify(SYSTEM_RESOURCES)).not.toMatch(

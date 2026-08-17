@@ -72,7 +72,7 @@ describe("system page SEO published Solutions boundary", () => {
       `système métier ${system.name.toLowerCase()}`,
       `process ${system.name.toLowerCase()}`,
       `modèle entreprise ${system.name.toLowerCase()}`,
-      "Tableau de pilotage opérationnel",
+      "Suivi et prévisionnel financier",
       "CRM - suivi commercial",
     ]));
     expect(itemList(jsonLd)?.name).toBe(
@@ -100,7 +100,8 @@ describe("system page SEO published Solutions boundary", () => {
       expect(exposed).not.toMatch(
         /Legacy Outil Fantôme|\boutils?\b|annuaire-outils|écosystème|Solutions publiées|Levier/i,
       );
-      expect(exposed).toContain("Tableau de pilotage opérationnel");
+      expect(exposed).not.toContain("Tableau de pilotage opérationnel");
+      expect(exposed).toContain("Suivi et prévisionnel financier");
     }
   });
 
@@ -173,19 +174,19 @@ describe("system page SEO published Solutions boundary", () => {
     );
     const exposed = JSON.stringify({ metadata, jsonLd });
 
-    expect(metadata.description).toContain("4 ressources pratiques");
+    expect(metadata.description).toContain("3 ressources pratiques");
     expect(exposed).not.toMatch(/Google Drive|docs\.google|private-assets/);
     expect(exposed).not.toContain("Levier");
     const list = itemList(jsonLd);
     expect(list?.itemListElement).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ name: "Tableau de pilotage opérationnel" }),
+        expect.objectContaining({ name: "Processus métier" }),
         expect.objectContaining({ name: "CRM - suivi commercial" }),
       ]),
     );
     if (!list?.itemListElement) throw new Error("ItemList JSON-LD manquant");
     const resourceItem = list.itemListElement.find(
-      (item) => item.name === "Tableau de pilotage opérationnel",
+      (item) => item.name === "CRM - suivi commercial",
     );
     expect(resourceItem).not.toHaveProperty("url");
   });

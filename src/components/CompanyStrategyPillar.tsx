@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
+import { useLayoutEffect, useRef } from "react";
 import {
   COMPANY_STRATEGY_ANSWER_MAX_LENGTH,
   type CompanyStrategyAnswerKey,
@@ -22,7 +23,7 @@ export default function CompanyStrategyPillar({
     key: CompanyStrategyPillar;
     label: string;
     framing: string;
-    questions: readonly { key: CompanyStrategyAnswerKey; label: string; placeholder?: string }[];
+    questions: readonly { key: CompanyStrategyAnswerKey; label: string }[];
   };
   open: boolean;
   answers: CompanyStrategyAnswers;
@@ -32,12 +33,30 @@ export default function CompanyStrategyPillar({
   onKeepLocal: (key: CompanyStrategyAnswerKey) => void;
   onUseRemote: (key: CompanyStrategyAnswerKey) => void;
 }) {
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const anchorTopRef = useRef<number | null>(null);
+
+  useLayoutEffect(() => {
+    if (!open || anchorTopRef.current === null || !triggerRef.current) return;
+    const offset = triggerRef.current.getBoundingClientRect().top - anchorTopRef.current;
+    anchorTopRef.current = null;
+    if (Math.abs(offset) > 1) window.scrollBy(0, offset);
+  }, [open]);
+
+  function openWithoutLosingReadingPosition() {
+    if (!open && triggerRef.current) {
+      anchorTopRef.current = triggerRef.current.getBoundingClientRect().top;
+    }
+    onOpen();
+  }
+
   return (
     <section className="py-5 first:pt-0">
       <button
+        ref={triggerRef}
         type="button"
         aria-expanded={open}
-        onClick={onOpen}
+        onClick={openWithoutLosingReadingPosition}
         className="flex w-full items-start justify-between gap-4 text-left"
       >
         <span>
@@ -60,9 +79,8 @@ export default function CompanyStrategyPillar({
                   value={answers[question.key]}
                   maxLength={COMPANY_STRATEGY_ANSWER_MAX_LENGTH}
                   rows={3}
-                  placeholder={question.placeholder}
                   onChange={(event) => onAnswerChange(question.key, event.target.value)}
-                  className="mt-2 w-full resize-y rounded-xl border border-dema-line bg-white px-3 py-2.5 text-left text-base font-normal leading-relaxed text-dema-ink outline-none placeholder:text-dema-muted/70 focus:border-dema-forest"
+                  className="mt-2 w-full resize-y rounded-xl border border-dema-line bg-white px-3 py-2.5 text-left text-base font-normal leading-relaxed text-dema-ink outline-none focus:border-dema-forest"
                   aria-describedby={conflict ? `strategy-${question.key}-conflict` : undefined}
                 />
                 <div className="mt-1 flex justify-end text-xs text-dema-muted">{answers[question.key].length}/{COMPANY_STRATEGY_ANSWER_MAX_LENGTH}</div>

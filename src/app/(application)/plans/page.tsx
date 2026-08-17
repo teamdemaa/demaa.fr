@@ -71,7 +71,7 @@ export default async function ActionPlansPage() {
                         {plan.status === "generating"
                           ? "Génération en cours"
                           : plan.status === "failed"
-                            ? "Génération à reprendre"
+                            ? "À reprendre"
                             : `Modifié le ${formatUpdatedAt(plan.updatedAt)}`}
                       </span>
                     </span>

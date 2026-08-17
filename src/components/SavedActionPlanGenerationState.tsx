@@ -77,16 +77,10 @@ export default function SavedActionPlanGenerationState({
           <>
             <LoaderCircle className="mx-auto h-6 w-6 animate-spin text-dema-forest" aria-hidden="true" />
             <h1 className="mt-5 text-3xl font-light tracking-[-0.04em]">Génération en cours</h1>
-            <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-              Votre plan est enregistré et continue d’être préparé.
-            </p>
           </>
         ) : (
           <>
             <h1 className="text-3xl font-light tracking-[-0.04em]">Génération interrompue</h1>
-            <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-              Votre demande est conservée. Vous pouvez reprendre la génération sans créer de doublon.
-            </p>
             <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
               {canRetry ? (
                 <button

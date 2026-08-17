@@ -31,6 +31,11 @@ const FORMALITIES_PROFESSIONAL_SYSTEM_SLUGS = new Set([
   "cabinet-davocat",
   "notaire",
 ]);
+const ADMIN_SUPPORT_PROFESSIONAL_SYSTEM_SLUGS = new Set([
+  "assistant-administratif-externalise",
+  "office-manager-externalise",
+  "secretariat-externalise",
+]);
 
 export function getCanonicalServiceSlugsForSystem(
   systemSlug: string,
@@ -42,6 +47,9 @@ export function getCanonicalServiceSlugsForSystem(
       }
       if (service.slug === "formalites-entreprise") {
         return !FORMALITIES_PROFESSIONAL_SYSTEM_SLUGS.has(systemSlug);
+      }
+      if (service.slug === "assistance-administrative") {
+        return !ADMIN_SUPPORT_PROFESSIONAL_SYSTEM_SLUGS.has(systemSlug);
       }
       return true;
     })

@@ -1,7 +1,8 @@
-# ADR 0011 — Plan versionné, commande et gouvernance de l'usage IA
+# ADR 0011 — Plan versionné, génération et gouvernance de l'usage IA
 
-- Statut : `working`
+- Statut : `validated`
 - Date : 2026-08-12
+- Révision : 2026-08-17
 - Complète : ADR 0008, ADR 0009, ADR 0010 et contrat produit D-076
 
 ## Décisions validées du lot
@@ -33,25 +34,20 @@ pseudonymisé : opération, modèle, durée, tokens, requêtes, réparations et 
 Il ne stocke jamais prompt, situation, commande, plan, support, note ou e-mail
 en clair.
 
-## Activation de la commande IA
+## Retrait de la commande IA après génération
 
-Le schéma de commande, les opérations déterministes, les limites et
-l'enveloppe externe minimale sont préparés. L'utilisatrice a explicitement
-autorisé le 12 août 2026 la transmission à AI Gateway et à son fournisseur de :
+La commande IA qui ajoutait, modifiait ou supprimait des actions après la
+génération est retirée. Elle créait une seconde manière de modifier le plan,
+rendait les changements difficiles à anticiper et envoyait de nouveau les
+actions visibles au modèle.
 
-1. la commande de la personne ;
-2. les actions visibles effectives.
+La seule barre IA conservée apparaît sur un plan manuel encore entièrement
+vierge. Elle recueille une situation puis déclenche le parcours de génération
+durable existant. Dès que le plan contient une action ou un contenu à
+conserver, cette barre disparaît. Les actions restent ensuite modifiables
+directement et explicitement dans l'interface.
 
-La V4 n'affiche et ne génère plus de Stratégie. La commande courante transmet
-donc moins que l'enveloppe initialement autorisée : commande et Actions
-visibles uniquement.
-
-Notes, identité, e-mail, situation source, historique, Systèmes, Process,
-Solutions et catalogue des 115 activités restent exclus. Les opérations du
-modèle sont validées puis appliquées déterministiquement ; le mode démo reste
-sans appel externe et aucun contenu n'entre dans le ledger.
-
-## Statut `working`
-
-L'ADR reste `working` jusqu'à la recette complète du candidat V4, y compris la
-commande, son annulation, ses limites d'usage, le mode démo et la persistance.
+La route `/api/action-plan/command`, son moteur, son contrat d'opérations et
+son événement de ledger dédié sont supprimés. La génération initiale conserve
+ses contrôles d'authentification, d'entreprise, d'idempotence, de validation et
+de mesure existants.

@@ -24,16 +24,17 @@ async function readSource(path: string) {
 }
 
 describe("canonical Accompagnement catalog", () => {
-  it("publishes exactly the eight approved offers from one immutable source", () => {
+  it("publishes exactly the nine approved offers from one immutable source", () => {
     const services = getCanonicalServices();
 
     expect(services.map((service) => service.slug)).toEqual(CANONICAL_SERVICE_SLUGS);
     expect(services.map((service) => service.name)).toEqual([
-      "Coach business",
-      "Expert-comptable",
-      "Formalités d’entreprise",
       "Automatisation des processus et IA",
       "Application métier",
+      "Coach business",
+      "Expert-comptable",
+      "Assistante administrative",
+      "Formalités d’entreprise",
       "Gestion des réseaux sociaux",
       "Publicité en ligne",
       "Prospection ciblée",
@@ -67,9 +68,9 @@ describe("canonical Accompagnement catalog", () => {
     });
   });
 
-  it("places Coach business first without discounting the subscription itself", () => {
+  it("places Automation first and keeps Coach business undiscounted", () => {
     const coach = getCanonicalServiceBySlug("coach-business");
-    expect(getCanonicalServices()[0]).toBe(coach);
+    expect(getCanonicalServices()[0]?.slug).toBe("automatisation-processus");
     expect(coach).toMatchObject({
       cta: { kind: "callback", label: "Envoyer ma demande" },
       monthlyAccompanimentDiscountEligible: false,
@@ -129,7 +130,7 @@ describe("canonical Accompagnement catalog", () => {
     });
   });
 
-  it("renders eight equal linked accompaniment cards without prices or discount copy", async () => {
+  it("renders nine equal linked accompaniment cards without prices or discount copy", async () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
@@ -138,12 +139,13 @@ describe("canonical Accompagnement catalog", () => {
       readSource("src/components/SystemSolutionsTab.tsx"),
     ]);
 
-    expect(markup.match(/<article/g)).toHaveLength(8);
+    expect(markup.match(/<article/g)).toHaveLength(9);
     for (const service of getCanonicalServices()) {
       expect(markup).toContain(service.detailHref);
     }
     expect(markup).toContain("/sur-mesure");
     expect(markup).toContain("Coach business");
+    expect(markup).toContain("Assistante administrative");
     expect(markup).not.toMatch(/€ HT|Sur devis|Avantage abonné|−12 %/);
     expect(markup).not.toContain("border-t");
     expect(markup).not.toContain("−15 %");

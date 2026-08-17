@@ -1,7 +1,6 @@
 "use client";
 
-import { LoaderCircle } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   COMPANY_STRATEGY_PILLARS,
   formatCompanyMonth,
@@ -12,13 +11,14 @@ function cycleLabel(cycle: CompanyStrategyCycle) {
   return `${formatCompanyMonth(cycle.startMonth)} — ${formatCompanyMonth(cycle.endMonth)}`;
 }
 
-export default function CompanyStrategyHistory({ open }: { open: boolean }) {
+export default function CompanyStrategyHistory() {
   const [cycles, setCycles] = useState<CompanyStrategyCycle[]>([]);
   const [cursor, setCursor] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [expandedCycle, setExpandedCycle] = useState<string | null>(null);
+  const initialLoadStartedRef = useRef(false);
 
   const load = useCallback(async (reset = false) => {
     setLoading(true);
@@ -39,17 +39,18 @@ export default function CompanyStrategyHistory({ open }: { open: boolean }) {
   }, [cursor]);
 
   useEffect(() => {
-    if (open && !loaded && !loading) void load(true);
-  }, [load, loaded, loading, open]);
+    if (initialLoadStartedRef.current) return;
+    initialLoadStartedRef.current = true;
+    void load(true);
+  }, [load]);
 
-  if (!open) return null;
+  if (loading && !loaded) return null;
+  if (loaded && cycles.length === 0 && !error) return null;
 
   return (
     <section className="mt-8 border-t border-dema-line pt-6" aria-labelledby="strategy-history-title">
       <h2 id="strategy-history-title" className="text-lg font-semibold text-dema-ink">Historique des cycles</h2>
-      {loading && !loaded ? <p role="status" className="mt-4 flex items-center gap-2 text-sm text-dema-muted"><LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />Chargement…</p> : null}
       {error ? <div role="alert" className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700"><p>{error}</p><button type="button" className="mt-1 font-semibold underline" onClick={() => void load(!loaded)}>Réessayer</button></div> : null}
-      {loaded && cycles.length === 0 ? <p className="mt-3 text-sm text-dema-muted">Aucun cycle archivé.</p> : null}
       <div className="mt-3 divide-y divide-dema-line border-y border-dema-line">
         {cycles.map((cycle) => (
           <article key={cycle.id} className="py-4">

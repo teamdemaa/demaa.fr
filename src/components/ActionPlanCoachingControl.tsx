@@ -204,7 +204,7 @@ export default function ActionPlanCoachingControl({
               {accessPreparing ? (
                 <div className="fixed inset-x-0 bottom-8 z-[135] mx-auto flex w-fit items-center gap-2 rounded-full bg-dema-paper px-4 py-2 text-sm text-dema-forest shadow-lg" role="status">
                   <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
-                  Préparation de votre accès…
+                  Ouverture…
                 </div>
               ) : null}
               {accessError ? (

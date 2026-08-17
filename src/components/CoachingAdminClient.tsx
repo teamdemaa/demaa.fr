@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, LoaderCircle, Plus, RotateCcw, Send, X } from "lucide-react";
+import { LoaderCircle, Plus, RotateCcw, Send, X } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import {
   isCoachingReviewOverdue,
@@ -223,7 +223,7 @@ export default function CoachingAdminClient() {
               <span className="block truncate text-sm font-medium text-brand-blue">{conversation.customerEmail}</span>
               <span className="mt-1 block truncate text-xs text-dema-muted">{conversation.lastMessage}</span>
               <span className="mt-2 inline-flex rounded-md bg-dema-sage/70 px-2 py-1 text-[0.68rem] font-medium text-dema-forest">
-                {conversation.freeStatus === "completed" ? "Clarification terminée" : "Gratuit en cours"}
+                {conversation.freeStatus === "completed" ? "Clôturée" : "Ouverte"}
               </span>
               {conversation.freeStatus === "open" && isCoachingReviewOverdue(conversation.openedAt) ? (
                 <span className="ml-1 mt-2 inline-flex rounded-md bg-amber-50 px-2 py-1 text-[0.68rem] font-medium text-amber-800">
@@ -241,7 +241,7 @@ export default function CoachingAdminClient() {
             <header className="flex flex-wrap items-center justify-between gap-4 border-b border-dema-line px-5 py-4">
               <div>
                 <h2 className="font-medium text-brand-blue">{selected.customerEmail}</h2>
-                <p className="mt-1 text-xs text-dema-muted">{selected.freeStatus === "completed" ? "Clarification gratuite terminée" : "Clarification gratuite en cours"}</p>
+                <p className="mt-1 text-xs text-dema-muted">{selected.freeStatus === "completed" ? "Conversation clôturée" : "Conversation ouverte"}</p>
                 {selected.freeStatus === "open" && isCoachingReviewOverdue(selected.openedAt) ? (
                   <p className="mt-1 text-xs font-medium text-amber-800">Ouverte depuis plus de 30 jours · clôture manuelle à vérifier</p>
                 ) : null}
@@ -317,16 +317,10 @@ export default function CoachingAdminClient() {
                 <label className="mt-3 flex cursor-pointer items-start gap-3 rounded-xl bg-dema-sage/30 px-3 py-3 text-sm text-brand-blue">
                   <input type="checkbox" checked={completeAfterReply} onChange={(event) => setCompleteAfterReply(event.target.checked)} className="mt-0.5 h-4 w-4 accent-dema-forest" />
                   <span>
-                    <span className="block font-medium">Clôturer la clarification gratuite après cet envoi</span>
-                    <span className="mt-0.5 block text-xs text-dema-muted">Le client pourra relire la réponse ; Coach business lui sera proposé pour un accompagnement régulier.</span>
+                    <span className="block font-medium">Clôturer après cet envoi</span>
+                    <span className="mt-0.5 block text-xs text-dema-muted">Le client pourra relire la conversation, mais ne pourra plus répondre.</span>
                   </span>
                 </label>
-              ) : null}
-              {completeAfterReply ? (
-                <p className="mt-2 flex items-center gap-2 text-xs font-medium text-dema-forest">
-                  <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-                  La réponse et la clôture seront enregistrées ensemble.
-                </p>
               ) : null}
               {error ? <p className="mt-2 text-xs text-red-700">{error}</p> : null}
             </form>

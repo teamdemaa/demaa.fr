@@ -270,7 +270,6 @@ describe("service callback request route", () => {
   });
 
   it.each([
-    "assistance-administrative",
     "formalites-juridiques",
     "sous-traitance-formalites-juridiques",
   ])("rejects a direct public callback for private recommendation %s", async (serviceSlug) => {
@@ -278,6 +277,18 @@ describe("service callback request route", () => {
 
     expect(response.status).toBe(404);
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
+  it("accepts a callback request for the public administrative assistant", async () => {
+    const response = await POST(request(validBody({ serviceSlug: "assistance-administrative" })));
+
+    expect(response.status).toBe(202);
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      fields: expect.arrayContaining([
+        { label: "Service", value: "Assistante administrative" },
+        { label: "Slug du service", value: "assistance-administrative" },
+      ]),
+    }));
   });
 
   it.each([

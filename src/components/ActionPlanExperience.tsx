@@ -598,7 +598,7 @@ export default function ActionPlanExperience({
       throw new Error(
         normalizedSituation.length < 20
           ? "Décrivez votre situation en quelques phrases pour obtenir un plan utile."
-          : "Une génération est déjà en cours.",
+          : "Le plan est déjà en cours de création.",
       );
     }
 
@@ -927,10 +927,7 @@ export default function ActionPlanExperience({
                 <ActionPlanUtilityActions
                   plan={plan}
                   workspace={workspace}
-                  demoMode={isDemoMode}
-                  isAuthenticated={isAuthenticated}
                   saveStatus={autoSaveStatus}
-                  onOpenAccess={() => setAccessPromptOpen(true)}
                   onRetrySave={requestAutoSaveRetry}
                   onReset={() => {
                     autoSaveControllerRef.current?.abort();

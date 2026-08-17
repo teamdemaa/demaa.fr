@@ -82,8 +82,11 @@ livraison du nouveau runtime.
 
 ## Présentation
 
-Le catalogue contient huit accompagnements publics, avec Application métier
-placée immédiatement après Automatisation. Les cartes ont une hauteur commune
+Le catalogue contient neuf accompagnements publics. Automatisation des
+processus et IA est placée en premier, Application métier immédiatement après,
+et Assistante administrative est désormais une prestation publique de mise en
+relation. Seule la sous-traitance de formalités juridiques reste réservée aux
+recommandations de la Team. Les cartes ont une hauteur commune
 et affichent uniquement catégorie, titre, description courte et une action
 discrète. Elles n'affichent ni montant, ni avantage, ni séparateur de prix.
 
@@ -98,6 +101,12 @@ de l'un ou l'autre peut ouvrir l'avantage sur les prestations Demaa éligibles.
 La formulation canonique est :
 
 > Avantage accompagnement mensuel : −12 % sur les prestations Demaa éligibles.
+
+Assistante administrative est facturée directement par la professionnelle :
+la carte ne montre aucun prix, la fiche indique `Sur devis`, et la demande
+utilise le même parcours WhatsApp minimal que les autres accompagnements. Elle
+est masquée des projections Système des professionnels qui proposent déjà ce
+service eux-mêmes.
 
 ## Demande
 
