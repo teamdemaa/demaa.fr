@@ -1,0 +1,525 @@
+{
+  "schemaVersion": 1,
+  "status": "preparation_only",
+  "preparedAt": "2026-08-17",
+  "systemSlug": "cabinet-comptable",
+  "supportedLocaleCodes": [
+    "fr"
+  ],
+  "supportedMarketCodes": [
+    "fr-fr"
+  ],
+  "unsupportedMarketCodes": [
+    "global-en-beta"
+  ],
+  "activationBlockers": [
+    "independent_business_review_pending",
+    "third_party_commercial_relationships_unconfirmed",
+    "runtime_resolver_not_implemented"
+  ],
+  "verdictVocabulary": {
+    "recommander": "recommander",
+    "alternative": "alternative",
+    "conserver_sans_mise_en_avant": "conserver sans mise en avant",
+    "a_verifier": "à vérifier",
+    "retirer": "retirer"
+  },
+  "capabilities": [
+    {
+      "key": "accounting_production",
+      "labels": {
+        "fr": "Production comptable",
+        "en": "Accounting production"
+      },
+      "descriptions": {
+        "fr": "Produire, réviser et clôturer les dossiers comptables.",
+        "en": "Produce, review and close accounting files."
+      }
+    },
+    {
+      "key": "tax_declaration_and_close",
+      "labels": {
+        "fr": "Déclarations fiscales et clôture",
+        "en": "Tax filing and close"
+      },
+      "descriptions": {
+        "fr": "Suivre les échéances, déclarations fiscales et travaux de clôture.",
+        "en": "Track deadlines, tax filings and closing work."
+      }
+    },
+    {
+      "key": "financial_management_and_cash",
+      "labels": {
+        "fr": "Gestion financière et trésorerie",
+        "en": "Financial management and cash flow"
+      },
+      "descriptions": {
+        "fr": "Centraliser facturation, achats, paiements, trésorerie et reporting financier.",
+        "en": "Centralise invoicing, purchases, payments, cash flow and financial reporting."
+      }
+    },
+    {
+      "key": "firm_internal_management",
+      "labels": {
+        "fr": "Gestion interne et rentabilité du cabinet",
+        "en": "Firm operations and profitability"
+      },
+      "descriptions": {
+        "fr": "Suivre dossiers, missions, temps, facturation, capacité et rentabilité du cabinet.",
+        "en": "Track files, engagements, time, billing, capacity and firm profitability."
+      }
+    },
+    {
+      "key": "client_request_management",
+      "labels": {
+        "fr": "Suivi des demandes clients",
+        "en": "Client request management"
+      },
+      "descriptions": {
+        "fr": "Centraliser ce qui a été demandé, reçu, traité, signé ou relancé.",
+        "en": "Centralise what was requested, received, processed, signed or followed up."
+      }
+    },
+    {
+      "key": "client_document_workflow",
+      "labels": {
+        "fr": "Collecte et suivi des documents clients",
+        "en": "Client document workflow"
+      },
+      "descriptions": {
+        "fr": "Collecter, classer, générer, faire signer et suivre les documents échangés avec les clients.",
+        "en": "Collect, organise, generate, sign and track documents exchanged with clients."
+      }
+    },
+    {
+      "key": "client_onboarding_and_engagement",
+      "labels": {
+        "fr": "Onboarding client et lettre de mission",
+        "en": "Client onboarding and engagement"
+      },
+      "descriptions": {
+        "fr": "Structurer le parcours du prospect jusqu'au démarrage du dossier et à la lettre de mission.",
+        "en": "Structure the journey from prospect to file opening and engagement letter."
+      }
+    },
+    {
+      "key": "client_portal_and_collaboration",
+      "labels": {
+        "fr": "Portail client et collaboration",
+        "en": "Client portal and collaboration"
+      },
+      "descriptions": {
+        "fr": "Donner au client et à l'équipe un espace partagé pour suivre les échanges et les prochaines étapes.",
+        "en": "Give clients and the team a shared space to track exchanges and next steps."
+      }
+    },
+    {
+      "key": "payroll_variable_collection",
+      "labels": {
+        "fr": "Collecte des variables de paie",
+        "en": "Payroll input collection"
+      },
+      "descriptions": {
+        "fr": "Demander, recevoir, contrôler et suivre les éléments variables avant la production de paie.",
+        "en": "Request, receive, check and track payroll inputs before payroll production."
+      }
+    },
+    {
+      "key": "payroll_production_and_dsn",
+      "labels": {
+        "fr": "Production de paie et DSN",
+        "en": "Payroll production and DSN filing"
+      },
+      "descriptions": {
+        "fr": "Calculer les bulletins, appliquer les règles conventionnelles et produire les déclarations sociales.",
+        "en": "Calculate payslips, apply collective rules and produce French statutory payroll filings."
+      }
+    },
+    {
+      "key": "hr_employee_workflows",
+      "labels": {
+        "fr": "Processus RH et salariés",
+        "en": "HR and employee workflows"
+      },
+      "descriptions": {
+        "fr": "Gérer absences, congés, temps, documents et parcours d'entrée ou de sortie des salariés.",
+        "en": "Manage absence, leave, time, documents and employee entry or exit workflows."
+      }
+    }
+  ],
+  "tools": [
+    {
+      "resourceSlug": "tiimora",
+      "name": "Tiimora",
+      "proposedVerdict": "recommander",
+      "activationVerdict": "a_verifier",
+      "commercialRelationship": "owned",
+      "relationshipEvidence": "docs/central-backlog.md D-049 à D-060",
+      "requiredDisclosure": "Outil édité par l'équipe Demaa/ODEMA",
+      "availability": {
+        "countryCodes": [
+          "FR"
+        ],
+        "localeCodes": [
+          "fr"
+        ],
+        "marketCodes": [
+          "fr-fr"
+        ],
+        "accessModel": "early_access",
+        "pricing": "Test gratuit jusqu'à 5 dossiers actifs ; Développement 200 EUR HT/mois jusqu'à 100 dossiers actifs ; Expansion 400 EUR HT/mois jusqu'à 250 dossiers actifs, selon la page officielle consultée le 2026-08-17."
+      },
+      "targetProfile": "Cabinet dont la production comptable ou sociale existe déjà mais dont les demandes, documents, signatures, relances ou prochaines étapes client restent dispersés.",
+      "capabilityRoles": [
+        {
+          "capabilityKey": "client_request_management",
+          "role": "primary"
+        },
+        {
+          "capabilityKey": "client_document_workflow",
+          "role": "primary"
+        },
+        {
+          "capabilityKey": "client_onboarding_and_engagement",
+          "role": "primary"
+        },
+        {
+          "capabilityKey": "client_portal_and_collaboration",
+          "role": "primary"
+        },
+        {
+          "capabilityKey": "payroll_variable_collection",
+          "role": "primary"
+        }
+      ],
+      "mustNotClaim": [
+        "production comptable",
+        "calcul des bulletins de paie",
+        "production ou dépôt de la DSN",
+        "remplacement automatique de Pennylane ou Silae"
+      ],
+      "sources": [
+        {
+          "url": "https://www.tiimora.com/",
+          "sourceType": "official_product_page",
+          "capturedAt": "2026-08-17",
+          "supports": [
+            "cabinet_comptable_target",
+            "client_requests",
+            "documents_and_signatures",
+            "client_portal",
+            "payroll_variable_collection",
+            "public_pricing"
+          ]
+        }
+      ],
+      "remainingBlockers": [
+        "independent_business_review_pending",
+        "public_relationship_disclosure_not_yet_verified_in_runtime",
+        "security_and_data_processing_evidence_not_yet_attached"
+      ]
+    },
+    {
+      "resourceSlug": "pennylane",
+      "name": "Pennylane",
+      "proposedVerdict": "recommander",
+      "activationVerdict": "a_verifier",
+      "commercialRelationship": "unknown",
+      "requiredDisclosure": "Sélection éditoriale sans rémunération ou relation commerciale exacte à confirmer avant activation",
+      "availability": {
+        "countryCodes": [
+          "FR"
+        ],
+        "localeCodes": [
+          "fr"
+        ],
+        "marketCodes": [
+          "fr-fr"
+        ],
+        "accessModel": "cabinet_demo_or_commercial_contact",
+        "pricing": "Tarification cabinet non publiée sur la page grand public vérifiée ; les offres entreprise publiques ne doivent pas être présentées comme le tarif d'un cabinet."
+      },
+      "targetProfile": "Cabinet qui veut réunir production comptable, données financières, gestion interne, facturation, rentabilité et collaboration avec ses clients sur une plateforme intégrée.",
+      "capabilityRoles": [
+        {
+          "capabilityKey": "accounting_production",
+          "role": "primary"
+        },
+        {
+          "capabilityKey": "tax_declaration_and_close",
+          "role": "primary"
+        },
+        {
+          "capabilityKey": "financial_management_and_cash",
+          "role": "primary"
+        },
+        {
+          "capabilityKey": "firm_internal_management",
+          "role": "primary"
+        },
+        {
+          "capabilityKey": "client_portal_and_collaboration",
+          "role": "primary"
+        },
+        {
+          "capabilityKey": "client_request_management",
+          "role": "secondary"
+        },
+        {
+          "capabilityKey": "client_onboarding_and_engagement",
+          "role": "secondary"
+        }
+      ],
+      "mustNotClaim": [
+        "solution spécialisée de production de paie équivalente à Silae",
+        "couverture garantie de tous les workflows de demandes client d'un cabinet",
+        "tarif cabinet identique aux tarifs entreprise publics"
+      ],
+      "sources": [
+        {
+          "url": "https://www.pennylane.com/fr/expert-comptable",
+          "sourceType": "official_product_page",
+          "capturedAt": "2026-08-17",
+          "supports": [
+            "accounting_production",
+            "financial_management",
+            "firm_internal_management",
+            "crm_and_client_portal",
+            "integrations"
+          ]
+        },
+        {
+          "url": "https://www.pennylane.com/fr/expert-comptable/gestion-interne",
+          "sourceType": "official_product_page",
+          "capturedAt": "2026-08-17",
+          "supports": [
+            "prospect_and_client_management",
+            "tax_deadline_tracking",
+            "billing",
+            "time_and_profitability_tracking"
+          ]
+        },
+        {
+          "url": "https://www.pennylane.com/fr/securite",
+          "sourceType": "official_security_page",
+          "capturedAt": "2026-08-17",
+          "supports": [
+            "iso_27001",
+            "encryption",
+            "access_control",
+            "gdpr"
+          ]
+        }
+      ],
+      "remainingBlockers": [
+        "independent_business_review_pending",
+        "commercial_relationship_confirmation_pending",
+        "cabinet_pricing_and_contract_conditions_not_publicly_verified"
+      ]
+    },
+    {
+      "resourceSlug": "silae",
+      "name": "Silae",
+      "proposedVerdict": "recommander",
+      "activationVerdict": "a_verifier",
+      "commercialRelationship": "unknown",
+      "requiredDisclosure": "Sélection éditoriale sans rémunération ou relation commerciale exacte à confirmer avant activation",
+      "availability": {
+        "countryCodes": [
+          "FR"
+        ],
+        "localeCodes": [
+          "fr"
+        ],
+        "marketCodes": [
+          "fr-fr"
+        ],
+        "accessModel": "partner_or_commercial_contact",
+        "pricing": "Tarification non publiée sur les pages officielles vérifiées ; ne jamais inventer de montant."
+      },
+      "targetProfile": "Cabinet ou pôle social qui doit produire des paies, appliquer les règles légales et conventionnelles, gérer la DSN et sécuriser les échanges de données sociales.",
+      "capabilityRoles": [
+        {
+          "capabilityKey": "payroll_production_and_dsn",
+          "role": "primary"
+        },
+        {
+          "capabilityKey": "payroll_variable_collection",
+          "role": "primary"
+        },
+        {
+          "capabilityKey": "hr_employee_workflows",
+          "role": "primary"
+        },
+        {
+          "capabilityKey": "client_document_workflow",
+          "role": "secondary"
+        }
+      ],
+      "mustNotClaim": [
+        "production comptable générale",
+        "CRM général du cabinet",
+        "gestion financière ou trésorerie du client",
+        "tarif public vérifié"
+      ],
+      "sources": [
+        {
+          "url": "https://www.silae.fr/solution-rh-paie/",
+          "sourceType": "official_product_page",
+          "capturedAt": "2026-08-17",
+          "supports": [
+            "payroll_production",
+            "dsn",
+            "payroll_variable_collection",
+            "hr_workflows",
+            "payroll_document_distribution"
+          ]
+        },
+        {
+          "url": "https://www.silae.fr/solutions-paie-securisees-et-innovantes/",
+          "sourceType": "official_security_page",
+          "capturedAt": "2026-08-17",
+          "supports": [
+            "france_hosting_claim",
+            "encryption_claim",
+            "continuous_monitoring_claim",
+            "security_audits_claim"
+          ]
+        }
+      ],
+      "remainingBlockers": [
+        "independent_business_review_pending",
+        "commercial_relationship_confirmation_pending",
+        "pricing_and_contract_conditions_not_publicly_verified"
+      ]
+    }
+  ],
+  "resolverScenarios": [
+    {
+      "scenarioId": "cabinet-scattered-client-requests",
+      "contentLocaleCode": "fr",
+      "marketCode": "fr-fr",
+      "situation": "Les demandes, pièces et relances clients sont dispersées entre les mails et plusieurs personnes de l'équipe.",
+      "expectedCapabilityKeys": [
+        "client_request_management",
+        "client_document_workflow"
+      ],
+      "existingToolSlugs": [],
+      "expectedResourceSlug": "tiimora",
+      "expectedState": "recommended"
+    },
+    {
+      "scenarioId": "cabinet-accounting-production",
+      "contentLocaleCode": "fr",
+      "marketCode": "fr-fr",
+      "situation": "Nous voulons fiabiliser la production comptable, la révision, les déclarations et le suivi des dossiers.",
+      "expectedCapabilityKeys": [
+        "accounting_production",
+        "tax_declaration_and_close"
+      ],
+      "existingToolSlugs": [],
+      "expectedResourceSlug": "pennylane",
+      "expectedState": "recommended"
+    },
+    {
+      "scenarioId": "cabinet-financial-management",
+      "contentLocaleCode": "fr",
+      "marketCode": "fr-fr",
+      "situation": "Nous manquons de visibilité sur la facturation du cabinet, les temps passés, les coûts et la rentabilité par client.",
+      "expectedCapabilityKeys": [
+        "firm_internal_management",
+        "financial_management_and_cash"
+      ],
+      "existingToolSlugs": [],
+      "expectedResourceSlug": "pennylane",
+      "expectedState": "recommended"
+    },
+    {
+      "scenarioId": "cabinet-payroll-production",
+      "contentLocaleCode": "fr",
+      "marketCode": "fr-fr",
+      "situation": "Le pôle social doit sécuriser le calcul des bulletins, les conventions collectives et les DSN.",
+      "expectedCapabilityKeys": [
+        "payroll_production_and_dsn"
+      ],
+      "existingToolSlugs": [],
+      "expectedResourceSlug": "silae",
+      "expectedState": "recommended"
+    },
+    {
+      "scenarioId": "cabinet-payroll-inputs-with-existing-silae",
+      "contentLocaleCode": "fr",
+      "marketCode": "fr-fr",
+      "situation": "Nous utilisons Silae mais les variables de paie arrivent encore par mail et doivent être ressaisies.",
+      "expectedCapabilityKeys": [
+        "payroll_variable_collection"
+      ],
+      "existingToolSlugs": [
+        "silae"
+      ],
+      "expectedResourceSlug": "silae",
+      "expectedState": "already_in_use"
+    },
+    {
+      "scenarioId": "cabinet-requests-with-existing-pennylane",
+      "contentLocaleCode": "fr",
+      "marketCode": "fr-fr",
+      "situation": "Nous utilisons Pennylane mais les échanges clients et l'état des dossiers ne sont pas partagés par toute l'équipe.",
+      "expectedCapabilityKeys": [
+        "client_portal_and_collaboration",
+        "client_request_management"
+      ],
+      "existingToolSlugs": [
+        "pennylane"
+      ],
+      "expectedResourceSlug": "pennylane",
+      "expectedState": "already_in_use"
+    },
+    {
+      "scenarioId": "cabinet-vague-team-alignment",
+      "contentLocaleCode": "fr",
+      "marketCode": "fr-fr",
+      "situation": "L'équipe n'est pas toujours au même niveau d'information.",
+      "expectedCapabilityKeys": [],
+      "existingToolSlugs": [],
+      "expectedResourceSlug": null,
+      "expectedState": "abstain"
+    },
+    {
+      "scenarioId": "cabinet-generic-simple-process",
+      "contentLocaleCode": "fr",
+      "marketCode": "fr-fr",
+      "situation": "Je veux construire un processus simple avec un formulaire et un tableau de suivi.",
+      "expectedCapabilityKeys": [],
+      "existingToolSlugs": [],
+      "expectedResourceSlug": null,
+      "expectedState": "abstain",
+      "note": "Airtable et Fillout ne sont pas activés pour cabinet-comptable dans ce pilote. Ils ne doivent pas être ajoutés par analogie."
+    },
+    {
+      "scenarioId": "cabinet-mixed-problem-needs-action-split",
+      "contentLocaleCode": "fr",
+      "marketCode": "fr-fr",
+      "situation": "Nous voulons refaire la production comptable, la paie et toutes les demandes clients en une seule action.",
+      "expectedCapabilityKeys": [],
+      "existingToolSlugs": [],
+      "expectedResourceSlug": null,
+      "expectedState": "abstain",
+      "note": "Le générateur doit d'abord séparer les résultats attendus en actions distinctes."
+    },
+    {
+      "scenarioId": "cabinet-english-global-beta",
+      "contentLocaleCode": "en",
+      "marketCode": "global-en-beta",
+      "situation": "Our accounting firm needs to centralise client requests and payroll inputs.",
+      "expectedCapabilityKeys": [
+        "client_request_management",
+        "payroll_variable_collection"
+      ],
+      "existingToolSlugs": [],
+      "expectedResourceSlug": null,
+      "expectedState": "abstain",
+      "note": "The capability identifiers are multilingual, but these three French-market placements are not eligible for global-en-beta."
+    }
+  ]
+}

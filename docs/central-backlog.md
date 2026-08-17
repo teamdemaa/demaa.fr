@@ -358,6 +358,21 @@ Il réutilisera le registre `SolutionPlacement` et remplacera uniquement la
 résolution des recommandations d'outils ; les aides Organisation, Modèle et
 Accompagnement conservent leur moteur actuel.
 
+État au 17 août 2026 : le pilote `cabinet-comptable` est préparé, mais ni
+validé métier ni activable. Les artefacts versionnés sont :
+
+- [`handoff.md`](research/action-plan-tool-recommendations/handoff.md) ;
+- [`cabinet-comptable-pilot.v1.json`](research/action-plan-tool-recommendations/cabinet-comptable-pilot.v1.json).
+
+Ils couvrent onze capacités, Tiimora, Pennylane et Silae, ainsi que dix
+scénarios de recommandation ou d'abstention. La dépendance technique à la pile
+internationale est satisfaite ; l'activation publique de `/en` reste une gate
+distincte et ne rend pas ces placements France éligibles au marché anglais.
+Les blocages restant à fermer sont : relecture métier contradictoire,
+confirmation des relations commerciales Pennylane/Silae, transparence du
+statut Demaa/ODEMA de Tiimora, preuve sécurité/traitement des données Tiimora,
+puis implémentation et tests du résolveur serveur.
+
 - [ ] Introduire une résolution serveur versionnée, sans seconde source de
   vérité, avec `recommendationResolutionVersion: 1` même lorsque la liste de
   recommandations est vide.
@@ -374,6 +389,27 @@ Accompagnement conservent leur moteur actuel.
 - [ ] Préparer contrats, tests d'étanchéité par entreprise, observabilité et
   activation progressive dans une PR runtime autonome, après stabilisation de
   la pile internationale.
+
+#### R.1 — Recommandations de modèles dans les Actions
+
+Le moteur lexical actuel peut proposer un modèle financier à partir de mots
+généraux comme `marge`, `budget`, `paiement` ou `rentabilité`, même lorsque
+l'Action ne demande pas de produire ou de mettre à jour un support chiffré.
+
+- [ ] Masquer temporairement les recommandations de modèles dans les Actions,
+  sans retirer les modèles de Ressources ni casser les plans historiques.
+- [ ] Ne réactiver un modèle que lorsque l'Action exprime un livrable explicite
+  (`créer`, `remplir`, `mettre à jour`, `suivre`) et une capacité propre au
+  modèle ; un simple concept financier ou commercial ne suffit pas.
+- [ ] Définir des intentions versionnées par modèle et une règle d'abstention,
+  plutôt que d'augmenter uniquement le seuil du score lexical.
+- [ ] Tester au minimum les faux positifs sur marge, prix, rentabilité et
+  paiements, ainsi que les vrais positifs prévisionnel, CRM et tableau de
+  pilotage.
+
+Critère de réactivation : chaque modèle affiché correspond à un support que
+l'Action demande réellement de créer ou de maintenir ; en cas de doute, aucune
+recommandation n'est affichée.
 
 ### M — Échanger par sujets et continuité client
 
@@ -2574,6 +2610,13 @@ UI, staging ou Production n'est inclus dans D-068.
   non prouvées ou retirées, puis corriger le contrat D-068 avant généralisation.
 - [ ] Recetter un export ou prototype hors production ; l'onglet Outils public
   reste strictement inchangé pendant le pilote.
+
+Préparation disponible : le dossier
+[`docs/research/action-plan-tool-recommendations/`](research/action-plan-tool-recommendations/)
+formalise déjà le cas `cabinet-comptable`, onze capacités et dix scénarios.
+Son statut reste `préparation uniquement` : les trois outils conservent le
+verdict d'activation `à vérifier` jusqu'à la relecture contradictoire et à la
+fermeture des blocages commerciaux, sécurité et runtime listés dans le dossier.
 
 Critère d'acceptation : 100 % des recommandations du pilote possèdent un verdict
 contradictoire et une preuve suffisante ; aucune recommandation n'est ajoutée
