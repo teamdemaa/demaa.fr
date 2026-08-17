@@ -54,6 +54,7 @@ export default function PolitiqueConfidentialitePage() {
               <li>numéro de téléphone / WhatsApp ;</li>
               <li>nom d&apos;entreprise ;</li>
               <li>secteur d&apos;activité ;</li>
+              <li>préférence de langue du membre, ainsi que marché, pays et devise de l&apos;entreprise lorsqu&apos;ils sont renseignés ;</li>
               <li>système métier et ressource dont vous demandez l&apos;envoi ;</li>
               <li>contenu de votre demande, besoin métier, préférences outils et informations transmises dans les formulaires ;</li>
               <li>entreprise, site ou page professionnelle et problématique proposés à la newsletter Structure, ainsi que la preuve de votre accord de publication lorsque vous le donnez ;</li>
@@ -93,7 +94,7 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Vercel</strong> pour l&apos;hébergement et la mesure d&apos;audience ;</li>
               <li><strong>Google Analytics</strong> pour la mesure des parcours lorsque vous l&apos;autorisez ;</li>
               <li><strong>Meta Pixel</strong> pour la mesure publicitaire lorsque vous l&apos;autorisez ;</li>
-              <li><strong>Google Firebase / Firestore et Firebase Authentication</strong> pour l&apos;authentification par e-mail et mot de passe ou Google, la session sécurisée, le stockage des entreprises techniques et de leurs appartenances, des demandes, des plans sauvegardés, des chiffres mensuels, des cycles de Stratégie, des brouillons temporaires, des conversations avec l&apos;équipe Demaa, de leur contexte d&apos;attribution et des compteurs agrégés d&apos;ouverture des systèmes ;</li>
+              <li><strong>Google Firebase / Firestore et Firebase Authentication</strong> pour l&apos;authentification par e-mail et mot de passe ou Google, la session sécurisée, le stockage des entreprises techniques, de leurs appartenances et des préférences de langue des membres, des demandes, des plans sauvegardés, des chiffres mensuels, des cycles de Stratégie, des brouillons temporaires, des conversations avec l&apos;équipe Demaa, de leur contexte d&apos;attribution et des compteurs agrégés d&apos;ouverture des systèmes ;</li>
               <li><strong>Stripe</strong> pour le paiement sécurisé, la facturation, la gestion des abonnements concernés et la prévention de la fraude ; Stripe traite directement les données de carte selon ses propres conditions de confidentialité ;</li>
               <li><strong>Resend</strong> pour l&apos;envoi des emails demandés et la gestion des contacts concernés ;</li>
               <li><strong>Vercel AI Gateway et le fournisseur de modèle sélectionné par Demaa, notamment OpenAI</strong>, pour la génération des réponses de l&apos;assistant IA ;</li>
@@ -118,6 +119,7 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Demandes de génération interrompues ou inachevées :</strong> 30 jours maximum afin de permettre une reprise et le diagnostic technique, puis suppression.</li>
               <li><strong>Texte préparé avant authentification pour créer un plan :</strong> 2 heures maximum dans la session du navigateur, puis suppression automatique ; il est supprimé plus tôt lorsque le plan est créé ou lorsque vous annulez.</li>
               <li><strong>Entreprise technique par défaut et appartenance associée :</strong> pendant la durée d&apos;existence de votre accès, puis suppression ou anonymisation avec celui-ci ou à la suite d&apos;une demande d&apos;effacement recevable, sous réserve des obligations légales applicables.</li>
+              <li><strong>Préférence de langue du membre :</strong> pendant la durée d&apos;existence de son accès, puis suppression avec celui-ci ou à la suite d&apos;une demande d&apos;effacement recevable.</li>
               <li><strong>Chiffres mensuels et cycles de Stratégie :</strong> conservés avec l&apos;entreprise, y compris lorsqu&apos;un plan est supprimé ou qu&apos;un membre quitte l&apos;entreprise. Ils sont supprimés lors de la suppression effective de l&apos;entreprise, sous réserve des obligations légales applicables. Les cycles archivés n&apos;expirent pas automatiquement.</li>
               <li><strong>Brouillon de message destiné à un spécialiste avant connexion :</strong> utilisable pendant 60 minutes maximum, puis supprimé lors du prochain nettoyage technique des données expirées.</li>
               <li><strong>Brouillon de proposition d&apos;opportunité avant connexion :</strong> utilisable pendant 2 heures maximum, puis supprimé lors du prochain nettoyage technique des données expirées.</li>

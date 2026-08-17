@@ -9,6 +9,7 @@ import {
   finishGoogleRedirect,
   startGoogleRedirect,
 } from "@/lib/firebase-client-auth";
+import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 const GOOGLE_CALLBACK_MARKER = "demaa:google-callback:v2";
 const GOOGLE_CALLBACK_TTL_MS = 10 * 60 * 1_000;
@@ -87,7 +88,13 @@ function friendlyGoogleError(error: unknown) {
     : "La connexion Google n’a pas pu aboutir.";
 }
 
-export default function GoogleAuthCallbackClient({ returnTo }: { returnTo: string }) {
+export default function GoogleAuthCallbackClient({
+  localeCode,
+  returnTo,
+}: {
+  localeCode: InterfaceLocaleCode;
+  returnTo: string;
+}) {
   const hasRun = useRef(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -98,7 +105,7 @@ export default function GoogleAuthCallbackClient({ returnTo }: { returnTo: strin
     void (async () => {
       try {
         const result = await withTimeout(
-          consumeGoogleRedirectAndGetIdToken(),
+          consumeGoogleRedirectAndGetIdToken(localeCode),
           15_000,
         );
         if (result) {
@@ -110,7 +117,7 @@ export default function GoogleAuthCallbackClient({ returnTo }: { returnTo: strin
             15_000,
           );
           clearMarker();
-          await finishGoogleRedirect();
+          await finishGoogleRedirect(localeCode);
           window.location.replace(session.redirectTo);
           return;
         }
@@ -122,10 +129,10 @@ export default function GoogleAuthCallbackClient({ returnTo }: { returnTo: strin
         }
 
         writeMarker(returnTo);
-        await startGoogleRedirect();
+        await startGoogleRedirect(localeCode);
       } catch (callbackError) {
         clearMarker();
-        await finishGoogleRedirect().catch(() => undefined);
+        await finishGoogleRedirect(localeCode).catch(() => undefined);
         console.error(
           "[google-auth-callback] flow failed",
           callbackError instanceof Error ? callbackError.message : "Unknown error",
@@ -133,13 +140,13 @@ export default function GoogleAuthCallbackClient({ returnTo }: { returnTo: strin
         setError(friendlyGoogleError(callbackError));
       }
     })();
-  }, [returnTo]);
+  }, [localeCode, returnTo]);
 
   async function retry() {
     setError(null);
     writeMarker(returnTo);
     try {
-      await startGoogleRedirect();
+      await startGoogleRedirect(localeCode);
     } catch (retryError) {
       clearMarker();
       setError(friendlyGoogleError(retryError));

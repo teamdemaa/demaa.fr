@@ -53,6 +53,7 @@ export default function PolitiqueCookiesPage() {
               <li><strong>Meta Pixel</strong> pour la mesure marketing et publicitaire ;</li>
               <li><strong>un stockage local d&apos;attribution Demaa</strong> pour mémoriser pendant 90 jours la première et la dernière source d&apos;acquisition lorsque la mesure d&apos;audience est autorisée ;</li>
               <li><strong>un cookie fonctionnel de consentement et sa copie locale</strong> pour conserver séparément vos choix de mesure d&apos;audience et de publicité pendant 180 jours ;</li>
+              <li><strong>un cookie fonctionnel de langue</strong> pour conserver pendant 180 jours la langue d&apos;interface choisie ; après connexion, cette préférence est également rattachée au profil du membre ;</li>
               <li><strong>un compteur serveur agrégé des ouvertures de systèmes</strong>, sans cookie, adresse email, adresse IP enregistrée ni identifiant visiteur ;</li>
               <li><strong>du stockage local navigateur</strong> pour mémoriser certaines informations utiles à l&apos;assistant et à l&apos;expérience utilisateur ;</li>
               <li><strong>des éléments techniques de session ou de sécurité</strong> nécessaires au bon fonctionnement du site.</li>
@@ -67,6 +68,7 @@ export default function PolitiqueCookiesPage() {
               <li>évaluer l&apos;efficacité des campagnes et des sources d&apos;acquisition ;</li>
               <li>rattacher une première et une dernière source à une demande envoyée volontairement ;</li>
               <li>mémoriser certaines préférences ou informations temporaires côté navigateur ;</li>
+              <li>conserver la langue d&apos;interface explicitement choisie sans la confondre avec le pays, le marché ou la devise de l&apos;entreprise ;</li>
               <li>assurer la sécurité, la stabilité et le bon fonctionnement technique du site.</li>
             </ul>
       </CookieSection>
@@ -97,6 +99,9 @@ export default function PolitiqueCookiesPage() {
             </p>
             <p>
               Le contexte d&apos;attribution conservé dans le navigateur expire après 90 jours. Le choix de consentement expire après 180 jours et vous est redemandé si sa version change.
+            </p>
+            <p>
+              Le cookie de préférence de langue expire après 180 jours. Une route explicitement ouverte reste prioritaire sur cette préférence.
             </p>
             <p>
               Après authentification par e-mail et mot de passe ou Google, un cookie de session Firebase essentiel, sécurisé et inaccessible au JavaScript maintient votre connexion pendant 14 jours au maximum. Avant cette étape, le texte saisi pour créer un plan et un identifiant technique de demande peuvent être conservés dans la session du navigateur pendant 2 heures au maximum afin de reprendre le parcours. Aucun plan n&apos;est généré avant l&apos;authentification.

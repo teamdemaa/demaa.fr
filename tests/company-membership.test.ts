@@ -45,6 +45,7 @@ import {
   ensureDefaultCompanyForIdentity,
   getActiveDefaultCompanyIdentity,
   hasActiveCompanyMembership,
+  readCompanyInternationalContext,
 } from "@/lib/company-membership.server";
 
 function identity(uid: string) {
@@ -61,7 +62,10 @@ describe("company membership foundation", () => {
     expect(second).toEqual(first);
     expect(firestore.documents).toHaveLength(2);
     expect(firestore.documents.get(`companies/${first.companyId}`)).toMatchObject({
+      country_code: null,
+      currency_code: "EUR",
       display_name: null,
+      market_code: "fr-fr",
       status: "active",
       created_by_uid: "owner-uid",
     });
@@ -79,6 +83,23 @@ describe("company membership foundation", () => {
     expect(companyId).not.toContain("private-firebase-uid");
     expect(membershipId).not.toContain("private-firebase-uid");
     expect(companyId).toBe(buildDefaultCompanyId("private-firebase-uid"));
+  });
+
+  it("keeps company market, country, and currency independent from interface language", () => {
+    expect(readCompanyInternationalContext(undefined)).toEqual({
+      countryCode: null,
+      currencyCode: "EUR",
+      marketCode: "fr-fr",
+    });
+    expect(readCompanyInternationalContext({
+      country_code: "GB",
+      currency_code: "EUR",
+      market_code: "global-en-beta",
+    })).toEqual({
+      countryCode: "GB",
+      currencyCode: "EUR",
+      marketCode: "global-en-beta",
+    });
   });
 
   it("refuses another UID and a suspended membership", async () => {

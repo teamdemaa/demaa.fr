@@ -15,6 +15,10 @@ import {
   signInWithRedirect,
   signOut,
 } from "firebase/auth";
+import {
+  type InterfaceLocaleCode,
+  getClientInterfaceLocale,
+} from "@/lib/international-context";
 
 const configuredClientConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -64,14 +68,14 @@ export function shouldUseGoogleRedirect() {
   return standalone || window.matchMedia("(max-width: 767px)").matches;
 }
 
-function getDemaaAuth() {
+function getDemaaAuth(localeCode?: InterfaceLocaleCode) {
   if (!hasFirebaseGoogleAuthConfiguration()) {
     throw new Error("La connexion n’est pas configurée.");
   }
   const app = getApps().find((candidate) => candidate.name === "demaa-client-auth")
     ?? initializeApp(clientConfig(), "demaa-client-auth");
   const auth = getAuth(app);
-  auth.languageCode = "fr";
+  auth.languageCode = localeCode ?? getClientInterfaceLocale();
   return auth;
 }
 
@@ -81,12 +85,14 @@ function googleProvider() {
   return provider;
 }
 
-export async function signInWithGoogleAndGetIdToken() {
+export async function signInWithGoogleAndGetIdToken(
+  localeCode?: InterfaceLocaleCode,
+) {
   if (!hasFirebaseGoogleAuthConfiguration()) {
     throw new Error("La connexion Google n’est pas configurée.");
   }
 
-  const auth = getDemaaAuth();
+  const auth = getDemaaAuth(localeCode);
   await setPersistence(auth, inMemoryPersistence);
 
   try {
@@ -99,30 +105,33 @@ export async function signInWithGoogleAndGetIdToken() {
   }
 }
 
-export async function startGoogleRedirect() {
-  const auth = getDemaaAuth();
+export async function startGoogleRedirect(localeCode?: InterfaceLocaleCode) {
+  const auth = getDemaaAuth(localeCode);
   await setPersistence(auth, browserSessionPersistence);
   await signInWithRedirect(auth, googleProvider());
 }
 
-export async function consumeGoogleRedirectAndGetIdToken() {
-  const auth = getDemaaAuth();
+export async function consumeGoogleRedirectAndGetIdToken(
+  localeCode?: InterfaceLocaleCode,
+) {
+  const auth = getDemaaAuth(localeCode);
   await setPersistence(auth, browserSessionPersistence);
   const result = await getRedirectResult(auth);
   if (!result) return null;
   return { idToken: await result.user.getIdToken() };
 }
 
-export async function finishGoogleRedirect() {
-  await signOut(getDemaaAuth()).catch(() => undefined);
+export async function finishGoogleRedirect(localeCode?: InterfaceLocaleCode) {
+  await signOut(getDemaaAuth(localeCode)).catch(() => undefined);
 }
 
 
 export async function createPasswordAccountAndGetIdToken(
   email: string,
   password: string,
+  localeCode?: InterfaceLocaleCode,
 ) {
-  const auth = getDemaaAuth();
+  const auth = getDemaaAuth(localeCode);
   await setPersistence(auth, inMemoryPersistence);
   try {
     const result = await createUserWithEmailAndPassword(auth, email, password);
@@ -136,8 +145,9 @@ export async function createPasswordAccountAndGetIdToken(
 export async function signInWithPasswordAndGetIdToken(
   email: string,
   password: string,
+  localeCode?: InterfaceLocaleCode,
 ) {
-  const auth = getDemaaAuth();
+  const auth = getDemaaAuth(localeCode);
   await setPersistence(auth, inMemoryPersistence);
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
@@ -148,9 +158,13 @@ export async function signInWithPasswordAndGetIdToken(
   }
 }
 
-export async function requestPasswordReset(email: string) {
-  const auth = getDemaaAuth();
+export async function requestPasswordReset(
+  email: string,
+  localeCode?: InterfaceLocaleCode,
+  returnTo = "/plans/latest",
+) {
+  const auth = getDemaaAuth(localeCode);
   await sendPasswordResetEmail(auth, email, {
-    url: `${window.location.origin}/connexion`,
+    url: `${window.location.origin}/connexion?returnTo=${encodeURIComponent(returnTo)}`,
   });
 }
