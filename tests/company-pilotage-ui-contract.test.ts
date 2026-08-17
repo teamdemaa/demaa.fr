@@ -4,12 +4,14 @@ import { COMPANY_STRATEGY_PILLARS } from "@/lib/company-pilotage-contract";
 const source = (file: string) => readFileSync(new URL(`../src/components/${file}`, import.meta.url), "utf8");
 
 describe("company Pilotage UI contract", () => {
-  it("owns one internal navigation without adding a fifth main destination", () => {
+  it("owns one internal navigation with Strategy temporarily hidden", () => {
     const owner = source("CompanyPilotagePanel.tsx");
     const navbar = source("ActionPlanNavbar.tsx");
     expect(owner).toContain("Plan d’action");
     expect(owner).toContain("Chiffres");
-    expect(owner).toContain("Stratégie");
+    expect(owner).toContain("COMPANY_STRATEGY_VISIBLE = false");
+    expect(owner).toContain('item.key !== "strategy" || COMPANY_STRATEGY_VISIBLE');
+    expect(owner).toContain('COMPANY_STRATEGY_VISIBLE && section === "strategy"');
     expect(source("SavedActionPlanDetail.tsx")).toContain("<CompanyPilotagePanel");
     expect(source("ActionPlanExperience.tsx")).toContain("<CompanyPilotagePanel");
     expect(navbar).not.toContain("Stratégie");

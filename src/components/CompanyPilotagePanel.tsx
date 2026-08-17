@@ -7,6 +7,8 @@ import type { ActionPlanSection } from "@/lib/action-plan-app-context";
 const CompanyFiguresPanel = dynamic(() => import("@/components/CompanyFiguresPanel"));
 const CompanyStrategyPanel = dynamic(() => import("@/components/CompanyStrategyPanel"));
 
+const COMPANY_STRATEGY_VISIBLE = false;
+
 const SECTIONS = [
   { key: "actions", label: "Plan d’action" },
   { key: "figures", label: "Chiffres" },
@@ -32,7 +34,9 @@ export default function CompanyPilotagePanel({
         aria-label="Sections du plan et du pilotage"
         className="mb-6 flex gap-1 overflow-x-auto border-b border-dema-line"
       >
-        {SECTIONS.map((item) => (
+        {SECTIONS.filter(
+          (item) => item.key !== "strategy" || COMPANY_STRATEGY_VISIBLE,
+        ).map((item) => (
           <button
             key={item.key}
             type="button"
@@ -50,7 +54,9 @@ export default function CompanyPilotagePanel({
       </nav>
       {section === "actions" ? children : null}
       {section === "figures" ? <CompanyFiguresPanel /> : null}
-      {section === "strategy" ? <CompanyStrategyPanel /> : null}
+      {COMPANY_STRATEGY_VISIBLE && section === "strategy"
+        ? <CompanyStrategyPanel />
+        : null}
     </section>
   );
 }
