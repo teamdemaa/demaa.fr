@@ -7,17 +7,17 @@ type CatalogEnrichmentModule = typeof import(
 );
 
 let buildRevision: CatalogEnrichmentModule["buildPublishedCatalogEnrichmentRevision"];
+let revision: ReturnType<CatalogEnrichmentModule["buildPublishedCatalogEnrichmentRevision"]>;
 
 beforeAll(async () => {
   ({ buildPublishedCatalogEnrichmentRevision: buildRevision } = await import(
     "@/lib/firebase-solution-registry-catalog-enrichment.server"
   ));
+  revision = buildRevision();
 });
 
 describe("Firebase Solutions catalog enrichment", () => {
   it("publishes the complete enriched catalog as one immutable revision", () => {
-    const revision = buildRevision();
-
     expect(revision).toMatchObject({
       revisionId: "solutions-2026-08-12-catalog-enrichment-published-v1",
       revisionStatus: "published",
@@ -29,7 +29,6 @@ describe("Firebase Solutions catalog enrichment", () => {
   });
 
   it("keeps Restaurant suppliers and expands its audited tools", () => {
-    const revision = buildRevision();
     const placements = revision.placements.filter(
       ({ placement }) => placement.systemSlug === "restaurant",
     );
