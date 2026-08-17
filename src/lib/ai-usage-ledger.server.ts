@@ -6,9 +6,7 @@ import { getTrustedServiceRequestClientIp } from "@/lib/service-request-security
 
 export const AI_USAGE_EVENTS_COLLECTION = "ai_usage_events";
 
-export type AiUsageOperation =
-  | "action_plan_generation"
-  | "action_plan_command";
+export type AiUsageOperation = "action_plan_generation";
 
 export type AiUsageEvent = {
   operation: AiUsageOperation;

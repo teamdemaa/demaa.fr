@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { getSafeCustomerReturnTo } from "@/lib/customer-space-redirect";
 
@@ -13,7 +13,7 @@ describe("action plan experience architecture", () => {
     const shareControl = source("src/components/ActionPlanShareControl.tsx");
     const utilityActions = source("src/components/ActionPlanUtilityActions.tsx");
     const result = source("src/components/ActionPlanResult.tsx");
-    const commandBar = source("src/components/ActionPlanCommandBar.tsx");
+    const generationBar = source("src/components/ActionPlanGenerationBar.tsx");
     const generationScreen = source("src/components/ActionPlanGenerationScreen.tsx");
 
     expect(experience).toContain("useState<EditableActionPlan | null>(null)");
@@ -77,8 +77,9 @@ describe("action plan experience architecture", () => {
     expect(utilityActions).not.toContain('createPortal(');
     expect(utilityActions).not.toContain("ActionPlanSaveControl");
     expect(utilityActions).not.toContain("Enregistrer");
-    expect(utilityActions).toContain("Plan temporaire");
+    expect(utilityActions).not.toContain("onOpenAccess");
     expect(utilityActions).toContain("onClick={onRetrySave}");
+    expect(utilityActions).toContain("Réessayer");
     expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} workspace={workspace} variant="menu" />');
     expect(utilityActions).not.toContain('plan.version !== "manual"');
     expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} workspace={workspace} variant="menu" />');
@@ -115,11 +116,11 @@ describe("action plan experience architecture", () => {
     expect(result).toContain('h-[52px]');
     expect(result).not.toContain('aria-label="Ajouter une action"\n            />');
     expect(result).not.toContain("Générer un plan à partir de ma situation");
-    expect(commandBar).toContain(
+    expect(generationBar).toContain(
       '"Qu’est-ce qui freine votre entreprise ?"',
     );
-    expect(commandBar).toContain('"Que voulez-vous modifier ?"');
-    expect(result).toContain('mode={isBlankManualPlan ? "generate" : "edit"}');
+    expect(generationBar).not.toContain('"Que voulez-vous modifier ?"');
+    expect(result).toContain("isBlankManualPlan && onGeneratePlan");
     expect(experience).toContain("createGeneratedActionPlanWorkspaceState");
     expect(experience).toContain("generatePlanFromSituation");
     expect(result).toContain("Supprimer cette action ?");
@@ -129,16 +130,19 @@ describe("action plan experience architecture", () => {
     expect(result).toContain("Supprimer la tâche");
     expect(result).toContain("workspace.deletedActionIds.includes(action.id)");
     expect(result).not.toContain("Générer un plan à partir de ma situation");
-    expect(result).toContain("<ActionPlanCommandBar");
-    expect(commandBar).toContain('fetch("/api/action-plan/command"');
-    expect(commandBar).toContain("applyActionPlanCommandOperations");
-    expect(commandBar).toContain("summarizeActionPlanCommandOperations");
-    expect(commandBar).toContain("Plan mis à jour :");
+    expect(result).toContain("<ActionPlanGenerationBar");
+    expect(generationBar).not.toContain('fetch("/api/action-plan/command"');
+    expect(generationBar).not.toContain("applyActionPlanCommandOperations");
+    expect(generationBar).not.toContain("summarizeActionPlanCommandOperations");
+    expect(generationBar).not.toContain("Plan mis à jour :");
     expect(result).toContain("closeAction();\n            onOpenSolution?.(input);");
-    expect(commandBar).toContain("useSpeechDictation");
-    expect(commandBar).toContain("Dicter ma demande");
-    expect(commandBar).toContain("Commande IA désactivée dans la démo");
-    expect(commandBar).toContain("Annuler");
+    expect(generationBar).toContain("useSpeechDictation");
+    expect(generationBar).toContain("Dicter ma demande");
+    expect(generationBar).not.toContain("Commande IA désactivée dans la démo");
+    expect(generationBar).not.toContain("undoSnapshot");
+    expect(existsSync("src/app/api/action-plan/command/route.ts")).toBe(false);
+    expect(existsSync("src/lib/action-plan-command.server.ts")).toBe(false);
+    expect(existsSync("src/lib/action-plan-command-contract.ts")).toBe(false);
   });
 
   it("keeps the latest authenticated edit when the user leaves quickly", () => {
@@ -242,6 +246,7 @@ describe("action plan experience architecture", () => {
 
     expect(academyPanel).toContain("embedded");
     expect(experience).toContain("<ActionPlanUtilityActions");
+    expect(experience).not.toContain("onOpenAccess={() => setAccessPromptOpen(true)}");
     expect(academyIndex).toContain("embedded || isSearching || showAllFundamentals");
     expect(academyIndex).toContain("!embedded ? (");
     expect(academyIndex).toContain("<AppLibrarySearch");

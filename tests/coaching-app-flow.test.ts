@@ -41,7 +41,8 @@ describe("unified app and coaching", () => {
     const services = read("src/components/ServicesCatalog.tsx");
     const coachingControl = read("src/components/ActionPlanCoachingControl.tsx");
     const appNavigation = read("src/components/ActionPlanNavbar.tsx");
-    expect(coaching).toContain("L’équipe Demaa vous aide gratuitement à identifier le blocage");
+    expect(coaching).toContain("Décrivez votre situation. L’équipe Demaa vous répond ici.");
+    expect(coaching).toContain("Ce premier échange est gratuit.");
     expect(coaching).toContain("Clarifier ma situation");
     expect(coaching).toContain("Découvrir Coach business");
     expect(coaching).not.toContain("Inclut 12 % de réduction sur les accompagnements Demaa éligibles");
@@ -52,7 +53,6 @@ describe("unified app and coaching", () => {
     expect(serviceCatalog).toContain("750 €");
     expect(serviceCatalog).toContain("Deux rendez-vous individuels de 60 minutes par mois");
     expect(serviceCatalog).toContain("suivi entre les rendez-vous");
-    expect(coaching).toContain("Écrivez ou dictez votre message.");
     expect(serviceCatalog).toMatch(/slug: "coach-business"[\s\S]*?monthlyAccompanimentDiscountEligible: false/);
     expect(services).not.toContain("CoachBusinessServiceCard");
     expect(offers).toContain('title: "Coach business · accompagnement mensuel"');
@@ -70,7 +70,9 @@ describe("unified app and coaching", () => {
     expect(coaching).toContain('fetch("/api/coaching-draft"');
     expect(coaching).toContain('onRequireAccess?.({ draftToken, tab: "messages" })');
     expect(coaching).toContain("initialDraftToken");
-    expect(coaching).toContain("Votre texte est conservé : réessayez.");
+    expect(coaching).toContain("Le message n’a pas été envoyé. Réessayez.");
+    expect(coaching).not.toContain("Réponse gratuite en préparation");
+    expect(coaching).not.toContain("Première clarification offerte");
     expect(coaching).not.toContain("Continuer par e-mail");
     expect(coaching).not.toContain("disponible prochainement");
     expect(coachingControl).toContain("Échanger");

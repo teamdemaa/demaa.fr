@@ -160,7 +160,7 @@ export default function CoachingPanel({
           Clarifier ma situation
         </h2>
         <p className="mx-auto mt-4 max-w-[35.625rem] text-base font-light leading-relaxed text-dema-muted sm:text-lg">
-          Écrivez ou dictez votre message. L’équipe Demaa vous aide gratuitement à identifier le blocage et la prochaine étape.
+          Décrivez votre situation. L’équipe Demaa vous répond ici.
         </p>
       </header>
       <CoachingMessageForm
@@ -354,15 +354,8 @@ function CoachingMessageForm({
   return (
     <>
       <section className="mx-auto mt-7 max-w-[51.25rem] overflow-hidden rounded-[1.5rem] border border-dema-line bg-dema-paper">
-      <div className="flex min-h-[3.875rem] items-center justify-between gap-4 border-b border-dema-line px-5 py-3.5 sm:px-6">
+      <div className="flex min-h-[3.875rem] items-center border-b border-dema-line px-5 py-3.5 sm:px-6">
         <h3 className="text-base font-medium text-brand-blue">Votre conversation</h3>
-        <span className="shrink-0 rounded-full bg-dema-sage px-3 py-1.5 text-xs font-medium text-dema-forest">
-          {access?.freeStatus === "completed"
-            ? "Clarification terminée"
-            : access?.freeStatus === "open"
-              ? "Réponse gratuite en préparation"
-              : "Première clarification offerte"}
-        </span>
       </div>
 
       <div
@@ -397,9 +390,9 @@ function CoachingMessageForm({
 
       {access?.freeStatus === "completed" ? (
         <div className="border-t border-dema-line p-4 text-center sm:p-5">
-          <p className="text-sm font-medium text-brand-blue">Clarification terminée</p>
+          <p className="text-sm font-medium text-brand-blue">Besoin d’un accompagnement régulier ?</p>
           <p className="mt-1 text-sm text-dema-muted">
-            Pour être accompagné régulièrement sur vos priorités et leur exécution, découvrez Coach business.
+            Coach business vous aide à faire avancer vos priorités dans la durée.
           </p>
           <Link
             href="/services/coach-business"
@@ -440,8 +433,11 @@ function CoachingMessageForm({
               )}
             </button>
           </div>
+          {access?.freeStatus === "available" ? (
+            <p className="mt-2 px-2 text-xs text-dema-muted">Ce premier échange est gratuit.</p>
+          ) : null}
           {messageDictation.error ? <p className="mt-2 px-2 text-xs text-amber-800" role="alert">{messageDictation.error}</p> : null}
-          {status === "error" ? <p className="mt-2 px-2 text-xs font-medium text-red-700">Le message n’a pas pu être envoyé. Votre texte est conservé : réessayez.</p> : null}
+          {status === "error" ? <p className="mt-2 px-2 text-xs font-medium text-red-700">Le message n’a pas été envoyé. Réessayez.</p> : null}
         </form>
       )}
       </section>

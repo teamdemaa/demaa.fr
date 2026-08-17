@@ -20,12 +20,13 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services SEO and redirects", () => {
-  it("publishes seven generic detail routes and keeps Application on /sur-mesure", async () => {
+  it("publishes eight generic detail routes and keeps Application on /sur-mesure", async () => {
     expect(generateStaticParams()).toEqual([
+      { slug: "automatisation-processus" },
       { slug: "coach-business" },
       { slug: "expert-comptable" },
+      { slug: "assistance-administrative" },
       { slug: "formalites-entreprise" },
-      { slug: "automatisation-processus" },
       { slug: "gestion-reseaux-sociaux" },
       { slug: "publicite-en-ligne" },
       { slug: "prospection-ciblee" },
@@ -132,7 +133,7 @@ describe("canonical Services SEO and redirects", () => {
     expect(nextConfig).toContain("source: '/marketing-ethique'");
     expect(nextConfig).toContain("destination: '/services/coach-business'");
     expect(nextConfig).toContain("destination: '/services/expert-comptable'");
-    expect(nextConfig).not.toContain("destination: '/services/assistance-administrative'");
+    expect(getCanonicalServiceBySlug("assistance-administrative")?.detailHref).toBe("/services/assistance-administrative");
     expect(proxy).not.toContain('"/services/"');
     expect(proxy).toContain('"/annuaire-services/"');
     expect(sitemap).toContain('`${base}${service.detailHref}`');

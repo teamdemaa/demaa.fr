@@ -3,7 +3,6 @@ import { enterpriseCatalogBySlug } from "@/lib/enterprise-annuaire";
 
 export const SYSTEM_RESOURCE_SLUGS = [
   "processus-metier",
-  "tableau-pilotage-operationnel",
   "suivi-previsionnel-financier",
   "crm-suivi-commercial",
 ] as const;
@@ -11,6 +10,7 @@ export const SYSTEM_RESOURCE_SLUGS = [
 type AvailableSystemResourceSlug = (typeof SYSTEM_RESOURCE_SLUGS)[number];
 type HistoricalSystemResourceSlug =
   | "recapitulatif-systeme"
+  | "tableau-pilotage-operationnel"
   | "guide-obligations-fiscales-sociales-comptables"
   | "guide-facturation-electronique";
 type PlannedGuideKind = "lancer" | "gerer";
@@ -56,25 +56,6 @@ export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
   },
   {
     availability: "available",
-    description: "Un tableau simple pour suivre les priorités, les actions et les résultats de votre activité.",
-    deliveryLabel: "Recevoir le tableau",
-    format: "template",
-    formatLabel: "Tableau de pilotage",
-    openLabel: "Créer ma copie",
-    preview: {
-      alt: "Aperçu du tableau de pilotage opérationnel avec des données d’exemple",
-      height: 933,
-      src: "/images/levier/levier-tableau-de-bord-preview.webp",
-      width: 1400,
-    },
-    previewDisclosure: "Aperçu avec des données d’exemple. Votre copie sera vierge et prête à compléter.",
-    rank: 1,
-    resourceSlug: "tableau-pilotage-operationnel",
-    successDescription: "Vous y trouverez le lien pour créer votre copie personnelle. Pensez à vérifier vos courriers indésirables.",
-    title: "Tableau de pilotage opérationnel",
-  },
-  {
-    availability: "available",
     description: "Un modèle pour suivre votre trésorerie, projeter les mois à venir et décider plus tôt.",
     deliveryLabel: "Recevoir le modèle",
     format: "template",
@@ -87,7 +68,7 @@ export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
       width: 3360,
     },
     previewDisclosure: "Aperçu du modèle. Le bouton vous permettra de créer votre propre copie.",
-    rank: 2,
+    rank: 1,
     resourceSlug: "suivi-previsionnel-financier",
     successDescription: "Vous y trouverez le lien vers le modèle financier. Pensez à vérifier vos courriers indésirables.",
     title: "Suivi et prévisionnel financier",
@@ -106,7 +87,7 @@ export const SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
       width: 3360,
     },
     previewDisclosure: "Aperçu de la structure CRM. Le bouton ouvrira le modèle Airtable.",
-    rank: 3,
+    rank: 2,
     resourceSlug: "crm-suivi-commercial",
     successDescription: "Vous y trouverez le lien vers le modèle CRM. Pensez à vérifier vos courriers indésirables.",
     title: "CRM - suivi commercial",
@@ -130,6 +111,25 @@ const HISTORICAL_SYSTEM_RESOURCES: readonly SystemResource[] = Object.freeze([
     resourceSlug: "recapitulatif-systeme",
     successDescription: "Le lien vers votre récapitulatif vient de vous être envoyé. Pensez à vérifier vos courriers indésirables.",
     title: "Récapitulatif du système",
+  },
+  {
+    availability: "available",
+    description: "Un tableau simple pour suivre les priorités, les actions et les résultats de votre activité.",
+    deliveryLabel: "Recevoir le tableau",
+    format: "template",
+    formatLabel: "Tableau de pilotage",
+    openLabel: "Créer ma copie",
+    preview: {
+      alt: "Aperçu du tableau de pilotage opérationnel avec des données d’exemple",
+      height: 933,
+      src: "/images/levier/levier-tableau-de-bord-preview.webp",
+      width: 1400,
+    },
+    previewDisclosure: "Aperçu avec des données d’exemple. Votre copie sera vierge et prête à compléter.",
+    rank: 1,
+    resourceSlug: "tableau-pilotage-operationnel",
+    successDescription: "Vous y trouverez le lien pour créer votre copie personnelle. Pensez à vérifier vos courriers indésirables.",
+    title: "Tableau de pilotage opérationnel",
   },
   {
     availability: "available",

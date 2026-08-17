@@ -3,11 +3,12 @@ import "server-only";
 import { deepFreeze } from "@/lib/registry-contract-utils";
 
 export const CANONICAL_SERVICE_SLUGS = [
-  "coach-business",
-  "expert-comptable",
-  "formalites-entreprise",
   "automatisation-processus",
   "application-metier",
+  "coach-business",
+  "expert-comptable",
+  "assistance-administrative",
+  "formalites-entreprise",
   "gestion-reseaux-sociaux",
   "publicite-en-ligne",
   "prospection-ciblee",
@@ -105,6 +106,19 @@ const canonicalServiceDefinitions = deepFreeze([
     included: ["Qualification de votre activité et de votre besoin", "Recherche d’un cabinet adapté", "Mise en relation avec l’interlocuteur retenu"],
     conditions: ["Vous restez libre de donner suite", "La mission est contractualisée avec le cabinet choisi"],
     notIncluded: ["La tenue comptable ou la paie réalisées par Demaa", "La garantie d’acceptation avant qualification"],
+  },
+  {
+    slug: "assistance-administrative", name: "Assistante administrative", eyebrow: "Support administratif",
+    detailHref: "/services/assistance-administrative", packages: [],
+    summary: "Trouvez une assistante administrative adaptée pour déléguer des tâches clairement définies et retrouver du temps.",
+    description: "Demaa qualifie les tâches, le volume et le rythme attendus, puis organise la mise en relation avec une assistante administrative adaptée. Vous choisissez librement de poursuivre avec la professionnelle retenue.",
+    result: "Un renfort administratif cadré, avec des responsabilités et un rythme clairement définis avant le démarrage.",
+    delivery: "third-party", monthlyAccompanimentDiscountEligible: false,
+    pricing: { mode: "quote", heading: "Tarif", label: "Sur devis", note: "La professionnelle confirme son périmètre et son tarif, puis facture directement son intervention. La mise en relation Demaa est sans frais." },
+    cta: callback,
+    included: ["Qualification des tâches, du volume et du rythme", "Recherche d’une assistante administrative adaptée", "Mise en relation et transmission du contexte utile"],
+    conditions: ["Vous restez libre de donner suite", "Le périmètre et les modalités sont confirmés avant le démarrage"],
+    notIncluded: ["La tenue comptable ou la paie", "Les décisions de gestion prises à votre place"],
   },
   {
     slug: "automatisation-processus", name: "Automatisation des processus et IA", eyebrow: "Organisation, automatisation et IA",

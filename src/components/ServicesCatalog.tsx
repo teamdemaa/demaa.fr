@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   Calculator,
+  ClipboardList,
   Compass,
   FileCheck2,
   PanelsTopLeft,
@@ -16,6 +17,7 @@ const ICONS: Record<CanonicalService["slug"], LucideIcon> = {
   "coach-business": Compass,
   "automatisation-processus": Workflow,
   "application-metier": PanelsTopLeft,
+  "assistance-administrative": ClipboardList,
   "expert-comptable": Calculator,
   "formalites-entreprise": FileCheck2,
   "gestion-reseaux-sociaux": MessagesSquare,

@@ -143,48 +143,47 @@ financements, formalités locales et partenaires strictement français.
 
 Référence : D-089 et [ADR 0015](decisions/0015-packaged-automation-and-business-application.md).
 
-Alignement France à livrer dans une PR autonome avant les projections
-anglaises :
+Alignement France livré avant les projections anglaises :
 
-- [ ] Conserver le slug, la route et les attributions existants
+- [x] Conserver le slug, la route et les attributions existants
   `automatisation-processus` ; ne créer ni deuxième prestation IA, ni migration
   de demande, ni nouvelle catégorie.
-- [ ] Remplacer le nom public par `Automatisation des processus et IA`, puis
+- [x] Remplacer le nom public par `Automatisation des processus et IA`, puis
   mettre à jour catalogue, cartes, modale, SEO, données structurées,
   notifications et tests qui affichent le nom.
-- [ ] Promesse courte recommandée : réduire les tâches manuelles grâce à des
+- [x] Promesse courte recommandée : réduire les tâches manuelles grâce à des
   workflows fiables et à des usages IA ciblés, intégrés aux outils existants.
-- [ ] Description recommandée : simplifier d'abord le processus, automatiser
+- [x] Description recommandée : simplifier d'abord le processus, automatiser
   les étapes répétitives, puis intégrer l'IA uniquement lorsqu'elle apporte un
   gain concret, avec validation humaine, tests et documentation.
-- [ ] Livrables à cadrer : analyse et priorisation du processus ; intégrations,
+- [x] Livrables à cadrer : analyse et priorisation du processus ; intégrations,
   automatisations et usages IA validés ; tests, points de contrôle humains,
   documentation et prise en main.
-- [ ] Exclusions à rendre explicites : refonte indistincte de tous les
+- [x] Exclusions à rendre explicites : refonte indistincte de tous les
   processus, licences et consommations d'outils ou de modèles tiers, promesse
   d'autonomie totale de l'IA ou résultat métier garanti sans mesure préalable.
-- [ ] Remplacer le prix 500 EUR HT/jour par les forfaits validés
+- [x] Remplacer le prix 500 EUR HT/jour par les forfaits validés
   Automatisation essentielle à 1 500 EUR HT et Automatisation avancée + IA à
   3 000 EUR HT, avec les limites de D-089.
-- [ ] Ajouter `Application métier` immédiatement après Automatisation, avec le
+- [x] Ajouter `Application métier` immédiatement après Automatisation, avec le
   forfait essentiel à 4 500 EUR HT et le forfait avancé à 7 500 EUR HT. Conserver
   `/sur-mesure` comme unique page canonique et supprimer toute occurrence
   publique de l'ancien prix 2 500 EUR.
-- [ ] Faire consommer une seule source de forfaits au catalogue, aux modales,
+- [x] Faire consommer une seule source de forfaits au catalogue, aux modales,
   à `/sur-mesure`, aux données structurées et aux notifications ; ne pas créer
   de page SEO concurrente `/services/application-metier`.
-- [ ] Retirer les montants et mentions d'avantage de toutes les cartes
+- [x] Retirer les montants et mentions d'avantage de toutes les cartes
   Accompagnement. Afficher les prix dès le haut des modales/fiches, sans
   séparateur qui traverse ou masque le texte.
-- [ ] Conserver l'éligibilité de ces deux prestations à l'avantage
+- [x] Conserver l'éligibilité de ces deux prestations à l'avantage
   accompagnement mensuel de 12 %, vérifié côté serveur, sans paiement ni
   checkout.
-- [ ] Remplacer le CTA `Être recontacté(e)` par `Envoyer ma demande` et étendre
+- [x] Remplacer le CTA `Être recontacté(e)` par `Envoyer ma demande` et étendre
   le contrat/API avec `packageSlug`, `localeCode`, `marketCode` et une source
   de page validée. `packageSlug` est obligatoire uniquement pour les deux
   prestations à forfaits. Le serveur retrouve le montant et refuse tout
   forfait qui n'appartient pas au service.
-- [ ] Retirer ou revalider contractuellement le support à 110 EUR/heure, la
+- [x] Retirer ou revalider contractuellement le support à 110 EUR/heure, la
   maintenance à 99 EUR/mois et les promesses absolues RGPD, propriété et
   hébergement de l'ancienne page `/sur-mesure`.
 - [ ] Ajouter ensuite la projection anglaise `Process automation and AI` au
@@ -198,18 +197,18 @@ par Système.
 
 ### Opportunités — décision immédiate
 
-- [ ] Retirer Opportunités des navbars desktop, mobile et PWA ainsi que des
+- [x] Retirer Opportunités des navbars desktop, mobile et PWA ainsi que des
   navigations générales.
-- [ ] Conserver `/opportunites` accessible directement aux personnes possédant
+- [x] Conserver `/opportunites` accessible directement aux personnes possédant
   le lien, avec `noindex` pendant cette phase contrôlée.
-- [ ] Préserver cartes, filtres, modales, soumissions et protections serveur
+- [x] Préserver cartes, filtres, modales, soumissions et protections serveur
   actuelles.
-- [ ] Ne créer ni droit client supplémentaire, ni abonnement obligatoire, ni
+- [x] Ne créer ni droit client supplémentaire, ni abonnement obligatoire, ni
   `403` commercial, ni teaser Solutions, ni entrée Profil.
-- [ ] Ne pas publier Opportunities dans English Beta.
-- [ ] Différer la réservation aux entreprises clientes jusqu'à une décision et
+- [x] Ne pas publier Opportunities dans English Beta.
+- [x] Différer la réservation aux entreprises clientes jusqu'à une décision et
   un lot distincts.
-- [ ] Normaliser les anciennes URLs `/?view=opportunities` vers
+- [x] Normaliser les anciennes URLs `/?view=opportunities` vers
   `/opportunites` et reprendre les intentions/brouillons d'authentification sur
   cette route canonique plutôt que dans une vue applicative cachée.
 
@@ -433,9 +432,9 @@ mobile et PWA avant d'ajouter les demandes commerciales.
 - [ ] Afficher dans le sujet une carte de contexte structurée et poursuivre
   qualification et prestation dans le même sujet.
 - [ ] Ne créer ni panier, ni canaux, ni checkout groupé dans ce lot.
-- [ ] Garder Assistance administrative et Sous-traitance de formalités
-  juridiques en `recommendation_only` tant que leur offre et la capacité de
-  réalisation ne sont pas stabilisées.
+- [ ] Garder Sous-traitance de formalités juridiques en
+  `recommendation_only`. Assistante administrative est déjà une mise en
+  relation publique, mais reste facturée directement par la professionnelle.
 - [ ] Conserver Expert-comptable, Formalités d'entreprise et autres frais de
   tiers en facturation directe par le professionnel ; ne jamais attribuer à
   Demaa leurs honoraires, budgets média, logiciels, frais administratifs ou
@@ -841,11 +840,10 @@ manuel du marché France.
 - [ ] Vérifier le ledger d'usage IA : métriques techniques et sujet
   pseudonymisé uniquement ; aucun prompt, situation, commande, plan, support,
   note ou e-mail en clair.
-- [ ] Recetter la commande IA désormais autorisée : enveloppe limitée à la
-  commande et aux actions visibles ; validation
-  déterministe, annulation, limites compte/IP, mode démo sans crédit et ledger
-  sans contenu. Notes, identité, situation source, historique et Systèmes
-  restent exclus.
+- [x] Retirer la commande IA d'édition après génération. La barre restante est
+  limitée au plan manuel entièrement vierge et déclenche le parcours de
+  génération durable existant. La route, le moteur, le contrat d'opérations et
+  l'événement de ledger propres à la commande ont été supprimés.
 - [x] D-084 — Pilotage d'entreprise `Chiffres + Stratégie` livré selon l'ADR
   0013 par la PR 116. Le périmètre Chiffres, omis lors d'une consolidation
   intermédiaire, a été restauré. D-082 reste la navigation principale cible.
@@ -859,7 +857,7 @@ manuel du marché France.
   conserve intégralement les quatre piliers, douze questions, cycles de trois
   mois calendaires Europe/Paris sans expiration, premier cycle automatique,
   nouveau cycle vide, historique paginé par 10, exactement un pli ouvert avec
-  Alignement par défaut, placeholders validés, archives avec l'entreprise et
+  Alignement par défaut, champs sans placeholders, archives avec l'entreprise et
   conflits inline sans écrasement. Aucun contenu Pilotage n'est transmis à
   l'IA. Aucune ancienne réponse V3 n'est migrée, affichée, recopiée ou supprimée
   physiquement. Chiffres et Stratégie ont été fusionnés ensemble comme une
@@ -876,10 +874,10 @@ manuel du marché France.
   consentement, lien révocable, durée et protection contre l'indexation. Le MVP
   permet déjà de sauvegarder et retrouver un plan, mais ne crée aucun lien
   public tant que ces règles ne sont pas validées.
-- [x] Le catalogue de sept accompagnements a été livré et reste l'état
-  Production avant D-089. D-089 porte la cible à huit avec Application métier,
-  sans modifier les exclusions de Formalités ni les deux prestations privées
-  accessibles uniquement par recommandation de la Team Demaa.
+- [x] Le catalogue France compte désormais neuf accompagnements. Automatisation
+  des processus et IA est en premier, suivie d'Application métier. Assistante
+  administrative est une mise en relation publique ; seule la sous-traitance de
+  formalités juridiques reste réservée aux recommandations de la Team Demaa.
 - [x] D-083, lot 1 : limiter la surface publique Solutions à `Outils` et
   `Services`, sans suppression ni déplacement de données. Le filtre public
   s'applique après la composition pour empêcher Financement et Aides d'être
@@ -893,8 +891,10 @@ manuel du marché France.
   Git et sécurité détaillés dans le cadrage ci-dessous.
 - [x] Créer `/contenus` et publier la fiche Facturation électronique comme
   article et diaporama avant la future vidéo.
-- [x] Simplifier Ressources : retirer les guides métier de la surface active et
-  afficher les modèles et documents en grille verticale responsive.
+- [x] Simplifier Ressources : retirer les guides métier de la surface active,
+  puis retirer le Tableau de pilotage opérationnel devenu redondant avec
+  Chiffres. Processus métier, prévisionnel financier et CRM restent publics ;
+  les anciens liens du tableau restent résolubles sans nouvelle exposition.
 - [x] Limiter temporairement Académie aux seuls `Cours`, sans onglet. Les
   Tutoriels techniques `case-study`, leurs slugs et leurs routes restent
   conservés mais masqués, comme les Webinaires.

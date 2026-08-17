@@ -121,42 +121,47 @@ describe("canonical Services composition in every system", () => {
 
   it("applies the explicit eligibility matrix to regulated professions", () => {
     expect(getCanonicalServiceSlugsForSystem("restaurant")).toEqual([
-      "coach-business",
-      "expert-comptable",
-      "formalites-entreprise",
       "automatisation-processus",
       "application-metier",
+      "coach-business",
+      "expert-comptable",
+      "assistance-administrative",
+      "formalites-entreprise",
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
     ]);
     expect(getCanonicalServiceSlugsForSystem("cabinet-comptable")).toEqual([
-      "coach-business",
       "automatisation-processus",
       "application-metier",
+      "coach-business",
+      "assistance-administrative",
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
     ]);
     expect(getCanonicalServiceSlugsForSystem("cabinet-davocat")).toEqual([
-      "coach-business",
-      "expert-comptable",
       "automatisation-processus",
       "application-metier",
+      "coach-business",
+      "expert-comptable",
+      "assistance-administrative",
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
     ]);
     expect(getCanonicalServiceSlugsForSystem("notaire")).toEqual([
-      "coach-business",
-      "expert-comptable",
       "automatisation-processus",
       "application-metier",
+      "coach-business",
+      "expert-comptable",
+      "assistance-administrative",
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
     ]);
     expect(getCanonicalServiceSlugsForSystem("expert-comptable")).not.toContain("formalites-entreprise");
+    expect(getCanonicalServiceSlugsForSystem("assistant-administratif-externalise")).not.toContain("assistance-administrative");
   });
 
   it("places relevant catalog sections in order without mutating registry data", () => {
@@ -231,9 +236,10 @@ describe("canonical Services composition in every system", () => {
 
     expect(services?.placements.map(({ resource }) => resource.resourceSlug))
       .toEqual([
-        "coach-business",
         "automatisation-processus",
         "application-metier",
+        "coach-business",
+        "assistance-administrative",
         "gestion-reseaux-sociaux",
         "publicite-en-ligne",
         "prospection-ciblee",

@@ -26,8 +26,6 @@ describe("company Pilotage API boundary", () => {
 
   it("keeps Pilotage outside all AI request contracts", () => {
     const aiSources = [
-      "src/lib/action-plan-command-contract.ts",
-      "src/lib/action-plan-command.server.ts",
       "src/lib/action-plan-generation.server.ts",
     ].map(source).join("\n");
     expect(aiSources).not.toMatch(/company_monthly_metrics|company_strategies|CompanyFigures|CompanyStrategy/);

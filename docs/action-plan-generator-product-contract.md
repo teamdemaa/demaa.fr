@@ -366,28 +366,18 @@ supports, les notes, l'adresse e-mail en clair ni l'identité de session. Une
 indisponibilité du ledger est signalée opérationnellement mais ne transforme
 pas le contenu utilisateur en log de secours.
 
-## Commande IA sur un plan existant — activée sous enveloppe minimale
+## Génération depuis un plan vierge
 
-Le contrat de commande et l'application déterministe des opérations permettent
-d'ajouter, modifier ou supprimer une action. L'utilisatrice a explicitement
-autorisé le 12 août 2026 l'envoi
-de l'enveloppe minimale suivante à Vercel AI Gateway et à son fournisseur :
+Un plan manuel encore entièrement vierge peut afficher une barre permettant de
+décrire une situation. Cette barre déclenche le même parcours de génération
+durable que le formulaire initial : elle ne constitue pas une commande
+d'édition.
 
-- la commande rédigée par la personne ;
-- les actions actuellement visibles et leurs modifications effectives ;
-
-La Stratégie n'étant plus visible ni générée dans le contrat courant, aucune
-donnée stratégique n'est transmise par cette commande.
-
-Sont exclus de cette enveloppe : notes, e-mail, identité de compte ou de
-session, situation source, historique, Systèmes sélectionnés, coches
-d'Organisation,
-sélections Solutions et catalogue des 115 activités. Les opérations retournées
-sont validées et appliquées déterministiquement ; le mode démo n'effectue aucun
-appel externe. Le ledger conserve uniquement les métriques techniques.
-
-Pour chaque commande exécutée, le ledger n'enregistre que ses métriques
-d'usage ; jamais le texte de commande, le prompt ou le contenu du plan.
+Dès qu'un plan contient une action ou un contenu à conserver, la barre
+disparaît. Les actions sont alors modifiées directement dans leur interface.
+Il n'existe plus de route, de contrat ni d'appel IA permettant d'ajouter,
+modifier ou supprimer des actions à partir d'une commande libre après la
+génération.
 
 ## Décisions rejetées
 
@@ -471,6 +461,7 @@ au backlog, sans modifier cette première version :
   l'adresse e-mail ou par le seul champ historique `owner_uid`.
 - La dictée utilise l'adaptateur microphone partagé et ne conserve aucun audio.
 - Le ledger ne contient aucun prompt, commande ou contenu de plan.
-- La commande IA n'envoie que l'enveloppe externe minimale explicitement
-  autorisée ; elle reste inactive en mode démo.
+- Aucun plan déjà généré ou commencé n'affiche de barre de commande IA.
+- La barre d'un plan manuel vierge utilise uniquement le parcours de génération
+  initial déjà authentifié et mesuré.
 - `/systemes`, `/academie` et les fiches publiques existantes restent intactes.

@@ -1,5 +1,6 @@
 import "server-only";
 
+import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
 import { deepFreeze } from "@/lib/registry-contract-utils";
 
 export const EXTERNAL_RECOMMENDATION_SLUGS = [
@@ -20,22 +21,27 @@ export type ExternalRecommendationCatalogItem = Readonly<{
   needs: readonly Readonly<{ key: string; label: string }>[];
   slug: ExternalRecommendationSlug;
   version: string;
-  visibility: "recommendation_only";
+  visibility: "public" | "recommendation_only";
 }>;
+
+const administrativeAssistant = getCanonicalServiceBySlug("assistance-administrative");
+if (!administrativeAssistant) {
+  throw new Error("Missing canonical administrative assistant service.");
+}
 
 const catalog = deepFreeze([
   {
     active: true,
-    category: "Support administratif",
+    category: administrativeAssistant.eyebrow,
     connectionProcess: "Demaa qualifie votre besoin puis recherche un professionnel adapté. Vous restez libre d’accepter la mise en relation.",
-    description: "Un renfort pour déléguer des tâches administratives clairement définies.",
-    included: ["Qualification des tâches et du volume", "Recherche d’un professionnel adapté", "Transmission du contexte utile"],
-    limits: ["La mission est contractualisée avec le professionnel", "La tenue comptable n’est pas incluse"],
-    name: "Assistance administrative",
+    description: administrativeAssistant.summary,
+    included: administrativeAssistant.included,
+    limits: administrativeAssistant.notIncluded,
+    name: administrativeAssistant.name,
     needs: [] as readonly Readonly<{ key: string; label: string }>[],
     slug: "assistance-administrative",
     version: "2026-08-14",
-    visibility: "recommendation_only",
+    visibility: "public",
   },
   {
     active: true,

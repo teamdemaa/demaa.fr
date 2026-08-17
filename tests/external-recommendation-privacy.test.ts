@@ -9,20 +9,24 @@ import {
 } from "@/lib/external-recommendation-catalog.server";
 import { getCanonicalServices } from "@/lib/canonical-service-catalog";
 
-describe("private external recommendation catalog", () => {
-  it("keeps exactly two active recommendation-only services", () => {
+describe("external recommendation catalog", () => {
+  it("keeps the public assistant and private legal reinforcement recommendable", () => {
     const catalog = getExternalRecommendationCatalog();
     expect(catalog.map((item) => item.slug)).toEqual([
       "assistance-administrative",
       "sous-traitance-formalites-juridiques",
     ]);
-    expect(catalog.every((item) => item.active && item.visibility === "recommendation_only")).toBe(true);
+    expect(catalog).toEqual(expect.arrayContaining([
+      expect.objectContaining({ slug: "assistance-administrative", active: true, visibility: "public" }),
+      expect.objectContaining({ slug: "sous-traitance-formalites-juridiques", active: true, visibility: "recommendation_only" }),
+    ]));
     expect(getExternalRecommendationBySlug("formalites-entreprise")).toBeNull();
   });
 
-  it("never exposes a private slug through the public canonical catalog", () => {
+  it("exposes only the promoted assistant through the public canonical catalog", () => {
     const serialized = JSON.stringify(getCanonicalServices());
-    expect(serialized).not.toMatch(/assistance-administrative|sous-traitance-formalites-juridiques/);
+    expect(serialized).toContain("assistance-administrative");
+    expect(serialized).not.toContain("sous-traitance-formalites-juridiques");
     expect(serialized).toContain("formalites-entreprise");
   });
 

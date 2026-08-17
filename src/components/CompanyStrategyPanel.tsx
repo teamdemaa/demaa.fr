@@ -9,7 +9,9 @@ import { ActionPlanSaveQueue } from "@/lib/action-plan-save-queue.client";
 import {
   COMPANY_STRATEGY_PILLARS,
   formatCompanyMonth,
+  getCurrentCompanyMonth,
   mergeCompanyStrategyAnswers,
+  shiftCompanyMonth,
   type CompanyStrategyAnswerKey,
   type CompanyStrategyAnswers,
   type CompanyStrategyCycle,
@@ -19,10 +21,10 @@ import {
 type SaveDraft = { answers: CompanyStrategyAnswers };
 type SaveError = Error & { code?: string; current?: CompanyStrategyCycle };
 
-function cycleLabel(cycle: CompanyStrategyCycle) {
-  const start = formatCompanyMonth(cycle.startMonth).replace(/ \d{4}$/, "");
-  const end = formatCompanyMonth(cycle.endMonth).replace(/ \d{4}$/, "");
-  return `${start} — ${end}`;
+function nextCycleLabel() {
+  const startMonth = getCurrentCompanyMonth();
+  const endMonth = shiftCompanyMonth(startMonth, 2);
+  return `${formatCompanyMonth(startMonth)} à ${formatCompanyMonth(endMonth)}`;
 }
 
 export default function CompanyStrategyPanel() {
@@ -34,7 +36,6 @@ export default function CompanyStrategyPanel() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [conflicts, setConflicts] = useState<Partial<Record<CompanyStrategyAnswerKey, string>>>({});
-  const [historyOpen, setHistoryOpen] = useState(false);
   const [cycleDialogOpen, setCycleDialogOpen] = useState(false);
   const [creatingCycle, setCreatingCycle] = useState(false);
   const [cycleError, setCycleError] = useState<string | null>(null);
@@ -185,7 +186,6 @@ export default function CompanyStrategyPanel() {
       setCycle(body.cycle);
       setAnswers(body.cycle.answers);
       setOpenPillar("alignment");
-      setHistoryOpen(false);
       setCycleDialogOpen(false);
       setConflicts({});
       conflictKeysRef.current.clear();
@@ -209,18 +209,14 @@ export default function CompanyStrategyPanel() {
         <div><h1 className="text-2xl font-semibold text-dema-ink">Stratégie</h1><p className="mt-1 text-sm text-dema-muted">Quatre repères pour garder un cap clair.</p></div>
         <button type="button" aria-label="Nouveau cycle" onClick={() => { setCycleError(null); setCycleDialogOpen(true); }} className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-dema-forest px-3 text-sm font-semibold text-white sm:px-4"><Plus className="h-4 w-4" aria-hidden="true" /><span className="hidden sm:inline">Nouveau cycle</span></button>
       </div>
-      <div className="mt-5 flex items-center justify-between gap-4 border-b border-dema-line pb-4">
-        <p className="text-sm font-medium text-dema-ink">Cycle actuel · {cycleLabel(cycle)}</p>
-        <button type="button" aria-expanded={historyOpen} onClick={() => setHistoryOpen((current) => !current)} className="text-sm font-semibold text-dema-forest underline-offset-4 hover:underline">Historique des cycles</button>
-      </div>
       <div className="sr-only" role="status" aria-live="polite">{message}</div>
       {saveState === "error" ? <div role="alert" className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700"><p>{error}</p><button type="button" className="mt-1 font-semibold underline" onClick={() => void flush()}>Réessayer</button></div> : null}
       {hasConflicts ? <p className="mt-4 text-sm text-amber-800" role="status">Choisissez une version pour chaque réponse en conflit.</p> : null}
-      <div className="divide-y divide-dema-line">
+      <div className="mt-6 divide-y divide-dema-line">
         {COMPANY_STRATEGY_PILLARS.map((pillar) => <CompanyStrategyPillar key={pillar.key} pillar={pillar} open={openPillar === pillar.key} answers={answers} conflicts={conflicts} onOpen={() => setOpenPillar(pillar.key)} onAnswerChange={changeAnswer} onKeepLocal={(key) => resolveConflict(key, false)} onUseRemote={(key) => resolveConflict(key, true)} />)}
       </div>
-      <CompanyStrategyHistory key={cycle.id} open={historyOpen} />
-      <CompanyStrategyCycleDialog open={cycleDialogOpen} creating={creatingCycle} error={cycleError} onClose={() => { if (!creatingCycle) setCycleDialogOpen(false); }} onConfirm={() => void createCycle()} />
+      <CompanyStrategyHistory key={cycle.id} />
+      <CompanyStrategyCycleDialog open={cycleDialogOpen} creating={creatingCycle} error={cycleError} periodLabel={nextCycleLabel()} onClose={() => { if (!creatingCycle) setCycleDialogOpen(false); }} onConfirm={() => void createCycle()} />
     </div>
   );
 }

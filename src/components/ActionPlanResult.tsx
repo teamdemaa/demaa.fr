@@ -29,7 +29,7 @@ import {
   useRef,
   useState,
 } from "react";
-import ActionPlanCommandBar from "@/components/ActionPlanCommandBar";
+import ActionPlanGenerationBar from "@/components/ActionPlanGenerationBar";
 import PwaInstallPrompt from "@/components/PwaInstallPrompt";
 import { useActionPlanContextualAids } from "@/hooks/useActionPlanContextualAids";
 import { isBlankManualActionPlan } from "@/lib/action-plan-manual";
@@ -898,14 +898,9 @@ export default function ActionPlanResult({
 
       <PwaInstallPrompt />
 
-      <ActionPlanCommandBar
-        plan={plan}
-        workspace={workspace}
-        onWorkspaceChange={onWorkspaceChange}
-        demoMode={commandDemoMode}
-        mode={isBlankManualPlan ? "generate" : "edit"}
-        onGeneratePlan={isBlankManualPlan ? onGeneratePlan : undefined}
-      />
+      {isBlankManualPlan && onGeneratePlan ? (
+        <ActionPlanGenerationBar onGeneratePlan={onGeneratePlan} />
+      ) : null}
 
       {selectedAction ? (
         <ActionDrawer
