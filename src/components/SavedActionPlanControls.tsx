@@ -69,6 +69,7 @@ export function SavedActionPlanMenu({
   openingPlanId,
   plan,
   planId,
+  sourceText,
   title,
   workspace,
   localeCode = "fr",
@@ -82,12 +83,14 @@ export function SavedActionPlanMenu({
   openingPlanId: string | null;
   plan: PersistableActionPlan;
   planId: string;
+  sourceText?: string | null;
   title: string;
   workspace: ActionPlanWorkspaceState;
   localeCode?: InterfaceLocaleCode;
 }) {
   const [open, setOpen] = useState(false);
   const [showPlans, setShowPlans] = useState(false);
+  const [showSourceText, setShowSourceText] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuId = useId();
@@ -102,6 +105,8 @@ export function SavedActionPlanMenu({
         && !containerRef.current?.contains(event.target)
       ) {
         setOpen(false);
+        setShowPlans(false);
+        setShowSourceText(false);
       }
     }
 
@@ -109,6 +114,7 @@ export function SavedActionPlanMenu({
       if (event.key !== "Escape") return;
       setOpen(false);
       setShowPlans(false);
+      setShowSourceText(false);
       triggerRef.current?.focus();
     }
 
@@ -206,6 +212,26 @@ export function SavedActionPlanMenu({
                       </button>
                     );
                   })}
+                </div>
+              ) : null}
+            </>
+          ) : null}
+          {sourceText?.trim() ? (
+            <>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowPlans(false);
+                  setShowSourceText((current) => !current);
+                }}
+                className={itemClassName}
+                aria-expanded={showSourceText}
+              >
+                {localeCode === "en" ? "View original request" : "Voir la demande initiale"}
+              </button>
+              {showSourceText ? (
+                <div className="my-1 max-h-56 max-w-[calc(100vw-3rem)] overflow-y-auto whitespace-pre-wrap border-y border-dema-line px-2 py-2 text-xs leading-5 text-brand-blue">
+                  {sourceText.trim()}
                 </div>
               ) : null}
             </>

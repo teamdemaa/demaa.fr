@@ -132,7 +132,7 @@ const canonicalServiceDefinitions = deepFreeze([
       {
         slug: "automatisation-essentielle",
         name: "Automatisation essentielle",
-        summary: "Un processus simple et déterministe, connecté à vos outils courants.",
+        summary: "Un flux métier complet, cadré et automatisé de bout en bout.",
         pricing: { mode: "fixed", amountMinor: 150000, currency: "EUR", heading: "Forfait", label: "1 500 € HT", note: "Prix fixe dans les limites du forfait validé avant le démarrage." },
         included: ["Un processus", "Jusqu’à deux outils standards", "Jusqu’à cinq étapes métier déterministes", "Tests, documentation et prise en main"],
       },
@@ -161,7 +161,7 @@ const canonicalServiceDefinitions = deepFreeze([
       {
         slug: "application-metier-essentielle",
         name: "Application métier essentielle",
-        summary: "Un cas d’usage central, une base et les écrans indispensables pour travailler.",
+        summary: "Un processus métier complet, sa base de données et les écrans nécessaires au quotidien.",
         pricing: { mode: "fixed", amountMinor: 450000, currency: "EUR", heading: "Forfait", label: "4 500 € HT", note: "Prix fixe dans les limites du forfait validé avant le démarrage." },
         included: ["Un processus et une base de données", "Jusqu’à quatre écrans", "Un rôle utilisateur principal et un rôle administrateur", "Authentification standard et automatisations simples", "Mise en ligne, formation et trente jours de correction des anomalies"],
       },

@@ -427,6 +427,7 @@ export default function SavedActionPlanDetail({
                 }}
                 plan={currentPlan}
                 planId={planId}
+                sourceText={initialSourceText}
                 openingPlanId={navigationTarget?.startsWith(planHrefPrefix)
                   && navigationTarget !== newPlanHref
                   ? decodeURIComponent(navigationTarget.slice(planHrefPrefix.length))
