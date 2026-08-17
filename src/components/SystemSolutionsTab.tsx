@@ -390,7 +390,8 @@ export default function SystemSolutionsTab({
     const opensServicePage =
       localeCode === "fr" &&
       placement.section === "services" &&
-      resource.interaction.interactionMode === "detail";
+      resource.interaction.interactionMode === "detail" &&
+      !onResourceSlugChange;
 
     return (
       <div
