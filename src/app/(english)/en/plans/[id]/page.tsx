@@ -35,7 +35,12 @@ export default async function EnglishActionPlanPage({
     redirect(`/connexion?returnTo=${encodeURIComponent(`/en/plans/${id}`)}`);
   }
   const parsedContext = parseActionPlanAppContext(query);
-  const initialAppContext = { ...parsedContext, view: parsedContext.view === "solutions" ? "solutions" : "plan" } as const;
+  const initialAppContext = {
+    ...parsedContext,
+    view: parsedContext.view === "solutions" || parsedContext.view === "academy"
+      ? parsedContext.view
+      : "plan",
+  } as const;
   const { generationState, plans } = await getActionPlanWorkspacePageForIdentity(identity, id);
   if (!generationState) notFound();
 
@@ -44,7 +49,7 @@ export default async function EnglishActionPlanPage({
       <div data-action-plan-workspace className="min-h-screen bg-dema-cream text-brand-blue">
         <DocumentLocale localeCode="en" />
         <Navbar anonymousLanding isAuthenticated localeCode="en" minimal />
-        <ActionPlanNavbar activeView="plan" localeCode="en" routeNavigation visibleViews={["plan", "solutions"]} />
+        <ActionPlanNavbar activeView="plan" localeCode="en" routeNavigation visibleViews={["plan", "solutions", "academy"]} />
         <SavedActionPlanGenerationState canRetry={generationState.status === "failed" && generationState.canRetry} localeCode="en" planId={generationState.id} status={generationState.status} />
       </div>
     );
@@ -74,7 +79,7 @@ export default async function EnglishActionPlanPage({
             planId={stored.id}
             showCoaching
             systemOptions={englishActionPlanSystemOptions}
-            visibleViews={["plan", "solutions"]}
+            visibleViews={["plan", "solutions", "academy"]}
           />
         </div>
       </main>

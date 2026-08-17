@@ -46,7 +46,7 @@ export default async function NewEnglishActionPlanPage({
         marketCodeAtCreation="global-en-beta"
         showCoaching
         systemOptions={englishActionPlanSystemOptions}
-        visibleViews={["plan", "solutions"]}
+        visibleViews={["plan", "solutions", "academy"]}
       />
     </>
   );

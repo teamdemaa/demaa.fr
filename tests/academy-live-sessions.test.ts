@@ -116,7 +116,9 @@ describe("Academy live sessions and contextual cases", () => {
     expect(clientSource).toContain('aria-controls={`academy-panel-${section.id}`}');
     expect(clientSource).toContain("onKeyDown={(event) => {");
     expect(clientSource).toContain("const nextSection = getNextAcademySection(");
-    expect(clientSource).toContain(': { "aria-label": "Cours" })');
+    expect(clientSource).toContain(
+      ': { "aria-label": localeCode === "en" ? "Courses" : "Cours" })',
+    );
     expect(clientSource).not.toContain('activeSection === "live"');
     expect(clientSource).not.toContain("Modèles et documents");
     expect(pageSource).not.toContain("getVisibleAcademyLiveTrainings()");

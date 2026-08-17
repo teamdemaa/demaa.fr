@@ -34,7 +34,7 @@ export default async function EnglishActionPlansPage() {
     <div className="min-h-screen bg-dema-cream text-brand-blue">
       <DocumentLocale localeCode="en" />
       <Navbar anonymousLanding isAuthenticated localeCode="en" minimal />
-      <ActionPlanNavbar activeView="plan" localeCode="en" routeNavigation visibleViews={["plan", "solutions"]} />
+      <ActionPlanNavbar activeView="plan" localeCode="en" routeNavigation visibleViews={["plan", "solutions", "academy"]} />
       <main className="px-4 pb-28 pt-8 sm:px-6 lg:px-8">
         <section className="mx-auto max-w-4xl">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">

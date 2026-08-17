@@ -168,9 +168,12 @@ export default function ActionPlanExperience({
 
   useEffect(() => {
     if (!visibleViews || visibleViews.includes("academy")) {
-      return scheduleActionPlanAcademyPayloadPreload();
+      return scheduleActionPlanAcademyPayloadPreload({
+        localeCode: contentLocaleCode,
+        marketCode: marketCodeAtCreation,
+      });
     }
-  }, [visibleViews]);
+  }, [contentLocaleCode, marketCodeAtCreation, visibleViews]);
 
   function closeAccessPrompt() {
     if (pendingSolutionSelection?.createdPlan) {
@@ -873,6 +876,8 @@ export default function ActionPlanExperience({
           {activeTab === "academy" ? (
             <ActionPlanAcademyPanel
               initialContentSlug={appContext.academyContentSlug}
+              localeCode={contentLocaleCode}
+              marketCode={marketCodeAtCreation}
               showStructureNewsletter={initialStructureIntent}
               onContentChange={(academyContentSlug) => navigateAppContext({
                 ...appContext,
@@ -1018,6 +1023,8 @@ export default function ActionPlanExperience({
           {activeTab === "academy" ? (
             <ActionPlanAcademyPanel
               initialContentSlug={appContext.academyContentSlug}
+              localeCode={contentLocaleCode}
+              marketCode={marketCodeAtCreation}
               showStructureNewsletter={initialStructureIntent}
               onContentChange={(academyContentSlug) => navigateAppContext({
                 ...appContext,

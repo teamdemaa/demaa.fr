@@ -115,9 +115,12 @@ export default function SavedActionPlanDetail({
 
   useEffect(() => {
     if (!visibleViews || visibleViews.includes("academy")) {
-      return scheduleActionPlanAcademyPayloadPreload();
+      return scheduleActionPlanAcademyPayloadPreload({
+        localeCode: interfaceLocaleCode,
+        marketCode: interfaceLocaleCode === "en" ? "global-en-beta" : "fr-fr",
+      });
     }
-  }, [visibleViews]);
+  }, [interfaceLocaleCode, visibleViews]);
 
   function selectAppView(view: ActionPlanView) {
     navigateAppContext({
@@ -536,6 +539,8 @@ export default function SavedActionPlanDetail({
         {activeTab === "academy" ? (
           <ActionPlanAcademyPanel
             initialContentSlug={appContext.academyContentSlug}
+            localeCode={interfaceLocaleCode}
+            marketCode={interfaceLocaleCode === "en" ? "global-en-beta" : "fr-fr"}
             onContentChange={(academyContentSlug) => navigateAppContext({
               ...appContext,
               view: "academy",
