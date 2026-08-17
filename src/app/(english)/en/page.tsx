@@ -41,6 +41,7 @@ export default async function EnglishActionPlanPage({
     searchParams,
   ]);
   const initialAppContext = parseActionPlanAppContext(query);
+  const englishView = initialAppContext.view === "solutions" ? "solutions" : "plan";
   const requestedIntent = Array.isArray(query.intent) ? query.intent[0] : query.intent;
   const requestedNewPlan = Array.isArray(query.new) ? query.new[0] : query.new;
 
@@ -71,12 +72,12 @@ export default async function EnglishActionPlanPage({
         contentLocaleCode="en"
         initialEmail={identity?.email ?? ""}
         initialIsAuthenticated={Boolean(identity)}
-        initialAppContext={{ ...initialAppContext, view: "plan" }}
+        initialAppContext={{ ...initialAppContext, view: englishView }}
         initialGenerationIntent={requestedIntent === "generate-plan"}
         marketCodeAtCreation="global-en-beta"
-        showCoaching={false}
+        showCoaching
         systemOptions={englishActionPlanSystemOptions}
-        visibleViews={["plan"]}
+        visibleViews={["plan", "solutions"]}
       />
     </>
   );

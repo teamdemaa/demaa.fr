@@ -187,7 +187,10 @@ describe("action plan experience architecture", () => {
     expect(generationClient).toContain('fetch("/api/action-plans/generate"');
     expect(systemPayload).toContain("/api/action-plan/system/");
     expect(systemPayload).toContain("payloadCache");
-    expect(systemPayload).toContain('demoMode ? "?demo=1" : ""');
+    expect(systemPayload).toContain("const query = new URLSearchParams()");
+    expect(systemPayload).toContain('query.set("demo", "1")');
+    expect(systemPayload).toContain('query.set("locale", input.localeCode)');
+    expect(systemPayload).toContain('query.set("market", input.marketCode)');
     expect(systemPanel).toContain("loadActionPlanSystemPayload");
     expect(systemPanel).not.toContain("/api/action-plan/generate");
     expect(systemPanel).toContain("if (!selectedSystemId)");

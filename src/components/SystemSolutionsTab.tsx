@@ -17,6 +17,7 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
 import SolutionReferralForm from "@/components/SolutionReferralForm";
+import ServiceCallbackForm from "@/components/ServiceCallbackForm";
 import { trackSystemSolutionEvent } from "@/lib/kit-analytics-client";
 import type { SolutionSection } from "@/lib/solution-registry-dto";
 import type {
@@ -130,14 +131,21 @@ function SolutionAction({
 function SolutionDialog({
   placement,
   onClose,
+  localeCode,
+  marketCode,
 }: {
   placement: RenderableSolutionPlacementDto;
   onClose: () => void;
+  localeCode: "fr" | "en";
+  marketCode: string;
 }) {
   const { resource } = placement;
+  const isEnglish = localeCode === "en";
+  const isEnglishService = isEnglish && placement.section === "services";
   return (
     <DirectoryDetailDialogShell
-      ariaLabel={`Détails de ${resource.name}`}
+      ariaLabel={`${isEnglish ? "Details for" : "Détails de"} ${resource.name}`}
+      closeLabel={isEnglish ? "Close" : "Fermer"}
       maxWidthClassName="max-w-2xl"
       onClose={onClose}
     >
@@ -150,7 +158,40 @@ function SolutionDialog({
       <p className="mt-4 text-base leading-relaxed text-dema-muted">
         {resource.description}
       </p>
-      {resource.interaction.interactionMode === "referral_form" ? (
+      {isEnglishService ? (
+        <div className="mt-7 space-y-5 border-t border-dema-line pt-6">
+          <div>
+            <h4 className="text-sm font-semibold text-brand-blue">What this helps you achieve</h4>
+            <p className="mt-2 text-sm leading-relaxed text-dema-muted">{placement.usage}</p>
+          </div>
+          <div>
+            <h4 className="text-sm font-semibold text-brand-blue">Why it may fit</h4>
+            <p className="mt-2 text-sm leading-relaxed text-dema-muted">{placement.fitRationale}</p>
+          </div>
+          {resource.indicativePricing ? (
+            <div>
+              <h4 className="text-sm font-semibold text-brand-blue">Indicative price</h4>
+              <p className="mt-2 text-sm leading-relaxed text-dema-muted">{resource.indicativePricing}</p>
+            </div>
+          ) : null}
+          {placement.fitConstraints.length ? (
+            <div>
+              <h4 className="text-sm font-semibold text-brand-blue">Before you decide</h4>
+              <ul className="mt-2 space-y-2 text-sm leading-relaxed text-dema-muted">
+                {placement.fitConstraints.map((constraint) => <li key={constraint}>• {constraint}</li>)}
+              </ul>
+            </div>
+          ) : null}
+          <ServiceCallbackForm
+            localeCode="en"
+            marketCode={marketCode}
+            serviceName={resource.name}
+            serviceSlug={resource.resourceSlug}
+            source="english-solutions"
+            systemSlug={placement.systemSlug}
+          />
+        </div>
+      ) : resource.interaction.interactionMode === "referral_form" ? (
         <div className="mt-6 border-t border-dema-line pt-5">
           <p className="text-sm leading-relaxed text-brand-blue">
             {placement.usage}
@@ -205,7 +246,7 @@ function SolutionDialog({
         </div>
       )}
 
-      {resource.interaction.interactionMode !== "referral_form" ? (
+      {!isEnglishService && resource.interaction.interactionMode !== "referral_form" ? (
         <SolutionAction
           interaction={resource.interaction}
           label={resource.ctaLabel ?? "Découvrir la solution"}
@@ -228,12 +269,16 @@ export default function SystemSolutionsTab({
   onResourceSlugChange,
   selectedPlacementIds,
   onToggleSelection,
+  localeCode = "fr",
+  marketCode = "fr-fr",
 }: {
   sections: readonly RenderableSolutionSectionDto[];
   initialResourceSlug?: string;
   onResourceSlugChange?: (resourceSlug: string | undefined) => void;
   selectedPlacementIds?: ReadonlySet<string>;
   onToggleSelection?: (placementId: string) => void;
+  localeCode?: "fr" | "en";
+  marketCode?: string;
 }) {
   const visibleSections = useMemo(
     () => SOLUTION_RAIL_DISPLAY_ORDER.flatMap((section) =>
@@ -343,6 +388,7 @@ export default function SystemSolutionsTab({
       },
     );
     const opensServicePage =
+      localeCode === "fr" &&
       placement.section === "services" &&
       resource.interaction.interactionMode === "detail";
 
@@ -374,7 +420,7 @@ export default function SystemSolutionsTab({
               }
             }}
             className={cardClassName}
-            aria-label={`Ouvrir ${resource.name}`}
+            aria-label={`${localeCode === "en" ? "Open" : "Ouvrir"} ${resource.name}`}
           >
             {cardContent}
           </button>
@@ -384,7 +430,7 @@ export default function SystemSolutionsTab({
             type="button"
             onClick={() => onToggleSelection(placement.placementId)}
             aria-pressed={isSaved}
-            aria-label={isSaved ? `Retirer ${resource.name} de votre sélection` : `Enregistrer ${resource.name}`}
+            aria-label={isSaved ? (localeCode === "en" ? `Remove ${resource.name} from your selection` : `Retirer ${resource.name} de votre sélection`) : (localeCode === "en" ? `Save ${resource.name}` : `Enregistrer ${resource.name}`)}
             className={`absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 ${
               isSaved
                 ? "border-dema-forest/20 bg-dema-forest text-white"
@@ -408,7 +454,7 @@ export default function SystemSolutionsTab({
         className="rounded-[1.15rem] border border-dema-line bg-dema-paper px-5 py-6 text-sm leading-relaxed text-dema-muted sm:px-6"
         role="status"
       >
-        Nous vérifions encore les solutions les plus pertinentes pour ce métier.
+        {localeCode === "en" ? "We are still reviewing the most relevant solutions for this business type." : "Nous vérifions encore les solutions les plus pertinentes pour ce métier."}
       </p>
     );
   }
@@ -422,7 +468,7 @@ export default function SystemSolutionsTab({
               id="solution-section-selection"
               className="text-xl font-semibold tracking-[-0.025em] text-brand-blue sm:text-2xl"
             >
-              Votre sélection
+              {localeCode === "en" ? "Your selection" : "Votre sélection"}
             </h3>
             <div className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_1rem)_/_2)] lg:auto-cols-[calc((100%_-_2rem)_/_3)] xl:auto-cols-[calc((100%_-_3rem)_/_3.5)] [&::-webkit-scrollbar]:hidden">
               {selectedPlacements.map(renderPlacementCard)}
@@ -431,9 +477,9 @@ export default function SystemSolutionsTab({
         ) : null}
 
         {visibleSections.map((group) => {
-          const label = SOLUTION_UI_WORKING_LABELS[
-            group.section as VisibleSolutionSection
-          ];
+          const label = localeCode === "en"
+            ? group.section === "software" ? "Tools" : "Accompaniment"
+            : SOLUTION_UI_WORKING_LABELS[group.section as VisibleSolutionSection];
           const railState = railStates[group.section];
 
           return (
@@ -453,7 +499,7 @@ export default function SystemSolutionsTab({
                   <div className="flex shrink-0 items-center gap-2">
                     <button
                       type="button"
-                      aria-label={`Voir les solutions précédentes - ${label}`}
+                      aria-label={`${localeCode === "en" ? "View previous solutions" : "Voir les solutions précédentes"} - ${label}`}
                       onClick={() => navigateRail(group, -1)}
                       disabled={!railState?.canPrevious}
                       className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
@@ -462,7 +508,7 @@ export default function SystemSolutionsTab({
                     </button>
                     <button
                       type="button"
-                      aria-label={`Voir les solutions suivantes - ${label}`}
+                      aria-label={`${localeCode === "en" ? "View next solutions" : "Voir les solutions suivantes"} - ${label}`}
                       onClick={() => navigateRail(group, 1)}
                       disabled={!railState?.canNext}
                       className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
@@ -488,7 +534,7 @@ export default function SystemSolutionsTab({
       </div>
 
       {selected ? (
-        <SolutionDialog placement={selected} onClose={closeSolution} />
+        <SolutionDialog placement={selected} onClose={closeSolution} localeCode={localeCode} marketCode={marketCode} />
       ) : null}
     </>
   );

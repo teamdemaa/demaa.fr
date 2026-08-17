@@ -58,4 +58,8 @@ export type CoachingConversationSummary = Readonly<{
   lastMessage: string;
   openedAt: string | null;
   updatedAt: string;
+  localeCode: "fr" | "en";
+  marketCode: string;
+  countryCode: string | null;
+  source: string;
 }>;

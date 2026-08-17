@@ -767,6 +767,8 @@ export default function ActionPlanExperience({
         <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} localeCode={contentLocaleCode} visibleViews={visibleViews} />
         {showCoaching ? (
           <ActionPlanCoachingControl
+            localeCode={contentLocaleCode}
+            marketCode={marketCodeAtCreation}
             demoMode={isDemoMode}
             initialEmail={initialEmail}
             isAuthenticated={isAuthenticated}
@@ -846,6 +848,8 @@ export default function ActionPlanExperience({
           ) : null}
           {activeTab === "solutions" ? (
             <ActionPlanSystemPanel
+              localeCode={contentLocaleCode}
+              marketCode={marketCodeAtCreation}
               options={systemOptions}
               selectedSystemId={selectedSystemId}
               onSystemChange={(systemId) => {
@@ -895,6 +899,8 @@ export default function ActionPlanExperience({
     <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
       <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} localeCode={contentLocaleCode} visibleViews={visibleViews} />
       {showCoaching ? <ActionPlanCoachingControl
+        localeCode={contentLocaleCode}
+        marketCode={marketCodeAtCreation}
         accessPlan={{
           plan,
           sourceText: situation.trim(),
@@ -983,6 +989,8 @@ export default function ActionPlanExperience({
           ) : null}
           {activeTab === "solutions" ? (
             <ActionPlanSystemPanel
+              localeCode={contentLocaleCode}
+              marketCode={marketCodeAtCreation}
               options={systemOptions}
               selectedSystemId={selectedSystemId}
               onSystemChange={(systemId) => {

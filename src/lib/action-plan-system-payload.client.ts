@@ -19,8 +19,10 @@ const pendingPayloads = new Map<string, Promise<ActionPlanSystemPayload>>();
 export function getActionPlanSystemPayloadCacheKey(
   systemId: string,
   demoMode: boolean,
+  localeCode: "fr" | "en" = "fr",
+  marketCode = localeCode === "en" ? "global-en-beta" : "fr-fr",
 ) {
-  return `${demoMode ? "demo" : "live"}:${systemId}`;
+  return `${demoMode ? "demo" : "live"}:${localeCode}:${marketCode}:${systemId}`;
 }
 
 export function readCachedActionPlanSystemPayload(cacheKey: string) {
@@ -36,6 +38,8 @@ export async function loadActionPlanSystemPayload(input: {
   cacheKey: string;
   demoMode: boolean;
   systemId: string;
+  localeCode?: "fr" | "en";
+  marketCode?: string;
 }) {
   const cached = payloadCache.get(input.cacheKey);
   if (cached) return cached;
@@ -43,9 +47,13 @@ export async function loadActionPlanSystemPayload(input: {
   const pending = pendingPayloads.get(input.cacheKey);
   if (pending) return pending;
 
-  const demoQuery = input.demoMode ? "?demo=1" : "";
+  const query = new URLSearchParams();
+  if (input.demoMode) query.set("demo", "1");
+  if (input.localeCode) query.set("locale", input.localeCode);
+  if (input.marketCode) query.set("market", input.marketCode);
+  const queryString = query.size ? `?${query.toString()}` : "";
   const request = fetch(
-    `/api/action-plan/system/${encodeURIComponent(input.systemId)}${demoQuery}`,
+    `/api/action-plan/system/${encodeURIComponent(input.systemId)}${queryString}`,
   ).then(async (response) => {
     const body = (await response.json().catch(() => null)) as
       | ActionPlanSystemPayload

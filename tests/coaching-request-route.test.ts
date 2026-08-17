@@ -120,8 +120,42 @@ describe("coaching request route", () => {
       body: "Je souhaite clarifier ma prochaine décision opérationnelle.",
       email: "owner@example.com",
       idempotencyKey: "coaching:12345678",
+      localeCode: "fr",
+      marketCode: "fr-fr",
+      countryCode: null,
+      source: "echange",
       uid: "owner-uid",
     });
+  });
+
+  it("preserves the English locale and market in the shared conversation pipeline", async () => {
+    const response = await POST(request({
+      countryCode: "gb",
+      localeCode: "en",
+      marketCode: "global-en-beta",
+      message: "I need to clarify my next operational decision.",
+      source: "english-talk-to-us",
+    }));
+
+    expect(response.status).toBe(202);
+    expect(mocks.appendCustomerCoachingMessage).toHaveBeenCalledWith({
+      body: "I need to clarify my next operational decision.",
+      countryCode: "GB",
+      email: "owner@example.com",
+      idempotencyKey: "coaching:12345678",
+      localeCode: "en",
+      marketCode: "global-en-beta",
+      source: "english-talk-to-us",
+      uid: "owner-uid",
+    });
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      fields: expect.arrayContaining([
+        { label: "Langue", value: "en" },
+        { label: "Marché", value: "global-en-beta" },
+        { label: "Pays", value: "GB" },
+        { label: "Source", value: "english-talk-to-us" },
+      ]),
+    }));
   });
 
   it("refuses a coaching request without an authenticated session", async () => {
@@ -175,10 +209,19 @@ describe("coaching request route", () => {
       body: "Message conservé avant la connexion.",
       email: "owner@example.com",
       idempotencyKey: "coaching:draft:server-owned-key",
+      localeCode: "fr",
+      marketCode: "fr-fr",
+      countryCode: null,
+      source: "echange",
       uid: "owner-uid",
     });
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
-      fields: [{ label: "Message", value: "Message conservé avant la connexion." }],
+      fields: expect.arrayContaining([
+        { label: "Message", value: "Message conservé avant la connexion." },
+        { label: "Langue", value: "fr" },
+        { label: "Marché", value: "fr-fr" },
+        { label: "Source", value: "echange" },
+      ]),
       idempotencyKey: "coaching:draft:server-owned-key",
     }));
     expect(mocks.markCoachingMessageDraftSent).toHaveBeenCalledWith({

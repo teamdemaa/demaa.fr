@@ -27,6 +27,7 @@ export const runtime = "nodejs";
 type ServiceCallbackRequestBody = Readonly<{
   attribution?: unknown;
   company?: unknown;
+  countryCode?: unknown;
   idempotencyKey?: unknown;
   localeCode?: unknown;
   marketCode?: unknown;
@@ -86,6 +87,7 @@ export async function POST(request: Request) {
       body = parseRecord(data, "serviceCallbackRequest", [
         "attribution",
         "company",
+        "countryCode",
         "idempotencyKey",
         "localeCode",
         "marketCode",
@@ -112,6 +114,7 @@ export async function POST(request: Request) {
     const marketCode = normalizeText(body?.marketCode, 40) || "fr-fr";
     const packageSlug = normalizeText(body?.packageSlug, 120);
     const phone = normalizeText(body?.phone, 60);
+    const countryCode = normalizeText(body?.countryCode, 2).toUpperCase();
     const serviceSlug = normalizeText(body?.serviceSlug, 120);
     const requestedSource = normalizeText(body?.source, 80);
     const systemSlug = normalizeText(body?.systemSlug, 120);
@@ -127,9 +130,17 @@ export async function POST(request: Request) {
       ? validatedSourcePage
       : normalizeInternalSourcePage(request.headers.get("referer"), requestOrigin);
 
+    if (!((localeCode === "fr" && marketCode === "fr-fr") || (localeCode === "en" && marketCode === "global-en-beta"))) {
+      return NextResponse.json({ error: "Le contexte international est invalide." }, { status: 400 });
+    }
+
     if (!company || !isValidPhone(phone) || !idempotencyKey) {
       return NextResponse.json(
-        { error: "Indiquez une entreprise et un numéro WhatsApp valides." },
+        {
+          error: localeCode === "en"
+            ? "Enter a company and a valid contact number."
+            : "Indiquez une entreprise et un numéro WhatsApp valides.",
+        },
         { status: 400 },
       );
     }
@@ -141,7 +152,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (localeCode !== "fr" || marketCode !== "fr-fr" || !sourcePage) {
+    if (!sourcePage) {
       return NextResponse.json(
         { error: "Le contexte de la demande est invalide." },
         { status: 400 },
@@ -228,9 +239,10 @@ export async function POST(request: Request) {
               { label: "Prix de référence", value: servicePackage.pricing.label },
             ]
           : []),
-        { label: "Numéro WhatsApp", value: phone },
-        { label: "Locale", value: localeCode },
+        { label: localeCode === "en" ? "Contact number" : "Numéro WhatsApp", value: phone },
+        { label: localeCode === "en" ? "Langue" : "Locale", value: localeCode },
         { label: "Marché", value: marketCode },
+        ...(countryCode ? [{ label: "Pays", value: countryCode }] : []),
         { label: "Page source", value: sourcePage },
         ...(monthlyBenefitDiscount.eligible
           ? [{
@@ -246,7 +258,9 @@ export async function POST(request: Request) {
       ],
       idempotencyKey: scopedIdempotencyKey,
       requestType: "service_callback_request",
-      title: `Demande de contact WhatsApp - ${service.name}${servicePackage ? ` - ${servicePackage.name}` : ""}`,
+      title: localeCode === "en"
+        ? `Service request - ${service.name}${servicePackage ? ` - ${servicePackage.name}` : ""}`
+        : `Demande de contact WhatsApp - ${service.name}${servicePackage ? ` - ${servicePackage.name}` : ""}`,
     });
 
     return success();
