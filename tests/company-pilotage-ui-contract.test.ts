@@ -40,7 +40,7 @@ describe("company Pilotage UI contract", () => {
     const figures = source("CompanyFiguresPanel.tsx");
     expect(figures).not.toContain(">Chiffres</h1>");
     expect(figures).not.toContain("Un suivi mensuel simple pour piloter votre entreprise.");
-    expect(figures).toContain('className="flex justify-end"');
+    expect(figures).toContain('className="flex flex-wrap items-end justify-between gap-3"');
     expect(figures).toContain('className="mt-6 grid grid-cols-2 gap-3"');
     expect(figures).not.toContain("mois renseignés sur");
     expect(figures).not.toContain("Les totaux incomplets restent affichés");
