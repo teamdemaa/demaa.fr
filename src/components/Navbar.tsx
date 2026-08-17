@@ -4,15 +4,19 @@ import Link from "next/link";
 import { CircleUserRound } from "lucide-react";
 import CustomerLogoutButton from "@/components/CustomerLogoutButton";
 import DemaaWordmark from "@/components/DemaaWordmark";
+import type { InterfaceLocaleCode } from "@/lib/international-context";
+import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
 
 export default function Navbar({
   anonymousLanding = false,
   isAuthenticated = false,
   minimal = false,
+  localeCode = "fr",
 }: {
   anonymousLanding?: boolean;
   isAuthenticated?: boolean;
   minimal?: boolean;
+  localeCode?: InterfaceLocaleCode;
 }) {
   const accountAccessClassName =
     "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
@@ -28,8 +32,8 @@ export default function Navbar({
         <div className="mx-auto w-full px-3 sm:px-6 md:px-10 lg:px-24">
           <div className="relative flex items-center justify-between py-3 md:min-h-16 md:py-4">
             <Link
-              href="/"
-              aria-label="Retour à l'accueil"
+              href={localeCode === "en" ? "/en" : "/"}
+              aria-label={localeCode === "en" ? "Back to home" : "Retour à l'accueil"}
               className="z-50 inline-flex shrink-0 cursor-pointer items-center"
             >
               <DemaaWordmark className="text-[1.2rem] sm:text-[1.7rem]" />
@@ -47,7 +51,7 @@ export default function Navbar({
                 {isAuthenticated ? (
                   <details className="group relative">
                     <summary
-                      aria-label="Ouvrir le menu du compte"
+                      aria-label={localeCode === "en" ? "Open account menu" : "Ouvrir le menu du compte"}
                       className={`${accountAccessClassName} cursor-pointer list-none [&::-webkit-details-marker]:hidden`}
                       title="Compte"
                     >
@@ -58,20 +62,20 @@ export default function Navbar({
                     </summary>
                     <div className="absolute right-0 top-full z-50 mt-2 min-w-40 rounded-2xl border border-dema-line bg-dema-paper px-3 py-2 shadow-[0_18px_46px_rgba(23,35,29,0.14)]">
                       <Link
-                        href="/plans"
+                        href={getLocalizedActionPlanPath(localeCode, "/plans")}
                         className="block whitespace-nowrap px-2 py-1.5 text-left text-sm text-brand-blue transition hover:text-dema-forest"
                       >
-                        Mes plans
+                        {localeCode === "en" ? "My plans" : "Mes plans"}
                       </Link>
-                      <CustomerLogoutButton />
+                      <CustomerLogoutButton localeCode={localeCode} />
                     </div>
                   </details>
                 ) : (
                   <Link
-                    href="/connexion?returnTo=%2Fplans%2Flatest"
+                    href={`/connexion?returnTo=${encodeURIComponent(getLocalizedActionPlanPath(localeCode, "/plans/latest"))}`}
                     className={connectionLinkClassName}
                   >
-                    <span>Connexion</span>
+                    <span>{localeCode === "en" ? "Sign in" : "Connexion"}</span>
                   </Link>
                 )}
               </div>

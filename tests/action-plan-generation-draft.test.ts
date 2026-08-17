@@ -22,14 +22,19 @@ describe("action plan generation draft", () => {
     });
   });
 
-  it("stores only the raw situation, request ID and creation timestamp", () => {
+  it("stores only the raw situation, request ID, creation timestamp and locale context", () => {
     const draft = createActionPlanGenerationDraft(
       "Je dois clarifier les priorités commerciales de mon entreprise.",
+      { contentLocaleCode: "en", marketCodeAtCreation: "global-en-beta" },
     );
     writeActionPlanGenerationDraft(draft);
     expect(readActionPlanGenerationDraft()).toEqual(draft);
     expect(JSON.stringify([...values.values()])).not.toContain("plan\"");
     expect(JSON.stringify([...values.values()])).not.toContain("owner_uid");
+    expect(readActionPlanGenerationDraft()).toMatchObject({
+      contentLocaleCode: "en",
+      marketCodeAtCreation: "global-en-beta",
+    });
   });
 
   it("expires and removes an abandoned draft", () => {

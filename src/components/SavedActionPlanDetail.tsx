@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
 import ActionPlanCoachingControl from "@/components/ActionPlanCoachingControl";
 import ActionPlanGenerationScreen from "@/components/ActionPlanGenerationScreen";
@@ -30,6 +30,10 @@ import {
   addActionPlanWorkspaceAction,
   type ActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
+import {
+  getLocalizedActionPlanPath,
+  type ActionPlanContentLocaleCode,
+} from "@/lib/action-plan-localization";
 
 export default function SavedActionPlanDetail({
   plan,
@@ -43,6 +47,10 @@ export default function SavedActionPlanDetail({
   availablePlans,
   initialEmail = "",
   initialIsAuthenticated = true,
+  contentLocaleCode = "fr",
+  interfaceLocaleCode = "fr",
+  visibleViews,
+  showCoaching = true,
 }: {
   plan: PersistableActionPlan;
   planId: string;
@@ -55,8 +63,27 @@ export default function SavedActionPlanDetail({
   availablePlans: readonly SavedActionPlanOption[];
   initialEmail?: string;
   initialIsAuthenticated?: boolean;
+  contentLocaleCode?: ActionPlanContentLocaleCode;
+  interfaceLocaleCode?: ActionPlanContentLocaleCode;
+  visibleViews?: readonly ActionPlanView[];
+  showCoaching?: boolean;
 }) {
   const router = useRouter();
+  const planHrefPrefix = getLocalizedActionPlanPath(interfaceLocaleCode, "/plans/");
+  const newPlanHref = getLocalizedActionPlanPath(interfaceLocaleCode, "/plans/new");
+  const messages = useMemo(() => interfaceLocaleCode === "en" ? {
+    saveFailed: "Your changes could not be saved.",
+    recentLoadFailed: "The latest version of the plan could not be loaded.",
+    deleteFailed: "This plan could not be deleted.",
+    planNotBlank: "This plan already contains information that must be kept.",
+    saveBeforeGenerate: "Save the latest changes before generating the plan.",
+  } : {
+    saveFailed: "Impossible d’enregistrer les modifications.",
+    recentLoadFailed: "Impossible de charger la version récente du plan.",
+    deleteFailed: "Impossible de supprimer ce plan.",
+    planNotBlank: "Ce plan contient déjà des informations à conserver.",
+    saveBeforeGenerate: "Enregistrez les dernières modifications avant de générer le plan.",
+  }, [interfaceLocaleCode]);
   const { context: appContext, navigate: navigateAppContext } =
     useActionPlanAppContext(initialAppContext);
   const activeTab = appContext.view;
@@ -84,7 +111,11 @@ export default function SavedActionPlanDetail({
   const navigationTargetRef = useRef<string | null>(null);
   const saveConflictRef = useRef(false);
 
-  useEffect(() => scheduleActionPlanAcademyPayloadPreload(), []);
+  useEffect(() => {
+    if (!visibleViews || visibleViews.includes("academy")) {
+      return scheduleActionPlanAcademyPayloadPreload();
+    }
+  }, [visibleViews]);
 
   function selectAppView(view: ActionPlanView) {
     navigateAppContext({
@@ -123,7 +154,9 @@ export default function SavedActionPlanDetail({
           | { revision?: number; title?: string; error?: string; code?: string }
           | null;
         if (!response.ok || !body?.revision) {
-          const error = new Error(body?.error || "Impossible d’enregistrer les modifications.") as Error & {
+          const error = new Error(
+            interfaceLocaleCode === "en" ? messages.saveFailed : body?.error || messages.saveFailed,
+          ) as Error & {
             code?: string;
           };
           error.code = body?.code;
@@ -142,11 +175,11 @@ export default function SavedActionPlanDetail({
       const conflict = error?.code === "revision_conflict";
       saveConflictRef.current = conflict;
       setSaveState("error");
-      setSaveError(error?.message || "Impossible d’enregistrer les modifications.");
+      setSaveError(error?.message || messages.saveFailed);
       setSaveConflict(conflict);
     }
     return false;
-  }, [planId]);
+  }, [interfaceLocaleCode, messages.saveFailed, planId]);
 
   useEffect(() => {
     if (firstRenderRef.current) {
@@ -226,7 +259,7 @@ export default function SavedActionPlanDetail({
         | { revision?: number; error?: string }
         | null;
       if (!response.ok || !body?.revision) {
-        throw new Error(body?.error || "Impossible de charger la version récente du plan.");
+        throw new Error(interfaceLocaleCode === "en" ? messages.recentLoadFailed : body?.error || messages.recentLoadFailed);
       }
       revisionRef.current = body.revision;
       saveConflictRef.current = false;
@@ -240,7 +273,7 @@ export default function SavedActionPlanDetail({
       setSaveError(
         error instanceof Error
           ? error.message
-          : "Impossible de charger la version récente du plan.",
+          : messages.recentLoadFailed,
       );
     }
   }
@@ -275,7 +308,9 @@ export default function SavedActionPlanDetail({
   async function deletePlan() {
     if (
       isDeleting
-      || !window.confirm("Supprimer ce plan ? Cette action est définitive dans l’application.")
+      || !window.confirm(interfaceLocaleCode === "en"
+        ? "Delete this plan? This action cannot be undone in the application."
+        : "Supprimer ce plan ? Cette action est définitive dans l’application.")
     ) return;
 
     setIsDeleting(true);
@@ -300,14 +335,14 @@ export default function SavedActionPlanDetail({
         | { error?: string }
         | null;
       if (!response.ok) {
-        throw new Error(body?.error || "Impossible de supprimer ce plan.");
+        throw new Error(interfaceLocaleCode === "en" ? messages.deleteFailed : body?.error || messages.deleteFailed);
       }
-      router.replace("/plans");
+      router.replace(getLocalizedActionPlanPath(interfaceLocaleCode, "/plans"));
       router.refresh();
     } catch (error) {
       setSaveState("error");
       setSaveError(
-        error instanceof Error ? error.message : "Impossible de supprimer ce plan.",
+        error instanceof Error ? error.message : messages.deleteFailed,
       );
       setIsDeleting(false);
     }
@@ -315,12 +350,12 @@ export default function SavedActionPlanDetail({
 
   async function generateBlankPlan(sourceText: string) {
     if (!isBlankManualActionPlan(currentPlan, workspace)) {
-      throw new Error("Ce plan contient déjà des informations à conserver.");
+      throw new Error(messages.planNotBlank);
     }
 
     const existingSaved = await flushWorkspaceSave();
     if (!existingSaved) {
-      throw new Error("Enregistrez les dernières modifications avant de générer le plan.");
+      throw new Error(messages.saveBeforeGenerate);
     }
 
     setIsGeneratingPlan(true);
@@ -329,28 +364,31 @@ export default function SavedActionPlanDetail({
         expectedRevision: revisionRef.current,
         id: planId,
         situation: sourceText,
-      }, new AbortController().signal);
-      window.location.replace(`/plans/${encodeURIComponent(generatedPlanId)}`);
+      }, new AbortController().signal, contentLocaleCode);
+      window.location.replace(getLocalizedActionPlanPath(
+        interfaceLocaleCode,
+        `/plans/${encodeURIComponent(generatedPlanId)}`,
+      ));
     } catch (error) {
       setIsGeneratingPlan(false);
       throw error;
     }
   }
 
-  if (isGeneratingPlan) return <ActionPlanGenerationScreen />;
+  if (isGeneratingPlan) return <ActionPlanGenerationScreen localeCode={interfaceLocaleCode} />;
 
   return (
     <div className="contents">
-      <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} />
-      <ActionPlanCoachingControl
+      <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} localeCode={interfaceLocaleCode} visibleViews={visibleViews} />
+      {showCoaching ? <ActionPlanCoachingControl
         existingPlanId={planId}
         initialEmail={initialEmail}
         isAuthenticated={initialIsAuthenticated}
-      />
+      /> : null}
       <div className="pt-1">
         {activeTab === "plan" ? (
           <CompanyPilotagePanel
-            available
+            available={interfaceLocaleCode === "fr"}
             section={appContext.planSection}
             onSectionChange={(planSection) => navigateAppContext({
               ...appContext,
@@ -368,6 +406,7 @@ export default function SavedActionPlanDetail({
                 onResetTitle={() => setPlanTitle(confirmedTitleRef.current)}
                 onTitleChange={setPlanTitle}
                 title={planTitle}
+                localeCode={interfaceLocaleCode}
               />
               <SavedActionPlanMenu
                 availablePlans={availablePlans}
@@ -381,17 +420,22 @@ export default function SavedActionPlanDetail({
                 }}
                 plan={currentPlan}
                 planId={planId}
-                openingPlanId={navigationTarget?.startsWith("/plans/")
-                  && navigationTarget !== "/plans/new"
-                  ? decodeURIComponent(navigationTarget.slice("/plans/".length))
+                openingPlanId={navigationTarget?.startsWith(planHrefPrefix)
+                  && navigationTarget !== newPlanHref
+                  ? decodeURIComponent(navigationTarget.slice(planHrefPrefix.length))
                   : null}
                 title={planTitle}
                 workspace={workspace}
+                localeCode={interfaceLocaleCode}
               />
             </div>
             <div className="sr-only" role="status" aria-live="polite">
               <span className={saveState === "error" ? "text-red-700" : "text-dema-muted"}>
-                {saveState === "saving" ? "Enregistrement…" : saveState === "error" ? saveError : "Modifications enregistrées"}
+                {saveState === "saving"
+                  ? interfaceLocaleCode === "en" ? "Saving…" : "Enregistrement…"
+                  : saveState === "error"
+                    ? saveError
+                    : interfaceLocaleCode === "en" ? "Changes saved" : "Modifications enregistrées"}
               </span>
             </div>
             {saveState === "error" ? (
@@ -405,14 +449,14 @@ export default function SavedActionPlanDetail({
                         className="font-semibold underline underline-offset-4"
                         onClick={() => { void keepLocalChangesAfterConflict(); }}
                       >
-                        Garder mes modifications
+                        {interfaceLocaleCode === "en" ? "Keep my changes" : "Garder mes modifications"}
                       </button>
                       <button
                         type="button"
                         className="font-semibold underline underline-offset-4"
                         onClick={() => window.location.reload()}
                       >
-                        Utiliser la version récente
+                        {interfaceLocaleCode === "en" ? "Use latest version" : "Utiliser la version récente"}
                       </button>
                     </>
                   ) : (
@@ -421,7 +465,7 @@ export default function SavedActionPlanDetail({
                       className="font-semibold underline underline-offset-4"
                       onClick={() => { void flushWorkspaceSave(); }}
                     >
-                      Réessayer
+                      {interfaceLocaleCode === "en" ? "Try again" : "Réessayer"}
                     </button>
                   )}
                 </div>
@@ -429,7 +473,7 @@ export default function SavedActionPlanDetail({
             ) : null}
             {navigationTarget ? (
               <p className="mb-3 text-sm text-dema-muted" role="status" aria-live="polite">
-                Ouverture…
+                {interfaceLocaleCode === "en" ? "Opening…" : "Ouverture…"}
               </p>
             ) : null}
             <ActionPlanResult
@@ -453,6 +497,8 @@ export default function SavedActionPlanDetail({
                 systemTab: "solutions",
                 solutionResourceSlug: resourceSlug,
               })}
+              localeCode={interfaceLocaleCode}
+              contentLocaleCode={contentLocaleCode}
             />
           </CompanyPilotagePanel>
         ) : null}

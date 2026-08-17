@@ -10,6 +10,7 @@ import {
   signInWithGoogleAndGetIdToken,
 } from "@/lib/firebase-client-auth";
 import { getReturnToInterfaceLocale } from "@/lib/international-context";
+import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 const GOOGLE_POPUP_TIMEOUT_MS = 30_000;
 
@@ -50,7 +51,7 @@ function shouldOfferRedirectFallback(error: unknown) {
     || code.includes("operation-not-supported-in-this-environment");
 }
 
-function getGoogleErrorMessage(error: unknown) {
+function getGoogleErrorMessage(error: unknown, localeCode: InterfaceLocaleCode) {
   const code = typeof error === "object" && error && "code" in error
     ? String(error.code)
     : "";
@@ -59,23 +60,31 @@ function getGoogleErrorMessage(error: unknown) {
     return null;
   }
   if (code.includes("popup-blocked")) {
-    return "La fenêtre Google a été bloquée. Réessayez pour continuer par redirection.";
+    return localeCode === "en"
+      ? "The Google window was blocked. Try again to continue by redirect."
+      : "La fenêtre Google a été bloquée. Réessayez pour continuer par redirection.";
   }
   if (
     code.includes("popup-timeout")
     || code.includes("operation-not-supported-in-this-environment")
   ) {
-    return "La fenêtre Google n’a pas répondu. Réessayez pour continuer par redirection.";
+    return localeCode === "en"
+      ? "The Google window did not respond. Try again to continue by redirect."
+      : "La fenêtre Google n’a pas répondu. Réessayez pour continuer par redirection.";
   }
   if (code.includes("unauthorized-domain")) {
-    return "La connexion Google n’est pas encore autorisée sur ce domaine.";
+    return localeCode === "en"
+      ? "Google sign-in is not yet authorised on this domain."
+      : "La connexion Google n’est pas encore autorisée sur ce domaine.";
   }
   if (code.includes("account-exists-with-different-credential")) {
-    return "Cette adresse utilise déjà un mot de passe. Connectez-vous avec votre e-mail.";
+    return localeCode === "en"
+      ? "This address already uses a password. Sign in with your email."
+      : "Cette adresse utilise déjà un mot de passe. Connectez-vous avec votre e-mail.";
   }
   return error instanceof Error
     ? error.message
-    : "La connexion Google n’a pas pu aboutir.";
+    : localeCode === "en" ? "Google sign-in could not be completed." : "La connexion Google n’a pas pu aboutir.";
 }
 
 export default function GoogleCustomerSignInButton({
@@ -83,11 +92,13 @@ export default function GoogleCustomerSignInButton({
   onAuthenticated,
   onError,
   returnTo = "/plans",
+  localeCode = "fr",
 }: {
   large?: boolean;
   onAuthenticated?: (result: { redirectTo: string }) => Promise<void> | void;
   onError?: (message: string | null) => void;
   returnTo?: string;
+  localeCode?: InterfaceLocaleCode;
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [preferRedirect, setPreferRedirect] = useState(false);
@@ -120,7 +131,7 @@ export default function GoogleCustomerSignInButton({
       }
     } catch (error) {
       if (shouldOfferRedirectFallback(error)) setPreferRedirect(true);
-      onError?.(getGoogleErrorMessage(error));
+      onError?.(getGoogleErrorMessage(error, localeCode));
     } finally {
       setIsLoading(false);
     }
@@ -138,7 +149,9 @@ export default function GoogleCustomerSignInButton({
       ) : (
         <span aria-hidden="true" className="text-base font-semibold text-dema-forest">G</span>
       )}
-      {isLoading ? "Connexion…" : "Continuer avec Google"}
+      {isLoading
+        ? localeCode === "en" ? "Signing in…" : "Connexion…"
+        : localeCode === "en" ? "Continue with Google" : "Continuer avec Google"}
     </button>
   );
 }

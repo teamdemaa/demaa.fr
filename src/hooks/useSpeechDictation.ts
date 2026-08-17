@@ -41,23 +41,44 @@ declare global {
   }
 }
 
-const KEYBOARD_FALLBACK = " Vous pouvez continuer au clavier.";
 const RESTART_DELAY_MS = 250;
 
-export function getSpeechDictationErrorMessage(error?: string) {
+export function getSpeechDictationErrorMessage(
+  error?: string,
+  language = "fr-FR",
+) {
+  const isEnglish = language.toLowerCase().startsWith("en");
+  if (isEnglish) {
+    const keyboardFallback = " You can continue with the keyboard.";
+    switch (error) {
+      case "not-allowed":
+      case "service-not-allowed":
+        return `Allow microphone access in your browser settings.${keyboardFallback}`;
+      case "audio-capture":
+        return `No microphone could be used.${keyboardFallback}`;
+      case "language-not-supported":
+      case "language-unavailable":
+        return `English dictation is not available on this device.${keyboardFallback}`;
+      case "network":
+        return `Dictation was interrupted by a connection problem.${keyboardFallback}`;
+      default:
+        return `Voice dictation is not available here.${keyboardFallback}`;
+    }
+  }
+  const keyboardFallback = " Vous pouvez continuer au clavier.";
   switch (error) {
     case "not-allowed":
     case "service-not-allowed":
-      return `Autorisez l’accès au microphone dans les réglages de votre navigateur.${KEYBOARD_FALLBACK}`;
+      return `Autorisez l’accès au microphone dans les réglages de votre navigateur.${keyboardFallback}`;
     case "audio-capture":
-      return `Aucun microphone disponible n’a pu être utilisé.${KEYBOARD_FALLBACK}`;
+      return `Aucun microphone disponible n’a pu être utilisé.${keyboardFallback}`;
     case "language-not-supported":
     case "language-unavailable":
-      return `La dictée en français n’est pas disponible sur cet appareil.${KEYBOARD_FALLBACK}`;
+      return `La dictée en français n’est pas disponible sur cet appareil.${keyboardFallback}`;
     case "network":
-      return `La dictée a été interrompue par un problème de connexion.${KEYBOARD_FALLBACK}`;
+      return `La dictée a été interrompue par un problème de connexion.${keyboardFallback}`;
     default:
-      return `La dictée vocale n’est pas disponible ici.${KEYBOARD_FALLBACK}`;
+      return `La dictée vocale n’est pas disponible ici.${keyboardFallback}`;
   }
 }
 
@@ -137,7 +158,7 @@ export function createSpeechDictationSession({
     try {
       recognition.start();
     } catch {
-      onError(getSpeechDictationErrorMessage());
+      onError(getSpeechDictationErrorMessage(undefined, language));
       finish();
     }
   };
@@ -165,7 +186,7 @@ export function createSpeechDictationSession({
     if (!active) return;
     if (event.error === "aborted") return;
     if (event.error === "no-speech" && shouldListen && continuous) return;
-    onError(getSpeechDictationErrorMessage(event.error));
+    onError(getSpeechDictationErrorMessage(event.error, language));
     finish();
   };
   recognition.onend = () => {
@@ -256,7 +277,7 @@ export function useSpeechDictation({
     const Recognition =
       window.SpeechRecognition ?? window.webkitSpeechRecognition;
     if (!Recognition) {
-      setError(getSpeechDictationErrorMessage("unsupported"));
+      setError(getSpeechDictationErrorMessage("unsupported", language));
       return;
     }
 

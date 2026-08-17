@@ -15,6 +15,7 @@ describe("action plan experience architecture", () => {
     const result = source("src/components/ActionPlanResult.tsx");
     const generationBar = source("src/components/ActionPlanGenerationBar.tsx");
     const generationScreen = source("src/components/ActionPlanGenerationScreen.tsx");
+    const uiCopy = source("src/lib/action-plan-ui-copy.ts");
 
     expect(experience).toContain("useState<EditableActionPlan | null>(null)");
     expect(experience).toContain("readGuestSelectedSystemId");
@@ -22,11 +23,11 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain('fetch("/api/action-plans"');
     expect(experience).toContain("createActionPlanGenerationDraft");
     expect(experience).toContain("writeActionPlanGenerationDraft(draft)");
-    expect(experience).toContain('window.location.assign("/plans/new?resume=generation")');
+    expect(experience).toContain('window.location.assign(`${newPlanPath}?resume=generation`)');
     expect(experience).toContain("runAuthenticatedActionPlanGeneration");
     expect(experience).toContain("setQueuedGenerationDraft(draft)");
-    expect(experience).toContain('window.location.assign(`/plans/${encodeURIComponent(id)}`)');
-    expect(experience).toContain('choiceTitle="Enregistrez votre plan"');
+    expect(experience).toContain("getLocalizedActionPlanPath(");
+    expect(experience).toContain("choiceTitle={uiCopy.savePlan}");
     expect(experience).not.toContain("Votre plan sera généré et enregistré dans votre espace.");
     expect(experience).not.toContain("type PendingGeneratedPlan");
     expect(experience).not.toContain("setPendingGeneratedPlan({");
@@ -36,7 +37,7 @@ describe("action plan experience architecture", () => {
       experience.lastIndexOf("if (isGenerating)"),
       experience.lastIndexOf("if (!plan)"),
     );
-    expect(generationBranch).toContain("<ActionPlanGenerationScreen />");
+    expect(generationBranch).toContain("<ActionPlanGenerationScreen localeCode={contentLocaleCode} />");
     expect(generationScreen).toContain("Génération de votre plan d’action");
     expect(generationScreen).not.toContain("CustomerSpaceAccessForm");
     expect(experience).toContain("draft={accessDraft}");
@@ -68,10 +69,12 @@ describe("action plan experience architecture", () => {
     expect(accessForm).toContain("Créer mon accès");
     expect(shareControl).toContain("navigator.share");
     expect(shareControl).toContain("navigator.clipboard.writeText");
-    expect(shareControl).toContain('aria-label={copied ? "Plan copié" : "Partager le plan"}');
+    expect(shareControl).toContain("aria-label={copied");
+    expect(shareControl).toContain('"Plan copié"');
+    expect(shareControl).toContain('"Partager le plan"');
     expect(shareControl).toContain('variant === "menu" ? undefined : "sr-only"');
     expect(shareControl).toContain('variant === "icon" ? (');
-    expect(shareControl).toContain('title={variant === "icon" ?');
+    expect(shareControl).toContain('title={variant === "icon"');
     expect(shareControl).toContain("appearance-none whitespace-nowrap border-0 bg-transparent");
     expect(utilityActions).toContain("appearance-none whitespace-nowrap border-0 bg-transparent");
     expect(utilityActions).not.toContain('createPortal(');
@@ -80,15 +83,16 @@ describe("action plan experience architecture", () => {
     expect(utilityActions).not.toContain("onOpenAccess");
     expect(utilityActions).toContain("onClick={onRetrySave}");
     expect(utilityActions).toContain("Réessayer");
-    expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} workspace={workspace} variant="menu" />');
+    expect(utilityActions).toContain("<ActionPlanShareControl");
+    expect(utilityActions).toContain('variant="menu"');
     expect(utilityActions).not.toContain('plan.version !== "manual"');
-    expect(utilityActions).toContain('<ActionPlanShareControl plan={plan} workspace={workspace} variant="menu" />');
+    expect(utilityActions).toContain("localeCode={localeCode}");
     expect(utilityActions).toContain("Nouveau plan");
     expect(experience).toContain('demo !== "plan"');
     expect(experience).toContain("ACTION_PLAN_DEMO");
     expect(experience).toContain('demo === "blank"');
-    expect(experience).toContain("Commencer avec un plan vierge");
-    expect(experience).toContain(
+    expect(uiCopy).toContain("Commencer avec un plan vierge");
+    expect(uiCopy).toContain(
       "On vous aide à clarifier les priorités, à structurer une activité plus rentable et moins dépendante de vous.",
     );
     expect(experience).toContain("max-w-[760px]");

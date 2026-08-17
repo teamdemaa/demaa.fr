@@ -9,8 +9,10 @@ describe("manual action plan experience", () => {
   it("opens a blank manual workspace without invoking the AI", () => {
     const experience = source("src/components/ActionPlanExperience.tsx");
     const systemPanel = source("src/components/ActionPlanSystemPanel.tsx");
+    const uiCopy = source("src/lib/action-plan-ui-copy.ts");
 
-    expect(experience).toContain("Commencer avec un plan vierge");
+    expect(uiCopy).toContain("Commencer avec un plan vierge");
+    expect(experience).toContain("{uiCopy.blankPlan}");
     expect(experience).toContain("createManualActionPlan()");
     expect(experience).toContain("createManualActionPlanWorkspaceState()");
     expect(experience).toContain("selectedSystemId: initialAppContext.systemId ?? null");
@@ -36,12 +38,15 @@ describe("manual action plan experience", () => {
     expect(result).not.toContain("Générer un plan à partir de ma situation");
     expect(result).not.toContain("Aucune action pour le moment");
     expect(result).toContain("isBlankManualPlan && onGeneratePlan");
-    expect(result).toContain("<ActionPlanGenerationBar onGeneratePlan={onGeneratePlan} />");
+    expect(result).toContain("<ActionPlanGenerationBar");
+    expect(result).toContain("onGeneratePlan={onGeneratePlan}");
+    expect(result).toContain("localeCode={localeCode}");
+    expect(result).toContain("contentLocaleCode={contentLocaleCode}");
     expect(result).not.toContain('mode="edit"');
     expect(savedDetail).toContain("function addAction()");
     expect(savedDetail).toContain("async function generateBlankPlan");
     expect(savedDetail).toContain("runExistingBlankActionPlanGeneration");
-    expect(savedDetail).toContain("<ActionPlanGenerationScreen />");
+    expect(savedDetail).toContain("<ActionPlanGenerationScreen localeCode={interfaceLocaleCode} />");
     expect(savedDetail).not.toContain('fetch("/api/action-plan/generate"');
     expect(savedDetail).toContain("plan: isManualActionPlan(nextSave.plan)");
     expect(savedDetail).toContain("onAddAction={addAction}");

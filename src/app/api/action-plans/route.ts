@@ -11,6 +11,10 @@ import {
 } from "@/lib/action-plan-storage.server";
 import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
+import {
+  authorizeActionPlanGenerationContext,
+  UnavailableActionPlanLocaleError,
+} from "@/lib/action-plan-localization.server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -63,7 +67,22 @@ export async function POST(request: Request) {
     );
   }
 
-  const actionPlan = await createOwnedActionPlanForIdentity(identity, parsed.data);
+  let generationContext;
+  try {
+    generationContext = authorizeActionPlanGenerationContext(parsed.data);
+  } catch (error) {
+    if (error instanceof UnavailableActionPlanLocaleError) {
+      return NextResponse.json(
+        { error: "Cette langue n’est pas disponible pour le moment." },
+        { status: 404, headers: noStoreHeaders() },
+      );
+    }
+    throw error;
+  }
+  const actionPlan = await createOwnedActionPlanForIdentity(identity, {
+    ...parsed.data,
+    ...generationContext,
+  });
   return NextResponse.json(
     { status: "saved", actionPlan },
     { status: 201, headers: noStoreHeaders() },

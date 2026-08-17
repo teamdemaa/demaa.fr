@@ -153,6 +153,8 @@ describe("company-scoped action plan persistence", () => {
       created_by_uid: "owner-uid",
       updated_by_uid: "owner-uid",
       status: "active",
+      content_locale_code: "fr",
+      market_code_at_creation: "fr-fr",
     });
     expect(firestore.documents.get(`companies/${stored?.company_id}`)).toMatchObject({
       status: "active",
@@ -195,6 +197,32 @@ describe("company-scoped action plan persistence", () => {
         status: "generating",
         title: "Plan en cours de création",
       }),
+    ]);
+  });
+
+  it("stores English generation context and keeps it in the company-wide index", async () => {
+    const started = await beginActionPlanGeneration({
+      contentLocaleCode: "en",
+      identity: identity("english-owner"),
+      marketCodeAtCreation: "global-en-beta",
+      requestId: "english-generation-1234",
+      situation: "Our SaaS is growing but every retention decision still depends on me.",
+    });
+    expect(started).toMatchObject({
+      kind: "claimed",
+      claim: {
+        contentLocaleCode: "en",
+        marketCodeAtCreation: "global-en-beta",
+      },
+    });
+    if (started.kind !== "claimed") throw new Error("Expected English generation claim.");
+    expect(firestore.documents.get(`action_plans/${started.claim.id}`)).toMatchObject({
+      content_locale_code: "en",
+      market_code_at_creation: "global-en-beta",
+      title: "Plan being created",
+    });
+    await expect(getActionPlanIndexForIdentity(identity("english-owner"))).resolves.toEqual([
+      expect.objectContaining({ contentLocaleCode: "en", id: started.claim.id }),
     ]);
   });
 

@@ -48,24 +48,35 @@ import {
   type ActionPlanTaskStatus,
   type ActionPlanWorkspaceState,
 } from "@/lib/action-plan-workspace";
+import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 type TaskView = "list" | "kanban";
 type TaskFilter = "week" | "all" | "overdue" | "done";
 
-const taskFilterLabels: Record<TaskFilter, string> = {
-  week: "Cette semaine",
-  all: "Toutes les actions",
-  overdue: "En retard",
-  done: "Terminées",
-};
+function getTaskFilterLabels(localeCode: InterfaceLocaleCode): Record<TaskFilter, string> {
+  return localeCode === "en" ? {
+    week: "This week",
+    all: "All actions",
+    overdue: "Overdue",
+    done: "Completed",
+  } : {
+    week: "Cette semaine",
+    all: "Toutes les actions",
+    overdue: "En retard",
+    done: "Terminées",
+  };
+}
 
 function TaskFilterMenu({
   value,
   onChange,
+  localeCode,
 }: {
   value: TaskFilter;
   onChange: (value: TaskFilter) => void;
+  localeCode: InterfaceLocaleCode;
 }) {
+  const taskFilterLabels = getTaskFilterLabels(localeCode);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -115,7 +126,7 @@ function TaskFilterMenu({
       {open ? (
         <div
           role="menu"
-          aria-label="Filtrer les actions"
+          aria-label={localeCode === "en" ? "Filter actions" : "Filtrer les actions"}
           className="absolute left-0 top-full z-50 mt-2 min-w-full overflow-hidden rounded-2xl border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
         >
           {(Object.keys(taskFilterLabels) as TaskFilter[]).map((option) => (
@@ -148,24 +159,33 @@ function TaskFilterMenu({
   );
 }
 
-const statusMeta: Record<
+function getStatusMeta(localeCode: InterfaceLocaleCode): Record<
   ActionPlanTaskStatus,
   { label: string; icon: typeof Circle }
-> = {
-  todo: { label: "À faire", icon: Circle },
-  in_progress: { label: "En cours", icon: CircleDot },
-  done: { label: "Terminé", icon: CheckCircle2 },
-};
+> {
+  return localeCode === "en" ? {
+    todo: { label: "To do", icon: Circle },
+    in_progress: { label: "In progress", icon: CircleDot },
+    done: { label: "Completed", icon: CheckCircle2 },
+  } : {
+    todo: { label: "À faire", icon: Circle },
+    in_progress: { label: "En cours", icon: CircleDot },
+    done: { label: "Terminé", icon: CheckCircle2 },
+  };
+}
 
 function TaskStatusButton({
   status,
   onChange,
   compact = false,
+  localeCode,
 }: {
   status: ActionPlanTaskStatus;
   onChange: (status: ActionPlanTaskStatus) => void;
   compact?: boolean;
+  localeCode: InterfaceLocaleCode;
 }) {
+  const statusMeta = getStatusMeta(localeCode);
   const StatusIcon = statusMeta[status].icon;
   const nextStatus: ActionPlanTaskStatus =
     status === "todo" ? "in_progress" : status === "in_progress" ? "done" : "todo";
@@ -186,8 +206,8 @@ function TaskStatusButton({
             ? "border-dema-forest/25 bg-dema-sage text-dema-forest"
             : "border-dema-line bg-dema-paper text-dema-muted"
       }`}
-      aria-label={`${statusMeta[status].label}. Passer à ${statusMeta[nextStatus].label}`}
-      title={`Passer à ${statusMeta[nextStatus].label}`}
+      aria-label={`${statusMeta[status].label}. ${localeCode === "en" ? "Move to" : "Passer à"} ${statusMeta[nextStatus].label}`}
+      title={`${localeCode === "en" ? "Move to" : "Passer à"} ${statusMeta[nextStatus].label}`}
     >
       <StatusIcon className="h-4 w-4" aria-hidden="true" />
       {!compact ? statusMeta[status].label : null}
@@ -203,6 +223,7 @@ function ActionDrawer({
   onDelete,
   onOpenSolution,
   contextualAid,
+  localeCode,
 }: {
   action: ActionPlanViewAction;
   workspace: ActionPlanWorkspaceState;
@@ -211,6 +232,7 @@ function ActionDrawer({
   onDelete: () => void;
   onOpenSolution?: (input: { resourceSlug: string; systemId: string }) => void;
   contextualAid?: ActionPlanContextualAid;
+  localeCode: InterfaceLocaleCode;
 }) {
   const taskState = workspace.tasks[action.id];
   const effectiveTitle = taskState?.overrides.title || action.title;
@@ -401,7 +423,7 @@ function ActionDrawer({
       >
         <header className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-dema-line bg-dema-paper/95 px-5 py-5 backdrop-blur sm:px-7">
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">Action</p>
+            <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">{localeCode === "en" ? "Action" : "Action"}</p>
             <textarea
               id="action-drawer-title"
               value={draftTitle}
@@ -414,11 +436,11 @@ function ActionDrawer({
                 }
               }}
               rows={1}
-              aria-label="Titre de l’action"
+              aria-label={localeCode === "en" ? "Action title" : "Titre de l’action"}
               className="mt-1 min-h-7 w-full resize-none overflow-hidden rounded-lg bg-transparent text-xl font-medium leading-snug text-brand-blue [field-sizing:content] outline-none transition focus:bg-dema-sage/35"
             />
           </div>
-          <button type="button" onClick={saveDraftsAndClose} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line" aria-label="Fermer">
+          <button type="button" onClick={saveDraftsAndClose} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line" aria-label={localeCode === "en" ? "Close" : "Fermer"}>
             <X className="h-4 w-4" aria-hidden="true" />
           </button>
         </header>
@@ -428,6 +450,7 @@ function ActionDrawer({
             <TaskStatusButton
               status={taskState.status}
               onChange={(status) => updateTask((current) => ({ ...current, status }))}
+              localeCode={localeCode}
             />
             <label className="inline-flex min-h-10 items-center gap-2 rounded-full border border-dema-line px-3 text-xs text-dema-muted">
               <CalendarDays className="h-4 w-4" aria-hidden="true" />
@@ -436,14 +459,14 @@ function ActionDrawer({
                 value={taskState.dueDate || ""}
                 onChange={(event) => updateTask((current) => ({ ...current, dueDate: event.target.value || null }))}
                 className="bg-transparent text-brand-blue outline-none"
-                aria-label="Échéance"
+                aria-label={localeCode === "en" ? "Due date" : "Échéance"}
               />
             </label>
           </div>
 
           <div>
             <label htmlFor="action-drawer-objective" className="text-xs font-medium uppercase tracking-[0.12em] text-dema-muted">
-              Résultat attendu
+              {localeCode === "en" ? "Expected result" : "Résultat attendu"}
             </label>
             <textarea
               id="action-drawer-objective"
@@ -456,7 +479,7 @@ function ActionDrawer({
           </div>
 
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">Tâches</p>
+            <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">{localeCode === "en" ? "Tasks" : "Tâches"}</p>
             <div className="mt-3 space-y-2">
               {draftSteps.split("\n").map((step, index) => {
                 const checked = taskState.completedStepIndexes.includes(index);
@@ -472,7 +495,7 @@ function ActionDrawer({
                           : [...current.completedStepIndexes, index].sort((left, right) => left - right),
                       }))}
                       className="mt-0.5 h-4 w-4 accent-[#2f664a]"
-                      aria-label={`Marquer la tâche ${index + 1} comme terminée`}
+                      aria-label={localeCode === "en" ? `Mark task ${index + 1} as completed` : `Marquer la tâche ${index + 1} comme terminée`}
                     />
                     <textarea
                       value={step}
@@ -494,7 +517,7 @@ function ActionDrawer({
                         addTaskAfter(index, event.currentTarget);
                       }}
                       rows={1}
-                      aria-label={`Tâche ${index + 1}`}
+                      aria-label={localeCode === "en" ? `Task ${index + 1}` : `Tâche ${index + 1}`}
                       data-task-index={index}
                       className={`min-h-6 min-w-0 flex-1 resize-none overflow-hidden bg-transparent [field-sizing:content] outline-none transition focus:bg-dema-paper/70 ${checked ? "text-dema-muted" : ""}`}
                     />
@@ -503,8 +526,8 @@ function ActionDrawer({
                         type="button"
                         onClick={() => removeTask(index)}
                         className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-dema-muted/70 transition hover:bg-dema-paper hover:text-red-700 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100"
-                        aria-label={`Supprimer la tâche ${index + 1}`}
-                        title="Supprimer la tâche"
+                        aria-label={localeCode === "en" ? `Delete task ${index + 1}` : `Supprimer la tâche ${index + 1}`}
+                        title={localeCode === "en" ? "Delete task" : "Supprimer la tâche"}
                       >
                         <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
                       </button>
@@ -522,12 +545,12 @@ function ActionDrawer({
                   value={draftSupportLabel}
                   onChange={(event) => setDraftSupportLabel(event.target.value)}
                   onBlur={saveSupport}
-                  aria-label="Titre du support"
+                  aria-label={localeCode === "en" ? "Support title" : "Titre du support"}
                   className="min-w-0 flex-1 bg-transparent text-xs font-medium uppercase tracking-[0.12em] text-dema-forest outline-none"
                 />
                 {supportIsCopyable ? (
                   <button type="button" onClick={() => void copySupport()} className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-dema-line px-3 text-xs text-dema-forest">
-                    <Copy className="h-3.5 w-3.5" aria-hidden="true" /> Copier
+                    <Copy className="h-3.5 w-3.5" aria-hidden="true" /> {localeCode === "en" ? "Copy" : "Copier"}
                   </button>
                 ) : null}
               </div>
@@ -536,7 +559,7 @@ function ActionDrawer({
                 onChange={(event) => setDraftSupportContent(event.target.value)}
                 onBlur={saveSupport}
                 rows={4}
-                aria-label="Contenu du support"
+                aria-label={localeCode === "en" ? "Support content" : "Contenu du support"}
                 className="mt-3 min-h-[5rem] w-full resize-y whitespace-pre-wrap bg-transparent text-sm leading-relaxed text-brand-blue outline-none"
               />
             </div>
@@ -547,7 +570,7 @@ function ActionDrawer({
               className="inline-flex min-h-10 items-center gap-2 rounded-full border border-dema-line px-4 text-sm text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
             >
               <Plus className="h-4 w-4" aria-hidden="true" />
-              Ajouter un support personnel
+              {localeCode === "en" ? "Add personal support" : "Ajouter un support personnel"}
             </button>
           )}
 
@@ -672,12 +695,12 @@ function ActionDrawer({
           ) : null}
 
           <label className="block text-xs font-medium text-dema-muted">
-            Notes personnelles
+            {localeCode === "en" ? "Personal notes" : "Notes personnelles"}
             <textarea
               value={taskState.notes}
               onChange={(event) => updateTask((current) => ({ ...current, notes: event.target.value.slice(0, 4_000) }))}
               rows={4}
-              placeholder="Ajoutez un suivi, une décision ou un point à retenir…"
+              placeholder={localeCode === "en" ? "Add a follow-up, decision or note…" : "Ajoutez un suivi, une décision ou un point à retenir…"}
               className="mt-2 w-full resize-y rounded-xl border border-dema-line bg-dema-cream p-3 text-sm leading-relaxed text-brand-blue outline-none focus:border-dema-forest/30"
             />
           </label>
@@ -685,7 +708,7 @@ function ActionDrawer({
           <div className="border-t border-dema-line pt-5">
             {confirmingDelete ? (
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between" role="alert">
-                <p className="text-sm text-brand-blue">Supprimer cette action ?</p>
+                <p className="text-sm text-brand-blue">{localeCode === "en" ? "Delete this action?" : "Supprimer cette action ?"}</p>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
@@ -702,7 +725,7 @@ function ActionDrawer({
                     }}
                     className="min-h-10 rounded-full border border-red-200 px-4 text-sm text-red-700 transition hover:bg-red-50"
                   >
-                    Supprimer
+                    {localeCode === "en" ? "Delete" : "Supprimer"}
                   </button>
                 </div>
               </div>
@@ -713,7 +736,7 @@ function ActionDrawer({
                 className="inline-flex min-h-10 items-center gap-2 text-sm text-dema-muted transition hover:text-red-700"
               >
                 <Trash2 className="h-4 w-4" aria-hidden="true" />
-                Supprimer l’action
+                {localeCode === "en" ? "Delete action" : "Supprimer l’action"}
               </button>
             )}
           </div>
@@ -737,6 +760,8 @@ export default function ActionPlanResult({
   contextualSystemId = "",
   sourceText = null,
   onOpenSolution,
+  localeCode = "fr",
+  contentLocaleCode = localeCode,
 }: {
   plan: PersistableActionPlan;
   workspace: ActionPlanWorkspaceState;
@@ -751,12 +776,16 @@ export default function ActionPlanResult({
   contextualSystemId?: string;
   sourceText?: string | null;
   onOpenSolution?: (input: { resourceSlug: string; systemId: string }) => void;
+  localeCode?: InterfaceLocaleCode;
+  contentLocaleCode?: InterfaceLocaleCode;
 }) {
+  const statusMeta = getStatusMeta(localeCode);
   const [view, setView] = useState<TaskView>("list");
   const [filter, setFilter] = useState<TaskFilter>("week");
   const [selectedActionId, setSelectedActionId] = useState<string | null>(null);
   const contextualAids = useActionPlanContextualAids({
     demoMode: commandDemoMode,
+    enabled: localeCode === "fr",
     plan,
     sourceText,
     systemId: contextualSystemId,
@@ -819,16 +848,16 @@ export default function ActionPlanResult({
   return (
     <div className="pb-24 xl:pb-20">
       <section aria-labelledby="tasks-title">
-          <h2 id="tasks-title" className="sr-only">Actions du plan</h2>
+          <h2 id="tasks-title" className="sr-only">{localeCode === "en" ? "Plan actions" : "Actions du plan"}</h2>
           <div className="flex min-w-0 items-center gap-2">
             <div className="flex min-w-0 flex-1 items-center gap-2">
-              <TaskFilterMenu value={filter} onChange={setFilter} />
+              <TaskFilterMenu value={filter} onChange={setFilter} localeCode={localeCode} />
               <button
                 type="button"
                 onClick={() => setView((current) => current === "list" ? "kanban" : "list")}
                 className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-forest transition hover:border-dema-forest/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
-                aria-label={view === "list" ? "Afficher en Kanban" : "Afficher en liste"}
-                title={view === "list" ? "Afficher en Kanban" : "Afficher en liste"}
+                aria-label={view === "list" ? localeCode === "en" ? "Show Kanban" : "Afficher en Kanban" : localeCode === "en" ? "Show list" : "Afficher en liste"}
+                title={view === "list" ? localeCode === "en" ? "Show Kanban" : "Afficher en Kanban" : localeCode === "en" ? "Show list" : "Afficher en liste"}
               >
                 {view === "list" ? (
                   <Columns3 className="h-4 w-4" aria-hidden="true" />
@@ -847,7 +876,7 @@ export default function ActionPlanResult({
                 const title = taskState.overrides.title || action.title;
                 return (
                   <div key={action.id} className="flex items-center gap-3 border-b border-dema-line px-4 py-3 last:border-b-0 sm:px-5">
-                    <TaskStatusButton status={taskState.status} onChange={(status) => updateStatus(action.id, status)} compact />
+                    <TaskStatusButton status={taskState.status} onChange={(status) => updateStatus(action.id, status)} compact localeCode={localeCode} />
                     <button type="button" onClick={() => openAction(action.id)} className="flex min-w-0 flex-1 items-center gap-3 text-left focus-visible:outline-none">
                       <span className="min-w-0 flex-1">
                         <span className={`block text-sm font-medium leading-snug ${taskState.status === "done" ? "text-dema-muted" : "text-brand-blue"}`}>{title}</span>
@@ -872,11 +901,11 @@ export default function ActionPlanResult({
                           <span className="mt-2 block text-xs text-dema-muted">{action.channelOrTool}</span>
                         </button>
                         <div className="mt-3">
-                          <TaskStatusButton status={status} onChange={(nextStatus) => updateStatus(action.id, nextStatus)} />
+                          <TaskStatusButton status={status} onChange={(nextStatus) => updateStatus(action.id, nextStatus)} localeCode={localeCode} />
                         </div>
                       </article>
                     ))}
-                    {visibleActions.every((action) => workspace.tasks[action.id].status !== status) ? <p className="px-2 py-4 text-xs text-dema-muted">Aucune action</p> : null}
+                    {visibleActions.every((action) => workspace.tasks[action.id].status !== status) ? <p className="px-2 py-4 text-xs text-dema-muted">{localeCode === "en" ? "No actions" : "Aucune action"}</p> : null}
                   </div>
                 </section>
               ))}
@@ -888,18 +917,22 @@ export default function ActionPlanResult({
               type="button"
               onClick={addAndOpenAction}
               className="mt-3 flex h-[52px] w-full items-center gap-2 rounded-[1.1rem] border border-dashed border-dema-line bg-dema-soft/35 px-5 text-left text-sm text-dema-muted transition hover:border-dema-forest/30 hover:bg-dema-soft/60 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
-              aria-label="Ajouter une action"
+              aria-label={localeCode === "en" ? "Add an action" : "Ajouter une action"}
             >
               <Plus className="h-4 w-4" aria-hidden="true" />
-              Ajouter une action
+              {localeCode === "en" ? "Add an action" : "Ajouter une action"}
             </button>
           ) : null}
       </section>
 
-      <PwaInstallPrompt />
+      {localeCode === "fr" ? <PwaInstallPrompt /> : null}
 
       {isBlankManualPlan && onGeneratePlan ? (
-        <ActionPlanGenerationBar onGeneratePlan={onGeneratePlan} />
+        <ActionPlanGenerationBar
+          onGeneratePlan={onGeneratePlan}
+          localeCode={localeCode}
+          contentLocaleCode={contentLocaleCode}
+        />
       ) : null}
 
       {selectedAction ? (
@@ -913,7 +946,8 @@ export default function ActionPlanResult({
             closeAction();
             onOpenSolution?.(input);
           }}
-          contextualAid={contextualAids[selectedAction.id]}
+          contextualAid={localeCode === "fr" ? contextualAids[selectedAction.id] : undefined}
+          localeCode={localeCode}
         />
       ) : null}
     </div>

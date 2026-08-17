@@ -37,6 +37,10 @@ export async function executeClaimedActionPlanGeneration(input: {
   try {
     const { title, plan, generation } = await generateActionPlanWithMetadata(
       input.claim.situation,
+      {
+        contentLocaleCode: input.claim.contentLocaleCode,
+        marketCodeAtCreation: input.claim.marketCodeAtCreation,
+      },
     );
 
     try {

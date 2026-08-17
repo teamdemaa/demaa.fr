@@ -12,7 +12,10 @@ import {
   requestPasswordReset,
   signInWithPasswordAndGetIdToken,
 } from "@/lib/firebase-client-auth";
-import { getReturnToInterfaceLocale } from "@/lib/international-context";
+import {
+  getReturnToInterfaceLocale,
+  type InterfaceLocaleCode,
+} from "@/lib/international-context";
 
 type AccessMode = "create" | "signin";
 type ProgressiveAccessStep = "choice" | "email" | "password";
@@ -23,23 +26,31 @@ export type CustomerSpaceAccessDraft = {
   password: string;
 };
 
-function getFriendlyAuthError(error: unknown) {
+function getFriendlyAuthError(error: unknown, localeCode: InterfaceLocaleCode) {
   const code = typeof error === "object" && error && "code" in error
     ? String(error.code)
     : "";
   if (code.includes("email-already-in-use")) {
-    return "Un compte existe déjà avec cette adresse. Connectez-vous avec votre mot de passe.";
+    return localeCode === "en"
+      ? "An account already exists for this address. Sign in with your password."
+      : "Un compte existe déjà avec cette adresse. Connectez-vous avec votre mot de passe.";
   }
   if (code.includes("invalid-credential") || code.includes("wrong-password")) {
-    return "Adresse e-mail ou mot de passe incorrect.";
+    return localeCode === "en" ? "Incorrect email address or password." : "Adresse e-mail ou mot de passe incorrect.";
   }
   if (code.includes("weak-password") || code.includes("password-does-not-meet-requirements")) {
-    return "Ce mot de passe ne respecte pas la politique de sécurité Firebase.";
+    return localeCode === "en"
+      ? "This password does not meet the Firebase security policy."
+      : "Ce mot de passe ne respecte pas la politique de sécurité Firebase.";
   }
   if (code.includes("too-many-requests")) {
-    return "Trop de tentatives. Patientez quelques minutes avant de réessayer.";
+    return localeCode === "en"
+      ? "Too many attempts. Wait a few minutes before trying again."
+      : "Trop de tentatives. Patientez quelques minutes avant de réessayer.";
   }
-  return error instanceof Error ? error.message : "La connexion n’a pas abouti.";
+  return error instanceof Error
+    ? error.message
+    : localeCode === "en" ? "Sign-in was not completed." : "La connexion n’a pas abouti.";
 }
 
 export default function CustomerSpaceAccessForm({
@@ -49,6 +60,7 @@ export default function CustomerSpaceAccessForm({
   onDraftChange,
   onAuthenticated,
   returnTo,
+  localeCode = "fr",
 }: {
   choiceTitle?: string;
   draft?: CustomerSpaceAccessDraft;
@@ -56,6 +68,7 @@ export default function CustomerSpaceAccessForm({
   onDraftChange?: (draft: CustomerSpaceAccessDraft) => void;
   onAuthenticated?: (result: { redirectTo: string }) => Promise<void> | void;
   returnTo?: string;
+  localeCode?: InterfaceLocaleCode;
 }) {
   const [internalDraft, setInternalDraft] = useState<CustomerSpaceAccessDraft>({
     email: "",
@@ -94,16 +107,16 @@ export default function CustomerSpaceAccessForm({
     setNotice(null);
 
     if (!isValidEmail(normalizedEmail)) {
-      setError("Merci d'indiquer une adresse email valide.");
+      setError(localeCode === "en" ? "Enter a valid email address." : "Merci d'indiquer une adresse email valide.");
       return;
     }
 
     if (!password) {
-      setError("Indiquez votre mot de passe.");
+      setError(localeCode === "en" ? "Enter your password." : "Indiquez votre mot de passe.");
       return;
     }
     if (mode === "create" && password.length < 8) {
-      setError("Choisissez un mot de passe d’au moins 8 caractères.");
+      setError(localeCode === "en" ? "Choose a password with at least 8 characters." : "Choisissez un mot de passe d’au moins 8 caractères.");
       return;
     }
 
@@ -121,7 +134,7 @@ export default function CustomerSpaceAccessForm({
       if (onAuthenticated) await onAuthenticated(result);
       else window.location.assign(result.redirectTo);
     } catch (submitError) {
-      setError(getFriendlyAuthError(submitError));
+      setError(getFriendlyAuthError(submitError, localeCode));
     } finally {
       setIsSending(false);
     }
@@ -132,7 +145,7 @@ export default function CustomerSpaceAccessForm({
     setError(null);
     setNotice(null);
     if (!isValidEmail(normalizedEmail)) {
-      setError("Indiquez d’abord l’adresse e-mail de votre compte.");
+      setError(localeCode === "en" ? "Enter your account email address first." : "Indiquez d’abord l’adresse e-mail de votre compte.");
       return;
     }
     setIsSending(true);
@@ -143,9 +156,11 @@ export default function CustomerSpaceAccessForm({
         getReturnToInterfaceLocale(target),
         target,
       );
-      setNotice("Si un compte correspond à cette adresse, les instructions ont été envoyées.");
+      setNotice(localeCode === "en"
+        ? "If an account matches this address, the instructions have been sent."
+        : "Si un compte correspond à cette adresse, les instructions ont été envoyées.");
     } catch (resetError) {
-      setError(getFriendlyAuthError(resetError));
+      setError(getFriendlyAuthError(resetError, localeCode));
     } finally {
       setIsSending(false);
     }
@@ -175,10 +190,10 @@ export default function CustomerSpaceAccessForm({
   const title = progressiveStep === "choice"
       ? choiceTitle
       : progressiveStep === "email"
-        ? "Votre adresse e-mail"
+        ? localeCode === "en" ? "Your email address" : "Votre adresse e-mail"
         : mode === "create"
-          ? "Créez votre accès"
-          : "Bon retour";
+          ? localeCode === "en" ? "Create your access" : "Créez votre accès"
+          : localeCode === "en" ? "Welcome back" : "Bon retour";
 
   return (
       <div className="space-y-5">
@@ -194,8 +209,8 @@ export default function CustomerSpaceAccessForm({
                 progressiveStep === "email" ? "choice" : "email",
               )}
               aria-label={progressiveStep === "email"
-                ? "Retour aux options de connexion"
-                : "Retour à l’étape e-mail"}
+                ? localeCode === "en" ? "Back to sign-in options" : "Retour aux options de connexion"
+                : localeCode === "en" ? "Back to the email step" : "Retour à l’étape e-mail"}
               className="inline-flex h-10 w-10 items-center justify-center rounded-full text-brand-blue transition hover:bg-dema-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
@@ -220,12 +235,13 @@ export default function CustomerSpaceAccessForm({
                 onAuthenticated={onAuthenticated}
                 onError={setError}
                 returnTo={returnTo}
+                localeCode={localeCode}
               />
             ) : null}
             {googleEnabled ? (
               <div className="flex items-center gap-3" aria-hidden="true">
                 <span className="h-px flex-1 bg-dema-line" />
-                <span className="text-xs text-dema-muted">ou</span>
+                <span className="text-xs text-dema-muted">{localeCode === "en" ? "or" : "ou"}</span>
                 <span className="h-px flex-1 bg-dema-line" />
               </div>
             ) : null}
@@ -235,13 +251,13 @@ export default function CustomerSpaceAccessForm({
               onClick={() => showProgressiveStep("email")}
               className="inline-flex min-h-[54px] w-full items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
             >
-              Continuer avec mon e-mail
+              {localeCode === "en" ? "Continue with my email" : "Continuer avec mon e-mail"}
             </button>
           </div>
         ) : progressiveStep === "email" ? (
           <form className="space-y-4" onSubmit={handleProgressiveEmailSubmit} noValidate>
             <div className="text-left">
-              <label className="sr-only" htmlFor={emailId}>Adresse e-mail</label>
+              <label className="sr-only" htmlFor={emailId}>{localeCode === "en" ? "Email address" : "Adresse e-mail"}</label>
               <div className="relative">
                 <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/45" aria-hidden="true" />
                 <input
@@ -251,7 +267,7 @@ export default function CustomerSpaceAccessForm({
                   autoFocus
                   value={email}
                   onChange={(event) => updateDraft({ email: event.target.value })}
-                  placeholder="Adresse e-mail"
+                  placeholder={localeCode === "en" ? "Email address" : "Adresse e-mail"}
                   aria-invalid={email.length > 0 && !emailReady}
                   className="min-h-[54px] w-full rounded-full border border-dema-line bg-dema-paper py-3 pl-10 pr-4 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/35 focus:border-dema-forest/30 focus:ring-2 focus:ring-dema-forest/10"
                 />
@@ -262,7 +278,7 @@ export default function CustomerSpaceAccessForm({
               disabled={!emailReady}
               className="inline-flex min-h-[54px] w-full items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-not-allowed disabled:opacity-45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
             >
-              Continuer
+              {localeCode === "en" ? "Continue" : "Continuer"}
             </button>
           </form>
         ) : (
@@ -274,11 +290,11 @@ export default function CustomerSpaceAccessForm({
                 onClick={() => showProgressiveStep("email")}
                 className="shrink-0 text-xs font-medium text-dema-forest underline decoration-dema-forest/25 underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
               >
-                Modifier
+                {localeCode === "en" ? "Edit" : "Modifier"}
               </button>
             </div>
             <div className="text-left">
-              <label className="sr-only" htmlFor={passwordId}>Mot de passe</label>
+              <label className="sr-only" htmlFor={passwordId}>{localeCode === "en" ? "Password" : "Mot de passe"}</label>
               <div className="relative">
                 <KeyRound className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/45" aria-hidden="true" />
                 <input
@@ -290,7 +306,9 @@ export default function CustomerSpaceAccessForm({
                   required
                   value={password}
                   onChange={(event) => updateDraft({ password: event.target.value })}
-                  placeholder={mode === "create" ? "Choisissez un mot de passe" : "Votre mot de passe"}
+                  placeholder={mode === "create"
+                    ? localeCode === "en" ? "Choose a password" : "Choisissez un mot de passe"
+                    : localeCode === "en" ? "Your password" : "Votre mot de passe"}
                   className="min-h-[54px] w-full rounded-full border border-dema-line bg-dema-paper py-3 pl-10 pr-4 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/35 focus:border-dema-forest/30 focus:ring-2 focus:ring-dema-forest/10"
                 />
               </div>
@@ -304,7 +322,7 @@ export default function CustomerSpaceAccessForm({
                 onClick={() => void handlePasswordReset()}
                 className="block min-h-8 text-left text-xs text-dema-muted underline decoration-dema-line underline-offset-4 hover:text-dema-forest disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
               >
-                Mot de passe oublié ?
+                {localeCode === "en" ? "Forgot your password?" : "Mot de passe oublié ?"}
               </button>
             ) : null}
             <button
@@ -313,10 +331,16 @@ export default function CustomerSpaceAccessForm({
               className="inline-flex min-h-[54px] w-full items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
             >
               {isSending ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-              {isSending ? "Connexion…" : mode === "create" ? "Créer mon accès" : "Se connecter"}
+              {isSending
+                ? localeCode === "en" ? "Signing in…" : "Connexion…"
+                : mode === "create"
+                  ? localeCode === "en" ? "Create my access" : "Créer mon accès"
+                  : localeCode === "en" ? "Sign in" : "Se connecter"}
             </button>
             <p className="text-center text-xs text-dema-muted">
-              {mode === "create" ? "Vous avez déjà un compte ?" : "Vous n’avez pas encore de compte ?"}{" "}
+              {mode === "create"
+                ? localeCode === "en" ? "Already have an account?" : "Vous avez déjà un compte ?"
+                : localeCode === "en" ? "Don’t have an account yet?" : "Vous n’avez pas encore de compte ?"}{" "}
               <button
                 type="button"
                 onClick={() => {
@@ -325,7 +349,9 @@ export default function CustomerSpaceAccessForm({
                 }}
                 className="font-medium text-dema-forest underline decoration-dema-forest/25 underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
               >
-                {mode === "create" ? "Se connecter" : "Créer mon accès"}
+                {mode === "create"
+                  ? localeCode === "en" ? "Sign in" : "Se connecter"
+                  : localeCode === "en" ? "Create my access" : "Créer mon accès"}
               </button>
             </p>
           </form>

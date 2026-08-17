@@ -295,7 +295,10 @@ describe("speech dictation", () => {
     expect(generationBar).toContain("useSpeechDictation");
     expect(generationBar).toContain("continuous: true");
     expect(generationBar).toContain("situationDictation.handleValueChange");
-    expect(generationBar).toContain('aria-label={situationDictation.isListening ? "Arrêter la dictée" : "Dicter ma demande"}');
+    expect(generationBar).toContain("aria-label={situationDictation.isListening");
+    expect(generationBar).toContain('"Arrêter la dictée"');
+    expect(generationBar).toContain('"Dicter ma demande"');
+    expect(generationBar).toContain('language: contentLocaleCode === "en" ? "en-GB" : "fr-FR"');
     expect(coaching).toContain("useSpeechDictation");
     expect(coaching).toContain("continuous: true");
     expect(`${actionPlan}\n${generationBar}\n${coaching}`).not.toContain("getUserMedia");

@@ -64,8 +64,13 @@ export default async function ActionPlansPage() {
                     className="group flex min-h-24 items-center justify-between gap-5 rounded-[1.15rem] border border-dema-line bg-dema-paper px-5 py-4 transition hover:border-dema-forest/25 hover:shadow-[0_14px_38px_rgba(23,35,29,0.055)] sm:px-6"
                   >
                     <span className="min-w-0">
-                      <span className="line-clamp-2 block text-lg font-medium tracking-[-0.02em] text-brand-blue group-hover:text-dema-forest">
-                        {plan.title}
+                      <span className="flex items-start gap-2">
+                        <span className="line-clamp-2 block text-lg font-medium tracking-[-0.02em] text-brand-blue group-hover:text-dema-forest">
+                          {plan.title}
+                        </span>
+                        <span className="mt-0.5 shrink-0 rounded-md bg-dema-sage px-1.5 py-0.5 text-[0.65rem] font-semibold uppercase text-dema-forest">
+                          {plan.contentLocaleCode}
+                        </span>
                       </span>
                       <span className="mt-1 block text-xs text-dema-muted">
                         {plan.status === "generating"

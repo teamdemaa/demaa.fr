@@ -1,6 +1,7 @@
 "use client";
 
 import { Analytics } from "@vercel/analytics/next";
+import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import {
   parseCookieConsentSnapshot,
@@ -85,6 +86,35 @@ function ensureMetaPixel() {
 }
 
 export default function CookieConsentManager() {
+  const pathname = usePathname();
+  const isEnglish = pathname === "/en" || pathname.startsWith("/en/");
+  const copy = isEnglish ? {
+    region: "Privacy preferences",
+    eyebrow: "Cookies & audience measurement",
+    description: "Demaa uses trackers to measure journeys and the origin of requests. You can accept all, reject all or choose by purpose.",
+    analytics: "Audience measurement",
+    analyticsDescription: "Vercel Analytics, Google Analytics and persistent source attribution.",
+    marketing: "Advertising",
+    marketingDescription: "Meta Pixel and advertising campaign measurement.",
+    reject: "Reject all",
+    customize: "Customise",
+    hide: "Hide choices",
+    save: "Save my choices",
+    accept: "Accept all",
+  } : {
+    region: "Préférences de confidentialité",
+    eyebrow: "Cookies & mesure d’audience",
+    description: "Demaa utilise des traceurs pour mesurer les parcours et l’origine des demandes. Vous pouvez tout accepter, tout refuser ou choisir par finalité.",
+    analytics: "Mesure d’audience",
+    analyticsDescription: "Vercel Analytics, Google Analytics et attribution persistante des sources.",
+    marketing: "Publicité",
+    marketingDescription: "Meta Pixel et mesure des campagnes publicitaires.",
+    reject: "Tout refuser",
+    customize: "Personnaliser",
+    hide: "Masquer les choix",
+    save: "Enregistrer mes choix",
+    accept: "Tout accepter",
+  };
   const consentSnapshot = useSyncExternalStore(
     subscribeToCookieConsent,
     readCookieConsentSnapshot,
@@ -150,18 +180,18 @@ export default function CookieConsentManager() {
       {hasAnalyticsConsent ? <Analytics /> : null}
 
       {shouldShowBanner ? (
-        <div className="fixed inset-x-0 bottom-4 z-[90] px-4">
+        <div className="fixed inset-x-0 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-[90] px-4">
           <section
             className="mx-auto max-w-3xl rounded-[1.4rem] border border-dema-line bg-dema-paper p-4 shadow-[0_18px_50px_rgba(23,35,29,0.08)] md:p-5"
-            aria-label="Préférences de confidentialité"
+            aria-label={copy.region}
           >
             <div className="flex flex-col gap-4">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-                  Cookies & mesure d&apos;audience
+                  {copy.eyebrow}
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-                  Demaa utilise des traceurs pour mesurer les parcours et l&apos;origine des demandes. Vous pouvez tout accepter, tout refuser ou choisir par finalité.
+                  {copy.description}
                 </p>
               </div>
 
@@ -175,9 +205,9 @@ export default function CookieConsentManager() {
                       className="mt-1 h-4 w-4"
                     />
                     <span>
-                      <strong className="block">Mesure d&apos;audience</strong>
+                      <strong className="block">{copy.analytics}</strong>
                       <span className="mt-1 block text-xs leading-relaxed text-dema-muted">
-                        Vercel Analytics, Google Analytics et attribution persistante des sources.
+                        {copy.analyticsDescription}
                       </span>
                     </span>
                   </label>
@@ -189,9 +219,9 @@ export default function CookieConsentManager() {
                       className="mt-1 h-4 w-4"
                     />
                     <span>
-                      <strong className="block">Publicité</strong>
+                      <strong className="block">{copy.marketing}</strong>
                       <span className="mt-1 block text-xs leading-relaxed text-dema-muted">
-                        Meta Pixel et mesure des campagnes publicitaires.
+                        {copy.marketingDescription}
                       </span>
                     </span>
                   </label>
@@ -204,14 +234,14 @@ export default function CookieConsentManager() {
                   onClick={() => saveConsent({ analytics: false, marketing: false })}
                   className="demaa-secondary-button"
                 >
-                  Tout refuser
+                  {copy.reject}
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowSettings((current) => !current)}
                   className="demaa-secondary-button"
                 >
-                  {showSettings ? "Masquer les choix" : "Personnaliser"}
+                  {showSettings ? copy.hide : copy.customize}
                 </button>
                 {showSettings ? (
                   <button
@@ -219,7 +249,7 @@ export default function CookieConsentManager() {
                     onClick={() => saveConsent({ analytics: analyticsChoice, marketing: marketingChoice })}
                     className="demaa-primary-button"
                   >
-                    Enregistrer mes choix
+                    {copy.save}
                   </button>
                 ) : (
                   <button
@@ -227,7 +257,7 @@ export default function CookieConsentManager() {
                     onClick={() => saveConsent({ analytics: true, marketing: true })}
                     className="demaa-primary-button"
                   >
-                    Tout accepter
+                    {copy.accept}
                   </button>
                 )}
               </div>
