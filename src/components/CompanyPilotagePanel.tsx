@@ -2,12 +2,13 @@
 
 import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
-import type { ActionPlanSection } from "@/lib/action-plan-app-context";
+import {
+  COMPANY_STRATEGY_VISIBLE,
+  type ActionPlanSection,
+} from "@/lib/action-plan-app-context";
 
 const CompanyFiguresPanel = dynamic(() => import("@/components/CompanyFiguresPanel"));
 const CompanyStrategyPanel = dynamic(() => import("@/components/CompanyStrategyPanel"));
-
-const COMPANY_STRATEGY_VISIBLE = false;
 
 const SECTIONS = [
   { key: "actions", label: "Plan d’action" },

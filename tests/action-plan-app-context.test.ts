@@ -143,7 +143,7 @@ describe("action plan app context", () => {
     });
     expect(parseActionPlanAppContext(new URLSearchParams("view=plan&section=strategy"))).toEqual({
       view: "plan",
-      planSection: "actions",
+      planSection: "strategy",
     });
     expect(parseActionPlanAppContext(new URLSearchParams("view=academy&section=strategy"))).toMatchObject({
       view: "academy",
@@ -152,6 +152,6 @@ describe("action plan app context", () => {
     expect(buildActionPlanAppHref({
       context: { view: "plan", planSection: "strategy" },
       search: "?system=old&academy=old",
-    })).toBe("/?view=plan");
+    })).toBe("/?view=plan&section=strategy");
   });
 });
