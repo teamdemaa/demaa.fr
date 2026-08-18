@@ -217,13 +217,17 @@ par Système.
 - [x] Republier `/opportunites` sur les surfaces de découverte publiques :
   lien footer (« Collaborer avec Demaa ») et entrée sitemap restaurés, `noindex`
   retiré de la page.
-- [x] Restaurer l'onglet applicatif intégré, en 4ᵉ position après Ressources
-  (ex-Académie) : `ActionPlanNavbar` (largeur de grille dynamique via
-  `visibleViews`, plus besoin de `grid-cols-4` en dur), `ActionPlanExperience`,
+- [x] Restaurer l'onglet applicatif intégré, en 4ᵉ position après Académie :
+  `ActionPlanNavbar` (largeur de grille dynamique via `visibleViews`, plus
+  besoin de `grid-cols-4` en dur), `ActionPlanExperience`,
   `SavedActionPlanDetail`, `opportunityId` dans `ActionPlanAppContext`. Le
   panneau (`OpportunitiesPanel`, recréé) réutilise directement
   `PublicOpportunitiesClient` sans titre visible (juste recherche + filtres,
   un `<h2>` `sr-only` pour l'accessibilité).
+- [x] Renommage « Académie » → « Ressources » testé un temps puis annulé
+  (18 août 2026) : en vue de formations payantes à venir, « Académie » porte
+  mieux la valeur perçue qu'un libellé générique « Ressources ». Le libellé
+  reste `Académie` / `Academy`.
 - [ ] Toujours exclue d'English Beta : `(english)/en/**` passe explicitement
   `visibleViews={["plan", "solutions", "academy"]}`, donc l'onglet Opportunités
   n'apparaît pas côté anglais. `OpportunitiesPanel` accepte un prop
