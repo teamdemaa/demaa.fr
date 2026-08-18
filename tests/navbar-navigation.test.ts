@@ -137,14 +137,18 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain("empty:hidden xl:hidden");
     expect(actionPlanNavSource).toContain("Plan d’action");
     expect(actionPlanNavSource).toContain("Solutions");
-    expect(actionPlanNavSource).toContain("Académie");
-    expect(actionPlanNavSource).not.toContain("Opportunités");
+    expect(actionPlanNavSource).toContain("Ressources");
+    expect(actionPlanNavSource).not.toContain("Académie");
+    expect(actionPlanNavSource).toContain("Opportunités");
     expect(actionPlanNavSource).not.toContain('label: "Système"');
     expect(actionPlanNavSource.indexOf('{ view: "plan"')).toBeLessThan(
       actionPlanNavSource.indexOf('{ view: "solutions"'),
     );
     expect(actionPlanNavSource.indexOf('{ view: "solutions"')).toBeLessThan(
       actionPlanNavSource.indexOf('{ view: "academy"'),
+    );
+    expect(actionPlanNavSource.indexOf('{ view: "academy"')).toBeLessThan(
+      actionPlanNavSource.indexOf('{ view: "opportunities"'),
     );
     expect(actionPlanNavSource).toContain("gridTemplateColumns");
     expect(actionPlanNavSource).toContain("visibleViews.includes(view)");
@@ -170,10 +174,10 @@ describe("Demaa application navbar", () => {
     expect(marketingLayoutSource).toContain("<Footer />");
     expect(experienceSource).toContain("<ActionPlanNavbar");
     expect(experienceSource).toContain("workspace={prePlanWorkspace}");
-    expect(experienceSource).not.toContain('activeTab === "opportunities"');
+    expect(experienceSource).toContain('activeTab === "opportunities"');
     expect(experienceSource).toContain("<ActionPlanAcademyPanel");
     expect(experienceSource).toContain("<ActionPlanCoachingControl");
-    expect(experienceSource).not.toContain("<OpportunitiesPanel");
+    expect(experienceSource).toContain("<OpportunitiesPanel");
     expect(experienceSource).not.toContain('aria-label="Votre résultat"');
   });
 });

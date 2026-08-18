@@ -1,12 +1,12 @@
 "use client";
 
-import { BookOpen, ListChecks, Wrench } from "lucide-react";
+import { BookOpen, BriefcaseBusiness, ListChecks, Wrench } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 
-export type ActionPlanView = "plan" | "solutions" | "academy";
+export type ActionPlanView = "plan" | "solutions" | "academy" | "opportunities";
 
 const tabClassName =
   "group relative inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:min-h-11 xl:flex-row xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
@@ -14,7 +14,8 @@ const tabClassName =
 const navigationItems = [
   { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
   { view: "solutions", labels: { fr: "Solutions", en: "Solutions" }, Icon: Wrench },
-  { view: "academy", labels: { fr: "Académie", en: "Academy" }, Icon: BookOpen },
+  { view: "academy", labels: { fr: "Ressources", en: "Resources" }, Icon: BookOpen },
+  { view: "opportunities", labels: { fr: "Opportunités", en: "Opportunities" }, Icon: BriefcaseBusiness },
 ] as const;
 
 export default function ActionPlanNavbar({

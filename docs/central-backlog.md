@@ -212,6 +212,25 @@ par Système.
   `/opportunites` et reprendre les intentions/brouillons d'authentification sur
   cette route canonique plutôt que dans une vue applicative cachée.
 
+#### Réactivation — 18 août 2026
+
+- [x] Republier `/opportunites` sur les surfaces de découverte publiques :
+  lien footer (« Collaborer avec Demaa ») et entrée sitemap restaurés, `noindex`
+  retiré de la page.
+- [x] Restaurer l'onglet applicatif intégré, en 4ᵉ position après Ressources
+  (ex-Académie) : `ActionPlanNavbar` (largeur de grille dynamique via
+  `visibleViews`, plus besoin de `grid-cols-4` en dur), `ActionPlanExperience`,
+  `SavedActionPlanDetail`, `opportunityId` dans `ActionPlanAppContext`. Le
+  panneau (`OpportunitiesPanel`, recréé) réutilise directement
+  `PublicOpportunitiesClient` sans titre visible (juste recherche + filtres,
+  un `<h2>` `sr-only` pour l'accessibilité).
+- [ ] Toujours exclue d'English Beta : `(english)/en/**` passe explicitement
+  `visibleViews={["plan", "solutions", "academy"]}`, donc l'onglet Opportunités
+  n'apparaît pas côté anglais. `OpportunitiesPanel` accepte un prop
+  `localeCode` (fr/en) pour son propre texte, mais `PublicOpportunitiesClient`
+  et ses dialogues (soumission, profil prestataire) restent entièrement en
+  français — leur localisation est un chantier à part, non commencé.
+
 ### Audit du code au 16 août 2026
 
 Éléments existants à réutiliser :

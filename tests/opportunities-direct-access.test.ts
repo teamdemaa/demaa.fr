@@ -7,7 +7,7 @@ const readSource = (path: string) => readFile(
 );
 
 describe("Opportunities direct-link access", () => {
-  it("removes Opportunities from discovery surfaces without removing the route", async () => {
+  it("restores Opportunities in the embedded app tab and on public discovery surfaces", async () => {
     const [navigation, footer, sitemap, page] = await Promise.all([
       readSource("src/components/ActionPlanNavbar.tsx"),
       readSource("src/components/Footer.tsx"),
@@ -15,12 +15,12 @@ describe("Opportunities direct-link access", () => {
       readSource("src/app/(marketing)/opportunites/page.tsx"),
     ]);
 
-    expect(navigation).not.toContain("Opportunités");
-    expect(footer).not.toContain('{ label: "Opportunités", href: "/opportunites" }');
-    expect(sitemap).not.toContain("`${base}/opportunites`");
+    expect(navigation).toContain('{ view: "opportunities", labels: { fr: "Opportunités", en: "Opportunities" }, Icon: BriefcaseBusiness }');
+    expect(footer).toContain('{ label: "Opportunités", href: "/opportunites" }');
+    expect(sitemap).toContain("`${base}/opportunites`");
     expect(page).toContain("export default async function OpportunitiesPage");
     expect(page).toContain("<PublicOpportunitiesClient");
-    expect(page).toContain("robots: { index: false, follow: true }");
+    expect(page).not.toContain("robots: { index: false, follow: true }");
     expect(await readSource("src/components/PublicOpportunitiesClient.tsx"))
       .toMatch(/\.get\(\s*"opportunity"/);
   });
