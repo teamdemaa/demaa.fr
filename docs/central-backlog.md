@@ -234,6 +234,13 @@ par Système.
   `localeCode` (fr/en) pour son propre texte, mais `PublicOpportunitiesClient`
   et ses dialogues (soumission, profil prestataire) restent entièrement en
   français — leur localisation est un chantier à part, non commencé.
+- [x] `COMPANY_STRATEGY_VISIBLE` passé à `true` (18 août 2026), sur décision
+  explicite du fondateur plutôt qu'après la surveillance production 24-48h
+  initialement prévue (point 1 de « Prochaine action » ci-dessous, non
+  complété avant activation). Constante désormais exportée depuis
+  `action-plan-app-context.ts` et importée par `CompanyPilotagePanel.tsx` au
+  lieu d'être dupliquée dans les deux fichiers. Chiffres était déjà visible
+  (non gated par ce flag) ; seule Stratégie était masquée.
 
 ### Audit du code au 16 août 2026
 
