@@ -14,7 +14,7 @@ const tabClassName =
 const navigationItems = [
   { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
   { view: "solutions", labels: { fr: "Solutions", en: "Solutions" }, Icon: Wrench },
-  { view: "academy", labels: { fr: "Ressources", en: "Resources" }, Icon: BookOpen },
+  { view: "academy", labels: { fr: "Académie", en: "Academy" }, Icon: BookOpen },
   { view: "opportunities", labels: { fr: "Opportunités", en: "Opportunities" }, Icon: BriefcaseBusiness },
 ] as const;
 
