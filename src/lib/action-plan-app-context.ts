@@ -8,6 +8,7 @@ const ACTION_PLAN_VIEWS = [
   "plan",
   "solutions",
   "academy",
+  "opportunities",
 ] as const satisfies readonly ActionPlanView[];
 
 const SAFE_SLUG_PATTERN = /^[A-Za-z0-9_-]{1,160}$/;
@@ -24,6 +25,7 @@ export type ActionPlanAppContext = {
   systemTab?: SystemDetailTab;
   solutionResourceSlug?: string;
   academyContentSlug?: string;
+  opportunityId?: string;
 };
 
 type SearchValue = string | string[] | undefined;
@@ -98,6 +100,10 @@ export function parseActionPlanAppContext(
     ? "solutions"
     : intent === "structure" || intent === "structure-problem"
       ? "academy"
+    : intent === "opportunity"
+        || intent === "opportunity-submit"
+        || intent === "team-demaa-profile"
+      ? "opportunities"
       : undefined;
   const requestedAppView = requestedView === "system"
     ? "solutions"
@@ -120,6 +126,12 @@ export function parseActionPlanAppContext(
         : undefined),
   );
   const academyContentSlug = safeSlug(readSearchValue(input, "academy"));
+  const opportunityId = safeSlug(
+    readSearchValue(input, "opportunity")
+      ?? (intent === "opportunity"
+        ? readSearchValue(input, "opportunityId")
+        : undefined),
+  );
   const requestedSystemTab = normalizeSystemDetailTab(
     readSearchValue(input, "systemTab"),
   );
@@ -133,6 +145,7 @@ export function parseActionPlanAppContext(
     ...(requestedSystemTab ? { systemTab: requestedSystemTab } : {}),
     ...(solutionResourceSlug ? { solutionResourceSlug } : {}),
     ...(academyContentSlug ? { academyContentSlug } : {}),
+    ...(opportunityId ? { opportunityId } : {}),
   };
 }
 
@@ -187,6 +200,10 @@ export function buildActionPlanAppHref(input: {
 
   if (input.context.view === "academy" && input.context.academyContentSlug) {
     params.set("academy", input.context.academyContentSlug);
+  }
+
+  if (input.context.view === "opportunities" && input.context.opportunityId) {
+    params.set("opportunity", input.context.opportunityId);
   }
 
   const query = params.toString();

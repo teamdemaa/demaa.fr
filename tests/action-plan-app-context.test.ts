@@ -31,7 +31,7 @@ describe("action plan app context", () => {
     });
   });
 
-  it("keeps non-opportunity legacy authentication intents compatible", () => {
+  it("keeps legacy authentication intents compatible", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "intent=solution-referral&systemSlug=restaurant&resourceSlug=lightspeed",
     ))).toEqual({
@@ -39,6 +39,19 @@ describe("action plan app context", () => {
       planSection: "actions",
       systemId: "restaurant",
       solutionResourceSlug: "lightspeed",
+    });
+    expect(parseActionPlanAppContext(new URLSearchParams(
+      "intent=opportunity&opportunityId=mission-btp",
+    ))).toMatchObject({
+      view: "opportunities",
+      planSection: "actions",
+      opportunityId: "mission-btp",
+    });
+    expect(parseActionPlanAppContext(new URLSearchParams(
+      "intent=team-demaa-profile",
+    ))).toEqual({
+      view: "opportunities",
+      planSection: "actions",
     });
     for (const intent of ["structure", "structure-problem"]) {
       expect(parseActionPlanAppContext(new URLSearchParams(
@@ -50,12 +63,13 @@ describe("action plan app context", () => {
     }
   });
 
-  it("does not expose Opportunities as an embedded application view", () => {
+  it("exposes Opportunities as an embedded application view", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=opportunities&opportunity=mission-btp",
     ))).toEqual({
-      view: "plan",
+      view: "opportunities",
       planSection: "actions",
+      opportunityId: "mission-btp",
     });
   });
 

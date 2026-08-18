@@ -22,14 +22,14 @@ describe("English beta integrated release boundaries", () => {
     expect(copy).not.toContain("Structurez votre entreprise");
   });
 
-  it("keeps Opportunities direct-link only and outside discovery surfaces", () => {
+  it("keeps Opportunities on public discovery surfaces, still excluded from English Beta", () => {
     const page = source("src/app/(marketing)/opportunites/page.tsx");
     const footer = source("src/components/Footer.tsx");
     const sitemap = source("src/app/sitemap.ts");
 
     expect(page).toContain("<PublicOpportunitiesClient");
-    expect(page).toMatch(/robots:\s*{\s*index:\s*false,\s*follow:\s*true\s*}/);
-    expect(footer).not.toContain('href: "/opportunites"');
-    expect(sitemap).not.toContain("`${base}/opportunites`");
+    expect(page).not.toMatch(/robots:\s*{\s*index:\s*false,\s*follow:\s*true\s*}/);
+    expect(footer).toContain('href: "/opportunites"');
+    expect(sitemap).toContain("`${base}/opportunites`");
   });
 });
