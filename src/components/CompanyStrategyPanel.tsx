@@ -30,7 +30,7 @@ function nextCycleLabel() {
 export default function CompanyStrategyPanel() {
   const [cycle, setCycle] = useState<CompanyStrategyCycle | null>(null);
   const [answers, setAnswers] = useState<CompanyStrategyAnswers | null>(null);
-  const [openPillar, setOpenPillar] = useState<StrategyPillar>("alignment");
+  const [openPillar, setOpenPillar] = useState<StrategyPillar | null>("alignment");
   const [loading, setLoading] = useState(true);
   const [saveState, setSaveState] = useState<"idle" | "saving" | "error" | "conflict">("idle");
   const [message, setMessage] = useState("");
@@ -213,7 +213,7 @@ export default function CompanyStrategyPanel() {
       {saveState === "error" ? <div role="alert" className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700"><p>{error}</p><button type="button" className="mt-1 font-semibold underline" onClick={() => void flush()}>Réessayer</button></div> : null}
       {hasConflicts ? <p className="mt-4 text-sm text-amber-800" role="status">Choisissez une version pour chaque réponse en conflit.</p> : null}
       <div className="mt-6 divide-y divide-dema-line">
-        {COMPANY_STRATEGY_PILLARS.map((pillar) => <CompanyStrategyPillar key={pillar.key} pillar={pillar} open={openPillar === pillar.key} answers={answers} conflicts={conflicts} onOpen={() => setOpenPillar(pillar.key)} onAnswerChange={changeAnswer} onKeepLocal={(key) => resolveConflict(key, false)} onUseRemote={(key) => resolveConflict(key, true)} />)}
+        {COMPANY_STRATEGY_PILLARS.map((pillar) => <CompanyStrategyPillar key={pillar.key} pillar={pillar} open={openPillar === pillar.key} answers={answers} conflicts={conflicts} onOpen={() => setOpenPillar((current) => (current === pillar.key ? null : pillar.key))} onAnswerChange={changeAnswer} onKeepLocal={(key) => resolveConflict(key, false)} onUseRemote={(key) => resolveConflict(key, true)} />)}
       </div>
       <CompanyStrategyHistory key={cycle.id} />
       <CompanyStrategyCycleDialog open={cycleDialogOpen} creating={creatingCycle} error={cycleError} periodLabel={nextCycleLabel()} onClose={() => { if (!creatingCycle) setCycleDialogOpen(false); }} onConfirm={() => void createCycle()} />
