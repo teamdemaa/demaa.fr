@@ -177,11 +177,11 @@ export const COMPANY_STRATEGY_PILLARS = [
   {
     key: "alignment",
     label: "Alignement",
-    framing: "Vos ambitions, vos forces et votre rôle.",
+    framing: "Vos ambitions, vos forces et vos contraintes.",
     questions: [
       { key: "alignment_1", label: "Qu’est-ce que vous voulez que cette entreprise vous apporte ?" },
       { key: "alignment_2", label: "Qu’est-ce que vous faites particulièrement bien, et comment le savez-vous ?" },
-      { key: "alignment_3", label: "Qu’est-ce que vous voulez continuer à faire vous-même, et qu’est-ce qui doit fonctionner sans vous ?" },
+      { key: "alignment_3", label: "Avec quelles contraintes composez-vous en ce moment : temps, argent, énergie ?" },
     ],
   },
   {
