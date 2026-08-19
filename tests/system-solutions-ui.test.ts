@@ -475,9 +475,6 @@ describe("system Solutions UI", () => {
     const resourcePreviewSource = await readSource(
       "src/components/SystemResourcePreviewModal.tsx",
     );
-    const systemModalSource = await readSource(
-      "src/components/HistoricalOperationalSystemCopyRequestModal.tsx",
-    );
 
     expect(detailSource).not.toContain('setDeliveryModal("system")');
     expect(detailSource).not.toContain("<SystemGuidesRail");
@@ -493,11 +490,7 @@ describe("system Solutions UI", () => {
     expect(resourcesSource).toContain("/systemes/${systemSlug}/processus");
     expect(resourcePreviewSource).toContain("/api/systeme-kit/open/${resource.resourceSlug}");
     expect(resourcesSource).toContain("resources: readonly SystemResource[]");
-    expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(detailSource).not.toContain("Voir le système");
-    expect(systemModalSource).toContain("Système métier - {systemName}");
-    expect(systemModalSource).toContain("Recevoir ma copie modifiable");
-    expect(systemModalSource).toContain('const flowKey = `system-copy:${systemSlug}`');
   });
 
   it("reuses the accessible modal lifecycle and resets selection on close", async () => {

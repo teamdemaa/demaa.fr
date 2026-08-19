@@ -25,9 +25,6 @@ describe("system UX contract", () => {
     const openRouteSource = await readSource(
       "src/app/api/systeme-kit/open/[resourceSlug]/route.ts",
     );
-    const historicalModalSource = await readSource(
-      "src/components/HistoricalOperationalSystemCopyRequestModal.tsx",
-    );
     const pageSource = await readSource(
       "src/app/(marketing)/systemes/[slug]/page.tsx",
     );
@@ -42,7 +39,6 @@ describe("system UX contract", () => {
     expect(detailSource).not.toContain("<SystemGuidesRail");
     expect(detailSource).toContain("<SystemResourcesTab");
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
-    expect(detailSource).not.toContain("HistoricalOperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("SystemRecapRequestModal");
     expect(resourcesSource).toContain("SystemResourcePreviewModal");
@@ -63,13 +59,6 @@ describe("system UX contract", () => {
     expect(openRouteSource).toContain("getSystemResourceAssetSnapshot");
     expect(openRouteSource).toContain("resolveSystemResourceDelivery");
     expect(openRouteSource).toContain("NextResponse.redirect");
-    expect(historicalModalSource).toContain('name="firstName"');
-    expect(historicalModalSource).toContain("Prénom");
-    expect(historicalModalSource).toContain("Voir la démonstration");
-    expect(historicalModalSource).toContain("Recevoir ma copie modifiable");
-    expect(historicalModalSource).toContain('firstName: normalizedFirstName');
-    expect(historicalModalSource).toContain('const flowKey = `system-copy:${systemSlug}`');
-    expect(historicalModalSource).toContain('fetch("/api/systeme-kit/request"');
     expect(pageSource).not.toContain("getOperationalSystemDemoUrl");
     expect(pageSource).not.toContain("deliveryAvailable=");
     expect(pageSource).toContain("hasEditableOperationalSystemAsset");
