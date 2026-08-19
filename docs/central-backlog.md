@@ -241,6 +241,24 @@ par Système.
   `action-plan-app-context.ts` et importée par `CompanyPilotagePanel.tsx` au
   lieu d'être dupliquée dans les deux fichiers. Chiffres était déjà visible
   (non gated par ce flag) ; seule Stratégie était masquée.
+- [x] Après usage en prod (19 août 2026) : le pilier `alignment_3` de
+  `COMPANY_STRATEGY_PILLARS` (`src/lib/company-pilotage-contract.ts`) passe
+  de « Qu'est-ce que vous voulez continuer à faire vous-même, et qu'est-ce
+  qui doit fonctionner sans vous ? » à « Avec quelles contraintes
+  composez-vous en ce moment : temps, argent, énergie ? ». Décision explicite
+  du fondateur : le framework Stratégie doit rester générique et réutilisable
+  par n'importe quelle entreprise, indépendamment de ce que Demaa vend —
+  connaître ses contraintes (temps, argent, énergie) est plus universel que
+  la question de délégation, qui présuppose un objectif de croissance sans
+  soi non partagé par toutes les entreprises. Le `framing` du pilier passe de
+  « Vos ambitions, vos forces et votre rôle. » à « Vos ambitions, vos forces
+  et vos contraintes. » pour rester cohérent. ADR 0013 non modifiée (registre
+  historique de la décision D-084 initiale) ; ce changement de contenu est
+  documenté ici plutôt que par réécriture de l'ADR.
+- [ ] Corollaire : le thème « rôle/délégation » (qu'est-ce qui doit
+  fonctionner sans vous) ne figure plus dans aucune des 12 questions
+  Stratégie. À surveiller si ce thème doit être réintroduit ailleurs (Plan
+  d'action, Académie) — non tranché.
 
 ### Audit du code au 16 août 2026
 

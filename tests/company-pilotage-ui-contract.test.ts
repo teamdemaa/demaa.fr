@@ -59,7 +59,7 @@ describe("company Pilotage UI contract", () => {
 
   it("contains exactly four pillars and twelve questions in the canonical contract", () => {
     const contract = readFileSync(new URL("../src/lib/company-pilotage-contract.ts", import.meta.url), "utf8");
-    for (const framing of ["Vos ambitions, vos forces et votre rôle.", "Pour qui et avec quel angle ?", "Quel résultat est vendu et comment gagne-t-on de l’argent ?", "Comment attirer, convertir et fidéliser ?"]) expect(contract).toContain(framing);
+    for (const framing of ["Vos ambitions, vos forces et vos contraintes.", "Pour qui et avec quel angle ?", "Quel résultat est vendu et comment gagne-t-on de l’argent ?", "Comment attirer, convertir et fidéliser ?"]) expect(contract).toContain(framing);
     expect(COMPANY_STRATEGY_PILLARS).toHaveLength(4);
     expect(COMPANY_STRATEGY_PILLARS.reduce((count, { questions }) => count + questions.length, 0)).toBe(12);
     expect(COMPANY_STRATEGY_PILLARS.every(({ questions }) =>
