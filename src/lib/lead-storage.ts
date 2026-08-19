@@ -317,6 +317,20 @@ export async function getFailedLeadRequests(limit = 30) {
     .map(([id, data]) => ({ id, data }));
 }
 
+export async function getRecentLeadRequests(limit = 100) {
+  const database = getAdminFirestore();
+  const snapshot = await database
+    .collection("lead_requests")
+    .orderBy("created_at", "desc")
+    .limit(limit)
+    .get();
+
+  return snapshot.docs.map((document) => ({
+    id: document.id,
+    data: document.data() as StoredLeadRequest,
+  }));
+}
+
 export async function claimLeadDeliveryRetry(input: {
   channel: LeadDeliveryChannel;
   leadId: string;

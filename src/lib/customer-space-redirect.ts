@@ -196,5 +196,12 @@ export function getSafeCustomerReturnTo(value?: string | null) {
       : candidate;
   }
   if (candidate === "/plans") return candidate;
+  if (
+    candidate === "/admin/opportunites"
+    || candidate === "/admin/coaching"
+    || candidate === "/admin/demandes"
+  ) {
+    return candidate;
+  }
   return "/";
 }

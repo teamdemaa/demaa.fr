@@ -8,6 +8,7 @@ const mocks = vi.hoisted(() => ({
   enforceRateLimit: vi.fn(),
   enforceSameOrigin: vi.fn(),
   getAllOpportunities: vi.fn(),
+  getCurrentAdminIdentity: vi.fn(),
   getExpertiseById: vi.fn(),
   getOpportunityById: vi.fn(),
   logOperationalError: vi.fn(),
@@ -17,6 +18,9 @@ const mocks = vi.hoisted(() => ({
 }));
 
 vi.mock("next/cache", () => ({ revalidateTag: mocks.revalidateTag }));
+vi.mock("@/lib/admin-auth.server", () => ({
+  getCurrentAdminIdentity: mocks.getCurrentAdminIdentity,
+}));
 vi.mock("@/lib/api-security", () => ({
   enforceRateLimit: mocks.enforceRateLimit,
   normalizeText: (value: unknown, maxLength: number, options: { multiline?: boolean } = {}) => {
@@ -49,15 +53,12 @@ vi.mock("@/lib/request-guard", () => ({
 
 import { GET, PATCH, POST } from "@/app/api/admin/opportunities/route";
 
-const secret = "this-is-a-long-private-admin-secret";
-
-function request(method: "GET" | "PATCH" | "POST", body?: unknown, providedSecret = secret) {
+function request(method: "GET" | "PATCH" | "POST", body?: unknown) {
   return new Request("https://demaa.fr/api/admin/opportunities", {
     method,
     headers: {
       ...(method === "GET" ? {} : { Origin: "https://demaa.fr" }),
       "Content-Type": "application/json",
-      "x-demaa-admin-secret": providedSecret,
     },
     body: body ? JSON.stringify(body) : undefined,
   });
@@ -66,10 +67,14 @@ function request(method: "GET" | "PATCH" | "POST", body?: unknown, providedSecre
 describe("opportunity admin route", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    process.env.OPPORTUNITIES_ADMIN_SECRET = secret;
     mocks.enforceAllowedHost.mockReturnValue(null);
     mocks.enforceSameOrigin.mockReturnValue(null);
     mocks.enforceRateLimit.mockResolvedValue(null);
+    mocks.getCurrentAdminIdentity.mockResolvedValue({
+      email: "hi.teamdemaa@gmail.com",
+      provider: "google",
+      uid: "admin-uid",
+    });
     mocks.getAllOpportunities.mockResolvedValue([]);
     mocks.getExpertiseById.mockResolvedValue({ expertiseId: "google-ads" });
     mocks.createOpportunity.mockImplementation(async (input) => input);
@@ -96,8 +101,9 @@ describe("opportunity admin route", () => {
     mocks.updateOpportunityStatus.mockResolvedValue(true);
   });
 
-  it("requires the private secret", async () => {
-    expect((await GET(request("GET", undefined, "wrong"))).status).toBe(401);
+  it("requires an authenticated admin session", async () => {
+    mocks.getCurrentAdminIdentity.mockResolvedValueOnce(null);
+    expect((await GET(request("GET"))).status).toBe(401);
   });
 
   it("creates an open Firebase opportunity and invalidates the public cache", async () => {

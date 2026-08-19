@@ -6,32 +6,31 @@ réservée à la Team Demaa, absente de la navigation publique et déclarée
 
 ## Configuration
 
-L’API `/api/admin/coaching` utilise exclusivement la variable serveur sensible
-`COACHING_ADMIN_SECRET`. Cette clé doit comporter au moins 24 caractères et être
-configurée séparément dans chaque environnement Vercel autorisé.
+L'accès admin (`/admin/coaching` et `/admin/opportunites`) réutilise la
+session client existante (`demaa_session`, la même connexion Google ou
+email/mot de passe que le reste du site) plutôt qu'un secret séparé. Un compte
+est administrateur si son email figure dans la variable serveur
+`DEMAA_ADMIN_EMAILS` (liste séparée par des virgules), vérifiée par
+`getCurrentAdminIdentity` (`src/lib/admin-auth.server.ts`).
 
-La clé `OPPORTUNITIES_ADMIN_SECRET` protège uniquement l’administration des
-opportunités. Il n’existe aucun fallback entre les deux consoles.
+Il n'y a plus de secret dédié par console : la même liste d'emails protège les
+deux espaces admin.
 
 ## Accès
 
-1. Ouvrir directement `https://demaa.co/admin/coaching`.
-2. Saisir la clé Coaching dans le champ « Clé d’administration ».
-3. Cliquer sur « Ouvrir ».
+1. Se connecter normalement sur le site avec un compte figurant dans
+   `DEMAA_ADMIN_EMAILS`.
+2. Ouvrir `https://demaa.co/admin/coaching` (ou `/admin/opportunites`).
+3. La page vérifie la session côté serveur et redirige vers `/connexion` si
+   le compte connecté n'est pas administrateur.
 
-La clé est transmise dans l’en-tête privé `x-demaa-admin-secret`. Elle ne doit
-jamais être placée dans une URL, un journal, un ticket ou un document partagé.
-Elle reste uniquement dans l’état mémoire de la page et doit être ressaisie
-après un rechargement.
-
-Les lectures et écritures sont privées, non mises en cache et limitées avant la
-comparaison de la clé. Les écritures exigent en plus une origine Demaa valide.
+Les lectures et écritures sont privées, non mises en cache et limitées avant
+la vérification de session. Les écritures exigent en plus une origine Demaa
+valide.
 
 ## Exploitation
 
-- Révoquer et remplacer immédiatement la clé en cas de doute sur sa
-  confidentialité.
-- Vérifier après rotation que `COACHING_ADMIN_SECRET` est présente dans Vercel
-  Production avant de supprimer l’ancienne valeur.
-- Ne jamais communiquer cette clé à un partenaire ou à un spécialiste externe.
-- Le futur accès par rôle Firebase `team_demaa` fera l’objet d’un lot séparé.
+- Retirer immédiatement un email de `DEMAA_ADMIN_EMAILS` révoque son accès
+  admin à la prochaine requête, sans affecter les autres comptes.
+- Ne jamais communiquer un accès admin à un partenaire ou un spécialiste
+  externe autrement qu'en ajoutant son email à cette liste.
