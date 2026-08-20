@@ -24,6 +24,7 @@ import {
   getConfiguredVisitorCommercialContext,
   resolveAuthenticatedInternationalContext,
 } from "@/lib/international-context.server";
+import { isEnglishBetaEnabled } from "@/lib/english-beta.server";
 
 type SearchValue = string | string[] | undefined;
 export type ActionPlanPageSearchParams = Record<string, SearchValue>;
@@ -63,6 +64,7 @@ export async function loadActionPlanHomePage(input: {
       })
     : null;
   const config = getActionPlanPageConfig({
+    englishBetaEnabled: isEnglishBetaEnabled(),
     localeCode: input.localeCode,
     marketCode: authenticatedContext?.internationalContext.marketCode
       ?? unauthenticatedConfig.marketCode,
@@ -82,6 +84,7 @@ export async function loadActionPlanHomePage(input: {
 function getUnauthenticatedConfig(localeCode: InterfaceLocaleCode) {
   const commercialContext = getConfiguredVisitorCommercialContext(localeCode);
   return getActionPlanPageConfig({
+    englishBetaEnabled: isEnglishBetaEnabled(),
     localeCode,
     marketCode: commercialContext.marketCode,
   });
@@ -120,6 +123,7 @@ export async function loadActionPlansPage(localeCode: InterfaceLocaleCode) {
   const page = await getActionPlanIndexPageForIdentity(identity);
   return {
     config: getActionPlanPageConfig({
+      englishBetaEnabled: isEnglishBetaEnabled(),
       localeCode,
       marketCode: page.companyContext.marketCode,
     }),
@@ -144,6 +148,7 @@ export async function loadNewActionPlanPage(input: {
   const page = await getActionPlanIndexPageForIdentity(identity);
   return {
     config: getActionPlanPageConfig({
+      englishBetaEnabled: isEnglishBetaEnabled(),
       localeCode: input.localeCode,
       marketCode: page.companyContext.marketCode,
     }),
@@ -184,6 +189,7 @@ export async function loadSavedActionPlanPage(input: {
   const page = await getActionPlanWorkspacePageForIdentity(identity, input.id);
   if (!page.companyContext || !page.generationState) notFound();
   const config = getActionPlanPageConfig({
+    englishBetaEnabled: isEnglishBetaEnabled(),
     localeCode: input.localeCode,
     marketCode: page.companyContext.marketCode,
   });
@@ -207,6 +213,7 @@ export async function redirectToLatestActionPlan(localeCode: InterfaceLocaleCode
   }
   const page = await getActionPlanIndexPageForIdentity(identity);
   const config = getActionPlanPageConfig({
+    englishBetaEnabled: isEnglishBetaEnabled(),
     localeCode,
     marketCode: page.companyContext.marketCode,
   });

@@ -424,6 +424,345 @@ par Système.
     externe n'a pas été reprise ailleurs qu'ici : elle correspondait déjà à
     ce qui venait d'être décidé et livré juste avant (cf. note ci-dessus).
 
+#### Plan Opportunités — pilote éditorial France, décision du 20 août 2026
+
+##### Décision de positionnement et limites du chantier
+
+- [x] Décision de cadrage : tester les reprises/transmissions dans
+  Opportunités fait sens comme **extension d'activation et de récurrence** de
+  Demaa, mais ne constitue ni un pivot, ni une nouvelle promesse principale,
+  ni le lancement d'une marketplace de cession d'entreprises.
+- [x] Conserver comme promesse produit canonique l'aide apportée au dirigeant
+  pour identifier ce qui freine son entreprise, la structurer et passer à
+  l'action. Opportunités intervient en aval : trouver une mission, un
+  partenaire, une entreprise à reprendre ou une solution de transmission est
+  une manière possible d'agir après le diagnostic et le plan.
+- [x] Traiter « les personnes qui systémisent veulent souvent revendre » comme
+  une **hypothèse à vérifier**, jamais comme un fait ni comme le fondement du
+  positionnement. La systémisation peut aussi servir la délégation, la qualité,
+  le financement, la croissance, la continuité ou la réduction de la charge du
+  dirigeant.
+- [x] Préserver Opportunités comme 4e destination de l'application après
+  Académie, et comme page publique autonome. La proposition de valeur de la
+  page d'accueil et l'entrée principale dans Demaa ne deviennent pas « acheter
+  ou vendre une entreprise ».
+- [x] Ne pas créer deux produits ou deux espaces de navigation séparés
+  « Missions » et « Reprises ». Conserver une seule rubrique Opportunités et
+  différencier les intentions par types/filtres : mission,
+  reprise-transmission, partenariat, sous-traitance, collaboration, autre.
+- [x] Test de cohérence à conserver dans toute décision future : si la rubrique
+  Opportunités disparaissait, la promesse cœur de Demaa devrait toujours être
+  complète et compréhensible. Si le catalogue de cessions devient nécessaire
+  pour expliquer ce qu'est Demaa, le produit aura dérivé de son positionnement.
+- [ ] Ne promouvoir les reprises/transmissions dans les autres surfaces
+  produit qu'après validation du pilote ci-dessous. En particulier, ne pas
+  modifier pour ce test la homepage, le parcours principal de génération de
+  plan, le pricing ou les offres de service.
+
+##### État initial et hypothèses à tester
+
+- [x] Le contrat courant `src/lib/opportunity-contract.ts` prévoit déjà le type
+  `reprise-transmission`, en plus de `mission`, `sous-traitance`, `partenariat`,
+  `collaboration` et `autre`, ainsi que les statuts brouillon/ouvert/fermé et
+  `expiresAt`.
+- [x] Le formulaire courant permet déjà de soumettre une opportunité, choisit
+  le type et la catégorie, recueille notamment géographie, rythme, démarrage,
+  budget, attentes et entreprise, puis passe par authentification/reprise de
+  brouillon et modération.
+- [x] L'inventaire embarqué au 20 août 2026 ne contient que 3 opportunités,
+  toutes de type `mission`. Il ne fournit donc aucune preuve comportementale
+  que les utilisateurs Demaa veulent consulter, publier ou reprendre des
+  entreprises.
+- [x] L'offre publique externe est abondante, mais l'abondance du marché ne
+  prouve pas l'adéquation avec les utilisateurs Demaa. Repères à ne pas
+  additionner, car plusieurs bases se syndiquent ou se dupliquent :
+  - [Bpifrance Transmission](https://reprise-entreprise.bpifrance.fr/) agrège
+    plusieurs dizaines de milliers d'affaires provenant d'opérateurs
+    partenaires ;
+  - [CessionPME](https://www.cessionpme.com/) affiche plus de 65 000 annonces
+    d'entreprises et commerces au moment du cadrage ;
+  - [CRA](https://www.cra.asso.fr/liste-entreprises-a-reprendre.aspx) présente
+    environ 560 entreprises sélectionnées, davantage orientées PME en bonne
+    santé ;
+  - [Transentreprise](https://reprise-entreprise.bpifrance.fr/Les-operateurs-partenaires/Transentreprise)
+    couvre 98 départements et a publié plus de 7 000 offres en 2024 ;
+  - [Transmibat](https://www.transmibat.fr/) annonce plus de 500 opportunités
+    spécialisées bâtiment ;
+  - [Actify](https://actify.fr/actifs/) couvre plutôt les actifs et entreprises
+    en procédure collective ;
+  - [Fusacq](https://www.fusacq.com/) publie des dossiers de cession de TPE et
+    PME.
+- [ ] Tester l'hypothèse H1 : un inventaire réduit, frais et vérifié donne une
+  raison mesurable de revenir dans Demaa.
+- [ ] Tester l'hypothèse H2 : les reprises/transmissions intéressent une partie
+  des utilisateurs sans diminuer la compréhension de Demaa comme produit de
+  structuration et de passage à l'action.
+- [ ] Tester l'hypothèse H3 : des cédants, intermédiaires ou partenaires sont
+  prêts à soumettre directement leurs opportunités à Demaa au lieu de dépendre
+  uniquement d'une curation manuelle.
+- [ ] Tester l'hypothèse H4 : au moins une partie des consultations se
+  transforme en action qualifiée — clic source, manifestation d'intérêt,
+  contact autorisé ou démarrage d'un plan — et pas seulement en consommation
+  de contenu.
+
+##### Stratégie de sources du pilote
+
+- [ ] Ne pas limiter le pilote à LinkedIn. Utiliser exactement trois flux pour
+  les 6 premières semaines afin de comparer fraîcheur, structure, droits de
+  diffusion et capacité de conversion :
+  1. publications LinkedIn publiques et récentes ;
+  2. Bpifrance Transmission avec renvoi vers l'opérateur/l'annonce d'origine ;
+  3. opportunités soumises directement à Demaa par un cédant, une entreprise,
+     un partenaire ou un intermédiaire autorisé.
+- [ ] Utiliser LinkedIn comme détecteur de signaux et canal relationnel, pas
+  comme base de données unique : annonce récente, auteur identifiable,
+  possibilité de contacter le cédant/intermédiaire et signaux parfois absents
+  des grandes places de marché.
+- [ ] Utiliser Bpifrance Transmission comme point de découverte structuré, tout
+  en enregistrant la source originale. Ne pas compter séparément comme offres
+  uniques les duplications Bpifrance/CessionPME/CRA/Fusacq/Transentreprise/
+  Transmibat.
+- [ ] Utiliser au besoin une seule source spécialiste pour compléter un segment
+  insuffisamment couvert, sans ouvrir de nouveau flux permanent pendant le
+  pilote : CRA pour une PME en bonne santé, Actify pour une procédure
+  collective, Transmibat pour le BTP.
+- [ ] Constituer un lot initial de 20 opportunités publiques, vivantes et
+  vérifiables en France : cible de travail de 10 annonces LinkedIn et 10
+  annonces Bpifrance/opérateur d'origine. Cette répartition est un protocole de
+  comparaison et peut être ajustée si une source ne fournit pas assez
+  d'annonces conformes ; garder le total et tracer l'écart.
+- [ ] En parallèle, solliciter les auteurs/intermédiaires des annonces repérées
+  et viser 5 premières soumissions ou autorisations explicites. Ne pas compter
+  une simple curation externe comme une soumission directe.
+- [ ] Pour chaque source et chaque annonce, tracer au minimum : URL source,
+  nom de la source, URL canonique d'origine si agrégée, date de publication
+  connue, date de dernière vérification, auteur/intermédiaire, caractère public
+  ou confidentiel et preuve/état de l'autorisation de republication.
+
+##### Deux modes de publication à rendre explicites
+
+- [ ] Introduire un mode `external_discovery` pour une annonce publique repérée
+  ailleurs : Demaa n'en est ni le dépositaire ni le mandataire ; la fiche
+  affiche une synthèse factuelle courte, la source, la date de vérification et
+  un CTA principal « Voir l'annonce source » ouvrant l'URL originale.
+- [ ] Conserver un mode `direct_submission` pour une annonce déposée ou
+  expressément confiée à Demaa : la fiche peut afficher « Manifester mon
+  intérêt » et transmettre la demande à l'équipe/au déposant selon le parcours
+  de modération autorisé.
+- [ ] Ne jamais faire passer une annonce externe pour une annonce déposée chez
+  Demaa. Ne pas capter une manifestation d'intérêt à la place de l'auteur sans
+  autorisation explicite et traçable.
+- [ ] Afficher sur chaque fiche un libellé sans ambiguïté : « Repérée par Demaa
+  — candidature sur le site source » ou « Déposée sur Demaa — mise en relation
+  par Demaa ».
+- [ ] Prévoir le cas où une annonce externe devient directe après accord de son
+  auteur : conserver l'identité de la source et l'historique de vérification,
+  changer le mode de publication et activer la mise en relation Demaa sans
+  créer de doublon visible.
+
+##### Contrat de données minimal du pilote
+
+- [ ] Étendre le contrat d'opportunité et son stockage avec des champs nommés
+  explicitement et validés côté serveur :
+  - `publicationMode`: `external_discovery | direct_submission` ;
+  - `sourceLabel` et `sourceUrl` ;
+  - `originalSourceUrl` si l'URL de découverte est un agrégateur ;
+  - `sourcePublishedAt` lorsqu'une date publique existe ;
+  - `verifiedAt` et, si utile, `verifiedBy` interne ;
+  - `authorizationStatus`: `not_required_link_only | requested | granted |
+    refused | revoked` ;
+  - `authorizationRecordedAt` et une référence interne de preuve, non publique ;
+  - `confidentialityLevel`: `public | limited | confidential` ;
+  - `closedReason`: `expired | filled | withdrawn | unavailable | duplicate |
+    moderation` pour fiabiliser l'analyse du stock ;
+  - `sourceOpportunityId` ou une empreinte de déduplication quand disponible.
+- [ ] Réutiliser `expiresAt` pour toutes les offres. Si la source ne donne pas
+  d'échéance, appliquer une date de revalidation interne plutôt que laisser une
+  annonce ouverte indéfiniment.
+- [ ] Ne stocker et n'afficher prix, chiffre d'affaires, EBE, effectif, nom de
+  l'entreprise ou identité du cédant que s'ils figurent publiquement dans la
+  source ou si le déposant en a autorisé la diffusion.
+- [ ] Ajouter ultérieurement, seulement après signal du pilote, des champs
+  propres à `reprise-transmission` : périmètre de cession (fonds, titres, droit
+  au bail, actifs), fourchette de prix, CA, EBE, effectif, motif de cession,
+  accompagnement par le cédant, profil de repreneur attendu et niveau de
+  confidentialité. Garder tous les indicateurs financiers facultatifs.
+- [ ] Définir une règle de déduplication avant import manuel : même URL
+  canonique, même entreprise/titre/localisation, identifiant de source ou
+  rapprochement humain. Une annonce syndiquée sur trois sites ne doit produire
+  qu'une fiche Demaa.
+
+##### Expérience utilisateur minimale
+
+- [ ] Garder une seule page et une seule entrée de navigation
+  « Opportunités ». Ajouter les filtres de type uniquement lorsque chaque
+  filtre activé contient assez de résultats pour ne pas créer de rayon vide :
+  Toutes, Missions, Reprises & transmissions, Partenariats, Sous-traitance,
+  Collaborations.
+- [ ] Conserver la recherche et le filtre catégorie actuels ; vérifier que le
+  type, la géographie, la date de vérification, le mode de publication et la
+  source restent perceptibles sur mobile sans surcharger la carte.
+- [ ] Sur la liste, privilégier les informations de décision : titre, type,
+  activité/catégorie, localisation, fraîcheur et source. Réserver les détails
+  financiers et les attentes à la fiche détaillée.
+- [ ] Sur la fiche, rendre le CTA dépendant de `publicationMode` et afficher la
+  dernière vérification. Une source indisponible ou une échéance dépassée doit
+  retirer le CTA et fermer/masquer l'annonce selon la règle éditoriale.
+- [ ] Adapter la copie du formulaire de soumission pour couvrir clairement les
+  intentions « proposer une mission », « chercher un partenaire », « céder une
+  entreprise » et « proposer une entreprise à reprendre », sans transformer le
+  formulaire générique en tunnel M&A pendant le pilote.
+- [ ] Conserver la modération avant publication et la reprise du brouillon
+  après authentification. Ajouter au contrôle de modération : droit de publier,
+  source, cohérence du contact, données confidentielles, doublon, date et
+  critères minimaux de qualité.
+- [ ] Ne pas construire pendant le pilote : messagerie interne, paiement,
+  abonnement dédié, data room, signature, matching automatique, alertes
+  avancées, enchères, notation des cédants ou moteur de recherche multicritère
+  de marketplace.
+
+##### Cadence éditoriale et exploitation manuelle
+
+- [ ] Désigner un responsable éditorial du pilote. Une offre ne doit jamais
+  être publiée sans propriétaire de la vérification et prochaine date de
+  contrôle.
+- [ ] Publier le lot initial de 20 offres puis tenir une cadence cible de 5
+  ajouts ou renouvellements qualifiés par semaine pendant 6 semaines.
+- [ ] Réaliser une revue hebdomadaire de toutes les annonces ouvertes : URL
+  encore accessible, statut toujours ouvert, données inchangées, date limite,
+  autorisation et éventuel doublon.
+- [ ] Fermer rapidement toute annonce expirée, pourvue, retirée, non vérifiable
+  ou révoquée. Conserver en interne le motif de fermeture et l'historique, sans
+  laisser une fiche trompeuse dans l'inventaire public.
+- [ ] Afficher une sélection légère « Nouvelles cette semaine » ou un tri par
+  fraîcheur pour matérialiser la raison de revenir, sans construire de système
+  de notification avant validation du comportement récurrent.
+- [ ] Tenir un journal hebdomadaire du pilote : stock initial, ajouts, retraits,
+  fermetures, âge médian, sources, autorisations obtenues, intérêt généré,
+  retours qualitatifs et temps opérationnel consacré à la curation.
+- [ ] Mesurer séparément le temps de découverte, de vérification, de contact,
+  de modération et de maintenance. Un catalogue qui demande une exploitation
+  disproportionnée invalide le modèle même si les pages sont consultées.
+
+##### Règles éditoriales, confidentialité et confiance
+
+- [ ] Pour une annonce externe sans autorisation de republication, ne publier
+  qu'un résumé original et factuel des éléments nécessaires à la qualification,
+  avec lien clair vers la source. Ne jamais recopier intégralement le texte,
+  les images, coordonnées, documents ou informations confidentielles.
+- [ ] Demander l'accord avant d'utiliser le nom d'une entreprise, le nom d'une
+  personne, des coordonnées ou un dossier non déjà rendus publics par la source
+  officielle ; respecter immédiatement un retrait ou une révocation.
+- [ ] Ne pas promettre la qualité financière, juridique ou opérationnelle
+  d'une entreprise. « Vérifiée » signifie uniquement que l'annonce, sa source
+  et son statut ont été contrôlés à une date donnée, pas que Demaa a réalisé un
+  audit ou une due diligence.
+- [ ] Ajouter la mention adaptée au parcours : Demaa facilite la découverte ou
+  la mise en relation mais ne remplace ni avocat, expert-comptable, conseil M&A,
+  audit financier, audit social ni vérification juridique.
+- [ ] Pour Actify ou toute procédure collective, rendre visibles la nature de
+  la procédure, la date limite publique et la source officielle ; ne pas
+  mélanger ces actifs avec une cession classique « in bonis » sans libellé
+  distinct.
+- [ ] Prévoir un mécanisme simple pour signaler une annonce incorrecte,
+  expirée, dupliquée ou publiée sans accord, avec traitement et traçabilité.
+
+##### Instrumentation et métriques du pilote
+
+- [ ] Définir et instrumenter avant publication les événements minimaux, sans
+  nouveau tableau de bord complexe :
+  - vue de la page Opportunités ;
+  - utilisation d'un filtre/type et recherche ;
+  - ouverture d'une fiche, avec type, source et mode de publication ;
+  - clic « Voir l'annonce source » ;
+  - ouverture puis envoi de « Manifester mon intérêt » ;
+  - ouverture puis envoi du formulaire « Soumettre une opportunité » ;
+  - retour d'un même utilisateur/visiteur sur la rubrique dans les 30 jours ;
+  - fermeture/expiration d'une annonce et son motif.
+- [ ] Distinguer les volumes bruts des actions qualifiées. Une manifestation
+  d'intérêt est qualifiée seulement si elle concerne une offre identifiable,
+  contient un profil/contact exploitable et exprime une intention concrète ; un
+  simple clic ou message vide ne suffit pas.
+- [ ] Suivre chaque semaine : visiteurs uniques, fiches ouvertes, taux
+  page→fiche, clics sortants, intérêts envoyés, intérêts qualifiés, soumissions
+  externes, annonces directes autorisées, retours à 30 jours, offres périmées,
+  âge du stock et temps éditorial.
+- [ ] Segmenter au minimum les résultats par type d'opportunité et par mode de
+  publication. Ne pas conclure que « les reprises fonctionnent » à partir du
+  trafic global de Missions, ni que Demaa génère des leads à partir de clics
+  sortants non attribués.
+- [ ] Recueillir un retour qualitatif court auprès des premiers déposants et
+  intéressés : ce qu'ils cherchaient, pourquoi ils ont utilisé Demaa, ce qui
+  manquait pour agir et s'ils reviendraient consulter/déposer une opportunité.
+
+##### Gate à 6 semaines : poursuivre, ajuster ou arrêter
+
+- [ ] Réaliser une revue formelle après 6 semaines complètes d'exploitation.
+  Les seuils ci-dessous sont des critères expérimentaux proposés, pas des
+  résultats acquis :
+  - au moins 20 opportunités ouvertes, vérifiées et suffisamment renseignées ;
+  - au moins 5 actions d'intérêt qualifiées réparties sur au moins 3 offres ;
+  - au moins 5 opportunités soumises ou expressément autorisées par des acteurs
+    externes, distinctes de la seule curation Demaa ;
+  - un signal observable de revisite à 30 jours chez les visiteurs de la
+    rubrique ;
+  - une charge de curation jugée soutenable et documentée ;
+  - aucun incident grave de confidentialité, attribution ou représentation
+    trompeuse d'une annonce.
+- [ ] Décision **GO** si les actions qualifiées, les apports externes et la
+  revisite montrent ensemble que la rubrique crée une boucle utile. Le volume
+  de pages vues seul ne peut pas déclencher le GO.
+- [ ] Décision **AJUSTER** si la consultation existe sans dépôts/intérêts :
+  revoir qualité, ciblage, copie, CTA ou sources pendant un seul cycle
+  supplémentaire borné, avec une nouvelle hypothèse explicite.
+- [ ] Décision **STOP/PARK** si le trafic reste passif, si les annonces ne
+  peuvent pas être maintenues fraîches, si les déposants ne veulent pas de
+  Demaa comme canal ou si l'exploitation détourne durablement l'équipe du cœur
+  Plans/Systèmes. Fermer proprement les fiches externes plutôt que laisser un
+  catalogue obsolète.
+
+##### Suite possible après validation, explicitement hors pilote
+
+- [ ] Si le gate est franchi, enrichir progressivement le formulaire et les
+  filtres propres aux reprises/transmissions, sans créer de navigation séparée
+  tant que le volume ne le justifie pas.
+- [ ] Tester ensuite le pont réellement différenciant avec le cœur Demaa : CTA
+  secondaire « Préparer mon projet » ou « Transformer cette opportunité en
+  plan d'action », qui ouvre un plan avec contexte contrôlé et aide à cadrer la
+  qualification, la due diligence ou les 90 premiers jours. Ne pas injecter
+  automatiquement dans un plan des données externes non confirmées par
+  l'utilisateur.
+- [ ] Explorer un contenu ou une checklist de transmissibilité pour les
+  cédants : dépendance au dirigeant, documentation des processus, indicateurs,
+  délégation, continuité et préparation du dossier. Le présenter comme une
+  conséquence utile de la structuration, pas comme la seule raison de
+  systémiser.
+- [ ] N'envisager alertes, recherches sauvegardées, digest, partenariats de
+  flux/API, modèle payant, frais de mise en relation ou place de marché qu'avec
+  des preuves séparées de demande, de droits de diffusion et d'économie
+  opérationnelle.
+- [ ] Avant tout partenariat de flux, vérifier conditions d'utilisation,
+  droits de republication, fréquence de synchronisation, gestion des retraits,
+  déduplication et responsabilité sur les données. Un lien public n'autorise
+  pas automatiquement une ingestion ou une republication industrielle.
+
+##### Critères permanents anti-dérive
+
+- [ ] Opportunités reste au service du passage à l'action, pas de la taille du
+  catalogue : privilégier 20 offres fraîches et qualifiées à des milliers de
+  fiches copiées ou périmées.
+- [ ] Ne jamais utiliser le volume total des places de marché comme preuve que
+  les utilisateurs Demaa veulent ce service ; seules les actions observées
+  dans Demaa valident l'hypothèse produit.
+- [ ] Ne jamais laisser la curation d'annonces devenir le principal travail de
+  l'équipe sans modèle, partenaire ou automatisation autorisée démontrant sa
+  soutenabilité.
+- [ ] Toute évolution majeure doit conserver le lien explicite
+  opportunité→décision→plan d'action. Une fonctionnalité qui rapproche Demaa
+  d'un portail d'annonces généraliste sans renforcer ce lien est hors
+  positionnement et doit être parkée.
+
+
 ### État réel du code au 20 août 2026
 
 Déjà livré et à préserver :
@@ -480,10 +819,10 @@ Déjà livré et à préserver :
   canonical et `hreflang`. `/en` reste `noindex` et absent du
   sitemap tant que la bêta n'est pas publique.
 - [ ] Avant l'ouverture publique, rendre également le `lang="en"` correct dans
-  le HTML initial renvoyé par le serveur. La tentative de lecture de header
-  dans le layout racine a été rejetée parce qu'elle rendait dynamiques les
-  pages françaises statiques. Résoudre ce point par l'architecture des routes
-  localisées, sans dégrader le rendu statique/SEO français.
+  le HTML initial renvoyé par le serveur. La lecture du header dans le layout
+  racine a été testée puis rejetée : elle rend toutes les pages françaises
+  dynamiques. Résoudre ce point avec de vrais root layouts localisés, sans
+  dégrader le rendu statique/SEO français.
 - [x] Les parcours anglais actuellement publiables n'envoient pas d'e-mail
   client automatique : ils conservent la langue de la demande et notifient
   l'équipe. Aucun e-mail français n'est donc utilisé comme fallback silencieux.

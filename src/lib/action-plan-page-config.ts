@@ -62,6 +62,7 @@ const copy = defineLocaleDictionary({
 });
 
 export function getActionPlanPageConfig(input: {
+  englishBetaEnabled?: boolean;
   localeCode: InterfaceLocaleCode;
   marketCode: MarketCode;
 }) {
@@ -75,6 +76,7 @@ export function getActionPlanPageConfig(input: {
 
   return {
     copy: copy[input.localeCode],
+    englishBetaEnabled: input.englishBetaEnabled ?? false,
     localeCode: input.localeCode,
     marketCode: input.marketCode,
     paths: {

@@ -33,6 +33,7 @@ export default function SavedActionPlanPageView({
           isAuthenticated
           localeCode={config.localeCode}
           minimal
+          showLocaleSwitcher={config.englishBetaEnabled}
         />
         <ActionPlanNavbar
           activeView="plan"
@@ -58,6 +59,7 @@ export default function SavedActionPlanPageView({
         isAuthenticated
         localeCode={config.localeCode}
         minimal
+        showLocaleSwitcher={config.englishBetaEnabled}
       />
       <main className="px-4 pb-24 pt-2 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-[68rem]">
