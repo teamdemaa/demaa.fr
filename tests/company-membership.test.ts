@@ -47,7 +47,6 @@ import {
   getActiveDefaultCompanyIdentity,
   hasActiveCompanyMembership,
   parseCompanyInternationalContext,
-  readCompanyInternationalContext,
 } from "@/lib/company-membership.server";
 
 function identity(uid: string) {
@@ -88,12 +87,7 @@ describe("company membership foundation", () => {
   });
 
   it("keeps company market, country, and currency independent from interface language", () => {
-    expect(readCompanyInternationalContext(undefined)).toEqual({
-      countryCode: null,
-      currencyCode: "EUR",
-      marketCode: "fr-fr",
-    });
-    expect(readCompanyInternationalContext({
+    expect(parseCompanyInternationalContext({
       country_code: "GB",
       currency_code: "GBP",
       market_code: "global-en-beta",
@@ -101,15 +95,6 @@ describe("company membership foundation", () => {
       countryCode: "GB",
       currencyCode: "GBP",
       marketCode: "global-en-beta",
-    });
-    expect(readCompanyInternationalContext({
-      country_code: "invalid",
-      currency_code: "invalid",
-      market_code: "invalid",
-    })).toEqual({
-      countryCode: null,
-      currencyCode: "EUR",
-      marketCode: "fr-fr",
     });
     expect(parseCompanyInternationalContext(undefined)).toEqual({
       countryCode: null,

@@ -5,11 +5,7 @@ import type { Transaction } from "firebase-admin/firestore";
 import type { CustomerSessionIdentity } from "@/lib/customer-space-auth";
 import { getAdminFirestore } from "@/lib/firebase-admin";
 import {
-  EUR_CURRENCY_CODE,
   FRANCE_CONTEXT,
-  isMarketCode,
-  normalizeCountryCode,
-  normalizeCurrencyCode,
   parseCommercialContext,
   type InternationalContext,
 } from "@/lib/international-context";
@@ -150,18 +146,6 @@ export async function getActiveDefaultCompanyIdentityInTransaction(
 
 function isActiveCompany(document: CompanyDocument | undefined) {
   return document?.status === "active";
-}
-
-export function readCompanyInternationalContext(
-  document: CompanyDocument | undefined,
-): CompanyInternationalContext {
-  return {
-    countryCode: normalizeCountryCode(document?.country_code),
-    currencyCode: normalizeCurrencyCode(document?.currency_code) ?? EUR_CURRENCY_CODE,
-    marketCode: isMarketCode(document?.market_code)
-      ? document.market_code
-      : FRANCE_CONTEXT.marketCode,
-  };
 }
 
 export function parseCompanyInternationalContext(

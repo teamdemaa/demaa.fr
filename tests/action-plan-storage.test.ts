@@ -249,6 +249,45 @@ describe("company-scoped action plan persistence", () => {
     });
   });
 
+  it("resumes an existing generation after the company market changes", async () => {
+    const owner = identity("changing-market-owner");
+    const company = await ensureDefaultCompanyForIdentity(owner);
+    const companyPath = `companies/${company.companyId}`;
+    firestore.documents.set(companyPath, {
+      ...firestore.documents.get(companyPath),
+      market_code: "global-en-beta",
+    });
+    const situation = "Our business needs a clearer operating rhythm and priorities.";
+    const first = await beginActionPlanGeneration({
+      contentLocaleCode: "en",
+      identity: owner,
+      marketCodeAtCreation: "global-en-beta",
+      requestId: "changing-market-generation-1234",
+      situation,
+      now: new Date("2026-08-20T10:00:00.000Z"),
+    });
+    expect(first).toMatchObject({
+      kind: "claimed",
+      claim: { marketCodeAtCreation: "global-en-beta" },
+    });
+
+    firestore.documents.set(companyPath, {
+      ...firestore.documents.get(companyPath),
+      market_code: "fr-fr",
+    });
+    await expect(beginActionPlanGeneration({
+      contentLocaleCode: "en",
+      identity: owner,
+      marketCodeAtCreation: "global-en-beta",
+      requestId: "changing-market-generation-1234",
+      situation,
+      now: new Date("2026-08-20T10:01:00.000Z"),
+    })).resolves.toMatchObject({
+      kind: "existing",
+      state: { status: "generating" },
+    });
+  });
+
   it("rejects an idempotency key reused with another situation", async () => {
     await beginActionPlanGeneration({
       identity: identity("owner-uid"),

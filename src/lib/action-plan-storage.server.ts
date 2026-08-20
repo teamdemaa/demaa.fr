@@ -399,7 +399,7 @@ export async function beginActionPlanGeneration(input: {
       if (
         !belongsToCompany(existing, company.companyId)
         || existing?.owner_uid !== uid
-        || existing.request_fingerprint !== fingerprint
+        || !matchesActionPlanGenerationFingerprint(existing, situation)
         || existing.status === "deleted"
       ) {
         throw new ActionPlanGenerationRequestConflictError();
