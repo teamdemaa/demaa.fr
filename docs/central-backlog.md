@@ -135,7 +135,7 @@ Contexte commercial résolu côté serveur
   currencyCode            devise commerciale/de devis
 ```
 
-- [ ] Ne plus déduire automatiquement `marketCode` et `currencyCode` de
+- [x] Ne plus déduire automatiquement `marketCode` et `currencyCode` de
   `localeCode`. Un membre anglophone d'une entreprise française peut utiliser
   `en + fr-fr + FR + EUR` ; la bêta globale peut utiliser
   `en + global-en-beta` avec un pays nullable.
@@ -154,7 +154,7 @@ Contexte commercial résolu côté serveur
   - [ ] Étendre la même autorité serveur aux offres, demandes de service,
     conversations, prix et notifications dans leurs lots dédiés ; ces routes
     ne doivent plus accepter le navigateur comme autorité commerciale.
-- [ ] Conserver l'ordre de résolution de locale : route explicite, choix
+- [x] Conserver l'ordre de résolution de locale : route explicite, choix
   manuel, `member_preferences`, cookie visiteur, langue du navigateur lors de
   la première visite, français. Une route explicitement ouverte n'est jamais
   remplacée silencieusement.
@@ -781,17 +781,18 @@ Déjà livré et à préserver :
 
 Écarts confirmés à fermer :
 
-- [ ] le résolveur associe encore trop directement `en` à
-  `global-en-beta` et `fr` à `fr-fr`; accepter notamment `en + fr-fr` et
-  résoudre marché/pays/devise côté serveur à partir de l'entreprise et de la
-  configuration commerciale ;
-- [ ] l'entreprise est encore initialisée avec des valeurs France/EUR par
-  défaut et la devise applicative est trop étroitement limitée à EUR ; faire
-  évoluer ces contrats sans migration destructive ni confiance dans le client ;
-- [ ] la génération anglaise est limitée à dix activités numériques et les
-  combinaisons de contexte invalides peuvent retomber silencieusement sur le
-  français ; utiliser les 115 métiers/37 familles et échouer explicitement si
-  une projection publiée manque ;
+- [x] Le résolveur accepte désormais notamment `en + fr-fr` : la locale reste
+  un choix de présentation, tandis que marché, pays et devise proviennent de
+  l'entreprise authentifiée ou d'une configuration visiteur explicite côté
+  serveur.
+- [x] Une nouvelle entreprise reçoit le contexte commercial de son point
+  d'entrée validé, sans écraser une entreprise existante. `CurrencyCode`
+  accepte les codes ISO à trois lettres sans migration destructive ; la bêta
+  reste volontairement en EUR tant que la politique de conversion n'est pas
+  validée.
+- [x] La génération anglaise utilise les projections des 115 métiers et leurs
+  37 familles canoniques. Une paire locale/marché invalide ou une projection
+  publiée manquante échoue explicitement, sans fallback français silencieux.
 - [x] Chiffres et Stratégie partagent leurs données d'entreprise ; leurs
   libellés, formats et validations visibles sont localisés sans second stockage.
   La devise métier reste volontairement EUR pour ce lot et est formatée selon
