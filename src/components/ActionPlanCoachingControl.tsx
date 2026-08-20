@@ -15,6 +15,7 @@ import {
   type AiGenerationMetadata,
 } from "@/lib/ai-generation-metadata";
 import { isCoachingMessageDraftToken } from "@/lib/coaching-message-draft";
+import { getCoachingUiCopy } from "@/lib/coaching-ui-copy";
 
 type AccessPlan = {
   plan: PersistableActionPlan;
@@ -40,6 +41,7 @@ export default function ActionPlanCoachingControl({
   localeCode?: "fr" | "en";
   marketCode?: string;
 }) {
+  const copy = getCoachingUiCopy(localeCode);
   const [target, setTarget] = useState<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
   const [accessOpen, setAccessOpen] = useState(false);
@@ -103,7 +105,7 @@ export default function ActionPlanCoachingControl({
         } | null;
         planId = body?.actionPlan?.id || "";
         if (!response.ok || body?.status !== "saved" || !planId) {
-          throw new Error(body?.error || (localeCode === "en" ? "Unable to save the plan." : "Impossible de sauvegarder le plan."));
+          throw new Error(localeCode === "fr" && body?.error ? body.error : copy.savePlanError);
         }
       }
 
@@ -116,13 +118,13 @@ export default function ActionPlanCoachingControl({
     } catch (error) {
       const message = error instanceof Error
         ? error.message
-        : localeCode === "en" ? "Unable to prepare access to Talk to us." : "Impossible de préparer l’accès au spécialiste.";
+        : copy.prepareAccessError;
       setAccessError(message);
       throw error;
     } finally {
       setAccessPreparing(false);
     }
-  }, [accessIntent, accessPlan, demoMode, existingPlanId, localeCode, marketCode]);
+  }, [accessIntent, accessPlan, copy.prepareAccessError, copy.savePlanError, demoMode, existingPlanId, localeCode, marketCode]);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -176,11 +178,11 @@ export default function ActionPlanCoachingControl({
           type="button"
           onClick={() => setOpen(true)}
           className="inline-flex min-h-10 items-center gap-2 rounded-full bg-dema-forest px-4 text-xs font-medium text-white shadow-[0_6px_18px_rgba(39,91,67,0.18)] transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:min-h-11 sm:px-5 sm:text-sm"
-          aria-label={localeCode === "en" ? "Talk to the Demaa team" : "Échanger avec l’équipe Demaa"}
-          title={localeCode === "en" ? "Talk to the Demaa team" : "Échanger avec l’équipe Demaa"}
+          aria-label={copy.talkLabel}
+          title={copy.talkLabel}
         >
           <MessageCircle className="h-4 w-4" aria-hidden="true" />
-          <span>{localeCode === "en" ? "Talk to us" : "Échanger"}</span>
+          <span>{copy.talk}</span>
         </button>,
         target,
       )}
@@ -191,7 +193,7 @@ export default function ActionPlanCoachingControl({
               className="fixed inset-0 z-[130] overflow-y-auto bg-dema-cream/98 px-4 pb-24 pt-4 backdrop-blur-md sm:px-6 lg:px-8"
               role="dialog"
               aria-modal="true"
-              aria-label={localeCode === "en" ? "Talk to the Demaa team" : "Échanger avec l’équipe Demaa"}
+              aria-label={copy.talkLabel}
             >
               <div className="mx-auto flex max-w-[68rem] justify-end">
                 <button
@@ -199,21 +201,20 @@ export default function ActionPlanCoachingControl({
                   type="button"
                   onClick={closePanel}
                   className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue"
-                  aria-label={localeCode === "en" ? "Close Talk to us" : "Fermer la page spécialiste"}
+                  aria-label={copy.closeTalk}
                 >
                   <X className="h-5 w-5" aria-hidden="true" />
                 </button>
               </div>
               <CoachingPanel
                 localeCode={localeCode}
-                marketCode={marketCode}
                 initialDraftToken={isAuthenticated ? accessIntent.draftToken : undefined}
                 onRequireAccess={isAuthenticated ? undefined : (intent) => void prepareAccess(intent)}
               />
               {accessPreparing ? (
                 <div className="fixed inset-x-0 bottom-8 z-[135] mx-auto flex w-fit items-center gap-2 rounded-full bg-dema-paper px-4 py-2 text-sm text-dema-forest shadow-lg" role="status">
                   <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
-                  {localeCode === "en" ? "Opening…" : "Ouverture…"}
+                  {copy.opening}
                 </div>
               ) : null}
               {accessError ? (
@@ -247,16 +248,16 @@ export default function ActionPlanCoachingControl({
                   onClick={closeAccessDialog}
                   data-dialog-initial-focus
                   className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line"
-                  aria-label="Fermer"
+                  aria-label={copy.close}
                 >
                   <X className="h-4 w-4" aria-hidden="true" />
                 </button>
                 <h2 id="specialist-access-title" className="pr-12 text-2xl font-medium tracking-[-0.03em] text-brand-blue">
-                  {localeCode === "en" ? (accessIntent.draftToken ? "Sign in to send" : "Write to the Demaa team") : (accessIntent.draftToken ? "Connectez-vous pour envoyer" : "Écrire à l’équipe Demaa")}
+                  {accessIntent.draftToken ? copy.signInTitle : copy.accessTitle}
                 </h2>
                 <div className="mt-4">
                   <CustomerSpaceAccessForm
-                    choiceTitle={localeCode === "en" ? "Sign in to send" : "Connectez-vous pour envoyer"}
+                    choiceTitle={copy.signInTitle}
                     localeCode={localeCode}
                     onAuthenticated={handleAuthenticated}
                     returnTo={localeCode === "en" ? "/en" : "/"}

@@ -24,6 +24,11 @@ import {
   isSpecialistOffer,
   SPECIALIST_OFFERS,
 } from "@/lib/specialist-offers";
+import {
+  getConfiguredVisitorCommercialContext,
+  resolveAuthenticatedInternationalContext,
+} from "@/lib/international-context.server";
+import { normalizeInterfaceLocaleCode } from "@/lib/international-context";
 
 export const runtime = "nodejs";
 
@@ -34,9 +39,6 @@ type CoachingRequestBody = {
   idempotencyKey?: unknown;
   message?: unknown;
   localeCode?: unknown;
-  marketCode?: unknown;
-  countryCode?: unknown;
-  source?: unknown;
   offer?: unknown;
   phone?: unknown;
   requestKind?: unknown;
@@ -104,12 +106,14 @@ export async function POST(request: Request) {
     const draftToken = normalizeText(data?.draftToken, 80);
     const offer = normalizeText(data?.offer, 30);
     const idempotencyKey = normalizeIdempotencyKey(data?.idempotencyKey);
-    const localeCode = normalizeText(data?.localeCode, 10) || "fr";
-    const marketCode = normalizeText(data?.marketCode, 40) || "fr-fr";
-    const countryCode = normalizeText(data?.countryCode, 2).toUpperCase();
-    const source = normalizeText(data?.source, 80) || (localeCode === "en" ? "english-talk-to-us" : "echange");
-    if (!((localeCode === "fr" && marketCode === "fr-fr") || (localeCode === "en" && marketCode === "global-en-beta"))) {
-      return NextResponse.json({ error: "Contexte international invalide." }, { status: 400, headers: PRIVATE_NO_STORE_HEADERS });
+    const localeCode = data?.localeCode === undefined
+      ? "fr"
+      : normalizeInterfaceLocaleCode(data.localeCode);
+    if (!localeCode) {
+      return NextResponse.json(
+        { error: "Contexte international invalide." },
+        { status: 400, headers: PRIVATE_NO_STORE_HEADERS },
+      );
     }
 
     const isMessage = requestKind === "message";
@@ -120,6 +124,15 @@ export async function POST(request: Request) {
     if (customer.response) return customer.response;
     const email = customer.identity?.email ?? "";
     const uid = customer.identity?.uid ?? "";
+    const commercialContext = customer.identity
+      ? (await resolveAuthenticatedInternationalContext({
+          identity: customer.identity,
+          localeCode,
+        })).internationalContext
+      : getConfiguredVisitorCommercialContext(localeCode);
+    const marketCode = commercialContext.marketCode;
+    const countryCode = commercialContext.countryCode;
+    const source = localeCode === "en" ? "english-talk-to-us" : "echange";
     if (isMessage && draftToken) {
       claimedDraft = await claimPendingCoachingMessageDraft({
         draftToken,
@@ -169,7 +182,7 @@ export async function POST(request: Request) {
           idempotencyKey: effectiveIdempotencyKey,
           localeCode,
           marketCode,
-          countryCode: countryCode || null,
+          countryCode,
           source,
           uid,
         })
