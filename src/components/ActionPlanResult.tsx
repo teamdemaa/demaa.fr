@@ -931,7 +931,7 @@ export default function ActionPlanResult({
           ) : null}
       </section>
 
-      {localeCode === "fr" ? <PwaInstallPrompt /> : null}
+      <PwaInstallPrompt localeCode={localeCode} />
 
       {isBlankManualPlan && onGeneratePlan ? (
         <ActionPlanGenerationBar

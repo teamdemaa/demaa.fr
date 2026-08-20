@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CircleUserRound } from "lucide-react";
 import CustomerLogoutButton from "@/components/CustomerLogoutButton";
 import DemaaWordmark from "@/components/DemaaWordmark";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
 
@@ -12,11 +13,13 @@ export default function Navbar({
   isAuthenticated = false,
   minimal = false,
   localeCode = "fr",
+  showLocaleSwitcher = false,
 }: {
   anonymousLanding?: boolean;
   isAuthenticated?: boolean;
   minimal?: boolean;
   localeCode?: InterfaceLocaleCode;
+  showLocaleSwitcher?: boolean;
 }) {
   const accountAccessClassName =
     "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
@@ -44,6 +47,7 @@ export default function Navbar({
             />
             {anonymousLanding ? (
               <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
+                {showLocaleSwitcher ? <LocaleSwitcher localeCode={localeCode} /> : null}
                 <div
                   id="action-plan-navbar-specialist"
                   className="shrink-0 empty:hidden"

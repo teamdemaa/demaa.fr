@@ -9,6 +9,7 @@ import {
 
 export const metadata: Metadata = {
   description: ENGLISH_BETA_DESCRIPTION,
+  manifest: "/en/manifest.webmanifest",
   openGraph: {
     description: ENGLISH_BETA_DESCRIPTION,
     images: [

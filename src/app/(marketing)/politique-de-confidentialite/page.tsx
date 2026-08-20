@@ -1,27 +1,10 @@
-import LegalPageLayout from "@/components/LegalPageLayout";
+import LegalPageLayout, { LegalSection as PrivacySection } from "@/components/LegalPageLayout";
 import { LEGAL, LEGAL_COPY } from "@/lib/legal";
 
 export const metadata = {
   title: "Politique de confidentialité - Demaa",
   description: "Politique de confidentialité du site Demaa.fr.",
 };
-
-function PrivacySection({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="rounded-[2rem] border border-black/5 bg-white px-6 py-7 md:px-8 md:py-9">
-      <h2 className="text-2xl font-black tracking-tight text-brand-blue">{title}</h2>
-      <div className="mt-4 space-y-3 text-sm leading-relaxed text-gray-600 md:text-base">
-        {children}
-      </div>
-    </section>
-  );
-}
 
 export default function PolitiqueConfidentialitePage() {
   return (

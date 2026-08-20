@@ -111,9 +111,11 @@ D-085 supersède les anciens cadrages « English Beta = Action Plan uniquement �
     d'entreprise en français et en anglais. Les libellés, questions, erreurs,
     dates et montants EUR sont projetés par un dictionnaire typé ; aucun second
     stockage Chiffres/Stratégie n'a été créé.
-  - [ ] La fiche Service commerciale complète, les textes métier de Talk to us
-    et Academy restent volontairement dans les lots 4, 5 et 6 : les mutualiser
-    ici masquerait leurs écarts de contrat, de prix ou de contenu.
+  - [x] La fiche Service commerciale complète, les textes métier de Talk to us
+    et Academy ont été traités dans leurs lots dédiés, après normalisation de
+    leurs contrats, prix et contenus. Ils réutilisent désormais les mêmes
+    composants et identifiants canoniques sans masquer leurs projections
+    éditoriales localisées.
 - [ ] Déclarer le scope de chaque évolution : `shared` par défaut, ou
   explicitement `locale`, `market` ou `country`. La traduction choisit les
   mots ; elle n'accorde aucune permission et ne décide ni du catalogue, ni du
@@ -133,7 +135,7 @@ Contexte commercial résolu côté serveur
   currencyCode            devise commerciale/de devis
 ```
 
-- [ ] Ne plus déduire automatiquement `marketCode` et `currencyCode` de
+- [x] Ne plus déduire automatiquement `marketCode` et `currencyCode` de
   `localeCode`. Un membre anglophone d'une entreprise française peut utiliser
   `en + fr-fr + FR + EUR` ; la bêta globale peut utiliser
   `en + global-en-beta` avec un pays nullable.
@@ -152,7 +154,7 @@ Contexte commercial résolu côté serveur
   - [ ] Étendre la même autorité serveur aux offres, demandes de service,
     conversations, prix et notifications dans leurs lots dédiés ; ces routes
     ne doivent plus accepter le navigateur comme autorité commerciale.
-- [ ] Conserver l'ordre de résolution de locale : route explicite, choix
+- [x] Conserver l'ordre de résolution de locale : route explicite, choix
   manuel, `member_preferences`, cookie visiteur, langue du navigateur lors de
   la première visite, français. Une route explicitement ouverte n'est jamais
   remplacée silencieusement.
@@ -440,17 +442,18 @@ Déjà livré et à préserver :
 
 Écarts confirmés à fermer :
 
-- [ ] le résolveur associe encore trop directement `en` à
-  `global-en-beta` et `fr` à `fr-fr`; accepter notamment `en + fr-fr` et
-  résoudre marché/pays/devise côté serveur à partir de l'entreprise et de la
-  configuration commerciale ;
-- [ ] l'entreprise est encore initialisée avec des valeurs France/EUR par
-  défaut et la devise applicative est trop étroitement limitée à EUR ; faire
-  évoluer ces contrats sans migration destructive ni confiance dans le client ;
-- [ ] la génération anglaise est limitée à dix activités numériques et les
-  combinaisons de contexte invalides peuvent retomber silencieusement sur le
-  français ; utiliser les 115 métiers/37 familles et échouer explicitement si
-  une projection publiée manque ;
+- [x] Le résolveur accepte désormais notamment `en + fr-fr` : la locale reste
+  un choix de présentation, tandis que marché, pays et devise proviennent de
+  l'entreprise authentifiée ou d'une configuration visiteur explicite côté
+  serveur.
+- [x] Une nouvelle entreprise reçoit le contexte commercial de son point
+  d'entrée validé, sans écraser une entreprise existante. `CurrencyCode`
+  accepte les codes ISO à trois lettres sans migration destructive ; la bêta
+  reste volontairement en EUR tant que la politique de conversion n'est pas
+  validée.
+- [x] La génération anglaise utilise les projections des 115 métiers et leurs
+  37 familles canoniques. Une paire locale/marché invalide ou une projection
+  publiée manquante échoue explicitement, sans fallback français silencieux.
 - [x] Chiffres et Stratégie partagent leurs données d'entreprise ; leurs
   libellés, formats et validations visibles sont localisés sans second stockage.
   La devise métier reste volontairement EUR pour ce lot et est formatée selon
@@ -471,8 +474,26 @@ Déjà livré et à préserver :
   enregistré délèguent aux mêmes loaders et écrans métier ; les surfaces
   commerciales Services, Pilotage et Academy encore simplifiées sont suivies
   séparément dans leurs lots dédiés ;
-- [ ] PWA, confidentialité, erreurs, e-mails, `html lang`, canonical,
-  `hreflang`, sitemap et tests anti-fallback restent à aligner.
+- [x] La PWA, la confidentialité, les erreurs et les métadonnées transverses
+  sont localisées : manifeste anglais partagé et flaggé, invitation
+  d'installation traduite, politique `/en/privacy`, erreurs de segment,
+  mise à jour de `html lang` avant hydratation et pendant la navigation,
+  canonical et `hreflang`. `/en` reste `noindex` et absent du
+  sitemap tant que la bêta n'est pas publique.
+- [ ] Avant l'ouverture publique, rendre également le `lang="en"` correct dans
+  le HTML initial renvoyé par le serveur. La lecture du header dans le layout
+  racine a été testée puis rejetée : elle rend toutes les pages françaises
+  dynamiques. Résoudre ce point avec de vrais root layouts localisés, sans
+  dégrader le rendu statique/SEO français.
+- [x] Les parcours anglais actuellement publiables n'envoient pas d'e-mail
+  client automatique : ils conservent la langue de la demande et notifient
+  l'équipe. Aucun e-mail français n'est donc utilisé comme fallback silencieux.
+- [ ] Avant d'activer un futur e-mail client sur une demande ou une
+  conversation anglaise, fournir son rendu anglais et le tester dans la langue
+  immuable de cette demande. Cette extension n'est pas nécessaire au parcours
+  Preview actuel.
+- [ ] Terminer la recette Preview authentifiée Google, desktop, mobile, PWA,
+  clavier et lecteur d'écran avant tout retrait du flag ou du `noindex`.
 
 Les anciens constats disant qu'aucune couche i18n, préférence membre,
 progression Academy ou donnée de langue sur les plans n'existait sont donc

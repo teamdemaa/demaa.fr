@@ -28,6 +28,7 @@ export default function ActionPlanHomeView({
         isAuthenticated={initialIsAuthenticated}
         localeCode={config.localeCode}
         minimal
+        showLocaleSwitcher={config.englishBetaEnabled}
       />
       <ActionPlanExperience
         contentLocaleCode={config.localeCode}

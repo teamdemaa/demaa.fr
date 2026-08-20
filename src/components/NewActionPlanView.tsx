@@ -24,6 +24,7 @@ export default function NewActionPlanView({
         isAuthenticated
         localeCode={config.localeCode}
         minimal
+        showLocaleSwitcher={config.englishBetaEnabled}
       />
       {hasPlans ? (
         <div className="mx-auto w-full max-w-[68rem] px-4 pt-3 sm:px-6 lg:px-8">

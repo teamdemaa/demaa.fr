@@ -24,6 +24,7 @@ export default function ActionPlansIndexView({
         isAuthenticated
         localeCode={config.localeCode}
         minimal
+        showLocaleSwitcher={config.englishBetaEnabled}
       />
       <ActionPlanNavbar
         activeView="plan"
