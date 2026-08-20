@@ -1,7 +1,7 @@
 "use client";
 
 import { LoaderCircle, Pencil } from "lucide-react";
-import { type FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useState } from "react";
 import type { ExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
 import {
   OPPORTUNITY_TYPE_LABELS,
@@ -39,7 +39,7 @@ export default function OpportunityAdminClient({
     return payload;
   }
 
-  async function load() {
+  const load = useCallback(async () => {
     setError(null);
     setIsLoading(true);
     try {
@@ -51,11 +51,11 @@ export default function OpportunityAdminClient({
     } finally {
       setIsLoading(false);
     }
-  }
+  }, []);
 
   useEffect(() => {
     void load();
-  }, []);
+  }, [load]);
 
   async function create(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

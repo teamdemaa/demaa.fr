@@ -1,7 +1,7 @@
 "use client";
 
 import { LoaderCircle, Plus, RotateCcw, Send, X } from "lucide-react";
-import { type FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useState } from "react";
 import {
   isCoachingReviewOverdue,
   type CoachingConversationSummary,
@@ -66,7 +66,7 @@ export default function CoachingAdminClient() {
     return payload;
   }
 
-  async function loadConversations() {
+  const loadConversations = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
@@ -79,11 +79,11 @@ export default function CoachingAdminClient() {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, []);
 
   useEffect(() => {
     void loadConversations();
-  }, []);
+  }, [loadConversations]);
 
   async function selectConversation(id: string) {
     setIsLoading(true);
