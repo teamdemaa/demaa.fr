@@ -25,6 +25,7 @@ import {
   resolveAuthenticatedInternationalContext,
 } from "@/lib/international-context.server";
 import { isEnglishBetaEnabled } from "@/lib/english-beta.server";
+import { buildLocalizedConnexionHref } from "@/lib/localized-auth-path";
 
 type SearchValue = string | string[] | undefined;
 export type ActionPlanPageSearchParams = Record<string, SearchValue>;
@@ -104,12 +105,11 @@ function constrainContext(
 }
 
 function redirectToSignIn(input: {
+  localeCode: InterfaceLocaleCode;
   returnTo: string;
   message?: string;
 }): never {
-  const params = new URLSearchParams({ returnTo: input.returnTo });
-  if (input.message) params.set("message", input.message);
-  redirect(`/connexion?${params.toString()}`);
+  redirect(buildLocalizedConnexionHref(input));
 }
 
 export async function loadActionPlansPage(localeCode: InterfaceLocaleCode) {
@@ -117,6 +117,7 @@ export async function loadActionPlansPage(localeCode: InterfaceLocaleCode) {
   const unauthenticatedConfig = getUnauthenticatedConfig(localeCode);
   if (!identity) {
     redirectToSignIn({
+      localeCode,
       returnTo: unauthenticatedConfig.paths.plans,
     });
   }
@@ -142,6 +143,7 @@ export async function loadNewActionPlanPage(input: {
   const unauthenticatedConfig = getUnauthenticatedConfig(input.localeCode);
   if (!identity) {
     redirectToSignIn({
+      localeCode: input.localeCode,
       returnTo: unauthenticatedConfig.paths.new,
     });
   }
@@ -178,6 +180,7 @@ export async function loadSavedActionPlanPage(input: {
   const identity = await getCurrentCustomerAppIdentityFromSession();
   if (!identity) {
     redirectToSignIn({
+      localeCode: input.localeCode,
       message: unauthenticatedConfig.copy.signInToOpen,
       returnTo: buildActionPlanAppHref({
         context: unauthenticatedContext,
@@ -208,6 +211,7 @@ export async function redirectToLatestActionPlan(localeCode: InterfaceLocaleCode
   const unauthenticatedConfig = getUnauthenticatedConfig(localeCode);
   if (!identity) {
     redirectToSignIn({
+      localeCode,
       returnTo: unauthenticatedConfig.paths.latest,
     });
   }

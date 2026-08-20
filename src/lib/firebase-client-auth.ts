@@ -19,6 +19,7 @@ import {
   type InterfaceLocaleCode,
   getClientInterfaceLocale,
 } from "@/lib/international-context";
+import { buildLocalizedConnexionHref } from "@/lib/localized-auth-path";
 
 const configuredClientConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -165,6 +166,9 @@ export async function requestPasswordReset(
 ) {
   const auth = getDemaaAuth(localeCode);
   await sendPasswordResetEmail(auth, email, {
-    url: `${window.location.origin}/connexion?returnTo=${encodeURIComponent(returnTo)}`,
+    url: `${window.location.origin}${buildLocalizedConnexionHref({
+      localeCode: localeCode ?? getClientInterfaceLocale(),
+      returnTo,
+    })}`,
   });
 }

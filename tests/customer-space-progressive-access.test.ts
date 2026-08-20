@@ -6,6 +6,7 @@ const experience = readFileSync("src/components/ActionPlanExperience.tsx", "utf8
 const googleButton = readFileSync("src/components/GoogleCustomerSignInButton.tsx", "utf8");
 const loginDialog = readFileSync("src/components/CustomerSpaceLoginDialog.tsx", "utf8");
 const loginPage = readFileSync("src/app/(french)/(auth)/connexion/page.tsx", "utf8");
+const sharedLoginPage = readFileSync("src/components/CustomerConnexionPage.tsx", "utf8");
 const applicationError = readFileSync("src/app/(french)/(application)/error.tsx", "utf8");
 
 describe("progressive plan authentication", () => {
@@ -67,10 +68,11 @@ describe("progressive plan authentication", () => {
   });
 
   it("keeps an escape path when a valid session has no usable company", () => {
-    expect(loginPage).toContain("ensureDefaultCompanyForIdentity(");
-    expect(loginPage).toContain("getConfiguredVisitorCommercialContext(localeCode)");
-    expect(loginPage).toContain("companyContextUnavailable");
-    expect(loginPage).toContain("<CustomerLogoutButton localeCode={localeCode} />");
+    expect(loginPage).toContain('<CustomerConnexionPage localeCode="fr"');
+    expect(sharedLoginPage).toContain("ensureDefaultCompanyForIdentity(");
+    expect(sharedLoginPage).toContain("getConfiguredVisitorCommercialContext(localeCode)");
+    expect(sharedLoginPage).toContain("companyContextUnavailable");
+    expect(sharedLoginPage).toContain("<CustomerLogoutButton localeCode={localeCode} />");
     expect(applicationError).toContain("<CustomerLogoutButton />");
   });
 });

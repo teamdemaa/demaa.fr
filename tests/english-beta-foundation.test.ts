@@ -61,23 +61,32 @@ describe("hidden English beta foundation", () => {
   });
 
   it("keeps standalone authentication and Google callbacks in the return locale", () => {
-    const connexion = source("src/app/(french)/(auth)/connexion/page.tsx");
+    const connexion = source("src/app/(english)/en/connexion/page.tsx");
+    const sharedConnexion = source("src/components/CustomerConnexionPage.tsx");
     const interceptedConnexion = source(
       "src/app/(french)/@modal/(.)connexion/page.tsx",
     );
     const loginDialog = source("src/components/CustomerSpaceLoginDialog.tsx");
-    const googlePage = source("src/app/(french)/(auth)/auth/google/page.tsx");
-    const googleCallback = source("src/app/(french)/(auth)/auth/google/GoogleAuthCallbackClient.tsx");
+    const googlePage = source("src/app/(english)/en/auth/google/page.tsx");
+    const sharedGooglePage = source("src/components/GoogleAuthPage.tsx");
+    const googleCallback = source("src/components/GoogleAuthCallbackClient.tsx");
+    const localizedAuthPaths = source("src/lib/localized-auth-path.ts");
 
-    expect(connexion).toContain("getReturnToInterfaceLocale(returnTo)");
-    expect(connexion).toContain('<DocumentLocale localeCode={localeCode}');
-    expect(connexion).toContain('<Navbar minimal localeCode={localeCode}');
-    expect(connexion).toContain('localeCode === "en" ? "Sign in" : "Connectez-vous"');
+    expect(connexion).toContain("isEnglishBetaEnabled()");
+    expect(connexion).toContain('dynamic = "force-dynamic"');
+    expect(connexion).toContain('<CustomerConnexionPage localeCode="en"');
+    expect(sharedConnexion).toContain('<Navbar minimal localeCode={localeCode}');
+    expect(sharedConnexion).toContain('localeCode === "en" ? "Sign in" : "Connectez-vous"');
+    expect(sharedConnexion).not.toContain("DocumentLocale");
     expect(interceptedConnexion).toContain("localeCode={localeCode}");
     expect(loginDialog).toContain('localeCode === "en" ? "Close" : "Fermer"');
-    expect(googlePage).toContain("getReturnToInterfaceLocale(returnTo)");
-    expect(googlePage).toContain('<DocumentLocale localeCode={localeCode}');
+    expect(googlePage).toContain('<GoogleAuthPage localeCode="en"');
+    expect(googlePage).toContain('dynamic = "force-dynamic"');
+    expect(sharedGooglePage).toContain("getSafeCustomerReturnTo");
+    expect(sharedGooglePage).not.toContain("DocumentLocale");
     expect(googleCallback).toContain('localeCode === "en" ? "Signing in with Google"');
     expect(googleCallback).toContain('localeCode === "en" ? "Try again with Google"');
+    expect(localizedAuthPaths).toContain('localeCode === "en" ? "/en/connexion" : "/connexion"');
+    expect(localizedAuthPaths).toContain('localeCode === "en" ? "/en/auth/google" : "/auth/google"');
   });
 });

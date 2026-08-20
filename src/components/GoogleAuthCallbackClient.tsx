@@ -10,6 +10,7 @@ import {
   startGoogleRedirect,
 } from "@/lib/firebase-client-auth";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
+import { buildLocalizedConnexionHref } from "@/lib/localized-auth-path";
 
 const GOOGLE_CALLBACK_MARKER = "demaa:google-callback:v2";
 const GOOGLE_CALLBACK_TTL_MS = 10 * 60 * 1_000;
@@ -186,7 +187,7 @@ export default function GoogleAuthCallbackClient({
               {localeCode === "en" ? "Try again with Google" : "Réessayer avec Google"}
             </button>
             <Link
-              href={`/connexion?returnTo=${encodeURIComponent(returnTo)}`}
+              href={buildLocalizedConnexionHref({ localeCode, returnTo })}
               className="mt-4 inline-flex min-h-10 items-center text-sm text-dema-gray underline-offset-4 hover:underline"
             >
               {localeCode === "en" ? "Continue with my email" : "Continuer avec mon e-mail"}
