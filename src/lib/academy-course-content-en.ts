@@ -1,4 +1,9 @@
-import type { AcademyContentDefinition, AcademyLesson } from "@/lib/academy-course-content";
+import {
+  getAcademyFundamentals,
+  type AcademyAction,
+  type AcademyContentDefinition,
+  type AcademyLesson,
+} from "@/lib/academy-course-content";
 
 type EnglishLessonSeed = Readonly<{
   body: string;
@@ -17,7 +22,7 @@ type EnglishQuizSeed = Readonly<{
 type EnglishCourseSeed = Readonly<{
   category: string;
   durationMinutes: number;
-  lessons: readonly [EnglishLessonSeed, EnglishLessonSeed, EnglishLessonSeed, EnglishLessonSeed];
+  lessons: readonly EnglishLessonSeed[];
   promise: string;
   quiz: readonly [EnglishQuizSeed, EnglishQuizSeed, EnglishQuizSeed];
   recap: readonly [string, string, string, string];
@@ -26,36 +31,119 @@ type EnglishCourseSeed = Readonly<{
   title: string;
 }>;
 
-function toLesson(seed: EnglishLessonSeed, index: number): AcademyLesson {
+function toEnglishVisualData(
+  lesson: EnglishLessonSeed,
+  visualType: AcademyLesson["visual"]["type"],
+) {
+  const steps = lesson.steps.map((title, index) => ({
+    number: String(index + 1).padStart(2, "0"),
+    title,
+  }));
+
+  if (visualType === "comparison") {
+    return {
+      leftLabel: "Starting point",
+      leftText: lesson.title,
+      operator: "→",
+      rightLabel: "Decision point",
+      rightText: lesson.takeaway,
+    };
+  }
+  if (visualType === "timeline") {
+    return {
+      steps: lesson.steps.map((label, index) => ({
+        label,
+        timing: `Step ${index + 1}`,
+      })),
+    };
+  }
+  if (visualType === "calculation") {
+    return {
+      result: { label: lesson.steps[0], value: "1" },
+      cash: {
+        available: lesson.steps[1],
+        payments: lesson.steps[2],
+        lowPoint: lesson.takeaway,
+      },
+      formula: lesson.title,
+    };
+  }
+  if (visualType === "metrics") {
+    return {
+      horizon: "the selected period",
+      inputs: [...lesson.steps],
+      output: lesson.takeaway,
+    };
+  }
+  if (visualType === "pipeline") {
+    return { steps: [...lesson.steps] };
+  }
+  return { steps };
+}
+
+function toLesson(
+  seed: EnglishLessonSeed,
+  canonicalLesson: AcademyLesson,
+  index: number,
+  lessonCount: number,
+): AcademyLesson {
   return {
-    id: `lesson-${index + 1}`,
-    type: index === 0 ? "concept" : index === 3 ? "decision" : "method",
-    eyebrow: `Lesson ${index + 1} of 4`,
+    id: canonicalLesson.id,
+    type: canonicalLesson.type,
+    eyebrow: `Lesson ${index + 1} of ${lessonCount}`,
     title: seed.title,
     body: seed.body,
     visual: {
-      type: "steps",
-      data: {
-        steps: seed.steps.map((title, stepIndex) => ({
-          number: String(stepIndex + 1).padStart(2, "0"),
-          title,
-        })),
-      },
+      type: canonicalLesson.visual.type,
+      data: toEnglishVisualData(seed, canonicalLesson.visual.type),
     },
     takeaway: seed.takeaway,
   };
 }
 
+function toEnglishAction(action: AcademyAction | null): AcademyAction | null {
+  if (!action) return null;
+  if (action.resourceId === "pilotage-marketing-vente") {
+    return {
+      ...action,
+      title: "Marketing and sales tracker",
+      description: "A simple workspace for enquiries, qualification, proposals, follow-ups and decisions.",
+      ctaLabel: "Open the tracker",
+    };
+  }
+  return {
+    ...action,
+    title: "Levier",
+    description: "A simple operating dashboard for activity, key figures and decisions.",
+    ctaLabel: "Get Levier",
+  };
+}
+
 function createEnglishCourse(seed: EnglishCourseSeed): AcademyContentDefinition {
+  const canonical = getAcademyFundamentals().find(
+    (content) => content.identity.slug === seed.slug,
+  );
+  if (!canonical) {
+    throw new Error(`Unknown canonical Academy course: ${seed.slug}`);
+  }
+  if (canonical.lessons.length !== seed.lessons.length) {
+    throw new Error(
+      `Incomplete English Academy projection for ${seed.slug}: expected ${canonical.lessons.length} lessons, received ${seed.lessons.length}.`,
+    );
+  }
+  if (canonical.quiz.questions.length !== seed.quiz.length) {
+    throw new Error(`Incomplete English Academy quiz projection for ${seed.slug}.`);
+  }
+
   return {
     version: "1.0",
     kind: "course",
     status: "ready",
     editorial: {
       courseId: seed.slug,
-      contentVersion: "en-1.0",
+      contentVersion: "1.0",
       localeCode: "en",
-      marketCodes: ["global-en-beta"],
+      marketCodes: ["fr-fr", "global-en-beta"],
       publicationStatus: "published",
     },
     identity: {
@@ -70,33 +158,45 @@ function createEnglishCourse(seed: EnglishCourseSeed): AcademyContentDefinition 
         section: "Business fundamentals",
         title: seed.shortTitle,
         meta: `${seed.durationMinutes} min · Knowledge quiz`,
-        image: null,
-        imageAlt: "",
+        image: canonical.identity.card.image,
+        imageAlt: `Illustration for ${seed.shortTitle}.`,
       },
     },
     outline: seed.lessons.slice(0, 3).map((lesson) => ({
       title: lesson.title,
       description: lesson.takeaway,
     })),
-    lessons: seed.lessons.map(toLesson),
+    lessons: seed.lessons.map((lesson, index) =>
+      toLesson(lesson, canonical.lessons[index], index, canonical.lessons.length),
+    ),
     recap: {
       title: "The course in four points",
       points: [...seed.recap],
     },
     quiz: {
       title: "Check your understanding",
-      questions: seed.quiz.map((item, index) => ({
-        id: `question-${index + 1}`,
-        question: item.question,
-        choices: [
-          { id: "correct", label: item.answer },
-          { id: "wrong", label: item.wrong },
-        ],
-        correctChoiceId: "correct",
-        explanation: item.explanation,
-      })),
+      questions: seed.quiz.map((item, index) => {
+        const canonicalQuestion = canonical.quiz.questions[index];
+        const correctChoiceId = canonicalQuestion.correctChoiceId;
+        const wrongChoiceId = canonicalQuestion.choices.find(
+          (choice) => choice.id !== correctChoiceId,
+        )?.id;
+        if (!wrongChoiceId) {
+          throw new Error(`Invalid canonical Academy quiz for ${seed.slug}.`);
+        }
+        return {
+          id: canonicalQuestion.id,
+          question: item.question,
+          choices: [
+            { id: correctChoiceId, label: item.answer },
+            { id: wrongChoiceId, label: item.wrong },
+          ],
+          correctChoiceId,
+          explanation: item.explanation,
+        };
+      }),
     },
-    action: null,
+    action: toEnglishAction(canonical.action),
   };
 }
 
@@ -110,7 +210,10 @@ const ENGLISH_COURSE_SEEDS: readonly EnglishCourseSeed[] = [
     promise: "Understand why a profitable business can run short of cash and spot pressure before it becomes urgent.",
     lessons: [
       { title: "Profit and cash are different", body: "Profit measures whether the business earned more than it spent over a period. Cash shows what is actually available in the bank today. A profitable sale can therefore create a short-term cash gap.", steps: ["Record the sale", "Pay operating costs", "Collect the customer payment"], takeaway: "A profitable business can still run out of available cash." },
-      { title: "Timing creates the cash gap", body: "Invoices may be paid weeks after the work is delivered, while payroll, suppliers and subscriptions are paid earlier. The gap is working capital that the business must finance.", steps: ["Date expected receipts", "Date committed payments", "Find the lowest balance"], takeaway: "Cash pressure is often a timing problem before it is a profitability problem." },
+      { title: "Invoicing is not the same as getting paid", body: "The work may be complete and the invoice sent, but the customer can pay weeks later. Payroll, rent, suppliers and subscriptions still leave the bank account during that delay.", steps: ["Complete the work", "Send the invoice", "Receive the payment"], takeaway: "An invoice protects the bank balance only after the money has been collected." },
+      { title: "The same project can show a profit and a cash shortfall", body: "A project can generate a healthy accounting result while the business still has to fund delivery before the customer pays. The lowest projected balance reveals the temporary funding gap.", steps: ["Estimate the project profit", "Date the outgoing payments", "Find the lowest cash point"], takeaway: "Profit on paper and the lowest bank balance can move in opposite directions." },
+      { title: "Working capital is money advanced before collection", body: "This timing gap is working capital. Service businesses mainly fund unpaid customer invoices, while retailers can also fund stock before it is sold.", steps: ["Pay delivery costs", "Fund the waiting period", "Collect the customer payment"], takeaway: "Working capital measures what the business must finance while it waits to be paid." },
+      { title: "More sales can initially mean less cash", body: "When sales grow without shorter payment terms, the business may have to fund more work before collecting. Growth can therefore increase the temporary cash requirement.", steps: ["Win more orders", "Advance more delivery costs", "Collect later"], takeaway: "Growth must be financed until customer payments arrive." },
       { title: "Use a rolling forecast", body: "A useful forecast starts with today’s balance and maps realistic receipts and payments over the next thirteen weeks. Update it every week rather than trying to predict the year perfectly.", steps: ["Start with the bank balance", "Add dated cash movements", "Review every week"], takeaway: "A short rolling forecast turns uncertainty into decisions." },
       { title: "Act before the low point", body: "Invoice promptly, request deposits where appropriate, follow up overdue payments and reschedule non-critical spending before the projected low point arrives.", steps: ["Invoice earlier", "Collect earlier", "Move optional spending"], takeaway: "The forecast matters only when it changes a decision early enough." },
     ],
@@ -130,9 +233,11 @@ const ENGLISH_COURSE_SEEDS: readonly EnglishCourseSeed[] = [
     promise: "Read the few numbers that show whether sales are creating enough value for the business.",
     lessons: [
       { title: "Revenue is not earnings", body: "Revenue is the value sold before costs. It can grow while the business becomes less profitable if delivery, labour or acquisition costs rise faster.", steps: ["Measure revenue", "Subtract direct costs", "Review what remains"], takeaway: "Higher revenue is useful only when enough value remains after costs." },
-      { title: "Contribution funds the business", body: "After direct costs, the remaining contribution pays fixed costs and then creates profit. Track this amount by offer, not only for the company as a whole.", steps: ["Group direct costs", "Calculate contribution", "Compare offers"], takeaway: "Contribution reveals which offers genuinely support the business." },
+      { title: "Profit appears only after every cost", body: "Revenue is only the start of the calculation. Purchases, production, subcontracting, payroll, premises, software, insurance, interest and taxes all have to be deducted before the final result is known.", steps: ["Start with revenue", "Deduct variable costs", "Deduct fixed costs"], takeaway: "Revenue starts the calculation; profit is found at the bottom." },
+      { title: "A large revenue figure can produce a small profit", body: "A business can sell one hundred thousand euros, spend sixty thousand on delivery and thirty-five thousand on fixed costs, and retain only five thousand in profit.", steps: ["100,000 in revenue", "95,000 in total costs", "5,000 in profit"], takeaway: "What matters is not only what is sold, but what remains after all costs." },
+      { title: "Selling more can reduce profit", body: "An additional contract may increase revenue but still destroy value when urgent subcontracting, overtime and corrections cost more than the sale brings in.", steps: ["Add the new sale", "Measure its full cost", "Check the result"], takeaway: "A large unprofitable sale is still a bad sale for the business." },
       { title: "Fixed costs set the threshold", body: "Rent, salaries, software and other recurring commitments continue even when sales slow down. Your break-even point is the revenue required to cover them at your normal margin.", steps: ["List recurring costs", "Use a realistic margin", "Estimate break-even revenue"], takeaway: "Break-even turns a vague sales goal into a financial minimum." },
-      { title: "Review trends, not isolated months", body: "One month can be distorted by timing. Compare several months and investigate changes in revenue, contribution and fixed costs before reacting.", steps: ["Compare three months", "Explain the variation", "Choose one corrective action"], takeaway: "A trend with an explanation is more useful than a single number." },
+      { title: "Track margin, break-even and actual profit", body: "Review margin in euros and as a percentage for each important offer. Calculate monthly break-even, then compare it with the actual result. Keep cash in a separate view because it answers a different question.", steps: ["Track margin", "Track break-even", "Track actual profit"], takeaway: "Revenue shows volume; margin and profit support decisions." },
     ],
     recap: ["Revenue measures sales before costs.", "Contribution shows what is left after direct costs.", "Fixed costs determine the break-even threshold.", "Trends reveal whether performance is improving."],
     quiz: [
@@ -149,10 +254,12 @@ const ENGLISH_COURSE_SEEDS: readonly EnglishCourseSeed[] = [
     durationMinutes: 9,
     promise: "Set a defensible price that covers delivery, overhead and the value your business needs to retain.",
     lessons: [
-      { title: "Know the full cost to serve", body: "Include direct purchases, delivery time, commissions and a fair share of recurring overhead. Missing one of these costs creates a false margin.", steps: ["Direct purchases", "Delivery time", "Allocated overhead"], takeaway: "A price floor starts with the complete cost to deliver." },
-      { title: "Separate the floor from the target", body: "The floor prevents a loss. The target price must also fund commercial effort, improvement, risk and profit. Do not treat the floor as the normal selling price.", steps: ["Calculate the floor", "Add required margin", "Set the target"], takeaway: "The minimum viable price and the right commercial price are not the same." },
-      { title: "Price the result and the scope", body: "Customers compare prices more fairly when the promised result, boundaries and responsibilities are explicit. A vague scope turns every price discussion into a negotiation.", steps: ["Name the result", "Define what is included", "State what is excluded"], takeaway: "Clear scope makes a price easier to understand and defend." },
-      { title: "Test with real sales evidence", body: "Track acceptance, delivery effort and margin by offer. Adjust from evidence rather than lowering the price after one objection.", steps: ["Track acceptance", "Measure delivery effort", "Review margin"], takeaway: "Pricing improves through controlled evidence, not reactive discounting." },
+      { title: "A price above purchase cost can still lose money", body: "A sale must also pay commissions, customer time and a fair share of company overhead. The price floor is the level below which each sale destroys value instead of creating it.", steps: ["Direct purchase cost", "Delivery and selling time", "Allocated overhead"], takeaway: "Comparing price only with purchase cost gives an incomplete picture." },
+      { title: "Compare amounts on the same tax basis", body: "When sales tax or VAT is recoverable, compare the price before tax with recoverable costs before tax. Tax collected for the authorities is not business income.", steps: ["Choose the tax basis", "Align revenue and costs", "Calculate consistently"], takeaway: "A reliable calculation always compares amounts on the same basis." },
+      { title: "Cover four families of cost", body: "Include direct purchases, other variable costs such as delivery, the real time spent at a coherent rate, and a realistic share of recurring overhead.", steps: ["Direct purchases", "Time and variable costs", "Allocated overhead"], takeaway: "Ignoring time or overhead often means working for free." },
+      { title: "Use a realistic volume assumption", body: "Dividing fixed costs by an optimistic sales volume creates a false profitable price. Use a volume the business can reasonably deliver and sell, then test what happens when it is lower.", steps: ["Estimate realistic volume", "Allocate fixed costs", "Stress-test the assumption"], takeaway: "The overhead share rises whenever actual volume falls below the assumption." },
+      { title: "Include percentage commissions in the formula", body: "When a commission is calculated as a percentage of selling price, divide the other costs by the percentage retained after commission. Do not add the commission as an arbitrary fixed amount.", steps: ["Add all other costs", "Deduct the commission rate", "Calculate the true floor"], takeaway: "A percentage commission must be built into the price formula." },
+      { title: "Move from the floor to the commercial price", body: "The price floor covers no uncertainty, investment or growth. Add a safety margin and compare the result with the market. If the price cannot sell, redesign the offer or its economics instead of hiding costs.", steps: ["Calculate the floor", "Add the required margin", "Test the offer and market"], takeaway: "The floor is only where the business stops losing money." },
     ],
     recap: ["The full delivery cost defines the floor.", "The target price must fund more than delivery.", "A clear result and scope make the price understandable.", "Acceptance and margin data guide future changes."],
     quiz: [
@@ -169,10 +276,12 @@ const ENGLISH_COURSE_SEEDS: readonly EnglishCourseSeed[] = [
     durationMinutes: 8,
     promise: "Connect visibility, trust, conversion and follow-up into one repeatable path to revenue.",
     lessons: [
-      { title: "Start with one priority customer", body: "A system becomes coherent when it is designed for a specific customer, problem and buying context. Broad messages create activity without enough relevance.", steps: ["Choose the customer", "Name the urgent problem", "Define the buying context"], takeaway: "Specificity is the foundation of an efficient marketing system." },
-      { title: "Give each channel one job", body: "A channel may create discovery, proof, conversation or conversion. Expecting every channel to do everything makes performance impossible to diagnose.", steps: ["Attract attention", "Build confidence", "Create a next step"], takeaway: "Clear channel roles make the system measurable and easier to improve." },
-      { title: "Design the next step", body: "Every useful piece of content or outreach should lead to one appropriate action: a reply, a call, a diagnostic or a purchase. Remove competing calls to action.", steps: ["Match intent", "Offer one next step", "Capture the response"], takeaway: "Marketing creates value when it moves the right person forward." },
-      { title: "Review the whole path", body: "Measure where qualified people enter, where they stop and what becomes revenue. Improve the weakest transition before adding more channels.", steps: ["Track qualified demand", "Find the drop-off", "Improve one transition"], takeaway: "Fixing a weak conversion step often beats generating more traffic." },
+      { title: "Marketing and sales form one path", body: "A post, a referral, a campaign and a rushed proposal do not yet form a system. The system describes the path from first discovery to a clear sales outcome, with stages and a few operating rules.", steps: ["Create discovery", "Build a conversation", "Reach a sales decision"], takeaway: "The system makes the complete path to a sale visible and repeatable." },
+      { title: "Define who to attract before choosing tools", body: "Choose the priority customer, the important problem and the result the business can genuinely produce. Without this clarity, messages remain vague and every sales conversation starts from zero.", steps: ["Choose the customer", "Name the priority problem", "Define the useful result"], takeaway: "Positioning gives the system a specific customer, problem and result." },
+      { title: "Choose few channels and one next step", body: "One main channel and, if useful, one supporting channel are enough to begin. Search, referrals, outreach or content should each lead to one clear action.", steps: ["Choose the main channel", "Offer one next step", "Measure entry into the system"], takeaway: "The goal is not to be everywhere, but to make entry measurable." },
+      { title: "Centralise every opportunity", body: "A well-maintained spreadsheet can work before a complex CRM. Record the source, need, owner, current stage and dated next action for every opportunity.", steps: ["Record the source and need", "Assign an owner", "Date the next action"], takeaway: "An opportunity without a dated next action usually disappears." },
+      { title: "Qualify before proposing, then move the opportunity", body: "Check the need, urgency, scope, decision-maker and constraints. Move each request through a simple path from new to qualified, proposed, won or lost.", steps: ["Qualify the fit", "Choose the next stage", "Reach a clear outcome"], takeaway: "Marketing creates opportunities; sales moves them towards a decision." },
+      { title: "Review a few numbers every week", body: "Count qualified requests, useful conversations, proposals and customers. Use those figures to locate the weakest transition, then choose one improvement for the week.", steps: ["Count each important stage", "Find the largest loss", "Improve one transition"], takeaway: "Metrics help decide where to act, not promise an ideal conversion rate." },
     ],
     recap: ["Focus the system on one priority customer.", "Give each channel a clear role.", "Offer one relevant next step.", "Improve the weakest transition in the path."],
     quiz: [
@@ -189,10 +298,12 @@ const ENGLISH_COURSE_SEEDS: readonly EnglishCourseSeed[] = [
     durationMinutes: 8,
     promise: "Respond, qualify and follow up consistently so that good enquiries do not disappear.",
     lessons: [
-      { title: "Respond while intent is active", body: "A prompt, useful acknowledgement protects the opportunity and sets expectations. It does not need to solve everything immediately.", steps: ["Acknowledge quickly", "Confirm the need", "Set the next step"], takeaway: "Speed matters most when it creates a clear and useful next step." },
-      { title: "Qualify before proposing", body: "Confirm the problem, desired result, timing, decision process and constraints. Qualification prevents unsuitable proposals and saves time for both sides.", steps: ["Understand the problem", "Confirm fit", "Map the decision"], takeaway: "A proposal should follow a fit decision, not replace it." },
-      { title: "Make the proposal easy to decide", body: "Link the proposed work to the desired result, define the scope and explain what happens after acceptance. Remove avoidable ambiguity.", steps: ["Restate the result", "Define the scope", "Explain the start"], takeaway: "A clear proposal reduces decision effort without applying pressure." },
-      { title: "Follow up with a reason", body: "Agree the next contact point and bring useful information when following up. A sequence of relevant follow-ups is more professional than repeated reminders.", steps: ["Agree a date", "Add useful context", "Close the loop"], takeaway: "Follow-up works best when it helps the buyer make a decision." },
+      { title: "An enquiry is not yet a sale", body: "An enquiry is an opportunity to assess. Sending a proposal before understanding the need means doing unpaid work on an assumption, while turning the first exchange into an interrogation can drive good prospects away.", steps: ["Acknowledge the request", "Check whether it deserves time", "Choose the next step"], takeaway: "The first goal is to decide whether a useful conversation should happen." },
+      { title: "Respond quickly without writing the proposal", body: "Acknowledge the request the same day when possible. Restate what you understood, ask for the key missing information and explain the next step.", steps: ["Acknowledge quickly", "Confirm your understanding", "Set the next step"], takeaway: "A prompt response creates clarity without proposing a solution too early." },
+      { title: "Qualify five essential points", body: "Confirm the desired result, reason for urgency, actual scope, decision-maker and time or budget constraints. You do not need a perfect brief, only enough evidence that the request can move forward seriously.", steps: ["Result and urgency", "Scope and decision-maker", "Time and budget constraints"], takeaway: "Qualification protects sales time before a proposal is produced." },
+      { title: "Understand the situation before presenting the business", body: "Explore the current situation, the concrete problem, what success would change, what has already been tried and what is blocking the decision. Then restate the priority and constraints.", steps: ["Understand the current situation", "Clarify the desired change", "Restate the priority"], takeaway: "A good restatement prevents unsuitable or unnecessary proposals." },
+      { title: "Make the proposal easy to decide and follow up cleanly", body: "Connect the solution to the desired result, then state scope, stages, timing, price and exclusions. End with a dated decision point and close the request after a second unanswered follow-up.", steps: ["Make the proposal clear", "Agree a decision date", "Follow up and close"], takeaway: "Without a dated next step, even a strong proposal can remain undecided." },
+      { title: "Measure the path and accept no-sale outcomes", body: "Track how many requests are declined or redirected, discussed, proposed and won. This reveals where sales time is spent and where requests are lost.", steps: ["Count requests", "Count proposals", "Count wins and closed losses"], takeaway: "A healthy sales process also declines or closes unsuitable projects." },
     ],
     recap: ["Acknowledge enquiries promptly.", "Qualify the fit before proposing.", "Make scope and next steps easy to understand.", "Follow up with context and a clear close."],
     quiz: [
@@ -209,10 +320,12 @@ const ENGLISH_COURSE_SEEDS: readonly EnglishCourseSeed[] = [
     durationMinutes: 9,
     promise: "Transfer outcomes and decision boundaries so work can move forward without constant supervision.",
     lessons: [
-      { title: "Delegate an outcome, not scattered tasks", body: "Define what good looks like, why it matters and when it is due. A list of isolated instructions leaves ownership with the manager.", steps: ["Name the outcome", "Define quality", "Set the deadline"], takeaway: "Ownership starts with a clear result, not a longer task list." },
-      { title: "Set decision boundaries", body: "Explain what the person can decide, when they should inform you and what requires approval. Boundaries create autonomy without hidden risk.", steps: ["Decide independently", "Inform after action", "Ask before action"], takeaway: "Clear decision rights reduce both bottlenecks and surprises." },
-      { title: "Transfer the minimum useful context", body: "Share examples, constraints, contacts and the source of truth. Avoid transferring every historical detail before work can start.", steps: ["Provide the standard", "Share key context", "Point to the source"], takeaway: "Useful context enables action; excessive context delays it." },
-      { title: "Review through checkpoints", body: "Agree a small number of checkpoints based on risk and experience. Review the result and improve the system rather than taking the work back.", steps: ["Choose checkpoints", "Review evidence", "Improve the process"], takeaway: "Control should come from visibility and feedback, not constant intervention." },
+      { title: "Delegation is neither disappearing nor controlling everything", body: "Saying ‘handle it’ and vanishing brings the work back as questions and corrections. Approving every detail also prevents ownership. Delegation means assigning a result within a clear frame.", steps: ["Define the result", "Set the boundaries", "Agree visibility"], takeaway: "Autonomy grows only when the result and limits are explicit." },
+      { title: "Start with frequent, explainable and correctable work", body: "Scheduling, recurring reporting or organising a customer file are good first delegations. Keep highly sensitive or irreversible decisions until the frame and available skills are proven.", steps: ["Choose frequent work", "Check it can be explained", "Keep the risk correctable"], takeaway: "A first delegation should free time without transferring uncontrolled risk." },
+      { title: "Describe an observable result", body: "State the deliverable, date, recipient, quality criteria and non-negotiable constraints. A visible result lets you review the output without prescribing every gesture.", steps: ["Name the deliverable", "Define quality", "Set the deadline"], takeaway: "An observable result makes completion and quality verifiable." },
+      { title: "Transfer the context and means needed to decide", body: "Explain why the work matters, who is affected, what has already been decided and which examples are good or poor. Provide the access, contacts, information and tools needed to act.", steps: ["Explain the purpose", "Share useful examples", "Provide access and tools"], takeaway: "The right context reduces questions without transferring the whole company history." },
+      { title: "Define decision zones and alert thresholds", body: "State what can be decided independently, what needs approval and what can be decided then reported. Add concrete alerts for delay, budget, customer complaint or safety risk.", steps: ["Decide independently", "Ask before acting", "Decide then report"], takeaway: "Autonomy is freedom to decide within known limits." },
+      { title: "Review outcomes and improve the frame", body: "Use a small number of checkpoints and indicators. When the outcome disappoints, inspect the result, context, tools, skill and missing alerts before automatically taking the work back.", steps: ["Review evidence", "Find the cause", "Improve the frame"], takeaway: "Control should come from visibility and feedback, not constant intervention." },
     ],
     recap: ["Delegate a result with a quality standard.", "Make decision rights explicit.", "Transfer the context needed to act.", "Use checkpoints instead of permanent supervision."],
     quiz: [
@@ -229,10 +342,12 @@ const ENGLISH_COURSE_SEEDS: readonly EnglishCourseSeed[] = [
     durationMinutes: 9,
     promise: "Turn expertise into a clear result, scope and buying decision for the right customer.",
     lessons: [
-      { title: "Lead with the customer result", body: "Describe the change the customer wants, not only the activities you perform. The result should be concrete enough to recognise without promising what you cannot control.", steps: ["Name the current problem", "Describe the useful change", "Define evidence of progress"], takeaway: "Customers buy a useful change, delivered through your expertise." },
-      { title: "Make the scope visible", body: "List the key stages, deliverables, responsibilities and exclusions. A visible scope improves trust and protects delivery.", steps: ["Define the stages", "Assign responsibilities", "State exclusions"], takeaway: "Scope clarity is part of the value, not administrative detail." },
-      { title: "Reduce unnecessary choices", body: "Offer one recommended route for the main customer type. Add options only when they reflect genuinely different needs, not every possible preference.", steps: ["Choose the core route", "Limit meaningful options", "Recommend the fit"], takeaway: "A focused offer makes a good decision easier." },
-      { title: "Align promise, price and proof", body: "The result, delivery model, price and evidence must support the same positioning. Misalignment creates doubt even when each element looks reasonable alone.", steps: ["Check the promise", "Check the economics", "Check the proof"], takeaway: "A coherent offer is more credible than a collection of strong claims." },
+      { title: "An offer is not a list of services", body: "A list describes what the business can do. An offer helps a specific customer solve a specific situation with a result, scope and way of working. The more assembly the customer must do, the harder the decision becomes.", steps: ["Name the customer", "Name the situation", "Present one coherent route"], takeaway: "A good offer reduces the customer’s work of understanding and deciding." },
+      { title: "Choose a situation the customer recognises", body: "Describe who faces the problem, what is happening now, why it matters and when a decision is needed. A concrete situation lets the right customer recognise themselves quickly.", steps: ["Identify who", "Describe what is happening", "Explain why action is needed"], takeaway: "A recognisable situation makes relevance immediately clearer." },
+      { title: "Promise an observable result without promising the impossible", body: "Describe what will be different after delivery without guaranteeing outcomes the business cannot control. You can promise an installed system, a prepared decision or a documented process.", steps: ["Name the useful change", "Define evidence of completion", "Keep the promise controllable"], takeaway: "A credible promise describes a verifiable change the provider can produce." },
+      { title: "Define what is included, excluded and complete", body: "State deliverables, stages, review rounds, customer contributions and exclusions. Clear limits protect the relationship, timing and margin.", steps: ["List deliverables", "Assign responsibilities", "State exclusions"], takeaway: "Scope clarity is part of the value, not administrative detail." },
+      { title: "Connect price to scope and a simple decision", body: "Present the price with what it covers, payment terms and clearly separated options. End with one visible next step: approve, book a conversation or choose an option by an agreed date.", steps: ["Connect price and scope", "Separate genuine options", "Ask for one decision"], takeaway: "Price is easier to understand when it is tied to a real scope and next step." },
+      { title: "Test understanding before adding arguments", body: "Show the offer to three people close to the target and ask who it is for, what problem it solves, what is delivered and what happens next. Simplify before adding more proof or options.", steps: ["Ask for a restatement", "Find the unclear point", "Simplify the offer"], takeaway: "An offer is clear when the customer can restate it without help." },
     ],
     recap: ["Lead with a concrete customer result.", "Make scope and responsibilities explicit.", "Limit choices to meaningful differences.", "Align the promise, price and proof."],
     quiz: [
@@ -249,10 +364,12 @@ const ENGLISH_COURSE_SEEDS: readonly EnglishCourseSeed[] = [
     durationMinutes: 9,
     promise: "Create a repeatable delivery path that protects quality while leaving room for professional judgement.",
     lessons: [
-      { title: "Map the delivery milestones", body: "Identify the few stages every successful engagement passes through, from start to closure. Focus on decisions and hand-offs rather than documenting every click.", steps: ["Start", "Produce and review", "Close"], takeaway: "A shared delivery path makes progress visible without overengineering the work." },
-      { title: "Standardise recurring inputs", body: "Use consistent briefs, checklists and source locations for information that is needed every time. Missing inputs create avoidable rework.", steps: ["Request the right inputs", "Validate completeness", "Store one source of truth"], takeaway: "Standard inputs reduce variation before delivery begins." },
-      { title: "Build quality into the process", body: "Define acceptance criteria and review points before work starts. Quality becomes more reliable when it is checked during delivery rather than only at the end.", steps: ["Define acceptance", "Review at the right stage", "Record the decision"], takeaway: "Early quality controls are cheaper than final-stage rework." },
-      { title: "Close and improve deliberately", body: "Confirm completion, transfer what the customer needs and capture one improvement for the next delivery cycle. Closure protects both the relationship and the operating system.", steps: ["Confirm completion", "Transfer ownership", "Improve one standard"], takeaway: "A proper close turns each delivery into a better next delivery." },
+      { title: "Delivery begins when the service is sold", body: "The customer relies on the promised result, scope and schedule before signing. If these change silently during production, delivery feels disorganised even when the technical work is good.", steps: ["Confirm the sold result", "Carry over the scope", "Protect the agreed timeline"], takeaway: "Good delivery visibly keeps the promise made before signature." },
+      { title: "Start by removing uncertainty", body: "At kick-off, confirm the expected result, people involved, required information, stages, dates and communication channel. The customer should know what the team needs and when.", steps: ["Confirm the result and roles", "Collect the inputs", "Agree dates and communication"], takeaway: "A clear start turns commercial commitments into shared working rules." },
+      { title: "Standardise stages, not every gesture", body: "Define the main stages that recur across engagements: collection, diagnosis, production, validation and handover. Expertise remains adaptable inside that shared path.", steps: ["Collect and diagnose", "Produce and review", "Hand over and close"], takeaway: "A repeatable structure frees expertise instead of restricting it." },
+      { title: "Validate before mistakes become expensive", body: "Place approval points before decisions that are hard to reverse, such as scope confirmation, first direction, intermediate version or launch. State who approves what and by when.", steps: ["Choose the risk point", "Name the approver", "Set the deadline"], takeaway: "A useful approval happens before change becomes slow or expensive." },
+      { title: "Turn scope changes into visible decisions", body: "When a request falls outside scope, restate it and explain the impact on time, price or priorities. The customer can replace an item, add an option or keep the original plan.", steps: ["Name the new request", "Show its impact", "Ask for a decision"], takeaway: "A scope change must become a decision, not invisible free work." },
+      { title: "Close by confirming the result and what comes next", body: "Summarise what was delivered, decisions made, access or documents transferred and what still needs attention. A clear close separates completed work from maintenance or a future engagement.", steps: ["Confirm completion", "Transfer ownership", "Agree the next step"], takeaway: "A proper close makes value visible and prevents an endless engagement." },
     ],
     recap: ["Use a small set of shared delivery milestones.", "Standardise recurring inputs and sources.", "Check quality during the work.", "Close clearly and improve one standard."],
     quiz: [

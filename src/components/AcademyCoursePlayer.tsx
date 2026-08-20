@@ -281,7 +281,10 @@ export default function AcademyCoursePlayer({
 
               {content.kind === "course" ? (
                 <div className="mt-8 rounded-[1.5rem] bg-[#E7EEE8] px-5 py-6 sm:px-7 sm:py-7">
-                  <AcademyLessonVisual lesson={content.lessons[activeScreen.lessonIndex]} />
+                  <AcademyLessonVisual
+                    lesson={content.lessons[activeScreen.lessonIndex]}
+                    localeCode={localeCode}
+                  />
                 </div>
               ) : null}
 
@@ -362,7 +365,9 @@ export default function AcademyCoursePlayer({
                     href={getAcademyActionHref(content.action)}
                     className="demaa-primary-button mt-5 min-h-11 w-full sm:w-auto"
                   >
-                    {getAcademyActionLabel(content.action)}
+                    {localeCode === "en"
+                      ? content.action.ctaLabel
+                      : getAcademyActionLabel(content.action)}
                   </Link>
                 </div>
               ) : null}

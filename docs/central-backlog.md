@@ -238,11 +238,11 @@ résolveur français n'est pas validé métier.
   clarification gratuite. Les libellés passent par un dictionnaire typé et la
   mutation résout marché/pays depuis l'entreprise authentifiée : les valeurs
   envoyées par le navigateur ne font plus autorité.
-- [ ] Réutiliser Academy et publier les huit fondamentaux anglais validés avec
+- [x] Réutiliser Academy et publier les huit fondamentaux anglais validés avec
   caches séparés par langue, marché et version.
-- [ ] Rendre Academy structurellement paritaire avec le français : mêmes cours,
+- [x] Rendre Academy structurellement paritaire avec le français : mêmes cours,
   ordre, leçons, visuels, quiz et actions, avec uniquement les textes localisés.
-- [ ] Ne pas modifier la progression Academy pendant ce chantier. Conserver le
+- [x] Ne pas modifier la progression Academy pendant ce chantier. Conserver le
   comportement persistant actuel indexé par
   `courseId + localeCode + contentVersion`; ne partager, migrer ou fusionner
   une progression entre langues qu'après une décision produit distincte.
@@ -455,9 +455,12 @@ Déjà livré et à préserver :
   libellés, formats et validations visibles sont localisés sans second stockage.
   La devise métier reste volontairement EUR pour ce lot et est formatée selon
   la locale de l'interface ; la tarification multidevise reste dans le lot 5 ;
-- [ ] Academy anglaise utilise un catalogue simplifié (moins de leçons,
-  visuels génériques et actions absentes) ; la reconstruire à partir de la
-  structure canonique française sans changer la progression existante ;
+- [x] Academy anglaise réutilise désormais les huit cours canoniques français :
+  mêmes slugs, ordre, nombre et identifiants de leçons, types de visuels, quiz,
+  actions et illustrations de carte. Les textes sont projetés en anglais, le
+  catalogue raccourci et le visuel générique ont été supprimés, `en + fr-fr`
+  et `en + global-en-beta` sont couverts, et la progression existante reste
+  isolée par `courseId + localeCode + contentVersion` ;
 - [x] les fiches Services anglaises et françaises utilisent désormais le même
   composant et les mêmes slugs/forfaits. Une projection locale complète, une
   matrice de disponibilité et un prix numérique EUR sont résolus côté serveur ;

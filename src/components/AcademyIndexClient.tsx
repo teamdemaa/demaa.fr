@@ -110,19 +110,7 @@ export function getNextAcademySection(
   ].id;
 }
 
-function CourseDiagram({ localeCode, slug }: { localeCode: "fr" | "en"; slug: string }) {
-  if (localeCode === "en") {
-    return (
-      <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
-        <path d="M80 146H440" fill="none" stroke="#A8BBB0" strokeWidth="2" />
-        <circle cx="96" cy="146" r="18" fill="#315F46" />
-        <circle cx="260" cy="146" r="18" fill="#789987" />
-        <circle cx="424" cy="146" r="18" fill="#315F46" />
-        <path d="M120 146H230M290 146H400" fill="none" stroke="#315F46" strokeWidth="3" strokeLinecap="round" />
-      </svg>
-    );
-  }
-
+function CourseDiagram({ slug }: { slug: string }) {
   if (slug === "piloter-sa-tresorerie") {
     return (
       <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
@@ -308,7 +296,7 @@ function AcademyCard({
               </span>
             </>
           ) : (
-            <CourseDiagram localeCode={localeCode} slug={identity.slug} />
+            <CourseDiagram slug={identity.slug} />
           )}
         </div>
 

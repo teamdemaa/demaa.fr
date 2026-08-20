@@ -94,7 +94,13 @@ function TimelineVisual({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-function CalculationVisual({ data }: { data: Record<string, unknown> }) {
+function CalculationVisual({
+  data,
+  localeCode,
+}: {
+  data: Record<string, unknown>;
+  localeCode: "fr" | "en";
+}) {
   const result = (data.result ?? {}) as Record<string, unknown>;
   const cash = (data.cash ?? {}) as Record<string, unknown>;
 
@@ -181,7 +187,7 @@ function CalculationVisual({ data }: { data: Record<string, unknown> }) {
   return (
     <div>
       <p className="text-xs font-semibold uppercase tracking-[0.12em] text-dema-muted">
-        {text(result.label) || "Résultat de la mission"}
+        {text(result.label) || (localeCode === "en" ? "Engagement result" : "Résultat de la mission")}
       </p>
       <p className="mt-1 text-3xl font-semibold text-dema-forest">{text(result.value)}</p>
 
@@ -192,15 +198,15 @@ function CalculationVisual({ data }: { data: Record<string, unknown> }) {
       </p>
       <div className="mt-4 space-y-3">
         <p className="flex items-baseline justify-between gap-4 text-brand-blue">
-          <span>Disponible sur le compte</span>
+          <span>{localeCode === "en" ? "Starting point" : "Disponible sur le compte"}</span>
           <strong className="text-lg">{text(cash.available)}</strong>
         </p>
         <p className="flex items-baseline justify-between gap-4 text-brand-blue">
-          <span>À payer avant l’encaissement</span>
+          <span>{localeCode === "en" ? "Key input" : "À payer avant l’encaissement"}</span>
           <strong className="text-lg">− {text(cash.payments)}</strong>
         </p>
         <p className="flex items-baseline justify-between gap-4 border-t border-dema-forest/20 pt-3 text-brand-blue">
-          <span className="font-semibold">Solde minimum prévu</span>
+          <span className="font-semibold">{localeCode === "en" ? "Decision point" : "Solde minimum prévu"}</span>
           <strong className="text-2xl text-dema-forest">{text(cash.lowPoint)}</strong>
         </p>
       </div>
@@ -208,7 +214,13 @@ function CalculationVisual({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-function MetricsVisual({ data }: { data: Record<string, unknown> }) {
+function MetricsVisual({
+  data,
+  localeCode,
+}: {
+  data: Record<string, unknown>;
+  localeCode: "fr" | "en";
+}) {
   const inputs = strings(data.inputs);
   const fields = strings(data.fields);
   const indicators = records(data.indicators);
@@ -286,7 +298,7 @@ function MetricsVisual({ data }: { data: Record<string, unknown> }) {
   return (
     <div>
       <p className="text-xs font-semibold uppercase tracking-[0.12em] text-dema-muted">
-        Projection sur {text(data.horizon)}
+        {localeCode === "en" ? "Review over" : "Projection sur"} {text(data.horizon)}
       </p>
       <div className="mt-4">
         {inputs.map((input, index) => (
@@ -301,7 +313,9 @@ function MetricsVisual({ data }: { data: Record<string, unknown> }) {
         <div className="grid grid-cols-[1.5rem_1fr] gap-3">
           <span className="text-lg text-dema-forest" aria-hidden="true">↓</span>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-dema-muted">À repérer</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-dema-muted">
+              {localeCode === "en" ? "Decision point" : "À repérer"}
+            </p>
             <p className="mt-1 text-xl font-semibold text-dema-forest">{text(data.output)}</p>
           </div>
         </div>
@@ -501,11 +515,17 @@ function StoryVisual({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-export default function AcademyLessonVisual({ lesson }: { lesson: AcademyLesson }) {
+export default function AcademyLessonVisual({
+  lesson,
+  localeCode = "fr",
+}: {
+  lesson: AcademyLesson;
+  localeCode?: "fr" | "en";
+}) {
   if (lesson.visual.type === "comparison") return <ComparisonVisual data={lesson.visual.data} />;
   if (lesson.visual.type === "timeline") return <TimelineVisual data={lesson.visual.data} />;
-  if (lesson.visual.type === "calculation") return <CalculationVisual data={lesson.visual.data} />;
-  if (lesson.visual.type === "metrics") return <MetricsVisual data={lesson.visual.data} />;
+  if (lesson.visual.type === "calculation") return <CalculationVisual data={lesson.visual.data} localeCode={localeCode} />;
+  if (lesson.visual.type === "metrics") return <MetricsVisual data={lesson.visual.data} localeCode={localeCode} />;
   if (lesson.visual.type === "steps") return <StepsVisual data={lesson.visual.data} />;
   if (lesson.visual.type === "pipeline") return <PipelineVisual data={lesson.visual.data} />;
   if (lesson.visual.type === "brand-case") return <BrandCaseVisual data={lesson.visual.data} />;
