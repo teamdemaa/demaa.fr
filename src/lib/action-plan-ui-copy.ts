@@ -4,6 +4,7 @@ const copy = {
   fr: {
     heroLead: "Qu’est-ce qui",
     heroEmphasis: "freine votre entreprise",
+    heroQuestionMark: "\u00a0?",
     heroDescription: "On vous aide à clarifier les priorités, à structurer une activité plus rentable et moins dépendante de vous.",
     situationLabel: "Décrivez la situation de votre entreprise",
     createPlan: "Créer mon plan d’action",
@@ -28,6 +29,7 @@ const copy = {
   en: {
     heroLead: "What’s holding",
     heroEmphasis: "your business back",
+    heroQuestionMark: "?",
     heroDescription: "Clarify your priorities and build a more profitable business that depends less on you.",
     situationLabel: "Describe what is happening in your business",
     createPlan: "Create my action plan",
