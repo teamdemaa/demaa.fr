@@ -7,6 +7,7 @@ import SystemShareControl from "@/components/SystemShareControl";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
+import type { InterfaceLocaleCode, MarketCode } from "@/lib/international-context";
 import {
   getActionPlanSystemPayloadCacheKey,
   invalidateActionPlanSystemPayload,
@@ -40,8 +41,8 @@ export default function ActionPlanSystemPanel({
   initialResourceSlug?: string;
   onResourceSlugChange?: (resourceSlug: string | undefined) => void;
   onToggleSolutionSelection?: (placementId: string) => void;
-  localeCode?: "fr" | "en";
-  marketCode?: string;
+  localeCode?: InterfaceLocaleCode;
+  marketCode?: MarketCode;
   toolOutboundSurface?: ToolOutboundSurface;
 }) {
   const [payload, setPayload] = useState<ActionPlanSystemPayload | null>(null);

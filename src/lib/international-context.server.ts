@@ -8,6 +8,8 @@ import {
   type ActiveCompanyContext,
 } from "@/lib/company-membership.server";
 import {
+  FRANCE_COMMERCIAL_CONTEXT,
+  GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT,
   LOCALE_PREFERENCE_COOKIE,
   type CommercialContext,
   type InterfaceLocaleCode,
@@ -62,6 +64,19 @@ export async function resolveRequestInternationalContext(input: {
 }) {
   const localeCode = await resolveRequestInterfaceLocale(input);
   return createInternationalContext(localeCode, input.commercialContext);
+}
+
+/**
+ * Returns the explicit server configuration used before authentication.
+ * This is a product entry-point decision, not a general locale-to-market
+ * inference. Authenticated surfaces must use the company resolver below.
+ */
+export function getConfiguredVisitorCommercialContext(
+  localeCode: InterfaceLocaleCode,
+): CommercialContext {
+  return localeCode === "en"
+    ? GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT
+    : FRANCE_COMMERCIAL_CONTEXT;
 }
 
 export type AuthenticatedInternationalContext = Readonly<{

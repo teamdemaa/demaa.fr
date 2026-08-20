@@ -142,6 +142,9 @@ Contexte commercial résolu côté serveur
     actuel, puis composent la locale d'interface avec le marché, le pays et la
     devise de cette entreprise. Un contexte absent ou invalide échoue
     explicitement et le DTO international n'expose aucun identifiant interne.
+    Le contexte visiteur est une configuration serveur explicite et les caches
+    Système/Academy exigent désormais `localeCode + marketCode` : aucun cache
+    client ne reconstruit le marché à partir de la seule langue.
   - [ ] Étendre la même autorité serveur aux offres, demandes de service,
     conversations, prix et notifications dans leurs lots dédiés ; ces routes
     ne doivent plus accepter le navigateur comme autorité commerciale.

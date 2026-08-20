@@ -16,6 +16,14 @@ const academyPayload = {
   contents: [],
   liveTrainings: [],
 };
+const frenchAcademyContext = {
+  localeCode: "fr",
+  marketCode: "fr-fr",
+} as const;
+const frenchAcademyCacheKey = getActionPlanAcademyPayloadCacheKey(
+  frenchAcademyContext.localeCode,
+  frenchAcademyContext.marketCode,
+);
 
 function jsonResponse(body: unknown, ok = true) {
   return {
@@ -26,7 +34,7 @@ function jsonResponse(body: unknown, ok = true) {
 
 describe("action plan Academy client payload cache", () => {
   beforeEach(() => {
-    invalidateActionPlanAcademyPayload();
+    invalidateActionPlanAcademyPayload(frenchAcademyCacheKey);
     invalidateActionPlanAcademyPayload(
       getActionPlanAcademyPayloadCacheKey("en", "global-en-beta"),
     );
@@ -40,8 +48,8 @@ describe("action plan Academy client payload cache", () => {
     }));
     vi.stubGlobal("fetch", fetchMock);
 
-    const first = loadActionPlanAcademyPayload();
-    const second = loadActionPlanAcademyPayload();
+    const first = loadActionPlanAcademyPayload(frenchAcademyContext);
+    const second = loadActionPlanAcademyPayload(frenchAcademyContext);
 
     expect(second).toBe(first);
     expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -55,19 +63,19 @@ describe("action plan Academy client payload cache", () => {
     const fetchMock = vi.fn().mockResolvedValue(jsonResponse(academyPayload));
     vi.stubGlobal("fetch", fetchMock);
 
-    await loadActionPlanAcademyPayload();
-    await loadActionPlanAcademyPayload();
+    await loadActionPlanAcademyPayload(frenchAcademyContext);
+    await loadActionPlanAcademyPayload(frenchAcademyContext);
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
-    expect(readCachedActionPlanAcademyPayload()).toEqual(academyPayload);
+    expect(readCachedActionPlanAcademyPayload(frenchAcademyCacheKey)).toEqual(academyPayload);
   });
 
   it("exposes the cached payload synchronously for a remount", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(jsonResponse(academyPayload)));
 
-    await loadActionPlanAcademyPayload();
+    await loadActionPlanAcademyPayload(frenchAcademyContext);
 
-    expect(readCachedActionPlanAcademyPayload()).toBe(academyPayload);
+    expect(readCachedActionPlanAcademyPayload(frenchAcademyCacheKey)).toBe(academyPayload);
   });
 
   it("invalidates and reloads a fresh payload after Retry", async () => {
@@ -80,13 +88,15 @@ describe("action plan Academy client payload cache", () => {
       .mockResolvedValueOnce(jsonResponse(refreshedPayload));
     vi.stubGlobal("fetch", fetchMock);
 
-    await loadActionPlanAcademyPayload();
-    invalidateActionPlanAcademyPayload();
-    expect(readCachedActionPlanAcademyPayload()).toBeNull();
+    await loadActionPlanAcademyPayload(frenchAcademyContext);
+    invalidateActionPlanAcademyPayload(frenchAcademyCacheKey);
+    expect(readCachedActionPlanAcademyPayload(frenchAcademyCacheKey)).toBeNull();
 
-    await expect(loadActionPlanAcademyPayload()).resolves.toEqual(refreshedPayload);
+    await expect(loadActionPlanAcademyPayload(frenchAcademyContext))
+      .resolves.toEqual(refreshedPayload);
     expect(fetchMock).toHaveBeenCalledTimes(2);
-    expect(readCachedActionPlanAcademyPayload()).toEqual(refreshedPayload);
+    expect(readCachedActionPlanAcademyPayload(frenchAcademyCacheKey))
+      .toEqual(refreshedPayload);
   });
 
   it("does not let an invalidated stale request overwrite the fresh cache", async () => {
@@ -99,22 +109,22 @@ describe("action plan Academy client payload cache", () => {
       .mockResolvedValueOnce(jsonResponse(freshPayload));
     vi.stubGlobal("fetch", fetchMock);
 
-    const staleRequest = loadActionPlanAcademyPayload();
-    invalidateActionPlanAcademyPayload();
-    await loadActionPlanAcademyPayload();
+    const staleRequest = loadActionPlanAcademyPayload(frenchAcademyContext);
+    invalidateActionPlanAcademyPayload(frenchAcademyCacheKey);
+    await loadActionPlanAcademyPayload(frenchAcademyContext);
     resolveStale?.(jsonResponse(academyPayload));
     await staleRequest;
 
-    expect(readCachedActionPlanAcademyPayload()).toEqual(freshPayload);
+    expect(readCachedActionPlanAcademyPayload(frenchAcademyCacheKey)).toEqual(freshPayload);
   });
 
   it("rejects incomplete payloads without caching them", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(jsonResponse({ contents: [] })));
 
-    await expect(loadActionPlanAcademyPayload()).rejects.toThrow(
+    await expect(loadActionPlanAcademyPayload(frenchAcademyContext)).rejects.toThrow(
       "Impossible de charger l’Académie.",
     );
-    expect(readCachedActionPlanAcademyPayload()).toBeNull();
+    expect(readCachedActionPlanAcademyPayload(frenchAcademyCacheKey)).toBeNull();
   });
 
   it("isolates English and French Academy payloads and requests", async () => {
@@ -125,7 +135,7 @@ describe("action plan Academy client payload cache", () => {
       .mockResolvedValueOnce(jsonResponse(englishPayload));
     vi.stubGlobal("fetch", fetchMock);
 
-    await loadActionPlanAcademyPayload();
+    await loadActionPlanAcademyPayload(frenchAcademyContext);
     await loadActionPlanAcademyPayload({
       localeCode: "en",
       marketCode: "global-en-beta",
@@ -139,10 +149,12 @@ describe("action plan Academy client payload cache", () => {
       2,
       "/api/action-plan/academy?locale=en&market=global-en-beta",
     );
-    expect(readCachedActionPlanAcademyPayload()).toEqual(frenchPayload);
+    expect(readCachedActionPlanAcademyPayload(frenchAcademyCacheKey)).toEqual(frenchPayload);
     expect(readCachedActionPlanAcademyPayload(
       getActionPlanAcademyPayloadCacheKey("en", "global-en-beta"),
     )).toEqual(englishPayload);
+    expect(getActionPlanAcademyPayloadCacheKey("en", "fr-fr"))
+      .not.toBe(getActionPlanAcademyPayloadCacheKey("en", "global-en-beta"));
   });
 
   it("reports English Academy load failures in English", async () => {
@@ -159,6 +171,8 @@ describe("action plan System payload cache regression", () => {
   it("isolates cached payloads by locale and market", () => {
     expect(getActionPlanSystemPayloadCacheKey("saas", false, "fr", "fr-fr"))
       .not.toBe(getActionPlanSystemPayloadCacheKey("saas", false, "en", "global-en-beta"));
+    expect(getActionPlanSystemPayloadCacheKey("saas", false, "en", "fr-fr"))
+      .not.toBe(getActionPlanSystemPayloadCacheKey("saas", false, "en", "global-en-beta"));
   });
 
   it("keeps deduplicating requests and exposing the cached System payload", async () => {
@@ -169,8 +183,20 @@ describe("action plan System payload cache regression", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     await Promise.all([
-      loadActionPlanSystemPayload({ cacheKey, demoMode: false, systemId: "test" }),
-      loadActionPlanSystemPayload({ cacheKey, demoMode: false, systemId: "test" }),
+      loadActionPlanSystemPayload({
+        cacheKey,
+        demoMode: false,
+        localeCode: "fr",
+        marketCode: "fr-fr",
+        systemId: "test",
+      }),
+      loadActionPlanSystemPayload({
+        cacheKey,
+        demoMode: false,
+        localeCode: "fr",
+        marketCode: "fr-fr",
+        systemId: "test",
+      }),
     ]);
 
     expect(fetchMock).toHaveBeenCalledTimes(1);

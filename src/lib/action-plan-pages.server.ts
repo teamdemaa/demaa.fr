@@ -18,11 +18,12 @@ import {
 import { shouldRedirectAuthenticatedHomeToPlans } from "@/lib/action-plan-home-routing";
 import { getCurrentCustomerAppIdentityFromSession } from "@/lib/customer-space-session.server";
 import {
-  GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT,
-  FRANCE_COMMERCIAL_CONTEXT,
   type InterfaceLocaleCode,
 } from "@/lib/international-context";
-import { resolveAuthenticatedInternationalContext } from "@/lib/international-context.server";
+import {
+  getConfiguredVisitorCommercialContext,
+  resolveAuthenticatedInternationalContext,
+} from "@/lib/international-context.server";
 
 type SearchValue = string | string[] | undefined;
 export type ActionPlanPageSearchParams = Record<string, SearchValue>;
@@ -79,11 +80,10 @@ export async function loadActionPlanHomePage(input: {
 }
 
 function getUnauthenticatedConfig(localeCode: InterfaceLocaleCode) {
+  const commercialContext = getConfiguredVisitorCommercialContext(localeCode);
   return getActionPlanPageConfig({
     localeCode,
-    marketCode: localeCode === "en"
-      ? GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT.marketCode
-      : FRANCE_COMMERCIAL_CONTEXT.marketCode,
+    marketCode: commercialContext.marketCode,
   });
 }
 

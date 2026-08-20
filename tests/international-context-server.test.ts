@@ -44,6 +44,7 @@ vi.mock("@/lib/company-membership.server", () => ({
 }));
 
 import {
+  getConfiguredVisitorCommercialContext,
   resolveAuthenticatedInternationalContext,
   resolveRequestInterfaceLocale,
   resolveRequestInternationalContext,
@@ -88,6 +89,13 @@ describe("server international context resolution", () => {
       localeCode: "fr",
       marketCode: "global-en-beta",
     });
+  });
+
+  it("uses explicit server entry-point contexts for visitors", () => {
+    expect(getConfiguredVisitorCommercialContext("fr"))
+      .toBe(FRANCE_COMMERCIAL_CONTEXT);
+    expect(getConfiguredVisitorCommercialContext("en"))
+      .toBe(GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT);
   });
 
   it("preserves the preference order when no route locale is explicit", async () => {

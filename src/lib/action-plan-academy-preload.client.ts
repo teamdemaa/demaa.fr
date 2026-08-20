@@ -1,6 +1,7 @@
 "use client";
 
 import { loadActionPlanAcademyPayload } from "@/lib/action-plan-academy-payload.client";
+import type { InterfaceLocaleCode, MarketCode } from "@/lib/international-context";
 
 type IdleWindow = Window & typeof globalThis & {
   cancelIdleCallback?: (handle: number) => void;
@@ -11,9 +12,9 @@ type IdleWindow = Window & typeof globalThis & {
 };
 
 export function scheduleActionPlanAcademyPayloadPreload(input: {
-  localeCode?: "fr" | "en";
-  marketCode?: string;
-} = {}) {
+  localeCode: InterfaceLocaleCode;
+  marketCode: MarketCode;
+}) {
   const preload = () => {
     void loadActionPlanAcademyPayload(input).catch(() => undefined);
   };
