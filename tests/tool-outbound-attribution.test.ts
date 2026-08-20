@@ -35,6 +35,10 @@ describe("tool outbound attribution", () => {
 
   it("rejects internal, malformed, credentialed and unsafe destinations", () => {
     expect(buildToolOutboundUrl("/annuaire-outils/tiimora")).toBeNull();
+    expect(buildToolOutboundUrl("https://demaa.co/annuaire-outils/tiimora")).toBeNull();
+    expect(buildToolOutboundUrl("https://app.demaa.co/outils/tiimora")).toBeNull();
+    expect(buildToolOutboundUrl("https://www.demaa.fr/outils/tiimora")).toBeNull();
+    expect(buildToolOutboundUrl("https://demaa.co./outils/tiimora")).toBeNull();
     expect(buildToolOutboundUrl("not a URL")).toBeNull();
     expect(buildToolOutboundUrl("javascript:alert(1)")).toBeNull();
     expect(buildToolOutboundUrl("https://user:secret@example.com/")).toBeNull();
