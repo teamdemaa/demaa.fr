@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import CustomerConnexionPage, {
   type CustomerConnexionSearchParams,
 } from "@/components/CustomerConnexionPage";
+import { isEnglishBetaEnabled } from "@/lib/english-beta.server";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Connexion sécurisée | Demaa",
+  title: "Secure sign-in | Demaa",
   robots: { index: false, follow: false },
 };
 
-export default function ConnexionPage({
+export default function EnglishConnexionPage({
   searchParams,
 }: {
   searchParams: CustomerConnexionSearchParams;
 }) {
-  return <CustomerConnexionPage localeCode="fr" searchParams={searchParams} />;
+  if (!isEnglishBetaEnabled()) notFound();
+  return <CustomerConnexionPage localeCode="en" searchParams={searchParams} />;
 }

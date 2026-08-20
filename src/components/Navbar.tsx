@@ -7,6 +7,7 @@ import DemaaWordmark from "@/components/DemaaWordmark";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
+import { buildLocalizedConnexionHref } from "@/lib/localized-auth-path";
 
 export default function Navbar({
   anonymousLanding = false,
@@ -76,7 +77,10 @@ export default function Navbar({
                   </details>
                 ) : (
                   <Link
-                    href={`/connexion?returnTo=${encodeURIComponent(getLocalizedActionPlanPath(localeCode, "/plans/latest"))}`}
+                    href={buildLocalizedConnexionHref({
+                      localeCode,
+                      returnTo: getLocalizedActionPlanPath(localeCode, "/plans/latest"),
+                    })}
                     className={connectionLinkClassName}
                   >
                     <span>{localeCode === "en" ? "Sign in" : "Connexion"}</span>

@@ -81,18 +81,20 @@ describe("Demaa application navbar", () => {
   });
 
   it("keeps sign-in minimal and intercepts it over the homepage", async () => {
-    const [legacySource, loginSource, modalSource] = await Promise.all([
+    const [legacySource, loginSource, sharedLoginSource, modalSource] = await Promise.all([
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/app/(french)/(auth)/connexion/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/CustomerConnexionPage.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/(french)/@modal/(.)connexion/page.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(legacySource).toContain("source: '/mon-espace'");
     expect(legacySource).toContain("destination: '/plans/latest'");
-    expect(loginSource).toContain("<Navbar minimal localeCode={localeCode} />");
-    expect(loginSource).toContain('localeCode === "en" ? "Sign in" : "Connectez-vous"');
-    expect(loginSource).not.toContain("Mes plans");
-    expect(loginSource).not.toContain("Mon espace");
+    expect(loginSource).toContain('<CustomerConnexionPage localeCode="fr"');
+    expect(sharedLoginSource).toContain("<Navbar minimal localeCode={localeCode} />");
+    expect(sharedLoginSource).toContain('localeCode === "en" ? "Sign in" : "Connectez-vous"');
+    expect(sharedLoginSource).not.toContain("Mes plans");
+    expect(sharedLoginSource).not.toContain("Mon espace");
     expect(modalSource).toContain("getSafeCustomerReturnTo");
     expect(modalSource).toContain("<CustomerSpaceLoginDialog");
     expect(modalSource).toContain("const returnTo = getSafeCustomerReturnTo");

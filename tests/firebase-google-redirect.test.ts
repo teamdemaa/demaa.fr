@@ -135,7 +135,7 @@ describe("Firebase Google redirect", () => {
 
   it("keeps the return destination out of Firebase client persistence", () => {
     const callback = readFileSync(
-      "src/app/(french)/(auth)/auth/google/GoogleAuthCallbackClient.tsx",
+      "src/components/GoogleAuthCallbackClient.tsx",
       "utf8",
     );
     const helper = readFileSync("src/lib/firebase-client-auth.ts", "utf8");
@@ -154,7 +154,7 @@ describe("Firebase Google redirect", () => {
     expect(button).toContain("GOOGLE_POPUP_TIMEOUT_MS = 30_000");
     expect(button).toContain("setPreferRedirect(true)");
     expect(button).toContain("shouldUseGoogleRedirect() || preferRedirect");
-    expect(button).toContain("window.location.assign(`/auth/google?");
-    expect(button).toContain("locale: localeCode");
+    expect(button).toContain("window.location.assign(buildLocalizedGoogleAuthHref");
+    expect(button).toContain("{ localeCode, returnTo }");
   });
 });

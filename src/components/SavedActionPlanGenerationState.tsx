@@ -11,6 +11,7 @@ import {
 } from "@/lib/action-plan-generation.client";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
+import { buildLocalizedConnexionHref } from "@/lib/localized-auth-path";
 
 export default function SavedActionPlanGenerationState({
   canRetry,
@@ -36,7 +37,10 @@ export default function SavedActionPlanGenerationState({
         if (resumeError instanceof DOMException && resumeError.name === "AbortError") return;
         if (resumeError instanceof ActionPlanAuthenticationRequiredError) {
           window.location.replace(
-            `/connexion?returnTo=${encodeURIComponent(getLocalizedActionPlanPath(localeCode, `/plans/${planId}`))}`,
+            buildLocalizedConnexionHref({
+              localeCode,
+              returnTo: getLocalizedActionPlanPath(localeCode, `/plans/${planId}`),
+            }),
           );
           return;
         }
@@ -63,7 +67,10 @@ export default function SavedActionPlanGenerationState({
     } catch (retryError) {
       if (retryError instanceof ActionPlanAuthenticationRequiredError) {
         window.location.replace(
-          `/connexion?returnTo=${encodeURIComponent(getLocalizedActionPlanPath(localeCode, `/plans/${planId}`))}`,
+          buildLocalizedConnexionHref({
+            localeCode,
+            returnTo: getLocalizedActionPlanPath(localeCode, `/plans/${planId}`),
+          }),
         );
         return;
       }

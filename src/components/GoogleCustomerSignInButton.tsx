@@ -11,6 +11,7 @@ import {
 } from "@/lib/firebase-client-auth";
 import { getReturnToInterfaceLocale } from "@/lib/international-context";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
+import { buildLocalizedGoogleAuthHref } from "@/lib/localized-auth-path";
 
 const GOOGLE_POPUP_TIMEOUT_MS = 30_000;
 
@@ -115,8 +116,7 @@ export default function GoogleCustomerSignInButton({
     try {
       const localeCode = getReturnToInterfaceLocale(returnTo);
       if (shouldUseGoogleRedirect() || preferRedirect) {
-        const params = new URLSearchParams({ locale: localeCode, returnTo });
-        window.location.assign(`/auth/google?${params.toString()}`);
+        window.location.assign(buildLocalizedGoogleAuthHref({ localeCode, returnTo }));
         return;
       }
       const { idToken } = await withGooglePopupTimeout(
