@@ -27,10 +27,21 @@ function placement(section: "software" | "services" | "providers", resourceSlug:
 }
 
 describe("English Solutions projections", () => {
-  it("publishes only explicitly translated Tools and Services entries", () => {
+  it("projects only approved tools and preserves server-localized services", () => {
     const input: RenderableSolutionSectionDto[] = [
       { section: "software", placements: [placement("software", "github"), placement("software", "freebe")] },
-      { section: "services", placements: [placement("services", "coach-business"), placement("services", "expert-comptable")] },
+      { section: "services", placements: [{
+        ...placement("services", "coach-business"),
+        usage: "English service usage",
+        fitRationale: "English service rationale",
+        fitConstraints: ["English constraint"],
+        resource: {
+          ...placement("services", "coach-business").resource,
+          name: "Business coaching",
+          description: "English service description",
+          ctaLabel: "Send my request",
+        },
+      }] },
       { section: "providers", placements: [placement("providers", "provider") ] },
     ];
 
@@ -41,7 +52,7 @@ describe("English Solutions projections", () => {
       "github",
       "coach-business",
     ]);
-    expect(JSON.stringify(result)).not.toContain("Texte français");
+    expect(JSON.stringify(result)).not.toContain("Nom français");
     expect(result[1]?.placements[0]?.resource.ctaLabel).toBe("Send my request");
   });
 });

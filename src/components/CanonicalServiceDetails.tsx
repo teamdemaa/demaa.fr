@@ -2,7 +2,9 @@ import { Check, CircleAlert, ClipboardCheck } from "lucide-react";
 import { Suspense } from "react";
 import ServiceCallbackForm from "@/components/ServiceCallbackForm";
 import CoachBusinessCallbackForm from "@/components/CoachBusinessCallbackForm";
-import type { CanonicalService } from "@/lib/canonical-service-catalog";
+import type { CanonicalService } from "@/lib/canonical-service-contract";
+import type { InterfaceLocaleCode } from "@/lib/international-context";
+import { getServiceUiCopy } from "@/lib/service-ui-copy";
 
 function DetailList({
   icon: Icon,
@@ -43,11 +45,20 @@ function ServiceCtaFallback({ label }: { label: string }) {
 
 function ServicePricingAndCta({
   compact = false,
+  localeCode,
+  marketCode,
   service,
+  source,
+  systemSlug,
 }: {
   compact?: boolean;
+  localeCode: InterfaceLocaleCode;
+  marketCode: string;
   service: CanonicalService;
+  source?: string;
+  systemSlug?: string;
 }) {
+  const ui = getServiceUiCopy(localeCode);
   return (
     <aside
       className={compact
@@ -69,28 +80,32 @@ function ServicePricingAndCta({
       ) : (
         <>
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-muted">
-            Forfaits
+            {ui.packagesHeading}
           </p>
           <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-            Choisissez le périmètre le plus proche de votre besoin. La Team confirme son adéquation avant tout démarrage.
+            {ui.packagesDescription}
           </p>
         </>
       )}
       {service.monthlyAccompanimentDiscountEligible ? (
         <p className="mt-3 text-xs font-normal text-dema-muted">
-          Avantage accompagnement mensuel : −12 % sur les prestations Demaa éligibles.
+          {ui.monthlyBenefit}
         </p>
       ) : null}
 
       <Suspense fallback={<ServiceCtaFallback label={service.cta.label} />}>
-        {service.slug === "coach-business" ? (
+        {service.slug === "coach-business" && localeCode === "fr" ? (
           <CoachBusinessCallbackForm />
         ) : (
           <ServiceCallbackForm
             key={service.slug}
+            localeCode={localeCode}
+            marketCode={marketCode}
             packages={service.packages}
             serviceName={service.name}
             serviceSlug={service.slug}
+            source={source}
+            systemSlug={systemSlug}
           />
         )}
       </Suspense>
@@ -100,11 +115,20 @@ function ServicePricingAndCta({
 
 function CompactServiceDetails({
   Heading,
+  localeCode,
+  marketCode,
   service,
+  source,
+  systemSlug,
 }: {
   Heading: "h1" | "h2";
+  localeCode: InterfaceLocaleCode;
+  marketCode: string;
   service: CanonicalService;
+  source?: string;
+  systemSlug?: string;
 }) {
+  const ui = getServiceUiCopy(localeCode);
   return (
     <div className="min-w-0 max-w-full">
       <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
@@ -120,7 +144,7 @@ function CompactServiceDetails({
       <div className="mt-7 grid min-w-0 gap-6">
         <section className="min-w-0 border-t border-dema-line pt-5">
           <h3 className="text-base font-semibold text-brand-blue">
-            Ce qui est inclus
+            {ui.included}
           </h3>
           <ul className="mt-4 space-y-3">
             {service.included.slice(0, 3).map((item) => (
@@ -132,7 +156,14 @@ function CompactServiceDetails({
           </ul>
         </section>
 
-        <ServicePricingAndCta compact service={service} />
+        <ServicePricingAndCta
+          compact
+          localeCode={localeCode}
+          marketCode={marketCode}
+          service={service}
+          source={source}
+          systemSlug={systemSlug}
+        />
       </div>
     </div>
   );
@@ -140,15 +171,33 @@ function CompactServiceDetails({
 
 export default function CanonicalServiceDetails({
   headingAs: Heading = "h1",
+  localeCode = "fr",
+  marketCode = "fr-fr",
   service,
+  source,
+  systemSlug,
   variant = "page",
 }: {
   headingAs?: "h1" | "h2";
+  localeCode?: InterfaceLocaleCode;
+  marketCode?: string;
   service: CanonicalService;
+  source?: string;
+  systemSlug?: string;
   variant?: "modal" | "page";
 }) {
+  const ui = getServiceUiCopy(localeCode);
   if (variant === "modal") {
-    return <CompactServiceDetails Heading={Heading} service={service} />;
+    return (
+      <CompactServiceDetails
+        Heading={Heading}
+        localeCode={localeCode}
+        marketCode={marketCode}
+        service={service}
+        source={source}
+        systemSlug={systemSlug}
+      />
+    );
   }
 
   return (
@@ -169,7 +218,7 @@ export default function CanonicalServiceDetails({
           </p>
           <div className="mt-7 rounded-[1.1rem] border border-dema-line bg-dema-sage/45 p-5 sm:p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
-              Résultat attendu
+              {ui.expectedResult}
             </p>
             <p className="mt-3 text-base leading-relaxed text-brand-blue/75">
               {service.result}
@@ -177,13 +226,19 @@ export default function CanonicalServiceDetails({
           </div>
         </section>
 
-        <ServicePricingAndCta service={service} />
+        <ServicePricingAndCta
+          localeCode={localeCode}
+          marketCode={marketCode}
+          service={service}
+          source={source}
+          systemSlug={systemSlug}
+        />
       </div>
 
       <div className="mt-8 grid min-w-0 gap-4 md:grid-cols-3">
-        <DetailList icon={ClipboardCheck} items={service.included} title="Ce qui est inclus" />
-        <DetailList icon={Check} items={service.conditions} title="Conditions" />
-        <DetailList icon={CircleAlert} items={service.notIncluded} title="Non inclus" />
+        <DetailList icon={ClipboardCheck} items={service.included} title={ui.included} />
+        <DetailList icon={Check} items={service.conditions} title={ui.conditions} />
+        <DetailList icon={CircleAlert} items={service.notIncluded} title={ui.notIncluded} />
       </div>
     </div>
   );

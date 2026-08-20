@@ -36,21 +36,13 @@ const ENGLISH_TOOL_PROJECTIONS: Readonly<Record<string, EnglishProjection>> = {
   webflow: { name: "Webflow", displayCategory: "Website", description: "Design and publish marketing websites with a visual development workflow.", usage: "Ship maintainable marketing pages without a fully custom front end.", fitRationale: "Useful for design-led teams managing a marketing site in-house.", fitConstraints: ["Complex application logic should remain outside the marketing site."] },
 };
 
-const ENGLISH_SERVICE_PROJECTIONS: Readonly<Record<string, EnglishProjection>> = {
-  "coach-business": { name: "Business coaching", displayCategory: "Leadership support", description: "A monthly partnership to develop your business, make stronger decisions and keep moving forward.", usage: "Work with a regular thinking partner on the priorities that will move the business forward.", fitRationale: "Useful when the owner needs sustained perspective and accountability, not a one-off answer.", fitConstraints: ["The coach supports decisions and progress; execution remains with your business."] },
-  "automatisation-processus": { name: "Process automation and AI", displayCategory: "Operations", description: "Simplify a process, connect the right tools and use AI where it creates a reliable operational gain.", usage: "Reduce repetitive work, re-entry and manual follow-ups in a defined process.", fitRationale: "Best for recurring work with clear inputs, rules and ownership.", fitConstraints: ["The process and delivery scope are confirmed before work starts."] },
-  "prospection-ciblee": { name: "Targeted B2B prospecting", displayCategory: "Business development", description: "Define the right accounts, messages and follow-up process for focused B2B outreach.", usage: "Build a traceable prospecting motion around qualified target companies.", fitRationale: "Useful when the target market and commercial offer are sufficiently clear.", fitConstraints: ["Meetings are never guaranteed and outreach rules must be approved."] },
-  "publicite-en-ligne": { name: "Paid acquisition", displayCategory: "Acquisition", description: "Plan, launch and improve paid campaigns around a specific commercial objective.", usage: "Test and scale acquisition with clear targets, budgets and measurement.", fitRationale: "Relevant when the offer, audience and conversion path are ready.", fitConstraints: ["Media spend is separate and paid directly to the platforms."] },
-};
-
 export function projectEnglishSolutionSections(
   sections: readonly RenderableSolutionSectionDto[],
 ): RenderableSolutionSectionDto[] {
   return sections.flatMap((section) => {
-    if (section.section !== "software" && section.section !== "services") return [];
-    const projections = section.section === "software"
-      ? ENGLISH_TOOL_PROJECTIONS
-      : ENGLISH_SERVICE_PROJECTIONS;
+    if (section.section === "services") return [section];
+    if (section.section !== "software") return [];
+    const projections = ENGLISH_TOOL_PROJECTIONS;
     const placements = section.placements.flatMap((placement) => {
       const projection = projections[placement.resource.resourceSlug];
       if (!projection) return [];
@@ -61,15 +53,10 @@ export function projectEnglishSolutionSections(
         usage: projection.usage,
         resource: {
           ...placement.resource,
-          ctaLabel: section.section === "services" ? "Send my request" : "Visit website",
+          ctaLabel: "Visit website",
           description: projection.description,
           displayCategory: projection.displayCategory,
           name: projection.name,
-          indicativePricing: placement.resource.indicativePricing
-            ?.replace("Sur devis", "Quote")
-            .replace("À partir de ", "From ")
-            .replace(" HT / mois", " excl. VAT / month")
-            .replace(" HT / jour", " excl. VAT / day"),
         },
       }];
     });

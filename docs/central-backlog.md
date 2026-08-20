@@ -217,19 +217,22 @@ résolveur français n'est pas validé métier.
     technique ne vaut pas encore validation éditoriale ni GO public.
 - [ ] Publier `Tools` avec projections anglaises validées et filtrage serveur
   par métier/famille, marché, pays et langue.
-- [ ] Employer le libellé naturel `Services`, jamais `Accompaniment`, et
+- [x] Employer le libellé naturel `Services`, jamais `Accompaniment`, et
   publier uniquement les prestations réellement
   réalisables à distance en anglais.
-- [ ] Conserver une seule prestation `Automatisation des processus et IA`
+- [x] Conserver une seule prestation `Automatisation des processus et IA`
   (`Process automation and AI` en anglais) : l'IA est un levier intégré à
   l'automatisation, jamais une carte ou une offre d'accompagnement séparée.
-- [ ] Utiliser `Envoyer ma demande` / `Send my request` avec le même formulaire
+- [x] Utiliser `Envoyer ma demande` / `Send my request` avec le même formulaire
   et la même API. En anglais, le contact passe par la session et l'e-mail du
   membre ; aucun numéro WhatsApp obligatoire. Le serveur retrouve l'identité,
   l'entreprise, la disponibilité marché/pays et le forfait autorisé avant de
   créer la demande. Il refuse tout service ou forfait indisponible et ne fait
-  jamais confiance à `localeCode`, `marketCode`, `countryCode`, prix ou
-  `companyId` envoyés seuls par le client.
+  jamais confiance à `marketCode`, `countryCode`, prix ou `companyId` envoyés
+  seuls par le client. `localeCode` reste uniquement une intention de
+  présentation. Le marché et la devise proviennent de l'entreprise connectée ;
+  un visiteur utilise la configuration serveur de l'entrée produit. Le parcours
+  anglais exige la session et utilise son e-mail, sans champ téléphone.
 - [x] Réutiliser Échanger comme `Talk to us`, avec les mêmes conversations,
   brouillons, statuts, dictée, administration, notifications et règles de
   clarification gratuite. Les libellés passent par un dictionnaire typé et la
@@ -269,7 +272,7 @@ résolveur français n'est pas validé métier.
 
 ### Prix internationaux
 
-- [ ] Ne jamais modifier un prix à partir de la seule langue d'interface.
+- [x] Ne jamais modifier un prix à partir de la seule langue d'interface.
 - [ ] Séparer la devise comptable de l'entreprise de la devise commerciale de
   l'offre ou du devis. Conserver une valeur économique canonique en EUR et une
   table de prix marché numérique, indépendante des dictionnaires.
@@ -331,7 +334,7 @@ Alignement France livré avant les projections anglaises :
 - [x] Retirer ou revalider contractuellement le support à 110 EUR/heure, la
   maintenance à 99 EUR/mois et les promesses absolues RGPD, propriété et
   hébergement de l'ancienne page `/sur-mesure`.
-- [ ] Ajouter ensuite la projection anglaise `Process automation and AI` au
+- [x] Ajouter ensuite la projection anglaise `Process automation and AI` au
   même service, avec disponibilité par marché et aucune fiche française en
   fallback.
 
@@ -455,9 +458,12 @@ Déjà livré et à préserver :
 - [ ] Academy anglaise utilise un catalogue simplifié (moins de leçons,
   visuels génériques et actions absentes) ; la reconstruire à partir de la
   structure canonique française sans changer la progression existante ;
-- [ ] les fiches Services anglaises et françaises divergent. Le serveur de
-  demande doit appliquer la matrice de disponibilité, retrouver le forfait et
-  le prix autorisés, puis localiser confirmation, notification et e-mail ;
+- [x] les fiches Services anglaises et françaises utilisent désormais le même
+  composant et les mêmes slugs/forfaits. Une projection locale complète, une
+  matrice de disponibilité et un prix numérique EUR sont résolus côté serveur ;
+  la demande retrouve le service, le forfait, le marché et la devise autorisés,
+  ignore le contexte commercial du navigateur et utilise l'e-mail de session
+  en anglais. Les e-mails client localisés restent dans le lot transverse ;
 - [x] les pages Accueil Plan, Mes plans, Nouveau plan, dernier plan et plan
   enregistré délèguent aux mêmes loaders et écrans métier ; les surfaces
   commerciales Services, Pilotage et Academy encore simplifiées sont suivies

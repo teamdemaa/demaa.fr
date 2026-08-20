@@ -1,6 +1,19 @@
 import "server-only";
 
 import { deepFreeze } from "@/lib/registry-contract-utils";
+import type {
+  CanonicalService,
+  CanonicalServicePackage,
+  CanonicalServiceSlug,
+} from "@/lib/canonical-service-contract";
+
+export type {
+  CanonicalService,
+  CanonicalServicePackage,
+  CanonicalServicePackageSlug,
+  CanonicalServicePricing,
+  CanonicalServiceSlug,
+} from "@/lib/canonical-service-contract";
 
 export const CANONICAL_SERVICE_SLUGS = [
   "automatisation-processus",
@@ -14,7 +27,14 @@ export const CANONICAL_SERVICE_SLUGS = [
   "prospection-ciblee",
 ] as const;
 
-export type CanonicalServiceSlug = (typeof CANONICAL_SERVICE_SLUGS)[number];
+type CanonicalServiceSlugInvariant =
+  (typeof CANONICAL_SERVICE_SLUGS)[number] extends CanonicalServiceSlug
+    ? CanonicalServiceSlug extends (typeof CANONICAL_SERVICE_SLUGS)[number]
+      ? true
+      : never
+    : never;
+const canonicalServiceSlugInvariant: CanonicalServiceSlugInvariant = true;
+void canonicalServiceSlugInvariant;
 
 export const CANONICAL_SERVICE_PACKAGE_SLUGS = [
   "automatisation-essentielle",
@@ -22,48 +42,6 @@ export const CANONICAL_SERVICE_PACKAGE_SLUGS = [
   "application-metier-essentielle",
   "application-metier-avancee",
 ] as const;
-
-export type CanonicalServicePackageSlug =
-  (typeof CANONICAL_SERVICE_PACKAGE_SLUGS)[number];
-
-export type CanonicalServicePricing = Readonly<{
-  amountMinor?: number;
-  currency?: "EUR";
-  heading: "Tarif" | "Forfait" | "Honoraires du cabinet";
-  label: string;
-  mode: "fixed" | "quote" | "starting";
-  note: string;
-}>;
-
-export type CanonicalServicePackage = Readonly<{
-  included: readonly string[];
-  name: string;
-  pricing: CanonicalServicePricing & Readonly<{
-    amountMinor: number;
-    currency: "EUR";
-    mode: "fixed";
-  }>;
-  slug: CanonicalServicePackageSlug;
-  summary: string;
-}>;
-
-export type CanonicalService = Readonly<{
-  monthlyAccompanimentDiscountEligible: boolean;
-  conditions: readonly string[];
-  cta: Readonly<{ kind: "callback"; label: "Envoyer ma demande" }>;
-  delivery: "demaa" | "third-party";
-  description: string;
-  detailHref: string;
-  eyebrow: string;
-  included: readonly string[];
-  name: string;
-  notIncluded: readonly string[];
-  packages: readonly CanonicalServicePackage[];
-  pricing: CanonicalServicePricing | null;
-  result: string;
-  slug: CanonicalServiceSlug;
-  summary: string;
-}>;
 
 const callback = { kind: "callback", label: "Envoyer ma demande" } as const;
 

@@ -3,6 +3,7 @@ import type {
   SolutionResourceType,
   SolutionSection,
 } from "@/lib/solution-registry-dto";
+import type { CanonicalService } from "@/lib/canonical-service-contract";
 
 export type SupportedSolutionInteractionDto = SolutionInteractionDto;
 
@@ -14,6 +15,7 @@ export type RenderableSolutionResourceDto = Readonly<{
   displayCategory?: string;
   ctaLabel?: string;
   indicativePricing?: string;
+  serviceDetails?: CanonicalService;
   interaction: SupportedSolutionInteractionDto;
 }>;
 

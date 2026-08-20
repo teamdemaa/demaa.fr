@@ -9,6 +9,7 @@ const mocks = vi.hoisted(() => ({
   resolveMonthlyAccompanimentDiscount: vi.fn(),
   resolveLeadAttribution: vi.fn(),
   resolveLeadContext: vi.fn(),
+  resolveAuthenticatedInternationalContext: vi.fn(),
   submitLeadRequest: vi.fn(),
 }));
 
@@ -20,6 +21,13 @@ vi.mock("@/lib/monthly-accompaniment-benefit.server", () => ({
 vi.mock("@/lib/customer-space-session.server", () => ({
   getCurrentCustomerIdentityFromSession: mocks.getCurrentCustomerIdentityFromSession,
 }));
+vi.mock("@/lib/international-context.server", async (importOriginal) => {
+  const original = await importOriginal<typeof import("@/lib/international-context.server")>();
+  return {
+    ...original,
+    resolveAuthenticatedInternationalContext: mocks.resolveAuthenticatedInternationalContext,
+  };
+});
 
 vi.mock("@/lib/lead-attribution-server", () => ({
   resolveLeadAttribution: mocks.resolveLeadAttribution,
@@ -72,6 +80,15 @@ describe("service callback request route", () => {
     process.env.SITE_URL = "https://demaa.co";
     mocks.enforceRateLimit.mockResolvedValue(null);
     mocks.getCurrentCustomerIdentityFromSession.mockResolvedValue(null);
+    mocks.resolveAuthenticatedInternationalContext.mockResolvedValue({
+      companyContext: { companyId: "company-owner" },
+      internationalContext: {
+        countryCode: null,
+        currencyCode: "EUR",
+        localeCode: "fr",
+        marketCode: "fr-fr",
+      },
+    });
     mocks.resolveMonthlyAccompanimentDiscount.mockResolvedValue({
       apply: false,
       eligible: false,
@@ -139,9 +156,24 @@ describe("service callback request route", () => {
   });
 
   it("preserves the English locale and market in the existing request pipeline", async () => {
+    mocks.getCurrentCustomerIdentityFromSession.mockResolvedValue({
+      email: "owner@example.com",
+      provider: "google",
+      uid: "owner-uid",
+    });
+    mocks.resolveAuthenticatedInternationalContext.mockResolvedValue({
+      companyContext: { companyId: "company-owner" },
+      internationalContext: {
+        countryCode: null,
+        currencyCode: "EUR",
+        localeCode: "en",
+        marketCode: "global-en-beta",
+      },
+    });
     const response = await POST(request(validBody({
       localeCode: "en",
       marketCode: "global-en-beta",
+      phone: undefined,
       serviceSlug: "coach-business",
       source: "english-solutions",
       systemSlug: "saas",
@@ -150,21 +182,53 @@ describe("service callback request route", () => {
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: expect.arrayContaining([
-        { label: "Contact number", value: "+33 6 12 34 56 78" },
+        { label: "Email", value: "owner@example.com" },
         { label: "Langue", value: "en" },
         { label: "Marché", value: "global-en-beta" },
       ]),
-      title: "Service request - Coach business",
+      title: "Service request - Business coaching",
     }));
   });
 
-  it("rejects an unsupported locale and market pairing", async () => {
+  it("ignores a browser-supplied market and resolves the visitor market on the server", async () => {
+    mocks.getCurrentCustomerIdentityFromSession.mockResolvedValue({
+      email: "owner@example.com",
+      provider: "password",
+      uid: "owner-uid",
+    });
+    mocks.resolveAuthenticatedInternationalContext.mockResolvedValue({
+      companyContext: { companyId: "company-owner" },
+      internationalContext: {
+        countryCode: null,
+        currencyCode: "EUR",
+        localeCode: "en",
+        marketCode: "global-en-beta",
+      },
+    });
     const response = await POST(request(validBody({
       localeCode: "en",
       marketCode: "fr-fr",
+      phone: undefined,
+      serviceSlug: "coach-business",
     })));
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(202);
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      fields: expect.arrayContaining([
+        { label: "Marché", value: "global-en-beta" },
+      ]),
+    }));
+  });
+
+  it("requires an authenticated session for an English service request", async () => {
+    const response = await POST(request(validBody({
+      localeCode: "en",
+      marketCode: "global-en-beta",
+      phone: undefined,
+      serviceSlug: "coach-business",
+    })));
+
+    expect(response.status).toBe(401);
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 

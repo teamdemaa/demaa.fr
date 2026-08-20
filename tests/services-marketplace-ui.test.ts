@@ -167,17 +167,24 @@ describe("canonical Accompagnement catalog", () => {
       company: "Indiquez le nom de votre entreprise.",
       phone: "Indiquez un numéro WhatsApp valide.",
     });
+    expect(validateCallbackFields({ company: "Demaa Ltd", phone: "", website: "" }, "en"))
+      .toEqual({});
     expect(isValidCallbackPhone("+33 (0)6 12 34 56 78")).toBe(true);
     expect(isValidCallbackPhone("javascript:alert(1)")).toBe(false);
 
-    const formSource = await readSource("src/components/ServiceCallbackForm.tsx");
+    const [formSource, formCopy] = await Promise.all([
+      readSource("src/components/ServiceCallbackForm.tsx"),
+      readSource("src/lib/service-callback-ui-copy.ts"),
+    ]);
     expect(formSource).toContain('name="company"');
     expect(formSource).toContain('name="phone"');
-    expect(formSource).toContain("Numéro WhatsApp");
-    expect(formSource).toContain("uniquement au sujet de cette demande");
+    expect(formCopy).toContain("Numéro WhatsApp");
+    expect(formCopy).toContain("uniquement au sujet de cette demande");
     expect(formSource).not.toContain('name="email"');
     expect(formSource).not.toContain('name="firstName"');
     expect(formSource).toContain('name="packageSlug"');
+    expect(formSource).toContain("useCustomerIdentity");
+    expect(formSource).toContain('localeCode="en"');
     expect(formSource).toContain('disabled={status === "submitting"}');
     expect(formSource).toContain('sourcePage: pathname');
   });

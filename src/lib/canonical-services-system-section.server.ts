@@ -1,9 +1,15 @@
 import "server-only";
 
 import {
-  getCanonicalServices,
   type CanonicalServiceSlug,
 } from "@/lib/canonical-service-catalog";
+import {
+  getLocalizedCanonicalServices,
+} from "@/lib/localized-service-catalog.server";
+import {
+  FRANCE_CONTEXT,
+  type InternationalContext,
+} from "@/lib/international-context";
 import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
 import { enterpriseCatalogBySlug } from "@/lib/enterprise-annuaire";
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
@@ -39,8 +45,9 @@ const ADMIN_SUPPORT_PROFESSIONAL_SYSTEM_SLUGS = new Set([
 
 export function getCanonicalServiceSlugsForSystem(
   systemSlug: string,
+  context: InternationalContext = FRANCE_CONTEXT,
 ): readonly CanonicalServiceSlug[] {
-  return getCanonicalServices()
+  return getLocalizedCanonicalServices(context)
     .filter((service) => {
       if (service.slug === "expert-comptable") {
         return !ACCOUNTING_FIRM_SYSTEM_SLUGS.has(systemSlug);
@@ -110,9 +117,10 @@ function buildAidPlacements(
 
 function buildCanonicalServicePlacements(
   systemSlug: string,
+  context: InternationalContext,
 ): readonly RenderableSolutionPlacementDto[] {
-  const eligibleSlugs = new Set(getCanonicalServiceSlugsForSystem(systemSlug));
-  const services = getCanonicalServices().filter((service) =>
+  const eligibleSlugs = new Set(getCanonicalServiceSlugsForSystem(systemSlug, context));
+  const services = getLocalizedCanonicalServices(context).filter((service) =>
     eligibleSlugs.has(service.slug),
   );
 
@@ -131,6 +139,7 @@ function buildCanonicalServicePlacements(
       description: service.summary,
       displayCategory: service.eyebrow,
       ctaLabel: "Voir le service",
+      serviceDetails: service,
       interaction: {
         interactionMode: "detail",
         href: `${service.detailHref}?systemSlug=${encodeURIComponent(systemSlug)}&source=solutions-systeme`,
@@ -146,6 +155,7 @@ function buildCanonicalServicePlacements(
 export function composeCanonicalServicesForSystem(
   systemSlug: string,
   visibleSections: readonly RenderableSolutionSectionDto[],
+  context: InternationalContext = FRANCE_CONTEXT,
 ): readonly RenderableSolutionSectionDto[] {
   const placementsBySection = new Map<
     SolutionSection,
@@ -164,7 +174,7 @@ export function composeCanonicalServicesForSystem(
   }
   placementsBySection.set(
     "services",
-    [...buildCanonicalServicePlacements(systemSlug)],
+    [...buildCanonicalServicePlacements(systemSlug, context)],
   );
   placementsBySection.set("financing", [...buildFinancePlacements(systemSlug)]);
   placementsBySection.set("aids", [...buildAidPlacements(systemSlug)]);
@@ -187,8 +197,9 @@ export function composeCanonicalServicesForSystem(
 export function composePublicSolutionSectionsForSystem(
   systemSlug: string,
   sections: readonly RenderableSolutionSectionDto[],
+  context: InternationalContext = FRANCE_CONTEXT,
 ): readonly RenderableSolutionSectionDto[] {
   return filterPublicSolutionSections(
-    composeCanonicalServicesForSystem(systemSlug, sections),
+    composeCanonicalServicesForSystem(systemSlug, sections, context),
   );
 }
