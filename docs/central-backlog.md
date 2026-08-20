@@ -94,6 +94,22 @@ D-085 supersède les anciens cadrages « English Beta = Action Plan uniquement �
   comportement partagé ne doit avoir qu'un composant, un contrat et une API ;
   les différences passent par des projections et configurations centrales,
   jamais par des conditions `locale === "en"` dispersées.
+  - [x] Accueil Plan, Mes plans, Nouveau plan, dernier plan et plan enregistré
+    délèguent aux mêmes loaders et écrans partagés ; les routes FR/EN ne
+    conservent que métadonnées, locale et flag anglais.
+  - [x] Les destinations applicatives visibles proviennent d'une matrice
+    centrale locale/marché ; les routes anglaises ne portent plus leurs propres
+    tableaux `visibleViews`.
+  - [x] La reprise d'un plan après authentification conserve le contexte
+    profond (`view`, section Pilotage, système, ressource et cours) et le
+    catalogue courant utilise le marché de l'entreprise, distinct de la langue
+    durable du plan.
+  - [x] Les libellés génériques Solutions utilisent un dictionnaire typé
+    partagé et le libellé anglais public est `Services`, jamais
+    `Accompaniment`.
+  - [ ] La fiche Service commerciale complète, Pilotage, les textes métier de
+    Talk to us et Academy restent volontairement dans les lots 4, 5 et 6 : les
+    mutualiser ici masquerait leurs écarts de contrat, de prix ou de contenu.
 - [ ] Déclarer le scope de chaque évolution : `shared` par défaut, ou
   explicitement `locale`, `market` ou `country`. La traduction choisit les
   mots ; elle n'accorde aucune permission et ne décide ni du catalogue, ni du
@@ -416,8 +432,10 @@ Déjà livré et à préserver :
 - [ ] les fiches Services anglaises et françaises divergent. Le serveur de
   demande doit appliquer la matrice de disponibilité, retrouver le forfait et
   le prix autorisés, puis localiser confirmation, notification et e-mail ;
-- [ ] les pages Plans/Nouveau plan et certaines surfaces anglaises restent
-  parallèles ou simplifiées ; les faire déléguer aux mêmes écrans métier ;
+- [x] les pages Accueil Plan, Mes plans, Nouveau plan, dernier plan et plan
+  enregistré délèguent aux mêmes loaders et écrans métier ; les surfaces
+  commerciales Services, Pilotage et Academy encore simplifiées sont suivies
+  séparément dans leurs lots dédiés ;
 - [ ] PWA, confidentialité, erreurs, e-mails, `html lang`, canonical,
   `hreflang`, sitemap et tests anti-fallback restent à aligner.
 
@@ -443,8 +461,12 @@ fusionnée sans GO explicite. Ordre canonique **0 → 7** :
    résolution serveur, dictionnaires typés, feature/publication matrix, caches
    et compatibilité legacy ; aucun changement visuel.
 2. **Écrans partagés** : shell, authentification, Plan, Mes plans/Nouveau plan,
-   Pilotage, Solutions, Services et Talk to us ; supprimer les copies
-   anglaises au lieu de les synchroniser manuellement.
+   dernier plan, plan enregistré et chrome Solutions. Supprimer les copies
+   anglaises au lieu de les synchroniser manuellement, sans fusionner les deux
+   machines d'état légitimes que sont la génération d'un nouveau plan et
+   l'autosauvegarde d'un plan existant. Pilotage, la fiche Service complète,
+   les textes métier de Talk to us et Academy restent respectivement dans les
+   lots 4, 5 et 6.
 3. **Catalogue métier et génération** : 115 `systemId`, 37 familles,
    projections/alias anglais, résolution métier et génération partagée. Dix
    métiers peuvent valider l'architecture en Preview, mais la bêta publique

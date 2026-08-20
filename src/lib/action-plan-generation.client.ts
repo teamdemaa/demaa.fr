@@ -1,6 +1,7 @@
 "use client";
 
 import type { ActionPlanGenerationDraft } from "@/lib/action-plan-generation-draft.client";
+import { normalizeActionPlanLocaleContext } from "@/lib/action-plan-localization";
 
 type GenerationResponse = {
   actionPlanId?: string;
@@ -86,13 +87,7 @@ async function startGeneration(
   draft: ActionPlanGenerationDraft,
   signal: AbortSignal,
 ) {
-  const context: {
-    contentLocaleCode: "en" | "fr";
-    marketCodeAtCreation: "fr-fr" | "global-en-beta";
-  } = draft.contentLocaleCode === "en"
-    && draft.marketCodeAtCreation === "global-en-beta"
-    ? { contentLocaleCode: "en", marketCodeAtCreation: "global-en-beta" }
-    : { contentLocaleCode: "fr", marketCodeAtCreation: "fr-fr" };
+  const context = normalizeActionPlanLocaleContext(draft);
   const response = await fetch("/api/action-plans/generate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

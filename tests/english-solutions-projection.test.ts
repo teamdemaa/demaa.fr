@@ -27,7 +27,7 @@ function placement(section: "software" | "services" | "providers", resourceSlug:
 }
 
 describe("English Solutions projections", () => {
-  it("publishes only explicitly translated Tools and Accompaniment entries", () => {
+  it("publishes only explicitly translated Tools and Services entries", () => {
     const input: RenderableSolutionSectionDto[] = [
       { section: "software", placements: [placement("software", "github"), placement("software", "freebe")] },
       { section: "services", placements: [placement("services", "coach-business"), placement("services", "expert-comptable")] },

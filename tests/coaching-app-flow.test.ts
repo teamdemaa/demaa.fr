@@ -14,22 +14,25 @@ describe("unified app and coaching", () => {
   });
 
   it("does not expose the generated summary as a saved-page hero", () => {
-    const canonicalPage = read("src/app/(application)/plans/[id]/page.tsx");
-    expect(canonicalPage).not.toContain("stored.plan.summary");
-    expect(canonicalPage).toContain("SavedActionPlanDetail");
+    const sharedPage = read("src/components/SavedActionPlanPageView.tsx");
+    expect(sharedPage).not.toContain("stored.plan.summary");
+    expect(sharedPage).toContain("SavedActionPlanDetail");
   });
 
   it("returns authenticated access directly to the app instead of a parallel portal", () => {
     const nextConfig = read("next.config.ts");
     const plansPage = read("src/app/(application)/plans/page.tsx");
+    const sharedPlansPage = read("src/components/ActionPlansIndexView.tsx");
+    const sharedPages = read("src/lib/action-plan-pages.server.ts");
     const accountAccessForm = read("src/components/CustomerSpaceAccessForm.tsx");
 
     expect(nextConfig).toContain("source: '/mon-espace'");
     expect(nextConfig).toContain("destination: '/plans/latest'");
-    expect(plansPage).toContain("getActionPlanIndexForIdentity");
+    expect(plansPage).toContain("loadActionPlansPage");
+    expect(sharedPages).toContain("getActionPlanIndexPageForIdentity");
     expect(nextConfig).not.toContain("Espace membre");
-    expect(plansPage).toContain("Mes plans");
-    expect(plansPage).not.toContain("Espace membre");
+    expect(sharedPlansPage).toContain("copy.plansHeading");
+    expect(sharedPlansPage).not.toContain("Espace membre");
     expect(accountAccessForm).not.toContain("espace membre");
     expect(accountAccessForm).not.toContain("votre espace Demaa");
   });

@@ -41,6 +41,7 @@ import {
   getLocalizedActionPlanPath,
   type ActionPlanContentLocaleCode,
 } from "@/lib/action-plan-localization";
+import type { MarketCode } from "@/lib/international-context";
 
 export default function SavedActionPlanDetail({
   plan,
@@ -56,7 +57,7 @@ export default function SavedActionPlanDetail({
   initialIsAuthenticated = true,
   contentLocaleCode = "fr",
   interfaceLocaleCode = "fr",
-  marketCodeAtCreation = "fr-fr",
+  marketCode = "fr-fr",
   visibleViews,
   showCoaching = true,
 }: {
@@ -73,7 +74,7 @@ export default function SavedActionPlanDetail({
   initialIsAuthenticated?: boolean;
   contentLocaleCode?: ActionPlanContentLocaleCode;
   interfaceLocaleCode?: ActionPlanContentLocaleCode;
-  marketCodeAtCreation?: string;
+  marketCode?: MarketCode;
   visibleViews?: readonly ActionPlanView[];
   showCoaching?: boolean;
 }) {
@@ -151,10 +152,10 @@ export default function SavedActionPlanDetail({
     if (!visibleViews || visibleViews.includes("academy")) {
       return scheduleActionPlanAcademyPayloadPreload({
         localeCode: interfaceLocaleCode,
-        marketCode: interfaceLocaleCode === "en" ? "global-en-beta" : "fr-fr",
+        marketCode,
       });
     }
-  }, [interfaceLocaleCode, visibleViews]);
+  }, [interfaceLocaleCode, marketCode, visibleViews]);
 
   function selectAppView(view: ActionPlanView) {
     navigateAppContext({
@@ -456,7 +457,7 @@ export default function SavedActionPlanDetail({
       <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} localeCode={interfaceLocaleCode} visibleViews={visibleViews} />
       {showCoaching ? <ActionPlanCoachingControl
         localeCode={interfaceLocaleCode}
-        marketCode={marketCodeAtCreation}
+        marketCode={marketCode}
         existingPlanId={planId}
         initialEmail={initialEmail}
         isAuthenticated={initialIsAuthenticated}
@@ -589,7 +590,7 @@ export default function SavedActionPlanDetail({
         {activeTab === "solutions" ? (
           <ActionPlanSystemPanel
             localeCode={interfaceLocaleCode}
-            marketCode={marketCodeAtCreation}
+            marketCode={marketCode}
             options={systemOptions}
             selectedSystemId={
               appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || ""
@@ -623,7 +624,7 @@ export default function SavedActionPlanDetail({
           <ActionPlanAcademyPanel
             initialContentSlug={appContext.academyContentSlug}
             localeCode={interfaceLocaleCode}
-            marketCode={interfaceLocaleCode === "en" ? "global-en-beta" : "fr-fr"}
+            marketCode={marketCode}
             onContentChange={(academyContentSlug) => navigateAppContext({
               ...appContext,
               view: "academy",

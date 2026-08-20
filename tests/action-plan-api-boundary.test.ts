@@ -34,6 +34,7 @@ describe("action plan persistence boundaries", () => {
     const auth = source("src/lib/customer-space-auth.ts");
     const storage = source("src/lib/action-plan-storage.server.ts");
     const planPage = source("src/app/(application)/plans/[id]/page.tsx");
+    const sharedPages = source("src/lib/action-plan-pages.server.ts");
 
     expect(collectionRoute).toContain("if (!identity)");
     expect(auth).toContain("createSessionCookie");
@@ -45,8 +46,9 @@ describe("action plan persistence boundaries", () => {
     expect(storage).not.toContain('.where("owner_uid", "=="');
     expect(storage).not.toContain("owner_email");
     expect(storage).not.toContain("pending_claim");
-    expect(planPage).toContain("getActionPlanWorkspacePageForIdentity");
-    expect(planPage).not.toContain("getOwnedActionPlansForIdentity");
+    expect(planPage).toContain("loadSavedActionPlanPage");
+    expect(sharedPages).toContain("getActionPlanWorkspacePageForIdentity");
+    expect(sharedPages).not.toContain("getOwnedActionPlansForIdentity");
   });
 
   it("registers action plan retention cleanup and documents the exact lifecycle", () => {
