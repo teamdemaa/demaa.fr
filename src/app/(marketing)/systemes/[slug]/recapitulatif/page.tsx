@@ -3,11 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemRecapPrintButton from "@/components/SystemRecapPrintButton";
+import ToolOutboundLink from "@/components/ToolOutboundLink";
 import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
 import { getActiveRenderableSolutionSectionsForSystem } from "@/lib/firebase-solution-registry-selection.server";
 import { getSystemDetailPageData } from "@/lib/system-detail-page";
 import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
 import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
+import { isToolSolutionResourceType } from "@/lib/tool-outbound-attribution";
 
 type SystemRecapPageProps = {
   params: Promise<{ slug: string }>;
@@ -134,7 +136,19 @@ export default async function SystemRecapPage({ params }: SystemRecapPageProps) 
                         const href = getSolutionHref(placement.resource.interaction);
                         return (
                           <li key={placement.placementId} className="rounded-xl border border-dema-line p-4">
-                            {href ? (
+                            {href
+                            && placement.resource.interaction.interactionMode === "external_link"
+                            && isToolSolutionResourceType(placement.resource.resourceType) ? (
+                              <ToolOutboundLink
+                                href={href}
+                                surface="system_recap"
+                                systemSlug={slug}
+                                toolSlug={placement.resource.resourceSlug}
+                                className="font-medium text-dema-forest underline decoration-dema-forest/25 underline-offset-4"
+                              >
+                                {placement.resource.name}
+                              </ToolOutboundLink>
+                            ) : href ? (
                               <Link
                                 href={href}
                                 target={href.startsWith("http") ? "_blank" : undefined}

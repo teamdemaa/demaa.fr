@@ -18,6 +18,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
 import SolutionReferralForm from "@/components/SolutionReferralForm";
 import ServiceCallbackForm from "@/components/ServiceCallbackForm";
+import ToolOutboundLink from "@/components/ToolOutboundLink";
 import { trackSystemSolutionEvent } from "@/lib/kit-analytics-client";
 import type { SolutionSection } from "@/lib/solution-registry-dto";
 import type {
@@ -25,6 +26,10 @@ import type {
   RenderableSolutionSectionDto,
   SupportedSolutionInteractionDto,
 } from "@/lib/system-solutions-ui-dto";
+import {
+  isToolSolutionResourceType,
+  type ToolOutboundSurface,
+} from "@/lib/tool-outbound-attribution";
 
 type RailState = Readonly<{
   canNext: boolean;
@@ -93,10 +98,18 @@ function SolutionAction({
   interaction,
   label,
   onClick,
+  resourceSlug,
+  resourceType,
+  systemSlug,
+  toolOutboundSurface,
 }: {
   interaction: SupportedSolutionInteractionDto;
   label: string;
   onClick: () => void;
+  resourceSlug: string;
+  resourceType: string;
+  systemSlug: string;
+  toolOutboundSurface: ToolOutboundSurface;
 }) {
   if (
     interaction.interactionMode === "system_delivery" ||
@@ -111,6 +124,22 @@ function SolutionAction({
       <Link href={interaction.href} className={className} onClick={onClick}>
         {label}
       </Link>
+    );
+  }
+
+  if (isToolSolutionResourceType(resourceType)) {
+    return (
+      <ToolOutboundLink
+        href={interaction.href}
+        surface={toolOutboundSurface}
+        systemSlug={systemSlug}
+        toolSlug={resourceSlug}
+        className={className}
+        onClick={onClick}
+      >
+        {label}
+        <ExternalLink className="h-4 w-4" aria-hidden="true" />
+      </ToolOutboundLink>
     );
   }
 
@@ -133,11 +162,13 @@ function SolutionDialog({
   onClose,
   localeCode,
   marketCode,
+  toolOutboundSurface,
 }: {
   placement: RenderableSolutionPlacementDto;
   onClose: () => void;
   localeCode: "fr" | "en";
   marketCode: string;
+  toolOutboundSurface: ToolOutboundSurface;
 }) {
   const { resource } = placement;
   const isEnglish = localeCode === "en";
@@ -260,6 +291,10 @@ function SolutionDialog({
               systemSlug: placement.systemSlug,
             });
           }}
+          resourceSlug={resource.resourceSlug}
+          resourceType={resource.resourceType}
+          systemSlug={placement.systemSlug}
+          toolOutboundSurface={toolOutboundSurface}
         />
       ) : null}
     </DirectoryDetailDialogShell>
@@ -274,6 +309,7 @@ export default function SystemSolutionsTab({
   onToggleSelection,
   localeCode = "fr",
   marketCode = "fr-fr",
+  toolOutboundSurface = "solutions",
 }: {
   sections: readonly RenderableSolutionSectionDto[];
   initialResourceSlug?: string;
@@ -282,6 +318,7 @@ export default function SystemSolutionsTab({
   onToggleSelection?: (placementId: string) => void;
   localeCode?: "fr" | "en";
   marketCode?: string;
+  toolOutboundSurface?: ToolOutboundSurface;
 }) {
   const visibleSections = useMemo(
     () => SOLUTION_RAIL_DISPLAY_ORDER.flatMap((section) =>
@@ -538,7 +575,13 @@ export default function SystemSolutionsTab({
       </div>
 
       {selected ? (
-        <SolutionDialog placement={selected} onClose={closeSolution} localeCode={localeCode} marketCode={marketCode} />
+        <SolutionDialog
+          placement={selected}
+          onClose={closeSolution}
+          localeCode={localeCode}
+          marketCode={marketCode}
+          toolOutboundSurface={toolOutboundSurface}
+        />
       ) : null}
     </>
   );

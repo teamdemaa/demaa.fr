@@ -249,6 +249,7 @@ export default function ActionPlanExperience({
         : appContext.systemId,
       systemTab: view === "solutions" ? "solutions" : appContext.systemTab,
       solutionResourceSlug: undefined,
+      solutionEntrySource: undefined,
     });
   }
 
@@ -259,6 +260,7 @@ export default function ActionPlanExperience({
       systemId,
       systemTab: "solutions",
       solutionResourceSlug: undefined,
+      solutionEntrySource: undefined,
     });
   }
 
@@ -864,6 +866,7 @@ export default function ActionPlanExperience({
               onWorkspaceChange={setPrePlanWorkspace}
               onToggleSolutionSelection={handleSolutionSelection}
               demoMode={isDemoMode}
+              toolOutboundSurface="solutions"
               initialResourceSlug={appContext.solutionResourceSlug}
               onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
                 ...appContext,
@@ -978,6 +981,7 @@ export default function ActionPlanExperience({
                   systemId,
                   systemTab: "solutions",
                   solutionResourceSlug: resourceSlug,
+                  solutionEntrySource: "action_recommendation",
                 });
               }}
               headerActions={(
@@ -1024,6 +1028,11 @@ export default function ActionPlanExperience({
                   : handleSolutionSelection
               }
               demoMode={isDemoMode}
+              toolOutboundSurface={
+                appContext.solutionEntrySource === "action_recommendation"
+                  ? "action_recommendation"
+                  : "solutions"
+              }
               initialResourceSlug={appContext.solutionResourceSlug}
               onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
                 ...appContext,

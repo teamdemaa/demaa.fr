@@ -2,6 +2,7 @@
 
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import ToolOutboundLink from "@/components/ToolOutboundLink";
 import { getToolPricingInfo } from "@/lib/tool-pricing";
 import {
   getToolDirectorySlug,
@@ -20,6 +21,7 @@ export default function SoftwareDetailContent({
   compact = false,
 }: SoftwareDetailContentProps) {
   const pricing = getToolPricingInfo(tool);
+  const toolSlug = getToolDirectorySlug(tool);
   const verifiedPricingNote = getFreshToolPricingNote(tool);
   const keyFeatures = tool.keyFeatures?.filter(Boolean) ?? [];
   const idealFor = tool.idealFor?.filter(Boolean) ?? [];
@@ -124,15 +126,15 @@ export default function SoftwareDetailContent({
             <ArrowRight className="h-4 w-4" />
           </Link>
         ) : (
-          <a
+          <ToolOutboundLink
             href={tool.url}
-            target="_blank"
-            rel="noreferrer"
+            surface="tool_detail"
+            toolSlug={toolSlug}
             className="demaa-primary-button gap-2 px-5 py-3"
           >
             {toolCtaLabel}
             <ArrowRight className="h-4 w-4" />
-          </a>
+          </ToolOutboundLink>
         )}
         {showCompactDetailCta && detailHref ? (
           <Link
@@ -143,15 +145,15 @@ export default function SoftwareDetailContent({
             <ArrowRight className="h-4 w-4" />
           </Link>
         ) : showPricingCta && pricing.sourceUrl ? (
-          <a
+          <ToolOutboundLink
             href={pricing.sourceUrl}
-            target="_blank"
-            rel="noreferrer"
+            surface="pricing"
+            toolSlug={toolSlug}
             className="demaa-secondary-button gap-2 px-5 py-3"
           >
             Voir les tarifs
             <ArrowRight className="h-4 w-4" />
-          </a>
+          </ToolOutboundLink>
         ) : null}
       </div>
     </div>

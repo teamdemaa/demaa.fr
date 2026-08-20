@@ -18,12 +18,16 @@ export const COMPANY_STRATEGY_VISIBLE = true;
 const ACTION_PLAN_SECTIONS = ["actions", "figures", "strategy"] as const;
 export type ActionPlanSection = (typeof ACTION_PLAN_SECTIONS)[number];
 
+const SOLUTION_ENTRY_SOURCES = ["action_recommendation"] as const;
+export type SolutionEntrySource = (typeof SOLUTION_ENTRY_SOURCES)[number];
+
 export type ActionPlanAppContext = {
   view: ActionPlanView;
   planSection: ActionPlanSection;
   systemId?: string;
   systemTab?: SystemDetailTab;
   solutionResourceSlug?: string;
+  solutionEntrySource?: SolutionEntrySource;
   academyContentSlug?: string;
   opportunityId?: string;
 };
@@ -52,6 +56,10 @@ function isActionPlanView(value: string | undefined): value is ActionPlanView {
 function isActionPlanSection(value: string | undefined): value is ActionPlanSection {
   return ACTION_PLAN_SECTIONS.includes(value as ActionPlanSection)
     && (value !== "strategy" || COMPANY_STRATEGY_VISIBLE);
+}
+
+function isSolutionEntrySource(value: string | undefined): value is SolutionEntrySource {
+  return SOLUTION_ENTRY_SOURCES.includes(value as SolutionEntrySource);
 }
 
 export function buildLegacyOpportunitiesHref(input: SearchInput) {
@@ -135,6 +143,10 @@ export function parseActionPlanAppContext(
   const requestedSystemTab = normalizeSystemDetailTab(
     readSearchValue(input, "systemTab"),
   );
+  const solutionEntrySource = view === "solutions"
+    && isSolutionEntrySource(readSearchValue(input, "toolSource"))
+    ? readSearchValue(input, "toolSource") as SolutionEntrySource
+    : undefined;
 
   return {
     view,
@@ -144,6 +156,7 @@ export function parseActionPlanAppContext(
     ...(systemId ? { systemId } : {}),
     ...(requestedSystemTab ? { systemTab: requestedSystemTab } : {}),
     ...(solutionResourceSlug ? { solutionResourceSlug } : {}),
+    ...(solutionEntrySource ? { solutionEntrySource } : {}),
     ...(academyContentSlug ? { academyContentSlug } : {}),
     ...(opportunityId ? { opportunityId } : {}),
   };
@@ -156,6 +169,7 @@ const CONTEXT_QUERY_KEYS = [
   "system",
   "systemTab",
   "resource",
+  "toolSource",
   "academy",
   "opportunity",
   "intent",
@@ -195,6 +209,9 @@ export function buildActionPlanAppHref(input: {
     if (input.context.systemTab) params.set("systemTab", input.context.systemTab);
     if (input.context.solutionResourceSlug) {
       params.set("resource", input.context.solutionResourceSlug);
+    }
+    if (input.context.solutionEntrySource) {
+      params.set("toolSource", input.context.solutionEntrySource);
     }
   }
 

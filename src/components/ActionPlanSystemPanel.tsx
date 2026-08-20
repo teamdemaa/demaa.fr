@@ -15,6 +15,7 @@ import {
   type ActionPlanSystemPayload,
 } from "@/lib/action-plan-system-payload.client";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
+import type { ToolOutboundSurface } from "@/lib/tool-outbound-attribution";
 
 export default function ActionPlanSystemPanel({
   options,
@@ -28,6 +29,7 @@ export default function ActionPlanSystemPanel({
   onToggleSolutionSelection,
   localeCode = "fr",
   marketCode = "fr-fr",
+  toolOutboundSurface = "solutions",
 }: {
   options: readonly ActionPlanSystemOption[];
   selectedSystemId: string;
@@ -40,6 +42,7 @@ export default function ActionPlanSystemPanel({
   onToggleSolutionSelection?: (placementId: string) => void;
   localeCode?: "fr" | "en";
   marketCode?: string;
+  toolOutboundSurface?: ToolOutboundSurface;
 }) {
   const [payload, setPayload] = useState<ActionPlanSystemPayload | null>(null);
   const [error, setError] = useState<{ slug: string; message: string } | null>(null);
@@ -211,6 +214,7 @@ export default function ActionPlanSystemPanel({
             }))}
             localeCode={localeCode}
             marketCode={marketCode}
+            toolOutboundSurface={toolOutboundSurface}
           />
           {localeCode === "fr" ? <SystemResourcesTab
             initialResourceSlug={initialResourceSlug}

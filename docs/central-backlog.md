@@ -508,6 +508,21 @@ Stabilisation France livrée le 20 août 2026, sans activer ce futur résolveur 
   reste invalide ; l'URL officielle de Maliora a été corrigée et les dates de
   revue de Maliora et Nomad ont été actualisées.
 
+Attribution transverse des sorties vers les outils, préparée dans une micro-PR
+autonome après cette stabilisation :
+
+- les URL officielles restent brutes dans les catalogues ; un constructeur
+  unique ajoute au rendu `utm_source=demaa`, `utm_medium=referral` et
+  `utm_campaign=solutions`, sans PII et sans redirecteur serveur ;
+- le même lien instrumenté couvre l'annuaire, les fiches, les tarifs, Solutions,
+  le récapitulatif système et la sortie issue d'une recommandation d'Action ;
+- l'origine `action_recommendation` est une valeur URL bornée, jamais stockée
+  dans le plan, Firestore ou l'IA ;
+- l'événement interne `tool_outbound_clicked` reste conditionné au consentement
+  Analytics et n'accepte que des slugs bornés, une surface et la campagne ;
+- aucun code affilié n'est inventé : un futur paramètre éditeur devra être
+  officiel, versionné dans le catalogue et validé séparément.
+
 - [ ] Introduire une résolution serveur versionnée, sans seconde source de
   vérité, avec `recommendationResolutionVersion: 1` même lorsque la liste de
   recommandations est vide.
@@ -2287,7 +2302,7 @@ finalisée.
 | ID | Priorité | Lot | Dépend de | État |
 |---|---|---|---|---|
 | D-049 | P0 | Figer le contrat de mesure et les frontières Demaa/Tiimora/EM2A | — | Backlog |
-| D-050 | P0 | Instrumenter le parcours Outils et la sortie vers Tiimora sur Demaa | D-049 | Backlog |
+| D-050 | P0 | Instrumenter les sorties vers les outils sur Demaa | D-049 | En cours |
 | D-051 | P0 | Créer la destination Tiimora et la mesure cross-domain consentie | D-049 | Backlog |
 | D-052 | P0 | Ajouter les passerelles Tiimora et la transparence commerciale | D-049, D-050, D-051 | Backlog |
 | D-053 | P0 | Ajouter l'opt-in marketing facultatif et la recette consentement | D-049 | Backlog |
@@ -2313,26 +2328,32 @@ finalisée.
 Critère d'acceptation : une spécification unique permet à Demaa et Tiimora
 d'utiliser les mêmes noms sans mélanger les audiences ni les finalités.
 
-#### D-050 — Instrumentation Demaa vers Tiimora
+#### D-050 — Instrumentation Demaa des sorties vers les outils
 
-- [ ] Ajouter les événements consentis et documentés :
-  `system_tools_tab_opened`, `tool_detail_viewed` et
-  `tool_outbound_clicked`.
-- [ ] Limiter leurs propriétés à des valeurs non personnelles et bornées :
-  `system_slug`, `tool_slug`, source et campagne.
-- [ ] Conserver les événements existants `kit_open`,
+- [x] Ajouter l'événement consenti `tool_outbound_clicked` sur toutes les
+  sorties d'outils canoniques.
+- [ ] Ajouter, seulement si leur usage produit est confirmé, les événements
+  `system_tools_tab_opened` et `tool_detail_viewed` ; ne pas créer de métrique
+  uniquement pour remplir un tableau de bord.
+- [x] Limiter les propriétés du clic sortant à des valeurs non personnelles et
+  bornées : `system_slug`, `tool_slug`, surface et campagne.
+- [x] Conserver les événements existants `kit_open`,
   `system_copy_form_opened`, `system_copy_form_submitted` et `generate_lead`.
-- [ ] Identifier Tiimora sans transmettre de prénom, email, requête libre,
+- [x] Identifier un outil, dont Tiimora lorsqu'il devient éligible, sans
+  transmettre de prénom, email, requête libre,
   URL privée ou identifiant individuel.
-- [ ] Tester consentement accepté, refusé puis retiré.
+- [x] Tester le refus et l'acceptation du consentement sur l'événement sortant ;
+  la recette globale du retrait reste mutualisée avec le contrat D-049.
 
-Critère d'acceptation : le parcours
-`système → Outils → fiche Tiimora → clic sortant` est mesurable uniquement
-lorsque le consentement correspondant l'autorise.
+Critère d'acceptation : les URL attribuent agrégément Demaa sans donnée
+personnelle ; l'événement interne du parcours
+`système ou Action → Outils → fiche → clic sortant` n'est émis que lorsque le
+consentement Analytics l'autorise.
 
 #### D-051 — Destination et mesure Tiimora
 
-- [ ] Ajouter des UTM contrôlés aux liens Demaa vers Tiimora.
+- [x] Réutiliser les UTM contrôlés du constructeur transverse pour tout futur
+  lien Demaa vers Tiimora, sans dupliquer les URL dans le catalogue.
 - [ ] Concevoir une page publique Tiimora adaptée à la conversion des cabinets,
   au lieu d'envoyer automatiquement vers une entrée d'application.
 - [ ] Installer sur Tiimora une CMP et Consent Mode compatibles avec le contrat

@@ -136,6 +136,41 @@ describe("action plan app context", () => {
     );
   });
 
+  it("carries only the bounded Action recommendation source inside Solutions", () => {
+    expect(parseActionPlanAppContext(new URLSearchParams(
+      "view=solutions&system=cabinet-comptable&resource=pennylane&toolSource=action_recommendation",
+    ))).toEqual({
+      view: "solutions",
+      planSection: "actions",
+      systemId: "cabinet-comptable",
+      solutionResourceSlug: "pennylane",
+      solutionEntrySource: "action_recommendation",
+    });
+    expect(parseActionPlanAppContext(new URLSearchParams(
+      "view=solutions&toolSource=person%40example.com",
+    ))).toEqual({
+      view: "solutions",
+      planSection: "actions",
+    });
+    expect(parseActionPlanAppContext(new URLSearchParams(
+      "view=academy&toolSource=action_recommendation",
+    ))).toEqual({
+      view: "academy",
+      planSection: "actions",
+    });
+    expect(buildActionPlanAppHref({
+      context: {
+        view: "solutions",
+        planSection: "actions",
+        systemId: "cabinet-comptable",
+        solutionResourceSlug: "pennylane",
+        solutionEntrySource: "action_recommendation",
+      },
+    })).toBe(
+      "/?view=solutions&system=cabinet-comptable&resource=pennylane&toolSource=action_recommendation",
+    );
+  });
+
   it("keeps Pilotage sections only inside the Plan view", () => {
     expect(parseActionPlanAppContext(new URLSearchParams("view=plan&section=figures"))).toEqual({
       view: "plan",

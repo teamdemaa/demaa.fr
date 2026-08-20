@@ -19,6 +19,7 @@ import {
   trackSystemEcosystemEvent,
   trackSystemJourneyEvent,
   trackSystemSolutionEvent,
+  trackToolOutboundClick,
 } from "@/lib/kit-analytics-client";
 
 describe("system journey analytics", () => {
@@ -127,5 +128,56 @@ describe("system journey analytics", () => {
       "section",
       "system_slug",
     ]);
+  });
+
+  it("gates tool outbound clicks and emits only bounded attribution properties", () => {
+    mocks.getCookieConsentPreferences.mockReturnValue({
+      analytics: false,
+      marketing: false,
+    });
+
+    trackToolOutboundClick({
+      surface: "action_recommendation",
+      systemSlug: "cabinet-comptable",
+      toolSlug: "pennylane",
+    });
+    expect(mocks.track).not.toHaveBeenCalled();
+
+    mocks.getCookieConsentPreferences.mockReturnValue({
+      analytics: true,
+      marketing: false,
+    });
+    trackToolOutboundClick({
+      surface: "action_recommendation",
+      systemSlug: "cabinet-comptable",
+      toolSlug: "pennylane",
+    });
+
+    expect(mocks.track).toHaveBeenCalledWith("tool_outbound_clicked", {
+      campaign: "solutions",
+      surface: "action_recommendation",
+      system_slug: "cabinet-comptable",
+      tool_slug: "pennylane",
+    });
+    expect(Object.keys(mocks.track.mock.calls[0]?.[1] ?? {}).sort()).toEqual([
+      "campaign",
+      "surface",
+      "system_slug",
+      "tool_slug",
+    ]);
+  });
+
+  it("refuses identifiers that are not canonical slugs", () => {
+    mocks.getCookieConsentPreferences.mockReturnValue({
+      analytics: true,
+      marketing: false,
+    });
+
+    trackToolOutboundClick({
+      surface: "tool_detail",
+      toolSlug: "person@example.com",
+    });
+
+    expect(mocks.track).not.toHaveBeenCalled();
   });
 });

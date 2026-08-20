@@ -5,7 +5,9 @@ import { useEffect, useMemo, useState, type MouseEvent, type ReactNode } from "r
 import { ArrowLeft } from "lucide-react";
 import SearchFilterControls from "@/components/SearchFilterControls";
 import SoftwareDetailDialog from "@/components/SoftwareDetailDialog";
+import ToolOutboundLink from "@/components/ToolOutboundLink";
 import { matchesSearchQuery } from "@/lib/search";
+import { getToolDirectorySlug } from "@/lib/tool-directory";
 import type { ToolDirectoryCardItem } from "@/lib/tool-directory-page";
 
 function getValidFilters(
@@ -315,11 +317,19 @@ function ToolCard({
   const className =
     "demaa-card group flex h-full flex-col rounded-[1.15rem] p-4";
 
-  if (externalLinks || (!tool.detailUrl && tool.url.startsWith("http"))) {
+  if (
+    tool.url.startsWith("http")
+    && (externalLinks || !tool.detailUrl)
+  ) {
     return (
-      <a href={tool.url} target="_blank" rel="noreferrer" className={className}>
+      <ToolOutboundLink
+        href={tool.url}
+        surface="tool_directory"
+        toolSlug={getToolDirectorySlug(tool)}
+        className={className}
+      >
         {children}
-      </a>
+      </ToolOutboundLink>
     );
   }
 
