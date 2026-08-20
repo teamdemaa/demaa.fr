@@ -32,8 +32,9 @@ describe("Demaa application navbar", () => {
   });
 
   it("keeps a distinct canonical homepage and one URL for each public universe", async () => {
-    const [homeSource, systemsSource, nextConfigSource] = await Promise.all([
+    const [homeSource, sharedHomeSource, systemsSource, nextConfigSource] = await Promise.all([
       readFile(new URL("../src/app/(application)/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/ActionPlanHomeView.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/(marketing)/systemes/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
     ]);
@@ -42,11 +43,9 @@ describe("Demaa application navbar", () => {
       'export { default, metadata } from "@/app/(marketing)/systemes/page"',
     );
     expect(homeSource).toContain('canonical: "/"');
-    expect(homeSource).toContain("<ActionPlanExperience");
-    expect(homeSource).toContain(
-      "<Navbar anonymousLanding isAuthenticated={Boolean(identity)} minimal />",
-    );
-    expect(homeSource).toContain("getCurrentCustomerAppIdentityFromSession()");
+    expect(homeSource).toContain("<ActionPlanHomeView");
+    expect(sharedHomeSource).toContain("<ActionPlanExperience");
+    expect(sharedHomeSource).toContain("<Navbar");
     expect(systemsSource).toContain('canonical: "/systemes"');
     expect(nextConfigSource).not.toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/',/,
@@ -59,7 +58,7 @@ describe("Demaa application navbar", () => {
   it("replaces the sign-in action with account access once a session is active", async () => {
     const [navbarSource, savedPlanSource] = await Promise.all([
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/(application)/plans/[id]/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/SavedActionPlanPageView.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(navbarSource).toContain('"Ouvrir le menu du compte"');
@@ -77,7 +76,8 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain('getLocalizedActionPlanPath(localeCode, "/plans/latest")');
     expect(navbarSource).toContain('"Connexion"');
     expect(navbarSource).not.toContain("<LogIn");
-    expect(savedPlanSource).toContain("<Navbar anonymousLanding isAuthenticated minimal />");
+    expect(savedPlanSource).toContain("<Navbar");
+    expect(savedPlanSource).toContain("isAuthenticated");
   });
 
   it("keeps sign-in minimal and intercepts it over the homepage", async () => {
@@ -103,18 +103,29 @@ describe("Demaa application navbar", () => {
   it("restores the latest saved plan unless a new situation is explicitly requested", async () => {
     const [homeSource, plansSource, latestSource, loginDialogSource] = await Promise.all([
       readFile(new URL("../src/app/(application)/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/(application)/plans/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/ActionPlansIndexView.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/(application)/plans/latest/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/CustomerSpaceLoginDialog.tsx", import.meta.url), "utf8"),
     ]);
+    const sharedPagesSource = await readFile(
+      new URL("../src/lib/action-plan-pages.server.ts", import.meta.url),
+      "utf8",
+    );
+    const configSource = await readFile(
+      new URL("../src/lib/action-plan-page-config.ts", import.meta.url),
+      "utf8",
+    );
 
-    expect(homeSource).toContain('redirect("/plans/latest")');
-    expect(homeSource).toContain("shouldRedirectAuthenticatedHomeToPlans");
+    expect(homeSource).toContain("loadActionPlanHomePage");
+    expect(sharedPagesSource).toContain("shouldRedirectAuthenticatedHomeToPlans");
+    expect(sharedPagesSource).toContain("redirect(unauthenticatedConfig.paths.latest)");
     expect(homeSource).toContain("planTab?: string | string[]");
-    expect(plansSource).toContain("Mes plans");
-    expect(plansSource).toContain('href="/plans/new"');
-    expect(plansSource).toContain("getActionPlanIndexForIdentity");
-    expect(latestSource).toContain('redirect(latestPlan ? `/plans/${latestPlan.id}` : "/plans/new")');
+    expect(plansSource).toContain("copy.plansHeading");
+    expect(plansSource).toContain("config.paths.new");
+    expect(sharedPagesSource).toContain("getActionPlanIndexPageForIdentity");
+    expect(latestSource).toContain('redirectToLatestActionPlan("fr")');
+    expect(sharedPagesSource).toContain("config.paths.plan(latestPlan.id)");
+    expect(configSource).toContain('plansHeading: "Mes plans"');
     expect(loginDialogSource).toContain("returnTo={returnTo}");
   });
 

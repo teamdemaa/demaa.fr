@@ -1,14 +1,6 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
-import ActionPlanExperience from "@/components/ActionPlanExperience";
-import Navbar from "@/components/Navbar";
-import {
-  buildLegacyOpportunitiesHref,
-  parseActionPlanAppContext,
-} from "@/lib/action-plan-app-context";
-import { shouldRedirectAuthenticatedHomeToPlans } from "@/lib/action-plan-home-routing";
-import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
-import { getCurrentCustomerAppIdentityFromSession } from "@/lib/customer-space-session.server";
+import ActionPlanHomeView from "@/components/ActionPlanHomeView";
+import { loadActionPlanHomePage } from "@/lib/action-plan-pages.server";
 
 const title = "Un plan d’action concret pour votre entreprise | Demaa";
 const description =
@@ -47,38 +39,10 @@ export default async function HomePage({
     view?: string | string[];
   }>;
 }) {
-  const [identity, query] = await Promise.all([
-    getCurrentCustomerAppIdentityFromSession(),
-    searchParams,
-  ]);
-  const legacyOpportunitiesHref = buildLegacyOpportunitiesHref(query);
-  if (legacyOpportunitiesHref) redirect(legacyOpportunitiesHref);
-  const initialAppContext = parseActionPlanAppContext(query);
-  const requestedIntent = Array.isArray(query.intent) ? query.intent[0] : query.intent;
-  const requestedNewPlan = Array.isArray(query.new) ? query.new[0] : query.new;
-
-  if (shouldRedirectAuthenticatedHomeToPlans({
-    isAuthenticated: Boolean(identity),
-    appContext: initialAppContext,
-    requestedIntent,
-    requestedNewPlan,
-  })) {
-    redirect("/plans/latest");
-  }
-
+  const query = await searchParams;
   return (
-    <>
-      <Navbar anonymousLanding isAuthenticated={Boolean(identity)} minimal />
-      <ActionPlanExperience
-        initialEmail={identity?.email ?? ""}
-        initialIsAuthenticated={Boolean(identity)}
-        initialAppContext={initialAppContext}
-        initialGenerationIntent={requestedIntent === "generate-plan"}
-        initialStructureIntent={
-          requestedIntent === "structure" || requestedIntent === "structure-problem"
-        }
-        systemOptions={actionPlanSystemOptions}
-      />
-    </>
+    <ActionPlanHomeView
+      {...await loadActionPlanHomePage({ localeCode: "fr", searchParams: query })}
+    />
   );
 }

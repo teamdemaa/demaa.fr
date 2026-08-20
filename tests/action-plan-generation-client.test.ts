@@ -49,6 +49,26 @@ describe("authenticated generation client", () => {
     expect(fetchMock.mock.calls[0]?.[0]).toBe("/api/action-plans/generate");
   });
 
+  it("keeps the content locale independent from the company market", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse(201, {
+      status: "active",
+      actionPlanId: "apl_english_france",
+    }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await runAuthenticatedActionPlanGeneration({
+      ...draft,
+      contentLocaleCode: "en",
+      marketCodeAtCreation: "fr-fr",
+    }, new AbortController().signal);
+
+    const request = fetchMock.mock.calls[0]?.[1] as RequestInit;
+    expect(JSON.parse(String(request.body))).toMatchObject({
+      contentLocaleCode: "en",
+      marketCodeAtCreation: "fr-fr",
+    });
+  });
+
   it("shares server progress through status polling without another generation", async () => {
     const fetchMock = vi.fn()
       .mockResolvedValueOnce(jsonResponse(202, {

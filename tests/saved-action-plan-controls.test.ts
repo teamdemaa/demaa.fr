@@ -8,13 +8,16 @@ function source(path: string) {
 describe("saved action plan controls", () => {
   it("loads every owned plan into the compact three-point menu", () => {
     const page = source("src/app/(application)/plans/[id]/page.tsx");
+    const sharedPage = source("src/components/SavedActionPlanPageView.tsx");
+    const sharedLoader = source("src/lib/action-plan-pages.server.ts");
     const detail = source("src/components/SavedActionPlanDetail.tsx");
     const controls = source("src/components/SavedActionPlanControls.tsx");
 
-    expect(page).toContain("getActionPlanWorkspacePageForIdentity");
-    expect(page).toContain("availablePlans={availablePlans}");
-    expect(page).toContain("initialTitle={stored.title}");
-    expect(page).toContain("key={stored.id}");
+    expect(page).toContain("loadSavedActionPlanPage");
+    expect(sharedLoader).toContain("getActionPlanWorkspacePageForIdentity");
+    expect(sharedPage).toContain("availablePlans={availablePlans}");
+    expect(sharedPage).toContain("initialTitle={stored.title}");
+    expect(sharedPage).toContain("key={stored.id}");
     expect(detail).toContain("<SavedActionPlanSelector");
     expect(controls).toContain("Changer de plan");
     expect(controls).toContain("Modifié le");
@@ -91,15 +94,18 @@ describe("saved action plan controls", () => {
   });
 
   it("keeps one creation CTA and a conditional return path", () => {
-    const plans = source("src/app/(application)/plans/page.tsx");
-    const newPlan = source("src/app/(application)/plans/new/page.tsx");
+    const plans = source("src/components/ActionPlansIndexView.tsx");
+    const newPlan = source("src/components/NewActionPlanView.tsx");
+    const copy = source("src/lib/action-plan-page-config.ts");
     const error = source("src/app/(application)/plans/[id]/error.tsx");
     const loading = source("src/app/(application)/plans/[id]/loading.tsx");
 
     expect(plans).toContain("{plans.length ? (");
-    expect(plans).toContain("Créer mon premier plan");
-    expect(newPlan).toContain("← Retour à mes plans");
-    expect(newPlan).toContain("{plans.length ? (");
+    expect(plans).toContain("copy.createFirstPlan");
+    expect(newPlan).toContain("config.copy.backToPlans");
+    expect(newPlan).toContain("{hasPlans ? (");
+    expect(copy).toContain('createFirstPlan: "Créer mon premier plan"');
+    expect(copy).toContain('backToPlans: "← Retour à mes plans"');
     expect(error).toContain("Impossible d’ouvrir ce plan");
     expect(error).toContain("unstable_retry()");
     expect(loading).toContain("Ouverture du plan…");

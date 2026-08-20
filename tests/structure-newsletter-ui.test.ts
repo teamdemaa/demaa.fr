@@ -57,9 +57,10 @@ describe("Structure newsletter public contract", () => {
 
     const academyIndex = read("src/components/AcademyIndexClient.tsx");
     expect(academyIndex).toContain("!embedded || showStructureNewsletter");
-    expect(read("src/app/(application)/page.tsx")).toContain(
-      'requestedIntent === "structure" || requestedIntent === "structure-problem"',
-    );
+    const sharedPageLoader = read("src/lib/action-plan-pages.server.ts");
+    expect(sharedPageLoader).toContain('requestedIntent === "structure"');
+    expect(sharedPageLoader).toContain('requestedIntent === "structure-problem"');
+    expect(sharedPageLoader).toContain('input.localeCode === "fr"');
 
     const academyCourseFiles = [
       "src/app/(marketing)/academie/[courseSlug]/page.tsx",

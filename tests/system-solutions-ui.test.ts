@@ -23,6 +23,7 @@ import {
   getRenderableSolutionSectionsForSystem,
 } from "@/lib/system-solutions-ui.server";
 import { getSolutionResourcePresentation } from "@/lib/solution-resource-presentation.server";
+import { getSolutionsUiCopy } from "@/lib/solutions-ui-copy";
 import { PILOT_SOLUTION_DRAFT_RESOURCES } from "@/lib/pilot-solution-registry-drafts.server";
 import {
   getFamilySystemSolutionSelection,
@@ -38,6 +39,11 @@ async function readSource(path: string) {
 }
 
 describe("system Solutions UI", () => {
+  it("uses one typed section dictionary and the natural English Services label", () => {
+    expect(getSolutionsUiCopy("fr").sectionLabels.services).toBe("Accompagnement");
+    expect(getSolutionsUiCopy("en").sectionLabels.services).toBe("Services");
+  });
+
   it("shows the validated empty state and hides empty section rails", () => {
     expect(
       renderToStaticMarkup(createElement(SystemSolutionsTab, { sections: [] })),
@@ -410,10 +416,11 @@ describe("system Solutions UI", () => {
     }
 
     const source = await readSource("src/components/SystemSolutionsTab.tsx");
-    expect(source).toContain("Ce que vous y gagnez");
-    expect(source).toContain("Pourquoi cette solution");
-    expect(source).toContain("Tarif indicatif");
-    expect(source).toContain("À vérifier avant de choisir");
+    const copySource = await readSource("src/lib/solutions-ui-copy.ts");
+    expect(copySource).toContain("Ce que vous y gagnez");
+    expect(copySource).toContain("Pourquoi cette solution");
+    expect(copySource).toContain("Tarif indicatif");
+    expect(copySource).toContain("À vérifier avant de choisir");
     expect(source).toContain('rel="noopener noreferrer"');
     expect(source).not.toContain("Voir la fiche");
     expect(source).not.toContain("Usage dans ce système");

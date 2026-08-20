@@ -8,35 +8,42 @@ function source(path: string) {
 describe("hidden English beta foundation", () => {
   it("keeps /en server-flagged and out of indexing before product activation", () => {
     const page = source("src/app/(english)/en/page.tsx");
+    const layout = source("src/app/(english)/en/layout.tsx");
     expect(page).toContain("isEnglishBetaEnabled()");
     expect(page).toContain("notFound()");
     expect(page).toContain("robots: { follow: false, index: false }");
     expect(page).toContain('canonical: "/en"');
-    expect(page).toContain("commercialContext: GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT");
-    expect(page).toContain('pathname: "/en"');
-    expect(page).toContain("<DocumentLocale localeCode={context.localeCode}");
-    expect(page).toContain("document.documentElement.lang=");
+    expect(page).toContain('loadActionPlanHomePage({ localeCode: "en"');
+    expect(layout).toContain('<DocumentLocale localeCode="en"');
+    expect(layout).toContain('document.documentElement.lang="en"');
   });
 
   it("reuses the shared action-plan experience and English system projection", () => {
     const page = source("src/app/(english)/en/page.tsx");
+    const sharedHome = source("src/components/ActionPlanHomeView.tsx");
+    const config = source("src/lib/action-plan-page-config.ts");
     const localization = source("src/lib/action-plan-localization.ts");
-    expect(page).toContain("<ActionPlanExperience");
-    expect(page).toContain('contentLocaleCode="en"');
-    expect(page).toContain('marketCodeAtCreation="global-en-beta"');
-    expect(page).toContain("englishActionPlanSystemOptions");
+    expect(page).toContain("<ActionPlanHomeView");
+    expect(sharedHome).toContain("<ActionPlanExperience");
+    expect(sharedHome).toContain("contentLocaleCode={config.localeCode}");
+    expect(sharedHome).toContain("marketCodeAtCreation={config.marketCode}");
+    expect(sharedHome).toContain("getActionPlanSystemOptionsForContext");
+    expect(config).toContain('"global-en-beta": ["plan", "solutions", "academy"]');
     expect(localization).toContain("ENGLISH_ACTION_PLAN_SYSTEM_IDS");
     expect(localization).toContain('"formation-en-ligne"');
-    expect(page).not.toContain("generateActionPlanWithMetadata");
+    expect(sharedHome).not.toContain("generateActionPlanWithMetadata");
   });
 
   it("keeps English plans in the same authenticated company plan space", () => {
     const latest = source("src/app/(english)/en/plans/latest/page.tsx");
     const detail = source("src/app/(english)/en/plans/[id]/page.tsx");
-    expect(latest).toContain("getActionPlanIndexForIdentity(identity)");
-    expect(detail).toContain("getActionPlanWorkspacePageForIdentity(identity, id)");
-    expect(detail).toContain("stored.contentLocaleCode");
-    expect(detail).toContain('interfaceLocaleCode="en"');
+    const sharedLoader = source("src/lib/action-plan-pages.server.ts");
+    const sharedView = source("src/components/SavedActionPlanPageView.tsx");
+    expect(latest).toContain('redirectToLatestActionPlan("en")');
+    expect(detail).toContain('localeCode: "en"');
+    expect(sharedLoader).toContain("getActionPlanWorkspacePageForIdentity(identity, input.id)");
+    expect(sharedView).toContain("stored.contentLocaleCode");
+    expect(sharedView).toContain("interfaceLocaleCode={config.localeCode}");
   });
 
   it("localizes the shared shell without loading French-only plan aids", () => {

@@ -11,8 +11,10 @@ import {
 } from "@/lib/action-plan-workspace";
 import {
   ensureDefaultCompanyForIdentity,
+  getActiveDefaultCompanyContext,
   getActiveDefaultCompanyIdentity,
   getActiveDefaultCompanyIdentityInTransaction,
+  type ActiveCompanyContext,
 } from "@/lib/company-membership.server";
 import type { CustomerSessionIdentity } from "@/lib/customer-space-auth";
 import {
@@ -107,7 +109,13 @@ export type ActionPlanGenerationState =
   | { status: "failed"; id: string; attemptCount: number; canRetry: boolean };
 
 export type ActionPlanWorkspacePageData = {
+  companyContext: ActiveCompanyContext | null;
   generationState: ActionPlanGenerationState | null;
+  plans: ActionPlanIndexEntry[];
+};
+
+export type ActionPlanIndexPageData = {
+  companyContext: ActiveCompanyContext;
   plans: ActionPlanIndexEntry[];
 };
 
@@ -850,7 +858,13 @@ export async function getOwnedActionPlansForIdentity(identity: CustomerSessionId
 export async function getActionPlanIndexForIdentity(
   identity: CustomerSessionIdentity,
 ): Promise<ActionPlanIndexEntry[]> {
-  const company = await getActiveDefaultCompanyIdentity(identity.uid);
+  return (await getActionPlanIndexPageForIdentity(identity)).plans;
+}
+
+export async function getActionPlanIndexPageForIdentity(
+  identity: CustomerSessionIdentity,
+): Promise<ActionPlanIndexPageData> {
+  const company = await getActiveDefaultCompanyContext(identity.uid);
   if (!company) throw new Error("The active company context is unavailable.");
 
   const snapshot = await getAdminFirestore()
@@ -858,15 +872,20 @@ export async function getActionPlanIndexForIdentity(
     .where("company_id", "==", company.companyId)
     .get();
 
-  return parseActionPlanIndex(snapshot.docs);
+  return {
+    companyContext: company,
+    plans: parseActionPlanIndex(snapshot.docs),
+  };
 }
 
 export async function getActionPlanWorkspacePageForIdentity(
   identity: CustomerSessionIdentity,
   id: string,
 ): Promise<ActionPlanWorkspacePageData> {
-  const company = await getActiveDefaultCompanyIdentity(identity.uid);
-  if (!company) return { generationState: null, plans: [] };
+  const company = await getActiveDefaultCompanyContext(identity.uid);
+  if (!company) {
+    return { companyContext: null, generationState: null, plans: [] };
+  }
 
   const collection = getAdminFirestore().collection(ACTION_PLANS_COLLECTION);
   const [planSnapshot, indexSnapshot] = await Promise.all([
@@ -880,6 +899,7 @@ export async function getActionPlanWorkspacePageForIdentity(
     : null;
 
   return {
+    companyContext: company,
     generationState,
     plans: parseActionPlanIndex(indexSnapshot.docs),
   };

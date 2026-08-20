@@ -30,6 +30,7 @@ import {
   isToolSolutionResourceType,
   type ToolOutboundSurface,
 } from "@/lib/tool-outbound-attribution";
+import { getSolutionsUiCopy } from "@/lib/solutions-ui-copy";
 
 type RailState = Readonly<{
   canNext: boolean;
@@ -42,14 +43,7 @@ type VisibleSolutionSection = Exclude<SolutionSection, "models">;
 // align final editorial and SEO wording before integration.
 export const SOLUTION_UI_WORKING_LABELS: Readonly<
   Record<VisibleSolutionSection, string>
-> = {
-  software: "Outils",
-  services: "Accompagnement",
-  providers: "Fournisseurs",
-  financing: "Financement",
-  aids: "Aides et subventions",
-  networks: "Réseaux professionnels",
-};
+> = getSolutionsUiCopy("fr").sectionLabels;
 
 export const SOLUTION_RAIL_DISPLAY_ORDER: readonly VisibleSolutionSection[] = [
   "software",
@@ -69,18 +63,6 @@ const RESOURCE_ICONS = {
   financing: BadgeEuro,
   aid: Landmark,
 } as const;
-
-const DEFAULT_RESOURCE_LABELS: Readonly<
-  Record<RenderableSolutionPlacementDto["resource"]["resourceType"], string>
-> = {
-  tool: "Outil",
-  software: "Logiciel",
-  provider: "Fournisseur",
-  directory: "Organisation professionnelle",
-  expertise: "Prestation",
-  financing: "Financement",
-  aid: "Aide publique",
-};
 
 function buildInitialRailState(sections: readonly RenderableSolutionSectionDto[]) {
   return Object.fromEntries(
@@ -173,15 +155,16 @@ function SolutionDialog({
   const { resource } = placement;
   const isEnglish = localeCode === "en";
   const isEnglishService = isEnglish && placement.section === "services";
+  const ui = getSolutionsUiCopy(localeCode);
   return (
     <DirectoryDetailDialogShell
-      ariaLabel={`${isEnglish ? "Details for" : "Détails de"} ${resource.name}`}
-      closeLabel={isEnglish ? "Close" : "Fermer"}
+      ariaLabel={ui.detailsFor(resource.name)}
+      closeLabel={ui.close}
       maxWidthClassName="max-w-2xl"
       onClose={onClose}
     >
       <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-        {resource.displayCategory ?? DEFAULT_RESOURCE_LABELS[resource.resourceType]}
+        {resource.displayCategory ?? ui.resourceLabels[resource.resourceType]}
       </p>
       <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-brand-blue sm:text-3xl">
         {resource.name}
@@ -192,22 +175,22 @@ function SolutionDialog({
       {isEnglishService ? (
         <div className="mt-7 space-y-5 border-t border-dema-line pt-6">
           <div>
-            <h4 className="text-sm font-semibold text-brand-blue">What this helps you achieve</h4>
+            <h4 className="text-sm font-semibold text-brand-blue">{ui.gain}</h4>
             <p className="mt-2 text-sm leading-relaxed text-dema-muted">{placement.usage}</p>
           </div>
           <div>
-            <h4 className="text-sm font-semibold text-brand-blue">Why it may fit</h4>
+            <h4 className="text-sm font-semibold text-brand-blue">{ui.fit}</h4>
             <p className="mt-2 text-sm leading-relaxed text-dema-muted">{placement.fitRationale}</p>
           </div>
           {resource.indicativePricing ? (
             <div>
-              <h4 className="text-sm font-semibold text-brand-blue">Indicative price</h4>
+              <h4 className="text-sm font-semibold text-brand-blue">{ui.price}</h4>
               <p className="mt-2 text-sm leading-relaxed text-dema-muted">{resource.indicativePricing}</p>
             </div>
           ) : null}
           {placement.fitConstraints.length ? (
             <div>
-              <h4 className="text-sm font-semibold text-brand-blue">Before you decide</h4>
+              <h4 className="text-sm font-semibold text-brand-blue">{ui.constraints}</h4>
               <ul className="mt-2 space-y-2 text-sm leading-relaxed text-dema-muted">
                 {placement.fitConstraints.map((constraint) => <li key={constraint}>• {constraint}</li>)}
               </ul>
@@ -242,20 +225,20 @@ function SolutionDialog({
       ) : (
         <div className="mt-7 space-y-5 border-t border-dema-line pt-6">
           <div>
-            <h4 className="text-sm font-semibold text-brand-blue">Ce que vous y gagnez</h4>
+            <h4 className="text-sm font-semibold text-brand-blue">{ui.gain}</h4>
             <p className="mt-2 text-sm leading-relaxed text-dema-muted">
               {placement.usage}
             </p>
           </div>
           <div>
-            <h4 className="text-sm font-semibold text-brand-blue">Pourquoi cette solution</h4>
+            <h4 className="text-sm font-semibold text-brand-blue">{ui.fit}</h4>
             <p className="mt-2 text-sm leading-relaxed text-dema-muted">
               {placement.fitRationale}
             </p>
           </div>
           {resource.indicativePricing ? (
             <div>
-              <h4 className="text-sm font-semibold text-brand-blue">Tarif indicatif</h4>
+              <h4 className="text-sm font-semibold text-brand-blue">{ui.price}</h4>
               <p className="mt-2 text-sm leading-relaxed text-dema-muted">
                 {resource.indicativePricing}
               </p>
@@ -263,7 +246,7 @@ function SolutionDialog({
           ) : null}
           {placement.fitConstraints.length > 0 ? (
             <div>
-              <h4 className="text-sm font-semibold text-brand-blue">À vérifier avant de choisir</h4>
+              <h4 className="text-sm font-semibold text-brand-blue">{ui.constraints}</h4>
               <ul className="mt-2 space-y-2 text-sm leading-relaxed text-dema-muted">
                 {placement.fitConstraints.map((constraint) => (
                   <li key={constraint} className="flex gap-2">
@@ -280,7 +263,7 @@ function SolutionDialog({
       {!isEnglishService && resource.interaction.interactionMode !== "referral_form" ? (
         <SolutionAction
           interaction={resource.interaction}
-          label={resource.ctaLabel ?? "Découvrir la solution"}
+          label={resource.ctaLabel ?? ui.discover}
           onClick={() => {
             onClose();
             trackSystemSolutionEvent("system_solution_resource_cta_clicked", {
@@ -320,6 +303,7 @@ export default function SystemSolutionsTab({
   marketCode?: string;
   toolOutboundSurface?: ToolOutboundSurface;
 }) {
+  const ui = getSolutionsUiCopy(localeCode);
   const visibleSections = useMemo(
     () => SOLUTION_RAIL_DISPLAY_ORDER.flatMap((section) =>
       sections.filter((group) => group.section === section && group.placements.length > 0),
@@ -407,7 +391,7 @@ export default function SystemSolutionsTab({
           </span>
         </span>
         <span className="mt-4 line-clamp-2 min-h-[2.5em] block text-[10px] font-semibold uppercase leading-[1.25] tracking-[0.15em] text-dema-muted">
-          {resource.displayCategory ?? DEFAULT_RESOURCE_LABELS[resource.resourceType]}
+          {resource.displayCategory ?? ui.resourceLabels[resource.resourceType]}
         </span>
         <span className="mt-1.5 line-clamp-2 block min-h-[2.5em] text-lg font-semibold leading-tight text-brand-blue sm:text-xl">
           {resource.name}
@@ -444,7 +428,7 @@ export default function SystemSolutionsTab({
             href={resource.interaction.href}
             onClick={openEvent}
             className={cardClassName}
-            aria-label={`Ouvrir ${resource.name}`}
+            aria-label={ui.open(resource.name)}
           >
             {cardContent}
           </Link>
@@ -461,7 +445,7 @@ export default function SystemSolutionsTab({
               }
             }}
             className={cardClassName}
-            aria-label={`${localeCode === "en" ? "Open" : "Ouvrir"} ${resource.name}`}
+            aria-label={ui.open(resource.name)}
           >
             {cardContent}
           </button>
@@ -471,7 +455,9 @@ export default function SystemSolutionsTab({
             type="button"
             onClick={() => onToggleSelection(placement.placementId)}
             aria-pressed={isSaved}
-            aria-label={isSaved ? (localeCode === "en" ? `Remove ${resource.name} from your selection` : `Retirer ${resource.name} de votre sélection`) : (localeCode === "en" ? `Save ${resource.name}` : `Enregistrer ${resource.name}`)}
+            aria-label={isSaved
+              ? ui.removeFromSelection(resource.name)
+              : ui.save(resource.name)}
             className={`absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 ${
               isSaved
                 ? "border-dema-forest/20 bg-dema-forest text-white"
@@ -495,7 +481,7 @@ export default function SystemSolutionsTab({
         className="rounded-[1.15rem] border border-dema-line bg-dema-paper px-5 py-6 text-sm leading-relaxed text-dema-muted sm:px-6"
         role="status"
       >
-        {localeCode === "en" ? "We are still reviewing the most relevant solutions for this business type." : "Nous vérifions encore les solutions les plus pertinentes pour ce métier."}
+        {ui.empty}
       </p>
     );
   }
@@ -509,7 +495,7 @@ export default function SystemSolutionsTab({
               id="solution-section-selection"
               className="text-xl font-semibold tracking-[-0.025em] text-brand-blue sm:text-2xl"
             >
-              {localeCode === "en" ? "Your selection" : "Votre sélection"}
+              {ui.selection}
             </h3>
             <div className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_1rem)_/_2)] lg:auto-cols-[calc((100%_-_2rem)_/_3)] xl:auto-cols-[calc((100%_-_3rem)_/_3.5)] [&::-webkit-scrollbar]:hidden">
               {selectedPlacements.map(renderPlacementCard)}
@@ -518,9 +504,7 @@ export default function SystemSolutionsTab({
         ) : null}
 
         {visibleSections.map((group) => {
-          const label = localeCode === "en"
-            ? group.section === "software" ? "Tools" : "Accompaniment"
-            : SOLUTION_UI_WORKING_LABELS[group.section as VisibleSolutionSection];
+          const label = ui.sectionLabels[group.section as VisibleSolutionSection];
           const railState = railStates[group.section];
 
           return (
@@ -540,7 +524,7 @@ export default function SystemSolutionsTab({
                   <div className="flex shrink-0 items-center gap-2">
                     <button
                       type="button"
-                      aria-label={`${localeCode === "en" ? "View previous solutions" : "Voir les solutions précédentes"} - ${label}`}
+                      aria-label={`${ui.previous} - ${label}`}
                       onClick={() => navigateRail(group, -1)}
                       disabled={!railState?.canPrevious}
                       className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
@@ -549,7 +533,7 @@ export default function SystemSolutionsTab({
                     </button>
                     <button
                       type="button"
-                      aria-label={`${localeCode === "en" ? "View next solutions" : "Voir les solutions suivantes"} - ${label}`}
+                      aria-label={`${ui.next} - ${label}`}
                       onClick={() => navigateRail(group, 1)}
                       disabled={!railState?.canNext}
                       className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
