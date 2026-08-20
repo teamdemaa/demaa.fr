@@ -203,6 +203,14 @@ résolveur français n'est pas validé métier.
 - [ ] Réutiliser le parcours Action Plan français, son schéma, ses statuts, sa
   propriété entreprise, sa reprise et le même appel IA, avec génération en
   anglais naturel et `systemId` universels.
+  - [x] Remplacer le prototype parallèle de dix métiers numériques par une
+    projection anglaise des **115 slugs canoniques**, dans le même ordre que le
+    catalogue français. Chaque projection publiée porte un libellé, des alias
+    et une version éditoriale ; les contrôles vérifient la bijection avec les
+    115 métiers actifs et leurs 37 familles existantes. Aucun identifiant
+    anglais parallèle, aucune nouvelle famille et aucun second catalogue n'ont
+    été introduits. `/en` reste désactivé et `noindex` : cette couverture
+    technique ne vaut pas encore validation éditoriale ni GO public.
 - [ ] Publier `Tools` avec projections anglaises validées et filtrage serveur
   par métier/famille, marché, pays et langue.
 - [ ] Employer le libellé naturel `Services`, jamais `Accompaniment`, et

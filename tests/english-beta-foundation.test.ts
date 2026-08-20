@@ -29,8 +29,9 @@ describe("hidden English beta foundation", () => {
     expect(sharedHome).toContain("marketCodeAtCreation={config.marketCode}");
     expect(sharedHome).toContain("getActionPlanSystemOptionsForContext");
     expect(config).toContain('"global-en-beta": ["plan", "solutions", "academy"]');
-    expect(localization).toContain("ENGLISH_ACTION_PLAN_SYSTEM_IDS");
-    expect(localization).toContain('"formation-en-ligne"');
+    const projections = source("src/lib/action-plan-system-projections.ts");
+    expect(localization).toContain("englishActionPlanSystemIds");
+    expect(projections).toContain('"formation-en-ligne"');
     expect(sharedHome).not.toContain("generateActionPlanWithMetadata");
   });
 

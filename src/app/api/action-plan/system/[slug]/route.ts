@@ -18,7 +18,11 @@ import {
 import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
 import { getAvailableSystemTemplatesForSystem } from "@/lib/system-resource-catalog";
 import { projectEnglishSolutionSections } from "@/lib/english-solution-projections.server";
-import { ENGLISH_BETA_CONTEXT } from "@/lib/international-context";
+import {
+  FRANCE_CONTEXT,
+  isInterfaceLocaleCode,
+  isMarketCode,
+} from "@/lib/international-context";
 import { isEnglishBetaEnabled } from "@/lib/english-beta.server";
 import { englishActionPlanSystemOptions } from "@/lib/action-plan-localization";
 
@@ -44,8 +48,18 @@ function getLocalSystemDetailPageData(slug: string): SystemDetailPageData | null
 export async function GET(request: Request, { params }: RouteContext) {
   const { slug } = await params;
   const searchParams = new URL(request.url).searchParams;
-  const isEnglish = searchParams.get("locale") === "en"
-    && searchParams.get("market") === ENGLISH_BETA_CONTEXT.marketCode;
+  const requestedLocale = searchParams.get("locale");
+  const requestedMarket = searchParams.get("market");
+  const hasExplicitContext = requestedLocale !== null || requestedMarket !== null;
+  if (
+    hasExplicitContext
+    && (!isInterfaceLocaleCode(requestedLocale) || !isMarketCode(requestedMarket))
+  ) {
+    return NextResponse.json({ error: "Invalid international context." }, { status: 400 });
+  }
+  const localeCode = hasExplicitContext ? requestedLocale : FRANCE_CONTEXT.localeCode;
+  const marketCode = hasExplicitContext ? requestedMarket : FRANCE_CONTEXT.marketCode;
+  const isEnglish = localeCode === "en";
   if (isEnglish && !isEnglishBetaEnabled()) {
     return NextResponse.json({ error: "Not found." }, { status: 404 });
   }
@@ -79,8 +93,14 @@ export async function GET(request: Request, { params }: RouteContext) {
 
   return NextResponse.json(
     {
-      system: isEnglish ? { ...data.system, name: englishSystem?.label ?? data.system.name } : data.system,
-      systeme: data.detail.systeme,
+      system: isEnglish ? {
+        ...data.system,
+        description: `Tools and support selected for ${englishSystem?.label}.`,
+        name: englishSystem?.label ?? data.system.name,
+      } : data.system,
+      // The operational guide remains French-only until its canonical content
+      // has a complete English projection. Never leak it through an English DTO.
+      systeme: isEnglish ? null : data.detail.systeme,
       intro: isEnglish
         ? `Tools and support selected for ${englishSystem?.label}.`
         : buildSystemPageIntro(data),
@@ -88,6 +108,10 @@ export async function GET(request: Request, { params }: RouteContext) {
       solutionSections: isEnglish
         ? projectEnglishSolutionSections(visibleSolutionSections)
         : visibleSolutionSections,
+      internationalContext: {
+        localeCode,
+        marketCode,
+      },
     },
     {
       headers: {
