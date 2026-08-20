@@ -135,7 +135,7 @@ describe("Firebase Google redirect", () => {
 
   it("keeps the return destination out of Firebase client persistence", () => {
     const callback = readFileSync(
-      "src/app/(auth)/auth/google/GoogleAuthCallbackClient.tsx",
+      "src/app/(french)/(auth)/auth/google/GoogleAuthCallbackClient.tsx",
       "utf8",
     );
     const helper = readFileSync("src/lib/firebase-client-auth.ts", "utf8");

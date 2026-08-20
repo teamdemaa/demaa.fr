@@ -26,7 +26,7 @@ describe("system UX contract", () => {
       "src/app/api/systeme-kit/open/[resourceSlug]/route.ts",
     );
     const pageSource = await readSource(
-      "src/app/(marketing)/systemes/[slug]/page.tsx",
+      "src/app/(french)/(marketing)/systemes/[slug]/page.tsx",
     );
 
     expect(detailSource).not.toContain("Voir le système");
@@ -77,7 +77,7 @@ describe("system UX contract", () => {
   it("provides a process-only printable page and a clear native-print fallback", async () => {
     const [printButtonSource, processesSource, globalStyles] = await Promise.all([
       readSource("src/components/SystemRecapPrintButton.tsx"),
-      readSource("src/app/(marketing)/systemes/[slug]/processus/page.tsx"),
+      readSource("src/app/(french)/(marketing)/systemes/[slug]/processus/page.tsx"),
       readSource("src/app/globals.css"),
     ]);
 

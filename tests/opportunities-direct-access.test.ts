@@ -12,7 +12,7 @@ describe("Opportunities direct-link access", () => {
       readSource("src/components/ActionPlanNavbar.tsx"),
       readSource("src/components/Footer.tsx"),
       readSource("src/app/sitemap.ts"),
-      readSource("src/app/(marketing)/opportunites/page.tsx"),
+      readSource("src/app/(french)/(marketing)/opportunites/page.tsx"),
     ]);
 
     expect(navigation).toContain('{ view: "opportunities", labels: { fr: "Opportunités", en: "Opportunities" }, Icon: BriefcaseBusiness }');
@@ -28,7 +28,7 @@ describe("Opportunities direct-link access", () => {
   it("keeps authentication return flows on the canonical direct route", async () => {
     const [redirects, joinPage] = await Promise.all([
       readSource("src/lib/customer-space-redirect.ts"),
-      readSource("src/app/(marketing)/rejoindre-team-demaa/page.tsx"),
+      readSource("src/app/(french)/(marketing)/rejoindre-team-demaa/page.tsx"),
     ]);
 
     expect(redirects).toContain('? "/opportunites"');

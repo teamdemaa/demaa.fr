@@ -12,7 +12,7 @@ describe("solution proposal UI contract", () => {
   it("exposes one neutral public entry without promising a partnership", async () => {
     const [footer, page, nextConfig, sitemap] = await Promise.all([
       readSource("src/components/Footer.tsx"),
-      readSource("src/app/(marketing)/rejoindre-team-demaa/page.tsx"),
+      readSource("src/app/(french)/(marketing)/rejoindre-team-demaa/page.tsx"),
       readSource("next.config.ts"),
       readSource("src/app/sitemap.ts"),
     ]);
@@ -65,9 +65,9 @@ describe("solution proposal UI contract", () => {
 
   it("loads Firebase-backed pages at request time", async () => {
     const [networkPage, opportunitiesPage, adminPage] = await Promise.all([
-      readSource("src/app/(marketing)/rejoindre-team-demaa/page.tsx"),
-      readSource("src/app/(marketing)/opportunites/page.tsx"),
-      readSource("src/app/(administration)/admin/opportunites/page.tsx"),
+      readSource("src/app/(french)/(marketing)/rejoindre-team-demaa/page.tsx"),
+      readSource("src/app/(french)/(marketing)/opportunites/page.tsx"),
+      readSource("src/app/(french)/(administration)/admin/opportunites/page.tsx"),
     ]);
 
     expect(networkPage).toContain(
@@ -82,7 +82,7 @@ describe("solution proposal UI contract", () => {
 
   it("separates immediate opportunities from the permanent Team Demaa profile", async () => {
     const [page, catalog, modal, submissionDialog] = await Promise.all([
-      readSource("src/app/(marketing)/opportunites/page.tsx"),
+      readSource("src/app/(french)/(marketing)/opportunites/page.tsx"),
       readSource("src/components/PublicOpportunitiesClient.tsx"),
       readSource("src/components/ProviderProfileModal.tsx"),
       readSource("src/components/OpportunitySubmissionDialog.tsx"),

@@ -54,8 +54,8 @@ describe("legacy Services and Courses retirement", () => {
       source("src/components/CanonicalServiceDetails.tsx"),
       source("src/components/ServicesCatalog.tsx"),
       source("src/components/ServicesLandingPage.tsx"),
-      source("src/app/(marketing)/services/page.tsx"),
-      source("src/app/(marketing)/sur-mesure/page.tsx"),
+      source("src/app/(french)/(marketing)/services/page.tsx"),
+      source("src/app/(french)/(marketing)/sur-mesure/page.tsx"),
       source("src/lib/sur-mesure-page-content.ts"),
     ].join("\n");
 

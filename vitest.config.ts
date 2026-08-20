@@ -8,6 +8,9 @@ export default defineConfig({
       "server-only": fileURLToPath(
         new URL("./scripts/server-only-stub.ts", import.meta.url),
       ),
+      "next/font/local": fileURLToPath(
+        new URL("./scripts/next-font-local-stub.ts", import.meta.url),
+      ),
     },
   },
   test: {
