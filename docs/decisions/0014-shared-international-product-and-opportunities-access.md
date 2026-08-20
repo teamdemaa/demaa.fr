@@ -97,7 +97,9 @@ currencyCode
 - `marketCode` détermine les fonctionnalités et le catalogue disponibles ;
 - `countryCode` décrit le pays d'établissement de l'entreprise et les règles
   locales applicables ;
-- `currencyCode` détermine la devise d'affichage, de devis et de facturation.
+- `currencyCode` est la devise commerciale résolue côté serveur pour
+  l'affichage, le devis et la facturation. La devise de référence comptable de
+  l'entreprise reste une donnée distincte, même lorsqu'elles sont identiques.
 
 La langue du contenu d'un plan est distincte de la locale de l'interface. Un
 plan enregistre `contentLocaleCode` et `marketCodeAtCreation`. Changer la
@@ -182,7 +184,12 @@ indique leur langue d'origine avec un repère `FR` ou `EN`.
 Les responsabilités restent séparées :
 
 - `preferred_locale_code` appartient au membre ;
-- `countryCode`, `marketCode` et `currencyCode` appartiennent à l'entreprise ;
+- `country_code`, `market_code` et la devise de référence `currency_code`
+  appartiennent à l'entreprise connectée ; pour un visiteur, leur équivalent
+  provient uniquement d'une configuration serveur validée ;
+- `currencyCode` dans le contexte commercial est résolu à partir de cette
+  référence et de la configuration de marché, puis verrouillé avec le montant
+  lorsqu'un devis est établi ;
 - `contentLocaleCode` et `marketCodeAtCreation` appartiennent au plan pour
   préserver son historique.
 
@@ -246,6 +253,8 @@ une conversion et aucune majoration ne résulte uniquement de l'anglais.
 La bêta cible contient, après fermeture de ces gates :
 
 - Action Plan ;
+- Key figures et Strategy, sur les mêmes données d'entreprise qu'en français ;
+- My plans et l'authentification partagées ;
 - Solutions ;
 - Academy ;
 - Talk to us.
