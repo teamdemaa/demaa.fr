@@ -19,7 +19,9 @@ import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
 import { getAvailableSystemTemplatesForSystem } from "@/lib/system-resource-catalog";
 import { projectEnglishSolutionSections } from "@/lib/english-solution-projections.server";
 import {
+  EUR_CURRENCY_CODE,
   FRANCE_CONTEXT,
+  createInternationalContext,
   isInterfaceLocaleCode,
   isMarketCode,
 } from "@/lib/international-context";
@@ -48,18 +50,23 @@ function getLocalSystemDetailPageData(slug: string): SystemDetailPageData | null
 export async function GET(request: Request, { params }: RouteContext) {
   const { slug } = await params;
   const searchParams = new URL(request.url).searchParams;
-  const requestedLocale = searchParams.get("locale");
-  const requestedMarket = searchParams.get("market");
-  const hasExplicitContext = requestedLocale !== null || requestedMarket !== null;
+  const localeParam = searchParams.get("locale");
+  const marketParam = searchParams.get("market");
+  const hasExplicitContext = localeParam !== null || marketParam !== null;
   if (
     hasExplicitContext
-    && (!isInterfaceLocaleCode(requestedLocale) || !isMarketCode(requestedMarket))
+    && (!isInterfaceLocaleCode(localeParam) || !isMarketCode(marketParam))
   ) {
     return NextResponse.json({ error: "Invalid international context." }, { status: 400 });
   }
-  const localeCode = hasExplicitContext ? requestedLocale : FRANCE_CONTEXT.localeCode;
-  const marketCode = hasExplicitContext ? requestedMarket : FRANCE_CONTEXT.marketCode;
-  const isEnglish = localeCode === "en";
+  const internationalContext = hasExplicitContext
+    ? createInternationalContext(localeParam as "fr" | "en", {
+        countryCode: null,
+        currencyCode: EUR_CURRENCY_CODE,
+        marketCode: marketParam as "fr-fr" | "global-en-beta",
+      })
+    : FRANCE_CONTEXT;
+  const isEnglish = internationalContext.localeCode === "en";
   if (isEnglish && !isEnglishBetaEnabled()) {
     return NextResponse.json({ error: "Not found." }, { status: 404 });
   }
@@ -85,6 +92,7 @@ export async function GET(request: Request, { params }: RouteContext) {
   const visibleSolutionSections = composePublicSolutionSectionsForSystem(
     slug,
     mergeRenderableSolutionSections(solutionSections),
+    internationalContext,
   );
   const englishSystem = englishActionPlanSystemOptions.find((option) => option.id === slug);
   if (isEnglish && !englishSystem) {
@@ -109,8 +117,8 @@ export async function GET(request: Request, { params }: RouteContext) {
         ? projectEnglishSolutionSections(visibleSolutionSections)
         : visibleSolutionSections,
       internationalContext: {
-        localeCode,
-        marketCode,
+        localeCode: internationalContext.localeCode,
+        marketCode: internationalContext.marketCode,
       },
     },
     {

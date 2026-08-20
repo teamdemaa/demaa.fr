@@ -6,14 +6,22 @@ import {
   readJsonBody,
 } from "@/lib/api-security";
 import {
-  getCanonicalServiceBySlug,
   getCanonicalServicePackage,
 } from "@/lib/canonical-service-catalog";
+import { getLocalizedCanonicalService } from "@/lib/localized-service-catalog.server";
 import {
   isMonthlyAccompanimentDiscountEligible,
   resolveMonthlyAccompanimentDiscount,
 } from "@/lib/monthly-accompaniment-benefit.server";
 import { getCurrentCustomerIdentityFromSession } from "@/lib/customer-space-session.server";
+import {
+  getConfiguredVisitorCommercialContext,
+  resolveAuthenticatedInternationalContext,
+} from "@/lib/international-context.server";
+import {
+  createInternationalContext,
+  isInterfaceLocaleCode,
+} from "@/lib/international-context";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
 import { submitLeadRequest } from "@/lib/lead-notifications";
@@ -111,15 +119,27 @@ export async function POST(request: Request) {
 
     const company = normalizeText(body?.company, 160);
     const localeCode = normalizeText(body?.localeCode, 20) || "fr";
-    const marketCode = normalizeText(body?.marketCode, 40) || "fr-fr";
     const packageSlug = normalizeText(body?.packageSlug, 120);
     const phone = normalizeText(body?.phone, 60);
-    const countryCode = normalizeText(body?.countryCode, 2).toUpperCase();
     const serviceSlug = normalizeText(body?.serviceSlug, 120);
     const requestedSource = normalizeText(body?.source, 80);
     const systemSlug = normalizeText(body?.systemSlug, 120);
     const idempotencyKey = normalizeIdempotencyKey(body?.idempotencyKey);
-    const service = getCanonicalServiceBySlug(serviceSlug);
+    if (!isInterfaceLocaleCode(localeCode)) {
+      return NextResponse.json({ error: "Le contexte international est invalide." }, { status: 400 });
+    }
+    const customer = await getCurrentCustomerIdentityFromSession();
+    const internationalContext = customer
+      ? (await resolveAuthenticatedInternationalContext({
+          identity: customer,
+          localeCode,
+        })).internationalContext
+      : createInternationalContext(
+          localeCode,
+          getConfiguredVisitorCommercialContext(localeCode),
+        );
+    const { countryCode, marketCode } = internationalContext;
+    const service = getLocalizedCanonicalService(serviceSlug, internationalContext);
     const requestOrigin = new URL(request.url).origin;
     const requestedSourcePage = normalizeText(body?.sourcePage, 240);
     const validatedSourcePage = normalizeInternalSourcePage(
@@ -130,15 +150,18 @@ export async function POST(request: Request) {
       ? validatedSourcePage
       : normalizeInternalSourcePage(request.headers.get("referer"), requestOrigin);
 
-    if (!((localeCode === "fr" && marketCode === "fr-fr") || (localeCode === "en" && marketCode === "global-en-beta"))) {
-      return NextResponse.json({ error: "Le contexte international est invalide." }, { status: 400 });
+    if (localeCode === "en" && !customer?.email) {
+      return NextResponse.json(
+        { error: "Sign in to send your request." },
+        { status: 401 },
+      );
     }
 
-    if (!company || !isValidPhone(phone) || !idempotencyKey) {
+    if (!company || (localeCode === "fr" && !isValidPhone(phone)) || !idempotencyKey) {
       return NextResponse.json(
         {
           error: localeCode === "en"
-            ? "Enter a company and a valid contact number."
+            ? "Enter your company name."
             : "Indiquez une entreprise et un numéro WhatsApp valides.",
         },
         { status: 400 },
@@ -189,7 +212,6 @@ export async function POST(request: Request) {
       validUntil: null,
     };
     try {
-      const customer = await getCurrentCustomerIdentityFromSession();
       monthlyBenefitDiscount = await resolveMonthlyAccompanimentDiscount({
         service,
         uid: customer?.uid,
@@ -200,10 +222,11 @@ export async function POST(request: Request) {
       });
     }
 
+    const contactIdentity = localeCode === "en" ? customer?.email ?? "" : phone;
     const limitedByPhone = await enforceServiceRequestRateLimit(request, {
-      identity: phone,
+      identity: contactIdentity,
       limit: 4,
-      scope: "phone",
+      scope: localeCode === "en" ? "email" : "phone",
       windowMs: 60 * 60 * 1000,
     });
     if (limitedByPhone) return limitedByPhone;
@@ -226,7 +249,12 @@ export async function POST(request: Request) {
     await submitLeadRequest({
       attribution: resolveLeadAttribution(request, body?.attribution),
       channels: { email: false, resend: false, slack: true },
-      contact: { company, phone },
+      contact: {
+        company,
+        ...(localeCode === "en"
+          ? { email: customer?.email ?? null }
+          : { phone }),
+      },
       context,
       emoji: "💬",
       fields: [
@@ -239,7 +267,9 @@ export async function POST(request: Request) {
               { label: "Prix de référence", value: servicePackage.pricing.label },
             ]
           : []),
-        { label: localeCode === "en" ? "Contact number" : "Numéro WhatsApp", value: phone },
+        ...(localeCode === "fr"
+          ? [{ label: "Numéro WhatsApp", value: phone }]
+          : [{ label: "Email", value: customer?.email ?? null }]),
         { label: localeCode === "en" ? "Langue" : "Locale", value: localeCode },
         { label: "Marché", value: marketCode },
         ...(countryCode ? [{ label: "Pays", value: countryCode }] : []),

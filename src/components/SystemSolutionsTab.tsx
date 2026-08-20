@@ -16,8 +16,8 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
+import CanonicalServiceDetails from "@/components/CanonicalServiceDetails";
 import SolutionReferralForm from "@/components/SolutionReferralForm";
-import ServiceCallbackForm from "@/components/ServiceCallbackForm";
 import ToolOutboundLink from "@/components/ToolOutboundLink";
 import { trackSystemSolutionEvent } from "@/lib/kit-analytics-client";
 import type { SolutionSection } from "@/lib/solution-registry-dto";
@@ -153,9 +153,27 @@ function SolutionDialog({
   toolOutboundSurface: ToolOutboundSurface;
 }) {
   const { resource } = placement;
-  const isEnglish = localeCode === "en";
-  const isEnglishService = isEnglish && placement.section === "services";
   const ui = getSolutionsUiCopy(localeCode);
+  if (placement.section === "services" && resource.serviceDetails) {
+    return (
+      <DirectoryDetailDialogShell
+        ariaLabel={ui.detailsFor(resource.name)}
+        closeLabel={ui.close}
+        maxWidthClassName="max-w-3xl"
+        onClose={onClose}
+      >
+        <CanonicalServiceDetails
+          headingAs="h2"
+          localeCode={localeCode}
+          marketCode={marketCode}
+          service={resource.serviceDetails}
+          source={localeCode === "en" ? "english-solutions" : "solutions-systeme"}
+          systemSlug={placement.systemSlug}
+          variant="modal"
+        />
+      </DirectoryDetailDialogShell>
+    );
+  }
   return (
     <DirectoryDetailDialogShell
       ariaLabel={ui.detailsFor(resource.name)}
@@ -172,40 +190,7 @@ function SolutionDialog({
       <p className="mt-4 text-base leading-relaxed text-dema-muted">
         {resource.description}
       </p>
-      {isEnglishService ? (
-        <div className="mt-7 space-y-5 border-t border-dema-line pt-6">
-          <div>
-            <h4 className="text-sm font-semibold text-brand-blue">{ui.gain}</h4>
-            <p className="mt-2 text-sm leading-relaxed text-dema-muted">{placement.usage}</p>
-          </div>
-          <div>
-            <h4 className="text-sm font-semibold text-brand-blue">{ui.fit}</h4>
-            <p className="mt-2 text-sm leading-relaxed text-dema-muted">{placement.fitRationale}</p>
-          </div>
-          {resource.indicativePricing ? (
-            <div>
-              <h4 className="text-sm font-semibold text-brand-blue">{ui.price}</h4>
-              <p className="mt-2 text-sm leading-relaxed text-dema-muted">{resource.indicativePricing}</p>
-            </div>
-          ) : null}
-          {placement.fitConstraints.length ? (
-            <div>
-              <h4 className="text-sm font-semibold text-brand-blue">{ui.constraints}</h4>
-              <ul className="mt-2 space-y-2 text-sm leading-relaxed text-dema-muted">
-                {placement.fitConstraints.map((constraint) => <li key={constraint}>• {constraint}</li>)}
-              </ul>
-            </div>
-          ) : null}
-          <ServiceCallbackForm
-            localeCode="en"
-            marketCode={marketCode}
-            serviceName={resource.name}
-            serviceSlug={resource.resourceSlug}
-            source="english-solutions"
-            systemSlug={placement.systemSlug}
-          />
-        </div>
-      ) : resource.interaction.interactionMode === "referral_form" ? (
+      {resource.interaction.interactionMode === "referral_form" ? (
         <div className="mt-6 border-t border-dema-line pt-5">
           <p className="text-sm leading-relaxed text-brand-blue">
             {placement.usage}
@@ -260,7 +245,7 @@ function SolutionDialog({
         </div>
       )}
 
-      {!isEnglishService && resource.interaction.interactionMode !== "referral_form" ? (
+      {resource.interaction.interactionMode !== "referral_form" ? (
         <SolutionAction
           interaction={resource.interaction}
           label={resource.ctaLabel ?? ui.discover}

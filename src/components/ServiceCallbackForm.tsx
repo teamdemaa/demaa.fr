@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { type FormEvent, useRef, useState } from "react";
+import { LoaderCircle } from "lucide-react";
+import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import {
   getLeadAttributionPayload,
   trackLeadConversion,
@@ -11,6 +13,8 @@ import {
   clearLeadSubmissionKey,
   getLeadSubmissionKey,
 } from "@/lib/lead-submission-client";
+import { getServiceCallbackUiCopy } from "@/lib/service-callback-ui-copy";
+import { useCustomerIdentity } from "@/lib/use-customer-identity";
 
 type CallbackFields = Readonly<{
   company: string;
@@ -20,12 +24,46 @@ type CallbackFields = Readonly<{
 
 type CallbackFieldErrors = Partial<Record<"company" | "phone", string>>;
 
-type CallbackPackage = Readonly<{
+export type CallbackPackage = Readonly<{
   name: string;
   pricing: Readonly<{ label: string; note: string }>;
   slug: string;
   summary: string;
 }>;
+
+export function CallbackPackageOverview({
+  legend,
+  packages,
+}: {
+  legend: string;
+  packages: readonly CallbackPackage[];
+}) {
+  if (packages.length === 0) return null;
+
+  return (
+    <section className="space-y-3" aria-label={legend}>
+      <h3 className="text-sm font-semibold text-brand-blue">{legend}</h3>
+      {packages.map((servicePackage) => (
+        <div
+          key={servicePackage.slug}
+          className="rounded-[0.9rem] border border-dema-line bg-dema-paper p-4"
+        >
+          <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+            <p className="text-sm font-semibold text-brand-blue">
+              {servicePackage.name}
+            </p>
+            <p className="text-sm font-normal text-dema-muted">
+              {servicePackage.pricing.label}
+            </p>
+          </div>
+          <p className="mt-1.5 text-xs leading-relaxed text-dema-muted">
+            {servicePackage.summary}
+          </p>
+        </div>
+      ))}
+    </section>
+  );
+}
 
 const EMPTY_FIELDS: CallbackFields = {
   company: "",
@@ -41,12 +79,13 @@ export function isValidCallbackPhone(value: string) {
 }
 
 export function validateCallbackFields(fields: CallbackFields, localeCode: "fr" | "en" = "fr"): CallbackFieldErrors {
+  const ui = getServiceCallbackUiCopy(localeCode);
   const errors: CallbackFieldErrors = {};
   if (!fields.company.trim()) {
-    errors.company = localeCode === "en" ? "Enter your company name." : "Indiquez le nom de votre entreprise.";
+    errors.company = ui.companyError;
   }
-  if (!isValidCallbackPhone(fields.phone)) {
-    errors.phone = localeCode === "en" ? "Enter a valid contact number." : "Indiquez un numéro WhatsApp valide.";
+  if (localeCode === "fr" && !isValidCallbackPhone(fields.phone)) {
+    errors.phone = ui.phoneError;
   }
   return errors;
 }
@@ -102,8 +141,10 @@ export default function ServiceCallbackForm({
   source?: string;
   systemSlug?: string;
 }) {
+  const ui = getServiceCallbackUiCopy(localeCode);
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { email: authenticatedEmail, loading: identityLoading } = useCustomerIdentity();
   const formRef = useRef<HTMLFormElement>(null);
   const submissionInFlightRef = useRef(false);
   const [fields, setFields] = useState<CallbackFields>(EMPTY_FIELDS);
@@ -150,7 +191,7 @@ export default function ServiceCallbackForm({
         marketCode,
         idempotencyKey,
         packageSlug: selectedPackageSlug || undefined,
-        phone: fields.phone.trim(),
+        phone: localeCode === "fr" ? fields.phone.trim() : undefined,
         serviceSlug,
         source: source ?? searchParams.get("source") ?? undefined,
         sourcePage: pathname,
@@ -171,6 +212,35 @@ export default function ServiceCallbackForm({
   const fieldClassName =
     "mt-2 min-h-11 w-full rounded-[0.9rem] border border-dema-line bg-dema-paper px-4 py-3 text-sm text-brand-blue outline-none transition placeholder:text-dema-muted/70 focus:border-dema-forest/40 focus:ring-2 focus:ring-dema-forest/20";
 
+  if (localeCode === "en" && identityLoading) {
+    return (
+      <div className="mt-6 space-y-4">
+        <CallbackPackageOverview legend={ui.packageLegend} packages={packages} />
+        <div className="flex min-h-20 items-center justify-center text-sm text-dema-muted" role="status">
+          <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+          Checking your access…
+        </div>
+      </div>
+    );
+  }
+
+  if (localeCode === "en" && !authenticatedEmail) {
+    const query = searchParams.toString();
+    const returnTo = `${pathname}${query ? `?${query}` : ""}`;
+    return (
+      <div className="mt-6 space-y-4">
+        <CallbackPackageOverview legend={ui.packageLegend} packages={packages} />
+        <div className="rounded-[1rem] border border-dema-line bg-dema-sage/35 p-4 sm:p-5">
+          <CustomerSpaceAccessForm
+            choiceTitle="Sign in to send your request"
+            localeCode="en"
+            returnTo={returnTo}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <form ref={formRef} onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
       {packages.length > 0 ? (
@@ -180,7 +250,7 @@ export default function ServiceCallbackForm({
           className="space-y-3 disabled:pointer-events-none disabled:opacity-70"
         >
           <legend className="text-sm font-semibold text-brand-blue">
-            Choisissez le forfait à étudier
+            {ui.packageLegend}
           </legend>
           {packages.map((servicePackage) => {
             const selected = selectedPackageSlug === servicePackage.slug;
@@ -226,7 +296,7 @@ export default function ServiceCallbackForm({
       ) : null}
 
       <label className="block text-sm font-semibold text-brand-blue">
-        {localeCode === "en" ? "Company" : "Entreprise"}
+        {ui.company}
         <input
           name="company"
           autoComplete="organization"
@@ -244,32 +314,34 @@ export default function ServiceCallbackForm({
         ) : null}
       </label>
 
-      <label className="block text-sm font-semibold text-brand-blue">
-        {localeCode === "en" ? "Contact number" : "Numéro WhatsApp"}
-        <input
-          name="phone"
-          type="tel"
-          inputMode="tel"
-          autoComplete="tel"
-          placeholder={localeCode === "en" ? "+44 20 1234 5678" : "+33 6 12 34 56 78"}
-          maxLength={60}
-          value={fields.phone}
-          onChange={(event) => updateField("phone", event.target.value)}
-          aria-invalid={Boolean(errors.phone)}
-          aria-describedby={errors.phone
-            ? "callback-phone-help callback-phone-error"
-            : "callback-phone-help"}
-          className={fieldClassName}
-        />
-        <span id="callback-phone-help" className="mt-1.5 block text-xs font-normal leading-relaxed text-dema-muted">
-          {localeCode === "en" ? "We will contact you about this request within 24 to 48 hours." : "Nous vous recontacterons sur WhatsApp, uniquement au sujet de cette demande."}
-        </span>
-        {errors.phone ? (
-          <span id="callback-phone-error" className="mt-1.5 block text-xs font-medium text-red-700">
-            {errors.phone}
+      {localeCode === "fr" ? (
+        <label className="block text-sm font-semibold text-brand-blue">
+          {ui.phone}
+          <input
+            name="phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            placeholder={ui.phonePlaceholder}
+            maxLength={60}
+            value={fields.phone}
+            onChange={(event) => updateField("phone", event.target.value)}
+            aria-invalid={Boolean(errors.phone)}
+            aria-describedby={errors.phone
+              ? "callback-phone-help callback-phone-error"
+              : "callback-phone-help"}
+            className={fieldClassName}
+          />
+          <span id="callback-phone-help" className="mt-1.5 block text-xs font-normal leading-relaxed text-dema-muted">
+            {ui.phoneHelp}
           </span>
-        ) : null}
-      </label>
+          {errors.phone ? (
+            <span id="callback-phone-error" className="mt-1.5 block text-xs font-medium text-red-700">
+              {errors.phone}
+            </span>
+          ) : null}
+        </label>
+      ) : null}
 
       <input
         name="website"
@@ -288,29 +360,29 @@ export default function ServiceCallbackForm({
         aria-busy={status === "submitting"}
         className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-60"
       >
-        {status === "submitting" ? (localeCode === "en" ? "Sending…" : "Envoi…") : (localeCode === "en" ? "Send my request" : "Envoyer ma demande")}
+        {status === "submitting" ? ui.sending : ui.submit}
       </button>
 
       <p className="text-xs leading-relaxed text-dema-muted">
-        {localeCode === "en" ? `By sending this request, you agree that Demaa may contact you about ${serviceName}.` : `En envoyant cette demande, vous acceptez que Demaa vous contacte sur WhatsApp au sujet de ${serviceName}.`}{" "}
+        {ui.consent(serviceName)}{" "}
         <Link
           href="/politique-de-confidentialite"
           className="font-medium text-dema-forest underline underline-offset-2"
         >
-          {localeCode === "en" ? "Privacy policy (French)" : "Politique de confidentialité"}
+          {ui.privacy}
         </Link>
       </p>
 
       {status === "success" ? (
         <p role="status" className="text-sm font-medium text-dema-forest">
-          {localeCode === "en" ? "Request received. We will contact you within 24 to 48 hours." : "Demande reçue. Nous vous contacterons prochainement sur WhatsApp."}
+          {ui.success}
         </p>
       ) : null}
       {status === "error" ? (
         <p role="alert" className="text-sm font-medium text-red-700">
           {Object.keys(errors).length > 0
-            ? (localeCode === "en" ? "Correct the highlighted fields and try again." : "Corrigez les champs signalés avant de réessayer.")
-            : (localeCode === "en" ? "Your request could not be sent. Please try again." : "La demande n’a pas pu être envoyée. Merci de réessayer.")}
+            ? ui.invalid
+            : ui.failure}
         </p>
       ) : null}
     </form>
