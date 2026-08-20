@@ -16,13 +16,14 @@ import {
   getActionPlanWorkspacePageForIdentity,
 } from "@/lib/action-plan-storage.server";
 import { shouldRedirectAuthenticatedHomeToPlans } from "@/lib/action-plan-home-routing";
-import { getActiveDefaultCompanyContext } from "@/lib/company-membership.server";
 import { getCurrentCustomerAppIdentityFromSession } from "@/lib/customer-space-session.server";
 import {
-  GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT,
-  FRANCE_COMMERCIAL_CONTEXT,
   type InterfaceLocaleCode,
 } from "@/lib/international-context";
+import {
+  getConfiguredVisitorCommercialContext,
+  resolveAuthenticatedInternationalContext,
+} from "@/lib/international-context.server";
 
 type SearchValue = string | string[] | undefined;
 export type ActionPlanPageSearchParams = Record<string, SearchValue>;
@@ -55,12 +56,16 @@ export async function loadActionPlanHomePage(input: {
     redirect(unauthenticatedConfig.paths.latest);
   }
 
-  const companyContext = identity
-    ? await getActiveDefaultCompanyContext(identity.uid)
+  const authenticatedContext = identity
+    ? await resolveAuthenticatedInternationalContext({
+        identity,
+        localeCode: input.localeCode,
+      })
     : null;
   const config = getActionPlanPageConfig({
     localeCode: input.localeCode,
-    marketCode: companyContext?.marketCode ?? unauthenticatedConfig.marketCode,
+    marketCode: authenticatedContext?.internationalContext.marketCode
+      ?? unauthenticatedConfig.marketCode,
   });
 
   return {
@@ -75,11 +80,10 @@ export async function loadActionPlanHomePage(input: {
 }
 
 function getUnauthenticatedConfig(localeCode: InterfaceLocaleCode) {
+  const commercialContext = getConfiguredVisitorCommercialContext(localeCode);
   return getActionPlanPageConfig({
     localeCode,
-    marketCode: localeCode === "en"
-      ? GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT.marketCode
-      : FRANCE_COMMERCIAL_CONTEXT.marketCode,
+    marketCode: commercialContext.marketCode,
   });
 }
 

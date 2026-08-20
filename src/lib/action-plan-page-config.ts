@@ -18,21 +18,15 @@ const localePublishedViews = {
   Record<InterfaceLocaleCode, readonly ActionPlanView[]>
 >;
 
-const contextSupportedViews = {
-  fr: {
-    "fr-fr": ["plan", "solutions", "academy", "opportunities"],
-    "global-en-beta": ["plan"],
-  },
-  en: {
-    "fr-fr": ["plan"],
-    "global-en-beta": ["plan", "solutions", "academy"],
-  },
-} as const satisfies Readonly<
-  Record<
-    InterfaceLocaleCode,
-    Readonly<Record<MarketCode, readonly ActionPlanView[]>>
-  >
->;
+const marketCoachingAvailability = {
+  "fr-fr": true,
+  "global-en-beta": true,
+} as const satisfies Readonly<Record<MarketCode, boolean>>;
+
+const localePublishedCoaching = {
+  fr: true,
+  en: true,
+} as const satisfies Readonly<Record<InterfaceLocaleCode, boolean>>;
 
 const copy = defineLocaleDictionary({
   fr: {
@@ -73,13 +67,11 @@ export function getActionPlanPageConfig(input: {
 }) {
   const publishedViews = localePublishedViews[input.localeCode];
   const availableViews = marketViews[input.marketCode];
-  const supportedViews = contextSupportedViews[input.localeCode][input.marketCode];
   const visibleViews = (availableViews as readonly ActionPlanView[]).filter(
-    (view) => (publishedViews as readonly ActionPlanView[]).includes(view)
-      && (supportedViews as readonly ActionPlanView[]).includes(view),
+    (view) => (publishedViews as readonly ActionPlanView[]).includes(view),
   );
-  const showCoaching = (input.localeCode === "fr" && input.marketCode === "fr-fr")
-    || (input.localeCode === "en" && input.marketCode === "global-en-beta");
+  const showCoaching = marketCoachingAvailability[input.marketCode]
+    && localePublishedCoaching[input.localeCode];
 
   return {
     copy: copy[input.localeCode],

@@ -137,6 +137,17 @@ Contexte commercial résolu côté serveur
   référence comptable. Résoudre côté serveur le marché et la devise
   commerciale applicables à une offre ; ne jamais faire autorité d'une valeur
   envoyée par le navigateur.
+  - [x] Les surfaces Plans authentifiées résolvent désormais leur entreprise
+    active via un adaptateur serveur indépendant du stockage mono-entreprise
+    actuel, puis composent la locale d'interface avec le marché, le pays et la
+    devise de cette entreprise. Un contexte absent ou invalide échoue
+    explicitement et le DTO international n'expose aucun identifiant interne.
+    Le contexte visiteur est une configuration serveur explicite et les caches
+    Système/Academy exigent désormais `localeCode + marketCode` : aucun cache
+    client ne reconstruit le marché à partir de la seule langue.
+  - [ ] Étendre la même autorité serveur aux offres, demandes de service,
+    conversations, prix et notifications dans leurs lots dédiés ; ces routes
+    ne doivent plus accepter le navigateur comme autorité commerciale.
 - [ ] Conserver l'ordre de résolution de locale : route explicite, choix
   manuel, `member_preferences`, cookie visiteur, langue du navigateur lors de
   la première visite, français. Une route explicitement ouverte n'est jamais

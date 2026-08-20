@@ -12,6 +12,7 @@ import {
 import { ensureDefaultCompanyForIdentity } from "@/lib/company-membership.server";
 import { getSafeCustomerReturnTo } from "@/lib/customer-space-redirect";
 import { getReturnToInterfaceLocale } from "@/lib/international-context";
+import { getConfiguredVisitorCommercialContext } from "@/lib/international-context.server";
 
 type ConnexionPageProps = {
   searchParams: Promise<{
@@ -51,7 +52,10 @@ export default async function ConnexionPage({ searchParams }: ConnexionPageProps
   let companyContextUnavailable = false;
   if (identity) {
     try {
-      await ensureDefaultCompanyForIdentity(identity);
+      await ensureDefaultCompanyForIdentity(
+        identity,
+        getConfiguredVisitorCommercialContext(localeCode),
+      );
     } catch {
       companyContextUnavailable = true;
     }

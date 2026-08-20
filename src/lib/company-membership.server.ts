@@ -7,6 +7,7 @@ import { getAdminFirestore } from "@/lib/firebase-admin";
 import {
   FRANCE_CONTEXT,
   parseCommercialContext,
+  type CommercialContext,
   type InternationalContext,
 } from "@/lib/international-context";
 
@@ -117,6 +118,20 @@ export async function getActiveDefaultCompanyContext(
     : null;
 }
 
+/**
+ * Resolves the company currently available to an authenticated identity.
+ *
+ * Demaa currently has one deterministic company per account. Callers should
+ * use this identity-based adapter instead of depending on that storage detail,
+ * so a future membership selector can evolve here without changing every
+ * product surface.
+ */
+export async function getActiveCompanyContextForIdentity(
+  identity: Pick<CustomerSessionIdentity, "uid">,
+): Promise<ActiveCompanyContext | null> {
+  return getActiveDefaultCompanyContext(identity.uid);
+}
+
 export async function getActiveDefaultCompanyIdentityInTransaction(
   transaction: Transaction,
   uidValue: string,
@@ -180,6 +195,7 @@ function isActiveMembership(
 
 export async function ensureDefaultCompanyForIdentity(
   identity: CustomerSessionIdentity,
+  initialCommercialContext: CommercialContext = FRANCE_CONTEXT,
 ): Promise<ActiveCompanyContext> {
   const uid = normalizeUid(identity.uid);
   const companyIdentity = getDefaultCompanyIdentity(uid);
@@ -215,11 +231,7 @@ export async function ensureDefaultCompanyForIdentity(
 
     const internationalContext = companySnapshot.exists
       ? parseCompanyInternationalContext(company)
-      : {
-          countryCode: FRANCE_CONTEXT.countryCode,
-          currencyCode: FRANCE_CONTEXT.currencyCode,
-          marketCode: FRANCE_CONTEXT.marketCode,
-        };
+      : parseCommercialContext(initialCommercialContext);
     if (!internationalContext) {
       throw new Error("The default company commercial context is invalid.");
     }
@@ -228,9 +240,9 @@ export async function ensureDefaultCompanyForIdentity(
       transaction.set(companyReference, {
         schema_version: "1",
         display_name: null,
-        country_code: FRANCE_CONTEXT.countryCode,
-        currency_code: FRANCE_CONTEXT.currencyCode,
-        market_code: FRANCE_CONTEXT.marketCode,
+        country_code: internationalContext.countryCode,
+        currency_code: internationalContext.currencyCode,
+        market_code: internationalContext.marketCode,
         status: "active",
         created_by_uid: uid,
         created_at: now,

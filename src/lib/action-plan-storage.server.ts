@@ -11,7 +11,7 @@ import {
 } from "@/lib/action-plan-workspace";
 import {
   ensureDefaultCompanyForIdentity,
-  getActiveDefaultCompanyContext,
+  getActiveCompanyContextForIdentity,
   getActiveDefaultCompanyIdentity,
   getActiveDefaultCompanyIdentityInTransaction,
   type ActiveCompanyContext,
@@ -864,7 +864,7 @@ export async function getActionPlanIndexForIdentity(
 export async function getActionPlanIndexPageForIdentity(
   identity: CustomerSessionIdentity,
 ): Promise<ActionPlanIndexPageData> {
-  const company = await getActiveDefaultCompanyContext(identity.uid);
+  const company = await getActiveCompanyContextForIdentity(identity);
   if (!company) throw new Error("The active company context is unavailable.");
 
   const snapshot = await getAdminFirestore()
@@ -882,7 +882,7 @@ export async function getActionPlanWorkspacePageForIdentity(
   identity: CustomerSessionIdentity,
   id: string,
 ): Promise<ActionPlanWorkspacePageData> {
-  const company = await getActiveDefaultCompanyContext(identity.uid);
+  const company = await getActiveCompanyContextForIdentity(identity);
   if (!company) {
     return { companyContext: null, generationState: null, plans: [] };
   }

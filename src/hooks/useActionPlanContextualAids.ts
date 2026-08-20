@@ -65,11 +65,15 @@ export function useActionPlanContextualAids(input: {
     const cacheKey = getActionPlanSystemPayloadCacheKey(
       input.systemId,
       demoMode,
+      "fr",
+      "fr-fr",
     );
 
     void loadActionPlanSystemPayload({
       cacheKey,
       demoMode,
+      localeCode: "fr",
+      marketCode: "fr-fr",
       systemId: input.systemId,
     }).then((payload) => {
       if (!active) return;

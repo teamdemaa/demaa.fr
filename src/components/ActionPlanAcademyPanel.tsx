@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { LoaderCircle, RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 import AcademyIndexClient from "@/components/AcademyIndexClient";
+import type { InterfaceLocaleCode, MarketCode } from "@/lib/international-context";
 import {
   getActionPlanAcademyPayloadCacheKey,
   invalidateActionPlanAcademyPayload,
@@ -23,8 +24,8 @@ export default function ActionPlanAcademyPanel({
   showStructureNewsletter = false,
 }: {
   initialContentSlug?: string;
-  localeCode?: "fr" | "en";
-  marketCode?: string;
+  localeCode?: InterfaceLocaleCode;
+  marketCode?: MarketCode;
   onContentChange?: (contentSlug?: string) => void;
   showStructureNewsletter?: boolean;
 }) {

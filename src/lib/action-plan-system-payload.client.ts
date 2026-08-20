@@ -1,6 +1,7 @@
 "use client";
 
 import type { SystemeDetail } from "@/lib/systeme-catalog";
+import type { InterfaceLocaleCode, MarketCode } from "@/lib/international-context";
 import type { SystemResource } from "@/lib/system-resource-catalog";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { System } from "@/lib/types";
@@ -19,8 +20,8 @@ const pendingPayloads = new Map<string, Promise<ActionPlanSystemPayload>>();
 export function getActionPlanSystemPayloadCacheKey(
   systemId: string,
   demoMode: boolean,
-  localeCode: "fr" | "en" = "fr",
-  marketCode = localeCode === "en" ? "global-en-beta" : "fr-fr",
+  localeCode: InterfaceLocaleCode,
+  marketCode: MarketCode,
 ) {
   return `${demoMode ? "demo" : "live"}:${localeCode}:${marketCode}:${systemId}`;
 }
@@ -38,8 +39,8 @@ export async function loadActionPlanSystemPayload(input: {
   cacheKey: string;
   demoMode: boolean;
   systemId: string;
-  localeCode?: "fr" | "en";
-  marketCode?: string;
+  localeCode: InterfaceLocaleCode;
+  marketCode: MarketCode;
 }) {
   const cached = payloadCache.get(input.cacheKey);
   if (cached) return cached;
@@ -49,8 +50,8 @@ export async function loadActionPlanSystemPayload(input: {
 
   const query = new URLSearchParams();
   if (input.demoMode) query.set("demo", "1");
-  if (input.localeCode) query.set("locale", input.localeCode);
-  if (input.marketCode) query.set("market", input.marketCode);
+  query.set("locale", input.localeCode);
+  query.set("market", input.marketCode);
   const queryString = query.size ? `?${query.toString()}` : "";
   const request = fetch(
     `/api/action-plan/system/${encodeURIComponent(input.systemId)}${queryString}`,

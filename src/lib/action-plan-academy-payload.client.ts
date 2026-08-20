@@ -1,6 +1,7 @@
 "use client";
 
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
+import type { InterfaceLocaleCode, MarketCode } from "@/lib/international-context";
 import type { PublicLiveTraining } from "@/lib/live-session-catalog";
 
 export type ActionPlanAcademyPayload = Readonly<{
@@ -13,8 +14,8 @@ const pendingPayloads = new Map<string, Promise<ActionPlanAcademyPayload>>();
 const cacheVersions = new Map<string, number>();
 
 export function getActionPlanAcademyPayloadCacheKey(
-  localeCode: "fr" | "en" = "fr",
-  marketCode = localeCode === "en" ? "global-en-beta" : "fr-fr",
+  localeCode: InterfaceLocaleCode,
+  marketCode: MarketCode,
 ) {
   return `${localeCode}:${marketCode}`;
 }
@@ -29,13 +30,13 @@ function isActionPlanAcademyPayload(
 }
 
 export function readCachedActionPlanAcademyPayload(
-  cacheKey = getActionPlanAcademyPayloadCacheKey(),
+  cacheKey: string,
 ) {
   return payloadCache.get(cacheKey) ?? null;
 }
 
 export function invalidateActionPlanAcademyPayload(
-  cacheKey = getActionPlanAcademyPayloadCacheKey(),
+  cacheKey: string,
 ) {
   cacheVersions.set(cacheKey, (cacheVersions.get(cacheKey) ?? 0) + 1);
   payloadCache.delete(cacheKey);
@@ -43,12 +44,10 @@ export function invalidateActionPlanAcademyPayload(
 }
 
 export function loadActionPlanAcademyPayload(input: {
-  localeCode?: "fr" | "en";
-  marketCode?: string;
-} = {}): Promise<ActionPlanAcademyPayload> {
-  const localeCode = input.localeCode ?? "fr";
-  const marketCode = input.marketCode
-    ?? (localeCode === "en" ? "global-en-beta" : "fr-fr");
+  localeCode: InterfaceLocaleCode;
+  marketCode: MarketCode;
+}): Promise<ActionPlanAcademyPayload> {
+  const { localeCode, marketCode } = input;
   const cacheKey = getActionPlanAcademyPayloadCacheKey(localeCode, marketCode);
   const cached = payloadCache.get(cacheKey);
   if (cached) return Promise.resolve(cached);

@@ -43,11 +43,13 @@ import {
   buildCompanyMembershipId,
   buildDefaultCompanyId,
   ensureDefaultCompanyForIdentity,
+  getActiveCompanyContextForIdentity,
   getActiveDefaultCompanyContext,
   getActiveDefaultCompanyIdentity,
   hasActiveCompanyMembership,
   parseCompanyInternationalContext,
 } from "@/lib/company-membership.server";
+import { EUR_CURRENCY_CODE } from "@/lib/international-context";
 
 function identity(uid: string) {
   return { email: `${uid}@example.com`, provider: "password" as const, uid };
@@ -75,6 +77,25 @@ describe("company membership foundation", () => {
       member_uid: "owner-uid",
       role: "owner",
       status: "active",
+    });
+  });
+
+  it("uses the explicit server entry context only when creating a company", async () => {
+    const first = await ensureDefaultCompanyForIdentity(identity("global-owner"), {
+      countryCode: null,
+      currencyCode: EUR_CURRENCY_CODE,
+      marketCode: "global-en-beta",
+    });
+    await ensureDefaultCompanyForIdentity(identity("global-owner"), {
+      countryCode: "FR",
+      currencyCode: EUR_CURRENCY_CODE,
+      marketCode: "fr-fr",
+    });
+
+    expect(firestore.documents.get(`companies/${first.companyId}`)).toMatchObject({
+      country_code: null,
+      currency_code: "EUR",
+      market_code: "global-en-beta",
     });
   });
 
@@ -151,6 +172,15 @@ describe("company membership foundation", () => {
       marketCode: "fr-fr",
     });
     await expect(getActiveDefaultCompanyIdentity("other-uid")).resolves.toBeNull();
+  });
+
+  it("resolves the active company through the identity adapter", async () => {
+    const owner = identity("owner-uid");
+    const company = await ensureDefaultCompanyForIdentity(owner);
+
+    await expect(getActiveCompanyContextForIdentity(owner)).resolves.toEqual(company);
+    await expect(getActiveCompanyContextForIdentity(identity("other-uid")))
+      .resolves.toBeNull();
   });
 
   it("fails closed when an active company has an invalid commercial context", async () => {

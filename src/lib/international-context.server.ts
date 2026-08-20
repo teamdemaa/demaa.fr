@@ -1,10 +1,19 @@
 import "server-only";
 
 import { cookies, headers } from "next/headers";
+import type { CustomerSessionIdentity } from "@/lib/customer-space-auth";
 import { getCurrentCustomerIdentityFromSession } from "@/lib/customer-space-session.server";
 import {
+  getActiveCompanyContextForIdentity,
+  type ActiveCompanyContext,
+} from "@/lib/company-membership.server";
+import {
+  FRANCE_COMMERCIAL_CONTEXT,
+  GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT,
   LOCALE_PREFERENCE_COOKIE,
   type CommercialContext,
+  type InterfaceLocaleCode,
+  type InternationalContext,
   createInternationalContext,
   getExplicitInterfaceLocaleFromPathname,
   normalizeInterfaceLocaleCode,
@@ -55,4 +64,49 @@ export async function resolveRequestInternationalContext(input: {
 }) {
   const localeCode = await resolveRequestInterfaceLocale(input);
   return createInternationalContext(localeCode, input.commercialContext);
+}
+
+/**
+ * Returns the explicit server configuration used before authentication.
+ * This is a product entry-point decision, not a general locale-to-market
+ * inference. Authenticated surfaces must use the company resolver below.
+ */
+export function getConfiguredVisitorCommercialContext(
+  localeCode: InterfaceLocaleCode,
+): CommercialContext {
+  return localeCode === "en"
+    ? GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT
+    : FRANCE_COMMERCIAL_CONTEXT;
+}
+
+export type AuthenticatedInternationalContext = Readonly<{
+  companyContext: ActiveCompanyContext;
+  internationalContext: InternationalContext;
+}>;
+
+/**
+ * Builds the international context for an authenticated product surface.
+ * Locale is a presentation choice; market, country and currency remain
+ * server-owned company data and are never accepted from the browser here.
+ */
+export async function resolveAuthenticatedInternationalContext(input: {
+  identity: Pick<CustomerSessionIdentity, "uid">;
+  localeCode: InterfaceLocaleCode;
+}): Promise<AuthenticatedInternationalContext> {
+  const companyContext = await getActiveCompanyContextForIdentity(input.identity);
+  if (!companyContext) {
+    throw new Error("The active company context is unavailable.");
+  }
+
+  return {
+    companyContext,
+    internationalContext: createInternationalContext(
+      input.localeCode,
+      {
+        countryCode: companyContext.countryCode,
+        currencyCode: companyContext.currencyCode,
+        marketCode: companyContext.marketCode,
+      },
+    ),
+  };
 }

@@ -88,13 +88,34 @@ describe("Firebase customer session route", () => {
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual({ redirectTo: "/plans" });
     expect(mocks.createCustomerSession).toHaveBeenCalledWith("id-token");
-    expect(mocks.ensureDefaultCompanyForIdentity).toHaveBeenCalledWith({
-      email: "owner@example.com",
-      provider: "password",
-      uid: "owner-uid",
-    });
+    expect(mocks.ensureDefaultCompanyForIdentity).toHaveBeenCalledWith(
+      {
+        email: "owner@example.com",
+        provider: "password",
+        uid: "owner-uid",
+      },
+      {
+        countryCode: null,
+        currencyCode: "EUR",
+        marketCode: "fr-fr",
+      },
+    );
     expect(response.headers.get("set-cookie")).toContain("demaa_session=firebase-session-cookie");
     expect(response.headers.get("set-cookie")).toContain("HttpOnly");
+  });
+
+  it("provisions a new English entry in the configured global beta market", async () => {
+    const response = await POST(request({ idToken: "id-token", returnTo: "/en/plans" }));
+
+    expect(response.status).toBe(200);
+    expect(mocks.ensureDefaultCompanyForIdentity).toHaveBeenCalledWith(
+      expect.objectContaining({ uid: "owner-uid" }),
+      {
+        countryCode: null,
+        currencyCode: "EUR",
+        marketCode: "global-en-beta",
+      },
+    );
   });
 
   it("rejects an unsupported or expired Firebase identity", async () => {

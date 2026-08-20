@@ -14,8 +14,10 @@ import {
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import {
   LOCALE_PREFERENCE_COOKIE,
+  getReturnToInterfaceLocale,
   normalizeInterfaceLocaleCode,
 } from "@/lib/international-context";
+import { getConfiguredVisitorCommercialContext } from "@/lib/international-context.server";
 import { saveMemberLocalePreference } from "@/lib/member-locale-preference.server";
 
 export const runtime = "nodejs";
@@ -93,7 +95,10 @@ export async function POST(request: Request) {
   }
 
   try {
-    await ensureDefaultCompanyForIdentity(session.identity);
+    await ensureDefaultCompanyForIdentity(
+      session.identity,
+      getConfiguredVisitorCommercialContext(getReturnToInterfaceLocale(returnTo)),
+    );
   } catch (error) {
     console.error(
       "[auth-session] Company provisioning failed",
