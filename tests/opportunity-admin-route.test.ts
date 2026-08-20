@@ -103,7 +103,35 @@ describe("opportunity admin route", () => {
 
   it("requires an authenticated admin session", async () => {
     mocks.getCurrentAdminIdentity.mockResolvedValueOnce(null);
-    expect((await GET(request("GET"))).status).toBe(401);
+    const response = await GET(request("GET"));
+    expect(response.status).toBe(401);
+    expect(response.headers.get("cache-control")).toBe("private, no-store, max-age=0");
+    expect(mocks.enforceRateLimit).toHaveBeenCalledWith(
+      expect.any(Request),
+      expect.objectContaining({ keyPrefix: "opportunity-admin-read" }),
+    );
+    expect(mocks.enforceRateLimit.mock.invocationCallOrder[0]).toBeLessThan(
+      mocks.getCurrentAdminIdentity.mock.invocationCallOrder[0],
+    );
+  });
+
+  it("rate-limits updates before checking the admin session", async () => {
+    mocks.enforceRateLimit.mockResolvedValueOnce(
+      new Response(JSON.stringify({ error: "Trop de requêtes." }), { status: 429 }),
+    );
+
+    const response = await PATCH(request("PATCH", {
+      opportunityId: "campagne-google",
+      status: "closed",
+    }));
+
+    expect(response.status).toBe(429);
+    expect(response.headers.get("cache-control")).toBe("private, no-store, max-age=0");
+    expect(mocks.enforceRateLimit).toHaveBeenCalledWith(
+      expect.any(Request),
+      expect.objectContaining({ keyPrefix: "opportunity-admin-update" }),
+    );
+    expect(mocks.getCurrentAdminIdentity).not.toHaveBeenCalled();
   });
 
   it("creates an open Firebase opportunity and invalidates the public cache", async () => {
@@ -123,6 +151,7 @@ describe("opportunity admin route", () => {
       workMode: "hybrid",
     }));
     expect(response.status).toBe(201);
+    expect(response.headers.get("cache-control")).toBe("private, no-store, max-age=0");
     expect(mocks.createOpportunity).toHaveBeenCalledWith(expect.objectContaining({
       expertiseId: "google-ads",
       opportunityType: "partenariat",
