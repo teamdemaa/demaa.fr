@@ -117,6 +117,20 @@ export async function getActiveDefaultCompanyContext(
     : null;
 }
 
+/**
+ * Resolves the company currently available to an authenticated identity.
+ *
+ * Demaa currently has one deterministic company per account. Callers should
+ * use this identity-based adapter instead of depending on that storage detail,
+ * so a future membership selector can evolve here without changing every
+ * product surface.
+ */
+export async function getActiveCompanyContextForIdentity(
+  identity: Pick<CustomerSessionIdentity, "uid">,
+): Promise<ActiveCompanyContext | null> {
+  return getActiveDefaultCompanyContext(identity.uid);
+}
+
 export async function getActiveDefaultCompanyIdentityInTransaction(
   transaction: Transaction,
   uidValue: string,

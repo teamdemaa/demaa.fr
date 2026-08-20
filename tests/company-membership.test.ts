@@ -43,6 +43,7 @@ import {
   buildCompanyMembershipId,
   buildDefaultCompanyId,
   ensureDefaultCompanyForIdentity,
+  getActiveCompanyContextForIdentity,
   getActiveDefaultCompanyContext,
   getActiveDefaultCompanyIdentity,
   hasActiveCompanyMembership,
@@ -151,6 +152,15 @@ describe("company membership foundation", () => {
       marketCode: "fr-fr",
     });
     await expect(getActiveDefaultCompanyIdentity("other-uid")).resolves.toBeNull();
+  });
+
+  it("resolves the active company through the identity adapter", async () => {
+    const owner = identity("owner-uid");
+    const company = await ensureDefaultCompanyForIdentity(owner);
+
+    await expect(getActiveCompanyContextForIdentity(owner)).resolves.toEqual(company);
+    await expect(getActiveCompanyContextForIdentity(identity("other-uid")))
+      .resolves.toBeNull();
   });
 
   it("fails closed when an active company has an invalid commercial context", async () => {
