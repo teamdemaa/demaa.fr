@@ -30,7 +30,6 @@ export type ActionPlanModelAid = Readonly<{
 }>;
 
 export type ActionPlanSolutionAid = Readonly<{
-  alreadySelected: boolean;
   description: string;
   kind: "accompaniment" | "tool";
   label: string;
@@ -412,8 +411,12 @@ type ScoredSolutionAid = Readonly<{
   score: number;
 }>;
 
-const DELEGATION_PATTERN =
-  /\b(aid|accompagn|confier|deleg|externalis|faire faire|mettre en place|prestataire|professionnel|sous trait|trouver quelqu)\w*/;
+// A service card is commercial, so a matching business topic is not enough.
+// Require language that clearly asks another person to take responsibility for
+// the work. Broad wording such as "aide", "accompagnement" or "mettre en
+// place" is deliberately excluded to avoid unsolicited upsell.
+const EXPLICIT_DELEGATION_PATTERN =
+  /\b(confier\w*|deleg\w*|externalis\w*|mandater\w*|solliciter\w*|sous trait\w*|faire (?:appel|faire|gerer|prendre en charge|realiser|valider)\w*|trouver (?:un |une |le |la )?(?:expert|prestataire|professionnel|specialiste|quelqu)\w*)/;
 
 const SOFTWARE_CAPABILITY_PATTERN =
   /\b(automatis|centralis|connect|crm|en ligne|integr|logiciel|multi utilisateur|outil|planning|rendez vous|synchron|temps reel|workflow)\w*/;
@@ -486,14 +489,12 @@ function textMentionsTool(
 }
 
 function toSolutionAid(input: {
-  alreadySelected: boolean;
   kind: ActionPlanSolutionAid["kind"];
   placement: RenderableSolutionPlacementDto;
   relationship?: ActionPlanSolutionAid["relationship"];
   systemId: string;
 }): ActionPlanSolutionAid {
   return {
-    alreadySelected: input.alreadySelected,
     description: input.placement.usage,
     kind: input.kind,
     label: input.placement.resource.name,
@@ -552,8 +553,6 @@ function findToolAid(
   return {
     actionId: action.id,
     aid: toSolutionAid({
-      alreadySelected:
-        bestIsSelected || bestIsMentioned,
       kind: "tool",
       placement: best.candidate,
       relationship: bestIsSelected
@@ -580,10 +579,7 @@ function serviceMatchesAction(
   ) return false;
   const intentPattern = SERVICE_INTENT_PATTERNS[slug];
   if (!intentPattern?.test(actionText)) return false;
-
-  return slug === "expert-comptable" ||
-    slug === "formalites-entreprise" ||
-    DELEGATION_PATTERN.test(actionText);
+  return EXPLICIT_DELEGATION_PATTERN.test(actionText);
 }
 
 function findAccompanimentAid(
@@ -616,7 +612,6 @@ function findAccompanimentAid(
   return {
     actionId: action.id,
     aid: toSolutionAid({
-      alreadySelected: input.selectedPlacementIds.has(best.placementId),
       kind: "accompaniment",
       placement: best,
       relationship: input.selectedPlacementIds.has(best.placementId)

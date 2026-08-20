@@ -353,7 +353,6 @@ describe("action plan contextual aids", () => {
     expect(tools).toHaveLength(2);
     expect(new Set(tools.map(({ resourceSlug }) => resourceSlug)).size).toBe(2);
     expect(tools).toContainEqual(expect.objectContaining({
-      alreadySelected: true,
       relationship: "selected_in_solutions",
       resourceSlug: "pipedrive",
     }));
@@ -473,7 +472,6 @@ describe("action plan contextual aids", () => {
     });
 
     expect(aids["action-1"]?.tool).toMatchObject({
-      alreadySelected: true,
       relationship: "already_in_use",
       resourceSlug: "pipedrive",
     });
@@ -492,7 +490,6 @@ describe("action plan contextual aids", () => {
     });
 
     expect(aids["action-1"]?.tool).toMatchObject({
-      alreadySelected: true,
       relationship: "already_in_use",
       resourceSlug: "pennylane",
     });
@@ -511,7 +508,6 @@ describe("action plan contextual aids", () => {
     });
 
     expect(aids["action-1"]?.tool).toMatchObject({
-      alreadySelected: false,
       relationship: "named_in_action",
       resourceSlug: "pennylane",
     });
@@ -541,6 +537,101 @@ describe("action plan contextual aids", () => {
       accompaniment ? [accompaniment] : []);
     expect(aidsList).toHaveLength(1);
     expect(aidsList[0]?.resourceSlug).not.toBe("coach-business");
+  });
+
+  it.each([
+    {
+      objective: "Préparer le bilan, la liasse fiscale et la déclaration de TVA.",
+      title: "Finaliser la clôture comptable",
+    },
+    {
+      objective: "Préparer les pièces nécessaires à la modification des statuts.",
+      title: "Modifier les statuts de l’entreprise",
+    },
+    {
+      objective: "Connecter les outils et supprimer les ressaisies manuelles.",
+      title: "Mettre en place un workflow automatisé",
+    },
+    {
+      objective: "Comparer les tarifs des professionnels pour le bilan et la liasse fiscale.",
+      title: "Étudier le marché des experts-comptables",
+    },
+  ])("does not turn an explicit business topic into an unsolicited service", (input) => {
+    const aids = buildActionPlanContextualAids({
+      actions: [action(input)],
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    expect(aids["action-1"]?.accompaniment).toBeNull();
+  });
+
+  it.each([
+    {
+      expectedSlug: "expert-comptable",
+      objective: "Faire appel à un professionnel pour le bilan et la liasse fiscale.",
+      title: "Confier la clôture comptable",
+    },
+    {
+      expectedSlug: "formalites-entreprise",
+      objective: "Trouver un prestataire pour préparer et déposer la modification des statuts.",
+      title: "Déléguer les formalités d’entreprise",
+    },
+    {
+      expectedSlug: "automatisation-processus",
+      objective: "Confier à un spécialiste la connexion des outils et la suppression des ressaisies.",
+      title: "Externaliser l’automatisation du workflow",
+    },
+  ])("keeps a service when both the need and delegation are explicit", ({ expectedSlug, ...input }) => {
+    const aids = buildActionPlanContextualAids({
+      actions: [action(input)],
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    expect(aids["action-1"]?.accompaniment).toMatchObject({
+      relationship: "suggested",
+      resourceSlug: expectedSlug,
+    });
+  });
+
+  it("removes a service after the current action no longer asks for delegation", () => {
+    const plan = structuredClone(ACTION_PLAN_DEMO);
+    const workspace = createActionPlanWorkspaceState(plan);
+    workspace.tasks["action-1"].overrides = {
+      objective: "Confier à un spécialiste la connexion des outils et la suppression des ressaisies.",
+      title: "Déléguer l’automatisation du workflow",
+    };
+    const delegatedActions = getEffectiveActionPlanActionsForContextualAids(plan, workspace);
+    const before = buildActionPlanContextualAids({
+      actions: delegatedActions,
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    workspace.tasks["action-1"].overrides = {
+      objective: "Documenter le workflow actuel et supprimer une ressaisie simple en interne.",
+      title: "Cartographier le workflow",
+    };
+    const editedActions = getEffectiveActionPlanActionsForContextualAids(plan, workspace);
+    const after = buildActionPlanContextualAids({
+      actions: editedActions,
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    expect(before["action-1"]?.accompaniment?.resourceSlug).toBe(
+      "automatisation-processus",
+    );
+    expect(after["action-1"]?.accompaniment).toBeNull();
   });
 
   it("never reintroduces a private solution section", () => {
