@@ -4,30 +4,44 @@ export type InterfaceLocaleCode = (typeof INTERFACE_LOCALE_CODES)[number];
 export const MARKET_CODES = ["fr-fr", "global-en-beta"] as const;
 export type MarketCode = (typeof MARKET_CODES)[number];
 
-export type CurrencyCode = "EUR";
+declare const currencyCodeBrand: unique symbol;
+export type CurrencyCode = string & { readonly [currencyCodeBrand]: true };
 
-export type InternationalContext = Readonly<{
+export type CommercialContext = Readonly<{
   countryCode: string | null;
   currencyCode: CurrencyCode;
-  localeCode: InterfaceLocaleCode;
   marketCode: MarketCode;
+}>;
+
+export type InternationalContext = CommercialContext & Readonly<{
+  localeCode: InterfaceLocaleCode;
 }>;
 
 export const LOCALE_PREFERENCE_COOKIE = "demaa_locale";
 export const LOCALE_PREFERENCE_MAX_AGE_SECONDS = 180 * 24 * 60 * 60;
 
-export const FRANCE_CONTEXT: InternationalContext = {
+export const EUR_CURRENCY_CODE = "EUR" as CurrencyCode;
+
+export const FRANCE_COMMERCIAL_CONTEXT: CommercialContext = {
   countryCode: null,
-  currencyCode: "EUR",
-  localeCode: "fr",
+  currencyCode: EUR_CURRENCY_CODE,
   marketCode: "fr-fr",
 };
 
-export const ENGLISH_BETA_CONTEXT: InternationalContext = {
+export const GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT: CommercialContext = {
   countryCode: null,
-  currencyCode: "EUR",
-  localeCode: "en",
+  currencyCode: EUR_CURRENCY_CODE,
   marketCode: "global-en-beta",
+};
+
+export const FRANCE_CONTEXT: InternationalContext = {
+  ...FRANCE_COMMERCIAL_CONTEXT,
+  localeCode: "fr",
+};
+
+export const ENGLISH_BETA_CONTEXT: InternationalContext = {
+  ...GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT,
+  localeCode: "en",
 };
 
 export function isInterfaceLocaleCode(
@@ -35,6 +49,52 @@ export function isInterfaceLocaleCode(
 ): value is InterfaceLocaleCode {
   return typeof value === "string"
     && INTERFACE_LOCALE_CODES.includes(value as InterfaceLocaleCode);
+}
+
+export function isMarketCode(value: unknown): value is MarketCode {
+  return typeof value === "string"
+    && MARKET_CODES.includes(value as MarketCode);
+}
+
+export function normalizeCountryCode(value: unknown): string | null {
+  if (value == null || value === "") return null;
+  if (typeof value !== "string") return null;
+  const countryCode = value.trim().toUpperCase();
+  return /^[A-Z]{2}$/.test(countryCode) ? countryCode : null;
+}
+
+export function normalizeCurrencyCode(value: unknown): CurrencyCode | null {
+  if (typeof value !== "string") return null;
+  const currencyCode = value.trim().toUpperCase();
+  return /^[A-Z]{3}$/.test(currencyCode)
+    ? currencyCode as CurrencyCode
+    : null;
+}
+
+export function parseCommercialContext(input: {
+  countryCode?: unknown;
+  currencyCode?: unknown;
+  marketCode?: unknown;
+}): CommercialContext | null {
+  if (!isMarketCode(input.marketCode)) return null;
+  const currencyCode = normalizeCurrencyCode(input.currencyCode);
+  if (!currencyCode) return null;
+  if (input.countryCode != null && input.countryCode !== "") {
+    const countryCode = normalizeCountryCode(input.countryCode);
+    if (!countryCode) return null;
+  }
+  return {
+    countryCode: normalizeCountryCode(input.countryCode),
+    currencyCode,
+    marketCode: input.marketCode,
+  };
+}
+
+export function createInternationalContext(
+  localeCode: InterfaceLocaleCode,
+  commercialContext: CommercialContext,
+): InternationalContext {
+  return { ...commercialContext, localeCode };
 }
 
 export function normalizeInterfaceLocaleCode(
@@ -93,12 +153,6 @@ export function resolveInterfaceLocale(input: {
     ?? normalizeInterfaceLocaleCode(input.cookiePreference)
     ?? getBrowserInterfaceLocale(input.acceptLanguage)
     ?? "fr";
-}
-
-export function getInternationalContext(
-  localeCode: InterfaceLocaleCode,
-): InternationalContext {
-  return localeCode === "en" ? ENGLISH_BETA_CONTEXT : FRANCE_CONTEXT;
 }
 
 export function getClientInterfaceLocale(

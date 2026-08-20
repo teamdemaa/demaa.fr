@@ -12,7 +12,8 @@ describe("hidden English beta foundation", () => {
     expect(page).toContain("notFound()");
     expect(page).toContain("robots: { follow: false, index: false }");
     expect(page).toContain('canonical: "/en"');
-    expect(page).toContain("resolveRequestInternationalContext({ pathname: \"/en\" })");
+    expect(page).toContain("commercialContext: GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT");
+    expect(page).toContain('pathname: "/en"');
     expect(page).toContain("<DocumentLocale localeCode={context.localeCode}");
     expect(page).toContain("document.documentElement.lang=");
   });

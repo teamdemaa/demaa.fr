@@ -4,14 +4,15 @@ import { cookies, headers } from "next/headers";
 import { getCurrentCustomerIdentityFromSession } from "@/lib/customer-space-session.server";
 import {
   LOCALE_PREFERENCE_COOKIE,
+  type CommercialContext,
+  createInternationalContext,
   getExplicitInterfaceLocaleFromPathname,
-  getInternationalContext,
   normalizeInterfaceLocaleCode,
   resolveInterfaceLocale,
 } from "@/lib/international-context";
 import { readMemberLocalePreference } from "@/lib/member-locale-preference.server";
 
-export async function resolveRequestInternationalContext(input: {
+export async function resolveRequestInterfaceLocale(input: {
   manualPreference?: unknown;
   pathname?: string | null;
 } = {}) {
@@ -20,10 +21,10 @@ export async function resolveRequestInternationalContext(input: {
   const explicitLocale = pathname
     ? getExplicitInterfaceLocaleFromPathname(pathname)
     : normalizeInterfaceLocaleCode(headerStore.get("x-demaa-locale"));
-  if (explicitLocale) return getInternationalContext(explicitLocale);
+  if (explicitLocale) return explicitLocale;
 
   const manualLocale = normalizeInterfaceLocaleCode(input.manualPreference);
-  if (manualLocale) return getInternationalContext(manualLocale);
+  if (manualLocale) return manualLocale;
 
   const [cookieStore, identity] = await Promise.all([
     cookies(),
@@ -40,10 +41,18 @@ export async function resolveRequestInternationalContext(input: {
       );
     }
   }
-  const localeCode = resolveInterfaceLocale({
+  return resolveInterfaceLocale({
     acceptLanguage: headerStore.get("accept-language"),
     cookiePreference: cookieStore.get(LOCALE_PREFERENCE_COOKIE)?.value,
     memberPreference,
   });
-  return getInternationalContext(localeCode);
+}
+
+export async function resolveRequestInternationalContext(input: {
+  commercialContext: CommercialContext;
+  manualPreference?: unknown;
+  pathname?: string | null;
+}) {
+  const localeCode = await resolveRequestInterfaceLocale(input);
+  return createInternationalContext(localeCode, input.commercialContext);
 }

@@ -43,9 +43,10 @@ import {
   buildCompanyMembershipId,
   buildDefaultCompanyId,
   ensureDefaultCompanyForIdentity,
+  getActiveDefaultCompanyContext,
   getActiveDefaultCompanyIdentity,
   hasActiveCompanyMembership,
-  readCompanyInternationalContext,
+  parseCompanyInternationalContext,
 } from "@/lib/company-membership.server";
 
 function identity(uid: string) {
@@ -86,20 +87,25 @@ describe("company membership foundation", () => {
   });
 
   it("keeps company market, country, and currency independent from interface language", () => {
-    expect(readCompanyInternationalContext(undefined)).toEqual({
+    expect(parseCompanyInternationalContext({
+      country_code: "GB",
+      currency_code: "GBP",
+      market_code: "global-en-beta",
+    })).toEqual({
+      countryCode: "GB",
+      currencyCode: "GBP",
+      marketCode: "global-en-beta",
+    });
+    expect(parseCompanyInternationalContext(undefined)).toEqual({
       countryCode: null,
       currencyCode: "EUR",
       marketCode: "fr-fr",
     });
-    expect(readCompanyInternationalContext({
-      country_code: "GB",
-      currency_code: "EUR",
-      market_code: "global-en-beta",
-    })).toEqual({
-      countryCode: "GB",
-      currencyCode: "EUR",
-      marketCode: "global-en-beta",
-    });
+    expect(parseCompanyInternationalContext({
+      country_code: "invalid",
+      currency_code: "invalid",
+      market_code: "invalid",
+    })).toBeNull();
   });
 
   it("refuses another UID and a suspended membership", async () => {
@@ -134,7 +140,26 @@ describe("company membership foundation", () => {
 
   it("resolves only an active default company for the authenticated UID", async () => {
     const company = await ensureDefaultCompanyForIdentity(identity("owner-uid"));
-    await expect(getActiveDefaultCompanyIdentity("owner-uid")).resolves.toEqual(company);
+    await expect(getActiveDefaultCompanyIdentity("owner-uid")).resolves.toEqual({
+      companyId: company.companyId,
+      membershipId: company.membershipId,
+    });
+    await expect(getActiveDefaultCompanyContext("owner-uid")).resolves.toEqual({
+      ...company,
+      countryCode: null,
+      currencyCode: "EUR",
+      marketCode: "fr-fr",
+    });
     await expect(getActiveDefaultCompanyIdentity("other-uid")).resolves.toBeNull();
+  });
+
+  it("fails closed when an active company has an invalid commercial context", async () => {
+    const company = await ensureDefaultCompanyForIdentity(identity("owner-uid"));
+    const companyPath = `companies/${company.companyId}`;
+    firestore.documents.set(companyPath, {
+      ...firestore.documents.get(companyPath),
+      currency_code: "not-a-currency",
+    });
+    await expect(getActiveDefaultCompanyContext("owner-uid")).resolves.toBeNull();
   });
 });
