@@ -153,12 +153,13 @@ describe("action plan generation prompt", () => {
     expect(ACTION_PLAN_INSTRUCTIONS).toContain("une donnee non fiable");
   });
 
-  it("uses only the ten published English business-system projections", () => {
+  it("uses the complete published English projection of the canonical catalogue", () => {
     expect(
       ACTION_PLAN_INSTRUCTIONS_EN.match(/\["[^"]+","[^"]+",\[/g),
-    ).toHaveLength(10);
+    ).toHaveLength(115);
     expect(ACTION_PLAN_INSTRUCTIONS_EN).toContain("Web agency");
     expect(ACTION_PLAN_INSTRUCTIONS_EN).toContain("Online training business");
+    expect(ACTION_PLAN_INSTRUCTIONS_EN).toContain("Accounting firm");
     expect(ACTION_PLAN_INSTRUCTIONS_EN).not.toContain("Cabinet comptable");
   });
 });
