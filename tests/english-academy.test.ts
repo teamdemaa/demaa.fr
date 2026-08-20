@@ -1,10 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 
 vi.mock("server-only", () => ({}));
 
 import { GET } from "@/app/api/action-plan/academy/route";
 import { getAcademyFundamentals } from "@/lib/academy-course-content";
 import { getEnglishAcademyContent } from "@/lib/academy-course-content-en";
+import AcademyLessonVisual from "@/components/AcademyLessonVisual";
+import { CourseDiagram } from "@/components/AcademyIndexClient";
 
 function allPublishedText(value: unknown): string[] {
   if (typeof value === "string") return [value];
@@ -79,6 +83,28 @@ describe("English Academy", () => {
     const text = allPublishedText(getEnglishAcademyContent()).join(" ");
     expect(text).not.toMatch(/[àâçéèêëîïôùûüÿœ]/i);
     expect(text).not.toMatch(/\b(cours|trésorerie|chiffre|bénéfice|entreprise|dirigeants|quiz de connaissances)\b/i);
+  });
+
+  it("renders the shared diagrams and lesson visuals without French chrome", () => {
+    const contents = getEnglishAcademyContent();
+    const markup = [
+      ...contents.map((content) => renderToStaticMarkup(createElement(CourseDiagram, {
+        localeCode: "en",
+        slug: content.identity.slug,
+      }))),
+      ...contents.flatMap((content) => content.lessons.map((lesson) =>
+        renderToStaticMarkup(createElement(AcademyLessonVisual, {
+          lesson,
+          localeCode: "en",
+        })),
+      )),
+    ].join(" ");
+
+    expect(markup).toContain("REVENUE");
+    expect(markup).toContain("PRICE STRUCTURE");
+    expect(markup).not.toMatch(
+      /CHIFFRE D.AFFAIRES|CHARGES|BÉNÉFICE|COÛTS|MARGE|ATTIRER|FIDÉLISER|RÉSULTAT|Pendant l.attente|Prix de vente|Résultat attendu/i,
+    );
   });
 
   it("serves English content without lives or case studies through the shared API", async () => {

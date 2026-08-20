@@ -110,7 +110,8 @@ export function getNextAcademySection(
   ].id;
 }
 
-function CourseDiagram({ slug }: { slug: string }) {
+export function CourseDiagram({ slug, localeCode = "fr" }: { slug: string; localeCode?: "fr" | "en" }) {
+  const en = localeCode === "en";
   if (slug === "piloter-sa-tresorerie") {
     return (
       <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
@@ -136,10 +137,10 @@ function CourseDiagram({ slug }: { slug: string }) {
         <path d="M80 158H358V196H98Q80 196 80 178Z" fill="#DCE5DF" />
         <path d="M358 158H440V178Q440 196 422 196H358Z" fill="#315F46" />
         <text x="260" y="143" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600" letterSpacing="1.5">
-          CHIFFRE D’AFFAIRES
+          {en ? "REVENUE" : "CHIFFRE D’AFFAIRES"}
         </text>
-        <text x="110" y="184" fill="#6E7C74" fontSize="14" fontWeight="500">CHARGES</text>
-        <text x="399" y="184" textAnchor="middle" fill="#F1F3F0" fontSize="13" fontWeight="600">BÉNÉFICE</text>
+        <text x="110" y="184" fill="#6E7C74" fontSize="14" fontWeight="500">{en ? "COSTS" : "CHARGES"}</text>
+        <text x="399" y="184" textAnchor="middle" fill="#F1F3F0" fontSize="13" fontWeight="600">{en ? "PROFIT" : "BÉNÉFICE"}</text>
       </svg>
     );
   }
@@ -148,14 +149,14 @@ function CourseDiagram({ slug }: { slug: string }) {
     return (
       <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
         <text x="58" y="82" fill="#315F46" fontSize="15" fontWeight="600" letterSpacing="1.5">
-          COMPOSITION DU PRIX
+          {en ? "PRICE STRUCTURE" : "COMPOSITION DU PRIX"}
         </text>
         <rect x="58" y="118" width="274" height="72" rx="17" fill="#DCE5DF" stroke="#A8BBB0" strokeWidth="2" />
         <path d="M238 118H315Q332 118 332 135V173Q332 190 315 190H238Z" fill="#C5D3C9" />
-        <text x="148" y="162" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">COÛTS</text>
-        <text x="285" y="162" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">MARGE</text>
+        <text x="148" y="162" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{en ? "COSTS" : "COÛTS"}</text>
+        <text x="285" y="162" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{en ? "MARGIN" : "MARGE"}</text>
         <path d="M352 154H422M407 138L423 154L407 170" fill="none" stroke="#315F46" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-        <text x="456" y="160" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">PRIX</text>
+        <text x="456" y="160" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{en ? "PRICE" : "PRIX"}</text>
       </svg>
     );
   }
@@ -167,12 +168,12 @@ function CourseDiagram({ slug }: { slug: string }) {
         <circle cx="90" cy="140" r="10" fill="#315F46" />
         <circle cx="260" cy="140" r="10" fill="#789987" />
         <circle cx="430" cy="140" r="10" fill="#315F46" />
-        <text x="90" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">ATTIRER</text>
-        <text x="90" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">LES BONS CLIENTS</text>
-        <text x="260" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">FACILITER</text>
-        <text x="260" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">L’ACHAT</text>
-        <text x="430" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">FIDÉLISER</text>
-        <text x="430" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">SUR LE LONG TERME</text>
+        <text x="90" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{en ? "ATTRACT" : "ATTIRER"}</text>
+        <text x="90" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">{en ? "THE RIGHT CLIENTS" : "LES BONS CLIENTS"}</text>
+        <text x="260" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{en ? "ENABLE" : "FACILITER"}</text>
+        <text x="260" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">{en ? "THE PURCHASE" : "L’ACHAT"}</text>
+        <text x="430" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{en ? "RETAIN" : "FIDÉLISER"}</text>
+        <text x="430" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">{en ? "FOR THE LONG TERM" : "SUR LE LONG TERME"}</text>
       </svg>
     );
   }
@@ -181,14 +182,14 @@ function CourseDiagram({ slug }: { slug: string }) {
     return (
       <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
         <rect x="42" y="116" width="122" height="60" rx="16" fill="#FFFFFF" stroke="#A8BBB0" strokeWidth="2" />
-        <text x="103" y="151" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">PROBLÈME</text>
+        <text x="103" y="151" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{en ? "PROBLEM" : "PROBLÈME"}</text>
         <path d="M180 146H204M196 138L204 146L196 154" fill="none" stroke="#789987" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         <rect x="220" y="103" width="148" height="86" rx="20" fill="#DCE5DF" stroke="#A8BBB0" strokeWidth="2" />
-        <text x="294" y="141" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">OFFRE CLAIRE</text>
-        <text x="294" y="162" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.55">RÉSULTAT · PÉRIMÈTRE</text>
+        <text x="294" y="141" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{en ? "CLEAR OFFER" : "OFFRE CLAIRE"}</text>
+        <text x="294" y="162" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.55">{en ? "RESULT · SCOPE" : "RÉSULTAT · PÉRIMÈTRE"}</text>
         <path d="M384 146H408M400 138L408 146L400 154" fill="none" stroke="#789987" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         <rect x="424" y="116" width="66" height="60" rx="16" fill="#315F46" />
-        <text x="457" y="151" textAnchor="middle" fill="#FFFFFF" fontSize="12" fontWeight="600">CHOIX</text>
+        <text x="457" y="151" textAnchor="middle" fill="#FFFFFF" fontSize="12" fontWeight="600">{en ? "CHOICE" : "CHOIX"}</text>
       </svg>
     );
   }
@@ -201,10 +202,10 @@ function CourseDiagram({ slug }: { slug: string }) {
         <circle cx="196" cy="140" r="10" fill="#789987" />
         <circle cx="324" cy="140" r="10" fill="#789987" />
         <circle cx="452" cy="140" r="10" fill="#315F46" />
-        <text x="68" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">DÉMARRER</text>
-        <text x="196" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">PRODUIRE</text>
-        <text x="324" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">VALIDER</text>
-        <text x="452" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">CLÔTURER</text>
+        <text x="68" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">{en ? "START" : "DÉMARRER"}</text>
+        <text x="196" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">{en ? "DELIVER" : "PRODUIRE"}</text>
+        <text x="324" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">{en ? "REVIEW" : "VALIDER"}</text>
+        <text x="452" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">{en ? "CLOSE" : "CLÔTURER"}</text>
       </svg>
     );
   }
@@ -215,9 +216,9 @@ function CourseDiagram({ slug }: { slug: string }) {
         <path d="M90 48H430L402 106H118Z" fill="#FFFFFF" stroke="#A8BBB0" strokeWidth="2" />
         <path d="M126 118H394L367 176H153Z" fill="#DCE5DF" stroke="#A8BBB0" strokeWidth="2" />
         <path d="M162 188H358L326 246H194Z" fill="#315F46" />
-        <text x="260" y="83" textAnchor="middle" fill="#315F46" fontSize="14" fontWeight="600">DEMANDES</text>
-        <text x="260" y="153" textAnchor="middle" fill="#315F46" fontSize="14" fontWeight="600">ÉCHANGES</text>
-        <text x="260" y="223" textAnchor="middle" fill="#FFFFFF" fontSize="14" fontWeight="600">CLIENTS</text>
+        <text x="260" y="83" textAnchor="middle" fill="#315F46" fontSize="14" fontWeight="600">{en ? "ENQUIRIES" : "DEMANDES"}</text>
+        <text x="260" y="153" textAnchor="middle" fill="#315F46" fontSize="14" fontWeight="600">{en ? "CONVERSATIONS" : "ÉCHANGES"}</text>
+        <text x="260" y="223" textAnchor="middle" fill="#FFFFFF" fontSize="14" fontWeight="600">{en ? "CLIENTS" : "CLIENTS"}</text>
       </svg>
     );
   }
@@ -225,13 +226,13 @@ function CourseDiagram({ slug }: { slug: string }) {
   return (
     <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
       <rect x="45" y="64" width="120" height="50" rx="25" fill="#FFFFFF" stroke="#A8BBB0" strokeWidth="2" />
-      <text x="105" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">OBJECTIF</text>
+      <text x="105" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{en ? "GOAL" : "OBJECTIF"}</text>
       <text x="185" y="97" textAnchor="middle" fill="#315F46" fontSize="22" fontWeight="300">+</text>
       <rect x="205" y="64" width="130" height="50" rx="25" fill="#DCE5DF" stroke="#A8BBB0" strokeWidth="2" />
-      <text x="270" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">AUTONOMIE</text>
+      <text x="270" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{en ? "AUTONOMY" : "AUTONOMIE"}</text>
       <text x="355" y="97" textAnchor="middle" fill="#315F46" fontSize="22" fontWeight="300">+</text>
       <rect x="375" y="64" width="100" height="50" rx="25" fill="#FFFFFF" stroke="#A8BBB0" strokeWidth="2" />
-      <text x="425" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">SUIVI</text>
+      <text x="425" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{en ? "FOLLOW-UP" : "SUIVI"}</text>
       <path
         d="M55 122C55 133 65 138 82 138H232C251 138 260 144 270 155C280 144 289 138 308 138H448C465 138 475 133 475 122"
         fill="none"
@@ -242,7 +243,7 @@ function CourseDiagram({ slug }: { slug: string }) {
       />
       <path d="M270 155V170M260 162L270 172L280 162" fill="none" stroke="#789987" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
       <rect x="158" y="180" width="224" height="64" rx="32" fill="#315F46" />
-      <text x="270" y="219" textAnchor="middle" fill="#FFFFFF" fontSize="16" fontWeight="600">RÉSULTAT</text>
+      <text x="270" y="219" textAnchor="middle" fill="#FFFFFF" fontSize="16" fontWeight="600">{en ? "RESULT" : "RÉSULTAT"}</text>
     </svg>
   );
 }
@@ -296,7 +297,7 @@ function AcademyCard({
               </span>
             </>
           ) : (
-            <CourseDiagram slug={identity.slug} />
+            <CourseDiagram slug={identity.slug} localeCode={localeCode} />
           )}
         </div>
 
