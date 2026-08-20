@@ -10,14 +10,21 @@ import type { InterfaceLocaleCode } from "@/lib/international-context";
 export default function CustomerSpaceLoginDialog({
   localeCode = "fr",
   message,
+  onAuthenticated,
+  onClose,
   returnTo = "/plans/latest",
 }: {
   localeCode?: InterfaceLocaleCode;
   message?: string;
+  onAuthenticated?: (result: { redirectTo: string }) => Promise<void> | void;
+  onClose?: () => void;
   returnTo?: string;
 }) {
   const router = useRouter();
-  const closeDialog = useCallback(() => router.back(), [router]);
+  const closeDialog = useCallback(
+    () => onClose ? onClose() : router.back(),
+    [onClose, router],
+  );
   const dialogRef = useAccessibleDialog({ onClose: closeDialog });
 
   return (
@@ -56,6 +63,7 @@ export default function CustomerSpaceLoginDialog({
           <CustomerSpaceAccessForm
             choiceTitle={localeCode === "en" ? "Sign in" : "Connectez-vous"}
             localeCode={localeCode}
+            onAuthenticated={onAuthenticated}
             returnTo={returnTo}
           />
         </div>

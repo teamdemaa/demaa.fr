@@ -15,17 +15,31 @@ function getAdminEmails() {
     .filter(Boolean);
 }
 
-export async function getCurrentAdminIdentity(): Promise<CustomerSessionIdentity | null> {
+function getAdminUids() {
+  return (process.env.DEMAA_ADMIN_UIDS ?? "")
+    .split(",")
+    .map((uid) => uid.trim())
+    .filter(Boolean);
+}
+
+export function isAdminIdentity(identity: CustomerSessionIdentity | null) {
+  if (!identity) return false;
+
+  const adminUids = getAdminUids();
+  if (adminUids.includes(identity.uid)) return true;
+
   const adminEmails = getAdminEmails();
-  if (adminEmails.length === 0) return null;
+  return identity.emailVerified === true
+    && adminEmails.includes(identity.email.toLowerCase());
+}
+
+export async function getCurrentAdminIdentity(): Promise<CustomerSessionIdentity | null> {
+  if (getAdminUids().length === 0 && getAdminEmails().length === 0) return null;
 
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
   const identity = await getIdentityFromCustomerSessionToken(sessionToken);
-  if (!identity || !adminEmails.includes(identity.email.toLowerCase())) {
-    return null;
-  }
-  return identity;
+  return isAdminIdentity(identity) ? identity : null;
 }
 
 export async function requireAdminIdentity(returnPath: string) {

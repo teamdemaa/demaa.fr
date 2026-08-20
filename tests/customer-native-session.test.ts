@@ -41,7 +41,12 @@ describe("native Firebase session", () => {
     });
 
     await expect(createCustomerSession("id-token")).resolves.toEqual({
-      identity: { email: "owner@example.com", provider: expected, uid: "firebase-uid" },
+      identity: {
+        email: "owner@example.com",
+        emailVerified: false,
+        provider: expected,
+        uid: "firebase-uid",
+      },
       sessionCookie: "session-cookie",
     });
     expect(mocks.createSessionCookie).toHaveBeenCalledWith("id-token", {
@@ -75,11 +80,13 @@ describe("native Firebase session", () => {
   it("verifies the native cookie with revocation checks", async () => {
     mocks.verifySessionCookie.mockResolvedValue({
       email: "owner@example.com",
+      email_verified: true,
       firebase: { sign_in_provider: "google.com" },
       uid: "firebase-uid",
     });
     await expect(getIdentityFromCustomerSessionToken("cookie")).resolves.toEqual({
       email: "owner@example.com",
+      emailVerified: true,
       provider: "google",
       uid: "firebase-uid",
     });

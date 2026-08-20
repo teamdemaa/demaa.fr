@@ -21,6 +21,7 @@ describe("coaching administration boundary", () => {
     expect(route).toContain("getCurrentAdminIdentity()");
     expect(route).not.toContain("ADMIN_SECRET");
     expect(procedure).toContain("DEMAA_ADMIN_EMAILS");
+    expect(procedure).toContain("DEMAA_ADMIN_UIDS");
     expect(procedure).toContain("getCurrentAdminIdentity");
   });
 });

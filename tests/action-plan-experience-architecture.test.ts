@@ -160,6 +160,10 @@ describe("action plan experience architecture", () => {
     expect(savedPlan).toContain("keepalive: true");
     expect(savedPlan).toContain("flushBeforeLeaving();");
     expect(savedPlan).toContain("saveQueueRef.current.drain");
+    expect(savedPlan).toContain("response.status === 401");
+    expect(savedPlan).toContain("writeActionPlanSaveRecovery");
+    expect(savedPlan).toContain("<CustomerSpaceLoginDialog");
+    expect(savedPlan).toContain("onAuthenticated={resumeSaveAfterAuthentication}");
   });
 
   it("waits for the first manual action editor to close before persisting", () => {

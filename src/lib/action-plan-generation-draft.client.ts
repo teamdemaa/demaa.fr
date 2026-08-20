@@ -29,8 +29,12 @@ function isRequestId(value: unknown): value is string {
   return typeof value === "string" && /^[A-Za-z0-9:_-]{16,160}$/.test(value);
 }
 
-function storage() {
+function sessionStorage() {
   return typeof window === "undefined" ? null : window.sessionStorage;
+}
+
+function persistentStorage() {
+  return typeof window === "undefined" ? null : window.localStorage;
 }
 
 export function createActionPlanGenerationDraft(
@@ -51,16 +55,23 @@ export function createActionPlanGenerationDraft(
 }
 
 export function writeActionPlanGenerationDraft(draft: ActionPlanGenerationDraft) {
+  const serialized = JSON.stringify(draft);
   try {
-    storage()?.setItem(STORAGE_KEY, JSON.stringify(draft));
+    sessionStorage()?.setItem(STORAGE_KEY, serialized);
   } catch {
-    // The in-memory React state remains available when sessionStorage is blocked.
+    // The persistent fallback below can still preserve a Google redirect.
+  }
+  try {
+    persistentStorage()?.setItem(STORAGE_KEY, serialized);
+  } catch {
+    // The in-memory React state remains available when browser storage is blocked.
   }
 }
 
 export function readActionPlanGenerationDraft(): ActionPlanGenerationDraft | null {
   try {
-    const value = storage()?.getItem(STORAGE_KEY);
+    const value = sessionStorage()?.getItem(STORAGE_KEY)
+      ?? persistentStorage()?.getItem(STORAGE_KEY);
     if (!value) return null;
     const parsed = JSON.parse(value) as Partial<ActionPlanGenerationDraft>;
     const situation = normalizeSituation(parsed.situation);
@@ -91,7 +102,12 @@ export function readActionPlanGenerationDraft(): ActionPlanGenerationDraft | nul
 
 export function clearActionPlanGenerationDraft() {
   try {
-    storage()?.removeItem(STORAGE_KEY);
+    sessionStorage()?.removeItem(STORAGE_KEY);
+  } catch {
+    // Continue with the persistent fallback.
+  }
+  try {
+    persistentStorage()?.removeItem(STORAGE_KEY);
   } catch {
     // Nothing else to clear.
   }

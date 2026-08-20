@@ -5,6 +5,8 @@ const source = readFileSync("src/components/CustomerSpaceAccessForm.tsx", "utf8"
 const experience = readFileSync("src/components/ActionPlanExperience.tsx", "utf8");
 const googleButton = readFileSync("src/components/GoogleCustomerSignInButton.tsx", "utf8");
 const loginDialog = readFileSync("src/components/CustomerSpaceLoginDialog.tsx", "utf8");
+const loginPage = readFileSync("src/app/(auth)/connexion/page.tsx", "utf8");
+const applicationError = readFileSync("src/app/(application)/error.tsx", "utf8");
 
 describe("progressive plan authentication", () => {
   it("starts with one Google option and one email action", () => {
@@ -38,6 +40,8 @@ describe("progressive plan authentication", () => {
     expect(source).toContain("Retour aux options de connexion");
     expect(source).toContain("Retour à l’étape e-mail");
     expect(source).toContain("Mot de passe oublié ?");
+    expect(source).toContain("CustomerSessionExchangeError");
+    expect(source).toContain("Votre compte a été créé, mais votre espace n’a pas pu être préparé.");
   });
 
   it("preserves the accessible bottom-sheet contract", () => {
@@ -60,5 +64,12 @@ describe("progressive plan authentication", () => {
     expect(source).not.toContain("sessionStorage");
     expect(experience).toContain("createActionPlanGenerationDraft");
     expect(experience).toContain("runAuthenticatedActionPlanGeneration");
+  });
+
+  it("keeps an escape path when a valid session has no usable company", () => {
+    expect(loginPage).toContain("ensureDefaultCompanyForIdentity(identity)");
+    expect(loginPage).toContain("companyContextUnavailable");
+    expect(loginPage).toContain("<CustomerLogoutButton localeCode={localeCode} />");
+    expect(applicationError).toContain("<CustomerLogoutButton />");
   });
 });

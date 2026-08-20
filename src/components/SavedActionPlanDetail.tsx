@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
 import ActionPlanCoachingControl from "@/components/ActionPlanCoachingControl";
 import ActionPlanGenerationScreen from "@/components/ActionPlanGenerationScreen";
+import CustomerSpaceLoginDialog from "@/components/CustomerSpaceLoginDialog";
 import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNavbar";
 import ActionPlanResult from "@/components/ActionPlanResult";
 import {
@@ -26,6 +27,11 @@ import {
 } from "@/lib/action-plan-manual";
 import { scheduleActionPlanAcademyPayloadPreload } from "@/lib/action-plan-academy-preload.client";
 import { ActionPlanSaveQueue } from "@/lib/action-plan-save-queue.client";
+import {
+  clearActionPlanSaveRecovery,
+  readActionPlanSaveRecovery,
+  writeActionPlanSaveRecovery,
+} from "@/lib/action-plan-save-recovery.client";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
 import {
   addActionPlanWorkspaceAction,
@@ -80,12 +86,14 @@ export default function SavedActionPlanDetail({
     deleteFailed: "This plan could not be deleted.",
     planNotBlank: "This plan already contains information that must be kept.",
     saveBeforeGenerate: "Save the latest changes before generating the plan.",
+    sessionExpired: "Your session has expired. Sign in again to save your changes.",
   } : {
     saveFailed: "Impossible d’enregistrer les modifications.",
     recentLoadFailed: "Impossible de charger la version récente du plan.",
     deleteFailed: "Impossible de supprimer ce plan.",
     planNotBlank: "Ce plan contient déjà des informations à conserver.",
     saveBeforeGenerate: "Enregistrez les dernières modifications avant de générer le plan.",
+    sessionExpired: "Votre session a expiré. Reconnectez-vous pour enregistrer vos modifications.",
   }, [interfaceLocaleCode]);
   const { context: appContext, navigate: navigateAppContext } =
     useActionPlanAppContext(initialAppContext);
@@ -99,6 +107,7 @@ export default function SavedActionPlanDetail({
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
   const [navigationTarget, setNavigationTarget] = useState<string | null>(null);
   const [saveConflict, setSaveConflict] = useState(false);
+  const [authenticationRequired, setAuthenticationRequired] = useState(false);
   const revisionRef = useRef(initialRevision);
   const confirmedTitleRef = useRef(initialTitle);
   const titleInputRef = useRef<HTMLInputElement>(null);
@@ -113,6 +122,30 @@ export default function SavedActionPlanDetail({
   const mountedRef = useRef(true);
   const navigationTargetRef = useRef<string | null>(null);
   const saveConflictRef = useRef(false);
+  const lastAttemptedSaveRef = useRef<PendingSave | null>(null);
+  const latestSaveRef = useRef<PendingSave>({
+    plan: currentPlan,
+    title: planTitle.trim() || confirmedTitleRef.current,
+    workspace,
+  });
+  latestSaveRef.current = {
+    plan: currentPlan,
+    title: planTitle.trim() || confirmedTitleRef.current,
+    workspace,
+  };
+
+  useEffect(() => {
+    const recovery = readActionPlanSaveRecovery(planId);
+    if (!recovery) return;
+    setCurrentPlan(recovery.plan);
+    setPlanTitle(recovery.title);
+    setWorkspace(recovery.workspace);
+    if (recovery.authenticationRequired && !initialIsAuthenticated) {
+      setSaveState("error");
+      setSaveError(messages.sessionExpired);
+      setAuthenticationRequired(true);
+    }
+  }, [initialIsAuthenticated, messages.sessionExpired, planId]);
 
   useEffect(() => {
     if (!visibleViews || visibleViews.includes("academy")) {
@@ -139,6 +172,7 @@ export default function SavedActionPlanDetail({
     if (saveConflictRef.current) return false;
 
     const result = await saveQueueRef.current.drain(async (nextSave) => {
+        lastAttemptedSaveRef.current = nextSave;
         if (mountedRef.current) {
           setSaveState("saving");
           setSaveError(null);
@@ -165,9 +199,13 @@ export default function SavedActionPlanDetail({
           ) as Error & {
             code?: string;
           };
-          error.code = body?.code;
+          error.code = response.status === 401
+            ? "authentication_required"
+            : body?.code;
           throw error;
         }
+        lastAttemptedSaveRef.current = null;
+        clearActionPlanSaveRecovery(planId);
         revisionRef.current = body.revision;
         confirmedTitleRef.current = body.title || nextSave.title;
     });
@@ -179,13 +217,27 @@ export default function SavedActionPlanDetail({
     if (mountedRef.current) {
       const error = result.error as (Error & { code?: string }) | null;
       const conflict = error?.code === "revision_conflict";
+      const expired = error?.code === "authentication_required";
       saveConflictRef.current = conflict;
+      if (expired && lastAttemptedSaveRef.current) {
+        writeActionPlanSaveRecovery(planId, {
+          ...lastAttemptedSaveRef.current,
+          authenticationRequired: true,
+        });
+        setAuthenticationRequired(true);
+      }
       setSaveState("error");
-      setSaveError(error?.message || messages.saveFailed);
+      setSaveError(expired ? messages.sessionExpired : error?.message || messages.saveFailed);
       setSaveConflict(conflict);
     }
     return false;
-  }, [interfaceLocaleCode, messages.saveFailed, planId]);
+  }, [interfaceLocaleCode, messages.saveFailed, messages.sessionExpired, planId]);
+
+  async function resumeSaveAfterAuthentication() {
+    setAuthenticationRequired(false);
+    setSaveError(null);
+    await flushWorkspaceSave();
+  }
 
   useEffect(() => {
     if (firstRenderRef.current) {
@@ -226,6 +278,12 @@ export default function SavedActionPlanDetail({
         window.clearTimeout(saveTimeoutRef.current);
         saveTimeoutRef.current = null;
       }
+      if (saveQueueRef.current.hasWork()) {
+        writeActionPlanSaveRecovery(planId, {
+          ...latestSaveRef.current,
+          authenticationRequired: false,
+        });
+      }
       void flushWorkspaceSave();
     }
 
@@ -235,7 +293,7 @@ export default function SavedActionPlanDetail({
       window.removeEventListener("pagehide", flushBeforeLeaving);
       flushBeforeLeaving();
     };
-  }, [flushWorkspaceSave]);
+  }, [flushWorkspaceSave, planId]);
 
   async function navigateAfterSave(href: string) {
     if (navigationTargetRef.current) return;
@@ -385,6 +443,15 @@ export default function SavedActionPlanDetail({
 
   return (
     <div className="contents">
+      {authenticationRequired ? (
+        <CustomerSpaceLoginDialog
+          localeCode={interfaceLocaleCode}
+          message={messages.sessionExpired}
+          onAuthenticated={resumeSaveAfterAuthentication}
+          onClose={() => setAuthenticationRequired(false)}
+          returnTo={`${planHrefPrefix}${encodeURIComponent(planId)}`}
+        />
+      ) : null}
       <ActionPlanNavbar activeView={activeTab} onViewChange={selectAppView} localeCode={interfaceLocaleCode} visibleViews={visibleViews} />
       {showCoaching ? <ActionPlanCoachingControl
         localeCode={interfaceLocaleCode}
@@ -472,7 +539,13 @@ export default function SavedActionPlanDetail({
                     <button
                       type="button"
                       className="font-semibold underline underline-offset-4"
-                      onClick={() => { void flushWorkspaceSave(); }}
+                      onClick={() => {
+                        if (saveError === messages.sessionExpired) {
+                          setAuthenticationRequired(true);
+                          return;
+                        }
+                        void flushWorkspaceSave();
+                      }}
                     >
                       {interfaceLocaleCode === "en" ? "Try again" : "Réessayer"}
                     </button>

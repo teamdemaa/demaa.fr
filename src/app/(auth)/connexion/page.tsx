@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
+import CustomerLogoutButton from "@/components/CustomerLogoutButton";
 import DocumentLocale from "@/components/DocumentLocale";
 import Navbar from "@/components/Navbar";
 import {
   CUSTOMER_SPACE_COOKIE,
   getIdentityFromCustomerSessionToken,
 } from "@/lib/customer-space-auth";
+import { ensureDefaultCompanyForIdentity } from "@/lib/company-membership.server";
 import { getSafeCustomerReturnTo } from "@/lib/customer-space-redirect";
 import { getReturnToInterfaceLocale } from "@/lib/international-context";
 
@@ -46,7 +48,15 @@ export default async function ConnexionPage({ searchParams }: ConnexionPageProps
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
   const identity = await getIdentityFromCustomerSessionToken(sessionToken);
-  if (identity) redirect(returnTo);
+  let companyContextUnavailable = false;
+  if (identity) {
+    try {
+      await ensureDefaultCompanyForIdentity(identity);
+    } catch {
+      companyContextUnavailable = true;
+    }
+  }
+  if (identity && !companyContextUnavailable) redirect(returnTo);
 
   return (
       <div data-action-plan-workspace className="min-h-screen bg-dema-cream text-brand-blue">
@@ -60,11 +70,23 @@ export default async function ConnexionPage({ searchParams }: ConnexionPageProps
                 {localeCode === "en" ? "Sign in to continue." : rawMessage.slice(0, 180)}
               </p>
             ) : null}
+            {companyContextUnavailable ? (
+              <p role="alert" className="mb-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
+                {localeCode === "en"
+                  ? "Your session is valid, but your company space is unavailable. Sign in with another account or sign out from the application."
+                  : "Votre session est valide, mais votre espace entreprise est indisponible. Utilisez un autre compte ou déconnectez-vous depuis l’application."}
+              </p>
+            ) : null}
             <CustomerSpaceAccessForm
               choiceTitle={localeCode === "en" ? "Sign in" : "Connectez-vous"}
               localeCode={localeCode}
               returnTo={returnTo}
             />
+            {companyContextUnavailable ? (
+              <div className="mx-auto mt-4 w-fit">
+                <CustomerLogoutButton localeCode={localeCode} />
+              </div>
+            ) : null}
           </section>
         </main>
       </div>
