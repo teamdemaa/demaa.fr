@@ -191,7 +191,7 @@ export const COMPANY_STRATEGY_PILLARS = [
     questions: [
       { key: "positioning_1", label: "Qui voulez-vous servir en priorité ?" },
       { key: "positioning_2", label: "Quel problème important résolvez-vous pour eux ?" },
-      { key: "positioning_3", label: "Qu’est-ce qui distingue votre manière de résoudre ce problème ?" },
+      { key: "positioning_3", label: "Que fait le client aujourd’hui à la place, et qu’est-ce qui distingue votre manière de résoudre ce problème ?" },
     ],
   },
   {
@@ -201,7 +201,7 @@ export const COMPANY_STRATEGY_PILLARS = [
     questions: [
       { key: "offer_1", label: "Quel résultat concret le client vient-il chercher ?" },
       { key: "offer_2", label: "Que comprend exactement l’offre ?" },
-      { key: "offer_3", label: "À quel prix et comment est-elle facturée ?" },
+      { key: "offer_3", label: "À quel prix, comment est-elle facturée, et est-ce validé ou encore une hypothèse ?" },
     ],
   },
   {
