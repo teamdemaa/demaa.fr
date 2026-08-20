@@ -954,6 +954,7 @@ export default function ActionPlanExperience({
           {activeTab === "plan" ? (
             <CompanyPilotagePanel
               available={false}
+              localeCode={contentLocaleCode}
               section="actions"
               onSectionChange={() => undefined}
             >

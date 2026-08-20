@@ -173,52 +173,14 @@ export const EMPTY_COMPANY_STRATEGY_ANSWERS: CompanyStrategyAnswers = {
   promotion_3: "",
 };
 
-export const COMPANY_STRATEGY_PILLARS = [
-  {
-    key: "alignment",
-    label: "Alignement",
-    framing: "Vos ambitions, vos forces et vos contraintes.",
-    questions: [
-      { key: "alignment_1", label: "Qu’est-ce que vous voulez que cette entreprise vous apporte ?" },
-      { key: "alignment_2", label: "Qu’est-ce que vous faites particulièrement bien, et comment le savez-vous ?" },
-      { key: "alignment_3", label: "Avec quelles contraintes composez-vous en ce moment : temps, argent, énergie ?" },
-    ],
-  },
-  {
-    key: "positioning",
-    label: "Positionnement",
-    framing: "Pour qui et avec quel angle ?",
-    questions: [
-      { key: "positioning_1", label: "Qui voulez-vous servir en priorité ?" },
-      { key: "positioning_2", label: "Quel problème important résolvez-vous pour eux ?" },
-      { key: "positioning_3", label: "Que fait le client aujourd’hui à la place, et qu’est-ce qui distingue votre manière de résoudre ce problème ?" },
-    ],
-  },
-  {
-    key: "offer",
-    label: "Offre",
-    framing: "Quel résultat est vendu et comment gagne-t-on de l’argent ?",
-    questions: [
-      { key: "offer_1", label: "Quel résultat concret le client vient-il chercher ?" },
-      { key: "offer_2", label: "Que comprend exactement l’offre ?" },
-      { key: "offer_3", label: "À quel prix, comment est-elle facturée, et est-ce validé ou encore une hypothèse ?" },
-    ],
-  },
-  {
-    key: "promotion",
-    label: "Promotion",
-    framing: "Comment attirer, convertir et fidéliser ?",
-    questions: [
-      { key: "promotion_1", label: "Comment les bons clients vous découvrent-ils ?" },
-      { key: "promotion_2", label: "Qu’est-ce qui les aide à passer à l’achat ?" },
-      { key: "promotion_3", label: "Comment entretenez-vous la relation pour favoriser le réachat et la recommandation ?" },
-    ],
-  },
+export const COMPANY_STRATEGY_PILLAR_KEYS = [
+  { key: "alignment", questions: ["alignment_1", "alignment_2", "alignment_3"] },
+  { key: "positioning", questions: ["positioning_1", "positioning_2", "positioning_3"] },
+  { key: "offer", questions: ["offer_1", "offer_2", "offer_3"] },
+  { key: "promotion", questions: ["promotion_1", "promotion_2", "promotion_3"] },
 ] as const satisfies readonly {
   key: CompanyStrategyPillar;
-  label: string;
-  framing: string;
-  questions: readonly { key: CompanyStrategyAnswerKey; label: string }[];
+  questions: readonly CompanyStrategyAnswerKey[];
 }[];
 
 export const companyStrategyCycleSchema = z.object({
@@ -267,11 +229,4 @@ export function mergeCompanyStrategyAnswers(input: {
     }
   }
   return { merged, conflicts };
-}
-
-export function formatCompanyMonth(period: CompanyMonth) {
-  const [year, month] = period.split("-").map(Number);
-  const label = new Intl.DateTimeFormat("fr-FR", { month: "long", year: "numeric", timeZone: "UTC" })
-    .format(new Date(Date.UTC(year, month - 1, 1)));
-  return label.charAt(0).toUpperCase() + label.slice(1);
 }

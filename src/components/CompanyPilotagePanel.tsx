@@ -6,36 +6,36 @@ import {
   COMPANY_STRATEGY_VISIBLE,
   type ActionPlanSection,
 } from "@/lib/action-plan-app-context";
+import { getCompanyPilotageUiCopy } from "@/lib/company-pilotage-ui-copy";
+import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 const CompanyFiguresPanel = dynamic(() => import("@/components/CompanyFiguresPanel"));
 const CompanyStrategyPanel = dynamic(() => import("@/components/CompanyStrategyPanel"));
 
-const SECTIONS = [
-  { key: "actions", label: "Plan d’action" },
-  { key: "figures", label: "Chiffres" },
-  { key: "strategy", label: "Stratégie" },
-] as const;
-
 export default function CompanyPilotagePanel({
   available,
+  localeCode,
   section,
   onSectionChange,
   children,
 }: {
   available: boolean;
+  localeCode: InterfaceLocaleCode;
   section: ActionPlanSection;
   onSectionChange: (section: ActionPlanSection) => void;
   children: ReactNode;
 }) {
   if (!available) return <>{children}</>;
+  const copy = getCompanyPilotageUiCopy(localeCode);
+  const sections = (["actions", "figures", "strategy"] as const).map((key) => ({ key, label: copy.sections[key] }));
 
   return (
-    <section aria-label="Pilotage de l’entreprise">
+    <section aria-label={copy.pilotageLabel}>
       <nav
-        aria-label="Sections du plan et du pilotage"
+        aria-label={copy.sectionNavigationLabel}
         className="mb-6 flex gap-1 overflow-x-auto border-b border-dema-line"
       >
-        {SECTIONS.filter(
+        {sections.filter(
           (item) => item.key !== "strategy" || COMPANY_STRATEGY_VISIBLE,
         ).map((item) => (
           <button
@@ -54,9 +54,9 @@ export default function CompanyPilotagePanel({
         ))}
       </nav>
       {section === "actions" ? children : null}
-      {section === "figures" ? <CompanyFiguresPanel /> : null}
+      {section === "figures" ? <CompanyFiguresPanel localeCode={localeCode} /> : null}
       {COMPANY_STRATEGY_VISIBLE && section === "strategy"
-        ? <CompanyStrategyPanel />
+        ? <CompanyStrategyPanel localeCode={localeCode} />
         : null}
     </section>
   );
