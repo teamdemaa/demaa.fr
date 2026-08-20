@@ -157,6 +157,27 @@ const solutionSections: readonly RenderableSolutionSectionDto[] = [
         section: "services",
         usage: "Confier une création, une modification ou une fermeture d’entreprise.",
       }),
+      placement({
+        category: "Communication",
+        name: "Gestion des réseaux sociaux",
+        resourceSlug: "gestion-reseaux-sociaux",
+        section: "services",
+        usage: "Confier le calendrier éditorial et les publications récurrentes.",
+      }),
+      placement({
+        category: "Acquisition",
+        name: "Publicité en ligne",
+        resourceSlug: "publicite-en-ligne",
+        section: "services",
+        usage: "Déléguer les campagnes Google Ads et Meta Ads.",
+      }),
+      placement({
+        category: "Commercial",
+        name: "Prospection ciblée",
+        resourceSlug: "prospection-ciblee",
+        section: "services",
+        usage: "Externaliser la recherche et la qualification de prospects.",
+      }),
     ],
   },
   {
@@ -556,6 +577,22 @@ describe("action plan contextual aids", () => {
       objective: "Comparer les tarifs des professionnels pour le bilan et la liasse fiscale.",
       title: "Étudier le marché des experts-comptables",
     },
+    {
+      objective: "Préparer un calendrier éditorial et publier régulièrement sur les réseaux sociaux.",
+      title: "Organiser les publications",
+    },
+    {
+      objective: "Lancer une campagne Google Ads avec un budget média défini.",
+      title: "Tester la publicité en ligne",
+    },
+    {
+      objective: "Construire un fichier de prospects et qualifier les leads prioritaires.",
+      title: "Préparer la prospection ciblée",
+    },
+    {
+      objective: "Trouver un professionnel pour avancer plus vite.",
+      title: "Chercher un prestataire",
+    },
   ])("does not turn an explicit business topic into an unsolicited service", (input) => {
     const aids = buildActionPlanContextualAids({
       actions: [action(input)],
@@ -583,6 +620,21 @@ describe("action plan contextual aids", () => {
       expectedSlug: "automatisation-processus",
       objective: "Confier à un spécialiste la connexion des outils et la suppression des ressaisies.",
       title: "Externaliser l’automatisation du workflow",
+    },
+    {
+      expectedSlug: "gestion-reseaux-sociaux",
+      objective: "Confier à un prestataire le calendrier éditorial et les publications récurrentes.",
+      title: "Déléguer les réseaux sociaux",
+    },
+    {
+      expectedSlug: "publicite-en-ligne",
+      objective: "Faire appel à un spécialiste pour gérer les campagnes Google Ads et le budget média.",
+      title: "Confier la publicité en ligne",
+    },
+    {
+      expectedSlug: "prospection-ciblee",
+      objective: "Externaliser la recherche de prospects et la qualification des leads.",
+      title: "Déléguer la prospection ciblée",
     },
   ])("keeps a service when both the need and delegation are explicit", ({ expectedSlug, ...input }) => {
     const aids = buildActionPlanContextualAids({
