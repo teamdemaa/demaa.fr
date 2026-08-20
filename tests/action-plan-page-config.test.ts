@@ -25,8 +25,8 @@ describe("shared action plan page configuration", () => {
       localeCode: "en",
       marketCode: "fr-fr",
     });
-    expect(englishInFrance.visibleViews).toEqual(["plan"]);
-    expect(englishInFrance.showCoaching).toBe(false);
+    expect(englishInFrance.visibleViews).toEqual(["plan", "solutions", "academy"]);
+    expect(englishInFrance.showCoaching).toBe(true);
 
     const englishBeta = getActionPlanPageConfig({
       localeCode: "en",
@@ -34,6 +34,13 @@ describe("shared action plan page configuration", () => {
     });
     expect(englishBeta.visibleViews).toEqual(["plan", "solutions", "academy"]);
     expect(englishBeta.showCoaching).toBe(true);
+
+    const frenchInGlobalBeta = getActionPlanPageConfig({
+      localeCode: "fr",
+      marketCode: "global-en-beta",
+    });
+    expect(frenchInGlobalBeta.visibleViews).toEqual(["plan", "solutions", "academy"]);
+    expect(frenchInGlobalBeta.showCoaching).toBe(true);
   });
 
   it("falls back to the plan view when a surface is not published", () => {
