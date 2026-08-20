@@ -1,10 +1,10 @@
-import { timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 import {
   enforceRateLimit,
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
+import { getCurrentAdminIdentity } from "@/lib/admin-auth.server";
 import {
   appendSpecialistCoachingMessage,
   getCoachingConversationForAdmin,
@@ -41,25 +41,11 @@ const PRIVATE_NO_STORE_HEADERS = {
   Pragma: "no-cache",
 } as const;
 
-function getAdminSecret() {
-  return process.env.COACHING_ADMIN_SECRET?.trim() || "";
-}
-
 function withPrivateNoStore<T extends NextResponse>(response: T) {
   for (const [name, value] of Object.entries(PRIVATE_NO_STORE_HEADERS)) {
     response.headers.set(name, value);
   }
   return response;
-}
-
-function hasValidSecret(request: Request) {
-  const expected = getAdminSecret();
-  const provided = request.headers.get("x-demaa-admin-secret") ?? "";
-  const expectedBuffer = Buffer.from(expected);
-  const providedBuffer = Buffer.from(provided);
-  return expected.length >= 24
-    && expectedBuffer.length === providedBuffer.length
-    && timingSafeEqual(expectedBuffer, providedBuffer);
 }
 
 async function guard(
@@ -84,13 +70,8 @@ async function guard(
   });
   if (limited) return withPrivateNoStore(limited);
 
-  if (getAdminSecret().length < 24) {
-    return NextResponse.json(
-      { error: "Administration non configurée." },
-      { status: 503, headers: PRIVATE_NO_STORE_HEADERS },
-    );
-  }
-  if (!hasValidSecret(request)) {
+  const identity = await getCurrentAdminIdentity();
+  if (!identity) {
     return NextResponse.json(
       { error: "Accès refusé." },
       { status: 401, headers: PRIVATE_NO_STORE_HEADERS },

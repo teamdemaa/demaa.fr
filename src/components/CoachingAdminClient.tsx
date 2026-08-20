@@ -1,7 +1,7 @@
 "use client";
 
 import { LoaderCircle, Plus, RotateCcw, Send, X } from "lucide-react";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useState } from "react";
 import {
   isCoachingReviewOverdue,
   type CoachingConversationSummary,
@@ -31,7 +31,6 @@ const coachingAdminDateFormatter = new Intl.DateTimeFormat("fr-FR", {
 });
 
 export default function CoachingAdminClient() {
-  const [secret, setSecret] = useState("");
   const [conversations, setConversations] = useState<CoachingConversationSummary[]>([]);
   const [selected, setSelected] = useState<Conversation | null>(null);
   const [reply, setReply] = useState("");
@@ -40,7 +39,7 @@ export default function CoachingAdminClient() {
   const [recommendationSlug, setRecommendationSlug] = useState("");
   const [recommendationNeedKey, setRecommendationNeedKey] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function request(path: string, init: RequestInit = {}) {
@@ -49,7 +48,6 @@ export default function CoachingAdminClient() {
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
-        "x-demaa-admin-secret": secret,
         ...init.headers,
       },
     });
@@ -68,20 +66,24 @@ export default function CoachingAdminClient() {
     return payload;
   }
 
-  async function loadConversations() {
+  const loadConversations = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
       const payload = await request("/api/admin/coaching");
       setConversations(payload?.conversations ?? []);
       setRecommendationCatalog(payload?.recommendationCatalog ?? []);
-      setIsUnlocked(true);
+      setIsLoaded(true);
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : "Accès refusé.");
     } finally {
       setIsLoading(false);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    void loadConversations();
+  }, [loadConversations]);
 
   async function selectConversation(id: string) {
     setIsLoading(true);
@@ -189,18 +191,14 @@ export default function CoachingAdminClient() {
     }
   }
 
-  if (!isUnlocked) {
+  if (!isLoaded) {
     return (
-      <div className="mx-auto mt-10 max-w-lg rounded-[1.2rem] border border-dema-line bg-white p-6">
-        <label className="block space-y-2 text-sm text-brand-blue">
-          <span>Clé d’administration</span>
-          <input type="password" value={secret} onChange={(event) => setSecret(event.target.value)} className="w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" />
-        </label>
-        {error ? <p className="mt-3 text-sm text-red-700">{error}</p> : null}
-        <button type="button" onClick={loadConversations} disabled={isLoading || !secret} className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-medium text-white disabled:opacity-60">
-          {isLoading ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-          Ouvrir
-        </button>
+      <div className="mx-auto mt-10 max-w-lg rounded-[1.2rem] border border-dema-line bg-white p-6 text-center">
+        {error ? (
+          <p className="text-sm text-red-700">{error}</p>
+        ) : (
+          <LoaderCircle className="mx-auto h-5 w-5 animate-spin text-dema-muted" aria-hidden="true" />
+        )}
       </div>
     );
   }

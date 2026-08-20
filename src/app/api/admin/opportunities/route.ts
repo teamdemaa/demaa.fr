@@ -1,4 +1,4 @@
-import { randomBytes, timingSafeEqual } from "node:crypto";
+import { randomBytes } from "node:crypto";
 import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 import {
@@ -6,6 +6,7 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
+import { getCurrentAdminIdentity } from "@/lib/admin-auth.server";
 import { logOperationalError } from "@/lib/operational-log";
 import {
   createOpportunity,
@@ -113,27 +114,15 @@ async function normalizeOpportunityFields(body: CreateBody | null) {
   };
 }
 
-function hasValidSecret(request: Request) {
-  const expected = process.env.OPPORTUNITIES_ADMIN_SECRET ?? "";
-  const provided = request.headers.get("x-demaa-admin-secret") ?? "";
-  const expectedBuffer = Buffer.from(expected);
-  const providedBuffer = Buffer.from(provided);
-  return expected.length >= 24
-    && expectedBuffer.length === providedBuffer.length
-    && timingSafeEqual(expectedBuffer, providedBuffer);
-}
-
-function guard(request: Request, requireOrigin: boolean) {
+async function guard(request: Request, requireOrigin: boolean) {
   const blockedHost = enforceAllowedHost(request);
   if (blockedHost) return blockedHost;
   if (requireOrigin) {
     const blockedOrigin = enforceSameOrigin(request);
     if (blockedOrigin) return blockedOrigin;
   }
-  if (!process.env.OPPORTUNITIES_ADMIN_SECRET) {
-    return NextResponse.json({ error: "Administration non configurée." }, { status: 503 });
-  }
-  if (!hasValidSecret(request)) {
+  const identity = await getCurrentAdminIdentity();
+  if (!identity) {
     return NextResponse.json({ error: "Accès refusé." }, { status: 401 });
   }
   return null;
@@ -151,8 +140,14 @@ function buildOpportunityId(title: string) {
 }
 
 export async function GET(request: Request) {
-  const blocked = guard(request, false);
+  const blocked = await guard(request, false);
   if (blocked) return blocked;
+  const limited = await enforceRateLimit(request, {
+    keyPrefix: "opportunity-admin-read",
+    limit: 180,
+    windowMs: 60 * 60 * 1000,
+  });
+  if (limited) return limited;
   const opportunities = (await getAllOpportunities())
     .sort((left, right) => Date.parse(right.createdAt) - Date.parse(left.createdAt));
   return NextResponse.json({ opportunities });
@@ -160,7 +155,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const blocked = guard(request, true);
+    const blocked = await guard(request, true);
     if (blocked) return blocked;
     const limited = await enforceRateLimit(request, {
       keyPrefix: "opportunity-admin-create",
@@ -195,7 +190,7 @@ export async function POST(request: Request) {
 
 export async function PATCH(request: Request) {
   try {
-    const blocked = guard(request, true);
+    const blocked = await guard(request, true);
     if (blocked) return blocked;
     const { data: body, response } = await readJsonBody<UpdateBody>(request);
     if (response) return response;

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
@@ -9,11 +9,15 @@ const mocks = vi.hoisted(() => ({
   enforceSameOrigin: vi.fn(),
   getCoachingConversationForAdmin: vi.fn(),
   getCoachingConversationSummaries: vi.fn(),
+  getCurrentAdminIdentity: vi.fn(),
   getMonthlyAccompanimentBenefitForUid: vi.fn(),
   reopenFreeCoachingClarification: vi.fn(),
   setExpertAccountantBenefitForUid: vi.fn(),
 }));
 
+vi.mock("@/lib/admin-auth.server", () => ({
+  getCurrentAdminIdentity: mocks.getCurrentAdminIdentity,
+}));
 vi.mock("@/lib/api-security", () => ({
   enforceRateLimit: mocks.enforceRateLimit,
   normalizeText: (value: unknown, maxLength: number, options: { multiline?: boolean } = {}) => {
@@ -40,7 +44,6 @@ vi.mock("@/lib/request-guard", () => ({
 
 import { GET, POST } from "@/app/api/admin/coaching/route";
 
-const secret = "a-secure-coaching-admin-secret";
 const conversationId = "a".repeat(64);
 
 function request(path = "", init: RequestInit = {}) {
@@ -49,7 +52,6 @@ function request(path = "", init: RequestInit = {}) {
     headers: {
       "Content-Type": "application/json",
       Origin: "https://demaa.co",
-      "x-demaa-admin-secret": secret,
       ...init.headers,
     },
   });
@@ -58,8 +60,12 @@ function request(path = "", init: RequestInit = {}) {
 describe("coaching admin route", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    process.env.COACHING_ADMIN_SECRET = secret;
     mocks.enforceAllowedHost.mockReturnValue(null);
+    mocks.getCurrentAdminIdentity.mockResolvedValue({
+      email: "hi.teamdemaa@gmail.com",
+      provider: "google",
+      uid: "admin-uid",
+    });
     mocks.enforceSameOrigin.mockReturnValue(null);
     mocks.enforceRateLimit.mockResolvedValue(null);
     mocks.getCoachingConversationSummaries.mockResolvedValue([]);
@@ -97,41 +103,15 @@ describe("coaching admin route", () => {
     });
   });
 
-  afterEach(() => {
-    delete process.env.COACHING_ADMIN_SECRET;
-    delete process.env.OPPORTUNITIES_ADMIN_SECRET;
-  });
-
-  it("rate limits a bad GET secret before refusing access", async () => {
-    const response = await GET(request("", {
-      headers: { "x-demaa-admin-secret": "wrong-secret" },
-    }));
+  it("rate limits a bad admin session before refusing access", async () => {
+    mocks.getCurrentAdminIdentity.mockResolvedValueOnce(null);
+    const response = await GET(request());
     expect(response.status).toBe(401);
     expect(mocks.enforceRateLimit).toHaveBeenCalledWith(expect.any(Request), {
       keyPrefix: "coaching-admin-read",
       limit: 180,
       windowMs: 60 * 60 * 1000,
     });
-    expect(mocks.getCoachingConversationSummaries).not.toHaveBeenCalled();
-  });
-
-  it("does not reuse the opportunities secret when coaching is not configured", async () => {
-    delete process.env.COACHING_ADMIN_SECRET;
-    process.env.OPPORTUNITIES_ADMIN_SECRET = secret;
-
-    const response = await GET(request());
-
-    expect(response.status).toBe(503);
-    expect(mocks.enforceRateLimit).toHaveBeenCalledOnce();
-    expect(mocks.getCoachingConversationSummaries).not.toHaveBeenCalled();
-  });
-
-  it("fails closed when the coaching secret is too short", async () => {
-    process.env.COACHING_ADMIN_SECRET = "too-short";
-
-    const response = await GET(request());
-
-    expect(response.status).toBe(503);
     expect(mocks.getCoachingConversationSummaries).not.toHaveBeenCalled();
   });
 
@@ -145,12 +125,11 @@ describe("coaching admin route", () => {
     expect(mocks.getCoachingConversationSummaries).not.toHaveBeenCalled();
   });
 
-  it("limits POST requests before validating a bad secret", async () => {
+  it("limits POST requests before checking the admin session", async () => {
     mocks.enforceRateLimit.mockResolvedValueOnce(new Response(null, { status: 429 }));
 
     const response = await POST(request("", {
       method: "POST",
-      headers: { "x-demaa-admin-secret": "wrong-secret" },
       body: JSON.stringify({ conversationId, message: "Réponse." }),
     }));
 
@@ -170,7 +149,7 @@ describe("coaching admin route", () => {
     expect(mocks.getCoachingConversationForAdmin).toHaveBeenCalledWith(conversationId);
   });
 
-  it("allows a specialist to append a reply after origin and secret checks", async () => {
+  it("allows a specialist to append a reply after origin and session checks", async () => {
     const response = await POST(request("", {
       method: "POST",
       body: JSON.stringify({ conversationId, message: "Voici ma réponse." }),

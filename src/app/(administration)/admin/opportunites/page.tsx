@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { connection } from "next/server";
 import Navbar from "@/components/Navbar";
 import OpportunityAdminClient from "@/components/OpportunityAdminClient";
+import { requireAdminIdentity } from "@/lib/admin-auth.server";
 import { getPublicExpertises } from "@/lib/provider-network.server";
 
 export const metadata: Metadata = {
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 
 export default async function OpportunityAdminPage() {
   await connection();
+  await requireAdminIdentity("/admin/opportunites");
   const expertises = await getPublicExpertises();
   return (
     <>
