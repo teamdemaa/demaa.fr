@@ -230,9 +230,11 @@ résolveur français n'est pas validé métier.
   créer la demande. Il refuse tout service ou forfait indisponible et ne fait
   jamais confiance à `localeCode`, `marketCode`, `countryCode`, prix ou
   `companyId` envoyés seuls par le client.
-- [ ] Réutiliser Échanger comme `Talk to us`, avec les mêmes conversations,
+- [x] Réutiliser Échanger comme `Talk to us`, avec les mêmes conversations,
   brouillons, statuts, dictée, administration, notifications et règles de
-  clarification gratuite.
+  clarification gratuite. Les libellés passent par un dictionnaire typé et la
+  mutation résout marché/pays depuis l'entreprise authentifiée : les valeurs
+  envoyées par le navigateur ne font plus autorité.
 - [ ] Réutiliser Academy et publier les huit fondamentaux anglais validés avec
   caches séparés par langue, marché et version.
 - [ ] Rendre Academy structurellement paritaire avec le français : mêmes cours,

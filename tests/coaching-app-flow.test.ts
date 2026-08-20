@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import { getCoachingUiCopy } from "@/lib/coaching-ui-copy";
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 
@@ -38,16 +39,20 @@ describe("unified app and coaching", () => {
   });
 
   it("keeps specialist messaging simple and moves coach business to Services", () => {
+    const coachingCopy = getCoachingUiCopy("fr");
+    const englishCoachingCopy = getCoachingUiCopy("en");
     const coaching = read("src/components/CoachingPanel.tsx");
     const offers = read("src/lib/specialist-offers.ts");
     const serviceCatalog = read("src/lib/canonical-service-catalog.ts");
     const services = read("src/components/ServicesCatalog.tsx");
     const coachingControl = read("src/components/ActionPlanCoachingControl.tsx");
     const appNavigation = read("src/components/ActionPlanNavbar.tsx");
-    expect(coaching).toContain("Décrivez votre situation. L’équipe Demaa vous répond ici.");
-    expect(coaching).toContain("Ce premier échange est gratuit.");
-    expect(coaching).toContain("Clarifier ma situation");
-    expect(coaching).toContain("Découvrir Coach business");
+    expect(coachingCopy.description).toBe("Décrivez votre situation. L’équipe Demaa vous répond ici.");
+    expect(coachingCopy.firstFree).toBe("Ce premier échange est gratuit.");
+    expect(coachingCopy.send).toBe("Clarifier ma situation");
+    expect(coachingCopy.discover).toBe("Découvrir Coach business");
+    expect(Object.keys(englishCoachingCopy)).toEqual(Object.keys(coachingCopy));
+    expect(englishCoachingCopy.talk).toBe("Talk to us");
     expect(coaching).not.toContain("Inclut 12 % de réduction sur les accompagnements Demaa éligibles");
     expect(coaching).not.toContain("149 €");
     expect(coaching).not.toContain('role="tablist"');
@@ -68,22 +73,22 @@ describe("unified app and coaching", () => {
     expect(coaching).toContain('aria-expanded={open}');
     expect(coaching).toContain('inert={!open}');
     expect(coaching).toContain('access.freeStatus !== "completed"');
-    expect(coaching).toContain("Deux rendez-vous individuels de 60 minutes par mois");
-    expect(coaching).toContain("Un suivi entre les rendez-vous");
+    expect(coachingCopy.meetings).toBe("Deux rendez-vous individuels de 60 minutes par mois");
+    expect(coachingCopy.followUp).toBe("Un suivi entre les rendez-vous");
     expect(coaching).toContain('fetch("/api/coaching-draft"');
     expect(coaching).toContain('onRequireAccess?.({ draftToken, tab: "messages" })');
     expect(coaching).toContain("initialDraftToken");
-    expect(coaching).toContain("Le message n’a pas été envoyé. Réessayez.");
+    expect(coachingCopy.sendError).toBe("Le message n’a pas été envoyé. Réessayez.");
     expect(coaching).not.toContain("Réponse gratuite en préparation");
     expect(coaching).not.toContain("Première clarification offerte");
     expect(coaching).not.toContain("Continuer par e-mail");
     expect(coaching).not.toContain("disponible prochainement");
-    expect(coachingControl).toContain("Échanger");
+    expect(coachingControl).toContain("getCoachingUiCopy");
     expect(coachingControl).toContain("onClick={() => setOpen(true)}");
     expect(coachingControl).toContain('url.searchParams.delete("intent")');
     expect(coachingControl).toContain("window.history.replaceState");
     expect(coachingControl).toContain("onRequireAccess={isAuthenticated ? undefined");
-    expect(coachingControl).toContain('"Connectez-vous pour envoyer"');
+    expect(coachingCopy.signInTitle).toBe("Connectez-vous pour envoyer");
     expect(coachingControl).not.toContain("Connectez-vous pour envoyer votre message et retrouver la réponse.");
     expect(coachingControl).toContain('params.set("draftToken", accessIntent.draftToken)');
     expect(coachingControl).not.toContain("SpecialistOffer");

@@ -14,6 +14,7 @@ const mocks = vi.hoisted(() => ({
   getCustomerCoachingState: vi.fn(),
   markCoachingMessageDraftSent: vi.fn(),
   submitLeadRequest: vi.fn(),
+  resolveAuthenticatedInternationalContext: vi.fn(),
 }));
 
 vi.mock("@/lib/api-security", () => ({
@@ -50,6 +51,10 @@ vi.mock("@/lib/request-guard", () => ({
 vi.mock("@/lib/service-request-security.server", () => ({
   enforceServiceRequestRateLimit: mocks.enforceServiceRequestRateLimit,
 }));
+vi.mock("@/lib/international-context.server", () => ({
+  getConfiguredVisitorCommercialContext: () => ({ countryCode: null, currencyCode: "EUR", marketCode: "fr-fr" }),
+  resolveAuthenticatedInternationalContext: mocks.resolveAuthenticatedInternationalContext,
+}));
 
 import { GET, POST } from "@/app/api/coaching-request/route";
 
@@ -82,6 +87,10 @@ describe("coaching request route", () => {
     mocks.requireCurrentCustomerIdentity.mockResolvedValue({
       identity: { email: "owner@example.com", provider: "password", uid: "owner-uid" },
       response: null,
+    });
+    mocks.resolveAuthenticatedInternationalContext.mockResolvedValue({
+      companyContext: { companyId: "company-1" },
+      internationalContext: { countryCode: null, currencyCode: "EUR", localeCode: "fr", marketCode: "fr-fr" },
     });
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
     mocks.resolveLeadContext.mockResolvedValue({
@@ -129,6 +138,10 @@ describe("coaching request route", () => {
   });
 
   it("preserves the English locale and market in the shared conversation pipeline", async () => {
+    mocks.resolveAuthenticatedInternationalContext.mockResolvedValue({
+      companyContext: { companyId: "company-1" },
+      internationalContext: { countryCode: "GB", currencyCode: "EUR", localeCode: "en", marketCode: "global-en-beta" },
+    });
     const response = await POST(request({
       countryCode: "gb",
       localeCode: "en",
@@ -155,6 +168,26 @@ describe("coaching request route", () => {
         { label: "Pays", value: "GB" },
         { label: "Source", value: "english-talk-to-us" },
       ]),
+    }));
+  });
+
+  it("ignores browser-controlled market and country values", async () => {
+    const response = await POST(request({
+      countryCode: "US",
+      localeCode: "en",
+      marketCode: "global-en-beta",
+      source: "forged-source",
+    }));
+
+    expect(response.status).toBe(202);
+    expect(mocks.resolveAuthenticatedInternationalContext).toHaveBeenCalledWith({
+      identity: expect.objectContaining({ uid: "owner-uid" }),
+      localeCode: "en",
+    });
+    expect(mocks.appendCustomerCoachingMessage).toHaveBeenCalledWith(expect.objectContaining({
+      countryCode: null,
+      marketCode: "fr-fr",
+      source: "english-talk-to-us",
     }));
   });
 
