@@ -320,14 +320,15 @@ famille et métier ne doit reconstruire le catalogue à chaque rendu.
 Les services étendent le catalogue canonique existant et utilisent les mêmes
 slugs, modales, demandes et administration que la France. Aucun catalogue
 anglais, aucune persistance par métier et aucun DTO Services parallèle ne sont
-créés. Seules les prestations
-réalisables à distance et en anglais sont publiées : Business coaching,
-Process automation and AI, Targeted B2B prospecting et Paid acquisition
-uniquement si la capacité réelle est validée. `Business application` reste
-masquée tant que Demaa ne peut pas assurer cadrage, livraison et support en
-anglais. `Process automation and AI` reste une seule prestation : l'IA est
-intégrée à l'automatisation et ne crée pas une offre parallèle. Les forfaits et
-le parcours de demande suivent D-089 sans contrat anglais parallèle.
+créés. Les prestations publiées dans la Preview technique sont Business
+coaching, Process automation and AI, Business application, Targeted B2B
+prospecting et Paid acquisition. Leur présence dans le code ne vaut pas à elle
+seule validation commerciale : avant l'ouverture publique, Demaa doit confirmer
+sa capacité réelle de cadrage, livraison et support en anglais pour Business
+application et Paid acquisition, ou les retirer de la matrice de marché.
+`Process automation and AI` reste une seule prestation : l'IA est intégrée à
+l'automatisation et ne crée pas une offre parallèle. Les forfaits et le parcours
+de demande suivent D-089 sans contrat anglais parallèle.
 
 Sont masqués : Expert-comptable, aides, financements, formalités et assistance
 locales, prestations réglementées, partenaires non qualifiés et ressources
@@ -351,10 +352,13 @@ suivi administratif partagé. Le formulaire et le suivi WhatsApp manuel restent
 inchangés pour `scope: market=fr-fr`.
 
 Les prix Services et forfaits restent des données structurées hors des textes
-localisés. Le resolver de marché part d'un montant économique canonique,
-applique une conversion et un arrondi explicitement configurés, puis produit un
-prix d'affichage ou de devis traçable. Un prix indicatif n'engage pas un montant
-de facturation ; seul le devis validé verrouille devise, taux, date et montant.
+localisés. La première Preview anglaise reste volontairement libellée et
+facturée en EUR : elle ne doit pas être présentée comme multidevise. Toute
+ouverture ultérieure en USD, GBP ou autre devise exige un resolver de marché
+partant du montant économique canonique, une conversion et un arrondi
+explicitement configurés, puis un snapshot traçable de la devise, du taux, de
+sa date et du montant proposé. Un prix indicatif n'engage pas un montant de
+facturation ; seul le devis validé verrouille ces valeurs.
 
 ### Talk to us
 

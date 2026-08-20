@@ -218,4 +218,40 @@ describe("lead storage asset snapshots", () => {
       }),
     ).toBeNull();
   });
+
+  it("stores a server-resolved commercial snapshot without personal data", async () => {
+    const created = await createLeadRequest({
+      ...buildInput("d032-v1-2026-07-28", "1.0.0"),
+      commercialSnapshot: {
+        amountMinor: 300000,
+        countryCode: null,
+        currencyCode: "EUR",
+        exchangeRate: null,
+        exchangeRateDate: null,
+        localeCode: "en",
+        marketCode: "global-en-beta",
+        packageSlug: "automatisation-avancee-ia",
+        pricingMode: "fixed",
+        serviceSlug: "automatisation-processus",
+      },
+      idempotencyKey: "service-commercial-snapshot",
+      requestType: "service_callback_request",
+    });
+
+    expect(firestore.documents.get(created.id)).toMatchObject({
+      commercial_snapshot: {
+        amount_minor: 300000,
+        country_code: null,
+        currency_code: "EUR",
+        exchange_rate: null,
+        exchange_rate_date: null,
+        locale_code: "en",
+        market_code: "global-en-beta",
+        package_slug: "automatisation-avancee-ia",
+        pricing_mode: "fixed",
+        service_slug: "automatisation-processus",
+      },
+    });
+    expect(JSON.stringify(firestore.documents.get(created.id))).not.toContain("owner_uid");
+  });
 });

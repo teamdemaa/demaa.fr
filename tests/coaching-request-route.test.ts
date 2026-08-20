@@ -168,7 +168,36 @@ describe("coaching request route", () => {
         { label: "Pays", value: "GB" },
         { label: "Source", value: "english-talk-to-us" },
       ]),
+      title: "New free clarification",
     }));
+  });
+
+  it("returns the completed clarification state in English", async () => {
+    mocks.resolveAuthenticatedInternationalContext.mockResolvedValue({
+      companyContext: { companyId: "company-1" },
+      internationalContext: {
+        countryCode: null,
+        currencyCode: "EUR",
+        localeCode: "en",
+        marketCode: "global-en-beta",
+      },
+    });
+    mocks.appendCustomerCoachingMessage.mockResolvedValue({
+      access: { canSend: false, freeStatus: "completed" },
+      allowed: false,
+    });
+
+    const response = await POST(request({
+      localeCode: "en",
+      message: "I need to clarify my next operational decision.",
+      source: "english-talk-to-us",
+    }));
+
+    expect(response.status).toBe(409);
+    await expect(response.json()).resolves.toMatchObject({
+      code: "free_clarification_completed",
+      error: "Your first clarification is complete.",
+    });
   });
 
   it("ignores browser-controlled market and country values", async () => {
