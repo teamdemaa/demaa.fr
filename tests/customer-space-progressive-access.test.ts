@@ -67,7 +67,8 @@ describe("progressive plan authentication", () => {
   });
 
   it("keeps an escape path when a valid session has no usable company", () => {
-    expect(loginPage).toContain("ensureDefaultCompanyForIdentity(identity)");
+    expect(loginPage).toContain("ensureDefaultCompanyForIdentity(");
+    expect(loginPage).toContain("getConfiguredVisitorCommercialContext(localeCode)");
     expect(loginPage).toContain("companyContextUnavailable");
     expect(loginPage).toContain("<CustomerLogoutButton localeCode={localeCode} />");
     expect(applicationError).toContain("<CustomerLogoutButton />");
