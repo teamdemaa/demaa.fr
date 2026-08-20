@@ -208,7 +208,7 @@ describe("action plan contextual aids", () => {
     );
   });
 
-  it("links a treasury action to the existing financial model", () => {
+  it("keeps the relevant process but hides contextual models until intent resolution is ready", () => {
     const aids = buildActionPlanContextualAids({
       actions: [action({
         channelOrTool: "Prévisionnel financier",
@@ -224,10 +224,7 @@ describe("action plan contextual aids", () => {
     expect(aids["action-1"]?.organisation?.routineId).toBe(
       "restaurant-piloter-tresorerie",
     );
-    expect(aids["action-1"]?.model).toMatchObject({
-      formatLabel: "Modèle financier",
-      resourceSlug: "suivi-previsionnel-financier",
-    });
+    expect(aids["action-1"]?.model).toBeNull();
   });
 
   it("fails closed for a vague action and ignores generated support content", () => {
@@ -253,7 +250,7 @@ describe("action plan contextual aids", () => {
     expect(hasActionPlanContextualAid(aids["action-1"])).toBe(false);
   });
 
-  it("keeps a canonical model even when a legacy generated table exists", () => {
+  it("does not surface a contextual model when a legacy generated table exists", () => {
     const aids = buildActionPlanContextualAids({
       actions: [action({
         channelOrTool: "Prévisionnel financier",
@@ -271,9 +268,7 @@ describe("action plan contextual aids", () => {
       systeme,
     });
 
-    expect(aids["action-1"]?.model?.resourceSlug).toBe(
-      "suivi-previsionnel-financier",
-    );
+    expect(aids["action-1"]?.model).toBeNull();
     expect(aids["action-1"]?.organisation?.routineId).toBe(
       "restaurant-piloter-tresorerie",
     );
@@ -359,8 +354,44 @@ describe("action plan contextual aids", () => {
     expect(new Set(tools.map(({ resourceSlug }) => resourceSlug)).size).toBe(2);
     expect(tools).toContainEqual(expect.objectContaining({
       alreadySelected: true,
+      relationship: "selected_in_solutions",
       resourceSlug: "pipedrive",
     }));
+  });
+
+  it("caps tools and accompaniments together at two commercial aids per plan", () => {
+    const aids = buildActionPlanContextualAids({
+      actions: [
+        action({
+          id: "action-1",
+          title: "Utiliser Pipedrive pour les prospects",
+          objective: "Centraliser les opportunités et les relances dans Pipedrive.",
+        }),
+        action({
+          id: "action-2",
+          title: "Utiliser Pennylane pour la trésorerie",
+          objective: "Suivre les factures et les paiements dans Pennylane.",
+        }),
+        action({
+          id: "action-3",
+          title: "Déléguer l’automatisation",
+          objective: "Confier la mise en place des workflows et supprimer les ressaisies.",
+        }),
+      ],
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    const commercialAids = Object.values(aids).flatMap(({ accompaniment, tool }) => [
+      ...(tool ? [tool] : []),
+      ...(accompaniment ? [accompaniment] : []),
+    ]);
+    expect(commercialAids).toHaveLength(2);
+    expect(Object.values(aids).every(({ accompaniment, tool }) =>
+      Number(Boolean(accompaniment)) + Number(Boolean(tool)) <= 1
+    )).toBe(true);
   });
 
   it("does not suggest software for a generic action without a software capability", () => {
@@ -378,7 +409,7 @@ describe("action plan contextual aids", () => {
     expect(aids["action-1"]?.tool).toBeNull();
   });
 
-  it("does not add an approximate CRM tool when the Demaa CRM model already covers the action", () => {
+  it("does not add an approximate CRM tool when no product is explicitly named", () => {
     const baseInput = {
       resources,
       solutionSections,
@@ -398,11 +429,11 @@ describe("action plan contextual aids", () => {
     });
 
     expect(before["action-1"]?.tool).toBeNull();
-    expect(after["action-1"]?.model?.resourceSlug).toBe("crm-suivi-commercial");
+    expect(after["action-1"]?.model).toBeNull();
     expect(after["action-1"]?.tool).toBeNull();
   });
 
-  it("can suggest a uniquely matching tool when no Demaa model covers the need", () => {
+  it("does not turn a generic software capability into a new product recommendation", () => {
     const aids = buildActionPlanContextualAids({
       actions: [action({
         channelOrTool: "CRM",
@@ -416,7 +447,7 @@ describe("action plan contextual aids", () => {
     });
 
     expect(aids["action-1"]?.model).toBeNull();
-    expect(aids["action-1"]?.tool?.resourceSlug).toBe("pipedrive");
+    expect(aids["action-1"]?.tool).toBeNull();
   });
 
   it("does not suggest a competitor from the same category when the source names an existing tool", () => {
@@ -443,6 +474,7 @@ describe("action plan contextual aids", () => {
 
     expect(aids["action-1"]?.tool).toMatchObject({
       alreadySelected: true,
+      relationship: "already_in_use",
       resourceSlug: "pipedrive",
     });
   });
@@ -461,6 +493,7 @@ describe("action plan contextual aids", () => {
 
     expect(aids["action-1"]?.tool).toMatchObject({
       alreadySelected: true,
+      relationship: "already_in_use",
       resourceSlug: "pennylane",
     });
   });
@@ -479,6 +512,7 @@ describe("action plan contextual aids", () => {
 
     expect(aids["action-1"]?.tool).toMatchObject({
       alreadySelected: false,
+      relationship: "named_in_action",
       resourceSlug: "pennylane",
     });
   });
@@ -585,7 +619,7 @@ describe("action plan contextual aid integration", () => {
     expect(result).toContain("encodeURIComponent(contextualAid.organisation.routineId)");
     expect(processPage).toContain("id={routine.routineId}");
     expect(processPage).toContain("scroll-mt-28");
-    expect(result).toContain("Peut faciliter cette action");
+    expect(result).toContain("Outil mentionné dans cette action");
     expect(result).toContain("Voir dans Solutions");
     expect(result).toContain("Vous souhaitez déléguer cette action ?");
     expect(result).toContain("Voir l’accompagnement");

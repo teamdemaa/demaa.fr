@@ -473,8 +473,10 @@ calendrier de livraison.
 
 Ce lot reste séparé de l'internationalisation et ne bloque pas la vague France.
 Il réutilisera le registre `SolutionPlacement` et remplacera uniquement la
-résolution des recommandations d'outils ; les aides Organisation, Modèle et
-Accompagnement conservent leur moteur actuel.
+résolution des recommandations d'outils ; les aides Organisation et
+Accompagnement conservent pour l'instant leur moteur local conservateur. Les
+recommandations contextuelles de modèles sont masquées tant que leur intention
+explicite et leur règle d'abstention ne sont pas validées.
 
 État au 17 août 2026 : le pilote `cabinet-comptable` est préparé, mais ni
 validé métier ni activable. Les artefacts versionnés sont :
@@ -490,6 +492,21 @@ Les blocages restant à fermer sont : relecture métier contradictoire,
 confirmation des relations commerciales Pennylane/Silae, transparence du
 statut Demaa/ODEMA de Tiimora, preuve sécurité/traitement des données Tiimora,
 puis implémentation et tests du résolveur serveur.
+
+Stabilisation France livrée le 20 août 2026, sans activer ce futur résolveur :
+
+- aucun outil nouveau n'est proposé à partir d'un simple mot-clé générique ;
+  l'outil doit déjà être sélectionné dans Solutions, utilisé ou explicitement
+  nommé dans l'Action ;
+- une Action ne reçoit jamais plus d'une aide commerciale Outil ou
+  Accompagnement et un plan n'en reçoit jamais plus de deux au total ;
+- ces plafonds sont des limites de sécurité, jamais des quotas à remplir : en
+  cas de doute, aucune recommandation n'est affichée ;
+- les recommandations de modèles sont masquées dans les Actions, sans retirer
+  les modèles de Ressources ni casser les plans historiques ;
+- Kiute Pro est masqué et exclu des sélections curées tant que son accès HTTPS
+  reste invalide ; l'URL officielle de Maliora a été corrigée et les dates de
+  revue de Maliora et Nomad ont été actualisées.
 
 - [ ] Introduire une résolution serveur versionnée, sans seconde source de
   vérité, avec `recommendationResolutionVersion: 1` même lorsque la liste de
@@ -514,7 +531,7 @@ Le moteur lexical actuel peut proposer un modèle financier à partir de mots
 généraux comme `marge`, `budget`, `paiement` ou `rentabilité`, même lorsque
 l'Action ne demande pas de produire ou de mettre à jour un support chiffré.
 
-- [ ] Masquer temporairement les recommandations de modèles dans les Actions,
+- [x] Masquer temporairement les recommandations de modèles dans les Actions,
   sans retirer les modèles de Ressources ni casser les plans historiques.
 - [ ] Ne réactiver un modèle que lorsque l'Action exprime un livrable explicite
   (`créer`, `remplir`, `mettre à jour`, `suivre`) et une capacité propre au

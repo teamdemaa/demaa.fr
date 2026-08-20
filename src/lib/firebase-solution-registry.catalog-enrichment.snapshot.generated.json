@@ -4,7 +4,7 @@
   "revisionStatus": "published",
   "createdAt": "2026-08-12T12:00:00.000Z",
   "createdBy": "release://catalog-enrichment-france-2026-08-12",
-  "sourceFingerprint": "31789715b771c6464677a418e0d72d3c29a202b17ab0cb1c3ed99211f3b92739",
+  "sourceFingerprint": "4913d1a2d1210d319446a3af2452d70413ca7e04803903d2165e78a2aa6d1526",
   "knownSystemSlugs": [
     "cabinet-comptable",
     "cabinet-davocat",
@@ -3569,34 +3569,6 @@
       "resource": {
         "evidence": [
           {
-            "evidenceId": "firebase-migration-resource-institut-de-beaute-kiute-pro",
-            "sourceRef": "https://pro.kiute.com/fr/",
-            "claim": "Kiute Pro est une ressource actuellement affichée dans les Solutions Demaa.",
-            "evidenceType": "legacy_catalog_reference",
-            "capturedAt": "2026-08-08T12:00:00.000Z"
-          }
-        ],
-        "reviewer": "Master Demaa",
-        "reviewedAt": "2026-08-08T12:00:00.000Z",
-        "expiresAt": "2027-02-08T12:00:00.000Z",
-        "interactionMode": "external_link",
-        "href": "https://pro.kiute.com/fr/",
-        "resourceSlug": "kiute-pro",
-        "resourceType": "software",
-        "name": "Kiute Pro",
-        "description": "Logiciel tout-en-un pour salons de coiffure, instituts et spas : rendez-vous, caisse, clients et fidélité.",
-        "commercialRelationship": "unknown",
-        "status": "draft",
-        "resourceVersion": "firebase.v1",
-        "publicationBlockers": [
-          "commercial-relationship-unconfirmed"
-        ]
-      }
-    },
-    {
-      "resource": {
-        "evidence": [
-          {
             "evidenceId": "firebase-migration-resource-nettoyage-professionnel-kizeo-forms",
             "sourceRef": "https://www.kizeo-forms.com/fr/",
             "claim": "Kizeo Forms est une ressource actuellement affichée dans les Solutions Demaa.",
@@ -4183,7 +4155,7 @@
         "evidence": [
           {
             "evidenceId": "firebase-migration-resource-coach-sportif-maliora",
-            "sourceRef": "https://maliora.fr/fonctionnalites",
+            "sourceRef": "https://www.maliora.fr/logiciel-coach-sportif",
             "claim": "Maliora est une ressource actuellement affichée dans les Solutions Demaa.",
             "evidenceType": "legacy_catalog_reference",
             "capturedAt": "2026-08-08T12:00:00.000Z"
@@ -4193,7 +4165,7 @@
         "reviewedAt": "2026-08-08T12:00:00.000Z",
         "expiresAt": "2027-02-08T12:00:00.000Z",
         "interactionMode": "external_link",
-        "href": "https://maliora.fr/fonctionnalites",
+        "href": "https://www.maliora.fr/logiciel-coach-sportif",
         "resourceSlug": "maliora",
         "resourceType": "software",
         "name": "Maliora",
@@ -16203,46 +16175,6 @@
       "placement": {
         "evidence": [
           {
-            "evidenceId": "firebase-migration-placement-institut-de-beaute-kiute-pro",
-            "sourceRef": "https://pro.kiute.com/fr/",
-            "claim": "Logiciel tout-en-un pour salons de coiffure, instituts et spas : rendez-vous, caisse, clients et fidélité.",
-            "evidenceType": "legacy_catalog_reference",
-            "capturedAt": "2026-08-08T12:00:00.000Z"
-          }
-        ],
-        "reviewer": "Master Demaa",
-        "reviewedAt": "2026-08-08T12:00:00.000Z",
-        "expiresAt": "2027-02-08T12:00:00.000Z",
-        "placementId": "institut-de-beaute:kiute-pro:software:5",
-        "systemSlug": "institut-de-beaute",
-        "resourceSlug": "kiute-pro",
-        "rank": 5,
-        "section": "software",
-        "usage": "Gérer agenda, caisse, clients, fidélité et visibilité beauté/coiffure.",
-        "fitRationale": "Logiciel tout-en-un pour salons de coiffure, instituts et spas : rendez-vous, caisse, clients et fidélité.",
-        "fitConstraints": [
-          "Comparer les fonctions, les intégrations, le coût total et les conditions avant de choisir."
-        ],
-        "editorialStatus": "selected",
-        "commercialRelationship": "unknown",
-        "status": "draft",
-        "placementVersion": "firebase.v1",
-        "publicationBlockers": [
-          "commercial-relationship-unconfirmed"
-        ]
-      },
-      "presentation": {
-        "displayCategory": "Caisse & réservation",
-        "nameOverride": "Kiute Pro",
-        "hrefOverride": "https://pro.kiute.com/fr/",
-        "ctaLabel": "Voir l’outil",
-        "descriptionOverride": "Logiciel tout-en-un pour salons de coiffure, instituts et spas : rendez-vous, caisse, clients et fidélité."
-      }
-    },
-    {
-      "placement": {
-        "evidence": [
-          {
             "evidenceId": "firebase-migration-placement-institut-de-beaute-square",
             "sourceRef": "https://squareup.com/fr/fr",
             "claim": "Solutions de caisse, paiement et gestion commerciale.",
@@ -16253,10 +16185,10 @@
         "reviewer": "Master Demaa",
         "reviewedAt": "2026-08-08T12:00:00.000Z",
         "expiresAt": "2027-02-08T12:00:00.000Z",
-        "placementId": "institut-de-beaute:square:software:6",
+        "placementId": "institut-de-beaute:square:software:5",
         "systemSlug": "institut-de-beaute",
         "resourceSlug": "square",
-        "rank": 6,
+        "rank": 5,
         "section": "software",
         "usage": "Encaisser et suivre les ventes au quotidien.",
         "fitRationale": "Solutions de caisse, paiement et gestion commerciale.",
@@ -16524,46 +16456,6 @@
       "placement": {
         "evidence": [
           {
-            "evidenceId": "firebase-migration-placement-salon-de-coiffure-kiute-pro",
-            "sourceRef": "https://pro.kiute.com/fr/",
-            "claim": "Logiciel tout-en-un pour salons de coiffure, instituts et spas : rendez-vous, caisse, clients et fidélité.",
-            "evidenceType": "legacy_catalog_reference",
-            "capturedAt": "2026-08-08T12:00:00.000Z"
-          }
-        ],
-        "reviewer": "Master Demaa",
-        "reviewedAt": "2026-08-08T12:00:00.000Z",
-        "expiresAt": "2027-02-08T12:00:00.000Z",
-        "placementId": "salon-de-coiffure:kiute-pro:software:5",
-        "systemSlug": "salon-de-coiffure",
-        "resourceSlug": "kiute-pro",
-        "rank": 5,
-        "section": "software",
-        "usage": "Gérer agenda, caisse, clients, fidélité et visibilité beauté/coiffure.",
-        "fitRationale": "Logiciel tout-en-un pour salons de coiffure, instituts et spas : rendez-vous, caisse, clients et fidélité.",
-        "fitConstraints": [
-          "Comparer les fonctions, les intégrations, le coût total et les conditions avant de choisir."
-        ],
-        "editorialStatus": "selected",
-        "commercialRelationship": "unknown",
-        "status": "draft",
-        "placementVersion": "firebase.v1",
-        "publicationBlockers": [
-          "commercial-relationship-unconfirmed"
-        ]
-      },
-      "presentation": {
-        "displayCategory": "Caisse & réservation",
-        "nameOverride": "Kiute Pro",
-        "hrefOverride": "https://pro.kiute.com/fr/",
-        "ctaLabel": "Voir l’outil",
-        "descriptionOverride": "Logiciel tout-en-un pour salons de coiffure, instituts et spas : rendez-vous, caisse, clients et fidélité."
-      }
-    },
-    {
-      "placement": {
-        "evidence": [
-          {
             "evidenceId": "firebase-migration-placement-salon-de-coiffure-square",
             "sourceRef": "https://squareup.com/fr/fr",
             "claim": "Solutions de caisse, paiement et gestion commerciale.",
@@ -16574,10 +16466,10 @@
         "reviewer": "Master Demaa",
         "reviewedAt": "2026-08-08T12:00:00.000Z",
         "expiresAt": "2027-02-08T12:00:00.000Z",
-        "placementId": "salon-de-coiffure:square:software:6",
+        "placementId": "salon-de-coiffure:square:software:5",
         "systemSlug": "salon-de-coiffure",
         "resourceSlug": "square",
-        "rank": 6,
+        "rank": 5,
         "section": "software",
         "usage": "Encaisser et suivre les ventes au quotidien.",
         "fitRationale": "Solutions de caisse, paiement et gestion commerciale.",
@@ -28926,7 +28818,7 @@
         "evidence": [
           {
             "evidenceId": "firebase-migration-placement-coach-sportif-maliora",
-            "sourceRef": "https://maliora.fr/fonctionnalites",
+            "sourceRef": "https://www.maliora.fr/logiciel-coach-sportif",
             "claim": "Plateforme tout-en-un pour coachs sportifs : clients, programmes, nutrition et facturation.",
             "evidenceType": "legacy_catalog_reference",
             "capturedAt": "2026-08-08T12:00:00.000Z"
@@ -28956,7 +28848,7 @@
       "presentation": {
         "displayCategory": "Outils métier",
         "nameOverride": "Maliora",
-        "hrefOverride": "https://maliora.fr/fonctionnalites",
+        "hrefOverride": "https://www.maliora.fr/logiciel-coach-sportif",
         "ctaLabel": "Voir l’outil",
         "descriptionOverride": "Plateforme tout-en-un pour coachs sportifs : clients, programmes, nutrition et facturation."
       }

@@ -200,6 +200,8 @@ describe("action plan experience architecture", () => {
     expect(systemSelector).toContain('role="listbox"');
     expect(systemSelector).toContain('role="combobox"');
     expect(systemPanel).toContain("<SystemSolutionsTab");
+    expect(systemPanel).toContain('<h1 className="sr-only">');
+    expect(systemPanel).toContain("Solutions pour votre entreprise");
     expect(systemPanel).toContain("<SystemResourcesTab");
     expect(systemPanel).toContain("initialResourceSlug={initialResourceSlug}");
     expect(systemPanel).toContain("onResourceSlugChange={onResourceSlugChange}");
@@ -210,6 +212,21 @@ describe("action plan experience architecture", () => {
     expect(systemPanel).not.toContain("Ouvrir la fiche complète");
     expect(experience).toContain("demoMode={isDemoMode}");
     expect(systemPanel).not.toContain("Organisation");
+  });
+
+  it("keeps embedded Solutions and Academy landmarks explicit and closes a detail before navigating", () => {
+    const solutions = source("src/components/SystemSolutionsTab.tsx");
+    const academy = source("src/components/AcademyIndexClient.tsx");
+    const actionStart = solutions.indexOf("<SolutionAction");
+    const actionEnd = solutions.indexOf("/>\n      ) : null}", actionStart);
+    const actionSource = solutions.slice(actionStart, actionEnd);
+
+    expect(academy).toContain('<h1 className="sr-only">');
+    expect(academy).toContain('localeCode === "en" ? "Academy" : "Académie"');
+    expect(actionSource).toContain("onClose();");
+    expect(actionSource.indexOf("onClose();")).toBeLessThan(
+      actionSource.indexOf('trackSystemSolutionEvent("system_solution_resource_cta_clicked"'),
+    );
   });
 
   it("keeps the application navigation usable before generation", () => {

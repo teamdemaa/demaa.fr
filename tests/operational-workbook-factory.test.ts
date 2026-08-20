@@ -172,14 +172,14 @@ describe("operational workbook factory", () => {
     expect(toolNames("institut-de-beaute")).toEqual([
       "Planity",
       "Fresha",
-      "Kiute Pro",
       "Square",
+      "SumUp Caisse",
     ]);
     expect(toolNames("salon-de-coiffure")).toEqual([
-      "Kiute Pro",
       "Planity",
       "Fresha",
       "Square",
+      "SumUp Caisse",
     ]);
     expect(toolNames("esthetique")).toEqual([
       "Fresha",

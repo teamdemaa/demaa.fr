@@ -113,6 +113,9 @@ export default function ActionPlanSystemPanel({
 
   return (
     <section aria-label={localeCode === "en" ? "Business type" : "Système"} className="pt-3">
+      <h1 className="sr-only">
+        {localeCode === "en" ? "Business solutions" : "Solutions pour votre entreprise"}
+      </h1>
       <div className="mx-auto mb-6 w-full max-w-xl xl:w-[min(40vw,36rem)]">
         <div className="flex items-center gap-2">
           <div className="min-w-0 flex-1">
