@@ -12,6 +12,7 @@ import {
 import { parseActionPlanAppContext } from "@/lib/action-plan-app-context";
 import { shouldRedirectAuthenticatedHomeToPlans } from "@/lib/action-plan-home-routing";
 import { englishActionPlanSystemOptions } from "@/lib/action-plan-localization";
+import { GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT } from "@/lib/international-context";
 import { resolveRequestInternationalContext } from "@/lib/international-context.server";
 import { getCurrentCustomerAppIdentityFromSession } from "@/lib/customer-space-session.server";
 
@@ -60,7 +61,10 @@ export default async function EnglishActionPlanPage({
 }) {
   if (!isEnglishBetaEnabled()) notFound();
   const [context, identity, query] = await Promise.all([
-    resolveRequestInternationalContext({ pathname: "/en" }),
+    resolveRequestInternationalContext({
+      commercialContext: GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT,
+      pathname: "/en",
+    }),
     getCurrentCustomerAppIdentityFromSession(),
     searchParams,
   ]);

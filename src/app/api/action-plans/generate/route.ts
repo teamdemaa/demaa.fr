@@ -11,6 +11,7 @@ import { enforceRateLimit, readJsonBody } from "@/lib/api-security";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import {
   authorizeActionPlanGenerationContext,
+  InvalidActionPlanLocaleContextError,
   UnavailableActionPlanLocaleError,
 } from "@/lib/action-plan-localization.server";
 
@@ -101,6 +102,12 @@ export async function POST(request: Request) {
       ...generationContext,
     });
   } catch (error) {
+    if (error instanceof InvalidActionPlanLocaleContextError) {
+      return NextResponse.json(
+        { error: "Le contexte de langue et de marché est invalide." },
+        { status: 400, headers: noStoreHeaders() },
+      );
+    }
     if (error instanceof UnavailableActionPlanLocaleError) {
       return NextResponse.json(
         { error: "Cette langue n’est pas disponible pour le moment." },

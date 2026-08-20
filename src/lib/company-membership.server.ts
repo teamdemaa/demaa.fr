@@ -5,9 +5,13 @@ import type { Transaction } from "firebase-admin/firestore";
 import type { CustomerSessionIdentity } from "@/lib/customer-space-auth";
 import { getAdminFirestore } from "@/lib/firebase-admin";
 import {
+  EUR_CURRENCY_CODE,
   FRANCE_CONTEXT,
+  isMarketCode,
+  normalizeCountryCode,
+  normalizeCurrencyCode,
+  parseCommercialContext,
   type InternationalContext,
-  type MarketCode,
 } from "@/lib/international-context";
 
 export const COMPANIES_COLLECTION = "companies";
@@ -38,6 +42,8 @@ export type CompanyInternationalContext = Pick<
   InternationalContext,
   "countryCode" | "currencyCode" | "marketCode"
 >;
+
+export type ActiveCompanyContext = CompanyIdentity & CompanyInternationalContext;
 
 type CompanyMembershipDocument = {
   schema_version?: unknown;
@@ -82,13 +88,37 @@ export function getDefaultCompanyIdentity(uid: string): CompanyIdentity {
 export async function getActiveDefaultCompanyIdentity(
   uidValue: string,
 ): Promise<CompanyIdentity | null> {
+  const company = await getActiveDefaultCompanyContext(uidValue);
+  return company
+    ? { companyId: company.companyId, membershipId: company.membershipId }
+    : null;
+}
+
+export async function getActiveDefaultCompanyContext(
+  uidValue: string,
+): Promise<ActiveCompanyContext | null> {
   const uid = normalizeUid(uidValue);
   const companyIdentity = getDefaultCompanyIdentity(uid);
-  const hasMembership = await hasActiveCompanyMembership({
-    companyId: companyIdentity.companyId,
-    uid,
-  });
-  return hasMembership ? companyIdentity : null;
+  const database = getAdminFirestore();
+  const [companySnapshot, membershipSnapshot] = await Promise.all([
+    database.collection(COMPANIES_COLLECTION).doc(companyIdentity.companyId).get(),
+    database
+      .collection(COMPANY_MEMBERSHIPS_COLLECTION)
+      .doc(companyIdentity.membershipId)
+      .get(),
+  ]);
+  const company = companySnapshot.data() as CompanyDocument | undefined;
+  const membership = membershipSnapshot.data() as CompanyMembershipDocument | undefined;
+  if (
+    !isActiveCompany(company)
+    || !isActiveMembership(membership, { companyId: companyIdentity.companyId, uid })
+  ) {
+    return null;
+  }
+  const internationalContext = parseCompanyInternationalContext(company);
+  return internationalContext
+    ? { ...companyIdentity, ...internationalContext }
+    : null;
 }
 
 export async function getActiveDefaultCompanyIdentityInTransaction(
@@ -125,17 +155,33 @@ function isActiveCompany(document: CompanyDocument | undefined) {
 export function readCompanyInternationalContext(
   document: CompanyDocument | undefined,
 ): CompanyInternationalContext {
-  const marketCode: MarketCode = document?.market_code === "global-en-beta"
-    ? "global-en-beta"
-    : "fr-fr";
   return {
-    countryCode: typeof document?.country_code === "string"
-      && /^[A-Z]{2}$/.test(document.country_code)
-      ? document.country_code
-      : null,
-    currencyCode: "EUR",
-    marketCode,
+    countryCode: normalizeCountryCode(document?.country_code),
+    currencyCode: normalizeCurrencyCode(document?.currency_code) ?? EUR_CURRENCY_CODE,
+    marketCode: isMarketCode(document?.market_code)
+      ? document.market_code
+      : FRANCE_CONTEXT.marketCode,
   };
+}
+
+export function parseCompanyInternationalContext(
+  document: CompanyDocument | undefined,
+): CompanyInternationalContext | null {
+  const hasStoredContext = document?.country_code !== undefined
+    || document?.currency_code !== undefined
+    || document?.market_code !== undefined;
+  if (!hasStoredContext) {
+    return {
+      countryCode: FRANCE_CONTEXT.countryCode,
+      currencyCode: FRANCE_CONTEXT.currencyCode,
+      marketCode: FRANCE_CONTEXT.marketCode,
+    };
+  }
+  return parseCommercialContext({
+    countryCode: document?.country_code,
+    currencyCode: document?.currency_code,
+    marketCode: document?.market_code,
+  });
 }
 
 function isActiveMembership(
@@ -150,7 +196,7 @@ function isActiveMembership(
 
 export async function ensureDefaultCompanyForIdentity(
   identity: CustomerSessionIdentity,
-): Promise<CompanyIdentity> {
+): Promise<ActiveCompanyContext> {
   const uid = normalizeUid(identity.uid);
   const companyIdentity = getDefaultCompanyIdentity(uid);
   const database = getAdminFirestore();
@@ -183,6 +229,17 @@ export async function ensureDefaultCompanyForIdentity(
       throw new Error("The default company membership is not active.");
     }
 
+    const internationalContext = companySnapshot.exists
+      ? parseCompanyInternationalContext(company)
+      : {
+          countryCode: FRANCE_CONTEXT.countryCode,
+          currencyCode: FRANCE_CONTEXT.currencyCode,
+          marketCode: FRANCE_CONTEXT.marketCode,
+        };
+    if (!internationalContext) {
+      throw new Error("The default company commercial context is invalid.");
+    }
+
     if (!companySnapshot.exists) {
       transaction.set(companyReference, {
         schema_version: "1",
@@ -208,7 +265,7 @@ export async function ensureDefaultCompanyForIdentity(
       });
     }
 
-    return companyIdentity;
+    return { ...companyIdentity, ...internationalContext };
   });
 }
 

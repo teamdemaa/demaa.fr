@@ -201,9 +201,15 @@ describe("company-scoped action plan persistence", () => {
   });
 
   it("stores English generation context and keeps it in the company-wide index", async () => {
+    const englishOwner = identity("english-owner");
+    const englishCompany = await ensureDefaultCompanyForIdentity(englishOwner);
+    firestore.documents.set(`companies/${englishCompany.companyId}`, {
+      ...firestore.documents.get(`companies/${englishCompany.companyId}`),
+      market_code: "global-en-beta",
+    });
     const started = await beginActionPlanGeneration({
       contentLocaleCode: "en",
-      identity: identity("english-owner"),
+      identity: englishOwner,
       marketCodeAtCreation: "global-en-beta",
       requestId: "english-generation-1234",
       situation: "Our SaaS is growing but every retention decision still depends on me.",
@@ -221,9 +227,26 @@ describe("company-scoped action plan persistence", () => {
       market_code_at_creation: "global-en-beta",
       title: "Plan being created",
     });
-    await expect(getActionPlanIndexForIdentity(identity("english-owner"))).resolves.toEqual([
+    await expect(getActionPlanIndexForIdentity(englishOwner)).resolves.toEqual([
       expect.objectContaining({ contentLocaleCode: "en", id: started.claim.id }),
     ]);
+  });
+
+  it("uses the active company market instead of trusting the browser market", async () => {
+    const started = await beginActionPlanGeneration({
+      contentLocaleCode: "en",
+      identity: identity("france-owner"),
+      marketCodeAtCreation: "global-en-beta",
+      requestId: "english-france-generation-1234",
+      situation: "Our French business needs an English plan with clearer priorities.",
+    });
+    expect(started).toMatchObject({
+      kind: "claimed",
+      claim: {
+        contentLocaleCode: "en",
+        marketCodeAtCreation: "fr-fr",
+      },
+    });
   });
 
   it("rejects an idempotency key reused with another situation", async () => {

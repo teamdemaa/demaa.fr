@@ -1,11 +1,20 @@
 import { describe, expect, it } from "vitest";
 import {
+  FRANCE_COMMERCIAL_CONTEXT,
+  GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT,
+  createInternationalContext,
   getBrowserInterfaceLocale,
-  getInternationalContext,
   getReturnToInterfaceLocale,
+  parseCommercialContext,
   resolveInterfaceLocale,
 } from "@/lib/international-context";
 import { getSafeCustomerReturnTo } from "@/lib/customer-space-redirect";
+import {
+  InvalidActionPlanLocaleContextError,
+  normalizeActionPlanLocaleContext,
+  parseActionPlanLocaleContext,
+  resolveActionPlanLocaleContextForCreation,
+} from "@/lib/action-plan-localization";
 
 describe("international context foundation", () => {
   it("keeps an explicitly opened route ahead of every stored preference", () => {
@@ -44,13 +53,19 @@ describe("international context foundation", () => {
   });
 
   it("keeps locale, market, country, and currency separate", () => {
-    expect(getInternationalContext("fr")).toEqual({
+    expect(createInternationalContext("fr", FRANCE_COMMERCIAL_CONTEXT)).toEqual({
       countryCode: null,
       currencyCode: "EUR",
       localeCode: "fr",
       marketCode: "fr-fr",
     });
-    expect(getInternationalContext("en")).toEqual({
+    expect(createInternationalContext("en", FRANCE_COMMERCIAL_CONTEXT)).toEqual({
+      countryCode: null,
+      currencyCode: "EUR",
+      localeCode: "en",
+      marketCode: "fr-fr",
+    });
+    expect(createInternationalContext("en", GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT)).toEqual({
       countryCode: null,
       currencyCode: "EUR",
       localeCode: "en",
@@ -58,6 +73,27 @@ describe("international context foundation", () => {
     });
     expect(getBrowserInterfaceLocale("es-ES,en;q=0.8")).toBe("en");
     expect(getBrowserInterfaceLocale("en;q=0,fr;q=0.5")).toBe("fr");
+  });
+
+  it("validates commercial context independently from interface locale", () => {
+    expect(parseCommercialContext({
+      countryCode: "gb",
+      currencyCode: "gbp",
+      marketCode: "global-en-beta",
+    })).toEqual({
+      countryCode: "GB",
+      currencyCode: "GBP",
+      marketCode: "global-en-beta",
+    });
+    expect(parseCommercialContext({
+      countryCode: "USA",
+      currencyCode: "USD",
+      marketCode: "global-en-beta",
+    })).toBeNull();
+    expect(parseCommercialContext({
+      currencyCode: "EUR",
+      marketCode: "unknown-market",
+    })).toBeNull();
   });
 
   it("preserves safe English return destinations through authentication", () => {
@@ -74,5 +110,36 @@ describe("international context foundation", () => {
     }
     expect(getSafeCustomerReturnTo("/en/unknown")).toBe("/");
     expect(getSafeCustomerReturnTo("//evil.example/en")).toBe("/");
+  });
+
+  it("keeps plan content language independent from its creation market", () => {
+    expect(parseActionPlanLocaleContext({
+      contentLocaleCode: "en",
+      marketCodeAtCreation: "fr-fr",
+    })).toEqual({
+      contentLocaleCode: "en",
+      marketCodeAtCreation: "fr-fr",
+    });
+    expect(parseActionPlanLocaleContext({
+      contentLocaleCode: "fr",
+      marketCodeAtCreation: "global-en-beta",
+    })).toEqual({
+      contentLocaleCode: "fr",
+      marketCodeAtCreation: "global-en-beta",
+    });
+    expect(parseActionPlanLocaleContext({
+      contentLocaleCode: "en",
+    })).toBeNull();
+    expect(normalizeActionPlanLocaleContext({})).toEqual({
+      contentLocaleCode: "fr",
+      marketCodeAtCreation: "fr-fr",
+    });
+    expect(resolveActionPlanLocaleContextForCreation()).toEqual({
+      contentLocaleCode: "fr",
+      marketCodeAtCreation: "fr-fr",
+    });
+    expect(() => resolveActionPlanLocaleContextForCreation({
+      contentLocaleCode: "en",
+    })).toThrow(InvalidActionPlanLocaleContextError);
   });
 });

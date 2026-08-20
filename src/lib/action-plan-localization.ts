@@ -1,6 +1,5 @@
 import type { InterfaceLocaleCode, MarketCode } from "@/lib/international-context";
 import {
-  ENGLISH_BETA_CONTEXT,
   FRANCE_CONTEXT,
 } from "@/lib/international-context";
 import {
@@ -89,27 +88,60 @@ export const englishActionPlanSystemOptions = ENGLISH_ACTION_PLAN_SYSTEM_IDS.map
   (id) => ENGLISH_SYSTEM_PROJECTIONS[id],
 );
 
+export class InvalidActionPlanLocaleContextError extends Error {
+  constructor() {
+    super("invalid_action_plan_locale_context");
+    this.name = "InvalidActionPlanLocaleContextError";
+  }
+}
+
+export function parseActionPlanLocaleContext(input?: {
+  contentLocaleCode?: unknown;
+  marketCodeAtCreation?: unknown;
+}) {
+  const contentLocaleCode = input?.contentLocaleCode;
+  const marketCodeAtCreation = input?.marketCodeAtCreation;
+  if (
+    (contentLocaleCode === "fr" || contentLocaleCode === "en")
+    && (marketCodeAtCreation === "fr-fr" || marketCodeAtCreation === "global-en-beta")
+  ) {
+    return { contentLocaleCode, marketCodeAtCreation } as const;
+  }
+  return null;
+}
+
 export function normalizeActionPlanLocaleContext(input?: {
   contentLocaleCode?: unknown;
   marketCodeAtCreation?: unknown;
 }) {
-  return input?.contentLocaleCode === "en"
-    && input.marketCodeAtCreation === ENGLISH_BETA_CONTEXT.marketCode
-    ? {
-        contentLocaleCode: ENGLISH_BETA_CONTEXT.localeCode,
-        marketCodeAtCreation: ENGLISH_BETA_CONTEXT.marketCode,
-      } as const
-    : {
-        contentLocaleCode: FRANCE_CONTEXT.localeCode,
-        marketCodeAtCreation: FRANCE_CONTEXT.marketCode,
-      } as const;
+  return parseActionPlanLocaleContext(input) ?? {
+    contentLocaleCode: FRANCE_CONTEXT.localeCode,
+    marketCodeAtCreation: FRANCE_CONTEXT.marketCode,
+  } as const;
+}
+
+export function resolveActionPlanLocaleContextForCreation(input?: {
+  contentLocaleCode?: unknown;
+  marketCodeAtCreation?: unknown;
+}) {
+  const hasExplicitContext = input?.contentLocaleCode !== undefined
+    || input?.marketCodeAtCreation !== undefined;
+  if (!hasExplicitContext) {
+    return {
+      contentLocaleCode: FRANCE_CONTEXT.localeCode,
+      marketCodeAtCreation: FRANCE_CONTEXT.marketCode,
+    } as const;
+  }
+  const parsed = parseActionPlanLocaleContext(input);
+  if (!parsed) throw new InvalidActionPlanLocaleContextError();
+  return parsed;
 }
 
 export function getActionPlanGenerationContext(input?: {
   contentLocaleCode?: unknown;
   marketCodeAtCreation?: unknown;
 }): ActionPlanGenerationContext {
-  const context = normalizeActionPlanLocaleContext(input);
+  const context = resolveActionPlanLocaleContextForCreation(input);
   const supportedSystemIds = context.contentLocaleCode === "en"
     ? ENGLISH_ACTION_PLAN_SYSTEM_IDS
     : actionPlanSystemOptions.map(({ id }) => id);

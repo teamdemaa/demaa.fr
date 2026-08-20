@@ -3,9 +3,12 @@ import "server-only";
 import { isEnglishBetaEnabled } from "@/lib/english-beta.server";
 import {
   getActionPlanGenerationContext,
+  InvalidActionPlanLocaleContextError,
   type ActionPlanContentLocaleCode,
   type ActionPlanCreationMarketCode,
 } from "@/lib/action-plan-localization";
+
+export { InvalidActionPlanLocaleContextError };
 
 export class UnavailableActionPlanLocaleError extends Error {
   constructor() {

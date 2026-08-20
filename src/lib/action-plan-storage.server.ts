@@ -17,6 +17,7 @@ import {
 import type { CustomerSessionIdentity } from "@/lib/customer-space-auth";
 import {
   normalizeActionPlanLocaleContext,
+  resolveActionPlanLocaleContextForCreation,
   type ActionPlanContentLocaleCode,
   type ActionPlanCreationMarketCode,
 } from "@/lib/action-plan-localization";
@@ -372,12 +373,16 @@ export async function beginActionPlanGeneration(input: {
   const uid = input.identity.uid.trim();
   const requestId = input.requestId.trim();
   const situation = normalizeSourceText(input.situation);
-  const localeContext = normalizeActionPlanLocaleContext(input);
   if (!uid || !/^[A-Za-z0-9:_-]{16,160}$/.test(requestId) || !situation) {
     throw new Error("A valid generation request is required.");
   }
 
   const company = await ensureDefaultCompanyForIdentity(input.identity);
+  const requestedLocaleContext = resolveActionPlanLocaleContextForCreation(input);
+  const localeContext = {
+    contentLocaleCode: requestedLocaleContext.contentLocaleCode,
+    marketCodeAtCreation: company.marketCode,
+  } as const;
   const database = getAdminFirestore();
   const id = buildActionPlanGenerationId(uid, requestId);
   const reference = database.collection(ACTION_PLANS_COLLECTION).doc(id);
@@ -797,7 +802,11 @@ export async function createOwnedActionPlanForIdentity(
   const company = await ensureDefaultCompanyForIdentity(identity);
   const id = createActionPlanId();
   const now = new Date().toISOString();
-  const localeContext = normalizeActionPlanLocaleContext(input);
+  const requestedLocaleContext = resolveActionPlanLocaleContextForCreation(input);
+  const localeContext = {
+    contentLocaleCode: requestedLocaleContext.contentLocaleCode,
+    marketCodeAtCreation: company.marketCode,
+  } as const;
   const document: ActionPlanDocument = {
     schema_version: getPersistedSchemaVersion(input.plan),
     status: "active",

@@ -183,6 +183,40 @@ describe("authenticated action plan generation route", () => {
     expect(mocks.beginActionPlanGeneration).not.toHaveBeenCalled();
   });
 
+  it("accepts English content for the France market without coupling locale and market", async () => {
+    vi.stubEnv("DEMAA_ENGLISH_BETA_ENABLED", "true");
+    const englishFranceClaim = {
+      ...claim,
+      contentLocaleCode: "en" as const,
+      marketCodeAtCreation: "fr-fr" as const,
+    };
+    mocks.beginActionPlanGeneration.mockResolvedValue({
+      kind: "claimed",
+      claim: englishFranceClaim,
+    });
+    const response = await POST(request({
+      contentLocaleCode: "en",
+      marketCodeAtCreation: "fr-fr",
+      requestId: "english-france-generation-1234",
+      situation: "Our French business needs clearer priorities and an English action plan.",
+    }));
+    expect(response.status).toBe(201);
+    expect(mocks.beginActionPlanGeneration).toHaveBeenCalledWith(expect.objectContaining({
+      contentLocaleCode: "en",
+      marketCodeAtCreation: "fr-fr",
+    }));
+  });
+
+  it("rejects a partial locale context instead of silently falling back to French", async () => {
+    const response = await POST(request({
+      contentLocaleCode: "en",
+      requestId: "partial-locale-generation-1234",
+      situation: "Our business needs clearer priorities and a reliable action plan.",
+    }));
+    expect(response.status).toBe(400);
+    expect(mocks.beginActionPlanGeneration).not.toHaveBeenCalled();
+  });
+
   it("returns an existing in-flight generation without another AI call", async () => {
     mocks.beginActionPlanGeneration.mockResolvedValue({
       kind: "existing",

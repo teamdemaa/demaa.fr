@@ -43,8 +43,10 @@ import {
   buildCompanyMembershipId,
   buildDefaultCompanyId,
   ensureDefaultCompanyForIdentity,
+  getActiveDefaultCompanyContext,
   getActiveDefaultCompanyIdentity,
   hasActiveCompanyMembership,
+  parseCompanyInternationalContext,
   readCompanyInternationalContext,
 } from "@/lib/company-membership.server";
 
@@ -93,13 +95,32 @@ describe("company membership foundation", () => {
     });
     expect(readCompanyInternationalContext({
       country_code: "GB",
-      currency_code: "EUR",
+      currency_code: "GBP",
       market_code: "global-en-beta",
     })).toEqual({
       countryCode: "GB",
-      currencyCode: "EUR",
+      currencyCode: "GBP",
       marketCode: "global-en-beta",
     });
+    expect(readCompanyInternationalContext({
+      country_code: "invalid",
+      currency_code: "invalid",
+      market_code: "invalid",
+    })).toEqual({
+      countryCode: null,
+      currencyCode: "EUR",
+      marketCode: "fr-fr",
+    });
+    expect(parseCompanyInternationalContext(undefined)).toEqual({
+      countryCode: null,
+      currencyCode: "EUR",
+      marketCode: "fr-fr",
+    });
+    expect(parseCompanyInternationalContext({
+      country_code: "invalid",
+      currency_code: "invalid",
+      market_code: "invalid",
+    })).toBeNull();
   });
 
   it("refuses another UID and a suspended membership", async () => {
@@ -134,7 +155,26 @@ describe("company membership foundation", () => {
 
   it("resolves only an active default company for the authenticated UID", async () => {
     const company = await ensureDefaultCompanyForIdentity(identity("owner-uid"));
-    await expect(getActiveDefaultCompanyIdentity("owner-uid")).resolves.toEqual(company);
+    await expect(getActiveDefaultCompanyIdentity("owner-uid")).resolves.toEqual({
+      companyId: company.companyId,
+      membershipId: company.membershipId,
+    });
+    await expect(getActiveDefaultCompanyContext("owner-uid")).resolves.toEqual({
+      ...company,
+      countryCode: null,
+      currencyCode: "EUR",
+      marketCode: "fr-fr",
+    });
     await expect(getActiveDefaultCompanyIdentity("other-uid")).resolves.toBeNull();
+  });
+
+  it("fails closed when an active company has an invalid commercial context", async () => {
+    const company = await ensureDefaultCompanyForIdentity(identity("owner-uid"));
+    const companyPath = `companies/${company.companyId}`;
+    firestore.documents.set(companyPath, {
+      ...firestore.documents.get(companyPath),
+      currency_code: "not-a-currency",
+    });
+    await expect(getActiveDefaultCompanyContext("owner-uid")).resolves.toBeNull();
   });
 });
