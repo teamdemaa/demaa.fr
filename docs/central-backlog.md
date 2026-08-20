@@ -259,6 +259,20 @@ par Système.
   fonctionner sans vous) ne figure plus dans aucune des 12 questions
   Stratégie. À surveiller si ce thème doit être réintroduit ailleurs (Plan
   d'action, Académie) — non tranché.
+- [x] Affinement de 2 questions (19 août 2026), après relecture croisée avec
+  une proposition externe (structure Alignment/Positioning/Offer/Promotion) :
+  - `positioning_3` : « Qu'est-ce qui distingue votre manière de résoudre ce
+    problème ? » devient « Que fait le client aujourd'hui à la place, et
+    qu'est-ce qui distingue votre manière de résoudre ce problème ? » —
+    ajoute le point de comparaison (l'alternative actuelle du client) avant
+    de juger la différenciation.
+  - `offer_3` : « À quel prix et comment est-elle facturée ? » devient « À
+    quel prix, comment est-elle facturée, et est-ce validé ou encore une
+    hypothèse ? » — distingue un prix déjà testé par de vraies ventes d'un
+    prix encore théorique.
+  - La question `alignment_3` (contraintes) proposée dans la même relecture
+    externe n'a pas été reprise ailleurs qu'ici : elle correspondait déjà à
+    ce qui venait d'être décidé et livré juste avant (cf. note ci-dessus).
 
 ### Audit du code au 16 août 2026
 
