@@ -48,7 +48,7 @@ describe("Structure newsletter public contract", () => {
     const approved = [
       "src/components/SystemDetailContent.tsx",
       "src/components/AcademyIndexClient.tsx",
-      "src/app/(marketing)/sur-mesure/page.tsx",
+      "src/app/(french)/(marketing)/sur-mesure/page.tsx",
     ];
 
     for (const path of approved) {
@@ -63,7 +63,7 @@ describe("Structure newsletter public contract", () => {
     expect(sharedPageLoader).toContain('input.localeCode === "fr"');
 
     const academyCourseFiles = [
-      "src/app/(marketing)/academie/[courseSlug]/page.tsx",
+      "src/app/(french)/(marketing)/academie/[courseSlug]/page.tsx",
       "src/components/AcademyCourseReader.tsx",
     ].filter((path) => {
       try {

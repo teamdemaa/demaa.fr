@@ -13,7 +13,7 @@ import {
   submitCallbackRequest,
   validateCallbackFields,
 } from "@/components/ServiceCallbackForm";
-import { generateStaticParams } from "@/app/(marketing)/services/[slug]/page";
+import { generateStaticParams } from "@/app/(french)/(marketing)/services/[slug]/page";
 import {
   CANONICAL_SERVICE_SLUGS,
   getCanonicalServiceBySlug,
@@ -225,10 +225,10 @@ describe("canonical Accompagnement catalog", () => {
 
   it("keeps legacy catalogs out of every canonical public Services module", async () => {
     const publicModules = await Promise.all([
-      "src/app/(marketing)/services/page.tsx",
-      "src/app/(marketing)/services/[slug]/page.tsx",
-      "src/app/@modal/(.)services/[slug]/page.tsx",
-      "src/app/@modal/(.)sur-mesure/page.tsx",
+      "src/app/(french)/(marketing)/services/page.tsx",
+      "src/app/(french)/(marketing)/services/[slug]/page.tsx",
+      "src/app/(french)/@modal/(.)services/[slug]/page.tsx",
+      "src/app/(french)/@modal/(.)sur-mesure/page.tsx",
       "src/components/CanonicalServiceDetails.tsx",
       "src/components/ServicesCatalog.tsx",
       "src/components/ServicesLandingPage.tsx",
@@ -244,10 +244,10 @@ describe("canonical Accompagnement catalog", () => {
 
   it("implements the documented intercepted modal contract", async () => {
     const [layout, modalDefault, modalPage, applicationModalPage, routeDialog, systemSolutions, serviceDetails] = await Promise.all([
-      readSource("src/app/layout.tsx"),
-      readSource("src/app/@modal/default.tsx"),
-      readSource("src/app/@modal/(.)services/[slug]/page.tsx"),
-      readSource("src/app/@modal/(.)sur-mesure/page.tsx"),
+      readSource("src/app/(french)/layout.tsx"),
+      readSource("src/app/(french)/@modal/default.tsx"),
+      readSource("src/app/(french)/@modal/(.)services/[slug]/page.tsx"),
+      readSource("src/app/(french)/@modal/(.)sur-mesure/page.tsx"),
       readSource("src/components/ServiceRouteDialog.tsx"),
       readSource("src/components/SystemSolutionsTab.tsx"),
       readSource("src/components/CanonicalServiceDetails.tsx"),

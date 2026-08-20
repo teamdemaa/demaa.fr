@@ -22,7 +22,7 @@ vi.mock("@/components/ServiceCallbackForm", () => ({
   ),
 }));
 
-import SurMesurePage, { metadata } from "@/app/(marketing)/sur-mesure/page";
+import SurMesurePage, { metadata } from "@/app/(french)/(marketing)/sur-mesure/page";
 import { surMesurePageContent as content } from "@/lib/sur-mesure-page-content";
 
 describe("Sur mesure commercial page", () => {
@@ -77,7 +77,7 @@ describe("Sur mesure commercial page", () => {
 
   it("keeps attribution, the sitemap and legacy redirects aligned", async () => {
     const [pageSource, sitemapSource, nextConfigSource] = await Promise.all([
-      readFile(new URL("../src/app/(marketing)/sur-mesure/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(french)/(marketing)/sur-mesure/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/sitemap.ts", import.meta.url), "utf8"),
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
     ]);

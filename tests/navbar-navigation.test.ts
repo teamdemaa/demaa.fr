@@ -18,8 +18,8 @@ describe("Demaa application navbar", () => {
 
   it("keeps the navbar on system detail and loading states", async () => {
     const [pageSource, loadingSource] = await Promise.all([
-      readFile(new URL("../src/app/(marketing)/systemes/[slug]/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/(marketing)/systemes/[slug]/loading.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(french)/(marketing)/systemes/[slug]/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(french)/(marketing)/systemes/[slug]/loading.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(pageSource).toContain("<Navbar minimal />");
@@ -33,14 +33,14 @@ describe("Demaa application navbar", () => {
 
   it("keeps a distinct canonical homepage and one URL for each public universe", async () => {
     const [homeSource, sharedHomeSource, systemsSource, nextConfigSource] = await Promise.all([
-      readFile(new URL("../src/app/(application)/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(french)/(application)/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanHomeView.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/(marketing)/systemes/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(french)/(marketing)/systemes/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
     ]);
 
     expect(homeSource).not.toContain(
-      'export { default, metadata } from "@/app/(marketing)/systemes/page"',
+      'export { default, metadata } from "@/app/(french)/(marketing)/systemes/page"',
     );
     expect(homeSource).toContain('canonical: "/"');
     expect(homeSource).toContain("<ActionPlanHomeView");
@@ -83,8 +83,8 @@ describe("Demaa application navbar", () => {
   it("keeps sign-in minimal and intercepts it over the homepage", async () => {
     const [legacySource, loginSource, modalSource] = await Promise.all([
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/(auth)/connexion/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/@modal/(.)connexion/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(french)/(auth)/connexion/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(french)/@modal/(.)connexion/page.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(legacySource).toContain("source: '/mon-espace'");
@@ -102,9 +102,9 @@ describe("Demaa application navbar", () => {
 
   it("restores the latest saved plan unless a new situation is explicitly requested", async () => {
     const [homeSource, plansSource, latestSource, loginDialogSource] = await Promise.all([
-      readFile(new URL("../src/app/(application)/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(french)/(application)/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlansIndexView.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/(application)/plans/latest/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(french)/(application)/plans/latest/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/CustomerSpaceLoginDialog.tsx", import.meta.url), "utf8"),
     ]);
     const sharedPagesSource = await readFile(
@@ -134,8 +134,8 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanNavbar.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanExperience.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/layout.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/(marketing)/layout.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(french)/layout.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(french)/(marketing)/layout.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(navbarSource).toContain('id="action-plan-navbar-desktop"');

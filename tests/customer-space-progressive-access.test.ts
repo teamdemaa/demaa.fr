@@ -5,8 +5,8 @@ const source = readFileSync("src/components/CustomerSpaceAccessForm.tsx", "utf8"
 const experience = readFileSync("src/components/ActionPlanExperience.tsx", "utf8");
 const googleButton = readFileSync("src/components/GoogleCustomerSignInButton.tsx", "utf8");
 const loginDialog = readFileSync("src/components/CustomerSpaceLoginDialog.tsx", "utf8");
-const loginPage = readFileSync("src/app/(auth)/connexion/page.tsx", "utf8");
-const applicationError = readFileSync("src/app/(application)/error.tsx", "utf8");
+const loginPage = readFileSync("src/app/(french)/(auth)/connexion/page.tsx", "utf8");
+const applicationError = readFileSync("src/app/(french)/(application)/error.tsx", "utf8");
 
 describe("progressive plan authentication", () => {
   it("starts with one Google option and one email action", () => {

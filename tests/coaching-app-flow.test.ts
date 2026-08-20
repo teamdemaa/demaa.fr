@@ -22,7 +22,7 @@ describe("unified app and coaching", () => {
 
   it("returns authenticated access directly to the app instead of a parallel portal", () => {
     const nextConfig = read("next.config.ts");
-    const plansPage = read("src/app/(application)/plans/page.tsx");
+    const plansPage = read("src/app/(french)/(application)/plans/page.tsx");
     const sharedPlansPage = read("src/components/ActionPlansIndexView.tsx");
     const sharedPages = read("src/lib/action-plan-pages.server.ts");
     const accountAccessForm = read("src/components/CustomerSpaceAccessForm.tsx");

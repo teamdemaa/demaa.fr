@@ -14,8 +14,10 @@ describe("hidden English beta foundation", () => {
     expect(page).toContain("robots: { follow: false, index: false }");
     expect(page).toContain('canonical: "/en"');
     expect(page).toContain('loadActionPlanHomePage({ localeCode: "en"');
-    expect(layout).toContain('<DocumentLocale localeCode="en"');
-    expect(layout).toContain('document.documentElement.lang="en"');
+    expect(layout).toContain('lang="en"');
+    expect(layout).toContain("<html");
+    expect(layout).not.toContain("DocumentLocale");
+    expect(layout).not.toContain("document.documentElement.lang");
   });
 
   it("reuses the shared action-plan experience and English system projection", () => {
@@ -59,11 +61,13 @@ describe("hidden English beta foundation", () => {
   });
 
   it("keeps standalone authentication and Google callbacks in the return locale", () => {
-    const connexion = source("src/app/(auth)/connexion/page.tsx");
-    const interceptedConnexion = source("src/app/@modal/(.)connexion/page.tsx");
+    const connexion = source("src/app/(french)/(auth)/connexion/page.tsx");
+    const interceptedConnexion = source(
+      "src/app/(french)/@modal/(.)connexion/page.tsx",
+    );
     const loginDialog = source("src/components/CustomerSpaceLoginDialog.tsx");
-    const googlePage = source("src/app/(auth)/auth/google/page.tsx");
-    const googleCallback = source("src/app/(auth)/auth/google/GoogleAuthCallbackClient.tsx");
+    const googlePage = source("src/app/(french)/(auth)/auth/google/page.tsx");
+    const googleCallback = source("src/app/(french)/(auth)/auth/google/GoogleAuthCallbackClient.tsx");
 
     expect(connexion).toContain("getReturnToInterfaceLocale(returnTo)");
     expect(connexion).toContain('<DocumentLocale localeCode={localeCode}');

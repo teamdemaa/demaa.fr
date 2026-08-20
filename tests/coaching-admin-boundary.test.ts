@@ -7,7 +7,7 @@ function source(path: string) {
 
 describe("coaching administration boundary", () => {
   it("keeps the console out of search indexing and public navigation", () => {
-    const page = source("src/app/(administration)/admin/coaching/page.tsx");
+    const page = source("src/app/(french)/(administration)/admin/coaching/page.tsx");
     const navbar = source("src/components/Navbar.tsx");
 
     expect(page).toContain("robots: { follow: false, index: false }");

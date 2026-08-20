@@ -14,7 +14,9 @@ describe("tool outbound surfaces", () => {
       source("components/ToolDirectoryClient.tsx"),
       source("components/SoftwareDetailContent.tsx"),
       source("components/SystemSolutionsTab.tsx"),
-      source("app/(marketing)/systemes/[slug]/recapitulatif/page.tsx"),
+      source(
+        "app/(french)/(marketing)/systemes/[slug]/recapitulatif/page.tsx",
+      ),
     ]);
 
     expect(directory).toContain('surface="tool_directory"');

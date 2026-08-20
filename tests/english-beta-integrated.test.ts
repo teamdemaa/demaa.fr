@@ -23,7 +23,7 @@ describe("English beta integrated release boundaries", () => {
   });
 
   it("keeps Opportunities on public discovery surfaces, still excluded from English Beta", () => {
-    const page = source("src/app/(marketing)/opportunites/page.tsx");
+    const page = source("src/app/(french)/(marketing)/opportunites/page.tsx");
     const footer = source("src/components/Footer.tsx");
     const sitemap = source("src/app/sitemap.ts");
 

@@ -7,7 +7,7 @@ function source(path: string) {
 
 describe("saved action plan controls", () => {
   it("loads every owned plan into the compact three-point menu", () => {
-    const page = source("src/app/(application)/plans/[id]/page.tsx");
+    const page = source("src/app/(french)/(application)/plans/[id]/page.tsx");
     const sharedPage = source("src/components/SavedActionPlanPageView.tsx");
     const sharedLoader = source("src/lib/action-plan-pages.server.ts");
     const detail = source("src/components/SavedActionPlanDetail.tsx");
@@ -97,8 +97,8 @@ describe("saved action plan controls", () => {
     const plans = source("src/components/ActionPlansIndexView.tsx");
     const newPlan = source("src/components/NewActionPlanView.tsx");
     const copy = source("src/lib/action-plan-page-config.ts");
-    const error = source("src/app/(application)/plans/[id]/error.tsx");
-    const loading = source("src/app/(application)/plans/[id]/loading.tsx");
+    const error = source("src/app/(french)/(application)/plans/[id]/error.tsx");
+    const loading = source("src/app/(french)/(application)/plans/[id]/loading.tsx");
 
     expect(plans).toContain("{plans.length ? (");
     expect(plans).toContain("copy.createFirstPlan");

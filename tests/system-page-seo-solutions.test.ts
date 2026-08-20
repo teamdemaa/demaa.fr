@@ -140,7 +140,7 @@ describe("system page SEO published Solutions boundary", () => {
 
   it("feeds metadata and JSON-LD from the same server-only selector", async () => {
     const pageSource = await readFile(
-      new URL("../src/app/(marketing)/systemes/[slug]/page.tsx", import.meta.url),
+      new URL("../src/app/(french)/(marketing)/systemes/[slug]/page.tsx", import.meta.url),
       "utf8",
     );
     const detailSource = await readFile(
