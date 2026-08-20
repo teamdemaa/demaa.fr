@@ -78,4 +78,13 @@ describe("English transverse readiness", () => {
     expect(errorSource).not.toContain("Réessayer");
     expect(notFoundSource).not.toContain("Page introuvable");
   });
+
+  it("requires every international PR to declare its scope and parity proof", async () => {
+    const template = await readSource(".github/pull_request_template.md");
+
+    expect(template).toContain("`shared` | `locale` | `market` | `country`");
+    expect(template).toContain("Tests de parité");
+    expect(template).toContain("Le navigateur ne fait pas autorité");
+    expect(template).toContain("GO explicite distinct");
+  });
 });

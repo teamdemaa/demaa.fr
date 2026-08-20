@@ -18,6 +18,7 @@ import {
   resolveStoredLeadAssetSnapshot,
   type LeadContact,
   type LeadAssetSnapshot,
+  type LeadCommercialSnapshot,
   type LeadDeliveryChannel,
   type LeadField,
   type LeadMarketingConsent,
@@ -35,6 +36,7 @@ type LeadSubmission = {
     resend: boolean;
     slack: boolean;
   };
+  commercialSnapshot?: LeadCommercialSnapshot | null;
   contact: LeadContact;
   consents?: Array<{
     capturedAt: string;
@@ -207,6 +209,7 @@ export async function submitLeadRequest(input: LeadSubmission) {
     assetSnapshot: input.assetSnapshot,
     attribution: input.attribution,
     channels: input.channels,
+    commercialSnapshot: input.commercialSnapshot,
     contact: input.contact,
     consents: input.consents,
     context: input.context,
@@ -296,6 +299,20 @@ function rebuildLeadSubmission(data: StoredLeadRequest): LeadSubmission {
       resend: data.notification_status.resend?.status !== "skipped",
       slack: data.notification_status.slack?.status !== "skipped",
     },
+    commercialSnapshot: data.commercial_snapshot
+      ? {
+          amountMinor: data.commercial_snapshot.amount_minor,
+          countryCode: data.commercial_snapshot.country_code,
+          currencyCode: data.commercial_snapshot.currency_code,
+          exchangeRate: data.commercial_snapshot.exchange_rate,
+          exchangeRateDate: data.commercial_snapshot.exchange_rate_date,
+          localeCode: data.commercial_snapshot.locale_code,
+          marketCode: data.commercial_snapshot.market_code,
+          packageSlug: data.commercial_snapshot.package_slug,
+          pricingMode: data.commercial_snapshot.pricing_mode,
+          serviceSlug: data.commercial_snapshot.service_slug,
+        }
+      : null,
     contact: {
       company: data.contact.company,
       email: data.contact.email,

@@ -90,7 +90,7 @@ D-085 supersède les anciens cadrages « English Beta = Action Plan uniquement �
 - [x] La préférence du membre est stockée dans
   `member_preferences/{uid}`. Ne pas créer le document concurrent
   `customer_preferences` cité dans un ancien audit.
-- [ ] Mutualiser les écrans encore dupliqués ou simplifiés en anglais. Un
+- [x] Mutualiser les écrans encore dupliqués ou simplifiés en anglais. Un
   comportement partagé ne doit avoir qu'un composant, un contrat et une API ;
   les différences passent par des projections et configurations centrales,
   jamais par des conditions `locale === "en"` dispersées.
@@ -116,10 +116,11 @@ D-085 supersède les anciens cadrages « English Beta = Action Plan uniquement �
     leurs contrats, prix et contenus. Ils réutilisent désormais les mêmes
     composants et identifiants canoniques sans masquer leurs projections
     éditoriales localisées.
-- [ ] Déclarer le scope de chaque évolution : `shared` par défaut, ou
+- [x] Déclarer le scope de chaque évolution : `shared` par défaut, ou
   explicitement `locale`, `market` ou `country`. La traduction choisit les
   mots ; elle n'accorde aucune permission et ne décide ni du catalogue, ni du
-  pays, ni de la devise.
+  pays, ni de la devise. Le template GitHub demande désormais le scope, les
+  locales, les marchés, les traductions et les tests de parité de chaque PR.
 
 Le contexte doit rester séparé en deux couches :
 
@@ -222,6 +223,10 @@ résolveur français n'est pas validé métier.
 - [x] Employer le libellé naturel `Services`, jamais `Accompaniment`, et
   publier uniquement les prestations réellement
   réalisables à distance en anglais.
+- [ ] Avant l'ouverture publique, confirmer la capacité réelle de livraison et
+  de support en anglais pour `Business application` et `Paid acquisition`, ou
+  les retirer de la matrice `global-en-beta`. Leur publication technique en
+  Preview ne vaut pas validation commerciale.
 - [x] Conserver une seule prestation `Automatisation des processus et IA`
   (`Process automation and AI` en anglais) : l'IA est un levier intégré à
   l'automatisation, jamais une carte ou une offre d'accompagnement séparée.
@@ -275,6 +280,13 @@ résolveur français n'est pas validé métier.
 ### Prix internationaux
 
 - [x] Ne jamais modifier un prix à partir de la seule langue d'interface.
+- [x] Maintenir la première Preview anglaise en EUR et ne pas la présenter
+  comme multidevise. Les montants actuels représentent la même valeur
+  économique EUR, seulement formatée en anglais.
+- [x] Pour chaque demande de Service, enregistrer côté serveur le montant de
+  référence, la devise, le mode tarifaire, le service, le forfait éventuel,
+  la locale, le marché et le pays résolus. Le taux et sa date restent `null`
+  tant qu'aucune conversion n'est appliquée.
 - [ ] Séparer la devise comptable de l'entreprise de la devise commerciale de
   l'offre ou du devis. Conserver une valeur économique canonique en EUR et une
   table de prix marché numérique, indépendante des dictionnaires.
@@ -480,11 +492,9 @@ Déjà livré et à préserver :
   mise à jour de `html lang` avant hydratation et pendant la navigation,
   canonical et `hreflang`. `/en` reste `noindex` et absent du
   sitemap tant que la bêta n'est pas publique.
-- [ ] Avant l'ouverture publique, rendre également le `lang="en"` correct dans
-  le HTML initial renvoyé par le serveur. La lecture du header dans le layout
-  racine a été testée puis rejetée : elle rend toutes les pages françaises
-  dynamiques. Résoudre ce point avec de vrais root layouts localisés, sans
-  dégrader le rendu statique/SEO français.
+- [x] Le `lang="en"` est correct dans le HTML initial grâce aux root layouts
+  localisés. Le layout français reste statique et aucun script client de
+  correction tardive n'est nécessaire.
 - [x] Les parcours anglais actuellement publiables n'envoient pas d'e-mail
   client automatique : ils conservent la langue de la demande et notifient
   l'équipe. Aucun e-mail français n'est donc utilisé comme fallback silencieux.
@@ -560,6 +570,10 @@ Gates minimales avant activation publique :
 - `/en` reste flaggé et `noindex` jusqu'au GO public explicite.
 
 ### Décision de livraison resserrée du 17 août 2026
+
+> Historique : cette pause a protégé la vague France du 17 août. Elle a ensuite
+> été levée par le GO de reprise du chantier international. Elle ne décrit plus
+> l'état courant de la pile Preview ni les gates de D-085 ci-dessus.
 
 Pour préserver la stabilité de la Production et terminer d'abord la proposition
 commerciale France, la vague immédiatement publiable est volontairement

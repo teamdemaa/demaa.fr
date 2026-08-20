@@ -53,10 +53,24 @@ export type LeadAssetSnapshot = {
   workbookVersion: string;
 };
 
+export type LeadCommercialSnapshot = {
+  amountMinor: number | null;
+  countryCode: string | null;
+  currencyCode: string;
+  exchangeRate: number | null;
+  exchangeRateDate: string | null;
+  localeCode: string;
+  marketCode: string;
+  packageSlug: string | null;
+  pricingMode: "fixed" | "quote" | "starting";
+  serviceSlug: string;
+};
+
 export type LeadRequestInput = {
   assetSnapshot?: LeadAssetSnapshot | null;
   attribution: LeadAttributionRecord;
   channels: Record<LeadNotificationChannel, boolean>;
+  commercialSnapshot?: LeadCommercialSnapshot | null;
   contact: LeadContact;
   consents?: LeadConsent[];
   context: LeadContext;
@@ -75,6 +89,18 @@ export type StoredLeadRequest = {
     workbook_version: string;
   } | null;
   attribution: LeadAttributionRecord;
+  commercial_snapshot?: {
+    amount_minor: number | null;
+    country_code: string | null;
+    currency_code: string;
+    exchange_rate: number | null;
+    exchange_rate_date: string | null;
+    locale_code: string;
+    market_code: string;
+    package_slug: string | null;
+    pricing_mode: "fixed" | "quote" | "starting";
+    service_slug: string;
+  } | null;
   contact: {
     company: string | null;
     email: string | null;
@@ -163,6 +189,20 @@ export async function createLeadRequest(input: LeadRequestInput) {
         }
       : null,
     attribution: input.attribution,
+    commercial_snapshot: input.commercialSnapshot
+      ? {
+          amount_minor: input.commercialSnapshot.amountMinor,
+          country_code: input.commercialSnapshot.countryCode,
+          currency_code: input.commercialSnapshot.currencyCode,
+          exchange_rate: input.commercialSnapshot.exchangeRate,
+          exchange_rate_date: input.commercialSnapshot.exchangeRateDate,
+          locale_code: input.commercialSnapshot.localeCode,
+          market_code: input.commercialSnapshot.marketCode,
+          package_slug: input.commercialSnapshot.packageSlug,
+          pricing_mode: input.commercialSnapshot.pricingMode,
+          service_slug: input.commercialSnapshot.serviceSlug,
+        }
+      : null,
     request_type: input.requestType,
     title: input.title,
     emoji: input.emoji,

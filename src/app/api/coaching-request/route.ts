@@ -28,9 +28,31 @@ import {
   getConfiguredVisitorCommercialContext,
   resolveAuthenticatedInternationalContext,
 } from "@/lib/international-context.server";
-import { normalizeInterfaceLocaleCode } from "@/lib/international-context";
+import {
+  normalizeInterfaceLocaleCode,
+  type InterfaceLocaleCode,
+} from "@/lib/international-context";
 
 export const runtime = "nodejs";
+
+const COACHING_REQUEST_ERROR_COPY = {
+  fr: {
+    completed: "Votre première clarification est terminée.",
+    draftUnavailable: "Ce brouillon n’est plus disponible. Réessayez depuis votre message.",
+    failed: "La demande n’a pas pu être envoyée.",
+    incomplete: "Les informations envoyées sont incomplètes.",
+    invalidContext: "Contexte invalide.",
+    invalidInternationalContext: "Contexte international invalide.",
+  },
+  en: {
+    completed: "Your first clarification is complete.",
+    draftUnavailable: "This draft is no longer available. Try again from your message.",
+    failed: "Your request could not be sent.",
+    incomplete: "The submitted information is incomplete.",
+    invalidContext: "The request context is invalid.",
+    invalidInternationalContext: "The international context is invalid.",
+  },
+} as const;
 
 type CoachingRequestBody = {
   attribution?: unknown;
@@ -79,6 +101,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   let claimedDraft: ClaimedCoachingMessageDraft | null = null;
+  let responseLocale: InterfaceLocaleCode = "fr";
 
   try {
     const blockedHost = enforceAllowedHost(request);
@@ -111,10 +134,16 @@ export async function POST(request: Request) {
       : normalizeInterfaceLocaleCode(data.localeCode);
     if (!localeCode) {
       return NextResponse.json(
-        { error: "Contexte international invalide." },
+        {
+          error: data?.localeCode === "en"
+            ? COACHING_REQUEST_ERROR_COPY.en.invalidInternationalContext
+            : COACHING_REQUEST_ERROR_COPY.fr.invalidInternationalContext,
+        },
         { status: 400, headers: PRIVATE_NO_STORE_HEADERS },
       );
     }
+    responseLocale = localeCode;
+    const errorCopy = COACHING_REQUEST_ERROR_COPY[localeCode];
 
     const isMessage = requestKind === "message";
     const isAccompaniment = requestKind === "accompaniment";
@@ -140,7 +169,7 @@ export async function POST(request: Request) {
       });
       if (!claimedDraft) {
         return NextResponse.json(
-          { error: "Ce brouillon n’est plus disponible. Réessayez depuis votre message." },
+          { error: errorCopy.draftUnavailable },
           { status: 409, headers: PRIVATE_NO_STORE_HEADERS },
         );
       }
@@ -154,7 +183,7 @@ export async function POST(request: Request) {
     if (!valid || !effectiveIdempotencyKey) {
       return NextResponse.json(
         {
-          error: "Les informations envoyées sont incomplètes.",
+          error: errorCopy.incomplete,
           ...(claimedDraft ? { draftMessage: claimedDraft.body } : {}),
         },
         { status: 400, headers: PRIVATE_NO_STORE_HEADERS },
@@ -168,7 +197,7 @@ export async function POST(request: Request) {
     if (!context) {
       return NextResponse.json(
         {
-          error: "Contexte invalide.",
+          error: errorCopy.invalidContext,
           ...(claimedDraft ? { draftMessage: claimedDraft.body } : {}),
         },
         { status: 400, headers: PRIVATE_NO_STORE_HEADERS },
@@ -193,7 +222,7 @@ export async function POST(request: Request) {
         {
           code: "free_clarification_completed",
           draftMessage: effectiveMessage,
-          error: "Votre première clarification est terminée.",
+          error: errorCopy.completed,
         },
         { status: 409, headers: PRIVATE_NO_STORE_HEADERS },
       );
@@ -225,7 +254,7 @@ export async function POST(request: Request) {
       idempotencyKey: effectiveIdempotencyKey,
       requestType: isMessage ? "coaching_message" : "coach_business_callback",
       title: isMessage
-        ? "Nouvelle clarification gratuite"
+        ? localeCode === "en" ? "New free clarification" : "Nouvelle clarification gratuite"
         : "Nouvelle demande d’accompagnement Coach business",
     });
 
@@ -249,7 +278,7 @@ export async function POST(request: Request) {
     logOperationalError("coaching_request.failed", error);
     return NextResponse.json(
       {
-        error: "La demande n’a pas pu être envoyée.",
+        error: COACHING_REQUEST_ERROR_COPY[responseLocale].failed,
         ...(claimedDraft ? { draftMessage: claimedDraft.body } : {}),
       },
       { status: 500, headers: PRIVATE_NO_STORE_HEADERS },

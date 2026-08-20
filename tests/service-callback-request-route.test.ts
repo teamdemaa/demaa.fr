@@ -181,6 +181,18 @@ describe("service callback request route", () => {
 
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      commercialSnapshot: {
+        amountMinor: 75000,
+        countryCode: null,
+        currencyCode: "EUR",
+        exchangeRate: null,
+        exchangeRateDate: null,
+        localeCode: "en",
+        marketCode: "global-en-beta",
+        packageSlug: null,
+        pricingMode: "fixed",
+        serviceSlug: "coach-business",
+      },
       fields: expect.arrayContaining([
         { label: "Email", value: "owner@example.com" },
         { label: "Langue", value: "en" },
@@ -252,6 +264,15 @@ describe("service callback request route", () => {
 
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      commercialSnapshot: expect.objectContaining({
+        amountMinor: 300000,
+        currencyCode: "EUR",
+        localeCode: "fr",
+        marketCode: "fr-fr",
+        packageSlug: "automatisation-avancee-ia",
+        pricingMode: "fixed",
+        serviceSlug: "automatisation-processus",
+      }),
       fields: [
         { label: "Service", value: "Automatisation des processus et IA" },
         { label: "Slug du service", value: "automatisation-processus" },
@@ -394,6 +415,36 @@ describe("service callback request route", () => {
     const response = await POST(request(validBody({ packageSlug, serviceSlug })));
 
     expect(response.status).toBe(400);
+    expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
+  });
+
+  it("returns an English package error without a French fallback", async () => {
+    mocks.getCurrentCustomerIdentityFromSession.mockResolvedValue({
+      email: "owner@example.com",
+      provider: "google",
+      uid: "owner-uid",
+    });
+    mocks.resolveAuthenticatedInternationalContext.mockResolvedValue({
+      companyContext: { companyId: "company-owner" },
+      internationalContext: {
+        countryCode: null,
+        currencyCode: "EUR",
+        localeCode: "en",
+        marketCode: "global-en-beta",
+      },
+    });
+
+    const response = await POST(request(validBody({
+      localeCode: "en",
+      packageSlug: "unknown-package",
+      phone: undefined,
+      serviceSlug: "automatisation-processus",
+    })));
+
+    expect(response.status).toBe(400);
+    await expect(response.json()).resolves.toEqual({
+      error: "Choose a valid package for this service.",
+    });
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 

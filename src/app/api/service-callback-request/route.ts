@@ -21,6 +21,7 @@ import {
 import {
   createInternationalContext,
   isInterfaceLocaleCode,
+  type InterfaceLocaleCode,
 } from "@/lib/international-context";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
@@ -31,6 +32,30 @@ import { parseRecord } from "@/lib/registry-contract-utils";
 import { enforceServiceRequestRateLimit } from "@/lib/service-request-security.server";
 
 export const runtime = "nodejs";
+
+const SERVICE_REQUEST_ERROR_COPY = {
+  fr: {
+    failed: "La demande n’a pas pu être enregistrée. Merci de réessayer.",
+    invalidBody: "Les informations envoyées sont invalides.",
+    invalidContext: "Le contexte de la demande est invalide.",
+    invalidInternationalContext: "Le contexte international est invalide.",
+    invalidPackage: "Choisissez un forfait valide pour cette prestation.",
+    unavailable: "Ce service ne propose pas de demande de contact.",
+  },
+  en: {
+    failed: "Your request could not be saved. Please try again.",
+    invalidBody: "The submitted information is invalid.",
+    invalidContext: "The request context is invalid.",
+    invalidInternationalContext: "The international context is invalid.",
+    invalidPackage: "Choose a valid package for this service.",
+    unavailable: "This service is not available for contact requests.",
+  },
+} as const;
+
+function getRequestedLocaleCode(value: unknown): InterfaceLocaleCode {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return "fr";
+  return Reflect.get(value, "localeCode") === "en" ? "en" : "fr";
+}
 
 type ServiceCallbackRequestBody = Readonly<{
   attribution?: unknown;
@@ -73,6 +98,7 @@ function success() {
 }
 
 export async function POST(request: Request) {
+  let responseLocale: InterfaceLocaleCode = "fr";
   try {
     const blockedHost = enforceAllowedHost(request);
     if (blockedHost) return blockedHost;
@@ -89,6 +115,7 @@ export async function POST(request: Request) {
     const { data, response: invalidBody } =
       await readJsonBody<ServiceCallbackRequestBody>(request, 8 * 1024);
     if (invalidBody) return invalidBody;
+    responseLocale = getRequestedLocaleCode(data);
 
     let body: ServiceCallbackRequestBody;
     try {
@@ -109,7 +136,7 @@ export async function POST(request: Request) {
       ]) as ServiceCallbackRequestBody;
     } catch {
       return NextResponse.json(
-        { error: "Les informations envoyées sont invalides." },
+        { error: SERVICE_REQUEST_ERROR_COPY[responseLocale].invalidBody },
         { status: 400 },
       );
     }
@@ -126,8 +153,12 @@ export async function POST(request: Request) {
     const systemSlug = normalizeText(body?.systemSlug, 120);
     const idempotencyKey = normalizeIdempotencyKey(body?.idempotencyKey);
     if (!isInterfaceLocaleCode(localeCode)) {
-      return NextResponse.json({ error: "Le contexte international est invalide." }, { status: 400 });
+      return NextResponse.json(
+        { error: SERVICE_REQUEST_ERROR_COPY[responseLocale].invalidInternationalContext },
+        { status: 400 },
+      );
     }
+    responseLocale = localeCode;
     const customer = await getCurrentCustomerIdentityFromSession();
     const internationalContext = customer
       ? (await resolveAuthenticatedInternationalContext({
@@ -170,14 +201,14 @@ export async function POST(request: Request) {
 
     if (!service || service.cta.kind !== "callback") {
       return NextResponse.json(
-        { error: "Ce service ne propose pas de demande de contact." },
+        { error: SERVICE_REQUEST_ERROR_COPY[localeCode].unavailable },
         { status: 404 },
       );
     }
 
     if (!sourcePage) {
       return NextResponse.json(
-        { error: "Le contexte de la demande est invalide." },
+        { error: SERVICE_REQUEST_ERROR_COPY[localeCode].invalidContext },
         { status: 400 },
       );
     }
@@ -190,8 +221,19 @@ export async function POST(request: Request) {
       || (service.packages.length === 0 && Boolean(packageSlug))
     ) {
       return NextResponse.json(
-        { error: "Choisissez un forfait valide pour cette prestation." },
+        { error: SERVICE_REQUEST_ERROR_COPY[localeCode].invalidPackage },
         { status: 400 },
+      );
+    }
+    const selectedPricing = servicePackage?.pricing ?? service.pricing;
+    if (!selectedPricing) {
+      return NextResponse.json(
+        {
+          error: localeCode === "en"
+            ? "The price for this service is unavailable."
+            : "Le tarif de cette prestation est indisponible.",
+        },
+        { status: 409 },
       );
     }
     const scopedIdempotencyKey = createHash("sha256")
@@ -241,7 +283,7 @@ export async function POST(request: Request) {
     });
     if (!context) {
       return NextResponse.json(
-        { error: "Le contexte de la demande est invalide." },
+        { error: SERVICE_REQUEST_ERROR_COPY[localeCode].invalidContext },
         { status: 400 },
       );
     }
@@ -249,6 +291,18 @@ export async function POST(request: Request) {
     await submitLeadRequest({
       attribution: resolveLeadAttribution(request, body?.attribution),
       channels: { email: false, resend: false, slack: true },
+      commercialSnapshot: {
+        amountMinor: selectedPricing.amountMinor ?? null,
+        countryCode,
+        currencyCode: internationalContext.currencyCode,
+        exchangeRate: null,
+        exchangeRateDate: null,
+        localeCode,
+        marketCode,
+        packageSlug: servicePackage?.slug ?? null,
+        pricingMode: selectedPricing.mode,
+        serviceSlug: service.slug,
+      },
       contact: {
         company,
         ...(localeCode === "en"
@@ -299,7 +353,7 @@ export async function POST(request: Request) {
       requestType: "service_callback_request",
     });
     return NextResponse.json(
-      { error: "La demande n’a pas pu être enregistrée. Merci de réessayer." },
+      { error: SERVICE_REQUEST_ERROR_COPY[responseLocale].failed },
       { status: 500 },
     );
   }
