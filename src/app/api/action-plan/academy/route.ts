@@ -7,7 +7,8 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const localeCode = url.searchParams.get("locale") ?? "fr";
   const marketCode = url.searchParams.get("market") ?? "fr-fr";
-  const isEnglish = localeCode === "en" && marketCode === "global-en-beta";
+  const isEnglish = localeCode === "en"
+    && (marketCode === "fr-fr" || marketCode === "global-en-beta");
   if (isEnglish && !isEnglishBetaEnabled()) {
     return Response.json({ error: "not_found" }, { status: 404 });
   }
