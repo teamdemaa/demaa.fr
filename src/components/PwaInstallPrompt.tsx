@@ -2,13 +2,20 @@
 
 import { Download, Share } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { InterfaceLocaleCode } from "@/lib/international-context";
+import { getPwaInstallUiCopy } from "@/lib/pwa-install-ui-copy";
 
 type BeforeInstallPromptEvent = Event & {
   prompt(): Promise<void>;
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 };
 
-export default function PwaInstallPrompt() {
+export default function PwaInstallPrompt({
+  localeCode = "fr",
+}: {
+  localeCode?: InterfaceLocaleCode;
+}) {
+  const ui = getPwaInstallUiCopy(localeCode);
   const [installEvent, setInstallEvent] = useState<BeforeInstallPromptEvent | null>(null);
   const [showIOSHelp, setShowIOSHelp] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
@@ -62,16 +69,16 @@ export default function PwaInstallPrompt() {
           className="inline-flex min-h-10 items-center gap-2 text-dema-forest"
         >
           <Download className="h-4 w-4" aria-hidden="true" />
-          Installer Demaa
+          {ui.install}
         </button>
         <button type="button" onClick={dismiss} className="text-xs text-dema-muted underline">
-          Plus tard
+          {ui.later}
         </button>
       </div>
       {showIOSHelp ? (
         <p className="mt-2 flex items-start gap-2 text-xs leading-relaxed text-dema-muted">
           <Share className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-          Dans Safari, touchez Partager, puis « Sur l’écran d’accueil ».
+          {ui.iosHelp}
         </p>
       ) : null}
     </aside>

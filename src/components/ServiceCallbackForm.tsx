@@ -366,7 +366,7 @@ export default function ServiceCallbackForm({
       <p className="text-xs leading-relaxed text-dema-muted">
         {ui.consent(serviceName)}{" "}
         <Link
-          href="/politique-de-confidentialite"
+          href={localeCode === "en" ? "/en/privacy" : "/politique-de-confidentialite"}
           className="font-medium text-dema-forest underline underline-offset-2"
         >
           {ui.privacy}

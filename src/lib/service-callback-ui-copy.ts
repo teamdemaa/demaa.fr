@@ -29,7 +29,7 @@ const copy = defineLocaleDictionary({
     sending: "Sending…",
     submit: "Send my request",
     consent: (serviceName: string) => `By sending this request, you agree that Demaa may contact you about ${serviceName}.`,
-    privacy: "Privacy policy (in French)",
+    privacy: "Privacy policy",
     success: "Request received. We will contact you within 24 to 48 hours.",
     invalid: "Correct the highlighted fields and try again.",
     failure: "Your request could not be sent. Please try again.",

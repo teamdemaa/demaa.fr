@@ -111,9 +111,11 @@ D-085 supersède les anciens cadrages « English Beta = Action Plan uniquement �
     d'entreprise en français et en anglais. Les libellés, questions, erreurs,
     dates et montants EUR sont projetés par un dictionnaire typé ; aucun second
     stockage Chiffres/Stratégie n'a été créé.
-  - [ ] La fiche Service commerciale complète, les textes métier de Talk to us
-    et Academy restent volontairement dans les lots 4, 5 et 6 : les mutualiser
-    ici masquerait leurs écarts de contrat, de prix ou de contenu.
+  - [x] La fiche Service commerciale complète, les textes métier de Talk to us
+    et Academy ont été traités dans leurs lots dédiés, après normalisation de
+    leurs contrats, prix et contenus. Ils réutilisent désormais les mêmes
+    composants et identifiants canoniques sans masquer leurs projections
+    éditoriales localisées.
 - [ ] Déclarer le scope de chaque évolution : `shared` par défaut, ou
   explicitement `locale`, `market` ou `country`. La traduction choisit les
   mots ; elle n'accorde aucune permission et ne décide ni du catalogue, ni du
@@ -471,8 +473,20 @@ Déjà livré et à préserver :
   enregistré délèguent aux mêmes loaders et écrans métier ; les surfaces
   commerciales Services, Pilotage et Academy encore simplifiées sont suivies
   séparément dans leurs lots dédiés ;
-- [ ] PWA, confidentialité, erreurs, e-mails, `html lang`, canonical,
-  `hreflang`, sitemap et tests anti-fallback restent à aligner.
+- [x] La PWA, la confidentialité, les erreurs et les métadonnées transverses
+  sont localisées : manifeste anglais partagé et flaggé, invitation
+  d'installation traduite, politique `/en/privacy`, erreurs de segment,
+  `html lang`, canonical et `hreflang`. `/en` reste `noindex` et absent du
+  sitemap tant que la bêta n'est pas publique.
+- [x] Les parcours anglais actuellement publiables n'envoient pas d'e-mail
+  client automatique : ils conservent la langue de la demande et notifient
+  l'équipe. Aucun e-mail français n'est donc utilisé comme fallback silencieux.
+- [ ] Avant d'activer un futur e-mail client sur une demande ou une
+  conversation anglaise, fournir son rendu anglais et le tester dans la langue
+  immuable de cette demande. Cette extension n'est pas nécessaire au parcours
+  Preview actuel.
+- [ ] Terminer la recette Preview authentifiée Google, desktop, mobile, PWA,
+  clavier et lecteur d'écran avant tout retrait du flag ou du `noindex`.
 
 Les anciens constats disant qu'aucune couche i18n, préférence membre,
 progression Academy ou donnée de langue sur les plans n'existait sont donc
