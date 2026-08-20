@@ -98,6 +98,10 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("max-w-[760px]");
     expect(experience).toContain("createManualActionPlan()");
     expect(experience).toContain("createManualActionPlanWorkspaceState()");
+    expect(uiCopy).toContain('heroQuestionMark: "\\u00a0?"');
+    expect(uiCopy).toContain('heroQuestionMark: "?"');
+    expect(experience).toContain("{uiCopy.heroQuestionMark}");
+    expect(experience).not.toContain("&nbsp;?");
     expect(experience).toContain("onAddAction={handleAddAction}");
     expect(generationScreen).toContain("Si je m’absente un mois, mon entreprise continue-t-elle de fonctionner ?");
     expect(generationScreen).toContain("Quelles décisions dépendent encore systématiquement de moi ?");

@@ -790,7 +790,7 @@ export default function ActionPlanExperience({
                     <span className="demaa-hero-title text-dema-forest">
                       {uiCopy.heroEmphasis}
                     </span>
-                    &nbsp;?
+                    {uiCopy.heroQuestionMark}
                   </h1>
                   <p className="mx-auto mt-6 max-w-[760px] text-balance text-[15px] font-normal leading-[1.5] text-dema-muted sm:text-lg">
                     {uiCopy.heroDescription}
