@@ -24,12 +24,46 @@ type CallbackFields = Readonly<{
 
 type CallbackFieldErrors = Partial<Record<"company" | "phone", string>>;
 
-type CallbackPackage = Readonly<{
+export type CallbackPackage = Readonly<{
   name: string;
   pricing: Readonly<{ label: string; note: string }>;
   slug: string;
   summary: string;
 }>;
+
+export function CallbackPackageOverview({
+  legend,
+  packages,
+}: {
+  legend: string;
+  packages: readonly CallbackPackage[];
+}) {
+  if (packages.length === 0) return null;
+
+  return (
+    <section className="space-y-3" aria-label={legend}>
+      <h3 className="text-sm font-semibold text-brand-blue">{legend}</h3>
+      {packages.map((servicePackage) => (
+        <div
+          key={servicePackage.slug}
+          className="rounded-[0.9rem] border border-dema-line bg-dema-paper p-4"
+        >
+          <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+            <p className="text-sm font-semibold text-brand-blue">
+              {servicePackage.name}
+            </p>
+            <p className="text-sm font-normal text-dema-muted">
+              {servicePackage.pricing.label}
+            </p>
+          </div>
+          <p className="mt-1.5 text-xs leading-relaxed text-dema-muted">
+            {servicePackage.summary}
+          </p>
+        </div>
+      ))}
+    </section>
+  );
+}
 
 const EMPTY_FIELDS: CallbackFields = {
   company: "",
@@ -180,9 +214,12 @@ export default function ServiceCallbackForm({
 
   if (localeCode === "en" && identityLoading) {
     return (
-      <div className="mt-6 flex min-h-28 items-center justify-center text-sm text-dema-muted" role="status">
-        <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-        Checking your access…
+      <div className="mt-6 space-y-4">
+        <CallbackPackageOverview legend={ui.packageLegend} packages={packages} />
+        <div className="flex min-h-20 items-center justify-center text-sm text-dema-muted" role="status">
+          <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+          Checking your access…
+        </div>
       </div>
     );
   }
@@ -191,12 +228,15 @@ export default function ServiceCallbackForm({
     const query = searchParams.toString();
     const returnTo = `${pathname}${query ? `?${query}` : ""}`;
     return (
-      <div className="mt-6 rounded-[1rem] border border-dema-line bg-dema-sage/35 p-4 sm:p-5">
-        <CustomerSpaceAccessForm
-          choiceTitle="Sign in to send your request"
-          localeCode="en"
-          returnTo={returnTo}
-        />
+      <div className="mt-6 space-y-4">
+        <CallbackPackageOverview legend={ui.packageLegend} packages={packages} />
+        <div className="rounded-[1rem] border border-dema-line bg-dema-sage/35 p-4 sm:p-5">
+          <CustomerSpaceAccessForm
+            choiceTitle="Sign in to send your request"
+            localeCode="en"
+            returnTo={returnTo}
+          />
+        </div>
       </div>
     );
   }

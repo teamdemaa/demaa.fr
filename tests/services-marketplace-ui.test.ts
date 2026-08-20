@@ -8,6 +8,7 @@ vi.mock("client-only", () => ({}));
 
 import ServicesCatalog from "@/components/ServicesCatalog";
 import {
+  CallbackPackageOverview,
   isValidCallbackPhone,
   submitCallbackRequest,
   validateCallbackFields,
@@ -187,6 +188,22 @@ describe("canonical Accompagnement catalog", () => {
     expect(formSource).toContain('localeCode="en"');
     expect(formSource).toContain('disabled={status === "submitting"}');
     expect(formSource).toContain('sourcePage: pathname');
+  });
+
+  it("shows package names and prices before English authentication", () => {
+    const markup = renderToStaticMarkup(createElement(CallbackPackageOverview, {
+      legend: "Packages",
+      packages: [{
+        name: "Essential automation",
+        pricing: { label: "€1,500 excl. VAT", note: "Fixed scope." },
+        slug: "automatisation-essentielle",
+        summary: "One clearly bounded process.",
+      }],
+    }));
+
+    expect(markup).toContain("Packages");
+    expect(markup).toContain("Essential automation");
+    expect(markup).toContain("€1,500 excl. VAT");
   });
 
   it("requires a strict 202 JSON acknowledgement", async () => {
