@@ -1,17 +1,15 @@
 # Backlog central Demaa
 
-Dernière consolidation : 16 août 2026.
+Dernière consolidation : 20 août 2026.
 
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
 
 Le Google Sheet a été resynchronisé le 16 août 2026 avec D-083 à D-088,
 DEC-023/024, le runtime de référence `8020e04` et la tête documentaire
-`10a9067`. La clôture documentaire complémentaire a ensuite été fusionnée par
-la PR 121 au commit `a47d844`, sans changement runtime. Le Sheet devra recevoir
-la résolution de langue de D-085, la nouvelle décision D-089 et cette nouvelle
-tête documentaire après fusion de la prochaine PR documentaire. Aucun chantier
-ne doit être déclaré livré avant sa recette réelle.
+`10a9067`. Les décisions postérieures sont conservées dans ce document ; le
+Sheet reste à réaligner lors d'une prochaine passe documentaire dédiée. Aucun
+chantier ne doit être déclaré livré avant sa recette réelle.
 
 Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
@@ -22,7 +20,7 @@ Plan directeur actif :
 Il fixe l'ordre des lots, leurs responsables, les branches/PR et les gates de
 release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
-## État courant Production — 16 août 2026
+## État courant Production — 20 août 2026
 
 - La référence Production constatée avant l'ouverture de D-085 est `ae5029d`.
   Les PR 110 à 118 ont été fusionnées
@@ -46,6 +44,13 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 - Le périmètre Plan d'action V4 reste `Actions + systemId`. Le Pilotage
   d'entreprise D-084 est livré : Chiffres et Stratégie sont rattachés à
   l'entreprise, séparés des plans et exclus du périmètre IA.
+- La tête Production au début de la présente clôture est `f0b4d75` (PR 145,
+  handover du 20 août). Les trois consoles internes utilisent désormais la
+  session Demaa et `DEMAA_ADMIN_EMAILS`. Leur accès authentifié a été vérifié
+  en Production ; les anciens secrets dédiés ont été retirés de Vercel.
+- `/en` n'est pas publié en Production. L'implémentation anglaise partielle
+  reste un prototype de Preview et ne constitue ni une bêta publique ni un
+  catalogue validé.
 
 ## Lecture canonique du backlog
 
@@ -65,7 +70,7 @@ section canonique courante avec un GO explicite. Cette règle évite de
 réintroduire Plan V4, l'ancienne Stratégie, l'ancien portail, les anciens lots
 d'authentification ou d'autres chantiers déjà livrés ou supersédés.
 
-## D-085 — Produit international commun — validé, non commencé
+## D-085 — Produit international commun — Preview partielle en pause
 
 Référence : [ADR 0014](decisions/0014-shared-international-product-and-opportunities-access.md).
 
@@ -106,6 +111,19 @@ D-085 supersède les anciens cadrages « English Beta = Action Plan uniquement �
 
 ### English Beta
 
+**Décision de pause du 20 août 2026.** Ne pas activer publiquement `/en` et ne
+pas promouvoir l'implémentation Preview actuelle. Avant toute reprise, revoir
+le positionnement et les projections métier : la cible anglaise doit servir
+les mêmes métiers de petites entreprises que le produit français, et non un
+segment séparé de « digital businesses ». Les identifiants métier restent
+communs ; leur traduction et leur disponibilité sont des projections du même
+catalogue, pas un second catalogue produit. Cette décision supersède la liste
+initiale limitée à SaaS, agences digitales, consultants et activités en ligne.
+
+La reprise exige d'abord un audit métier du catalogue français, puis une
+matrice explicite `systemId × localeCode × marketCode`. Aucun métier ne doit
+être inventé, retiré ou rendu visible par la seule langue de l'interface.
+
 La cible complète est :
 
 ```text
@@ -115,15 +133,17 @@ Action Plan
 + Talk to us
 ```
 
-Elle exclut Opportunities, Resources, modèles non internationalisés, aides,
-financements, formalités locales et partenaires strictement français.
+Elle exclut Opportunities, les Ressources autres que les processus métier
+localisés, les modèles non internationalisés, aides, financements, formalités
+locales et partenaires strictement français.
 
 - [ ] Réutiliser le parcours Action Plan français, son schéma, ses statuts, sa
   propriété entreprise, sa reprise et le même appel IA, avec génération en
   anglais naturel et `systemId` universels.
 - [ ] Publier `Tools` avec projections anglaises validées et filtrage serveur
   par système, langue et marché.
-- [ ] Publier `Accompaniment` uniquement pour les prestations réellement
+- [ ] Employer le libellé naturel `Services`, jamais `Accompaniment`, et
+  publier uniquement les prestations réellement
   réalisables à distance en anglais.
 - [ ] Conserver une seule prestation `Automatisation des processus et IA`
   (`Process automation and AI` en anglais) : l'IA est un levier intégré à
@@ -136,8 +156,44 @@ financements, formalités locales et partenaires strictement français.
   clarification gratuite.
 - [ ] Réutiliser Academy et publier uniquement les huit fondamentaux anglais
   validés, avec progression et caches séparés par langue/version.
+- [ ] Rendre Academy structurellement paritaire avec le français : mêmes cours,
+  ordre, leçons, visuels, quiz et actions, avec uniquement les textes localisés.
+- [ ] Localiser Chiffres et Stratégie et exposer les mêmes données d'entreprise
+  dans les deux langues, sans stockage parallèle ni restriction française.
+- [ ] Publier dans `Resources` uniquement `Business processes` pendant la
+  bêta : même moteur et mêmes identifiants que les processus français, sans
+  prévisionnel, CRM ni fallback français tant que ces modèles ne sont pas
+  internationalisés.
 - [ ] Ne laisser apparaître aucun texte, écran, fiche ou contenu français comme
   fallback dans le parcours anglais.
+
+### Gates de reprise de l'anglais
+
+1. **Catalogue métier** : valider que les mêmes métiers de petites entreprises
+   que le français sont couverts, avec projections anglaises complètes.
+2. **Services** : partager fiches, forfaits, prix et demandes ; afficher
+   `Services`, jamais une modale anglaise simplifiée parallèle.
+3. **Pilotage** : rendre Chiffres et Stratégie disponibles en anglais avec les
+   mêmes données entreprise.
+4. **Academy** : supprimer le catalogue anglais raccourci et les visuels
+   génériques au profit d'une structure canonique traduite.
+5. **Resources** : limiter la bêta aux processus métier localisés.
+6. **Surfaces communes** : mutualiser les pages Plans, localiser PWA,
+   confidentialité, erreurs et e-mails sans fallback français.
+7. **Recette publique** : E2E FR/EN de parité, Google, mobile/PWA, demandes,
+   données partagées et absence de français, puis GO Production explicite.
+
+### Prix internationaux
+
+- [ ] Ne jamais modifier un prix à partir de la seule langue d'interface.
+- [ ] Conserver la valeur économique canonique en EUR et convertir vers la
+  devise du devis : `1 500 EUR` ne devient jamais nominalement `1 500 USD`.
+- [ ] Enregistrer côté serveur devise, taux, date du taux et montant converti,
+  puis verrouiller le montant pendant la durée de validité du devis.
+- [ ] Documenter l'arrondi et réviser les grilles converties ; ne pas stocker
+  prix ou taux dans les dictionnaires de traduction.
+- [ ] Ne pas appliquer de majoration liée à l'anglais pendant la bêta. Une
+  différence commerciale par marché exigera une décision tarifaire distincte.
 
 ### Accompagnement — Automatisation des processus et IA
 
@@ -195,7 +251,7 @@ la carte, la modale, `/sur-mesure`, la demande reçue par la Team et la projecti
 anglaise, sans changement du slug Automatisation ni régression des placements
 par Système.
 
-### Opportunités — décision immédiate
+### Opportunités — décision historique supersédée par la réactivation du 18 août
 
 - [x] Retirer Opportunités des navbars desktop, mobile et PWA ainsi que des
   navigations générales.
@@ -380,7 +436,7 @@ fusionnée sans GO explicite :
 3. PR fondation internationale cachée : contexte central, `/en` sous flag et
    `noindex`, auth/returnTo/PWA/métadonnées compatibles ;
 4. PR Action Plan anglais de bout en bout ;
-5. PR Solutions, Accompaniment et Talk to us ;
+5. PR Solutions, Services et Talk to us ;
 6. PR Academy anglaise ;
 7. PR de recette intégrée et activation publique sous GO Production séparé.
 

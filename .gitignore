@@ -33,6 +33,7 @@
 # local working files
 Outils_metier_*.xlsx
 Processus_TPE_*.xlsx
+/.claude/
 
 # misc
 .DS_Store
