@@ -9,6 +9,18 @@ export type CustomerSessionPayload = {
   error?: string;
 };
 
+export class CustomerSessionExchangeError extends Error {
+  readonly code: string | null;
+  readonly status: number;
+
+  constructor(message: string, input: { code?: string | null; status: number }) {
+    super(message);
+    this.name = "CustomerSessionExchangeError";
+    this.code = input.code ?? null;
+    this.status = input.status;
+  }
+}
+
 export async function exchangeFirebaseIdTokenForSession(input: {
   idToken: string;
   returnTo: string;
@@ -19,10 +31,13 @@ export async function exchangeFirebaseIdTokenForSession(input: {
     body: JSON.stringify(input),
   });
   const payload = await response.json().catch(() => null) as
-    | { error?: string; redirectTo?: string }
+    | { code?: string; error?: string; redirectTo?: string }
     | null;
   if (!response.ok || !payload?.redirectTo) {
-    throw new Error(payload?.error || "La connexion n’a pas pu aboutir.");
+    throw new CustomerSessionExchangeError(
+      payload?.error || "La connexion n’a pas pu aboutir.",
+      { code: payload?.code, status: response.status },
+    );
   }
   return { redirectTo: payload.redirectTo };
 }

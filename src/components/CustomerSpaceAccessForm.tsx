@@ -3,7 +3,10 @@
 import { useEffect, useId, useState } from "react";
 import { ArrowLeft, KeyRound, LoaderCircle, Mail } from "lucide-react";
 import GoogleCustomerSignInButton from "@/components/GoogleCustomerSignInButton";
-import { exchangeFirebaseIdTokenForSession } from "@/lib/customer-auth-session.client";
+import {
+  CustomerSessionExchangeError,
+  exchangeFirebaseIdTokenForSession,
+} from "@/lib/customer-auth-session.client";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 import {
   createPasswordAccountAndGetIdToken,
@@ -51,6 +54,12 @@ function getFriendlyAuthError(error: unknown, localeCode: InterfaceLocaleCode) {
   return error instanceof Error
     ? error.message
     : localeCode === "en" ? "Sign-in was not completed." : "La connexion n’a pas abouti.";
+}
+
+function getFirebaseAuthErrorCode(error: unknown) {
+  return typeof error === "object" && error && "code" in error
+    ? String(error.code)
+    : "";
 }
 
 export default function CustomerSpaceAccessForm({
@@ -123,10 +132,10 @@ export default function CustomerSpaceAccessForm({
     setIsSending(true);
 
     try {
-      const localeCode = getReturnToInterfaceLocale(returnTo || "/");
+      const returnLocaleCode = getReturnToInterfaceLocale(returnTo || "/");
       const authResult = mode === "create"
-        ? await createPasswordAccountAndGetIdToken(normalizedEmail, password, localeCode)
-        : await signInWithPasswordAndGetIdToken(normalizedEmail, password, localeCode);
+        ? await createPasswordAccountAndGetIdToken(normalizedEmail, password, returnLocaleCode)
+        : await signInWithPasswordAndGetIdToken(normalizedEmail, password, returnLocaleCode);
       const result = await exchangeFirebaseIdTokenForSession({
         idToken: authResult.idToken,
         returnTo: returnTo || "/",
@@ -134,6 +143,24 @@ export default function CustomerSpaceAccessForm({
       if (onAuthenticated) await onAuthenticated(result);
       else window.location.assign(result.redirectTo);
     } catch (submitError) {
+      const firebaseCode = getFirebaseAuthErrorCode(submitError);
+      if (
+        mode === "create"
+        && (
+          firebaseCode.includes("email-already-in-use")
+          || (submitError instanceof CustomerSessionExchangeError && submitError.status === 503)
+        )
+      ) {
+        updateDraft({ mode: "signin", password: "" });
+        setError(
+          submitError instanceof CustomerSessionExchangeError
+            ? localeCode === "en"
+              ? "Your account was created, but your workspace could not be prepared. Sign in to try again."
+              : "Votre compte a été créé, mais votre espace n’a pas pu être préparé. Reconnectez-vous pour réessayer."
+            : getFriendlyAuthError(submitError, localeCode),
+        );
+        return;
+      }
       setError(getFriendlyAuthError(submitError, localeCode));
     } finally {
       setIsSending(false);

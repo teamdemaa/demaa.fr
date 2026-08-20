@@ -14,6 +14,10 @@ export class ActionPlanSaveQueue<T> {
     return this.pending !== null;
   }
 
+  hasWork() {
+    return this.pending !== null || this.draining !== null;
+  }
+
   drain(save: (value: T) => Promise<void>): Promise<ActionPlanSaveDrainResult> {
     if (this.draining) return this.draining;
 

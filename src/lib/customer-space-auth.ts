@@ -24,6 +24,7 @@ export function getCustomerCookieOptions(maxAge = CUSTOMER_SESSION_TTL_MS / 1000
 
 export type CustomerSessionIdentity = Readonly<{
   email: string;
+  emailVerified?: boolean;
   provider: "google" | "password";
   uid: string;
 }>;
@@ -38,6 +39,7 @@ function toCustomerIdentity(decoded: DecodedIdToken): CustomerSessionIdentity | 
 
   return {
     email: normalizeEmail(decoded.email),
+    emailVerified: decoded.email_verified === true,
     provider: provider === "google.com" ? "google" : "password",
     uid: decoded.uid,
   };

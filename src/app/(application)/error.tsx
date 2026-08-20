@@ -1,5 +1,7 @@
 "use client";
 
+import CustomerLogoutButton from "@/components/CustomerLogoutButton";
+
 export default function ApplicationError({
   error,
   reset,
@@ -23,6 +25,9 @@ export default function ApplicationError({
         >
           Réessayer
         </button>
+        <div className="mx-auto mt-3 w-fit">
+          <CustomerLogoutButton />
+        </div>
         {error.digest ? (
           <p className="mt-4 text-[11px] text-dema-muted">Référence : {error.digest}</p>
         ) : null}

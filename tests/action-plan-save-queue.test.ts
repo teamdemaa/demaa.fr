@@ -52,6 +52,20 @@ describe("ActionPlanSaveQueue", () => {
     await expect(first).resolves.toEqual({ ok: true });
   });
 
+  it("reports pending or in-flight work for page-leave recovery", async () => {
+    const queue = new ActionPlanSaveQueue<string>();
+    const pending = deferred<void>();
+    expect(queue.hasWork()).toBe(false);
+    queue.enqueue("change");
+    expect(queue.hasWork()).toBe(true);
+    const draining = queue.drain(async () => pending.promise);
+    expect(queue.hasPending()).toBe(false);
+    expect(queue.hasWork()).toBe(true);
+    pending.resolve();
+    await draining;
+    expect(queue.hasWork()).toBe(false);
+  });
+
   it("retains the latest unsaved value after a failure and retries only on demand", async () => {
     const queue = new ActionPlanSaveQueue<string>();
     const failure = new Error("network failed");
