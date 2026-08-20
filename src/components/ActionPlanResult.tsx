@@ -656,7 +656,11 @@ function ActionDrawer({
                     <Wrench className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
                     <span className="min-w-0 flex-1">
                       <span className="block text-[10px] font-medium uppercase tracking-[0.12em] text-dema-muted">
-                        {contextualAid.tool.alreadySelected ? "Déjà dans vos Solutions" : "Peut faciliter cette action"}
+                        {contextualAid.tool.relationship === "selected_in_solutions"
+                          ? "Sélectionné dans vos Solutions"
+                          : contextualAid.tool.relationship === "already_in_use"
+                            ? "Outil déjà utilisé"
+                            : "Outil mentionné dans cette action"}
                       </span>
                       <span className="mt-0.5 block text-sm text-brand-blue">{contextualAid.tool.label}</span>
                       <span className="mt-1 line-clamp-2 block text-xs leading-relaxed text-dema-muted">{contextualAid.tool.description}</span>
@@ -679,7 +683,9 @@ function ActionDrawer({
                     <BriefcaseBusiness className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
                     <span className="min-w-0 flex-1">
                       <span className="block text-[10px] font-medium uppercase tracking-[0.12em] text-dema-muted">
-                        {contextualAid.accompaniment.alreadySelected ? "Déjà dans vos Solutions" : "Vous souhaitez déléguer cette action ?"}
+                        {contextualAid.accompaniment.relationship === "selected_in_solutions"
+                          ? "Sélectionné dans vos Solutions"
+                          : "Vous souhaitez déléguer cette action ?"}
                       </span>
                       <span className="mt-0.5 block text-sm text-brand-blue">{contextualAid.accompaniment.label}</span>
                       <span className="mt-1 line-clamp-2 block text-xs leading-relaxed text-dema-muted">{contextualAid.accompaniment.description}</span>

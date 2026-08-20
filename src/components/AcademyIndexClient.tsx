@@ -509,6 +509,9 @@ export default function AcademyIndexClient({
     <div className={`${embedded ? "min-h-[60vh]" : "min-h-[85vh]"} bg-[#FAFAFA]`}>
       {embedded ? (
         <div className="mx-auto max-w-7xl px-4 pb-6 pt-3">
+          <h1 className="sr-only">
+            {localeCode === "en" ? "Academy" : "Académie"}
+          </h1>
           {searchControl}
         </div>
       ) : null}

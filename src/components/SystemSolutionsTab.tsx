@@ -250,13 +250,16 @@ function SolutionDialog({
         <SolutionAction
           interaction={resource.interaction}
           label={resource.ctaLabel ?? "Découvrir la solution"}
-          onClick={() => trackSystemSolutionEvent("system_solution_resource_cta_clicked", {
-            rank: placement.rank,
-            resourceSlug: resource.resourceSlug,
-            resourceType: resource.resourceType,
-            section: placement.section,
-            systemSlug: placement.systemSlug,
-          })}
+          onClick={() => {
+            onClose();
+            trackSystemSolutionEvent("system_solution_resource_cta_clicked", {
+              rank: placement.rank,
+              resourceSlug: resource.resourceSlug,
+              resourceType: resource.resourceType,
+              section: placement.section,
+              systemSlug: placement.systemSlug,
+            });
+          }}
         />
       ) : null}
     </DirectoryDetailDialogShell>

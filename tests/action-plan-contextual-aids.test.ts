@@ -157,6 +157,27 @@ const solutionSections: readonly RenderableSolutionSectionDto[] = [
         section: "services",
         usage: "Confier une création, une modification ou une fermeture d’entreprise.",
       }),
+      placement({
+        category: "Communication",
+        name: "Gestion des réseaux sociaux",
+        resourceSlug: "gestion-reseaux-sociaux",
+        section: "services",
+        usage: "Confier le calendrier éditorial et les publications récurrentes.",
+      }),
+      placement({
+        category: "Acquisition",
+        name: "Publicité en ligne",
+        resourceSlug: "publicite-en-ligne",
+        section: "services",
+        usage: "Déléguer les campagnes Google Ads et Meta Ads.",
+      }),
+      placement({
+        category: "Commercial",
+        name: "Prospection ciblée",
+        resourceSlug: "prospection-ciblee",
+        section: "services",
+        usage: "Externaliser la recherche et la qualification de prospects.",
+      }),
     ],
   },
   {
@@ -208,7 +229,7 @@ describe("action plan contextual aids", () => {
     );
   });
 
-  it("links a treasury action to the existing financial model", () => {
+  it("keeps the relevant process but hides contextual models until intent resolution is ready", () => {
     const aids = buildActionPlanContextualAids({
       actions: [action({
         channelOrTool: "Prévisionnel financier",
@@ -224,10 +245,7 @@ describe("action plan contextual aids", () => {
     expect(aids["action-1"]?.organisation?.routineId).toBe(
       "restaurant-piloter-tresorerie",
     );
-    expect(aids["action-1"]?.model).toMatchObject({
-      formatLabel: "Modèle financier",
-      resourceSlug: "suivi-previsionnel-financier",
-    });
+    expect(aids["action-1"]?.model).toBeNull();
   });
 
   it("fails closed for a vague action and ignores generated support content", () => {
@@ -253,7 +271,7 @@ describe("action plan contextual aids", () => {
     expect(hasActionPlanContextualAid(aids["action-1"])).toBe(false);
   });
 
-  it("keeps a canonical model even when a legacy generated table exists", () => {
+  it("does not surface a contextual model when a legacy generated table exists", () => {
     const aids = buildActionPlanContextualAids({
       actions: [action({
         channelOrTool: "Prévisionnel financier",
@@ -271,9 +289,7 @@ describe("action plan contextual aids", () => {
       systeme,
     });
 
-    expect(aids["action-1"]?.model?.resourceSlug).toBe(
-      "suivi-previsionnel-financier",
-    );
+    expect(aids["action-1"]?.model).toBeNull();
     expect(aids["action-1"]?.organisation?.routineId).toBe(
       "restaurant-piloter-tresorerie",
     );
@@ -358,9 +374,44 @@ describe("action plan contextual aids", () => {
     expect(tools).toHaveLength(2);
     expect(new Set(tools.map(({ resourceSlug }) => resourceSlug)).size).toBe(2);
     expect(tools).toContainEqual(expect.objectContaining({
-      alreadySelected: true,
+      relationship: "selected_in_solutions",
       resourceSlug: "pipedrive",
     }));
+  });
+
+  it("caps tools and accompaniments together at two commercial aids per plan", () => {
+    const aids = buildActionPlanContextualAids({
+      actions: [
+        action({
+          id: "action-1",
+          title: "Utiliser Pipedrive pour les prospects",
+          objective: "Centraliser les opportunités et les relances dans Pipedrive.",
+        }),
+        action({
+          id: "action-2",
+          title: "Utiliser Pennylane pour la trésorerie",
+          objective: "Suivre les factures et les paiements dans Pennylane.",
+        }),
+        action({
+          id: "action-3",
+          title: "Déléguer l’automatisation",
+          objective: "Confier la mise en place des workflows et supprimer les ressaisies.",
+        }),
+      ],
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    const commercialAids = Object.values(aids).flatMap(({ accompaniment, tool }) => [
+      ...(tool ? [tool] : []),
+      ...(accompaniment ? [accompaniment] : []),
+    ]);
+    expect(commercialAids).toHaveLength(2);
+    expect(Object.values(aids).every(({ accompaniment, tool }) =>
+      Number(Boolean(accompaniment)) + Number(Boolean(tool)) <= 1
+    )).toBe(true);
   });
 
   it("does not suggest software for a generic action without a software capability", () => {
@@ -378,7 +429,7 @@ describe("action plan contextual aids", () => {
     expect(aids["action-1"]?.tool).toBeNull();
   });
 
-  it("does not add an approximate CRM tool when the Demaa CRM model already covers the action", () => {
+  it("does not add an approximate CRM tool when no product is explicitly named", () => {
     const baseInput = {
       resources,
       solutionSections,
@@ -398,11 +449,11 @@ describe("action plan contextual aids", () => {
     });
 
     expect(before["action-1"]?.tool).toBeNull();
-    expect(after["action-1"]?.model?.resourceSlug).toBe("crm-suivi-commercial");
+    expect(after["action-1"]?.model).toBeNull();
     expect(after["action-1"]?.tool).toBeNull();
   });
 
-  it("can suggest a uniquely matching tool when no Demaa model covers the need", () => {
+  it("does not turn a generic software capability into a new product recommendation", () => {
     const aids = buildActionPlanContextualAids({
       actions: [action({
         channelOrTool: "CRM",
@@ -416,7 +467,7 @@ describe("action plan contextual aids", () => {
     });
 
     expect(aids["action-1"]?.model).toBeNull();
-    expect(aids["action-1"]?.tool?.resourceSlug).toBe("pipedrive");
+    expect(aids["action-1"]?.tool).toBeNull();
   });
 
   it("does not suggest a competitor from the same category when the source names an existing tool", () => {
@@ -442,7 +493,7 @@ describe("action plan contextual aids", () => {
     });
 
     expect(aids["action-1"]?.tool).toMatchObject({
-      alreadySelected: true,
+      relationship: "already_in_use",
       resourceSlug: "pipedrive",
     });
   });
@@ -460,7 +511,7 @@ describe("action plan contextual aids", () => {
     });
 
     expect(aids["action-1"]?.tool).toMatchObject({
-      alreadySelected: true,
+      relationship: "already_in_use",
       resourceSlug: "pennylane",
     });
   });
@@ -478,7 +529,7 @@ describe("action plan contextual aids", () => {
     });
 
     expect(aids["action-1"]?.tool).toMatchObject({
-      alreadySelected: false,
+      relationship: "named_in_action",
       resourceSlug: "pennylane",
     });
   });
@@ -507,6 +558,132 @@ describe("action plan contextual aids", () => {
       accompaniment ? [accompaniment] : []);
     expect(aidsList).toHaveLength(1);
     expect(aidsList[0]?.resourceSlug).not.toBe("coach-business");
+  });
+
+  it.each([
+    {
+      objective: "Préparer le bilan, la liasse fiscale et la déclaration de TVA.",
+      title: "Finaliser la clôture comptable",
+    },
+    {
+      objective: "Préparer les pièces nécessaires à la modification des statuts.",
+      title: "Modifier les statuts de l’entreprise",
+    },
+    {
+      objective: "Connecter les outils et supprimer les ressaisies manuelles.",
+      title: "Mettre en place un workflow automatisé",
+    },
+    {
+      objective: "Comparer les tarifs des professionnels pour le bilan et la liasse fiscale.",
+      title: "Étudier le marché des experts-comptables",
+    },
+    {
+      objective: "Préparer un calendrier éditorial et publier régulièrement sur les réseaux sociaux.",
+      title: "Organiser les publications",
+    },
+    {
+      objective: "Lancer une campagne Google Ads avec un budget média défini.",
+      title: "Tester la publicité en ligne",
+    },
+    {
+      objective: "Construire un fichier de prospects et qualifier les leads prioritaires.",
+      title: "Préparer la prospection ciblée",
+    },
+    {
+      objective: "Trouver un professionnel pour avancer plus vite.",
+      title: "Chercher un prestataire",
+    },
+  ])("does not turn an explicit business topic into an unsolicited service", (input) => {
+    const aids = buildActionPlanContextualAids({
+      actions: [action(input)],
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    expect(aids["action-1"]?.accompaniment).toBeNull();
+  });
+
+  it.each([
+    {
+      expectedSlug: "expert-comptable",
+      objective: "Faire appel à un professionnel pour le bilan et la liasse fiscale.",
+      title: "Confier la clôture comptable",
+    },
+    {
+      expectedSlug: "formalites-entreprise",
+      objective: "Trouver un prestataire pour préparer et déposer la modification des statuts.",
+      title: "Déléguer les formalités d’entreprise",
+    },
+    {
+      expectedSlug: "automatisation-processus",
+      objective: "Confier à un spécialiste la connexion des outils et la suppression des ressaisies.",
+      title: "Externaliser l’automatisation du workflow",
+    },
+    {
+      expectedSlug: "gestion-reseaux-sociaux",
+      objective: "Confier à un prestataire le calendrier éditorial et les publications récurrentes.",
+      title: "Déléguer les réseaux sociaux",
+    },
+    {
+      expectedSlug: "publicite-en-ligne",
+      objective: "Faire appel à un spécialiste pour gérer les campagnes Google Ads et le budget média.",
+      title: "Confier la publicité en ligne",
+    },
+    {
+      expectedSlug: "prospection-ciblee",
+      objective: "Externaliser la recherche de prospects et la qualification des leads.",
+      title: "Déléguer la prospection ciblée",
+    },
+  ])("keeps a service when both the need and delegation are explicit", ({ expectedSlug, ...input }) => {
+    const aids = buildActionPlanContextualAids({
+      actions: [action(input)],
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    expect(aids["action-1"]?.accompaniment).toMatchObject({
+      relationship: "suggested",
+      resourceSlug: expectedSlug,
+    });
+  });
+
+  it("removes a service after the current action no longer asks for delegation", () => {
+    const plan = structuredClone(ACTION_PLAN_DEMO);
+    const workspace = createActionPlanWorkspaceState(plan);
+    workspace.tasks["action-1"].overrides = {
+      objective: "Confier à un spécialiste la connexion des outils et la suppression des ressaisies.",
+      title: "Déléguer l’automatisation du workflow",
+    };
+    const delegatedActions = getEffectiveActionPlanActionsForContextualAids(plan, workspace);
+    const before = buildActionPlanContextualAids({
+      actions: delegatedActions,
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    workspace.tasks["action-1"].overrides = {
+      objective: "Documenter le workflow actuel et supprimer une ressaisie simple en interne.",
+      title: "Cartographier le workflow",
+    };
+    const editedActions = getEffectiveActionPlanActionsForContextualAids(plan, workspace);
+    const after = buildActionPlanContextualAids({
+      actions: editedActions,
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    expect(before["action-1"]?.accompaniment?.resourceSlug).toBe(
+      "automatisation-processus",
+    );
+    expect(after["action-1"]?.accompaniment).toBeNull();
   });
 
   it("never reintroduces a private solution section", () => {
@@ -585,7 +762,7 @@ describe("action plan contextual aid integration", () => {
     expect(result).toContain("encodeURIComponent(contextualAid.organisation.routineId)");
     expect(processPage).toContain("id={routine.routineId}");
     expect(processPage).toContain("scroll-mt-28");
-    expect(result).toContain("Peut faciliter cette action");
+    expect(result).toContain("Outil mentionné dans cette action");
     expect(result).toContain("Voir dans Solutions");
     expect(result).toContain("Vous souhaitez déléguer cette action ?");
     expect(result).toContain("Voir l’accompagnement");

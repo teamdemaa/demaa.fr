@@ -24,8 +24,8 @@ describe("Firebase Solutions catalog enrichment", () => {
       createdBy: "release://catalog-enrichment-france-2026-08-12",
     });
     expect(revision.knownSystemSlugs).toHaveLength(115);
-    expect(revision.resources).toHaveLength(267);
-    expect(revision.placements).toHaveLength(722);
+    expect(revision.resources).toHaveLength(266);
+    expect(revision.placements).toHaveLength(720);
   });
 
   it("keeps Restaurant suppliers and expands its audited tools", () => {

@@ -11,6 +11,12 @@ import type {
   RenderableSolutionSectionDto,
 } from "@/lib/system-solutions-ui-dto";
 
+// Emergency editorial circuit breaker for destinations that are present in an
+// older remote registry revision but are no longer safe to expose publicly.
+// Keep this list narrow and remove an entry after a reviewed replacement URL
+// has been published in the registry.
+const BLOCKED_EXTERNAL_RESOURCE_SLUGS = new Set(["kiute-pro"]);
+
 function isFreshPricing(
   presentation: FirebaseSolutionRegistryRevision["placements"][number]["presentation"],
   now: Date,
@@ -47,6 +53,7 @@ export function selectRenderableSolutionSectionsFromRevision(
     const resource = resources.get(placement.resourceSlug);
     if (
       !resource ||
+      BLOCKED_EXTERNAL_RESOURCE_SLUGS.has(resource.resourceSlug) ||
       resource.commercialRelationship !== placement.commercialRelationship ||
       (options.publishedOnly && resource.status !== "published")
     ) return [];

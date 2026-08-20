@@ -30,11 +30,11 @@ export type ActionPlanModelAid = Readonly<{
 }>;
 
 export type ActionPlanSolutionAid = Readonly<{
-  alreadySelected: boolean;
   description: string;
   kind: "accompaniment" | "tool";
   label: string;
   placementId: string;
+  relationship: "already_in_use" | "named_in_action" | "selected_in_solutions" | "suggested";
   resourceSlug: string;
   systemId: string;
 }>;
@@ -181,6 +181,12 @@ const EMPTY_AID: ActionPlanContextualAid = Object.freeze({
   organisation: null,
   tool: null,
 });
+
+// The current lexical resolver is not precise enough to distinguish an
+// explicit deliverable from a broad business concept. Models remain available
+// in Resources, but contextual model cards stay hidden until the versioned
+// intent resolver is ready.
+const CONTEXTUAL_MODEL_RECOMMENDATIONS_ENABLED = false;
 
 export function getEffectiveActionPlanActionsForContextualAids(
   plan: PersistableActionPlan,
@@ -405,8 +411,12 @@ type ScoredSolutionAid = Readonly<{
   score: number;
 }>;
 
-const DELEGATION_PATTERN =
-  /\b(aid|accompagn|confier|deleg|externalis|faire faire|mettre en place|prestataire|professionnel|sous trait|trouver quelqu)\w*/;
+// A service card is commercial, so a matching business topic is not enough.
+// Require language that clearly asks another person to take responsibility for
+// the work. Broad wording such as "aide", "accompagnement" or "mettre en
+// place" is deliberately excluded to avoid unsolicited upsell.
+const EXPLICIT_DELEGATION_PATTERN =
+  /\b(confier\w*|deleg\w*|externalis\w*|mandater\w*|solliciter\w*|sous trait\w*|faire (?:appel|faire|gerer|prendre en charge|realiser|valider)\w*|trouver (?:un |une |le |la )?(?:expert|prestataire|professionnel|specialiste|quelqu)\w*)/;
 
 const SOFTWARE_CAPABILITY_PATTERN =
   /\b(automatis|centralis|connect|crm|en ligne|integr|logiciel|multi utilisateur|outil|planning|rendez vous|synchron|temps reel|workflow)\w*/;
@@ -479,17 +489,17 @@ function textMentionsTool(
 }
 
 function toSolutionAid(input: {
-  alreadySelected: boolean;
   kind: ActionPlanSolutionAid["kind"];
   placement: RenderableSolutionPlacementDto;
+  relationship?: ActionPlanSolutionAid["relationship"];
   systemId: string;
 }): ActionPlanSolutionAid {
   return {
-    alreadySelected: input.alreadySelected,
     description: input.placement.usage,
     kind: input.kind,
     label: input.placement.resource.name,
     placementId: input.placement.placementId,
+    relationship: input.relationship ?? "suggested",
     resourceSlug: input.placement.resource.resourceSlug,
     systemId: input.systemId,
   };
@@ -531,8 +541,8 @@ function findToolAid(
     : false;
   if (
     !best ||
-    (!SOFTWARE_CAPABILITY_PATTERN.test(actionText) &&
-      !bestIsReferenced) ||
+    (!bestIsMentioned && !bestIsReferenced && !bestIsSelected) ||
+    (!SOFTWARE_CAPABILITY_PATTERN.test(actionText) && !bestIsReferenced && !bestIsSelected) ||
     (input.hasModel && !bestIsReferenced && !bestIsSelected) ||
     best.score < 14 ||
     (!bestIsReferenced && !bestIsSelected && best.rawMatches < 2) ||
@@ -543,10 +553,13 @@ function findToolAid(
   return {
     actionId: action.id,
     aid: toSolutionAid({
-      alreadySelected:
-        bestIsSelected || bestIsMentioned,
       kind: "tool",
       placement: best.candidate,
+      relationship: bestIsSelected
+        ? "selected_in_solutions"
+        : bestIsMentioned
+          ? "already_in_use"
+          : "named_in_action",
       systemId: input.systemId,
     }),
     score: best.score,
@@ -566,10 +579,7 @@ function serviceMatchesAction(
   ) return false;
   const intentPattern = SERVICE_INTENT_PATTERNS[slug];
   if (!intentPattern?.test(actionText)) return false;
-
-  return slug === "expert-comptable" ||
-    slug === "formalites-entreprise" ||
-    DELEGATION_PATTERN.test(actionText);
+  return EXPLICIT_DELEGATION_PATTERN.test(actionText);
 }
 
 function findAccompanimentAid(
@@ -593,18 +603,23 @@ function findAccompanimentAid(
       ...scoreParts(actionTokens, getPlacementParts(placement)),
     }))
     .sort((left, right) => right.score - left.score);
-  const best = scored[0];
+  const best = selectUniqueBest(scored, {
+    minimumMargin: 3,
+    minimumScore: 10,
+  });
   if (!best) return null;
 
   return {
     actionId: action.id,
     aid: toSolutionAid({
-      alreadySelected: input.selectedPlacementIds.has(best.candidate.placementId),
       kind: "accompaniment",
-      placement: best.candidate,
+      placement: best,
+      relationship: input.selectedPlacementIds.has(best.placementId)
+        ? "selected_in_solutions"
+        : "suggested",
       systemId: input.systemId,
     }),
-    score: best.score,
+    score: scored.find(({ candidate }) => candidate.placementId === best.placementId)?.score ?? 0,
   };
 }
 
@@ -660,7 +675,9 @@ export function buildActionPlanContextualAids(input: {
   const modelAidByActionId = new Map(
     input.actions.map((action) => [
       action.id,
-      findModelAid(getActionTokens(action), input.systemId, input.resources),
+      CONTEXTUAL_MODEL_RECOMMENDATIONS_ENABLED
+        ? findModelAid(getActionTokens(action), input.systemId, input.resources)
+        : null,
     ]),
   );
   const toolCandidates = input.actions.flatMap((action) => {
@@ -687,9 +704,6 @@ export function buildActionPlanContextualAids(input: {
     selectedToolSlugs.add(candidate.aid.resourceSlug);
     selectedToolActionIds.add(candidate.actionId);
   }
-  const toolAidByActionId = new Map(
-    selectedToolCandidates.map(({ actionId, aid }) => [actionId, aid]),
-  );
   const accompanimentCandidate = input.actions
     .flatMap((action) => {
       const candidate = findAccompanimentAid(action, servicePlacements, {
@@ -699,6 +713,29 @@ export function buildActionPlanContextualAids(input: {
       return candidate ? [candidate] : [];
     })
     .sort((left, right) => right.score - left.score)[0] ?? null;
+  const selectedCommercialCandidates: ScoredSolutionAid[] = [];
+  const selectedCommercialActionIds = new Set<string>();
+  for (const candidate of [
+    ...selectedToolCandidates,
+    ...(accompanimentCandidate ? [accompanimentCandidate] : []),
+  ].sort((left, right) => right.score - left.score)) {
+    if (
+      selectedCommercialCandidates.length >= 2 ||
+      selectedCommercialActionIds.has(candidate.actionId)
+    ) continue;
+    selectedCommercialCandidates.push(candidate);
+    selectedCommercialActionIds.add(candidate.actionId);
+  }
+  const toolAidByActionId = new Map(
+    selectedCommercialCandidates
+      .filter(({ aid }) => aid.kind === "tool")
+      .map(({ actionId, aid }) => [actionId, aid]),
+  );
+  const accompanimentAidByActionId = new Map(
+    selectedCommercialCandidates
+      .filter(({ aid }) => aid.kind === "accompaniment")
+      .map(({ actionId, aid }) => [actionId, aid]),
+  );
 
   return Object.fromEntries(
     input.actions.map((action) => {
@@ -707,9 +744,7 @@ export function buildActionPlanContextualAids(input: {
 
       return [action.id, {
         accompaniment:
-          accompanimentCandidate?.actionId === action.id
-            ? accompanimentCandidate.aid
-            : null,
+          accompanimentAidByActionId.get(action.id) ?? null,
         model: modelAidByActionId.get(action.id) ?? null,
         organisation: findOrganisationAid(
           actionTokens,

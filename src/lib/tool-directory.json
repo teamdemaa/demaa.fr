@@ -2477,7 +2477,7 @@
       "sources": [
         "https://www.nomadcaisse.fr/"
       ],
-      "lastReviewedAt": "2026-07-14",
+      "lastReviewedAt": "2026-08-20",
       "category": "Caisse & réservation",
       "sectors": [
         "Restauration"
@@ -2543,11 +2543,11 @@
     {
       "slug": "maliora",
       "name": "Maliora",
-      "url": "https://maliora.fr/fonctionnalites",
+      "url": "https://www.maliora.fr/logiciel-coach-sportif",
       "sources": [
-        "https://maliora.fr/fonctionnalites"
+        "https://www.maliora.fr/logiciel-coach-sportif"
       ],
-      "lastReviewedAt": "2026-07-15",
+      "lastReviewedAt": "2026-08-20",
       "category": "Outils métier",
       "sectors": [
         "Santé & bien-être"
@@ -6901,7 +6901,7 @@
       ],
       "bestFor": "Gérer agenda, caisse, clients, fidélité et visibilité beauté/coiffure.",
       "pricingHint": "Payant",
-      "status": "active",
+      "status": "hidden",
       "scope": "business"
     },
     {
