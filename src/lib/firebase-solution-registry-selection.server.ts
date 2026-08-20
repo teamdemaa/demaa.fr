@@ -123,6 +123,17 @@ export async function getLocalRenderableSolutionSectionsForSystem(
   return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, { now });
 }
 
+export async function getLocalPublishedRenderableSolutionSectionsForSystem(
+  systemSlug: unknown,
+  now = new Date(),
+) {
+  const revision = await loadFirebaseSolutionRegistryRevision({ forceLocal: true });
+  return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, {
+    now,
+    publishedOnly: true,
+  });
+}
+
 export async function getActivePublishedRenderableSolutionSectionsForSystem(
   systemSlug: unknown,
   now = new Date(),

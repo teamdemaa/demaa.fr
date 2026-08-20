@@ -138,7 +138,7 @@ function buildCanonicalServicePlacements(
       name: service.name,
       description: service.summary,
       displayCategory: service.eyebrow,
-      ctaLabel: "Voir le service",
+      ctaLabel: context.localeCode === "en" ? "View service" : "Voir le service",
       serviceDetails: service,
       interaction: {
         interactionMode: "detail",
