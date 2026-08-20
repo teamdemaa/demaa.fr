@@ -22,17 +22,15 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
 ## État courant Production — 20 août 2026
 
-- La référence Production constatée avant l'ouverture de D-085 est `ae5029d`.
-  Les PR 110 à 118 ont été fusionnées
-  séparément et vérifiées en Production : fiabilité des plans, sécurité de
-  l'administration Coaching, consentement aux traceurs, expérience Échanger,
-  barre du titre, documentation D-084, Pilotage, Titre IA et clôture
-  documentaire du programme 0 à 8. `8020e04` reste le dernier commit runtime
-  de ce programme ; `ae5029d` est son état consolidé avant la PR documentaire
-  D-085. Les commits documentaires ultérieurs peuvent faire avancer `main`
-  sans modifier cette référence runtime.
-- La tête Production et `origin/main` après la clôture documentaire sont
-  `a47d844`. Aucun runtime n'a été modifié entre `ae5029d` et `a47d844`.
+- Au démarrage du présent chantier documentaire, `main` et `origin/main`
+  pointent sur `260ad7d`. Les références `8020e04`, `ae5029d`, `a47d844` et
+  `f0b4d75` restent des checkpoints historiques du programme de stabilisation,
+  de sa clôture documentaire et du handover ; elles ne sont plus présentées
+  comme la tête courante.
+- Les PR 110 à 118 ont été fusionnées séparément et vérifiées en Production :
+  fiabilité des plans, sécurité de l'administration Coaching, consentement aux
+  traceurs, expérience Échanger, barre du titre, documentation D-084,
+  Pilotage, Titre IA et clôture documentaire du programme 0 à 8.
 - L'application conserve un seul domaine canonique et des groupes de routes
   distincts pour le marketing, l'application, l'authentification et
   l'administration.
@@ -44,10 +42,9 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 - Le périmètre Plan d'action V4 reste `Actions + systemId`. Le Pilotage
   d'entreprise D-084 est livré : Chiffres et Stratégie sont rattachés à
   l'entreprise, séparés des plans et exclus du périmètre IA.
-- La tête Production au début de la présente clôture est `f0b4d75` (PR 145,
-  handover du 20 août). Les trois consoles internes utilisent désormais la
-  session Demaa et `DEMAA_ADMIN_EMAILS`. Leur accès authentifié a été vérifié
-  en Production ; les anciens secrets dédiés ont été retirés de Vercel.
+- Depuis la PR 145, les trois consoles internes utilisent la session Demaa et
+  `DEMAA_ADMIN_EMAILS`. Leur accès authentifié a été vérifié en Production ;
+  les anciens secrets dédiés ont été retirés de Vercel.
 - `/en` n'est pas publié en Production. L'implémentation anglaise partielle
   reste un prototype de Preview et ne constitue ni une bêta publique ni un
   catalogue validé.
@@ -80,34 +77,60 @@ D-085 supersède les anciens cadrages « English Beta = Action Plan uniquement �
 
 ### Architecture commune
 
-- [ ] Réutiliser une seule application, les mêmes contrats, composants, API,
-  permissions et parcours dans toutes les langues.
-- [ ] Déclarer toute exception avec un scope `locale` ou `market` explicite ;
-  sans scope, le comportement appartient au socle commun.
-- [ ] Centraliser `localeCode`, `marketCode`, `countryCode` et `currencyCode`.
-- [ ] Conserver le français sans préfixe et utiliser `/en` pour English Beta.
-- [ ] Séparer la locale de l'interface de la langue du contenu :
-  `preferredLocale` appartient au membre, tandis que chaque plan conserve
-  `contentLocaleCode` et `marketCodeAtCreation`.
-- [ ] Résoudre la locale de l'interface dans l'ordre canonique : route
-  explicite, choix manuel, préférence membre, cookie visiteur, langue du
-  navigateur à la première visite, puis français.
-- [ ] Ne jamais rediriger silencieusement une route explicitement française ou
-  anglaise ; préserver locale et `returnTo` interne validé pendant
-  l'authentification, notamment Google depuis `/en`.
-- [ ] Enregistrer un choix manuel dans un cookie puis dans le profil du membre
-  connecté, sans créer d'identité, d'entreprise ou d'espace Plans distinct.
-- [ ] Afficher tous les plans dans `Mes plans` / `My plans` avec un indicateur
-  `FR` ou `EN`; `latest` ne filtre pas par langue et changer l'interface ne
-  traduit jamais un plan existant.
-- [ ] Faire utiliser `contentLocaleCode` aux commandes IA et la langue de la
-  demande/conversation aux e-mails contextuels ; les e-mails génériques
-  utilisent `preferredLocale`.
-- [ ] Ne déduire ni États-Unis, ni droit américain, ni USD de la seule langue
-  anglaise.
-- [ ] Interdire composant, API, générateur, conversation, administration ou
-  système commercial anglais parallèles, ainsi que tout fallback silencieux
-  vers le français.
+- [x] Une seule identité Firebase, une seule session Demaa, une seule
+  entreprise et les mêmes espaces Plans, Chiffres et Stratégie sont partagés
+  entre les langues.
+- [x] `/` est la route française canonique et `/en` la route anglaise. Le
+  choix manuel, le cookie de locale, la préférence connectée et les
+  `returnTo` internes Google/e-mail existent déjà ; `/en` reste derrière un
+  flag serveur et `noindex` tant que la bêta n'est pas validée.
+- [x] Les plans enregistrent déjà `content_locale_code` et
+  `market_code_at_creation`; la langue de l'interface ne traduit pas leur
+  contenu et `latest` ne filtre pas par langue.
+- [x] La préférence du membre est stockée dans
+  `member_preferences/{uid}`. Ne pas créer le document concurrent
+  `customer_preferences` cité dans un ancien audit.
+- [ ] Mutualiser les écrans encore dupliqués ou simplifiés en anglais. Un
+  comportement partagé ne doit avoir qu'un composant, un contrat et une API ;
+  les différences passent par des projections et configurations centrales,
+  jamais par des conditions `locale === "en"` dispersées.
+- [ ] Déclarer le scope de chaque évolution : `shared` par défaut, ou
+  explicitement `locale`, `market` ou `country`. La traduction choisit les
+  mots ; elle n'accorde aucune permission et ne décide ni du catalogue, ni du
+  pays, ni de la devise.
+
+Le contexte doit rester séparé en deux couches :
+
+```text
+Interface et contenu
+  localeCode              route, libellés et formats
+  preferredLocale         préférence du membre
+  contentLocaleCode       langue durable du plan
+
+Contexte commercial résolu côté serveur
+  marketCode              catalogue et prestations disponibles
+  countryCode             contraintes géographiques/réglementaires
+  currencyCode            devise commerciale/de devis
+```
+
+- [ ] Ne plus déduire automatiquement `marketCode` et `currencyCode` de
+  `localeCode`. Un membre anglophone d'une entreprise française peut utiliser
+  `en + fr-fr + FR + EUR` ; la bêta globale peut utiliser
+  `en + global-en-beta` avec un pays nullable.
+- [ ] Faire porter à l'entreprise `marketCode`, `countryCode` et sa devise de
+  référence comptable. Résoudre côté serveur le marché et la devise
+  commerciale applicables à une offre ; ne jamais faire autorité d'une valeur
+  envoyée par le navigateur.
+- [ ] Conserver l'ordre de résolution de locale : route explicite, choix
+  manuel, `member_preferences`, cookie visiteur, langue du navigateur lors de
+  la première visite, français. Une route explicitement ouverte n'est jamais
+  remplacée silencieusement.
+- [ ] Utiliser `contentLocaleCode` pour la génération et les commandes IA. Les
+  e-mails de demande/conversation suivent la langue de cette demande ; les
+  e-mails génériques suivent `preferredLocale`.
+- [ ] Interdire tout fallback français silencieux sous `/en`, tout identifiant
+  métier anglais parallèle et toute API, identité, entreprise, conversation,
+  administration ou stockage anglais distinct.
 
 ### English Beta
 
@@ -120,64 +143,84 @@ communs ; leur traduction et leur disponibilité sont des projections du même
 catalogue, pas un second catalogue produit. Cette décision supersède la liste
 initiale limitée à SaaS, agences digitales, consultants et activités en ligne.
 
-La reprise exige d'abord un audit métier du catalogue français, puis une
-matrice explicite `systemId × localeCode × marketCode`. Aucun métier ne doit
-être inventé, retiré ou rendu visible par la seule langue de l'interface.
+Le catalogue canonique réel comprend **115 métiers actifs** et réutilise les
+**37 familles métier existantes**. Ces identifiants et familles sont la source
+commune : l'anglais ajoute des projections publiées et des alias, jamais des
+métiers parallèles. Les dix métiers numériques de la Preview actuelle ne sont
+qu'un prototype à retirer comme périmètre commercial ; la cible est la même
+population de petites entreprises qu'en français.
+
+La reprise exige une matrice explicite
+`systemId × familyId × localeCode × marketCode × publicationStatus`. Les
+héritages globaux, familiaux et spécifiques restent explicables et sont filtrés
+par le marché/pays, puis par la disponibilité de la projection locale.
 
 La cible complète est :
 
 ```text
-Action Plan
-+ Solutions
+Action Plan + Key figures + Strategy
++ Solutions (Tools + Services)
 + Academy
 + Talk to us
++ My plans + authentification
 ```
 
-Elle exclut Opportunities, les Ressources autres que les processus métier
-localisés, les modèles non internationalisés, aides, financements, formalités
-locales et partenaires strictement français.
+Elle exclut de la **première bêta** Opportunities, Resources/Business
+Processes, les recommandations contextuelles d'outils ou services, les
+modèles, aides, financements, formalités locales et partenaires strictement
+français. Business Processes est pertinent mais volumineux et très marqué par
+le contexte français actuel : il fera l'objet d'un lot ultérieur, après la
+parité du cœur. Les recommandations restent désactivées en anglais tant que le
+résolveur français n'est pas validé métier.
 
 - [ ] Réutiliser le parcours Action Plan français, son schéma, ses statuts, sa
   propriété entreprise, sa reprise et le même appel IA, avec génération en
   anglais naturel et `systemId` universels.
 - [ ] Publier `Tools` avec projections anglaises validées et filtrage serveur
-  par système, langue et marché.
+  par métier/famille, marché, pays et langue.
 - [ ] Employer le libellé naturel `Services`, jamais `Accompaniment`, et
   publier uniquement les prestations réellement
   réalisables à distance en anglais.
 - [ ] Conserver une seule prestation `Automatisation des processus et IA`
   (`Process automation and AI` en anglais) : l'IA est un levier intégré à
   l'automatisation, jamais une carte ou une offre d'accompagnement séparée.
-- [ ] Utiliser `Envoyer ma demande` / `Send my request` avec le système actuel,
-  sans paiement, panier, WhatsApp, marketplace ni dépendance à la future
-  messagerie par sujets.
+- [ ] Utiliser `Envoyer ma demande` / `Send my request` avec le même formulaire
+  et la même API. En anglais, le contact passe par la session et l'e-mail du
+  membre ; aucun numéro WhatsApp obligatoire. Le serveur retrouve l'identité,
+  l'entreprise, la disponibilité marché/pays et le forfait autorisé avant de
+  créer la demande. Il refuse tout service ou forfait indisponible et ne fait
+  jamais confiance à `localeCode`, `marketCode`, `countryCode`, prix ou
+  `companyId` envoyés seuls par le client.
 - [ ] Réutiliser Échanger comme `Talk to us`, avec les mêmes conversations,
   brouillons, statuts, dictée, administration, notifications et règles de
   clarification gratuite.
-- [ ] Réutiliser Academy et publier uniquement les huit fondamentaux anglais
-  validés, avec progression et caches séparés par langue/version.
+- [ ] Réutiliser Academy et publier les huit fondamentaux anglais validés avec
+  caches séparés par langue, marché et version.
 - [ ] Rendre Academy structurellement paritaire avec le français : mêmes cours,
   ordre, leçons, visuels, quiz et actions, avec uniquement les textes localisés.
+- [ ] Ne pas modifier la progression Academy pendant ce chantier. Conserver le
+  comportement persistant actuel indexé par
+  `courseId + localeCode + contentVersion`; ne partager, migrer ou fusionner
+  une progression entre langues qu'après une décision produit distincte.
 - [ ] Localiser Chiffres et Stratégie et exposer les mêmes données d'entreprise
   dans les deux langues, sans stockage parallèle ni restriction française.
-- [ ] Publier dans `Resources` uniquement `Business processes` pendant la
-  bêta : même moteur et mêmes identifiants que les processus français, sans
-  prévisionnel, CRM ni fallback français tant que ces modèles ne sont pas
-  internationalisés.
 - [ ] Ne laisser apparaître aucun texte, écran, fiche ou contenu français comme
   fallback dans le parcours anglais.
 
 ### Gates de reprise de l'anglais
 
-1. **Catalogue métier** : valider que les mêmes métiers de petites entreprises
-   que le français sont couverts, avec projections anglaises complètes.
+1. **Architecture et catalogue métier** : séparation locale/marché/pays/devise
+   validée côté serveur ; 115 `systemId` et 37 familles réutilisés sans doublon,
+   avec projections anglaises complètes pour le périmètre publié.
 2. **Services** : partager fiches, forfaits, prix et demandes ; afficher
    `Services`, jamais une modale anglaise simplifiée parallèle.
 3. **Pilotage** : rendre Chiffres et Stratégie disponibles en anglais avec les
    mêmes données entreprise.
 4. **Academy** : supprimer le catalogue anglais raccourci et les visuels
    génériques au profit d'une structure canonique traduite.
-5. **Resources** : limiter la bêta aux processus métier localisés.
+5. **Demandes et prix** : mêmes contrats et validations serveur, contact par
+   session/e-mail, aucun service indisponible et aucun prix fourni par le
+   navigateur accepté comme autorité.
 6. **Surfaces communes** : mutualiser les pages Plans, localiser PWA,
    confidentialité, erreurs et e-mails sans fallback français.
 7. **Recette publique** : E2E FR/EN de parité, Google, mobile/PWA, demandes,
@@ -186,14 +229,19 @@ locales et partenaires strictement français.
 ### Prix internationaux
 
 - [ ] Ne jamais modifier un prix à partir de la seule langue d'interface.
-- [ ] Conserver la valeur économique canonique en EUR et convertir vers la
-  devise du devis : `1 500 EUR` ne devient jamais nominalement `1 500 USD`.
-- [ ] Enregistrer côté serveur devise, taux, date du taux et montant converti,
-  puis verrouiller le montant pendant la durée de validité du devis.
+- [ ] Séparer la devise comptable de l'entreprise de la devise commerciale de
+  l'offre ou du devis. Conserver une valeur économique canonique en EUR et une
+  table de prix marché numérique, indépendante des dictionnaires.
+- [ ] Pour un prix converti, résoudre côté serveur devise, taux, date du taux,
+  règle d'arrondi et montant. `1 500 EUR` ne devient jamais nominalement
+  `1 500 USD`; le snapshot du devis/demande conserve montant, devise, taux et
+  date pendant sa validité.
 - [ ] Documenter l'arrondi et réviser les grilles converties ; ne pas stocker
   prix ou taux dans les dictionnaires de traduction.
 - [ ] Ne pas appliquer de majoration liée à l'anglais pendant la bêta. Une
   différence commerciale par marché exigera une décision tarifaire distincte.
+  Tant qu'aucune politique de change n'est approuvée, afficher et facturer en
+  EUR plutôt que d'improviser une conversion.
 
 ### Accompagnement — Automatisation des processus et IA
 
@@ -330,123 +378,108 @@ par Système.
     externe n'a pas été reprise ailleurs qu'ici : elle correspondait déjà à
     ce qui venait d'être décidé et livré juste avant (cf. note ci-dessus).
 
-### Audit du code au 16 août 2026
+### État réel du code au 20 août 2026
 
-Éléments existants à réutiliser :
+Déjà livré et à préserver :
 
-- `ActionPlanExperience` et `SavedActionPlanDetail` portent déjà les deux
-  expériences Plan ; `CustomerSpaceAccessForm` centralise l'authentification ;
-- `ActionPlanAcademyPanel` et `AcademyIndexClient` partagent déjà l'Académie et
-  son cache ;
-- `CoachingPanel` et l'administration Coaching portent déjà Échanger ;
-- `ServiceCallbackForm`, `/api/service-callback-request`, `service_requests`
-  et les notifications existantes fournissent un socle de demande à faire
-  évoluer, sans nouvelle administration ;
-- `/opportunites` existe comme page publique et les données affichées sont
-  limitées aux opportunités publiées.
+- [x] types et résolution initiale `localeCode/marketCode/countryCode`, cookie
+  de locale, `member_preferences`, routes `/en` sous flag/noindex et reprise
+  authentification/Google avec `returnTo` localisé ;
+- [x] `content_locale_code` et `market_code_at_creation` dans l'enveloppe du
+  plan ; lecture legacy française des plans antérieurs ; `latest` commun ;
+- [x] clés de cache Académie et Système incluant déjà la locale et le marché ;
+- [x] identité, session, entreprise, appartenance, stockage Plans,
+  Chiffres/Stratégie, conversations et demandes partagés ;
+- [x] progression Academy persistante et versionnée par locale ;
+- [x] Preview anglaise partielle permettant d'auditer les écarts, sans GO
+  public.
 
-Écarts réels confirmés avant runtime :
+Écarts confirmés à fermer :
 
-- [ ] Aucune couche i18n ni contexte `localeCode/marketCode` transversal
-  n'existe encore ; choisir une solution compatible avec le Next.js 16
-  installé après lecture de sa documentation locale.
-- [ ] Aucun profil ou document de préférences membre n'existe encore. Créer
-  `customer_preferences/{uid}` avec `schema_version`, `preferred_locale`,
-  `created_at` et `updated_at`, sans e-mail ni identité dupliquée. Sa rétention,
-  sa suppression et son audit suivent le membre, jamais l'entreprise ou une
-  appartenance particulière.
-- [ ] La navigation et les libellés applicatifs sont codés en français ;
-  `ActionPlanNavbar` contient encore Opportunités et suppose quatre colonnes.
-- [ ] Le prompt de génération est français et les contrats de génération et de
-  stockage ne transportent pas encore langue, marché, pays ou devise. Le
-  document Plan et son index compact ne possèdent pas encore
-  `contentLocaleCode` ni `marketCodeAtCreation`.
-- [ ] `getSafeCustomerReturnTo` valide aujourd'hui une liste de routes
-  françaises limitée. L'étendre de manière centralisée aux routes localisées
-  sans affaiblir la protection contre les redirections externes ; conserver le
-  contexte `/en` pendant Google et l'authentification e-mail.
-- [x] `/plans/latest` sélectionne déjà le dernier plan accessible sans filtre
-  de langue. Préserver cette requête et enrichir seulement l'index avec le
-  repère de langue.
-- [ ] Les champs de langue du plan appartiennent à son enveloppe Firestore et à
-  l'index compact, jamais au JSON `ActionPlan` produit par l'IA.
-- [ ] Le cache Académie est encore global et le cache Système n'est indexé que
-  par mode + `systemId`. Les payloads et projections doivent intégrer locale,
-  marché et version afin d'interdire tout mélange français/anglais.
-- [ ] Le lecteur Académie ne persiste actuellement aucune progression entre
-  deux visites. Ajouter `courseId` stable et `contentVersion` aux contrats et
-  caches, mais ne pas introduire une progression persistante dans English Beta
-  sans nouvelle décision produit.
-- [ ] Le manifeste PWA courant démarre sur la racine française. Projeter un
-  manifeste anglais avec `start_url=/en` en réutilisant le même runtime et les
-  mêmes assets, sans créer une deuxième application.
-- [ ] Les plans existants sans contexte international devront être lus comme
-  `fr/fr-fr` ; aucun backfill global ne sera exécuté avant audit et migration
-  idempotente.
-- [ ] `/opportunites` est encore présent dans la navigation applicative, le
-  footer et le sitemap, et sa metadata ne déclare pas encore `noindex`.
-- [ ] Le formulaire Service utilise déjà `Envoyer ma demande`, mais le
-  catalogue canonique et Coach business conservent des libellés de rappel ; le
-  parcours actuel demande entreprise et WhatsApp et ne rattache pas
-  systématiquement la demande à une session et une entreprise.
-- [ ] Les contenus, quiz, progression et caches Académie ne possèdent pas
-  encore le contrat éditorial localisé D-085.
-- [ ] Les dictionnaires, `html lang`, canoniques, `hreflang`, sitemap et
-  isolement des caches par langue/marché restent à construire.
+- [ ] le résolveur associe encore trop directement `en` à
+  `global-en-beta` et `fr` à `fr-fr`; accepter notamment `en + fr-fr` et
+  résoudre marché/pays/devise côté serveur à partir de l'entreprise et de la
+  configuration commerciale ;
+- [ ] l'entreprise est encore initialisée avec des valeurs France/EUR par
+  défaut et la devise applicative est trop étroitement limitée à EUR ; faire
+  évoluer ces contrats sans migration destructive ni confiance dans le client ;
+- [ ] la génération anglaise est limitée à dix activités numériques et les
+  combinaisons de contexte invalides peuvent retomber silencieusement sur le
+  français ; utiliser les 115 métiers/37 familles et échouer explicitement si
+  une projection publiée manque ;
+- [ ] Chiffres et Stratégie partagent bien leurs données mais leurs libellés,
+  formats, validations et devise sont encore français/EUR ; les localiser sans
+  second stockage ;
+- [ ] Academy anglaise utilise un catalogue simplifié (moins de leçons,
+  visuels génériques et actions absentes) ; la reconstruire à partir de la
+  structure canonique française sans changer la progression existante ;
+- [ ] les fiches Services anglaises et françaises divergent. Le serveur de
+  demande doit appliquer la matrice de disponibilité, retrouver le forfait et
+  le prix autorisés, puis localiser confirmation, notification et e-mail ;
+- [ ] les pages Plans/Nouveau plan et certaines surfaces anglaises restent
+  parallèles ou simplifiées ; les faire déléguer aux mêmes écrans métier ;
+- [ ] PWA, confidentialité, erreurs, e-mails, `html lang`, canonical,
+  `hreflang`, sitemap et tests anti-fallback restent à aligner.
 
-Ces écarts justifient les PR distinctes ci-dessous. Ils ne doivent pas être
-résolus par duplication du runtime français.
+Les anciens constats disant qu'aucune couche i18n, préférence membre,
+progression Academy ou donnée de langue sur les plans n'existait sont donc
+supersédés. Aucun backfill global n'est requis avant un audit ciblé ; toute
+lecture legacy reste déterministe et toute migration éventuelle idempotente.
 
-Carte initiale des fichiers et collisions à confirmer au début de chaque PR :
-
-- PR Accompagnement France : contrat tarifaire et forfaits, catalogue,
-  `ServicesCatalog`, `SystemSolutionsTab`, modales interceptées, `/sur-mesure`,
-  SEO, formulaire/API de demande, avantage mensuel et tests. Cette PR précède
-  toute projection anglaise de Services.
-- PR Opportunités : `ActionPlanNavbar.tsx`, `ActionPlanExperience.tsx`,
-  `SavedActionPlanDetail.tsx`, `Footer.tsx`, `sitemap.ts`, metadata de
-  `/opportunites`, contexte URL, compatibilité `?view=opportunities`, intentions
-  de retour et tests de navigation ; conserver les contrats de données et la
-  route directe.
-- PR fondation internationale : dépendance i18n choisie, `src/proxy.ts`,
-  layouts/métadonnées, helpers d'URL et `returnTo`, auth Google/e-mail, contexte
-  applicatif, préférence membre/cookie et types internationaux centraux.
-- PR Action Plan : contrat, génération, stockage, routes de génération,
-  brouillon client, `contentLocaleCode`, `marketCodeAtCreation`, index
-  multilingue et composants Plan. Cette PR partage des fichiers critiques avec
-  toute future évolution IA et doit rester seule sur cette zone.
-- PR Solutions/Talk : catalogue Services, formulaires et API de demande,
-  stockage/notifications existants, Coaching et dictionnaires. Ne pas y
-  introduire le modèle de sujets M ni le back office A.
-- PR Academy : catalogue, API, lecteur, quiz, progression, cache et composants
-  Académie. Préserver l'optimisation de cache déjà livrée.
-
-Avant chaque runtime : actualiser `origin/main`, inventorier worktrees et
-changements non committés, relire la documentation Next.js 16 locale, confirmer
-les migrations et indexes éventuels, puis présenter le diff prévu et les tests
-de la PR. Aucune de ces listes ne vaut GO code.
+Avant chaque runtime : actualiser `origin/main`, inventorier les worktrees et
+les changements non committés, lire la documentation Next.js 16 installée,
+confirmer les collisions, migrations et index, puis présenter le diff et les
+tests de la PR. Cette section ne vaut pas GO code.
 
 ### Séquencement D-085
 
 Chaque PR est autonome, compatible avec la France, vérifiée en Preview et non
-fusionnée sans GO explicite :
+fusionnée sans GO explicite. Ordre canonique **0 → 7** :
 
-1. PR documentaire : ADR, registre et backlog ;
-2. PR Opportunités : navigation masquée, route directe conservée ;
-3. PR fondation internationale cachée : contexte central, `/en` sous flag et
-   `noindex`, auth/returnTo/PWA/métadonnées compatibles ;
-4. PR Action Plan anglais de bout en bout ;
-5. PR Solutions, Services et Talk to us ;
-6. PR Academy anglaise ;
-7. PR de recette intégrée et activation publique sous GO Production séparé.
+0. **Contrat documentaire et audit** : doctrine partagée, état livré/restant,
+   inventaire des duplications et conditions de locale, aucune modification
+   runtime.
+1. **Fondation internationale** : séparation locale/contexte commercial,
+   résolution serveur, dictionnaires typés, feature/publication matrix, caches
+   et compatibilité legacy ; aucun changement visuel.
+2. **Écrans partagés** : shell, authentification, Plan, Mes plans/Nouveau plan,
+   Pilotage, Solutions, Services et Talk to us ; supprimer les copies
+   anglaises au lieu de les synchroniser manuellement.
+3. **Catalogue métier et génération** : 115 `systemId`, 37 familles,
+   projections/alias anglais, résolution métier et génération partagée. Dix
+   métiers peuvent valider l'architecture en Preview, mais la bêta publique
+   attend la couverture publiée complète.
+4. **Parité du cœur** : Action Plan, Key figures, Strategy, reprise,
+   autosauvegarde, My plans, Talk to us et e-mails contextuels, avec les mêmes
+   données d'entreprise.
+5. **Solutions, Services et prix** : Tools, projections, disponibilités,
+   formulaire session/e-mail, validation serveur, prix/devis et notifications.
+   Business Processes et recommandations restent hors de cette première bêta.
+6. **Academy paritaire** : structure canonique, traductions intégrales,
+   visuels/quiz/actions identiques, caches localisés ; progression inchangée.
+7. **Transverse, recette et activation** : PWA, confidentialité, SEO,
+   accessibilité, formats, E2E intégrés, Preview interne puis petit groupe de
+   testeurs. Le retrait du flag/noindex et l'activation SEO exigent un GO
+   Production séparé.
 
-Les tests partagés sont rejoués en `fr/fr-fr` et `en/global-en-beta` et
-couvrent TypeScript, ESLint, build, E2E desktop/mobile/PWA, clavier, lecteur
-d'écran, auth e-mail/Google, génération/réouverture, demandes dans
-l'administration, conversations, cours, caches, SEO et absence de fallback.
-Ils couvrent aussi l'ordre de résolution de langue, le choix manuel persistant,
-le retour Google sous `/en`, `latest` et l'index de plans multilingues,
-l'absence de traduction automatique et la langue des commandes IA et e-mails.
+Gates minimales avant activation publique :
+
+- mêmes composants, contrats, statuts et API en français et en anglais ;
+- tests au minimum en `fr + fr-fr`, `en + fr-fr` et
+  `en + global-en-beta`, dont auth e-mail/Google et `returnTo` sous `/en` ;
+- même entreprise, mêmes Plans, Chiffres et Stratégie dans les deux interfaces,
+  avec badge de langue du plan et aucune traduction automatique ;
+- 115 métiers canoniques et 37 familles, sans identifiant anglais parallèle ;
+- marché, pays, disponibilité, devise et prix résolus/validés côté serveur ;
+- aucun fallback français silencieux, y compris erreurs, e-mails, contenus
+  longs et fiches Services ;
+- Academy paritaire en cours/leçons/visuels/quiz/actions, cache isolé et
+  progression actuelle préservée ;
+- prix numériques hors dictionnaires, conversion explicite et snapshot de
+  devis/demande ;
+- E2E desktop, mobile, PWA, clavier et lecteur d'écran ; build, TypeScript,
+  ESLint et tests de structure/parité verts ;
+- `/en` reste flaggé et `noindex` jusqu'au GO public explicite.
 
 ### Décision de livraison resserrée du 17 août 2026
 
