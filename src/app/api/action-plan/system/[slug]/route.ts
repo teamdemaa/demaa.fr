@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
 import {
+  getActivePublishedRenderableSolutionSectionsForSystem,
   getActiveRenderableSolutionSectionsForSystem,
+  getLocalPublishedRenderableSolutionSectionsForSystem,
   getLocalRenderableSolutionSectionsForSystem,
 } from "@/lib/firebase-solution-registry-selection.server";
 import {
@@ -78,13 +80,17 @@ export async function GET(request: Request, { params }: RouteContext) {
       ? Promise.resolve(getLocalSystemDetailPageData(slug))
       : getSystemDetailPageData(slug),
     useLocalDemoData
-      ? getLocalRenderableSolutionSectionsForSystem(slug)
-      : getActiveRenderableSolutionSectionsForSystem(slug),
+      ? isEnglish
+        ? getLocalPublishedRenderableSolutionSectionsForSystem(slug)
+        : getLocalRenderableSolutionSectionsForSystem(slug)
+      : isEnglish
+        ? getActivePublishedRenderableSolutionSectionsForSystem(slug)
+        : getActiveRenderableSolutionSectionsForSystem(slug),
   ]);
 
   if (!data) {
     return NextResponse.json(
-      { error: "Système métier introuvable." },
+      { error: isEnglish ? "Business system not found." : "Système métier introuvable." },
       { status: 404 },
     );
   }
@@ -98,23 +104,27 @@ export async function GET(request: Request, { params }: RouteContext) {
   if (isEnglish && !englishSystem) {
     return NextResponse.json({ error: "Business system not found." }, { status: 404 });
   }
+  const englishSystemDescription = `Tools and support selected for ${englishSystem?.label}.`;
 
   return NextResponse.json(
     {
       system: isEnglish ? {
         ...data.system,
-        description: `Tools and support selected for ${englishSystem?.label}.`,
+        category: "Business system",
+        description: englishSystemDescription,
         name: englishSystem?.label ?? data.system.name,
+        shortDescription: englishSystemDescription,
+        tags: [],
       } : data.system,
       // The operational guide remains French-only until its canonical content
       // has a complete English projection. Never leak it through an English DTO.
       systeme: isEnglish ? null : data.detail.systeme,
       intro: isEnglish
-        ? `Tools and support selected for ${englishSystem?.label}.`
+        ? englishSystemDescription
         : buildSystemPageIntro(data),
       resources: isEnglish ? [] : getAvailableSystemTemplatesForSystem(slug),
       solutionSections: isEnglish
-        ? projectEnglishSolutionSections(visibleSolutionSections)
+        ? projectEnglishSolutionSections(visibleSolutionSections, internationalContext)
         : visibleSolutionSections,
       internationalContext: {
         localeCode: internationalContext.localeCode,
