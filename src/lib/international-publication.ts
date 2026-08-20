@@ -11,8 +11,13 @@ export type LocalizedProjection<TContent> = Readonly<{
   content: Readonly<TContent>;
   contentVersion: string;
   localeCode: InterfaceLocaleCode;
-  marketCodes: readonly MarketCode[];
   publicationStatus: PublicationStatus;
+}>;
+
+export type MarketAvailability = Readonly<{
+  canonicalId: string;
+  countryCodes?: readonly string[];
+  marketCodes: readonly MarketCode[];
 }>;
 
 export type LocaleDictionary<TValue> = Readonly<
@@ -25,13 +30,22 @@ export function defineLocaleDictionary<TValue>(
   return dictionary;
 }
 
-export function isProjectionPublishedForContext<TContent>(
+export function isProjectionPublishedForLocale<TContent>(
   projection: LocalizedProjection<TContent>,
-  context: Pick<InternationalContext, "localeCode" | "marketCode">,
+  localeCode: InternationalContext["localeCode"],
 ) {
   return projection.publicationStatus === "published"
-    && projection.localeCode === context.localeCode
-    && projection.marketCodes.includes(context.marketCode);
+    && projection.localeCode === localeCode;
+}
+
+export function isAvailableForContext(
+  availability: MarketAvailability,
+  context: Pick<InternationalContext, "countryCode" | "marketCode">,
+) {
+  if (!availability.marketCodes.includes(context.marketCode)) return false;
+  if (availability.countryCodes === undefined) return true;
+  return context.countryCode !== null
+    && availability.countryCodes.includes(context.countryCode);
 }
 
 export function buildInternationalCacheKey(input: {

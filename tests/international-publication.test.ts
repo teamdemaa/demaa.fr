@@ -2,8 +2,10 @@ import { describe, expect, it } from "vitest";
 import {
   buildInternationalCacheKey,
   defineLocaleDictionary,
-  isProjectionPublishedForContext,
+  isAvailableForContext,
+  isProjectionPublishedForLocale,
   type LocalizedProjection,
+  type MarketAvailability,
 } from "@/lib/international-publication";
 
 describe("international publication contracts", () => {
@@ -12,8 +14,12 @@ describe("international publication contracts", () => {
     content: { name: "Process automation and AI" },
     contentVersion: "1",
     localeCode: "en",
-    marketCodes: ["fr-fr", "global-en-beta"],
     publicationStatus: "published",
+  };
+
+  const availability: MarketAvailability = {
+    canonicalId: englishProjection.canonicalId,
+    marketCodes: ["fr-fr", "global-en-beta"],
   };
 
   it("requires one typed dictionary entry per interface locale", () => {
@@ -26,21 +32,47 @@ describe("international publication contracts", () => {
     });
   });
 
-  it("publishes only an explicit locale and market combination", () => {
-    expect(isProjectionPublishedForContext(englishProjection, {
-      localeCode: "en",
-      marketCode: "fr-fr",
-    })).toBe(true);
-    expect(isProjectionPublishedForContext(englishProjection, {
-      localeCode: "fr",
-      marketCode: "fr-fr",
-    })).toBe(false);
-    expect(isProjectionPublishedForContext({
+  it("keeps publication independent from commercial availability", () => {
+    expect(isProjectionPublishedForLocale(englishProjection, "en")).toBe(true);
+    expect(isProjectionPublishedForLocale(englishProjection, "fr")).toBe(false);
+    expect(isProjectionPublishedForLocale({
       ...englishProjection,
       publicationStatus: "draft",
-    }, {
-      localeCode: "en",
+    }, "en")).toBe(false);
+
+    expect(isAvailableForContext(availability, {
+      countryCode: null,
       marketCode: "global-en-beta",
+    })).toBe(true);
+    expect(isAvailableForContext(availability, {
+      countryCode: "FR",
+      marketCode: "fr-fr",
+    })).toBe(true);
+  });
+
+  it("can restrict availability to explicit countries without changing text", () => {
+    const franceOnlyAvailability: MarketAvailability = {
+      ...availability,
+      countryCodes: ["FR"],
+    };
+    expect(isAvailableForContext(franceOnlyAvailability, {
+      countryCode: "FR",
+      marketCode: "fr-fr",
+    })).toBe(true);
+    expect(isAvailableForContext(franceOnlyAvailability, {
+      countryCode: "GB",
+      marketCode: "fr-fr",
+    })).toBe(false);
+    expect(isAvailableForContext(franceOnlyAvailability, {
+      countryCode: null,
+      marketCode: "fr-fr",
+    })).toBe(false);
+    expect(isAvailableForContext({
+      ...availability,
+      countryCodes: [],
+    }, {
+      countryCode: "FR",
+      marketCode: "fr-fr",
     })).toBe(false);
   });
 
