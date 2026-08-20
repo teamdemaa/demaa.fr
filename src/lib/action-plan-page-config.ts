@@ -18,6 +18,22 @@ const localePublishedViews = {
   Record<InterfaceLocaleCode, readonly ActionPlanView[]>
 >;
 
+const contextSupportedViews = {
+  fr: {
+    "fr-fr": ["plan", "solutions", "academy", "opportunities"],
+    "global-en-beta": ["plan"],
+  },
+  en: {
+    "fr-fr": ["plan"],
+    "global-en-beta": ["plan", "solutions", "academy"],
+  },
+} as const satisfies Readonly<
+  Record<
+    InterfaceLocaleCode,
+    Readonly<Record<MarketCode, readonly ActionPlanView[]>>
+  >
+>;
+
 const copy = defineLocaleDictionary({
   fr: {
     spaceLabel: "Votre espace",
@@ -57,9 +73,13 @@ export function getActionPlanPageConfig(input: {
 }) {
   const publishedViews = localePublishedViews[input.localeCode];
   const availableViews = marketViews[input.marketCode];
+  const supportedViews = contextSupportedViews[input.localeCode][input.marketCode];
   const visibleViews = (availableViews as readonly ActionPlanView[]).filter(
-    (view) => (publishedViews as readonly ActionPlanView[]).includes(view),
+    (view) => (publishedViews as readonly ActionPlanView[]).includes(view)
+      && (supportedViews as readonly ActionPlanView[]).includes(view),
   );
+  const showCoaching = (input.localeCode === "fr" && input.marketCode === "fr-fr")
+    || (input.localeCode === "en" && input.marketCode === "global-en-beta");
 
   return {
     copy: copy[input.localeCode],
@@ -74,7 +94,7 @@ export function getActionPlanPageConfig(input: {
         `/plans/${encodeURIComponent(id)}`,
       ),
     },
-    showCoaching: true,
+    showCoaching,
     visibleViews,
   } as const;
 }

@@ -21,15 +21,19 @@ describe("shared action plan page configuration", () => {
       marketCode: "fr-fr",
     }).visibleViews).toEqual(["plan", "solutions", "academy", "opportunities"]);
 
-    expect(getActionPlanPageConfig({
+    const englishInFrance = getActionPlanPageConfig({
       localeCode: "en",
       marketCode: "fr-fr",
-    }).visibleViews).toEqual(["plan", "solutions", "academy"]);
+    });
+    expect(englishInFrance.visibleViews).toEqual(["plan"]);
+    expect(englishInFrance.showCoaching).toBe(false);
 
-    expect(getActionPlanPageConfig({
+    const englishBeta = getActionPlanPageConfig({
       localeCode: "en",
       marketCode: "global-en-beta",
-    }).visibleViews).toEqual(["plan", "solutions", "academy"]);
+    });
+    expect(englishBeta.visibleViews).toEqual(["plan", "solutions", "academy"]);
+    expect(englishBeta.showCoaching).toBe(true);
   });
 
   it("falls back to the plan view when a surface is not published", () => {
