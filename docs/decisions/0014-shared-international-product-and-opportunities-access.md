@@ -1,7 +1,7 @@
 # ADR 0014 — Produit international commun et accès Opportunités par lien
 
 Date : 16 août 2026
-Statut : validé, runtime non commencé
+Statut : validé, socle partiel en Preview, activation publique en pause
 Décision : D-085
 
 ## Contexte
@@ -184,7 +184,28 @@ anglais ne doit ramener silencieusement l'utilisateur à la racine française.
 
 ## Périmètre English Beta
 
-La bêta contient :
+### Amendement du 20 août 2026 — pause et parité métier
+
+`/en` ne doit pas être activé en Production avant un nouveau GO explicite.
+L'implémentation Preview partielle a révélé des variantes parallèles dans
+Academy, Services et Pilotage. Elles doivent être remplacées par les mêmes
+structures fonctionnelles que le français, uniquement localisées.
+
+La cible métier est également corrigée : l'anglais doit couvrir les mêmes
+métiers de petites entreprises que le français. La liste initiale centrée sur
+SaaS, agences digitales, consultants et activités en ligne est supersédée.
+Les `systemId` restent universels et leur disponibilité résulte d'une matrice
+explicite langue/marché ; la langue seule ne crée pas un nouveau segment.
+
+Le libellé commercial anglais est `Services`, jamais `Accompaniment`.
+Chiffres et Stratégie partagent les données entreprise entre langues. Academy
+conserve la même structure, les mêmes leçons, visuels, quiz et actions. Dans
+Resources, seule la projection localisée des processus métier est prévue pour
+la bêta. Le prix économique reste référencé en EUR puis converti dans la devise
+du devis avec taux, date et montant verrouillés ; aucun même montant nominal et
+aucune majoration due uniquement à l'anglais.
+
+La bêta cible contient, après fermeture de ces gates :
 
 - Action Plan ;
 - Solutions ;
@@ -216,14 +237,14 @@ Le moteur partagé reçoit au minimum `localeCode`, `marketCode` et la liste
 serveur `supportedSystemIds`. Il génère en anglais naturel dans le même appel et
 ne duplique aucun processus métier.
 
-Le premier périmètre réutilise des `systemId` universels pour SaaS, agences web,
-marketing, SEO et acquisition, consultants indépendants et data/BI,
-freelances B2B, studios branding/design et formation en ligne. Seuls leurs
-libellés, alias et projections anglaises sont ajoutés.
+Le périmètre réutilise les `systemId` universels du catalogue français des
+petites entreprises. Seuls leurs libellés, alias, contenus et disponibilités
+par marché sont projetés en anglais après validation explicite.
 
 ### Solutions
 
-Solutions affiche uniquement `Tools` et `Accompaniment`.
+Solutions affiche `Tools`, `Services` et, dans la bêta, la seule ressource
+`Business processes` lorsqu'elle est localisée sans fallback français.
 
 Les outils réutilisent le registre existant et une projection éditoriale par
 langue et marché : `localeCode`, `marketCodes`, nom, description, usage,
@@ -329,7 +350,7 @@ fusionnée sans GO explicite :
 3. masquage de navigation Opportunités et accès direct conservé ;
 4. fondation internationale cachée et `/en` sous flag/noindex ;
 5. Action Plan anglais complet ;
-6. Solutions, Accompaniment et Talk to us ;
+6. Solutions, Services et Talk to us ;
 7. Academy anglaise ;
 8. recette English Beta intégrée puis activation publique sous GO séparé.
 

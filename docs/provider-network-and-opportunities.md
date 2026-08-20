@@ -42,7 +42,11 @@ permanent conserve `requestType: provider_profile_submission`.
 
 ## Gestion quotidienne
 
-`/admin/opportunites` permet de créer, fermer ou rouvrir une opportunité avec la variable privée `OPPORTUNITIES_ADMIN_SECRET`. Cet écran ne gère ni matching ni publication automatique de prestataires.
+`/admin/opportunites` permet de créer, fermer ou rouvrir une opportunité. Il
+réutilise la session Demaa et réserve l'accès aux emails déclarés dans la
+variable serveur `DEMAA_ADMIN_EMAILS` ; aucun secret propre à la console n'est
+transmis par le navigateur. Cet écran ne gère ni matching ni publication
+automatique de prestataires.
 
 Une carte placée dans un système représente une expertise générique, jamais une
 personne. La sélection de la personne reste manuelle après réception du besoin.
