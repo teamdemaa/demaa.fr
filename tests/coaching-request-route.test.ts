@@ -191,6 +191,14 @@ describe("coaching request route", () => {
     }));
   });
 
+  it("rejects an unsupported request locale instead of falling back to French", async () => {
+    const response = await POST(request({ localeCode: "de" }));
+
+    expect(response.status).toBe(400);
+    expect(mocks.resolveAuthenticatedInternationalContext).not.toHaveBeenCalled();
+    expect(mocks.appendCustomerCoachingMessage).not.toHaveBeenCalled();
+  });
+
   it("refuses a coaching request without an authenticated session", async () => {
     mocks.requireCurrentCustomerIdentity.mockResolvedValue({
       identity: null,

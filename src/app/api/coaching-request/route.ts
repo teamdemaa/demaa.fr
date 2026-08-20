@@ -106,7 +106,15 @@ export async function POST(request: Request) {
     const draftToken = normalizeText(data?.draftToken, 80);
     const offer = normalizeText(data?.offer, 30);
     const idempotencyKey = normalizeIdempotencyKey(data?.idempotencyKey);
-    const localeCode = normalizeInterfaceLocaleCode(data?.localeCode) ?? "fr";
+    const localeCode = data?.localeCode === undefined
+      ? "fr"
+      : normalizeInterfaceLocaleCode(data.localeCode);
+    if (!localeCode) {
+      return NextResponse.json(
+        { error: "Contexte international invalide." },
+        { status: 400, headers: PRIVATE_NO_STORE_HEADERS },
+      );
+    }
 
     const isMessage = requestKind === "message";
     const isAccompaniment = requestKind === "accompaniment";
