@@ -476,8 +476,14 @@ Déjà livré et à préserver :
 - [x] La PWA, la confidentialité, les erreurs et les métadonnées transverses
   sont localisées : manifeste anglais partagé et flaggé, invitation
   d'installation traduite, politique `/en/privacy`, erreurs de segment,
-  `html lang`, canonical et `hreflang`. `/en` reste `noindex` et absent du
+  mise à jour de `html lang` avant hydratation et pendant la navigation,
+  canonical et `hreflang`. `/en` reste `noindex` et absent du
   sitemap tant que la bêta n'est pas publique.
+- [ ] Avant l'ouverture publique, rendre également le `lang="en"` correct dans
+  le HTML initial renvoyé par le serveur. La tentative de lecture de header
+  dans le layout racine a été rejetée parce qu'elle rendait dynamiques les
+  pages françaises statiques. Résoudre ce point par l'architecture des routes
+  localisées, sans dégrader le rendu statique/SEO français.
 - [x] Les parcours anglais actuellement publiables n'envoient pas d'e-mail
   client automatique : ils conservent la langue de la demande et notifient
   l'équipe. Aucun e-mail français n'est donc utilisé comme fallback silencieux.
