@@ -2,6 +2,12 @@ import "client-only";
 
 import { track } from "@vercel/analytics";
 import { getCookieConsentPreferences } from "@/lib/cookie-consent";
+import {
+  TOOL_OUTBOUND_CAMPAIGN,
+  type ToolOutboundSurface,
+} from "@/lib/tool-outbound-attribution";
+
+const SAFE_ANALYTICS_SLUG = /^[A-Za-z0-9_-]{1,120}$/;
 
 export function trackKitOpen(input: {
   kitName: string;
@@ -140,5 +146,32 @@ export function trackSystemSolutionEvent(
     window.gtag?.("event", eventName, properties);
   } catch {
     // Les parcours restent utilisables même si la mesure est indisponible.
+  }
+}
+
+export function trackToolOutboundClick(input: {
+  surface: ToolOutboundSurface;
+  systemSlug?: string;
+  toolSlug: string;
+}) {
+  if (typeof window === "undefined") return;
+  if (!SAFE_ANALYTICS_SLUG.test(input.toolSlug)) return;
+  if (input.systemSlug && !SAFE_ANALYTICS_SLUG.test(input.systemSlug)) return;
+
+  const preferences = getCookieConsentPreferences();
+  if (!preferences?.analytics) return;
+
+  const properties = {
+    campaign: TOOL_OUTBOUND_CAMPAIGN,
+    surface: input.surface,
+    system_slug: input.systemSlug || "none",
+    tool_slug: input.toolSlug,
+  };
+
+  try {
+    track("tool_outbound_clicked", properties);
+    window.gtag?.("event", "tool_outbound_clicked", properties);
+  } catch {
+    // Un échec de mesure ne doit jamais empêcher l'ouverture de l'outil.
   }
 }

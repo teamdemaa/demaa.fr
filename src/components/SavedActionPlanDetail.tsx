@@ -165,6 +165,7 @@ export default function SavedActionPlanDetail({
         : appContext.systemId,
       systemTab: view === "solutions" ? "solutions" : appContext.systemTab,
       solutionResourceSlug: undefined,
+      solutionEntrySource: undefined,
     });
   }
 
@@ -578,6 +579,7 @@ export default function SavedActionPlanDetail({
                 systemId,
                 systemTab: "solutions",
                 solutionResourceSlug: resourceSlug,
+                solutionEntrySource: "action_recommendation",
               })}
               localeCode={interfaceLocaleCode}
               contentLocaleCode={contentLocaleCode}
@@ -598,9 +600,15 @@ export default function SavedActionPlanDetail({
               systemId,
               systemTab: "solutions",
               solutionResourceSlug: undefined,
+              solutionEntrySource: undefined,
             })}
             workspace={workspace}
             onWorkspaceChange={setWorkspace}
+            toolOutboundSurface={
+              appContext.solutionEntrySource === "action_recommendation"
+                ? "action_recommendation"
+                : "solutions"
+            }
             initialResourceSlug={appContext.solutionResourceSlug}
             onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
               ...appContext,
