@@ -28,6 +28,26 @@ import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 
 export const runtime = "nodejs";
 
+const PRIVATE_NO_STORE_HEADERS = {
+  "Cache-Control": "private, no-store, max-age=0",
+  Pragma: "no-cache",
+} as const;
+
+function withPrivateNoStore<T extends NextResponse>(response: T) {
+  for (const [name, value] of Object.entries(PRIVATE_NO_STORE_HEADERS)) {
+    response.headers.set(name, value);
+  }
+  return response;
+}
+
+function privateJson(body: unknown, init?: ResponseInit) {
+  const headers = new Headers(init?.headers);
+  for (const [name, value] of Object.entries(PRIVATE_NO_STORE_HEADERS)) {
+    headers.set(name, value);
+  }
+  return NextResponse.json(body, { ...init, headers });
+}
+
 type CreateBody = {
   cadence?: unknown;
   category?: unknown;
@@ -114,16 +134,31 @@ async function normalizeOpportunityFields(body: CreateBody | null) {
   };
 }
 
-async function guard(request: Request, requireOrigin: boolean) {
+async function guard(
+  request: Request,
+  options: {
+    keyPrefix: string;
+    limit: number;
+    requireOrigin: boolean;
+  },
+) {
   const blockedHost = enforceAllowedHost(request);
-  if (blockedHost) return blockedHost;
-  if (requireOrigin) {
+  if (blockedHost) return withPrivateNoStore(blockedHost);
+  if (options.requireOrigin) {
     const blockedOrigin = enforceSameOrigin(request);
-    if (blockedOrigin) return blockedOrigin;
+    if (blockedOrigin) return withPrivateNoStore(blockedOrigin);
   }
+
+  const limited = await enforceRateLimit(request, {
+    keyPrefix: options.keyPrefix,
+    limit: options.limit,
+    windowMs: 60 * 60 * 1000,
+  });
+  if (limited) return withPrivateNoStore(limited);
+
   const identity = await getCurrentAdminIdentity();
   if (!identity) {
-    return NextResponse.json({ error: "Accès refusé." }, { status: 401 });
+    return privateJson({ error: "Accès refusé." }, { status: 401 });
   }
   return null;
 }
@@ -140,35 +175,31 @@ function buildOpportunityId(title: string) {
 }
 
 export async function GET(request: Request) {
-  const blocked = await guard(request, false);
-  if (blocked) return blocked;
-  const limited = await enforceRateLimit(request, {
+  const blocked = await guard(request, {
     keyPrefix: "opportunity-admin-read",
     limit: 180,
-    windowMs: 60 * 60 * 1000,
+    requireOrigin: false,
   });
-  if (limited) return limited;
+  if (blocked) return blocked;
   const opportunities = (await getAllOpportunities())
     .sort((left, right) => Date.parse(right.createdAt) - Date.parse(left.createdAt));
-  return NextResponse.json({ opportunities });
+  return privateJson({ opportunities });
 }
 
 export async function POST(request: Request) {
   try {
-    const blocked = await guard(request, true);
-    if (blocked) return blocked;
-    const limited = await enforceRateLimit(request, {
+    const blocked = await guard(request, {
       keyPrefix: "opportunity-admin-create",
       limit: 12,
-      windowMs: 60 * 60 * 1000,
+      requireOrigin: true,
     });
-    if (limited) return limited;
+    if (blocked) return blocked;
 
     const { data: body, response } = await readJsonBody<CreateBody>(request);
-    if (response) return response;
+    if (response) return withPrivateNoStore(response);
     const { fields, valid } = await normalizeOpportunityFields(body);
     if (!valid) {
-      return NextResponse.json({ error: "Les informations de l’opportunité sont incomplètes." }, { status: 400 });
+      return privateJson({ error: "Les informations de l’opportunité sont incomplètes." }, { status: 400 });
     }
 
     const now = new Date().toISOString();
@@ -181,23 +212,27 @@ export async function POST(request: Request) {
     };
     await createOpportunity(opportunity);
     revalidateTag("provider-network-opportunities", { expire: 0 });
-    return NextResponse.json({ ok: true, opportunity }, { status: 201 });
+    return privateJson({ ok: true, opportunity }, { status: 201 });
   } catch (error) {
     logOperationalError("opportunities.admin.create_failed", error);
-    return NextResponse.json({ error: "Impossible de créer l’opportunité." }, { status: 500 });
+    return privateJson({ error: "Impossible de créer l’opportunité." }, { status: 500 });
   }
 }
 
 export async function PATCH(request: Request) {
   try {
-    const blocked = await guard(request, true);
+    const blocked = await guard(request, {
+      keyPrefix: "opportunity-admin-update",
+      limit: 60,
+      requireOrigin: true,
+    });
     if (blocked) return blocked;
     const { data: body, response } = await readJsonBody<UpdateBody>(request);
-    if (response) return response;
+    if (response) return withPrivateNoStore(response);
     const opportunityId = normalizeText(body?.opportunityId, 120);
     const status = normalizeText(body?.status, 20) as OpportunityStatus;
     if (!opportunityId) {
-      return NextResponse.json({ error: "Modification invalide." }, { status: 400 });
+      return privateJson({ error: "Modification invalide." }, { status: 400 });
     }
 
     const isContentUpdate = body?.title !== undefined;
@@ -206,7 +241,7 @@ export async function PATCH(request: Request) {
       const existing = await getOpportunityById(opportunityId);
       const { fields, valid } = await normalizeOpportunityFields(body);
       if (!existing || !valid) {
-        return NextResponse.json({ error: "Modification invalide." }, { status: 400 });
+        return privateJson({ error: "Modification invalide." }, { status: 400 });
       }
       updated = await updateOpportunity({
         ...existing,
@@ -215,17 +250,17 @@ export async function PATCH(request: Request) {
       });
     } else {
       if (!["open", "closed"].includes(status)) {
-        return NextResponse.json({ error: "Modification invalide." }, { status: 400 });
+        return privateJson({ error: "Modification invalide." }, { status: 400 });
       }
       updated = await updateOpportunityStatus(opportunityId, status);
     }
     if (!updated) {
-      return NextResponse.json({ error: "Opportunité introuvable." }, { status: 404 });
+      return privateJson({ error: "Opportunité introuvable." }, { status: 404 });
     }
     revalidateTag("provider-network-opportunities", { expire: 0 });
-    return NextResponse.json({ ok: true });
+    return privateJson({ ok: true });
   } catch (error) {
     logOperationalError("opportunities.admin.update_failed", error);
-    return NextResponse.json({ error: "Impossible de modifier l’opportunité." }, { status: 500 });
+    return privateJson({ error: "Impossible de modifier l’opportunité." }, { status: 500 });
   }
 }
