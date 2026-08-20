@@ -12,31 +12,36 @@ import {
   companyMetricCentsToInput,
   getCompanyMetricEntryDraft,
 } from "@/lib/company-metric-entry";
+import { getCompanyPilotageUiCopy } from "@/lib/company-pilotage-ui-copy";
+import type { InterfaceLocaleCode } from "@/lib/international-context";
 
-function inputToCents(value: string, allowNegative: boolean) {
+function inputToCents(value: string, allowNegative: boolean, messages: { decimals: string; invalidAmount: string; nonNegative: string }) {
   const normalized = value.trim().replace(/\s/g, "").replace(",", ".");
   if (!normalized) return null;
-  if (!/^-?\d+(?:\.\d{1,2})?$/.test(normalized)) throw new Error("Saisissez un montant avec deux décimales maximum.");
+  if (!/^-?\d+(?:\.\d{1,2})?$/.test(normalized)) throw new Error(messages.decimals);
   const cents = Math.round(Number(normalized) * 100);
   if (!Number.isSafeInteger(cents) || (!allowNegative && cents < 0)) {
-    throw new Error(allowNegative ? "Montant invalide." : "Ce montant ne peut pas être négatif.");
+    throw new Error(allowNegative ? messages.invalidAmount : messages.nonNegative);
   }
   return cents;
 }
 
 export default function CompanyMetricEntryDialog({
+  localeCode,
   open,
   initialPeriod,
   metricsByPeriod,
   onClose,
   onSaved,
 }: {
+  localeCode: InterfaceLocaleCode;
   open: boolean;
   initialPeriod: CompanyMonth;
   metricsByPeriod: ReadonlyMap<CompanyMonth, CompanyMonthlyMetric>;
   onClose: () => void;
   onSaved: (metric: CompanyMonthlyMetric) => void;
 }) {
+  const copy = getCompanyPilotageUiCopy(localeCode).metricDialog;
   const id = useId();
   const [period, setPeriod] = useState(initialPeriod);
   const [revenue, setRevenue] = useState("");
@@ -70,7 +75,7 @@ export default function CompanyMetricEntryDialog({
     setError(null);
     const parsedPeriod = companyMonthSchema.safeParse(period);
     if (!parsedPeriod.success) {
-      setError("Choisissez un mois valide.");
+      setError(copy.invalidMonth);
       return;
     }
     try {
@@ -80,22 +85,22 @@ export default function CompanyMetricEntryDialog({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           expectedRevision,
-          revenueCents: inputToCents(revenue, false),
-          expensesCents: inputToCents(expenses, false),
-          cashBalanceCents: inputToCents(cash, true),
+          revenueCents: inputToCents(revenue, false, copy),
+          expensesCents: inputToCents(expenses, false, copy),
+          cashBalanceCents: inputToCents(cash, true, copy),
         }),
       });
       const body = await response.json().catch(() => null) as { metric?: CompanyMonthlyMetric; error?: string; code?: string; current?: CompanyMonthlyMetric | null } | null;
       if (response.status === 409 && body?.code === "revision_conflict" && body.current) {
         setConflictCurrent(body.current);
-        setError(body.error || "Ce mois a été modifié ailleurs.");
+        setError(localeCode === "fr" && body.error ? body.error : copy.conflict);
         return;
       }
-      if (!response.ok || !body?.metric) throw new Error(body?.error || "Impossible d’enregistrer ce mois.");
+      if (!response.ok || !body?.metric) throw new Error(localeCode === "fr" && body?.error ? body.error : copy.saveError);
       onSaved(body.metric);
       onClose();
     } catch (saveError) {
-      setError(saveError instanceof Error ? saveError.message : "Impossible d’enregistrer ce mois.");
+      setError(saveError instanceof Error ? saveError.message : copy.saveError);
     } finally {
       setSaving(false);
     }
@@ -107,20 +112,20 @@ export default function CompanyMetricEntryDialog({
       <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={`${id}-title`} tabIndex={-1} className="max-h-[92dvh] w-full max-w-lg overflow-y-auto rounded-2xl bg-dema-paper p-5 shadow-2xl outline-none sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 id={`${id}-title`} className="text-xl font-semibold text-dema-ink">Saisir les chiffres du mois</h2>
-            <p className="mt-1 text-sm text-dema-muted">Les montants sont enregistrés en euros, au niveau de l’entreprise.</p>
+            <h2 id={`${id}-title`} className="text-xl font-semibold text-dema-ink">{copy.title}</h2>
+            <p className="mt-1 text-sm text-dema-muted">{copy.description}</p>
           </div>
-          <button data-dialog-initial-focus type="button" onClick={onClose} aria-label="Fermer" className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line text-dema-forest"><X className="h-4 w-4" aria-hidden="true" /></button>
+          <button data-dialog-initial-focus type="button" onClick={onClose} aria-label={copy.close} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line text-dema-forest"><X className="h-4 w-4" aria-hidden="true" /></button>
         </div>
         <form className="mt-6 space-y-4" onSubmit={submit}>
-          <label className="block text-sm font-medium text-dema-ink">Mois<input type="month" value={period} onChange={(event) => { const nextPeriod = event.target.value as CompanyMonth; const draft = getCompanyMetricEntryDraft(nextPeriod, metricsByPeriod); setPeriod(draft.period); setRevenue(draft.revenue); setExpenses(draft.expenses); setCash(draft.cash); setExpectedRevision(draft.expectedRevision); setConflictCurrent(null); setError(null); }} className={inputClass} /></label>
-          <label className="block text-sm font-medium text-dema-ink">Chiffre d’affaires (€)<input inputMode="decimal" value={revenue} onChange={(event) => setRevenue(event.target.value)} placeholder="0,00" className={inputClass} /></label>
-          <label className="block text-sm font-medium text-dema-ink">Charges (€)<input inputMode="decimal" value={expenses} onChange={(event) => setExpenses(event.target.value)} placeholder="0,00" className={inputClass} /></label>
-          <label className="block text-sm font-medium text-dema-ink">Trésorerie en fin de mois (€)<input inputMode="decimal" value={cash} onChange={(event) => setCash(event.target.value)} placeholder="0,00" className={inputClass} /></label>
-          {error ? <div role="alert" className="rounded-xl bg-red-50 px-3 py-2 text-sm text-red-700"><p>{error}</p>{conflictCurrent ? <div className="mt-2 flex flex-wrap gap-3"><button type="button" className="font-semibold underline" onClick={() => { setExpectedRevision(conflictCurrent.revision); setConflictCurrent(null); setError(null); }}>Garder mes valeurs</button><button type="button" className="font-semibold underline" onClick={() => { setRevenue(companyMetricCentsToInput(conflictCurrent.revenueCents)); setExpenses(companyMetricCentsToInput(conflictCurrent.expensesCents)); setCash(companyMetricCentsToInput(conflictCurrent.cashBalanceCents)); setExpectedRevision(conflictCurrent.revision); setConflictCurrent(null); setError(null); }}>Utiliser la version récente</button></div> : <button type="button" className="mt-1 font-semibold underline" onClick={() => setError(null)}>Réessayer</button>}</div> : null}
+          <label className="block text-sm font-medium text-dema-ink">{copy.month}<input type="month" value={period} onChange={(event) => { const nextPeriod = event.target.value as CompanyMonth; const draft = getCompanyMetricEntryDraft(nextPeriod, metricsByPeriod); setPeriod(draft.period); setRevenue(draft.revenue); setExpenses(draft.expenses); setCash(draft.cash); setExpectedRevision(draft.expectedRevision); setConflictCurrent(null); setError(null); }} className={inputClass} /></label>
+          <label className="block text-sm font-medium text-dema-ink">{copy.revenue}<input inputMode="decimal" value={revenue} onChange={(event) => setRevenue(event.target.value)} placeholder={copy.placeholder} className={inputClass} /></label>
+          <label className="block text-sm font-medium text-dema-ink">{copy.expenses}<input inputMode="decimal" value={expenses} onChange={(event) => setExpenses(event.target.value)} placeholder={copy.placeholder} className={inputClass} /></label>
+          <label className="block text-sm font-medium text-dema-ink">{copy.cash}<input inputMode="decimal" value={cash} onChange={(event) => setCash(event.target.value)} placeholder={copy.placeholder} className={inputClass} /></label>
+          {error ? <div role="alert" className="rounded-xl bg-red-50 px-3 py-2 text-sm text-red-700"><p>{error}</p>{conflictCurrent ? <div className="mt-2 flex flex-wrap gap-3"><button type="button" className="font-semibold underline" onClick={() => { setExpectedRevision(conflictCurrent.revision); setConflictCurrent(null); setError(null); }}>{copy.keep}</button><button type="button" className="font-semibold underline" onClick={() => { setRevenue(companyMetricCentsToInput(conflictCurrent.revenueCents)); setExpenses(companyMetricCentsToInput(conflictCurrent.expensesCents)); setCash(companyMetricCentsToInput(conflictCurrent.cashBalanceCents)); setExpectedRevision(conflictCurrent.revision); setConflictCurrent(null); setError(null); }}>{copy.recent}</button></div> : <button type="button" className="mt-1 font-semibold underline" onClick={() => setError(null)}>{copy.retry}</button>}</div> : null}
           <button disabled={saving} type="submit" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-white disabled:opacity-60">
             {saving ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-            {metricsByPeriod.has(period) ? "Mettre à jour" : "Ajouter"}
+            {metricsByPeriod.has(period) ? copy.update : copy.add}
           </button>
         </form>
       </div>

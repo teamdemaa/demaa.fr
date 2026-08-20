@@ -1,14 +1,18 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { COMPANY_STRATEGY_PILLARS } from "@/lib/company-pilotage-contract";
+import { COMPANY_STRATEGY_PILLAR_KEYS } from "@/lib/company-pilotage-contract";
+import {
+  formatCompanyMetricCents,
+  formatCompanyMonth,
+  getCompanyPilotageUiCopy,
+} from "@/lib/company-pilotage-ui-copy";
 const source = (file: string) => readFileSync(new URL(`../src/components/${file}`, import.meta.url), "utf8");
 
 describe("company Pilotage UI contract", () => {
   it("owns one internal navigation with Strategy visible", () => {
     const owner = source("CompanyPilotagePanel.tsx");
     const navbar = source("ActionPlanNavbar.tsx");
-    expect(owner).toContain("Plan d’action");
-    expect(owner).toContain("Chiffres");
+    expect(owner).toContain("getCompanyPilotageUiCopy");
     expect(owner).toContain(
       'COMPANY_STRATEGY_VISIBLE,\n  type ActionPlanSection,\n} from "@/lib/action-plan-app-context"',
     );
@@ -22,12 +26,12 @@ describe("company Pilotage UI contract", () => {
   it("keeps explicit metric saves and serial Strategy autosaves with recovery", () => {
     const figures = source("CompanyFiguresPanel.tsx") + source("CompanyMetricEntryDialog.tsx");
     const strategy = source("CompanyStrategyPanel.tsx") + source("CompanyStrategyPillar.tsx");
-    expect(figures).toContain("Mettre à jour");
+    expect(figures).toContain("copy.update");
     expect(figures).not.toContain("setTimeout(() =>");
     expect(strategy).toContain("}, 700)");
-    expect(strategy).toContain("Réessayer");
-    expect(strategy).toContain("Garder ma version");
-    expect(strategy).toContain("Utiliser la version récente");
+    expect(strategy).toContain("copy.retry");
+    expect(strategy).toContain("copy.keep");
+    expect(strategy).toContain("copy.recent");
     expect(strategy).toContain('aria-live="polite"');
   });
 
@@ -58,13 +62,32 @@ describe("company Pilotage UI contract", () => {
   });
 
   it("contains exactly four pillars and twelve questions in the canonical contract", () => {
-    const contract = readFileSync(new URL("../src/lib/company-pilotage-contract.ts", import.meta.url), "utf8");
-    for (const framing of ["Vos ambitions, vos forces et vos contraintes.", "Pour qui et avec quel angle ?", "Quel résultat est vendu et comment gagne-t-on de l’argent ?", "Comment attirer, convertir et fidéliser ?"]) expect(contract).toContain(framing);
-    expect(COMPANY_STRATEGY_PILLARS).toHaveLength(4);
-    expect(COMPANY_STRATEGY_PILLARS.reduce((count, { questions }) => count + questions.length, 0)).toBe(12);
-    expect(COMPANY_STRATEGY_PILLARS.every(({ questions }) =>
+    const fr = getCompanyPilotageUiCopy("fr").pillars;
+    const en = getCompanyPilotageUiCopy("en").pillars;
+    expect(COMPANY_STRATEGY_PILLAR_KEYS).toHaveLength(4);
+    expect(COMPANY_STRATEGY_PILLAR_KEYS.reduce((count, { questions }) => count + questions.length, 0)).toBe(12);
+    expect(fr.map(({ key }) => key)).toEqual(COMPANY_STRATEGY_PILLAR_KEYS.map(({ key }) => key));
+    expect(en.map(({ key }) => key)).toEqual(COMPANY_STRATEGY_PILLAR_KEYS.map(({ key }) => key));
+    expect(fr.every(({ questions }) =>
       questions.every((question) => !("placeholder" in question))
     )).toBe(true);
+    expect(en.flatMap(({ questions }) => questions.map(({ key }) => key))).toEqual(
+      fr.flatMap(({ questions }) => questions.map(({ key }) => key)),
+    );
+  });
+
+  it("localizes Pilotage without changing its EUR company data", () => {
+    expect(formatCompanyMonth("2026-08", "fr")).toBe("Août 2026");
+    expect(formatCompanyMonth("2026-08", "en")).toBe("August 2026");
+    expect(formatCompanyMetricCents(150_000, "fr")).toContain("1 500");
+    expect(formatCompanyMetricCents(150_000, "en")).toContain("1,500");
+    expect(formatCompanyMetricCents(150_000, "fr")).toContain("€");
+    expect(formatCompanyMetricCents(150_000, "en")).toContain("€");
+    expect(getCompanyPilotageUiCopy("en").sections).toEqual({
+      actions: "Action plan",
+      figures: "Key figures",
+      strategy: "Strategy",
+    });
   });
 
   it("keeps Strategy focused on its content and makes cycle creation explicit", () => {
@@ -74,9 +97,11 @@ describe("company Pilotage UI contract", () => {
     expect(panel).not.toContain("Cycle actuel ·");
     expect(panel).not.toContain('aria-expanded={historyOpen}');
     expect(panel).toContain("<CompanyStrategyHistory");
-    expect(dialog).toContain("Prochaine période ·");
+    expect(dialog).toContain("copy.nextPeriod");
     expect(pillar).not.toContain("placeholder={question.placeholder}");
     expect(pillar).toContain("window.scrollBy(0, offset)");
+    expect(panel).toContain("onOpen={() => setOpenPillar(pillar.key)}");
+    expect(panel).not.toContain("current === pillar.key ? null");
   });
 
   it("limits the global em-dash audit exception to canonical Pilotage semantics", () => {

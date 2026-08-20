@@ -107,9 +107,13 @@ D-085 supersède les anciens cadrages « English Beta = Action Plan uniquement �
   - [x] Les libellés génériques Solutions utilisent un dictionnaire typé
     partagé et le libellé anglais public est `Services`, jamais
     `Accompaniment`.
-  - [ ] La fiche Service commerciale complète, Pilotage, les textes métier de
-    Talk to us et Academy restent volontairement dans les lots 4, 5 et 6 : les
-    mutualiser ici masquerait leurs écarts de contrat, de prix ou de contenu.
+  - [x] Pilotage réutilise désormais les mêmes composants et les mêmes données
+    d'entreprise en français et en anglais. Les libellés, questions, erreurs,
+    dates et montants EUR sont projetés par un dictionnaire typé ; aucun second
+    stockage Chiffres/Stratégie n'a été créé.
+  - [ ] La fiche Service commerciale complète, les textes métier de Talk to us
+    et Academy restent volontairement dans les lots 4, 5 et 6 : les mutualiser
+    ici masquerait leurs écarts de contrat, de prix ou de contenu.
 - [ ] Déclarer le scope de chaque évolution : `shared` par défaut, ou
   explicitement `locale`, `market` ou `country`. La traduction choisit les
   mots ; elle n'accorde aucune permission et ne décide ni du catalogue, ni du
@@ -237,7 +241,7 @@ résolveur français n'est pas validé métier.
   comportement persistant actuel indexé par
   `courseId + localeCode + contentVersion`; ne partager, migrer ou fusionner
   une progression entre langues qu'après une décision produit distincte.
-- [ ] Localiser Chiffres et Stratégie et exposer les mêmes données d'entreprise
+- [x] Localiser Chiffres et Stratégie et exposer les mêmes données d'entreprise
   dans les deux langues, sans stockage parallèle ni restriction française.
 - [ ] Ne laisser apparaître aucun texte, écran, fiche ou contenu français comme
   fallback dans le parcours anglais.
@@ -442,9 +446,10 @@ Déjà livré et à préserver :
   combinaisons de contexte invalides peuvent retomber silencieusement sur le
   français ; utiliser les 115 métiers/37 familles et échouer explicitement si
   une projection publiée manque ;
-- [ ] Chiffres et Stratégie partagent bien leurs données mais leurs libellés,
-  formats, validations et devise sont encore français/EUR ; les localiser sans
-  second stockage ;
+- [x] Chiffres et Stratégie partagent leurs données d'entreprise ; leurs
+  libellés, formats et validations visibles sont localisés sans second stockage.
+  La devise métier reste volontairement EUR pour ce lot et est formatée selon
+  la locale de l'interface ; la tarification multidevise reste dans le lot 5 ;
 - [ ] Academy anglaise utilise un catalogue simplifié (moins de leçons,
   visuels génériques et actions absentes) ; la reconstruire à partir de la
   structure canonique française sans changer la progression existante ;

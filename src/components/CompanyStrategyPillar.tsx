@@ -8,8 +8,10 @@ import {
   type CompanyStrategyAnswers,
   type CompanyStrategyPillar,
 } from "@/lib/company-pilotage-contract";
+import { getCompanyPilotageUiCopy } from "@/lib/company-pilotage-ui-copy";
 
 export default function CompanyStrategyPillar({
+  copy,
   pillar,
   open,
   answers,
@@ -19,6 +21,7 @@ export default function CompanyStrategyPillar({
   onKeepLocal,
   onUseRemote,
 }: {
+  copy: ReturnType<typeof getCompanyPilotageUiCopy>["strategy"];
   pillar: {
     key: CompanyStrategyPillar;
     label: string;
@@ -86,11 +89,11 @@ export default function CompanyStrategyPillar({
                 <div className="mt-1 flex justify-end text-xs text-dema-muted">{answers[question.key].length}/{COMPANY_STRATEGY_ANSWER_MAX_LENGTH}</div>
                 {conflict !== undefined ? (
                   <div id={`strategy-${question.key}-conflict`} role="alert" className="mt-2 rounded-xl bg-amber-50 p-3 text-sm text-amber-950">
-                    <p>Cette réponse a aussi été modifiée ailleurs.</p>
-                    <p className="mt-1 text-xs">Version récente : {conflict || "Réponse vide"}</p>
+                    <p>{copy.answerConflict}</p>
+                    <p className="mt-1 text-xs">{copy.recentVersion} {conflict || copy.emptyAnswer}</p>
                     <div className="mt-2 flex flex-wrap gap-3">
-                      <button type="button" className="font-semibold underline underline-offset-4" onClick={() => onKeepLocal(question.key)}>Garder ma version</button>
-                      <button type="button" className="font-semibold underline underline-offset-4" onClick={() => onUseRemote(question.key)}>Utiliser la version récente</button>
+                      <button type="button" className="font-semibold underline underline-offset-4" onClick={() => onKeepLocal(question.key)}>{copy.keep}</button>
+                      <button type="button" className="font-semibold underline underline-offset-4" onClick={() => onUseRemote(question.key)}>{copy.recent}</button>
                     </div>
                   </div>
                 ) : null}

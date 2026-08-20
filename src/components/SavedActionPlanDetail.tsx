@@ -465,7 +465,8 @@ export default function SavedActionPlanDetail({
       <div className="pt-1">
         {activeTab === "plan" ? (
           <CompanyPilotagePanel
-            available={interfaceLocaleCode === "fr"}
+            available
+            localeCode={interfaceLocaleCode}
             section={appContext.planSection}
             onSectionChange={(planSection) => navigateAppContext({
               ...appContext,
