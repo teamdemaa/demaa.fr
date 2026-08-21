@@ -22,6 +22,8 @@ export default function CompanyPilotagePanel({
   section,
   onSectionChange,
   children,
+  figuresAuthenticated,
+  onFiguresAuthenticationRequired,
   solutions,
   localeCode = "fr",
 }: {
@@ -29,6 +31,8 @@ export default function CompanyPilotagePanel({
   section: ActionPlanSection;
   onSectionChange: (section: ActionPlanSection) => void;
   children: ReactNode;
+  figuresAuthenticated: boolean;
+  onFiguresAuthenticationRequired?: () => void;
   solutions: ReactNode;
   localeCode?: "fr" | "en";
 }) {
@@ -59,7 +63,12 @@ export default function CompanyPilotagePanel({
         ))}
       </nav> : null}
       {section === "actions" ? children : null}
-      {section === "figures" ? <CompanyFiguresPanel /> : null}
+      {section === "figures" ? (
+        <CompanyFiguresPanel
+          authenticated={figuresAuthenticated}
+          onAuthenticationRequired={onFiguresAuthenticationRequired}
+        />
+      ) : null}
       {section === "solutions" ? solutions : null}
       {COMPANY_STRATEGY_VISIBLE && section === "strategy"
         ? <div>

@@ -17,6 +17,7 @@ describe("company Pilotage UI contract", () => {
     expect(source("CompanyStrategyEntry.tsx")).toContain("Stratégie");
     expect(source("SavedActionPlanDetail.tsx")).toContain("<CompanyPilotagePanel");
     expect(source("ActionPlanExperience.tsx")).toContain("<CompanyPilotagePanel");
+    expect(source("CompanyPilotagePanel.tsx")).toContain("authenticated={figuresAuthenticated}");
     expect(navbar).not.toContain("Stratégie");
   });
 
@@ -30,6 +31,18 @@ describe("company Pilotage UI contract", () => {
     expect(strategy).toContain("Garder ma version");
     expect(strategy).toContain("Utiliser la version récente");
     expect(strategy).toContain('aria-live="polite"');
+  });
+
+  it("keeps Figures readable before authentication and protects only metric edits", () => {
+    const figures = source("CompanyFiguresPanel.tsx");
+    const experience = source("ActionPlanExperience.tsx");
+
+    expect(figures).toContain("if (!authenticated)");
+    expect(figures).toContain("onAuthenticationRequired?.()");
+    expect(figures).toContain("openMetricEntry(currentMonth)");
+    expect(figures).toContain("openMetricEntry(period)");
+    expect(figures).toContain("authenticated ? <CompanyMetricEntryDialog");
+    expect(experience).toContain("onFiguresAuthenticationRequired={requestFiguresAuthentication}");
   });
 
   it("keeps chart month controls exposed to assistive technologies", () => {

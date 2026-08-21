@@ -174,7 +174,6 @@ export default function ActionPlanExperience({
   const autoSaveAttemptRef = useRef("");
   const manualAccessPromptHandledRef = useRef(false);
   const generationIntentHandledRef = useRef(false);
-  const pendingPlanSectionRef = useRef<ActionPlanSection | null>(null);
 
   useEffect(() => {
     if (!visibleViews || visibleViews.includes("academy")) {
@@ -205,7 +204,6 @@ export default function ActionPlanExperience({
       clearActionPlanGenerationDraft();
       setGenerationDraft(null);
     }
-    pendingPlanSectionRef.current = null;
     setPendingSolutionSelection(null);
     setAccessPromptOpen(false);
   }
@@ -241,29 +239,20 @@ export default function ActionPlanExperience({
     setAccessPromptOpen(false);
     setAccessDraft((current) => ({ ...current, password: "" }));
     requestAutoSaveRetry();
-    const pendingPlanSection = pendingPlanSectionRef.current;
-    pendingPlanSectionRef.current = null;
-    if (pendingPlanSection) {
-      navigateAppContext({
-        ...appContext,
-        view: "plan",
-        planSection: pendingPlanSection,
-      });
-    }
   }
 
   function selectPlanSection(planSection: ActionPlanSection) {
-    if (planSection === "figures" && !isAuthenticated && !isDemoMode) {
-      pendingPlanSectionRef.current = planSection;
-      setAccessDraft((current) => ({ ...current, mode: "create", password: "" }));
-      setAccessPromptOpen(true);
-      return;
-    }
     navigateAppContext({
       ...appContext,
       view: "plan",
       planSection,
     });
+  }
+
+  function requestFiguresAuthentication() {
+    if (isAuthenticated || isDemoMode) return;
+    setAccessDraft((current) => ({ ...current, mode: "create", password: "" }));
+    setAccessPromptOpen(true);
   }
   const situationDictation = useSpeechDictation({
     value: situation,
@@ -1004,6 +993,8 @@ export default function ActionPlanExperience({
               section={appContext.planSection}
               localeCode={contentLocaleCode}
               onSectionChange={selectPlanSection}
+              figuresAuthenticated={isAuthenticated && !isDemoMode}
+              onFiguresAuthenticationRequired={requestFiguresAuthentication}
               solutions={(
                 <ActionPlanSystemPanel
                   localeCode={contentLocaleCode}

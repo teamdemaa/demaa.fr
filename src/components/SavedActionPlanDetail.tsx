@@ -473,6 +473,7 @@ export default function SavedActionPlanDetail({
             available={interfaceLocaleCode === "fr"}
             section={appContext.planSection}
             localeCode={interfaceLocaleCode}
+            figuresAuthenticated
             onSectionChange={(planSection) => navigateAppContext({
               ...appContext,
               view: "plan",
