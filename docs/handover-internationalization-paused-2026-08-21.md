@@ -15,7 +15,7 @@ Ces deux documents restent les sources de vérité produit et architecture.
 
 ## Instantané Git vérifié
 
-État vérifié le 21 août 2026 :
+État initial de la pause, vérifié le 21 août 2026 :
 
 - base `origin/main` : `3b40505` ;
 - sommet de la pile anglaise : `690cf83` ;
@@ -30,6 +30,22 @@ Ces deux documents restent les sources de vérité produit et architecture.
 
 Ces résultats constituent un instantané. Ils doivent être intégralement
 revalidés contre le `main` courant lors de la reprise.
+
+Actualisation documentaire du 22 août 2026, avant fusion du présent handover :
+
+- `origin/main` : `74f029d` ;
+- sommet anglais inchangé : `690cf83` ;
+- écart courant : `26` commits derrière `main`, `30` devant ;
+- les 13 PR restent ouvertes en brouillon et leurs branches sont préservées ;
+- leurs checks verts restent des preuves historiques de chaque sommet, pas une
+  validation contre le nouveau `main` ;
+- aucun rebase de la pile runtime n'a été réalisé pendant la pause.
+
+Les PR françaises 169 à 171 ont modifié le shell Plan, les accès invités,
+Solutions, Services et la navigation. La PR 172 a réaligné la documentation
+canonique. Ces évolutions sont des collisions potentielles connues à classer
+PR par PR lors de la reprise ; elles ne doivent pas être recopiées manuellement
+dans les treize branches.
 
 ## Pile de PR canonique
 
