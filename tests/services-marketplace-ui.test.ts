@@ -77,6 +77,22 @@ describe("canonical Accompagnement catalog", () => {
       monthlyAccompanimentDiscountEligible: false,
       pricing: { label: "Sur devis" },
     });
+    for (const slug of [
+      "gestion-reseaux-sociaux",
+      "publicite-en-ligne",
+      "prospection-ciblee",
+    ] as const) {
+      expect(getCanonicalServiceBySlug(slug)).toMatchObject({
+        delivery: "third-party",
+        monthlyAccompanimentDiscountEligible: false,
+      });
+      expect(getCanonicalServiceBySlug(slug)?.description).toContain(
+        "organise la mise en relation",
+      );
+      expect(getCanonicalServiceBySlug(slug)?.pricing?.note).toContain(
+        "facture directement son intervention",
+      );
+    }
   });
 
   it("places Automation first and keeps Coach business undiscounted", () => {
@@ -121,6 +137,12 @@ describe("canonical Accompagnement catalog", () => {
       ["automatisation-essentielle", 150000],
       ["automatisation-avancee-ia", 300000],
     ]);
+    expect(automation?.packages[0]).toMatchObject({
+      name: "Automatisation essentielle + IA",
+    });
+    expect(automation?.packages[0]?.included).toContain(
+      "Un usage IA simple et contrôlé lorsqu’il est pertinent",
+    );
     expect(application).toMatchObject({
       detailHref: "/sur-mesure",
       name: "Application métier",
@@ -141,7 +163,7 @@ describe("canonical Accompagnement catalog", () => {
     });
   });
 
-  it("renders nine equal linked service cards with subtle pricing and no discount copy", async () => {
+  it("renders two direct Demaa services followed by seven trusted-partner services", async () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
@@ -151,6 +173,8 @@ describe("canonical Accompagnement catalog", () => {
     ]);
 
     expect(markup.match(/<article/g)).toHaveLength(9);
+    expect(getCanonicalServices().filter(({ delivery }) => delivery === "demaa")).toHaveLength(2);
+    expect(getCanonicalServices().filter(({ delivery }) => delivery === "third-party")).toHaveLength(7);
     for (const service of getCanonicalServices()) {
       expect(markup).toContain(service.detailHref);
     }
@@ -161,11 +185,20 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).toContain("À partir de 4 500 € HT");
     expect(markup).toContain("750 € HT / mois");
     expect(markup).toContain("Sur devis");
+    expect(markup).toContain("Nos accompagnements");
+    expect(markup).toContain("Conçus et réalisés directement par Demaa.");
+    expect(markup).toContain("Avec nos partenaires de confiance");
+    expect(markup).toContain("Le professionnel confirme son tarif et facture directement son intervention.");
+    expect(markup.indexOf("Nos accompagnements")).toBeLessThan(
+      markup.indexOf("Avec nos partenaires de confiance"),
+    );
     expect(markup).not.toMatch(/Avantage abonné|−12 %/);
     expect(markup).not.toContain("border-t");
     expect(markup).not.toContain("−15 %");
     expect(markup).not.toContain("Découvrir le service");
     expect(catalogSource).toContain("service.pricing.label");
+    expect(catalogSource).toContain('service.delivery === "demaa"');
+    expect(catalogSource).toContain('service.delivery === "third-party"');
     expect(catalogSource).toContain("mt-6 text-sm font-normal text-dema-muted md:mt-auto md:pt-5");
     expect(catalogSource).toContain('className="min-w-0 md:h-[19rem]"');
     expect(catalogSource).not.toContain('className="h-[19rem] min-w-0"');

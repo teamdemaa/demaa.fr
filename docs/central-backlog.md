@@ -1,6 +1,6 @@
 # Backlog central Demaa
 
-Dernière consolidation : 20 août 2026.
+Dernière consolidation : 22 août 2026.
 
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
@@ -283,8 +283,9 @@ Alignement France livré avant les projections anglaises :
   processus, licences et consommations d'outils ou de modèles tiers, promesse
   d'autonomie totale de l'IA ou résultat métier garanti sans mesure préalable.
 - [x] Remplacer le prix 500 EUR HT/jour par les forfaits validés
-  Automatisation essentielle à 1 500 EUR HT et Automatisation avancée + IA à
-  3 000 EUR HT, avec les limites de D-089.
+  Automatisation essentielle + IA à 1 500 EUR HT et Automatisation avancée +
+  IA à 3 000 EUR HT, avec les limites de D-089. Le premier forfait autorise un
+  usage IA simple et contrôlé uniquement lorsqu'il apporte un gain concret.
 - [x] Ajouter `Application métier` immédiatement après Automatisation, avec le
   forfait essentiel à 4 500 EUR HT et le forfait avancé à 7 500 EUR HT. Conserver
   `/sur-mesure` comme unique page canonique et supprimer toute occurrence
@@ -292,9 +293,19 @@ Alignement France livré avant les projections anglaises :
 - [x] Faire consommer une seule source de forfaits au catalogue, aux modales,
   à `/sur-mesure`, aux données structurées et aux notifications ; ne pas créer
   de page SEO concurrente `/services/application-metier`.
-- [x] Retirer les montants et mentions d'avantage de toutes les cartes
-  Accompagnement. Afficher les prix dès le haut des modales/fiches, sans
+- [x] Afficher sur chaque carte le prix canonique ou le forfait réellement le
+  moins cher avec `À partir de`, sans dupliquer le montant. Conserver le même
+  prix dans la carte, la modale, la demande et les notifications, sans
   séparateur qui traverse ou masque le texte.
+- [x] Structurer Services en deux sections utilisant la même carte et la même
+  grille : `Nos accompagnements` pour Automatisation et Application métier,
+  réalisées directement par Demaa ; `Avec nos partenaires de confiance` pour
+  les sept prestations de mise en relation. Réseaux sociaux, Publicité et
+  Prospection rejoignent les prestations partenaires, sont facturées
+  directement par le professionnel et ne bénéficient pas de la réduction de
+  12 %.
+- [x] Ordonner la navigation applicative française `Plan d'action · Académie ·
+  Services · Opportunités`, avec Opportunités conservé en dernière position.
 - [x] Conserver l'éligibilité de ces deux prestations à l'avantage
   accompagnement mensuel de 12 %, vérifié côté serveur, sans paiement ni
   checkout.
@@ -307,8 +318,11 @@ Alignement France livré avant les projections anglaises :
   maintenance à 99 EUR/mois et les promesses absolues RGPD, propriété et
   hébergement de l'ancienne page `/sur-mesure`.
 - [ ] Ajouter ensuite la projection anglaise `Process automation and AI` au
-  même service, avec disponibilité par marché et aucune fiche française en
-  fallback.
+  même service, avec `Essential automation + AI` pour le premier forfait,
+  disponibilité par marché et aucune fiche française en fallback. Lors de la
+  reprise du chantier anglais, réaligner également la disponibilité et la
+  facturation des trois prestations désormais partenaires sans recopier le
+  catalogue français.
 
 Gate : nom, promesse, livrables, exclusions, forfaits et avantage cohérents sur
 la carte, la modale, `/sur-mesure`, la demande reçue par la Team et la projection
