@@ -1610,9 +1610,18 @@ n'est modifiée par cette décision documentaire.
   fournisseurs. Les Services ne comptent jamais dans les dix, ne partagent pas
   leur rail et conservent tracking, SEO et source de données distincts. La
   séparation visuelle livrée par D-090 reste la base à préserver.
-- [ ] Auditer avant toute mutation `SystemSolutionsTab`,
-  `composeCanonicalServicesForSystem`, les pages Système, l'API Action Plan,
-  le JSON-LD et les tests afin d'empêcher toute réintroduction du mélange.
+- [ ] Préserver Services dans l'API, le DTO Système et
+  `composeCanonicalServicesForSystem` pour les recommandations contextuelles
+  strictes des Actions ; ne jamais les réinjecter comme rail Outils.
+- [ ] Aligner les pages publiques `/systemes/[slug]` et leur récapitulatif, qui
+  affichent encore Services dans Solutions, puis vérifier tracking, SEO,
+  JSON-LD et tests sans casser le payload contextuel.
+- [ ] Auditer la révision Firebase candidate et active, pas seulement la liste
+  legacy : exactement dix placements `software` sélectionnés pour le public,
+  rangs 1–10, ressources actives et publication fail-closed.
+- [ ] Garder tout pool de recherche supérieur à dix hors de la révision finale
+  et traiter explicitement les anciennes sélections de Services afin d'éviter
+  un faux état « Service déjà sélectionné ».
 - [ ] Appliquer des bornes propres aux autres sections : Fournisseurs 3–8 si
   pertinents, Financement 2–5, Aides plausiblement applicables, Réseaux 2–5,
   documents sans quota.

@@ -58,7 +58,12 @@ concurrent.
    ne sont dépréciées qu'après parité vérifiée et rollback documenté.
 8. Services reste le catalogue des services Demaa et de ses mises en relation
    canoniques. Il n'entre jamais dans le quota Outils et ne devient pas un
-   annuaire de fournisseurs externes.
+   annuaire de fournisseurs externes. La séparation est déjà livrée dans
+   l'application : la destination Services est distincte et son rail est filtré
+   de Solutions. La section Services reste toutefois dans l'API et le DTO
+   Système afin d'alimenter les recommandations contextuelles strictes des
+   Actions ; elle ne doit pas être supprimée de
+   `composeCanonicalServicesForSystem`.
 9. Les autres sections conservent des règles propres, sans quota artificiel :
    Fournisseurs de 3 à 8 seulement si pertinents ; Financement de 2 à 5 ; Aides
    uniquement plausiblement applicables ; Réseaux de 2 à 5 ; documents et
@@ -70,6 +75,10 @@ concurrent.
 11. L'activation est atomique et distincte de l'audit. Elle exige une Preview,
     la parité Preview/Production, le contrôle du HTML accessible à Google et du
     JSON-LD, puis un GO PROD explicite.
+12. Les pages publiques `/systemes/[slug]` et leur récapitulatif affichent encore
+    Services dans Solutions. L'exécution devra les aligner sur la séparation
+    déjà livrée dans l'application, sans retirer Services du payload contextuel,
+    et vérifier tracking, SEO, JSON-LD et liens vers la destination canonique.
 
 ## Contrôles bloquants
 
@@ -77,6 +86,8 @@ L'audit de données devra échouer si un système publié ne respecte pas tous l
 points suivants :
 
 - exactement dix placements Logiciels ;
+- définition portée par les placements `software` sélectionnés et destinés au
+  public dans la révision Firebase candidate, avec rangs continus de 1 à 10 ;
 - couverture des besoins prioritaires du métier, sans homogénéité artificielle ;
 - aucun doublon et rangs continus ;
 - outil et ressource actifs, URL sûre et résoluble ;
@@ -84,6 +95,16 @@ points suivants :
 - justification réellement contextualisée au métier ;
 - limite ou prérequis réel, sans texte inventé ;
 - aucune publication issue d'un simple remplissage de quota.
+
+Le contrôle porte sur les révisions Firebase candidate et active, pas seulement
+sur `system-tool-recommendations.ts`. La révision finale ne contient que les dix
+placements retenus : les pools de recherche supérieurs à dix restent hors du
+registre activable. Avant le GO PROD, la publication Logiciels doit être
+fail-closed explicitement — soit tous les placements retenus et leurs ressources
+sont `published`, soit la section `software` rejoint les sections soumises au
+publication gate. Les anciennes sélections de Services sont conservées ou
+nettoyées explicitement afin qu'elles ne produisent pas un état trompeur
+« Service déjà sélectionné ».
 
 Les listes de produits utilisées pendant une recherche sont des pools à
 expertiser, jamais des listes finales. L'agence de recrutement, par exemple,
@@ -94,12 +115,14 @@ doit pas recevoir automatiquement dix ATS.
 
 1. Geler un export de toutes les sources et définir leur autorité.
 2. Fermer le contrat de preuve et l'audit automatisé, sans mutation.
-3. Expertiser les cinq pilotes avec relecture contradictoire.
-4. Recetter le read-model sur Preview, sans changer le pointeur actif.
-5. Généraliser par lots métier et traiter les cas ambigus manuellement.
-6. Vérifier les 115 pages, le HTML et le JSON-LD.
-7. Activer une nouvelle révision Firebase atomiquement après GO PROD.
-8. Déprécier les sources parallèles seulement après contrôle de parité et
+3. Aligner les pages Système publiques sur la séparation Services déjà livrée
+   dans l'application, tout en conservant le payload contextuel.
+4. Expertiser les cinq pilotes avec relecture contradictoire.
+5. Recetter le read-model sur Preview, sans changer le pointeur actif.
+6. Généraliser par lots métier et traiter les cas ambigus manuellement.
+7. Vérifier les 115 pages, le HTML et le JSON-LD.
+8. Activer une nouvelle révision Firebase atomiquement après GO PROD.
+9. Déprécier les sources parallèles seulement après contrôle de parité et
    période de rollback.
 
 ## Hors périmètre
@@ -111,4 +134,3 @@ doit pas recevoir automatiquement dix ATS.
 - activation anglaise ;
 - import automatique de `toolRefs` ;
 - publication d'un registre pendant la phase d'audit.
-
