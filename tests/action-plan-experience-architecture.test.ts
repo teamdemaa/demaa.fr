@@ -102,6 +102,11 @@ describe("action plan experience architecture", () => {
     expect(heroTitle).toContain('["entreprise", "agence", "startup", "cabinet"]');
     expect(heroTitle).toContain('prefers-reduced-motion: reduce');
     expect(heroTitle).toContain('aria-label={accessibleTitle}');
+    expect(heroTitle).toContain('`${subject}\\u00a0?`');
+    expect(heroTitle).toContain('phase === "typing"');
+    expect(heroTitle).toContain('phase === "deleting"');
+    expect(heroTitle).toContain("animatedPhrase.slice(0, typedLength)");
+    expect(heroTitle).not.toContain("transition-opacity");
     expect(plansIndex).not.toContain("plan.contentLocaleCode");
     expect(experience).toContain("createManualActionPlan()");
     expect(experience).toContain("createManualActionPlanWorkspaceState()");
