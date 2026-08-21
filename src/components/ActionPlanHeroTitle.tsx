@@ -53,7 +53,7 @@ export default function ActionPlanHeroTitle({
         <span className="demaa-hero-title text-dema-forest">
           {localeCode === "en" ? "your " : "freine votre "}
           <span
-            className={`inline-block min-w-[10ch] transition-opacity duration-200 motion-reduce:transition-none ${!animate || visible ? "opacity-100" : "opacity-0"}`}
+            className={`inline-block transition-opacity duration-200 motion-reduce:transition-none ${!animate || visible ? "opacity-100" : "opacity-0"}`}
           >
             {subject}
           </span>

@@ -25,6 +25,20 @@ const ICONS: Record<CanonicalService["slug"], LucideIcon> = {
   "prospection-ciblee": SearchCheck,
 };
 
+function getServiceCardPriceLabel(service: CanonicalService) {
+  if (service.pricing) return service.pricing.label;
+  const lowestPackage = service.packages.reduce<CanonicalService["packages"][number] | null>(
+    (lowest, current) => !lowest || current.pricing.amountMinor < lowest.pricing.amountMinor
+      ? current
+      : lowest,
+    null,
+  );
+  if (!lowestPackage) return null;
+  return service.packages.length > 1
+    ? `À partir de ${lowestPackage.pricing.label}`
+    : lowestPackage.pricing.label;
+}
+
 function ServiceCard({
   onSelect,
   service,
@@ -33,6 +47,7 @@ function ServiceCard({
   service: CanonicalService;
 }) {
   const Icon = ICONS[service.slug];
+  const priceLabel = getServiceCardPriceLabel(service);
   const className = "group flex h-full min-w-0 flex-col rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_8px_24px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/30 hover:shadow-[0_10px_28px_rgba(23,35,29,0.055)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 sm:p-6";
   const content = <>
     <div className="flex items-center gap-4">
@@ -43,6 +58,9 @@ function ServiceCard({
     <p className="mt-4 line-clamp-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">{service.eyebrow}</p>
     <h3 className="mt-2 line-clamp-2 text-xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue">{service.name}</h3>
     <p className="mt-2 line-clamp-2 text-sm leading-5 text-dema-muted">{service.summary}</p>
+    {priceLabel ? (
+      <p className="mt-auto pt-5 text-sm font-normal text-dema-muted">{priceLabel}</p>
+    ) : null}
   </>;
 
   return (
