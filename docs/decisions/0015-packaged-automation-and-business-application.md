@@ -31,11 +31,12 @@ doit être créé sous `/services/application-metier`.
 
 ## Forfaits
 
-### Automatisation essentielle — 1 500 EUR HT
+### Automatisation essentielle + IA — 1 500 EUR HT
 
 - un processus ;
 - jusqu'à deux outils standards ;
 - jusqu'à cinq étapes métier déterministes ;
+- un usage IA simple et contrôlé lorsqu'il apporte un gain concret ;
 - tests, documentation et prise en main.
 
 ### Automatisation avancée + IA — 3 000 EUR HT
@@ -82,17 +83,17 @@ livraison du nouveau runtime.
 
 ## Présentation
 
-Le catalogue contient neuf accompagnements publics. Automatisation des
-processus et IA est placée en premier, Application métier immédiatement après,
-et Assistante administrative est désormais une prestation publique de mise en
-relation. Seule la sous-traitance de formalités juridiques reste réservée aux
-recommandations de la Team. Les cartes ont une hauteur commune
-et affichent uniquement catégorie, titre, description courte et une action
-discrète. Elles n'affichent ni montant, ni avantage, ni séparateur de prix.
+Le catalogue contient neuf accompagnements publics. `Nos accompagnements`
+contient Automatisation des processus et IA puis Application métier, réalisées
+directement par Demaa. `Avec nos partenaires de confiance` contient les sept
+prestations de mise en relation. Seule la sous-traitance de formalités
+juridiques reste réservée aux recommandations de la Team. Les deux sections
+réutilisent la même carte, la même fiche et le même formulaire.
 
-Les prix apparaissent immédiatement dans la modale ou la fiche détaillée. Une
-source de vérité unique alimente le catalogue, la modale interceptée et la page
-`/sur-mesure`. Les données structurées SEO utilisent cette même source.
+Les cartes affichent le prix canonique ou le forfait le moins cher avec
+`À partir de` lorsqu'il existe plusieurs forfaits. Une source de vérité unique
+alimente la carte, la modale interceptée, la page `/sur-mesure`, la demande et
+les données structurées SEO. Aucun montant n'est recopié dans le composant.
 
 Automatisation et Application métier sont directement facturées par Demaa et
 éligibles à l'avantage de 12 %. Coach business et Expert-comptable n'affichent
@@ -103,10 +104,15 @@ La formulation canonique est :
 > Avantage accompagnement mensuel : −12 % sur les prestations Demaa éligibles.
 
 Assistante administrative est facturée directement par la professionnelle :
-la carte ne montre aucun prix, la fiche indique `Sur devis`, et la demande
-utilise le même parcours WhatsApp minimal que les autres accompagnements. Elle
-est masquée des projections Système des professionnels qui proposent déjà ce
-service eux-mêmes.
+la carte et la fiche indiquent `À partir de 500 EUR HT / mois`, correspondant
+au minimum de 20 heures à 25 EUR HT / heure ; toute heure supplémentaire reste
+à 25 EUR HT. La demande utilise le même parcours WhatsApp minimal que les
+autres accompagnements. Elle est masquée des projections Système des
+professionnels qui proposent déjà ce service eux-mêmes.
+
+Gestion des réseaux sociaux, Publicité en ligne et Prospection ciblée sont des
+prestations partenaires facturées directement par le professionnel. Elles ne
+sont pas éligibles à l'avantage de 12 % réservé aux prestations Demaa.
 
 ## Demande
 
