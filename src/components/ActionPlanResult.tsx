@@ -127,7 +127,7 @@ function TaskFilterMenu({
         <div
           role="menu"
           aria-label={localeCode === "en" ? "Filter actions" : "Filtrer les actions"}
-          className="absolute left-0 top-full z-50 mt-2 min-w-full overflow-hidden rounded-2xl border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
+          className="demaa-popover-shadow absolute left-0 top-full z-50 mt-2 min-w-full overflow-hidden rounded-2xl border border-dema-line bg-dema-paper p-1.5"
         >
           {(Object.keys(taskFilterLabels) as TaskFilter[]).map((option) => (
             <button
@@ -420,7 +420,7 @@ function ActionDrawer({
         role="dialog"
         aria-modal="true"
         aria-labelledby="action-drawer-title"
-        className="mt-auto max-h-[92dvh] w-full overflow-y-auto rounded-t-[1.5rem] bg-dema-paper shadow-2xl sm:mt-0 sm:h-full sm:max-h-none sm:max-w-xl sm:rounded-none"
+        className="demaa-dialog-shadow mt-auto max-h-[92dvh] w-full overflow-y-auto rounded-t-[1.5rem] bg-dema-paper sm:mt-0 sm:h-full sm:max-h-none sm:max-w-xl sm:rounded-none"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <header className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-dema-line bg-dema-paper/95 px-5 py-5 backdrop-blur sm:px-7">

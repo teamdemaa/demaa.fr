@@ -70,7 +70,7 @@ function OpportunityDetailsDialog({
         aria-modal="true"
         aria-labelledby="opportunity-details-title"
         tabIndex={-1}
-        className="relative max-h-[calc(100dvh-1rem)] w-full max-w-xl overflow-y-auto rounded-t-[1.5rem] bg-white p-5 shadow-2xl sm:max-h-[calc(100dvh-2.5rem)] sm:rounded-[1.5rem] sm:p-8"
+        className="demaa-dialog-shadow relative max-h-[calc(100dvh-1rem)] w-full max-w-xl overflow-y-auto rounded-t-[1.5rem] bg-white p-5 sm:max-h-[calc(100dvh-2.5rem)] sm:rounded-[1.5rem] sm:p-8"
       >
         <button
           type="button"

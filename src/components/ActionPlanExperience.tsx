@@ -775,7 +775,7 @@ export default function ActionPlanExperience({
         aria-labelledby="action-plan-access-title"
         tabIndex={-1}
         onMouseDown={(event) => event.stopPropagation()}
-        className="relative w-full max-w-[430px] rounded-t-[1.5rem] bg-dema-paper p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-[0_24px_70px_rgba(23,35,29,0.14)] sm:rounded-[1.5rem] sm:p-7"
+        className="demaa-dialog-shadow relative w-full max-w-[430px] rounded-t-[1.5rem] bg-dema-paper p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:rounded-[1.5rem] sm:p-7"
       >
         <button
           type="button"
@@ -987,7 +987,7 @@ export default function ActionPlanExperience({
           role="status"
           aria-live="polite"
         >
-          <div className="flex items-center gap-3 rounded-full bg-dema-paper px-5 py-3 text-sm font-medium text-dema-forest shadow-lg">
+          <div className="demaa-popover-shadow flex items-center gap-3 rounded-full bg-dema-paper px-5 py-3 text-sm font-medium text-dema-forest">
             <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
             {contentLocaleCode === "en" ? "Saving your plan…" : "Sauvegarde de votre plan…"}
           </div>

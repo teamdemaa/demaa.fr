@@ -79,7 +79,7 @@ export default function ActionPlanUtilityActions({
             <MoreVertical className="h-5 w-5" aria-hidden="true" />
           </button>
           {menuOpen ? (
-            <div id="action-plan-utility-menu" className="absolute right-0 top-full z-50 mt-2 min-w-[11rem] rounded-2xl border border-dema-line bg-dema-paper px-3 py-2 shadow-[0_18px_46px_rgba(23,35,29,0.14)]">
+            <div id="action-plan-utility-menu" className="demaa-popover-shadow absolute right-0 top-full z-50 mt-2 min-w-[11rem] rounded-2xl border border-dema-line bg-dema-paper px-3 py-2">
               <ActionPlanShareControl plan={plan} workspace={workspace} variant="menu" localeCode={localeCode} />
               <button
                 type="button"

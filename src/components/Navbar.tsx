@@ -60,7 +60,7 @@ export default function Navbar({
                         aria-hidden="true"
                       />
                     </summary>
-                    <div className="absolute right-0 top-full z-50 mt-2 min-w-40 rounded-2xl border border-dema-line bg-dema-paper px-3 py-2 shadow-[0_18px_46px_rgba(23,35,29,0.14)]">
+                    <div className="demaa-popover-shadow absolute right-0 top-full z-50 mt-2 min-w-40 rounded-2xl border border-dema-line bg-dema-paper px-3 py-2">
                       <Link
                         href={getLocalizedActionPlanPath(localeCode, "/plans")}
                         className="block whitespace-nowrap px-2 py-1.5 text-left text-sm text-brand-blue transition hover:text-dema-forest"

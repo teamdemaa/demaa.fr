@@ -185,7 +185,7 @@ export default function GuideNotifyModal({
     >
       <section
         ref={dialogRef}
-        className="relative max-h-[calc(100dvh-2rem)] w-full max-w-[30rem] overflow-y-auto rounded-[1.5rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.14)] sm:max-h-[calc(100dvh-3rem)]"
+        className="demaa-dialog-shadow relative max-h-[calc(100dvh-2rem)] w-full max-w-[30rem] overflow-y-auto rounded-[1.5rem] border border-dema-line bg-dema-paper sm:max-h-[calc(100dvh-3rem)]"
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"

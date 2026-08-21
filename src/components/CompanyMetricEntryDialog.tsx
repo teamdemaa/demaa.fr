@@ -104,7 +104,7 @@ export default function CompanyMetricEntryDialog({
   const inputClass = "mt-1 w-full rounded-xl border border-dema-line bg-white px-3 py-2.5 text-base text-dema-ink outline-none focus:border-dema-forest";
   return (
     <div className="fixed inset-0 z-[170] flex items-end justify-center bg-black/40 p-3 sm:items-center" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={`${id}-title`} tabIndex={-1} className="max-h-[92dvh] w-full max-w-lg overflow-y-auto rounded-2xl bg-dema-paper p-5 shadow-2xl outline-none sm:p-7">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={`${id}-title`} tabIndex={-1} className="demaa-dialog-shadow max-h-[92dvh] w-full max-w-lg overflow-y-auto rounded-2xl bg-dema-paper p-5 outline-none sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 id={`${id}-title`} className="text-xl font-semibold text-dema-ink">Saisir les chiffres du mois</h2>

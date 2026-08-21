@@ -126,7 +126,7 @@ export default function GuideSlidesDialog({
       onClick={onClose}
     >
       <div
-        className="relative flex max-h-[94vh] w-full max-w-7xl flex-col overflow-hidden rounded-[1.5rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.22)]"
+        className="demaa-dialog-shadow relative flex max-h-[94vh] w-full max-w-7xl flex-col overflow-hidden rounded-[1.5rem] border border-dema-line bg-dema-paper"
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"

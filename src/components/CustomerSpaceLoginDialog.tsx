@@ -39,7 +39,7 @@ export default function CustomerSpaceLoginDialog({
         aria-labelledby="action-plan-access-title"
         tabIndex={-1}
         onClick={(event) => event.stopPropagation()}
-        className="relative w-full max-w-md rounded-t-[1.4rem] border border-dema-line bg-dema-paper px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-16 shadow-[0_24px_70px_rgba(23,35,29,0.16)] outline-none sm:rounded-[1.4rem] sm:p-8 sm:pt-16"
+        className="demaa-dialog-shadow relative w-full max-w-md rounded-t-[1.4rem] border border-dema-line bg-dema-paper px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-16 outline-none sm:rounded-[1.4rem] sm:p-8 sm:pt-16"
       >
         <button
           type="button"

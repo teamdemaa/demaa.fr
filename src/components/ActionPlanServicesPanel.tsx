@@ -52,7 +52,7 @@ export default function ActionPlanServicesPanel({
             aria-modal="true"
             aria-label={selectedService.name}
             onMouseDown={(event) => event.stopPropagation()}
-            className="relative max-h-[92dvh] w-full max-w-[46rem] overflow-y-auto rounded-t-[1.5rem] bg-dema-paper p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-[0_24px_70px_rgba(23,35,29,0.14)] sm:rounded-[1.5rem] sm:p-8"
+            className="demaa-dialog-shadow relative max-h-[92dvh] w-full max-w-[46rem] overflow-y-auto rounded-t-[1.5rem] bg-dema-paper p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:rounded-[1.5rem] sm:p-8"
           >
             <button
               type="button"

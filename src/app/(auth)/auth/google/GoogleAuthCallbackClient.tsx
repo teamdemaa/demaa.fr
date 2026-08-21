@@ -171,7 +171,7 @@ export default function GoogleAuthCallbackClient({
 
   return (
     <main className="flex min-h-dvh items-center justify-center bg-dema-cream px-5 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-[calc(2rem+env(safe-area-inset-top))]">
-      <section className="w-full max-w-[430px] rounded-[1.5rem] border border-dema-line bg-white p-7 text-center shadow-[0_24px_70px_rgba(23,35,29,0.12)]">
+      <section className="demaa-dialog-shadow w-full max-w-[430px] rounded-[1.5rem] border border-dema-line bg-white p-7 text-center">
         {error ? (
           <>
             <h1 className="text-2xl font-medium text-brand-blue">

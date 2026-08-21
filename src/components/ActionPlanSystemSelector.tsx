@@ -125,7 +125,7 @@ export default function ActionPlanSystemSelector({
       </button>
 
       {isOpen ? (
-        <div className="absolute right-0 top-full z-40 mt-2 w-full min-w-[18rem] overflow-hidden rounded-[1.35rem] border border-dema-line/80 bg-dema-paper p-2 shadow-[0_22px_52px_rgba(23,35,29,0.12)]">
+        <div className="demaa-popover-shadow absolute right-0 top-full z-40 mt-2 w-full min-w-[18rem] overflow-hidden rounded-[1.35rem] border border-dema-line/80 bg-dema-paper p-2">
           <div className="relative m-1">
             <Search
               className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/45"

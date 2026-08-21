@@ -137,7 +137,7 @@ export default function AcademyLiveRegistrationModal({
     >
       <section
         ref={dialogRef}
-        className="relative max-h-[calc(100dvh-2rem)] w-full max-w-[32rem] overflow-y-auto rounded-[1.5rem] border border-dema-line bg-dema-paper shadow-[0_24px_70px_rgba(23,35,29,0.14)]"
+        className="demaa-dialog-shadow relative max-h-[calc(100dvh-2rem)] w-full max-w-[32rem] overflow-y-auto rounded-[1.5rem] border border-dema-line bg-dema-paper"
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"

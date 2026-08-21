@@ -70,7 +70,7 @@ export default function AppLibrarySearch({
 
       {isFilterOpen ? (
         <div
-          className="absolute left-0 right-0 top-full z-40 mt-2 rounded-2xl border border-dema-line bg-dema-paper p-2 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
+          className="demaa-popover-shadow absolute left-0 right-0 top-full z-40 mt-2 rounded-2xl border border-dema-line bg-dema-paper p-2"
           aria-label={filterLabels.group}
         >
           <div className="flex flex-wrap gap-2">
