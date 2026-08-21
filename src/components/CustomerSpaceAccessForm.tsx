@@ -19,6 +19,7 @@ import {
   getReturnToInterfaceLocale,
   type InterfaceLocaleCode,
 } from "@/lib/international-context";
+import { getAuthUiCopy } from "@/lib/auth-ui-copy";
 
 type AccessMode = "create" | "signin";
 type ProgressiveAccessStep = "choice" | "email" | "password";
@@ -30,30 +31,25 @@ export type CustomerSpaceAccessDraft = {
 };
 
 function getFriendlyAuthError(error: unknown, localeCode: InterfaceLocaleCode) {
+  const copy = getAuthUiCopy(localeCode);
   const code = typeof error === "object" && error && "code" in error
     ? String(error.code)
     : "";
   if (code.includes("email-already-in-use")) {
-    return localeCode === "en"
-      ? "An account already exists for this address. Sign in with your password."
-      : "Un compte existe déjà avec cette adresse. Connectez-vous avec votre mot de passe.";
+    return copy.errors.emailAlreadyUsed;
   }
   if (code.includes("invalid-credential") || code.includes("wrong-password")) {
-    return localeCode === "en" ? "Incorrect email address or password." : "Adresse e-mail ou mot de passe incorrect.";
+    return copy.errors.invalidCredentials;
   }
   if (code.includes("weak-password") || code.includes("password-does-not-meet-requirements")) {
-    return localeCode === "en"
-      ? "This password does not meet the Firebase security policy."
-      : "Ce mot de passe ne respecte pas la politique de sécurité Firebase.";
+    return copy.errors.weakPassword;
   }
   if (code.includes("too-many-requests")) {
-    return localeCode === "en"
-      ? "Too many attempts. Wait a few minutes before trying again."
-      : "Trop de tentatives. Patientez quelques minutes avant de réessayer.";
+    return copy.errors.tooManyRequests;
   }
   return error instanceof Error
     ? error.message
-    : localeCode === "en" ? "Sign-in was not completed." : "La connexion n’a pas abouti.";
+    : copy.errors.signInIncomplete;
 }
 
 function getFirebaseAuthErrorCode(error: unknown) {
@@ -63,7 +59,7 @@ function getFirebaseAuthErrorCode(error: unknown) {
 }
 
 export default function CustomerSpaceAccessForm({
-  choiceTitle = "Accédez à votre espace",
+  choiceTitle,
   draft,
   initialMode = "signin",
   onDraftChange,
@@ -79,6 +75,7 @@ export default function CustomerSpaceAccessForm({
   returnTo?: string;
   localeCode?: InterfaceLocaleCode;
 }) {
+  const copy = getAuthUiCopy(localeCode);
   const [internalDraft, setInternalDraft] = useState<CustomerSpaceAccessDraft>({
     email: "",
     mode: initialMode,
@@ -116,16 +113,16 @@ export default function CustomerSpaceAccessForm({
     setNotice(null);
 
     if (!isValidEmail(normalizedEmail)) {
-      setError(localeCode === "en" ? "Enter a valid email address." : "Merci d'indiquer une adresse email valide.");
+      setError(copy.errors.invalidEmail);
       return;
     }
 
     if (!password) {
-      setError(localeCode === "en" ? "Enter your password." : "Indiquez votre mot de passe.");
+      setError(copy.errors.missingPassword);
       return;
     }
     if (mode === "create" && password.length < 8) {
-      setError(localeCode === "en" ? "Choose a password with at least 8 characters." : "Choisissez un mot de passe d’au moins 8 caractères.");
+      setError(copy.errors.shortPassword);
       return;
     }
 
@@ -154,9 +151,7 @@ export default function CustomerSpaceAccessForm({
         updateDraft({ mode: "signin", password: "" });
         setError(
           submitError instanceof CustomerSessionExchangeError
-            ? localeCode === "en"
-              ? "Your account was created, but your workspace could not be prepared. Sign in to try again."
-              : "Votre compte a été créé, mais votre espace n’a pas pu être préparé. Reconnectez-vous pour réessayer."
+            ? copy.errors.workspacePreparationFailed
             : getFriendlyAuthError(submitError, localeCode),
         );
         return;
@@ -172,7 +167,7 @@ export default function CustomerSpaceAccessForm({
     setError(null);
     setNotice(null);
     if (!isValidEmail(normalizedEmail)) {
-      setError(localeCode === "en" ? "Enter your account email address first." : "Indiquez d’abord l’adresse e-mail de votre compte.");
+      setError(copy.errors.missingResetEmail);
       return;
     }
     setIsSending(true);
@@ -183,9 +178,7 @@ export default function CustomerSpaceAccessForm({
         getReturnToInterfaceLocale(target),
         target,
       );
-      setNotice(localeCode === "en"
-        ? "If an account matches this address, the instructions have been sent."
-        : "Si un compte correspond à cette adresse, les instructions ont été envoyées.");
+      setNotice(copy.notices.resetSent);
     } catch (resetError) {
       setError(getFriendlyAuthError(resetError, localeCode));
     } finally {
@@ -215,12 +208,12 @@ export default function CustomerSpaceAccessForm({
   const normalizedEmail = normalizeEmail(email);
   const emailReady = isValidEmail(normalizedEmail);
   const title = progressiveStep === "choice"
-      ? choiceTitle
+      ? choiceTitle ?? copy.access.defaultChoiceTitle
       : progressiveStep === "email"
-        ? localeCode === "en" ? "Your email address" : "Votre adresse e-mail"
+        ? copy.access.emailTitle
         : mode === "create"
-          ? localeCode === "en" ? "Create your access" : "Créez votre accès"
-          : localeCode === "en" ? "Welcome back" : "Bon retour";
+          ? copy.access.createTitle
+          : copy.access.welcomeBackTitle;
 
   return (
       <div className="space-y-5">
@@ -236,8 +229,8 @@ export default function CustomerSpaceAccessForm({
                 progressiveStep === "email" ? "choice" : "email",
               )}
               aria-label={progressiveStep === "email"
-                ? localeCode === "en" ? "Back to sign-in options" : "Retour aux options de connexion"
-                : localeCode === "en" ? "Back to the email step" : "Retour à l’étape e-mail"}
+                ? copy.access.backToOptions
+                : copy.access.backToEmail}
               className="inline-flex h-10 w-10 items-center justify-center rounded-full text-brand-blue transition hover:bg-dema-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
@@ -268,7 +261,7 @@ export default function CustomerSpaceAccessForm({
             {googleEnabled ? (
               <div className="flex items-center gap-3" aria-hidden="true">
                 <span className="h-px flex-1 bg-dema-line" />
-                <span className="text-xs text-dema-muted">{localeCode === "en" ? "or" : "ou"}</span>
+                <span className="text-xs text-dema-muted">{copy.access.or}</span>
                 <span className="h-px flex-1 bg-dema-line" />
               </div>
             ) : null}
@@ -278,13 +271,13 @@ export default function CustomerSpaceAccessForm({
               onClick={() => showProgressiveStep("email")}
               className="inline-flex min-h-[54px] w-full items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
             >
-              {localeCode === "en" ? "Continue with my email" : "Continuer avec mon e-mail"}
+              {copy.access.continueWithEmail}
             </button>
           </div>
         ) : progressiveStep === "email" ? (
           <form className="space-y-4" onSubmit={handleProgressiveEmailSubmit} noValidate>
             <div className="text-left">
-              <label className="sr-only" htmlFor={emailId}>{localeCode === "en" ? "Email address" : "Adresse e-mail"}</label>
+              <label className="sr-only" htmlFor={emailId}>{copy.access.emailAddress}</label>
               <div className="relative">
                 <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/45" aria-hidden="true" />
                 <input
@@ -294,7 +287,7 @@ export default function CustomerSpaceAccessForm({
                   autoFocus
                   value={email}
                   onChange={(event) => updateDraft({ email: event.target.value })}
-                  placeholder={localeCode === "en" ? "Email address" : "Adresse e-mail"}
+                  placeholder={copy.access.emailAddress}
                   aria-invalid={email.length > 0 && !emailReady}
                   className="min-h-[54px] w-full rounded-full border border-dema-line bg-dema-paper py-3 pl-10 pr-4 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/35 focus:border-dema-forest/30 focus:ring-2 focus:ring-dema-forest/10"
                 />
@@ -305,7 +298,7 @@ export default function CustomerSpaceAccessForm({
               disabled={!emailReady}
               className="inline-flex min-h-[54px] w-full items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-not-allowed disabled:opacity-45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
             >
-              {localeCode === "en" ? "Continue" : "Continuer"}
+              {copy.access.continue}
             </button>
           </form>
         ) : (
@@ -317,11 +310,11 @@ export default function CustomerSpaceAccessForm({
                 onClick={() => showProgressiveStep("email")}
                 className="shrink-0 text-xs font-medium text-dema-forest underline decoration-dema-forest/25 underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
               >
-                {localeCode === "en" ? "Edit" : "Modifier"}
+                {copy.access.edit}
               </button>
             </div>
             <div className="text-left">
-              <label className="sr-only" htmlFor={passwordId}>{localeCode === "en" ? "Password" : "Mot de passe"}</label>
+              <label className="sr-only" htmlFor={passwordId}>{copy.access.password}</label>
               <div className="relative">
                 <KeyRound className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/45" aria-hidden="true" />
                 <input
@@ -334,8 +327,8 @@ export default function CustomerSpaceAccessForm({
                   value={password}
                   onChange={(event) => updateDraft({ password: event.target.value })}
                   placeholder={mode === "create"
-                    ? localeCode === "en" ? "Choose a password" : "Choisissez un mot de passe"
-                    : localeCode === "en" ? "Your password" : "Votre mot de passe"}
+                    ? copy.access.choosePassword
+                    : copy.access.currentPassword}
                   className="min-h-[54px] w-full rounded-full border border-dema-line bg-dema-paper py-3 pl-10 pr-4 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/35 focus:border-dema-forest/30 focus:ring-2 focus:ring-dema-forest/10"
                 />
               </div>
@@ -349,7 +342,7 @@ export default function CustomerSpaceAccessForm({
                 onClick={() => void handlePasswordReset()}
                 className="block min-h-8 text-left text-xs text-dema-muted underline decoration-dema-line underline-offset-4 hover:text-dema-forest disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
               >
-                {localeCode === "en" ? "Forgot your password?" : "Mot de passe oublié ?"}
+                {copy.access.forgotPassword}
               </button>
             ) : null}
             <button
@@ -359,15 +352,15 @@ export default function CustomerSpaceAccessForm({
             >
               {isSending ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" /> : null}
               {isSending
-                ? localeCode === "en" ? "Signing in…" : "Connexion…"
+                ? copy.access.signingIn
                 : mode === "create"
-                  ? localeCode === "en" ? "Create my access" : "Créer mon accès"
-                  : localeCode === "en" ? "Sign in" : "Se connecter"}
+                  ? copy.access.createAccess
+                  : copy.access.signIn}
             </button>
             <p className="text-center text-xs text-dema-muted">
               {mode === "create"
-                ? localeCode === "en" ? "Already have an account?" : "Vous avez déjà un compte ?"
-                : localeCode === "en" ? "Don’t have an account yet?" : "Vous n’avez pas encore de compte ?"}{" "}
+                ? copy.access.alreadyHasAccount
+                : copy.access.needsAccount}{" "}
               <button
                 type="button"
                 onClick={() => {
@@ -377,8 +370,8 @@ export default function CustomerSpaceAccessForm({
                 className="font-medium text-dema-forest underline decoration-dema-forest/25 underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
               >
                 {mode === "create"
-                  ? localeCode === "en" ? "Sign in" : "Se connecter"
-                  : localeCode === "en" ? "Create my access" : "Créer mon accès"}
+                  ? copy.access.signIn
+                  : copy.access.createAccess}
               </button>
             </p>
           </form>

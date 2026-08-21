@@ -4,6 +4,7 @@ import Link from "next/link";
 import { LoaderCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { exchangeFirebaseIdTokenForSession } from "@/lib/customer-auth-session.client";
+import { getAuthUiCopy } from "@/lib/auth-ui-copy";
 import {
   consumeGoogleRedirectAndGetIdToken,
   finishGoogleRedirect,
@@ -60,11 +61,10 @@ function withTimeout<T>(
   timeoutMs: number,
   localeCode: InterfaceLocaleCode,
 ) {
+  const copy = getAuthUiCopy(localeCode);
   return new Promise<T>((resolve, reject) => {
     const timeout = window.setTimeout(
-      () => reject(new Error(localeCode === "en"
-        ? "Google sign-in is taking too long. Try again."
-        : "La connexion Google prend trop de temps. Réessayez.")),
+      () => reject(new Error(copy.errors.googleCallbackTimeout)),
       timeoutMs,
     );
     promise.then(
@@ -81,24 +81,19 @@ function withTimeout<T>(
 }
 
 function friendlyGoogleError(error: unknown, localeCode: InterfaceLocaleCode) {
+  const copy = getAuthUiCopy(localeCode);
   const code = typeof error === "object" && error && "code" in error
     ? String(error.code)
     : "";
   if (code.includes("unauthorized-domain")) {
-    return localeCode === "en"
-      ? "Google is not authorised on this domain."
-      : "Google n’est pas autorisé sur ce domaine.";
+    return copy.errors.googleUnauthorizedDomain;
   }
   if (code.includes("account-exists-with-different-credential")) {
-    return localeCode === "en"
-      ? "This address already uses a password. Sign in with your email."
-      : "Cette adresse utilise déjà un mot de passe. Connectez-vous avec votre e-mail.";
+    return copy.errors.googleAccountUsesPassword;
   }
   return error instanceof Error
     ? error.message
-    : localeCode === "en"
-      ? "Google sign-in could not be completed."
-      : "La connexion Google n’a pas pu aboutir.";
+    : copy.errors.googleIncomplete;
 }
 
 export default function GoogleAuthCallbackClient({
@@ -108,6 +103,7 @@ export default function GoogleAuthCallbackClient({
   localeCode: InterfaceLocaleCode;
   returnTo: string;
 }) {
+  const copy = getAuthUiCopy(localeCode);
   const hasRun = useRef(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -140,9 +136,7 @@ export default function GoogleAuthCallbackClient({
         const marker = readMarker();
         if (marker?.returnTo === returnTo) {
           clearMarker();
-          throw new Error(localeCode === "en"
-            ? "Google sign-in was not completed. Try again."
-            : "La connexion Google n’a pas été finalisée. Réessayez.");
+          throw new Error(copy.errors.googleRedirectIncomplete);
         }
 
         writeMarker(returnTo);
@@ -157,7 +151,7 @@ export default function GoogleAuthCallbackClient({
         setError(friendlyGoogleError(callbackError, localeCode));
       }
     })();
-  }, [localeCode, returnTo]);
+  }, [copy, localeCode, returnTo]);
 
   async function retry() {
     setError(null);
@@ -176,7 +170,7 @@ export default function GoogleAuthCallbackClient({
         {error ? (
           <>
             <h1 className="text-2xl font-medium text-brand-blue">
-              {localeCode === "en" ? "Sign-in interrupted" : "Connexion interrompue"}
+              {copy.google.interruptedTitle}
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-dema-gray">{error}</p>
             <button
@@ -184,23 +178,23 @@ export default function GoogleAuthCallbackClient({
               onClick={() => void retry()}
               className="mt-6 inline-flex min-h-[54px] w-full items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-dema-forest/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
             >
-              {localeCode === "en" ? "Try again with Google" : "Réessayer avec Google"}
+              {copy.google.retry}
             </button>
             <Link
               href={buildLocalizedConnexionHref({ localeCode, returnTo })}
               className="mt-4 inline-flex min-h-10 items-center text-sm text-dema-gray underline-offset-4 hover:underline"
             >
-              {localeCode === "en" ? "Continue with my email" : "Continuer avec mon e-mail"}
+              {copy.access.continueWithEmail}
             </Link>
           </>
         ) : (
           <div role="status" aria-live="polite">
             <LoaderCircle className="mx-auto h-6 w-6 animate-spin text-dema-forest" aria-hidden="true" />
             <h1 className="mt-5 text-2xl font-medium text-brand-blue">
-              {localeCode === "en" ? "Signing in with Google" : "Connexion avec Google"}
+              {copy.google.callbackTitle}
             </h1>
             <p className="mt-3 text-sm text-dema-gray">
-              {localeCode === "en" ? "Finishing your sign-in…" : "Finalisation de votre accès…"}
+              {copy.google.callbackDescription}
             </p>
           </div>
         )}

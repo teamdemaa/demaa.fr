@@ -7,6 +7,7 @@ import SystemShareControl from "@/components/SystemShareControl";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
+import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
 import type { InterfaceLocaleCode, MarketCode } from "@/lib/international-context";
 import {
   getActionPlanSystemPayloadCacheKey,
@@ -45,6 +46,7 @@ export default function ActionPlanSystemPanel({
   marketCode?: MarketCode;
   toolOutboundSurface?: ToolOutboundSurface;
 }) {
+  const copy = getActionPlanUiCopy(localeCode).system;
   const [payload, setPayload] = useState<ActionPlanSystemPayload | null>(null);
   const [error, setError] = useState<{ slug: string; message: string } | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
@@ -97,14 +99,14 @@ export default function ActionPlanSystemPanel({
           message:
             fetchError instanceof Error
               ? fetchError.message
-              : localeCode === "en" ? "Unable to load this business type." : "Impossible de charger ce système métier.",
+              : copy.loadFailed,
         });
       });
 
     return () => {
       active = false;
     };
-  }, [cacheKey, demoMode, localeCode, marketCode, reloadKey, selectedSystemId]);
+  }, [cacheKey, copy.loadFailed, demoMode, localeCode, marketCode, reloadKey, selectedSystemId]);
 
   const currentPayload =
     readCachedActionPlanSystemPayload(cacheKey) ??
@@ -116,9 +118,9 @@ export default function ActionPlanSystemPanel({
       : null;
 
   return (
-    <section aria-label={localeCode === "en" ? "Business type" : "Système"} className="pt-3">
+    <section aria-label={copy.sectionLabel} className="pt-3">
       <h1 className="sr-only">
-        {localeCode === "en" ? "Business solutions" : "Solutions pour votre entreprise"}
+        {copy.title}
       </h1>
       <div className="mx-auto mb-6 w-full max-w-xl xl:w-[min(40vw,36rem)]">
         <div className="flex items-center gap-2">
@@ -139,7 +141,7 @@ export default function ActionPlanSystemPanel({
           ) : null}
         </div>
         {savedSystems.length > 1 ? (
-          <div className="mt-2 flex flex-wrap justify-center gap-1.5" aria-label={localeCode === "en" ? "Saved business types" : "Systèmes enregistrés"}>
+          <div className="mt-2 flex flex-wrap justify-center gap-1.5" aria-label={copy.savedSystems}>
             {savedSystems.map((system) => (
               <button
                 key={system.id}
@@ -158,10 +160,10 @@ export default function ActionPlanSystemPanel({
       {!selectedSystemId ? (
         <div className="rounded-[1.25rem] border border-dema-line bg-dema-paper px-6 py-12 text-center">
           <h2 id="action-plan-system-title" className="text-2xl font-light tracking-[-0.03em] text-brand-blue">
-            {localeCode === "en" ? "Choose your business type" : "Choisissez votre système métier"}
+            {copy.chooseTitle}
           </h2>
           <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-dema-muted">
-            {localeCode === "en" ? "Select your activity to see relevant tools and support." : "Sélectionnez votre activité parmi les 115 systèmes pour afficher ses solutions."}
+            {copy.chooseDescription}
           </p>
         </div>
       ) : null}
@@ -169,7 +171,7 @@ export default function ActionPlanSystemPanel({
       {selectedSystemId && !currentPayload && !currentError ? (
         <div className="flex min-h-48 items-center justify-center rounded-[1.25rem] border border-dema-line bg-dema-paper text-sm text-dema-muted">
           <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-          {localeCode === "en" ? "Loading business solutions…" : "Chargement du système métier…"}
+          {copy.loading}
         </div>
       ) : null}
 
@@ -185,7 +187,7 @@ export default function ActionPlanSystemPanel({
             className="demaa-secondary-button mt-4 min-h-11 gap-2"
           >
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
-            {localeCode === "en" ? "Try again" : "Réessayer"}
+            {copy.retry}
           </button>
         </div>
       ) : null}

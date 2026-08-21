@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import ActionPlanShareControl from "@/components/ActionPlanShareControl";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
+import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 export default function ActionPlanUtilityActions({
@@ -22,6 +23,7 @@ export default function ActionPlanUtilityActions({
   saveStatus: "idle" | "saving" | "error";
   localeCode?: InterfaceLocaleCode;
 }) {
+  const copy = getActionPlanUiCopy(localeCode).utility;
   const [menuOpen, setMenuOpen] = useState(false);
   const menuContainerRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -55,7 +57,7 @@ export default function ActionPlanUtilityActions({
   return (
     <div className="flex shrink-0 items-center justify-end gap-1 sm:gap-2">
         {saveStatus === "saving" ? (
-          <span className="px-2 text-xs text-dema-muted" role="status">{localeCode === "en" ? "Saving…" : "Sauvegarde…"}</span>
+          <span className="px-2 text-xs text-dema-muted" role="status">{copy.saving}</span>
         ) : null}
         {saveStatus === "error" ? (
           <button
@@ -63,7 +65,7 @@ export default function ActionPlanUtilityActions({
             onClick={onRetrySave}
             className="px-2 text-xs font-medium text-red-700 underline underline-offset-4"
           >
-            {localeCode === "en" ? "Try again" : "Réessayer"}
+            {copy.retry}
           </button>
         ) : null}
         <div ref={menuContainerRef} className="relative">
@@ -72,7 +74,7 @@ export default function ActionPlanUtilityActions({
             type="button"
             onClick={() => setMenuOpen((current) => !current)}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted sm:h-11 sm:w-11"
-            aria-label={localeCode === "en" ? "Plan actions" : "Actions du plan"}
+            aria-label={copy.menuLabel}
             aria-expanded={menuOpen}
             aria-controls="action-plan-utility-menu"
           >
@@ -89,7 +91,7 @@ export default function ActionPlanUtilityActions({
                 }}
                 className="block w-full appearance-none whitespace-nowrap border-0 bg-transparent px-2 py-1.5 text-left text-sm font-normal leading-6 text-brand-blue transition-colors hover:text-dema-forest focus-visible:outline-none focus-visible:underline"
               >
-                {localeCode === "en" ? "New plan" : "Nouveau plan"}
+                {copy.newPlan}
               </button>
             </div>
           ) : null}

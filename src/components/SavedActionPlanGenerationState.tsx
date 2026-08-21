@@ -9,6 +9,7 @@ import {
   resumeAuthenticatedActionPlanGeneration,
   watchAuthenticatedActionPlanGeneration,
 } from "@/lib/action-plan-generation.client";
+import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
 import { buildLocalizedConnexionHref } from "@/lib/localized-auth-path";
@@ -24,6 +25,7 @@ export default function SavedActionPlanGenerationState({
   status: "failed" | "generating";
   localeCode?: InterfaceLocaleCode;
 }) {
+  const copy = getActionPlanUiCopy(localeCode).generationState;
   const status = initialStatus;
   const [error, setError] = useState<string | null>(null);
   const [isRetrying, setIsRetrying] = useState(false);
@@ -50,12 +52,12 @@ export default function SavedActionPlanGenerationState({
           window.location.replace(getLocalizedActionPlanPath(localeCode, `/plans/${encodeURIComponent(planId)}`));
           return;
         }
-        setError(localeCode === "en" ? "The generation status could not be checked." : "Impossible de vérifier la génération pour le moment.");
+        setError(copy.statusCheckFailed);
       });
     return () => {
       controller.abort();
     };
-  }, [localeCode, planId, status]);
+  }, [copy.statusCheckFailed, localeCode, planId, status]);
 
   async function retry() {
     setIsRetrying(true);
@@ -76,7 +78,7 @@ export default function SavedActionPlanGenerationState({
       }
       setError(retryError instanceof Error
         ? retryError.message
-        : localeCode === "en" ? "Generation could not restart." : "La génération n’a pas pu redémarrer.");
+        : copy.restartFailed);
       setIsRetrying(false);
     }
   }
@@ -87,11 +89,11 @@ export default function SavedActionPlanGenerationState({
         {status === "generating" ? (
           <>
             <LoaderCircle className="mx-auto h-6 w-6 animate-spin text-dema-forest" aria-hidden="true" />
-            <h1 className="mt-5 text-3xl font-light tracking-[-0.04em]">{localeCode === "en" ? "Generation in progress" : "Génération en cours"}</h1>
+            <h1 className="mt-5 text-3xl font-light tracking-[-0.04em]">{copy.inProgress}</h1>
           </>
         ) : (
           <>
-            <h1 className="text-3xl font-light tracking-[-0.04em]">{localeCode === "en" ? "Generation interrupted" : "Génération interrompue"}</h1>
+            <h1 className="text-3xl font-light tracking-[-0.04em]">{copy.interrupted}</h1>
             <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
               {canRetry ? (
                 <button
@@ -100,16 +102,14 @@ export default function SavedActionPlanGenerationState({
                   disabled={isRetrying}
                   className="inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-semibold text-white disabled:opacity-50"
                 >
-                  {isRetrying
-                    ? localeCode === "en" ? "Trying again…" : "Nouvelle tentative…"
-                    : localeCode === "en" ? "Try again" : "Réessayer"}
+                  {isRetrying ? copy.retrying : copy.retry}
                 </button>
               ) : null}
               <Link
                 href={getLocalizedActionPlanPath(localeCode, "/plans/new")}
                 className="inline-flex min-h-11 items-center justify-center rounded-full border border-dema-line px-5 text-sm font-medium text-brand-blue"
               >
-                {localeCode === "en" ? "New plan" : "Nouveau plan"}
+                {copy.newPlan}
               </Link>
             </div>
           </>

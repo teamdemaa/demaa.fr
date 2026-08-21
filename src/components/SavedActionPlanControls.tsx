@@ -11,6 +11,7 @@ import {
 } from "react";
 import ActionPlanShareControl from "@/components/ActionPlanShareControl";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
+import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
@@ -36,11 +37,12 @@ export function SavedActionPlanSelector({
   title: string;
   localeCode?: InterfaceLocaleCode;
 }) {
+  const copy = getActionPlanUiCopy(localeCode).savedPlan;
   return (
     <div className="flex h-11 min-w-0 flex-1 items-center rounded-full border border-dema-line bg-dema-paper px-1.5 shadow-[0_8px_24px_rgba(23,35,29,0.035)] focus-within:border-dema-forest/30 focus-within:ring-2 focus-within:ring-dema-forest/20">
       <input
         ref={inputRef}
-        aria-label={localeCode === "en" ? "Plan name" : "Nom du plan"}
+        aria-label={copy.planName}
         value={title}
         onChange={(event) => onTitleChange(event.target.value.slice(0, 120))}
         onBlur={() => {
@@ -88,6 +90,7 @@ export function SavedActionPlanMenu({
   workspace: ActionPlanWorkspaceState;
   localeCode?: InterfaceLocaleCode;
 }) {
+  const copy = getActionPlanUiCopy(localeCode).savedPlan;
   const [open, setOpen] = useState(false);
   const [showPlans, setShowPlans] = useState(false);
   const [showSourceText, setShowSourceText] = useState(false);
@@ -150,7 +153,7 @@ export function SavedActionPlanMenu({
         type="button"
         onClick={() => setOpen((current) => !current)}
         className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted transition hover:border-dema-forest/30 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
-        aria-label={localeCode === "en" ? "Plan actions" : "Actions du plan"}
+        aria-label={copy.planActions}
         aria-expanded={open}
         aria-controls={menuId}
       >
@@ -170,7 +173,7 @@ export function SavedActionPlanMenu({
                 aria-expanded={showPlans}
               >
                 <span className="flex items-center justify-between gap-4">
-                  {localeCode === "en" ? "Switch plan" : "Changer de plan"}
+                  {copy.switchPlan}
                   <ChevronRight className={`h-4 w-4 transition ${showPlans ? "rotate-90" : ""}`} aria-hidden="true" />
                 </span>
               </button>
@@ -201,12 +204,12 @@ export function SavedActionPlanMenu({
                           <span className="block truncate text-sm font-medium text-brand-blue">{displayedTitle}</span>
                           <span className="block text-[0.7rem] text-dema-muted">
                             {openingPlanId === availablePlan.id
-                              ? localeCode === "en" ? "Opening…" : "Ouverture…"
+                              ? copy.opening
                               : availablePlan.status === "generating"
-                                ? localeCode === "en" ? "Generating" : "Génération en cours"
+                                ? copy.generating
                                 : availablePlan.status === "failed"
-                                  ? localeCode === "en" ? "Needs attention" : "À reprendre"
-                                  : `${localeCode === "en" ? "Updated" : "Modifié le"} ${new Intl.DateTimeFormat(localeCode === "en" ? "en-GB" : "fr-FR", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(availablePlan.updatedAt))}`}
+                                  ? copy.needsAttention
+                                  : `${copy.updated} ${new Intl.DateTimeFormat(localeCode === "en" ? "en-GB" : "fr-FR", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(availablePlan.updatedAt))}`}
                           </span>
                         </span>
                       </button>
@@ -227,7 +230,7 @@ export function SavedActionPlanMenu({
                 className={itemClassName}
                 aria-expanded={showSourceText}
               >
-                {localeCode === "en" ? "View original request" : "Voir la demande initiale"}
+                {copy.source}
               </button>
               {showSourceText ? (
                 <div className="my-1 max-h-56 max-w-[calc(100vw-3rem)] overflow-y-auto whitespace-pre-wrap border-y border-dema-line px-2 py-2 text-xs leading-5 text-brand-blue">
@@ -246,7 +249,7 @@ export function SavedActionPlanMenu({
             }}
             className={itemClassName}
           >
-            {localeCode === "en" ? "New plan" : "Nouveau plan"}
+            {copy.newPlan}
           </button>
           <div onClick={() => setOpen(false)}>
             <ActionPlanShareControl
@@ -265,7 +268,7 @@ export function SavedActionPlanMenu({
             }}
             className={itemClassName}
           >
-            {localeCode === "en" ? "Rename" : "Renommer"}
+            {copy.rename}
           </button>
           <button
             type="button"
@@ -277,8 +280,8 @@ export function SavedActionPlanMenu({
             className={`${itemClassName} text-red-700 hover:text-red-800`}
           >
             {deleting
-              ? localeCode === "en" ? "Deleting…" : "Suppression…"
-              : localeCode === "en" ? "Delete" : "Supprimer"}
+              ? copy.deleting
+              : copy.delete}
           </button>
         </div>
       ) : null}

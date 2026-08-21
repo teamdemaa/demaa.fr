@@ -39,6 +39,7 @@ import {
 import type {
   PersistableActionPlan,
 } from "@/lib/action-plan-contract";
+import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
 import {
   getActionPlanActions,
   type ActionPlanViewAction,
@@ -54,17 +55,7 @@ type TaskView = "list" | "kanban";
 type TaskFilter = "week" | "all" | "overdue" | "done";
 
 function getTaskFilterLabels(localeCode: InterfaceLocaleCode): Record<TaskFilter, string> {
-  return localeCode === "en" ? {
-    week: "This week",
-    all: "All actions",
-    overdue: "Overdue",
-    done: "Completed",
-  } : {
-    week: "Cette semaine",
-    all: "Toutes les actions",
-    overdue: "En retard",
-    done: "Terminées",
-  };
+  return getActionPlanUiCopy(localeCode).result.filters;
 }
 
 function TaskFilterMenu({
@@ -77,6 +68,7 @@ function TaskFilterMenu({
   localeCode: InterfaceLocaleCode;
 }) {
   const taskFilterLabels = getTaskFilterLabels(localeCode);
+  const copy = getActionPlanUiCopy(localeCode).result;
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -126,7 +118,7 @@ function TaskFilterMenu({
       {open ? (
         <div
           role="menu"
-          aria-label={localeCode === "en" ? "Filter actions" : "Filtrer les actions"}
+          aria-label={copy.filterLabel}
           className="absolute left-0 top-full z-50 mt-2 min-w-full overflow-hidden rounded-2xl border border-dema-line bg-dema-paper p-1.5 shadow-[0_18px_46px_rgba(23,35,29,0.12)]"
         >
           {(Object.keys(taskFilterLabels) as TaskFilter[]).map((option) => (
@@ -163,14 +155,11 @@ function getStatusMeta(localeCode: InterfaceLocaleCode): Record<
   ActionPlanTaskStatus,
   { label: string; icon: typeof Circle }
 > {
-  return localeCode === "en" ? {
-    todo: { label: "To do", icon: Circle },
-    in_progress: { label: "In progress", icon: CircleDot },
-    done: { label: "Completed", icon: CheckCircle2 },
-  } : {
-    todo: { label: "À faire", icon: Circle },
-    in_progress: { label: "En cours", icon: CircleDot },
-    done: { label: "Terminé", icon: CheckCircle2 },
+  const labels = getActionPlanUiCopy(localeCode).result.statuses;
+  return {
+    todo: { label: labels.todo, icon: Circle },
+    in_progress: { label: labels.in_progress, icon: CircleDot },
+    done: { label: labels.done, icon: CheckCircle2 },
   };
 }
 
@@ -186,6 +175,7 @@ function TaskStatusButton({
   localeCode: InterfaceLocaleCode;
 }) {
   const statusMeta = getStatusMeta(localeCode);
+  const copy = getActionPlanUiCopy(localeCode).result;
   const StatusIcon = statusMeta[status].icon;
   const nextStatus: ActionPlanTaskStatus =
     status === "todo" ? "in_progress" : status === "in_progress" ? "done" : "todo";
@@ -206,8 +196,8 @@ function TaskStatusButton({
             ? "border-dema-forest/25 bg-dema-sage text-dema-forest"
             : "border-dema-line bg-dema-paper text-dema-muted"
       }`}
-      aria-label={`${statusMeta[status].label}. ${localeCode === "en" ? "Move to" : "Passer à"} ${statusMeta[nextStatus].label}`}
-      title={`${localeCode === "en" ? "Move to" : "Passer à"} ${statusMeta[nextStatus].label}`}
+      aria-label={`${statusMeta[status].label}. ${copy.moveTo} ${statusMeta[nextStatus].label}`}
+      title={`${copy.moveTo} ${statusMeta[nextStatus].label}`}
     >
       <StatusIcon className="h-4 w-4" aria-hidden="true" />
       {!compact ? statusMeta[status].label : null}
@@ -234,6 +224,7 @@ function ActionDrawer({
   contextualAid?: ActionPlanContextualAid;
   localeCode: InterfaceLocaleCode;
 }) {
+  const copy = getActionPlanUiCopy(localeCode).result;
   const taskState = workspace.tasks[action.id];
   const effectiveTitle = taskState?.overrides.title || action.title;
   const effectiveObjective = taskState?.overrides.objective || action.objective;
@@ -337,7 +328,7 @@ function ActionDrawer({
   }
 
   function openSupportEditor() {
-    setDraftSupportLabel("Support personnel");
+    setDraftSupportLabel(copy.defaultSupportLabel);
     setSupportEditorOpen(true);
   }
 
@@ -423,7 +414,7 @@ function ActionDrawer({
       >
         <header className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-dema-line bg-dema-paper/95 px-5 py-5 backdrop-blur sm:px-7">
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">{localeCode === "en" ? "Action" : "Action"}</p>
+            <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">{copy.action}</p>
             <textarea
               id="action-drawer-title"
               value={draftTitle}
@@ -436,11 +427,11 @@ function ActionDrawer({
                 }
               }}
               rows={1}
-              aria-label={localeCode === "en" ? "Action title" : "Titre de l’action"}
+              aria-label={copy.actionTitle}
               className="mt-1 min-h-7 w-full resize-none overflow-hidden rounded-lg bg-transparent text-xl font-medium leading-snug text-brand-blue [field-sizing:content] outline-none transition focus:bg-dema-sage/35"
             />
           </div>
-          <button type="button" onClick={saveDraftsAndClose} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line" aria-label={localeCode === "en" ? "Close" : "Fermer"}>
+          <button type="button" onClick={saveDraftsAndClose} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line" aria-label={copy.close}>
             <X className="h-4 w-4" aria-hidden="true" />
           </button>
         </header>
@@ -459,14 +450,14 @@ function ActionDrawer({
                 value={taskState.dueDate || ""}
                 onChange={(event) => updateTask((current) => ({ ...current, dueDate: event.target.value || null }))}
                 className="bg-transparent text-brand-blue outline-none"
-                aria-label={localeCode === "en" ? "Due date" : "Échéance"}
+                aria-label={copy.dueDate}
               />
             </label>
           </div>
 
           <div>
             <label htmlFor="action-drawer-objective" className="text-xs font-medium uppercase tracking-[0.12em] text-dema-muted">
-              {localeCode === "en" ? "Expected result" : "Résultat attendu"}
+              {copy.expectedResult}
             </label>
             <textarea
               id="action-drawer-objective"
@@ -479,7 +470,7 @@ function ActionDrawer({
           </div>
 
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">{localeCode === "en" ? "Tasks" : "Tâches"}</p>
+            <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">{copy.tasks}</p>
             <div className="mt-3 space-y-2">
               {draftSteps.split("\n").map((step, index) => {
                 const checked = taskState.completedStepIndexes.includes(index);
@@ -495,7 +486,7 @@ function ActionDrawer({
                           : [...current.completedStepIndexes, index].sort((left, right) => left - right),
                       }))}
                       className="mt-0.5 h-4 w-4 accent-[#2f664a]"
-                      aria-label={localeCode === "en" ? `Mark task ${index + 1} as completed` : `Marquer la tâche ${index + 1} comme terminée`}
+                      aria-label={copy.markTaskDone(index + 1)}
                     />
                     <textarea
                       value={step}
@@ -517,7 +508,7 @@ function ActionDrawer({
                         addTaskAfter(index, event.currentTarget);
                       }}
                       rows={1}
-                      aria-label={localeCode === "en" ? `Task ${index + 1}` : `Tâche ${index + 1}`}
+                      aria-label={copy.taskLabel(index + 1)}
                       data-task-index={index}
                       className={`min-h-6 min-w-0 flex-1 resize-none overflow-hidden bg-transparent [field-sizing:content] outline-none transition focus:bg-dema-paper/70 ${checked ? "text-dema-muted" : ""}`}
                     />
@@ -526,8 +517,8 @@ function ActionDrawer({
                         type="button"
                         onClick={() => removeTask(index)}
                         className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-dema-muted/70 transition hover:bg-dema-paper hover:text-red-700 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100"
-                        aria-label={localeCode === "en" ? `Delete task ${index + 1}` : `Supprimer la tâche ${index + 1}`}
-                        title={localeCode === "en" ? "Delete task" : "Supprimer la tâche"}
+                        aria-label={copy.deleteTaskLabel(index + 1)}
+                        title={copy.deleteTask}
                       >
                         <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
                       </button>
@@ -545,12 +536,12 @@ function ActionDrawer({
                   value={draftSupportLabel}
                   onChange={(event) => setDraftSupportLabel(event.target.value)}
                   onBlur={saveSupport}
-                  aria-label={localeCode === "en" ? "Support title" : "Titre du support"}
+                  aria-label={copy.supportTitle}
                   className="min-w-0 flex-1 bg-transparent text-xs font-medium uppercase tracking-[0.12em] text-dema-forest outline-none"
                 />
                 {supportIsCopyable ? (
                   <button type="button" onClick={() => void copySupport()} className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-dema-line px-3 text-xs text-dema-forest">
-                    <Copy className="h-3.5 w-3.5" aria-hidden="true" /> {localeCode === "en" ? "Copy" : "Copier"}
+                    <Copy className="h-3.5 w-3.5" aria-hidden="true" /> {copy.copy}
                   </button>
                 ) : null}
               </div>
@@ -559,7 +550,7 @@ function ActionDrawer({
                 onChange={(event) => setDraftSupportContent(event.target.value)}
                 onBlur={saveSupport}
                 rows={4}
-                aria-label={localeCode === "en" ? "Support content" : "Contenu du support"}
+                aria-label={copy.supportContent}
                 className="mt-3 min-h-[5rem] w-full resize-y whitespace-pre-wrap bg-transparent text-sm leading-relaxed text-brand-blue outline-none"
               />
             </div>
@@ -570,7 +561,7 @@ function ActionDrawer({
               className="inline-flex min-h-10 items-center gap-2 rounded-full border border-dema-line px-4 text-sm text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
             >
               <Plus className="h-4 w-4" aria-hidden="true" />
-              {localeCode === "en" ? "Add personal support" : "Ajouter un support personnel"}
+              {copy.addSupport}
             </button>
           )}
 
@@ -701,12 +692,12 @@ function ActionDrawer({
           ) : null}
 
           <label className="block text-xs font-medium text-dema-muted">
-            {localeCode === "en" ? "Personal notes" : "Notes personnelles"}
+            {copy.personalNotes}
             <textarea
               value={taskState.notes}
               onChange={(event) => updateTask((current) => ({ ...current, notes: event.target.value.slice(0, 4_000) }))}
               rows={4}
-              placeholder={localeCode === "en" ? "Add a follow-up, decision or note…" : "Ajoutez un suivi, une décision ou un point à retenir…"}
+              placeholder={copy.notesPlaceholder}
               className="mt-2 w-full resize-y rounded-xl border border-dema-line bg-dema-cream p-3 text-sm leading-relaxed text-brand-blue outline-none focus:border-dema-forest/30"
             />
           </label>
@@ -714,14 +705,14 @@ function ActionDrawer({
           <div className="border-t border-dema-line pt-5">
             {confirmingDelete ? (
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between" role="alert">
-                <p className="text-sm text-brand-blue">{localeCode === "en" ? "Delete this action?" : "Supprimer cette action ?"}</p>
+                <p className="text-sm text-brand-blue">{copy.deleteQuestion}</p>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setConfirmingDelete(false)}
                     className="min-h-10 rounded-full px-4 text-sm text-dema-muted transition hover:text-brand-blue"
                   >
-                    Annuler
+                    {copy.cancel}
                   </button>
                   <button
                     type="button"
@@ -731,7 +722,7 @@ function ActionDrawer({
                     }}
                     className="min-h-10 rounded-full border border-red-200 px-4 text-sm text-red-700 transition hover:bg-red-50"
                   >
-                    {localeCode === "en" ? "Delete" : "Supprimer"}
+                    {copy.delete}
                   </button>
                 </div>
               </div>
@@ -742,7 +733,7 @@ function ActionDrawer({
                 className="inline-flex min-h-10 items-center gap-2 text-sm text-dema-muted transition hover:text-red-700"
               >
                 <Trash2 className="h-4 w-4" aria-hidden="true" />
-                {localeCode === "en" ? "Delete action" : "Supprimer l’action"}
+                {copy.deleteAction}
               </button>
             )}
           </div>
@@ -785,6 +776,7 @@ export default function ActionPlanResult({
   localeCode?: InterfaceLocaleCode;
   contentLocaleCode?: InterfaceLocaleCode;
 }) {
+  const copy = getActionPlanUiCopy(localeCode).result;
   const statusMeta = getStatusMeta(localeCode);
   const [view, setView] = useState<TaskView>("list");
   const [filter, setFilter] = useState<TaskFilter>("week");
@@ -854,7 +846,7 @@ export default function ActionPlanResult({
   return (
     <div className="pb-24 xl:pb-20">
       <section aria-labelledby="tasks-title">
-          <h2 id="tasks-title" className="sr-only">{localeCode === "en" ? "Plan actions" : "Actions du plan"}</h2>
+          <h2 id="tasks-title" className="sr-only">{copy.planActions}</h2>
           <div className="flex min-w-0 items-center gap-2">
             <div className="flex min-w-0 flex-1 items-center gap-2">
               <TaskFilterMenu value={filter} onChange={setFilter} localeCode={localeCode} />
@@ -862,8 +854,8 @@ export default function ActionPlanResult({
                 type="button"
                 onClick={() => setView((current) => current === "list" ? "kanban" : "list")}
                 className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-forest transition hover:border-dema-forest/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
-                aria-label={view === "list" ? localeCode === "en" ? "Show Kanban" : "Afficher en Kanban" : localeCode === "en" ? "Show list" : "Afficher en liste"}
-                title={view === "list" ? localeCode === "en" ? "Show Kanban" : "Afficher en Kanban" : localeCode === "en" ? "Show list" : "Afficher en liste"}
+                aria-label={view === "list" ? copy.showKanban : copy.showList}
+                title={view === "list" ? copy.showKanban : copy.showList}
               >
                 {view === "list" ? (
                   <Columns3 className="h-4 w-4" aria-hidden="true" />
@@ -911,7 +903,7 @@ export default function ActionPlanResult({
                         </div>
                       </article>
                     ))}
-                    {visibleActions.every((action) => workspace.tasks[action.id].status !== status) ? <p className="px-2 py-4 text-xs text-dema-muted">{localeCode === "en" ? "No actions" : "Aucune action"}</p> : null}
+                    {visibleActions.every((action) => workspace.tasks[action.id].status !== status) ? <p className="px-2 py-4 text-xs text-dema-muted">{copy.noActions}</p> : null}
                   </div>
                 </section>
               ))}
@@ -923,10 +915,10 @@ export default function ActionPlanResult({
               type="button"
               onClick={addAndOpenAction}
               className="mt-3 flex h-[52px] w-full items-center gap-2 rounded-[1.1rem] border border-dashed border-dema-line bg-dema-soft/35 px-5 text-left text-sm text-dema-muted transition hover:border-dema-forest/30 hover:bg-dema-soft/60 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
-              aria-label={localeCode === "en" ? "Add an action" : "Ajouter une action"}
+              aria-label={copy.addAction}
             >
               <Plus className="h-4 w-4" aria-hidden="true" />
-              {localeCode === "en" ? "Add an action" : "Ajouter une action"}
+              {copy.addAction}
             </button>
           ) : null}
       </section>

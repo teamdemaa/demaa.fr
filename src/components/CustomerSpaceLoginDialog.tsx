@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
+import { getAuthUiCopy } from "@/lib/auth-ui-copy";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 export default function CustomerSpaceLoginDialog({
@@ -20,6 +21,7 @@ export default function CustomerSpaceLoginDialog({
   onClose?: () => void;
   returnTo?: string;
 }) {
+  const copy = getAuthUiCopy(localeCode);
   const router = useRouter();
   const closeDialog = useCallback(
     () => onClose ? onClose() : router.back(),
@@ -43,7 +45,7 @@ export default function CustomerSpaceLoginDialog({
       >
         <button
           type="button"
-          aria-label={localeCode === "en" ? "Close" : "Fermer"}
+          aria-label={copy.page.close}
           data-dialog-initial-focus
           onClick={closeDialog}
           className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
@@ -61,7 +63,7 @@ export default function CustomerSpaceLoginDialog({
 
         <div className={message ? "mt-6" : ""}>
           <CustomerSpaceAccessForm
-            choiceTitle={localeCode === "en" ? "Sign in" : "Connectez-vous"}
+            choiceTitle={copy.page.signInTitle}
             localeCode={localeCode}
             onAuthenticated={onAuthenticated}
             returnTo={returnTo}

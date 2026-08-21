@@ -4,6 +4,7 @@ import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import CustomerLogoutButton from "@/components/CustomerLogoutButton";
 import Navbar from "@/components/Navbar";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
+import { getAuthUiCopy } from "@/lib/auth-ui-copy";
 import { ensureDefaultCompanyForIdentity } from "@/lib/company-membership.server";
 import {
   CUSTOMER_SPACE_COOKIE,
@@ -25,6 +26,7 @@ export default async function CustomerConnexionPage({
   localeCode: InterfaceLocaleCode;
   searchParams: CustomerConnexionSearchParams;
 }) {
+  const copy = getAuthUiCopy(localeCode);
   const params = await searchParams;
   const rawReturnTo = Array.isArray(params.returnTo) ? params.returnTo[0] : params.returnTo;
   const rawMessage = Array.isArray(params.message) ? params.message[0] : params.message;
@@ -53,21 +55,19 @@ export default async function CustomerConnexionPage({
       <Navbar minimal localeCode={localeCode} />
       <main className="px-4 py-12 md:px-8 md:py-20">
         <section className="mx-auto max-w-md rounded-[1.15rem] border border-dema-line bg-dema-paper p-6 text-center shadow-[0_12px_36px_rgba(23,35,29,0.04)] md:p-8">
-          <h1 className="sr-only">{localeCode === "en" ? "Sign in to Demaa" : "Connexion à Demaa"}</h1>
+          <h1 className="sr-only">{copy.page.title}</h1>
           {rawMessage ? (
             <p className="mb-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
-              {localeCode === "en" ? "Sign in to continue." : rawMessage.slice(0, 180)}
+              {localeCode === "en" ? copy.page.continueMessage : rawMessage.slice(0, 180)}
             </p>
           ) : null}
           {companyContextUnavailable ? (
             <p role="alert" className="mb-4 rounded-[0.9rem] border border-dema-forest/15 bg-dema-sage/70 px-4 py-3 text-sm text-dema-forest">
-              {localeCode === "en"
-                ? "Your session is valid, but your company space is unavailable. Sign in with another account or sign out from the application."
-                : "Votre session est valide, mais votre espace entreprise est indisponible. Utilisez un autre compte ou déconnectez-vous depuis l’application."}
+              {copy.page.companyUnavailable}
             </p>
           ) : null}
           <CustomerSpaceAccessForm
-            choiceTitle={localeCode === "en" ? "Sign in" : "Connectez-vous"}
+            choiceTitle={copy.page.signInTitle}
             localeCode={localeCode}
             returnTo={returnTo}
           />

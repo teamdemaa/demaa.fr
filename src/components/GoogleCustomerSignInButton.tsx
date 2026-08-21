@@ -3,6 +3,7 @@
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { exchangeFirebaseIdTokenForSession } from "@/lib/customer-auth-session.client";
+import { getAuthUiCopy } from "@/lib/auth-ui-copy";
 import {
   hasFirebaseGoogleAuthConfiguration,
   isFirebaseGoogleAuthAllowedOnCurrentHost,
@@ -53,6 +54,7 @@ function shouldOfferRedirectFallback(error: unknown) {
 }
 
 function getGoogleErrorMessage(error: unknown, localeCode: InterfaceLocaleCode) {
+  const copy = getAuthUiCopy(localeCode);
   const code = typeof error === "object" && error && "code" in error
     ? String(error.code)
     : "";
@@ -61,31 +63,23 @@ function getGoogleErrorMessage(error: unknown, localeCode: InterfaceLocaleCode) 
     return null;
   }
   if (code.includes("popup-blocked")) {
-    return localeCode === "en"
-      ? "The Google window was blocked. Try again to continue by redirect."
-      : "La fenêtre Google a été bloquée. Réessayez pour continuer par redirection.";
+    return copy.errors.googlePopupBlocked;
   }
   if (
     code.includes("popup-timeout")
     || code.includes("operation-not-supported-in-this-environment")
   ) {
-    return localeCode === "en"
-      ? "The Google window did not respond. Try again to continue by redirect."
-      : "La fenêtre Google n’a pas répondu. Réessayez pour continuer par redirection.";
+    return copy.errors.googlePopupTimeout;
   }
   if (code.includes("unauthorized-domain")) {
-    return localeCode === "en"
-      ? "Google sign-in is not yet authorised on this domain."
-      : "La connexion Google n’est pas encore autorisée sur ce domaine.";
+    return copy.errors.googleUnauthorizedDomain;
   }
   if (code.includes("account-exists-with-different-credential")) {
-    return localeCode === "en"
-      ? "This address already uses a password. Sign in with your email."
-      : "Cette adresse utilise déjà un mot de passe. Connectez-vous avec votre e-mail.";
+    return copy.errors.googleAccountUsesPassword;
   }
   return error instanceof Error
     ? error.message
-    : localeCode === "en" ? "Google sign-in could not be completed." : "La connexion Google n’a pas pu aboutir.";
+    : copy.errors.googleIncomplete;
 }
 
 export default function GoogleCustomerSignInButton({
@@ -101,6 +95,7 @@ export default function GoogleCustomerSignInButton({
   returnTo?: string;
   localeCode?: InterfaceLocaleCode;
 }) {
+  const copy = getAuthUiCopy(localeCode);
   const [isLoading, setIsLoading] = useState(false);
   const [preferRedirect, setPreferRedirect] = useState(false);
 
@@ -150,8 +145,8 @@ export default function GoogleCustomerSignInButton({
         <span aria-hidden="true" className="text-base font-semibold text-dema-forest">G</span>
       )}
       {isLoading
-        ? localeCode === "en" ? "Signing in…" : "Connexion…"
-        : localeCode === "en" ? "Continue with Google" : "Continuer avec Google"}
+        ? copy.google.signingIn
+        : copy.google.continue}
     </button>
   );
 }

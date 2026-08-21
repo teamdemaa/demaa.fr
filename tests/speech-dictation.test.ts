@@ -288,6 +288,7 @@ describe("speech dictation", () => {
       "src/components/ActionPlanGenerationBar.tsx",
       "utf8",
     );
+    const uiCopy = readFileSync("src/lib/action-plan-ui-copy.ts", "utf8");
     const coaching = readFileSync("src/components/CoachingPanel.tsx", "utf8");
 
     expect(actionPlan).toContain("useSpeechDictation");
@@ -296,8 +297,10 @@ describe("speech dictation", () => {
     expect(generationBar).toContain("continuous: true");
     expect(generationBar).toContain("situationDictation.handleValueChange");
     expect(generationBar).toContain("aria-label={situationDictation.isListening");
-    expect(generationBar).toContain('"Arrêter la dictée"');
-    expect(generationBar).toContain('"Dicter ma demande"');
+    expect(generationBar).toContain("copy.stopDictation");
+    expect(generationBar).toContain("copy.dictate");
+    expect(uiCopy).toContain('stopDictation: "Arrêter la dictée"');
+    expect(uiCopy).toContain('dictate: "Dicter ma demande"');
     expect(generationBar).toContain('language: contentLocaleCode === "en" ? "en-GB" : "fr-FR"');
     expect(coaching).toContain("useSpeechDictation");
     expect(coaching).toContain("continuous: true");

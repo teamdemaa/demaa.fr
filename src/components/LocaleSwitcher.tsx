@@ -22,6 +22,12 @@ export function getLocaleSwitchHref(
   return `${localizedPathname}${search ? `?${search}` : ""}`;
 }
 
+export function getLocaleSwitchCopy(localeCode: InterfaceLocaleCode) {
+  return localeCode === "en"
+    ? { ariaLabel: "Afficher Demaa en français", label: "FR" }
+    : { ariaLabel: "View Demaa in English", label: "EN" };
+}
+
 export default function LocaleSwitcher({
   localeCode,
 }: {
@@ -29,7 +35,7 @@ export default function LocaleSwitcher({
 }) {
   const [pending, setPending] = useState(false);
   const targetLocaleCode = localeCode === "en" ? "fr" : "en";
-  const label = targetLocaleCode === "en" ? "English" : "Français";
+  const switchCopy = getLocaleSwitchCopy(localeCode);
 
   async function switchLocale() {
     if (pending) return;
@@ -54,12 +60,12 @@ export default function LocaleSwitcher({
   return (
     <button
       type="button"
-      aria-label={localeCode === "en" ? "Afficher Demaa en français" : "View Demaa in English"}
+      aria-label={switchCopy.ariaLabel}
       disabled={pending}
       onClick={switchLocale}
-      className="inline-flex min-h-10 items-center px-1 text-xs font-medium text-dema-forest transition hover:text-brand-blue disabled:cursor-wait disabled:opacity-60 sm:min-h-11 sm:text-sm"
+      className="inline-flex size-10 items-center justify-center rounded-full text-[11px] font-medium tracking-[0.08em] text-dema-muted transition hover:bg-dema-sage/35 hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/45 disabled:cursor-wait disabled:opacity-60 sm:size-11"
     >
-      {pending ? "…" : label}
+      {pending ? "…" : switchCopy.label}
     </button>
   );
 }

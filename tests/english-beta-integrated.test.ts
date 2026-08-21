@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 function source(path: string) {
@@ -15,7 +15,9 @@ describe("English beta integrated release boundaries", () => {
     expect(copy).toContain("Clarify your priorities");
     expect(layout).toContain("ENGLISH_BETA_TITLE");
     expect(layout).toContain("ENGLISH_BETA_DESCRIPTION");
-    expect(layout).toContain('url: "/twitter-image"');
+    expect(layout).not.toContain('url: "/twitter-image"');
+    expect(existsSync("src/app/(english)/en/twitter-image.tsx")).toBe(true);
+    expect(existsSync("src/app/(english)/en/opengraph-image.tsx")).toBe(true);
     expect(layout).toContain("robots: { follow: false, index: false }");
     expect(page).toContain('canonical: "/en"');
     expect(page).toContain('languages: { fr: "/", en: "/en" }');

@@ -9,6 +9,8 @@ import {
   type KeyboardEvent,
 } from "react";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
+import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
+import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 function normalizeSearchValue(value: string) {
   return value
@@ -27,8 +29,9 @@ export default function ActionPlanSystemSelector({
   options: readonly ActionPlanSystemOption[];
   value: string;
   onChange: (value: string) => void;
-  localeCode?: "fr" | "en";
+  localeCode?: InterfaceLocaleCode;
 }) {
+  const copy = getActionPlanUiCopy(localeCode).selector;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -115,7 +118,7 @@ export default function ActionPlanSystemSelector({
             : "border-dema-line hover:border-dema-forest/20"
         }`}
       >
-        <span className="truncate">{selectedOption?.label ?? (localeCode === "en" ? "Choose a business type" : "Choisir un système")}</span>
+        <span className="truncate">{selectedOption?.label ?? copy.choose}</span>
         <ChevronDown
           className={`h-4 w-4 shrink-0 text-dema-forest transition-transform ${isOpen ? "rotate-180" : ""}`}
           aria-hidden="true"
@@ -138,9 +141,9 @@ export default function ActionPlanSystemSelector({
                 setActiveIndex(0);
               }}
               onKeyDown={handleSearchKeyDown}
-              placeholder={localeCode === "en" ? "Search business types…" : "Rechercher un système…"}
+              placeholder={copy.searchPlaceholder}
               role="combobox"
-              aria-label={localeCode === "en" ? "Search business types" : "Rechercher un système métier"}
+              aria-label={copy.searchLabel}
               aria-expanded="true"
               aria-controls="action-plan-system-options"
               aria-autocomplete="list"
@@ -156,7 +159,7 @@ export default function ActionPlanSystemSelector({
           <div
             id="action-plan-system-options"
             role="listbox"
-            aria-label={localeCode === "en" ? "Business types" : "Systèmes métier"}
+            aria-label={copy.listLabel}
             className="soft-scroll mt-2 max-h-72 overflow-y-auto"
           >
             {filteredOptions.length ? (
@@ -189,7 +192,7 @@ export default function ActionPlanSystemSelector({
               })
             ) : (
               <p className="px-4 py-6 text-center text-sm text-dema-muted">
-                {localeCode === "en" ? "No business type found." : "Aucun système trouvé."}
+                {copy.empty}
               </p>
             )}
           </div>

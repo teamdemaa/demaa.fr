@@ -3,6 +3,7 @@
 import { ArrowUp, LoaderCircle, Mic } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
+import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 export default function ActionPlanGenerationBar({
@@ -14,7 +15,7 @@ export default function ActionPlanGenerationBar({
   localeCode?: InterfaceLocaleCode;
   contentLocaleCode?: InterfaceLocaleCode;
 }) {
-  const isEnglish = localeCode === "en";
+  const copy = getActionPlanUiCopy(localeCode).generationBar;
   const [situation, setSituation] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -42,9 +43,7 @@ export default function ActionPlanGenerationBar({
       setError(
         generationError instanceof Error
           ? generationError.message
-          : isEnglish
-            ? "The plan could not be created."
-            : "Le plan n’a pas pu être créé.",
+          : copy.failed,
       );
     } finally {
       setIsSubmitting(false);
@@ -58,7 +57,7 @@ export default function ActionPlanGenerationBar({
         className="flex min-h-14 items-center gap-2 rounded-full border border-dema-line bg-white/95 p-1.5 pl-5 shadow-[0_16px_40px_rgba(23,35,29,0.12)] backdrop-blur"
       >
         <label htmlFor="action-plan-generation-situation" className="sr-only">
-          {isEnglish ? "What’s holding your business back?" : "Qu’est-ce qui freine votre entreprise ?"}
+          {copy.prompt}
         </label>
         <input
           id="action-plan-generation-situation"
@@ -66,16 +65,14 @@ export default function ActionPlanGenerationBar({
           onChange={(event) => situationDictation.handleValueChange(event.target.value)}
           disabled={isSubmitting}
           maxLength={4_000}
-          placeholder={isEnglish ? "What’s holding your business back?" : "Qu’est-ce qui freine votre entreprise ?"}
+          placeholder={copy.prompt}
           className="min-w-0 flex-1 bg-transparent text-sm text-brand-blue outline-none placeholder:text-dema-muted disabled:cursor-not-allowed"
         />
         <button
           type="button"
           onClick={situationDictation.toggle}
           disabled={isSubmitting}
-          aria-label={situationDictation.isListening
-            ? isEnglish ? "Stop dictation" : "Arrêter la dictée"
-            : isEnglish ? "Dictate my request" : "Dicter ma demande"}
+          aria-label={situationDictation.isListening ? copy.stopDictation : copy.dictate}
           aria-pressed={situationDictation.isListening}
           className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition disabled:cursor-not-allowed disabled:opacity-45 ${
             situationDictation.isListening
@@ -88,7 +85,7 @@ export default function ActionPlanGenerationBar({
         <button
           type="submit"
           disabled={isSubmitting || situation.trim().length < 20}
-          aria-label={isEnglish ? "Generate the plan" : "Générer le plan"}
+          aria-label={copy.generate}
           className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-forest text-white transition hover:bg-brand-blue disabled:cursor-not-allowed disabled:bg-dema-muted/45"
         >
           {isSubmitting ? (

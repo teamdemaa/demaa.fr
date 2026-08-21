@@ -16,6 +16,7 @@ describe("action plan experience architecture", () => {
     const generationBar = source("src/components/ActionPlanGenerationBar.tsx");
     const generationScreen = source("src/components/ActionPlanGenerationScreen.tsx");
     const uiCopy = source("src/lib/action-plan-ui-copy.ts");
+    const authCopy = source("src/lib/auth-ui-copy.ts");
 
     expect(experience).toContain("useState<EditableActionPlan | null>(null)");
     expect(experience).toContain("readGuestSelectedSystemId");
@@ -38,7 +39,8 @@ describe("action plan experience architecture", () => {
       experience.lastIndexOf("if (!plan)"),
     );
     expect(generationBranch).toContain("<ActionPlanGenerationScreen localeCode={contentLocaleCode} />");
-    expect(generationScreen).toContain("Génération de votre plan d’action");
+    expect(generationScreen).toContain("copy.status");
+    expect(uiCopy).toContain('status: "Génération de votre plan d’action"');
     expect(generationScreen).not.toContain("CustomerSpaceAccessForm");
     expect(experience).toContain("draft={accessDraft}");
     expect(experience).toContain("onDraftChange={setAccessDraft}");
@@ -66,12 +68,14 @@ describe("action plan experience architecture", () => {
     expect(accessForm).toContain("createPasswordAccountAndGetIdToken");
     expect(accessForm).toContain("signInWithPasswordAndGetIdToken");
     expect(accessForm).toContain("onAuthenticated={onAuthenticated");
-    expect(accessForm).toContain("Créer mon accès");
+    expect(accessForm).toContain("getAuthUiCopy");
+    expect(authCopy).toContain("Créer mon accès");
     expect(shareControl).toContain("navigator.share");
     expect(shareControl).toContain("navigator.clipboard.writeText");
     expect(shareControl).toContain("aria-label={copied");
-    expect(shareControl).toContain('"Plan copié"');
-    expect(shareControl).toContain('"Partager le plan"');
+    expect(shareControl).toContain("getActionPlanUiCopy");
+    expect(uiCopy).toContain('copied: "Plan copié"');
+    expect(uiCopy).toContain('sharePlan: "Partager le plan"');
     expect(shareControl).toContain('variant === "menu" ? undefined : "sr-only"');
     expect(shareControl).toContain('variant === "icon" ? (');
     expect(shareControl).toContain('title={variant === "icon"');
@@ -82,12 +86,14 @@ describe("action plan experience architecture", () => {
     expect(utilityActions).not.toContain("Enregistrer");
     expect(utilityActions).not.toContain("onOpenAccess");
     expect(utilityActions).toContain("onClick={onRetrySave}");
-    expect(utilityActions).toContain("Réessayer");
+    expect(utilityActions).toContain("copy.retry");
+    expect(uiCopy).toContain('retry: "Réessayer"');
     expect(utilityActions).toContain("<ActionPlanShareControl");
     expect(utilityActions).toContain('variant="menu"');
     expect(utilityActions).not.toContain('plan.version !== "manual"');
     expect(utilityActions).toContain("localeCode={localeCode}");
-    expect(utilityActions).toContain("Nouveau plan");
+    expect(utilityActions).toContain("copy.newPlan");
+    expect(uiCopy).toContain('newPlan: "Nouveau plan"');
     expect(experience).toContain('demo !== "plan"');
     expect(experience).toContain("ACTION_PLAN_DEMO");
     expect(experience).toContain('demo === "blank"');
@@ -103,20 +109,22 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("{uiCopy.heroQuestionMark}");
     expect(experience).not.toContain("&nbsp;?");
     expect(experience).toContain("onAddAction={handleAddAction}");
-    expect(generationScreen).toContain("Si je m’absente un mois, mon entreprise continue-t-elle de fonctionner ?");
-    expect(generationScreen).toContain("Quelles décisions dépendent encore systématiquement de moi ?");
-    expect(generationScreen).toContain("Mon équipe sait-elle quoi faire sans attendre mes instructions ?");
-    expect(generationScreen).toContain("Que pourrais-je supprimer, simplifier, déléguer ou automatiser ?");
-    expect(generationScreen).toContain("Est-ce que la qualité reste constante lorsque je ne supervise pas directement ?");
+    expect(generationScreen).toContain("const questions = copy.questions");
+    expect(uiCopy).toContain("Si je m’absente un mois, mon entreprise continue-t-elle de fonctionner ?");
+    expect(uiCopy).toContain("Quelles décisions dépendent encore systématiquement de moi ?");
+    expect(uiCopy).toContain("Mon équipe sait-elle quoi faire sans attendre mes instructions ?");
+    expect(uiCopy).toContain("Que pourrais-je supprimer, simplifier, déléguer ou automatiser ?");
+    expect(uiCopy).toContain("Est-ce que la qualité reste constante lorsque je ne supervise pas directement ?");
     expect(experience).toContain("headerActions={(");
     expect(result).not.toContain('type PlanSection = "tasks" | "strategy"');
     expect(result).not.toContain('>Stratégie</button>');
     expect(result).not.toContain("<StrategyPanel");
     expect(result).toContain('type TaskView = "list" | "kanban"');
-    expect(result).toContain("Notes personnelles");
+    expect(result).toContain("copy.personalNotes");
+    expect(uiCopy).toContain('personalNotes: "Notes personnelles"');
     expect(result).not.toContain("demaa-accordion");
-    expect(result).toContain("Ajouter une action");
-    expect(result).toContain("Ajouter un support personnel");
+    expect(result).toContain("copy.addAction");
+    expect(result).toContain("copy.addSupport");
     expect(result).toContain("onActionEditorOpenChange?.(true)");
     expect(result).toContain("onActionEditorOpenChange?.(false)");
     expect(result).not.toContain("Aucune action pour le moment");
@@ -124,18 +132,17 @@ describe("action plan experience architecture", () => {
     expect(result).toContain('h-[52px]');
     expect(result).not.toContain('aria-label="Ajouter une action"\n            />');
     expect(result).not.toContain("Générer un plan à partir de ma situation");
-    expect(generationBar).toContain(
-      '"Qu’est-ce qui freine votre entreprise ?"',
-    );
+    expect(generationBar).toContain("copy.prompt");
+    expect(uiCopy).toContain('prompt: "Qu’est-ce qui freine votre entreprise ?"');
     expect(generationBar).not.toContain('"Que voulez-vous modifier ?"');
     expect(result).toContain("isBlankManualPlan && onGeneratePlan");
     expect(experience).toContain("createGeneratedActionPlanWorkspaceState");
     expect(experience).toContain("generatePlanFromSituation");
-    expect(result).toContain("Supprimer cette action ?");
-    expect(result).toContain("Supprimer l’action");
+    expect(result).toContain("copy.deleteQuestion");
+    expect(result).toContain("copy.deleteAction");
     expect(result).toContain("function saveDraftsAndClose()");
     expect(result).toContain("onClick={saveDraftsAndClose}");
-    expect(result).toContain("Supprimer la tâche");
+    expect(result).toContain("copy.deleteTask");
     expect(result).toContain("workspace.deletedActionIds.includes(action.id)");
     expect(result).not.toContain("Générer un plan à partir de ma situation");
     expect(result).toContain("<ActionPlanGenerationBar");
@@ -145,7 +152,8 @@ describe("action plan experience architecture", () => {
     expect(generationBar).not.toContain("Plan mis à jour :");
     expect(result).toContain("closeAction();\n            onOpenSolution?.(input);");
     expect(generationBar).toContain("useSpeechDictation");
-    expect(generationBar).toContain("Dicter ma demande");
+    expect(generationBar).toContain("copy.dictate");
+    expect(uiCopy).toContain('dictate: "Dicter ma demande"');
     expect(generationBar).not.toContain("Commande IA désactivée dans la démo");
     expect(generationBar).not.toContain("undoSnapshot");
     expect(existsSync("src/app/api/action-plan/command/route.ts")).toBe(false);
@@ -190,6 +198,7 @@ describe("action plan experience architecture", () => {
       "src/lib/action-plan-system-payload.client.ts",
     );
     const systemSelector = source("src/components/ActionPlanSystemSelector.tsx");
+    const uiCopy = source("src/lib/action-plan-ui-copy.ts");
 
     expect(experience).not.toContain('fetch("/api/action-plan/generate"');
     expect(generationClient).toContain('fetch("/api/action-plans/generate"');
@@ -202,14 +211,15 @@ describe("action plan experience architecture", () => {
     expect(systemPanel).toContain("loadActionPlanSystemPayload");
     expect(systemPanel).not.toContain("/api/action-plan/generate");
     expect(systemPanel).toContain("if (!selectedSystemId)");
-    expect(systemPanel).toContain("Choisissez votre système métier");
+    expect(systemPanel).toContain("getActionPlanUiCopy");
+    expect(uiCopy).toContain("Choisissez votre système métier");
     expect(systemPanel).toContain("<ActionPlanSystemSelector");
     expect(systemPanel).toContain("onChange={selectSystem}");
     expect(systemSelector).toContain('role="listbox"');
     expect(systemSelector).toContain('role="combobox"');
     expect(systemPanel).toContain("<SystemSolutionsTab");
     expect(systemPanel).toContain('<h1 className="sr-only">');
-    expect(systemPanel).toContain("Solutions pour votre entreprise");
+    expect(uiCopy).toContain("Solutions pour votre entreprise");
     expect(systemPanel).toContain("<SystemResourcesTab");
     expect(systemPanel).toContain("initialResourceSlug={initialResourceSlug}");
     expect(systemPanel).toContain("onResourceSlugChange={onResourceSlugChange}");
@@ -225,12 +235,15 @@ describe("action plan experience architecture", () => {
   it("keeps embedded Solutions and Academy landmarks explicit and closes a detail before navigating", () => {
     const solutions = source("src/components/SystemSolutionsTab.tsx");
     const academy = source("src/components/AcademyIndexClient.tsx");
+    const academyCopy = source("src/lib/academy-ui-copy.ts");
     const actionStart = solutions.indexOf("<SolutionAction");
     const actionEnd = solutions.indexOf("/>\n      ) : null}", actionStart);
     const actionSource = solutions.slice(actionStart, actionEnd);
 
     expect(academy).toContain('<h1 className="sr-only">');
-    expect(academy).toContain('localeCode === "en" ? "Academy" : "Académie"');
+    expect(academy).toContain("getAcademyUiCopy");
+    expect(academyCopy).toContain('academy: "Académie"');
+    expect(academyCopy).toContain('academy: "Academy"');
     expect(actionSource).toContain("onClose();");
     expect(actionSource.indexOf("onClose();")).toBeLessThan(
       actionSource.indexOf('trackSystemSolutionEvent("system_solution_resource_cta_clicked"'),
@@ -275,6 +288,7 @@ describe("action plan experience architecture", () => {
     const coursePlayer = source("src/components/AcademyCoursePlayer.tsx");
     const experience = source("src/components/ActionPlanExperience.tsx");
     const systemPanel = source("src/components/ActionPlanSystemPanel.tsx");
+    const academyCopy = source("src/lib/academy-ui-copy.ts");
 
     expect(academyPanel).toContain("embedded");
     expect(experience).toContain("<ActionPlanUtilityActions");
@@ -307,7 +321,8 @@ describe("action plan experience architecture", () => {
     expect(academyIndex).toContain("onOpen?: (content: AcademyContentDefinition) => void");
     expect(coursePlayer).toContain('const CourseContainer = embedded ? "div" : "main"');
     expect(coursePlayer).toContain('if (activeScreen.type === "intro") return null');
-    expect(coursePlayer).toContain("Quiz de connaissances");
+    expect(coursePlayer).toContain("getAcademyUiCopy");
+    expect(academyCopy).toContain("Quiz de connaissances");
     expect(coursePlayer).not.toContain("Cours fondamental");
     expect(coursePlayer).not.toContain("content.lessons.length} notions");
     expect(source("src/components/SystemDetailContent.tsx")).toContain(

@@ -22,7 +22,8 @@ describe("manual action plan experience", () => {
     expect(experience).toContain('demo === "blank"');
     expect(experience).toContain("const storedSystemId = readGuestSelectedSystemId() ?? \"\"");
     expect(experience).toContain("savedSystemIds: storedSystemId ? [storedSystemId] : []");
-    expect(systemPanel).toContain("Choisissez votre système métier");
+    expect(systemPanel).toContain("getActionPlanUiCopy");
+    expect(uiCopy).toContain("Choisissez votre système métier");
     expect(systemPanel).toContain("if (!selectedSystemId)");
   });
 
@@ -30,9 +31,11 @@ describe("manual action plan experience", () => {
     const experience = source("src/components/ActionPlanExperience.tsx");
     const result = source("src/components/ActionPlanResult.tsx");
     const savedDetail = source("src/components/SavedActionPlanDetail.tsx");
+    const uiCopy = source("src/lib/action-plan-ui-copy.ts");
 
     expect(experience).toContain("handleAddAction");
-    expect(result).toContain("Ajouter une action");
+    expect(result).toContain("copy.addAction");
+    expect(uiCopy).toContain('addAction: "Ajouter une action"');
     expect(result).toContain("addAndOpenAction");
     expect(result).toContain("setSelectedActionId(actionId)");
     expect(result).not.toContain("Générer un plan à partir de ma situation");
