@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { getLocaleSwitchHref } from "@/components/LocaleSwitcher";
+import {
+  getLocaleSwitchCopy,
+  getLocaleSwitchHref,
+} from "@/components/LocaleSwitcher";
 
 describe("locale switcher", () => {
   it("preserves the complete plan context when switching to English", () => {
@@ -25,5 +28,16 @@ describe("locale switcher", () => {
   it("maps the two canonical roots without duplicating the prefix", () => {
     expect(getLocaleSwitchHref("/", "", "en")).toBe("/en");
     expect(getLocaleSwitchHref("/en", "", "fr")).toBe("/");
+  });
+
+  it("uses discreet locale codes while keeping explicit accessible labels", () => {
+    expect(getLocaleSwitchCopy("fr")).toEqual({
+      ariaLabel: "View Demaa in English",
+      label: "EN",
+    });
+    expect(getLocaleSwitchCopy("en")).toEqual({
+      ariaLabel: "Afficher Demaa en français",
+      label: "FR",
+    });
   });
 });

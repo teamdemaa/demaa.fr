@@ -50,7 +50,6 @@ export default function Navbar({
             />
             {anonymousLanding ? (
               <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
-                {showLocaleSwitcher ? <LocaleSwitcher localeCode={localeCode} /> : null}
                 <div
                   id="action-plan-navbar-specialist"
                   className="shrink-0 empty:hidden"
@@ -88,6 +87,7 @@ export default function Navbar({
                     <span>{copy.signIn}</span>
                   </Link>
                 )}
+                {showLocaleSwitcher ? <LocaleSwitcher localeCode={localeCode} /> : null}
               </div>
             ) : null}
           </div>
