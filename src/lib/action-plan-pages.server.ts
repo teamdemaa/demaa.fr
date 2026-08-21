@@ -7,6 +7,7 @@ import {
   parseActionPlanAppContext,
   type ActionPlanAppContext,
 } from "@/lib/action-plan-app-context";
+import { parseActionPlanAccessIntent } from "@/lib/action-plan-access-intent";
 import {
   constrainActionPlanView,
   getActionPlanPageConfig,
@@ -44,11 +45,13 @@ export async function loadActionPlanHomePage(input: {
   const requestedNewPlan = Array.isArray(input.searchParams.new)
     ? input.searchParams.new[0]
     : input.searchParams.new;
+  const requestedAccessIntent = parseActionPlanAccessIntent(input.searchParams);
   const unauthenticatedConfig = getUnauthenticatedConfig(input.localeCode);
 
   if (shouldRedirectAuthenticatedHomeToPlans({
     isAuthenticated: Boolean(identity),
     appContext: parsedContext,
+    requestedAccessIntent,
     requestedIntent,
     requestedNewPlan,
   })) {
@@ -65,6 +68,7 @@ export async function loadActionPlanHomePage(input: {
 
   return {
     config,
+    initialAccessIntent: requestedAccessIntent,
     initialAppContext: constrainContext(parsedContext, config.visibleViews),
     initialEmail: identity?.email ?? "",
     initialGenerationIntent: requestedIntent === "generate-plan",

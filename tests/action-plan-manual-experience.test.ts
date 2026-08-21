@@ -15,8 +15,8 @@ describe("manual action plan experience", () => {
     expect(experience).toContain("{uiCopy.blankPlan}");
     expect(experience).toContain("createManualActionPlan()");
     expect(experience).toContain("createManualActionPlanWorkspaceState()");
-    expect(experience).toContain("selectedSystemId: initialAppContext.systemId ?? null");
-    expect(experience).not.toContain("selectedSystemId: initialAppContext.systemId ?? \"\"");
+    expect(experience).toContain("selectedSystemId: input.appContext.systemId ?? null");
+    expect(experience).not.toContain("selectedSystemId: input.appContext.systemId ?? \"\"");
     expect(experience).toContain("systemId: prePlanWorkspace.selectedSystemId");
     expect(experience).toContain("setWorkspace(prePlanWorkspace)");
     expect(experience).toContain("<CompanyPilotagePanel");
@@ -38,6 +38,9 @@ describe("manual action plan experience", () => {
     const savedDetail = source("src/components/SavedActionPlanDetail.tsx");
 
     expect(experience).toContain("handleAddAction");
+    expect(experience).toContain('setPendingAccessIntent({ kind: "add-manual-action" })');
+    expect(experience).toContain("buildActionPlanAccessReturnTo");
+    expect(experience).toContain("initialSelectedActionId={actionOpenRequest?.actionId}");
     expect(result).toContain("Ajouter une action");
     expect(result).toContain("addAndOpenAction");
     expect(result).toContain("setSelectedActionId(actionId)");

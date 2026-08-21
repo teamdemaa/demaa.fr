@@ -17,7 +17,8 @@ describe("progressive plan authentication", () => {
     expect(source).toContain("large");
     expect(googleButton).toContain("Continuer avec Google");
     expect(source).toContain("Continuer avec mon e-mail");
-    expect(experience).toContain("choiceTitle={uiCopy.savePlan}");
+    expect(experience).toContain(": uiCopy.savePlan}");
+    expect(experience).toContain("Connectez-vous pour saisir vos chiffres");
     expect(source).not.toContain("J’ai déjà un compte");
     expect(experience).not.toContain("Votre plan sera généré et enregistré dans votre espace.");
   });

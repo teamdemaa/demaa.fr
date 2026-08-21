@@ -19,7 +19,10 @@ describe("action plan experience architecture", () => {
     const plansIndex = source("src/components/ActionPlansIndexView.tsx");
     const uiCopy = source("src/lib/action-plan-ui-copy.ts");
 
-    expect(experience).toContain("useState<EditableActionPlan | null>(null)");
+    expect(experience).toContain("useState<EditableActionPlan | null>(");
+    expect(experience).toContain("initialExperienceState.plan");
+    expect(experience).toContain("if (!input.intent)");
+    expect(experience).toContain("plan: null");
     expect(experience).toContain("readGuestSelectedSystemId");
     expect(experience).toContain("writeGuestSelectedSystemId");
     expect(experience).toContain('fetch("/api/action-plans"');
@@ -29,7 +32,8 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("runAuthenticatedActionPlanGeneration");
     expect(experience).toContain("setQueuedGenerationDraft(draft)");
     expect(experience).toContain("getLocalizedActionPlanPath(");
-    expect(experience).toContain("choiceTitle={uiCopy.savePlan}");
+    expect(experience).toContain(": uiCopy.savePlan}");
+    expect(experience).toContain("Connectez-vous pour saisir vos chiffres");
     expect(experience).not.toContain("Votre plan sera généré et enregistré dans votre espace.");
     expect(experience).not.toContain("type PendingGeneratedPlan");
     expect(experience).not.toContain("setPendingGeneratedPlan({");
@@ -62,7 +66,7 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("isBlankManualActionPlan(plan, workspace)");
     expect(experience).toContain("manualAccessPromptHandledRef.current = true");
     expect(experience).toContain("isActionEditorOpen");
-    expect(experience).toContain("onActionEditorOpenChange={setIsActionEditorOpen}");
+    expect(experience).toContain("onActionEditorOpenChange={handleActionEditorOpenChange}");
     expect(experience).toContain("useAccessibleDialog({");
     expect(experience).toContain("data-dialog-initial-focus");
     expect(accessForm).toContain("createPasswordAccountAndGetIdToken");

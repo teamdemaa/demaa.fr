@@ -41,11 +41,15 @@ describe("company Pilotage UI contract", () => {
     const experience = source("ActionPlanExperience.tsx");
 
     expect(figures).toContain("if (!authenticated)");
-    expect(figures).toContain("onAuthenticationRequired?.()");
+    expect(figures).toContain("onAuthenticationRequired?.(period)");
     expect(figures).toContain("openMetricEntry(currentMonth)");
     expect(figures).toContain("openMetricEntry(period)");
     expect(figures).toContain("authenticated ? <CompanyMetricEntryDialog");
     expect(experience).toContain("onFiguresAuthenticationRequired={requestFiguresAuthentication}");
+    expect(experience).toContain('setPendingAccessIntent({ kind: "edit-company-metric", period })');
+    expect(experience).toContain("figuresEntryRequest={figuresEntryRequest}");
+    expect(source("CompanyPilotagePanel.tsx")).toContain("initialEntryPeriod={figuresEntryRequest?.period}");
+    expect(source("CompanyPilotagePanel.tsx")).toContain("onEntryRequestConsumed={onFiguresEntryRequestConsumed}");
   });
 
   it("keeps chart month controls exposed to assistive technologies", () => {

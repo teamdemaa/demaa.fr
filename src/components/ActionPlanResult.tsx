@@ -759,6 +759,7 @@ export default function ActionPlanResult({
   onWorkspaceChange,
   headerActions,
   manualMode = false,
+  initialSelectedActionId = null,
   onAddAction,
   onActionEditorOpenChange,
   onDeleteAction,
@@ -776,6 +777,7 @@ export default function ActionPlanResult({
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   headerActions?: ReactNode;
   manualMode?: boolean;
+  initialSelectedActionId?: string | null;
   onAddAction?: () => string | undefined;
   onActionEditorOpenChange?: (isOpen: boolean) => void;
   onDeleteAction: (actionId: string) => void;
@@ -791,7 +793,9 @@ export default function ActionPlanResult({
   const statusMeta = getStatusMeta(localeCode);
   const [view, setView] = useState<TaskView>("list");
   const [filter, setFilter] = useState<TaskFilter>("week");
-  const [selectedActionId, setSelectedActionId] = useState<string | null>(null);
+  const [selectedActionId, setSelectedActionId] = useState<string | null>(
+    initialSelectedActionId,
+  );
   const contextualAids = useActionPlanContextualAids({
     demoMode: commandDemoMode,
     enabled: localeCode === "fr",

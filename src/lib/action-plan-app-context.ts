@@ -191,6 +191,7 @@ const CONTEXT_QUERY_KEYS = [
   "systemSlug",
   "resourceSlug",
   "opportunityId",
+  "period",
 ] as const;
 
 export function buildActionPlanAppHref(input: {

@@ -7,6 +7,12 @@ import {
   COMPANY_STRATEGY_VISIBLE,
   type ActionPlanSection,
 } from "@/lib/action-plan-app-context";
+import type { CompanyMonth } from "@/lib/company-pilotage-contract";
+
+export type CompanyFiguresEntryRequest = {
+  id: number;
+  period: CompanyMonth;
+};
 
 const CompanyFiguresPanel = dynamic(() => import("@/components/CompanyFiguresPanel"));
 const CompanyStrategyPanel = dynamic(() => import("@/components/CompanyStrategyPanel"));
@@ -23,6 +29,8 @@ export default function CompanyPilotagePanel({
   onSectionChange,
   children,
   figuresAuthenticated,
+  figuresEntryRequest,
+  onFiguresEntryRequestConsumed,
   onFiguresAuthenticationRequired,
   solutions,
   localeCode = "fr",
@@ -32,7 +40,9 @@ export default function CompanyPilotagePanel({
   onSectionChange: (section: ActionPlanSection) => void;
   children: ReactNode;
   figuresAuthenticated: boolean;
-  onFiguresAuthenticationRequired?: () => void;
+  figuresEntryRequest?: CompanyFiguresEntryRequest | null;
+  onFiguresEntryRequestConsumed?: () => void;
+  onFiguresAuthenticationRequired?: (period: CompanyMonth) => void;
   solutions: ReactNode;
   localeCode?: "fr" | "en";
 }) {
@@ -65,7 +75,10 @@ export default function CompanyPilotagePanel({
       {section === "actions" ? children : null}
       {section === "figures" ? (
         <CompanyFiguresPanel
+          key={figuresEntryRequest?.id ?? "company-figures"}
           authenticated={figuresAuthenticated}
+          initialEntryPeriod={figuresEntryRequest?.period}
+          onEntryRequestConsumed={onFiguresEntryRequestConsumed}
           onAuthenticationRequired={onFiguresAuthenticationRequired}
         />
       ) : null}

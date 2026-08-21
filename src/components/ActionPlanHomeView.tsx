@@ -1,6 +1,7 @@
 import ActionPlanExperience from "@/components/ActionPlanExperience";
 import Navbar from "@/components/Navbar";
 import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
+import type { ActionPlanAccessIntent } from "@/lib/action-plan-access-intent";
 import { getActionPlanPageConfig } from "@/lib/action-plan-page-config";
 import { getActionPlanSystemOptionsForContext } from "@/lib/action-plan-localization";
 import { getCanonicalServices } from "@/lib/canonical-service-catalog";
@@ -9,6 +10,7 @@ type ActionPlanPageConfig = ReturnType<typeof getActionPlanPageConfig>;
 
 export default function ActionPlanHomeView({
   config,
+  initialAccessIntent,
   initialAppContext,
   initialEmail,
   initialGenerationIntent,
@@ -16,6 +18,7 @@ export default function ActionPlanHomeView({
   initialStructureIntent,
 }: {
   config: ActionPlanPageConfig;
+  initialAccessIntent: ActionPlanAccessIntent | null;
   initialAppContext: ActionPlanAppContext;
   initialEmail: string;
   initialGenerationIntent: boolean;
@@ -32,6 +35,7 @@ export default function ActionPlanHomeView({
       />
       <ActionPlanExperience
         contentLocaleCode={config.localeCode}
+        initialAccessIntent={initialAccessIntent}
         initialAppContext={initialAppContext}
         initialEmail={initialEmail}
         initialGenerationIntent={initialGenerationIntent}
