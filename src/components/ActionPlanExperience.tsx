@@ -97,7 +97,9 @@ function createInitialExperienceState(input: {
     selectedSystemId: input.appContext.systemId ?? null,
     savedSystemIds: input.appContext.systemId ? [input.appContext.systemId] : [],
   };
-  if (!input.intent) {
+  const shouldRestoreBlankPlanShell = input.appContext.view === "plan"
+    && input.appContext.planSection !== "actions";
+  if (!input.intent && !shouldRestoreBlankPlanShell) {
     return {
       actionOpenRequest: null,
       figuresEntryRequest: null,
@@ -111,7 +113,7 @@ function createInitialExperienceState(input: {
     ...createManualActionPlan(),
     systemId: prePlanWorkspace.selectedSystemId,
   };
-  if (input.authenticated && input.intent.kind === "add-manual-action") {
+  if (input.authenticated && input.intent?.kind === "add-manual-action") {
     const next = addActionToManualPlan(plan, prePlanWorkspace);
     if (next) {
       return {
@@ -127,7 +129,7 @@ function createInitialExperienceState(input: {
   return {
     actionOpenRequest: null,
     figuresEntryRequest: input.authenticated
-      && input.intent.kind === "edit-company-metric"
+      && input.intent?.kind === "edit-company-metric"
       ? { id: 1, period: input.intent.period }
       : null,
     plan,

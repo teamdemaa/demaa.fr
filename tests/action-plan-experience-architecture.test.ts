@@ -21,7 +21,8 @@ describe("action plan experience architecture", () => {
 
     expect(experience).toContain("useState<EditableActionPlan | null>(");
     expect(experience).toContain("initialExperienceState.plan");
-    expect(experience).toContain("if (!input.intent)");
+    expect(experience).toContain("if (!input.intent && !shouldRestoreBlankPlanShell)");
+    expect(experience).toContain('input.appContext.planSection !== "actions"');
     expect(experience).toContain("plan: null");
     expect(experience).toContain("readGuestSelectedSystemId");
     expect(experience).toContain("writeGuestSelectedSystemId");
