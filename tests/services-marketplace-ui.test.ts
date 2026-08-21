@@ -56,7 +56,18 @@ describe("canonical Accompagnement catalog", () => {
       label: "800 € HT / mois",
       mode: "fixed",
     });
-    expect(getCanonicalServiceBySlug("prospection-ciblee")?.pricing?.label).toBe("Sur devis");
+    expect(getCanonicalServiceBySlug("prospection-ciblee")?.pricing).toMatchObject({
+      amountMinor: 150000,
+      label: "1 500 € HT / mois",
+      mode: "fixed",
+    });
+    expect(getCanonicalServiceBySlug("assistance-administrative")?.pricing).toMatchObject({
+      amountMinor: 50000,
+      label: "À partir de 500 € HT / mois",
+      mode: "starting",
+    });
+    expect(getCanonicalServiceBySlug("assistance-administrative")?.pricing?.note).toContain("20 heures");
+    expect(getCanonicalServiceBySlug("assistance-administrative")?.pricing?.note).toContain("25 € HT");
     expect(getCanonicalServiceBySlug("coach-business")?.monthlyAccompanimentDiscountEligible).toBe(false);
     expect(getCanonicalServiceBySlug("automatisation-processus")?.monthlyAccompanimentDiscountEligible).toBe(true);
     expect(getCanonicalServiceBySlug("expert-comptable")?.monthlyAccompanimentDiscountEligible).toBe(false);
