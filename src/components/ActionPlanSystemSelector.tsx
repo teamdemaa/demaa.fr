@@ -115,7 +115,7 @@ export default function ActionPlanSystemSelector({
             : "border-dema-line hover:border-dema-forest/20"
         }`}
       >
-        <span className="truncate">{selectedOption?.label ?? (localeCode === "en" ? "Choose a business type" : "Choisir un système")}</span>
+        <span className="truncate">{selectedOption?.label ?? (localeCode === "en" ? "Choose your activity" : "Choisir votre activité")}</span>
         <ChevronDown
           className={`h-4 w-4 shrink-0 text-dema-forest transition-transform ${isOpen ? "rotate-180" : ""}`}
           aria-hidden="true"
@@ -138,9 +138,9 @@ export default function ActionPlanSystemSelector({
                 setActiveIndex(0);
               }}
               onKeyDown={handleSearchKeyDown}
-              placeholder={localeCode === "en" ? "Search business types…" : "Rechercher un système…"}
+              placeholder={localeCode === "en" ? "Search activities…" : "Rechercher une activité…"}
               role="combobox"
-              aria-label={localeCode === "en" ? "Search business types" : "Rechercher un système métier"}
+              aria-label={localeCode === "en" ? "Search activities" : "Rechercher une activité"}
               aria-expanded="true"
               aria-controls="action-plan-system-options"
               aria-autocomplete="list"
@@ -156,7 +156,7 @@ export default function ActionPlanSystemSelector({
           <div
             id="action-plan-system-options"
             role="listbox"
-            aria-label={localeCode === "en" ? "Business types" : "Systèmes métier"}
+            aria-label={localeCode === "en" ? "Activities" : "Activités"}
             className="soft-scroll mt-2 max-h-72 overflow-y-auto"
           >
             {filteredOptions.length ? (
@@ -189,7 +189,7 @@ export default function ActionPlanSystemSelector({
               })
             ) : (
               <p className="px-4 py-6 text-center text-sm text-dema-muted">
-                {localeCode === "en" ? "No business type found." : "Aucun système trouvé."}
+                {localeCode === "en" ? "No activity found." : "Aucune activité trouvée."}
               </p>
             )}
           </div>

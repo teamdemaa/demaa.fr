@@ -38,6 +38,10 @@ describe("authenticated homepage routing", () => {
       isAuthenticated: true,
       query: "view=system&system=restaurant",
     })).toBe(false);
+    expect(shouldRedirect({
+      isAuthenticated: true,
+      query: "view=plan&section=solutions&system=restaurant",
+    })).toBe(false);
   });
 
   it("preserves explicit intents and new-plan entries", () => {

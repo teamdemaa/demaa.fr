@@ -20,6 +20,7 @@ export function shouldRedirectAuthenticatedHomeToPlans(input: {
 }) {
   return input.isAuthenticated
     && input.appContext.view === "plan"
+    && input.appContext.planSection === "actions"
     && !HOME_INTENTS.has(input.requestedIntent ?? "")
     && input.requestedNewPlan !== "1";
 }

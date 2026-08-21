@@ -28,7 +28,7 @@ describe("hidden English beta foundation", () => {
     expect(sharedHome).toContain("contentLocaleCode={config.localeCode}");
     expect(sharedHome).toContain("marketCodeAtCreation={config.marketCode}");
     expect(sharedHome).toContain("getActionPlanSystemOptionsForContext");
-    expect(config).toContain('"global-en-beta": ["plan", "solutions", "academy"]');
+    expect(config).toContain('"global-en-beta": ["plan", "services", "academy"]');
     expect(localization).toContain("ENGLISH_ACTION_PLAN_SYSTEM_IDS");
     expect(localization).toContain('"formation-en-ligne"');
     expect(sharedHome).not.toContain("generateActionPlanWithMetadata");

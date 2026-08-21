@@ -25,28 +25,44 @@ const ICONS: Record<CanonicalService["slug"], LucideIcon> = {
   "prospection-ciblee": SearchCheck,
 };
 
-function ServiceCard({ service }: { service: CanonicalService }) {
+function ServiceCard({
+  onSelect,
+  service,
+}: {
+  onSelect?: (service: CanonicalService) => void;
+  service: CanonicalService;
+}) {
   const Icon = ICONS[service.slug];
+  const className = "group flex h-full min-w-0 flex-col rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_8px_24px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/30 hover:shadow-[0_10px_28px_rgba(23,35,29,0.055)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 sm:p-6";
+  const content = <>
+    <div className="flex items-center gap-4">
+      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+        <Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
+      </span>
+    </div>
+    <p className="mt-4 line-clamp-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">{service.eyebrow}</p>
+    <h3 className="mt-2 line-clamp-2 text-xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue">{service.name}</h3>
+    <p className="mt-2 line-clamp-2 text-sm leading-5 text-dema-muted">{service.summary}</p>
+  </>;
 
   return (
     <article className="h-[19rem] min-w-0">
-      <Link href={service.detailHref} className="group flex h-full min-w-0 flex-col rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 shadow-[0_8px_24px_rgba(23,35,29,0.025)] transition hover:border-dema-forest/30 hover:shadow-[0_10px_28px_rgba(23,35,29,0.055)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 sm:p-6">
-        <div className="flex items-center gap-4">
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-            <Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
-          </span>
-        </div>
-        <p className="mt-4 line-clamp-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">{service.eyebrow}</p>
-        <h3 className="mt-2 line-clamp-2 text-xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue">{service.name}</h3>
-        <p className="mt-2 line-clamp-2 text-sm leading-5 text-dema-muted">{service.summary}</p>
-      </Link>
+      {onSelect ? (
+        <button type="button" onClick={() => onSelect(service)} className={className}>
+          {content}
+        </button>
+      ) : (
+        <Link href={service.detailHref} className={className}>{content}</Link>
+      )}
     </article>
   );
 }
 
 export default function ServicesCatalog({
+  onServiceSelect,
   services,
 }: {
+  onServiceSelect?: (service: CanonicalService) => void;
   services: readonly CanonicalService[];
 }) {
   return (
@@ -62,7 +78,7 @@ export default function ServicesCatalog({
       </h2>
       <div className="mt-7 grid min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {services.map((service) => (
-          <ServiceCard key={service.slug} service={service} />
+          <ServiceCard key={service.slug} service={service} onSelect={onServiceSelect} />
         ))}
       </div>
     </section>

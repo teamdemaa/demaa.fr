@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
+import { ArrowLeft } from "lucide-react";
 import {
   COMPANY_STRATEGY_VISIBLE,
   type ActionPlanSection,
@@ -11,9 +12,9 @@ const CompanyFiguresPanel = dynamic(() => import("@/components/CompanyFiguresPan
 const CompanyStrategyPanel = dynamic(() => import("@/components/CompanyStrategyPanel"));
 
 const SECTIONS = [
-  { key: "actions", label: "Plan d’action" },
-  { key: "figures", label: "Chiffres" },
-  { key: "strategy", label: "Stratégie" },
+  { key: "actions", labels: { fr: "Actions", en: "Actions" } },
+  { key: "figures", labels: { fr: "Chiffres", en: "Key figures" } },
+  { key: "solutions", labels: { fr: "Solutions", en: "Solutions" } },
 ] as const;
 
 export default function CompanyPilotagePanel({
@@ -21,42 +22,57 @@ export default function CompanyPilotagePanel({
   section,
   onSectionChange,
   children,
+  solutions,
+  localeCode = "fr",
 }: {
   available: boolean;
   section: ActionPlanSection;
   onSectionChange: (section: ActionPlanSection) => void;
   children: ReactNode;
+  solutions: ReactNode;
+  localeCode?: "fr" | "en";
 }) {
-  if (!available) return <>{children}</>;
+  if (!available) {
+    return section === "solutions" ? <>{solutions}</> : <>{children}</>;
+  }
 
   return (
     <section aria-label="Pilotage de l’entreprise">
-      <nav
-        aria-label="Sections du plan et du pilotage"
-        className="mb-6 flex gap-1 overflow-x-auto border-b border-dema-line"
+      {section !== "strategy" ? <nav
+        aria-label={localeCode === "en" ? "Plan sections" : "Sections du plan"}
+        className="mx-auto mb-7 grid w-full max-w-[32.5rem] grid-cols-3 gap-1 rounded-full border border-dema-line bg-dema-sage/35 p-1.5"
       >
-        {SECTIONS.filter(
-          (item) => item.key !== "strategy" || COMPANY_STRATEGY_VISIBLE,
-        ).map((item) => (
+        {SECTIONS.map((item) => (
           <button
             key={item.key}
             type="button"
             aria-current={section === item.key ? "page" : undefined}
             onClick={() => onSectionChange(item.key)}
-            className={`shrink-0 border-b-2 px-3 py-3 text-sm font-medium transition sm:px-4 ${
+            className={`min-h-12 rounded-full px-3 py-2.5 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 ${
               section === item.key
-                ? "border-dema-forest text-dema-forest"
-                : "border-transparent text-dema-muted hover:text-dema-forest"
+                ? "bg-dema-paper text-dema-forest shadow-[0_5px_16px_rgba(23,35,29,0.055)]"
+                : "text-dema-muted hover:text-dema-forest"
             }`}
           >
-            {item.label}
+            {item.labels[localeCode]}
           </button>
         ))}
-      </nav>
+      </nav> : null}
       {section === "actions" ? children : null}
       {section === "figures" ? <CompanyFiguresPanel /> : null}
+      {section === "solutions" ? solutions : null}
       {COMPANY_STRATEGY_VISIBLE && section === "strategy"
-        ? <CompanyStrategyPanel />
+        ? <div>
+            <button
+              type="button"
+              onClick={() => onSectionChange("actions")}
+              className="mb-5 inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-sm font-medium text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              {localeCode === "en" ? "Back to actions" : "Retour aux actions"}
+            </button>
+            <CompanyStrategyPanel />
+          </div>
         : null}
     </section>
   );

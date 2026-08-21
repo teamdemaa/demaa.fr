@@ -1,4 +1,5 @@
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
+import { getPublishedSystemDiscoveryTerms } from "@/lib/system-discovery";
 
 export type ActionPlanSystemOption = Readonly<{
   id: string;
@@ -18,7 +19,12 @@ export const actionPlanSystemOptions: readonly ActionPlanSystemOption[] =
   enterpriseCatalog.map((enterprise) => ({
     id: enterprise.slug,
     label: enterprise.name,
-    aliases: uniqueNonEmpty(enterprise.tags),
+    aliases: uniqueNonEmpty([
+      ...enterprise.tags,
+      ...getPublishedSystemDiscoveryTerms(enterprise.slug)
+        .filter((term) => term.status === "published" && term.kind !== "problem")
+        .map((term) => term.value),
+    ]),
   }));
 
 const actionPlanSystemIds = new Set(

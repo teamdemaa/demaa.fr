@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
 import { getActionPlanPageConfig } from "@/lib/action-plan-page-config";
 import { getActionPlanSystemOptionsForContext } from "@/lib/action-plan-localization";
+import { getCanonicalServices } from "@/lib/canonical-service-catalog";
 
 type ActionPlanPageConfig = ReturnType<typeof getActionPlanPageConfig>;
 
@@ -38,6 +39,7 @@ export default function ActionPlanHomeView({
         initialStructureIntent={initialStructureIntent}
         marketCodeAtCreation={config.marketCode}
         showCoaching={config.showCoaching}
+        services={getCanonicalServices()}
         systemOptions={getActionPlanSystemOptionsForContext({
           contentLocaleCode: config.localeCode,
           marketCodeAtCreation: config.marketCode,

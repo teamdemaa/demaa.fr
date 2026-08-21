@@ -7,25 +7,25 @@ import { defineLocaleDictionary } from "@/lib/international-publication";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
 
 const marketViews = {
-  "fr-fr": ["plan", "solutions", "academy", "opportunities"],
-  "global-en-beta": ["plan", "solutions", "academy"],
+  "fr-fr": ["plan", "services", "academy", "opportunities"],
+  "global-en-beta": ["plan", "services", "academy"],
 } as const satisfies Readonly<Record<MarketCode, readonly ActionPlanView[]>>;
 
 const localePublishedViews = {
-  fr: ["plan", "solutions", "academy", "opportunities"],
-  en: ["plan", "solutions", "academy"],
+  fr: ["plan", "services", "academy", "opportunities"],
+  en: ["plan", "services", "academy"],
 } as const satisfies Readonly<
   Record<InterfaceLocaleCode, readonly ActionPlanView[]>
 >;
 
 const contextSupportedViews = {
   fr: {
-    "fr-fr": ["plan", "solutions", "academy", "opportunities"],
+    "fr-fr": ["plan", "services", "academy", "opportunities"],
     "global-en-beta": ["plan"],
   },
   en: {
     "fr-fr": ["plan"],
-    "global-en-beta": ["plan", "solutions", "academy"],
+    "global-en-beta": ["plan", "services", "academy"],
   },
 } as const satisfies Readonly<
   Record<

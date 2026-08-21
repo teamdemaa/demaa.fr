@@ -115,9 +115,9 @@ export default function ActionPlanSystemPanel({
       : null;
 
   return (
-    <section aria-label={localeCode === "en" ? "Business type" : "Système"} className="pt-3">
+    <section aria-label={localeCode === "en" ? "Activity solutions" : "Solutions par activité"} className="pt-3">
       <h1 className="sr-only">
-        {localeCode === "en" ? "Business solutions" : "Solutions pour votre entreprise"}
+        {localeCode === "en" ? "Solutions for your activity" : "Solutions pour votre activité"}
       </h1>
       <div className="mx-auto mb-6 w-full max-w-xl xl:w-[min(40vw,36rem)]">
         <div className="flex items-center gap-2">
@@ -138,7 +138,7 @@ export default function ActionPlanSystemPanel({
           ) : null}
         </div>
         {savedSystems.length > 1 ? (
-          <div className="mt-2 flex flex-wrap justify-center gap-1.5" aria-label={localeCode === "en" ? "Saved business types" : "Systèmes enregistrés"}>
+          <div className="mt-2 flex flex-wrap justify-center gap-1.5" aria-label={localeCode === "en" ? "Saved activities" : "Activités enregistrées"}>
             {savedSystems.map((system) => (
               <button
                 key={system.id}
@@ -157,10 +157,10 @@ export default function ActionPlanSystemPanel({
       {!selectedSystemId ? (
         <div className="rounded-[1.25rem] border border-dema-line bg-dema-paper px-6 py-12 text-center">
           <h2 id="action-plan-system-title" className="text-2xl font-light tracking-[-0.03em] text-brand-blue">
-            {localeCode === "en" ? "Choose your business type" : "Choisissez votre système métier"}
+            {localeCode === "en" ? "Choose your activity" : "Choisissez votre activité"}
           </h2>
           <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-dema-muted">
-            {localeCode === "en" ? "Select your activity to see relevant tools and support." : "Sélectionnez votre activité parmi les 115 systèmes pour afficher ses solutions."}
+            {localeCode === "en" ? "Select the activity closest to your business to see relevant tools and resources." : "Sélectionnez l’activité la plus proche de votre entreprise pour afficher les outils et ressources adaptés."}
           </p>
         </div>
       ) : null}
@@ -168,7 +168,7 @@ export default function ActionPlanSystemPanel({
       {selectedSystemId && !currentPayload && !currentError ? (
         <div className="flex min-h-48 items-center justify-center rounded-[1.25rem] border border-dema-line bg-dema-paper text-sm text-dema-muted">
           <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-          {localeCode === "en" ? "Loading business solutions…" : "Chargement du système métier…"}
+          {localeCode === "en" ? "Loading activity solutions…" : "Chargement des solutions…"}
         </div>
       ) : null}
 

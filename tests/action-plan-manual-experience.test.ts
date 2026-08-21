@@ -22,7 +22,7 @@ describe("manual action plan experience", () => {
     expect(experience).toContain('demo === "blank"');
     expect(experience).toContain("const storedSystemId = readGuestSelectedSystemId() ?? \"\"");
     expect(experience).toContain("savedSystemIds: storedSystemId ? [storedSystemId] : []");
-    expect(systemPanel).toContain("Choisissez votre système métier");
+    expect(systemPanel).toContain("Choisissez votre activité");
     expect(systemPanel).toContain("if (!selectedSystemId)");
   });
 

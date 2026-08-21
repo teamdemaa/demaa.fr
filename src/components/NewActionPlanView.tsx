@@ -3,6 +3,7 @@ import ActionPlanExperience from "@/components/ActionPlanExperience";
 import Navbar from "@/components/Navbar";
 import { getActionPlanPageConfig } from "@/lib/action-plan-page-config";
 import { getActionPlanSystemOptionsForContext } from "@/lib/action-plan-localization";
+import { getCanonicalServices } from "@/lib/canonical-service-catalog";
 
 type ActionPlanPageConfig = ReturnType<typeof getActionPlanPageConfig>;
 
@@ -42,6 +43,7 @@ export default function NewActionPlanView({
         initialIsAuthenticated
         marketCodeAtCreation={config.marketCode}
         showCoaching={config.showCoaching}
+        services={getCanonicalServices()}
         systemOptions={getActionPlanSystemOptionsForContext({
           contentLocaleCode: config.localeCode,
           marketCodeAtCreation: config.marketCode,

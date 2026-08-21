@@ -147,15 +147,15 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain("empty:hidden xl:block");
     expect(navbarSource).toContain("empty:hidden xl:hidden");
     expect(actionPlanNavSource).toContain("Plan d’action");
-    expect(actionPlanNavSource).toContain("Solutions");
+    expect(actionPlanNavSource).toContain("Services");
     expect(actionPlanNavSource).toContain("Académie");
     expect(actionPlanNavSource).not.toContain("Ressources");
     expect(actionPlanNavSource).toContain("Opportunités");
     expect(actionPlanNavSource).not.toContain('label: "Système"');
     expect(actionPlanNavSource.indexOf('{ view: "plan"')).toBeLessThan(
-      actionPlanNavSource.indexOf('{ view: "solutions"'),
+      actionPlanNavSource.indexOf('{ view: "services"'),
     );
-    expect(actionPlanNavSource.indexOf('{ view: "solutions"')).toBeLessThan(
+    expect(actionPlanNavSource.indexOf('{ view: "services"')).toBeLessThan(
       actionPlanNavSource.indexOf('{ view: "academy"'),
     );
     expect(actionPlanNavSource.indexOf('{ view: "academy"')).toBeLessThan(
@@ -185,6 +185,7 @@ describe("Demaa application navbar", () => {
     expect(marketingLayoutSource).toContain("<Footer />");
     expect(experienceSource).toContain("<ActionPlanNavbar");
     expect(experienceSource).toContain("workspace={prePlanWorkspace}");
+    expect(experienceSource).toContain('activeTab === "services"');
     expect(experienceSource).toContain('activeTab === "opportunities"');
     expect(experienceSource).toContain("<ActionPlanAcademyPanel");
     expect(experienceSource).toContain("<ActionPlanCoachingControl");

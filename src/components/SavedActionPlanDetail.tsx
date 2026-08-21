@@ -14,6 +14,8 @@ import {
   SavedActionPlanSelector,
 } from "@/components/SavedActionPlanControls";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
+import ActionPlanServicesPanel from "@/components/ActionPlanServicesPanel";
+import CompanyStrategyEntry from "@/components/CompanyStrategyEntry";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import CompanyPilotagePanel from "@/components/CompanyPilotagePanel";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
@@ -42,6 +44,7 @@ import {
   type ActionPlanContentLocaleCode,
 } from "@/lib/action-plan-localization";
 import type { MarketCode } from "@/lib/international-context";
+import type { CanonicalService } from "@/lib/canonical-service-catalog";
 
 export default function SavedActionPlanDetail({
   plan,
@@ -60,6 +63,7 @@ export default function SavedActionPlanDetail({
   marketCode = "fr-fr",
   visibleViews,
   showCoaching = true,
+  services,
 }: {
   plan: PersistableActionPlan;
   planId: string;
@@ -77,6 +81,7 @@ export default function SavedActionPlanDetail({
   marketCode?: MarketCode;
   visibleViews?: readonly ActionPlanView[];
   showCoaching?: boolean;
+  services: readonly CanonicalService[];
 }) {
   const router = useRouter();
   const planHrefPrefix = getLocalizedActionPlanPath(interfaceLocaleCode, "/plans/");
@@ -161,10 +166,9 @@ export default function SavedActionPlanDetail({
     navigateAppContext({
       ...appContext,
       view,
-      systemId: view === "solutions"
-        ? appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || undefined
-        : appContext.systemId,
-      systemTab: view === "solutions" ? "solutions" : appContext.systemTab,
+      planSection: "actions",
+      systemId: undefined,
+      systemTab: undefined,
       solutionResourceSlug: undefined,
       solutionEntrySource: undefined,
     });
@@ -467,6 +471,7 @@ export default function SavedActionPlanDetail({
           <CompanyPilotagePanel
             available={interfaceLocaleCode === "fr"}
             section={appContext.planSection}
+            localeCode={interfaceLocaleCode}
             onSectionChange={(planSection) => navigateAppContext({
               ...appContext,
               view: "plan",
@@ -476,6 +481,41 @@ export default function SavedActionPlanDetail({
               solutionResourceSlug: undefined,
               academyContentSlug: undefined,
             })}
+            solutions={(
+              <ActionPlanSystemPanel
+                localeCode={interfaceLocaleCode}
+                marketCode={marketCode}
+                options={systemOptions}
+                selectedSystemId={
+                  appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || ""
+                }
+                onSystemChange={(systemId) => navigateAppContext({
+                  ...appContext,
+                  view: "plan",
+                  planSection: "solutions",
+                  systemId,
+                  systemTab: "solutions",
+                  solutionResourceSlug: undefined,
+                  solutionEntrySource: undefined,
+                })}
+                workspace={workspace}
+                onWorkspaceChange={setWorkspace}
+                toolOutboundSurface={
+                  appContext.solutionEntrySource === "action_recommendation"
+                    ? "action_recommendation"
+                    : "solutions"
+                }
+                initialResourceSlug={appContext.solutionResourceSlug}
+                onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
+                  ...appContext,
+                  view: "plan",
+                  planSection: "solutions",
+                  systemId: appContext.systemId || workspace.selectedSystemId || undefined,
+                  systemTab: "solutions",
+                  solutionResourceSlug,
+                })}
+              />
+            )}
           >
             <div className="mb-3 flex min-w-0 max-w-[40rem] items-center gap-2">
               <SavedActionPlanSelector
@@ -576,7 +616,8 @@ export default function SavedActionPlanDetail({
               sourceText={initialSourceText}
               onOpenSolution={({ resourceSlug, systemId }) => navigateAppContext({
                 ...appContext,
-                view: "solutions",
+                view: "plan",
+                planSection: "solutions",
                 systemId,
                 systemTab: "solutions",
                 solutionResourceSlug: resourceSlug,
@@ -585,41 +626,17 @@ export default function SavedActionPlanDetail({
               localeCode={interfaceLocaleCode}
               contentLocaleCode={contentLocaleCode}
             />
+            <CompanyStrategyEntry
+              localeCode={interfaceLocaleCode}
+              onOpen={() => navigateAppContext({
+                ...appContext,
+                view: "plan",
+                planSection: "strategy",
+              })}
+            />
           </CompanyPilotagePanel>
         ) : null}
-        {activeTab === "solutions" ? (
-          <ActionPlanSystemPanel
-            localeCode={interfaceLocaleCode}
-            marketCode={marketCode}
-            options={systemOptions}
-            selectedSystemId={
-              appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || ""
-            }
-            onSystemChange={(systemId) => navigateAppContext({
-              ...appContext,
-              view: "solutions",
-              systemId,
-              systemTab: "solutions",
-              solutionResourceSlug: undefined,
-              solutionEntrySource: undefined,
-            })}
-            workspace={workspace}
-            onWorkspaceChange={setWorkspace}
-            toolOutboundSurface={
-              appContext.solutionEntrySource === "action_recommendation"
-                ? "action_recommendation"
-                : "solutions"
-            }
-            initialResourceSlug={appContext.solutionResourceSlug}
-            onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
-              ...appContext,
-              view: "solutions",
-              systemId: appContext.systemId || workspace.selectedSystemId || undefined,
-              systemTab: "solutions",
-              solutionResourceSlug,
-            })}
-          />
-        ) : null}
+        {activeTab === "services" ? <ActionPlanServicesPanel services={services} /> : null}
         {activeTab === "academy" ? (
           <ActionPlanAcademyPanel
             initialContentSlug={appContext.academyContentSlug}

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
 import ActionPlanCoachingControl from "@/components/ActionPlanCoachingControl";
 import ActionPlanGenerationScreen from "@/components/ActionPlanGenerationScreen";
+import ActionPlanHeroTitle from "@/components/ActionPlanHeroTitle";
 import CustomerSpaceAccessForm, {
   type CustomerSpaceAccessDraft,
 } from "@/components/CustomerSpaceAccessForm";
@@ -12,6 +13,7 @@ import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNavbar";
 import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
+import ActionPlanServicesPanel from "@/components/ActionPlanServicesPanel";
 import ActionPlanUtilityActions from "@/components/ActionPlanUtilityActions";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import CompanyPilotagePanel from "@/components/CompanyPilotagePanel";
@@ -61,6 +63,7 @@ import {
   type ActionPlanCreationMarketCode,
 } from "@/lib/action-plan-localization";
 import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
+import type { CanonicalService } from "@/lib/canonical-service-catalog";
 
 type PendingSolutionSelection = {
   createdPlan: boolean;
@@ -102,6 +105,7 @@ export default function ActionPlanExperience({
   marketCodeAtCreation = "fr-fr",
   visibleViews,
   showCoaching = true,
+  services,
 }: {
   systemOptions: readonly ActionPlanSystemOption[];
   initialEmail?: string;
@@ -113,6 +117,7 @@ export default function ActionPlanExperience({
   marketCodeAtCreation?: ActionPlanCreationMarketCode;
   visibleViews?: readonly ActionPlanView[];
   showCoaching?: boolean;
+  services: readonly CanonicalService[];
 }) {
   const uiCopy = getActionPlanUiCopy(contentLocaleCode);
   const newPlanPath = getLocalizedActionPlanPath(contentLocaleCode, "/plans/new");
@@ -185,7 +190,8 @@ export default function ActionPlanExperience({
       autoSaveAttemptRef.current = "";
       navigateAppContext({
         ...appContext,
-        view: "solutions",
+        view: "plan",
+        planSection: "solutions",
         systemId: pendingSolutionSelection.systemId,
         systemTab: "solutions",
         solutionResourceSlug: undefined,
@@ -244,10 +250,9 @@ export default function ActionPlanExperience({
     navigateAppContext({
       ...appContext,
       view,
-      systemId: view === "solutions"
-        ? selectedSystemId || workspace?.selectedSystemId || prePlanWorkspace.selectedSystemId || undefined
-        : appContext.systemId,
-      systemTab: view === "solutions" ? "solutions" : appContext.systemTab,
+      planSection: "actions",
+      systemId: undefined,
+      systemTab: undefined,
       solutionResourceSlug: undefined,
       solutionEntrySource: undefined,
     });
@@ -256,7 +261,8 @@ export default function ActionPlanExperience({
   function selectAppSystem(systemId: string) {
     navigateAppContext({
       ...appContext,
-      view: "solutions",
+      view: "plan",
+      planSection: "solutions",
       systemId,
       systemTab: "solutions",
       solutionResourceSlug: undefined,
@@ -292,7 +298,8 @@ export default function ActionPlanExperience({
         setSelectedSystemId(systemId);
         navigateAppContext({
           ...appContext,
-          view: "solutions",
+          view: "plan",
+          planSection: "solutions",
           systemId,
           systemTab: "solutions",
           solutionResourceSlug: undefined,
@@ -311,7 +318,8 @@ export default function ActionPlanExperience({
       setSelectedSystemId(systemId);
       navigateAppContext({
         ...appContext,
-        view: "solutions",
+        view: "plan",
+        planSection: "solutions",
         systemId,
         systemTab: "solutions",
         solutionResourceSlug: undefined,
@@ -385,7 +393,8 @@ export default function ActionPlanExperience({
       setPrePlanWorkspace((current) => ({ ...current, selectedSystemId: systemSlug }));
       navigateAppContext({
         ...appContext,
-        view: "solutions",
+        view: "plan",
+        planSection: "solutions",
         systemId: systemSlug,
         systemTab: "solutions",
         solutionResourceSlug: resourceSlug,
@@ -782,16 +791,12 @@ export default function ActionPlanExperience({
         ) : null}
         {accessPromptDialog}
         <div className="mx-auto max-w-[68rem] pt-1">
-          {activeTab === "plan" ? (
+          {activeTab === "plan" && appContext.planSection === "actions" ? (
             <section className="mx-auto max-w-5xl pt-5 text-center sm:pt-7 lg:pt-10">
-                  <h1 className="text-balance text-[clamp(2.1rem,5.25vw,3.9rem)] font-light leading-[0.98] tracking-[-0.055em] text-brand-blue/62">
-                    {uiCopy.heroLead}
-                    <br />
-                    <span className="demaa-hero-title text-dema-forest">
-                      {uiCopy.heroEmphasis}
-                    </span>
-                    &nbsp;?
-                  </h1>
+                  <ActionPlanHeroTitle
+                    animate={!situation}
+                    localeCode={contentLocaleCode}
+                  />
                   <p className="mx-auto mt-6 max-w-[760px] text-balance text-[15px] font-normal leading-[1.5] text-dema-muted sm:text-lg">
                     {uiCopy.heroDescription}
                   </p>
@@ -852,7 +857,7 @@ export default function ActionPlanExperience({
                   </form>
             </section>
           ) : null}
-          {activeTab === "solutions" ? (
+          {activeTab === "plan" && appContext.planSection === "solutions" ? (
             <ActionPlanSystemPanel
               localeCode={contentLocaleCode}
               marketCode={marketCodeAtCreation}
@@ -870,13 +875,15 @@ export default function ActionPlanExperience({
               initialResourceSlug={appContext.solutionResourceSlug}
               onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
                 ...appContext,
-                view: "solutions",
+                view: "plan",
+                planSection: "solutions",
                 systemId: selectedSystemId || appContext.systemId,
                 systemTab: "solutions",
                 solutionResourceSlug,
               })}
             />
           ) : null}
+          {activeTab === "services" ? <ActionPlanServicesPanel services={services} /> : null}
           {activeTab === "academy" ? (
             <ActionPlanAcademyPanel
               initialContentSlug={appContext.academyContentSlug}
@@ -954,8 +961,42 @@ export default function ActionPlanExperience({
           {activeTab === "plan" ? (
             <CompanyPilotagePanel
               available={false}
-              section="actions"
-              onSectionChange={() => undefined}
+              section={appContext.planSection}
+              localeCode={contentLocaleCode}
+              onSectionChange={(planSection) => navigateAppContext({
+                ...appContext,
+                view: "plan",
+                planSection,
+              })}
+              solutions={(
+                <ActionPlanSystemPanel
+                  localeCode={contentLocaleCode}
+                  marketCode={marketCodeAtCreation}
+                  options={systemOptions}
+                  selectedSystemId={selectedSystemId}
+                  onSystemChange={(systemId) => {
+                    setSelectedSystemId(systemId);
+                    selectAppSystem(systemId);
+                  }}
+                  workspace={workspace}
+                  onWorkspaceChange={updateWorkspace}
+                  demoMode={isDemoMode}
+                  toolOutboundSurface={
+                    appContext.solutionEntrySource === "action_recommendation"
+                      ? "action_recommendation"
+                      : "solutions"
+                  }
+                  initialResourceSlug={appContext.solutionResourceSlug}
+                  onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
+                    ...appContext,
+                    view: "plan",
+                    planSection: "solutions",
+                    systemId: selectedSystemId || appContext.systemId,
+                    systemTab: "solutions",
+                    solutionResourceSlug,
+                  })}
+                />
+              )}
             >
               <ActionPlanResult
               plan={plan}
@@ -977,7 +1018,8 @@ export default function ActionPlanExperience({
                 setSelectedSystemId(systemId);
                 navigateAppContext({
                   ...appContext,
-                  view: "solutions",
+                  view: "plan",
+                  planSection: "solutions",
                   systemId,
                   systemTab: "solutions",
                   solutionResourceSlug: resourceSlug,
@@ -1010,39 +1052,7 @@ export default function ActionPlanExperience({
               />
             </CompanyPilotagePanel>
           ) : null}
-          {activeTab === "solutions" ? (
-            <ActionPlanSystemPanel
-              localeCode={contentLocaleCode}
-              marketCode={marketCodeAtCreation}
-              options={systemOptions}
-              selectedSystemId={selectedSystemId}
-              onSystemChange={(systemId) => {
-                setSelectedSystemId(systemId);
-                selectAppSystem(systemId);
-              }}
-              workspace={workspace}
-              onWorkspaceChange={updateWorkspace}
-              onToggleSolutionSelection={
-                isAuthenticated || isDemoMode
-                  ? undefined
-                  : handleSolutionSelection
-              }
-              demoMode={isDemoMode}
-              toolOutboundSurface={
-                appContext.solutionEntrySource === "action_recommendation"
-                  ? "action_recommendation"
-                  : "solutions"
-              }
-              initialResourceSlug={appContext.solutionResourceSlug}
-              onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
-                ...appContext,
-                view: "solutions",
-                systemId: selectedSystemId || appContext.systemId,
-                systemTab: "solutions",
-                solutionResourceSlug,
-              })}
-            />
-          ) : null}
+          {activeTab === "services" ? <ActionPlanServicesPanel services={services} /> : null}
           {activeTab === "academy" ? (
             <ActionPlanAcademyPanel
               initialContentSlug={appContext.academyContentSlug}

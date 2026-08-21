@@ -5,6 +5,7 @@ import {
   SYSTEM_DISCOVERY_ENTRIES,
   getSystemDiscoveryScore,
 } from "@/lib/system-discovery";
+import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
 
 const systems = enterpriseCatalog.map((enterprise) => ({
   ...enterpriseToSystem(enterprise),
@@ -79,6 +80,24 @@ describe("system discovery content", () => {
     ["mécanique mobile", "garage-automobile"],
   ])("ranks %s toward %s", (query, expectedSlug) => {
     expect(rankedSlugs(query)[0]).toBe(expectedSlug);
+  });
+
+  it("reuses published discovery vocabulary for activity selection without problem terms", () => {
+    const vanActivity = actionPlanSystemOptions.find(
+      (option) => option.id === "menuiserie-agencement",
+    );
+    const renovationActivity = actionPlanSystemOptions.find(
+      (option) => option.id === "renovation-interieur",
+    );
+
+    expect(vanActivity?.aliases).toEqual(expect.arrayContaining([
+      "van aménagé",
+      "fourgon aménagé",
+      "aménagement de vans",
+      "véhicule de loisirs",
+      "camping-car",
+    ]));
+    expect(renovationActivity?.aliases).not.toContain("rénovation énergétique");
   });
 
   it.each([
