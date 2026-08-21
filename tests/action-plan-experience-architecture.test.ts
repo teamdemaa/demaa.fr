@@ -102,7 +102,8 @@ describe("action plan experience architecture", () => {
     expect(uiCopy).not.toContain("heroDescription");
     expect(experience).not.toContain("uiCopy.heroDescription");
     expect(experience).toContain("<ActionPlanHeroTitle");
-    expect(heroTitle).toContain('["entreprise", "agence", "startup", "cabinet"]');
+    expect(heroTitle).toContain('["entreprise", "agence", "cabinet"]');
+    expect(heroTitle).not.toContain('"startup"');
     expect(heroTitle).toContain('prefers-reduced-motion: reduce');
     expect(heroTitle).toContain('aria-label={accessibleTitle}');
     expect(heroTitle).toContain('`${subject}\\u00a0?`');
