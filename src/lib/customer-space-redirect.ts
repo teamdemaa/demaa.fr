@@ -1,6 +1,10 @@
 import { isCoachingMessageDraftToken } from "@/lib/coaching-message-draft";
 import { isOpportunitySubmissionDraftToken } from "@/lib/opportunity-submission";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
+import {
+  buildActionPlanAccessReturnTo,
+  parseActionPlanAccessIntent,
+} from "@/lib/action-plan-access-intent";
 
 const INTENT_PARAM = "intent";
 const SAFE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -167,23 +171,39 @@ export function getSafeCustomerReturnTo(value?: string | null) {
   }
 
   const candidate = normalizeLegacyCustomerPath(rawCandidate);
-  const parsedIntent = parseCustomerAccessIntent(candidate);
+  const parsedCustomerIntent = parseCustomerAccessIntent(candidate);
+  const candidateUrl = new URL(candidate, "https://demaa.invalid");
+  const parsedActionPlanIntent = (
+    candidateUrl.pathname === "/" || candidateUrl.pathname === "/en"
+  )
+    ? parseActionPlanAccessIntent(candidateUrl.searchParams)
+    : null;
+  const hasParsedIntent = Boolean(parsedCustomerIntent || parsedActionPlanIntent);
   if (SAVED_PLAN_PATH_PATTERN.test(candidate)) {
-    return candidate.includes(`${INTENT_PARAM}=`) && !parsedIntent
+    return candidate.includes(`${INTENT_PARAM}=`) && !hasParsedIntent
       ? "/"
       : candidate;
   }
 
   if (ENGLISH_APP_PATH_PATTERN.test(candidate)) {
-    return candidate.includes(`${INTENT_PARAM}=`) && !parsedIntent
+    if (parsedActionPlanIntent) {
+      return buildActionPlanAccessReturnTo("en", parsedActionPlanIntent);
+    }
+    return candidate.includes(`${INTENT_PARAM}=`) && !hasParsedIntent
       ? "/"
       : candidate;
   }
 
   if (candidate.includes(`${INTENT_PARAM}=`)) {
-    return parsedIntent
+    if (parsedActionPlanIntent) {
+      return buildActionPlanAccessReturnTo(
+        candidateUrl.pathname === "/en" ? "en" : "fr",
+        parsedActionPlanIntent,
+      );
+    }
+    return parsedCustomerIntent
       ? buildCustomerIntentReturnTo(
-          parsedIntent,
+          parsedCustomerIntent,
           candidate === "/en" || candidate.startsWith("/en?") ? "en" : "fr",
         )
       : "/";
@@ -191,7 +211,7 @@ export function getSafeCustomerReturnTo(value?: string | null) {
 
   if (candidate === "/" || candidate.startsWith("/?")) return candidate;
   if (candidate === "/opportunites" || candidate.startsWith("/opportunites?")) {
-    return candidate.includes(`${INTENT_PARAM}=`) && !parsedIntent
+    return candidate.includes(`${INTENT_PARAM}=`) && !hasParsedIntent
       ? "/opportunites"
       : candidate;
   }
