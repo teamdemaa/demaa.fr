@@ -10,9 +10,11 @@ describe("company Pilotage UI contract", () => {
     expect(owner).toContain('labels: { fr: "Plan", en: "Plan" }');
     expect(owner).toContain("Chiffres");
     expect(owner).toContain("Solutions");
-    expect(owner).toContain("rounded-[1.15rem] border border-dema-line/70");
-    expect(owner).toContain("max-w-[29rem]");
-    expect(owner).toContain("min-h-11 rounded-[0.9rem]");
+    expect(owner).toContain("mx-auto mb-5 flex w-fit max-w-full items-center gap-1");
+    expect(owner).toContain("min-h-10 shrink-0 items-center justify-center rounded-full px-4");
+    expect(owner).toContain("bg-dema-sage/60 text-dema-forest");
+    expect(owner).not.toContain("max-w-[29rem]");
+    expect(owner).not.toContain("border border-dema-line/70 bg-dema-sage/20 p-1");
     expect(owner).not.toContain("shadow-[0_5px_16px");
     expect(owner).not.toContain('key: "strategy"');
     expect(owner).toContain('COMPANY_STRATEGY_VISIBLE && section === "strategy"');
