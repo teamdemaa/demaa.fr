@@ -22,6 +22,8 @@ describe("company Pilotage UI contract", () => {
     expect(source("CompanyStrategyEntry.tsx")).toContain("Stratégie");
     expect(source("SavedActionPlanDetail.tsx")).toContain("<CompanyPilotagePanel");
     expect(source("ActionPlanExperience.tsx")).toContain("<CompanyPilotagePanel");
+    expect(source("SavedActionPlanDetail.tsx")).toContain("<CompanyStrategyEntry");
+    expect(source("ActionPlanExperience.tsx")).toContain("<CompanyStrategyEntry");
     expect(source("CompanyPilotagePanel.tsx")).toContain("authenticated={figuresAuthenticated}");
     expect(navbar).not.toContain("Stratégie");
   });
