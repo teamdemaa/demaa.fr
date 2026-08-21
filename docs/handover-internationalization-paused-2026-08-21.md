@@ -55,8 +55,11 @@ commits et ne pas fusionner les branches dans un autre ordre.
 La PR [#161](https://github.com/teamdemaa/demaa.fr/pull/161) ne fait pas partie
 de cette pile. Elle conserve le pilote éditorial Opportunités et modifie
 `docs/central-backlog.md`, également modifié par la PR #154. Si #161 est
-fusionnée pendant la pause, ce conflit documentaire doit être résolu une seule
-fois dans #154 lors de la reprise, jamais recopié dans les treize branches.
+fusionnée pendant la pause, ce chevauchement documentaire doit être revalidé
+dans #154 lors de la reprise. La simulation Git du présent instantané le
+fusionne automatiquement sans marqueur de conflit ; si la situation évolue,
+un éventuel conflit doit être résolu une seule fois dans #154, jamais recopié
+dans les treize branches.
 
 ## État fonctionnel préservé au sommet
 
