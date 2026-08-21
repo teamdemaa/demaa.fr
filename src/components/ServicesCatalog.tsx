@@ -56,7 +56,7 @@ function ServiceCard({
       </span>
     </div>
     <p className="mt-4 line-clamp-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">{service.eyebrow}</p>
-    <h3 className="mt-2 line-clamp-2 text-xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue">{service.name}</h3>
+    <h4 className="mt-2 line-clamp-2 text-xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue">{service.name}</h4>
     <p className="mt-2 line-clamp-2 text-sm leading-5 text-dema-muted">{service.summary}</p>
     {priceLabel ? (
       <p className="mt-6 text-sm font-normal text-dema-muted md:mt-auto md:pt-5">{priceLabel}</p>
@@ -76,6 +76,39 @@ function ServiceCard({
   );
 }
 
+function ServiceSection({
+  description,
+  services,
+  title,
+  onServiceSelect,
+}: {
+  description: string;
+  services: readonly CanonicalService[];
+  title: string;
+  onServiceSelect?: (service: CanonicalService) => void;
+}) {
+  if (services.length === 0) return null;
+
+  return (
+    <section aria-labelledby={`services-section-${services[0]?.delivery}`}>
+      <h3
+        id={`services-section-${services[0]?.delivery}`}
+        className="text-xl font-semibold tracking-[-0.025em] text-brand-blue sm:text-2xl"
+      >
+        {title}
+      </h3>
+      <p className="mt-2 max-w-3xl text-sm leading-6 text-dema-muted">
+        {description}
+      </p>
+      <div className="mt-5 grid min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {services.map((service) => (
+          <ServiceCard key={service.slug} service={service} onSelect={onServiceSelect} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function ServicesCatalog({
   onServiceSelect,
   services,
@@ -83,6 +116,9 @@ export default function ServicesCatalog({
   onServiceSelect?: (service: CanonicalService) => void;
   services: readonly CanonicalService[];
 }) {
+  const demaaServices = services.filter((service) => service.delivery === "demaa");
+  const partnerServices = services.filter((service) => service.delivery === "third-party");
+
   return (
     <section aria-labelledby="services-catalog-title">
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
@@ -94,10 +130,19 @@ export default function ServicesCatalog({
       >
         L’accompagnement utile, au même endroit
       </h2>
-      <div className="mt-7 grid min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {services.map((service) => (
-          <ServiceCard key={service.slug} service={service} onSelect={onServiceSelect} />
-        ))}
+      <div className="mt-7 space-y-10 sm:space-y-12">
+        <ServiceSection
+          title="Nos accompagnements"
+          description="Conçus et réalisés directement par Demaa."
+          services={demaaServices}
+          onServiceSelect={onServiceSelect}
+        />
+        <ServiceSection
+          title="Avec nos partenaires de confiance"
+          description="Demaa qualifie votre besoin et organise la mise en relation. Le professionnel confirme son tarif et facture directement son intervention."
+          services={partnerServices}
+          onServiceSelect={onServiceSelect}
+        />
       </div>
     </section>
   );

@@ -64,7 +64,7 @@ describe("canonical Services SEO and redirects", () => {
     expect(buildServicePageJsonLd(automation)[1]).toMatchObject({
       offers: [
         {
-          name: "Automatisation essentielle",
+          name: "Automatisation essentielle + IA",
           price: "1500.00",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
@@ -98,13 +98,9 @@ describe("canonical Services SEO and redirects", () => {
     expect(buildServicePageJsonLd(advertising)[1]).toMatchObject({
       "@type": "Service",
       name: "Publicité en ligne",
-      provider: { "@type": "Organization", name: "Demaa" },
-      offers: {
-        "@type": "Offer",
-        price: "750.00",
-        priceCurrency: "EUR",
-      },
     });
+    expect(JSON.stringify(buildServicePageJsonLd(advertising))).not.toContain('"@type":"Offer"');
+    expect(JSON.stringify(buildServicePageJsonLd(advertising))).not.toContain('"provider":{"@type":"Organization","name":"Demaa"}');
     expect(JSON.stringify(buildServicePageJsonLd(expert))).not.toContain('"@type":"Offer"');
     expect(JSON.stringify(buildServicePageJsonLd(expert))).not.toContain('"provider":{"@type":"Organization","name":"Demaa"}');
     expect(JSON.stringify(buildServicePageJsonLd(formalities))).not.toContain('"@type":"Offer"');
