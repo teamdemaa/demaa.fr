@@ -54,7 +54,7 @@ export default function CompanyPilotagePanel({
     <section aria-label="Pilotage de l’entreprise">
       {section !== "strategy" ? <nav
         aria-label={localeCode === "en" ? "Plan sections" : "Sections du plan"}
-        className="mx-auto mb-6 grid w-full max-w-[29rem] grid-cols-3 gap-1 rounded-[1.15rem] border border-dema-line/70 bg-dema-sage/20 p-1"
+        className="mx-auto mb-5 flex w-fit max-w-full items-center gap-1"
       >
         {SECTIONS.map((item) => (
           <button
@@ -62,10 +62,10 @@ export default function CompanyPilotagePanel({
             type="button"
             aria-current={section === item.key ? "page" : undefined}
             onClick={() => onSectionChange(item.key)}
-            className={`min-h-11 rounded-[0.9rem] px-3 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 ${
+            className={`inline-flex min-h-10 shrink-0 items-center justify-center rounded-full px-4 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 ${
               section === item.key
-                ? "bg-dema-paper/80 text-dema-forest"
-                : "text-dema-muted/90 hover:bg-dema-paper/35 hover:text-dema-forest"
+                ? "bg-dema-sage/60 text-dema-forest"
+                : "text-dema-muted/90 hover:text-dema-forest"
             }`}
           >
             {item.labels[localeCode]}

@@ -71,6 +71,11 @@ describe("authenticated homepage routing", () => {
       query: "intent=edit-company-metric&period=2026-08",
       requestedIntent: "edit-company-metric",
     })).toBe(false);
+    expect(shouldRedirect({
+      isAuthenticated: true,
+      query: "intent=open-company-strategy",
+      requestedIntent: "open-company-strategy",
+    })).toBe(false);
   });
 
   it("does not preserve a malformed metric intent", () => {

@@ -2,7 +2,6 @@ import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 const copy = {
   fr: {
-    heroDescription: "On vous aide à clarifier les priorités, à structurer une activité plus rentable et moins dépendante de vous.",
     situationLabel: "Décrivez la situation de votre entreprise",
     createPlan: "Créer mon plan d’action",
     creatingPlan: "Création du plan…",
@@ -24,7 +23,6 @@ const copy = {
     ],
   },
   en: {
-    heroDescription: "Clarify your priorities and build a more profitable business that depends less on you.",
     situationLabel: "Describe what is happening in your business",
     createPlan: "Create my action plan",
     creatingPlan: "Creating your plan…",

@@ -1,15 +1,18 @@
 import type { CompanyMonth } from "@/lib/company-pilotage-contract";
 import { companyMonthSchema } from "@/lib/company-pilotage-contract";
+import type { ActionPlanSection } from "@/lib/action-plan-app-context";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 export const ACTION_PLAN_ACCESS_INTENT_NAMES = [
   "add-manual-action",
   "edit-company-metric",
+  "open-company-strategy",
 ] as const;
 
 export type ActionPlanAccessIntent =
   | { kind: "add-manual-action" }
-  | { kind: "edit-company-metric"; period: CompanyMonth };
+  | { kind: "edit-company-metric"; period: CompanyMonth }
+  | { kind: "open-company-strategy" };
 
 type SearchValue = string | string[] | undefined;
 type SearchInput = URLSearchParams | Record<string, SearchValue>;
@@ -28,7 +31,9 @@ export function parseActionPlanAccessIntent(
   input: SearchInput,
 ): ActionPlanAccessIntent | null {
   const kind = readSearchValue(input, "intent");
-  if (kind === "add-manual-action") return { kind };
+  if (kind === "add-manual-action" || kind === "open-company-strategy") {
+    return { kind };
+  }
   if (kind !== "edit-company-metric") return null;
 
   const period = companyMonthSchema.safeParse(readSearchValue(input, "period"));
@@ -44,4 +49,17 @@ export function buildActionPlanAccessReturnTo(
     params.set("period", intent.period);
   }
   return `${localeCode === "en" ? "/en" : "/"}?${params.toString()}`;
+}
+
+export function getActionPlanAccessIntentSection(
+  intent: ActionPlanAccessIntent,
+): ActionPlanSection {
+  switch (intent.kind) {
+    case "add-manual-action":
+      return "actions";
+    case "edit-company-metric":
+      return "figures";
+    case "open-company-strategy":
+      return "strategy";
+  }
 }

@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 const SUBJECTS = {
-  fr: ["entreprise", "agence", "startup", "cabinet"],
-  en: ["business", "agency", "startup", "practice"],
+  fr: ["entreprise", "agence", "cabinet"],
+  en: ["business", "agency", "practice"],
 } as const;
 
 type TypewriterPhase = "deleting" | "holding" | "typing";

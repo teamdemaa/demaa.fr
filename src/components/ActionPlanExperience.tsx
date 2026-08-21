@@ -15,6 +15,7 @@ import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import ActionPlanServicesPanel from "@/components/ActionPlanServicesPanel";
 import ActionPlanUtilityActions from "@/components/ActionPlanUtilityActions";
+import CompanyStrategyEntry from "@/components/CompanyStrategyEntry";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import CompanyPilotagePanel, {
   type CompanyFiguresEntryRequest,
@@ -27,6 +28,7 @@ import type {
 } from "@/lib/action-plan-app-context";
 import {
   buildActionPlanAccessReturnTo,
+  getActionPlanAccessIntentSection,
   type ActionPlanAccessIntent,
 } from "@/lib/action-plan-access-intent";
 import type { AiGenerationMetadata } from "@/lib/ai-generation-metadata";
@@ -198,9 +200,10 @@ export default function ActionPlanExperience({
   const resolvedInitialAppContext = initialAccessIntent
     ? {
         view: "plan" as const,
-        planSection: initialAccessIntent.kind === "edit-company-metric"
-          ? "figures" as const
-          : "actions" as const,
+        planSection: initialAccessIntent.kind === "open-company-strategy"
+          && !initialIsAuthenticated
+          ? "actions" as const
+          : getActionPlanAccessIntentSection(initialAccessIntent),
       }
     : initialAppContext;
   const [situation, setSituation] = useState("");
@@ -267,15 +270,11 @@ export default function ActionPlanExperience({
 
   useEffect(() => {
     if (!initialAccessIntent || !initialIsAuthenticated) return;
-    const url = new URL(window.location.href);
-    url.searchParams.delete("intent");
-    url.searchParams.delete("period");
-    window.history.replaceState(
-      window.history.state,
-      "",
-      `${url.pathname}${url.search}${url.hash}`,
-    );
-  }, [initialAccessIntent, initialIsAuthenticated]);
+    navigateAppContext({
+      view: "plan",
+      planSection: getActionPlanAccessIntentSection(initialAccessIntent),
+    }, "replace");
+  }, [initialAccessIntent, initialIsAuthenticated, navigateAppContext]);
 
   useEffect(() => {
     if (!visibleViews || visibleViews.includes("academy")) {
@@ -382,6 +381,13 @@ export default function ActionPlanExperience({
       return;
     }
 
+    if (intent.kind === "open-company-strategy") {
+      setPlan(sourcePlan);
+      setWorkspace(sourceWorkspace);
+      navigateAppContext({ view: "plan", planSection: "strategy" }, "replace");
+      return;
+    }
+
     setPlan(sourcePlan);
     setWorkspace(sourceWorkspace);
     setFiguresEntryRequest((current) => ({
@@ -394,6 +400,16 @@ export default function ActionPlanExperience({
   function requestFiguresAuthentication(period: CompanyMonth) {
     if (isAuthenticated || isDemoMode) return;
     setPendingAccessIntent({ kind: "edit-company-metric", period });
+    setAccessDraft((current) => ({ ...current, mode: "create", password: "" }));
+    setAccessPromptOpen(true);
+  }
+
+  function openCompanyStrategy() {
+    if (isAuthenticated) {
+      navigateAppContext({ view: "plan", planSection: "strategy" });
+      return;
+    }
+    setPendingAccessIntent({ kind: "open-company-strategy" });
     setAccessDraft((current) => ({ ...current, mode: "create", password: "" }));
     setAccessPromptOpen(true);
   }
@@ -938,6 +954,10 @@ export default function ActionPlanExperience({
               ? contentLocaleCode === "en"
                 ? "Sign in to enter your figures"
                 : "Connectez-vous pour saisir vos chiffres"
+              : pendingAccessIntent?.kind === "open-company-strategy"
+                ? contentLocaleCode === "en"
+                  ? "Sign in to open your strategy"
+                  : "Connectez-vous pour ouvrir votre stratégie"
               : uiCopy.savePlan}
             draft={accessDraft}
             initialMode="create"
@@ -980,9 +1000,6 @@ export default function ActionPlanExperience({
                     animate={!situation}
                     localeCode={contentLocaleCode}
                   />
-                  <p className="mx-auto mt-6 max-w-[760px] text-balance text-[15px] font-normal leading-[1.5] text-dema-muted sm:text-lg">
-                    {uiCopy.heroDescription}
-                  </p>
                   <form onSubmit={handleGenerate} className="mx-auto mt-7 max-w-[42rem] text-left sm:mt-8">
                     <div className="rounded-[1.45rem] border border-dema-line bg-dema-paper p-2 shadow-[0_14px_38px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">
                       <label htmlFor="business-situation" className="sr-only">{uiCopy.situationLabel}</label>
@@ -1259,6 +1276,12 @@ export default function ActionPlanExperience({
                 localeCode={contentLocaleCode}
                 contentLocaleCode={contentLocaleCode}
               />
+              {!isDemoMode ? (
+                <CompanyStrategyEntry
+                  localeCode={contentLocaleCode}
+                  onOpen={openCompanyStrategy}
+                />
+              ) : null}
             </CompanyPilotagePanel>
           ) : null}
           {activeTab === "services" ? (

@@ -99,12 +99,11 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("ACTION_PLAN_DEMO");
     expect(experience).toContain('demo === "blank"');
     expect(uiCopy).toContain("Commencer avec un plan vierge");
-    expect(uiCopy).toContain(
-      "On vous aide à clarifier les priorités, à structurer une activité plus rentable et moins dépendante de vous.",
-    );
-    expect(experience).toContain("max-w-[760px]");
+    expect(uiCopy).not.toContain("heroDescription");
+    expect(experience).not.toContain("uiCopy.heroDescription");
     expect(experience).toContain("<ActionPlanHeroTitle");
-    expect(heroTitle).toContain('["entreprise", "agence", "startup", "cabinet"]');
+    expect(heroTitle).toContain('["entreprise", "agence", "cabinet"]');
+    expect(heroTitle).not.toContain('"startup"');
     expect(heroTitle).toContain('prefers-reduced-motion: reduce');
     expect(heroTitle).toContain('aria-label={accessibleTitle}');
     expect(heroTitle).toContain('`${subject}\\u00a0?`');
