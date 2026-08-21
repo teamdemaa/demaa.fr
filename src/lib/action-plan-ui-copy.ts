@@ -131,10 +131,10 @@ const copy = {
       retry: "Try again",
     },
     examples: [
-      "I run a SaaS company with a small team. Sales are growing, but every customer decision and product priority still comes back to me.",
-      "My web agency is busy, but projects overrun and client feedback is scattered across messages, meetings and documents.",
-      "I am an independent consultant with steady projects, but my offer is unclear and new business still depends almost entirely on referrals.",
-      "My online training business attracts learners, but completion and repeat sales are inconsistent and I do not have a reliable operating rhythm.",
+      "I run a six-person accounting firm. The work gets done, but every decision still comes back to me and deadlines are tracked across several files.",
+      "My restaurant is busy at lunchtime, but margins are falling. Purchasing, staffing and waste are not tracked consistently.",
+      "I run a plumbing business with four technicians. I want to organise jobs, quotes and follow-ups without adding a complicated tool.",
+      "I am an independent consultant. I have client work, but my offer is unclear and I want a steadier way to find customers without mass outreach.",
     ],
   },
 } as const;

@@ -20,6 +20,10 @@ describe("action plan UI copy", () => {
     expect(Object.keys(fr.system)).toEqual(Object.keys(en.system));
     expect(en.savedPlan.switchPlan).toBe("Switch plan");
     expect(en.system.title).toBe("Business solutions");
+    expect(en.examples).toHaveLength(fr.examples.length);
+    expect(en.examples.join(" ")).toContain("restaurant");
+    expect(en.examples.join(" ")).toContain("plumbing business");
+    expect(en.examples.join(" ")).not.toMatch(/SaaS|web agency|online training/i);
   });
 
   it("keeps visible bilingual literals out of the audited shared components", () => {
