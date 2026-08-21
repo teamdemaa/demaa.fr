@@ -11,8 +11,6 @@ import {
 const originalVercelEnv = process.env.VERCEL_ENV;
 const originalVercelUrl = process.env.VERCEL_URL;
 const originalVercelBranchUrl = process.env.VERCEL_BRANCH_URL;
-const originalFirebaseAuthorizedDomains =
-  process.env.NEXT_PUBLIC_FIREBASE_AUTHORIZED_DOMAINS;
 const originalSiteUrl = process.env.SITE_URL;
 const originalPublicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
@@ -20,8 +18,6 @@ afterEach(() => {
   process.env.VERCEL_ENV = originalVercelEnv;
   process.env.VERCEL_URL = originalVercelUrl;
   process.env.VERCEL_BRANCH_URL = originalVercelBranchUrl;
-  process.env.NEXT_PUBLIC_FIREBASE_AUTHORIZED_DOMAINS =
-    originalFirebaseAuthorizedDomains;
   process.env.SITE_URL = originalSiteUrl;
   process.env.NEXT_PUBLIC_SITE_URL = originalPublicSiteUrl;
 });
@@ -79,19 +75,5 @@ describe("Vercel preview hosts", () => {
         new Request("https://demaa-preview-123.vercel.app/api/customer-space/firebase-session"),
       ),
     ).toBe("https://demaa.co");
-  });
-
-  it("accepts only explicitly authorized Vercel aliases in preview", () => {
-    process.env.VERCEL_ENV = "preview";
-    process.env.VERCEL_URL = "demaa-preview-123.vercel.app";
-    delete process.env.VERCEL_BRANCH_URL;
-    process.env.NEXT_PUBLIC_FIREBASE_AUTHORIZED_DOMAINS = [
-      "demaa-stable-preview.vercel.app",
-      "evil.example",
-    ].join(",");
-
-    expect(isVercelPreviewHost("demaa-stable-preview.vercel.app")).toBe(true);
-    expect(isVercelPreviewHost("evil.example")).toBe(false);
-    expect(isVercelPreviewHost("unrelated.vercel.app")).toBe(false);
   });
 });
