@@ -1579,6 +1579,60 @@ Référence : [ADR 0016](decisions/0016-plan-services-and-solutions-ecosystem.md
 - [x] Recetter les parcours desktop, mobile, PWA, clavier, liens legacy et
   absence de régression française. L'anglais reste en pause.
 
+#### D-091 — Dix outils pertinents par système métier
+
+Référence : [ADR 0017](decisions/0017-curated-tools-per-system.md).
+
+Statut : **planifié, non commencé**. D-091 consolide et supersède D-068 à
+D-070 comme contrat d'exécution ; aucune donnée, interface ou révision Firebase
+n'est modifiée par cette décision documentaire.
+
+- [ ] Conserver exactement la carte actuelle et n'ajouter aucun badge, repère
+  éditorial ou module « Aide au choix ».
+- [ ] Porter la section Logiciels à exactement dix outils réellement pertinents
+  pour chacun des 115 systèmes, classés simplement par pertinence.
+- [ ] Couvrir les besoins essentiels du métier dans son ensemble : ne pas
+  remplir les dix places avec des outils génériques ni dix concurrents d'une
+  même catégorie, et n'imposer aucun quota d'ATS, CRM, ERP ou autre famille.
+- [ ] Valider chaque `toolRef` et compléter les 243 associations manquantes à
+  partir de sources officielles datées ; ne jamais importer automatiquement une
+  association faible pour atteindre le quota.
+- [ ] Piloter d'abord agence de recrutement, SaaS, agence web, cabinet
+  comptable et bâtiment, avec relecture contradictoire et sans règle propre à
+  l'un de ces secteurs.
+- [ ] Renforcer l'audit : dix placements, couverture métier, unicité, rangs
+  continus, liens sûrs, ressources actives, preuves et dates, justification
+  contextuelle et limites factuelles.
+- [ ] Consolider Firebase comme autorité des recommandations tierces seulement
+  après parité vérifiée ; conserver les sources historiques et le rollback
+  jusqu'à la fin de la transition.
+- [ ] Garder Services comme domaine Demaa distinct des outils et des
+  fournisseurs. Les Services ne comptent jamais dans les dix, ne partagent pas
+  leur rail et conservent tracking, SEO et source de données distincts. La
+  séparation visuelle livrée par D-090 reste la base à préserver.
+- [ ] Préserver Services dans l'API, le DTO Système et
+  `composeCanonicalServicesForSystem` pour les recommandations contextuelles
+  strictes des Actions ; ne jamais les réinjecter comme rail Outils.
+- [ ] Aligner les pages publiques `/systemes/[slug]` et leur récapitulatif, qui
+  affichent encore Services dans Solutions, puis vérifier tracking, SEO,
+  JSON-LD et tests sans casser le payload contextuel.
+- [ ] Auditer la révision Firebase candidate et active, pas seulement la liste
+  legacy : exactement dix placements `software` sélectionnés pour le public,
+  rangs 1–10, ressources actives et publication fail-closed.
+- [ ] Garder tout pool de recherche supérieur à dix hors de la révision finale
+  et traiter explicitement les anciennes sélections de Services afin d'éviter
+  un faux état « Service déjà sélectionné ».
+- [ ] Appliquer des bornes propres aux autres sections : Fournisseurs 3–8 si
+  pertinents, Financement 2–5, Aides plausiblement applicables, Réseaux 2–5,
+  documents sans quota.
+- [ ] Recetter Preview/Production, HTML indexable et JSON-LD avant une
+  activation atomique soumise à un GO PROD séparé.
+
+Critère de sortie : les 115 systèmes disposent chacun de dix outils prouvés,
+complémentaires, ordonnés et recettés, sans remplissage artificiel ni
+modification visuelle des cartes. L'activation du nouveau pointeur Firebase
+reste une opération distincte.
+
 #### D-083 — Solutions publiques simples et accompagnement progressif — historique
 
 Décision courante : la simplification `Outils + Services` ne crée aucun profil
@@ -3122,7 +3176,11 @@ Critère d'acceptation : les 115 systèmes possèdent une révision v2 contrôl�
 sans perte de données, fausse promesse de support ou rupture des anciennes
 demandes.
 
-### P0 à P1 — Pertinence des recommandations d'outils (D-068 à D-070)
+### Historique — Pertinence des recommandations d'outils (D-068 à D-070)
+
+Cette première définition est conservée pour ses preuves et recherches, mais
+son contrat d'exécution est supersédé par D-091. Aucun lot parallèle ne doit
+être lancé depuis cette section.
 
 Constat de départ : les recommandations visibles dans l'onglet Outils reposent
 sur plusieurs sources qui doivent être auditées ensemble :
@@ -3140,9 +3198,9 @@ photographie d'audit, pas une cible à conserver artificiellement.
 
 | ID | Priorité | Lot | Dépend de | Propriétaire futur | État |
 |---|---|---|---|---|---|
-| D-068 | P0 | Figer le contrat de preuve et produire la matrice complète outil × système × processus | D-012, D-061 | Référent catalogue Outils Demaa + relecteur métier indépendant | Backlog |
-| D-069 | P0 | Auditer un pilote représentatif et arbitrer chaque recommandation | D-068 | Référent catalogue, experts métier ponctuels, QA éditoriale | Backlog |
-| D-070 | P1 | Généraliser l'audit aux 115 systèmes et préparer une activation contrôlée | D-069 | Référent catalogue + QA données/produit | Bloqué par le pilote |
+| D-068 | P0 | Figer le contrat de preuve et produire la matrice complète outil × système × processus | D-012, D-061 | Référent catalogue Outils Demaa + relecteur métier indépendant | Supersédé par D-091 |
+| D-069 | P0 | Auditer un pilote représentatif et arbitrer chaque recommandation | D-068 | Référent catalogue, experts métier ponctuels, QA éditoriale | Supersédé par D-091 |
+| D-070 | P1 | Généraliser l'audit aux 115 systèmes et préparer une activation contrôlée | D-069 | Référent catalogue + QA données/produit | Supersédé par D-091 |
 
 #### D-068 — Contrat de preuve et matrice de pertinence
 

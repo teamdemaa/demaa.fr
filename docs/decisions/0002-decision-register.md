@@ -2,7 +2,7 @@
 
 - Statut : `validated`
 - Date : 31 juillet 2026
-- Mise à jour d'état : 22 août 2026, D-090 et Services livrés
+- Mise à jour d'état : 22 août 2026, D-090 livré et D-091 planifié
 
 Les seuls statuts autorisés sont `validated`, `working`, `deferred` et
 `superseded`. Le **scope** décrit la décision ; la **phase** décrit son niveau
@@ -37,10 +37,11 @@ produit.
 | D-085 | `paused` | Produit international commun et English Beta | ADR 0014 ; socle partiel en Preview, activation interdite sans nouveau GO | Le comportement fonctionnel reste commun par défaut et les variations passent par locale, marché, pays, devise et un scope explicite. `/en` n'est pas publié en Production. La reprise étend les 115 métiers et 37 familles canoniques des petites entreprises françaises, sans catalogue anglais parallèle. Les gates sont : contexte commercial résolu côté serveur, écrans et fiches Services partagés, Chiffres/Stratégie communs, Academy structurellement paritaire, prix numériques hors traductions et recette FR/EN complète. Resources/Business Processes et les recommandations contextuelles restent hors de la première bêta. Opportunités est active en français et indisponible dans `global-en-beta` par configuration de marché. |
 | D-089 | `validated` | Automatisation, IA et Application métier en forfaits | ADR 0015 ; livré par les PR 123 et 171 | Automatisation des processus et IA conserve son slug et reçoit deux forfaits à 1 500 et 3 000 EUR HT. Application métier reçoit deux forfaits à 4 500 et 7 500 EUR HT, tandis que `/sur-mesure` reste sa seule page canonique. Les cartes, modales et fiches dérivent leurs prix de la même source. Le CTA `Envoyer ma demande` transmet un forfait validé côté serveur, sans checkout. |
 | D-090 | `validated` | Plan, Services et écosystème Solutions | ADR 0016 ; livré par les PR 169 à 171 au commit `6d35805f` | La sous-navigation est `Plan / Chiffres / Solutions`. Services est une destination principale après Académie et ses placements demeurent dans le DTO Système pour les recommandations strictement contextuelles, mais son rail disparaît de Solutions. Solutions compose `Outils / Ressources / Fournisseurs / Financement / Aides / Réseaux` avec publication fail-closed. Services sépare deux accompagnements Demaa et sept partenaires de confiance en réutilisant une seule carte, une seule fiche et le catalogue canonique. |
+| D-091 | `working` | Dix outils pertinents par système métier | ADR 0017 ; cadrage validé, audit et pilote non commencés | D-091 consolide et supersède D-068 à D-070 comme contrat d'exécution. La cible est exactement dix outils validés, diversifiés par besoin et ordonnés par pertinence pour chacun des 115 systèmes, sans badge, repère éditorial ni module d'aide au choix. Les Services Demaa restent une destination et une source distinctes, hors du quota et de la liste Outils. Firebase devient l'unique autorité tierce seulement après pilote, parité, Preview, contrôles Google/JSON-LD et GO PROD atomique. |
 | Mesure client Services/Solutions | `deferred` | Événements de parcours et conversion sans PII | chantier ultérieur après contrat de mesure | La branche ne contient que l'attribution consent-aware jointe aux demandes et des logs opérationnels serveur ; aucun dispositif client spécifique n'est déclaré actif. |
 | Boutique en ligne | `superseded` | Offre Services | retirée avant implémentation | Aucune carte V1. |
 | Site 1 350 EUR + cadeaux | `deferred` | Hypothèse d'offre enrichie D-071 | revue commerciale ultérieure | Elle ne modifie pas l'offre active à 950 EUR HT. |
-| Audit des outils | `working` | Pertinence des placements par métier | W2a-W2c puis contrôle périodique | Aucune proposition publique sans placement vérifié. |
+| Audit des outils D-068 à D-070 | `superseded` | Première définition de la pertinence des placements | historique consolidé par D-091 | Les preuves et recherches restent utiles, mais D-091 est l'unique contrat d'exécution courant. |
 
 ## Gates explicites
 
