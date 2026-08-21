@@ -88,7 +88,7 @@ export default function CoachingRecommendationCard({
 
       {isOpen ? (
         <div className="fixed inset-0 z-[120] flex items-center justify-center bg-brand-blue/30 p-4 backdrop-blur-sm" onMouseDown={(event) => { if (event.target === event.currentTarget) setIsOpen(false); }}>
-          <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={`recommendation-${recommendation.id}-title`} tabIndex={-1} className="max-h-[92dvh] w-full max-w-2xl overflow-y-auto rounded-[1.35rem] bg-dema-paper p-5 shadow-2xl outline-none sm:p-7">
+          <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={`recommendation-${recommendation.id}-title`} tabIndex={-1} className="demaa-dialog-shadow max-h-[92dvh] w-full max-w-2xl overflow-y-auto rounded-[1.35rem] bg-dema-paper p-5 outline-none sm:p-7">
             <div className="flex items-start justify-between gap-5">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.13em] text-dema-forest">{recommendation.category}</p>

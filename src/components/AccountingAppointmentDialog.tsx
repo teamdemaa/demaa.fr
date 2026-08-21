@@ -211,7 +211,7 @@ export default function AccountingAppointmentDialog({
         >
           <div
             ref={dialogRef}
-            className="max-h-[88dvh] w-full max-w-2xl overflow-y-auto rounded-t-[1.25rem] border border-dema-line bg-dema-paper p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-[0_24px_70px_rgba(23,35,29,0.2)] outline-none sm:max-h-[92vh] sm:rounded-[1.25rem]"
+            className="demaa-dialog-shadow max-h-[88dvh] w-full max-w-2xl overflow-y-auto rounded-t-[1.25rem] border border-dema-line bg-dema-paper p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] outline-none sm:max-h-[92vh] sm:rounded-[1.25rem]"
             onClick={(event) => event.stopPropagation()}
             role="dialog"
             aria-modal="true"

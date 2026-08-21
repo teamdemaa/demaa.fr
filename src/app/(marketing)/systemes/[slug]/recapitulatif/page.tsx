@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 import SystemRecapPrintButton from "@/components/SystemRecapPrintButton";
 import ToolOutboundLink from "@/components/ToolOutboundLink";
 import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
-import { getActiveRenderableSolutionSectionsForSystem } from "@/lib/firebase-solution-registry-selection.server";
+import { getActivePublicRenderableSolutionSectionsForSystem } from "@/lib/firebase-solution-registry-selection.server";
 import { getSystemDetailPageData } from "@/lib/system-detail-page";
 import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
 import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
@@ -53,7 +53,7 @@ export default async function SystemRecapPage({ params }: SystemRecapPageProps) 
   const { slug } = await params;
   const [data, solutionSections] = await Promise.all([
     getSystemDetailPageData(slug),
-    getActiveRenderableSolutionSectionsForSystem(slug),
+    getActivePublicRenderableSolutionSectionsForSystem(slug),
   ]);
 
   if (!data) notFound();

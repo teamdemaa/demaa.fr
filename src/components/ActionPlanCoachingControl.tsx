@@ -175,7 +175,7 @@ export default function ActionPlanCoachingControl({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="inline-flex min-h-10 items-center gap-2 rounded-full bg-dema-forest px-4 text-xs font-medium text-white shadow-[0_6px_18px_rgba(39,91,67,0.18)] transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:min-h-11 sm:px-5 sm:text-sm"
+          className="demaa-floating-shadow inline-flex min-h-10 items-center gap-2 rounded-full bg-dema-forest px-4 text-xs font-medium text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:min-h-11 sm:px-5 sm:text-sm"
           aria-label={localeCode === "en" ? "Talk to the Demaa team" : "Échanger avec l’équipe Demaa"}
           title={localeCode === "en" ? "Talk to the Demaa team" : "Échanger avec l’équipe Demaa"}
         >
@@ -211,13 +211,13 @@ export default function ActionPlanCoachingControl({
                 onRequireAccess={isAuthenticated ? undefined : (intent) => void prepareAccess(intent)}
               />
               {accessPreparing ? (
-                <div className="fixed inset-x-0 bottom-8 z-[135] mx-auto flex w-fit items-center gap-2 rounded-full bg-dema-paper px-4 py-2 text-sm text-dema-forest shadow-lg" role="status">
+                <div className="demaa-popover-shadow fixed inset-x-0 bottom-8 z-[135] mx-auto flex w-fit items-center gap-2 rounded-full bg-dema-paper px-4 py-2 text-sm text-dema-forest" role="status">
                   <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
                   {localeCode === "en" ? "Opening…" : "Ouverture…"}
                 </div>
               ) : null}
               {accessError ? (
-                <p className="fixed inset-x-4 bottom-8 z-[135] mx-auto max-w-md rounded-2xl bg-dema-paper px-4 py-3 text-center text-sm text-red-700 shadow-lg" role="alert">
+                <p className="demaa-popover-shadow fixed inset-x-4 bottom-8 z-[135] mx-auto max-w-md rounded-2xl bg-dema-paper px-4 py-3 text-center text-sm text-red-700" role="alert">
                   {accessError}
                 </p>
               ) : null}
@@ -239,7 +239,7 @@ export default function ActionPlanCoachingControl({
                 aria-modal="true"
                 aria-labelledby="specialist-access-title"
                 tabIndex={-1}
-                className="relative max-h-dvh w-full max-w-md overflow-y-auto rounded-t-[1.5rem] bg-dema-paper p-6 shadow-2xl sm:rounded-[1.5rem] sm:p-7"
+                className="demaa-dialog-shadow relative max-h-dvh w-full max-w-md overflow-y-auto rounded-t-[1.5rem] bg-dema-paper p-6 sm:rounded-[1.5rem] sm:p-7"
                 onMouseDown={(event) => event.stopPropagation()}
               >
                 <button

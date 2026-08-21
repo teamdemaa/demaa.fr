@@ -90,6 +90,28 @@ export function getPublishedSystemDiscoveryTerms(systemSlug: string): readonly S
   return SYSTEM_DISCOVERY_ENTRIES[systemSlug]?.terms ?? [];
 }
 
+export function getSystemDiscoveryOptionScore(
+  option: Readonly<{
+    aliases: readonly string[];
+    id: string;
+    label: string;
+  }>,
+  rawQuery: string,
+): number | null {
+  const query = normalizeDiscoveryText(rawQuery);
+
+  if (!query) return 0;
+  if (draftDiscoveryTerms.has(query)) return null;
+
+  const scores = [
+    scoreText(option.label, query, 0),
+    scoreText(option.id, query, 1),
+    ...option.aliases.map((alias) => scoreText(alias, query, 3)),
+  ].filter((score): score is number => score !== null);
+
+  return scores.length ? Math.min(...scores) : null;
+}
+
 export function getSystemDiscoveryScore(
   system: SystemDiscoverySearchInput,
   rawQuery: string,

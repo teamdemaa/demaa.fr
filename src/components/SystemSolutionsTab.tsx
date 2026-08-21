@@ -14,7 +14,8 @@ import {
   BookmarkCheck,
   Wrench,
 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
 import SolutionReferralForm from "@/components/SolutionReferralForm";
 import ServiceCallbackForm from "@/components/ServiceCallbackForm";
@@ -293,6 +294,8 @@ export default function SystemSolutionsTab({
   localeCode = "fr",
   marketCode = "fr-fr",
   toolOutboundSurface = "solutions",
+  interstitialAfterSection,
+  interstitialContent,
 }: {
   sections: readonly RenderableSolutionSectionDto[];
   initialResourceSlug?: string;
@@ -302,6 +305,8 @@ export default function SystemSolutionsTab({
   localeCode?: "fr" | "en";
   marketCode?: string;
   toolOutboundSurface?: ToolOutboundSurface;
+  interstitialAfterSection?: VisibleSolutionSection;
+  interstitialContent?: ReactNode;
 }) {
   const ui = getSolutionsUiCopy(localeCode);
   const visibleSections = useMemo(
@@ -331,6 +336,11 @@ export default function SystemSolutionsTab({
       .flatMap((group) => group.placements)
       .filter((placement) => selectedPlacementIds?.has(placement.placementId)),
     [selectedPlacementIds, visibleSections],
+  );
+  const hasInterstitialAnchor = Boolean(
+    interstitialAfterSection && visibleSections.some(
+      ({ section }) => section === interstitialAfterSection,
+    ),
   );
 
   const updateRailState = useCallback((group: RenderableSolutionSectionDto) => {
@@ -475,7 +485,7 @@ export default function SystemSolutionsTab({
     );
   }
 
-  if (visibleSections.length === 0) {
+  if (visibleSections.length === 0 && !interstitialContent) {
     return (
       <p
         className="rounded-[1.15rem] border border-dema-line bg-dema-paper px-5 py-6 text-sm leading-relaxed text-dema-muted sm:px-6"
@@ -503,13 +513,16 @@ export default function SystemSolutionsTab({
           </section>
         ) : null}
 
+        {interstitialContent && !hasInterstitialAnchor
+          ? interstitialContent
+          : null}
+
         {visibleSections.map((group) => {
           const label = ui.sectionLabels[group.section as VisibleSolutionSection];
           const railState = railStates[group.section];
 
-          return (
+          return <Fragment key={group.section}>
             <section
-              key={group.section}
               aria-labelledby={`solution-section-${group.section}`}
               className="min-w-0 max-w-full"
             >
@@ -554,7 +567,10 @@ export default function SystemSolutionsTab({
                 {group.placements.map(renderPlacementCard)}
               </div>
             </section>
-          );
+            {interstitialContent && group.section === interstitialAfterSection
+              ? interstitialContent
+              : null}
+          </Fragment>;
         })}
       </div>
 

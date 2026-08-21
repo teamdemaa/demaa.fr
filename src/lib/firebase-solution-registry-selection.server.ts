@@ -10,6 +10,7 @@ import type {
   RenderableSolutionPlacementDto,
   RenderableSolutionSectionDto,
 } from "@/lib/system-solutions-ui-dto";
+import type { SolutionSection } from "@/lib/solution-registry-dto";
 
 // Emergency editorial circuit breaker for destinations that are present in an
 // older remote registry revision but are no longer safe to expose publicly.
@@ -34,7 +35,11 @@ function isFreshPricing(
 export function selectRenderableSolutionSectionsFromRevision(
   revision: FirebaseSolutionRegistryRevision,
   systemSlug: unknown,
-  options: { now?: Date; publishedOnly?: boolean } = {},
+  options: {
+    now?: Date;
+    publishedOnly?: boolean;
+    publishedOnlySections?: readonly SolutionSection[];
+  } = {},
 ): readonly RenderableSolutionSectionDto[] {
   if (typeof systemSlug !== "string" || !revision.knownSystemSlugs.includes(systemSlug)) {
     return [];
@@ -45,17 +50,19 @@ export function selectRenderableSolutionSectionsFromRevision(
   );
   const placements = revision.placements.flatMap((entry) => {
     const { placement, presentation } = entry;
+    const requiresPublished = options.publishedOnly ||
+      options.publishedOnlySections?.includes(placement.section);
     if (
       placement.systemSlug !== systemSlug ||
       placement.editorialStatus !== "selected" ||
-      (options.publishedOnly && placement.status !== "published")
+      (requiresPublished && placement.status !== "published")
     ) return [];
     const resource = resources.get(placement.resourceSlug);
     if (
       !resource ||
       BLOCKED_EXTERNAL_RESOURCE_SLUGS.has(resource.resourceSlug) ||
       resource.commercialRelationship !== placement.commercialRelationship ||
-      (options.publishedOnly && resource.status !== "published")
+      (requiresPublished && resource.status !== "published")
     ) return [];
     if (![
       "external_link",
@@ -131,5 +138,32 @@ export async function getActivePublishedRenderableSolutionSectionsForSystem(
   return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, {
     now,
     publishedOnly: true,
+  });
+}
+
+const PUBLICATION_GATED_ECOSYSTEM_SECTIONS = [
+  "providers",
+  "networks",
+] as const satisfies readonly SolutionSection[];
+
+export async function getActivePublicRenderableSolutionSectionsForSystem(
+  systemSlug: unknown,
+  now = new Date(),
+) {
+  const revision = await getActiveFirebaseSolutionRegistryRevision();
+  return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, {
+    now,
+    publishedOnlySections: PUBLICATION_GATED_ECOSYSTEM_SECTIONS,
+  });
+}
+
+export async function getLocalPublicRenderableSolutionSectionsForSystem(
+  systemSlug: unknown,
+  now = new Date(),
+) {
+  const revision = await loadFirebaseSolutionRegistryRevision({ forceLocal: true });
+  return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, {
+    now,
+    publishedOnlySections: PUBLICATION_GATED_ECOSYSTEM_SECTIONS,
   });
 }

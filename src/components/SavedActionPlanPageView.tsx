@@ -9,6 +9,7 @@ import {
   type ActionPlanIndexEntry,
 } from "@/lib/action-plan-storage.server";
 import { getActionPlanSystemOptionsForContext } from "@/lib/action-plan-localization";
+import { getCanonicalServices } from "@/lib/canonical-service-catalog";
 
 type ActionPlanPageConfig = ReturnType<typeof getActionPlanPageConfig>;
 
@@ -78,6 +79,7 @@ export default function SavedActionPlanPageView({
             plan={stored.plan}
             planId={stored.id}
             showCoaching={config.showCoaching}
+            services={getCanonicalServices()}
             systemOptions={getActionPlanSystemOptionsForContext({
               contentLocaleCode: stored.contentLocaleCode,
               marketCodeAtCreation: config.marketCode,

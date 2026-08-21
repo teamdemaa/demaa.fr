@@ -511,7 +511,7 @@ function AccountingDirectoryFilterModal({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-3xl rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 shadow-[0_24px_70px_rgba(23,35,29,0.2)] md:p-6"
+        className="demaa-dialog-shadow w-full max-w-3xl rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 md:p-6"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4">
@@ -634,7 +634,7 @@ function AccountingDirectoryMapDrawer({
       onClick={onClose}
     >
       <div
-        className="absolute inset-x-4 bottom-4 max-h-[82vh] overflow-y-auto rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 shadow-[0_24px_70px_rgba(23,35,29,0.2)]"
+        className="demaa-dialog-shadow absolute inset-x-4 bottom-4 max-h-[82vh] overflow-y-auto rounded-[1.25rem] border border-dema-line bg-dema-paper p-4"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between gap-3">

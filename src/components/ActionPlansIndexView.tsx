@@ -65,9 +65,6 @@ export default function ActionPlansIndexView({
                         <span className="line-clamp-2 block text-lg font-medium tracking-[-0.02em] text-brand-blue group-hover:text-dema-forest">
                           {plan.title}
                         </span>
-                        <span className="mt-0.5 shrink-0 rounded-md bg-dema-sage px-1.5 py-0.5 text-[0.65rem] font-semibold uppercase text-dema-forest">
-                          {plan.contentLocaleCode}
-                        </span>
                       </span>
                       <span className="mt-1 block text-xs text-dema-muted">
                         {plan.status === "generating"

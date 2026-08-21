@@ -56,7 +56,18 @@ describe("canonical Accompagnement catalog", () => {
       label: "800 € HT / mois",
       mode: "fixed",
     });
-    expect(getCanonicalServiceBySlug("prospection-ciblee")?.pricing?.label).toBe("Sur devis");
+    expect(getCanonicalServiceBySlug("prospection-ciblee")?.pricing).toMatchObject({
+      amountMinor: 150000,
+      label: "1 500 € HT / mois",
+      mode: "fixed",
+    });
+    expect(getCanonicalServiceBySlug("assistance-administrative")?.pricing).toMatchObject({
+      amountMinor: 50000,
+      label: "À partir de 500 € HT / mois",
+      mode: "starting",
+    });
+    expect(getCanonicalServiceBySlug("assistance-administrative")?.pricing?.note).toContain("20 heures");
+    expect(getCanonicalServiceBySlug("assistance-administrative")?.pricing?.note).toContain("25 € HT");
     expect(getCanonicalServiceBySlug("coach-business")?.monthlyAccompanimentDiscountEligible).toBe(false);
     expect(getCanonicalServiceBySlug("automatisation-processus")?.monthlyAccompanimentDiscountEligible).toBe(true);
     expect(getCanonicalServiceBySlug("expert-comptable")?.monthlyAccompanimentDiscountEligible).toBe(false);
@@ -130,7 +141,7 @@ describe("canonical Accompagnement catalog", () => {
     });
   });
 
-  it("renders nine equal linked accompaniment cards without prices or discount copy", async () => {
+  it("renders nine equal linked service cards with subtle pricing and no discount copy", async () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
@@ -146,12 +157,20 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).toContain("/sur-mesure");
     expect(markup).toContain("Coach business");
     expect(markup).toContain("Assistante administrative");
-    expect(markup).not.toMatch(/€ HT|Sur devis|Avantage abonné|−12 %/);
+    expect(markup).toContain("À partir de 1 500 € HT");
+    expect(markup).toContain("À partir de 4 500 € HT");
+    expect(markup).toContain("750 € HT / mois");
+    expect(markup).toContain("Sur devis");
+    expect(markup).not.toMatch(/Avantage abonné|−12 %/);
     expect(markup).not.toContain("border-t");
     expect(markup).not.toContain("−15 %");
     expect(markup).not.toContain("Découvrir le service");
+    expect(catalogSource).toContain("service.pricing.label");
+    expect(catalogSource).toContain("mt-6 text-sm font-normal text-dema-muted md:mt-auto md:pt-5");
+    expect(catalogSource).toContain('className="min-w-0 md:h-[19rem]"');
+    expect(catalogSource).not.toContain('className="h-[19rem] min-w-0"');
+    expect(systemSolutionsSource).not.toContain("service.pricing.label");
     for (const source of [catalogSource, systemSolutionsSource]) {
-      expect(source).not.toContain("service.pricing.label");
       expect(source).not.toContain("mt-auto shrink-0 border-t");
       expect(source).not.toContain("Avantage abonné : −12 %");
     }

@@ -9,14 +9,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
-
-function normalizeSearchValue(value: string) {
-  return value
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .toLocaleLowerCase("fr")
-    .trim();
-}
+import { getSystemDiscoveryOptionScore } from "@/lib/system-discovery";
 
 export default function ActionPlanSystemSelector({
   options,
@@ -37,15 +30,24 @@ export default function ActionPlanSystemSelector({
 
   const selectedOption = options.find((option) => option.id === value);
   const filteredOptions = useMemo(() => {
-    const normalizedQuery = normalizeSearchValue(query);
-    if (!normalizedQuery) return options;
+    if (!query.trim()) return options;
 
-    return options.filter((option) =>
-      normalizeSearchValue([option.label, ...option.aliases].join(" ")).includes(
-        normalizedQuery,
-      ),
-    );
-  }, [options, query]);
+    return options
+      .map((option) => ({
+        option,
+        score: getSystemDiscoveryOptionScore(option, query),
+      }))
+      .filter((entry): entry is { option: ActionPlanSystemOption; score: number } =>
+        entry.score !== null
+      )
+      .sort((left, right) =>
+        left.score - right.score || left.option.label.localeCompare(
+          right.option.label,
+          localeCode,
+        )
+      )
+      .map(({ option }) => option);
+  }, [localeCode, options, query]);
 
   useEffect(() => {
     function closeOnOutsidePointer(event: PointerEvent) {
@@ -115,7 +117,7 @@ export default function ActionPlanSystemSelector({
             : "border-dema-line hover:border-dema-forest/20"
         }`}
       >
-        <span className="truncate">{selectedOption?.label ?? (localeCode === "en" ? "Choose a business type" : "Choisir un système")}</span>
+        <span className="truncate">{selectedOption?.label ?? (localeCode === "en" ? "Choose your activity" : "Choisir votre activité")}</span>
         <ChevronDown
           className={`h-4 w-4 shrink-0 text-dema-forest transition-transform ${isOpen ? "rotate-180" : ""}`}
           aria-hidden="true"
@@ -123,7 +125,7 @@ export default function ActionPlanSystemSelector({
       </button>
 
       {isOpen ? (
-        <div className="absolute right-0 top-full z-40 mt-2 w-full min-w-[18rem] overflow-hidden rounded-[1.35rem] border border-dema-line/80 bg-dema-paper p-2 shadow-[0_22px_52px_rgba(23,35,29,0.12)]">
+        <div className="demaa-popover-shadow absolute right-0 top-full z-40 mt-2 w-full min-w-[18rem] overflow-hidden rounded-[1.35rem] border border-dema-line/80 bg-dema-paper p-2">
           <div className="relative m-1">
             <Search
               className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-dema-forest/45"
@@ -138,9 +140,9 @@ export default function ActionPlanSystemSelector({
                 setActiveIndex(0);
               }}
               onKeyDown={handleSearchKeyDown}
-              placeholder={localeCode === "en" ? "Search business types…" : "Rechercher un système…"}
+              placeholder={localeCode === "en" ? "Search activities…" : "Rechercher une activité…"}
               role="combobox"
-              aria-label={localeCode === "en" ? "Search business types" : "Rechercher un système métier"}
+              aria-label={localeCode === "en" ? "Search activities" : "Rechercher une activité"}
               aria-expanded="true"
               aria-controls="action-plan-system-options"
               aria-autocomplete="list"
@@ -156,7 +158,7 @@ export default function ActionPlanSystemSelector({
           <div
             id="action-plan-system-options"
             role="listbox"
-            aria-label={localeCode === "en" ? "Business types" : "Systèmes métier"}
+            aria-label={localeCode === "en" ? "Activities" : "Activités"}
             className="soft-scroll mt-2 max-h-72 overflow-y-auto"
           >
             {filteredOptions.length ? (
@@ -189,7 +191,7 @@ export default function ActionPlanSystemSelector({
               })
             ) : (
               <p className="px-4 py-6 text-center text-sm text-dema-muted">
-                {localeCode === "en" ? "No business type found." : "Aucun système trouvé."}
+                {localeCode === "en" ? "No activity found." : "Aucune activité trouvée."}
               </p>
             )}
           </div>

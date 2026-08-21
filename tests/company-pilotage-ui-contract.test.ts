@@ -4,18 +4,23 @@ import { COMPANY_STRATEGY_PILLARS } from "@/lib/company-pilotage-contract";
 const source = (file: string) => readFileSync(new URL(`../src/components/${file}`, import.meta.url), "utf8");
 
 describe("company Pilotage UI contract", () => {
-  it("owns one internal navigation with Strategy visible", () => {
+  it("owns one compact internal navigation and opens Strategy from the Plan", () => {
     const owner = source("CompanyPilotagePanel.tsx");
     const navbar = source("ActionPlanNavbar.tsx");
-    expect(owner).toContain("Plan d’action");
+    expect(owner).toContain('labels: { fr: "Plan", en: "Plan" }');
     expect(owner).toContain("Chiffres");
-    expect(owner).toContain(
-      'COMPANY_STRATEGY_VISIBLE,\n  type ActionPlanSection,\n} from "@/lib/action-plan-app-context"',
-    );
-    expect(owner).toContain('item.key !== "strategy" || COMPANY_STRATEGY_VISIBLE');
+    expect(owner).toContain("Solutions");
+    expect(owner).toContain("rounded-[1.15rem] border border-dema-line/70");
+    expect(owner).toContain("max-w-[29rem]");
+    expect(owner).toContain("min-h-11 rounded-[0.9rem]");
+    expect(owner).not.toContain("shadow-[0_5px_16px");
+    expect(owner).not.toContain('key: "strategy"');
     expect(owner).toContain('COMPANY_STRATEGY_VISIBLE && section === "strategy"');
+    expect(owner).toContain("Retour au plan");
+    expect(source("CompanyStrategyEntry.tsx")).toContain("Stratégie");
     expect(source("SavedActionPlanDetail.tsx")).toContain("<CompanyPilotagePanel");
     expect(source("ActionPlanExperience.tsx")).toContain("<CompanyPilotagePanel");
+    expect(source("CompanyPilotagePanel.tsx")).toContain("authenticated={figuresAuthenticated}");
     expect(navbar).not.toContain("Stratégie");
   });
 
@@ -29,6 +34,22 @@ describe("company Pilotage UI contract", () => {
     expect(strategy).toContain("Garder ma version");
     expect(strategy).toContain("Utiliser la version récente");
     expect(strategy).toContain('aria-live="polite"');
+  });
+
+  it("keeps Figures readable before authentication and protects only metric edits", () => {
+    const figures = source("CompanyFiguresPanel.tsx");
+    const experience = source("ActionPlanExperience.tsx");
+
+    expect(figures).toContain("if (!authenticated)");
+    expect(figures).toContain("onAuthenticationRequired?.(period)");
+    expect(figures).toContain("openMetricEntry(currentMonth)");
+    expect(figures).toContain("openMetricEntry(period)");
+    expect(figures).toContain("authenticated ? <CompanyMetricEntryDialog");
+    expect(experience).toContain("onFiguresAuthenticationRequired={requestFiguresAuthentication}");
+    expect(experience).toContain('setPendingAccessIntent({ kind: "edit-company-metric", period })');
+    expect(experience).toContain("figuresEntryRequest={figuresEntryRequest}");
+    expect(source("CompanyPilotagePanel.tsx")).toContain("initialEntryPeriod={figuresEntryRequest?.period}");
+    expect(source("CompanyPilotagePanel.tsx")).toContain("onEntryRequestConsumed={onFiguresEntryRequestConsumed}");
   });
 
   it("keeps chart month controls exposed to assistive technologies", () => {

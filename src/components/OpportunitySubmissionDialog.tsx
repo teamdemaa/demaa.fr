@@ -130,7 +130,7 @@ export default function OpportunitySubmissionDialog({
         aria-labelledby="opportunity-submission-title"
         tabIndex={-1}
         onClick={(event) => event.stopPropagation()}
-        className="relative max-h-[92svh] w-full overscroll-contain overflow-y-auto rounded-t-[1.5rem] bg-dema-paper px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-7 shadow-2xl outline-none [scrollbar-gutter:stable] sm:max-w-2xl sm:rounded-[1.5rem] sm:p-8"
+        className="demaa-dialog-shadow relative max-h-[92svh] w-full overscroll-contain overflow-y-auto rounded-t-[1.5rem] bg-dema-paper px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-7 outline-none [scrollbar-gutter:stable] sm:max-w-2xl sm:rounded-[1.5rem] sm:p-8"
       >
         <button
           type="button"

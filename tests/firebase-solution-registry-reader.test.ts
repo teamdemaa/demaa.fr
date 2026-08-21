@@ -69,6 +69,16 @@ describe("Firebase Solutions reader", () => {
           .flatMap(({ placements }) => placements),
       ),
     ).toHaveLength(118);
+    const publicEcosystem = revision.knownSystemSlugs.flatMap((systemSlug) =>
+      modules.selectSections(revision, systemSlug, {
+        publishedOnlySections: ["providers", "networks"],
+      }).flatMap(({ placements }) => placements),
+    );
+    expect(publicEcosystem).toHaveLength(508);
+    expect(publicEcosystem.filter(({ section }) => section === "providers"))
+      .toHaveLength(3);
+    expect(publicEcosystem.filter(({ section }) => section === "networks"))
+      .toHaveLength(0);
   });
 
   it("accepts a complete published remote revision", async () => {

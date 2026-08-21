@@ -151,6 +151,20 @@ const solutionSections: readonly RenderableSolutionSectionDto[] = [
         usage: "Déléguer la mise en place de workflows et supprimer les ressaisies.",
       }),
       placement({
+        category: "Support administratif",
+        name: "Assistante administrative",
+        resourceSlug: "assistance-administrative",
+        section: "services",
+        usage: "Confier le classement, la collecte de pièces et les relances administratives.",
+      }),
+      placement({
+        category: "Outil sur mesure",
+        name: "Application métier",
+        resourceSlug: "application-metier",
+        section: "services",
+        usage: "Faire développer une application adaptée au fonctionnement de l’entreprise.",
+      }),
+      placement({
         category: "Juridique",
         name: "Formalités d’entreprise",
         resourceSlug: "formalites-entreprise",
@@ -590,6 +604,14 @@ describe("action plan contextual aids", () => {
       title: "Préparer la prospection ciblée",
     },
     {
+      objective: "Classer les documents et organiser la collecte des pièces administratives.",
+      title: "Structurer l’administration",
+    },
+    {
+      objective: "Décrire les écrans et les données nécessaires à une application métier.",
+      title: "Cadrer l’application métier",
+    },
+    {
       objective: "Trouver un professionnel pour avancer plus vite.",
       title: "Chercher un prestataire",
     },
@@ -620,6 +642,16 @@ describe("action plan contextual aids", () => {
       expectedSlug: "automatisation-processus",
       objective: "Confier à un spécialiste la connexion des outils et la suppression des ressaisies.",
       title: "Externaliser l’automatisation du workflow",
+    },
+    {
+      expectedSlug: "assistance-administrative",
+      objective: "Confier à une assistante administrative le classement et la collecte des pièces.",
+      title: "Déléguer la gestion administrative",
+    },
+    {
+      expectedSlug: "application-metier",
+      objective: "Faire appel à un spécialiste pour développer une application métier sur mesure.",
+      title: "Confier la création de l’application métier",
     },
     {
       expectedSlug: "gestion-reseaux-sociaux",
@@ -735,6 +767,45 @@ describe("action plan contextual aids", () => {
       expect(aids["action-1"]?.accompaniment, systemId).toBeNull();
     }
   });
+
+  it.each([
+    {
+      objective: "Faire appel à un professionnel pour le bilan et la liasse fiscale.",
+      serviceSlug: "expert-comptable",
+      systemId: "cabinet-comptable",
+      title: "Confier la clôture comptable",
+    },
+    {
+      objective: "Confier à une assistante administrative le classement et la collecte des pièces.",
+      serviceSlug: "assistance-administrative",
+      systemId: "assistant-administratif-externalise",
+      title: "Déléguer la gestion administrative",
+    },
+  ])("preserves the $serviceSlug self-service exclusion for $systemId", ({
+    objective,
+    serviceSlug,
+    systemId,
+    title,
+  }) => {
+    const scopedSections = solutionSections.map((section) => ({
+      ...section,
+      placements: section.placements.map((item) => ({
+        ...item,
+        placementId: `${systemId}:${item.resource.resourceSlug}:${item.section}:1`,
+        systemSlug: systemId,
+      })),
+    }));
+    const aids = buildActionPlanContextualAids({
+      actions: [action({ objective, title })],
+      resources: [],
+      solutionSections: scopedSections,
+      systemId,
+      systeme: null,
+    });
+
+    expect(aids["action-1"]?.accompaniment).toBeNull();
+    expect(JSON.stringify(aids)).not.toContain(serviceSlug);
+  });
 });
 
 describe("action plan contextual aid integration", () => {
@@ -765,7 +836,7 @@ describe("action plan contextual aid integration", () => {
     expect(result).toContain("Outil mentionné dans cette action");
     expect(result).toContain("Voir dans Solutions");
     expect(result).toContain("Vous souhaitez déléguer cette action ?");
-    expect(result).toContain("Voir l’accompagnement");
+    expect(result).toContain("Voir le service");
     expect(result).not.toContain("contextualAid?.solutions");
     expect(result).not.toMatch(/Prix|Avantage abonné|checkout/i);
     expect(result).not.toContain("https://");

@@ -159,7 +159,7 @@ export function SavedActionPlanMenu({
       {open ? (
         <div
           id={menuId}
-          className="absolute right-0 top-full z-50 mt-2 min-w-[11rem] rounded-2xl border border-dema-line bg-dema-paper px-3 py-2 shadow-[0_18px_46px_rgba(23,35,29,0.14)]"
+          className="demaa-popover-shadow absolute right-0 top-full z-50 mt-2 min-w-[11rem] rounded-2xl border border-dema-line bg-dema-paper px-3 py-2"
         >
           {availablePlans.length > 1 ? (
             <>

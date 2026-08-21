@@ -4,6 +4,7 @@ import {
   getCanonicalServices,
   type CanonicalServiceSlug,
 } from "@/lib/canonical-service-catalog";
+import { isCanonicalServiceEligibleForSystem } from "@/lib/canonical-service-eligibility";
 import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
 import { enterpriseCatalogBySlug } from "@/lib/enterprise-annuaire";
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
@@ -24,35 +25,11 @@ const SECTION_ORDER: readonly SolutionSection[] = [
   "networks",
 ];
 
-const ACCOUNTING_FIRM_SYSTEM_SLUGS = new Set(["cabinet-comptable", "expert-comptable"]);
-const FORMALITIES_PROFESSIONAL_SYSTEM_SLUGS = new Set([
-  "cabinet-comptable",
-  "expert-comptable",
-  "cabinet-davocat",
-  "notaire",
-]);
-const ADMIN_SUPPORT_PROFESSIONAL_SYSTEM_SLUGS = new Set([
-  "assistant-administratif-externalise",
-  "office-manager-externalise",
-  "secretariat-externalise",
-]);
-
 export function getCanonicalServiceSlugsForSystem(
   systemSlug: string,
 ): readonly CanonicalServiceSlug[] {
   return getCanonicalServices()
-    .filter((service) => {
-      if (service.slug === "expert-comptable") {
-        return !ACCOUNTING_FIRM_SYSTEM_SLUGS.has(systemSlug);
-      }
-      if (service.slug === "formalites-entreprise") {
-        return !FORMALITIES_PROFESSIONAL_SYSTEM_SLUGS.has(systemSlug);
-      }
-      if (service.slug === "assistance-administrative") {
-        return !ADMIN_SUPPORT_PROFESSIONAL_SYSTEM_SLUGS.has(systemSlug);
-      }
-      return true;
-    })
+    .filter((service) => isCanonicalServiceEligibleForSystem(service.slug, systemSlug))
     .map((service) => service.slug);
 }
 

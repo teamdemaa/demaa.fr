@@ -15,14 +15,20 @@ describe("manual action plan experience", () => {
     expect(experience).toContain("{uiCopy.blankPlan}");
     expect(experience).toContain("createManualActionPlan()");
     expect(experience).toContain("createManualActionPlanWorkspaceState()");
-    expect(experience).toContain("selectedSystemId: initialAppContext.systemId ?? null");
-    expect(experience).not.toContain("selectedSystemId: initialAppContext.systemId ?? \"\"");
+    expect(experience).toContain("selectedSystemId: input.appContext.systemId ?? null");
+    expect(experience).not.toContain("selectedSystemId: input.appContext.systemId ?? \"\"");
     expect(experience).toContain("systemId: prePlanWorkspace.selectedSystemId");
     expect(experience).toContain("setWorkspace(prePlanWorkspace)");
+    expect(experience).toContain("<CompanyPilotagePanel");
+    expect(experience).toContain("available\n");
+    expect(experience).toContain("onSectionChange={selectPlanSection}");
+    expect(experience).toContain("figuresAuthenticated={isAuthenticated && !isDemoMode}");
+    expect(experience).toContain("onFiguresAuthenticationRequired={requestFiguresAuthentication}");
+    expect(experience).not.toContain('planSection === "figures" && !isAuthenticated');
     expect(experience).toContain('demo === "blank"');
     expect(experience).toContain("const storedSystemId = readGuestSelectedSystemId() ?? \"\"");
     expect(experience).toContain("savedSystemIds: storedSystemId ? [storedSystemId] : []");
-    expect(systemPanel).toContain("Choisissez votre système métier");
+    expect(systemPanel).toContain("Choisissez votre activité");
     expect(systemPanel).toContain("if (!selectedSystemId)");
   });
 
@@ -32,6 +38,9 @@ describe("manual action plan experience", () => {
     const savedDetail = source("src/components/SavedActionPlanDetail.tsx");
 
     expect(experience).toContain("handleAddAction");
+    expect(experience).toContain('setPendingAccessIntent({ kind: "add-manual-action" })');
+    expect(experience).toContain("buildActionPlanAccessReturnTo");
+    expect(experience).toContain("initialSelectedActionId={actionOpenRequest?.actionId}");
     expect(result).toContain("Ajouter une action");
     expect(result).toContain("addAndOpenAction");
     expect(result).toContain("setSelectedActionId(actionId)");

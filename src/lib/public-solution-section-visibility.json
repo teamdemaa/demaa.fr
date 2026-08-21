@@ -1,9 +1,9 @@
 {
   "software": true,
   "services": true,
-  "providers": false,
-  "financing": false,
-  "aids": false,
+  "providers": true,
+  "financing": true,
+  "aids": true,
   "models": false,
-  "networks": false
+  "networks": true
 }

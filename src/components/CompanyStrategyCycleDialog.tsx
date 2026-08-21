@@ -24,7 +24,7 @@ export default function CompanyStrategyCycleDialog({
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-[170] flex items-end justify-center bg-black/40 p-3 sm:items-center" onMouseDown={(event) => { if (event.target === event.currentTarget && !creating) onClose(); }}>
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={`${id}-title`} tabIndex={-1} className="w-full max-w-md rounded-2xl bg-dema-paper p-5 shadow-2xl outline-none sm:p-7">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={`${id}-title`} tabIndex={-1} className="demaa-dialog-shadow w-full max-w-md rounded-2xl bg-dema-paper p-5 outline-none sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 id={`${id}-title`} className="text-xl font-semibold text-dema-ink">Créer un nouveau cycle ?</h2>

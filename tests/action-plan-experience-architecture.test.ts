@@ -15,9 +15,15 @@ describe("action plan experience architecture", () => {
     const result = source("src/components/ActionPlanResult.tsx");
     const generationBar = source("src/components/ActionPlanGenerationBar.tsx");
     const generationScreen = source("src/components/ActionPlanGenerationScreen.tsx");
+    const heroTitle = source("src/components/ActionPlanHeroTitle.tsx");
+    const plansIndex = source("src/components/ActionPlansIndexView.tsx");
     const uiCopy = source("src/lib/action-plan-ui-copy.ts");
 
-    expect(experience).toContain("useState<EditableActionPlan | null>(null)");
+    expect(experience).toContain("useState<EditableActionPlan | null>(");
+    expect(experience).toContain("initialExperienceState.plan");
+    expect(experience).toContain("if (!input.intent && !shouldRestoreBlankPlanShell)");
+    expect(experience).toContain('input.appContext.planSection !== "actions"');
+    expect(experience).toContain("plan: null");
     expect(experience).toContain("readGuestSelectedSystemId");
     expect(experience).toContain("writeGuestSelectedSystemId");
     expect(experience).toContain('fetch("/api/action-plans"');
@@ -27,7 +33,8 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("runAuthenticatedActionPlanGeneration");
     expect(experience).toContain("setQueuedGenerationDraft(draft)");
     expect(experience).toContain("getLocalizedActionPlanPath(");
-    expect(experience).toContain("choiceTitle={uiCopy.savePlan}");
+    expect(experience).toContain(": uiCopy.savePlan}");
+    expect(experience).toContain("Connectez-vous pour saisir vos chiffres");
     expect(experience).not.toContain("Votre plan sera généré et enregistré dans votre espace.");
     expect(experience).not.toContain("type PendingGeneratedPlan");
     expect(experience).not.toContain("setPendingGeneratedPlan({");
@@ -60,7 +67,7 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain("isBlankManualActionPlan(plan, workspace)");
     expect(experience).toContain("manualAccessPromptHandledRef.current = true");
     expect(experience).toContain("isActionEditorOpen");
-    expect(experience).toContain("onActionEditorOpenChange={setIsActionEditorOpen}");
+    expect(experience).toContain("onActionEditorOpenChange={handleActionEditorOpenChange}");
     expect(experience).toContain("useAccessibleDialog({");
     expect(experience).toContain("data-dialog-initial-focus");
     expect(accessForm).toContain("createPasswordAccountAndGetIdToken");
@@ -96,6 +103,16 @@ describe("action plan experience architecture", () => {
       "On vous aide à clarifier les priorités, à structurer une activité plus rentable et moins dépendante de vous.",
     );
     expect(experience).toContain("max-w-[760px]");
+    expect(experience).toContain("<ActionPlanHeroTitle");
+    expect(heroTitle).toContain('["entreprise", "agence", "startup", "cabinet"]');
+    expect(heroTitle).toContain('prefers-reduced-motion: reduce');
+    expect(heroTitle).toContain('aria-label={accessibleTitle}');
+    expect(heroTitle).toContain('`${subject}\\u00a0?`');
+    expect(heroTitle).toContain('phase === "typing"');
+    expect(heroTitle).toContain('phase === "deleting"');
+    expect(heroTitle).toContain("animatedPhrase.slice(0, typedLength)");
+    expect(heroTitle).not.toContain("transition-opacity");
+    expect(plansIndex).not.toContain("plan.contentLocaleCode");
     expect(experience).toContain("createManualActionPlan()");
     expect(experience).toContain("createManualActionPlanWorkspaceState()");
     expect(experience).toContain("onAddAction={handleAddAction}");
@@ -140,6 +157,7 @@ describe("action plan experience architecture", () => {
     expect(generationBar).not.toContain("summarizeActionPlanCommandOperations");
     expect(generationBar).not.toContain("Plan mis à jour :");
     expect(result).toContain("closeAction();\n            onOpenSolution?.(input);");
+    expect(result).toContain("closeAction();\n            onOpenService?.(serviceSlug);");
     expect(generationBar).toContain("useSpeechDictation");
     expect(generationBar).toContain("Dicter ma demande");
     expect(generationBar).not.toContain("Commande IA désactivée dans la démo");
@@ -198,14 +216,14 @@ describe("action plan experience architecture", () => {
     expect(systemPanel).toContain("loadActionPlanSystemPayload");
     expect(systemPanel).not.toContain("/api/action-plan/generate");
     expect(systemPanel).toContain("if (!selectedSystemId)");
-    expect(systemPanel).toContain("Choisissez votre système métier");
+    expect(systemPanel).toContain("Choisissez votre activité");
     expect(systemPanel).toContain("<ActionPlanSystemSelector");
     expect(systemPanel).toContain("onChange={selectSystem}");
     expect(systemSelector).toContain('role="listbox"');
     expect(systemSelector).toContain('role="combobox"');
     expect(systemPanel).toContain("<SystemSolutionsTab");
     expect(systemPanel).toContain('<h1 className="sr-only">');
-    expect(systemPanel).toContain("Solutions pour votre entreprise");
+    expect(systemPanel).toContain("Solutions pour votre activité");
     expect(systemPanel).toContain("<SystemResourcesTab");
     expect(systemPanel).toContain("initialResourceSlug={initialResourceSlug}");
     expect(systemPanel).toContain("onResourceSlugChange={onResourceSlugChange}");
@@ -245,7 +263,8 @@ describe("action plan experience architecture", () => {
     expect(guestExperience).not.toContain("<ActionPlanWorkspaceTabs");
     expect(guestExperience).not.toContain("activePlanTab");
     expect(guestExperience).toContain("<ActionPlanSystemPanel");
-    expect(guestExperience).toContain('activeTab === "solutions"');
+    expect(guestExperience).toContain('appContext.planSection === "solutions"');
+    expect(guestExperience).toContain('activeTab === "services"');
     expect(guestExperience).toContain('activeTab === "academy"');
     expect(guestExperience).toContain('activeTab === "opportunities"');
     expect(guestExperience).toContain("<OpportunitiesPanel");
@@ -259,7 +278,7 @@ describe("action plan experience architecture", () => {
     const savedPlan = source("src/components/SavedActionPlanDetail.tsx");
 
     expect(savedPlan).toContain(
-      "appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || undefined",
+      "appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || \"\"",
     );
     expect(savedPlan).toContain("sourceText={initialSourceText}");
     expect(savedPlan).toContain("solutionResourceSlug: resourceSlug");

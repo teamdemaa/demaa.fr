@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
 import {
-  getActiveRenderableSolutionSectionsForSystem,
-  getLocalRenderableSolutionSectionsForSystem,
+  getActivePublicRenderableSolutionSectionsForSystem,
+  getLocalPublicRenderableSolutionSectionsForSystem,
 } from "@/lib/firebase-solution-registry-selection.server";
 import {
   enrichEnterpriseBusinessModel,
@@ -57,8 +57,8 @@ export async function GET(request: Request, { params }: RouteContext) {
       ? Promise.resolve(getLocalSystemDetailPageData(slug))
       : getSystemDetailPageData(slug),
     useLocalDemoData
-      ? getLocalRenderableSolutionSectionsForSystem(slug)
-      : getActiveRenderableSolutionSectionsForSystem(slug),
+      ? getLocalPublicRenderableSolutionSectionsForSystem(slug)
+      : getActivePublicRenderableSolutionSectionsForSystem(slug),
   ]);
 
   if (!data) {

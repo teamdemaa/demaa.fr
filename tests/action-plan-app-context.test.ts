@@ -7,24 +7,24 @@ import {
 } from "@/lib/action-plan-app-context";
 
 describe("action plan app context", () => {
-  it("normalizes the legacy system view into the main Solutions view", () => {
+  it("normalizes the legacy system view into the local Solutions section", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=system&system=restaurant&systemTab=solutions&resource=lightspeed",
     ))).toEqual({
-      view: "solutions",
-      planSection: "actions",
+      view: "plan",
+      planSection: "solutions",
       systemId: "restaurant",
       systemTab: "solutions",
       solutionResourceSlug: "lightspeed",
     });
   });
 
-  it("normalizes the former plan Solutions tab into the main Solutions view", () => {
+  it("normalizes the former plan Solutions tab into the local Solutions section", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=plan&planTab=solutions&system=restaurant&systemTab=resources&resource=lightspeed",
     ))).toEqual({
-      view: "solutions",
-      planSection: "actions",
+      view: "plan",
+      planSection: "solutions",
       systemId: "restaurant",
       systemTab: "solutions",
       solutionResourceSlug: "lightspeed",
@@ -35,8 +35,8 @@ describe("action plan app context", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "intent=solution-referral&systemSlug=restaurant&resourceSlug=lightspeed",
     ))).toEqual({
-      view: "solutions",
-      planSection: "actions",
+      view: "plan",
+      planSection: "solutions",
       systemId: "restaurant",
       solutionResourceSlug: "lightspeed",
     });
@@ -111,7 +111,7 @@ describe("action plan app context", () => {
     });
 
     expect(href).toBe(
-      "/?view=solutions&system=restaurant&systemTab=solutions",
+      "/?view=plan&section=solutions&system=restaurant&systemTab=solutions",
     );
     expect(href).not.toContain("/plans/");
   });
@@ -119,20 +119,41 @@ describe("action plan app context", () => {
   it("rejects unsafe context values", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=system&system=https://example.com&academy=../../secret",
-    ))).toEqual({ view: "solutions", planSection: "actions" });
+    ))).toEqual({ view: "plan", planSection: "solutions" });
   });
 
-  it("builds canonical Solutions contexts without the former local tab", () => {
+  it("builds contextual Solutions inside the Plan view", () => {
     expect(buildActionPlanAppHref({
       context: {
-        view: "solutions",
-        planSection: "actions",
+        view: "plan",
+        planSection: "solutions",
         systemId: "restaurant",
         systemTab: "solutions",
         solutionResourceSlug: "lightspeed",
       },
     })).toBe(
-      "/?view=solutions&system=restaurant&systemTab=solutions&resource=lightspeed",
+      "/?view=plan&section=solutions&system=restaurant&systemTab=solutions&resource=lightspeed",
+    );
+  });
+
+  it("opens a contextual service in the primary Services destination", () => {
+    expect(parseActionPlanAppContext(new URLSearchParams(
+      "view=services&service=assistance-administrative&system=restaurant&resource=legacy",
+    ))).toEqual({
+      view: "services",
+      planSection: "actions",
+      serviceSlug: "assistance-administrative",
+    });
+    expect(buildActionPlanAppHref({
+      context: {
+        view: "services",
+        planSection: "actions",
+        serviceSlug: "assistance-administrative",
+      },
+      pathname: "/plans/plan-1",
+      search: "?section=solutions&system=restaurant&resource=legacy",
+    })).toBe(
+      "/plans/plan-1?view=services&service=assistance-administrative",
     );
   });
 
@@ -140,8 +161,8 @@ describe("action plan app context", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=solutions&system=cabinet-comptable&resource=pennylane&toolSource=action_recommendation",
     ))).toEqual({
-      view: "solutions",
-      planSection: "actions",
+      view: "plan",
+      planSection: "solutions",
       systemId: "cabinet-comptable",
       solutionResourceSlug: "pennylane",
       solutionEntrySource: "action_recommendation",
@@ -149,8 +170,8 @@ describe("action plan app context", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=solutions&toolSource=person%40example.com",
     ))).toEqual({
-      view: "solutions",
-      planSection: "actions",
+      view: "plan",
+      planSection: "solutions",
     });
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=academy&toolSource=action_recommendation",
@@ -160,14 +181,14 @@ describe("action plan app context", () => {
     });
     expect(buildActionPlanAppHref({
       context: {
-        view: "solutions",
-        planSection: "actions",
+        view: "plan",
+        planSection: "solutions",
         systemId: "cabinet-comptable",
         solutionResourceSlug: "pennylane",
         solutionEntrySource: "action_recommendation",
       },
     })).toBe(
-      "/?view=solutions&system=cabinet-comptable&resource=pennylane&toolSource=action_recommendation",
+      "/?view=plan&section=solutions&system=cabinet-comptable&resource=pennylane&toolSource=action_recommendation",
     );
   });
 
@@ -188,5 +209,11 @@ describe("action plan app context", () => {
       context: { view: "plan", planSection: "strategy" },
       search: "?system=old&academy=old",
     })).toBe("/?view=plan&section=strategy");
+    expect(parseActionPlanAppContext(new URLSearchParams(
+      "view=services&section=solutions&system=restaurant",
+    ))).toEqual({
+      view: "services",
+      planSection: "actions",
+    });
   });
 });

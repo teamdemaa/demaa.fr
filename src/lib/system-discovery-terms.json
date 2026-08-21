@@ -171,7 +171,12 @@
     "menuiserie-agencement": [
       { "value": "menuisier", "kind": "alias", "status": "published" },
       { "value": "agenceur", "kind": "alias", "status": "published" },
-      { "value": "charpente bois", "kind": "specialty", "status": "published" }
+      { "value": "charpente bois", "kind": "specialty", "status": "published" },
+      { "value": "van aménagé", "kind": "specialty", "status": "published" },
+      { "value": "fourgon aménagé", "kind": "specialty", "status": "published" },
+      { "value": "aménagement de vans", "kind": "specialty", "status": "published" },
+      { "value": "véhicule de loisirs", "kind": "object", "status": "published" },
+      { "value": "camping-car", "kind": "object", "status": "published" }
     ],
     "maconnerie-gros-oeuvre": [
       { "value": "maçon", "kind": "alias", "status": "published" },

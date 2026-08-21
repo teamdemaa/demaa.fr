@@ -27,7 +27,7 @@ export default function DirectoryDetailDialogShell({
     >
       <div
         ref={dialogRef}
-        className={`relative max-h-[88dvh] w-full overflow-y-auto rounded-t-[1.35rem] border border-dema-line bg-dema-paper p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-14 shadow-[0_24px_70px_rgba(23,35,29,0.2)] outline-none sm:max-h-[92vh] sm:rounded-[1.25rem] sm:p-6 sm:pt-14 md:p-8 ${maxWidthClassName}`}
+        className={`demaa-dialog-shadow relative max-h-[88dvh] w-full overflow-y-auto rounded-t-[1.35rem] border border-dema-line bg-dema-paper p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-14 outline-none sm:max-h-[92vh] sm:rounded-[1.25rem] sm:p-6 sm:pt-14 md:p-8 ${maxWidthClassName}`}
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"

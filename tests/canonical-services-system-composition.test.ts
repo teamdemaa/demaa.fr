@@ -212,17 +212,24 @@ describe("canonical Services composition in every system", () => {
       .not.toEqual(saas.find(({ section }) => section === "aids"));
   });
 
-  it("filters after composition so public payloads expose only Tools and Services", () => {
+  it("filters after composition so public payloads expose the validated ecosystem without legacy models", () => {
     const inputSnapshot = structuredClone(sectionsWithLegacyReferral);
     const sections = composePublicSolutionSectionsForSystem(
       "cabinet-comptable",
       sectionsWithLegacyReferral,
     );
 
-    expect(sections.map(({ section }) => section)).toEqual(["software", "services"]);
-    expect(JSON.stringify(sections)).not.toMatch(
-      /Fournisseur Test|Financement|Aides et subventions|Réseaux professionnels|Anciens modèles/,
-    );
+    expect(sections.map(({ section }) => section)).toEqual([
+      "software",
+      "services",
+      "providers",
+      "financing",
+      "aids",
+    ]);
+    expect(JSON.stringify(sections)).toContain("Fournisseur Test");
+    expect(JSON.stringify(sections)).toContain("financing-");
+    expect(JSON.stringify(sections)).toContain("aid-");
+    expect(JSON.stringify(sections)).not.toMatch(/Réseaux professionnels|Anciens modèles/);
     expect(sectionsWithLegacyReferral).toEqual(inputSnapshot);
   });
 

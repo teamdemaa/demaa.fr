@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
 import ActionPlanCoachingControl from "@/components/ActionPlanCoachingControl";
 import ActionPlanGenerationScreen from "@/components/ActionPlanGenerationScreen";
+import ActionPlanHeroTitle from "@/components/ActionPlanHeroTitle";
 import CustomerSpaceAccessForm, {
   type CustomerSpaceAccessDraft,
 } from "@/components/CustomerSpaceAccessForm";
@@ -12,12 +13,22 @@ import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNavbar";
 import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
+import ActionPlanServicesPanel from "@/components/ActionPlanServicesPanel";
 import ActionPlanUtilityActions from "@/components/ActionPlanUtilityActions";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
-import CompanyPilotagePanel from "@/components/CompanyPilotagePanel";
+import CompanyPilotagePanel, {
+  type CompanyFiguresEntryRequest,
+} from "@/components/CompanyPilotagePanel";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
-import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
+import type {
+  ActionPlanAppContext,
+  ActionPlanSection,
+} from "@/lib/action-plan-app-context";
+import {
+  buildActionPlanAccessReturnTo,
+  type ActionPlanAccessIntent,
+} from "@/lib/action-plan-access-intent";
 import type { AiGenerationMetadata } from "@/lib/ai-generation-metadata";
 import { toPersistedAiGenerationMetadata } from "@/lib/ai-generation-metadata";
 import {
@@ -61,6 +72,8 @@ import {
   type ActionPlanCreationMarketCode,
 } from "@/lib/action-plan-localization";
 import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
+import type { CanonicalService } from "@/lib/canonical-service-catalog";
+import type { CompanyMonth } from "@/lib/company-pilotage-contract";
 
 type PendingSolutionSelection = {
   createdPlan: boolean;
@@ -68,6 +81,62 @@ type PendingSolutionSelection = {
   selected: boolean;
   systemId: string;
 };
+
+type ActionOpenRequest = {
+  actionId: string;
+  id: number;
+};
+
+function createInitialExperienceState(input: {
+  appContext: ActionPlanAppContext;
+  authenticated: boolean;
+  intent: ActionPlanAccessIntent | null;
+}) {
+  const prePlanWorkspace = {
+    ...createManualActionPlanWorkspaceState(),
+    selectedSystemId: input.appContext.systemId ?? null,
+    savedSystemIds: input.appContext.systemId ? [input.appContext.systemId] : [],
+  };
+  const shouldRestoreBlankPlanShell = input.appContext.view === "plan"
+    && input.appContext.planSection !== "actions";
+  if (!input.intent && !shouldRestoreBlankPlanShell) {
+    return {
+      actionOpenRequest: null,
+      figuresEntryRequest: null,
+      plan: null,
+      prePlanWorkspace,
+      workspace: null,
+    };
+  }
+
+  const plan = {
+    ...createManualActionPlan(),
+    systemId: prePlanWorkspace.selectedSystemId,
+  };
+  if (input.authenticated && input.intent?.kind === "add-manual-action") {
+    const next = addActionToManualPlan(plan, prePlanWorkspace);
+    if (next) {
+      return {
+        actionOpenRequest: { actionId: next.actionId, id: 1 },
+        figuresEntryRequest: null,
+        plan: next.plan,
+        prePlanWorkspace,
+        workspace: next.workspace,
+      };
+    }
+  }
+
+  return {
+    actionOpenRequest: null,
+    figuresEntryRequest: input.authenticated
+      && input.intent?.kind === "edit-company-metric"
+      ? { id: 1, period: input.intent.period }
+      : null,
+    plan,
+    prePlanWorkspace,
+    workspace: prePlanWorkspace,
+  };
+}
 
 function updateSolutionSelection(
   workspace: ActionPlanWorkspaceState,
@@ -94,6 +163,7 @@ function updateSolutionSelection(
 export default function ActionPlanExperience({
   systemOptions,
   initialEmail = "",
+  initialAccessIntent = null,
   initialIsAuthenticated = false,
   initialAppContext = { view: "plan", planSection: "actions" },
   initialGenerationIntent = false,
@@ -102,9 +172,11 @@ export default function ActionPlanExperience({
   marketCodeAtCreation = "fr-fr",
   visibleViews,
   showCoaching = true,
+  services,
 }: {
   systemOptions: readonly ActionPlanSystemOption[];
   initialEmail?: string;
+  initialAccessIntent?: ActionPlanAccessIntent | null;
   initialIsAuthenticated?: boolean;
   initialAppContext?: ActionPlanAppContext;
   initialGenerationIntent?: boolean;
@@ -113,34 +185,58 @@ export default function ActionPlanExperience({
   marketCodeAtCreation?: ActionPlanCreationMarketCode;
   visibleViews?: readonly ActionPlanView[];
   showCoaching?: boolean;
+  services: readonly CanonicalService[];
 }) {
   const uiCopy = getActionPlanUiCopy(contentLocaleCode);
   const newPlanPath = getLocalizedActionPlanPath(contentLocaleCode, "/plans/new");
   const plansPath = getLocalizedActionPlanPath(contentLocaleCode, "/plans");
+  const [initialExperienceState] = useState(() => createInitialExperienceState({
+    appContext: initialAppContext,
+    authenticated: initialIsAuthenticated,
+    intent: initialAccessIntent,
+  }));
+  const resolvedInitialAppContext = initialAccessIntent
+    ? {
+        view: "plan" as const,
+        planSection: initialAccessIntent.kind === "edit-company-metric"
+          ? "figures" as const
+          : "actions" as const,
+      }
+    : initialAppContext;
   const [situation, setSituation] = useState("");
   const [exampleIndex, setExampleIndex] = useState(0);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState("");
-  const [plan, setPlan] = useState<EditableActionPlan | null>(null);
+  const [plan, setPlan] = useState<EditableActionPlan | null>(
+    initialExperienceState.plan,
+  );
   const [generation, setGeneration] = useState<AiGenerationMetadata | null>(null);
-  const [workspace, setWorkspace] = useState<ActionPlanWorkspaceState | null>(null);
+  const [workspace, setWorkspace] = useState<ActionPlanWorkspaceState | null>(
+    initialExperienceState.workspace,
+  );
   const [prePlanWorkspace, setPrePlanWorkspace] = useState<ActionPlanWorkspaceState>(
-    () => ({
-      ...createManualActionPlanWorkspaceState(),
-      selectedSystemId: initialAppContext.systemId ?? null,
-      savedSystemIds: initialAppContext.systemId
-        ? [initialAppContext.systemId]
-        : [],
-    }),
+    initialExperienceState.prePlanWorkspace,
   );
   const [selectedSystemId, setSelectedSystemId] = useState(
     initialAppContext.systemId ?? "",
   );
   const { context: appContext, navigate: navigateAppContext } =
-    useActionPlanAppContext(initialAppContext);
+    useActionPlanAppContext(resolvedInitialAppContext);
   const activeTab = appContext.view;
   const [isGenerating, setIsGenerating] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(initialIsAuthenticated);
-  const [accessPromptOpen, setAccessPromptOpen] = useState(false);
+  const [accessPromptOpen, setAccessPromptOpen] = useState(
+    Boolean(initialAccessIntent && !initialIsAuthenticated),
+  );
+  const [pendingAccessIntent, setPendingAccessIntent] =
+    useState<ActionPlanAccessIntent | null>(
+      initialIsAuthenticated ? null : initialAccessIntent,
+    );
+  const [actionOpenRequest, setActionOpenRequest] =
+    useState<ActionOpenRequest | null>(initialExperienceState.actionOpenRequest);
+  const [figuresEntryRequest, setFiguresEntryRequest] =
+    useState<CompanyFiguresEntryRequest | null>(
+      initialExperienceState.figuresEntryRequest,
+    );
   const [pendingSolutionSelection, setPendingSolutionSelection] =
     useState<PendingSolutionSelection | null>(null);
   const [generationDraft, setGenerationDraft] =
@@ -154,7 +250,9 @@ export default function ActionPlanExperience({
   });
   const [autoSaveStatus, setAutoSaveStatus] = useState<"idle" | "saving" | "error">("idle");
   const [autoSaveRevision, setAutoSaveRevision] = useState(0);
-  const [isActionEditorOpen, setIsActionEditorOpen] = useState(false);
+  const [isActionEditorOpen, setIsActionEditorOpen] = useState(
+    Boolean(initialExperienceState.actionOpenRequest),
+  );
   const [error, setError] = useState<string | null>(null);
   const [isDemoMode, setIsDemoMode] = useState(false);
   const resultTitleRef = useRef<HTMLHeadingElement | null>(null);
@@ -166,6 +264,18 @@ export default function ActionPlanExperience({
   const autoSaveAttemptRef = useRef("");
   const manualAccessPromptHandledRef = useRef(false);
   const generationIntentHandledRef = useRef(false);
+
+  useEffect(() => {
+    if (!initialAccessIntent || !initialIsAuthenticated) return;
+    const url = new URL(window.location.href);
+    url.searchParams.delete("intent");
+    url.searchParams.delete("period");
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `${url.pathname}${url.search}${url.hash}`,
+    );
+  }, [initialAccessIntent, initialIsAuthenticated]);
 
   useEffect(() => {
     if (!visibleViews || visibleViews.includes("academy")) {
@@ -185,7 +295,8 @@ export default function ActionPlanExperience({
       autoSaveAttemptRef.current = "";
       navigateAppContext({
         ...appContext,
-        view: "solutions",
+        view: "plan",
+        planSection: "solutions",
         systemId: pendingSolutionSelection.systemId,
         systemTab: "solutions",
         solutionResourceSlug: undefined,
@@ -196,6 +307,10 @@ export default function ActionPlanExperience({
       setGenerationDraft(null);
     }
     setPendingSolutionSelection(null);
+    if (pendingAccessIntent) {
+      setPendingAccessIntent(null);
+      navigateAppContext(appContext, "replace");
+    }
     setAccessPromptOpen(false);
   }
   const accessDialogRef = useAccessibleDialog({
@@ -226,10 +341,61 @@ export default function ActionPlanExperience({
       );
       setPendingSolutionSelection(null);
     }
+    if (pendingAccessIntent) {
+      resumeAccessIntent(pendingAccessIntent);
+      setPendingAccessIntent(null);
+    }
     setIsAuthenticated(true);
     setAccessPromptOpen(false);
     setAccessDraft((current) => ({ ...current, password: "" }));
     requestAutoSaveRetry();
+  }
+
+  function selectPlanSection(planSection: ActionPlanSection) {
+    navigateAppContext({
+      ...appContext,
+      view: "plan",
+      planSection,
+    });
+  }
+
+  function resumeAccessIntent(intent: ActionPlanAccessIntent) {
+    const sourcePlan = plan && isManualActionPlan(plan)
+      ? plan
+      : {
+          ...createManualActionPlan(),
+          systemId: prePlanWorkspace.selectedSystemId,
+        };
+    const sourceWorkspace = workspace ?? prePlanWorkspace;
+
+    if (intent.kind === "add-manual-action") {
+      const next = addActionToManualPlan(sourcePlan, sourceWorkspace);
+      if (!next) return;
+      setPlan(next.plan);
+      setWorkspace(next.workspace);
+      setActionOpenRequest((current) => ({
+        actionId: next.actionId,
+        id: (current?.id ?? 0) + 1,
+      }));
+      setIsActionEditorOpen(true);
+      navigateAppContext({ view: "plan", planSection: "actions" }, "replace");
+      return;
+    }
+
+    setPlan(sourcePlan);
+    setWorkspace(sourceWorkspace);
+    setFiguresEntryRequest((current) => ({
+      id: (current?.id ?? 0) + 1,
+      period: intent.period,
+    }));
+    navigateAppContext({ view: "plan", planSection: "figures" }, "replace");
+  }
+
+  function requestFiguresAuthentication(period: CompanyMonth) {
+    if (isAuthenticated || isDemoMode) return;
+    setPendingAccessIntent({ kind: "edit-company-metric", period });
+    setAccessDraft((current) => ({ ...current, mode: "create", password: "" }));
+    setAccessPromptOpen(true);
   }
   const situationDictation = useSpeechDictation({
     value: situation,
@@ -244,19 +410,20 @@ export default function ActionPlanExperience({
     navigateAppContext({
       ...appContext,
       view,
-      systemId: view === "solutions"
-        ? selectedSystemId || workspace?.selectedSystemId || prePlanWorkspace.selectedSystemId || undefined
-        : appContext.systemId,
-      systemTab: view === "solutions" ? "solutions" : appContext.systemTab,
+      planSection: "actions",
+      systemId: undefined,
+      systemTab: undefined,
       solutionResourceSlug: undefined,
       solutionEntrySource: undefined,
+      serviceSlug: undefined,
     });
   }
 
   function selectAppSystem(systemId: string) {
     navigateAppContext({
       ...appContext,
-      view: "solutions",
+      view: "plan",
+      planSection: "solutions",
       systemId,
       systemTab: "solutions",
       solutionResourceSlug: undefined,
@@ -292,7 +459,8 @@ export default function ActionPlanExperience({
         setSelectedSystemId(systemId);
         navigateAppContext({
           ...appContext,
-          view: "solutions",
+          view: "plan",
+          planSection: "solutions",
           systemId,
           systemTab: "solutions",
           solutionResourceSlug: undefined,
@@ -311,7 +479,8 @@ export default function ActionPlanExperience({
       setSelectedSystemId(systemId);
       navigateAppContext({
         ...appContext,
-        view: "solutions",
+        view: "plan",
+        planSection: "solutions",
         systemId,
         systemTab: "solutions",
         solutionResourceSlug: undefined,
@@ -385,7 +554,8 @@ export default function ActionPlanExperience({
       setPrePlanWorkspace((current) => ({ ...current, selectedSystemId: systemSlug }));
       navigateAppContext({
         ...appContext,
-        view: "solutions",
+        view: "plan",
+        planSection: "solutions",
         systemId: systemSlug,
         systemTab: "solutions",
         solutionResourceSlug: resourceSlug,
@@ -683,6 +853,9 @@ export default function ActionPlanExperience({
   function handleStartBlankPlan() {
     requestControllerRef.current?.abort();
     manualAccessPromptHandledRef.current = false;
+    setActionOpenRequest(null);
+    setFiguresEntryRequest(null);
+    setIsActionEditorOpen(false);
     setSituation("");
     setPlan({
       ...createManualActionPlan(),
@@ -708,11 +881,22 @@ export default function ActionPlanExperience({
   function handleAddAction(): string | undefined {
     if (!plan || !workspace) return undefined;
     if (isManualActionPlan(plan)) {
+      if (!isAuthenticated && !isDemoMode) {
+        setPendingAccessIntent({ kind: "add-manual-action" });
+        setAccessDraft((current) => ({ ...current, mode: "create", password: "" }));
+        setAccessPromptOpen(true);
+        return undefined;
+      }
       return handleAddManualAction();
     }
     const nextWorkspace = addActionPlanWorkspaceAction(workspace);
     setWorkspace(nextWorkspace);
     return nextWorkspace.addedActions.at(-1)?.id;
+  }
+
+  function handleActionEditorOpenChange(open: boolean) {
+    setIsActionEditorOpen(open);
+    if (!open) setActionOpenRequest(null);
   }
 
   function handleDeleteAction(actionId: string) {
@@ -737,7 +921,7 @@ export default function ActionPlanExperience({
         aria-labelledby="action-plan-access-title"
         tabIndex={-1}
         onMouseDown={(event) => event.stopPropagation()}
-        className="relative w-full max-w-[430px] rounded-t-[1.5rem] bg-dema-paper p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-[0_24px_70px_rgba(23,35,29,0.14)] sm:rounded-[1.5rem] sm:p-7"
+        className="demaa-dialog-shadow relative w-full max-w-[430px] rounded-t-[1.5rem] bg-dema-paper p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:rounded-[1.5rem] sm:p-7"
       >
         <button
           type="button"
@@ -750,12 +934,20 @@ export default function ActionPlanExperience({
         </button>
         <div>
           <CustomerSpaceAccessForm
-            choiceTitle={uiCopy.savePlan}
+            choiceTitle={pendingAccessIntent?.kind === "edit-company-metric"
+              ? contentLocaleCode === "en"
+                ? "Sign in to enter your figures"
+                : "Connectez-vous pour saisir vos chiffres"
+              : uiCopy.savePlan}
             draft={accessDraft}
             initialMode="create"
             onDraftChange={setAccessDraft}
             onAuthenticated={handleAccessAuthenticated}
-            returnTo={generationDraft ? `${newPlanPath}?resume=generation` : plansPath}
+            returnTo={generationDraft
+              ? `${newPlanPath}?resume=generation`
+              : pendingAccessIntent
+                ? buildActionPlanAccessReturnTo(contentLocaleCode, pendingAccessIntent)
+                : plansPath}
             localeCode={contentLocaleCode}
           />
         </div>
@@ -782,16 +974,12 @@ export default function ActionPlanExperience({
         ) : null}
         {accessPromptDialog}
         <div className="mx-auto max-w-[68rem] pt-1">
-          {activeTab === "plan" ? (
+          {activeTab === "plan" && appContext.planSection === "actions" ? (
             <section className="mx-auto max-w-5xl pt-5 text-center sm:pt-7 lg:pt-10">
-                  <h1 className="text-balance text-[clamp(2.1rem,5.25vw,3.9rem)] font-light leading-[0.98] tracking-[-0.055em] text-brand-blue/62">
-                    {uiCopy.heroLead}
-                    <br />
-                    <span className="demaa-hero-title text-dema-forest">
-                      {uiCopy.heroEmphasis}
-                    </span>
-                    &nbsp;?
-                  </h1>
+                  <ActionPlanHeroTitle
+                    animate={!situation}
+                    localeCode={contentLocaleCode}
+                  />
                   <p className="mx-auto mt-6 max-w-[760px] text-balance text-[15px] font-normal leading-[1.5] text-dema-muted sm:text-lg">
                     {uiCopy.heroDescription}
                   </p>
@@ -852,7 +1040,7 @@ export default function ActionPlanExperience({
                   </form>
             </section>
           ) : null}
-          {activeTab === "solutions" ? (
+          {activeTab === "plan" && appContext.planSection === "solutions" ? (
             <ActionPlanSystemPanel
               localeCode={contentLocaleCode}
               marketCode={marketCodeAtCreation}
@@ -870,10 +1058,23 @@ export default function ActionPlanExperience({
               initialResourceSlug={appContext.solutionResourceSlug}
               onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
                 ...appContext,
-                view: "solutions",
+                view: "plan",
+                planSection: "solutions",
                 systemId: selectedSystemId || appContext.systemId,
                 systemTab: "solutions",
                 solutionResourceSlug,
+              })}
+            />
+          ) : null}
+          {activeTab === "services" ? (
+            <ActionPlanServicesPanel
+              services={services}
+              selectedServiceSlug={appContext.serviceSlug}
+              onServiceSlugChange={(serviceSlug) => navigateAppContext({
+                ...appContext,
+                view: "services",
+                planSection: "actions",
+                serviceSlug,
               })}
             />
           ) : null}
@@ -940,7 +1141,7 @@ export default function ActionPlanExperience({
           role="status"
           aria-live="polite"
         >
-          <div className="flex items-center gap-3 rounded-full bg-dema-paper px-5 py-3 text-sm font-medium text-dema-forest shadow-lg">
+          <div className="demaa-popover-shadow flex items-center gap-3 rounded-full bg-dema-paper px-5 py-3 text-sm font-medium text-dema-forest">
             <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
             {contentLocaleCode === "en" ? "Saving your plan…" : "Sauvegarde de votre plan…"}
           </div>
@@ -953,93 +1154,122 @@ export default function ActionPlanExperience({
         <div className="pt-1">
           {activeTab === "plan" ? (
             <CompanyPilotagePanel
-              available={false}
-              section="actions"
-              onSectionChange={() => undefined}
-            >
-              <ActionPlanResult
-              plan={plan}
-              workspace={workspace}
-              onWorkspaceChange={updateWorkspace}
-              manualMode={isManualActionPlan(plan)}
-              onAddAction={handleAddAction}
-              onActionEditorOpenChange={setIsActionEditorOpen}
-              onDeleteAction={handleDeleteAction}
-              onGeneratePlan={isBlankManualActionPlan(plan, workspace)
-                ? (nextSituation) => generatePlanFromSituation(nextSituation, workspace)
-                : undefined}
-              commandDemoMode={isDemoMode}
-              sourceText={situation.trim()}
-              contextualSystemId={
-                selectedSystemId || workspace.selectedSystemId || plan.systemId || ""
-              }
-              onOpenSolution={({ resourceSlug, systemId }) => {
-                setSelectedSystemId(systemId);
-                navigateAppContext({
-                  ...appContext,
-                  view: "solutions",
-                  systemId,
-                  systemTab: "solutions",
-                  solutionResourceSlug: resourceSlug,
-                  solutionEntrySource: "action_recommendation",
-                });
-              }}
-              headerActions={(
-                <ActionPlanUtilityActions
-                  plan={plan}
-                  workspace={workspace}
-                  saveStatus={autoSaveStatus}
-                  onRetrySave={requestAutoSaveRetry}
-                  onReset={() => {
-                    autoSaveControllerRef.current?.abort();
-                    autoSaveControllerRef.current = null;
-                    autoSaveRunningRef.current = false;
-                    autoSaveAttemptRef.current = "";
-                    manualAccessPromptHandledRef.current = false;
-                    setAutoSaveStatus("idle");
-                    setPlan(null);
-                    setGeneration(null);
-                    setWorkspace(null);
-                    setError(null);
-                  }}
+              available
+              section={appContext.planSection}
+              localeCode={contentLocaleCode}
+              onSectionChange={selectPlanSection}
+              figuresAuthenticated={isAuthenticated && !isDemoMode}
+              figuresEntryRequest={figuresEntryRequest}
+              onFiguresEntryRequestConsumed={() => setFiguresEntryRequest(null)}
+              onFiguresAuthenticationRequired={requestFiguresAuthentication}
+              solutions={(
+                <ActionPlanSystemPanel
                   localeCode={contentLocaleCode}
+                  marketCode={marketCodeAtCreation}
+                  options={systemOptions}
+                  selectedSystemId={selectedSystemId}
+                  onSystemChange={(systemId) => {
+                    setSelectedSystemId(systemId);
+                    selectAppSystem(systemId);
+                  }}
+                  workspace={workspace}
+                  onWorkspaceChange={updateWorkspace}
+                  demoMode={isDemoMode}
+                  toolOutboundSurface={
+                    appContext.solutionEntrySource === "action_recommendation"
+                      ? "action_recommendation"
+                      : "solutions"
+                  }
+                  initialResourceSlug={appContext.solutionResourceSlug}
+                  onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
+                    ...appContext,
+                    view: "plan",
+                    planSection: "solutions",
+                    systemId: selectedSystemId || appContext.systemId,
+                    systemTab: "solutions",
+                    solutionResourceSlug,
+                  })}
                 />
               )}
-              localeCode={contentLocaleCode}
-              contentLocaleCode={contentLocaleCode}
+            >
+              <ActionPlanResult
+                key={actionOpenRequest?.id ?? "action-plan-result"}
+                plan={plan}
+                workspace={workspace}
+                onWorkspaceChange={updateWorkspace}
+                manualMode={isManualActionPlan(plan)}
+                initialSelectedActionId={actionOpenRequest?.actionId}
+                onAddAction={handleAddAction}
+                onActionEditorOpenChange={handleActionEditorOpenChange}
+                onDeleteAction={handleDeleteAction}
+                onGeneratePlan={isBlankManualActionPlan(plan, workspace)
+                  ? (nextSituation) => generatePlanFromSituation(nextSituation, workspace)
+                  : undefined}
+                commandDemoMode={isDemoMode}
+                sourceText={situation.trim()}
+                contextualSystemId={
+                  selectedSystemId || workspace.selectedSystemId || plan.systemId || ""
+                }
+                onOpenSolution={({ resourceSlug, systemId }) => {
+                  setSelectedSystemId(systemId);
+                  navigateAppContext({
+                    ...appContext,
+                    view: "plan",
+                    planSection: "solutions",
+                    systemId,
+                    systemTab: "solutions",
+                    solutionResourceSlug: resourceSlug,
+                    solutionEntrySource: "action_recommendation",
+                  });
+                }}
+                onOpenService={(serviceSlug) => navigateAppContext({
+                  ...appContext,
+                  view: "services",
+                  planSection: "actions",
+                  systemId: undefined,
+                  systemTab: undefined,
+                  solutionResourceSlug: undefined,
+                  solutionEntrySource: undefined,
+                  serviceSlug,
+                })}
+                headerActions={(
+                  <ActionPlanUtilityActions
+                    plan={plan}
+                    workspace={workspace}
+                    saveStatus={autoSaveStatus}
+                    onRetrySave={requestAutoSaveRetry}
+                    onReset={() => {
+                      autoSaveControllerRef.current?.abort();
+                      autoSaveControllerRef.current = null;
+                      autoSaveRunningRef.current = false;
+                      autoSaveAttemptRef.current = "";
+                      manualAccessPromptHandledRef.current = false;
+                      setAutoSaveStatus("idle");
+                      setActionOpenRequest(null);
+                      setFiguresEntryRequest(null);
+                      setIsActionEditorOpen(false);
+                      setPlan(null);
+                      setGeneration(null);
+                      setWorkspace(null);
+                      setError(null);
+                    }}
+                    localeCode={contentLocaleCode}
+                  />
+                )}
+                localeCode={contentLocaleCode}
+                contentLocaleCode={contentLocaleCode}
               />
             </CompanyPilotagePanel>
           ) : null}
-          {activeTab === "solutions" ? (
-            <ActionPlanSystemPanel
-              localeCode={contentLocaleCode}
-              marketCode={marketCodeAtCreation}
-              options={systemOptions}
-              selectedSystemId={selectedSystemId}
-              onSystemChange={(systemId) => {
-                setSelectedSystemId(systemId);
-                selectAppSystem(systemId);
-              }}
-              workspace={workspace}
-              onWorkspaceChange={updateWorkspace}
-              onToggleSolutionSelection={
-                isAuthenticated || isDemoMode
-                  ? undefined
-                  : handleSolutionSelection
-              }
-              demoMode={isDemoMode}
-              toolOutboundSurface={
-                appContext.solutionEntrySource === "action_recommendation"
-                  ? "action_recommendation"
-                  : "solutions"
-              }
-              initialResourceSlug={appContext.solutionResourceSlug}
-              onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
+          {activeTab === "services" ? (
+            <ActionPlanServicesPanel
+              services={services}
+              selectedServiceSlug={appContext.serviceSlug}
+              onServiceSlugChange={(serviceSlug) => navigateAppContext({
                 ...appContext,
-                view: "solutions",
-                systemId: selectedSystemId || appContext.systemId,
-                systemTab: "solutions",
-                solutionResourceSlug,
+                view: "services",
+                planSection: "actions",
+                serviceSlug,
               })}
             />
           ) : null}
