@@ -414,6 +414,11 @@ par Système.
 
 #### Plan Opportunités — pilote éditorial France, décision du 20 août 2026
 
+**Statut : planifié, non commencé.** Ce programme préserve un protocole de
+test éditorial futur. Il n'autorise ni import de données, ni modification du
+contrat, ni instrumentation, ni publication supplémentaire sans GO runtime
+distinct. La page Opportunités française livrée reste inchangée.
+
 ##### Décision de positionnement et limites du chantier
 
 - [x] Décision de cadrage : tester les reprises/transmissions dans
