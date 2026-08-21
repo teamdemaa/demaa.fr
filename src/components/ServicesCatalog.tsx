@@ -92,7 +92,7 @@ export default function ServicesCatalog({
         id="services-catalog-title"
         className="mt-1.5 max-w-3xl text-2xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-3xl"
       >
-        L’accompagnement utile, au bon moment
+        L’accompagnement utile, au même endroit
       </h2>
       <div className="mt-7 grid min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {services.map((service) => (
