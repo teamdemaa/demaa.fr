@@ -20,13 +20,12 @@ Plan directeur actif :
 Il fixe l'ordre des lots, leurs responsables, les branches/PR et les gates de
 release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
-## État courant Production — 20 août 2026
+## État courant Production — 22 août 2026
 
-- Au démarrage du présent chantier documentaire, `main` et `origin/main`
-  pointent sur `260ad7d`. Les références `8020e04`, `ae5029d`, `a47d844` et
-  `f0b4d75` restent des checkpoints historiques du programme de stabilisation,
-  de sa clôture documentaire et du handover ; elles ne sont plus présentées
-  comme la tête courante.
+- `main` et `origin/main` pointent sur `6d35805f`, déployé en Production par la
+  PR 171. Les références `260ad7d`, `8020e04`, `ae5029d`, `a47d844` et
+  `f0b4d75` restent des checkpoints historiques ; elles ne sont plus
+  présentées comme la tête courante.
 - Les PR 110 à 118 ont été fusionnées séparément et vérifiées en Production :
   fiabilité des plans, sécurité de l'administration Coaching, consentement aux
   traceurs, expérience Échanger, barre du titre, documentation D-084,
@@ -48,6 +47,11 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 - `/en` n'est pas publié en Production. L'implémentation anglaise partielle
   reste un prototype de Preview et ne constitue ni une bêta publique ni un
   catalogue validé.
+- Les PR 169 à 171 ont livré la cible française D-090 : sous-navigation
+  `Plan / Chiffres / Solutions`, Stratégie accessible sous le Plan, catalogue
+  Solutions enrichi, puis Services séparé entre deux accompagnements Demaa et
+  sept partenaires de confiance. La navigation principale est désormais
+  `Plan d'action / Académie / Services / Opportunités`.
 
 ## Lecture canonique du backlog
 
