@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
 import ActionPlanCoachingControl from "@/components/ActionPlanCoachingControl";
 import ActionPlanGenerationScreen from "@/components/ActionPlanGenerationScreen";
@@ -19,6 +19,7 @@ import CompanyPilotagePanel from "@/components/CompanyPilotagePanel";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
 import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
+import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
 import { runExistingBlankActionPlanGeneration } from "@/lib/action-plan-generation.client";
 import {
   addActionToManualPlan,
@@ -81,21 +82,7 @@ export default function SavedActionPlanDetail({
   const router = useRouter();
   const planHrefPrefix = getLocalizedActionPlanPath(interfaceLocaleCode, "/plans/");
   const newPlanHref = getLocalizedActionPlanPath(interfaceLocaleCode, "/plans/new");
-  const messages = useMemo(() => interfaceLocaleCode === "en" ? {
-    saveFailed: "Your changes could not be saved.",
-    recentLoadFailed: "The latest version of the plan could not be loaded.",
-    deleteFailed: "This plan could not be deleted.",
-    planNotBlank: "This plan already contains information that must be kept.",
-    saveBeforeGenerate: "Save the latest changes before generating the plan.",
-    sessionExpired: "Your session has expired. Sign in again to save your changes.",
-  } : {
-    saveFailed: "Impossible d’enregistrer les modifications.",
-    recentLoadFailed: "Impossible de charger la version récente du plan.",
-    deleteFailed: "Impossible de supprimer ce plan.",
-    planNotBlank: "Ce plan contient déjà des informations à conserver.",
-    saveBeforeGenerate: "Enregistrez les dernières modifications avant de générer le plan.",
-    sessionExpired: "Votre session a expiré. Reconnectez-vous pour enregistrer vos modifications.",
-  }, [interfaceLocaleCode]);
+  const messages = getActionPlanUiCopy(interfaceLocaleCode).savedPlan;
   const { context: appContext, navigate: navigateAppContext } =
     useActionPlanAppContext(initialAppContext);
   const activeTab = appContext.view;
@@ -374,9 +361,7 @@ export default function SavedActionPlanDetail({
   async function deletePlan() {
     if (
       isDeleting
-      || !window.confirm(interfaceLocaleCode === "en"
-        ? "Delete this plan? This action cannot be undone in the application."
-        : "Supprimer ce plan ? Cette action est définitive dans l’application.")
+      || !window.confirm(messages.deleteConfirmation)
     ) return;
 
     setIsDeleting(true);
@@ -511,10 +496,10 @@ export default function SavedActionPlanDetail({
             <div className="sr-only" role="status" aria-live="polite">
               <span className={saveState === "error" ? "text-red-700" : "text-dema-muted"}>
                 {saveState === "saving"
-                  ? interfaceLocaleCode === "en" ? "Saving…" : "Enregistrement…"
+                  ? messages.saving
                   : saveState === "error"
                     ? saveError
-                    : interfaceLocaleCode === "en" ? "Changes saved" : "Modifications enregistrées"}
+                    : messages.saved}
               </span>
             </div>
             {saveState === "error" ? (
@@ -528,14 +513,14 @@ export default function SavedActionPlanDetail({
                         className="font-semibold underline underline-offset-4"
                         onClick={() => { void keepLocalChangesAfterConflict(); }}
                       >
-                        {interfaceLocaleCode === "en" ? "Keep my changes" : "Garder mes modifications"}
+                        {messages.keepChanges}
                       </button>
                       <button
                         type="button"
                         className="font-semibold underline underline-offset-4"
                         onClick={() => window.location.reload()}
                       >
-                        {interfaceLocaleCode === "en" ? "Use latest version" : "Utiliser la version récente"}
+                        {messages.useLatest}
                       </button>
                     </>
                   ) : (
@@ -550,7 +535,7 @@ export default function SavedActionPlanDetail({
                         void flushWorkspaceSave();
                       }}
                     >
-                      {interfaceLocaleCode === "en" ? "Try again" : "Réessayer"}
+                      {messages.retry}
                     </button>
                   )}
                 </div>
@@ -558,7 +543,7 @@ export default function SavedActionPlanDetail({
             ) : null}
             {navigationTarget ? (
               <p className="mb-3 text-sm text-dema-muted" role="status" aria-live="polite">
-                {interfaceLocaleCode === "en" ? "Opening…" : "Ouverture…"}
+                {messages.opening}
               </p>
             ) : null}
             <ActionPlanResult

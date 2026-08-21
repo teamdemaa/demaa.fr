@@ -16,6 +16,7 @@ describe("action plan experience architecture", () => {
     const generationBar = source("src/components/ActionPlanGenerationBar.tsx");
     const generationScreen = source("src/components/ActionPlanGenerationScreen.tsx");
     const uiCopy = source("src/lib/action-plan-ui-copy.ts");
+    const authCopy = source("src/lib/auth-ui-copy.ts");
 
     expect(experience).toContain("useState<EditableActionPlan | null>(null)");
     expect(experience).toContain("readGuestSelectedSystemId");
@@ -66,12 +67,14 @@ describe("action plan experience architecture", () => {
     expect(accessForm).toContain("createPasswordAccountAndGetIdToken");
     expect(accessForm).toContain("signInWithPasswordAndGetIdToken");
     expect(accessForm).toContain("onAuthenticated={onAuthenticated");
-    expect(accessForm).toContain("Créer mon accès");
+    expect(accessForm).toContain("getAuthUiCopy");
+    expect(authCopy).toContain("Créer mon accès");
     expect(shareControl).toContain("navigator.share");
     expect(shareControl).toContain("navigator.clipboard.writeText");
     expect(shareControl).toContain("aria-label={copied");
-    expect(shareControl).toContain('"Plan copié"');
-    expect(shareControl).toContain('"Partager le plan"');
+    expect(shareControl).toContain("getActionPlanUiCopy");
+    expect(uiCopy).toContain('copied: "Plan copié"');
+    expect(uiCopy).toContain('sharePlan: "Partager le plan"');
     expect(shareControl).toContain('variant === "menu" ? undefined : "sr-only"');
     expect(shareControl).toContain('variant === "icon" ? (');
     expect(shareControl).toContain('title={variant === "icon"');
@@ -190,6 +193,7 @@ describe("action plan experience architecture", () => {
       "src/lib/action-plan-system-payload.client.ts",
     );
     const systemSelector = source("src/components/ActionPlanSystemSelector.tsx");
+    const uiCopy = source("src/lib/action-plan-ui-copy.ts");
 
     expect(experience).not.toContain('fetch("/api/action-plan/generate"');
     expect(generationClient).toContain('fetch("/api/action-plans/generate"');
@@ -202,14 +206,15 @@ describe("action plan experience architecture", () => {
     expect(systemPanel).toContain("loadActionPlanSystemPayload");
     expect(systemPanel).not.toContain("/api/action-plan/generate");
     expect(systemPanel).toContain("if (!selectedSystemId)");
-    expect(systemPanel).toContain("Choisissez votre système métier");
+    expect(systemPanel).toContain("getActionPlanUiCopy");
+    expect(uiCopy).toContain("Choisissez votre système métier");
     expect(systemPanel).toContain("<ActionPlanSystemSelector");
     expect(systemPanel).toContain("onChange={selectSystem}");
     expect(systemSelector).toContain('role="listbox"');
     expect(systemSelector).toContain('role="combobox"');
     expect(systemPanel).toContain("<SystemSolutionsTab");
     expect(systemPanel).toContain('<h1 className="sr-only">');
-    expect(systemPanel).toContain("Solutions pour votre entreprise");
+    expect(uiCopy).toContain("Solutions pour votre entreprise");
     expect(systemPanel).toContain("<SystemResourcesTab");
     expect(systemPanel).toContain("initialResourceSlug={initialResourceSlug}");
     expect(systemPanel).toContain("onResourceSlugChange={onResourceSlugChange}");

@@ -3,6 +3,7 @@
 import { Check, Share2 } from "lucide-react";
 import { useState } from "react";
 import type { PersistableActionPlan } from "@/lib/action-plan-contract";
+import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 import { getActionPlanActions } from "@/lib/action-plan-view-model";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
@@ -12,6 +13,7 @@ function buildShareText(
   workspace?: ActionPlanWorkspaceState,
   localeCode: InterfaceLocaleCode = "fr",
 ) {
+  const copy = getActionPlanUiCopy(localeCode).share;
   const actions = [
     ...getActionPlanActions(plan),
     ...(workspace?.addedActions || []),
@@ -24,9 +26,9 @@ function buildShareText(
   const legacySummary = "summary" in plan ? plan.summary.trim() : "";
 
   return [
-    localeCode === "en" ? "My Demaa action plan" : "Mon plan d’action Demaa",
+    copy.title,
     ...(legacySummary ? ["", legacySummary, ""] : [""]),
-    localeCode === "en" ? "To do this week" : "À faire cette semaine",
+    copy.thisWeek,
     ...visibleActions.map(
       (action, index) => `${index + 1}. ${action.title}`,
     ),
@@ -44,6 +46,7 @@ export default function ActionPlanShareControl({
   variant?: "icon" | "menu";
   localeCode?: InterfaceLocaleCode;
 }) {
+  const copy = getActionPlanUiCopy(localeCode).share;
   const [copied, setCopied] = useState(false);
 
   async function sharePlan() {
@@ -52,7 +55,7 @@ export default function ActionPlanShareControl({
     try {
       if (navigator.share) {
         await navigator.share({
-          title: localeCode === "en" ? "My Demaa action plan" : "Mon plan d’action Demaa",
+          title: copy.title,
           text,
         });
         return;
@@ -82,12 +85,12 @@ export default function ActionPlanShareControl({
         ? "block w-full appearance-none whitespace-nowrap border-0 bg-transparent px-2 py-1.5 text-left text-sm font-normal leading-6 text-brand-blue transition-colors hover:text-dema-forest focus-visible:outline-none focus-visible:underline"
         : "inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted transition hover:border-dema-forest/30 hover:text-dema-forest"}
       aria-label={copied
-        ? localeCode === "en" ? "Plan copied" : "Plan copié"
-        : localeCode === "en" ? "Share plan" : "Partager le plan"}
+        ? copy.copied
+        : copy.sharePlan}
       title={variant === "icon"
         ? copied
-          ? localeCode === "en" ? "Plan copied" : "Plan copié"
-          : localeCode === "en" ? "Share plan" : "Partager le plan"
+          ? copy.copied
+          : copy.sharePlan
         : undefined}
       aria-live="polite"
     >
@@ -100,8 +103,8 @@ export default function ActionPlanShareControl({
       ) : null}
       <span className={variant === "menu" ? undefined : "sr-only"}>
         {copied
-          ? localeCode === "en" ? "Plan copied" : "Plan copié"
-          : localeCode === "en" ? "Share" : "Partager"}
+          ? copy.copied
+          : copy.share}
       </span>
     </button>
   );

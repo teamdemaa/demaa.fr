@@ -12,6 +12,7 @@ describe("saved action plan controls", () => {
     const sharedLoader = source("src/lib/action-plan-pages.server.ts");
     const detail = source("src/components/SavedActionPlanDetail.tsx");
     const controls = source("src/components/SavedActionPlanControls.tsx");
+    const copy = source("src/lib/action-plan-ui-copy.ts");
 
     expect(page).toContain("loadSavedActionPlanPage");
     expect(sharedLoader).toContain("getActionPlanWorkspacePageForIdentity");
@@ -19,13 +20,14 @@ describe("saved action plan controls", () => {
     expect(sharedPage).toContain("initialTitle={stored.title}");
     expect(sharedPage).toContain("key={stored.id}");
     expect(detail).toContain("<SavedActionPlanSelector");
-    expect(controls).toContain("Changer de plan");
-    expect(controls).toContain("Modifié le");
+    expect(controls).toContain("getActionPlanUiCopy");
+    expect(copy).toContain("Changer de plan");
+    expect(copy).toContain("Modifié le");
     expect(controls).toContain("availablePlan.id === planId");
     expect(controls).toContain("onNavigate(getLocalizedActionPlanPath(");
     expect(controls).toContain("`/plans/${encodeURIComponent(availablePlan.id)}`");
-    expect(controls).toContain("Génération en cours");
-    expect(controls).toContain("À reprendre");
+    expect(copy).toContain("Génération en cours");
+    expect(copy).toContain("À reprendre");
     expect(controls).not.toContain("Mon espace");
     expect(controls).not.toContain("<select");
   });
@@ -33,8 +35,10 @@ describe("saved action plan controls", () => {
   it("edits the title inline through the existing optimistic revision queue", () => {
     const detail = source("src/components/SavedActionPlanDetail.tsx");
     const controls = source("src/components/SavedActionPlanControls.tsx");
+    const copy = source("src/lib/action-plan-ui-copy.ts");
 
-    expect(controls).toContain('"Nom du plan"');
+    expect(controls).toContain("copy.planName");
+    expect(copy).toContain('planName: "Nom du plan"');
     expect(detail).toContain("expectedRevision: revisionRef.current");
     expect(detail).toContain("title: nextSave.title");
     expect(detail).toContain("revisionRef.current = body.revision");
@@ -47,6 +51,7 @@ describe("saved action plan controls", () => {
   it("keeps plan lifecycle actions in a vertical three-point menu", () => {
     const detail = source("src/components/SavedActionPlanDetail.tsx");
     const controls = source("src/components/SavedActionPlanControls.tsx");
+    const copy = source("src/lib/action-plan-ui-copy.ts");
 
     expect(detail).toContain('className="mb-3 flex min-w-0 max-w-[40rem] items-center gap-2"');
     expect(detail).toContain("<SavedActionPlanSelector");
@@ -57,11 +62,11 @@ describe("saved action plan controls", () => {
     expect(controls).toContain("focus-visible:ring-2");
     expect(controls).toContain('className="flex h-11 min-w-0 flex-1');
     expect(controls).toContain("ActionPlanShareControl");
-    expect(controls).toContain("Nouveau plan");
+    expect(copy).toContain("Nouveau plan");
     expect(controls).toContain('getLocalizedActionPlanPath(localeCode, "/plans/new")');
-    expect(controls).toContain("Renommer");
-    expect(controls).toContain("Supprimer");
-    expect(controls.indexOf("Nouveau plan")).toBeLessThan(
+    expect(copy).toContain("Renommer");
+    expect(copy).toContain("Supprimer");
+    expect(controls.indexOf("{copy.newPlan}")).toBeLessThan(
       controls.indexOf("ActionPlanShareControl", controls.indexOf("return (")),
     );
   });
@@ -81,14 +86,16 @@ describe("saved action plan controls", () => {
   it("waits for the save queue and exposes explicit retry or conflict choices", () => {
     const detail = source("src/components/SavedActionPlanDetail.tsx");
     const route = source("src/app/api/action-plans/[id]/route.ts");
+    const copy = source("src/lib/action-plan-ui-copy.ts");
 
     expect(detail).toContain("const saved = await flushWorkspaceSave()");
     expect(detail).toContain("navigationTargetRef.current");
     expect(detail).toContain("if (saveConflictRef.current) return false");
     expect(detail).toContain("if (saveConflictRef.current) return;");
-    expect(detail).toContain("Garder mes modifications");
-    expect(detail).toContain("Utiliser la version récente");
-    expect(detail).toContain("Réessayer");
+    expect(detail).toContain("getActionPlanUiCopy");
+    expect(copy).toContain("Garder mes modifications");
+    expect(copy).toContain("Utiliser la version récente");
+    expect(copy).toContain("Réessayer");
     expect(route).toContain("export async function GET");
     expect(route).toContain("revision: plan.revision");
   });
