@@ -8,23 +8,43 @@ import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import type { CanonicalService } from "@/lib/canonical-service-catalog";
 
 export default function ActionPlanServicesPanel({
+  onServiceSlugChange,
+  selectedServiceSlug,
   services,
 }: {
+  onServiceSlugChange?: (serviceSlug: string | undefined) => void;
+  selectedServiceSlug?: string;
   services: readonly CanonicalService[];
 }) {
-  const [selectedService, setSelectedService] = useState<CanonicalService | null>(null);
+  const [localServiceSlug, setLocalServiceSlug] = useState<string>();
+  const activeServiceSlug = onServiceSlugChange
+    ? selectedServiceSlug
+    : localServiceSlug;
+  const selectedService = services.find(({ slug }) => slug === activeServiceSlug) ?? null;
+
+  function selectService(serviceSlug: string | undefined) {
+    if (onServiceSlugChange) {
+      onServiceSlugChange(serviceSlug);
+      return;
+    }
+    setLocalServiceSlug(serviceSlug);
+  }
+
   const dialogRef = useAccessibleDialog({
     isOpen: Boolean(selectedService),
-    onClose: () => setSelectedService(null),
+    onClose: () => selectService(undefined),
   });
 
   return (
     <section className="py-5 sm:py-7" aria-label="Services Demaa">
-      <ServicesCatalog services={services} onServiceSelect={setSelectedService} />
+      <ServicesCatalog
+        services={services}
+        onServiceSelect={(service) => selectService(service.slug)}
+      />
       {selectedService ? (
         <div
           className="fixed inset-0 z-[140] flex items-end justify-center overflow-y-auto bg-brand-blue/25 p-0 backdrop-blur-sm sm:items-center sm:p-6"
-          onMouseDown={() => setSelectedService(null)}
+          onMouseDown={() => selectService(undefined)}
         >
           <section
             ref={dialogRef}
@@ -37,7 +57,7 @@ export default function ActionPlanServicesPanel({
             <button
               type="button"
               data-dialog-initial-focus
-              onClick={() => setSelectedService(null)}
+              onClick={() => selectService(undefined)}
               className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:bg-dema-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
               aria-label="Fermer"
             >

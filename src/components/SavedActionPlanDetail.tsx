@@ -171,6 +171,7 @@ export default function SavedActionPlanDetail({
       systemTab: undefined,
       solutionResourceSlug: undefined,
       solutionEntrySource: undefined,
+      serviceSlug: undefined,
     });
   }
 
@@ -623,6 +624,16 @@ export default function SavedActionPlanDetail({
                 solutionResourceSlug: resourceSlug,
                 solutionEntrySource: "action_recommendation",
               })}
+              onOpenService={(serviceSlug) => navigateAppContext({
+                ...appContext,
+                view: "services",
+                planSection: "actions",
+                systemId: undefined,
+                systemTab: undefined,
+                solutionResourceSlug: undefined,
+                solutionEntrySource: undefined,
+                serviceSlug,
+              })}
               localeCode={interfaceLocaleCode}
               contentLocaleCode={contentLocaleCode}
             />
@@ -636,7 +647,18 @@ export default function SavedActionPlanDetail({
             />
           </CompanyPilotagePanel>
         ) : null}
-        {activeTab === "services" ? <ActionPlanServicesPanel services={services} /> : null}
+        {activeTab === "services" ? (
+          <ActionPlanServicesPanel
+            services={services}
+            selectedServiceSlug={appContext.serviceSlug}
+            onServiceSlugChange={(serviceSlug) => navigateAppContext({
+              ...appContext,
+              view: "services",
+              planSection: "actions",
+              serviceSlug,
+            })}
+          />
+        ) : null}
         {activeTab === "academy" ? (
           <ActionPlanAcademyPanel
             initialContentSlug={appContext.academyContentSlug}

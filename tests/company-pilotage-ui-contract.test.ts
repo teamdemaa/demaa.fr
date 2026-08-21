@@ -4,16 +4,16 @@ import { COMPANY_STRATEGY_PILLARS } from "@/lib/company-pilotage-contract";
 const source = (file: string) => readFileSync(new URL(`../src/components/${file}`, import.meta.url), "utf8");
 
 describe("company Pilotage UI contract", () => {
-  it("owns one compact internal navigation and opens Strategy from Actions", () => {
+  it("owns one compact internal navigation and opens Strategy from the Plan", () => {
     const owner = source("CompanyPilotagePanel.tsx");
     const navbar = source("ActionPlanNavbar.tsx");
-    expect(owner).toContain('labels: { fr: "Actions", en: "Actions" }');
+    expect(owner).toContain('labels: { fr: "Plan", en: "Plan" }');
     expect(owner).toContain("Chiffres");
     expect(owner).toContain("Solutions");
     expect(owner).toContain("rounded-full border border-dema-line");
     expect(owner).not.toContain('key: "strategy"');
     expect(owner).toContain('COMPANY_STRATEGY_VISIBLE && section === "strategy"');
-    expect(owner).toContain("Retour aux actions");
+    expect(owner).toContain("Retour au plan");
     expect(source("CompanyStrategyEntry.tsx")).toContain("Stratégie");
     expect(source("SavedActionPlanDetail.tsx")).toContain("<CompanyPilotagePanel");
     expect(source("ActionPlanExperience.tsx")).toContain("<CompanyPilotagePanel");

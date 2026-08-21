@@ -62,6 +62,28 @@ describe("system Solutions UI", () => {
     expect(markup).not.toMatch(/bientôt|placeholder/i);
   });
 
+  it("inserts Resources after Tools and hides only the Services rail in the Plan", async () => {
+    const markup = renderToStaticMarkup(
+      createElement(SystemSolutionsTab, {
+        sections: publishedSolutionSectionsFixture,
+        interstitialAfterSection: "software",
+        interstitialContent: createElement(
+          "section",
+          { "data-test-resources": true },
+          "Ressources",
+        ),
+      }),
+    );
+    expect(markup.indexOf("Outils")).toBeLessThan(markup.indexOf("Ressources"));
+    expect(markup.indexOf("Ressources")).toBeLessThan(markup.indexOf("Fournisseurs"));
+
+    const panelSource = await readSource("src/components/ActionPlanSystemPanel.tsx");
+    const aidsSource = await readSource("src/hooks/useActionPlanContextualAids.ts");
+    expect(panelSource).toContain('section !== "services" && section !== "models"');
+    expect(panelSource).toContain('interstitialAfterSection="software"');
+    expect(aidsSource).toContain("solutionSections: payload.solutionSections");
+  });
+
   it("shows saved cards first in a dedicated selection rail", () => {
     const placement = publishedSolutionSectionsFixture[0]?.placements[0];
     expect(placement).toBeDefined();
@@ -440,7 +462,7 @@ describe("system Solutions UI", () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const solutionsSource = await readSource("src/components/SystemSolutionsTab.tsx");
 
-    expect(pageSource).toContain("getActiveRenderableSolutionSectionsForSystem,");
+    expect(pageSource).toContain("getActivePublicRenderableSolutionSectionsForSystem,");
     expect(pageSource).toContain(
       'from "@/lib/firebase-solution-registry-selection.server"',
     );

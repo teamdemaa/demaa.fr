@@ -1119,10 +1119,12 @@ manuel du marché France.
   des processus et IA est en premier, suivie d'Application métier. Assistante
   administrative est une mise en relation publique ; seule la sous-traitance de
   formalités juridiques reste réservée aux recommandations de la Team Demaa.
-- [x] D-083, lot 1 : limiter la surface publique Solutions à `Outils` et
-  `Services`, sans suppression ni déplacement de données. Le filtre public
-  s'applique après la composition pour empêcher Financement et Aides d'être
-  réinjectés dans les pages, récapitulatifs ou réponses API publiques.
+- [x] D-083, lot 1 : limiter historiquement la surface publique Solutions à
+  `Outils` et `Services`, sans suppression ni déplacement de données. Cette
+  première réduction de surface est supersédée dans l'application par D-090 :
+  Services devient une destination principale, son rail disparaît de la vue
+  Solutions et les catégories d'écosystème ne peuvent revenir que lorsqu'elles
+  passent leurs gates de publication.
 - [ ] D-083, lots 2 à 4 : maintenir l'accompagnement sous responsabilité de la
   Team Demaa, clarifier le référentiel interne et préparer progressivement les
   dossiers d'accompagnement sans créer de profil Coach.
@@ -1188,7 +1190,34 @@ manuel du marché France.
 - [ ] Activer le vocal de Structure uniquement avec stockage privé,
   transcription et politique de suppression validés.
 
-#### D-083 — Solutions publiques simples et accompagnement progressif
+#### D-090 — Plan, Services et écosystème Solutions
+
+Référence : [ADR 0016](decisions/0016-plan-services-and-solutions-ecosystem.md).
+
+- [x] Renommer la sous-navigation sauvegardée en `Plan / Chiffres / Solutions`
+  et le retour Stratégie en `Retour au plan`.
+- [x] Masquer le rail Services dans Solutions sans retirer ses placements du
+  DTO utilisé par les recommandations contextuelles.
+- [x] Conserver une recommandation de service uniquement avec besoin précis et
+  délégation explicite ; Coach business reste exclu, avec au plus un service et
+  deux recommandations commerciales par plan. Ouvrir la fiche dans `Services`,
+  jamais dans le rail contextuel masqué.
+- [x] Ajouter les intentions strictes Assistante administrative et Application
+  métier, en conservant les exclusions des professionnels qui réalisent déjà
+  ces prestations.
+- [x] Composer `Outils / Ressources / Fournisseurs / Financement / Aides /
+  Réseaux` avec les composants existants. `models` reste masqué et une section
+  vide ne produit ni titre ni faux message d'erreur.
+- [x] Rendre Fournisseurs et Réseaux fail-closed sur les seuls placements et
+  ressources explicitement publiés. Ne jamais publier une relation ou un
+  brouillon simplement parce qu'il existe dans le snapshot.
+- [x] Réutiliser le scoring canonique de découverte dans le sélecteur des 115
+  activités ; classer sans sélection silencieuse, préserver le choix manuel et
+  les activités multiples.
+- [x] Recetter les parcours desktop, mobile, PWA, clavier, liens legacy et
+  absence de régression française. L'anglais reste en pause.
+
+#### D-083 — Solutions publiques simples et accompagnement progressif — historique
 
 Décision courante : la simplification `Outils + Services` ne crée aucun profil
 Coach. La Team Demaa reste l'opérateur unique des échanges tant que le volume

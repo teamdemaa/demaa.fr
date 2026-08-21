@@ -255,6 +255,7 @@ export default function ActionPlanExperience({
       systemTab: undefined,
       solutionResourceSlug: undefined,
       solutionEntrySource: undefined,
+      serviceSlug: undefined,
     });
   }
 
@@ -883,7 +884,18 @@ export default function ActionPlanExperience({
               })}
             />
           ) : null}
-          {activeTab === "services" ? <ActionPlanServicesPanel services={services} /> : null}
+          {activeTab === "services" ? (
+            <ActionPlanServicesPanel
+              services={services}
+              selectedServiceSlug={appContext.serviceSlug}
+              onServiceSlugChange={(serviceSlug) => navigateAppContext({
+                ...appContext,
+                view: "services",
+                planSection: "actions",
+                serviceSlug,
+              })}
+            />
+          ) : null}
           {activeTab === "academy" ? (
             <ActionPlanAcademyPanel
               initialContentSlug={appContext.academyContentSlug}
@@ -1026,6 +1038,16 @@ export default function ActionPlanExperience({
                   solutionEntrySource: "action_recommendation",
                 });
               }}
+              onOpenService={(serviceSlug) => navigateAppContext({
+                ...appContext,
+                view: "services",
+                planSection: "actions",
+                systemId: undefined,
+                systemTab: undefined,
+                solutionResourceSlug: undefined,
+                solutionEntrySource: undefined,
+                serviceSlug,
+              })}
               headerActions={(
                 <ActionPlanUtilityActions
                   plan={plan}
@@ -1052,7 +1074,18 @@ export default function ActionPlanExperience({
               />
             </CompanyPilotagePanel>
           ) : null}
-          {activeTab === "services" ? <ActionPlanServicesPanel services={services} /> : null}
+          {activeTab === "services" ? (
+            <ActionPlanServicesPanel
+              services={services}
+              selectedServiceSlug={appContext.serviceSlug}
+              onServiceSlugChange={(serviceSlug) => navigateAppContext({
+                ...appContext,
+                view: "services",
+                planSection: "actions",
+                serviceSlug,
+              })}
+            />
+          ) : null}
           {activeTab === "academy" ? (
             <ActionPlanAcademyPanel
               initialContentSlug={appContext.academyContentSlug}

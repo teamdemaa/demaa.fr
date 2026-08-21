@@ -3,16 +3,16 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("server-only", () => ({}));
 
 const mocks = vi.hoisted(() => ({
-  getActiveRenderableSolutionSectionsForSystem: vi.fn(),
-  getLocalRenderableSolutionSectionsForSystem: vi.fn(),
+  getActivePublicRenderableSolutionSectionsForSystem: vi.fn(),
+  getLocalPublicRenderableSolutionSectionsForSystem: vi.fn(),
   getSystemDetailPageData: vi.fn(),
 }));
 
 vi.mock("@/lib/firebase-solution-registry-selection.server", () => ({
-  getActiveRenderableSolutionSectionsForSystem:
-    mocks.getActiveRenderableSolutionSectionsForSystem,
-  getLocalRenderableSolutionSectionsForSystem:
-    mocks.getLocalRenderableSolutionSectionsForSystem,
+  getActivePublicRenderableSolutionSectionsForSystem:
+    mocks.getActivePublicRenderableSolutionSectionsForSystem,
+  getLocalPublicRenderableSolutionSectionsForSystem:
+    mocks.getLocalPublicRenderableSolutionSectionsForSystem,
 }));
 
 vi.mock("@/lib/system-detail-page", () => ({
@@ -36,12 +36,12 @@ describe("public action-plan system route", () => {
         description: "Piloter un cabinet comptable.",
       },
     });
-    mocks.getActiveRenderableSolutionSectionsForSystem.mockResolvedValue(
+    mocks.getActivePublicRenderableSolutionSectionsForSystem.mockResolvedValue(
       publishedSolutionSectionsFixture,
     );
   });
 
-  it("returns only Tools and Services after all canonical sections are composed", async () => {
+  it("returns the validated ecosystem after all canonical sections are composed", async () => {
     const response = await GET(
       new Request("https://demaa.co/api/action-plan/system/cabinet-comptable"),
       { params: Promise.resolve({ slug: "cabinet-comptable" }) },
@@ -52,11 +52,18 @@ describe("public action-plan system route", () => {
     );
 
     expect(response.status).toBe(200);
-    expect(sectionNames).toEqual(["software", "services"]);
-    expect(JSON.stringify(payload.solutionSections)).not.toMatch(
-      /Prestataire Facturation|financing-|aid-|Fournisseurs|Financement|Aides/,
-    );
-    expect(mocks.getActiveRenderableSolutionSectionsForSystem)
+    expect(sectionNames).toEqual([
+      "software",
+      "services",
+      "providers",
+      "financing",
+      "aids",
+    ]);
+    expect(JSON.stringify(payload.solutionSections)).toContain("Prestataire Facturation");
+    expect(JSON.stringify(payload.solutionSections)).toContain("financing-");
+    expect(JSON.stringify(payload.solutionSections)).toContain("aid-");
+    expect(JSON.stringify(payload.solutionSections)).not.toContain('"section":"models"');
+    expect(mocks.getActivePublicRenderableSolutionSectionsForSystem)
       .toHaveBeenCalledWith("cabinet-comptable");
   });
 });

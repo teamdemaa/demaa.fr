@@ -8,7 +8,7 @@ import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import {
   getActivePublishedRenderableSolutionSectionsForSystem,
-  getActiveRenderableSolutionSectionsForSystem,
+  getActivePublicRenderableSolutionSectionsForSystem,
 } from "@/lib/firebase-solution-registry-selection.server";
 import {
   filterPublicSolutionSections,
@@ -59,7 +59,7 @@ export default async function SystemPage({
   const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   const [data, solutionSections, publishedSolutionSections] = await Promise.all([
     getSystemDetailPageData(slug),
-    getActiveRenderableSolutionSectionsForSystem(slug),
+    getActivePublicRenderableSolutionSectionsForSystem(slug),
     getActivePublishedRenderableSolutionSectionsForSystem(slug),
   ]);
 

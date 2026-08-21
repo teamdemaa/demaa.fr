@@ -20,6 +20,8 @@ export const actionPlanSystemOptions: readonly ActionPlanSystemOption[] =
     id: enterprise.slug,
     label: enterprise.name,
     aliases: uniqueNonEmpty([
+      enterprise.sectorLabel,
+      enterprise.shortDescription ?? "",
       ...enterprise.tags,
       ...getPublishedSystemDiscoveryTerms(enterprise.slug)
         .filter((term) => term.status === "published" && term.kind !== "problem")

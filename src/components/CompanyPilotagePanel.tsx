@@ -12,7 +12,7 @@ const CompanyFiguresPanel = dynamic(() => import("@/components/CompanyFiguresPan
 const CompanyStrategyPanel = dynamic(() => import("@/components/CompanyStrategyPanel"));
 
 const SECTIONS = [
-  { key: "actions", labels: { fr: "Actions", en: "Actions" } },
+  { key: "actions", labels: { fr: "Plan", en: "Plan" } },
   { key: "figures", labels: { fr: "Chiffres", en: "Key figures" } },
   { key: "solutions", labels: { fr: "Solutions", en: "Solutions" } },
 ] as const;
@@ -69,7 +69,7 @@ export default function CompanyPilotagePanel({
               className="mb-5 inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-sm font-medium text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              {localeCode === "en" ? "Back to actions" : "Retour aux actions"}
+              {localeCode === "en" ? "Back to plan" : "Retour au plan"}
             </button>
             <CompanyStrategyPanel />
           </div>

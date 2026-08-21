@@ -113,6 +113,10 @@ export default function ActionPlanSystemPanel({
     : error?.slug === selectedSystemId
       ? error.message
       : null;
+  const contextualSolutionSections = currentPayload?.solutionSections ?? [];
+  const displayedSolutionSections = contextualSolutionSections.filter(
+    ({ section }) => section !== "services" && section !== "models",
+  );
 
   return (
     <section aria-label={localeCode === "en" ? "Activity solutions" : "Solutions par activité"} className="pt-3">
@@ -192,7 +196,7 @@ export default function ActionPlanSystemPanel({
       {currentPayload ? (
         <div className="space-y-10">
           <SystemSolutionsTab
-            sections={currentPayload.solutionSections}
+            sections={displayedSolutionSections}
             initialResourceSlug={initialResourceSlug}
             onResourceSlugChange={onResourceSlugChange}
             selectedPlacementIds={
@@ -215,14 +219,15 @@ export default function ActionPlanSystemPanel({
             localeCode={localeCode}
             marketCode={marketCode}
             toolOutboundSurface={toolOutboundSurface}
+            interstitialAfterSection="software"
+            interstitialContent={localeCode === "fr" ? <SystemResourcesTab
+              initialResourceSlug={initialResourceSlug}
+              layout="rail"
+              onResourceSlugChange={onResourceSlugChange}
+              resources={currentPayload.resources}
+              systemSlug={currentPayload.system.slug}
+            /> : null}
           />
-          {localeCode === "fr" ? <SystemResourcesTab
-            initialResourceSlug={initialResourceSlug}
-            layout="rail"
-            onResourceSlugChange={onResourceSlugChange}
-            resources={currentPayload.resources}
-            systemSlug={currentPayload.system.slug}
-          /> : null}
         </div>
       ) : null}
     </section>

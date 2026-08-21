@@ -6,6 +6,7 @@ import {
 import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 import type { SystemResource } from "@/lib/system-resource-catalog";
+import { isCanonicalServiceEligibleForSystem } from "@/lib/canonical-service-eligibility";
 import type {
   RenderableSolutionPlacementDto,
   RenderableSolutionSectionDto,
@@ -421,20 +422,17 @@ const EXPLICIT_DELEGATION_PATTERN =
 const SOFTWARE_CAPABILITY_PATTERN =
   /\b(automatis|centralis|connect|crm|en ligne|integr|logiciel|multi utilisateur|outil|planning|rendez vous|synchron|temps reel|workflow)\w*/;
 
-const FORMALITIES_SELF_SERVICE_SYSTEM_IDS = new Set([
-  "cabinet-comptable",
-  "expert-comptable",
-  "cabinet-davocat",
-  "notaire",
-]);
-
 const SERVICE_INTENT_PATTERNS: Readonly<Record<string, RegExp>> = {
   "expert-comptable":
     /\b(expert comptable|comptabil|bilan|liasse|fisc|tva|tenue comptable|cloture comptable)\w*/,
   "formalites-entreprise":
     /\b(creer (une |mon |son )?entreprise|creation d entreprise|cessation|fermeture|formal|immatricul|modifier (les )?statut|radiation)\w*/,
+  "assistance-administrative":
+    /\b(assistance administrative|assistant administratif|secretariat|classement (des )?document|gestion administrative|saisie administrative|collecte (des )?piece|relance (des )?document)\w*/,
   "automatisation-processus":
     /\b(automatis|connecter? (les )?outil|integration|workflow|ressaisie|tache repetit)\w*/,
+  "application-metier":
+    /\b(application metier|logiciel sur mesure|outil sur mesure|portail interne|espace client sur mesure|developper (une )?application|creer (une )?application)\w*/,
   "gestion-reseaux-sociaux":
     /\b(reseaux sociaux|publication|calendrier editorial|community management|contenu recurrent)\w*/,
   "publicite-en-ligne":
@@ -573,10 +571,7 @@ function serviceMatchesAction(
 ) {
   const slug = placement.resource.resourceSlug;
   if (slug === "coach-business") return false;
-  if (
-    slug === "formalites-entreprise" &&
-    FORMALITIES_SELF_SERVICE_SYSTEM_IDS.has(systemId)
-  ) return false;
+  if (!isCanonicalServiceEligibleForSystem(slug, systemId)) return false;
   const intentPattern = SERVICE_INTENT_PATTERNS[slug];
   if (!intentPattern?.test(actionText)) return false;
   return EXPLICIT_DELEGATION_PATTERN.test(actionText);

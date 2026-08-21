@@ -9,14 +9,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import type { ActionPlanSystemOption } from "@/lib/action-plan-system-catalog";
-
-function normalizeSearchValue(value: string) {
-  return value
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .toLocaleLowerCase("fr")
-    .trim();
-}
+import { getSystemDiscoveryOptionScore } from "@/lib/system-discovery";
 
 export default function ActionPlanSystemSelector({
   options,
@@ -37,15 +30,24 @@ export default function ActionPlanSystemSelector({
 
   const selectedOption = options.find((option) => option.id === value);
   const filteredOptions = useMemo(() => {
-    const normalizedQuery = normalizeSearchValue(query);
-    if (!normalizedQuery) return options;
+    if (!query.trim()) return options;
 
-    return options.filter((option) =>
-      normalizeSearchValue([option.label, ...option.aliases].join(" ")).includes(
-        normalizedQuery,
-      ),
-    );
-  }, [options, query]);
+    return options
+      .map((option) => ({
+        option,
+        score: getSystemDiscoveryOptionScore(option, query),
+      }))
+      .filter((entry): entry is { option: ActionPlanSystemOption; score: number } =>
+        entry.score !== null
+      )
+      .sort((left, right) =>
+        left.score - right.score || left.option.label.localeCompare(
+          right.option.label,
+          localeCode,
+        )
+      )
+      .map(({ option }) => option);
+  }, [localeCode, options, query]);
 
   useEffect(() => {
     function closeOnOutsidePointer(event: PointerEvent) {

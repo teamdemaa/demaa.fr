@@ -221,6 +221,7 @@ function ActionDrawer({
   onWorkspaceChange,
   onClose,
   onDelete,
+  onOpenService,
   onOpenSolution,
   contextualAid,
   localeCode,
@@ -230,6 +231,7 @@ function ActionDrawer({
   onWorkspaceChange: Dispatch<SetStateAction<ActionPlanWorkspaceState>>;
   onClose: () => void;
   onDelete: () => void;
+  onOpenService?: (serviceSlug: string) => void;
   onOpenSolution?: (input: { resourceSlug: string; systemId: string }) => void;
   contextualAid?: ActionPlanContextualAid;
   localeCode: InterfaceLocaleCode;
@@ -674,23 +676,22 @@ function ActionDrawer({
                 {contextualAid.accompaniment ? (
                   <button
                     type="button"
-                    onClick={() => onOpenSolution?.({
-                      resourceSlug: contextualAid.accompaniment!.resourceSlug,
-                      systemId: contextualAid.accompaniment!.systemId,
-                    })}
+                    onClick={() => onOpenService?.(
+                      contextualAid.accompaniment!.resourceSlug,
+                    )}
                     className="group flex w-full items-start gap-3 rounded-xl border border-dema-line bg-dema-paper px-4 py-3 text-left transition hover:border-dema-forest/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30"
                   >
                     <BriefcaseBusiness className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
                     <span className="min-w-0 flex-1">
                       <span className="block text-[10px] font-medium uppercase tracking-[0.12em] text-dema-muted">
                         {contextualAid.accompaniment.relationship === "selected_in_solutions"
-                          ? "Sélectionné dans vos Solutions"
+                          ? "Service déjà sélectionné"
                           : "Vous souhaitez déléguer cette action ?"}
                       </span>
                       <span className="mt-0.5 block text-sm text-brand-blue">{contextualAid.accompaniment.label}</span>
                       <span className="mt-1 line-clamp-2 block text-xs leading-relaxed text-dema-muted">{contextualAid.accompaniment.description}</span>
                       <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-dema-forest">
-                        Voir l’accompagnement
+                        Voir le service
                         <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                       </span>
                     </span>
@@ -765,6 +766,7 @@ export default function ActionPlanResult({
   commandDemoMode = false,
   contextualSystemId = "",
   sourceText = null,
+  onOpenService,
   onOpenSolution,
   localeCode = "fr",
   contentLocaleCode = localeCode,
@@ -781,6 +783,7 @@ export default function ActionPlanResult({
   commandDemoMode?: boolean;
   contextualSystemId?: string;
   sourceText?: string | null;
+  onOpenService?: (serviceSlug: string) => void;
   onOpenSolution?: (input: { resourceSlug: string; systemId: string }) => void;
   localeCode?: InterfaceLocaleCode;
   contentLocaleCode?: InterfaceLocaleCode;
@@ -948,6 +951,10 @@ export default function ActionPlanResult({
           onWorkspaceChange={onWorkspaceChange}
           onClose={closeAction}
           onDelete={() => onDeleteAction(selectedAction.id)}
+          onOpenService={(serviceSlug) => {
+            closeAction();
+            onOpenService?.(serviceSlug);
+          }}
           onOpenSolution={(input) => {
             closeAction();
             onOpenSolution?.(input);

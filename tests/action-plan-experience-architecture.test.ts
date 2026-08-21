@@ -147,6 +147,7 @@ describe("action plan experience architecture", () => {
     expect(generationBar).not.toContain("summarizeActionPlanCommandOperations");
     expect(generationBar).not.toContain("Plan mis à jour :");
     expect(result).toContain("closeAction();\n            onOpenSolution?.(input);");
+    expect(result).toContain("closeAction();\n            onOpenService?.(serviceSlug);");
     expect(generationBar).toContain("useSpeechDictation");
     expect(generationBar).toContain("Dicter ma demande");
     expect(generationBar).not.toContain("Commande IA désactivée dans la démo");

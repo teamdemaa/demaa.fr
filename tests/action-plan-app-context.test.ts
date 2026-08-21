@@ -136,6 +136,27 @@ describe("action plan app context", () => {
     );
   });
 
+  it("opens a contextual service in the primary Services destination", () => {
+    expect(parseActionPlanAppContext(new URLSearchParams(
+      "view=services&service=assistance-administrative&system=restaurant&resource=legacy",
+    ))).toEqual({
+      view: "services",
+      planSection: "actions",
+      serviceSlug: "assistance-administrative",
+    });
+    expect(buildActionPlanAppHref({
+      context: {
+        view: "services",
+        planSection: "actions",
+        serviceSlug: "assistance-administrative",
+      },
+      pathname: "/plans/plan-1",
+      search: "?section=solutions&system=restaurant&resource=legacy",
+    })).toBe(
+      "/plans/plan-1?view=services&service=assistance-administrative",
+    );
+  });
+
   it("carries only the bounded Action recommendation source inside Solutions", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=solutions&system=cabinet-comptable&resource=pennylane&toolSource=action_recommendation",

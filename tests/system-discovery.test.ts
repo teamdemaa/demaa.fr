@@ -3,6 +3,7 @@ import { enterpriseCatalog, enterpriseToSystem } from "@/lib/enterprise-annuaire
 import {
   FUTURE_SYSTEM_CANDIDATES,
   SYSTEM_DISCOVERY_ENTRIES,
+  getSystemDiscoveryOptionScore,
   getSystemDiscoveryScore,
 } from "@/lib/system-discovery";
 import { actionPlanSystemOptions } from "@/lib/action-plan-system-catalog";
@@ -21,6 +22,17 @@ function rankedSlugs(query: string): string[] {
     .filter((result): result is { slug: string; score: number } => result.score !== null)
     .sort((left, right) => left.score - right.score || left.slug.localeCompare(right.slug, "fr"))
     .map((result) => result.slug);
+}
+
+function rankedActionPlanSlugs(query: string): string[] {
+  return actionPlanSystemOptions
+    .map((option) => ({
+      slug: option.id,
+      score: getSystemDiscoveryOptionScore(option, query),
+    }))
+    .filter((result): result is { slug: string; score: number } => result.score !== null)
+    .sort((left, right) => left.score - right.score || left.slug.localeCompare(right.slug, "fr"))
+    .map(({ slug }) => slug);
 }
 
 describe("system discovery content", () => {
@@ -98,6 +110,12 @@ describe("system discovery content", () => {
       "camping-car",
     ]));
     expect(renovationActivity?.aliases).not.toContain("rénovation énergétique");
+    expect(rankedActionPlanSlugs("aménagement de vans")[0]).toBe(
+      "menuiserie-agencement",
+    );
+    expect(rankedActionPlanSlugs("Cabinet comptable")[0]).toBe(
+      "cabinet-comptable",
+    );
   });
 
   it.each([
@@ -114,6 +132,7 @@ describe("system discovery content", () => {
     for (const candidate of FUTURE_SYSTEM_CANDIDATES) {
       for (const term of candidate.terms) {
         expect(rankedSlugs(term), `${candidate.candidateKey}: ${term}`).toEqual([]);
+        expect(rankedActionPlanSlugs(term), `${candidate.candidateKey}: ${term}`).toEqual([]);
       }
     }
   });

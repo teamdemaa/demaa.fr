@@ -86,9 +86,12 @@ export function buildExpectedSolutionOrders(options = {}) {
   const enterprises = loadEnterprises();
   const canonicalServiceSlugs = loadCanonicalServiceSlugs();
   const revision = readJson(firebaseSolutionSnapshotPath);
-  if (!Array.isArray(revision?.placements)) {
+  if (!Array.isArray(revision?.placements) || !Array.isArray(revision?.resources)) {
     throw new Error("Invalid Firebase Solution registry snapshot");
   }
+  const resources = new Map(
+    revision.resources.map((entry) => [entry?.resource?.resourceSlug, entry?.resource]),
+  );
   const expectCandidateV2 = options.expectCandidateV2 ??
     process.env.DEMAA_AUDIT_EXPECT_FIREBASE_REVISION === FIREBASE_V2_REVISION_ID;
 
@@ -99,7 +102,15 @@ export function buildExpectedSolutionOrders(options = {}) {
         placement?.systemSlug === enterprise.slug &&
         placement.editorialStatus === "selected" &&
         placement.section !== "models" &&
-        placement.resourceSlug !== "levier"
+        placement.resourceSlug !== "levier" &&
+        placement.resourceSlug !== "juridi-consulting" &&
+        (
+          !["providers", "networks"].includes(placement.section) ||
+          (
+            placement.status === "published" &&
+            resources.get(placement.resourceSlug)?.status === "published"
+          )
+        )
       ));
     const order = SOLUTION_SECTION_ORDER.flatMap((section) => {
       if (section === "services") {
@@ -121,6 +132,7 @@ export function buildExpectedSolutionOrders(options = {}) {
         section === "providers" &&
         expectCandidateV2 &&
         TRANSVERSAL_PURCHASING_SECTORS.has(enterprise.sectorLabel) &&
+        resources.get("amazon-business")?.status === "published" &&
         !sectionSlugs.includes("amazon-business") &&
         sectionSlugs.length < 5
       ) {

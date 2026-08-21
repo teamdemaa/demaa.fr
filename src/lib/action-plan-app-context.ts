@@ -28,6 +28,7 @@ export type ActionPlanAppContext = {
   systemTab?: SystemDetailTab;
   solutionResourceSlug?: string;
   solutionEntrySource?: SolutionEntrySource;
+  serviceSlug?: string;
   academyContentSlug?: string;
   opportunityId?: string;
 };
@@ -142,6 +143,7 @@ export function parseActionPlanAppContext(
         : undefined),
   );
   const academyContentSlug = safeSlug(readSearchValue(input, "academy"));
+  const serviceSlug = safeSlug(readSearchValue(input, "service"));
   const opportunityId = safeSlug(
     readSearchValue(input, "opportunity")
       ?? (intent === "opportunity"
@@ -165,6 +167,7 @@ export function parseActionPlanAppContext(
     ...(isSolutionsContext && requestedSystemTab ? { systemTab: requestedSystemTab } : {}),
     ...(isSolutionsContext && solutionResourceSlug ? { solutionResourceSlug } : {}),
     ...(isSolutionsContext && solutionEntrySource ? { solutionEntrySource } : {}),
+    ...(view === "services" && serviceSlug ? { serviceSlug } : {}),
     ...(view === "academy" && academyContentSlug ? { academyContentSlug } : {}),
     ...(view === "opportunities" && opportunityId ? { opportunityId } : {}),
   };
@@ -178,6 +181,7 @@ const CONTEXT_QUERY_KEYS = [
   "systemTab",
   "resource",
   "toolSource",
+  "service",
   "academy",
   "opportunity",
   "intent",
@@ -225,6 +229,10 @@ export function buildActionPlanAppHref(input: {
 
   if (input.context.view === "academy" && input.context.academyContentSlug) {
     params.set("academy", input.context.academyContentSlug);
+  }
+
+  if (input.context.view === "services" && input.context.serviceSlug) {
+    params.set("service", input.context.serviceSlug);
   }
 
   if (input.context.view === "opportunities" && input.context.opportunityId) {
