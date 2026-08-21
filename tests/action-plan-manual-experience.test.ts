@@ -19,6 +19,11 @@ describe("manual action plan experience", () => {
     expect(experience).not.toContain("selectedSystemId: initialAppContext.systemId ?? \"\"");
     expect(experience).toContain("systemId: prePlanWorkspace.selectedSystemId");
     expect(experience).toContain("setWorkspace(prePlanWorkspace)");
+    expect(experience).toContain("<CompanyPilotagePanel");
+    expect(experience).toContain("available\n");
+    expect(experience).toContain("onSectionChange={selectPlanSection}");
+    expect(experience).toContain('planSection === "figures" && !isAuthenticated');
+    expect(experience).toContain("pendingPlanSectionRef.current = planSection");
     expect(experience).toContain('demo === "blank"');
     expect(experience).toContain("const storedSystemId = readGuestSelectedSystemId() ?? \"\"");
     expect(experience).toContain("savedSystemIds: storedSystemId ? [storedSystemId] : []");

@@ -19,7 +19,10 @@ import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import CompanyPilotagePanel from "@/components/CompanyPilotagePanel";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
-import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
+import type {
+  ActionPlanAppContext,
+  ActionPlanSection,
+} from "@/lib/action-plan-app-context";
 import type { AiGenerationMetadata } from "@/lib/ai-generation-metadata";
 import { toPersistedAiGenerationMetadata } from "@/lib/ai-generation-metadata";
 import {
@@ -171,6 +174,7 @@ export default function ActionPlanExperience({
   const autoSaveAttemptRef = useRef("");
   const manualAccessPromptHandledRef = useRef(false);
   const generationIntentHandledRef = useRef(false);
+  const pendingPlanSectionRef = useRef<ActionPlanSection | null>(null);
 
   useEffect(() => {
     if (!visibleViews || visibleViews.includes("academy")) {
@@ -201,6 +205,7 @@ export default function ActionPlanExperience({
       clearActionPlanGenerationDraft();
       setGenerationDraft(null);
     }
+    pendingPlanSectionRef.current = null;
     setPendingSolutionSelection(null);
     setAccessPromptOpen(false);
   }
@@ -236,6 +241,29 @@ export default function ActionPlanExperience({
     setAccessPromptOpen(false);
     setAccessDraft((current) => ({ ...current, password: "" }));
     requestAutoSaveRetry();
+    const pendingPlanSection = pendingPlanSectionRef.current;
+    pendingPlanSectionRef.current = null;
+    if (pendingPlanSection) {
+      navigateAppContext({
+        ...appContext,
+        view: "plan",
+        planSection: pendingPlanSection,
+      });
+    }
+  }
+
+  function selectPlanSection(planSection: ActionPlanSection) {
+    if (planSection === "figures" && !isAuthenticated && !isDemoMode) {
+      pendingPlanSectionRef.current = planSection;
+      setAccessDraft((current) => ({ ...current, mode: "create", password: "" }));
+      setAccessPromptOpen(true);
+      return;
+    }
+    navigateAppContext({
+      ...appContext,
+      view: "plan",
+      planSection,
+    });
   }
   const situationDictation = useSpeechDictation({
     value: situation,
@@ -972,14 +1000,10 @@ export default function ActionPlanExperience({
         <div className="pt-1">
           {activeTab === "plan" ? (
             <CompanyPilotagePanel
-              available={false}
+              available
               section={appContext.planSection}
               localeCode={contentLocaleCode}
-              onSectionChange={(planSection) => navigateAppContext({
-                ...appContext,
-                view: "plan",
-                planSection,
-              })}
+              onSectionChange={selectPlanSection}
               solutions={(
                 <ActionPlanSystemPanel
                   localeCode={contentLocaleCode}
