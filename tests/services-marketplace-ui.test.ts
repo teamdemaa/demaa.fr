@@ -155,7 +155,9 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).not.toContain("−15 %");
     expect(markup).not.toContain("Découvrir le service");
     expect(catalogSource).toContain("service.pricing.label");
-    expect(catalogSource).toContain("mt-auto pt-5 text-sm font-normal text-dema-muted");
+    expect(catalogSource).toContain("mt-6 text-sm font-normal text-dema-muted md:mt-auto md:pt-5");
+    expect(catalogSource).toContain('className="min-w-0 md:h-[19rem]"');
+    expect(catalogSource).not.toContain('className="h-[19rem] min-w-0"');
     expect(systemSolutionsSource).not.toContain("service.pricing.label");
     for (const source of [catalogSource, systemSolutionsSource]) {
       expect(source).not.toContain("mt-auto shrink-0 border-t");
