@@ -6,6 +6,7 @@ import CustomerLogoutButton from "@/components/CustomerLogoutButton";
 import DemaaWordmark from "@/components/DemaaWordmark";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
+import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
 import { buildLocalizedConnexionHref } from "@/lib/localized-auth-path";
 
@@ -22,6 +23,7 @@ export default function Navbar({
   localeCode?: InterfaceLocaleCode;
   showLocaleSwitcher?: boolean;
 }) {
+  const copy = getActionPlanUiCopy(localeCode).navbar;
   const accountAccessClassName =
     "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
   const connectionLinkClassName =
@@ -37,7 +39,7 @@ export default function Navbar({
           <div className="relative flex items-center justify-between py-3 md:min-h-16 md:py-4">
             <Link
               href={localeCode === "en" ? "/en" : "/"}
-              aria-label={localeCode === "en" ? "Back to home" : "Retour à l'accueil"}
+              aria-label={copy.home}
               className="z-50 inline-flex shrink-0 cursor-pointer items-center"
             >
               <DemaaWordmark className="text-[1.2rem] sm:text-[1.7rem]" />
@@ -56,7 +58,7 @@ export default function Navbar({
                 {isAuthenticated ? (
                   <details className="group relative">
                     <summary
-                      aria-label={localeCode === "en" ? "Open account menu" : "Ouvrir le menu du compte"}
+                      aria-label={copy.accountMenu}
                       className={`${accountAccessClassName} cursor-pointer list-none [&::-webkit-details-marker]:hidden`}
                       title="Compte"
                     >
@@ -70,7 +72,7 @@ export default function Navbar({
                         href={getLocalizedActionPlanPath(localeCode, "/plans")}
                         className="block whitespace-nowrap px-2 py-1.5 text-left text-sm text-brand-blue transition hover:text-dema-forest"
                       >
-                        {localeCode === "en" ? "My plans" : "Mes plans"}
+                        {copy.myPlans}
                       </Link>
                       <CustomerLogoutButton localeCode={localeCode} />
                     </div>
@@ -83,7 +85,7 @@ export default function Navbar({
                     })}
                     className={connectionLinkClassName}
                   >
-                    <span>{localeCode === "en" ? "Sign in" : "Connexion"}</span>
+                    <span>{copy.signIn}</span>
                   </Link>
                 )}
               </div>

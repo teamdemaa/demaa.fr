@@ -4,7 +4,6 @@ import { rootFontClassName } from "@/app/root-fonts";
 import CookieConsentManager from "@/components/CookieConsentManager";
 import {
   ENGLISH_BETA_DESCRIPTION,
-  ENGLISH_BETA_SOCIAL_IMAGE_ALT,
   ENGLISH_BETA_TITLE,
 } from "@/lib/english-beta-metadata";
 import { getCanonicalOrigin } from "@/lib/site-url";
@@ -16,12 +15,6 @@ export const metadata: Metadata = {
   manifest: "/en/manifest.webmanifest",
   openGraph: {
     description: ENGLISH_BETA_DESCRIPTION,
-    images: [
-      {
-        alt: ENGLISH_BETA_SOCIAL_IMAGE_ALT,
-        url: "/opengraph-image",
-      },
-    ],
     locale: "en",
     siteName: "Demaa",
     title: ENGLISH_BETA_TITLE,
@@ -31,12 +24,6 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     description: ENGLISH_BETA_DESCRIPTION,
-    images: [
-      {
-        alt: ENGLISH_BETA_SOCIAL_IMAGE_ALT,
-        url: "/twitter-image",
-      },
-    ],
     title: ENGLISH_BETA_TITLE,
   },
   appleWebApp: {

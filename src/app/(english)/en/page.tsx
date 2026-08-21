@@ -4,7 +4,6 @@ import ActionPlanHomeView from "@/components/ActionPlanHomeView";
 import { isEnglishBetaEnabled } from "@/lib/english-beta.server";
 import {
   ENGLISH_BETA_DESCRIPTION,
-  ENGLISH_BETA_SOCIAL_IMAGE_ALT,
   ENGLISH_BETA_TITLE,
 } from "@/lib/english-beta-metadata";
 import { loadActionPlanHomePage } from "@/lib/action-plan-pages.server";
@@ -16,12 +15,6 @@ export const metadata: Metadata = {
   description: ENGLISH_BETA_DESCRIPTION,
   openGraph: {
     description: ENGLISH_BETA_DESCRIPTION,
-    images: [
-      {
-        alt: ENGLISH_BETA_SOCIAL_IMAGE_ALT,
-        url: "/opengraph-image",
-      },
-    ],
     locale: "en",
     siteName: "Demaa",
     title: ENGLISH_BETA_TITLE,
@@ -32,12 +25,6 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     description: ENGLISH_BETA_DESCRIPTION,
-    images: [
-      {
-        alt: ENGLISH_BETA_SOCIAL_IMAGE_ALT,
-        url: "/twitter-image",
-      },
-    ],
     title: ENGLISH_BETA_TITLE,
   },
 };

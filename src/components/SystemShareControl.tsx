@@ -3,6 +3,8 @@
 import { Check, Share2 } from "lucide-react";
 import { useState } from "react";
 import { buildPublicSystemAppHref } from "@/lib/action-plan-app-context";
+import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
+import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 export default function SystemShareControl({
   systemName,
@@ -11,8 +13,9 @@ export default function SystemShareControl({
 }: {
   systemName: string;
   systemSlug: string;
-  localeCode?: "fr" | "en";
+  localeCode?: InterfaceLocaleCode;
 }) {
+  const copy = getActionPlanUiCopy(localeCode).systemShare;
   const [copied, setCopied] = useState(false);
 
   async function shareSystem() {
@@ -20,7 +23,7 @@ export default function SystemShareControl({
       `${localeCode === "en" ? "/en" : ""}${buildPublicSystemAppHref({ systemId: systemSlug })}`,
       window.location.origin,
     ).toString();
-    const title = `${localeCode === "en" ? "Business type" : "Système"} ${systemName} | Demaa`;
+    const title = `${copy.titlePrefix} ${systemName} | Demaa`;
 
     try {
       if (navigator.share) {
@@ -49,8 +52,8 @@ export default function SystemShareControl({
       type="button"
       onClick={() => void shareSystem()}
       className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-dema-muted transition hover:border-dema-forest/30 hover:text-dema-forest"
-      aria-label={copied ? (localeCode === "en" ? "Business type link copied" : "Lien du système copié") : (localeCode === "en" ? "Share this business type" : "Partager ce système")}
-      title={copied ? (localeCode === "en" ? "Link copied" : "Lien copié") : (localeCode === "en" ? "Share this business type" : "Partager ce système")}
+      aria-label={copied ? copy.copiedLabel : copy.shareLabel}
+      title={copied ? copy.copiedTitle : copy.shareLabel}
       aria-live="polite"
     >
       {copied ? (

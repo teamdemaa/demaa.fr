@@ -56,12 +56,14 @@ describe("Demaa application navbar", () => {
   });
 
   it("replaces the sign-in action with account access once a session is active", async () => {
-    const [navbarSource, savedPlanSource] = await Promise.all([
+    const [navbarSource, savedPlanSource, uiCopySource] = await Promise.all([
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/SavedActionPlanPageView.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/lib/action-plan-ui-copy.ts", import.meta.url), "utf8"),
     ]);
 
-    expect(navbarSource).toContain('"Ouvrir le menu du compte"');
+    expect(navbarSource).toContain("copy.accountMenu");
+    expect(uiCopySource).toContain('accountMenu: "Ouvrir le menu du compte"');
     expect(navbarSource).not.toContain('window.location.assign("/")');
     expect(navbarSource).not.toContain("openAuthenticatedAccount");
     expect(navbarSource).not.toContain("<span>Mon espace</span>");
@@ -79,7 +81,8 @@ describe("Demaa application navbar", () => {
     );
     expect(authCopySource).toContain('signOut: "Se déconnecter"');
     expect(navbarSource).toContain('getLocalizedActionPlanPath(localeCode, "/plans/latest")');
-    expect(navbarSource).toContain('"Connexion"');
+    expect(navbarSource).toContain("copy.signIn");
+    expect(uiCopySource).toContain('signIn: "Connexion"');
     expect(navbarSource).not.toContain("<LogIn");
     expect(savedPlanSource).toContain("<Navbar");
     expect(savedPlanSource).toContain("isAuthenticated");

@@ -1,4 +1,8 @@
-import { buildSocialImage, brandImageContentType, socialImageSize } from "@/app/brand-image-utils";
+import {
+  buildSocialImage,
+  brandImageContentType,
+  socialImageSize,
+} from "@/app/brand-image-utils";
 
 export const alt = "Structurez votre entreprise pour qu’elle dépende moins de vous";
 export const size = socialImageSize;
