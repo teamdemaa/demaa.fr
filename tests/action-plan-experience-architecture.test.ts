@@ -230,12 +230,15 @@ describe("action plan experience architecture", () => {
   it("keeps embedded Solutions and Academy landmarks explicit and closes a detail before navigating", () => {
     const solutions = source("src/components/SystemSolutionsTab.tsx");
     const academy = source("src/components/AcademyIndexClient.tsx");
+    const academyCopy = source("src/lib/academy-ui-copy.ts");
     const actionStart = solutions.indexOf("<SolutionAction");
     const actionEnd = solutions.indexOf("/>\n      ) : null}", actionStart);
     const actionSource = solutions.slice(actionStart, actionEnd);
 
     expect(academy).toContain('<h1 className="sr-only">');
-    expect(academy).toContain('localeCode === "en" ? "Academy" : "Académie"');
+    expect(academy).toContain("getAcademyUiCopy");
+    expect(academyCopy).toContain('academy: "Académie"');
+    expect(academyCopy).toContain('academy: "Academy"');
     expect(actionSource).toContain("onClose();");
     expect(actionSource.indexOf("onClose();")).toBeLessThan(
       actionSource.indexOf('trackSystemSolutionEvent("system_solution_resource_cta_clicked"'),
@@ -280,6 +283,7 @@ describe("action plan experience architecture", () => {
     const coursePlayer = source("src/components/AcademyCoursePlayer.tsx");
     const experience = source("src/components/ActionPlanExperience.tsx");
     const systemPanel = source("src/components/ActionPlanSystemPanel.tsx");
+    const academyCopy = source("src/lib/academy-ui-copy.ts");
 
     expect(academyPanel).toContain("embedded");
     expect(experience).toContain("<ActionPlanUtilityActions");
@@ -312,7 +316,8 @@ describe("action plan experience architecture", () => {
     expect(academyIndex).toContain("onOpen?: (content: AcademyContentDefinition) => void");
     expect(coursePlayer).toContain('const CourseContainer = embedded ? "div" : "main"');
     expect(coursePlayer).toContain('if (activeScreen.type === "intro") return null');
-    expect(coursePlayer).toContain("Quiz de connaissances");
+    expect(coursePlayer).toContain("getAcademyUiCopy");
+    expect(academyCopy).toContain("Quiz de connaissances");
     expect(coursePlayer).not.toContain("Cours fondamental");
     expect(coursePlayer).not.toContain("content.lessons.length} notions");
     expect(source("src/components/SystemDetailContent.tsx")).toContain(

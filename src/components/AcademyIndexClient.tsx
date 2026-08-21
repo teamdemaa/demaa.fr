@@ -6,6 +6,7 @@ import { ChevronDown, ChevronUp, Play, Search, SlidersHorizontal } from "lucide-
 import { useMemo, useState } from "react";
 import AppLibrarySearch from "@/components/AppLibrarySearch";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
+import { getAcademyUiCopy } from "@/lib/academy-ui-copy";
 import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
 import { matchesSearchQuery } from "@/lib/search";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
@@ -73,8 +74,6 @@ const COURSE_TITLES: Record<string, string> = {
   "construire-systeme-marketing-vente": "Construire son système marketing",
 };
 
-const ALL_ACADEMY_CATEGORIES = "Tous";
-
 export type AcademySection = "tutorials" | "courses";
 
 const CORE_ACADEMY_SECTIONS: ReadonlyArray<{
@@ -111,7 +110,7 @@ export function getNextAcademySection(
 }
 
 export function CourseDiagram({ slug, localeCode = "fr" }: { slug: string; localeCode?: "fr" | "en" }) {
-  const en = localeCode === "en";
+  const copy = getAcademyUiCopy(localeCode).diagram;
   if (slug === "piloter-sa-tresorerie") {
     return (
       <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
@@ -137,10 +136,10 @@ export function CourseDiagram({ slug, localeCode = "fr" }: { slug: string; local
         <path d="M80 158H358V196H98Q80 196 80 178Z" fill="#DCE5DF" />
         <path d="M358 158H440V178Q440 196 422 196H358Z" fill="#315F46" />
         <text x="260" y="143" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600" letterSpacing="1.5">
-          {en ? "REVENUE" : "CHIFFRE D’AFFAIRES"}
+          {copy.revenue}
         </text>
-        <text x="110" y="184" fill="#6E7C74" fontSize="14" fontWeight="500">{en ? "COSTS" : "CHARGES"}</text>
-        <text x="399" y="184" textAnchor="middle" fill="#F1F3F0" fontSize="13" fontWeight="600">{en ? "PROFIT" : "BÉNÉFICE"}</text>
+        <text x="110" y="184" fill="#6E7C74" fontSize="14" fontWeight="500">{copy.costs}</text>
+        <text x="399" y="184" textAnchor="middle" fill="#F1F3F0" fontSize="13" fontWeight="600">{copy.profit}</text>
       </svg>
     );
   }
@@ -149,14 +148,14 @@ export function CourseDiagram({ slug, localeCode = "fr" }: { slug: string; local
     return (
       <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
         <text x="58" y="82" fill="#315F46" fontSize="15" fontWeight="600" letterSpacing="1.5">
-          {en ? "PRICE STRUCTURE" : "COMPOSITION DU PRIX"}
+          {copy.priceStructure}
         </text>
         <rect x="58" y="118" width="274" height="72" rx="17" fill="#DCE5DF" stroke="#A8BBB0" strokeWidth="2" />
         <path d="M238 118H315Q332 118 332 135V173Q332 190 315 190H238Z" fill="#C5D3C9" />
-        <text x="148" y="162" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{en ? "COSTS" : "COÛTS"}</text>
-        <text x="285" y="162" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{en ? "MARGIN" : "MARGE"}</text>
+        <text x="148" y="162" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{copy.costs}</text>
+        <text x="285" y="162" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{copy.margin}</text>
         <path d="M352 154H422M407 138L423 154L407 170" fill="none" stroke="#315F46" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-        <text x="456" y="160" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{en ? "PRICE" : "PRIX"}</text>
+        <text x="456" y="160" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{copy.price}</text>
       </svg>
     );
   }
@@ -168,12 +167,12 @@ export function CourseDiagram({ slug, localeCode = "fr" }: { slug: string; local
         <circle cx="90" cy="140" r="10" fill="#315F46" />
         <circle cx="260" cy="140" r="10" fill="#789987" />
         <circle cx="430" cy="140" r="10" fill="#315F46" />
-        <text x="90" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{en ? "ATTRACT" : "ATTIRER"}</text>
-        <text x="90" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">{en ? "THE RIGHT CLIENTS" : "LES BONS CLIENTS"}</text>
-        <text x="260" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{en ? "ENABLE" : "FACILITER"}</text>
-        <text x="260" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">{en ? "THE PURCHASE" : "L’ACHAT"}</text>
-        <text x="430" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{en ? "RETAIN" : "FIDÉLISER"}</text>
-        <text x="430" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">{en ? "FOR THE LONG TERM" : "SUR LE LONG TERME"}</text>
+        <text x="90" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{copy.attract}</text>
+        <text x="90" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">{copy.rightClients}</text>
+        <text x="260" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{copy.enable}</text>
+        <text x="260" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">{copy.purchase}</text>
+        <text x="430" y="181" textAnchor="middle" fill="#315F46" fontSize="15" fontWeight="600">{copy.retain}</text>
+        <text x="430" y="203" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.5">{copy.longTerm}</text>
       </svg>
     );
   }
@@ -182,14 +181,14 @@ export function CourseDiagram({ slug, localeCode = "fr" }: { slug: string; local
     return (
       <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
         <rect x="42" y="116" width="122" height="60" rx="16" fill="#FFFFFF" stroke="#A8BBB0" strokeWidth="2" />
-        <text x="103" y="151" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{en ? "PROBLEM" : "PROBLÈME"}</text>
+        <text x="103" y="151" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{copy.problem}</text>
         <path d="M180 146H204M196 138L204 146L196 154" fill="none" stroke="#789987" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         <rect x="220" y="103" width="148" height="86" rx="20" fill="#DCE5DF" stroke="#A8BBB0" strokeWidth="2" />
-        <text x="294" y="141" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{en ? "CLEAR OFFER" : "OFFRE CLAIRE"}</text>
-        <text x="294" y="162" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.55">{en ? "RESULT · SCOPE" : "RÉSULTAT · PÉRIMÈTRE"}</text>
+        <text x="294" y="141" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{copy.clearOffer}</text>
+        <text x="294" y="162" textAnchor="middle" fill="#315F46" fontSize="10" fontWeight="500" opacity="0.55">{copy.resultScope}</text>
         <path d="M384 146H408M400 138L408 146L400 154" fill="none" stroke="#789987" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         <rect x="424" y="116" width="66" height="60" rx="16" fill="#315F46" />
-        <text x="457" y="151" textAnchor="middle" fill="#FFFFFF" fontSize="12" fontWeight="600">{en ? "CHOICE" : "CHOIX"}</text>
+        <text x="457" y="151" textAnchor="middle" fill="#FFFFFF" fontSize="12" fontWeight="600">{copy.choice}</text>
       </svg>
     );
   }
@@ -202,10 +201,10 @@ export function CourseDiagram({ slug, localeCode = "fr" }: { slug: string; local
         <circle cx="196" cy="140" r="10" fill="#789987" />
         <circle cx="324" cy="140" r="10" fill="#789987" />
         <circle cx="452" cy="140" r="10" fill="#315F46" />
-        <text x="68" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">{en ? "START" : "DÉMARRER"}</text>
-        <text x="196" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">{en ? "DELIVER" : "PRODUIRE"}</text>
-        <text x="324" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">{en ? "REVIEW" : "VALIDER"}</text>
-        <text x="452" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">{en ? "CLOSE" : "CLÔTURER"}</text>
+        <text x="68" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">{copy.start}</text>
+        <text x="196" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">{copy.deliver}</text>
+        <text x="324" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">{copy.review}</text>
+        <text x="452" y="184" textAnchor="middle" fill="#315F46" fontSize="12" fontWeight="600">{copy.close}</text>
       </svg>
     );
   }
@@ -216,9 +215,9 @@ export function CourseDiagram({ slug, localeCode = "fr" }: { slug: string; local
         <path d="M90 48H430L402 106H118Z" fill="#FFFFFF" stroke="#A8BBB0" strokeWidth="2" />
         <path d="M126 118H394L367 176H153Z" fill="#DCE5DF" stroke="#A8BBB0" strokeWidth="2" />
         <path d="M162 188H358L326 246H194Z" fill="#315F46" />
-        <text x="260" y="83" textAnchor="middle" fill="#315F46" fontSize="14" fontWeight="600">{en ? "ENQUIRIES" : "DEMANDES"}</text>
-        <text x="260" y="153" textAnchor="middle" fill="#315F46" fontSize="14" fontWeight="600">{en ? "CONVERSATIONS" : "ÉCHANGES"}</text>
-        <text x="260" y="223" textAnchor="middle" fill="#FFFFFF" fontSize="14" fontWeight="600">{en ? "CLIENTS" : "CLIENTS"}</text>
+        <text x="260" y="83" textAnchor="middle" fill="#315F46" fontSize="14" fontWeight="600">{copy.enquiries}</text>
+        <text x="260" y="153" textAnchor="middle" fill="#315F46" fontSize="14" fontWeight="600">{copy.conversations}</text>
+        <text x="260" y="223" textAnchor="middle" fill="#FFFFFF" fontSize="14" fontWeight="600">{copy.clients}</text>
       </svg>
     );
   }
@@ -226,13 +225,13 @@ export function CourseDiagram({ slug, localeCode = "fr" }: { slug: string; local
   return (
     <svg viewBox="0 0 520 292.5" className="h-full w-full" aria-hidden="true">
       <rect x="45" y="64" width="120" height="50" rx="25" fill="#FFFFFF" stroke="#A8BBB0" strokeWidth="2" />
-      <text x="105" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{en ? "GOAL" : "OBJECTIF"}</text>
+      <text x="105" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{copy.goal}</text>
       <text x="185" y="97" textAnchor="middle" fill="#315F46" fontSize="22" fontWeight="300">+</text>
       <rect x="205" y="64" width="130" height="50" rx="25" fill="#DCE5DF" stroke="#A8BBB0" strokeWidth="2" />
-      <text x="270" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{en ? "AUTONOMY" : "AUTONOMIE"}</text>
+      <text x="270" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{copy.autonomy}</text>
       <text x="355" y="97" textAnchor="middle" fill="#315F46" fontSize="22" fontWeight="300">+</text>
       <rect x="375" y="64" width="100" height="50" rx="25" fill="#FFFFFF" stroke="#A8BBB0" strokeWidth="2" />
-      <text x="425" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{en ? "FOLLOW-UP" : "SUIVI"}</text>
+      <text x="425" y="95" textAnchor="middle" fill="#315F46" fontSize="13" fontWeight="600">{copy.followUp}</text>
       <path
         d="M55 122C55 133 65 138 82 138H232C251 138 260 144 270 155C280 144 289 138 308 138H448C465 138 475 133 475 122"
         fill="none"
@@ -243,7 +242,7 @@ export function CourseDiagram({ slug, localeCode = "fr" }: { slug: string; local
       />
       <path d="M270 155V170M260 162L270 172L280 162" fill="none" stroke="#789987" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
       <rect x="158" y="180" width="224" height="64" rx="32" fill="#315F46" />
-      <text x="270" y="219" textAnchor="middle" fill="#FFFFFF" fontSize="16" fontWeight="600">{en ? "RESULT" : "RÉSULTAT"}</text>
+      <text x="270" y="219" textAnchor="middle" fill="#FFFFFF" fontSize="16" fontWeight="600">{copy.result}</text>
     </svg>
   );
 }
@@ -259,6 +258,7 @@ function AcademyCard({
   localeCode: "fr" | "en";
   onOpen?: (content: AcademyContentDefinition) => void;
 }) {
+  const copy = getAcademyUiCopy(localeCode).index;
   const { identity, kind } = content;
   const isCaseStudy = kind === "case-study";
   const caseStudy = isCaseStudy ? CASE_STUDY_PRESENTATIONS[identity.slug] : undefined;
@@ -266,9 +266,7 @@ function AcademyCard({
     ?? (localeCode === "fr" ? COURSE_TITLES[identity.slug] : undefined)
     ?? identity.card.title;
   const meta = caseStudy
-    ? localeCode === "en"
-      ? `Guided tutorial · ${caseStudy.sector} · ${identity.durationMinutes} min`
-      : `Tutoriel guidé · ${caseStudy.sector} · ${identity.durationMinutes} min`
+    ? copy.guidedTutorial(caseStudy.sector, identity.durationMinutes)
     : `${identity.durationMinutes} min`;
 
   const card = (
@@ -319,7 +317,7 @@ function AcademyCard({
         type="button"
         onClick={() => onOpen(content)}
         className={className}
-        aria-label={localeCode === "en" ? `Open ${title}` : `Ouvrir ${title}`}
+        aria-label={copy.open(title)}
       >
         {card}
       </button>
@@ -330,7 +328,7 @@ function AcademyCard({
     <Link
       href={localeCode === "en" ? `/en?view=academy&academy=${identity.slug}` : `/academie/${identity.slug}`}
       className={className}
-      aria-label={localeCode === "en" ? `Open ${title}` : `Ouvrir ${title}`}
+      aria-label={copy.open(title)}
     >
       {card}
     </Link>
@@ -345,7 +343,8 @@ export default function AcademyIndexClient({
   showStructureNewsletter = false,
   backLink,
 }: AcademyIndexClientProps) {
-  const allCategoriesLabel = localeCode === "en" ? "All" : ALL_ACADEMY_CATEGORIES;
+  const copy = getAcademyUiCopy(localeCode).index;
+  const allCategoriesLabel = copy.all;
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllFundamentals, setShowAllFundamentals] = useState(false);
   const [activeSection, setActiveSection] = useState<AcademySection>(
@@ -354,7 +353,10 @@ export default function AcademyIndexClient({
   const [activeCategory, setActiveCategory] = useState(allCategoriesLabel);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
 
-  const academySections = VISIBLE_ACADEMY_SECTIONS;
+  const academySections = VISIBLE_ACADEMY_SECTIONS.map((section) => ({
+    ...section,
+    label: section.id === "tutorials" ? copy.tutorials : copy.courses,
+  }));
   const hasSectionNavigation = academySections.length > 1;
 
   const activeSectionContents = useMemo(
@@ -366,16 +368,12 @@ export default function AcademyIndexClient({
     [activeSection, contents],
   );
 
-  const categories = useMemo(
-    () => [
-      allCategoriesLabel,
-      ...Array.from(new Set(activeSectionContents.map((content) => content.identity.category))),
-    ],
-    [activeSectionContents, allCategoriesLabel],
-  );
+  const categories = [
+    allCategoriesLabel,
+    ...Array.from(new Set(activeSectionContents.map((content) => content.identity.category))),
+  ];
 
-  const filteredContents = useMemo(() => {
-    return activeSectionContents.filter((content) => {
+  const filteredContents = activeSectionContents.filter((content) => {
       const matchesCategory =
         activeCategory === allCategoriesLabel ||
         content.identity.category === activeCategory;
@@ -392,7 +390,6 @@ export default function AcademyIndexClient({
 
       return matchesCategory && matchesQuery;
     });
-  }, [activeCategory, activeSectionContents, allCategoriesLabel, searchQuery]);
 
   const sectionContents = filteredContents;
   const isSearching = searchQuery.trim().length > 0;
@@ -422,14 +419,12 @@ export default function AcademyIndexClient({
         setSearchQuery(value);
         setActiveCategory(allCategoriesLabel);
       }}
-      filterLabels={localeCode === "en"
-        ? {
-            close: "Hide categories",
-            group: "Filter by category",
-            open: "Show categories",
-          }
-        : undefined}
-      placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un cours ou une question…"}
+      filterLabels={{
+        close: copy.hideCategories,
+        group: copy.filterByCategory,
+        open: copy.showCategories,
+      }}
+      placeholder={copy.searchPlaceholder}
       query={searchQuery}
     />
   ) : (
@@ -442,13 +437,13 @@ export default function AcademyIndexClient({
           />
           <input
             type="search"
-            aria-label={localeCode === "en" ? "Search the Academy" : "Rechercher dans l’Académie"}
+            aria-label={copy.search}
             value={searchQuery}
             onChange={(event) => {
               setSearchQuery(event.target.value);
               setActiveCategory(allCategoriesLabel);
             }}
-            placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un cours ou une question…"}
+            placeholder={copy.searchPlaceholder}
             className="w-full rounded-full bg-dema-paper py-4 pl-11 pr-12 text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 md:py-5 md:pl-16 md:pr-20 md:text-lg"
           />
           <button
@@ -456,8 +451,8 @@ export default function AcademyIndexClient({
             onClick={() => setAreCategoryTagsVisible((visible) => !visible)}
             aria-expanded={areCategoryTagsVisible}
             aria-label={areCategoryTagsVisible
-              ? localeCode === "en" ? "Hide categories" : "Masquer les catégories"
-              : localeCode === "en" ? "Show categories" : "Afficher les catégories"}
+              ? copy.hideCategories
+              : copy.showCategories}
             className={`absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full transition md:right-2.5 md:h-10 md:w-10 ${
               areCategoryTagsVisible || activeCategory !== allCategoriesLabel
                 ? "bg-dema-sage text-dema-forest"
@@ -470,7 +465,7 @@ export default function AcademyIndexClient({
       </div>
 
       {areCategoryTagsVisible ? (
-        <div className="mt-4 text-left" aria-label={localeCode === "en" ? "Filter content by category" : "Filtrer les contenus par catégorie"}>
+        <div className="mt-4 text-left" aria-label={copy.filterByCategory}>
           <div className="flex flex-wrap gap-2 px-1">
             {categories.map((category) => (
               <button
@@ -499,7 +494,7 @@ export default function AcademyIndexClient({
       {embedded ? (
         <div className="mx-auto max-w-7xl px-4 pb-6 pt-3">
           <h1 className="sr-only">
-            {localeCode === "en" ? "Academy" : "Académie"}
+            {copy.academy}
           </h1>
           {searchControl}
         </div>
@@ -521,8 +516,8 @@ export default function AcademyIndexClient({
               className="text-balance font-light leading-[0.94] tracking-tight"
               style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
             >
-              <span className="block text-brand-blue/62">Apprendre à</span>
-              <span className="demaa-hero-title block text-dema-forest">entreprendre</span>
+              <span className="block text-brand-blue/62">{copy.heroLead}</span>
+              <span className="demaa-hero-title block text-dema-forest">{copy.heroEmphasis}</span>
             </h1>
           </div>
 
@@ -538,7 +533,7 @@ export default function AcademyIndexClient({
               academySections.length === 2 ? "grid-cols-2" : "grid-cols-3"
             }`}
             role="tablist"
-            aria-label={localeCode === "en" ? "Academy content" : "Contenus de l’Académie"}
+            aria-label={copy.content}
           >
             {academySections.map((section) => (
               <button
@@ -583,7 +578,7 @@ export default function AcademyIndexClient({
                   role: "tabpanel",
                   "aria-labelledby": `academy-section-${activeSection}`,
                 }
-              : { "aria-label": localeCode === "en" ? "Courses" : "Cours" })}
+              : { "aria-label": copy.courses })}
           >
             <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
               {visibleContents.map((content, index) => (
@@ -606,8 +601,8 @@ export default function AcademyIndexClient({
                   aria-expanded={showAllFundamentals}
                 >
                   {showAllFundamentals
-                    ? localeCode === "en" ? "Show less" : "Voir moins"
-                    : localeCode === "en" ? "Show more courses" : "Voir plus de cours"}
+                    ? copy.showLess
+                    : copy.showMore}
                   {showAllFundamentals ? (
                     <ChevronUp className="h-4 w-4" aria-hidden="true" />
                   ) : (
@@ -627,14 +622,14 @@ export default function AcademyIndexClient({
                   role: "tabpanel",
                   "aria-labelledby": `academy-section-${activeSection}`,
                 }
-              : { "aria-label": localeCode === "en" ? "Courses" : "Cours" })}
+              : { "aria-label": copy.courses })}
             className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-14 text-center"
           >
             <h2 className="text-xl font-semibold text-brand-blue">
-              {localeCode === "en" ? "No content found" : "Aucun contenu trouvé"}
+              {copy.noContent}
             </h2>
             <p className="mt-2 text-sm text-dema-muted">
-              {localeCode === "en" ? "Try a simpler word or another topic." : "Essayez un mot plus simple ou un autre sujet."}
+              {copy.noContentHint}
             </p>
           </section>
         ) : null}
