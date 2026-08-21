@@ -72,7 +72,12 @@ describe("Demaa application navbar", () => {
       "utf8",
     );
     expect(logoutSource).toContain("deleteCustomerSession");
-    expect(logoutSource).toContain("Se déconnecter");
+    expect(logoutSource).toContain("copy.page.signOut");
+    const authCopySource = await readFile(
+      new URL("../src/lib/auth-ui-copy.ts", import.meta.url),
+      "utf8",
+    );
+    expect(authCopySource).toContain('signOut: "Se déconnecter"');
     expect(navbarSource).toContain('getLocalizedActionPlanPath(localeCode, "/plans/latest")');
     expect(navbarSource).toContain('"Connexion"');
     expect(navbarSource).not.toContain("<LogIn");
@@ -92,7 +97,8 @@ describe("Demaa application navbar", () => {
     expect(legacySource).toContain("destination: '/plans/latest'");
     expect(loginSource).toContain('<CustomerConnexionPage localeCode="fr"');
     expect(sharedLoginSource).toContain("<Navbar minimal localeCode={localeCode} />");
-    expect(sharedLoginSource).toContain('localeCode === "en" ? "Sign in" : "Connectez-vous"');
+    expect(sharedLoginSource).toContain("getAuthUiCopy(localeCode)");
+    expect(sharedLoginSource).toContain("choiceTitle={copy.page.signInTitle}");
     expect(sharedLoginSource).not.toContain("Mes plans");
     expect(sharedLoginSource).not.toContain("Mon espace");
     expect(modalSource).toContain("getSafeCustomerReturnTo");

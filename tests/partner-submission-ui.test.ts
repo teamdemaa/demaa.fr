@@ -36,9 +36,10 @@ describe("solution proposal UI contract", () => {
   });
 
   it("uses one shared short form without asking candidates to choose systems", async () => {
-    const [form, googleSignIn, route] = await Promise.all([
+    const [form, googleSignIn, authCopy, route] = await Promise.all([
       readSource("src/components/ProviderProfileModal.tsx"),
       readSource("src/components/GoogleCustomerSignInButton.tsx"),
+      readSource("src/lib/auth-ui-copy.ts"),
       readSource("src/app/api/provider-profile-submission/route.ts"),
     ]);
 
@@ -52,7 +53,8 @@ describe("solution proposal UI contract", () => {
     expect(form).not.toContain(
       "Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.",
     );
-    expect(googleSignIn).toContain("Continuer avec Google");
+    expect(googleSignIn).toContain("copy.google.continue");
+    expect(authCopy).toContain('continue: "Continuer avec Google"');
     expect(googleSignIn).toContain("exchangeFirebaseIdTokenForSession");
     expect(googleSignIn).not.toContain("/api/customer-space/firebase-session");
     expect(googleSignIn).toContain("if (onAuthenticated)");
