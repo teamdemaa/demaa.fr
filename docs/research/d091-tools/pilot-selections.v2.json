@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 2,
+  "decisionId": "D-091",
+  "status": "research-candidate",
+  "selectionPolicy": "evidence-threshold",
+  "runtimeActivation": false,
+  "systems": [
+    {
+      "systemSlug": "agence-de-recrutement",
+      "priorityNeeds": [
+        "candidatures-et-vivier",
+        "sourcing-et-diffusion",
+        "relation-clients",
+        "qualification-et-entretiens",
+        "collaboration-et-documents",
+        "automatisation-et-reporting"
+      ],
+      "toolCandidatesByRank": [
+        { "toolSlug": "recruitee", "coveredNeedIds": ["candidatures-et-vivier", "sourcing-et-diffusion", "qualification-et-entretiens"] },
+        { "toolSlug": "teamtailor", "coveredNeedIds": ["candidatures-et-vivier", "sourcing-et-diffusion", "qualification-et-entretiens"] },
+        { "toolSlug": "hubspot", "coveredNeedIds": ["relation-clients"] },
+        { "toolSlug": "calendly", "coveredNeedIds": ["qualification-et-entretiens"] },
+        { "toolSlug": "typeform", "coveredNeedIds": ["qualification-et-entretiens"] },
+        { "toolSlug": "aircall", "coveredNeedIds": ["relation-clients"] },
+        { "toolSlug": "zoom", "coveredNeedIds": ["qualification-et-entretiens"] },
+        { "toolSlug": "google-workspace", "coveredNeedIds": ["collaboration-et-documents"] },
+        { "toolSlug": "n8n", "coveredNeedIds": ["automatisation-et-reporting"] },
+        { "toolSlug": "power-bi", "coveredNeedIds": ["automatisation-et-reporting"] }
+      ],
+      "compositionRationale": "Pool de recherche couvrant le sourcing, le recrutement, la relation client, les entretiens, la collaboration, l’automatisation et le reporting. Chaque candidat reste soumis à la preuve officielle et à une seconde revue."
+    },
+    {
+      "systemSlug": "saas",
+      "priorityNeeds": [
+        "paiement-et-revenu-recurrent",
+        "vente-et-relation-client",
+        "developpement-et-deploiement",
+        "pilotage-produit-et-qualite",
+        "support-et-automatisation",
+        "collaboration-interne"
+      ],
+      "toolCandidatesByRank": [
+        { "toolSlug": "stripe", "coveredNeedIds": ["paiement-et-revenu-recurrent"] },
+        { "toolSlug": "attio", "coveredNeedIds": ["vente-et-relation-client"] },
+        { "toolSlug": "github", "coveredNeedIds": ["developpement-et-deploiement"] },
+        { "toolSlug": "vercel", "coveredNeedIds": ["developpement-et-deploiement"] },
+        { "toolSlug": "linear", "coveredNeedIds": ["pilotage-produit-et-qualite"] },
+        { "toolSlug": "sentry", "coveredNeedIds": ["pilotage-produit-et-qualite"] },
+        { "toolSlug": "posthog", "coveredNeedIds": ["pilotage-produit-et-qualite"] },
+        { "toolSlug": "intercom", "coveredNeedIds": ["support-et-automatisation"] },
+        { "toolSlug": "n8n", "coveredNeedIds": ["support-et-automatisation"] },
+        { "toolSlug": "google-workspace", "coveredNeedIds": ["collaboration-interne"] }
+      ],
+      "compositionRationale": "Pool de recherche couvrant revenus récurrents, vente, livraison logicielle, qualité produit, support, automatisation et collaboration. Le nombre final dépendra uniquement des preuves et de la valeur distincte de chaque outil."
+    },
+    {
+      "systemSlug": "agence-web",
+      "priorityNeeds": [
+        "conception-et-production",
+        "developpement-et-deploiement",
+        "gestion-projets-clients",
+        "vente-et-facturation",
+        "collaboration-et-automatisation"
+      ],
+      "toolCandidatesByRank": [
+        { "toolSlug": "figma", "coveredNeedIds": ["conception-et-production"] },
+        { "toolSlug": "webflow", "coveredNeedIds": ["conception-et-production", "developpement-et-deploiement"] },
+        { "toolSlug": "wordpress", "coveredNeedIds": ["conception-et-production", "developpement-et-deploiement"] },
+        { "toolSlug": "github", "coveredNeedIds": ["developpement-et-deploiement"] },
+        { "toolSlug": "vercel", "coveredNeedIds": ["developpement-et-deploiement"] },
+        { "toolSlug": "asana", "coveredNeedIds": ["gestion-projets-clients"] },
+        { "toolSlug": "slack", "coveredNeedIds": ["collaboration-et-automatisation"] },
+        { "toolSlug": "sellsy", "coveredNeedIds": ["vente-et-facturation"] },
+        { "toolSlug": "n8n", "coveredNeedIds": ["collaboration-et-automatisation"] },
+        { "toolSlug": "google-workspace", "coveredNeedIds": ["gestion-projets-clients", "collaboration-et-automatisation"] }
+      ],
+      "compositionRationale": "Pool de recherche couvrant conception, production, développement, déploiement, gestion des projets clients, vente, facturation et automatisation. Webflow et WordPress ne seront conservés ensemble que si leurs usages distincts sont confirmés."
+    },
+    {
+      "systemSlug": "cabinet-comptable",
+      "priorityNeeds": [
+        "production-comptable",
+        "collecte-et-collaboration-client",
+        "paie-et-social",
+        "pilotage-et-conseil",
+        "documentation-et-organisation"
+      ],
+      "toolCandidatesByRank": [
+        { "toolSlug": "tiimora", "coveredNeedIds": ["pilotage-et-conseil"] },
+        { "toolSlug": "pennylane", "coveredNeedIds": ["production-comptable", "collecte-et-collaboration-client"] },
+        { "toolSlug": "silae", "coveredNeedIds": ["paie-et-social"] },
+        { "toolSlug": "myunisoft", "coveredNeedIds": ["production-comptable", "collecte-et-collaboration-client"] },
+        { "toolSlug": "acd", "coveredNeedIds": ["production-comptable"] },
+        { "toolSlug": "dext", "coveredNeedIds": ["collecte-et-collaboration-client"] },
+        { "toolSlug": "rca", "coveredNeedIds": ["pilotage-et-conseil"] },
+        { "toolSlug": "lefebvre-dalloz", "coveredNeedIds": ["documentation-et-organisation"] },
+        { "toolSlug": "google-workspace", "coveredNeedIds": ["documentation-et-organisation"] },
+        { "toolSlug": "cegid", "coveredNeedIds": ["production-comptable", "paie-et-social"] }
+      ],
+      "compositionRationale": "Pool de recherche couvrant production comptable, collecte client, paie, conseil, documentation et organisation. Les suites concurrentes ne seront toutes conservées que si leurs cibles et positionnements apportent des alternatives réellement utiles."
+    },
+    {
+      "systemSlug": "batiment",
+      "priorityNeeds": [
+        "devis-et-facturation",
+        "couts-et-rentabilite-chantier",
+        "planning-equipes",
+        "suivi-terrain-et-reserves",
+        "documents-et-coordination"
+      ],
+      "toolCandidatesByRank": [
+        { "toolSlug": "vertuoza", "coveredNeedIds": ["devis-et-facturation", "planning-equipes"] },
+        { "toolSlug": "progbat", "coveredNeedIds": ["devis-et-facturation", "couts-et-rentabilite-chantier"] },
+        { "toolSlug": "graneet", "coveredNeedIds": ["couts-et-rentabilite-chantier"] },
+        { "toolSlug": "sage-batigest-connect", "coveredNeedIds": ["devis-et-facturation", "couts-et-rentabilite-chantier"] },
+        { "toolSlug": "obat", "coveredNeedIds": ["devis-et-facturation"] },
+        { "toolSlug": "alobees", "coveredNeedIds": ["planning-equipes", "suivi-terrain-et-reserves"] },
+        { "toolSlug": "fieldwire", "coveredNeedIds": ["suivi-terrain-et-reserves", "documents-et-coordination"] },
+        { "toolSlug": "kizeo-forms", "coveredNeedIds": ["suivi-terrain-et-reserves"] },
+        { "toolSlug": "google-workspace", "coveredNeedIds": ["documents-et-coordination"] },
+        { "toolSlug": "oryka", "coveredNeedIds": ["planning-equipes"] }
+      ],
+      "compositionRationale": "Pool de recherche couvrant devis, rentabilité, planning, terrain, réserves et coordination documentaire. Les suites de gestion proches devront être départagées par taille d’entreprise, profondeur fonctionnelle et usage terrain."
+    }
+  ],
+  "activationBlockers": [
+    "Recouper les sources officielles du répertoire avec l'usage revendiqué pour chaque métier.",
+    "Valider les usages, contraintes, alternatives et rangs avec une seconde revue métier.",
+    "Retirer tout candidat qui ne franchit pas le seuil de preuve, sans le remplacer pour atteindre un nombre.",
+    "Transformer uniquement les candidats retenus en ressources et placements Firebase complets.",
+    "Recetter le read-model candidate sans changer le pointeur actif."
+  ]
+}

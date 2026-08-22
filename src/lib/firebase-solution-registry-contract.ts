@@ -32,6 +32,12 @@ export const FIREBASE_SOLUTION_REGISTRY_ACTIVE_POINTER =
 export const FIREBASE_SOLUTION_REGISTRY_REVISIONS_COLLECTION =
   "solution_registry_revisions" as const;
 
+// Corruption/payload guards only. Editorial selection is intentionally
+// evidence-based and variable; neither value is a target to fill. Software
+// alone needs room for a broader reviewed selection.
+export const MAX_SOFTWARE_PLACEMENTS_PER_SYSTEM = 50 as const;
+export const MAX_OTHER_SOLUTION_PLACEMENTS_PER_SECTION = 10 as const;
+
 export type FirebaseSolutionRevisionStatus =
   (typeof FIREBASE_SOLUTION_REVISION_STATUSES)[number];
 
@@ -343,8 +349,13 @@ export function validateFirebaseSolutionRegistryRevision(
       const inSection = systemPlacements
         .filter(({ placement }) => placement.section === section)
         .sort((left, right) => left.placement.rank - right.placement.rank);
-      if (inSection.length > 10) {
-        errors.push(`${systemSlug}:${section} must not exceed ten placements`);
+      const maximumPlacements = section === "software"
+        ? MAX_SOFTWARE_PLACEMENTS_PER_SYSTEM
+        : MAX_OTHER_SOLUTION_PLACEMENTS_PER_SECTION;
+      if (inSection.length > maximumPlacements) {
+        errors.push(
+          `${systemSlug}:${section} must not exceed ${maximumPlacements} placements`,
+        );
       }
       if (inSection.some(({ placement }, index) => placement.rank !== index + 1)) {
         errors.push(`${systemSlug}:${section} ranks must be contiguous`);

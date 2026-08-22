@@ -265,14 +265,31 @@ const AID_RECOMMENDATIONS_BY_SYSTEM: Record<string, readonly string[]> = {
 };
 
 export function getRecommendedAidsForSystem(systemSlug: string, sectorLabel?: string): DemaaAidItem[] {
-  const aidSlugs = AID_RECOMMENDATIONS_BY_SYSTEM[systemSlug]
-    ?? (sectorLabel ? AID_RECOMMENDATIONS_BY_SECTOR[sectorLabel] : undefined)
-    ?? DEFAULT_AID_ORDER;
+  return [...resolveAidRecommendationsForSystem(systemSlug, sectorLabel).items];
+}
 
-  return Array.from(new Set(aidSlugs))
-    .map((slug) => getDemaaAidBySlug(slug))
-    .filter((item): item is DemaaAidItem => Boolean(item))
-    .slice(0, 6);
+export type AidRecommendationSelection = Readonly<{
+  items: readonly DemaaAidItem[];
+  source: "system" | "sector" | "default";
+}>;
+
+export function resolveAidRecommendationsForSystem(
+  systemSlug: string,
+  sectorLabel?: string,
+): AidRecommendationSelection {
+  const systemSelection = AID_RECOMMENDATIONS_BY_SYSTEM[systemSlug];
+  const sectorSelection = sectorLabel
+    ? AID_RECOMMENDATIONS_BY_SECTOR[sectorLabel]
+    : undefined;
+  const aidSlugs = systemSelection ?? sectorSelection ?? DEFAULT_AID_ORDER;
+
+  return {
+    items: Array.from(new Set(aidSlugs))
+      .map((slug) => getDemaaAidBySlug(slug))
+      .filter((item): item is DemaaAidItem => Boolean(item))
+      .slice(0, 6),
+    source: systemSelection ? "system" : sectorSelection ? "sector" : "default",
+  };
 }
 
 export function splitAidRecommendationsForDisplay(items: DemaaAidItem[]): {

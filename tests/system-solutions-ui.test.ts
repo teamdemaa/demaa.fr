@@ -307,7 +307,6 @@ describe("system Solutions UI", () => {
       for (const [index, expectedSlugs] of expectedSections.entries()) {
         expect(actualSections[index].slice(0, expectedSlugs.length)).toEqual(expectedSlugs);
       }
-      expect(sections.every(({ placements }) => placements.length <= 10)).toBe(true);
       expect(JSON.stringify(sections)).not.toMatch(
         /commercialRelationship|editorialStatus|publicationBlockers|status|evidenceUrls|reviewedAt|catalogDestination/i,
       );

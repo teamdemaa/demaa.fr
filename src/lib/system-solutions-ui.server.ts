@@ -213,11 +213,9 @@ function getSupplementaryToolPlacements(
   const firstAvailableRank = existingPlacements
     .filter(({ section }) => section === "software")
     .reduce((highest, { rank }) => Math.max(highest, rank), 0) + 1;
-  const availableSlots = Math.max(0, 10 - (firstAvailableRank - 1));
   const supplementary: RenderableSolutionPlacementDto[] = [];
 
   for (const requestedSlug of curatedSlugs) {
-    if (supplementary.length >= availableSlots) break;
     const tool = getToolDirectoryItemBySlug(requestedSlug);
     if (!tool || !isSafeInteractionHref(tool.url, "external_link")) continue;
     const resourceSlug = getToolDirectorySlug(tool);

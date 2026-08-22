@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   buildStableSoftwarePlacementId,
+  validateCuratedEcosystemCandidateRevision,
   validateCuratedToolsCandidateRevision,
 } from "@/lib/curated-tools-candidate-audit";
 import {
@@ -9,6 +10,12 @@ import {
   validateFirebaseSolutionRegistryRevision,
   type FirebaseSolutionRegistryRevision,
 } from "@/lib/firebase-solution-registry-contract";
+import type {
+  SolutionPlacement,
+  SolutionResource,
+} from "@/lib/solution-registry-contract";
+
+type Mutable<T> = { -readonly [Key in keyof T]: T[Key] };
 
 const NOW = "2026-08-22T00:00:00.000Z";
 const EXPIRES = "2027-08-22T00:00:00.000Z";
@@ -29,11 +36,12 @@ function review(id: string) {
 }
 
 function revision(input?: {
+  count?: number;
   legacyFirstId?: string;
   statuses?: "draft" | "published";
 }) {
   const status = input?.statuses ?? "published";
-  const softwareResources = Array.from({ length: 10 }, (_, index) => ({
+  const softwareResources = Array.from({ length: input?.count ?? 7 }, (_, index) => ({
     resource: {
       resourceSlug: `tool-${index + 1}`,
       resourceType: "software" as const,
@@ -130,7 +138,7 @@ function revision(input?: {
 }
 
 describe("D-091 curated tools candidate audit", () => {
-  it("accepts ten published, evidenced and rank-stable tools", () => {
+  it("accepts a variable non-empty selection of published, evidenced and rank-stable tools", () => {
     const candidate = revision();
     expect(validateFirebaseSolutionRegistryRevision(candidate, {
       expectedSystemSlugs: ["test-system"],
@@ -138,22 +146,69 @@ describe("D-091 curated tools candidate audit", () => {
     })).toEqual([]);
     expect(validateCuratedToolsCandidateRevision(candidate, {
       activeToolSlugs: new Set(candidate.resources.map(({ resource }) => resource.resourceSlug)),
-      expectedSystemSlugs: ["test-system"],
+      auditSystemSlugs: ["test-system"],
+      expectedCatalogSystemSlugs: ["test-system"],
     })).toEqual([]);
   });
 
-  it("fails closed for draft entries and incomplete coverage", () => {
+  it("fails closed for draft entries and hidden research candidates", () => {
     const candidate = revision({ statuses: "draft" });
-    candidate.placements.splice(0, 1);
+    (candidate.placements[0]!.placement as Mutable<SolutionPlacement>)
+      .editorialStatus = "hidden";
     const errors = validateCuratedToolsCandidateRevision(candidate, {
-      expectedSystemSlugs: ["test-system"],
+      auditSystemSlugs: ["test-system"],
+      expectedCatalogSystemSlugs: ["test-system"],
     });
 
     expect(errors).toEqual(expect.arrayContaining([
-      expect.stringContaining("expected exactly ten"),
+      expect.stringContaining("non-empty final software selection"),
       expect.stringContaining("placement is not publication-ready"),
       expect.stringContaining("resource is not publication-ready"),
     ]));
+  });
+
+  it("accepts more than ten selected tools without treating the technical guard as a target", () => {
+    const candidate = revision({ count: 12 });
+
+    expect(validateFirebaseSolutionRegistryRevision(candidate, {
+      expectedSystemSlugs: ["test-system"],
+      now: new Date(NOW),
+    })).toEqual([]);
+    expect(validateCuratedToolsCandidateRevision(candidate, {
+      auditSystemSlugs: ["test-system"],
+      expectedCatalogSystemSlugs: ["test-system"],
+    })).toEqual([]);
+  });
+
+  it("keeps a high technical payload guard without imposing an editorial quota", () => {
+    const candidate = revision({ count: 51 });
+
+    expect(validateFirebaseSolutionRegistryRevision(candidate, {
+      expectedSystemSlugs: ["test-system"],
+      now: new Date(NOW),
+    })).toContain(
+      "test-system:software must not exceed 50 placements",
+    );
+  });
+
+  it("does not broaden the technical payload guard for non-tool sections", () => {
+    const candidate = revision({ count: 11 });
+    candidate.placements.slice(0, 11).forEach(({ placement }, index) => {
+      (placement as Mutable<SolutionPlacement>).section = "providers";
+      (placement as Mutable<SolutionPlacement>).placementId =
+        `test-system:tool-${index + 1}:providers`;
+      (candidate.resources[index]!.resource as Mutable<SolutionResource>).resourceType =
+        "provider";
+    });
+    candidate.sourceFingerprint = fingerprintFirebaseSolutionRegistryRevision({
+      ...candidate,
+      sourceFingerprint: "0".repeat(64),
+    });
+
+    expect(validateFirebaseSolutionRegistryRevision(candidate, {
+      expectedSystemSlugs: ["test-system"],
+      now: new Date(NOW),
+    })).toContain("test-system:providers must not exceed 10 placements");
   });
 
   it("preserves a retained legacy placement ID even when its rank changes", () => {
@@ -163,7 +218,46 @@ describe("D-091 curated tools candidate audit", () => {
 
     expect(validateCuratedToolsCandidateRevision(candidate, {
       activeRevision: active,
-      expectedSystemSlugs: ["test-system"],
+      auditSystemSlugs: ["test-system"],
+      expectedCatalogSystemSlugs: ["test-system"],
     })).toContain("test-system:tool-1:software: retained placement ID changed");
+  });
+
+  it("does not confuse a technical catalogue scope with the editorial audit scope", () => {
+    const candidate = revision({ count: 4 });
+
+    expect(validateCuratedToolsCandidateRevision(candidate, {
+      auditSystemSlugs: ["test-system"],
+      expectedCatalogSystemSlugs: ["test-system"],
+    })).toEqual([]);
+  });
+
+  it("allows an empty provider or network section", () => {
+    expect(validateCuratedEcosystemCandidateRevision(revision(), {
+      auditSystemSlugs: ["test-system"],
+    })).toEqual([]);
+  });
+
+  it("fails closed when a provider candidate is hidden or unpublished", () => {
+    const candidate = revision({ count: 2 });
+    const providerEntry = candidate.placements[0]!;
+    const providerPlacement = providerEntry.placement as Mutable<SolutionPlacement>;
+    const providerResource = candidate.resources[0]!.resource as Mutable<SolutionResource>;
+    providerPlacement.section = "providers";
+    providerPlacement.placementId = "test-system:tool-1:providers";
+    providerPlacement.editorialStatus = "hidden";
+    providerPlacement.status = "draft";
+    providerPlacement.publicationBlockers = ["review-required"];
+    providerResource.resourceType = "provider";
+    providerResource.status = "draft";
+    providerResource.publicationBlockers = ["review-required"];
+
+    expect(validateCuratedEcosystemCandidateRevision(candidate, {
+      auditSystemSlugs: ["test-system"],
+    })).toEqual(expect.arrayContaining([
+      "test-system:providers: final selection contains hidden entries",
+      "test-system:tool-1:providers: placement is not publication-ready",
+      "test-system:tool-1:providers: resource is not publication-ready",
+    ]));
   });
 });
