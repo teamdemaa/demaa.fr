@@ -17,6 +17,7 @@ import {
   getVisibleSystemDetailTabs,
   normalizeSystemDetailTab,
 } from "@/lib/system-detail-tabs";
+import { filterPublicSystemRecommendationSections } from "@/lib/public-solution-section-visibility";
 import {
   filterRenderableSolutionSections,
   getPublishedRenderableSolutionSectionsForSystem,
@@ -82,6 +83,33 @@ describe("system Solutions UI", () => {
     expect(panelSource).toContain('section !== "services" && section !== "models"');
     expect(panelSource).toContain('interstitialAfterSection="software"');
     expect(aidsSource).toContain("solutionSections: payload.solutionSections");
+  });
+
+  it("keeps Services out of public system recommendations without removing the payload section", async () => {
+    const servicesSection = {
+      section: "services" as const,
+      placements: [],
+    };
+    const softwareSection = {
+      section: "software" as const,
+      placements: [],
+    };
+
+    expect(filterPublicSystemRecommendationSections([
+      softwareSection,
+      servicesSection,
+    ])).toEqual([softwareSection]);
+
+    const pageSource = await readSource("src/app/(marketing)/systemes/[slug]/page.tsx");
+    const recapSource = await readSource(
+      "src/app/(marketing)/systemes/[slug]/recapitulatif/page.tsx",
+    );
+    const apiSource = await readSource("src/app/api/action-plan/system/[slug]/route.ts");
+
+    expect(pageSource).toContain("filterPublicSystemRecommendationSections");
+    expect(recapSource).toContain("filterPublicSystemRecommendationSections");
+    expect(apiSource).toContain("composePublicSolutionSectionsForSystem");
+    expect(apiSource).not.toContain("filterPublicSystemRecommendationSections");
   });
 
   it("shows saved cards first in a dedicated selection rail", () => {

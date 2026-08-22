@@ -12,6 +12,7 @@ import {
 } from "@/lib/firebase-solution-registry-selection.server";
 import {
   filterPublicSolutionSections,
+  filterPublicSystemRecommendationSections,
 } from "@/lib/public-solution-section-visibility";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
@@ -69,9 +70,11 @@ export default async function SystemPage({
 
   const initialTab = getParamValue(resolvedSearchParams.tab);
   const normalizedInitialTab = normalizeSystemDetailTab(initialTab) ?? "process";
-  const visibleSolutionSections = composePublicSolutionSectionsForSystem(
-    slug,
-    mergeRenderableSolutionSections(solutionSections),
+  const visibleSolutionSections = filterPublicSystemRecommendationSections(
+    composePublicSolutionSectionsForSystem(
+      slug,
+      mergeRenderableSolutionSections(solutionSections),
+    ),
   );
   const visiblePublishedSolutionSections = filterPublicSolutionSections(
     publishedSolutionSections,

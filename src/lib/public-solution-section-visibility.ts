@@ -14,3 +14,16 @@ export function filterPublicSolutionSections<
 >(sections: readonly T[]): T[] {
   return sections.filter(({ section }) => isPublicSolutionSectionVisible(section));
 }
+
+/**
+ * Public system pages present third-party recommendations only. Canonical
+ * Demaa Services keep travelling in the system payload for strict contextual
+ * Action aids, but their public destination remains `/services`.
+ */
+export function filterPublicSystemRecommendationSections<
+  T extends Readonly<{ section: SolutionSection }>,
+>(sections: readonly T[]): T[] {
+  return filterPublicSolutionSections(sections).filter(
+    ({ section }) => section !== "services",
+  );
+}
