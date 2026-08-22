@@ -1422,9 +1422,9 @@ manuel du marché France.
   le Plan. Les anciennes URLs `view=system` et
   `view=plan&planTab=solutions` restent compatibles et sont normalisées en
   `view=solutions` pour les nouveaux liens ; les
-  routes `/systemes` restent inchangées. Coaching reste le
-  produit accessible par `Échanger`; la surface s'intitule
-  `Échanger avec l'équipe Demaa`. Aucun onglet `Accueil`, portail parallèle
+  routes `/systemes` restent inchangées. La conversation reste accessible par
+  `Diagnostic`; la surface demande `Quel problème rencontrez-vous ?` et ne
+  rend aucune recommandation ni promotion Coach business. Aucun onglet `Accueil`, portail parallèle
   `Mon espace` ou profil obligatoire n'est créé. `Mes plans` reste une vue
   authentifiée de l'application unique.
 - [x] Plan V4 de D-079 livré : génération limitée

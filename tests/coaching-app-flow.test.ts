@@ -37,17 +37,22 @@ describe("unified app and coaching", () => {
     expect(accountAccessForm).not.toContain("votre espace Demaa");
   });
 
-  it("keeps specialist messaging simple and moves coach business to Services", () => {
+  it("keeps Diagnostic focused on the conversation and leaves coach business in Services", () => {
     const coaching = read("src/components/CoachingPanel.tsx");
     const offers = read("src/lib/specialist-offers.ts");
     const serviceCatalog = read("src/lib/canonical-service-catalog.ts");
     const services = read("src/components/ServicesCatalog.tsx");
     const coachingControl = read("src/components/ActionPlanCoachingControl.tsx");
     const appNavigation = read("src/components/ActionPlanNavbar.tsx");
-    expect(coaching).toContain("Décrivez votre situation. L’équipe Demaa vous répond ici.");
+    expect(coaching).toContain("Décrivez ce qui vous bloque. L’équipe Demaa vous répond ici.");
     expect(coaching).toContain("Ce premier échange est gratuit.");
-    expect(coaching).toContain("Clarifier ma situation");
-    expect(coaching).toContain("Découvrir Coach business");
+    expect(coaching).toContain("Quel problème rencontrez-vous ?");
+    expect(coaching).toContain("Envoyer pour diagnostic");
+    expect(coaching).not.toContain("Clarifier ma situation");
+    expect(coaching).not.toContain("Découvrir Coach business");
+    expect(coaching).not.toContain("CoachBusinessPromo");
+    expect(coaching).not.toContain("CoachingRecommendationCard");
+    expect(coaching).not.toContain("recommendationsByMessage");
     expect(coaching).not.toContain("Inclut 12 % de réduction sur les accompagnements Demaa éligibles");
     expect(coaching).not.toContain("149 €");
     expect(coaching).not.toContain('role="tablist"');
@@ -65,11 +70,7 @@ describe("unified app and coaching", () => {
     expect(coaching).toContain("useSpeechDictation");
     expect(coaching).not.toContain("Dictée en cours… le texte apparaît dans le message.");
     expect(coaching).not.toContain("Vous pourrez envoyer votre message après la connexion.");
-    expect(coaching).toContain('aria-expanded={open}');
-    expect(coaching).toContain('inert={!open}');
-    expect(coaching).toContain('access.freeStatus !== "completed"');
-    expect(coaching).toContain("Deux rendez-vous individuels de 60 minutes par mois");
-    expect(coaching).toContain("Un suivi entre les rendez-vous");
+    expect(coaching).toContain('access?.freeStatus !== "completed"');
     expect(coaching).toContain('fetch("/api/coaching-draft"');
     expect(coaching).toContain('onRequireAccess?.({ draftToken, tab: "messages" })');
     expect(coaching).toContain("initialDraftToken");
@@ -78,7 +79,10 @@ describe("unified app and coaching", () => {
     expect(coaching).not.toContain("Première clarification offerte");
     expect(coaching).not.toContain("Continuer par e-mail");
     expect(coaching).not.toContain("disponible prochainement");
-    expect(coachingControl).toContain("Échanger");
+    expect(coachingControl).toContain("Diagnostic");
+    expect(coachingControl).toContain("Assessment");
+    expect(coachingControl).toContain("Ouvrir le diagnostic Demaa");
+    expect(coachingControl).not.toContain("Échanger avec l’équipe Demaa");
     expect(coachingControl).toContain("onClick={() => setOpen(true)}");
     expect(coachingControl).toContain('url.searchParams.delete("intent")');
     expect(coachingControl).toContain("window.history.replaceState");

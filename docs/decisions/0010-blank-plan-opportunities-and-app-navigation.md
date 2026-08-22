@@ -31,10 +31,11 @@ présents, `system`, `systemTab` et `resource`. Les slugs Système et les routes
 publiques `/systemes` restent stables. Les choix
 effectués dans cet espace restent uniquement en mémoire tant qu'aucun plan
 n'est volontairement enregistré.
-Coaching demeure dans la même application, mais s’ouvre depuis l’action
-compacte `Échanger` du header, y compris avant la génération d'un plan. Cette surface est une
-conversation simple sans onglets commerciaux ; la carte Coach business reste
-dans Services conformément à l’ADR 0009.
+La conversation demeure dans la même application, mais s’ouvre depuis l’action
+compacte `Diagnostic` du header, y compris avant la génération d'un plan. Cette
+surface est une conversation simple sans onglets commerciaux, recommandations
+ni promotion Coach business ; Coach business reste dans Services conformément
+à l’ADR 0018.
 
 La sauvegarde est automatique et n'encombre ni le header ni le plan avec une
 action `Enregistrer`. Au clic sur `Créer mon plan d’action`, une personne non

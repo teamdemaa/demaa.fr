@@ -242,13 +242,14 @@ endpoint de session et le même mécanisme de retour.
 
 ### Après connexion
 
-La même navigation applicative est conservée. Coaching reste accessible depuis
-l'action compacte `Échanger`, conformément aux ADR 0009 et
-0010, sans devenir un cinquième onglet.
+La même navigation applicative est conservée. La conversation reste accessible
+depuis l'action compacte `Diagnostic`, conformément à l'ADR 0018, sans devenir
+un cinquième onglet.
 
-La surface porte le titre `Échanger avec l’équipe Demaa`. La copie précise que
-l'équipe mobilise le spécialiste adapté ; les termes `coach` et `votre coach`
-ne sont pas utilisés comme libellés humains.
+La surface porte le titre `Quel problème rencontrez-vous ?` et précise
+`Décrivez ce qui vous bloque. L’équipe Demaa vous répond ici.` Elle ne rend
+aucune recommandation, promotion ou action Coach business : Coach business
+reste uniquement dans Services.
 
 ## Persistance
 
