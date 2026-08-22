@@ -50,6 +50,8 @@ describe("public guest action-plan experience", () => {
     expect(delivery).toContain('submit("email"');
     expect(delivery).toContain('submit("diagnostic"');
     expect(delivery).toContain("contactConsent");
+    expect(delivery).toContain("Comment pouvons-nous vous aider ?");
+    expect(delivery).not.toContain("Précision <span");
     expect(delivery).not.toContain("CoachBusinessPromo");
   });
 
