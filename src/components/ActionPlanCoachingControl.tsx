@@ -116,7 +116,7 @@ export default function ActionPlanCoachingControl({
     } catch (error) {
       const message = error instanceof Error
         ? error.message
-        : localeCode === "en" ? "Unable to prepare access to Talk to us." : "Impossible de préparer l’accès au spécialiste.";
+        : localeCode === "en" ? "Unable to prepare the assessment." : "Impossible de préparer le diagnostic.";
       setAccessError(message);
       throw error;
     } finally {
@@ -176,11 +176,11 @@ export default function ActionPlanCoachingControl({
           type="button"
           onClick={() => setOpen(true)}
           className="demaa-floating-shadow inline-flex min-h-10 items-center gap-2 rounded-full bg-dema-forest px-4 text-xs font-medium text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:min-h-11 sm:px-5 sm:text-sm"
-          aria-label={localeCode === "en" ? "Talk to the Demaa team" : "Échanger avec l’équipe Demaa"}
-          title={localeCode === "en" ? "Talk to the Demaa team" : "Échanger avec l’équipe Demaa"}
+          aria-label={localeCode === "en" ? "Open the Demaa assessment" : "Ouvrir le diagnostic Demaa"}
+          title={localeCode === "en" ? "Open the Demaa assessment" : "Ouvrir le diagnostic Demaa"}
         >
           <MessageCircle className="h-4 w-4" aria-hidden="true" />
-          <span>{localeCode === "en" ? "Talk to us" : "Échanger"}</span>
+          <span>{localeCode === "en" ? "Assessment" : "Diagnostic"}</span>
         </button>,
         target,
       )}
@@ -191,7 +191,7 @@ export default function ActionPlanCoachingControl({
               className="fixed inset-0 z-[130] overflow-y-auto bg-dema-cream/98 px-4 pb-24 pt-4 backdrop-blur-md sm:px-6 lg:px-8"
               role="dialog"
               aria-modal="true"
-              aria-label={localeCode === "en" ? "Talk to the Demaa team" : "Échanger avec l’équipe Demaa"}
+              aria-label={localeCode === "en" ? "Demaa assessment" : "Diagnostic Demaa"}
             >
               <div className="mx-auto flex max-w-[68rem] justify-end">
                 <button
@@ -199,7 +199,7 @@ export default function ActionPlanCoachingControl({
                   type="button"
                   onClick={closePanel}
                   className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue"
-                  aria-label={localeCode === "en" ? "Close Talk to us" : "Fermer la page spécialiste"}
+                  aria-label={localeCode === "en" ? "Close the assessment" : "Fermer le diagnostic"}
                 >
                   <X className="h-5 w-5" aria-hidden="true" />
                 </button>
