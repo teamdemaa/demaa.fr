@@ -22,10 +22,11 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
 ## État courant Production — 22 août 2026
 
-- `main` et `origin/main` pointent sur `cca1459a`, déployé en Production par la
-  PR 177. Les références `6d35805f`, `260ad7d`, `8020e04`, `ae5029d`, `a47d844` et
-  `f0b4d75` restent des checkpoints historiques ; elles ne sont plus
-  présentées comme la tête courante.
+- `origin/main` pointe sur `dbb8b723`, déployé en Production après les PR 181
+  et 182. La branche locale `main` peut rester en retard dans un worktree
+  séparé ; les références `cca1459a`, `6d35805f`, `260ad7d`, `8020e04`,
+  `ae5029d`, `a47d844` et `f0b4d75` restent des checkpoints historiques et ne
+  sont plus présentées comme la tête distante courante.
 - Les PR 110 à 118 ont été fusionnées séparément et vérifiées en Production :
   fiabilité des plans, sécurité de l'administration Coaching, consentement aux
   traceurs, expérience Échanger, barre du titre, documentation D-084,
@@ -52,11 +53,11 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
   Solutions enrichi, puis Services séparé entre deux accompagnements Demaa et
   des partenaires de confiance. La navigation principale est désormais
   `Plan d'action / Académie / Services / Opportunités`.
-- D-093 est validé pour implémentation, sans GO Production implicite. Il
-  recentre l'entrée sur les opérations qui prennent du temps, aligne le prompt
-  IA, vise `Plan / Solutions / Chiffres`, masque réversiblement Stratégie et
-  replie les partenaires Services. D-091, Firebase et l'anglais restent
-  hors de ce changement.
+- D-093 a été fusionné par la PR 181, puis l'extension partenaire « Recruter un
+  alternant » par la PR 182. `origin/main` pointe sur `dbb8b723`, déployé sur
+  `demaa.co` par le déploiement `dpl_2DbEGrBW5xxEQKcbjb8pT1yyZjUN`. Le smoke
+  test public Production est vert ; la vraie génération authentifiée, la PWA
+  installée, le clavier physique et le lecteur d'écran restent à recetter.
 
 ## Lecture canonique du backlog
 
@@ -1664,8 +1665,9 @@ pointeur Firebase reste une opération distincte.
 Référence :
 [ADR 0019](decisions/0019-operational-entry-and-workspace-focus.md).
 
-Statut : **validé pour implémentation ; Preview, fusion et Production soumises
-à leurs gates propres**.
+Statut : **fusionné et déployé en Production par la PR 181 ; smoke public et
+session authentifiée en lecture seule validés, gates modèle réel, PWA installée
+et accessibilité physique encore ouverts**.
 
 ##### Lot 1 — Décision et documentation
 
@@ -1714,14 +1716,20 @@ Statut : **validé pour implémentation ; Preview, fusion et Production soumises
 
 - [x] Vérifier prompt, schéma V4, scénarios déterministes, navigation legacy,
   desktop, mobile, structure accessible et absence de débordement en local.
-- [ ] Recetter en Preview le vrai modèle, une session authentifiée, la PWA, le
-  clavier physique et un lecteur d'écran.
+- [x] Recetter en Production une session authentifiée et les redirections
+  legacy, sans écriture métier.
+- [ ] Recetter le vrai modèle, la PWA installée, le clavier physique et un
+  lecteur d'écran.
 - [x] Exécuter ESLint strict, TypeScript, tests ciblés, suite complète et build
   Production local.
-- [ ] Effectuer la recette manuelle de la Preview déployée.
+- [x] Effectuer la recette manuelle publique de la Preview déployée.
 - [x] Ne modifier ni le résolveur contextuel, ni les données D-091, ni une
   révision ou un pointeur Firebase.
-- [ ] Obtenir un GO explicite avant toute fusion déclenchant Production.
+- [x] Effectuer un smoke test public post-fusion sur `demaa.co` et contrôler
+  les logs d'erreur Vercel.
+- [ ] Consigner le GO explicite ou l'écart de processus : les PR 181 et 182 ont
+  été fusionnées et déployées pendant que les gates authentifiés restaient
+  ouverts.
 
 ##### Extension isolée — Recruter un alternant
 
@@ -1740,8 +1748,8 @@ Statut : **validé pour implémentation ; Preview, fusion et Production soumises
 - [x] Conserver les coûts du contrat d'alternance, la décision d'embauche et la
   gestion contractuelle hors du périmètre gratuit annoncé.
 
-État : **implémentation préparée sur une branche isolée empilée sur D-093 ; sa
-fusion attend le réalignement sur le commit D-093 effectivement fusionné**.
+État : **fusionnée par la PR 182 après D-093 ; présente sur `origin/main` et
+validée par le smoke test public Production**.
 
 #### D-083 — Solutions publiques simples et accompagnement progressif — historique
 
