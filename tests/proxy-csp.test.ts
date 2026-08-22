@@ -6,10 +6,12 @@ import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
 
 const originalVercelEnv = process.env.VERCEL_ENV;
 const originalEnglishBetaEnabled = process.env.DEMAA_ENGLISH_BETA_ENABLED;
+const originalDemaaPreviewHosts = process.env.DEMAA_PREVIEW_HOSTS;
 
 afterEach(() => {
   process.env.VERCEL_ENV = originalVercelEnv;
   process.env.DEMAA_ENGLISH_BETA_ENABLED = originalEnglishBetaEnabled;
+  process.env.DEMAA_PREVIEW_HOSTS = originalDemaaPreviewHosts;
 });
 
 describe("proxy content security policy", () => {
@@ -126,6 +128,35 @@ describe("proxy content security policy", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("location")).toBeNull();
     expect(response.headers.get("x-middleware-next")).toBe("1");
+  });
+
+  it("keeps an explicitly allowed stable Preview alias on its own origin", () => {
+    process.env.VERCEL_ENV = "preview";
+    process.env.DEMAA_PREVIEW_HOSTS = "demaa-d094-preview.vercel.app";
+    const response = proxy(
+      new NextRequest("https://demaa-d094-preview.vercel.app/admin/demandes", {
+        headers: { host: "demaa-d094-preview.vercel.app" },
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("location")).toBeNull();
+    expect(response.headers.get("x-middleware-next")).toBe("1");
+  });
+
+  it("still redirects an unlisted Vercel Preview host", () => {
+    process.env.VERCEL_ENV = "preview";
+    process.env.DEMAA_PREVIEW_HOSTS = "demaa-d094-preview.vercel.app";
+    const response = proxy(
+      new NextRequest("https://unrelated.vercel.app/admin/demandes", {
+        headers: { host: "unrelated.vercel.app" },
+      }),
+    );
+
+    expect(response.status).toBe(308);
+    expect(response.headers.get("location")).toBe(
+      "https://demaa.co/admin/demandes",
+    );
   });
 
   it("redirects a retired legacy path before applying the canonical 404 policy", () => {

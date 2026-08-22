@@ -57,7 +57,15 @@ export function isVercelPreviewHost(host: string) {
   }
 
   const normalizedHost = host.trim().toLowerCase();
-  const previewHosts = [process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL]
+  const explicitlyAllowedPreviewHosts = (process.env.DEMAA_PREVIEW_HOSTS ?? "")
+    .split(",")
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean);
+  const previewHosts = [
+    process.env.VERCEL_URL,
+    process.env.VERCEL_BRANCH_URL,
+    ...explicitlyAllowedPreviewHosts,
+  ]
     .map((value) => value?.trim().toLowerCase())
     .filter(Boolean);
 
