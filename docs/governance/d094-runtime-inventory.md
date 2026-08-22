@@ -11,7 +11,7 @@
 | `POST /api/action-plans/generate` | session, UID, entreprise et appartenance | nouvelle frontière invitée temporaire ; ne pas retirer l'autorisation de la route historique |
 | `/api/action-plans`, `/api/action-plans/[id]` | propriété entreprise | conserver pour rollback puis retirer du parcours public |
 | `/api/action-plans/[id]/generate` et `/generation` | plan sauvegardé authentifié | ne pas réutiliser comme API publique |
-| `ActionPlanExperience` | brouillon, modale auth, génération puis plan | conserver un seul composant et remplacer la branche d'accès/persistance, sans créer une copie complète |
+| `ActionPlanExperience` | brouillon, modale auth, génération puis plan | conserver temporairement pour rollback ; le nouveau `GuestActionPlanExperience` reste une machine d'état séparée et doit devenir l'unique shell après retrait autorisé du parcours historique |
 | `action_plans` | `company_id`, `owner_uid`, `created_by_uid` | ne pas écrire de job invité dans cette collection |
 
 Primitives réutilisables : contrat ActionPlan V4, exécution de génération,

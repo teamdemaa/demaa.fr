@@ -38,6 +38,8 @@ situation
 - le CTA reste `Créer mon plan d’action` ;
 - le plan généré reste privé, non indexable et accessible uniquement au moyen
   d'un secret opaque ;
+- le plan invité est consultable en lecture seule : il n'introduit ni
+  autosauvegarde anonyme, ni espace client implicite ;
 - l'e-mail n'est demandé qu'au moment d'envoyer le plan ou le Diagnostic ;
 - recevoir un plan ne vaut jamais consentement à une newsletter.
 

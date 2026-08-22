@@ -1813,7 +1813,9 @@ fusion, activation Production ou suppression de données sans GO explicite**.
 ##### Lot 5 — Bascule UI publique
 
 - [ ] Connecter l'accueil à la génération invitée et afficher le plan dans la
-  session temporaire.
+  session temporaire en lecture seule.
+- [ ] Limiter les suites à `Recevoir mon plan par e-mail` et `Demander un
+  diagnostic`, sans autosauvegarde anonyme ni espace client implicite.
 - [ ] Retirer Connexion, Profil, Mes plans, redirection vers le dernier plan et
   Diagnostic conversationnel du parcours public.
 - [ ] Masquer Chiffres et Stratégie ; préserver les anciens lecteurs pendant
@@ -1829,6 +1831,11 @@ fusion, activation Production ou suppression de données sans GO explicite**.
 - [ ] Inventorier exactement les comptes et données de test ; demander une
   autorisation destructive séparée avant suppression.
 - [ ] Retirer le code historique uniquement après stabilité et fin du rollback.
+
+La coexistence de `ActionPlanExperience` et `GuestActionPlanExperience` est
+temporaire et justifiée uniquement par le rollback. Après stabilité du parcours
+public et autorisation de retirer l'ancien produit client, conserver un seul
+shell public et supprimer la machine d'état historique devenue orpheline.
 
 Frontières : D-091 peut continuer ses recherches éditoriales hors registre
 actif, mais ne modifie pas les surfaces D-094. D-085 et les PR anglaises restent

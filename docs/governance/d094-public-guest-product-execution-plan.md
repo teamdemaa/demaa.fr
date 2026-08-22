@@ -44,7 +44,9 @@ expiration, noindex, GET/POST admin, zéro document entreprise créé.
 - rate limit fiable, idempotence, budget quotidien global et circuit breaker ;
 - lecture et écriture avec contrôle du secret ;
 - TTL initial de 24 heures ;
-- flag `DEMAA_GUEST_PRODUCT_ENABLED` désactivé par défaut.
+- flag `DEMAA_GUEST_PRODUCT_ENABLED` désactivé par défaut ;
+- `DEMAA_GUEST_AI_DAILY_LIMIT` obligatoire avant toute activation ;
+- `DEMAA_GUEST_AI_CIRCUIT_OPEN` disponible pour une coupure d'urgence.
 
 Gate : doublon, concurrence, interruption, échec IA, réparation, mauvaise clé,
 expiration, quota IP/global, indisponibilité Firestore, absence de PII/log de
@@ -80,7 +82,8 @@ CGV alignées.
 ## PR 5 — Bascule de l'interface publique
 
 - connecter l'accueil à la génération invitée ;
-- afficher le plan éditable dans la session invitée ;
+- afficher le plan en lecture seule dans la session invitée ;
+- proposer uniquement l'envoi du plan par e-mail ou le Diagnostic ;
 - retirer les entrées Connexion, Profil, Mes plans et chat client ;
 - masquer Chiffres et Stratégie ;
 - retirer les redirections automatiques vers le dernier plan ;
@@ -124,3 +127,10 @@ D-091 peut poursuivre ses recherches éditoriales hors registre actif, mais pas
 modifier les mêmes surfaces pendant PR 5. L'anglais et The Done Studio restent
 gelés. Toute correction française commune est faite sur `main`, jamais copiée
 manuellement dans la branche anglaise en pause.
+
+Pendant la fenêtre de rollback, `ActionPlanExperience` et
+`GuestActionPlanExperience` coexistent comme deux machines d'état distinctes.
+Cette duplication est temporaire : après activation stable et autorisation de
+retirer le parcours client, le Lot 7 supprime le parcours historique puis
+conserve un seul shell public. Une fusion risquée des deux machines d'état
+avant la recette n'est pas requise.
