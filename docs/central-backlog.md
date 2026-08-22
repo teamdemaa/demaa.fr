@@ -1703,11 +1703,11 @@ Statut : **validé pour implémentation ; Preview, fusion et Production soumises
 
 ##### Lot 4 — Services
 
-- [ ] Conserver les deux accompagnements Demaa ouverts et placer les sept
+- [x] Conserver les deux accompagnements Demaa ouverts et placer les sept
   partenaires dans un dépliant fermé par défaut mais consultable sans compte.
-- [ ] Réutiliser le même catalogue, les mêmes cartes et le même dépliant dans
+- [x] Réutiliser le même catalogue, les mêmes cartes et le même dépliant dans
   l'application et sur `/services`, sans second catalogue ni changement SEO.
-- [ ] Limiter l'espace du bouton de fermeture de la modale au bloc supérieur et
+- [x] Limiter l'espace du bouton de fermeture de la modale au bloc supérieur et
   rendre toute la largeur intérieure aux inclusions, forfaits et formulaires.
 
 ##### Gates D-093

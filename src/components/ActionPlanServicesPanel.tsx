@@ -63,9 +63,7 @@ export default function ActionPlanServicesPanel({
             >
               <X className="h-4 w-4" aria-hidden="true" />
             </button>
-            <div className="pr-12">
-              <CanonicalServiceDetails headingAs="h2" service={selectedService} variant="modal" />
-            </div>
+            <CanonicalServiceDetails headingAs="h2" service={selectedService} variant="modal" />
           </section>
         </div>
       ) : null}
