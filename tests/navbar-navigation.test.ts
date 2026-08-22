@@ -44,7 +44,8 @@ describe("Demaa application navbar", () => {
     );
     expect(homeSource).toContain('canonical: "/"');
     expect(homeSource).toContain("<ActionPlanHomeView");
-    expect(sharedHomeSource).toContain("<ActionPlanExperience");
+    expect(sharedHomeSource).toContain("<GuestActionPlanExperience");
+    expect(sharedHomeSource).toContain("if (!guestProductEnabled)");
     expect(sharedHomeSource).toContain("<Navbar");
     expect(systemsSource).toContain('canonical: "/systemes"');
     expect(nextConfigSource).not.toMatch(
@@ -100,7 +101,7 @@ describe("Demaa application navbar", () => {
     expect(modalSource).toContain("returnTo={returnTo}");
   });
 
-  it("restores the latest saved plan unless a new situation is explicitly requested", async () => {
+  it("keeps the public homepage independent from the legacy saved-plan space", async () => {
     const [homeSource, plansSource, latestSource, loginDialogSource] = await Promise.all([
       readFile(new URL("../src/app/(application)/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlansIndexView.tsx", import.meta.url), "utf8"),
@@ -117,8 +118,14 @@ describe("Demaa application navbar", () => {
     );
 
     expect(homeSource).toContain("loadActionPlanHomePage");
+    const guestLoader = sharedPagesSource.slice(
+      sharedPagesSource.indexOf("if (isGuestProductEnabled())"),
+      sharedPagesSource.indexOf("const identity =", sharedPagesSource.indexOf("if (isGuestProductEnabled())")),
+    );
+    expect(guestLoader).not.toContain("getCurrentCustomerAppIdentityFromSession");
+    expect(guestLoader).not.toContain("paths.latest");
+    expect(guestLoader).toContain("guestProductEnabled: true");
     expect(sharedPagesSource).toContain("shouldRedirectAuthenticatedHomeToPlans");
-    expect(sharedPagesSource).toContain("redirect(unauthenticatedConfig.paths.latest)");
     expect(homeSource).toContain("planTab?: string | string[]");
     expect(plansSource).toContain("copy.plansHeading");
     expect(plansSource).toContain("config.paths.new");
