@@ -24,10 +24,12 @@ describe("manual action plan experience", () => {
     expect(experience).toContain("onSectionChange={selectPlanSection}");
     expect(experience).toContain("figuresAuthenticated={isAuthenticated && !isDemoMode}");
     expect(experience).toContain("onFiguresAuthenticationRequired={requestFiguresAuthentication}");
+    expect(experience).toContain("strategyAuthenticated={isAuthenticated && !isDemoMode}");
+    expect(experience).toContain("onStrategyAuthenticationRequired={requestStrategyAuthentication}");
     expect(experience).toContain("<CompanyStrategyEntry");
     expect(experience).toContain('setPendingAccessIntent({ kind: "open-company-strategy" })');
     expect(experience).toContain('planSection: "strategy"');
-    expect(experience).toContain("Connectez-vous pour ouvrir votre stratégie");
+    expect(experience).toContain("Connectez-vous pour renseigner votre stratégie");
     expect(experience).not.toContain('planSection === "figures" && !isAuthenticated');
     expect(experience).toContain('demo === "blank"');
     expect(experience).toContain("const storedSystemId = readGuestSelectedSystemId() ?? \"\"");

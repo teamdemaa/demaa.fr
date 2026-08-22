@@ -1,5 +1,8 @@
 import { readFileSync } from "node:fs";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import CompanyStrategyPanel from "@/components/CompanyStrategyPanel";
 import { COMPANY_STRATEGY_PILLARS } from "@/lib/company-pilotage-contract";
 const source = (file: string) => readFileSync(new URL(`../src/components/${file}`, import.meta.url), "utf8");
 
@@ -25,7 +28,31 @@ describe("company Pilotage UI contract", () => {
     expect(source("SavedActionPlanDetail.tsx")).toContain("<CompanyStrategyEntry");
     expect(source("ActionPlanExperience.tsx")).toContain("<CompanyStrategyEntry");
     expect(source("CompanyPilotagePanel.tsx")).toContain("authenticated={figuresAuthenticated}");
+    expect(source("CompanyPilotagePanel.tsx")).toContain("authenticated={strategyAuthenticated}");
     expect(navbar).not.toContain("Stratégie");
+  });
+
+  it("shows the Strategy framework to guests and protects only writing", () => {
+    const panel = source("CompanyStrategyPanel.tsx");
+    const pillar = source("CompanyStrategyPillar.tsx");
+    const experience = source("ActionPlanExperience.tsx");
+    const markup = renderToStaticMarkup(createElement(CompanyStrategyPanel, {
+      authenticated: false,
+      onAuthenticationRequired: () => undefined,
+    }));
+
+    expect(markup).toContain("Stratégie");
+    expect(markup).toContain("Qu’est-ce que vous voulez que cette entreprise vous apporte ?");
+    expect(markup.match(/<textarea/g)).toHaveLength(3);
+    expect(markup.match(/readonly=""/gi)).toHaveLength(3);
+    expect(markup).not.toContain("Chargement de la stratégie");
+    expect(markup).not.toContain("Historique des cycles");
+    expect(panel).toContain("if (!authenticated) return;");
+    expect(pillar).toContain("onClick={readOnly ? onWriteRequest : undefined}");
+    expect(pillar).toContain('event.key !== "Enter"');
+    expect(experience).toContain("strategyAuthenticated={isAuthenticated && !isDemoMode}");
+    expect(experience).toContain("onStrategyAuthenticationRequired={requestStrategyAuthentication}");
+    expect(experience).toContain("Connectez-vous pour renseigner votre stratégie");
   });
 
   it("keeps explicit metric saves and serial Strategy autosaves with recovery", () => {

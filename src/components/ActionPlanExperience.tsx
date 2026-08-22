@@ -405,10 +405,11 @@ export default function ActionPlanExperience({
   }
 
   function openCompanyStrategy() {
-    if (isAuthenticated) {
-      navigateAppContext({ view: "plan", planSection: "strategy" });
-      return;
-    }
+    navigateAppContext({ view: "plan", planSection: "strategy" });
+  }
+
+  function requestStrategyAuthentication() {
+    if (isAuthenticated || isDemoMode) return;
     setPendingAccessIntent({ kind: "open-company-strategy" });
     setAccessDraft((current) => ({ ...current, mode: "create", password: "" }));
     setAccessPromptOpen(true);
@@ -956,8 +957,8 @@ export default function ActionPlanExperience({
                 : "Connectez-vous pour saisir vos chiffres"
               : pendingAccessIntent?.kind === "open-company-strategy"
                 ? contentLocaleCode === "en"
-                  ? "Sign in to open your strategy"
-                  : "Connectez-vous pour ouvrir votre stratégie"
+                  ? "Sign in to edit your strategy"
+                  : "Connectez-vous pour renseigner votre stratégie"
               : uiCopy.savePlan}
             draft={accessDraft}
             initialMode="create"
@@ -1179,6 +1180,8 @@ export default function ActionPlanExperience({
               figuresEntryRequest={figuresEntryRequest}
               onFiguresEntryRequestConsumed={() => setFiguresEntryRequest(null)}
               onFiguresAuthenticationRequired={requestFiguresAuthentication}
+              strategyAuthenticated={isAuthenticated && !isDemoMode}
+              onStrategyAuthenticationRequired={requestStrategyAuthentication}
               solutions={(
                 <ActionPlanSystemPanel
                   localeCode={contentLocaleCode}

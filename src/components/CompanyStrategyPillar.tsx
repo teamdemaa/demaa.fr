@@ -17,7 +17,9 @@ export default function CompanyStrategyPillar({
   onOpen,
   onAnswerChange,
   onKeepLocal,
+  onWriteRequest,
   onUseRemote,
+  readOnly = false,
 }: {
   pillar: {
     key: CompanyStrategyPillar;
@@ -31,7 +33,9 @@ export default function CompanyStrategyPillar({
   onOpen: () => void;
   onAnswerChange: (key: CompanyStrategyAnswerKey, value: string) => void;
   onKeepLocal: (key: CompanyStrategyAnswerKey) => void;
+  onWriteRequest?: () => void;
   onUseRemote: (key: CompanyStrategyAnswerKey) => void;
+  readOnly?: boolean;
 }) {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const anchorTopRef = useRef<number | null>(null);
@@ -79,6 +83,14 @@ export default function CompanyStrategyPillar({
                   value={answers[question.key]}
                   maxLength={COMPANY_STRATEGY_ANSWER_MAX_LENGTH}
                   rows={3}
+                  readOnly={readOnly}
+                  aria-readonly={readOnly}
+                  onClick={readOnly ? onWriteRequest : undefined}
+                  onKeyDown={readOnly ? (event) => {
+                    if (event.key.length !== 1 && event.key !== "Enter") return;
+                    event.preventDefault();
+                    onWriteRequest?.();
+                  } : undefined}
                   onChange={(event) => onAnswerChange(question.key, event.target.value)}
                   className="mt-2 w-full resize-y rounded-xl border border-dema-line bg-white px-3 py-2.5 text-left text-base font-normal leading-relaxed text-dema-ink outline-none focus:border-dema-forest"
                   aria-describedby={conflict ? `strategy-${question.key}-conflict` : undefined}
