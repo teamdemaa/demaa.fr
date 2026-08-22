@@ -104,7 +104,7 @@ describe("Structure problem submission route", () => {
       channels: { email: false, resend: false, slack: true },
       contact: {
         company: "Atelier Horizon — architecture intérieure",
-        email: "owner@example.com",
+        email: "maya@example.com",
       },
       requestType: "structure_problem_submission",
       title: "Proposition de problématique - Structure",
@@ -138,12 +138,9 @@ describe("Structure problem submission route", () => {
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
-  it("requires an authenticated session and ignores a body email", async () => {
-    mocks.requireCurrentCustomerIdentity.mockResolvedValueOnce({
-      identity: null,
-      response: Response.json({ error: "authentication_required" }, { status: 401 }),
-    });
-    expect((await POST(request({ email: "spoofed@example.net" }))).status).toBe(401);
+  it("rejects an invalid public contact email without consulting a customer session", async () => {
+    expect((await POST(request({ email: "invalid" }))).status).toBe(400);
+    expect(mocks.requireCurrentCustomerIdentity).not.toHaveBeenCalled();
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 

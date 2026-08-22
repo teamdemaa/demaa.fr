@@ -5,7 +5,7 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
-import { requireCurrentCustomerIdentity } from "@/lib/customer-space-session.server";
+import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
 import { submitLeadRequest } from "@/lib/lead-notifications";
@@ -59,9 +59,6 @@ export async function POST(request: Request) {
     const blockedOrigin = enforceSameOrigin(request);
     if (blockedOrigin) return blockedOrigin;
 
-    const customer = await requireCurrentCustomerIdentity();
-    if (customer.response) return customer.response;
-
     const limited = await enforceRateLimit(request, {
       keyPrefix: "structure-problem",
       limit: 5,
@@ -79,7 +76,7 @@ export async function POST(request: Request) {
     if (honeypot) return successResponse();
 
     const companyActivity = normalizeText(body?.companyActivity, 160);
-    const email = customer.identity.email;
+    const email = normalizeEmail(normalizeText(body?.email, 160));
     const idempotencyKey = normalizeIdempotencyKey(body?.idempotencyKey);
     const problem = normalizeText(body?.problem, 4000, { multiline: true });
     const professionalPage = normalizeProfessionalPage(body?.professionalPage);
@@ -87,6 +84,7 @@ export async function POST(request: Request) {
 
     if (
       !companyActivity ||
+      !isValidEmail(email) ||
       !idempotencyKey ||
       !problem ||
       !professionalPage
