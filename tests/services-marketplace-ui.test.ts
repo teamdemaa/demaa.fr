@@ -217,7 +217,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).toContain("Sur devis");
     expect(markup).toContain("Gratuit");
     expect(markup).toContain("Nos accompagnements");
-    expect(markup).toContain("Conçus et réalisés directement par Demaa.");
+    expect(markup).toContain("Pour faire en sorte que votre entreprise dépende moins de vous.");
     expect(markup).toContain("Avec nos partenaires de confiance");
     expect(markup).toContain("Demaa qualifie votre besoin et organise la mise en relation.");
     expect(markup).toContain("<details");
@@ -259,8 +259,10 @@ describe("canonical Accompagnement catalog", () => {
     expect(catalogSource).toContain("<h2");
     expect(catalogSource).toContain("<h3");
     expect(catalogSource).not.toContain("<h4");
-    expect(catalogSource).toContain("mt-6 text-sm font-normal text-dema-muted md:mt-auto md:pt-5");
-    expect(catalogSource).toContain('className="min-w-0 md:h-[19rem]"');
+    expect(catalogSource).toContain("mt-4 text-sm font-normal text-dema-muted");
+    expect(catalogSource).not.toContain("md:mt-auto");
+    expect(catalogSource).not.toContain("md:h-[19rem]");
+    expect(catalogSource).toContain('className="min-w-0"');
     expect(catalogSource).not.toContain('className="h-[19rem] min-w-0"');
     expect(systemSolutionsSource).not.toContain("service.pricing.label");
     for (const source of [catalogSource, systemSolutionsSource]) {
