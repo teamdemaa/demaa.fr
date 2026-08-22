@@ -162,9 +162,10 @@ export async function requestPasswordReset(
   email: string,
   localeCode?: InterfaceLocaleCode,
   returnTo = "/plans/latest",
+  signInPath = "/connexion",
 ) {
   const auth = getDemaaAuth(localeCode);
   await sendPasswordResetEmail(auth, email, {
-    url: `${window.location.origin}/connexion?returnTo=${encodeURIComponent(returnTo)}`,
+    url: `${window.location.origin}${signInPath}?returnTo=${encodeURIComponent(returnTo)}`,
   });
 }
