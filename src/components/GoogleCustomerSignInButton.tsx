@@ -2,6 +2,7 @@
 
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
+import { exchangeFirebaseIdTokenForAdminSession } from "@/lib/admin-auth-session.client";
 import { exchangeFirebaseIdTokenForSession } from "@/lib/customer-auth-session.client";
 import {
   hasFirebaseGoogleAuthConfiguration,
@@ -88,12 +89,14 @@ function getGoogleErrorMessage(error: unknown, localeCode: InterfaceLocaleCode) 
 }
 
 export default function GoogleCustomerSignInButton({
+  accessKind = "customer",
   large = false,
   onAuthenticated,
   onError,
   returnTo = "/plans",
   localeCode = "fr",
 }: {
+  accessKind?: "admin" | "customer";
   large?: boolean;
   onAuthenticated?: (result: { redirectTo: string }) => Promise<void> | void;
   onError?: (message: string | null) => void;
@@ -116,13 +119,19 @@ export default function GoogleCustomerSignInButton({
       const localeCode = getReturnToInterfaceLocale(returnTo);
       if (shouldUseGoogleRedirect() || preferRedirect) {
         const params = new URLSearchParams({ locale: localeCode, returnTo });
-        window.location.assign(`/auth/google?${params.toString()}`);
+        if (accessKind === "admin") {
+          window.location.assign(`/admin/auth/google?${params.toString()}`);
+        } else {
+          window.location.assign(`/auth/google?${params.toString()}`);
+        }
         return;
       }
       const { idToken } = await withGooglePopupTimeout(
         signInWithGoogleAndGetIdToken(localeCode),
       );
-      const result = await exchangeFirebaseIdTokenForSession({ idToken, returnTo });
+      const result = await (accessKind === "admin"
+        ? exchangeFirebaseIdTokenForAdminSession
+        : exchangeFirebaseIdTokenForSession)({ idToken, returnTo });
 
       if (onAuthenticated) {
         await onAuthenticated(result);

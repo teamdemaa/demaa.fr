@@ -6,9 +6,11 @@ réservée à la Team Demaa, absente de la navigation publique et déclarée
 
 ## Configuration
 
-L'accès admin (`/admin/coaching`, `/admin/opportunites` et `/admin/demandes`) réutilise la
-session client existante (`demaa_session`, la même connexion Google ou
-email/mot de passe que le reste du site) plutôt qu'un secret séparé. L'autorité
+L'accès admin (`/admin/coaching`, `/admin/opportunites` et `/admin/demandes`) utilise une
+session Team indépendante (`demaa_admin_session`) créée depuis
+`/admin/connexion`. La connexion Firebase Google ou email/mot de passe est
+réutilisée, mais la session client `demaa_session` n'accorde aucun accès admin.
+L'autorité
 la plus forte est la variable serveur `DEMAA_ADMIN_UIDS` (UID Firebase séparés
 par des virgules). `DEMAA_ADMIN_EMAILS` reste un mécanisme de compatibilité,
 mais uniquement pour une adresse dont Firebase confirme la vérification.
@@ -19,15 +21,19 @@ vérifiés protègent les trois espaces admin.
 
 ## Accès
 
-1. Se connecter normalement avec un compte dont l'UID figure dans
+1. Ouvrir `/admin/connexion` et se connecter avec un compte dont l'UID figure dans
    `DEMAA_ADMIN_UIDS`, ou avec une adresse Firebase vérifiée figurant dans
    `DEMAA_ADMIN_EMAILS`.
 2. Ouvrir `https://demaa.co/admin/coaching`, `/admin/opportunites` ou
    `/admin/demandes`.
-3. La page vérifie la session côté serveur et redirige vers `/connexion` si
+3. La page vérifie la session Team côté serveur et redirige vers
+   `/admin/connexion` si
    le compte connecté n'est pas administrateur.
 
-Les lectures et écritures sont privées, non mises en cache et limitées avant
+La création de cette session n'appelle jamais le provisioning d'entreprise ou
+d'appartenance client. Le cookie est `HttpOnly`, signé par Firebase, limité à
+12 heures et revérifié avec contrôle de révocation à chaque accès. Les lectures
+et écritures sont privées, non mises en cache et limitées avant
 la vérification de session. Les écritures exigent en plus une origine Demaa
 valide.
 
