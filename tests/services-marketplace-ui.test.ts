@@ -196,13 +196,13 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).toContain("Sur devis");
     expect(markup).toContain("Nos accompagnements");
     expect(markup).toContain("Conçus et réalisés directement par Demaa.");
-    expect(markup).toContain("Avec nos partenaires de confiance");
+    expect(markup).toContain("Proposé par nos partenaires de confiance");
     expect(markup).toContain("Demaa qualifie votre besoin et organise la mise en relation.");
     expect(markup).not.toContain("Catalogue Demaa");
     expect(markup).not.toContain("L’accompagnement utile, au même endroit");
     expect(markup).not.toContain("Le professionnel confirme son tarif et facture directement son intervention.");
     expect(markup.indexOf("Nos accompagnements")).toBeLessThan(
-      markup.indexOf("Avec nos partenaires de confiance"),
+      markup.indexOf("Proposé par nos partenaires de confiance"),
     );
     expect(markup.indexOf("Expert-comptable")).toBeLessThan(
       markup.indexOf("Assistante administrative"),

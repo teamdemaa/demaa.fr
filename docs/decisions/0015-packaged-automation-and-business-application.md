@@ -85,7 +85,7 @@ livraison du nouveau runtime.
 
 Le catalogue contient neuf accompagnements publics. `Nos accompagnements`
 contient Automatisation des processus et IA puis Application métier, réalisées
-directement par Demaa. `Avec nos partenaires de confiance` contient les sept
+directement par Demaa. `Proposé par nos partenaires de confiance` contient les sept
 prestations de mise en relation. Seule la sous-traitance de formalités
 juridiques reste réservée aux recommandations de la Team. Les deux sections
 réutilisent la même carte, la même fiche et le même formulaire.

@@ -142,7 +142,7 @@ export default function ServicesCatalog({
           onServiceSelect={onServiceSelect}
         />
         <ServiceSection
-          title="Avec nos partenaires de confiance"
+          title="Proposé par nos partenaires de confiance"
           description="Demaa qualifie votre besoin et organise la mise en relation."
           services={partnerServices}
           onServiceSelect={onServiceSelect}
