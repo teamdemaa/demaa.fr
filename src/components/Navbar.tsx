@@ -2,17 +2,20 @@
 
 import Link from "next/link";
 import { CircleUserRound } from "lucide-react";
+import AdminLogoutButton from "@/components/AdminLogoutButton";
 import CustomerLogoutButton from "@/components/CustomerLogoutButton";
 import DemaaWordmark from "@/components/DemaaWordmark";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
 
 export default function Navbar({
+  adminControls = false,
   anonymousLanding = false,
   isAuthenticated = false,
   minimal = false,
   localeCode = "fr",
 }: {
+  adminControls?: boolean;
   anonymousLanding?: boolean;
   isAuthenticated?: boolean;
   minimal?: boolean;
@@ -42,7 +45,9 @@ export default function Navbar({
               id="action-plan-navbar-desktop"
               className="absolute left-1/2 top-1/2 hidden w-[min(40vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden xl:block"
             />
-            {anonymousLanding ? (
+            {adminControls ? (
+              <AdminLogoutButton />
+            ) : anonymousLanding ? (
               <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
                 <div
                   id="action-plan-navbar-specialist"

@@ -45,7 +45,7 @@ function toCustomerIdentity(decoded: DecodedIdToken): CustomerSessionIdentity | 
   };
 }
 
-export async function createCustomerSession(idToken: string) {
+export async function verifyFreshFirebaseIdentity(idToken: string) {
   const auth = getAdminAuth();
   const decoded = await auth.verifyIdToken(idToken, true);
   const identity = toCustomerIdentity(decoded);
@@ -60,9 +60,24 @@ export async function createCustomerSession(idToken: string) {
     return null;
   }
 
-  const sessionCookie = await auth.createSessionCookie(idToken, {
-    expiresIn: CUSTOMER_SESSION_TTL_MS,
-  });
+  return identity;
+}
+
+export async function createFirebaseSessionCookie(
+  idToken: string,
+  expiresIn = CUSTOMER_SESSION_TTL_MS,
+) {
+  return getAdminAuth().createSessionCookie(idToken, { expiresIn });
+}
+
+export async function createCustomerSession(
+  idToken: string,
+  expiresIn = CUSTOMER_SESSION_TTL_MS,
+) {
+  const identity = await verifyFreshFirebaseIdentity(idToken);
+  if (!identity) return null;
+
+  const sessionCookie = await createFirebaseSessionCookie(idToken, expiresIn);
   return { identity, sessionCookie } as const;
 }
 
