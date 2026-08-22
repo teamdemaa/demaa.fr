@@ -53,8 +53,8 @@ par une simple bascule de visibilité.
    / Opportunités`. Services est placé après Académie afin de préserver le
    parcours produit avant l'entrée commerciale ; Opportunités reste en dernier.
 10. Services sépare `Nos accompagnements` — Automatisation et Application
-    métier, directement réalisées par Demaa — et `Avec nos partenaires de
-    confiance` — sept prestations de mise en relation. Les deux sections
+    métier, directement réalisées par Demaa — et `Proposé par nos partenaires
+    de confiance` — sept prestations de mise en relation. Les deux sections
     réutilisent le catalogue, la carte, la fiche et le formulaire existants.
 11. Les cartes dérivent le prix canonique ou le forfait le moins cher depuis la
     même source que les modales et demandes. Aucun champ de prix d'affichage

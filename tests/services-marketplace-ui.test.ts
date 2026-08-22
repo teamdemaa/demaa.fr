@@ -167,8 +167,17 @@ describe("canonical Accompagnement catalog", () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
-    const [catalogSource, systemSolutionsSource] = await Promise.all([
+    const [
+      academySource,
+      catalogSource,
+      opportunitySource,
+      sharedCardTitleSource,
+      systemSolutionsSource,
+    ] = await Promise.all([
+      readSource("src/components/AcademyIndexClient.tsx"),
       readSource("src/components/ServicesCatalog.tsx"),
+      readSource("src/components/PublicOpportunitiesClient.tsx"),
+      readSource("src/lib/library-card-ui.ts"),
       readSource("src/components/SystemSolutionsTab.tsx"),
     ]);
 
@@ -187,10 +196,19 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).toContain("Sur devis");
     expect(markup).toContain("Nos accompagnements");
     expect(markup).toContain("Conçus et réalisés directement par Demaa.");
-    expect(markup).toContain("Avec nos partenaires de confiance");
-    expect(markup).toContain("Le professionnel confirme son tarif et facture directement son intervention.");
+    expect(markup).toContain("Proposé par nos partenaires de confiance");
+    expect(markup).toContain("Demaa qualifie votre besoin et organise la mise en relation.");
+    expect(markup).not.toContain("Catalogue Demaa");
+    expect(markup).not.toContain("L’accompagnement utile, au même endroit");
+    expect(markup).not.toContain("Le professionnel confirme son tarif et facture directement son intervention.");
     expect(markup.indexOf("Nos accompagnements")).toBeLessThan(
-      markup.indexOf("Avec nos partenaires de confiance"),
+      markup.indexOf("Proposé par nos partenaires de confiance"),
+    );
+    expect(markup.indexOf("Expert-comptable")).toBeLessThan(
+      markup.indexOf("Assistante administrative"),
+    );
+    expect(markup.indexOf("Assistante administrative")).toBeLessThan(
+      markup.indexOf("Coach business"),
     );
     expect(markup).not.toMatch(/Avantage abonné|−12 %/);
     expect(markup).not.toContain("border-t");
@@ -199,6 +217,15 @@ describe("canonical Accompagnement catalog", () => {
     expect(catalogSource).toContain("service.pricing.label");
     expect(catalogSource).toContain('service.delivery === "demaa"');
     expect(catalogSource).toContain('service.delivery === "third-party"');
+    for (const source of [academySource, catalogSource, opportunitySource]) {
+      expect(source).toContain("LIBRARY_CARD_TITLE_CLASSNAME");
+    }
+    expect(sharedCardTitleSource).toContain("text-[1.05rem] font-normal leading-[1.3]");
+    expect(sharedCardTitleSource).toContain("sm:text-lg");
+    expect(catalogSource).toContain('className="text-xl font-normal leading-[1.3] text-brand-blue"');
+    expect(catalogSource).toContain("<h2");
+    expect(catalogSource).toContain("<h3");
+    expect(catalogSource).not.toContain("<h4");
     expect(catalogSource).toContain("mt-6 text-sm font-normal text-dema-muted md:mt-auto md:pt-5");
     expect(catalogSource).toContain('className="min-w-0 md:h-[19rem]"');
     expect(catalogSource).not.toContain('className="h-[19rem] min-w-0"');

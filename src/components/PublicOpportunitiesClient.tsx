@@ -13,6 +13,7 @@ import {
   type PublicOpportunity,
 } from "@/lib/opportunity-contract";
 import { matchesSearchQuery } from "@/lib/search";
+import { LIBRARY_CARD_TITLE_CLASSNAME } from "@/lib/library-card-ui";
 
 const ALL_OPPORTUNITY_CATEGORIES = "Toutes";
 
@@ -356,7 +357,7 @@ export default function PublicOpportunitiesClient({
               aria-controls="opportunity-details-dialog"
               className={`group flex h-[13rem] w-full flex-col rounded-[1.2rem] border bg-white p-4 text-left shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/25 hover:bg-dema-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest sm:h-44 sm:p-5 ${selected?.opportunityId === opportunity.opportunityId ? "border-dema-forest/45" : "border-dema-line"}`}
             >
-              <h2 className="line-clamp-2 min-h-[2.75rem] text-lg font-medium leading-snug tracking-[-0.015em] text-brand-blue sm:text-xl">
+              <h2 className={`line-clamp-2 min-h-[2.75rem] ${LIBRARY_CARD_TITLE_CLASSNAME}`}>
                 {opportunity.title}
               </h2>
               <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-dema-muted">

@@ -303,7 +303,7 @@ Alignement France livré avant les projections anglaises :
   séparateur qui traverse ou masque le texte.
 - [x] Structurer Services en deux sections utilisant la même carte et la même
   grille : `Nos accompagnements` pour Automatisation et Application métier,
-  réalisées directement par Demaa ; `Avec nos partenaires de confiance` pour
+  réalisées directement par Demaa ; `Proposé par nos partenaires de confiance` pour
   les sept prestations de mise en relation. Réseaux sociaux, Publicité et
   Prospection rejoignent les prestations partenaires, sont facturées
   directement par le professionnel et ne bénéficient pas de la réduction de
