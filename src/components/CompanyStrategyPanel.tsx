@@ -8,6 +8,7 @@ import CompanyStrategyPillar from "@/components/CompanyStrategyPillar";
 import { ActionPlanSaveQueue } from "@/lib/action-plan-save-queue.client";
 import {
   COMPANY_STRATEGY_PILLARS,
+  EMPTY_COMPANY_STRATEGY_ANSWERS,
   formatCompanyMonth,
   getCurrentCompanyMonth,
   mergeCompanyStrategyAnswers,
@@ -27,11 +28,19 @@ function nextCycleLabel() {
   return `${formatCompanyMonth(startMonth)} à ${formatCompanyMonth(endMonth)}`;
 }
 
-export default function CompanyStrategyPanel() {
+export default function CompanyStrategyPanel({
+  authenticated = true,
+  onAuthenticationRequired,
+}: {
+  authenticated?: boolean;
+  onAuthenticationRequired?: () => void;
+}) {
   const [cycle, setCycle] = useState<CompanyStrategyCycle | null>(null);
-  const [answers, setAnswers] = useState<CompanyStrategyAnswers | null>(null);
+  const [answers, setAnswers] = useState<CompanyStrategyAnswers | null>(
+    authenticated ? null : { ...EMPTY_COMPANY_STRATEGY_ANSWERS },
+  );
   const [openPillar, setOpenPillar] = useState<StrategyPillar | null>("alignment");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(authenticated);
   const [saveState, setSaveState] = useState<"idle" | "saving" | "error" | "conflict">("idle");
   const [message, setMessage] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -70,7 +79,10 @@ export default function CompanyStrategyPanel() {
     }
   }, []);
 
-  useEffect(() => { void load(); }, [load]);
+  useEffect(() => {
+    if (!authenticated) return;
+    void load();
+  }, [authenticated, load]);
 
   const flush = useCallback(async () => {
     const result = await saveQueueRef.current.drain(async ({ answers: target }) => {
@@ -146,6 +158,10 @@ export default function CompanyStrategyPanel() {
   }
 
   function changeAnswer(key: CompanyStrategyAnswerKey, value: string) {
+    if (!authenticated) {
+      onAuthenticationRequired?.();
+      return;
+    }
     if (!answers) return;
     const next = { ...answers, [key]: value };
     draftRef.current = next;
@@ -201,22 +217,29 @@ export default function CompanyStrategyPanel() {
   const hasConflicts = Object.keys(conflicts).length > 0;
   if (loading) return <p role="status" className="flex items-center gap-2 py-8 text-sm text-dema-muted"><LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />Chargement de la stratégie…</p>;
   if (error && !cycle) return <div role="alert" className="rounded-xl bg-red-50 p-4 text-sm text-red-700"><p>{error}</p><button type="button" onClick={() => void load()} className="mt-2 font-semibold underline">Réessayer</button></div>;
-  if (!cycle || !answers) return null;
+  if (!answers) return null;
 
   return (
     <div className="mx-auto max-w-3xl pb-12">
       <div className="flex items-start justify-between gap-4">
         <div><h1 className="text-2xl font-semibold text-dema-ink">Stratégie</h1><p className="mt-1 text-sm text-dema-muted">Quatre repères pour garder un cap clair.</p></div>
-        <button type="button" aria-label="Nouveau cycle" onClick={() => { setCycleError(null); setCycleDialogOpen(true); }} className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-dema-forest px-3 text-sm font-semibold text-white sm:px-4"><Plus className="h-4 w-4" aria-hidden="true" /><span className="hidden sm:inline">Nouveau cycle</span></button>
+        <button type="button" aria-label="Nouveau cycle" onClick={() => {
+          if (!authenticated) {
+            onAuthenticationRequired?.();
+            return;
+          }
+          setCycleError(null);
+          setCycleDialogOpen(true);
+        }} className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-dema-forest px-3 text-sm font-semibold text-white sm:px-4"><Plus className="h-4 w-4" aria-hidden="true" /><span className="hidden sm:inline">Nouveau cycle</span></button>
       </div>
       <div className="sr-only" role="status" aria-live="polite">{message}</div>
       {saveState === "error" ? <div role="alert" className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700"><p>{error}</p><button type="button" className="mt-1 font-semibold underline" onClick={() => void flush()}>Réessayer</button></div> : null}
       {hasConflicts ? <p className="mt-4 text-sm text-amber-800" role="status">Choisissez une version pour chaque réponse en conflit.</p> : null}
       <div className="mt-6 divide-y divide-dema-line">
-        {COMPANY_STRATEGY_PILLARS.map((pillar) => <CompanyStrategyPillar key={pillar.key} pillar={pillar} open={openPillar === pillar.key} answers={answers} conflicts={conflicts} onOpen={() => setOpenPillar((current) => (current === pillar.key ? null : pillar.key))} onAnswerChange={changeAnswer} onKeepLocal={(key) => resolveConflict(key, false)} onUseRemote={(key) => resolveConflict(key, true)} />)}
+        {COMPANY_STRATEGY_PILLARS.map((pillar) => <CompanyStrategyPillar key={pillar.key} pillar={pillar} open={openPillar === pillar.key} answers={answers} conflicts={conflicts} onOpen={() => setOpenPillar((current) => (current === pillar.key ? null : pillar.key))} onAnswerChange={changeAnswer} onKeepLocal={(key) => resolveConflict(key, false)} onUseRemote={(key) => resolveConflict(key, true)} readOnly={!authenticated} onWriteRequest={onAuthenticationRequired} />)}
       </div>
-      <CompanyStrategyHistory key={cycle.id} />
-      <CompanyStrategyCycleDialog open={cycleDialogOpen} creating={creatingCycle} error={cycleError} periodLabel={nextCycleLabel()} onClose={() => { if (!creatingCycle) setCycleDialogOpen(false); }} onConfirm={() => void createCycle()} />
+      {authenticated && cycle ? <CompanyStrategyHistory key={cycle.id} /> : null}
+      {authenticated ? <CompanyStrategyCycleDialog open={cycleDialogOpen} creating={creatingCycle} error={cycleError} periodLabel={nextCycleLabel()} onClose={() => { if (!creatingCycle) setCycleDialogOpen(false); }} onConfirm={() => void createCycle()} /> : null}
     </div>
   );
 }

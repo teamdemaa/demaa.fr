@@ -32,7 +32,9 @@ export default function CompanyPilotagePanel({
   figuresEntryRequest,
   onFiguresEntryRequestConsumed,
   onFiguresAuthenticationRequired,
+  onStrategyAuthenticationRequired,
   solutions,
+  strategyAuthenticated = true,
   localeCode = "fr",
 }: {
   available: boolean;
@@ -43,7 +45,9 @@ export default function CompanyPilotagePanel({
   figuresEntryRequest?: CompanyFiguresEntryRequest | null;
   onFiguresEntryRequestConsumed?: () => void;
   onFiguresAuthenticationRequired?: (period: CompanyMonth) => void;
+  onStrategyAuthenticationRequired?: () => void;
   solutions: ReactNode;
+  strategyAuthenticated?: boolean;
   localeCode?: "fr" | "en";
 }) {
   if (!available) {
@@ -93,7 +97,11 @@ export default function CompanyPilotagePanel({
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               {localeCode === "en" ? "Back to plan" : "Retour au plan"}
             </button>
-            <CompanyStrategyPanel />
+            <CompanyStrategyPanel
+              key={strategyAuthenticated ? "strategy-authenticated" : "strategy-guest"}
+              authenticated={strategyAuthenticated}
+              onAuthenticationRequired={onStrategyAuthenticationRequired}
+            />
           </div>
         : null}
     </section>
