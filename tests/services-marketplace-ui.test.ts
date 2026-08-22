@@ -213,6 +213,10 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).toContain("<details");
     expect(markup).toContain("<summary");
     expect(markup).not.toContain("<details open");
+    expect(markup).toContain('<details class="group">');
+    expect(markup).not.toContain(
+      'group rounded-[1.25rem] border border-dema-line bg-dema-paper',
+    );
     expect(markup).not.toContain("Catalogue Demaa");
     expect(markup).not.toContain("L’accompagnement utile, au même endroit");
     expect(markup).not.toContain("Le professionnel confirme son tarif et facture directement son intervention.");
@@ -234,6 +238,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(catalogSource).toContain("service.pricing.label");
     expect(catalogSource).toContain('service.delivery === "demaa"');
     expect(catalogSource).toContain('service.delivery === "third-party"');
+    expect(catalogSource).not.toContain("service.eyebrow");
     expect(catalogSource).toContain("<details");
     expect(catalogSource).toContain("<summary");
     expect(catalogSource).toContain("group-open:rotate-180");
