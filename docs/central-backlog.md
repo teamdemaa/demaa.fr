@@ -1712,11 +1712,14 @@ Statut : **validé pour implémentation ; Preview, fusion et Production soumises
 
 ##### Gates D-093
 
-- [ ] Vérifier prompt, schéma V4, scénarios, navigation legacy, authentification,
-  desktop, mobile, PWA, clavier, lecteur d'écran et absence de débordement.
-- [ ] Exécuter ESLint strict, TypeScript, tests ciblés, suite complète, build
-  Production et Preview manuelle.
-- [ ] Ne modifier ni le résolveur contextuel, ni les données D-091, ni une
+- [x] Vérifier prompt, schéma V4, scénarios déterministes, navigation legacy,
+  desktop, mobile, structure accessible et absence de débordement en local.
+- [ ] Recetter en Preview le vrai modèle, une session authentifiée, la PWA, le
+  clavier physique et un lecteur d'écran.
+- [x] Exécuter ESLint strict, TypeScript, tests ciblés, suite complète et build
+  Production local.
+- [ ] Effectuer la recette manuelle de la Preview déployée.
+- [x] Ne modifier ni le résolveur contextuel, ni les données D-091, ni une
   révision ou un pointeur Firebase.
 - [ ] Obtenir un GO explicite avant toute fusion déclenchant Production.
 
