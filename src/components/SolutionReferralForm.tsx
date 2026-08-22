@@ -1,17 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { LoaderCircle } from "lucide-react";
 import { type FormEvent, useRef, useState } from "react";
-import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
 import type { LeadAttributionPayload } from "@/lib/lead-attribution";
 import {
   clearLeadSubmissionKey,
   getLeadSubmissionKey,
 } from "@/lib/lead-submission-client";
-import { buildCustomerIntentReturnTo } from "@/lib/customer-space-redirect";
-import { useCustomerIdentity } from "@/lib/use-customer-identity";
 
 export type SolutionReferralFields = Readonly<{
   firstName: string;
@@ -123,11 +119,12 @@ export default function SolutionReferralForm({
   resourceSlug: string;
   systemSlug: string;
 }) {
-  const { email: authenticatedEmail, loading: identityLoading } =
-    useCustomerIdentity(initialEmail);
   const formRef = useRef<HTMLFormElement>(null);
   const submissionInFlightRef = useRef(false);
-  const [fields, setFields] = useState<SolutionReferralFields>(EMPTY_FIELDS);
+  const [fields, setFields] = useState<SolutionReferralFields>({
+    ...EMPTY_FIELDS,
+    email: initialEmail,
+  });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
@@ -139,9 +136,7 @@ export default function SolutionReferralForm({
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!authenticatedEmail) return;
-    const authenticatedFields = { ...fields, email: authenticatedEmail };
-    const nextErrors = validateSolutionReferralFields(authenticatedFields);
+    const nextErrors = validateSolutionReferralFields(fields);
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       setStatus("error");
@@ -159,7 +154,7 @@ export default function SolutionReferralForm({
 
     const flowKey = `solution-referral:${systemSlug}:${resourceSlug}`;
     try {
-      await submitSolutionReferral(buildSolutionReferralPayload(authenticatedFields, {
+      await submitSolutionReferral(buildSolutionReferralPayload(fields, {
         attribution: getLeadAttributionPayload(),
         idempotencyKey: getLeadSubmissionKey(flowKey),
         resourceSlug,
@@ -177,33 +172,6 @@ export default function SolutionReferralForm({
 
   const fieldClassName =
     "mt-2 min-h-11 w-full rounded-[0.9rem] border border-dema-line bg-dema-paper px-4 py-3 text-sm text-brand-blue outline-none transition placeholder:text-dema-muted/65 focus:border-dema-forest/40 focus:ring-2 focus:ring-dema-forest/15";
-
-  if (identityLoading) {
-    return (
-      <div className="mt-6 flex min-h-28 items-center justify-center text-sm text-dema-muted" role="status">
-        <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-        Vérification de votre accès…
-      </div>
-    );
-  }
-
-  if (!authenticatedEmail) {
-    return (
-      <div className="mt-6 rounded-[1rem] border border-dema-line bg-dema-sage/35 p-4 sm:p-5">
-        <p className="mb-4 text-sm leading-relaxed text-brand-blue">
-          Connectez-vous pour envoyer votre demande sans renseigner de nouveau votre adresse e-mail.
-        </p>
-        <CustomerSpaceAccessForm
-          choiceTitle="Connectez-vous pour envoyer"
-          returnTo={buildCustomerIntentReturnTo({
-            kind: "solution-referral",
-            resourceSlug,
-            systemSlug,
-          })}
-        />
-      </div>
-    );
-  }
 
   if (status === "success") {
     return (
@@ -237,6 +205,23 @@ export default function SolutionReferralForm({
           ) : null}
         </label>
       </div>
+
+      <label className="block text-sm font-medium text-brand-blue">
+        Adresse e-mail
+        <input
+          name="email"
+          type="email"
+          autoComplete="email"
+          maxLength={160}
+          value={fields.email}
+          onChange={(event) => updateField("email", event.target.value)}
+          aria-invalid={Boolean(errors.email)}
+          className={fieldClassName}
+        />
+        {errors.email ? (
+          <span className="mt-1.5 block text-xs text-red-700">{errors.email}</span>
+        ) : null}
+      </label>
 
       <label className="block text-sm font-medium text-brand-blue">
         Cabinet ou entreprise

@@ -6,7 +6,7 @@ import {
   normalizeText,
   readJsonBody,
 } from "@/lib/api-security";
-import { requireCurrentCustomerIdentity } from "@/lib/customer-space-session.server";
+import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
 import { resolveLeadContext } from "@/lib/lead-context";
 import { submitLeadRequest } from "@/lib/lead-notifications";
@@ -35,6 +35,7 @@ type ProviderProfileSubmissionBody = {
   company?: unknown;
   consent?: unknown;
   countries?: unknown;
+  email?: unknown;
   expertiseIds?: unknown;
   fullName?: unknown;
   idempotencyKey?: unknown;
@@ -100,10 +101,6 @@ async function handlePost(request: Request) {
   });
   if (limitedByIp) return limitedByIp;
 
-  const customer = await requireCurrentCustomerIdentity();
-  if (customer.response) return customer.response;
-  const email = customer.identity.email;
-
   const { data: body, response } = await readJsonBody<ProviderProfileSubmissionBody>(
     request,
     16 * 1024,
@@ -113,6 +110,7 @@ async function handlePost(request: Request) {
   if (normalizeText(body?.website, 200)) return successResponse();
 
   const fullName = normalizeText(body?.fullName, 140);
+  const email = normalizeEmail(normalizeText(body?.email, 160));
   const company = normalizeText(body?.company, 160);
   const countries = normalizeText(body?.countries, 300);
   const message = normalizeText(body?.message, 1600, { multiline: true });
@@ -123,7 +121,7 @@ async function handlePost(request: Request) {
 
   if (
     !fullName
-    || !email
+    || !isValidEmail(email)
     || !company
     || message.length < 20
     || body?.consent !== true

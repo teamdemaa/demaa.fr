@@ -20,6 +20,9 @@ describe("Opportunities direct-link access", () => {
     expect(sitemap).toContain("`${base}/opportunites`");
     expect(page).toContain("export default async function OpportunitiesPage");
     expect(page).toContain("<PublicOpportunitiesClient");
+    expect(page).toContain('initialEmail=""');
+    expect(page).not.toContain("CUSTOMER_SPACE_COOKIE");
+    expect(page).not.toContain("getIdentityFromCustomerSessionToken");
     expect(page).not.toContain("robots: { index: false, follow: true }");
     expect(await readSource("src/components/PublicOpportunitiesClient.tsx"))
       .toMatch(/\.get\(\s*"opportunity"/);

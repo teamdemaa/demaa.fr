@@ -14,7 +14,6 @@ import { parseSolutionReferralPayload } from "@/lib/service-solution-request-con
 import { getSolutionReferralDisclosure } from "@/lib/solution-referral-disclosures.server";
 import { getExpertiseReferralDisclosure } from "@/lib/solution-referral-disclosures.server";
 import { getExpertiseReferralContext } from "@/lib/expertise-solutions.server";
-import { requireCurrentCustomerIdentity } from "@/lib/customer-space-session.server";
 import {
   getPublishedSolutionPlacementsForSystem,
   getPublishedSolutionResourceBySlug,
@@ -39,9 +38,6 @@ export async function POST(request: Request) {
     const blockedOrigin = enforceSameOrigin(request);
     if (blockedOrigin) return blockedOrigin;
 
-    const customer = await requireCurrentCustomerIdentity();
-    if (customer.response) return customer.response;
-
     const limitedByIp = await enforceServiceRequestRateLimit(request, {
       limit: 8,
       scope: "ip",
@@ -57,10 +53,7 @@ export async function POST(request: Request) {
 
     let payload: ReturnType<typeof parseSolutionReferralPayload>;
     try {
-      payload = {
-        ...parseSolutionReferralPayload(data),
-        email: customer.identity.email,
-      };
+      payload = parseSolutionReferralPayload(data);
     } catch {
       return NextResponse.json(
         { error: "Les informations envoyées sont invalides." },

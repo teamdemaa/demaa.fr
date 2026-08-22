@@ -23,11 +23,12 @@ describe("Structure newsletter public contract", () => {
     expect(component).not.toContain("La lettre Demaa");
   });
 
-  it("resumes both Structure intents after authentication", () => {
+  it("keeps both Structure forms public with an explicit contact email", () => {
     expect(component).toContain('intent === "structure-problem"');
-    expect(component).toContain('intent !== "structure"');
     expect(component).toContain("setIsProblemOpen(true)");
-    expect(component).toContain("void subscribe()");
+    expect(component).toContain('id="structure-newsletter-email"');
+    expect(component).toContain('id="structure-contact-email"');
+    expect(component).not.toContain("CustomerSpaceAccessForm");
   });
 
   it("requires the versioned publication consent", () => {

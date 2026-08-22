@@ -276,7 +276,7 @@ export default function PublicOpportunitiesClient({
     void fetch("/api/opportunity-submissions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ draftToken }),
+      body: JSON.stringify({ draftToken, email: initialEmail }),
     }).then(async (response) => {
       const payload = await response.json().catch(() => null) as {
         error?: string;
