@@ -422,7 +422,7 @@ export default function GuestActionPlanExperience({
                 <div className="rounded-[1.45rem] border border-dema-line bg-dema-paper p-2 shadow-[0_14px_38px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">
                   <label htmlFor="guest-business-situation" className="sr-only">{uiCopy.situationLabel}</label>
                   <div className="relative">
-                    {!situation ? <div aria-hidden="true" className="pointer-events-none absolute inset-0 px-5 py-4 text-[0.7rem] font-light leading-relaxed text-brand-blue/28 sm:px-[1.125rem] sm:py-[1.125rem]">{animatedPlaceholder}</div> : null}
+                    {!situation ? <div aria-hidden="true" className="pointer-events-none absolute inset-0 px-5 py-4 text-[0.8rem] font-light leading-relaxed text-brand-blue/28 sm:px-[1.125rem] sm:py-[1.125rem]">{animatedPlaceholder}</div> : null}
                     <textarea
                       id="guest-business-situation"
                       value={situation}
