@@ -17,6 +17,14 @@ const generating = {
   expiresAt: access.expiresAt,
 };
 
+const failed = {
+  status: "failed",
+  generationId: access.generationId,
+  expiresAt: access.expiresAt,
+  canRetry: true,
+  error: "La génération a été interrompue. Réessayez.",
+};
+
 afterEach(() => vi.unstubAllGlobals());
 
 describe("guest action-plan browser client", () => {
@@ -70,5 +78,17 @@ describe("guest action-plan browser client", () => {
     }
     expect(fetchMock.mock.calls[0]?.[0]).toBe(`/api/guest/action-plans/${access.generationId}`);
     expect(fetchMock.mock.calls[1]?.[0]).toBe(`/api/guest/action-plans/${access.generationId}/generation`);
+  });
+
+  it("preserves a retryable failed state returned with a non-success status", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(
+      JSON.stringify(failed),
+      {
+        headers: { "Content-Type": "application/json" },
+        status: 502,
+      },
+    )));
+
+    await expect(readGuestActionPlan(access)).resolves.toEqual(failed);
   });
 });

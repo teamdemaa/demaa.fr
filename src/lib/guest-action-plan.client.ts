@@ -52,7 +52,9 @@ function isState(value: unknown): value is GuestGenerationState {
 
 async function readResponse(response: Response) {
   const payload = await response.json().catch(() => null) as unknown;
-  if (response.ok && isState(payload)) return payload;
+  if (isState(payload) && (response.ok || payload.status === "failed")) {
+    return payload;
+  }
   const error = payload && typeof payload === "object" && !Array.isArray(payload)
     && typeof Reflect.get(payload, "error") === "string"
     ? String(Reflect.get(payload, "error"))
