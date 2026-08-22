@@ -5,6 +5,13 @@
 - Date : 21 août 2026
 - Phase : livrée par les PR 169 à 171 au commit Production `6d35805f`
 
+> **Mise à jour D-093 / ADR 0019 :** l'ordre visuel devient
+> `Plan / Solutions / Chiffres`, Stratégie est temporairement masquée sans
+> suppression de données et les sept partenaires de confiance sont regroupés
+> dans un dépliant fermé par défaut mais consultable sans authentification.
+> Les valeurs techniques, URL, catalogues, prix, formulaires et placements
+> contextuels restent inchangés.
+
 ## Contexte
 
 La navigation applicative expose désormais `Services` comme destination

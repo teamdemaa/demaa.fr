@@ -23,6 +23,14 @@
 > générés. La nouvelle Stratégie D-084 est un espace manuel d'entreprise
 > séparé ; elle ne réactive ni ne recopie ces champs historiques.
 
+> **Mise à jour D-093 / ADR 0019 :** la promesse de présentation du point 1
+> devient « Qu’est-ce qui vous prend trop de temps aujourd’hui ? » Le champ
+> reste libre et accepte aussi les problèmes de marge, ventes, recrutement,
+> qualité, trésorerie ou organisation. Le prompt recherche d'abord les pertes
+> de temps, attentes, reprises et dépendances, puis simplifie avant toute
+> automatisation. Les contrats ActionPlan V4, `systemId`, authentification et
+> persistance restent inchangés.
+
 ## Contexte
 
 La homepage publique reproduit actuellement le hub des Systèmes. Demaa veut y

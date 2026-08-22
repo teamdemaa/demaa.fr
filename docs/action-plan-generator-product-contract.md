@@ -1,7 +1,7 @@
 # D-076 — Contrat produit du générateur de plan d'action
 
 - Statut : `validated`
-- Date de consolidation : 13 août 2026
+- Date de consolidation : 22 août 2026
 - Propriétaires de décision : utilisatrice + Master Demaa
 - Portée : entrée libre, génération IA V3, résultat, multi-plans,
   multi-systèmes, dictée, persistance, mesure d'usage et garde-fous
@@ -22,11 +22,16 @@ Les choix non validés restent indiqués `open` ou `deferred` et ne doivent pas
 
 ### Promesse
 
-> Qu’est-ce qui freine votre entreprise ?
+> Qu’est-ce qui vous prend trop de temps aujourd’hui ?
 
 Le produit aide un dirigeant à clarifier une situation réelle et à savoir quoi
 faire ensuite. Il ne doit devenir ni un questionnaire préalable, ni une étude
 théorique, ni un générateur de conseils génériques.
+
+La formulation privilégie les tâches répétitives, doubles saisies, attentes,
+validations, reprises et informations dispersées. Elle ne force pas une lecture
+« processus » lorsque le problème réel porte sur la marge, les ventes, le
+recrutement, la qualité, la trésorerie ou l'organisation.
 
 ### Cible de travail
 
@@ -49,7 +54,10 @@ problème, objectif et Système métier pertinent.
 
 ## Génération principale
 
-Le MVP utilise une seule opération de raisonnement principale :
+Le MVP utilise une seule opération de génération principale. L'appel de
+réparation déterministe déjà gouverné reste autorisé lorsque la première sortie
+échoue au schéma ou aux contrôles ; aucun appel autonome d'analyse, de matching
+ou d'évaluation n'est ajouté en Production :
 
 ```text
 texte libre final
@@ -136,6 +144,28 @@ Chaque action contient les éléments nécessaires à son exécution. Le message
 modèle prêt à l'emploi reste facultatif. Le nombre est adapté à la situation,
 entre trois et cinq en V4. Les lecteurs historiques continuent d'accepter
 jusqu'à sept actions pour ne pas invalider un ancien plan V1, V2 ou manuel.
+
+### Focalisation opérationnelle D-093
+
+Le prompt recherche d'abord les tâches et décisions qui consomment du temps,
+créent de l'attente, provoquent des reprises ou dépendent excessivement du
+dirigeant. Lorsqu'ils sont fournis, il tient compte de la fréquence, du volume,
+des personnes, des outils, des ressaisies, des validations, des erreurs et du
+résultat attendu.
+
+La réponse la plus simple est recherchée dans l'ordre : supprimer, simplifier,
+clarifier les responsabilités, standardiser ou documenter, déléguer, puis
+automatiser. Un processus confus est d'abord observé et clarifié. Une donnée
+manquante devient une première Action de mesure terrain plutôt qu'un chiffre ou
+un fait inventé.
+
+Le modèle n'invente et n'introduit aucune marque, logiciel, prestation ou nom
+de prestataire. Une marque explicitement citée par l'utilisateur peut rester
+un élément factuel du contexte, sans devenir automatiquement une
+recommandation. `channelOrTool` peut nommer un canal ou une capacité générique.
+
+Le plan contient trois ou quatre Actions par défaut. Une cinquième Action est
+acceptée seulement lorsqu'elle poursuit un résultat distinct et nécessaire.
 
 ### Stratégie définitivement séparée du Plan d'action
 
