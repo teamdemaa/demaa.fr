@@ -28,7 +28,8 @@ const ICONS: Record<CanonicalService["slug"], LucideIcon> = {
 
 const PARTNER_SERVICE_DISPLAY_ORDER: Partial<Record<CanonicalService["slug"], number>> = {
   "expert-comptable": 0,
-  "coach-business": 1,
+  "assistance-administrative": 1,
+  "coach-business": 2,
 };
 
 function getServiceCardPriceLabel(service: CanonicalService) {
@@ -127,8 +128,8 @@ export default function ServicesCatalog({
     .filter((service) => service.delivery === "third-party")
     .sort(
       (left, right) =>
-        (PARTNER_SERVICE_DISPLAY_ORDER[left.slug] ?? 2) -
-        (PARTNER_SERVICE_DISPLAY_ORDER[right.slug] ?? 2),
+        (PARTNER_SERVICE_DISPLAY_ORDER[left.slug] ?? 3) -
+        (PARTNER_SERVICE_DISPLAY_ORDER[right.slug] ?? 3),
     );
 
   return (
