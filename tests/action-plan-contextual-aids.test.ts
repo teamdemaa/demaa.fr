@@ -438,13 +438,15 @@ describe("action plan contextual aids", () => {
   it("ignores historical Service selections now that Services has its own destination", () => {
     const service = solutionSections
       .find(({ section }) => section === "services")
-      ?.placements[0];
+      ?.placements.find(({ resource }) =>
+        resource.resourceSlug === "assistance-administrative"
+      );
     expect(service).toBeDefined();
 
     const aids = buildActionPlanContextualAids({
       actions: [action({
-        title: "Confier la tenue comptable à un expert-comptable",
-        objective: "Trouver un professionnel pour prendre en charge la comptabilité.",
+        title: "Confier la gestion administrative",
+        objective: "Trouver une assistante pour classer et collecter les pièces.",
       })],
       selectedSolutionPlacementIds: new Set([service!.placementId]),
       resources,
@@ -657,11 +659,6 @@ describe("action plan contextual aids", () => {
 
   it.each([
     {
-      expectedSlug: "expert-comptable",
-      objective: "Faire appel à un professionnel pour le bilan et la liasse fiscale.",
-      title: "Confier la clôture comptable",
-    },
-    {
       expectedSlug: "formalites-entreprise",
       objective: "Trouver un prestataire pour préparer et déposer la modification des statuts.",
       title: "Déléguer les formalités d’entreprise",
@@ -714,6 +711,22 @@ describe("action plan contextual aids", () => {
       relationship: "suggested",
       resourceSlug: expectedSlug,
     });
+  });
+
+  it("never recommends a globally hidden service from a stale payload", () => {
+    const aids = buildActionPlanContextualAids({
+      actions: [action({
+        objective: "Faire appel à un professionnel pour le bilan et la liasse fiscale.",
+        title: "Confier la clôture comptable",
+      })],
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    expect(aids["action-1"]?.accompaniment).toBeNull();
+    expect(JSON.stringify(aids)).not.toContain("expert-comptable");
   });
 
   it("does not suggest the alternance service from a vague information request", () => {

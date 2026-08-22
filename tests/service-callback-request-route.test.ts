@@ -48,7 +48,7 @@ function request(
     headers: {
       "Content-Type": "application/json",
       Origin: origin,
-      Referer: "https://demaa.co/services/expert-comptable",
+      Referer: "https://demaa.co/services/assistance-administrative",
     },
     body: JSON.stringify(body),
   });
@@ -60,7 +60,7 @@ function validBody(overrides: Record<string, unknown> = {}) {
     company: "Atelier Martin",
     idempotencyKey: "service:callback:12345678",
     phone: "+33 6 12 34 56 78",
-    serviceSlug: "expert-comptable",
+    serviceSlug: "assistance-administrative",
     website: "",
     ...overrides,
   };
@@ -83,8 +83,8 @@ describe("service callback request route", () => {
     mocks.resolveLeadContext.mockResolvedValue({
       sectorLabel: null,
       sectorSlug: null,
-      source: "Services - Expert-comptable",
-      sourceUrl: "https://demaa.co/services/expert-comptable",
+      source: "Services - Assistante administrative",
+      sourceUrl: "https://demaa.co/services/assistance-administrative",
       systemName: null,
       systemSlug: null,
     });
@@ -132,7 +132,7 @@ describe("service callback request route", () => {
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
         { label: "Locale", value: "fr" },
         { label: "Marché", value: "fr-fr" },
-        { label: "Page source", value: "/services/expert-comptable" },
+        { label: "Page source", value: "/services/assistance-administrative" },
       ]),
       requestType: "service_callback_request",
     }));
@@ -213,7 +213,7 @@ describe("service callback request route", () => {
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
         { label: "Locale", value: "fr" },
         { label: "Marché", value: "fr-fr" },
-        { label: "Page source", value: "/services/expert-comptable" },
+        { label: "Page source", value: "/services/assistance-administrative" },
         {
           label: "Avantage accompagnement mensuel",
           value: "−12 % confirmé côté serveur sur les honoraires Demaa",
@@ -303,12 +303,12 @@ describe("service callback request route", () => {
         phone: "+33 6 12 34 56 78",
       },
       fields: expect.arrayContaining([
-        { label: "Service", value: "Expert-comptable" },
-        { label: "Slug du service", value: "expert-comptable" },
+        { label: "Service", value: "Assistante administrative" },
+        { label: "Slug du service", value: "assistance-administrative" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
         { label: "Locale", value: "fr" },
         { label: "Marché", value: "fr-fr" },
-        { label: "Page source", value: "/services/expert-comptable" },
+        { label: "Page source", value: "/services/assistance-administrative" },
       ]),
       idempotencyKey: expect.stringMatching(/^[a-f0-9]{64}$/),
       requestType: "service_callback_request",
@@ -318,6 +318,7 @@ describe("service callback request route", () => {
   it.each([
     "formalites-juridiques",
     "sous-traitance-formalites-juridiques",
+    "expert-comptable",
   ])("rejects a direct public callback for private recommendation %s", async (serviceSlug) => {
     const response = await POST(request(validBody({ serviceSlug })));
 
@@ -341,7 +342,6 @@ describe("service callback request route", () => {
     ["automatisation-processus", undefined],
     ["automatisation-processus", "application-metier-essentielle"],
     ["application-metier", "forfait-inconnu"],
-    ["expert-comptable", "automatisation-essentielle"],
   ])("rejects a missing or cross-service package for %s", async (serviceSlug, packageSlug) => {
     const response = await POST(request(validBody({ packageSlug, serviceSlug })));
 
@@ -366,8 +366,8 @@ describe("service callback request route", () => {
 
     expect(response.status).toBe(202);
     expect(mocks.resolveLeadContext).toHaveBeenCalledWith({
-      source: "Solutions - Expert-comptable",
-      sourceUrl: "https://demaa.co/services/expert-comptable",
+      source: "Solutions - Assistante administrative",
+      sourceUrl: "https://demaa.co/services/assistance-administrative",
       systemSlug: "cabinet-comptable",
     });
   });

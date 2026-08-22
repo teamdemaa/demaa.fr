@@ -12,6 +12,13 @@
 > Les valeurs techniques, URL, catalogues, prix, formulaires et placements
 > contextuels restent inchangés.
 
+> **Mise à jour du 22 août 2026 :** l'offre commerciale
+> `expert-comptable` est masquée. Son identité et sa définition restent
+> conservées pour l'historique, mais elle est exclue des cartes Services, des
+> recommandations contextuelles, du sitemap, de sa fiche publique et des
+> nouvelles demandes. L'annuaire `/annuaire-experts-comptables` et ses demandes
+> restent actifs et indépendants ; les anciennes URL de l'offre y redirigent.
+
 ## Contexte
 
 La navigation applicative expose désormais `Services` comme destination
@@ -41,8 +48,8 @@ par une simple bascule de visibilité.
    un plan au plus deux et un seul service peut être proposé par plan. Son clic
    ouvre directement la fiche dans la destination principale `Services`, jamais
    le rail contextuel désormais masqué.
-5. Les exclusions métier du catalogue canonique restent obligatoires : un
-   cabinet comptable ne reçoit pas Expert-comptable, les professions qui
+5. Les exclusions métier du catalogue canonique restent obligatoires. Le
+   service Expert-comptable est masqué globalement ; les professions qui
    réalisent les formalités ne les reçoivent pas, et les métiers du support
    administratif ne reçoivent pas Assistante administrative.
 6. La vue Solutions vise l'ordre `Outils / Ressources / Fournisseurs /
