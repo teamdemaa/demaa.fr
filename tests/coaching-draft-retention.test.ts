@@ -67,7 +67,20 @@ describe("coaching draft retention", () => {
       operator: "<=",
       value: "2026-08-13T10:00:00.000Z",
     });
-    expect(result).toEqual({ deleted: 0, operations: 14 });
+    for (const collection of [
+      "guest_action_plan_generations",
+      "guest_ai_daily_budgets",
+      "guest_ai_budget_reservations",
+    ]) {
+      expect(firestore.queries).toContainEqual({
+        collection,
+        field: "expires_at",
+        limit: 7,
+        operator: "<=",
+        value: "2026-08-13T10:00:00.000Z",
+      });
+    }
+    expect(result).toEqual({ deleted: 0, operations: 17 });
   });
 
   it("documents the temporary draft and its retention without naming its access mechanism", () => {
