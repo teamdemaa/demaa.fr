@@ -4,7 +4,8 @@
 - Statut : validée pour cadrage
 - Date : 22 août 2026
 - Phase : fondation technique réalisée ; cinq pools de recherche Outils
-  préparés ; validation métier, révision Firebase et publication non commencées
+  préparés ; prochaine priorité après observation D-094 ; validation métier,
+  révision Firebase et publication non commencées
 
 ## Contexte
 
@@ -76,10 +77,11 @@ concurrent.
 11. L'activation est atomique et distincte de l'audit. Elle exige une Preview,
     la parité Preview/Production, le contrôle du HTML accessible à Google et du
     JSON-LD, puis un GO PROD explicite.
-12. Les pages publiques `/systemes/[slug]` et leur récapitulatif affichent encore
-    Services dans Solutions. L'exécution devra les aligner sur la séparation
-    déjà livrée dans l'application, sans retirer Services du payload contextuel,
-    et vérifier tracking, SEO, JSON-LD et liens vers la destination canonique.
+12. Les pages publiques `/systemes/[slug]` et leur récapitulatif sont désormais
+    alignés sur l'application : Services est retiré des recommandations
+    visibles mais reste présent dans le payload contextuel. D-091 doit préserver
+    cette séparation et contrôler tracking, SEO, JSON-LD et liens vers la
+    destination canonique lors de chaque révision candidate.
 13. Les identifiants de placements déjà persistés dans les plans restent
     stables lorsque le rang éditorial change. Le rang est une propriété de
     présentation, pas l'identité. Tout nouveau placement D-091 reçoit un
@@ -133,8 +135,9 @@ doit pas recevoir automatiquement une liste homogène d'ATS.
 1. Geler un export de toutes les sources et définir leur autorité.
 2. Fermer le contrat de preuve et l'audit automatisé fondé sur la couverture
    des besoins, sans mutation.
-3. Aligner les pages Système publiques sur la séparation Services déjà livrée
-   dans l'application, tout en conservant le payload contextuel.
+3. Vérifier que la révision candidate préserve la séparation Services déjà
+   livrée dans l'application et les pages Système, tout en conservant le
+   payload contextuel.
 4. Expertiser les cinq pilotes avec relecture contradictoire.
 5. Recetter le read-model sur Preview, sans changer le pointeur actif.
 6. Généraliser par lots métier et traiter les cas ambigus manuellement.
