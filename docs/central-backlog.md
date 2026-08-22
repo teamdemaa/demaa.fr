@@ -22,9 +22,9 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
 ## État courant Production — 22 août 2026
 
-- `main` et `origin/main` pointent sur `cca1459a`, déployé en Production par la
-  PR 177. Les références `6d35805f`, `260ad7d`, `8020e04`, `ae5029d`, `a47d844` et
-  `f0b4d75` restent des checkpoints historiques ; elles ne sont plus
+- `main` et `origin/main` pointent sur `dbb8b723`, déployé en Production par la
+  PR 182. Les références `6d35805f`, `260ad7d`, `8020e04`, `ae5029d`, `a47d844`,
+  `f0b4d75` et `cca1459a` restent des checkpoints historiques ; elles ne sont plus
   présentées comme la tête courante.
 - Les PR 110 à 118 ont été fusionnées séparément et vérifiées en Production :
   fiabilité des plans, sécurité de l'administration Coaching, consentement aux
@@ -52,11 +52,15 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
   Solutions enrichi, puis Services séparé entre deux accompagnements Demaa et
   des partenaires de confiance. La navigation principale est désormais
   `Plan d'action / Académie / Services / Opportunités`.
-- D-093 est validé pour implémentation, sans GO Production implicite. Il
-  recentre l'entrée sur les opérations qui prennent du temps, aligne le prompt
-  IA, vise `Plan / Solutions / Chiffres`, masque réversiblement Stratégie et
-  replie les partenaires Services. D-091, Firebase et l'anglais restent
-  hors de ce changement.
+- D-093 est livré par la PR 181 : entrée opérationnelle, prompt IA, ordre
+  `Plan / Solutions / Chiffres`, Stratégie masquée et partenaires Services
+  repliés. La PR 182 ajoute le service gratuit `Recruter un alternant` en
+  réutilisant le parcours Services existant.
+- D-094 est la cible validée suivante, encore absente de Production : produit
+  public sans compte, génération invitée durable, livraison du plan et
+  Diagnostic par e-mail, session Team Demaa indépendante et retrait de
+  Chiffres/Stratégie/chat du parcours public. Aucun compte ou donnée de test ne
+  sera supprimé sans inventaire et autorisation destructive séparée.
 
 ## Lecture canonique du backlog
 
@@ -79,6 +83,12 @@ d'authentification ou d'autres chantiers déjà livrés ou supersédés.
 ## D-085 — Produit international commun — Preview partielle en pause
 
 Référence : [ADR 0014](decisions/0014-shared-international-product-and-opportunities-access.md).
+
+**Pause renforcée par D-094 :** les cases ci-dessous décrivent le prototype
+Preview existant et la doctrine internationale, pas une cible exécutable. La
+reprise devra repartir du produit public sans compte, sans Mes plans, Pilotage
+ni conversation client, et faire l'objet d'un nouvel audit/ADR. Ne pas rebaser,
+fusionner ou activer les PR anglaises pendant D-094.
 
 D-085 supersède les anciens cadrages « English Beta = Action Plan uniquement »,
 « Solutions et Academy après la bêta », « Échanger absent de l'anglais » et
@@ -1588,7 +1598,8 @@ Référence : [ADR 0016](decisions/0016-plan-services-and-solutions-ecosystem.md
 
 Référence : [ADR 0017](decisions/0017-curated-tools-per-system.md).
 
-Statut : **fondation technique réalisée, validation éditoriale non commencée**.
+Statut : **fondation technique réalisée, validation éditoriale non commencée ;
+exécution runtime mise en attente pendant la stabilisation D-094**.
 D-091 consolide et supersède D-068 à D-070 comme contrat d'exécution. Les gates
 pilote et final, la séparation publique de Services et la compatibilité des
 identifiants sont en place ; aucune révision Firebase candidate ou active n'a
@@ -1664,8 +1675,8 @@ pointeur Firebase reste une opération distincte.
 Référence :
 [ADR 0019](decisions/0019-operational-entry-and-workspace-focus.md).
 
-Statut : **validé pour implémentation ; Preview, fusion et Production soumises
-à leurs gates propres**.
+Statut : **livré en Production par la PR 181 ; certains parcours sont désormais
+supersédés par D-094**.
 
 ##### Lot 1 — Décision et documentation
 
@@ -1740,8 +1751,89 @@ Statut : **validé pour implémentation ; Preview, fusion et Production soumises
 - [x] Conserver les coûts du contrat d'alternance, la décision d'embauche et la
   gestion contractuelle hors du périmètre gratuit annoncé.
 
-État : **implémentation préparée sur une branche isolée empilée sur D-093 ; sa
-fusion attend le réalignement sur le commit D-093 effectivement fusionné**.
+État : **livré en Production par la PR 182 au commit `dbb8b723`**.
+
+#### D-094 — Produit public sans compte et administration Team Demaa
+
+Références :
+[ADR 0020](decisions/0020-public-guest-product-and-team-admin.md) et
+[plan d'exécution](governance/d094-public-guest-product-execution-plan.md), avec
+[inventaire runtime](governance/d094-runtime-inventory.md).
+
+Statut : **décision validée ; préparation par PRs autonomes autorisée ; aucune
+fusion, activation Production ou suppression de données sans GO explicite**.
+
+##### Lot 0 — Documentation et assainissement
+
+- [x] Enregistrer le parcours public `situation → génération → plan → e-mail ou
+  Diagnostic` sans compte dirigeant.
+- [x] Séparer explicitement Firebase Auth Team Demaa de l'identité client
+  historique.
+- [x] Documenter la sortie de Chiffres et Stratégie de Demaa sans suppression
+  prématurée du runtime ou des données.
+- [x] Versionner le handover The Done Studio en statut PAUSE.
+- [x] Figer l'ordre des PR, les gates et les collisions avec D-091 et l'anglais.
+
+##### Lot 1 — Authentification Team indépendante
+
+- [ ] Créer une route de connexion et un cookie admin distincts.
+- [ ] Vérifier Firebase puis l'allowlist admin avant toute session.
+- [ ] Garantir qu'une connexion admin ne crée ni entreprise ni appartenance.
+- [ ] Appliquer le DAL admin aux pages et APIs ; tester expiration, logout,
+  identité non autorisée et cookie falsifié.
+
+##### Lot 2 — Génération invitée durable
+
+- [ ] Créer un stockage temporaire dédié avec secret opaque haché et TTL 24 h.
+- [ ] Réutiliser ActionPlan V4, idempotence, lease, reprise, validation,
+  réparation et ledger sans UID/company.
+- [ ] Ajouter rate limit par IP de confiance, budget IA quotidien global,
+  circuit breaker et comportement fail-closed.
+- [ ] Livrer derrière `DEMAA_GUEST_PRODUCT_ENABLED=false` par défaut.
+
+##### Lot 3 — E-mail du plan et Diagnostic
+
+- [ ] Envoyer le plan complet par e-mail transactionnel sans inscription
+  marketing implicite.
+- [ ] Créer un Diagnostic ponctuel avec e-mail obligatoire, téléphone
+  facultatif et instantané du plan/situation.
+- [ ] Notifier la Team, exposer détail/statut dans l'admin et répondre par
+  e-mail, sans conversation client.
+
+##### Lot 4 — Formulaires publics et administration
+
+- [ ] Convertir les formulaires dirigeants encore liés artificiellement à
+  l'UID ; retirer les doublons conversationnels.
+- [ ] Agréger les collections existantes par adaptateurs, sans migration
+  aveugle vers une collection unique.
+- [ ] Ajouter pagination, filtres, source, détail, statut et état de livraison.
+- [ ] Conserver Opportunités spécialisée et vérifier manuellement l'avantage
+  mensuel de 12 % sans UID client.
+
+##### Lot 5 — Bascule UI publique
+
+- [ ] Connecter l'accueil à la génération invitée et afficher le plan dans la
+  session temporaire.
+- [ ] Retirer Connexion, Profil, Mes plans, redirection vers le dernier plan et
+  Diagnostic conversationnel du parcours public.
+- [ ] Masquer Chiffres et Stratégie ; préserver les anciens lecteurs pendant
+  la période de rollback.
+- [ ] Traiter les anciennes routes sans fuite et conserver Plans personnalisés
+  hors indexation.
+
+##### Lots 6 et 7 — Recette, activation et nettoyage
+
+- [ ] Exécuter tests ciblés, `npm run check`, build, E2E local/Preview,
+  génération réelle bornée, e-mail, admin, mobile/PWA et accessibilité.
+- [ ] Activer progressivement après GO Production et observer 24–48 heures.
+- [ ] Inventorier exactement les comptes et données de test ; demander une
+  autorisation destructive séparée avant suppression.
+- [ ] Retirer le code historique uniquement après stabilité et fin du rollback.
+
+Frontières : D-091 peut continuer ses recherches éditoriales hors registre
+actif, mais ne modifie pas les surfaces D-094. D-085 et les PR anglaises restent
+en pause. The Done Studio ne démarre pas sans GO et ne partage aucune collection
+Demaa.
 
 #### D-083 — Solutions publiques simples et accompagnement progressif — historique
 
