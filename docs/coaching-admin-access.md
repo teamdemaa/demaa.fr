@@ -37,6 +37,13 @@ et écritures sont privées, non mises en cache et limitées avant
 la vérification de session. Les écritures exigent en plus une origine Demaa
 valide.
 
+Pour une recette sur un alias Vercel Preview stable, le nom d'hôte doit être
+déclaré à la fois dans les domaines Firebase Preview autorisés, dans
+`NEXT_PUBLIC_FIREBASE_AUTHORIZED_DOMAINS` et dans la liste serveur fermée
+`DEMAA_PREVIEW_HOSTS`. Cette dernière n'est prise en compte que lorsque
+`VERCEL_ENV=preview` ; elle n'autorise jamais globalement les domaines
+`*.vercel.app`.
+
 Recette du 20 août 2026 : les trois pages ont été ouvertes en Production avec
 une session Google autorisée. `DEMAA_ADMIN_EMAILS` est configurée dans Vercel
 Production et Preview ; `DEMAA_ADMIN_UIDS` doit être privilégiée dès que l'UID
