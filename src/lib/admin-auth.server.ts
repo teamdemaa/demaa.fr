@@ -3,10 +3,17 @@ import "server-only";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
-  CUSTOMER_SPACE_COOKIE,
+  getCustomerCookieOptions,
   getIdentityFromCustomerSessionToken,
   type CustomerSessionIdentity,
 } from "@/lib/customer-space-auth";
+
+export const ADMIN_SESSION_COOKIE = "demaa_admin_session";
+export const ADMIN_SESSION_TTL_MS = 12 * 60 * 60 * 1000;
+
+export function getAdminCookieOptions(maxAge = ADMIN_SESSION_TTL_MS / 1000) {
+  return getCustomerCookieOptions(maxAge);
+}
 
 function getAdminEmails() {
   return (process.env.DEMAA_ADMIN_EMAILS ?? "")
@@ -37,7 +44,7 @@ export async function getCurrentAdminIdentity(): Promise<CustomerSessionIdentity
   if (getAdminUids().length === 0 && getAdminEmails().length === 0) return null;
 
   const cookieStore = await cookies();
-  const sessionToken = cookieStore.get(CUSTOMER_SPACE_COOKIE)?.value || null;
+  const sessionToken = cookieStore.get(ADMIN_SESSION_COOKIE)?.value || null;
   const identity = await getIdentityFromCustomerSessionToken(sessionToken);
   return isAdminIdentity(identity) ? identity : null;
 }
@@ -45,7 +52,7 @@ export async function getCurrentAdminIdentity(): Promise<CustomerSessionIdentity
 export async function requireAdminIdentity(returnPath: string) {
   const identity = await getCurrentAdminIdentity();
   if (!identity) {
-    redirect(`/connexion?returnTo=${encodeURIComponent(returnPath)}`);
+    redirect(`/admin/connexion?returnTo=${encodeURIComponent(returnPath)}`);
   }
   return identity;
 }

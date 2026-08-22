@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { LoaderCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { exchangeFirebaseIdTokenForAdminSession } from "@/lib/admin-auth-session.client";
 import { exchangeFirebaseIdTokenForSession } from "@/lib/customer-auth-session.client";
 import {
   consumeGoogleRedirectAndGetIdToken,
@@ -11,14 +12,15 @@ import {
 } from "@/lib/firebase-client-auth";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 
-const GOOGLE_CALLBACK_MARKER = "demaa:google-callback:v2";
+const CUSTOMER_GOOGLE_CALLBACK_MARKER = "demaa:google-callback:v2";
+const ADMIN_GOOGLE_CALLBACK_MARKER = "demaa:admin-google-callback:v1";
 const GOOGLE_CALLBACK_TTL_MS = 10 * 60 * 1_000;
 
 type Marker = { returnTo: string; startedAt: number };
 
-function readMarker(): Marker | null {
+function readMarker(markerKey: string): Marker | null {
   try {
-    const raw = window.sessionStorage.getItem(GOOGLE_CALLBACK_MARKER);
+    const raw = window.sessionStorage.getItem(markerKey);
     if (!raw) return null;
     const value = JSON.parse(raw) as Partial<Marker>;
     if (
@@ -26,7 +28,7 @@ function readMarker(): Marker | null {
       || typeof value.startedAt !== "number"
       || Date.now() - value.startedAt > GOOGLE_CALLBACK_TTL_MS
     ) {
-      window.sessionStorage.removeItem(GOOGLE_CALLBACK_MARKER);
+      window.sessionStorage.removeItem(markerKey);
       return null;
     }
     return value as Marker;
@@ -35,18 +37,18 @@ function readMarker(): Marker | null {
   }
 }
 
-function clearMarker() {
+function clearMarker(markerKey: string) {
   try {
-    window.sessionStorage.removeItem(GOOGLE_CALLBACK_MARKER);
+    window.sessionStorage.removeItem(markerKey);
   } catch {
     // The callback also works without sessionStorage once Firebase returns.
   }
 }
 
-function writeMarker(returnTo: string) {
+function writeMarker(markerKey: string, returnTo: string) {
   try {
     window.sessionStorage.setItem(
-      GOOGLE_CALLBACK_MARKER,
+      markerKey,
       JSON.stringify({ returnTo, startedAt: Date.now() } satisfies Marker),
     );
   } catch {
@@ -101,14 +103,19 @@ function friendlyGoogleError(error: unknown, localeCode: InterfaceLocaleCode) {
 }
 
 export default function GoogleAuthCallbackClient({
+  accessKind = "customer",
   localeCode,
   returnTo,
 }: {
+  accessKind?: "admin" | "customer";
   localeCode: InterfaceLocaleCode;
   returnTo: string;
 }) {
   const hasRun = useRef(false);
   const [error, setError] = useState<string | null>(null);
+  const markerKey = accessKind === "admin"
+    ? ADMIN_GOOGLE_CALLBACK_MARKER
+    : CUSTOMER_GOOGLE_CALLBACK_MARKER;
 
   useEffect(() => {
     if (hasRun.current) return;
@@ -123,31 +130,33 @@ export default function GoogleAuthCallbackClient({
         );
         if (result) {
           const session = await withTimeout(
-            exchangeFirebaseIdTokenForSession({
+            (accessKind === "admin"
+              ? exchangeFirebaseIdTokenForAdminSession
+              : exchangeFirebaseIdTokenForSession)({
               idToken: result.idToken,
               returnTo,
             }),
             15_000,
             localeCode,
           );
-          clearMarker();
+          clearMarker(markerKey);
           await finishGoogleRedirect(localeCode);
           window.location.replace(session.redirectTo);
           return;
         }
 
-        const marker = readMarker();
+        const marker = readMarker(markerKey);
         if (marker?.returnTo === returnTo) {
-          clearMarker();
+          clearMarker(markerKey);
           throw new Error(localeCode === "en"
             ? "Google sign-in was not completed. Try again."
             : "La connexion Google n’a pas été finalisée. Réessayez.");
         }
 
-        writeMarker(returnTo);
+        writeMarker(markerKey, returnTo);
         await startGoogleRedirect(localeCode);
       } catch (callbackError) {
-        clearMarker();
+        clearMarker(markerKey);
         await finishGoogleRedirect(localeCode).catch(() => undefined);
         console.error(
           "[google-auth-callback] flow failed",
@@ -156,15 +165,15 @@ export default function GoogleAuthCallbackClient({
         setError(friendlyGoogleError(callbackError, localeCode));
       }
     })();
-  }, [localeCode, returnTo]);
+  }, [accessKind, localeCode, markerKey, returnTo]);
 
   async function retry() {
     setError(null);
-    writeMarker(returnTo);
+    writeMarker(markerKey, returnTo);
     try {
       await startGoogleRedirect(localeCode);
     } catch (retryError) {
-      clearMarker();
+      clearMarker(markerKey);
       setError(friendlyGoogleError(retryError, localeCode));
     }
   }
@@ -186,7 +195,7 @@ export default function GoogleAuthCallbackClient({
               {localeCode === "en" ? "Try again with Google" : "Réessayer avec Google"}
             </button>
             <Link
-              href={`/connexion?returnTo=${encodeURIComponent(returnTo)}`}
+              href={`${accessKind === "admin" ? "/admin/connexion" : "/connexion"}?returnTo=${encodeURIComponent(returnTo)}`}
               className="mt-4 inline-flex min-h-10 items-center text-sm text-dema-gray underline-offset-4 hover:underline"
             >
               {localeCode === "en" ? "Continue with my email" : "Continuer avec mon e-mail"}

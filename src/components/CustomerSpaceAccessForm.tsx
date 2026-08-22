@@ -4,6 +4,10 @@ import { useEffect, useId, useState } from "react";
 import { ArrowLeft, KeyRound, LoaderCircle, Mail } from "lucide-react";
 import GoogleCustomerSignInButton from "@/components/GoogleCustomerSignInButton";
 import {
+  AdminSessionExchangeError,
+  exchangeFirebaseIdTokenForAdminSession,
+} from "@/lib/admin-auth-session.client";
+import {
   CustomerSessionExchangeError,
   exchangeFirebaseIdTokenForSession,
 } from "@/lib/customer-auth-session.client";
@@ -63,6 +67,7 @@ function getFirebaseAuthErrorCode(error: unknown) {
 }
 
 export default function CustomerSpaceAccessForm({
+  accessKind = "customer",
   choiceTitle = "Accédez à votre espace",
   draft,
   initialMode = "signin",
@@ -71,6 +76,7 @@ export default function CustomerSpaceAccessForm({
   returnTo,
   localeCode = "fr",
 }: {
+  accessKind?: "admin" | "customer";
   choiceTitle?: string;
   draft?: CustomerSpaceAccessDraft;
   initialMode?: AccessMode;
@@ -94,6 +100,7 @@ export default function CustomerSpaceAccessForm({
   const emailId = useId();
   const passwordId = useId();
   const [googleEnabled, setGoogleEnabled] = useState(false);
+  const accountCreationAllowed = accessKind === "customer";
 
   useEffect(() => {
     setGoogleEnabled(
@@ -124,7 +131,7 @@ export default function CustomerSpaceAccessForm({
       setError(localeCode === "en" ? "Enter your password." : "Indiquez votre mot de passe.");
       return;
     }
-    if (mode === "create" && password.length < 8) {
+    if (accountCreationAllowed && mode === "create" && password.length < 8) {
       setError(localeCode === "en" ? "Choose a password with at least 8 characters." : "Choisissez un mot de passe d’au moins 8 caractères.");
       return;
     }
@@ -133,10 +140,13 @@ export default function CustomerSpaceAccessForm({
 
     try {
       const returnLocaleCode = getReturnToInterfaceLocale(returnTo || "/");
-      const authResult = mode === "create"
+      const creatingAccount = accountCreationAllowed && mode === "create";
+      const authResult = creatingAccount
         ? await createPasswordAccountAndGetIdToken(normalizedEmail, password, returnLocaleCode)
         : await signInWithPasswordAndGetIdToken(normalizedEmail, password, returnLocaleCode);
-      const result = await exchangeFirebaseIdTokenForSession({
+      const result = await (accessKind === "admin"
+        ? exchangeFirebaseIdTokenForAdminSession
+        : exchangeFirebaseIdTokenForSession)({
         idToken: authResult.idToken,
         returnTo: returnTo || "/",
       });
@@ -145,7 +155,8 @@ export default function CustomerSpaceAccessForm({
     } catch (submitError) {
       const firebaseCode = getFirebaseAuthErrorCode(submitError);
       if (
-        mode === "create"
+        accountCreationAllowed
+        && mode === "create"
         && (
           firebaseCode.includes("email-already-in-use")
           || (submitError instanceof CustomerSessionExchangeError && submitError.status === 503)
@@ -161,7 +172,11 @@ export default function CustomerSpaceAccessForm({
         );
         return;
       }
-      setError(getFriendlyAuthError(submitError, localeCode));
+      if (submitError instanceof AdminSessionExchangeError) {
+        setError(submitError.message);
+      } else {
+        setError(getFriendlyAuthError(submitError, localeCode));
+      }
     } finally {
       setIsSending(false);
     }
@@ -182,6 +197,7 @@ export default function CustomerSpaceAccessForm({
         normalizedEmail,
         getReturnToInterfaceLocale(target),
         target,
+        accessKind === "admin" ? "/admin/connexion" : "/connexion",
       );
       setNotice(localeCode === "en"
         ? "If an account matches this address, the instructions have been sent."
@@ -218,7 +234,7 @@ export default function CustomerSpaceAccessForm({
       ? choiceTitle
       : progressiveStep === "email"
         ? localeCode === "en" ? "Your email address" : "Votre adresse e-mail"
-        : mode === "create"
+        : accountCreationAllowed && mode === "create"
           ? localeCode === "en" ? "Create your access" : "Créez votre accès"
           : localeCode === "en" ? "Welcome back" : "Bon retour";
 
@@ -258,6 +274,7 @@ export default function CustomerSpaceAccessForm({
           <div className="space-y-3">
             {googleEnabled ? (
               <GoogleCustomerSignInButton
+                accessKind={accessKind}
                 large
                 onAuthenticated={onAuthenticated}
                 onError={setError}
@@ -327,13 +344,13 @@ export default function CustomerSpaceAccessForm({
                 <input
                   id={passwordId}
                   type="password"
-                  autoComplete={mode === "create" ? "new-password" : "current-password"}
+                  autoComplete={accountCreationAllowed && mode === "create" ? "new-password" : "current-password"}
                   autoFocus
-                  minLength={mode === "create" ? 8 : undefined}
+                  minLength={accountCreationAllowed && mode === "create" ? 8 : undefined}
                   required
                   value={password}
                   onChange={(event) => updateDraft({ password: event.target.value })}
-                  placeholder={mode === "create"
+                  placeholder={accountCreationAllowed && mode === "create"
                     ? localeCode === "en" ? "Choose a password" : "Choisissez un mot de passe"
                     : localeCode === "en" ? "Your password" : "Votre mot de passe"}
                   className="min-h-[54px] w-full rounded-full border border-dema-line bg-dema-paper py-3 pl-10 pr-4 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/35 focus:border-dema-forest/30 focus:ring-2 focus:ring-dema-forest/10"
@@ -360,11 +377,11 @@ export default function CustomerSpaceAccessForm({
               {isSending ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" /> : null}
               {isSending
                 ? localeCode === "en" ? "Signing in…" : "Connexion…"
-                : mode === "create"
+                : accountCreationAllowed && mode === "create"
                   ? localeCode === "en" ? "Create my access" : "Créer mon accès"
                   : localeCode === "en" ? "Sign in" : "Se connecter"}
             </button>
-            <p className="text-center text-xs text-dema-muted">
+            {accountCreationAllowed ? <p className="text-center text-xs text-dema-muted">
               {mode === "create"
                 ? localeCode === "en" ? "Already have an account?" : "Vous avez déjà un compte ?"
                 : localeCode === "en" ? "Don’t have an account yet?" : "Vous n’avez pas encore de compte ?"}{" "}
@@ -380,7 +397,7 @@ export default function CustomerSpaceAccessForm({
                   ? localeCode === "en" ? "Sign in" : "Se connecter"
                   : localeCode === "en" ? "Create my access" : "Créer mon accès"}
               </button>
-            </p>
+            </p> : null}
           </form>
         )}
       </div>
