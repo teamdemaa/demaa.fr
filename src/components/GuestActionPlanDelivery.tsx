@@ -144,7 +144,7 @@ export default function GuestActionPlanDelivery({ access }: { access: GuestAcces
               <input name="phone" type="tel" autoComplete="tel" className="demaa-input mt-2" />
             </label>
             <label className="block text-sm text-brand-blue">
-              Précision <span className="text-dema-muted">(facultatif)</span>
+              Comment pouvons-nous vous aider ?
               <textarea name="message" rows={3} maxLength={2_000} className="demaa-textarea mt-2" />
             </label>
             <label className="flex items-start gap-2 text-xs leading-relaxed text-dema-muted">
