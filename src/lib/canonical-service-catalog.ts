@@ -1,5 +1,9 @@
 import "server-only";
 
+import {
+  HIDDEN_CANONICAL_SERVICE_SLUGS,
+  isCanonicalServicePublic,
+} from "@/lib/canonical-service-visibility";
 import { deepFreeze } from "@/lib/registry-contract-utils";
 
 export const CANONICAL_SERVICE_SLUGS = [
@@ -16,6 +20,8 @@ export const CANONICAL_SERVICE_SLUGS = [
 ] as const;
 
 export type CanonicalServiceSlug = (typeof CANONICAL_SERVICE_SLUGS)[number];
+
+export { HIDDEN_CANONICAL_SERVICE_SLUGS };
 
 export const CANONICAL_SERVICE_PACKAGE_SLUGS = [
   "automatisation-essentielle",
@@ -233,11 +239,26 @@ const canonicalServiceDefinitions = deepFreeze([
   },
 ] satisfies readonly CanonicalService[]);
 
-const canonicalServices = deepFreeze(CANONICAL_SERVICE_SLUGS.map((slug) => {
+const canonicalServiceRecords = deepFreeze(CANONICAL_SERVICE_SLUGS.map((slug) => {
   const service = canonicalServiceDefinitions.find((definition) => definition.slug === slug);
   if (!service) throw new Error(`Missing canonical service definition: ${slug}`);
   return service;
 }));
+
+const canonicalServices = deepFreeze(
+  canonicalServiceRecords.filter(
+    (service) => isCanonicalServicePublic(service.slug),
+  ),
+);
+
+export function getCanonicalServiceRecords(): readonly CanonicalService[] {
+  return canonicalServiceRecords;
+}
+
+export function getCanonicalServiceRecordBySlug(slug: unknown): CanonicalService | null {
+  if (typeof slug !== "string") return null;
+  return canonicalServiceRecords.find((service) => service.slug === slug) ?? null;
+}
 
 export function getCanonicalServices(): readonly CanonicalService[] {
   return canonicalServices;

@@ -15,7 +15,10 @@ import {
 import { generateStaticParams } from "@/app/(marketing)/services/[slug]/page";
 import {
   CANONICAL_SERVICE_SLUGS,
+  HIDDEN_CANONICAL_SERVICE_SLUGS,
   getCanonicalServiceBySlug,
+  getCanonicalServiceRecordBySlug,
+  getCanonicalServiceRecords,
   getCanonicalServices,
 } from "@/lib/canonical-service-catalog";
 
@@ -24,15 +27,18 @@ async function readSource(path: string) {
 }
 
 describe("canonical Accompagnement catalog", () => {
-  it("publishes exactly the ten approved offers from one immutable source", () => {
+  it("keeps ten canonical records and publishes only the nine visible offers", () => {
     const services = getCanonicalServices();
 
-    expect(services.map((service) => service.slug)).toEqual(CANONICAL_SERVICE_SLUGS);
+    expect(getCanonicalServiceRecords().map((service) => service.slug))
+      .toEqual(CANONICAL_SERVICE_SLUGS);
+    expect(HIDDEN_CANONICAL_SERVICE_SLUGS.every((slug) =>
+      CANONICAL_SERVICE_SLUGS.includes(slug)
+    )).toBe(true);
     expect(services.map((service) => service.name)).toEqual([
       "Automatisation des processus et IA",
       "Application métier",
       "Coach business",
-      "Expert-comptable",
       "Assistante administrative",
       "Formalités d’entreprise",
       "Gestion des réseaux sociaux",
@@ -42,9 +48,12 @@ describe("canonical Accompagnement catalog", () => {
     ]);
     expect(generateStaticParams()).toEqual(
       CANONICAL_SERVICE_SLUGS
-        .filter((slug) => slug !== "application-metier")
+        .filter((slug) => !["application-metier", "expert-comptable"].includes(slug))
         .map((slug) => ({ slug })),
     );
+    expect(getCanonicalServiceBySlug("expert-comptable")).toBeNull();
+    expect(getCanonicalServiceRecordBySlug("expert-comptable")?.name)
+      .toBe("Expert-comptable");
     expect(Object.isFrozen(services)).toBe(true);
     expect(Object.isFrozen(services[0].included)).toBe(true);
     expect(getCanonicalServiceBySlug("ancienne-offre")).toBeNull();
@@ -71,8 +80,8 @@ describe("canonical Accompagnement catalog", () => {
     expect(getCanonicalServiceBySlug("assistance-administrative")?.pricing?.note).toContain("25 € HT");
     expect(getCanonicalServiceBySlug("coach-business")?.monthlyAccompanimentDiscountEligible).toBe(false);
     expect(getCanonicalServiceBySlug("automatisation-processus")?.monthlyAccompanimentDiscountEligible).toBe(true);
-    expect(getCanonicalServiceBySlug("expert-comptable")?.monthlyAccompanimentDiscountEligible).toBe(false);
-    expect(getCanonicalServiceBySlug("expert-comptable")?.summary).toContain("inscrit à l’Ordre");
+    expect(getCanonicalServiceRecordBySlug("expert-comptable")?.monthlyAccompanimentDiscountEligible).toBe(false);
+    expect(getCanonicalServiceRecordBySlug("expert-comptable")?.summary).toContain("inscrit à l’Ordre");
     expect(getCanonicalServiceBySlug("formalites-entreprise")).toMatchObject({
       delivery: "third-party",
       monthlyAccompanimentDiscountEligible: false,
@@ -164,8 +173,8 @@ describe("canonical Accompagnement catalog", () => {
     ]);
   });
 
-  it("publishes the validated accounting price reference", () => {
-    expect(getCanonicalServiceBySlug("expert-comptable")?.pricing).toMatchObject({
+  it("retains the hidden accounting price only in the historical record", () => {
+    expect(getCanonicalServiceRecordBySlug("expert-comptable")?.pricing).toMatchObject({
       amountMinor: 25000,
       heading: "Honoraires du cabinet",
       label: "À partir de 250 € HT / mois",
@@ -173,7 +182,7 @@ describe("canonical Accompagnement catalog", () => {
     });
   });
 
-  it("renders two direct Demaa services followed by eight trusted-partner services", async () => {
+  it("renders two direct Demaa services followed by seven trusted-partner services", async () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
@@ -191,9 +200,9 @@ describe("canonical Accompagnement catalog", () => {
       readSource("src/components/SystemSolutionsTab.tsx"),
     ]);
 
-    expect(markup.match(/<article/g)).toHaveLength(10);
+    expect(markup.match(/<article/g)).toHaveLength(9);
     expect(getCanonicalServices().filter(({ delivery }) => delivery === "demaa")).toHaveLength(2);
-    expect(getCanonicalServices().filter(({ delivery }) => delivery === "third-party")).toHaveLength(8);
+    expect(getCanonicalServices().filter(({ delivery }) => delivery === "third-party")).toHaveLength(7);
     for (const service of getCanonicalServices()) {
       expect(markup).toContain(service.detailHref);
     }
@@ -201,6 +210,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).toContain("Coach business");
     expect(markup).toContain("Assistante administrative");
     expect(markup).toContain("Recruter un alternant");
+    expect(markup).not.toContain("Expert-comptable");
     expect(markup).toContain("À partir de 1 500 € HT");
     expect(markup).toContain("À partir de 4 500 € HT");
     expect(markup).toContain("750 € HT / mois");
@@ -222,9 +232,6 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).not.toContain("Le professionnel confirme son tarif et facture directement son intervention.");
     expect(markup.indexOf("Nos accompagnements")).toBeLessThan(
       markup.indexOf("Avec nos partenaires de confiance"),
-    );
-    expect(markup.indexOf("Expert-comptable")).toBeLessThan(
-      markup.indexOf("Assistante administrative"),
     );
     expect(markup.indexOf("Assistante administrative")).toBeLessThan(
       markup.indexOf("Coach business"),

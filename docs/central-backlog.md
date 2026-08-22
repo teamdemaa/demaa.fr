@@ -1743,6 +1743,20 @@ Statut : **validé pour implémentation ; Preview, fusion et Production soumises
 État : **implémentation préparée sur une branche isolée empilée sur D-093 ; sa
 fusion attend le réalignement sur le commit D-093 effectivement fusionné**.
 
+##### Mise à jour catalogue — Masquage du service Expert-comptable
+
+- [x] Masquer l'offre `expert-comptable` des cartes Services et des
+  recommandations contextuelles sans supprimer son identité canonique ni les
+  anciennes demandes.
+- [x] Retirer sa fiche des routes publiées, du sitemap et des nouvelles
+  demandes de service ; rediriger ses anciennes URL vers
+  `/annuaire-experts-comptables`.
+- [x] Conserver sans changement l'annuaire des experts-comptables, ses cabinets
+  et son propre parcours de demande.
+- [x] Centraliser le masquage dans le catalogue afin d'éviter des filtres JSX
+  divergents et permettre une réactivation uniquement après une nouvelle
+  décision produit explicite.
+
 #### D-083 — Solutions publiques simples et accompagnement progressif — historique
 
 Décision courante : la simplification `Outils + Services` ne crée aucun profil

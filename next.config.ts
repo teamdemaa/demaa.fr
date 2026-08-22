@@ -116,7 +116,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/annuaire-services/expert-comptable',
-        destination: '/services/expert-comptable',
+        destination: '/annuaire-experts-comptables',
+        permanent: true,
+      },
+      {
+        source: '/services/expert-comptable',
+        destination: '/annuaire-experts-comptables',
         permanent: true,
       },
       {
