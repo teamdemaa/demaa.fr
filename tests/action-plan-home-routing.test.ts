@@ -75,7 +75,7 @@ describe("authenticated homepage routing", () => {
       isAuthenticated: true,
       query: "intent=open-company-strategy",
       requestedIntent: "open-company-strategy",
-    })).toBe(false);
+    })).toBe(true);
   });
 
   it("does not preserve a malformed metric intent", () => {

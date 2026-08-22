@@ -95,6 +95,21 @@ function mockResult(
   };
 }
 
+const operationalScenarioMatrix = [
+  "Je ressaisis les mêmes coordonnées entre les demandes reçues par email et notre outil de suivi.",
+  "Mes trois techniciens attendent souvent ma validation avant de poursuivre une intervention.",
+  "Je planifie les interventions de plomberie au fil des messages et je perds la vue d’ensemble.",
+  "Je relance chaque semaine les mêmes clients pour récupérer leurs pièces comptables.",
+  "Les documents d’un dossier sont répartis entre les emails, les messages et plusieurs dossiers.",
+  "La marge de mon restaurant baisse, mais je ne sais pas encore quels postes expliquent l’écart.",
+  "Je trouve difficilement de nouveaux clients pour mon activité de conseil.",
+  "Notre processus de commande change selon la personne et personne ne suit les mêmes étapes.",
+  "Je manque de temps dans mon entreprise, mais je ne sais pas encore quelles tâches en prennent le plus.",
+  "Je veux déléguer la préparation des comptes rendus sans perdre les informations importantes.",
+  "Nous utilisons déjà Pennylane pour la comptabilité et je recopie encore certains montants à la main.",
+  "Mon activité fonctionne correctement et je cherche seulement à vérifier où simplifier une opération.",
+] as const;
+
 describe("action plan generation prompt", () => {
   it("uses the model available on the current Vercel AI Gateway plan", () => {
     expect(ACTION_PLAN_MODEL_ID).toBe("openai/gpt-5-mini");
@@ -128,6 +143,33 @@ describe("action plan generation prompt", () => {
     );
   });
 
+  it("prioritizes operational evidence before delegation or automation", () => {
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain(
+      "supprimer, simplifier, clarifier les responsabilites",
+    );
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain(
+      "n'automatise jamais un processus encore confus",
+    );
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain(
+      "la premiere action consiste a mesurer ou observer le terrain",
+    );
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain(
+      "traite honnetement le probleme reel",
+    );
+  });
+
+  it("does not introduce an absent brand, provider or service", () => {
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain(
+      "N'introduis ni marque, ni logiciel nomme, ni prestataire, ni service absent",
+    );
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain(
+      "Une marque explicitement mentionnee",
+    );
+    expect(ACTION_PLAN_INSTRUCTIONS).toContain(
+      "une capacite, un canal ou une categorie generique",
+    );
+  });
+
   it("limits generated supports to ready-to-send communication", () => {
     expect(ACTION_PLAN_INSTRUCTIONS).toContain(
       "communication, prospection ou relance exige",
@@ -152,6 +194,17 @@ describe("action plan generation prompt", () => {
     );
     expect(ACTION_PLAN_INSTRUCTIONS).toContain("une donnee non fiable");
   });
+
+  it.each(operationalScenarioMatrix)(
+    "serializes the D-093 operational scenario as untrusted data: %s",
+    (situation) => {
+      const prompt = buildActionPlanPrompt(situation);
+
+      expect(prompt).toContain(JSON.stringify({ situation }));
+      expect(prompt).toContain("Donnee utilisateur a analyser (JSON)");
+      expect(prompt).toContain("N'ajoute aucun commentaire hors du schema");
+    },
+  );
 
   it("uses only the ten published English business-system projections", () => {
     expect(

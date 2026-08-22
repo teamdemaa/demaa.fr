@@ -9,6 +9,7 @@ import {
   MessagesSquare,
   SearchCheck,
   Workflow,
+  ChevronDown,
   type LucideIcon,
 } from "lucide-react";
 import type { CanonicalService } from "@/lib/canonical-service-catalog";
@@ -85,11 +86,13 @@ function ServiceCard({
 
 function ServiceSection({
   description,
+  id,
   services,
   title,
   onServiceSelect,
 }: {
   description: string;
+  id: string;
   services: readonly CanonicalService[];
   title: string;
   onServiceSelect?: (service: CanonicalService) => void;
@@ -97,9 +100,9 @@ function ServiceSection({
   if (services.length === 0) return null;
 
   return (
-    <section aria-labelledby={`services-section-${services[0]?.delivery}`}>
+    <section aria-labelledby={id}>
       <h2
-        id={`services-section-${services[0]?.delivery}`}
+        id={id}
         className="text-xl font-normal leading-[1.3] text-brand-blue"
       >
         {title}
@@ -113,6 +116,40 @@ function ServiceSection({
         ))}
       </div>
     </section>
+  );
+}
+
+function PartnerServicesDisclosure({
+  onServiceSelect,
+  services,
+}: {
+  onServiceSelect?: (service: CanonicalService) => void;
+  services: readonly CanonicalService[];
+}) {
+  if (services.length === 0) return null;
+
+  return (
+    <details className="group rounded-[1.25rem] border border-dema-line bg-dema-paper px-5 py-1 sm:px-6">
+      <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-3 text-left marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 [&::-webkit-details-marker]:hidden">
+        <span className="text-xl font-normal leading-[1.3] text-brand-blue">
+          Avec nos partenaires de confiance
+        </span>
+        <ChevronDown
+          className="h-5 w-5 shrink-0 text-dema-forest transition-transform group-open:rotate-180"
+          aria-hidden="true"
+        />
+      </summary>
+      <div className="border-t border-dema-line pb-6 pt-4 sm:pb-7">
+        <p className="max-w-3xl text-sm leading-6 text-dema-muted">
+          Demaa qualifie votre besoin et organise la mise en relation.
+        </p>
+        <div className="mt-5 grid min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {services.map((service) => (
+            <ServiceCard key={service.slug} service={service} onSelect={onServiceSelect} />
+          ))}
+        </div>
+      </div>
+    </details>
   );
 }
 
@@ -136,14 +173,13 @@ export default function ServicesCatalog({
     <section aria-label="Services">
       <div className="space-y-10 sm:space-y-12">
         <ServiceSection
+          id="services-section-demaa"
           title="Nos accompagnements"
           description="Conçus et réalisés directement par Demaa."
           services={demaaServices}
           onServiceSelect={onServiceSelect}
         />
-        <ServiceSection
-          title="Proposé par nos partenaires de confiance"
-          description="Demaa qualifie votre besoin et organise la mise en relation."
+        <PartnerServicesDisclosure
           services={partnerServices}
           onServiceSelect={onServiceSelect}
         />

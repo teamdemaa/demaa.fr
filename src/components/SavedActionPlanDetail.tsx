@@ -15,7 +15,6 @@ import {
 } from "@/components/SavedActionPlanControls";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import ActionPlanServicesPanel from "@/components/ActionPlanServicesPanel";
-import CompanyStrategyEntry from "@/components/CompanyStrategyEntry";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import CompanyPilotagePanel from "@/components/CompanyPilotagePanel";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
@@ -637,14 +636,6 @@ export default function SavedActionPlanDetail({
               })}
               localeCode={interfaceLocaleCode}
               contentLocaleCode={contentLocaleCode}
-            />
-            <CompanyStrategyEntry
-              localeCode={interfaceLocaleCode}
-              onOpen={() => navigateAppContext({
-                ...appContext,
-                view: "plan",
-                planSection: "strategy",
-              })}
             />
           </CompanyPilotagePanel>
         ) : null}

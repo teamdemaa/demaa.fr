@@ -15,7 +15,6 @@ import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import ActionPlanServicesPanel from "@/components/ActionPlanServicesPanel";
 import ActionPlanUtilityActions from "@/components/ActionPlanUtilityActions";
-import CompanyStrategyEntry from "@/components/CompanyStrategyEntry";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import CompanyPilotagePanel, {
   type CompanyFiguresEntryRequest,
@@ -189,21 +188,21 @@ export default function ActionPlanExperience({
   showCoaching?: boolean;
   services: readonly CanonicalService[];
 }) {
+  const activeInitialAccessIntent = initialAccessIntent?.kind === "open-company-strategy"
+    ? null
+    : initialAccessIntent;
   const uiCopy = getActionPlanUiCopy(contentLocaleCode);
   const newPlanPath = getLocalizedActionPlanPath(contentLocaleCode, "/plans/new");
   const plansPath = getLocalizedActionPlanPath(contentLocaleCode, "/plans");
   const [initialExperienceState] = useState(() => createInitialExperienceState({
     appContext: initialAppContext,
     authenticated: initialIsAuthenticated,
-    intent: initialAccessIntent,
+    intent: activeInitialAccessIntent,
   }));
-  const resolvedInitialAppContext = initialAccessIntent
+  const resolvedInitialAppContext = activeInitialAccessIntent
     ? {
         view: "plan" as const,
-        planSection: initialAccessIntent.kind === "open-company-strategy"
-          && !initialIsAuthenticated
-          ? "actions" as const
-          : getActionPlanAccessIntentSection(initialAccessIntent),
+        planSection: getActionPlanAccessIntentSection(activeInitialAccessIntent),
       }
     : initialAppContext;
   const [situation, setSituation] = useState("");
@@ -228,11 +227,11 @@ export default function ActionPlanExperience({
   const [isGenerating, setIsGenerating] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(initialIsAuthenticated);
   const [accessPromptOpen, setAccessPromptOpen] = useState(
-    Boolean(initialAccessIntent && !initialIsAuthenticated),
+    Boolean(activeInitialAccessIntent && !initialIsAuthenticated),
   );
   const [pendingAccessIntent, setPendingAccessIntent] =
     useState<ActionPlanAccessIntent | null>(
-      initialIsAuthenticated ? null : initialAccessIntent,
+      initialIsAuthenticated ? null : activeInitialAccessIntent,
     );
   const [actionOpenRequest, setActionOpenRequest] =
     useState<ActionOpenRequest | null>(initialExperienceState.actionOpenRequest);
@@ -269,12 +268,12 @@ export default function ActionPlanExperience({
   const generationIntentHandledRef = useRef(false);
 
   useEffect(() => {
-    if (!initialAccessIntent || !initialIsAuthenticated) return;
+    if (!activeInitialAccessIntent || !initialIsAuthenticated) return;
     navigateAppContext({
       view: "plan",
-      planSection: getActionPlanAccessIntentSection(initialAccessIntent),
+      planSection: getActionPlanAccessIntentSection(activeInitialAccessIntent),
     }, "replace");
-  }, [initialAccessIntent, initialIsAuthenticated, navigateAppContext]);
+  }, [activeInitialAccessIntent, initialIsAuthenticated, navigateAppContext]);
 
   useEffect(() => {
     if (!visibleViews || visibleViews.includes("academy")) {
@@ -402,10 +401,6 @@ export default function ActionPlanExperience({
     setPendingAccessIntent({ kind: "edit-company-metric", period });
     setAccessDraft((current) => ({ ...current, mode: "create", password: "" }));
     setAccessPromptOpen(true);
-  }
-
-  function openCompanyStrategy() {
-    navigateAppContext({ view: "plan", planSection: "strategy" });
   }
 
   function requestStrategyAuthentication() {
@@ -1279,12 +1274,6 @@ export default function ActionPlanExperience({
                 localeCode={contentLocaleCode}
                 contentLocaleCode={contentLocaleCode}
               />
-              {!isDemoMode ? (
-                <CompanyStrategyEntry
-                  localeCode={contentLocaleCode}
-                  onOpen={openCompanyStrategy}
-                />
-              ) : null}
             </CompanyPilotagePanel>
           ) : null}
           {activeTab === "services" ? (

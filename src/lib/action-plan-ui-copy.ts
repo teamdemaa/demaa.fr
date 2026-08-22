@@ -2,7 +2,7 @@ import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 const copy = {
   fr: {
-    situationLabel: "Décrivez la situation de votre entreprise",
+    situationLabel: "Décrivez les tâches, blocages ou opérations qui vous prennent du temps",
     createPlan: "Créer mon plan d’action",
     creatingPlan: "Création du plan…",
     blankPlan: "Commencer avec un plan vierge",
@@ -16,14 +16,14 @@ const copy = {
     generationFailed: "Impossible de générer le plan pour le moment.",
     autoSaveFailed: "La sauvegarde automatique a échoué.",
     examples: [
-      "Je dirige un cabinet comptable de 6 personnes. Les dossiers avancent, mais tout remonte encore vers moi et les échéances sont suivies dans plusieurs fichiers.",
-      "Mon restaurant fonctionne bien le midi, mais la marge baisse. Les achats, les plannings et les pertes ne sont pas suivis de façon régulière.",
-      "Je développe une entreprise de plomberie avec 4 techniciens. Je veux mieux organiser les interventions, les devis et les relances sans ajouter un outil compliqué.",
-      "Je suis consultante indépendante. J’ai des missions, mais mon offre manque de clarté et je veux trouver des clients de manière plus régulière sans démarchage de masse.",
+      "Je dirige un cabinet comptable. Je collecte encore les pièces, relance les clients et vérifie les échéances dans plusieurs dossiers avant que tout remonte vers moi.",
+      "Dans mon restaurant, les plannings, les commandes et les stocks sont suivis à la main. Je passe du temps à rechercher les écarts et à vérifier que tout a été fait.",
+      "Je gère une entreprise de plomberie. Les interventions, devis et relances passent par des messages, et les techniciens m’appellent souvent pour obtenir une décision.",
+      "Je suis consultante indépendante. La préparation des missions, les comptes rendus, la facturation et les relances me prennent du temps alors que je veux un fonctionnement plus simple.",
     ],
   },
   en: {
-    situationLabel: "Describe what is happening in your business",
+    situationLabel: "Describe the tasks, blockers or operations taking up your time",
     createPlan: "Create my action plan",
     creatingPlan: "Creating your plan…",
     blankPlan: "Start with a blank plan",
@@ -37,10 +37,10 @@ const copy = {
     generationFailed: "Your plan could not be generated right now.",
     autoSaveFailed: "Automatic saving failed.",
     examples: [
-      "I run a SaaS company with a small team. Sales are growing, but every customer decision and product priority still comes back to me.",
-      "My web agency is busy, but projects overrun and client feedback is scattered across messages, meetings and documents.",
-      "I am an independent consultant with steady projects, but my offer is unclear and new business still depends almost entirely on referrals.",
-      "My online training business attracts learners, but completion and repeat sales are inconsistent and I do not have a reliable operating rhythm.",
+      "I run an accounting practice. I still collect documents, chase clients and check deadlines across several folders before every issue comes back to me.",
+      "In my restaurant, schedules, orders and stock are tracked manually. I spend time finding discrepancies and checking that everything was completed.",
+      "I run a plumbing business. Jobs, quotes and follow-ups are handled through messages, and technicians often call me to make a decision.",
+      "I am an independent consultant. Preparing projects, writing reports, invoicing and following up take time when I need a simpler way of working.",
     ],
   },
 } as const;

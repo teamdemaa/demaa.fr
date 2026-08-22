@@ -20,10 +20,14 @@ export function shouldRedirectAuthenticatedHomeToPlans(input: {
   requestedIntent?: string;
   requestedNewPlan?: string;
 }) {
+  const hasActionableAccessIntent = Boolean(
+    input.requestedAccessIntent
+      && input.requestedAccessIntent.kind !== "open-company-strategy",
+  );
   return input.isAuthenticated
     && input.appContext.view === "plan"
     && input.appContext.planSection === "actions"
-    && !input.requestedAccessIntent
+    && !hasActionableAccessIntent
     && !HOME_INTENTS.has(input.requestedIntent ?? "")
     && input.requestedNewPlan !== "1";
 }

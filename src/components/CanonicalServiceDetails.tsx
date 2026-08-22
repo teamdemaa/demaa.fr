@@ -107,15 +107,17 @@ function CompactServiceDetails({
 }) {
   return (
     <div className="min-w-0 max-w-full">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
-        {service.eyebrow}
-      </p>
-      <Heading className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-4xl">
-        {service.name}
-      </Heading>
-      <p className="mt-4 max-w-2xl text-base leading-7 text-dema-muted">
-        {service.result}
-      </p>
+      <div className="pr-12">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+          {service.eyebrow}
+        </p>
+        <Heading className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-4xl">
+          {service.name}
+        </Heading>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-dema-muted">
+          {service.result}
+        </p>
+      </div>
 
       <div className="mt-7 grid min-w-0 gap-6">
         <section className="min-w-0 border-t border-dema-line pt-5">

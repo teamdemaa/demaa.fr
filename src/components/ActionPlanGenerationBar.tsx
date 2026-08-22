@@ -58,7 +58,7 @@ export default function ActionPlanGenerationBar({
         className="demaa-popover-shadow flex min-h-14 items-center gap-2 rounded-full border border-dema-line bg-white/95 p-1.5 pl-5 backdrop-blur"
       >
         <label htmlFor="action-plan-generation-situation" className="sr-only">
-          {isEnglish ? "What’s holding your business back?" : "Qu’est-ce qui freine votre entreprise ?"}
+          {isEnglish ? "What takes too much of your time today?" : "Qu’est-ce qui vous prend trop de temps aujourd’hui ?"}
         </label>
         <input
           id="action-plan-generation-situation"
@@ -66,7 +66,7 @@ export default function ActionPlanGenerationBar({
           onChange={(event) => situationDictation.handleValueChange(event.target.value)}
           disabled={isSubmitting}
           maxLength={4_000}
-          placeholder={isEnglish ? "What’s holding your business back?" : "Qu’est-ce qui freine votre entreprise ?"}
+          placeholder={isEnglish ? "What takes too much of your time today?" : "Qu’est-ce qui vous prend trop de temps aujourd’hui ?"}
           className="min-w-0 flex-1 bg-transparent text-sm text-brand-blue outline-none placeholder:text-dema-muted disabled:cursor-not-allowed"
         />
         <button

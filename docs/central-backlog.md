@@ -52,6 +52,11 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
   Solutions enrichi, puis Services séparé entre deux accompagnements Demaa et
   sept partenaires de confiance. La navigation principale est désormais
   `Plan d'action / Académie / Services / Opportunités`.
+- D-093 est validé pour implémentation, sans GO Production implicite. Il
+  recentre l'entrée sur les opérations qui prennent du temps, aligne le prompt
+  IA, vise `Plan / Solutions / Chiffres`, masque réversiblement Stratégie et
+  replie les sept partenaires Services. D-091, Firebase et l'anglais restent
+  hors de ce changement.
 
 ## Lecture canonique du backlog
 
@@ -1653,6 +1658,70 @@ Critère de sortie : les 115 systèmes disposent chacun d'une sélection variabl
 d'outils prouvés, complémentaires, ordonnés et recettés, sans remplissage
 artificiel ni modification visuelle des cartes. L'activation du nouveau
 pointeur Firebase reste une opération distincte.
+
+#### D-093 — Entrée opérationnelle et espace de travail recentré
+
+Référence :
+[ADR 0019](decisions/0019-operational-entry-and-workspace-focus.md).
+
+Statut : **validé pour implémentation ; Preview, fusion et Production soumises
+à leurs gates propres**.
+
+##### Lot 1 — Décision et documentation
+
+- [x] Enregistrer D-093 sans réutiliser D-092.
+- [x] Documenter les supersessions limitées de D-076, D-084 et D-090 sans
+  réécrire leur historique.
+- [x] Préserver Plan V4, les données Chiffres et Stratégie, Firebase, les 115
+  identifiants français, D-091, D-092 et la pause anglaise.
+
+##### Lot 2 — Entrée opérationnelle et IA
+
+- [x] Remplacer le titre par « Qu’est-ce qui vous prend trop de temps
+  aujourd’hui ? » et supprimer son typewriter.
+- [x] Conserver les CTA et faire tourner les exemples uniquement dans le champ
+  vide, avec un nom accessible centré sur les tâches, blocages et opérations.
+- [x] Aligner les exemples et l'écran d'attente sur tâches récurrentes,
+  ressaisies, validations, simplification et résultat observable.
+- [x] Modifier les prompts français et anglais sans activer l'anglais :
+  simplifier avant d'automatiser, mesurer plutôt qu'inventer, ne forcer ni
+  marque ni prestation et traiter honnêtement un autre problème réel.
+- [x] Conserver ActionPlan V4, trois ou quatre Actions par défaut, une cinquième
+  seulement si nécessaire, et au maximum la réparation IA existante.
+- [x] Ajouter une matrice de scénarios déterministes sans snapshot de
+  formulation exacte.
+- [ ] Effectuer la recette humaine du vrai modèle en Preview.
+
+##### Lot 3 — Plan et Stratégie
+
+- [x] Ordonner visuellement `Plan / Solutions / Chiffres` sans modifier les
+  valeurs techniques, URL, données ou règles d'accès.
+- [x] Masquer les entrées et la surface Stratégie sans supprimer ses composants,
+  API, documents, cycles, réponses, historique ou règles de concurrence.
+- [x] Normaliser `section=strategy` et `open-company-strategy` vers le Plan,
+  notamment après authentification, sans page vide.
+
+##### Lot 4 — Services
+
+- [x] Conserver les deux accompagnements Demaa ouverts et placer les sept
+  partenaires dans un dépliant fermé par défaut mais consultable sans compte.
+- [x] Réutiliser le même catalogue, les mêmes cartes et le même dépliant dans
+  l'application et sur `/services`, sans second catalogue ni changement SEO.
+- [x] Limiter l'espace du bouton de fermeture de la modale au bloc supérieur et
+  rendre toute la largeur intérieure aux inclusions, forfaits et formulaires.
+
+##### Gates D-093
+
+- [x] Vérifier prompt, schéma V4, scénarios déterministes, navigation legacy,
+  desktop, mobile, structure accessible et absence de débordement en local.
+- [ ] Recetter en Preview le vrai modèle, une session authentifiée, la PWA, le
+  clavier physique et un lecteur d'écran.
+- [x] Exécuter ESLint strict, TypeScript, tests ciblés, suite complète et build
+  Production local.
+- [ ] Effectuer la recette manuelle de la Preview déployée.
+- [x] Ne modifier ni le résolveur contextuel, ni les données D-091, ni une
+  révision ou un pointeur Firebase.
+- [ ] Obtenir un GO explicite avant toute fusion déclenchant Production.
 
 #### D-083 — Solutions publiques simples et accompagnement progressif — historique
 

@@ -196,13 +196,16 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).toContain("Sur devis");
     expect(markup).toContain("Nos accompagnements");
     expect(markup).toContain("Conçus et réalisés directement par Demaa.");
-    expect(markup).toContain("Proposé par nos partenaires de confiance");
+    expect(markup).toContain("Avec nos partenaires de confiance");
     expect(markup).toContain("Demaa qualifie votre besoin et organise la mise en relation.");
+    expect(markup).toContain("<details");
+    expect(markup).toContain("<summary");
+    expect(markup).not.toContain("<details open");
     expect(markup).not.toContain("Catalogue Demaa");
     expect(markup).not.toContain("L’accompagnement utile, au même endroit");
     expect(markup).not.toContain("Le professionnel confirme son tarif et facture directement son intervention.");
     expect(markup.indexOf("Nos accompagnements")).toBeLessThan(
-      markup.indexOf("Proposé par nos partenaires de confiance"),
+      markup.indexOf("Avec nos partenaires de confiance"),
     );
     expect(markup.indexOf("Expert-comptable")).toBeLessThan(
       markup.indexOf("Assistante administrative"),
@@ -211,12 +214,15 @@ describe("canonical Accompagnement catalog", () => {
       markup.indexOf("Coach business"),
     );
     expect(markup).not.toMatch(/Avantage abonné|−12 %/);
-    expect(markup).not.toContain("border-t");
     expect(markup).not.toContain("−15 %");
     expect(markup).not.toContain("Découvrir le service");
     expect(catalogSource).toContain("service.pricing.label");
     expect(catalogSource).toContain('service.delivery === "demaa"');
     expect(catalogSource).toContain('service.delivery === "third-party"');
+    expect(catalogSource).toContain("<details");
+    expect(catalogSource).toContain("<summary");
+    expect(catalogSource).toContain("group-open:rotate-180");
+    expect(catalogSource).not.toContain("<details open");
     for (const source of [academySource, catalogSource, opportunitySource]) {
       expect(source).toContain("LIBRARY_CARD_TITLE_CLASSNAME");
     }
@@ -298,7 +304,7 @@ describe("canonical Accompagnement catalog", () => {
   });
 
   it("implements the documented intercepted modal contract", async () => {
-    const [layout, modalDefault, modalPage, applicationModalPage, routeDialog, systemSolutions, serviceDetails] = await Promise.all([
+    const [layout, modalDefault, modalPage, applicationModalPage, routeDialog, systemSolutions, serviceDetails, actionPlanServices] = await Promise.all([
       readSource("src/app/layout.tsx"),
       readSource("src/app/@modal/default.tsx"),
       readSource("src/app/@modal/(.)services/[slug]/page.tsx"),
@@ -306,6 +312,7 @@ describe("canonical Accompagnement catalog", () => {
       readSource("src/components/ServiceRouteDialog.tsx"),
       readSource("src/components/SystemSolutionsTab.tsx"),
       readSource("src/components/CanonicalServiceDetails.tsx"),
+      readSource("src/components/ActionPlanServicesPanel.tsx"),
     ]);
 
     expect(layout).toContain("modal: React.ReactNode");
@@ -326,5 +333,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(serviceDetails).not.toContain(
       "lg:grid-cols-[minmax(0,1fr)_18rem]",
     );
+    expect(serviceDetails).toContain('<div className="pr-12">');
+    expect(actionPlanServices).not.toContain('<div className="pr-12">');
   });
 });

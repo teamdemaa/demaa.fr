@@ -44,6 +44,9 @@ export function buildActionPlanAccessReturnTo(
   localeCode: InterfaceLocaleCode,
   intent: ActionPlanAccessIntent,
 ) {
+  if (intent.kind === "open-company-strategy") {
+    return localeCode === "en" ? "/en" : "/";
+  }
   const params = new URLSearchParams({ intent: intent.kind });
   if (intent.kind === "edit-company-metric") {
     params.set("period", intent.period);
@@ -60,6 +63,6 @@ export function getActionPlanAccessIntentSection(
     case "edit-company-metric":
       return "figures";
     case "open-company-strategy":
-      return "strategy";
+      return "actions";
   }
 }

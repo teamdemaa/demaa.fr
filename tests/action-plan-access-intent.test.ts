@@ -27,7 +27,7 @@ describe("action plan access intents", () => {
       .toEqual({ kind: "edit-company-metric", period: "2026-08" });
   });
 
-  it("round-trips the company Strategy intent without company data", () => {
+  it("normalizes the retired company Strategy intent to the Plan", () => {
     const frenchReturnTo = buildActionPlanAccessReturnTo("fr", {
       kind: "open-company-strategy",
     });
@@ -35,14 +35,14 @@ describe("action plan access intents", () => {
       kind: "open-company-strategy",
     });
 
-    expect(frenchReturnTo).toBe("/?intent=open-company-strategy");
-    expect(englishReturnTo).toBe("/en?intent=open-company-strategy");
+    expect(frenchReturnTo).toBe("/");
+    expect(englishReturnTo).toBe("/en");
     expect(parseActionPlanAccessIntent(
-      new URL(frenchReturnTo, "https://demaa.co").searchParams,
+      new URL("/?intent=open-company-strategy", "https://demaa.co").searchParams,
     )).toEqual({ kind: "open-company-strategy" });
     expect(getActionPlanAccessIntentSection({
       kind: "open-company-strategy",
-    })).toBe("strategy");
+    })).toBe("actions");
   });
 
   it("fails closed for unknown intents and invalid periods", () => {

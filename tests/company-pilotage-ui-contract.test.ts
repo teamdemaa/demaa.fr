@@ -7,7 +7,7 @@ import { COMPANY_STRATEGY_PILLARS } from "@/lib/company-pilotage-contract";
 const source = (file: string) => readFileSync(new URL(`../src/components/${file}`, import.meta.url), "utf8");
 
 describe("company Pilotage UI contract", () => {
-  it("owns one compact internal navigation and opens Strategy from the Plan", () => {
+  it("owns one compact Plan, Solutions, Figures navigation and hides Strategy", () => {
     const owner = source("CompanyPilotagePanel.tsx");
     const navbar = source("ActionPlanNavbar.tsx");
     expect(owner).toContain('labels: { fr: "Plan", en: "Plan" }');
@@ -20,19 +20,22 @@ describe("company Pilotage UI contract", () => {
     expect(owner).not.toContain("border border-dema-line/70 bg-dema-sage/20 p-1");
     expect(owner).not.toContain("shadow-[0_5px_16px");
     expect(owner).not.toContain('key: "strategy"');
-    expect(owner).toContain('COMPANY_STRATEGY_VISIBLE && section === "strategy"');
+    expect(owner.indexOf('{ key: "actions"')).toBeLessThan(owner.indexOf('{ key: "solutions"'));
+    expect(owner.indexOf('{ key: "solutions"')).toBeLessThan(owner.indexOf('{ key: "figures"'));
+    expect(owner).toContain('COMPANY_STRATEGY_VISIBLE && visibleSection === "strategy"');
+    expect(owner).toContain('section === "strategy" && !COMPANY_STRATEGY_VISIBLE');
     expect(owner).toContain("Retour au plan");
     expect(source("CompanyStrategyEntry.tsx")).toContain("Stratégie");
     expect(source("SavedActionPlanDetail.tsx")).toContain("<CompanyPilotagePanel");
     expect(source("ActionPlanExperience.tsx")).toContain("<CompanyPilotagePanel");
-    expect(source("SavedActionPlanDetail.tsx")).toContain("<CompanyStrategyEntry");
-    expect(source("ActionPlanExperience.tsx")).toContain("<CompanyStrategyEntry");
+    expect(source("SavedActionPlanDetail.tsx")).not.toContain("<CompanyStrategyEntry");
+    expect(source("ActionPlanExperience.tsx")).not.toContain("<CompanyStrategyEntry");
     expect(source("CompanyPilotagePanel.tsx")).toContain("authenticated={figuresAuthenticated}");
     expect(source("CompanyPilotagePanel.tsx")).toContain("authenticated={strategyAuthenticated}");
     expect(navbar).not.toContain("Stratégie");
   });
 
-  it("shows the Strategy framework to guests and protects only writing", () => {
+  it("preserves the dormant Strategy framework and its write protection", () => {
     const panel = source("CompanyStrategyPanel.tsx");
     const pillar = source("CompanyStrategyPillar.tsx");
     const experience = source("ActionPlanExperience.tsx");
@@ -52,7 +55,9 @@ describe("company Pilotage UI contract", () => {
     expect(pillar).toContain('event.key !== "Enter"');
     expect(experience).toContain("strategyAuthenticated={isAuthenticated && !isDemoMode}");
     expect(experience).toContain("onStrategyAuthenticationRequired={requestStrategyAuthentication}");
-    expect(experience).toContain("Connectez-vous pour renseigner votre stratégie");
+    expect(source("../lib/action-plan-app-context.ts")).toContain(
+      "COMPANY_STRATEGY_VISIBLE = false",
+    );
   });
 
   it("keeps explicit metric saves and serial Strategy autosaves with recovery", () => {

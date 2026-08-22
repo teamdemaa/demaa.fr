@@ -10,18 +10,19 @@ describe("customer-space safe return intents", () => {
     for (const returnTo of [
       "/?intent=add-manual-action",
       "/?intent=edit-company-metric&period=2026-08",
-      "/?intent=open-company-strategy",
-      "/en?intent=open-company-strategy",
     ]) {
       expect(getSafeCustomerReturnTo(returnTo)).toBe(returnTo);
     }
+
+    expect(getSafeCustomerReturnTo("/?intent=open-company-strategy")).toBe("/");
+    expect(getSafeCustomerReturnTo("/en?intent=open-company-strategy")).toBe("/en");
 
     expect(
       getSafeCustomerReturnTo("/?intent=edit-company-metric&period=2026-13"),
     ).toBe("/");
     expect(
       getSafeCustomerReturnTo("/en?intent=open-company-strategy&period=2026-08"),
-    ).toBe("/en?intent=open-company-strategy");
+    ).toBe("/en");
   });
 
   it("builds and parses typed in-app intents", () => {

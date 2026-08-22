@@ -48,6 +48,11 @@ Regles de fond :
 - Utilise uniquement les faits fournis par le dirigeant et les donnees du catalogue. Tu n'effectues aucune recherche web et tu n'inventes ni etude de marche, ni chiffre, ni preuve, ni obligation legale.
 - Selectionne exactement un systemId parmi les 115 identifiants fournis. Le systeme correspond a l'activite de l'entreprise, jamais au theme de l'aide demandee. Les aliases servent uniquement a cette detection.
 - Ne produis ni justification interne du systeme, ni liste d'hypotheses. Une information manquante qui change materiellement le plan devient une verification concrete dans une action ; ne la transforme jamais en fait.
+- Pars d'abord du travail reel : taches recurrentes, ressaisies, recherches d'information, attentes, reprises, erreurs, validations et decisions qui dependent encore du dirigeant. Lorsque le dirigeant les fournit, utilise la frequence, le volume, les personnes, les outils, les points de validation et le resultat attendu pour prioriser sans les extrapoler.
+- Examine les leviers dans cet ordre : supprimer, simplifier, clarifier les responsabilites, standardiser ou documenter, deleguer, puis automatiser. Ne transforme pas automatiquement un probleme en projet d'automatisation et n'automatise jamais un processus encore confus.
+- Si la situation manque de faits observables, la premiere action consiste a mesurer ou observer le terrain. N'invente jamais un volume, une duree, une frequence, un taux d'erreur, un temps d'attente, une responsabilite ou une personne impliquee.
+- Si le probleme principal n'est pas le temps, traite honnetement le probleme reel au lieu de forcer ce cadrage.
+- N'introduis ni marque, ni logiciel nomme, ni prestataire, ni service absent de la situation. Une marque explicitement mentionnee par le dirigeant peut rester un element de contexte, jamais devenir automatiquement une recommandation. channelOrTool decrit par defaut une capacite, un canal ou une categorie generique.
 - Propose 3 ou 4 premieres actions prioritaires et realistes a commencer cette semaine, et 5 seulement si la situation l'exige vraiment. Respecte un ordre logique, sans doublon. Chaque action poursuit un seul resultat observable.
 - Une semaine sert a demarrer, apprendre et verifier une progression, pas a promettre une transformation complete. N'affirme jamais qu'une equipe, une organisation, une acquisition client, une autonomie ou une rentabilite sera totalement transformee en 7 jours.
 - Si le resultat demande plusieurs semaines ou plusieurs mois, indique uniquement une premiere etape observable cette semaine, sans inventer de delai final.
@@ -79,6 +84,11 @@ Core rules:
 - Use only facts supplied by the business owner and the catalogue. Do not browse the web or invent market research, figures, evidence or legal requirements.
 - Select exactly one systemId from the identifiers provided. The system represents the company's activity, never the topic of the requested help. Aliases are only detection aids.
 - Do not output internal reasoning, hypotheses or a system justification. If missing information would materially change the plan, turn it into a concrete verification step instead of a fact.
+- Start with the real work: recurring tasks, duplicate entry, information searches, waiting, rework, errors, approvals and decisions that still depend on the owner. When supplied by the owner, use frequency, volume, people, tools, approval points and the expected result to prioritise without extrapolating them.
+- Consider levers in this order: remove, simplify, clarify responsibilities, standardise or document, delegate, then automate. Do not automatically turn a problem into an automation project and never automate a process that is still unclear.
+- If the situation lacks observable facts, make measurement or field observation the first action. Never invent volume, duration, frequency, error rates, waiting time, responsibility or people involved.
+- If time is not the main issue, address the real issue honestly instead of forcing that framing.
+- Do not introduce a brand, named software, provider or service absent from the situation. A brand explicitly mentioned by the owner may remain context but must not automatically become a recommendation. channelOrTool should default to a generic capability, channel or category.
 - Propose 3 or 4 realistic priority actions that can start this week, and 5 only when genuinely necessary. Keep a logical order, avoid duplication and give each action one observable outcome.
 - A week is for starting, learning and checking progress, not promising a complete transformation. Never claim that a team, organisation, acquisition channel, autonomy or profitability will be fully transformed in seven days.
 - If the desired outcome takes several weeks or months, provide only the observable first step for this week and do not invent a final deadline.
@@ -122,6 +132,8 @@ Codes possibles :
 - unrealistic_seven_day_claim : remplace la promesse par une premiere etape observable et realiste.
 
 Le support suit cette regle unique : communication, prospection ou relance = message, email ou script. Pour toute autre action, support vaut null. Ne genere jamais de tableau, checklist, brief ou template. N'ajoute aucun commentaire hors du schema.
+
+Pendant la reparation, preserve aussi le cadrage operationnel : n'invente aucun fait, n'introduis aucune marque ou prestataire absent, n'automatise pas un processus confus et conserve 3 ou 4 actions par defaut, 5 uniquement si la situation l'exige vraiment. Si les faits observables manquent, utilise une mesure ou une observation terrain comme premiere action.
 `.trim();
 
 const ACTION_PLAN_REPAIR_INSTRUCTIONS_EN = `
@@ -135,6 +147,8 @@ Possible codes:
 - unrealistic_seven_day_claim: replace the promise with an observable, realistic first step.
 
 Support follows one rule: communication, prospecting or follow-up = message, email or script. For any other action, support is null. Never generate a table, checklist, brief or template. Add no commentary outside the schema.
+
+During repair, preserve the operational framing too: invent no facts, introduce no absent brand or provider, do not automate an unclear process, and keep 3 or 4 actions by default, using 5 only when genuinely necessary. When observable facts are missing, use measurement or field observation as the first action.
 `.trim();
 
 export type ActionPlanGenerationMetadata = AiGenerationMetadata;

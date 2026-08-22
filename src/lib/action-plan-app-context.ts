@@ -13,7 +13,7 @@ const ACTION_PLAN_VIEWS = [
 
 const SAFE_SLUG_PATTERN = /^[A-Za-z0-9_-]{1,160}$/;
 const OPPORTUNITY_DRAFT_TOKEN_PATTERN = /^[A-Za-z0-9_-]{43}$/;
-export const COMPANY_STRATEGY_VISIBLE = true;
+export const COMPANY_STRATEGY_VISIBLE = false;
 
 const ACTION_PLAN_SECTIONS = ["actions", "figures", "solutions", "strategy"] as const;
 export type ActionPlanSection = (typeof ACTION_PLAN_SECTIONS)[number];

@@ -8,6 +8,7 @@ remplacé et la nouvelle référence à consulter.
 | Navigation web `Process / Outils / Écosystème` | `superseded` | `Process / Solutions / Ressources`, voir ADR 0001 |
 | ADR 0003, point 3 : `/` peut reproduire le hub `/systemes` | `superseded` | `/` devient l'entrée du générateur de plan ; `/systemes` reste le hub public intact, voir ADR 0008 et D-076 |
 | ADR 0008/D-076 : masquer la navigation applicative avant le résultat | `superseded` | navigation visible et utilisable dès l'arrivée, sans compte ni persistance avant sauvegarde, voir ADR 0010 et D-077 |
+| ADR 0008/D-076 : promesse « Qu’est-ce qui freine votre entreprise ? » | `superseded` | entrée « Qu’est-ce qui vous prend trop de temps aujourd’hui ? », avec traitement honnête des autres problèmes, voir ADR 0019 et D-093 |
 | ADR 0009 : `Coaching` comme quatrième onglet principal | `superseded` | Coaching reste accessible par `Échanger`, voir ADR 0010 ; navigation courante dans ADR 0012 |
 | ADR 0010 : navigation `Plan d’action / Opportunités / Académie` avec sous-onglets `Actions / Solutions` | `superseded` | navigation `Plan d’action / Solutions / Académie / Opportunités`, sans sous-onglets dans le Plan, voir ADR 0012 |
 | Page et cartes dédiées `Rejoindre Team Demaa` | `superseded` | lien simple dans Opportunités ouvrant la modale de profil à expertise principale unique ; l'ancienne route redirige vers cette intention, voir ADR 0010 |
@@ -41,6 +42,8 @@ remplacé et la nouvelle référence à consulter.
 | Mesure client Services/Solutions | `deferred` | attribution consent-aware et logs opérationnels seulement ; contrat d'événements sans PII à définir ultérieurement |
 | Manifests démo et preview historiques multiples | `working` | 115 révisions v1 restent actives ; manifest révisionné D-061 et consolidation W7 avant tout pilote v2 |
 | `docs/governance/release-manifest.json` W1 utilisé comme état courant | `superseded` | conserver comme preuve historique ; régénérer uniquement depuis le candidat exact W7/W8 |
+| D-084/D-090 : ordre `Plan / Chiffres / Solutions` et Stratégie exposée sous le Plan | `temporarily-superseded` | ordre `Plan / Solutions / Chiffres` et Stratégie masquée sans suppression de données, voir ADR 0019 et D-093 |
+| D-090 : sept partenaires Services ouverts en permanence | `superseded` | mêmes cartes dans un dépliant fermé par défaut et consultable sans compte, voir ADR 0019 et D-093 |
 
 ## Éléments à préserver
 
