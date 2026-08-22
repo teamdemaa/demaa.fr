@@ -31,4 +31,3 @@ Les routes, collections, statuts, brouillons, `intent=coaching`, notifications
 et écrans d'administration ne sont pas renommés. Les liens existants continuent
 donc à ouvrir la même conversation. Cette décision porte seulement sur la copie,
 l'accessibilité et l'absence de promotion commerciale dans cette surface.
-
