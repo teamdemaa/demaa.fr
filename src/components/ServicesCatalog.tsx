@@ -69,12 +69,12 @@ function ServiceCard({
     <h3 className={`mt-4 line-clamp-2 ${LIBRARY_CARD_TITLE_CLASSNAME}`}>{service.name}</h3>
     <p className="mt-2 line-clamp-2 text-sm leading-5 text-dema-muted">{service.summary}</p>
     {priceLabel ? (
-      <p className="mt-6 text-sm font-normal text-dema-muted md:mt-auto md:pt-5">{priceLabel}</p>
+      <p className="mt-4 text-sm font-normal text-dema-muted">{priceLabel}</p>
     ) : null}
   </>;
 
   return (
-    <article className="min-w-0 md:h-[19rem]">
+    <article className="min-w-0">
       {onSelect ? (
         <button type="button" onClick={() => onSelect(service)} className={className}>
           {content}
@@ -177,7 +177,7 @@ export default function ServicesCatalog({
         <ServiceSection
           id="services-section-demaa"
           title="Nos accompagnements"
-          description="Conçus et réalisés directement par Demaa."
+          description="Pour faire en sorte que votre entreprise dépende moins de vous."
           services={demaaServices}
           onServiceSelect={onServiceSelect}
         />
