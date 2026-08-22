@@ -141,18 +141,6 @@ export default function OpportunitySubmissionDialog({
 
         <form onSubmit={submit} className="mt-5 grid gap-4 sm:grid-cols-2">
           <label className="sm:col-span-2 text-sm font-medium text-brand-blue">
-            Votre adresse e-mail
-            <input
-              name="email"
-              type="email"
-              required
-              maxLength={160}
-              autoComplete="email"
-              defaultValue={initialEmail}
-              className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest"
-            />
-          </label>
-          <label className="sm:col-span-2 text-sm font-medium text-brand-blue">
             Titre
             <input name="title" required minLength={5} maxLength={140} defaultValue={restoredDraft.title} className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest" />
           </label>
@@ -204,6 +192,18 @@ export default function OpportunitySubmissionDialog({
               </label>
             </div>
           </details>
+          <label className="sm:col-span-2 text-sm font-medium text-brand-blue">
+            Votre adresse e-mail
+            <input
+              name="email"
+              type="email"
+              required
+              maxLength={160}
+              autoComplete="email"
+              defaultValue={initialEmail}
+              className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest"
+            />
+          </label>
           {error ? (
             <p className="sm:col-span-2 text-sm text-red-700" role="alert">{error}</p>
           ) : null}
