@@ -2,12 +2,14 @@ import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
+import { D091_PILOT_SYSTEM_SLUGS } from "@/lib/curated-tools-candidate-audit";
 import { getToolDirectoryItemBySlug } from "@/lib/tool-directory";
 
 type PilotManifest = {
   status: string;
   systems: Array<{
     priorityNeeds: string[];
+    compositionRationale: string;
     systemSlug: string;
     toolSlugsByRank: string[];
   }>;
@@ -30,11 +32,15 @@ describe("D-091 pilot research selections", () => {
 
     expect(payload.status).toBe("research-candidate");
     expect(payload.systems).toHaveLength(5);
+    expect(payload.systems.map(({ systemSlug }) => systemSlug)).toEqual(
+      D091_PILOT_SYSTEM_SLUGS,
+    );
     for (const system of payload.systems) {
       expect(knownSystems.has(system.systemSlug)).toBe(true);
       expect(system.priorityNeeds.length).toBeGreaterThanOrEqual(4);
       expect(system.toolSlugsByRank).toHaveLength(10);
       expect(new Set(system.toolSlugsByRank).size).toBe(10);
+      expect(system.compositionRationale.length).toBeGreaterThan(50);
       for (const toolSlug of system.toolSlugsByRank) {
         expect(getToolDirectoryItemBySlug(toolSlug), `${system.systemSlug}:${toolSlug}`)
           .toBeDefined();

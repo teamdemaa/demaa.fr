@@ -3,7 +3,8 @@
 - Décision : D-091
 - Statut : validée pour cadrage
 - Date : 22 août 2026
-- Phase : planifiée, non commencée ; aucune mutation de registre ni publication
+- Phase : fondation technique réalisée ; cinq compositions de recherche
+  préparées ; validation métier, révision Firebase et publication non commencées
 
 ## Contexte
 
@@ -140,6 +141,18 @@ doit pas recevoir automatiquement dix ATS.
 8. Activer une nouvelle révision Firebase atomiquement après GO PROD.
 9. Déprécier les sources parallèles seulement après contrôle de parité et
    période de rollback.
+
+Deux gates distincts sont obligatoires :
+
+- `npm run audit:d091:pilot -- <candidate.json> [active-revision.json]`
+  contrôle uniquement une révision Preview limitée aux cinq systèmes pilotes ;
+  elle ne peut jamais déplacer le pointeur actif ;
+- `npm run audit:d091 -- <candidate.json> [active-revision.json]` contrôle la
+  révision finale complète des 115 systèmes avant toute activation.
+
+Le manifeste `pilot-selections.v1.json` décrit seulement la composition de
+recherche. Il doit d'abord être transformé en ressources et placements Firebase
+complets, sourcés et relus avant de pouvoir être transmis au gate pilote.
 
 La révision active reste inchangée tant que les 115 systèmes ne possèdent pas
 chacun dix placements réellement validés. Les cinq pilotes sont consultés via

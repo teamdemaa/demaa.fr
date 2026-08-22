@@ -1583,11 +1583,13 @@ Référence : [ADR 0016](decisions/0016-plan-services-and-solutions-ecosystem.md
 
 Référence : [ADR 0017](decisions/0017-curated-tools-per-system.md).
 
-Statut : **planifié, non commencé**. D-091 consolide et supersède D-068 à
-D-070 comme contrat d'exécution ; aucune donnée, interface ou révision Firebase
-n'est modifiée par cette décision documentaire.
+Statut : **fondation technique réalisée, validation éditoriale non commencée**.
+D-091 consolide et supersède D-068 à D-070 comme contrat d'exécution. Les gates
+pilote et final, la séparation publique de Services et la compatibilité des
+identifiants sont en place ; aucune révision Firebase candidate ou active n'a
+été créée ou publiée.
 
-- [ ] Conserver exactement la carte actuelle et n'ajouter aucun badge, repère
+- [x] Conserver exactement la carte actuelle et n'ajouter aucun badge, repère
   éditorial ou module « Aide au choix ».
 - [ ] Porter la section Logiciels à exactement dix outils réellement pertinents
   pour chacun des 115 systèmes, classés simplement par pertinence.
@@ -1600,37 +1602,39 @@ n'est modifiée par cette décision documentaire.
 - [ ] Piloter d'abord agence de recrutement, SaaS, agence web, cabinet
   comptable et bâtiment, avec relecture contradictoire et sans règle propre à
   l'un de ces secteurs.
-- [ ] Renforcer l'audit : dix placements, couverture métier, unicité, rangs
+- [x] Poser le gate automatisé : dix placements, couverture métier, unicité, rangs
   continus, liens sûrs, ressources actives, preuves et dates, justification
-  contextuelle et limites factuelles.
+  contextuelle et limites factuelles. Le gate pilote couvre uniquement les cinq
+  systèmes de recherche ; le gate final exige les 115.
 - [ ] Consolider Firebase comme autorité des recommandations tierces seulement
   après parité vérifiée ; conserver les sources historiques et le rollback
   jusqu'à la fin de la transition.
-- [ ] Garder Services comme domaine Demaa distinct des outils et des
+- [x] Garder Services comme domaine Demaa distinct des outils et des
   fournisseurs. Les Services ne comptent jamais dans les dix, ne partagent pas
   leur rail et conservent tracking, SEO et source de données distincts. La
   séparation visuelle livrée par D-090 reste la base à préserver.
-- [ ] Préserver Services dans l'API, le DTO Système et
+- [x] Préserver Services dans l'API, le DTO Système et
   `composeCanonicalServicesForSystem` pour les recommandations contextuelles
   strictes des Actions ; ne jamais les réinjecter comme rail Outils.
-- [ ] Aligner les pages publiques `/systemes/[slug]` et leur récapitulatif, qui
-  affichent encore Services dans Solutions, puis vérifier tracking, SEO,
-  JSON-LD et tests sans casser le payload contextuel.
-- [ ] Auditer la révision Firebase candidate et active, pas seulement la liste
+- [x] Aligner les pages publiques `/systemes/[slug]` et leur récapitulatif en
+  retirant Services de la liste des recommandations, puis séparer le JSON-LD
+  Outils sans casser le payload contextuel.
+- [x] Préparer l'audit de la révision Firebase candidate et active, pas seulement la liste
   legacy : exactement dix placements `software` sélectionnés pour le public,
   rangs 1–10, ressources actives et publication fail-closed.
-- [ ] Préserver les `placementId` historiques des placements conservés lorsque
+- [x] Préserver les `placementId` historiques des placements conservés lorsque
   leur rang change ; utiliser des identifiants indépendants du rang pour les
   nouveaux placements et tester les sélections déjà enregistrées.
 - [ ] Créer et valider explicitement dans Firebase toute ressource outil encore
   absente avant de créer ses placements ; aucune association ne crée une
   ressource implicitement.
-- [ ] Prouver que le passage à dix outils ne change pas les limites des Actions :
+- [x] Prouver que le passage à dix outils ne change pas les limites des Actions :
   aucune recommandation générique, une carte au plus par Action et deux aides
   commerciales au plus par plan.
-- [ ] Aligner les dix outils et leurs rangs entre API, interface, pages Système
+- [x] Aligner le read-model Outils et ses rangs entre API, interface, pages Système
   et JSON-LD ; ne pas conserver la troncature historique à huit solutions ni y
-  mélanger Services.
+  mélanger Services. La preuve sur dix outils reste à exécuter sur la future
+  révision candidate.
 - [ ] Garder tout pool de recherche supérieur à dix hors de la révision finale
   et traiter explicitement les anciennes sélections de Services afin d'éviter
   un faux état « Service déjà sélectionné ».

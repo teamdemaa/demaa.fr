@@ -1,5 +1,16 @@
 import type { FirebaseSolutionRegistryRevision } from "@/lib/firebase-solution-registry-contract";
-import { isSafeInteractionHref } from "@/lib/solution-registry-contract";
+import {
+  buildStableSolutionPlacementId,
+  isSafeInteractionHref,
+} from "@/lib/solution-registry-contract";
+
+export const D091_PILOT_SYSTEM_SLUGS = [
+  "agence-de-recrutement",
+  "saas",
+  "agence-web",
+  "cabinet-comptable",
+  "batiment",
+] as const;
 
 const OFFICIAL_EVIDENCE_TYPES = new Set([
   "official_product_page",
@@ -27,7 +38,10 @@ export function buildStableSoftwarePlacementId(input: {
   resourceSlug: string;
   systemSlug: string;
 }) {
-  return softwarePlacementKey(input);
+  return buildStableSolutionPlacementId({
+    ...input,
+    section: "software",
+  });
 }
 
 function hasOfficialEvidence(

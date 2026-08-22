@@ -1,7 +1,10 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import { validateCuratedToolsCandidateRevision } from "@/lib/curated-tools-candidate-audit";
+import {
+  D091_PILOT_SYSTEM_SLUGS,
+  validateCuratedToolsCandidateRevision,
+} from "@/lib/curated-tools-candidate-audit";
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 import {
   parseFirebaseSolutionRegistryRevision,
@@ -15,25 +18,37 @@ async function readRevision(filePath: string) {
   );
 }
 
-const candidatePath = process.argv[2];
+const args = process.argv.slice(2);
+const pilotMode = args[0] === "--pilot";
+if (pilotMode) args.shift();
+const candidatePath = args[0];
 if (!candidatePath) {
   throw new Error(
-    "Usage: npm run audit:d091 -- <candidate.json> [active-revision.json]",
+    pilotMode
+      ? "Usage: npm run audit:d091:pilot -- <candidate.json> [active-revision.json]"
+      : "Usage: npm run audit:d091 -- <candidate.json> [active-revision.json]",
   );
 }
 
-const activePath = process.argv[3] ??
+const activePath = args[1] ??
   "src/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json";
 const [candidate, activeRevision] = await Promise.all([
   readRevision(candidatePath),
   readRevision(activePath),
 ]);
-const expectedSystemSlugs = enterpriseCatalog.map(({ slug }) => slug);
+const canonicalSystemSlugs = enterpriseCatalog.map(({ slug }) => slug);
+const expectedSystemSlugs = pilotMode
+  ? [...D091_PILOT_SYSTEM_SLUGS]
+  : canonicalSystemSlugs;
 const activeToolSlugs = new Set(toolDirectory.map(getToolDirectorySlug));
 const errors = [
   ...validateFirebaseSolutionRegistryRevision(candidate, {
     expectedSystemSlugs,
   }),
+  ...validateFirebaseSolutionRegistryRevision(activeRevision, {
+    expectedSystemSlugs: canonicalSystemSlugs,
+    requirePublishedRevision: true,
+  }).map((error) => `active revision: ${error}`),
   ...validateCuratedToolsCandidateRevision(candidate, {
     activeRevision,
     activeToolSlugs,
@@ -47,10 +62,11 @@ if (errors.length > 0) {
 } else {
   console.log(JSON.stringify({
     revisionId: candidate.revisionId,
+    scope: pilotMode ? "five-system-pilot" : "all-115-systems",
     systems: expectedSystemSlugs.length,
     softwarePlacements: candidate.placements.filter(
       ({ placement }) => placement.section === "software",
     ).length,
-    status: "ready-for-preview",
+    status: pilotMode ? "pilot-ready-for-preview" : "ready-for-final-preview",
   }, null, 2));
 }

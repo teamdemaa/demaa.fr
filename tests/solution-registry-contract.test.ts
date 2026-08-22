@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("server-only", () => ({}));
 
 import {
+  buildStableSolutionPlacementId,
   parseSolutionPlacement,
   parseSolutionResource,
   selectPublishedSolutionPlacements,
@@ -54,6 +55,26 @@ function publishedPlacement(): SolutionPlacement {
 }
 
 describe("Solutions registry contract", () => {
+  it("accepts stable placement IDs and retained legacy rank suffixes", () => {
+    const placement = publishedPlacement();
+    const stableId = buildStableSolutionPlacementId(placement);
+
+    expect(validateSolutionPlacement({
+      ...placement,
+      placementId: stableId,
+      rank: 4,
+    }, now)).toEqual([]);
+    expect(validateSolutionPlacement({
+      ...placement,
+      placementId: `${stableId}:1`,
+      rank: 4,
+    }, now)).toEqual([]);
+    expect(validateSolutionPlacement({
+      ...placement,
+      placementId: "other-system:qonto:software",
+    }, now)).toContain("solution placement ID must match its semantic fields");
+  });
+
   it("keeps editorial selection independent from commercial relationship", () => {
     const placement = {
       ...structuredClone(solutionMigrationCandidatePlacements[0]),

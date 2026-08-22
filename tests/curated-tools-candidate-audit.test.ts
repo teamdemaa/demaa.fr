@@ -6,6 +6,7 @@ import {
 } from "@/lib/curated-tools-candidate-audit";
 import {
   fingerprintFirebaseSolutionRegistryRevision,
+  validateFirebaseSolutionRegistryRevision,
   type FirebaseSolutionRegistryRevision,
 } from "@/lib/firebase-solution-registry-contract";
 
@@ -32,7 +33,7 @@ function revision(input?: {
   statuses?: "draft" | "published";
 }) {
   const status = input?.statuses ?? "published";
-  const resources = Array.from({ length: 10 }, (_, index) => ({
+  const softwareResources = Array.from({ length: 10 }, (_, index) => ({
     resource: {
       resourceSlug: `tool-${index + 1}`,
       resourceType: "software" as const,
@@ -47,7 +48,7 @@ function revision(input?: {
       ...review(`resource-${index + 1}`),
     },
   }));
-  const placements = resources.map(({ resource }, index) => ({
+  const softwarePlacements = softwareResources.map(({ resource }, index) => ({
     placement: {
       placementId: index === 0 && input?.legacyFirstId
         ? input.legacyFirstId
@@ -74,6 +75,43 @@ function revision(input?: {
       ctaLabel: "Découvrir",
     },
   }));
+  const levierResource = {
+    resource: {
+      resourceSlug: "levier",
+      resourceType: "tool" as const,
+      name: "Levier",
+      description: "Ressource opérationnelle Demaa utilisée par le système métier.",
+      interactionMode: "system_delivery" as const,
+      commercialRelationship: "owned" as const,
+      status: "published" as const,
+      resourceVersion: "d091.v1",
+      publicationBlockers: [],
+      ...review("resource-levier"),
+    },
+  };
+  const levierPlacement = {
+    placement: {
+      placementId: "test-system:levier:models:1",
+      systemSlug: "test-system",
+      resourceSlug: "levier",
+      rank: 1,
+      section: "models" as const,
+      usage: "Utiliser Levier pour structurer le suivi opérationnel du système.",
+      fitRationale: "Levier constitue la ressource opérationnelle canonique de ce système métier.",
+      fitConstraints: ["Adapter le contenu à la situation réelle de l'entreprise."],
+      editorialStatus: "selected" as const,
+      commercialRelationship: "owned" as const,
+      status: "published" as const,
+      placementVersion: "d091.v1",
+      publicationBlockers: [],
+      ...review("placement-levier"),
+    },
+    presentation: {
+      displayCategory: "Ressource",
+    },
+  };
+  const resources = [...softwareResources, levierResource];
+  const placements = [...softwarePlacements, levierPlacement];
   const withoutFingerprint = {
     schemaVersion: 1 as const,
     revisionId: "d091-test",
@@ -94,6 +132,10 @@ function revision(input?: {
 describe("D-091 curated tools candidate audit", () => {
   it("accepts ten published, evidenced and rank-stable tools", () => {
     const candidate = revision();
+    expect(validateFirebaseSolutionRegistryRevision(candidate, {
+      expectedSystemSlugs: ["test-system"],
+      now: new Date(NOW),
+    })).toEqual([]);
     expect(validateCuratedToolsCandidateRevision(candidate, {
       activeToolSlugs: new Set(candidate.resources.map(({ resource }) => resource.resourceSlug)),
       expectedSystemSlugs: ["test-system"],
@@ -102,7 +144,7 @@ describe("D-091 curated tools candidate audit", () => {
 
   it("fails closed for draft entries and incomplete coverage", () => {
     const candidate = revision({ statuses: "draft" });
-    candidate.placements.pop();
+    candidate.placements.splice(0, 1);
     const errors = validateCuratedToolsCandidateRevision(candidate, {
       expectedSystemSlugs: ["test-system"],
     });

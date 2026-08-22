@@ -31,7 +31,7 @@
         "n8n",
         "power-bi"
       ],
-      "contradictoryReview": "Deux ATS seulement. Les autres places couvrent clients, qualification, entretiens, collaboration, automatisation et reporting."
+      "compositionRationale": "Deux ATS seulement. Les autres places couvrent clients, qualification, entretiens, collaboration, automatisation et reporting."
     },
     {
       "systemSlug": "saas",
@@ -54,7 +54,7 @@
         "n8n",
         "google-workspace"
       ],
-      "contradictoryReview": "La sélection évite de doubler CRM, support et gestion de projet et couvre le cycle produit, commercial et opérationnel."
+      "compositionRationale": "La sélection évite de doubler CRM, support et gestion de projet et couvre le cycle produit, commercial et opérationnel."
     },
     {
       "systemSlug": "agence-web",
@@ -77,7 +77,7 @@
         "n8n",
         "google-workspace"
       ],
-      "contradictoryReview": "Webflow et WordPress répondent à des contextes de livraison différents ; les autres outils couvrent conception, code, projet, commercial et automatisation."
+      "compositionRationale": "Webflow et WordPress répondent à des contextes de livraison différents ; les autres outils couvrent conception, code, projet, commercial et automatisation."
     },
     {
       "systemSlug": "cabinet-comptable",
@@ -100,7 +100,7 @@
         "google-workspace",
         "cegid"
       ],
-      "contradictoryReview": "Plusieurs suites comptables restent justifiées par leurs positionnements distincts ; collecte, paie, conseil, documentation et collaboration complètent la production."
+      "compositionRationale": "Plusieurs suites comptables restent justifiées par leurs positionnements distincts ; collecte, paie, conseil, documentation et collaboration complètent la production."
     },
     {
       "systemSlug": "batiment",
@@ -123,7 +123,7 @@
         "google-workspace",
         "oryka"
       ],
-      "contradictoryReview": "Les suites de gestion sont complétées par achats-marges, planning, terrain, formulaires et documents ; aucune place n'est réservée à une catégorie."
+      "compositionRationale": "Les suites de gestion sont complétées par achats-marges, planning, terrain, formulaires et documents ; aucune place n'est réservée à une catégorie."
     }
   ],
   "activationBlockers": [
