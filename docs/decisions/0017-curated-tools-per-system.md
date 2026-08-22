@@ -79,6 +79,18 @@ concurrent.
     Services dans Solutions. L'exécution devra les aligner sur la séparation
     déjà livrée dans l'application, sans retirer Services du payload contextuel,
     et vérifier tracking, SEO, JSON-LD et liens vers la destination canonique.
+13. Les identifiants de placements déjà persistés dans les plans restent
+    stables lorsque le rang éditorial change. Le rang est une propriété de
+    présentation, pas l'identité. Tout nouveau placement D-091 reçoit un
+    identifiant indépendant du rang et l'audit compare la révision active à la
+    candidate.
+14. Le passage de trois à dix outils ne modifie pas le contrat des aides
+    contextuelles dans les Actions : aucune recommandation générique, une au
+    plus par Action et deux recommandations commerciales au plus par plan.
+15. Les dix outils visibles et leurs rangs doivent provenir du même read-model
+    publié dans l'API, l'application, les pages publiques et les données
+    structurées. Le JSON-LD ne doit ni tronquer arbitrairement la liste à huit,
+    ni mélanger Services au classement Outils.
 
 ## Contrôles bloquants
 
@@ -95,6 +107,10 @@ points suivants :
 - justification réellement contextualisée au métier ;
 - limite ou prérequis réel, sans texte inventé ;
 - aucune publication issue d'un simple remplissage de quota.
+- stabilité des identifiants des placements conservés, indépendamment de leur
+  nouveau rang ;
+- absence de régression des plafonds et règles d'abstention des aides
+  contextuelles dans les Actions.
 
 Le contrôle porte sur les révisions Firebase candidate et active, pas seulement
 sur `system-tool-recommendations.ts`. La révision finale ne contient que les dix
@@ -124,6 +140,13 @@ doit pas recevoir automatiquement dix ATS.
 8. Activer une nouvelle révision Firebase atomiquement après GO PROD.
 9. Déprécier les sources parallèles seulement après contrôle de parité et
    période de rollback.
+
+La révision active reste inchangée tant que les 115 systèmes ne possèdent pas
+chacun dix placements réellement validés. Les cinq pilotes sont consultés via
+un read-model candidate/Preview et ne déclenchent aucune activation partielle.
+Les ressources outils encore absentes du registre Firebase sont créées et
+validées avant leurs placements ; une association ne peut jamais créer
+implicitement une ressource.
 
 ## Hors périmètre
 

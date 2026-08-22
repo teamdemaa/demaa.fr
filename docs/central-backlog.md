@@ -1619,6 +1619,18 @@ n'est modifiée par cette décision documentaire.
 - [ ] Auditer la révision Firebase candidate et active, pas seulement la liste
   legacy : exactement dix placements `software` sélectionnés pour le public,
   rangs 1–10, ressources actives et publication fail-closed.
+- [ ] Préserver les `placementId` historiques des placements conservés lorsque
+  leur rang change ; utiliser des identifiants indépendants du rang pour les
+  nouveaux placements et tester les sélections déjà enregistrées.
+- [ ] Créer et valider explicitement dans Firebase toute ressource outil encore
+  absente avant de créer ses placements ; aucune association ne crée une
+  ressource implicitement.
+- [ ] Prouver que le passage à dix outils ne change pas les limites des Actions :
+  aucune recommandation générique, une carte au plus par Action et deux aides
+  commerciales au plus par plan.
+- [ ] Aligner les dix outils et leurs rangs entre API, interface, pages Système
+  et JSON-LD ; ne pas conserver la troncature historique à huit solutions ni y
+  mélanger Services.
 - [ ] Garder tout pool de recherche supérieur à dix hors de la révision finale
   et traiter explicitement les anciennes sélections de Services afin d'éviter
   un faux état « Service déjà sélectionné ».

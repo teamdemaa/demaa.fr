@@ -314,6 +314,14 @@ function getPublishedSolutionResources(sections: SystemPageSolutionSections) {
   return [...resources.values()];
 }
 
+function getPublishedToolPlacements(sections: SystemPageSolutionSections) {
+  return sections
+    .filter(({ section }) => section === "software")
+    .flatMap(({ placements }) => placements)
+    .sort((left, right) => left.rank - right.rank)
+    .slice(0, 10);
+}
+
 function buildSystemPageTitle(
   data: SystemDetailPageData,
   solutionSections: SystemPageSolutionSections,
@@ -431,6 +439,7 @@ export function buildSystemPageJsonLd(
     ) ?? []
   ).slice(0, 8);
   const listedSolutions = getPublishedSolutionResources(solutionSections).slice(0, 8);
+  const listedTools = getPublishedToolPlacements(solutionSections);
   const listedResources = getSystemResourcesForSystem(data.system.slug);
 
   return [
@@ -490,6 +499,30 @@ export function buildSystemPageJsonLd(
         })),
       ],
     },
+    ...(listedTools.length > 0 ? [{
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: `Outils recommandés pour le système métier ${data.system.name}`,
+      numberOfItems: listedTools.length,
+      itemListElement: listedTools.map((placement, index) => {
+        const item = {
+          "@type": "ListItem",
+          position: index + 1,
+          name: placement.resource.name,
+        };
+        const interaction = placement.resource.interaction;
+        if (
+          interaction.interactionMode !== "external_link" &&
+          interaction.interactionMode !== "detail"
+        ) return item;
+        return {
+          ...item,
+          url: interaction.href.startsWith("/")
+            ? `${origin}${interaction.href}`
+            : interaction.href,
+        };
+      }),
+    }] : []),
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",

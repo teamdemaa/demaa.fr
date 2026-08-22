@@ -581,7 +581,6 @@ function findAccompanimentAid(
   action: ActionPlanViewAction,
   placements: readonly RenderableSolutionPlacementDto[],
   input: {
-    selectedPlacementIds: ReadonlySet<string>;
     systemId: string;
   },
 ): ScoredSolutionAid | null {
@@ -609,9 +608,10 @@ function findAccompanimentAid(
     aid: toSolutionAid({
       kind: "accompaniment",
       placement: best,
-      relationship: input.selectedPlacementIds.has(best.placementId)
-        ? "selected_in_solutions"
-        : "suggested",
+      // Services now live in their own destination and are no longer
+      // selectable in Solutions. Historical service placement IDs must not
+      // surface a misleading "already selected" state.
+      relationship: "suggested",
       systemId: input.systemId,
     }),
     score: scored.find(({ candidate }) => candidate.placementId === best.placementId)?.score ?? 0,
@@ -702,7 +702,6 @@ export function buildActionPlanContextualAids(input: {
   const accompanimentCandidate = input.actions
     .flatMap((action) => {
       const candidate = findAccompanimentAid(action, servicePlacements, {
-        selectedPlacementIds,
         systemId: input.systemId,
       });
       return candidate ? [candidate] : [];
