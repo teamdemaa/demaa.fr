@@ -4,19 +4,19 @@ import { useEffect, useState } from "react";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 const GENERATION_QUESTIONS = [
-  "Si je m’absente un mois, mon entreprise continue-t-elle de fonctionner ?",
-  "Quelles décisions dépendent encore systématiquement de moi ?",
-  "Mon équipe sait-elle quoi faire sans attendre mes instructions ?",
-  "Que pourrais-je supprimer, simplifier, déléguer ou automatiser ?",
-  "Est-ce que la qualité reste constante lorsque je ne supervise pas directement ?",
+  "Quelles tâches reviennent chaque semaine ?",
+  "Où les informations sont-elles ressaisies ou recherchées ?",
+  "Qu’est-ce qui attend encore votre validation ?",
+  "Que peut-on supprimer, simplifier, déléguer ou automatiser ?",
+  "Quel résultat permettrait de vérifier que cela fonctionne mieux ?",
 ] as const;
 
 const GENERATION_QUESTIONS_EN = [
-  "If I stepped away for a month, would the business keep running?",
-  "Which decisions still depend on me every time?",
-  "Does my team know what to do without waiting for my instructions?",
-  "What could I remove, simplify, delegate or automate?",
-  "Does quality remain consistent when I am not directly supervising?",
+  "Which tasks come back every week?",
+  "Where is information re-entered or searched for?",
+  "What is still waiting for your approval?",
+  "What can be removed, simplified, delegated or automated?",
+  "What result would show that it is working better?",
 ] as const;
 
 export default function ActionPlanGenerationScreen({

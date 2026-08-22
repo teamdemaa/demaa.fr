@@ -102,24 +102,20 @@ describe("action plan experience architecture", () => {
     expect(uiCopy).not.toContain("heroDescription");
     expect(experience).not.toContain("uiCopy.heroDescription");
     expect(experience).toContain("<ActionPlanHeroTitle");
-    expect(heroTitle).toContain('["entreprise", "agence", "cabinet"]');
-    expect(heroTitle).not.toContain('"startup"');
-    expect(heroTitle).toContain('prefers-reduced-motion: reduce');
+    expect(heroTitle).toContain("Qu’est-ce qui vous prend trop de temps aujourd’hui ?");
     expect(heroTitle).toContain('aria-label={accessibleTitle}');
-    expect(heroTitle).toContain('`${subject}\\u00a0?`');
-    expect(heroTitle).toContain('phase === "typing"');
-    expect(heroTitle).toContain('phase === "deleting"');
-    expect(heroTitle).toContain("animatedPhrase.slice(0, typedLength)");
-    expect(heroTitle).not.toContain("transition-opacity");
+    expect(heroTitle).not.toContain("useEffect");
+    expect(heroTitle).not.toContain("setTimeout");
+    expect(heroTitle).not.toContain("TypewriterPhrase");
     expect(plansIndex).not.toContain("plan.contentLocaleCode");
     expect(experience).toContain("createManualActionPlan()");
     expect(experience).toContain("createManualActionPlanWorkspaceState()");
     expect(experience).toContain("onAddAction={handleAddAction}");
-    expect(generationScreen).toContain("Si je m’absente un mois, mon entreprise continue-t-elle de fonctionner ?");
-    expect(generationScreen).toContain("Quelles décisions dépendent encore systématiquement de moi ?");
-    expect(generationScreen).toContain("Mon équipe sait-elle quoi faire sans attendre mes instructions ?");
-    expect(generationScreen).toContain("Que pourrais-je supprimer, simplifier, déléguer ou automatiser ?");
-    expect(generationScreen).toContain("Est-ce que la qualité reste constante lorsque je ne supervise pas directement ?");
+    expect(generationScreen).toContain("Quelles tâches reviennent chaque semaine ?");
+    expect(generationScreen).toContain("Où les informations sont-elles ressaisies ou recherchées ?");
+    expect(generationScreen).toContain("Qu’est-ce qui attend encore votre validation ?");
+    expect(generationScreen).toContain("Que peut-on supprimer, simplifier, déléguer ou automatiser ?");
+    expect(generationScreen).toContain("Quel résultat permettrait de vérifier que cela fonctionne mieux ?");
     expect(experience).toContain("headerActions={(");
     expect(result).not.toContain('type PlanSection = "tasks" | "strategy"');
     expect(result).not.toContain('>Stratégie</button>');
@@ -137,7 +133,7 @@ describe("action plan experience architecture", () => {
     expect(result).not.toContain('aria-label="Ajouter une action"\n            />');
     expect(result).not.toContain("Générer un plan à partir de ma situation");
     expect(generationBar).toContain(
-      '"Qu’est-ce qui freine votre entreprise ?"',
+      '"Qu’est-ce qui vous prend trop de temps aujourd’hui ?"',
     );
     expect(generationBar).not.toContain('"Que voulez-vous modifier ?"');
     expect(result).toContain("isBlankManualPlan && onGeneratePlan");

@@ -1677,19 +1677,20 @@ Statut : **validé pour implémentation ; Preview, fusion et Production soumises
 
 ##### Lot 2 — Entrée opérationnelle et IA
 
-- [ ] Remplacer le titre par « Qu’est-ce qui vous prend trop de temps
+- [x] Remplacer le titre par « Qu’est-ce qui vous prend trop de temps
   aujourd’hui ? » et supprimer son typewriter.
-- [ ] Conserver les CTA et faire tourner les exemples uniquement dans le champ
+- [x] Conserver les CTA et faire tourner les exemples uniquement dans le champ
   vide, avec un nom accessible centré sur les tâches, blocages et opérations.
-- [ ] Aligner les exemples et l'écran d'attente sur tâches récurrentes,
+- [x] Aligner les exemples et l'écran d'attente sur tâches récurrentes,
   ressaisies, validations, simplification et résultat observable.
-- [ ] Modifier les prompts français et anglais sans activer l'anglais :
+- [x] Modifier les prompts français et anglais sans activer l'anglais :
   simplifier avant d'automatiser, mesurer plutôt qu'inventer, ne forcer ni
   marque ni prestation et traiter honnêtement un autre problème réel.
-- [ ] Conserver ActionPlan V4, trois ou quatre Actions par défaut, une cinquième
+- [x] Conserver ActionPlan V4, trois ou quatre Actions par défaut, une cinquième
   seulement si nécessaire, et au maximum la réparation IA existante.
-- [ ] Ajouter une matrice de scénarios déterministes et une recette humaine du
-  vrai modèle en Preview, sans snapshot de formulation exacte.
+- [x] Ajouter une matrice de scénarios déterministes sans snapshot de
+  formulation exacte.
+- [ ] Effectuer la recette humaine du vrai modèle en Preview.
 
 ##### Lot 3 — Plan et Stratégie
 
