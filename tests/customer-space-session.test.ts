@@ -28,6 +28,7 @@ import { GET as getCustomerSession } from "@/app/api/auth/session/route";
 describe("customer-space session helper", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    delete process.env.DEMAA_GUEST_PRODUCT_ENABLED;
     mocks.cookies.mockResolvedValue({
       get: vi.fn().mockReturnValue({ value: "session-cookie" }),
     });
@@ -35,6 +36,17 @@ describe("customer-space session helper", () => {
       companyId: "company-1",
       membershipId: "membership-1",
     });
+  });
+
+  it("does not inspect or repair a customer session when the guest product is enabled", async () => {
+    process.env.DEMAA_GUEST_PRODUCT_ENABLED = "true";
+
+    const response = await getCustomerSession();
+
+    expect(response.status).toBe(404);
+    expect(response.headers.get("cache-control")).toContain("no-store");
+    expect(mocks.getIdentityFromCustomerSessionToken).not.toHaveBeenCalled();
+    expect(mocks.ensureDefaultCompanyForIdentity).not.toHaveBeenCalled();
   });
 
   it("derives the full UID identity from the HttpOnly cookie", async () => {

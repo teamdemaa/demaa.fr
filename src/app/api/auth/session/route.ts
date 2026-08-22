@@ -17,6 +17,7 @@ import {
   normalizeInterfaceLocaleCode,
 } from "@/lib/international-context";
 import { saveMemberLocalePreference } from "@/lib/member-locale-preference.server";
+import { isGuestProductEnabled } from "@/lib/guest-action-plan-security.server";
 
 export const runtime = "nodejs";
 
@@ -29,6 +30,13 @@ type SessionBody = {
   idToken?: unknown;
   returnTo?: unknown;
 };
+
+function retiredCustomerSessionResponse() {
+  return NextResponse.json(
+    { error: "Cette route n’est plus disponible." },
+    { status: 404, headers: PRIVATE_NO_STORE_HEADERS },
+  );
+}
 
 function readCookie(request: Request, name: string) {
   const cookies = request.headers.get("cookie")?.split(";") ?? [];
@@ -46,6 +54,7 @@ function readCookie(request: Request, name: string) {
 }
 
 export async function POST(request: Request) {
+  if (isGuestProductEnabled()) return retiredCustomerSessionResponse();
   const blockedHost = enforceAllowedHost(request);
   if (blockedHost) return blockedHost;
   const blockedOrigin = enforceSameOrigin(request);
@@ -137,6 +146,7 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
+  if (isGuestProductEnabled()) return retiredCustomerSessionResponse();
   const identity = await getCurrentCustomerIdentityFromSession();
   if (!identity) {
     return NextResponse.json(

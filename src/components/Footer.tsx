@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { UserRound } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
+import { isGuestProductEnabled } from "@/lib/guest-action-plan-security.server";
 
 const directoryLinks = [
   { label: "Annuaire outils", href: "/annuaire-outils" },
@@ -29,6 +30,7 @@ const resourceLinks = [
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const linkClass = "text-sm text-neutral-500 transition-colors hover:text-neutral-950";
+  const showCustomerLogin = !isGuestProductEnabled();
 
   return (
     <footer data-site-footer className="mt-auto border-t border-neutral-200 bg-white py-16 text-neutral-950">
@@ -103,16 +105,18 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 border-t border-neutral-200 pt-8">
-          <div className="flex justify-center">
-            <Link
-              href="/connexion"
-              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue/56 transition hover:border-dema-forest/24 hover:text-brand-blue/72"
-              aria-label="Se connecter"
-            >
-              <UserRound className="h-4 w-4 shrink-0" aria-hidden="true" />
-              <span>Se connecter</span>
-            </Link>
-          </div>
+          {showCustomerLogin ? (
+            <div className="flex justify-center">
+              <Link
+                href="/connexion"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-sm font-medium text-brand-blue/56 transition hover:border-dema-forest/24 hover:text-brand-blue/72"
+                aria-label="Se connecter"
+              >
+                <UserRound className="h-4 w-4 shrink-0" aria-hidden="true" />
+                <span>Se connecter</span>
+              </Link>
+            </div>
+          ) : null}
 
           <div className="mt-8 flex flex-col items-center justify-between text-xs text-gray-500 sm:flex-row">
             <p>© {currentYear} Demaa. Tous droits réservés.</p>
