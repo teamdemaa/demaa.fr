@@ -314,6 +314,14 @@ function getPublishedSolutionResources(sections: SystemPageSolutionSections) {
   return [...resources.values()];
 }
 
+function getPublishedNonToolSolutionResources(
+  sections: SystemPageSolutionSections,
+) {
+  return getPublishedSolutionResources(
+    sections.filter(({ section }) => section !== "software"),
+  );
+}
+
 function getPublishedToolPlacements(sections: SystemPageSolutionSections) {
   return sections
     .filter(({ section }) => section === "software")
@@ -438,7 +446,7 @@ export function buildSystemPageJsonLd(
       card.items.map((item) => ({ title: item.process })),
     ) ?? []
   ).slice(0, 8);
-  const listedSolutions = getPublishedSolutionResources(solutionSections).slice(0, 8);
+  const listedSolutions = getPublishedNonToolSolutionResources(solutionSections).slice(0, 8);
   const listedTools = getPublishedToolPlacements(solutionSections);
   const listedResources = getSystemResourcesForSystem(data.system.slug);
 

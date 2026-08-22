@@ -142,6 +142,18 @@ describe("system page SEO published Solutions boundary", () => {
     expect(exposed).not.toMatch(
       /Legacy Outil Fantôme|Partenaire Referral|annuaire-outils|écosystème/i,
     );
+    const generalList = itemList(jsonLd);
+    expect(generalList?.itemListElement).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: "Prestataire Facturation" }),
+      ]),
+    );
+    expect(generalList?.itemListElement).not.toContainEqual(
+      expect.objectContaining({ name: "Qonto" }),
+    );
+    expect(generalList?.itemListElement).not.toContainEqual(
+      expect.objectContaining({ name: "Demaa Pilotage" }),
+    );
     const tools = toolItemList(jsonLd);
     expect(tools?.itemListElement).toEqual([
       expect.objectContaining({ name: "Qonto", position: 1 }),
