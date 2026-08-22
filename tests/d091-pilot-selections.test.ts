@@ -17,7 +17,7 @@ import {
 async function manifest() {
   return JSON.parse(await readFile(
     new URL(
-      "../docs/research/d091-tools/pilot-selections.v2.json",
+      "../docs/research/d091-tools/pilot-reviewed-selections.v1.json",
       import.meta.url,
     ),
     "utf8",
@@ -44,7 +44,8 @@ describe("D-091 pilot research selections", () => {
       expect(new Set(system.toolCandidatesByRank.map(({ toolSlug }) => toolSlug)).size)
         .toBe(system.toolCandidatesByRank.length);
       expect(system.compositionRationale.length).toBeGreaterThan(50);
-      for (const { toolSlug } of system.toolCandidatesByRank) {
+      for (const candidate of system.toolCandidatesByRank) {
+        const { toolSlug } = candidate;
         const tool = getToolDirectoryItemBySlug(toolSlug);
         expect(tool, `${system.systemSlug}:${toolSlug}`).toBeDefined();
         expect(tool?.sources?.some((source) => source.startsWith("https://")))
@@ -52,6 +53,15 @@ describe("D-091 pilot research selections", () => {
         expect(Date.parse(tool?.lastReviewedAt ?? "")).toBeGreaterThanOrEqual(
           Date.parse("2026-02-22"),
         );
+        const reviewed = candidate as typeof candidate & Record<string, unknown>;
+        expect(String(reviewed.usage ?? "").length).toBeGreaterThan(20);
+        expect(String(reviewed.fitRationale ?? "").length).toBeGreaterThan(30);
+        expect(reviewed.fitConstraints).toEqual(expect.arrayContaining([
+          expect.any(String),
+        ]));
+        expect(String(reviewed.officialSourceUrl ?? "")).toMatch(/^https:\/\//);
+        expect(String(reviewed.evidenceClaim ?? "").length).toBeGreaterThan(30);
+        expect(Date.parse(String(reviewed.reviewedAt ?? ""))).not.toBeNaN();
       }
     }
     expect(validateSolutionCurationResearchManifest(payload, {
@@ -67,15 +77,11 @@ describe("D-091 pilot research selections", () => {
 
     expect(recruitment?.toolCandidatesByRank.map(({ toolSlug }) => toolSlug)).toEqual([
       "recruitee",
-      "teamtailor",
       "hubspot",
       "calendly",
-      "typeform",
       "aircall",
-      "zoom",
       "google-workspace",
       "n8n",
-      "power-bi",
     ]);
   });
 
@@ -112,7 +118,6 @@ describe("D-091 pilot research selections", () => {
       "agence-de-recrutement:unknown-tool: selected tool is absent from reviewed research",
       "agence-de-recrutement: selected tools do not cover priority need relation-clients",
       "agence-de-recrutement: selected tools do not cover priority need collaboration-et-documents",
-      "agence-de-recrutement: selected tools do not cover priority need automatisation-et-reporting",
     ]));
 
     expect(validateCuratedSelectionAgainstResearch(

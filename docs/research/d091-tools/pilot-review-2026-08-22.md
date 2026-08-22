@@ -1,10 +1,10 @@
 # D-091 — Revue des cinq pilotes au 22 août 2026
 
-Statut : **pools contrôlés, non publiables**.
+Statut : **seconde revue terminée, révision candidate Preview contrôlée**.
 
 Cette revue ne modifie ni le registre Firebase actif, ni l'interface, ni la
-Production. Elle vérifie la cohérence de la méthode avant la revue métier
-contradictoire et la construction d'une révision candidate complète.
+Production. Elle fixe la sélection pilote opposable utilisée pour générer la
+révision candidate complète.
 
 ## Contrôles fermés
 
@@ -21,46 +21,49 @@ contradictoire et la construction d'une révision candidate complète.
 - le gate pilote exige une révision candidate complète des 115 systèmes et ne
   peut pas déplacer le pointeur actif.
 
-## Points à arbitrer pendant la seconde revue
+## Décisions de la seconde revue
 
 ### Agence de recrutement
 
-Le pool couvre sourcing et diffusion, vivier, relation client, entretiens,
-documents, automatisation et reporting. Recruitee et Teamtailor sont deux
-alternatives ATS à comparer, pas deux choix obligatoires. HubSpot et Aircall
-servent la relation client ; ils ne doivent pas être classés comme ATS.
+Six outils sont retenus : Recruitee, HubSpot, Calendly, Aircall,
+Google Workspace et n8n. Teamtailor, Typeform, Zoom et Power BI sont retirés :
+ils dupliquent respectivement l’ATS, la qualification, la visio ou le reporting
+déjà couvert, sans valeur assez distincte pour ce pilote.
 
 ### SaaS
 
-Le pool est équilibré entre revenu récurrent, vente, développement, qualité,
-support et collaboration. La seconde revue doit vérifier si chaque outil garde
-une valeur distincte pour une petite équipe : GitHub/Vercel, Linear, Sentry et
-PostHog couvrent des étapes différentes, mais leur ordre dépend de la maturité
-du produit.
+Huit outils sont retenus : Stripe, Attio, GitHub, Vercel, Linear, Sentry,
+PostHog et Intercom. Google Workspace et n8n sont retirés de la sélection
+métier : GitHub et Linear couvrent déjà la collaboration prioritaire, tandis
+que l’automatisation générique n’est pas indispensable à tous les SaaS.
 
 ### Agence web
 
-Webflow et WordPress sont des alternatives de production dont la coexistence
-doit être justifiée par les types de projets réellement livrés. GitHub/Vercel
-ne sont utiles que pour les agences qui développent du code. Le pool final peut
-donc être plus court selon la cible retenue.
+Huit outils sont retenus : Figma, Webflow, WordPress, GitHub, Vercel, Asana,
+Sellsy et n8n. Webflow et WordPress restent deux alternatives de production
+explicitement distinctes ; GitHub et Vercel sont conditionnels aux projets
+codés. Slack et Google Workspace sont retirés car trop transverses.
 
 ### Cabinet comptable
 
-Le pool contient plusieurs suites de production concurrentes. Elles ne doivent
-pas toutes être conservées sans segmentation explicite par taille, organisation
-ou besoin. Tiimora nécessite en plus la validation de transparence, sécurité et
-relation commerciale déjà inscrite au backlog. Dext, RCA et Lefebvre Dalloz
-répondent à des besoins distincts et ne doivent pas être comparés comme des
-suites comptables équivalentes.
+Sept outils sont retenus : Pennylane, MyUnisoft, ACD, Silae, Dext, RCA et
+Lefebvre Dalloz. Les trois premières sont présentées comme alternatives de
+suite principale ; les quatre autres couvrent paie, collecte, conseil et
+documentation. Cegid et Google Workspace sont retirés car trop génériques.
+Tiimora reste exclu tant que transparence, sécurité et relation commerciale ne
+sont pas validées.
 
 ### Bâtiment
 
-Vertuoza, ProGBat, Graneet, Sage Batigest Connect et Obat se chevauchent
-partiellement. La seconde revue doit définir les profils auxquels chaque
-alternative apporte une valeur distincte. Alobees, Fieldwire et Kizeo Forms
-couvrent davantage le terrain ; Oryka est rattaché au planning des équipes, pas
-à la rentabilité chantier.
+Sept outils sont retenus : Obat, Vertuoza, Graneet, Sage Batigest Connect,
+Alobees, Fieldwire et Kizeo Forms. Les quatre premiers correspondent à des
+profils de gestion différents ; les trois autres couvrent planning, chantier,
+plans, réserves et formulaires terrain. ProGBat, Oryka et Google Workspace sont
+retirés pour éviter redondance et contenu trop transverse.
+
+Le détail opposable — ordre, besoin, usage, contrainte, source officielle et
+date de revue — se trouve dans `pilot-reviewed-selections.v1.json`. Le volume
+final varie de six à huit outils selon le métier ; aucun quota n'est rempli.
 
 ## Écosystème connexe constaté
 
@@ -76,9 +79,14 @@ couvrent davantage le terrain ; Oryka est rattaché au planning des équipes, pa
 Ces absences sont acceptables. Elles ne doivent jamais être comblées par des
 cartes faibles.
 
+La candidate pilote retire donc les anciens placements Fournisseurs et Réseaux
+des cinq systèmes. Ils resteront vides jusqu'à une revue dédiée apportant
+preuve officielle, contrainte réelle et date d'expiration. Le fournisseur
+Juridi Consulting du cabinet comptable est lui aussi retiré de la candidate :
+sa publication historique ne remplace pas la preuve exigée par D-091.
+
 ## Prochaine sortie attendue
 
-Pour chaque pilote : liste retenue à volume variable, ordre, besoin couvert,
-source officielle, usage, contrainte, date de revue et décision contradictoire.
-Seulement ensuite, transformer les éléments retenus en ressources et placements
-d'une révision Firebase candidate complète, puis lancer le gate Preview.
+Faire valider les cinq compositions sur la Preview, puis appliquer cette méthode
+aux 110 autres systèmes par lots bornés. La candidate globale devra être auditée
+et recettée à son tour avant tout GO de déplacement du pointeur Firebase.

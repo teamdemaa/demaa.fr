@@ -1,0 +1,442 @@
+{
+  "schemaVersion": 2,
+  "decisionId": "D-091",
+  "status": "research-candidate",
+  "selectionPolicy": "evidence-threshold",
+  "runtimeActivation": false,
+  "systems": [
+    {
+      "systemSlug": "agence-de-recrutement",
+      "priorityNeeds": [
+        "candidatures-et-vivier",
+        "sourcing-et-diffusion",
+        "relation-clients",
+        "qualification-et-entretiens",
+        "collaboration-et-documents",
+        "automatisation-et-reporting"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "recruitee",
+          "coveredNeedIds": ["candidatures-et-vivier", "sourcing-et-diffusion", "qualification-et-entretiens", "automatisation-et-reporting"],
+          "usage": "Centraliser les candidatures, le vivier, les entretiens et la diffusion des offres dans un ATS unique.",
+          "fitRationale": "Recruitee couvre le cœur opérationnel d’une agence de recrutement sans multiplier les outils de suivi candidat.",
+          "fitConstraints": ["Vérifier que les fonctions agence et la gestion des clients correspondent au modèle du cabinet.", "Prévoir la reprise et la conformité des données candidats existantes."],
+          "officialSourceUrl": "https://recruitee.com/fr/",
+          "evidenceClaim": "Recruitee centralise ATS, viviers, diffusion, entretiens, automatisations et rapports.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "hubspot",
+          "coveredNeedIds": ["relation-clients"],
+          "usage": "Suivre les prospects entreprises, les missions ouvertes et les relances commerciales dans un CRM distinct du vivier candidat.",
+          "fitRationale": "HubSpot apporte une vraie couche de relation client que l’ATS ne remplace pas toujours dans une agence.",
+          "fitConstraints": ["Limiter le périmètre aux fonctions CRM réellement utilisées pour éviter une configuration trop lourde.", "Les fonctions avancées deviennent payantes selon les hubs et le volume."],
+          "officialSourceUrl": "https://www.hubspot.fr/products/crm",
+          "evidenceClaim": "HubSpot fournit un CRM pour organiser contacts, opportunités et activités commerciales.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "calendly",
+          "coveredNeedIds": ["qualification-et-entretiens"],
+          "usage": "Planifier les entretiens candidats et rendez-vous clients sans multiplier les échanges de disponibilité.",
+          "fitRationale": "Calendly reste utile lorsque plusieurs recruteurs partagent des créneaux externes et des règles de réservation.",
+          "fitConstraints": ["L’ATS peut déjà couvrir une partie de la planification : vérifier le besoin avant d’ajouter l’outil.", "Configurer les agendas et délais de disponibilité avec soin."],
+          "officialSourceUrl": "https://calendly.com/fr",
+          "evidenceClaim": "Calendly automatise la prise de rendez-vous et la synchronisation des agendas.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "aircall",
+          "coveredNeedIds": ["relation-clients", "qualification-et-entretiens"],
+          "usage": "Structurer les appels candidats et clients lorsque l’équipe gère un volume téléphonique réellement récurrent.",
+          "fitRationale": "Aircall est pertinent pour une agence dont la relation candidats-clients repose fortement sur le téléphone et le suivi d’équipe.",
+          "fitConstraints": ["Surdimensionné pour une personne seule ou un faible volume d’appels.", "Vérifier les intégrations avec le CRM et l’ATS retenus."],
+          "officialSourceUrl": "https://aircall.io/fr/logiciel-centre-appels/",
+          "evidenceClaim": "Aircall fournit téléphonie cloud, routage, supervision et intégrations CRM pour les équipes.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "google-workspace",
+          "coveredNeedIds": ["collaboration-et-documents"],
+          "usage": "Partager les documents de mission, comptes rendus, modèles et agendas dans un socle bureautique commun.",
+          "fitRationale": "Google Workspace couvre les documents et la collaboration transverses sans prétendre remplacer l’ATS ou le CRM.",
+          "fitConstraints": ["Définir les droits d’accès aux données candidats et clients.", "Éviter de recréer dans Drive les dossiers déjà structurés dans l’ATS."],
+          "officialSourceUrl": "https://workspace.google.com/intl/fr/",
+          "evidenceClaim": "Google Workspace regroupe messagerie, agenda, stockage et documents collaboratifs.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "n8n",
+          "coveredNeedIds": ["automatisation-et-reporting"],
+          "usage": "Relier ATS, CRM et outils internes lorsque des ressaisies ou synchronisations récurrentes subsistent.",
+          "fitRationale": "n8n apporte une couche d’automatisation distincte uniquement lorsque les intégrations natives ne couvrent pas le processus.",
+          "fitConstraints": ["Nécessite une personne capable de concevoir, surveiller et maintenir les workflows.", "Ne pas automatiser des données sensibles sans valider sécurité et hébergement."],
+          "officialSourceUrl": "https://n8n.io/",
+          "evidenceClaim": "n8n permet de construire et exploiter des workflows d’automatisation connectés.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "La sélection couvre le cœur candidat, la relation client, les rendez-vous, les documents et l’automatisation. Un seul ATS est retenu ; les autres outils couvrent des besoins distincts et restent conditionnels au volume réel."
+    },
+    {
+      "systemSlug": "saas",
+      "priorityNeeds": [
+        "paiement-et-revenu-recurrent",
+        "vente-et-relation-client",
+        "developpement-et-deploiement",
+        "pilotage-produit-et-qualite",
+        "support-et-automatisation",
+        "collaboration-interne"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "stripe",
+          "coveredNeedIds": ["paiement-et-revenu-recurrent"],
+          "usage": "Encaisser les abonnements et paiements du produit avec une infrastructure adaptée aux revenus récurrents.",
+          "fitRationale": "Stripe couvre directement le paiement et la facturation d’un SaaS sans ajouter un système financier parallèle.",
+          "fitConstraints": ["Valider frais, fiscalité, remboursements et gestion des impayés selon les marchés servis.", "La mise en œuvre technique et les webhooks doivent être maintenus."],
+          "officialSourceUrl": "https://stripe.com/fr/billing",
+          "evidenceClaim": "Stripe Billing gère abonnements, facturation récurrente et paiements.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "attio",
+          "coveredNeedIds": ["vente-et-relation-client"],
+          "usage": "Suivre prospects, essais, partenaires et comptes clients dans un CRM flexible pour une petite équipe SaaS.",
+          "fitRationale": "Attio apporte une couche commerciale structurée tout en restant adaptable aux objets et relations d’un SaaS.",
+          "fitConstraints": ["La flexibilité demande de définir clairement le modèle de données et les étapes du pipeline.", "Vérifier les automatisations nécessaires avant de remplacer un CRM existant."],
+          "officialSourceUrl": "https://attio.com/",
+          "evidenceClaim": "Attio propose un CRM personnalisable avec données, workflows et collaboration.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "github",
+          "coveredNeedIds": ["developpement-et-deploiement", "collaboration-interne"],
+          "usage": "Centraliser le code, les revues, les issues techniques et les automatisations de livraison du produit.",
+          "fitRationale": "GitHub constitue le socle de collaboration et de traçabilité technique pour une équipe qui développe son SaaS.",
+          "fitConstraints": ["Définir les droits, protections de branches et règles de revue.", "Ne remplace pas à lui seul le pilotage produit ou la supervision en production."],
+          "officialSourceUrl": "https://github.com/features",
+          "evidenceClaim": "GitHub regroupe dépôts, collaboration, issues, pull requests et automatisations.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "vercel",
+          "coveredNeedIds": ["developpement-et-deploiement"],
+          "usage": "Déployer et prévisualiser une application web lorsque l’architecture du SaaS est compatible avec la plateforme.",
+          "fitRationale": "Vercel apporte une valeur distincte de GitHub pour le déploiement, les previews et l’exploitation du frontend.",
+          "fitConstraints": ["Pertinent surtout pour les applications et frameworks compatibles avec la plateforme.", "Surveiller coûts, régions, limites et dépendance à l’hébergement choisi."],
+          "officialSourceUrl": "https://vercel.com/docs",
+          "evidenceClaim": "Vercel fournit déploiements, previews et infrastructure pour applications web.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "linear",
+          "coveredNeedIds": ["pilotage-produit-et-qualite", "collaboration-interne"],
+          "usage": "Prioriser bugs, cycles et évolutions produit dans un espace commun à l’équipe produit et technique.",
+          "fitRationale": "Linear couvre le pilotage de l’exécution produit sans dupliquer le suivi de code de GitHub.",
+          "fitConstraints": ["Peut être superflu pour une équipe très petite utilisant déjà efficacement les issues GitHub.", "Définir une frontière claire entre demandes produit et tâches techniques."],
+          "officialSourceUrl": "https://linear.app/features",
+          "evidenceClaim": "Linear fournit issues, cycles et roadmaps pour les équipes produit et engineering.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "sentry",
+          "coveredNeedIds": ["pilotage-produit-et-qualite"],
+          "usage": "Détecter et prioriser les erreurs rencontrées par les utilisateurs dans l’application en production.",
+          "fitRationale": "Sentry apporte une observation des erreurs distincte de l’analytics produit et du suivi des tickets.",
+          "fitConstraints": ["Configurer l’échantillonnage et la protection des données sensibles.", "Un bon triage reste nécessaire pour éviter le bruit d’alertes."],
+          "officialSourceUrl": "https://sentry.io/welcome/",
+          "evidenceClaim": "Sentry fournit suivi des erreurs et performance des applications.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "posthog",
+          "coveredNeedIds": ["pilotage-produit-et-qualite"],
+          "usage": "Comprendre l’usage réel du produit, les parcours et l’impact des évolutions sur l’activation et la rétention.",
+          "fitRationale": "PostHog couvre l’analytics produit et l’expérimentation, un besoin différent de la détection d’erreurs.",
+          "fitConstraints": ["Définir un plan de mesure limité avant d’instrumenter.", "Respecter le consentement et minimiser les données collectées."],
+          "officialSourceUrl": "https://posthog.com/product",
+          "evidenceClaim": "PostHog propose analytics produit, replay, feature flags et expérimentation.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "intercom",
+          "coveredNeedIds": ["support-et-automatisation"],
+          "usage": "Centraliser les demandes d’aide, la messagerie client et le libre-service lorsque le volume de support le justifie.",
+          "fitRationale": "Intercom couvre la relation support dans le produit et ses automatisations sans être présenté comme indispensable au démarrage.",
+          "fitConstraints": ["Le coût et la complexité peuvent être disproportionnés pour un très faible volume de support.", "Définir précisément les données utilisateur transmises au service."],
+          "officialSourceUrl": "https://www.intercom.com/helpdesk",
+          "evidenceClaim": "Intercom fournit helpdesk, messagerie, base de connaissances et automatisation du support.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "La sélection suit la chaîne revenu, vente, développement, déploiement, qualité, apprentissage produit et support. Les outils génériques de bureautique et d’automatisation sont retirés car le socle retenu couvre déjà la collaboration et les besoins prioritaires."
+    },
+    {
+      "systemSlug": "agence-web",
+      "priorityNeeds": [
+        "conception-et-production",
+        "developpement-et-deploiement",
+        "gestion-projets-clients",
+        "vente-et-facturation",
+        "collaboration-et-automatisation"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "figma",
+          "coveredNeedIds": ["conception-et-production", "collaboration-et-automatisation"],
+          "usage": "Concevoir, prototyper et faire valider les interfaces avec les clients avant la production.",
+          "fitRationale": "Figma couvre la conception collaborative, un besoin distinct des outils de construction et de déploiement.",
+          "fitConstraints": ["Définir les règles de partage et de validation client.", "Le design system doit rester proportionné à la taille des projets."],
+          "officialSourceUrl": "https://www.figma.com/design/",
+          "evidenceClaim": "Figma permet la conception et le prototypage collaboratifs d’interfaces.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "webflow",
+          "coveredNeedIds": ["conception-et-production", "developpement-et-deploiement"],
+          "usage": "Produire des sites marketing visuels lorsque le projet correspond au CMS et au modèle d’hébergement Webflow.",
+          "fitRationale": "Webflow constitue une option de production visuelle distincte pour les projets où la liberté de mise en page prime.",
+          "fitConstraints": ["Vérifier coûts d’hébergement, export, CMS et besoins fonctionnels avant de standardiser.", "Ne convient pas à tous les projets applicatifs ou fortement personnalisés."],
+          "officialSourceUrl": "https://webflow.com/",
+          "evidenceClaim": "Webflow fournit conception visuelle, CMS et publication de sites web.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "wordpress",
+          "coveredNeedIds": ["conception-et-production", "developpement-et-deploiement"],
+          "usage": "Livrer des sites éditoriaux ou vitrines extensibles lorsque le client doit garder la main sur ses contenus.",
+          "fitRationale": "WordPress reste une alternative distincte à Webflow pour les projets nécessitant extensions, portabilité ou écosystème CMS ouvert.",
+          "fitConstraints": ["Prévoir maintenance, mises à jour, sécurité et qualité des extensions.", "Le choix d’hébergement et de thème influence fortement la performance."],
+          "officialSourceUrl": "https://wordpress.org/",
+          "evidenceClaim": "WordPress est un CMS open source extensible pour sites et contenus administrables.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "github",
+          "coveredNeedIds": ["developpement-et-deploiement", "collaboration-et-automatisation"],
+          "usage": "Versionner le code, organiser les revues et automatiser la livraison des projets développés sur mesure.",
+          "fitRationale": "GitHub est pertinent pour la partie développement de l’agence sans être imposé aux projets entièrement no-code.",
+          "fitConstraints": ["Inutile pour un projet sans code ni fichiers versionnés.", "Configurer les accès clients et protections de branches."],
+          "officialSourceUrl": "https://github.com/features",
+          "evidenceClaim": "GitHub fournit dépôts, collaboration, revues et automatisations de développement.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "vercel",
+          "coveredNeedIds": ["developpement-et-deploiement"],
+          "usage": "Déployer les sites et applications web codés avec des previews partageables pour la recette client.",
+          "fitRationale": "Vercel apporte une couche de déploiement distincte pour les projets compatibles, complémentaire au dépôt GitHub.",
+          "fitConstraints": ["Réservé aux architectures compatibles ; ne remplace pas tous les hébergeurs.", "Surveiller coûts et limites selon le trafic et les fonctions serveur."],
+          "officialSourceUrl": "https://vercel.com/docs",
+          "evidenceClaim": "Vercel fournit déploiements et previews pour applications web.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "asana",
+          "coveredNeedIds": ["gestion-projets-clients", "collaboration-et-automatisation"],
+          "usage": "Planifier les projets clients, responsabilités, validations et échéances dans une vue partagée par l’équipe.",
+          "fitRationale": "Asana structure le delivery multi-projets sans dupliquer les outils de production ou de vente.",
+          "fitConstraints": ["Définir des modèles de projet simples pour éviter la surcharge de gestion.", "Limiter l’accès client aux informations qui le concernent."],
+          "officialSourceUrl": "https://asana.com/fr/product",
+          "evidenceClaim": "Asana organise projets, tâches, responsabilités, échéances et workflows.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "sellsy",
+          "coveredNeedIds": ["vente-et-facturation"],
+          "usage": "Relier prospection, devis, factures et relances commerciales pour suivre la rentabilité du portefeuille client.",
+          "fitRationale": "Sellsy couvre le cycle commercial et administratif d’une agence française dans un outil distinct du suivi de production.",
+          "fitConstraints": ["Vérifier les modules réellement nécessaires et l’intégration comptable.", "Ne pas dupliquer les données avec un autre CRM déjà installé."],
+          "officialSourceUrl": "https://go.sellsy.com/",
+          "evidenceClaim": "Sellsy regroupe CRM, devis, facturation et suivi commercial pour TPE et PME.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "n8n",
+          "coveredNeedIds": ["collaboration-et-automatisation"],
+          "usage": "Automatiser les transferts entre formulaires, CRM, gestion de projet et outils de production lorsque les intégrations natives sont insuffisantes.",
+          "fitRationale": "n8n est retenu uniquement comme couche d’intégration pour les agences capables de maintenir leurs workflows.",
+          "fitConstraints": ["Demande conception, surveillance et maintenance des automatisations.", "Valider les accès et données clients traités par chaque workflow."],
+          "officialSourceUrl": "https://n8n.io/",
+          "evidenceClaim": "n8n permet de construire des workflows connectant applications et logique métier.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "La sélection sépare clairement conception, deux modes de production de sites, développement, déploiement, gestion de projets, commerce et automatisation. Slack et Google Workspace sont retirés car trop transverses pour améliorer cette sélection métier."
+    },
+    {
+      "systemSlug": "cabinet-comptable",
+      "priorityNeeds": [
+        "production-comptable",
+        "collecte-et-collaboration-client",
+        "paie-et-social",
+        "pilotage-et-conseil",
+        "documentation-et-organisation"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "pennylane",
+          "coveredNeedIds": ["production-comptable", "collecte-et-collaboration-client"],
+          "usage": "Gérer la production comptable et partager les flux financiers avec les clients dans une plateforme commune.",
+          "fitRationale": "Pennylane constitue une option intégrée pour les cabinets recherchant production, collaboration client et données financières.",
+          "fitConstraints": ["Valider migration, modules, intégrations et couverture des dossiers du cabinet.", "Ne couvre pas seul toutes les obligations sociales et documentaires."],
+          "officialSourceUrl": "https://www.pennylane.com/fr/expert-comptable",
+          "evidenceClaim": "Pennylane propose une plateforme de production et de collaboration dédiée aux cabinets comptables.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "myunisoft",
+          "coveredNeedIds": ["production-comptable", "collecte-et-collaboration-client"],
+          "usage": "Structurer la production et la relation cabinet-client avec une plateforme pensée pour les cabinets français.",
+          "fitRationale": "MyUnisoft reste une alternative métier distincte pour les cabinets qui privilégient un environnement cabinet-client intégré.",
+          "fitConstraints": ["Comparer profondeur fonctionnelle, migration et interopérabilité avec le système existant.", "Une suite principale doit être choisie plutôt que cumulée avec une autre."],
+          "officialSourceUrl": "https://myunisoft.fr/",
+          "evidenceClaim": "MyUnisoft fournit production comptable, gestion interne et collaboration client pour les cabinets.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "acd",
+          "coveredNeedIds": ["production-comptable", "paie-et-social"],
+          "usage": "Couvrir une production cabinet plus profonde incluant comptabilité, fiscalité et paie dans une suite établie.",
+          "fitRationale": "ACD est conservé comme alternative structurée pour les cabinets ayant un périmètre de production plus large.",
+          "fitConstraints": ["Comparer le coût et la complexité de déploiement avec la taille du cabinet.", "Éviter de cumuler plusieurs suites principales de production."],
+          "officialSourceUrl": "https://www.acd-groupe.fr/",
+          "evidenceClaim": "ACD propose des logiciels de comptabilité, fiscalité, paie et gestion pour cabinets.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "silae",
+          "coveredNeedIds": ["paie-et-social"],
+          "usage": "Fiabiliser la production de paie et les obligations sociales lorsque le cabinet réalise cette mission.",
+          "fitRationale": "Silae couvre le domaine paie-social distinct des fonctions de production comptable principales.",
+          "fitConstraints": ["Pertinent uniquement si le cabinet assure effectivement la paie ou le social.", "Vérifier formation, paramétrage et responsabilités de conformité."],
+          "officialSourceUrl": "https://www.silae.fr/solutions-paie/",
+          "evidenceClaim": "Silae propose une solution de paie et de gestion sociale destinée notamment aux professionnels.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "dext",
+          "coveredNeedIds": ["collecte-et-collaboration-client"],
+          "usage": "Collecter, classer et transmettre les justificatifs pour réduire les ressaisies entre clients et cabinet.",
+          "fitRationale": "Dext répond à un point opérationnel précis de collecte documentaire, distinct du choix de la suite comptable.",
+          "fitConstraints": ["Vérifier la compatibilité avec la suite de production retenue.", "Définir les règles de contrôle malgré l’automatisation de la collecte."],
+          "officialSourceUrl": "https://dext.com/fr/",
+          "evidenceClaim": "Dext automatise la collecte et le traitement des pièces pour les cabinets comptables.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "rca",
+          "coveredNeedIds": ["pilotage-et-conseil"],
+          "usage": "Produire prévisionnels, tableaux de bord et missions de conseil au-delà de la tenue comptable.",
+          "fitRationale": "RCA est retenu pour développer les missions de pilotage et de conseil, un besoin différent de la production courante.",
+          "fitConstraints": ["Nécessite une offre de conseil structurée et du temps d’accompagnement client.", "Vérifier les modules adaptés aux missions réellement vendues."],
+          "officialSourceUrl": "https://rca.fr/logiciels-experts/",
+          "evidenceClaim": "RCA propose des logiciels de prévisionnel, pilotage et conseil pour experts-comptables.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "lefebvre-dalloz",
+          "coveredNeedIds": ["documentation-et-organisation"],
+          "usage": "Accéder à une documentation professionnelle pour sécuriser les recherches fiscales, sociales et juridiques du cabinet.",
+          "fitRationale": "Lefebvre Dalloz couvre la documentation de référence sans être présenté comme une suite de production comptable.",
+          "fitConstraints": ["Choisir les fonds documentaires correspondant aux missions du cabinet.", "La documentation ne remplace pas la validation professionnelle d’un cas particulier."],
+          "officialSourceUrl": "https://www.lefebvre-dalloz.fr/",
+          "evidenceClaim": "Lefebvre Dalloz fournit documentation et solutions d’information juridique, fiscale et sociale.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "Trois suites principales sont conservées comme alternatives à comparer, puis quatre briques distinctes couvrent paie, collecte, conseil et documentation. Tiimora reste exclu tant que transparence, sécurité et relation commerciale ne sont pas validées."
+    },
+    {
+      "systemSlug": "batiment",
+      "priorityNeeds": [
+        "devis-et-facturation",
+        "couts-et-rentabilite-chantier",
+        "planning-equipes",
+        "suivi-terrain-et-reserves",
+        "documents-et-coordination"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "obat",
+          "coveredNeedIds": ["devis-et-facturation"],
+          "usage": "Créer devis et factures avec un outil simple lorsque l’entreprise artisanale veut cadrer d’abord sa gestion commerciale.",
+          "fitRationale": "Obat est conservé comme option accessible pour les artisans et petites structures qui n’ont pas besoin d’un ERP complet.",
+          "fitConstraints": ["Peut devenir limité pour le pilotage multi-chantiers ou une organisation plus complexe.", "Comparer les fonctions de rentabilité et planning avant de choisir."],
+          "officialSourceUrl": "https://www.obat.fr/",
+          "evidenceClaim": "Obat propose devis, factures et gestion commerciale pour artisans et entreprises du bâtiment.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "vertuoza",
+          "coveredNeedIds": ["devis-et-facturation", "couts-et-rentabilite-chantier", "planning-equipes"],
+          "usage": "Relier gestion commerciale, planning et suivi de rentabilité dans une entreprise BTP en croissance.",
+          "fitRationale": "Vertuoza constitue l’option intégrée pour les équipes qui veulent piloter le chantier de la vente à l’exécution.",
+          "fitConstraints": ["Plus structurant et coûteux qu’un simple outil de devis.", "Prévoir paramétrage, reprise des données et adoption des équipes."],
+          "officialSourceUrl": "https://www.vertuoza.com/",
+          "evidenceClaim": "Vertuoza regroupe gestion commerciale, planning, chantier et rentabilité pour le BTP.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "graneet",
+          "coveredNeedIds": ["couts-et-rentabilite-chantier"],
+          "usage": "Suivre budgets, achats, marges et rentabilité par chantier dans une PME du bâtiment.",
+          "fitRationale": "Graneet est retenu pour sa spécialisation sur le pilotage financier chantier, distincte du devis simple et du suivi terrain.",
+          "fitConstraints": ["Plus pertinent pour une structure qui suit plusieurs chantiers et des coûts détaillés.", "Vérifier l’articulation avec la comptabilité et les outils déjà en place."],
+          "officialSourceUrl": "https://www.graneet.com/",
+          "evidenceClaim": "Graneet fournit un ERP de pilotage financier et de rentabilité pour entreprises du BTP.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "sage-batigest-connect",
+          "coveredNeedIds": ["devis-et-facturation", "couts-et-rentabilite-chantier"],
+          "usage": "Conserver une gestion BTP structurée avec devis, facturation et suivi lorsque l’entreprise utilise déjà l’écosystème Sage.",
+          "fitRationale": "Sage Batigest Connect reste une alternative pertinente pour les structures établies recherchant continuité et profondeur de gestion.",
+          "fitConstraints": ["Comparer ergonomie, migration et coût avec les solutions plus récentes.", "Le bénéfice est plus fort lorsque l’entreprise utilise déjà des produits Sage."],
+          "officialSourceUrl": "https://www.sage.com/fr-fr/produits/sage-batigest-connect/",
+          "evidenceClaim": "Sage Batigest Connect couvre devis, facturation et gestion pour les professionnels du bâtiment.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "alobees",
+          "coveredNeedIds": ["planning-equipes", "suivi-terrain-et-reserves"],
+          "usage": "Planifier les équipes, suivre les heures et partager l’avancement des chantiers avec le terrain.",
+          "fitRationale": "Alobees apporte un suivi opérationnel d’équipe distinct des outils de devis et de rentabilité.",
+          "fitConstraints": ["Vérifier l’intégration avec la gestion commerciale et la paie.", "La qualité dépend de l’adoption quotidienne par les équipes terrain."],
+          "officialSourceUrl": "https://www.alobees.com/",
+          "evidenceClaim": "Alobees fournit planning, suivi d’heures et suivi de chantier pour les équipes BTP.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "fieldwire",
+          "coveredNeedIds": ["suivi-terrain-et-reserves", "documents-et-coordination"],
+          "usage": "Partager plans, tâches, observations et réserves entre chantier et bureau sur les opérations complexes.",
+          "fitRationale": "Fieldwire couvre la coordination d’exécution et les plans terrain, un besoin différent du planning d’équipe.",
+          "fitConstraints": ["Peut être trop riche pour de petits chantiers sans plans ni coordination multi-intervenants.", "Définir les règles de classement et de mise à jour des plans."],
+          "officialSourceUrl": "https://www.fieldwire.com/fr/",
+          "evidenceClaim": "Fieldwire centralise plans, tâches et suivi de chantier entre terrain et bureau.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        },
+        {
+          "toolSlug": "kizeo-forms",
+          "coveredNeedIds": ["suivi-terrain-et-reserves", "documents-et-coordination"],
+          "usage": "Remplacer les fiches papier par des formulaires et rapports terrain adaptés aux contrôles de l’entreprise.",
+          "fitRationale": "Kizeo Forms est retenu pour les relevés et rapports sur mesure qui ne sont pas bien couverts par une suite chantier standard.",
+          "fitConstraints": ["Concevoir des formulaires simples et gouverner leurs versions.", "Vérifier les exports et intégrations nécessaires avant le déploiement."],
+          "officialSourceUrl": "https://www.kizeo-forms.com/fr/",
+          "evidenceClaim": "Kizeo Forms numérise formulaires, collecte de terrain et génération de rapports.",
+          "reviewedAt": "2026-08-22T10:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "La sélection distingue quatre profils de gestion à comparer puis trois briques terrain réellement complémentaires. ProGBat et Oryka sont retirés du pilote pour éviter les doublons ; Google Workspace est trop transverse pour cette liste métier."
+    }
+  ],
+  "activationBlockers": [
+    "Construire une révision Firebase candidate complète des 115 systèmes sans changer le pointeur actif.",
+    "Auditer la révision candidate contre cette sélection revue et l’export actif figé.",
+    "Recetter API, interface, pages publiques, HTML et JSON-LD sur Preview.",
+    "Obtenir un GO PROD explicite avant tout déplacement du pointeur Firebase."
+  ]
+}

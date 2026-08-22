@@ -17,6 +17,7 @@
     "check:process-cadences": "vite-node --config vitest.config.ts scripts/generate-system-process-cadences.ts --check",
     "audit:d091": "vite-node --config vitest.config.ts scripts/audit-d091-curated-tools.ts",
     "audit:d091:pilot": "vite-node --config vitest.config.ts scripts/audit-d091-curated-tools.ts --pilot",
+    "build:d091:pilot-candidate": "vite-node --config vitest.config.ts scripts/build-d091-pilot-candidate.ts --write",
     "report:d091:baseline": "vite-node --config vitest.config.ts scripts/report-d091-solution-baseline.ts",
     "audit:academy:http": "node scripts/audit-academy-http.mjs",
     "validate:data": "node scripts/validate-data.mjs && node scripts/validate-process-registry.mjs && npm run check:process-cadences && node scripts/validate-systeme-catalog.mjs && node scripts/validate-sector-taxonomy.mjs && node scripts/validate-seo-routes.mjs && node scripts/validate-sector-editorial-links.mjs && node scripts/validate-build-runtime.mjs && node scripts/audit-supplier-placeholders.mjs && node scripts/audit-system-recommendations.mjs && node scripts/audit-system-discovery-recommendations.mjs && node scripts/audit-finance-network-recommendations.mjs && node scripts/audit-aid-recommendations.mjs && node scripts/audit-system-kit-previews.mjs && node scripts/audit-private-operational-system-assets.mjs && node scripts/audit-public-wording.mjs && node scripts/audit-firebase-active-solution-coverage.mjs",

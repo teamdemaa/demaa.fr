@@ -56,10 +56,10 @@ dans Firebase maintenant créerait une migration sans bénéfice utilisateur.
 
 ## Pilote
 
-`pilot-selections.v2.json` relie cinq pools de recherche aux besoins
-prioritaires des métiers. Les candidats n'y sont pas encore publiables. Ils
-doivent être vérifiés puis éventuellement retirés ; aucun remplacement n'est
-obligatoire.
+`pilot-selections.v2.json` conserve les cinq pools initiaux.
+`pilot-reviewed-selections.v1.json` contient leur seconde revue à volume
+variable, avec ordre, besoin, usage, contrainte et preuve officielle. Aucun
+remplacement n'est obligatoire lorsqu'un candidat est retiré.
 
 Le gate pilote audite ces cinq systèmes dans une **révision candidate complète
 des 115 systèmes**. Il n'accepte pas une mini-révision incompatible avec le

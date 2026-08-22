@@ -39,7 +39,7 @@ if (!candidatePath) {
 const activePath = args[1] ??
   "src/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json";
 const researchPath = args[2] ?? (pilotMode
-  ? "docs/research/d091-tools/pilot-selections.v2.json"
+  ? "docs/research/d091-tools/pilot-reviewed-selections.v1.json"
   : undefined);
 if (!researchPath) {
   throw new Error(
