@@ -44,6 +44,7 @@ describe("public guest action-plan experience", () => {
     expect(experience).toContain('>\n              Solutions\n');
     expect(experience).not.toContain('>Chiffres<');
     expect(experience).not.toContain('>Stratégie<');
+    expect(experience).toContain('text-[0.7rem] font-light leading-relaxed text-brand-blue/28');
     expect(result).toContain("<details");
     expect(result).not.toContain("onWorkspaceChange");
     expect(result).not.toContain("Disponible pendant 24 h");
@@ -54,6 +55,11 @@ describe("public guest action-plan experience", () => {
     expect(delivery).toContain('rounded-full bg-dema-forest px-5 text-sm font-medium text-white');
     expect(delivery).not.toContain("Précision <span");
     expect(delivery).not.toContain("CoachBusinessPromo");
+
+    const authenticatedExperience = source("src/components/ActionPlanExperience.tsx");
+    expect(authenticatedExperience).toContain(
+      'text-[0.7rem] font-light leading-relaxed text-brand-blue/28',
+    );
   });
 
   it("stores only temporary access coordinates, never generated plan content", () => {
