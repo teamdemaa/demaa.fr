@@ -130,6 +130,7 @@ describe("canonical Services composition in every system", () => {
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
+      "recruter-un-alternant",
     ]);
     expect(getCanonicalServiceSlugsForSystem("cabinet-comptable")).toEqual([
       "automatisation-processus",
@@ -139,6 +140,7 @@ describe("canonical Services composition in every system", () => {
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
+      "recruter-un-alternant",
     ]);
     expect(getCanonicalServiceSlugsForSystem("cabinet-davocat")).toEqual([
       "automatisation-processus",
@@ -149,6 +151,7 @@ describe("canonical Services composition in every system", () => {
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
+      "recruter-un-alternant",
     ]);
     expect(getCanonicalServiceSlugsForSystem("notaire")).toEqual([
       "automatisation-processus",
@@ -159,6 +162,7 @@ describe("canonical Services composition in every system", () => {
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
+      "recruter-un-alternant",
     ]);
     expect(getCanonicalServiceSlugsForSystem("expert-comptable")).not.toContain("formalites-entreprise");
     expect(getCanonicalServiceSlugsForSystem("assistant-administratif-externalise")).not.toContain("assistance-administrative");
@@ -250,6 +254,7 @@ describe("canonical Services composition in every system", () => {
         "gestion-reseaux-sociaux",
         "publicite-en-ligne",
         "prospection-ciblee",
+        "recruter-un-alternant",
       ]);
     expect(services?.placements.filter(({ resource }) =>
       resource.resourceSlug === "expert-comptable"

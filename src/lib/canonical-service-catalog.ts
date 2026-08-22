@@ -12,6 +12,7 @@ export const CANONICAL_SERVICE_SLUGS = [
   "gestion-reseaux-sociaux",
   "publicite-en-ligne",
   "prospection-ciblee",
+  "recruter-un-alternant",
 ] as const;
 
 export type CanonicalServiceSlug = (typeof CANONICAL_SERVICE_SLUGS)[number];
@@ -119,6 +120,19 @@ const canonicalServiceDefinitions = deepFreeze([
     included: ["Qualification des tâches, du volume et du rythme", "Recherche d’une assistante administrative adaptée", "Mise en relation et transmission du contexte utile"],
     conditions: ["Un minimum de 20 heures est prévu", "Le périmètre et les modalités sont confirmés avant le démarrage"],
     notIncluded: ["La tenue comptable ou la paie", "Les décisions de gestion prises à votre place"],
+  },
+  {
+    slug: "recruter-un-alternant", name: "Recruter un alternant", eyebrow: "Recrutement et alternance",
+    detailHref: "/services/recruter-un-alternant", packages: [],
+    summary: "Recevez des profils d’alternants correspondant aux fonctions actuellement proposées par notre école partenaire.",
+    description: "Demaa qualifie votre besoin et le transmet à l’école partenaire. L’école vérifie les profils disponibles et vous accompagne dans la mise en relation.",
+    result: "Des profils présélectionnés à étudier, sans frais de mise en relation.",
+    delivery: "third-party", monthlyAccompanimentDiscountEligible: false,
+    pricing: { mode: "fixed", amountMinor: 0, currency: "EUR", heading: "Tarif", label: "Gratuit", note: "La demande, la présentation des profils et l’accompagnement par l’école sont gratuits. Aucun paiement n’est déclenché." },
+    cta: callback,
+    included: ["Profil commercial", "Profil administratif polyvalent", "Profil montage vidéo ou création de contenu"],
+    conditions: ["Les profils dépendent des disponibilités de l’école", "L’école confirme l’adéquation du profil avec le besoin", "Vous restez libre de poursuivre le recrutement"],
+    notIncluded: ["Une garantie de recrutement", "Les coûts liés au contrat d’alternance", "La gestion du contrat réalisée par Demaa"],
   },
   {
     slug: "automatisation-processus", name: "Automatisation des processus et IA", eyebrow: "Organisation, automatisation et IA",

@@ -417,10 +417,13 @@ type ScoredSolutionAid = Readonly<{
 // the work. Broad wording such as "aide", "accompagnement" or "mettre en
 // place" is deliberately excluded to avoid unsolicited upsell.
 const EXPLICIT_DELEGATION_PATTERN =
-  /\b(confier\w*|deleg\w*|externalis\w*|mandater\w*|solliciter\w*|sous trait\w*|faire (?:appel|faire|gerer|prendre en charge|realiser|valider)\w*|trouver (?:un |une |le |la )?(?:expert|prestataire|professionnel|specialiste|quelqu)\w*)/;
+  /\b(confier\w*|deleg\w*|externalis\w*|mandater\w*|recrut\w*|solliciter\w*|sous trait\w*|faire (?:appel|faire|gerer|prendre en charge|realiser|valider)\w*|trouver (?:un |une |le |la )?(?:expert|prestataire|professionnel|specialiste|quelqu)\w*)/;
 
 const SOFTWARE_CAPABILITY_PATTERN =
   /\b(automatis|centralis|connect|crm|en ligne|integr|logiciel|multi utilisateur|outil|planning|rendez vous|synchron|temps reel|workflow)\w*/;
+
+const ALTERNANCE_INTENT_PATTERN =
+  /\b(alternan|apprenti|commercial en alternance|administratif polyvalent en alternance|monteur video en alternance|createur de contenu en alternance)\w*/;
 
 const SERVICE_INTENT_PATTERNS: Readonly<Record<string, RegExp>> = {
   "expert-comptable":
@@ -439,6 +442,7 @@ const SERVICE_INTENT_PATTERNS: Readonly<Record<string, RegExp>> = {
     /\b(publicite|campagne payante|google ads|meta ads|budget media|acquisition payante)\w*/,
   "prospection-ciblee":
     /\b(prospection|fichier prospect|recherche de prospect|qualification (des )?lead|prise de rendez vous)\w*/,
+  "recruter-un-alternant": ALTERNANCE_INTENT_PATTERN,
 };
 
 function getActionSearchText(action: ActionPlanViewAction) {
@@ -572,6 +576,9 @@ function serviceMatchesAction(
   const slug = placement.resource.resourceSlug;
   if (slug === "coach-business") return false;
   if (!isCanonicalServiceEligibleForSystem(slug, systemId)) return false;
+  if (ALTERNANCE_INTENT_PATTERN.test(actionText) && slug !== "recruter-un-alternant") {
+    return false;
+  }
   const intentPattern = SERVICE_INTENT_PATTERNS[slug];
   if (!intentPattern?.test(actionText)) return false;
   return EXPLICIT_DELEGATION_PATTERN.test(actionText);
