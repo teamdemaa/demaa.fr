@@ -326,8 +326,7 @@ function getPublishedToolPlacements(sections: SystemPageSolutionSections) {
   return sections
     .filter(({ section }) => section === "software")
     .flatMap(({ placements }) => placements)
-    .sort((left, right) => left.rank - right.rank)
-    .slice(0, 10);
+    .sort((left, right) => left.rank - right.rank);
 }
 
 function buildSystemPageTitle(

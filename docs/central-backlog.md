@@ -22,8 +22,8 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
 ## État courant Production — 22 août 2026
 
-- `main` et `origin/main` pointent sur `6d35805f`, déployé en Production par la
-  PR 171. Les références `260ad7d`, `8020e04`, `ae5029d`, `a47d844` et
+- `main` et `origin/main` pointent sur `cca1459a`, déployé en Production par la
+  PR 177. Les références `6d35805f`, `260ad7d`, `8020e04`, `ae5029d`, `a47d844` et
   `f0b4d75` restent des checkpoints historiques ; elles ne sont plus
   présentées comme la tête courante.
 - Les PR 110 à 118 ont été fusionnées séparément et vérifiées en Production :
@@ -1579,7 +1579,7 @@ Référence : [ADR 0016](decisions/0016-plan-services-and-solutions-ecosystem.md
 - [x] Recetter les parcours desktop, mobile, PWA, clavier, liens legacy et
   absence de régression française. L'anglais reste en pause.
 
-#### D-091 — Dix outils pertinents par système métier
+#### D-091 — Curation des Solutions par système métier
 
 Référence : [ADR 0017](decisions/0017-curated-tools-per-system.md).
 
@@ -1591,28 +1591,32 @@ identifiants sont en place ; aucune révision Firebase candidate ou active n'a
 
 - [x] Conserver exactement la carte actuelle et n'ajouter aucun badge, repère
   éditorial ou module « Aide au choix ».
-- [ ] Porter la section Logiciels à exactement dix outils réellement pertinents
-  pour chacun des 115 systèmes, classés simplement par pertinence.
+- [ ] Porter la section Logiciels de chaque système à une sélection variable
+  d'outils réellement pertinents, classés simplement par pertinence et couvrant
+  les besoins prioritaires du métier. Une sélection courte et solide vaut mieux
+  qu'une liste artificiellement complétée.
 - [ ] Couvrir les besoins essentiels du métier dans son ensemble : ne pas
-  remplir les dix places avec des outils génériques ni dix concurrents d'une
-  même catégorie, et n'imposer aucun quota d'ATS, CRM, ERP ou autre famille.
-- [ ] Valider chaque `toolRef` et compléter les 243 associations manquantes à
-  partir de sources officielles datées ; ne jamais importer automatiquement une
-  association faible pour atteindre le quota.
+  accumuler des outils génériques ou des concurrents d'une même catégorie, et
+  n'imposer aucun quota d'ATS, CRM, ERP ou autre famille.
+- [ ] Valider chaque `toolRef` retenu à partir de sources officielles datées ;
+  ne jamais importer automatiquement une association faible pour atteindre un
+  volume prédéfini.
 - [ ] Piloter d'abord agence de recrutement, SaaS, agence web, cabinet
   comptable et bâtiment, avec relecture contradictoire et sans règle propre à
   l'un de ces secteurs.
-- [x] Poser le gate automatisé : dix placements, couverture métier, unicité, rangs
-  continus, liens sûrs, ressources actives, preuves et dates, justification
-  contextuelle et limites factuelles. Le gate pilote couvre uniquement les cinq
-  systèmes de recherche ; le gate final exige les 115.
+- [x] Poser le gate automatisé : sélection non vide et variable, couverture
+  métier, unicité, rangs continus, liens sûrs, ressources actives, preuves et
+  dates, justification contextuelle et limites factuelles. Le gate relie
+  explicitement les placements réellement retenus aux besoins du manifeste de
+  recherche. Le gate pilote audite les cinq systèmes dans une révision
+  candidate complète ; le gate final exige un manifeste couvrant les 115.
 - [ ] Consolider Firebase comme autorité des recommandations tierces seulement
   après parité vérifiée ; conserver les sources historiques et le rollback
   jusqu'à la fin de la transition.
 - [x] Garder Services comme domaine Demaa distinct des outils et des
-  fournisseurs. Les Services ne comptent jamais dans les dix, ne partagent pas
-  leur rail et conservent tracking, SEO et source de données distincts. La
-  séparation visuelle livrée par D-090 reste la base à préserver.
+  fournisseurs. Les Services ne font jamais partie de la sélection Outils, ne
+  partagent pas leur rail et conservent tracking, SEO et source de données
+  distincts. La séparation visuelle livrée par D-090 reste la base à préserver.
 - [x] Préserver Services dans l'API, le DTO Système et
   `composeCanonicalServicesForSystem` pour les recommandations contextuelles
   strictes des Actions ; ne jamais les réinjecter comme rail Outils.
@@ -1620,34 +1624,35 @@ identifiants sont en place ; aucune révision Firebase candidate ou active n'a
   retirant Services de la liste des recommandations, puis séparer le JSON-LD
   Outils sans casser le payload contextuel.
 - [x] Préparer l'audit de la révision Firebase candidate et active, pas seulement la liste
-  legacy : exactement dix placements `software` sélectionnés pour le public,
-  rangs 1–10, ressources actives et publication fail-closed.
+  legacy : placements `software` retenus et sélectionnés pour le public, rangs
+  continus 1–N, ressources actives et publication fail-closed.
 - [x] Préserver les `placementId` historiques des placements conservés lorsque
   leur rang change ; utiliser des identifiants indépendants du rang pour les
   nouveaux placements et tester les sélections déjà enregistrées.
 - [ ] Créer et valider explicitement dans Firebase toute ressource outil encore
   absente avant de créer ses placements ; aucune association ne crée une
   ressource implicitement.
-- [x] Prouver que le passage à dix outils ne change pas les limites des Actions :
+- [x] Prouver que l'enrichissement des outils ne change pas les limites des Actions :
   aucune recommandation générique, une carte au plus par Action et deux aides
   commerciales au plus par plan.
 - [x] Aligner le read-model Outils et ses rangs entre API, interface, pages Système
-  et JSON-LD ; ne pas conserver la troncature historique à huit solutions ni y
-  mélanger Services. La preuve sur dix outils reste à exécuter sur la future
-  révision candidate.
-- [ ] Garder tout pool de recherche supérieur à dix hors de la révision finale
+  et JSON-LD ; ne pas conserver de troncature arbitraire ni y mélanger Services.
+  La preuve de parité reste à exécuter sur la future révision candidate.
+- [ ] Garder les candidats de recherche non retenus hors de la révision finale
   et traiter explicitement les anciennes sélections de Services afin d'éviter
   un faux état « Service déjà sélectionné ».
-- [ ] Appliquer des bornes propres aux autres sections : Fournisseurs 3–8 si
-  pertinents, Financement 2–5, Aides plausiblement applicables, Réseaux 2–5,
-  documents sans quota.
+- [ ] Appliquer un gate propre à chaque autre section, sans quota uniforme :
+  Fournisseurs seulement lorsqu'une relation et une utilité métier sont
+  vérifiées ; Financement selon le besoin réel et l'adéquation ; Aides selon
+  l'éligibilité plausible et la période ; Réseaux selon la portée et l'accès ;
+  documents selon leur utilité opérationnelle.
 - [ ] Recetter Preview/Production, HTML indexable et JSON-LD avant une
   activation atomique soumise à un GO PROD séparé.
 
-Critère de sortie : les 115 systèmes disposent chacun de dix outils prouvés,
-complémentaires, ordonnés et recettés, sans remplissage artificiel ni
-modification visuelle des cartes. L'activation du nouveau pointeur Firebase
-reste une opération distincte.
+Critère de sortie : les 115 systèmes disposent chacun d'une sélection variable
+d'outils prouvés, complémentaires, ordonnés et recettés, sans remplissage
+artificiel ni modification visuelle des cartes. L'activation du nouveau
+pointeur Firebase reste une opération distincte.
 
 #### D-083 — Solutions publiques simples et accompagnement progressif — historique
 
@@ -3475,27 +3480,23 @@ ne sont pas confirmés, D-071 reste documenté sans effet sur le produit.
 
 ## Prochaine action
 
-Le programme 0 à 8 est fusionné, déployé et recetté. `8020e04` reste son dernier
-commit runtime et `a47d844` la tête Production documentaire courante. Il ne
-reste aucun lot runtime ouvert dans ce programme.
+La priorité active est D-091, sans changement du registre Firebase actif ni de
+la Production pendant la phase de recherche.
 
 Ordre recommandé :
 
-1. terminer la surveillance Production de 24 à 48 heures et, dès qu'un compte
-   possédant des plans est disponible, rejouer sans créer de données
-   artificielles le parcours authentifié Plan → Chiffres → Stratégie →
-   reconnexion ;
-2. fusionner la PR documentaire D-085/D-089 contenant la résolution de langue
-   et la décision de livraison resserrée, puis resynchroniser le Google Sheet ;
-3. livrer la PR Accompagnement France D-089 afin que le catalogue, les modales,
-   `/sur-mesure` et les demandes partagent les mêmes forfaits ;
-4. retirer ensuite Opportunités des navigations tout en conservant
-   `/opportunites` directement accessible et `noindex` ;
-5. arrêter la vague Production après la recette de ces trois PR ; conserver au
-   backlog la fondation internationale cachée, Action Plan anglais,
-   Solutions/Talk to us, Academy et la recette intégrée jusqu'à un nouveau GO.
+1. valider la méthode sur les cinq pilotes en reliant chaque candidat aux
+   besoins prioritaires du métier et à des preuves officielles datées ;
+2. auditer séparément Outils, Fournisseurs, Financement, Aides et Réseaux : même
+   exigence de preuve, mais règles métier et sources de données propres ;
+3. transformer uniquement les candidats retenus en une révision Firebase
+   candidate complète, compatible avec les 115 systèmes et le rollback ;
+4. recetter le read-model sur Preview, l'API, l'interface, les pages publiques,
+   le HTML et le JSON-LD sans déplacer le pointeur actif ;
+5. faire relire le pilote, puis généraliser par familles de métiers avant un GO
+   PROD explicite et une activation atomique.
 
-Les programmes Échanger par sujets, administration enrichie, Réseau Partenaire,
-invitations multi-membres, suppression d'entreprise, paiement et marketplace
-restent différés. Ils ne doivent pas interrompre D-085 sans signal utilisateur,
-obligation opérationnelle ou risque de sécurité nouveau.
+L'internationalisation reste en pause. Les programmes Échanger par sujets,
+administration enrichie, invitations multi-membres, suppression d'entreprise,
+paiement et marketplace restent différés et ne doivent pas interrompre D-091
+sans obligation opérationnelle ou risque de sécurité nouveau.

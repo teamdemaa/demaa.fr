@@ -44,15 +44,35 @@ const SYSTEMS_WITH_THREE_VISIBLE_FINANCE_RECOMMENDATIONS = new Set([
   "demenagement",
 ]);
 
+export type FinanceRecommendationSelection = Readonly<{
+  items: readonly DemaaFinanceItem[];
+  source: "system" | "default";
+}>;
+
 export function getVisibleFinanceRecommendationCountForSystem(systemSlug: string): number {
   return SYSTEMS_WITH_THREE_VISIBLE_FINANCE_RECOMMENDATIONS.has(systemSlug) ? 3 : 2;
 }
 
 export function getRecommendedFinanceForSystem(systemSlug: string): DemaaFinanceItem[] {
-  const financeSlugs = FINANCE_RECOMMENDATIONS_BY_SYSTEM[systemSlug] ?? DEFAULT_FINANCE_ORDER;
+  return [...resolveFinanceRecommendationsForSystem(systemSlug).items];
+}
 
-  return Array.from(new Set(financeSlugs))
+export function resolveFinanceRecommendationsForSystem(
+  systemSlug: string,
+): FinanceRecommendationSelection {
+  const hasSystemSelection = Object.hasOwn(
+    FINANCE_RECOMMENDATIONS_BY_SYSTEM,
+    systemSlug,
+  );
+  const financeSlugs = hasSystemSelection
+    ? FINANCE_RECOMMENDATIONS_BY_SYSTEM[systemSlug]!
+    : DEFAULT_FINANCE_ORDER;
+
+  return {
+    items: Array.from(new Set(financeSlugs))
     .map((slug) => getDemaaFinanceBySlug(slug))
     .filter((item): item is DemaaFinanceItem => Boolean(item))
-    .slice(0, 8);
+    .slice(0, 8),
+    source: hasSystemSelection ? "system" : "default",
+  };
 }

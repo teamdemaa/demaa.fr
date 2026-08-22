@@ -2934,6 +2934,10 @@
       "slug": "sage-batigest-connect",
       "name": "Sage Batigest Connect",
       "url": "https://www.sage.com/fr-fr/produits/sage-batigest-connect/",
+      "sources": [
+        "https://www.sage.com/fr-fr/produits/sage-batigest-connect/"
+      ],
+      "lastReviewedAt": "2026-08-22",
       "category": "Outils métier",
       "sectors": [
         "Artisanat & BTP"
@@ -4489,6 +4493,10 @@
       "slug": "lefebvre-dalloz",
       "name": "Lefebvre Dalloz",
       "url": "https://www.dalloz.fr/",
+      "sources": [
+        "https://www.lefebvre-dalloz.fr/"
+      ],
+      "lastReviewedAt": "2026-08-22",
       "category": "Outils métier",
       "sectors": [
         "Services & conseil"
@@ -6932,6 +6940,10 @@
       "slug": "vercel",
       "name": "Vercel",
       "url": "https://vercel.com/",
+      "sources": [
+        "https://vercel.com/docs"
+      ],
+      "lastReviewedAt": "2026-08-22",
       "category": "IA dev",
       "sectors": [
         "Tech & Digital",

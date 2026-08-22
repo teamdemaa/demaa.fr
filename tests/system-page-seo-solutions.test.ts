@@ -164,6 +164,34 @@ describe("system page SEO published Solutions boundary", () => {
     );
   });
 
+  it("keeps every curated tool in JSON-LD instead of applying a display quota", () => {
+    const template = publishedSolutionSectionsFixture[0]!.placements[0]!;
+    const variableToolSelection = [{
+      section: "software" as const,
+      placements: Array.from({ length: 12 }, (_, index) => ({
+        ...template,
+        placementId: `cabinet-comptable:tool-${index + 1}:software`,
+        rank: index + 1,
+        resource: {
+          ...template.resource,
+          resourceSlug: `tool-${index + 1}`,
+          name: `Tool ${index + 1}`,
+        },
+      })),
+    }];
+
+    const tools = toolItemList(buildSystemPageJsonLd(
+      publishedSolutionsData,
+      variableToolSelection,
+    ));
+
+    expect(tools?.itemListElement).toHaveLength(12);
+    if (!tools?.itemListElement) throw new Error("ItemList Outils JSON-LD manquant");
+    expect(tools.itemListElement.at(-1)).toEqual(
+      expect.objectContaining({ name: "Tool 12", position: 12 }),
+    );
+  });
+
   it("feeds metadata and JSON-LD from the same server-only selector", async () => {
     const pageSource = await readFile(
       new URL("../src/app/(marketing)/systemes/[slug]/page.tsx", import.meta.url),
