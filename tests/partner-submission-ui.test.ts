@@ -117,7 +117,9 @@ describe("solution proposal UI contract", () => {
     expect(page).toContain("preserveOpportunityEnrichment(opportunities)");
     expect(submissionDialog).toContain("Ajouter des précisions");
     expect(submissionDialog).toContain("<details");
-    expect(submissionDialog).toContain('Connexion demandée à l’envoi.');
+    expect(submissionDialog).toContain('name="email"');
+    expect(submissionDialog).toContain("Votre adresse e-mail");
+    expect(submissionDialog).not.toContain("Connexion demandée à l’envoi.");
     expect(submissionDialog).not.toContain("Envoyer pour modération");
     expect(submissionDialog).not.toContain("Vous pourrez tout remplir maintenant");
     expect([page, catalog, modal].join("\n")).not.toMatch(

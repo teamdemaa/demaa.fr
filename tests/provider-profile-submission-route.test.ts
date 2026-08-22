@@ -116,7 +116,7 @@ describe("provider profile submission route", () => {
       channels: { email: false, resend: false, slack: true },
       contact: {
         company: "Studio Calme",
-        email: "maya@example.com",
+        email: "spoofed@example.net",
         name: "Maya Martin",
       },
       requestType: "provider_profile_submission",
@@ -124,15 +124,10 @@ describe("provider profile submission route", () => {
     }));
   });
 
-  it("refuses guests before accepting a provider profile", async () => {
-    mocks.requireCurrentCustomerIdentity.mockResolvedValue({
-      identity: null,
-      response: Response.json({ error: "authentication_required" }, { status: 401 }),
-    });
+  it("rejects an invalid public contact email", async () => {
+    const response = await POST(request({ email: "not-an-email" }));
 
-    const response = await POST(request());
-
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 

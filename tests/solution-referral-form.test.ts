@@ -18,7 +18,7 @@ const fields = {
 };
 
 describe("solution referral form", () => {
-  it("reuses the authenticated email and renders only the remaining fields", () => {
+  it("prefills an existing email while keeping it explicit and editable", () => {
     const markup = renderToStaticMarkup(createElement(SolutionReferralForm, {
       initialEmail: "maya@cabinet-martin.fr",
       resourceName: "JuridiConsulting",
@@ -26,9 +26,10 @@ describe("solution referral form", () => {
       systemSlug: "cabinet-comptable",
     }));
 
-    expect(markup.match(/<(?:input|textarea)\b/g)).toHaveLength(3);
+    expect(markup.match(/<(?:input|textarea)\b/g)).toHaveLength(4);
     expect(markup).toContain("Prénom");
-    expect(markup).not.toContain("E-mail professionnel");
+    expect(markup).toContain("Adresse e-mail");
+    expect(markup).toContain("maya@cabinet-martin.fr");
     expect(markup).toContain("Cabinet ou entreprise");
     expect(markup).toContain("Votre besoin");
     expect(markup).not.toMatch(/Téléphone|newsletter|volume|marque blanche/i);
