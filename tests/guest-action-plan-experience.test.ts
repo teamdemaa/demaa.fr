@@ -44,7 +44,7 @@ describe("public guest action-plan experience", () => {
     expect(experience).toContain('>\n              Solutions\n');
     expect(experience).not.toContain('>Chiffres<');
     expect(experience).not.toContain('>Stratégie<');
-    expect(experience).toContain('text-[0.7rem] font-light leading-relaxed text-brand-blue/28');
+    expect(experience).toContain('text-[0.8rem] font-light leading-relaxed text-brand-blue/28');
     expect(result).toContain("<details");
     expect(result).not.toContain("onWorkspaceChange");
     expect(result).not.toContain("Disponible pendant 24 h");
@@ -58,7 +58,7 @@ describe("public guest action-plan experience", () => {
 
     const authenticatedExperience = source("src/components/ActionPlanExperience.tsx");
     expect(authenticatedExperience).toContain(
-      'text-[0.7rem] font-light leading-relaxed text-brand-blue/28',
+      'text-[0.8rem] font-light leading-relaxed text-brand-blue/28',
     );
   });
 
