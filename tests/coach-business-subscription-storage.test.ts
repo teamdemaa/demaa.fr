@@ -72,7 +72,10 @@ import {
   resolveMonthlyAccompanimentDiscount,
   setExpertAccountantBenefitForUid,
 } from "@/lib/monthly-accompaniment-benefit.server";
-import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
+import {
+  getCanonicalServiceBySlug,
+  getCanonicalServiceRecordBySlug,
+} from "@/lib/canonical-service-catalog";
 
 function subscription(overrides: Partial<Stripe.Subscription> = {}) {
   return {
@@ -117,7 +120,7 @@ describe("monthly accompaniment benefit", () => {
       status: "active",
     });
     const eligible = getCanonicalServiceBySlug("automatisation-processus");
-    const partner = getCanonicalServiceBySlug("expert-comptable");
+    const partner = getCanonicalServiceRecordBySlug("expert-comptable");
     const coach = getCanonicalServiceBySlug("coach-business");
     if (!eligible || !partner || !coach) throw new Error("test catalog is incomplete");
 

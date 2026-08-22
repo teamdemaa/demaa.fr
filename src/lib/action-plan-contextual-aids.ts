@@ -7,6 +7,7 @@ import type { ActionPlanWorkspaceState } from "@/lib/action-plan-workspace";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 import type { SystemResource } from "@/lib/system-resource-catalog";
 import { isCanonicalServiceEligibleForSystem } from "@/lib/canonical-service-eligibility";
+import { isCanonicalServicePublic } from "@/lib/canonical-service-visibility";
 import type {
   RenderableSolutionPlacementDto,
   RenderableSolutionSectionDto,
@@ -649,7 +650,10 @@ export function buildActionPlanContextualAids(input: {
   const servicePlacements = visibleSections
     .filter(({ section }) => section === "services")
     .flatMap(({ placements }) => placements)
-    .filter(({ systemSlug }) => systemSlug === input.systemId);
+    .filter(({ resource, systemSlug }) =>
+      systemSlug === input.systemId &&
+      isCanonicalServicePublic(resource.resourceSlug),
+    );
   const mentionedTools = toolPlacements.filter((placement) =>
     sourceMentionsTool(
       [

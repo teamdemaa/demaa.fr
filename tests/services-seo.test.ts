@@ -20,11 +20,10 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services SEO and redirects", () => {
-  it("publishes nine generic detail routes and keeps Application on /sur-mesure", async () => {
+  it("publishes eight generic detail routes and keeps hidden offers out", async () => {
     expect(generateStaticParams()).toEqual([
       { slug: "automatisation-processus" },
       { slug: "coach-business" },
-      { slug: "expert-comptable" },
       { slug: "assistance-administrative" },
       { slug: "formalites-entreprise" },
       { slug: "gestion-reseaux-sociaux" },
@@ -38,6 +37,9 @@ describe("canonical Services SEO and redirects", () => {
     })).rejects.toMatchObject({ digest: "NEXT_HTTP_ERROR_FALLBACK;404" });
     await expect(generateMetadata({
       params: Promise.resolve({ slug: "application-metier" }),
+    })).rejects.toMatchObject({ digest: "NEXT_HTTP_ERROR_FALLBACK;404" });
+    await expect(generateMetadata({
+      params: Promise.resolve({ slug: "expert-comptable" }),
     })).rejects.toMatchObject({ digest: "NEXT_HTTP_ERROR_FALLBACK;404" });
   });
 
@@ -55,10 +57,9 @@ describe("canonical Services SEO and redirects", () => {
   it("emits direct Demaa offers without attributing third-party accounting fees to Demaa", () => {
     const automation = getCanonicalServiceBySlug("automatisation-processus");
     const advertising = getCanonicalServiceBySlug("publicite-en-ligne");
-    const expert = getCanonicalServiceBySlug("expert-comptable");
     const formalities = getCanonicalServiceBySlug("formalites-entreprise");
     const application = getCanonicalServiceBySlug("application-metier");
-    if (!automation || !advertising || !expert || !formalities || !application) {
+    if (!automation || !advertising || !formalities || !application) {
       throw new Error("missing canonical service fixture");
     }
 
@@ -102,8 +103,6 @@ describe("canonical Services SEO and redirects", () => {
     });
     expect(JSON.stringify(buildServicePageJsonLd(advertising))).not.toContain('"@type":"Offer"');
     expect(JSON.stringify(buildServicePageJsonLd(advertising))).not.toContain('"provider":{"@type":"Organization","name":"Demaa"}');
-    expect(JSON.stringify(buildServicePageJsonLd(expert))).not.toContain('"@type":"Offer"');
-    expect(JSON.stringify(buildServicePageJsonLd(expert))).not.toContain('"provider":{"@type":"Organization","name":"Demaa"}');
     expect(JSON.stringify(buildServicePageJsonLd(formalities))).not.toContain('"@type":"Offer"');
     expect(JSON.stringify(buildServicePageJsonLd(formalities))).not.toContain('"provider":{"@type":"Organization","name":"Demaa"}');
   });
@@ -129,7 +128,8 @@ describe("canonical Services SEO and redirects", () => {
     expect(nextConfig).toContain("source: '/systeme-marketing'");
     expect(nextConfig).toContain("source: '/marketing-ethique'");
     expect(nextConfig).toContain("destination: '/services/coach-business'");
-    expect(nextConfig).toContain("destination: '/services/expert-comptable'");
+    expect(nextConfig).toContain("source: '/services/expert-comptable'");
+    expect(nextConfig).toContain("destination: '/annuaire-experts-comptables'");
     expect(getCanonicalServiceBySlug("assistance-administrative")?.detailHref).toBe("/services/assistance-administrative");
     expect(proxy).not.toContain('"/services/"');
     expect(proxy).toContain('"/annuaire-services/"');
