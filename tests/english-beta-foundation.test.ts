@@ -18,13 +18,13 @@ describe("hidden English beta foundation", () => {
     expect(layout).toContain('document.documentElement.lang="en"');
   });
 
-  it("reuses the shared action-plan experience and English system projection", () => {
+  it("reuses the shared guest action-plan experience and English system projection", () => {
     const page = source("src/app/(english)/en/page.tsx");
     const sharedHome = source("src/components/ActionPlanHomeView.tsx");
     const config = source("src/lib/action-plan-page-config.ts");
     const localization = source("src/lib/action-plan-localization.ts");
     expect(page).toContain("<ActionPlanHomeView");
-    expect(sharedHome).toContain("<ActionPlanExperience");
+    expect(sharedHome).toContain("<GuestActionPlanExperience");
     expect(sharedHome).toContain("contentLocaleCode={config.localeCode}");
     expect(sharedHome).toContain("marketCodeAtCreation={config.marketCode}");
     expect(sharedHome).toContain("getActionPlanSystemOptionsForContext");
