@@ -11,14 +11,11 @@ export default function GuestActionPlanResult({ actionPlan }: { actionPlan: Gues
 
   return (
     <section aria-labelledby="guest-plan-title" className="pb-10">
-      <div className="mb-5 flex items-center justify-between gap-4">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">Votre plan d’action</p>
-          <h1 id="guest-plan-title" className="mt-1 text-xl font-medium text-brand-blue sm:text-2xl">
-            {actionPlan.title}
-          </h1>
-        </div>
-        <p className="shrink-0 text-xs text-dema-muted">Disponible pendant 24 h</p>
+      <div className="mb-5">
+        <p className="text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">Votre plan d’action</p>
+        <h1 id="guest-plan-title" className="mt-1 text-xl font-medium text-brand-blue sm:text-2xl">
+          {actionPlan.title}
+        </h1>
       </div>
 
       <div className="overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper">
