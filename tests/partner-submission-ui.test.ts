@@ -48,6 +48,21 @@ describe("solution proposal UI contract", () => {
     expect(form).toContain("useAccessibleDialog({ onClose })");
     expect(form).toContain("data-dialog-initial-focus");
     expect(form).toContain("Pays ou zones couverts");
+    expect(form.indexOf("Expertise principale")).toBeLessThan(
+      form.indexOf("Présentez brièvement votre expérience"),
+    );
+    expect(form.indexOf("Présentez brièvement votre expérience")).toBeLessThan(
+      form.indexOf("Nom et prénom"),
+    );
+    expect(form.indexOf("Votre message")).toBeLessThan(
+      form.indexOf("Nom et prénom"),
+    );
+    expect(form.indexOf("Nom et prénom")).toBeLessThan(
+      form.indexOf("Adresse e-mail"),
+    );
+    expect(form.indexOf("Site ou profil professionnel")).toBeLessThan(
+      form.indexOf("Adresse e-mail"),
+    );
     expect(form).not.toContain("selectedSystemSlugs");
     expect(form).not.toContain(
       "Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.",

@@ -185,25 +185,6 @@ export default function ProviderProfileModal({
             ) : null}
 
             <form onSubmit={submit} className="mt-7 space-y-5">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <label className="space-y-2 text-sm text-brand-blue">
-                  <span>Nom et prénom</span>
-                  <input required value={fullName} onChange={(event) => setFullName(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
-                </label>
-                <label className="space-y-2 text-sm text-brand-blue">
-                  <span>Adresse e-mail</span>
-                  <input required type="email" autoComplete="email" maxLength={160} value={email} onChange={(event) => setEmail(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
-                </label>
-                <label className="space-y-2 text-sm text-brand-blue">
-                  <span>{opportunity ? "Entreprise ou activité" : "Entreprise"}</span>
-                  <input required value={company} onChange={(event) => setCompany(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
-                </label>
-                <label className="space-y-2 text-sm text-brand-blue">
-                  <span>Site ou profil professionnel <span className="text-dema-muted">(facultatif)</span></span>
-                  <input value={profileUrl} onChange={(event) => setProfileUrl(event.target.value)} placeholder="https://" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
-                </label>
-              </div>
-
               {!opportunity ? (
                 <label className="block space-y-2 text-sm text-brand-blue">
                   <span>Expertise principale</span>
@@ -225,17 +206,35 @@ export default function ProviderProfileModal({
                 </label>
               ) : null}
 
-              {!opportunity ? (
-                <label className="block space-y-2 text-sm text-brand-blue">
-                  <span>Pays ou zones couverts</span>
-                  <input required value={countries} onChange={(event) => setCountries(event.target.value)} placeholder="Ex. France, Côte d’Ivoire, à distance…" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
-                </label>
-              ) : null}
-
               <label className="block space-y-2 text-sm text-brand-blue">
                 <span>{opportunity ? "Votre message" : "Présentez brièvement votre expérience"}</span>
                 <textarea required minLength={20} rows={4} value={message} onChange={(event) => setMessage(event.target.value)} className="w-full resize-y rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
               </label>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="space-y-2 text-sm text-brand-blue">
+                  <span>Nom et prénom</span>
+                  <input required value={fullName} onChange={(event) => setFullName(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                </label>
+                <label className="space-y-2 text-sm text-brand-blue">
+                  <span>{opportunity ? "Entreprise ou activité" : "Entreprise"}</span>
+                  <input required value={company} onChange={(event) => setCompany(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                </label>
+                {!opportunity ? (
+                  <label className="space-y-2 text-sm text-brand-blue">
+                    <span>Pays ou zones couverts</span>
+                    <input required value={countries} onChange={(event) => setCountries(event.target.value)} placeholder="Ex. France, Côte d’Ivoire, à distance…" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                  </label>
+                ) : null}
+                <label className="space-y-2 text-sm text-brand-blue">
+                  <span>Site ou profil professionnel <span className="text-dema-muted">(facultatif)</span></span>
+                  <input value={profileUrl} onChange={(event) => setProfileUrl(event.target.value)} placeholder="https://" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                </label>
+                <label className="space-y-2 text-sm text-brand-blue">
+                  <span>Adresse e-mail</span>
+                  <input required type="email" autoComplete="email" maxLength={160} value={email} onChange={(event) => setEmail(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                </label>
+              </div>
 
               <label className="hidden" aria-hidden="true">
                 Site secondaire
