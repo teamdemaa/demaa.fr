@@ -12,6 +12,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { CanonicalService } from "@/lib/canonical-service-catalog";
+import { LIBRARY_CARD_TITLE_CLASSNAME } from "@/lib/library-card-ui";
 
 const ICONS: Record<CanonicalService["slug"], LucideIcon> = {
   "coach-business": Compass,
@@ -55,8 +56,8 @@ function ServiceCard({
         <Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
       </span>
     </div>
-    <p className="mt-4 line-clamp-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-dema-forest">{service.eyebrow}</p>
-    <h4 className="mt-2 line-clamp-2 text-xl font-semibold leading-tight tracking-[-0.025em] text-brand-blue">{service.name}</h4>
+    <p className="mt-4 line-clamp-1 text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">{service.eyebrow}</p>
+    <h3 className={`mt-2 line-clamp-2 ${LIBRARY_CARD_TITLE_CLASSNAME}`}>{service.name}</h3>
     <p className="mt-2 line-clamp-2 text-sm leading-5 text-dema-muted">{service.summary}</p>
     {priceLabel ? (
       <p className="mt-6 text-sm font-normal text-dema-muted md:mt-auto md:pt-5">{priceLabel}</p>
@@ -91,12 +92,12 @@ function ServiceSection({
 
   return (
     <section aria-labelledby={`services-section-${services[0]?.delivery}`}>
-      <h3
+      <h2
         id={`services-section-${services[0]?.delivery}`}
-        className="text-xl font-semibold tracking-[-0.025em] text-brand-blue sm:text-2xl"
+        className="text-xl font-normal leading-[1.3] text-brand-blue"
       >
         {title}
-      </h3>
+      </h2>
       <p className="mt-2 max-w-3xl text-sm leading-6 text-dema-muted">
         {description}
       </p>
@@ -120,17 +121,8 @@ export default function ServicesCatalog({
   const partnerServices = services.filter((service) => service.delivery === "third-party");
 
   return (
-    <section aria-labelledby="services-catalog-title">
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
-        Catalogue Demaa
-      </p>
-      <h2
-        id="services-catalog-title"
-        className="mt-1.5 max-w-3xl text-2xl font-semibold tracking-[-0.035em] text-brand-blue sm:text-3xl"
-      >
-        L’accompagnement utile, au même endroit
-      </h2>
-      <div className="mt-7 space-y-10 sm:space-y-12">
+    <section aria-label="Services">
+      <div className="space-y-10 sm:space-y-12">
         <ServiceSection
           title="Nos accompagnements"
           description="Conçus et réalisés directement par Demaa."
@@ -139,7 +131,7 @@ export default function ServicesCatalog({
         />
         <ServiceSection
           title="Avec nos partenaires de confiance"
-          description="Demaa qualifie votre besoin et organise la mise en relation. Le professionnel confirme son tarif et facture directement son intervention."
+          description="Demaa qualifie votre besoin et organise la mise en relation."
           services={partnerServices}
           onServiceSelect={onServiceSelect}
         />

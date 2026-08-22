@@ -6,6 +6,7 @@ import { ChevronDown, ChevronUp, Play, Search, SlidersHorizontal } from "lucide-
 import { useMemo, useState } from "react";
 import AppLibrarySearch from "@/components/AppLibrarySearch";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
+import { LIBRARY_CARD_TITLE_CLASSNAME } from "@/lib/library-card-ui";
 import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
 import { matchesSearchQuery } from "@/lib/search";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
@@ -313,7 +314,7 @@ function AcademyCard({
         </div>
 
         <div className="px-0.5 pb-1 pt-3.5">
-          <h3 className="text-[1.05rem] font-normal leading-[1.3] text-brand-blue transition-colors group-hover:text-dema-forest sm:text-lg">
+          <h3 className={`${LIBRARY_CARD_TITLE_CLASSNAME} transition-colors group-hover:text-dema-forest`}>
             {title}
           </h3>
           <p className="mt-1.5 text-sm text-dema-muted">{meta}</p>
