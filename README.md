@@ -43,6 +43,22 @@ Do not expose this flag in `NEXT_PUBLIC_*`. The French application remains the
 default and `/en` must stay disabled in Production until the integrated beta
 gate (Action Plan, Solutions, Academy, and Talk to us) is complete.
 
+The public guest-plan foundation is also fail-closed and remains invisible
+until its dedicated UI rollout. A controlled Preview requires all of the
+following server-only values:
+
+```bash
+DEMAA_GUEST_PRODUCT_ENABLED=true
+DEMAA_GUEST_AI_DAILY_LIMIT=25
+SERVICE_REQUEST_RATE_LIMIT_HMAC_SECRET=a-random-secret-of-at-least-32-characters
+```
+
+`DEMAA_GUEST_AI_CIRCUIT_OPEN=true` immediately blocks new guest AI work without
+affecting existing authenticated plans. Guest access keys are browser-held,
+sent only in the request body or `Authorization` header, stored only as hashes,
+and never placed in URLs. Guest generations expire after 24 hours; the
+operational cleanup removes their expired documents and budget reservations.
+
 The runtime service account also needs Firestore access plus the two Firebase
 Auth permissions `firebaseauth.users.createSession` and
 `firebaseauth.users.get`. Keep the latter in a minimal custom IAM role rather
