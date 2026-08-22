@@ -8,18 +8,12 @@ import type {
   StoredServiceRequest,
   StoredSolutionReferral,
 } from "@/lib/service-request-storage.server";
+import {
+  sendTransactionalEmail,
+  TransactionalEmailProviderError,
+} from "@/lib/transactional-email.server";
 
-export class RequestDeliveryProviderError extends Error {
-  readonly code: string;
-  readonly providerStatus: number | null;
-
-  constructor(code: string, providerStatus: number | null = null) {
-    super(code);
-    this.name = "RequestDeliveryProviderError";
-    this.code = code;
-    this.providerStatus = providerStatus;
-  }
-}
+export { TransactionalEmailProviderError as RequestDeliveryProviderError };
 
 function escapeHtml(value: string) {
   return value
@@ -30,44 +24,6 @@ function escapeHtml(value: string) {
     .replaceAll("'", "&#039;");
 }
 
-async function sendResendEmail(input: {
-  html: string;
-  idempotencyKey: string;
-  replyTo?: string;
-  subject: string;
-  text: string;
-  to: string;
-}) {
-  const apiKey = process.env.RESEND_API_KEY?.trim();
-  const from = process.env.RESEND_FROM_EMAIL?.trim();
-  if (!apiKey || !from) throw new RequestDeliveryProviderError("email_configuration_missing");
-  let response: Response;
-  try {
-    response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-        "Idempotency-Key": input.idempotencyKey,
-      },
-      body: JSON.stringify({
-        from,
-        html: input.html,
-        reply_to: input.replyTo,
-        subject: input.subject,
-        text: input.text,
-        to: input.to,
-      }),
-      cache: "no-store",
-    });
-  } catch {
-    throw new RequestDeliveryProviderError("email_network_failed");
-  }
-  if (!response.ok) {
-    await response.body?.cancel().catch(() => undefined);
-    throw new RequestDeliveryProviderError("email_provider_rejected", response.status);
-  }
-}
 
 function internalRecipient() {
   return process.env.LEAD_NOTIFICATION_EMAIL?.trim() || "team@demaa.fr";
@@ -118,7 +74,7 @@ async function syncMarketing(record: StoredServiceRequest | StoredSolutionReferr
       firstName: record.contact.first_name,
     });
   } catch {
-    throw new RequestDeliveryProviderError("marketing_provider_failed");
+    throw new TransactionalEmailProviderError("marketing_provider_failed");
   }
 }
 
@@ -132,7 +88,7 @@ export async function deliverServiceRequestChannel(input: {
   if (channel === "slack") return sendServiceRequestSlack(record, requestId);
   if (channel === "customer_email") {
     const subject = `Demande reçue - ${record.service.service_name}`;
-    return sendResendEmail({
+    return sendTransactionalEmail({
       html: `<p>Bonjour ${escapeHtml(record.contact.first_name)},</p><p>Nous avons bien reçu votre demande concernant <strong>${escapeHtml(record.service.service_name)}</strong>. L’équipe vous recontactera pour confirmer le besoin et la prochaine étape.</p><p>Référence : ${escapeHtml(requestId)}</p>`,
       idempotencyKey: `service-request-${requestId}-customer`,
       subject,
@@ -144,7 +100,7 @@ export async function deliverServiceRequestChannel(input: {
     ? `${(record.service.pricing.amountMinor / 100).toFixed(2)} EUR HT`
     : "Sur devis";
   const subject = `[Services] ${record.service.service_name}`;
-  return sendResendEmail({
+  return sendTransactionalEmail({
     html: `<h1>${escapeHtml(subject)}</h1><p>Référence : ${escapeHtml(requestId)}</p><p><strong>Prénom :</strong> ${escapeHtml(record.contact.first_name)}<br><strong>E-mail :</strong> ${escapeHtml(record.contact.email)}<br><strong>Entreprise :</strong> ${escapeHtml(record.contact.company)}<br><strong>Système :</strong> ${escapeHtml(record.system_slug ?? "Non renseigné")}<br><strong>Opérateur :</strong> ${escapeHtml(record.service.contracting_party)}<br><strong>Tarification :</strong> ${escapeHtml(pricing)}<br><strong>Version :</strong> ${escapeHtml(record.service.offer_version)}</p><p style="white-space:pre-wrap">${escapeHtml(record.need)}</p>`,
     idempotencyKey: `service-request-${requestId}-internal`,
     replyTo: record.contact.email,
@@ -176,7 +132,7 @@ export async function deliverSolutionReferralChannel(input: {
   if (channel === "slack") return sendSolutionReferralSlack(record, requestId);
   if (channel === "customer_email") {
     const subject = `Demande de mise en relation reçue - ${record.solution.resource_name}`;
-    return sendResendEmail({
+    return sendTransactionalEmail({
       html: `<p>Bonjour ${escapeHtml(record.contact.first_name)},</p><p>Nous avons bien reçu votre demande de mise en relation avec <strong>${escapeHtml(record.solution.resource_name)}</strong>.</p><p>${escapeHtml(record.solution.transparency)}</p><p>Référence : ${escapeHtml(requestId)}</p>`,
       idempotencyKey: `solution-referral-${requestId}-customer`,
       subject,
@@ -185,7 +141,7 @@ export async function deliverSolutionReferralChannel(input: {
     });
   }
   const subject = `[Solutions] Mise en relation - ${record.solution.resource_name}`;
-  return sendResendEmail({
+  return sendTransactionalEmail({
     html: `<h1>${escapeHtml(subject)}</h1><p>Référence : ${escapeHtml(requestId)}</p><p><strong>Prénom :</strong> ${escapeHtml(record.contact.first_name)}<br><strong>E-mail :</strong> ${escapeHtml(record.contact.email)}<br><strong>Entreprise :</strong> ${escapeHtml(record.contact.company)}<br><strong>Système :</strong> ${escapeHtml(record.system_slug)}<br><strong>Contractant :</strong> ${escapeHtml(record.solution.contracting_party)}<br><strong>Facturant :</strong> ${escapeHtml(record.solution.billing_party)}<br><strong>Relation :</strong> ${escapeHtml(record.solution.commercial_relationship)}<br><strong>Transparence :</strong> ${escapeHtml(record.solution.transparency)}</p><p style="white-space:pre-wrap">${escapeHtml(record.need)}</p>`,
     idempotencyKey: `solution-referral-${requestId}-internal`,
     replyTo: record.contact.email,
