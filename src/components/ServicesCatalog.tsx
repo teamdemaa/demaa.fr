@@ -66,8 +66,7 @@ function ServiceCard({
         <Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
       </span>
     </div>
-    <p className="mt-4 line-clamp-1 text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">{service.eyebrow}</p>
-    <h3 className={`mt-2 line-clamp-2 ${LIBRARY_CARD_TITLE_CLASSNAME}`}>{service.name}</h3>
+    <h3 className={`mt-4 line-clamp-2 ${LIBRARY_CARD_TITLE_CLASSNAME}`}>{service.name}</h3>
     <p className="mt-2 line-clamp-2 text-sm leading-5 text-dema-muted">{service.summary}</p>
     {priceLabel ? (
       <p className="mt-6 text-sm font-normal text-dema-muted md:mt-auto md:pt-5">{priceLabel}</p>
