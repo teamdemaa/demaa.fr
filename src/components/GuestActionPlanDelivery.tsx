@@ -130,7 +130,7 @@ export default function GuestActionPlanDelivery({ access }: { access: GuestAcces
             <Check className="h-4 w-4" aria-hidden="true" /> Demande envoyée.
           </p>
         ) : !diagnosticOpen ? (
-          <button type="button" onClick={() => setDiagnosticOpen(true)} className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full border border-dema-forest/20 px-5 text-sm font-medium text-dema-forest transition hover:bg-dema-sage/50">
+          <button type="button" onClick={() => setDiagnosticOpen(true)} className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2">
             Demander un diagnostic
           </button>
         ) : (

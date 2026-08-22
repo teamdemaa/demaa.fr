@@ -51,6 +51,7 @@ describe("public guest action-plan experience", () => {
     expect(delivery).toContain('submit("diagnostic"');
     expect(delivery).toContain("contactConsent");
     expect(delivery).toContain("Comment pouvons-nous vous aider ?");
+    expect(delivery).toContain('rounded-full bg-dema-forest px-5 text-sm font-medium text-white');
     expect(delivery).not.toContain("Précision <span");
     expect(delivery).not.toContain("CoachBusinessPromo");
   });
