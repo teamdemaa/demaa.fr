@@ -1694,11 +1694,11 @@ Statut : **validé pour implémentation ; Preview, fusion et Production soumises
 
 ##### Lot 3 — Plan et Stratégie
 
-- [ ] Ordonner visuellement `Plan / Solutions / Chiffres` sans modifier les
+- [x] Ordonner visuellement `Plan / Solutions / Chiffres` sans modifier les
   valeurs techniques, URL, données ou règles d'accès.
-- [ ] Masquer les entrées et la surface Stratégie sans supprimer ses composants,
+- [x] Masquer les entrées et la surface Stratégie sans supprimer ses composants,
   API, documents, cycles, réponses, historique ou règles de concurrence.
-- [ ] Normaliser `section=strategy` et `open-company-strategy` vers le Plan,
+- [x] Normaliser `section=strategy` et `open-company-strategy` vers le Plan,
   notamment après authentification, sans page vide.
 
 ##### Lot 4 — Services

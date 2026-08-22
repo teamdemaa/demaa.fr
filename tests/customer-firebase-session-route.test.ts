@@ -97,12 +97,12 @@ describe("Firebase customer session route", () => {
     expect(response.headers.get("set-cookie")).toContain("HttpOnly");
   });
 
-  it("preserves a validated Strategy intent after the Firebase session exchange", async () => {
+  it("normalizes a retired Strategy intent after the Firebase session exchange", async () => {
     const returnTo = "/?intent=open-company-strategy";
     const response = await POST(request({ idToken: "id-token", returnTo }));
 
     expect(response.status).toBe(200);
-    await expect(response.json()).resolves.toEqual({ redirectTo: returnTo });
+    await expect(response.json()).resolves.toEqual({ redirectTo: "/" });
   });
 
   it("rejects an unsupported or expired Firebase identity", async () => {

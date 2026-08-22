@@ -19,8 +19,8 @@ const CompanyStrategyPanel = dynamic(() => import("@/components/CompanyStrategyP
 
 const SECTIONS = [
   { key: "actions", labels: { fr: "Plan", en: "Plan" } },
-  { key: "figures", labels: { fr: "Chiffres", en: "Key figures" } },
   { key: "solutions", labels: { fr: "Solutions", en: "Solutions" } },
+  { key: "figures", labels: { fr: "Chiffres", en: "Key figures" } },
 ] as const;
 
 export default function CompanyPilotagePanel({
@@ -50,13 +50,17 @@ export default function CompanyPilotagePanel({
   strategyAuthenticated?: boolean;
   localeCode?: "fr" | "en";
 }) {
+  const visibleSection = section === "strategy" && !COMPANY_STRATEGY_VISIBLE
+    ? "actions"
+    : section;
+
   if (!available) {
-    return section === "solutions" ? <>{solutions}</> : <>{children}</>;
+    return visibleSection === "solutions" ? <>{solutions}</> : <>{children}</>;
   }
 
   return (
     <section aria-label="Pilotage de l’entreprise">
-      {section !== "strategy" ? <nav
+      {visibleSection !== "strategy" ? <nav
         aria-label={localeCode === "en" ? "Plan sections" : "Sections du plan"}
         className="mx-auto mb-5 flex w-fit max-w-full items-center gap-1"
       >
@@ -64,10 +68,10 @@ export default function CompanyPilotagePanel({
           <button
             key={item.key}
             type="button"
-            aria-current={section === item.key ? "page" : undefined}
+            aria-current={visibleSection === item.key ? "page" : undefined}
             onClick={() => onSectionChange(item.key)}
             className={`inline-flex min-h-10 shrink-0 items-center justify-center rounded-full px-4 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 ${
-              section === item.key
+              visibleSection === item.key
                 ? "bg-dema-sage/60 text-dema-forest"
                 : "text-dema-muted/90 hover:text-dema-forest"
             }`}
@@ -76,8 +80,8 @@ export default function CompanyPilotagePanel({
           </button>
         ))}
       </nav> : null}
-      {section === "actions" ? children : null}
-      {section === "figures" ? (
+      {visibleSection === "actions" ? children : null}
+      {visibleSection === "figures" ? (
         <CompanyFiguresPanel
           key={figuresEntryRequest?.id ?? "company-figures"}
           authenticated={figuresAuthenticated}
@@ -86,8 +90,8 @@ export default function CompanyPilotagePanel({
           onAuthenticationRequired={onFiguresAuthenticationRequired}
         />
       ) : null}
-      {section === "solutions" ? solutions : null}
-      {COMPANY_STRATEGY_VISIBLE && section === "strategy"
+      {visibleSection === "solutions" ? solutions : null}
+      {COMPANY_STRATEGY_VISIBLE && visibleSection === "strategy"
         ? <div>
             <button
               type="button"

@@ -45,7 +45,10 @@ export async function loadActionPlanHomePage(input: {
   const requestedNewPlan = Array.isArray(input.searchParams.new)
     ? input.searchParams.new[0]
     : input.searchParams.new;
-  const requestedAccessIntent = parseActionPlanAccessIntent(input.searchParams);
+  const parsedAccessIntent = parseActionPlanAccessIntent(input.searchParams);
+  const requestedAccessIntent = parsedAccessIntent?.kind === "open-company-strategy"
+    ? null
+    : parsedAccessIntent;
   const unauthenticatedConfig = getUnauthenticatedConfig(input.localeCode);
 
   if (shouldRedirectAuthenticatedHomeToPlans({

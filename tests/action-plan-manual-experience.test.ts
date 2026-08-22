@@ -26,7 +26,7 @@ describe("manual action plan experience", () => {
     expect(experience).toContain("onFiguresAuthenticationRequired={requestFiguresAuthentication}");
     expect(experience).toContain("strategyAuthenticated={isAuthenticated && !isDemoMode}");
     expect(experience).toContain("onStrategyAuthenticationRequired={requestStrategyAuthentication}");
-    expect(experience).toContain("<CompanyStrategyEntry");
+    expect(experience).not.toContain("<CompanyStrategyEntry");
     expect(experience).toContain('setPendingAccessIntent({ kind: "open-company-strategy" })');
     expect(experience).toContain('planSection: "strategy"');
     expect(experience).toContain("Connectez-vous pour renseigner votre stratégie");
