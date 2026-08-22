@@ -1,4 +1,5 @@
 import ActionPlanExperience from "@/components/ActionPlanExperience";
+import GuestActionPlanExperience from "@/components/GuestActionPlanExperience";
 import Navbar from "@/components/Navbar";
 import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
 import type { ActionPlanAccessIntent } from "@/lib/action-plan-access-intent";
@@ -10,6 +11,7 @@ type ActionPlanPageConfig = ReturnType<typeof getActionPlanPageConfig>;
 
 export default function ActionPlanHomeView({
   config,
+  guestProductEnabled,
   initialAccessIntent,
   initialAppContext,
   initialEmail,
@@ -18,6 +20,7 @@ export default function ActionPlanHomeView({
   initialStructureIntent,
 }: {
   config: ActionPlanPageConfig;
+  guestProductEnabled: boolean;
   initialAccessIntent: ActionPlanAccessIntent | null;
   initialAppContext: ActionPlanAppContext;
   initialEmail: string;
@@ -25,24 +28,44 @@ export default function ActionPlanHomeView({
   initialIsAuthenticated: boolean;
   initialStructureIntent: boolean;
 }) {
+  if (!guestProductEnabled) {
+    return (
+      <>
+        <Navbar
+          anonymousLanding
+          isAuthenticated={initialIsAuthenticated}
+          localeCode={config.localeCode}
+          minimal
+        />
+        <ActionPlanExperience
+          contentLocaleCode={config.localeCode}
+          initialAccessIntent={initialAccessIntent}
+          initialAppContext={initialAppContext}
+          initialEmail={initialEmail}
+          initialGenerationIntent={initialGenerationIntent}
+          initialIsAuthenticated={initialIsAuthenticated}
+          initialStructureIntent={initialStructureIntent}
+          marketCodeAtCreation={config.marketCode}
+          services={getCanonicalServices()}
+          showCoaching={config.showCoaching}
+          systemOptions={getActionPlanSystemOptionsForContext({
+            contentLocaleCode: config.localeCode,
+            marketCodeAtCreation: config.marketCode,
+          })}
+          visibleViews={config.visibleViews}
+        />
+      </>
+    );
+  }
+
   return (
     <>
-      <Navbar
-        anonymousLanding
-        isAuthenticated={initialIsAuthenticated}
-        localeCode={config.localeCode}
-        minimal
-      />
-      <ActionPlanExperience
+      <Navbar localeCode={config.localeCode} minimal />
+      <GuestActionPlanExperience
         contentLocaleCode={config.localeCode}
-        initialAccessIntent={initialAccessIntent}
         initialAppContext={initialAppContext}
-        initialEmail={initialEmail}
-        initialGenerationIntent={initialGenerationIntent}
-        initialIsAuthenticated={initialIsAuthenticated}
         initialStructureIntent={initialStructureIntent}
         marketCodeAtCreation={config.marketCode}
-        showCoaching={config.showCoaching}
         services={getCanonicalServices()}
         systemOptions={getActionPlanSystemOptionsForContext({
           contentLocaleCode: config.localeCode,
