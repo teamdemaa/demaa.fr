@@ -26,6 +26,11 @@ const ICONS: Record<CanonicalService["slug"], LucideIcon> = {
   "prospection-ciblee": SearchCheck,
 };
 
+const PARTNER_SERVICE_DISPLAY_ORDER: Partial<Record<CanonicalService["slug"], number>> = {
+  "expert-comptable": 0,
+  "coach-business": 1,
+};
+
 function getServiceCardPriceLabel(service: CanonicalService) {
   if (service.pricing) return service.pricing.label;
   const lowestPackage = service.packages.reduce<CanonicalService["packages"][number] | null>(
@@ -118,7 +123,13 @@ export default function ServicesCatalog({
   services: readonly CanonicalService[];
 }) {
   const demaaServices = services.filter((service) => service.delivery === "demaa");
-  const partnerServices = services.filter((service) => service.delivery === "third-party");
+  const partnerServices = services
+    .filter((service) => service.delivery === "third-party")
+    .sort(
+      (left, right) =>
+        (PARTNER_SERVICE_DISPLAY_ORDER[left.slug] ?? 2) -
+        (PARTNER_SERVICE_DISPLAY_ORDER[right.slug] ?? 2),
+    );
 
   return (
     <section aria-label="Services">

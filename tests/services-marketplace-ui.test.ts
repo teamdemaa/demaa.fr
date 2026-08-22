@@ -204,6 +204,9 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup.indexOf("Nos accompagnements")).toBeLessThan(
       markup.indexOf("Avec nos partenaires de confiance"),
     );
+    expect(markup.indexOf("Expert-comptable")).toBeLessThan(
+      markup.indexOf("Coach business"),
+    );
     expect(markup).not.toMatch(/Avantage abonné|−12 %/);
     expect(markup).not.toContain("border-t");
     expect(markup).not.toContain("−15 %");
