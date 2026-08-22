@@ -49,6 +49,7 @@ describe("Firebase customer session route", () => {
     vi.clearAllMocks();
     vi.spyOn(console, "error").mockImplementation(() => undefined);
     process.env.SITE_URL = "https://demaa.co";
+    delete process.env.DEMAA_GUEST_PRODUCT_ENABLED;
     mocks.enforceRateLimit.mockResolvedValue(null);
     mocks.ensureDefaultCompanyForIdentity.mockResolvedValue({
       companyId: "company-1",
@@ -59,6 +60,18 @@ describe("Firebase customer session route", () => {
       identity: { email: "owner@example.com", provider: "password", uid: "owner-uid" },
       sessionCookie: "firebase-session-cookie",
     });
+  });
+
+  it("does not create a customer session when the public guest product is enabled", async () => {
+    process.env.DEMAA_GUEST_PRODUCT_ENABLED = "true";
+
+    const response = await POST(request({ idToken: "id-token", returnTo: "/plans" }));
+
+    expect(response.status).toBe(404);
+    expect(response.headers.get("cache-control")).toContain("no-store");
+    expect(mocks.createCustomerSession).not.toHaveBeenCalled();
+    expect(mocks.ensureDefaultCompanyForIdentity).not.toHaveBeenCalled();
+    expect(response.headers.get("set-cookie")).toBeNull();
   });
 
   it("copies a valid visitor locale preference to the member without blocking auth", async () => {

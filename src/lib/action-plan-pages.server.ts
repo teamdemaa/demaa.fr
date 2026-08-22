@@ -132,7 +132,12 @@ function redirectToSignIn(input: {
   redirect(`/connexion?${params.toString()}`);
 }
 
+function redirectRetiredCustomerRoute(localeCode: InterfaceLocaleCode) {
+  if (isGuestProductEnabled()) redirect(localeCode === "en" ? "/en" : "/");
+}
+
 export async function loadActionPlansPage(localeCode: InterfaceLocaleCode) {
+  redirectRetiredCustomerRoute(localeCode);
   const identity = await getCurrentCustomerAppIdentityFromSession();
   const unauthenticatedConfig = getUnauthenticatedConfig(localeCode);
   if (!identity) {
@@ -154,6 +159,7 @@ export async function loadNewActionPlanPage(input: {
   localeCode: InterfaceLocaleCode;
   searchParams: Promise<{ resume?: string | string[] }>;
 }) {
+  redirectRetiredCustomerRoute(input.localeCode);
   const [identity, params] = await Promise.all([
     getCurrentCustomerAppIdentityFromSession(),
     input.searchParams,
@@ -182,6 +188,7 @@ export async function loadSavedActionPlanPage(input: {
   localeCode: InterfaceLocaleCode;
   searchParams: ActionPlanPageSearchParams;
 }) {
+  redirectRetiredCustomerRoute(input.localeCode);
   if (input.localeCode === "fr") {
     const legacyOpportunitiesHref = buildLegacyOpportunitiesHref(input.searchParams);
     if (legacyOpportunitiesHref) redirect(legacyOpportunitiesHref);
@@ -221,6 +228,7 @@ export async function loadSavedActionPlanPage(input: {
 }
 
 export async function redirectToLatestActionPlan(localeCode: InterfaceLocaleCode) {
+  redirectRetiredCustomerRoute(localeCode);
   const identity = await getCurrentCustomerAppIdentityFromSession();
   const unauthenticatedConfig = getUnauthenticatedConfig(localeCode);
   if (!identity) {

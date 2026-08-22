@@ -11,6 +11,7 @@ import {
 } from "@/lib/customer-space-auth";
 import { ensureDefaultCompanyForIdentity } from "@/lib/company-membership.server";
 import { getSafeCustomerReturnTo } from "@/lib/customer-space-redirect";
+import { isGuestProductEnabled } from "@/lib/guest-action-plan-security.server";
 import { getReturnToInterfaceLocale } from "@/lib/international-context";
 
 type ConnexionPageProps = {
@@ -43,6 +44,7 @@ export async function generateMetadata({
 }
 
 export default async function ConnexionPage({ searchParams }: ConnexionPageProps) {
+  if (isGuestProductEnabled()) redirect("/");
   const { localeCode, rawMessage, returnTo } = await resolveConnexionContext(searchParams);
 
   const cookieStore = await cookies();

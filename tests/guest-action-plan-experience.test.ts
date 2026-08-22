@@ -23,6 +23,24 @@ describe("public guest action-plan experience", () => {
     expect(guestLoader).toContain("guestProductEnabled: true");
   });
 
+  it("removes customer entry points while keeping the rollback code behind the flag", () => {
+    const pages = source("src/lib/action-plan-pages.server.ts");
+    const footer = source("src/components/Footer.tsx");
+    const signInPage = source("src/app/(auth)/connexion/page.tsx");
+    const googlePage = source("src/app/(auth)/auth/google/page.tsx");
+    const interceptedSignIn = source("src/app/@modal/(.)connexion/page.tsx");
+    const sessionRoute = source("src/app/api/auth/session/route.ts");
+
+    expect(pages.match(/redirectRetiredCustomerRoute\(/g)).toHaveLength(5);
+    expect(footer).toContain("const showCustomerLogin = !isGuestProductEnabled()");
+    expect(footer).toContain("{showCustomerLogin ? (");
+    expect(signInPage).toContain('if (isGuestProductEnabled()) redirect("/")');
+    expect(googlePage).toContain('if (isGuestProductEnabled()) redirect("/")');
+    expect(interceptedSignIn).toContain('if (isGuestProductEnabled()) redirect("/")');
+    expect(sessionRoute.match(/isGuestProductEnabled\(\)/g)).toHaveLength(2);
+    expect(sessionRoute).toContain("retiredCustomerSessionResponse");
+  });
+
   it("renders a read-only guest result with e-mail and Diagnostic, without chat or Pilotage", () => {
     const experience = source("src/components/GuestActionPlanExperience.tsx");
     const result = source("src/components/GuestActionPlanResult.tsx");

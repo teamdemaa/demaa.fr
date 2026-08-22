@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import DocumentLocale from "@/components/DocumentLocale";
 import GoogleAuthCallbackClient from "./GoogleAuthCallbackClient";
 import { getSafeCustomerReturnTo } from "@/lib/customer-space-redirect";
+import { isGuestProductEnabled } from "@/lib/guest-action-plan-security.server";
 import {
   getReturnToInterfaceLocale,
   normalizeInterfaceLocaleCode,
@@ -40,6 +42,7 @@ export async function generateMetadata({
 export default async function GoogleAuthPage({
   searchParams,
 }: GoogleAuthPageProps) {
+  if (isGuestProductEnabled()) redirect("/");
   const { localeCode, returnTo } = await resolveGoogleAuthContext(searchParams);
 
   return (
