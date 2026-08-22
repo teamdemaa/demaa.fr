@@ -1842,6 +1842,47 @@ actif, mais ne modifie pas les surfaces D-094. D-085 et les PR anglaises restent
 en pause. The Done Studio ne démarre pas sans GO et ne partage aucune collection
 Demaa.
 
+#### D-095 — Faire évoluer Opportunités vers un espace d'Annonces — planifié
+
+Statut : **décision produit à cadrer après la fusion et la stabilisation de
+D-094 ; aucun runtime commencé dans le lot D-094**.
+
+Objectif : élargir la surface française actuelle au-delà des seules
+opportunités commerciales, pour publier et consulter des annonces
+professionnelles utiles à l'exploitation, au développement, à l'achat, à la
+vente ou à la transmission d'une entreprise.
+
+- [ ] Renommer les libellés visibles `Opportunités` en `Annonces`, notamment la
+  navigation, le titre, la recherche, les états vides, les CTA et les noms
+  accessibles.
+- [ ] Réutiliser les cartes, filtres, détail, soumission, modération,
+  notifications et administration spécialisés existants ; ne créer ni second
+  catalogue ni nouvelle collection par défaut.
+- [ ] Conserver provisoirement les identifiants techniques historiques
+  (`view=opportunities`, `/opportunites`, APIs, collection, `opportunityId` et
+  routes admin) afin d'éviter une migration risquée sans bénéfice utilisateur.
+- [ ] Faire évoluer le formulaire avec une copie plus générique : `Type
+  d'annonce`, `Détails utiles`, `Budget ou prix`, puis coordonnées avec
+  l'adresse e-mail en dernier ; préserver la validation et l'anti-abus de
+  D-094.
+- [ ] Couvrir au minimum les intentions `recherche`, `propose`, `achète`,
+  `vend`, `partenariat` et `transmission`, avec une taxonomie courte validée
+  avant de modifier les données existantes.
+- [ ] Conserver les trois publications actuelles et les reclasser seulement
+  après revue éditoriale ; ne pas réécrire leur stockage pour un simple
+  changement de vocabulaire.
+- [ ] Limiter la surface aux annonces professionnelles liées à l'entreprise :
+  ne pas construire une place de marché généraliste, un paiement, une
+  messagerie ou un portail partenaire dans ce lot.
+- [ ] Vérifier SEO, données structurées, sitemap, URL canonique, mobile/PWA,
+  clavier, lecteur d'écran, accès direct et administration avant activation.
+- [ ] Garder l'anglais hors périmètre tant que D-085 reste en pause.
+
+Dépendance : commencer le runtime uniquement après la fusion de la PR D-094 qui
+rend les formulaires publics et place l'e-mail en dernier. Ce séquencement évite
+de modifier simultanément `OpportunitySubmissionDialog`,
+`PublicOpportunitiesClient` et l'API de soumission.
+
 #### D-083 — Solutions publiques simples et accompagnement progressif — historique
 
 Décision courante : la simplification `Outils + Services` ne crée aucun profil
