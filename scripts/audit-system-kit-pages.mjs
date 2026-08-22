@@ -16,6 +16,10 @@ const canonicalServiceCatalogPath = resolve(
   currentDir,
   "../src/lib/canonical-service-catalog.ts",
 );
+const canonicalServiceVisibilityPath = resolve(
+  currentDir,
+  "../src/lib/canonical-service-visibility.ts",
+);
 
 const PUBLIC_SOLUTION_SECTION_VISIBILITY = readJson(publicSolutionVisibilityPath);
 const SOLUTION_SECTION_ORDER = ["software", "services", "providers", "networks"]
@@ -65,11 +69,20 @@ function readJson(path) {
 
 export function loadCanonicalServiceSlugs() {
   const source = fs.readFileSync(canonicalServiceCatalogPath, "utf8");
+  const visibilitySource = fs.readFileSync(canonicalServiceVisibilityPath, "utf8");
   const declaration = source.match(
     /export const CANONICAL_SERVICE_SLUGS = \[([\s\S]*?)\] as const;/,
   )?.[1];
   if (!declaration) throw new Error("Invalid canonical service slug declaration");
-  return Array.from(declaration.matchAll(/"([^"]+)"/g), (match) => match[1]);
+  const hiddenDeclaration = visibilitySource.match(
+    /export const HIDDEN_CANONICAL_SERVICE_SLUGS = \[([\s\S]*?)\] as const/,
+  )?.[1];
+  if (!hiddenDeclaration) throw new Error("Invalid hidden canonical service slug declaration");
+  const hiddenSlugs = new Set(
+    Array.from(hiddenDeclaration.matchAll(/"([^"]+)"/g), (match) => match[1]),
+  );
+  return Array.from(declaration.matchAll(/"([^"]+)"/g), (match) => match[1])
+    .filter((slug) => !hiddenSlugs.has(slug));
 }
 
 export function loadEnterprises() {

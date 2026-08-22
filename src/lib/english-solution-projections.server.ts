@@ -1,5 +1,6 @@
 import "server-only";
 
+import { isCanonicalServicePublic } from "@/lib/canonical-service-visibility";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 
 type EnglishProjection = Readonly<{
@@ -52,6 +53,10 @@ export function projectEnglishSolutionSections(
       ? ENGLISH_TOOL_PROJECTIONS
       : ENGLISH_SERVICE_PROJECTIONS;
     const placements = section.placements.flatMap((placement) => {
+      if (
+        section.section === "services" &&
+        !isCanonicalServicePublic(placement.resource.resourceSlug)
+      ) return [];
       const projection = projections[placement.resource.resourceSlug];
       if (!projection) return [];
       return [{
