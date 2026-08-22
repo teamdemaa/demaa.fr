@@ -3,7 +3,6 @@
 import { ChevronDown, LoaderCircle, X } from "lucide-react";
 import { useState } from "react";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
-import { buildCustomerIntentReturnTo } from "@/lib/customer-space-redirect";
 import {
   OPPORTUNITY_TYPE_LABELS,
   OPPORTUNITY_TYPES,
@@ -54,6 +53,7 @@ export default function OpportunitySubmissionDialog({
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
+    const contactEmail = String(formData.get("email") ?? "").trim();
     const fields = {
       cadence: formData.get("cadence"),
       category: formData.get("category"),
@@ -85,19 +85,10 @@ export default function OpportunitySubmissionDialog({
         throw new Error(draftPayload?.error || "Le brouillon n’a pas pu être préparé.");
       }
 
-      if (!initialEmail) {
-        const returnTo = buildCustomerIntentReturnTo({
-          kind: "opportunity-submit",
-          draftToken: draftPayload.draftToken,
-        });
-        window.location.assign(`/connexion?returnTo=${encodeURIComponent(returnTo)}`);
-        return;
-      }
-
       const submissionResponse = await fetch("/api/opportunity-submissions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ draftToken: draftPayload.draftToken }),
+        body: JSON.stringify({ draftToken: draftPayload.draftToken, email: contactEmail }),
       });
       const submissionPayload = await submissionResponse.json().catch(() => null) as {
         error?: string;
@@ -201,6 +192,18 @@ export default function OpportunitySubmissionDialog({
               </label>
             </div>
           </details>
+          <label className="sm:col-span-2 text-sm font-medium text-brand-blue">
+            Votre adresse e-mail
+            <input
+              name="email"
+              type="email"
+              required
+              maxLength={160}
+              autoComplete="email"
+              defaultValue={initialEmail}
+              className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest"
+            />
+          </label>
           {error ? (
             <p className="sm:col-span-2 text-sm text-red-700" role="alert">{error}</p>
           ) : null}
@@ -211,11 +214,6 @@ export default function OpportunitySubmissionDialog({
             {status === "sending" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" /> : null}
             {status === "sending" ? "Envoi…" : "Soumettre"}
           </button>
-          {!initialEmail ? (
-            <p className="text-center text-xs text-dema-muted sm:col-span-2">
-              Connexion demandée à l’envoi.
-            </p>
-          ) : null}
         </form>
       </section>
     </div>

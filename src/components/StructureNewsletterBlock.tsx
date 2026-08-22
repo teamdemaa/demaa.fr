@@ -5,10 +5,8 @@ import {
   type FormEvent,
   useCallback,
   useEffect,
-  useRef,
   useState,
 } from "react";
-import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
 import {
   getLeadAttributionPayload,
@@ -52,8 +50,8 @@ function responseError(response: Response, payload: ApiResponse, fallback: strin
 }
 
 export default function StructureNewsletterBlock() {
-  const { email, loading: identityLoading } = useCustomerIdentity();
-  const resumedSubscriptionRef = useRef(false);
+  const { email } = useCustomerIdentity();
+  const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterHoneypot, setNewsletterHoneypot] = useState("");
   const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
   const [newsletterError, setNewsletterError] = useState<string | null>(null);
@@ -62,6 +60,7 @@ export default function StructureNewsletterBlock() {
   const [problemForm, setProblemForm] = useState(EMPTY_PROBLEM_FORM);
   const [problemSubmitting, setProblemSubmitting] = useState(false);
   const [problemError, setProblemError] = useState<string | null>(null);
+  const [problemEmail, setProblemEmail] = useState("");
   const [problemSent, setProblemSent] = useState(false);
 
   const subscribe = useCallback(async () => {
@@ -74,7 +73,7 @@ export default function StructureNewsletterBlock() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email,
+          email: newsletterEmail,
           website: newsletterHoneypot,
         }),
       });
@@ -96,12 +95,16 @@ export default function StructureNewsletterBlock() {
     } finally {
       setNewsletterSubmitting(false);
     }
-  }, [email, newsletterHoneypot, newsletterSubmitting]);
+  }, [newsletterEmail, newsletterHoneypot, newsletterSubmitting]);
 
   useEffect(() => {
-    if (identityLoading || !email) return;
-    const intent = new URLSearchParams(window.location.search).get("intent");
+    if (!email) return;
+    setNewsletterEmail((current) => current || email);
+    setProblemEmail((current) => current || email);
+  }, [email]);
 
+  useEffect(() => {
+    const intent = new URLSearchParams(window.location.search).get("intent");
     if (intent === "structure-problem") {
       const timeout = window.setTimeout(() => {
         setProblemSent(false);
@@ -109,11 +112,7 @@ export default function StructureNewsletterBlock() {
       }, 0);
       return () => window.clearTimeout(timeout);
     }
-
-    if (intent !== "structure" || resumedSubscriptionRef.current) return;
-    resumedSubscriptionRef.current = true;
-    void subscribe();
-  }, [email, identityLoading, subscribe]);
+  }, []);
 
   function updateProblemField<Field extends keyof ProblemForm>(
     field: Field,
@@ -138,7 +137,7 @@ export default function StructureNewsletterBlock() {
           attribution: getLeadAttributionPayload(),
           companyActivity: problemForm.companyActivity,
           consent: problemForm.consent,
-          email,
+          email: problemEmail,
           faxNumber: problemForm.faxNumber,
           idempotencyKey: getLeadSubmissionKey(flowKey),
           problem: problemForm.problem,
@@ -203,7 +202,7 @@ export default function StructureNewsletterBlock() {
               >
                 Merci, votre inscription à Structure est confirmée.
               </div>
-            ) : email ? (
+            ) : (
               <form
                 onSubmit={(event: FormEvent<HTMLFormElement>) => {
                   event.preventDefault();
@@ -222,11 +221,22 @@ export default function StructureNewsletterBlock() {
                     onChange={(event) => setNewsletterHoneypot(event.target.value)}
                   />
                 </div>
-                <div className="overflow-hidden rounded-xl border border-dema-line bg-dema-paper">
+                <div className="flex overflow-hidden rounded-xl border border-dema-line bg-dema-paper focus-within:border-dema-forest/45">
+                  <label className="sr-only" htmlFor="structure-newsletter-email">Adresse e-mail</label>
+                  <input
+                    id="structure-newsletter-email"
+                    type="email"
+                    required
+                    autoComplete="email"
+                    value={newsletterEmail}
+                    onChange={(event) => setNewsletterEmail(event.target.value)}
+                    placeholder="Votre adresse e-mail"
+                    className="min-w-0 flex-1 bg-transparent px-4 text-sm text-brand-blue outline-none"
+                  />
                   <button
                     type="submit"
                     disabled={newsletterSubmitting}
-                    className="inline-flex min-h-13 w-full items-center justify-center gap-2 bg-dema-forest px-5 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-wait disabled:opacity-65"
+                    className="inline-flex min-h-13 shrink-0 items-center justify-center gap-2 bg-dema-forest px-5 text-sm font-medium text-dema-paper transition hover:bg-[#284f3a] disabled:cursor-wait disabled:opacity-65"
                   >
                     {newsletterSubmitting ? (
                       <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
@@ -240,11 +250,7 @@ export default function StructureNewsletterBlock() {
                   </p>
                 ) : null}
               </form>
-            ) : !identityLoading ? (
-              <div className="rounded-xl border border-dema-line bg-dema-paper p-4">
-                <CustomerSpaceAccessForm choiceTitle="Connectez-vous" returnTo="/academie?intent=structure" />
-              </div>
-            ) : null}
+            )}
 
             <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-dema-muted">
               <span>5 min de lecture · Désinscription en un clic</span>
@@ -305,23 +311,29 @@ export default function StructureNewsletterBlock() {
                 toute publication.
               </p>
 
-              {!identityLoading && !email ? (
-                <div className="mt-6 rounded-xl border border-dema-line bg-dema-cream/55 p-4">
-                  <p className="mb-4 text-sm leading-relaxed text-dema-muted">
-                    Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer.
-                  </p>
-                  <CustomerSpaceAccessForm choiceTitle="Connectez-vous" returnTo="/academie?intent=structure-problem" />
+              <form className="mt-6 space-y-4" onSubmit={submitProblem} aria-busy={problemSubmitting}>
+                <div>
+                  <label className="block text-sm font-medium text-brand-blue" htmlFor="structure-contact-email">
+                    Votre adresse e-mail
+                  </label>
+                  <input
+                    id="structure-contact-email"
+                    data-dialog-initial-focus
+                    className="demaa-input mt-2"
+                    type="email"
+                    value={problemEmail}
+                    onChange={(event) => setProblemEmail(event.target.value)}
+                    autoComplete="email"
+                    required
+                    maxLength={160}
+                  />
                 </div>
-              ) : null}
-
-              {email ? <form className="mt-6 space-y-4" onSubmit={submitProblem} aria-busy={problemSubmitting}>
                 <div>
                   <label className="block text-sm font-medium text-brand-blue" htmlFor="structure-company-activity">
                     Votre entreprise ou activité
                   </label>
                   <input
                     id="structure-company-activity"
-                    data-dialog-initial-focus
                     className="demaa-input mt-2"
                     value={problemForm.companyActivity}
                     onChange={(event) => updateProblemField("companyActivity", event.target.value)}
@@ -406,7 +418,7 @@ export default function StructureNewsletterBlock() {
                   ) : null}
                   {problemSubmitting ? "Envoi…" : "Envoyer ma problématique"}
                 </button>
-              </form> : null}
+              </form>
             </>
           )}
         </DirectoryDetailDialogShell>

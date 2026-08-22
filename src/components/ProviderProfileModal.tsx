@@ -1,8 +1,7 @@
 "use client";
 
 import { Check, LoaderCircle, X } from "lucide-react";
-import { type FormEvent, useEffect, useMemo, useState } from "react";
-import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
+import { type FormEvent, useMemo, useState } from "react";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import {
   getLeadAttributionPayload,
@@ -17,7 +16,6 @@ import {
   OPPORTUNITY_TYPE_LABELS,
   type PublicOpportunity,
 } from "@/lib/opportunity-contract";
-import { useCustomerIdentity } from "@/lib/use-customer-identity";
 
 type ProviderProfileModalProps = {
   expertises: readonly ExpertiseCatalogEntry[];
@@ -49,9 +47,7 @@ export default function ProviderProfileModal({
 }: ProviderProfileModalProps) {
   const dialogRef = useAccessibleDialog({ onClose });
   const [fullName, setFullName] = useState("");
-  const { email: authenticatedEmail, loading: identityLoading } =
-    useCustomerIdentity(initialEmail);
-  const [returnTo, setReturnTo] = useState("/");
+  const [email, setEmail] = useState(initialEmail);
   const [company, setCompany] = useState("");
   const [profileUrl, setProfileUrl] = useState("");
   const [countries, setCountries] = useState("");
@@ -76,20 +72,6 @@ export default function ProviderProfileModal({
     [expertiseIds, expertises],
   );
 
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    url.searchParams.set(
-      "intent",
-      opportunity ? "opportunity" : "team-demaa-profile",
-    );
-    if (opportunity) {
-      url.searchParams.set("opportunityId", opportunity.opportunityId);
-    } else if (initialExpertiseId) {
-      url.searchParams.set("expertiseId", initialExpertiseId);
-    }
-    setReturnTo(`${url.pathname}${url.search}`);
-  }, [initialExpertiseId, opportunity]);
-
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
@@ -106,6 +88,7 @@ export default function ProviderProfileModal({
           company,
           consent,
           countries,
+          email,
           expertiseIds,
           fullName,
           idempotencyKey: submissionKey,
@@ -195,36 +178,13 @@ export default function ProviderProfileModal({
                 ?? "Présentez simplement votre activité. Nous vous contacterons lorsqu’un besoin correspondra à votre profil."}
             </p>
 
-            {!identityLoading && !authenticatedEmail ? (
-              <div className="mt-7 rounded-[1.1rem] border border-dema-line bg-dema-cream/55 p-4 sm:p-5">
-                <div>
-                  <CustomerSpaceAccessForm choiceTitle="Connectez-vous" returnTo={returnTo} />
-                </div>
-              </div>
-            ) : null}
-
             {lockedExpertiseId && selectedLabels[0] ? (
               <p className="mt-3 text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">
                 {selectedLabels[0]}
               </p>
             ) : null}
 
-            {authenticatedEmail ? <form onSubmit={submit} className="mt-7 space-y-5">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <label className="space-y-2 text-sm text-brand-blue">
-                  <span>Nom et prénom</span>
-                  <input required value={fullName} onChange={(event) => setFullName(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
-                </label>
-                <label className="space-y-2 text-sm text-brand-blue">
-                  <span>{opportunity ? "Entreprise ou activité" : "Entreprise"}</span>
-                  <input required value={company} onChange={(event) => setCompany(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
-                </label>
-                <label className="space-y-2 text-sm text-brand-blue">
-                  <span>Site ou profil professionnel <span className="text-dema-muted">(facultatif)</span></span>
-                  <input value={profileUrl} onChange={(event) => setProfileUrl(event.target.value)} placeholder="https://" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
-                </label>
-              </div>
-
+            <form onSubmit={submit} className="mt-7 space-y-5">
               {!opportunity ? (
                 <label className="block space-y-2 text-sm text-brand-blue">
                   <span>Expertise principale</span>
@@ -246,17 +206,35 @@ export default function ProviderProfileModal({
                 </label>
               ) : null}
 
-              {!opportunity ? (
-                <label className="block space-y-2 text-sm text-brand-blue">
-                  <span>Pays ou zones couverts</span>
-                  <input required value={countries} onChange={(event) => setCountries(event.target.value)} placeholder="Ex. France, Côte d’Ivoire, à distance…" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
-                </label>
-              ) : null}
-
               <label className="block space-y-2 text-sm text-brand-blue">
                 <span>{opportunity ? "Votre message" : "Présentez brièvement votre expérience"}</span>
                 <textarea required minLength={20} rows={4} value={message} onChange={(event) => setMessage(event.target.value)} className="w-full resize-y rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
               </label>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="space-y-2 text-sm text-brand-blue">
+                  <span>Nom et prénom</span>
+                  <input required value={fullName} onChange={(event) => setFullName(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                </label>
+                <label className="space-y-2 text-sm text-brand-blue">
+                  <span>{opportunity ? "Entreprise ou activité" : "Entreprise"}</span>
+                  <input required value={company} onChange={(event) => setCompany(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                </label>
+                {!opportunity ? (
+                  <label className="space-y-2 text-sm text-brand-blue">
+                    <span>Pays ou zones couverts</span>
+                    <input required value={countries} onChange={(event) => setCountries(event.target.value)} placeholder="Ex. France, Côte d’Ivoire, à distance…" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                  </label>
+                ) : null}
+                <label className="space-y-2 text-sm text-brand-blue">
+                  <span>Site ou profil professionnel <span className="text-dema-muted">(facultatif)</span></span>
+                  <input value={profileUrl} onChange={(event) => setProfileUrl(event.target.value)} placeholder="https://" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                </label>
+                <label className="space-y-2 text-sm text-brand-blue">
+                  <span>Adresse e-mail</span>
+                  <input required type="email" autoComplete="email" maxLength={160} value={email} onChange={(event) => setEmail(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                </label>
+              </div>
 
               <label className="hidden" aria-hidden="true">
                 Site secondaire
@@ -282,7 +260,7 @@ export default function ProviderProfileModal({
                 {isSubmitting ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
                 {opportunity ? "Manifester mon intérêt" : "Envoyer mon profil"}
               </button>
-            </form> : null}
+            </form>
           </>
         )}
       </section>

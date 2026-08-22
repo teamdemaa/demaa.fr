@@ -172,7 +172,7 @@ describe("solution referral request route", () => {
 
     expect(response.status).toBe(202);
     expect(mocks.createSolutionReferral).toHaveBeenCalledWith(expect.objectContaining({
-      email: "owner@cabinet-martin.fr",
+      email: "maya@cabinet-martin.fr",
       marketingConsent: null,
       solution: expect.objectContaining({
         billing_party: "Juridique Services SAS",
@@ -187,12 +187,12 @@ describe("solution referral request route", () => {
     expect(mocks.scheduleServiceSolutionDeliveries).toHaveBeenCalledOnce();
   });
 
-  it("requires a session and ignores the email sent in the request body", async () => {
-    mocks.requireCurrentCustomerIdentity.mockResolvedValueOnce({
-      identity: null,
-      response: Response.json({ error: "authentication_required" }, { status: 401 }),
-    });
-    expect((await submitSolution(request("/api/solution-referral", solutionBody()))).status).toBe(401);
+  it("rejects an invalid public contact email without consulting a customer session", async () => {
+    expect((await submitSolution(request(
+      "/api/solution-referral",
+      solutionBody({ email: "invalid" }),
+    ))).status).toBe(400);
+    expect(mocks.requireCurrentCustomerIdentity).not.toHaveBeenCalled();
     expect(mocks.createSolutionReferral).not.toHaveBeenCalled();
   });
 

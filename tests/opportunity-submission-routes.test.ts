@@ -106,10 +106,10 @@ describe("opportunity submission routes", () => {
     expect(mocks.createPendingOpportunitySubmissionDraft).not.toHaveBeenCalled();
   });
 
-  it("binds the opaque draft to the verified session and invalidates admin data", async () => {
+  it("binds the opaque draft to the explicit contact email and invalidates admin data", async () => {
     const response = await submitDraft(post(
       "/api/opportunity-submissions",
-      { draftToken: "a".repeat(43) },
+      { draftToken: "a".repeat(43), email: "dirigeante@example.com" },
     ));
     expect(response.status).toBe(201);
     expect(mocks.submitPendingOpportunityDraft).toHaveBeenCalledWith({
@@ -122,16 +122,12 @@ describe("opportunity submission routes", () => {
     );
   });
 
-  it("requires the Demaa session only at final submission", async () => {
-    mocks.requireCurrentCustomerIdentity.mockResolvedValue({
-      identity: null,
-      response: Response.json({ error: "Connexion requise." }, { status: 401 }),
-    });
+  it("rejects an invalid public contact email at final submission", async () => {
     const response = await submitDraft(post(
       "/api/opportunity-submissions",
-      { draftToken: "a".repeat(43) },
+      { draftToken: "a".repeat(43), email: "invalid" },
     ));
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
     expect(mocks.submitPendingOpportunityDraft).not.toHaveBeenCalled();
   });
 
@@ -142,7 +138,7 @@ describe("opportunity submission routes", () => {
     });
     const response = await submitDraft(post(
       "/api/opportunity-submissions",
-      { draftToken: "a".repeat(43) },
+      { draftToken: "a".repeat(43), email: "dirigeante@example.com" },
     ));
     expect(response.status).toBe(200);
   });
