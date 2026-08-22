@@ -133,7 +133,7 @@ function PartnerServicesDisclosure({
 
   return (
     <details className="group">
-      <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 border-b border-dema-line py-3 text-left marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 [&::-webkit-details-marker]:hidden">
+      <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 border-b border-dema-line py-3 text-left marker:content-none focus-visible:border-b-2 focus-visible:border-dema-forest focus-visible:outline-none [&::-webkit-details-marker]:hidden">
         <span className="text-xl font-normal leading-[1.3] text-brand-blue">
           Avec nos partenaires de confiance
         </span>
