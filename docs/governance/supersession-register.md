@@ -42,7 +42,7 @@ remplacé et la nouvelle référence à consulter.
 | Mesure client Services/Solutions | `deferred` | attribution consent-aware et logs opérationnels seulement ; contrat d'événements sans PII à définir ultérieurement |
 | Manifests démo et preview historiques multiples | `working` | 115 révisions v1 restent actives ; manifest révisionné D-061 et consolidation W7 avant tout pilote v2 |
 | `docs/governance/release-manifest.json` W1 utilisé comme état courant | `superseded` | conserver comme preuve historique ; régénérer uniquement depuis le candidat exact W7/W8 |
-| D-084/D-090 : ordre `Plan / Chiffres / Solutions` et Stratégie exposée sous le Plan | `temporarily-superseded` | ordre `Plan / Solutions / Chiffres` et Stratégie masquée sans suppression de données, voir ADR 0019 et D-093 |
+| D-084/D-090 : Chiffres et Stratégie dans l'espace Plan | `superseded` | les deux modules sortent de la cible publique Demaa ; code et données conservés pendant rollback, voir ADR 0020 et D-094 |
 | D-090 : sept partenaires Services ouverts en permanence | `superseded` | mêmes cartes dans un dépliant fermé par défaut et consultable sans compte, voir ADR 0019 et D-093 |
 | D-080 : compte Firebase obligatoire pour générer et sauvegarder un plan | `superseded` | génération publique durable sans compte ; Firebase Auth réservé à la Team Demaa, voir ADR 0020 et D-094 |
 | D-077/D-080 : `Mes plans`, Profil et reprise par UID comme parcours dirigeant | `superseded` | plan invité temporaire, réception par e-mail et aucune boîte client, voir ADR 0020 et D-094 |

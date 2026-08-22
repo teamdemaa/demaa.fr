@@ -1,12 +1,32 @@
 # ADR 0020 — Produit public sans compte et administration Team Demaa
 
 - Décision : D-094
-- Statut : `validated`
+- Statut : `validated` — livré ; observation et nettoyage différé en cours
 - Date : 22 août 2026
+- Livraison : PR 183 à 190, `origin/main` au commit `467f420f`
+- Activation Production : 23 août 2026
 - Portée : génération du plan, identité, persistance temporaire, e-mails,
   Diagnostic, formulaires publics, administration et retrait de Pilotage
-- Autorisation : préparation par PRs autonomes autorisée ; aucune fusion sur
-  `main`, activation Production ou suppression de données sans GO explicite
+- Autorisation : fusion et activation Production effectuées après GO explicite ;
+  aucune suppression de données n'est autorisée sans inventaire et autorisation
+  destructive séparée
+
+## État de livraison
+
+Le parcours public sans compte est actif sur `demaa.co`. La recette contrôlée
+du 23 août 2026 a vérifié une génération réelle, la conservation du plan entre
+les destinations publiques, l'envoi du plan par e-mail, la création d'un
+Diagnostic, sa notification et son affichage détaillé dans l'administration
+Team. La session Google Team a été vérifiée sans création d'entreprise ou
+d'appartenance. Le smoke mobile ne présente aucun débordement horizontal et les
+logs Vercel ne remontent aucune erreur sur le parcours contrôlé.
+
+`DEMAA_GUEST_PRODUCT_ENABLED` est actif avec un plafond initial de six
+générations publiques par jour. Ce plafond correspond à une phase de lancement
+calme ; toute augmentation reste une décision budgétaire et opérationnelle.
+L'observation 24–48 heures, la passe physique PWA/clavier/lecteur d'écran et le
+nettoyage du legacy restent ouverts. Ils ne remettent pas en cause le statut
+livré du parcours public.
 
 ## Contexte
 

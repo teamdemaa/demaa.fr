@@ -1,6 +1,6 @@
 # Backlog central Demaa
 
-Dernière consolidation : 22 août 2026.
+Dernière consolidation : 23 août 2026.
 
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
@@ -20,10 +20,12 @@ Plan directeur actif :
 Il fixe l'ordre des lots, leurs responsables, les branches/PR et les gates de
 release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
-## État courant Production — 22 août 2026
+## État courant Production — 23 août 2026
 
-- `main` et `origin/main` pointent sur `dbb8b723`, déployé en Production par la
-  PR 182. Les références `6d35805f`, `260ad7d`, `8020e04`, `ae5029d`, `a47d844`,
+- `origin/main` pointe sur `467f420f`, déployé en Production après la fusion
+  des PR 183 à 190 et l'activation contrôlée de D-094. `dbb8b723` reste le
+  dernier checkpoint antérieur à D-094. Les références `6d35805f`, `260ad7d`,
+  `8020e04`, `ae5029d`, `a47d844`,
   `f0b4d75` et `cca1459a` restent des checkpoints historiques ; elles ne sont plus
   présentées comme la tête courante.
 - Les PR 110 à 118 ont été fusionnées séparément et vérifiées en Production :
@@ -56,11 +58,13 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
   `Plan / Solutions / Chiffres`, Stratégie masquée et partenaires Services
   repliés. La PR 182 ajoute le service gratuit `Recruter un alternant` en
   réutilisant le parcours Services existant.
-- D-094 est la cible validée suivante, encore absente de Production : produit
-  public sans compte, génération invitée durable, livraison du plan et
-  Diagnostic par e-mail, session Team Demaa indépendante et retrait de
-  Chiffres/Stratégie/chat du parcours public. Aucun compte ou donnée de test ne
-  sera supprimé sans inventaire et autorisation destructive séparée.
+- D-094 est livré et activé en Production : produit public sans compte,
+  génération invitée durable, livraison du plan et Diagnostic par e-mail,
+  session Team Demaa indépendante et retrait de Chiffres/Stratégie/chat du
+  parcours public. Une génération réelle, l'envoi du plan, la demande
+  Diagnostic et sa présence dans l'administration Team ont été vérifiés le
+  23 août 2026. La période d'observation est en cours ; aucun compte ou donnée
+  de test ne sera supprimé sans inventaire et autorisation destructive séparée.
 
 ## Lecture canonique du backlog
 
@@ -1599,7 +1603,7 @@ Référence : [ADR 0016](decisions/0016-plan-services-and-solutions-ecosystem.md
 Référence : [ADR 0017](decisions/0017-curated-tools-per-system.md).
 
 Statut : **fondation technique réalisée, validation éditoriale non commencée ;
-exécution runtime mise en attente pendant la stabilisation D-094**.
+prochaine priorité après la période d'observation D-094**.
 D-091 consolide et supersède D-068 à D-070 comme contrat d'exécution. Les gates
 pilote et final, la séparation publique de Services et la compatibilité des
 identifiants sont en place ; aucune révision Firebase candidate ou active n'a
@@ -1678,6 +1682,12 @@ Référence :
 Statut : **livré en Production par la PR 181 ; certains parcours sont désormais
 supersédés par D-094**.
 
+Les gates manuels encore ouverts ci-dessous sont conservés comme trace du lot
+D-093. Ils ne bloquent plus le produit courant : D-094 a remplacé le parcours
+authentifié et a fait l'objet d'une génération réelle, d'une recette mobile et
+d'un smoke Production. La passe physique PWA, clavier et lecteur d'écran reste
+un contrôle de clôture D-094, pas une raison de réactiver D-093.
+
 ##### Lot 1 — Décision et documentation
 
 - [x] Enregistrer D-093 sans réutiliser D-092.
@@ -1732,7 +1742,8 @@ supersédés par D-094**.
 - [ ] Effectuer la recette manuelle de la Preview déployée.
 - [x] Ne modifier ni le résolveur contextuel, ni les données D-091, ni une
   révision ou un pointeur Firebase.
-- [ ] Obtenir un GO explicite avant toute fusion déclenchant Production.
+- [x] Obtenir un GO explicite avant toute fusion déclenchant Production. La PR
+  181 puis D-094 ont été fusionnées après les GO correspondants.
 
 ##### Extension isolée — Recruter un alternant
 
@@ -1760,8 +1771,9 @@ Références :
 [plan d'exécution](governance/d094-public-guest-product-execution-plan.md), avec
 [inventaire runtime](governance/d094-runtime-inventory.md).
 
-Statut : **décision validée ; préparation par PRs autonomes autorisée ; aucune
-fusion, activation Production ou suppression de données sans GO explicite**.
+Statut : **livré par les PR 183 à 190, activé en Production au commit
+`467f420f` ; observation et nettoyage différé en cours**. L'activation a reçu
+son GO explicite. Aucune suppression de données n'est autorisée par ce statut.
 
 ##### Lot 0 — Documentation et assainissement
 
@@ -1776,66 +1788,77 @@ fusion, activation Production ou suppression de données sans GO explicite**.
 
 ##### Lot 1 — Authentification Team indépendante
 
-- [ ] Créer une route de connexion et un cookie admin distincts.
-- [ ] Vérifier Firebase puis l'allowlist admin avant toute session.
-- [ ] Garantir qu'une connexion admin ne crée ni entreprise ni appartenance.
-- [ ] Appliquer le DAL admin aux pages et APIs ; tester expiration, logout,
+- [x] Créer une route de connexion et un cookie admin distincts.
+- [x] Vérifier Firebase puis l'allowlist admin avant toute session.
+- [x] Garantir qu'une connexion admin ne crée ni entreprise ni appartenance.
+- [x] Appliquer le DAL admin aux pages et APIs ; tester expiration, logout,
   identité non autorisée et cookie falsifié.
 
 ##### Lot 2 — Génération invitée durable
 
-- [ ] Créer un stockage temporaire dédié avec secret opaque haché et TTL 24 h.
-- [ ] Réutiliser ActionPlan V4, idempotence, lease, reprise, validation,
+- [x] Créer un stockage temporaire dédié avec secret opaque haché et TTL 24 h.
+- [x] Réutiliser ActionPlan V4, idempotence, lease, reprise, validation,
   réparation et ledger sans UID/company.
-- [ ] Ajouter rate limit par IP de confiance, budget IA quotidien global,
+- [x] Ajouter rate limit par IP de confiance, budget IA quotidien global,
   circuit breaker et comportement fail-closed.
-- [ ] Livrer derrière `DEMAA_GUEST_PRODUCT_ENABLED=false` par défaut.
+- [x] Livrer derrière `DEMAA_GUEST_PRODUCT_ENABLED=false` par défaut, puis
+  activer explicitement le flag et un plafond initial de six générations par
+  jour après le GO Production.
 
 ##### Lot 3 — E-mail du plan et Diagnostic
 
-- [ ] Envoyer le plan complet par e-mail transactionnel sans inscription
+- [x] Envoyer le plan complet par e-mail transactionnel sans inscription
   marketing implicite.
-- [ ] Créer un Diagnostic ponctuel avec e-mail obligatoire, téléphone
+- [x] Créer un Diagnostic ponctuel avec e-mail obligatoire, téléphone
   facultatif et instantané du plan/situation.
-- [ ] Notifier la Team, exposer détail/statut dans l'admin et répondre par
+- [x] Notifier la Team, exposer détail/statut dans l'admin et répondre par
   e-mail, sans conversation client.
 
 ##### Lot 4 — Formulaires publics et administration
 
-- [ ] Convertir les formulaires dirigeants encore liés artificiellement à
+- [x] Convertir les formulaires dirigeants encore liés artificiellement à
   l'UID ; retirer les doublons conversationnels.
-- [ ] Agréger les collections existantes par adaptateurs, sans migration
+- [x] Agréger les collections existantes par adaptateurs, sans migration
   aveugle vers une collection unique.
-- [ ] Ajouter pagination, filtres, source, détail, statut et état de livraison.
-- [ ] Conserver Opportunités spécialisée et vérifier manuellement l'avantage
+- [x] Ajouter pagination, filtres, source, détail, statut et état de livraison.
+- [x] Conserver Opportunités spécialisée et vérifier manuellement l'avantage
   mensuel de 12 % sans UID client.
 
 ##### Lot 5 — Bascule UI publique
 
-- [ ] Connecter l'accueil à la génération invitée et afficher le plan dans la
+- [x] Connecter l'accueil à la génération invitée et afficher le plan dans la
   session temporaire en lecture seule.
-- [ ] Limiter les suites à `Recevoir mon plan par e-mail` et `Demander un
+- [x] Limiter les suites à `Recevoir mon plan par e-mail` et `Demander un
   diagnostic`, sans autosauvegarde anonyme ni espace client implicite.
-- [ ] Retirer Connexion, Profil, Mes plans, redirection vers le dernier plan et
+- [x] Retirer Connexion, Profil, Mes plans, redirection vers le dernier plan et
   Diagnostic conversationnel du parcours public.
-- [ ] Masquer Chiffres et Stratégie ; préserver les anciens lecteurs pendant
+- [x] Masquer Chiffres et Stratégie ; préserver les anciens lecteurs pendant
   la période de rollback.
-- [ ] Traiter les anciennes routes sans fuite et conserver Plans personnalisés
+- [x] Traiter les anciennes routes sans fuite et conserver Plans personnalisés
   hors indexation.
 
 ##### Lots 6 et 7 — Recette, activation et nettoyage
 
-- [ ] Exécuter tests ciblés, `npm run check`, build, E2E local/Preview,
-  génération réelle bornée, e-mail, admin, mobile/PWA et accessibilité.
-- [ ] Activer progressivement après GO Production et observer 24–48 heures.
+- [x] Exécuter tests ciblés, `npm run check`, build, E2E local/Preview,
+  génération réelle bornée, e-mail, admin et contrôles automatisés
+  mobile/PWA/accessibilité.
+- [x] Activer après GO Production et vérifier une génération réelle, l'e-mail,
+  le Diagnostic, l'administration, le rendu mobile et les logs.
+- [ ] Terminer l'observation 24–48 heures et la passe physique PWA, clavier et
+  lecteur d'écran avant de fermer la fenêtre de rollback.
 - [ ] Inventorier exactement les comptes et données de test ; demander une
   autorisation destructive séparée avant suppression.
-- [ ] Retirer le code historique uniquement après stabilité et fin du rollback.
+- [ ] Retirer le code historique uniquement après stabilité, fin du rollback
+  et cartographie de ses consommateurs. Préserver les primitives Firebase et le
+  callback Google encore partagés avec l'authentification Team, ainsi que les
+  adaptateurs nécessaires à la lecture des anciens liens et documents.
 
 La coexistence de `ActionPlanExperience` et `GuestActionPlanExperience` est
-temporaire et justifiée uniquement par le rollback. Après stabilité du parcours
-public et autorisation de retirer l'ancien produit client, conserver un seul
-shell public et supprimer la machine d'état historique devenue orpheline.
+temporaire et justifiée par le rollback, les anciennes routes et les branches
+anglaises en pause. Après stabilité du parcours public, cartographier les
+imports et extraire les briques réellement partagées avant de retirer une
+machine d'état devenue orpheline ; ne pas supprimer en bloc l'authentification
+Firebase client utilisée par la session Team.
 
 Frontières : D-091 peut continuer ses recherches éditoriales hors registre
 actif, mais ne modifie pas les surfaces D-094. D-085 et les PR anglaises restent
@@ -1844,8 +1867,9 @@ Demaa.
 
 #### D-095 — Faire évoluer Opportunités vers un espace d'Annonces — planifié
 
-Statut : **décision produit à cadrer après la fusion et la stabilisation de
-D-094 ; aucun runtime commencé dans le lot D-094**.
+Statut : **décision produit planifiée ; D-094 est fusionné et activé, mais la
+période d'observation et D-091 restent prioritaires. Aucun runtime D-095 n'a
+commencé**.
 
 Objectif : élargir la surface française actuelle au-delà des seules
 opportunités commerciales, pour publier et consulter des annonces
@@ -1878,10 +1902,11 @@ vente ou à la transmission d'une entreprise.
   clavier, lecteur d'écran, accès direct et administration avant activation.
 - [ ] Garder l'anglais hors périmètre tant que D-085 reste en pause.
 
-Dépendance : commencer le runtime uniquement après la fusion de la PR D-094 qui
-rend les formulaires publics et place l'e-mail en dernier. Ce séquencement évite
-de modifier simultanément `OpportunitySubmissionDialog`,
-`PublicOpportunitiesClient` et l'API de soumission.
+Dépendance technique satisfaite : D-094 est fusionné, les formulaires sont
+publics et l'e-mail est placé en dernier. Le runtime D-095 reste néanmoins
+différé après l'observation D-094 et la priorité D-091 afin de ne pas modifier
+simultanément `OpportunitySubmissionDialog`, `PublicOpportunitiesClient` et
+l'API de soumission.
 
 ##### Mise à jour catalogue — Masquage du service Expert-comptable
 
@@ -3723,8 +3748,12 @@ ne sont pas confirmés, D-071 reste documenté sans effet sur le produit.
 
 ## Prochaine action
 
-La priorité active est D-091, sans changement du registre Firebase actif ni de
-la Production pendant la phase de recherche.
+La clôture immédiate consiste à terminer l'observation D-094, réaligner la
+documentation et nettoyer les branches fusionnées sans supprimer de données.
+La recherche éditoriale D-091 peut avancer en lecture seule pendant
+l'observation. Son runtime et sa révision Firebase candidate commencent après
+le nettoyage compatible D-094, sans changement du registre actif ni de la
+Production pendant la phase de recherche.
 
 Ordre recommandé :
 
