@@ -134,6 +134,9 @@ describe("solution proposal UI contract", () => {
     expect(submissionDialog).toContain("<details");
     expect(submissionDialog).toContain('name="email"');
     expect(submissionDialog).toContain("Votre adresse e-mail");
+    expect(submissionDialog.indexOf('name="email"')).toBeGreaterThan(
+      submissionDialog.indexOf("Ajouter des précisions"),
+    );
     expect(submissionDialog).not.toContain("Connexion demandée à l’envoi.");
     expect(submissionDialog).not.toContain("Envoyer pour modération");
     expect(submissionDialog).not.toContain("Vous pourrez tout remplir maintenant");
