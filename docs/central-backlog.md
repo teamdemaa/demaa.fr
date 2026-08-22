@@ -50,12 +50,12 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 - Les PR 169 à 171 ont livré la cible française D-090 : sous-navigation
   `Plan / Chiffres / Solutions`, Stratégie accessible sous le Plan, catalogue
   Solutions enrichi, puis Services séparé entre deux accompagnements Demaa et
-  sept partenaires de confiance. La navigation principale est désormais
+  des partenaires de confiance. La navigation principale est désormais
   `Plan d'action / Académie / Services / Opportunités`.
 - D-093 est validé pour implémentation, sans GO Production implicite. Il
   recentre l'entrée sur les opérations qui prennent du temps, aligne le prompt
   IA, vise `Plan / Solutions / Chiffres`, masque réversiblement Stratégie et
-  replie les sept partenaires Services. D-091, Firebase et l'anglais restent
+  replie les partenaires Services. D-091, Firebase et l'anglais restent
   hors de ce changement.
 
 ## Lecture canonique du backlog
@@ -1703,7 +1703,7 @@ Statut : **validé pour implémentation ; Preview, fusion et Production soumises
 
 ##### Lot 4 — Services
 
-- [x] Conserver les deux accompagnements Demaa ouverts et placer les sept
+- [x] Conserver les deux accompagnements Demaa ouverts et placer les
   partenaires dans un dépliant fermé par défaut mais consultable sans compte.
 - [x] Réutiliser le même catalogue, les mêmes cartes et le même dépliant dans
   l'application et sur `/services`, sans second catalogue ni changement SEO.
@@ -1722,6 +1722,26 @@ Statut : **validé pour implémentation ; Preview, fusion et Production soumises
 - [x] Ne modifier ni le résolveur contextuel, ni les données D-091, ni une
   révision ou un pointeur Firebase.
 - [ ] Obtenir un GO explicite avant toute fusion déclenchant Production.
+
+##### Extension isolée — Recruter un alternant
+
+- [x] Ajouter `Recruter un alternant` au catalogue canonique comme huitième
+  service partenaire, sans annuaire de profils ni nouvelle API.
+- [x] Présenter la demande comme gratuite et conserver le parcours existant
+  `Envoyer ma demande` avec entreprise et téléphone.
+- [x] Limiter les profils proposés à : commercial, administratif polyvalent,
+  montage vidéo ou création de contenu.
+- [x] Réutiliser la fiche, la modale, `lead_requests`, l'administration et les
+  notifications existantes ; l'école partenaire confirme ensuite les profils
+  réellement disponibles.
+- [x] Ne recommander ce service dans une Action que si l'alternance et une
+  intention explicite de recrutement sont toutes deux présentes. Une demande
+  générale d'information sur l'alternance reste sans recommandation.
+- [x] Conserver les coûts du contrat d'alternance, la décision d'embauche et la
+  gestion contractuelle hors du périmètre gratuit annoncé.
+
+État : **implémentation préparée sur une branche isolée empilée sur D-093 ; sa
+fusion attend le réalignement sur le commit D-093 effectivement fusionné**.
 
 #### D-083 — Solutions publiques simples et accompagnement progressif — historique
 

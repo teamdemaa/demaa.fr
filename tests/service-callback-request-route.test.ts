@@ -138,6 +138,22 @@ describe("service callback request route", () => {
     }));
   });
 
+  it("accepts the existing callback journey for the free alternance service", async () => {
+    const response = await POST(request(validBody({
+      serviceSlug: "recruter-un-alternant",
+    })));
+
+    expect(response.status).toBe(202);
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      fields: expect.arrayContaining([
+        { label: "Service", value: "Recruter un alternant" },
+        { label: "Slug du service", value: "recruter-un-alternant" },
+        { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
+      ]),
+      requestType: "service_callback_request",
+    }));
+  });
+
   it("preserves the English locale and market in the existing request pipeline", async () => {
     const response = await POST(request(validBody({
       localeCode: "en",

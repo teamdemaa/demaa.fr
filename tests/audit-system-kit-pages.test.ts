@@ -23,6 +23,7 @@ describe("system kit page audit contract", () => {
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
+      "recruter-un-alternant",
     ]);
 
     const enterprises = loadEnterprises();
@@ -45,6 +46,7 @@ describe("system kit page audit contract", () => {
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
+      "recruter-un-alternant",
     ]);
     expect(orders.get("marchand-de-biens")).toEqual([
       "apimo",
@@ -59,6 +61,7 @@ describe("system kit page audit contract", () => {
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
+      "recruter-un-alternant",
     ]);
     expect(orders.get("chasseur-immobilier")).toEqual([
       "apimo",
@@ -73,6 +76,7 @@ describe("system kit page audit contract", () => {
       "gestion-reseaux-sociaux",
       "publicite-en-ligne",
       "prospection-ciblee",
+      "recruter-un-alternant",
     ]);
     expect([...orders.values()].some((order) => order.includes("netty"))).toBe(false);
     expect(orders.get("cabinet-comptable")).not.toContain("legal-formalist");

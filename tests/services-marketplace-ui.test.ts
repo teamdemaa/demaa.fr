@@ -24,7 +24,7 @@ async function readSource(path: string) {
 }
 
 describe("canonical Accompagnement catalog", () => {
-  it("publishes exactly the nine approved offers from one immutable source", () => {
+  it("publishes exactly the ten approved offers from one immutable source", () => {
     const services = getCanonicalServices();
 
     expect(services.map((service) => service.slug)).toEqual(CANONICAL_SERVICE_SLUGS);
@@ -38,6 +38,7 @@ describe("canonical Accompagnement catalog", () => {
       "Gestion des réseaux sociaux",
       "Publicité en ligne",
       "Prospection ciblée",
+      "Recruter un alternant",
     ]);
     expect(generateStaticParams()).toEqual(
       CANONICAL_SERVICE_SLUGS
@@ -76,6 +77,15 @@ describe("canonical Accompagnement catalog", () => {
       delivery: "third-party",
       monthlyAccompanimentDiscountEligible: false,
       pricing: { label: "Sur devis" },
+    });
+    expect(getCanonicalServiceBySlug("recruter-un-alternant")).toMatchObject({
+      delivery: "third-party",
+      monthlyAccompanimentDiscountEligible: false,
+      pricing: {
+        amountMinor: 0,
+        label: "Gratuit",
+        mode: "fixed",
+      },
     });
     for (const slug of [
       "gestion-reseaux-sociaux",
@@ -163,7 +173,7 @@ describe("canonical Accompagnement catalog", () => {
     });
   });
 
-  it("renders two direct Demaa services followed by seven trusted-partner services", async () => {
+  it("renders two direct Demaa services followed by eight trusted-partner services", async () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
@@ -181,19 +191,21 @@ describe("canonical Accompagnement catalog", () => {
       readSource("src/components/SystemSolutionsTab.tsx"),
     ]);
 
-    expect(markup.match(/<article/g)).toHaveLength(9);
+    expect(markup.match(/<article/g)).toHaveLength(10);
     expect(getCanonicalServices().filter(({ delivery }) => delivery === "demaa")).toHaveLength(2);
-    expect(getCanonicalServices().filter(({ delivery }) => delivery === "third-party")).toHaveLength(7);
+    expect(getCanonicalServices().filter(({ delivery }) => delivery === "third-party")).toHaveLength(8);
     for (const service of getCanonicalServices()) {
       expect(markup).toContain(service.detailHref);
     }
     expect(markup).toContain("/sur-mesure");
     expect(markup).toContain("Coach business");
     expect(markup).toContain("Assistante administrative");
+    expect(markup).toContain("Recruter un alternant");
     expect(markup).toContain("À partir de 1 500 € HT");
     expect(markup).toContain("À partir de 4 500 € HT");
     expect(markup).toContain("750 € HT / mois");
     expect(markup).toContain("Sur devis");
+    expect(markup).toContain("Gratuit");
     expect(markup).toContain("Nos accompagnements");
     expect(markup).toContain("Conçus et réalisés directement par Demaa.");
     expect(markup).toContain("Avec nos partenaires de confiance");
@@ -212,6 +224,9 @@ describe("canonical Accompagnement catalog", () => {
     );
     expect(markup.indexOf("Assistante administrative")).toBeLessThan(
       markup.indexOf("Coach business"),
+    );
+    expect(markup.indexOf("Coach business")).toBeLessThan(
+      markup.indexOf("Recruter un alternant"),
     );
     expect(markup).not.toMatch(/Avantage abonné|−12 %/);
     expect(markup).not.toContain("−15 %");

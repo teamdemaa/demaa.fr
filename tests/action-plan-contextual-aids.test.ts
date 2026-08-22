@@ -192,6 +192,13 @@ const solutionSections: readonly RenderableSolutionSectionDto[] = [
         section: "services",
         usage: "Externaliser la recherche et la qualification de prospects.",
       }),
+      placement({
+        category: "Recrutement",
+        name: "Recruter un alternant",
+        resourceSlug: "recruter-un-alternant",
+        section: "services",
+        usage: "Recruter un alternant commercial, administratif polyvalent ou en création de contenu.",
+      }),
     ],
   },
   {
@@ -689,6 +696,11 @@ describe("action plan contextual aids", () => {
       objective: "Externaliser la recherche de prospects et la qualification des leads.",
       title: "Déléguer la prospection ciblée",
     },
+    {
+      expectedSlug: "recruter-un-alternant",
+      objective: "Recruter un alternant commercial avec l’aide d’une école partenaire.",
+      title: "Recruter un alternant commercial",
+    },
   ])("keeps a service when both the need and delegation are explicit", ({ expectedSlug, ...input }) => {
     const aids = buildActionPlanContextualAids({
       actions: [action(input)],
@@ -701,6 +713,39 @@ describe("action plan contextual aids", () => {
     expect(aids["action-1"]?.accompaniment).toMatchObject({
       relationship: "suggested",
       resourceSlug: expectedSlug,
+    });
+  });
+
+  it("does not suggest the alternance service from a vague information request", () => {
+    const aids = buildActionPlanContextualAids({
+      actions: [action({
+        objective: "Comprendre le fonctionnement général de l’alternance.",
+        title: "Se renseigner sur l’alternance",
+      })],
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    expect(aids["action-1"]?.accompaniment).toBeNull();
+  });
+
+  it("keeps an alternance request on recruitment instead of administrative assistance", () => {
+    const aids = buildActionPlanContextualAids({
+      actions: [action({
+        objective: "Recruter un apprenti assistant administratif polyvalent.",
+        title: "Recruter un alternant administratif",
+      })],
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    expect(aids["action-1"]?.accompaniment).toMatchObject({
+      relationship: "suggested",
+      resourceSlug: "recruter-un-alternant",
     });
   });
 

@@ -20,7 +20,7 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services SEO and redirects", () => {
-  it("publishes eight generic detail routes and keeps Application on /sur-mesure", async () => {
+  it("publishes nine generic detail routes and keeps Application on /sur-mesure", async () => {
     expect(generateStaticParams()).toEqual([
       { slug: "automatisation-processus" },
       { slug: "coach-business" },
@@ -30,6 +30,7 @@ describe("canonical Services SEO and redirects", () => {
       { slug: "gestion-reseaux-sociaux" },
       { slug: "publicite-en-ligne" },
       { slug: "prospection-ciblee" },
+      { slug: "recruter-un-alternant" },
     ]);
     expect(servicesIndexMetadata.alternates).toEqual({ canonical: "/services" });
     await expect(generateMetadata({

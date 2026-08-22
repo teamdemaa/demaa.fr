@@ -163,7 +163,7 @@ D-092 ou la pause de l'English Beta.
 4. le schéma V4, les limites et la réparation existante sont conservés ;
 5. les anciennes URL et intentions Stratégie reviennent au Plan sans page vide ;
 6. aucune donnée Stratégie n'est modifiée ou supprimée ;
-7. les deux Services Demaa restent visibles et les sept partenaires restent
+7. les deux Services Demaa restent visibles et les partenaires restent
    consultables sans compte dans un dépliant accessible ;
 8. aucune donnée D-091, révision Firebase, activation anglaise ou recommandation
    contextuelle n'est élargie ;
