@@ -46,6 +46,7 @@ describe("public guest action-plan experience", () => {
     expect(experience).not.toContain('>Stratégie<');
     expect(result).toContain("<details");
     expect(result).not.toContain("onWorkspaceChange");
+    expect(result).not.toContain("Disponible pendant 24 h");
     expect(delivery).toContain('submit("email"');
     expect(delivery).toContain('submit("diagnostic"');
     expect(delivery).toContain("contactConsent");
