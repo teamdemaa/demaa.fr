@@ -132,8 +132,8 @@ function PartnerServicesDisclosure({
   if (services.length === 0) return null;
 
   return (
-    <details className="group rounded-[1.25rem] border border-dema-line bg-dema-paper px-5 py-1 sm:px-6">
-      <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-3 text-left marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 [&::-webkit-details-marker]:hidden">
+    <details className="group">
+      <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 border-b border-dema-line py-3 text-left marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 [&::-webkit-details-marker]:hidden">
         <span className="text-xl font-normal leading-[1.3] text-brand-blue">
           Avec nos partenaires de confiance
         </span>
@@ -142,7 +142,7 @@ function PartnerServicesDisclosure({
           aria-hidden="true"
         />
       </summary>
-      <div className="border-t border-dema-line pb-6 pt-4 sm:pb-7">
+      <div className="pb-1 pt-4 sm:pb-2">
         <p className="max-w-3xl text-sm leading-6 text-dema-muted">
           Demaa qualifie votre besoin et organise la mise en relation.
         </p>
