@@ -56,6 +56,12 @@ function itemList(jsonLd: ReturnType<typeof buildSystemPageJsonLd>) {
   return jsonLd.find((item) => item["@type"] === "ItemList");
 }
 
+function toolItemList(jsonLd: ReturnType<typeof buildSystemPageJsonLd>) {
+  return jsonLd.find((item) =>
+    item["@type"] === "ItemList" && item.name?.startsWith("Outils recommandés")
+  );
+}
+
 describe("system page SEO published Solutions boundary", () => {
   it("describes Organisation and contextual Resources without archived presentations", () => {
     const metadata = buildSystemPageMetadata(processOnlyData, []);
@@ -134,7 +140,27 @@ describe("system page SEO published Solutions boundary", () => {
     expect(exposed).toContain("https://qonto.com/fr");
     expect(exposed).toContain("https://demaa.co/solutions/prestataire-facturation");
     expect(exposed).not.toMatch(
-      /Legacy Outil Fantôme|Partenaire Referral|\boutils?\b|annuaire-outils|écosystème/i,
+      /Legacy Outil Fantôme|Partenaire Referral|annuaire-outils|écosystème/i,
+    );
+    const generalList = itemList(jsonLd);
+    expect(generalList?.itemListElement).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: "Prestataire Facturation" }),
+      ]),
+    );
+    expect(generalList?.itemListElement).not.toContainEqual(
+      expect.objectContaining({ name: "Qonto" }),
+    );
+    expect(generalList?.itemListElement).not.toContainEqual(
+      expect.objectContaining({ name: "Demaa Pilotage" }),
+    );
+    const tools = toolItemList(jsonLd);
+    expect(tools?.itemListElement).toEqual([
+      expect.objectContaining({ name: "Qonto", position: 1 }),
+      expect.objectContaining({ name: "Demaa Pilotage", position: 2 }),
+    ]);
+    expect(tools?.itemListElement).not.toContainEqual(
+      expect.objectContaining({ name: "Prestataire Facturation" }),
     );
   });
 

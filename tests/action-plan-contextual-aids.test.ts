@@ -428,6 +428,27 @@ describe("action plan contextual aids", () => {
     )).toBe(true);
   });
 
+  it("ignores historical Service selections now that Services has its own destination", () => {
+    const service = solutionSections
+      .find(({ section }) => section === "services")
+      ?.placements[0];
+    expect(service).toBeDefined();
+
+    const aids = buildActionPlanContextualAids({
+      actions: [action({
+        title: "Confier la tenue comptable à un expert-comptable",
+        objective: "Trouver un professionnel pour prendre en charge la comptabilité.",
+      })],
+      selectedSolutionPlacementIds: new Set([service!.placementId]),
+      resources,
+      solutionSections,
+      systemId: "restaurant",
+      systeme,
+    });
+
+    expect(aids["action-1"]?.accompaniment?.relationship).toBe("suggested");
+  });
+
   it("does not suggest software for a generic action without a software capability", () => {
     const aids = buildActionPlanContextualAids({
       actions: [action({

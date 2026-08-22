@@ -8,6 +8,7 @@ import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services
 import { getActivePublicRenderableSolutionSectionsForSystem } from "@/lib/firebase-solution-registry-selection.server";
 import { getSystemDetailPageData } from "@/lib/system-detail-page";
 import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
+import { filterPublicSystemRecommendationSections } from "@/lib/public-solution-section-visibility";
 import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
 import { isToolSolutionResourceType } from "@/lib/tool-outbound-attribution";
 
@@ -58,9 +59,11 @@ export default async function SystemRecapPage({ params }: SystemRecapPageProps) 
 
   if (!data) notFound();
 
-  const visibleSolutionSections = composePublicSolutionSectionsForSystem(
-    slug,
-    mergeRenderableSolutionSections(solutionSections),
+  const visibleSolutionSections = filterPublicSystemRecommendationSections(
+    composePublicSolutionSectionsForSystem(
+      slug,
+      mergeRenderableSolutionSections(solutionSections),
+    ),
   );
   const resources = getSystemResourcesForSystem(slug).filter(
     (resource) => resource.resourceSlug !== "recapitulatif-systeme",

@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "D-091",
+  "status": "research-candidate",
+  "reviewedAt": "2026-08-22",
+  "rules": {
+    "cardsPerSystem": 10,
+    "categoryQuotas": false,
+    "runtimeActivation": false,
+    "sourceOfIdentity": "tool-directory.json"
+  },
+  "systems": [
+    {
+      "systemSlug": "agence-de-recrutement",
+      "priorityNeeds": [
+        "candidatures-et-vivier",
+        "relation-clients",
+        "qualification-et-entretiens",
+        "collaboration-et-documents",
+        "automatisation-et-reporting"
+      ],
+      "toolSlugsByRank": [
+        "recruitee",
+        "teamtailor",
+        "hubspot",
+        "calendly",
+        "typeform",
+        "aircall",
+        "zoom",
+        "google-workspace",
+        "n8n",
+        "power-bi"
+      ],
+      "compositionRationale": "Deux ATS seulement. Les autres places couvrent clients, qualification, entretiens, collaboration, automatisation et reporting."
+    },
+    {
+      "systemSlug": "saas",
+      "priorityNeeds": [
+        "paiement-et-revenu-recurrent",
+        "vente-et-relation-client",
+        "developpement-et-deploiement",
+        "pilotage-produit-et-qualite",
+        "support-et-automatisation"
+      ],
+      "toolSlugsByRank": [
+        "stripe",
+        "attio",
+        "github",
+        "vercel",
+        "linear",
+        "sentry",
+        "posthog",
+        "intercom",
+        "n8n",
+        "google-workspace"
+      ],
+      "compositionRationale": "La sélection évite de doubler CRM, support et gestion de projet et couvre le cycle produit, commercial et opérationnel."
+    },
+    {
+      "systemSlug": "agence-web",
+      "priorityNeeds": [
+        "conception-et-production",
+        "developpement-et-deploiement",
+        "gestion-projets-clients",
+        "vente-et-facturation",
+        "collaboration-et-automatisation"
+      ],
+      "toolSlugsByRank": [
+        "figma",
+        "webflow",
+        "wordpress",
+        "github",
+        "vercel",
+        "asana",
+        "slack",
+        "sellsy",
+        "n8n",
+        "google-workspace"
+      ],
+      "compositionRationale": "Webflow et WordPress répondent à des contextes de livraison différents ; les autres outils couvrent conception, code, projet, commercial et automatisation."
+    },
+    {
+      "systemSlug": "cabinet-comptable",
+      "priorityNeeds": [
+        "production-comptable",
+        "collecte-et-collaboration-client",
+        "paie-et-social",
+        "pilotage-et-conseil",
+        "documentation-et-organisation"
+      ],
+      "toolSlugsByRank": [
+        "tiimora",
+        "pennylane",
+        "silae",
+        "myunisoft",
+        "acd",
+        "dext",
+        "rca",
+        "lefebvre-dalloz",
+        "google-workspace",
+        "cegid"
+      ],
+      "compositionRationale": "Plusieurs suites comptables restent justifiées par leurs positionnements distincts ; collecte, paie, conseil, documentation et collaboration complètent la production."
+    },
+    {
+      "systemSlug": "batiment",
+      "priorityNeeds": [
+        "devis-et-facturation",
+        "couts-et-rentabilite-chantier",
+        "planning-equipes",
+        "suivi-terrain-et-reserves",
+        "documents-et-coordination"
+      ],
+      "toolSlugsByRank": [
+        "vertuoza",
+        "progbat",
+        "graneet",
+        "sage-batigest-connect",
+        "obat",
+        "alobees",
+        "fieldwire",
+        "kizeo-forms",
+        "google-workspace",
+        "oryka"
+      ],
+      "compositionRationale": "Les suites de gestion sont complétées par achats-marges, planning, terrain, formulaires et documents ; aucune place n'est réservée à une catégorie."
+    }
+  ],
+  "activationBlockers": [
+    "Transformer chaque sélection en ressources et placements Firebase complets.",
+    "Rafraîchir les preuves officielles et dates absentes du répertoire.",
+    "Valider les usages, contraintes et rangs avec une seconde revue métier.",
+    "Recetter le read-model candidate sans changer le pointeur actif."
+  ]
+}

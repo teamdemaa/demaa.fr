@@ -98,6 +98,26 @@ export type SolutionPlacement = ReviewMetadata & Readonly<{
   publicationBlockers: readonly string[];
 }>;
 
+type SolutionPlacementIdentityFields = Pick<
+  SolutionPlacement,
+  "placementId" | "resourceSlug" | "section" | "systemSlug"
+>;
+
+export function buildStableSolutionPlacementId(
+  placement: Omit<SolutionPlacementIdentityFields, "placementId">,
+): string {
+  return `${placement.systemSlug}:${placement.resourceSlug}:${placement.section}`;
+}
+
+function hasCompatibleSolutionPlacementId(
+  placement: SolutionPlacementIdentityFields,
+): boolean {
+  const stableId = buildStableSolutionPlacementId(placement);
+  if (placement.placementId === stableId) return true;
+  if (!placement.placementId.startsWith(`${stableId}:`)) return false;
+  return /^[1-9]\d*$/.test(placement.placementId.slice(stableId.length + 1));
+}
+
 const RESOURCE_BASE_KEYS = [
   ...REVIEW_FIELD_NAMES, "resourceSlug", "resourceType", "name", "description",
   "interactionMode", "commercialRelationship", "status", "resourceVersion", "publicationBlockers",
@@ -239,8 +259,9 @@ export function validateSolutionPlacement(input: unknown, now = new Date()): str
     requireComplete: placement.status === "published",
     now,
   });
-  const expectedId = `${placement.systemSlug}:${placement.resourceSlug}:${placement.section}:${placement.rank}`;
-  if (placement.placementId !== expectedId) errors.push("solution placement ID must match its semantic fields");
+  if (!hasCompatibleSolutionPlacementId(placement)) {
+    errors.push("solution placement ID must match its semantic fields");
+  }
   if (placement.status === "published") {
     if (placement.commercialRelationship === "unknown") errors.push("published placement requires a known commercial relationship");
     if (placement.publicationBlockers.length > 0) errors.push("published placement cannot have blockers");
