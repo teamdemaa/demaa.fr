@@ -19,6 +19,7 @@ import {
 import { shouldRedirectAuthenticatedHomeToPlans } from "@/lib/action-plan-home-routing";
 import { getActiveDefaultCompanyContext } from "@/lib/company-membership.server";
 import { getCurrentCustomerAppIdentityFromSession } from "@/lib/customer-space-session.server";
+import { isGuestProductEnabled } from "@/lib/guest-action-plan-security.server";
 import {
   GLOBAL_ENGLISH_BETA_COMMERCIAL_CONTEXT,
   FRANCE_COMMERCIAL_CONTEXT,
@@ -37,11 +38,30 @@ export async function loadActionPlanHomePage(input: {
     if (legacyOpportunitiesHref) redirect(legacyOpportunitiesHref);
   }
 
-  const identity = await getCurrentCustomerAppIdentityFromSession();
   const parsedContext = parseActionPlanAppContext(input.searchParams);
   const requestedIntent = Array.isArray(input.searchParams.intent)
     ? input.searchParams.intent[0]
     : input.searchParams.intent;
+  const unauthenticatedConfig = getUnauthenticatedConfig(input.localeCode);
+
+  if (isGuestProductEnabled()) {
+    return {
+      config: unauthenticatedConfig,
+      guestProductEnabled: true,
+      initialAccessIntent: null,
+      initialAppContext: constrainContext(
+        parsedContext,
+        unauthenticatedConfig.visibleViews,
+      ),
+      initialEmail: "",
+      initialGenerationIntent: false,
+      initialIsAuthenticated: false,
+      initialStructureIntent: input.localeCode === "fr"
+        && (requestedIntent === "structure" || requestedIntent === "structure-problem"),
+    };
+  }
+
+  const identity = await getCurrentCustomerAppIdentityFromSession();
   const requestedNewPlan = Array.isArray(input.searchParams.new)
     ? input.searchParams.new[0]
     : input.searchParams.new;
@@ -49,7 +69,6 @@ export async function loadActionPlanHomePage(input: {
   const requestedAccessIntent = parsedAccessIntent?.kind === "open-company-strategy"
     ? null
     : parsedAccessIntent;
-  const unauthenticatedConfig = getUnauthenticatedConfig(input.localeCode);
 
   if (shouldRedirectAuthenticatedHomeToPlans({
     isAuthenticated: Boolean(identity),
@@ -71,6 +90,7 @@ export async function loadActionPlanHomePage(input: {
 
   return {
     config,
+    guestProductEnabled: false,
     initialAccessIntent: requestedAccessIntent,
     initialAppContext: constrainContext(parsedContext, config.visibleViews),
     initialEmail: identity?.email ?? "",
@@ -112,7 +132,12 @@ function redirectToSignIn(input: {
   redirect(`/connexion?${params.toString()}`);
 }
 
+function redirectRetiredCustomerRoute(localeCode: InterfaceLocaleCode) {
+  if (isGuestProductEnabled()) redirect(localeCode === "en" ? "/en" : "/");
+}
+
 export async function loadActionPlansPage(localeCode: InterfaceLocaleCode) {
+  redirectRetiredCustomerRoute(localeCode);
   const identity = await getCurrentCustomerAppIdentityFromSession();
   const unauthenticatedConfig = getUnauthenticatedConfig(localeCode);
   if (!identity) {
@@ -134,6 +159,7 @@ export async function loadNewActionPlanPage(input: {
   localeCode: InterfaceLocaleCode;
   searchParams: Promise<{ resume?: string | string[] }>;
 }) {
+  redirectRetiredCustomerRoute(input.localeCode);
   const [identity, params] = await Promise.all([
     getCurrentCustomerAppIdentityFromSession(),
     input.searchParams,
@@ -162,6 +188,7 @@ export async function loadSavedActionPlanPage(input: {
   localeCode: InterfaceLocaleCode;
   searchParams: ActionPlanPageSearchParams;
 }) {
+  redirectRetiredCustomerRoute(input.localeCode);
   if (input.localeCode === "fr") {
     const legacyOpportunitiesHref = buildLegacyOpportunitiesHref(input.searchParams);
     if (legacyOpportunitiesHref) redirect(legacyOpportunitiesHref);
@@ -201,6 +228,7 @@ export async function loadSavedActionPlanPage(input: {
 }
 
 export async function redirectToLatestActionPlan(localeCode: InterfaceLocaleCode) {
+  redirectRetiredCustomerRoute(localeCode);
   const identity = await getCurrentCustomerAppIdentityFromSession();
   const unauthenticatedConfig = getUnauthenticatedConfig(localeCode);
   if (!identity) {
