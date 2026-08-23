@@ -1911,12 +1911,14 @@ différé après l'observation D-094 et la priorité D-091 afin de ne pas modifi
 simultanément `OpportunitySubmissionDialog`, `PublicOpportunitiesClient` et
 l'API de soumission.
 
-#### D-096 — Académie Demaa : Tutoriels et Formations — validé, non livré
+#### D-096 — Structurer : Tutoriels et Formations — PR prête, non fusionnée
 
 Référence : [ADR 0021](decisions/0021-demaa-academy-and-external-course-boundaries.md).
 
-Objectif : conserver l'onglet Académie Demaa tout en séparant clairement la
-lecture éditoriale des véritables parcours de formation.
+Objectif : présenter la surface française sous le libellé visible `Structurer`
+tout en séparant clairement la lecture éditoriale des véritables parcours de
+formation. Les identifiants techniques `academy`, l'API et la route
+`/academie` restent inchangés ; l'anglais reste `Academy`.
 
 - [ ] Afficher deux sections horizontalement scrollables : `Tutoriels`, puis
   `Formations`.
@@ -1925,6 +1927,9 @@ lecture éditoriale des véritables parcours de formation.
   ou quiz.
 - [ ] Présenter les actuels `Cours` comme `Formations` sans changer leurs
   identifiants, leçons, quiz, actions, versions, cache ou progression.
+- [ ] Organiser les huit Formations, sans doublon, autour de cinq thèmes
+  éditoriaux : `Finances et trésorerie`, `Prix et offre`, `Marketing et
+  ventes`, `Délégation` et `Réalisation des prestations`.
 - [ ] Simplifier les miniatures avec une même composition et plusieurs thèmes
   de couleur Demaa ; conserver des cibles tactiles, focus et textes alternatifs
   accessibles.
@@ -1933,6 +1938,13 @@ lecture éditoriale des véritables parcours de formation.
   explicites, sans supprimer les contenus masqués avant la fin du rollback.
 - [ ] Recetter desktop, mobile, PWA, clavier, lecteur d'écran, retour depuis un
   article et reprise de progression d'une Formation.
+
+État d'exécution : la PR #194 porte le runtime et la Preview, avec les deux
+rails, les articles Tutoriels, les huit Formations, les miniatures existantes,
+le libellé `Structurer` et les cinq thèmes. Elle est prête pour la recette
+finale mais n'est pas fusionnée. La navigation française visée par ce lot est
+`Plan d'action · Services · Structurer · Opportunités`. Le remplacement
+ultérieur d'`Opportunités` par `Annonces` reste le lot D-095 séparé.
 
 The Done Studio suit un handover informatif séparé : son onglet Ressources
 reçoit une section unique `Cours`, sans Tutoriels/Formations. Les applications

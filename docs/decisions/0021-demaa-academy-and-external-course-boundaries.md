@@ -1,7 +1,7 @@
-# ADR 0021 — Académie Demaa et frontières avec les Cours externes
+# ADR 0021 — Structurer dans Demaa et frontières avec les Cours externes
 
 - Décision : D-096
-- Statut : validé, non livré
+- Statut : validé, PR #194 prête, non livré
 - Date : 23 août 2026
 
 ## Contexte
@@ -17,8 +17,11 @@ deux produits.
 
 ## Décision Demaa
 
-Demaa conserve l'onglet `Académie` avec deux sections horizontalement
-scrollables :
+Demaa conserve les contrats et routes techniques Academy, mais la destination
+française visible s'appelle `Structurer`. L'identifiant `academy`, l'API et la
+route `/academie` ne sont pas renommés. L'anglais reste `Academy`.
+
+`Structurer` contient deux sections horizontalement scrollables :
 
 1. `Tutoriels` : contenus éditoriaux lisibles comme des articles, sans leçon,
    progression ni quiz. Les `case-study` existants sont réutilisés uniquement
@@ -27,9 +30,23 @@ scrollables :
 2. `Formations` : les actuels `Cours` et leur lecteur. Les identifiants,
    leçons, quiz, actions, versions, caches et progressions restent compatibles.
 
+Les huit Formations existantes couvrent cinq axes, sans nouvelle copie de
+contenu :
+
+- `Finances et trésorerie` : trésorerie, chiffre d'affaires et bénéfice ;
+- `Prix et offre` : prix rentable et offre facile à acheter ;
+- `Marketing et ventes` : système marketing et transformation d'une demande
+  en client ;
+- `Délégation` : déléguer sans perdre le contrôle ;
+- `Réalisation des prestations` : livrer sans tout réinventer.
+
 Les miniatures utilisent une composition simple et cohérente, déclinable en
 plusieurs thèmes de couleur Demaa. Les Webinaires restent masqués. L'anglais
 reste en pause et n'est pas activé par D-096.
+
+La navigation française du lot D-096 est
+`Plan d'action · Services · Structurer · Opportunités`. Le renommage
+`Opportunités` → `Annonces` appartient exclusivement à D-095.
 
 ## Frontière avec The Done Studio
 

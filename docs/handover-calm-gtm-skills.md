@@ -52,4 +52,4 @@ couleurs et répertoires de sortie deviennent portables ou configurables.
 - aucune mutation externe sans autorisation au moment de l'action ;
 - une PR Fondation, une PR Prospection et une PR Vidéo ;
 - aucune release Calm avant validation des tests d'installation et des deux
-  skills avec `quick_validate.py` et des scénarios comportementaux réalistes.
+  skills avec `quick_validate.sh` et des scénarios comportementaux réalistes.
