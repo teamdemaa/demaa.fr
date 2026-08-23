@@ -5,11 +5,10 @@ Dernière consolidation : 23 août 2026.
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
 
-Le Google Sheet a été resynchronisé le 16 août 2026 avec D-083 à D-088,
-DEC-023/024, le runtime de référence `8020e04` et la tête documentaire
-`10a9067`. Les décisions postérieures sont conservées dans ce document ; le
-Sheet reste à réaligner lors d'une prochaine passe documentaire dédiée. Aucun
-chantier ne doit être déclaré livré avant sa recette réelle.
+Le Google Sheet a été resynchronisé le 23 août 2026 avec la décision finale
+D-091 sans quota fixe, D-094 livré et en observation, D-095 planifié, ainsi que
+la tête Production `69bbc336`. Aucun chantier ne doit être déclaré livré avant
+sa recette réelle.
 
 Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
@@ -22,8 +21,9 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
 ## État courant Production — 23 août 2026
 
-- `origin/main` pointe sur `467f420f`, déployé en Production après la fusion
-  des PR 183 à 190 et l'activation contrôlée de D-094. `dbb8b723` reste le
+- `origin/main` pointe sur `69bbc336`, après la clôture documentaire de la PR
+  191. `467f420f` reste le dernier checkpoint runtime de D-094, déployé après
+  la fusion des PR 183 à 190 et son activation contrôlée. `dbb8b723` reste le
   dernier checkpoint antérieur à D-094. Les références `6d35805f`, `260ad7d`,
   `8020e04`, `ae5029d`, `a47d844`,
   `f0b4d75` et `cca1459a` restent des checkpoints historiques ; elles ne sont plus
