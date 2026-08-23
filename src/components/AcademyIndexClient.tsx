@@ -262,8 +262,8 @@ function AcademyCard({
                   src={caseStudy.character}
                   alt={caseStudy.characterAlt}
                   fill
-                  priority={eager}
-                  sizes="(max-width: 767px) 92vw, (max-width: 1199px) 45vw, 30vw"
+                  loading={eager ? "eager" : "lazy"}
+                  unoptimized
                   className={`object-contain ${caseStudy.characterClassName ?? ""}`}
                 />
               </div>
