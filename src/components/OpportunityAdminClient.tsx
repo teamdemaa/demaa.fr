@@ -150,7 +150,14 @@ export default function OpportunityAdminClient({
         </select>
         <input aria-label="Titre" name="title" required defaultValue={editingOpportunity?.title ?? ""} placeholder="Titre" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
         <textarea aria-label="Description" name="summary" minLength={30} required rows={5} defaultValue={editingOpportunity?.summary ?? ""} placeholder="Décrivez l’annonce de manière claire, sans information confidentielle" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
-        <input aria-label="Secteur" name="category" required defaultValue={editingOpportunity?.category ?? ""} placeholder="Secteur : ex. Marketing, BTP, Bâtiment" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
+        <div className="space-y-2">
+          <p className="text-xs text-dema-muted">
+            Secteur, domaine et type apparaissent en tags sur la carte, par exemple
+            « BTP », « Appels d’offres », « Mission ».
+          </p>
+          <input aria-label="Secteur" name="category" required defaultValue={editingOpportunity?.category ?? ""} placeholder="Secteur, ex. BTP" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
+          <input aria-label="Domaine affiché" name="domainLabel" defaultValue={editingOpportunity?.domainLabel ?? ""} placeholder="Domaine, ex. Appels d’offres (facultatif)" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
+        </div>
         <input aria-label="Localisation" name="geography" defaultValue={editingOpportunity?.geography ?? ""} placeholder="Localisation : France, ville ou pays (facultatif)" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
         <label className="block space-y-2 text-sm text-brand-blue">
           <span>Date limite <span className="text-dema-muted">(facultatif)</span></span>
@@ -158,7 +165,6 @@ export default function OpportunityAdminClient({
         </label>
         <input aria-label="Prix ou budget" name="compensation" defaultValue={editingOpportunity?.compensation ?? ""} placeholder="Prix ou budget, seulement si défini (facultatif)" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
         <input aria-label="Nom de l’entreprise" name="companyName" defaultValue={editingOpportunity?.companyName ?? ""} placeholder="Entreprise, uniquement avec son accord (facultatif)" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
-        <input aria-label="Domaine affiché" name="domainLabel" defaultValue={editingOpportunity?.domainLabel ?? ""} placeholder="Domaine ou spécialité (facultatif)" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
 
         {isRepriseTransmission ? null : (
           <div className="space-y-4 border-t border-dema-line pt-4">
