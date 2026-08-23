@@ -70,6 +70,12 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
   Diagnostic et sa présence dans l'administration Team ont été vérifiés le
   23 août 2026. La période d'observation est en cours ; aucun compte ou donnée
   de test ne sera supprimé sans inventaire et autorisation destructive séparée.
+- Décision de positionnement du 23 août 2026 : la description meta globale
+  (layout racine et page d'accueil, OG/Twitter compris) devient « Demaa
+  structure votre entreprise en mettant en place les bons systèmes, pour
+  qu'elle dépende moins de vous. », remplaçant l'ancienne formulation centrée
+  sur « clarifie les responsabilités, formalise les processus ». Changement de
+  texte uniquement, aucune structure ni logique modifiée.
 
 ## Lecture canonique du backlog
 
