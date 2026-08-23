@@ -13,6 +13,7 @@ export type OpportunitySubmissionFields = Readonly<{
   companyName: string | null;
   compensation: string | null;
   expectations: readonly string[];
+  expiresAt: string | null;
   geography: string | null;
   opportunityType: OpportunityType;
   startTiming: string | null;
@@ -53,6 +54,10 @@ export function parseOpportunitySubmissionFields(
     .map((value) => cleanText(value, 180))
     .filter(Boolean)
     .slice(0, 4);
+  const expiresAtRaw = cleanText(entry.expiresAt, 40);
+  const expiresAt = expiresAtRaw
+    ? new Date(`${expiresAtRaw}T23:59:59.999Z`).toISOString()
+    : null;
 
   if (
     title.length < 5
@@ -60,6 +65,7 @@ export function parseOpportunitySubmissionFields(
     || !category
     || !OPPORTUNITY_TYPES.includes(opportunityType as OpportunityType)
     || (workMode && !OPPORTUNITY_WORK_MODES.includes(workMode as OpportunityWorkMode))
+    || (expiresAtRaw && !Number.isFinite(Date.parse(expiresAt ?? "")))
   ) return null;
 
   return {
@@ -68,6 +74,7 @@ export function parseOpportunitySubmissionFields(
     companyName: cleanText(entry.companyName, 140) || null,
     compensation: cleanText(entry.compensation, 140) || null,
     expectations,
+    expiresAt,
     geography: cleanText(entry.geography, 100) || null,
     opportunityType: opportunityType as OpportunityType,
     startTiming: cleanText(entry.startTiming, 140) || null,

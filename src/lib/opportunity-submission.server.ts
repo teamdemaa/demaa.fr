@@ -91,7 +91,6 @@ export async function submitPendingOpportunityDraft(input: {
     const opportunity = parseOpportunity({
       ...fields,
       createdAt: now,
-      expiresAt: null,
       expertiseId: null,
       opportunityId,
       publishedAt: null,
