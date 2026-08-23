@@ -43,6 +43,19 @@ trouve dans `pilot-reviewed-selections.v2.json`.
   le JSON-LD public ; aucune troncature à huit ou dix ;
 - audit pilote vert et 26 tests ciblés verts.
 
+## Preview recettée
+
+- URL : <https://demaa-5b4nh2fwb-hiteamdemaa-2292s-projects.vercel.app> ;
+- déploiement Vercel `dpl_Gz9PWLW7bZ39ZfnS9oGpYQ8jhMS6`, cible `preview`,
+  statut `Ready` ;
+- build forcé sur les données locales de la candidate, sans lecture ni
+  déplacement du pointeur Firebase ;
+- API des cinq pilotes : 4/8/8/7/7 Outils, dans l'ordre revu, et Services
+  contextuels présents séparément ;
+- HTML et JSON-LD des cinq pages : chaque Outil apparaît une fois, avec les
+  positions continues de 1 à N ;
+- aucun log d'erreur Vercel relevé après la recette.
+
 ## Gate de validation métier
 
 La Preview doit permettre de valider uniquement trois décisions éditoriales :
