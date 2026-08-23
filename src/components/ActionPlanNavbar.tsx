@@ -18,10 +18,12 @@ const navigationItems = {
   opportunities: { view: "opportunities", labels: { fr: "Opportunités", en: "Opportunities" }, Icon: BriefcaseBusiness },
 } as const;
 
-const navigationOrder: Record<InterfaceLocaleCode, readonly ActionPlanView[]> = {
-  fr: ["plan", "services", "academy", "opportunities"],
-  en: ["plan", "academy", "services", "opportunities"],
-};
+const navigationOrder: readonly ActionPlanView[] = [
+  "plan",
+  "academy",
+  "services",
+  "opportunities",
+];
 
 export default function ActionPlanNavbar({
   activeView,
@@ -53,7 +55,7 @@ export default function ActionPlanNavbar({
   }
 
   function navigation() {
-    const orderedItems = navigationOrder[localeCode].map(
+    const orderedItems = navigationOrder.map(
       (view) => navigationItems[view],
     );
 

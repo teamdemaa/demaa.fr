@@ -2,10 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { BookOpenText, Search, SlidersHorizontal } from "lucide-react";
+import { Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import AppLibrarySearch from "@/components/AppLibrarySearch";
-import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { LIBRARY_CARD_TITLE_CLASSNAME } from "@/lib/library-card-ui";
 import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
@@ -76,13 +75,6 @@ const COURSE_TITLES: Record<string, string> = {
 };
 
 const ALL_ACADEMY_CATEGORIES = "Tous";
-
-export function groupAcademyContents(contents: AcademyContentDefinition[]) {
-  return {
-    formations: contents.filter((content) => content.kind === "course"),
-    tutorials: contents.filter((content) => content.kind === "case-study"),
-  };
-}
 
 function CourseDiagram({ localeCode, slug }: { localeCode: "fr" | "en"; slug: string }) {
   if (localeCode === "en") {
@@ -264,23 +256,18 @@ function AcademyCard({
           }`}
         >
           {caseStudy ? (
-            <>
-              <div className="absolute inset-4 flex items-center justify-center overflow-hidden sm:inset-[1.125rem]">
-                <div className="relative aspect-square h-full overflow-hidden">
-                  <Image
-                    src={caseStudy.character}
-                    alt={caseStudy.characterAlt}
-                    fill
-                    priority={eager}
-                    sizes="(max-width: 767px) 92vw, (max-width: 1199px) 45vw, 30vw"
-                    className={`object-contain ${caseStudy.characterClassName ?? ""}`}
-                  />
-                </div>
+            <div className="absolute inset-4 flex items-center justify-center overflow-hidden sm:inset-[1.125rem]">
+              <div className="relative aspect-square h-full overflow-hidden">
+                <Image
+                  src={caseStudy.character}
+                  alt={caseStudy.characterAlt}
+                  fill
+                  priority={eager}
+                  sizes="(max-width: 767px) 92vw, (max-width: 1199px) 45vw, 30vw"
+                  className={`object-contain ${caseStudy.characterClassName ?? ""}`}
+                />
               </div>
-              <span className="absolute bottom-3 left-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-dema-forest shadow-sm" aria-hidden="true">
-                <BookOpenText className="h-4 w-4" />
-              </span>
-            </>
+            </div>
           ) : (
             <CourseDiagram localeCode={localeCode} slug={identity.slug} />
           )}
@@ -322,52 +309,6 @@ function AcademyCard({
   );
 }
 
-function AcademyContentRail({
-  contents,
-  eager = false,
-  label,
-  localeCode,
-  onOpenContent,
-}: {
-  contents: AcademyContentDefinition[];
-  eager?: boolean;
-  label: string;
-  localeCode: "fr" | "en";
-  onOpenContent?: (content: AcademyContentDefinition) => void;
-}) {
-  if (contents.length === 0) return null;
-
-  const headingId = label === "Tutoriels"
-    ? "academy-tutorials"
-    : "academy-formations";
-
-  return (
-    <section aria-labelledby={headingId} className="min-w-0 max-w-full">
-      <h2
-        id={headingId}
-        className="mb-5 text-2xl font-light tracking-[-0.025em] text-brand-blue sm:text-[2rem]"
-      >
-        {label}
-      </h2>
-      <HorizontalScrollHint
-        className="grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[84%] gap-5 overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:none] sm:auto-cols-[48%] lg:auto-cols-[calc((100%_-_3rem)_/_3)] [&::-webkit-scrollbar]:hidden"
-        controlsClassName="absolute right-0 -top-12 z-10 flex items-center gap-1.5"
-      >
-        {contents.map((content, index) => (
-          <div key={content.identity.slug} className="min-w-0 snap-start">
-            <AcademyCard
-              content={content}
-              eager={eager && index < 3}
-              localeCode={localeCode}
-              onOpen={onOpenContent}
-            />
-          </div>
-        ))}
-      </HorizontalScrollHint>
-    </section>
-  );
-}
-
 export default function AcademyIndexClient({
   contents,
   embedded = false,
@@ -381,16 +322,27 @@ export default function AcademyIndexClient({
   const [activeCategory, setActiveCategory] = useState(allCategoriesLabel);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
 
+  const indexContents = useMemo(
+    () => contents.filter((content) => {
+      if (localeCode === "en") return content.kind === "course";
+      if (content.kind === "case-study") {
+        return PUBLIC_EDITORIAL_VISIBILITY.academyTutorials;
+      }
+      return PUBLIC_EDITORIAL_VISIBILITY.academyFormations;
+    }),
+    [contents, localeCode],
+  );
+
   const categories = useMemo(
     () => [
       allCategoriesLabel,
-      ...Array.from(new Set(contents.map((content) => content.identity.category))),
+      ...Array.from(new Set(indexContents.map((content) => content.identity.category))),
     ],
-    [allCategoriesLabel, contents],
+    [allCategoriesLabel, indexContents],
   );
 
   const filteredContents = useMemo(() => {
-    return contents.filter((content) => {
+    return indexContents.filter((content) => {
       const matchesCategory =
         activeCategory === allCategoriesLabel ||
         content.identity.category === activeCategory;
@@ -407,12 +359,7 @@ export default function AcademyIndexClient({
 
       return matchesCategory && matchesQuery;
     });
-  }, [activeCategory, allCategoriesLabel, contents, searchQuery]);
-
-  const {
-    formations: formationContents,
-    tutorials: tutorialContents,
-  } = groupAcademyContents(filteredContents);
+  }, [activeCategory, allCategoriesLabel, indexContents, searchQuery]);
   const ContentContainer = embedded ? "div" : "main";
 
   const searchControl = embedded ? (
@@ -437,7 +384,7 @@ export default function AcademyIndexClient({
             open: "Show categories",
           }
         : undefined}
-      placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher une formation ou un tutoriel…"}
+      placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un tutoriel…"}
       query={searchQuery}
     />
   ) : (
@@ -450,13 +397,13 @@ export default function AcademyIndexClient({
           />
           <input
             type="search"
-            aria-label={localeCode === "en" ? "Search the Academy" : "Rechercher une formation ou un tutoriel"}
+            aria-label={localeCode === "en" ? "Search the Academy" : "Rechercher un tutoriel"}
             value={searchQuery}
             onChange={(event) => {
               setSearchQuery(event.target.value);
               setActiveCategory(allCategoriesLabel);
             }}
-            placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher une formation ou un tutoriel…"}
+            placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un tutoriel…"}
             className="w-full rounded-full bg-dema-paper py-4 pl-11 pr-12 text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 md:py-5 md:pl-16 md:pr-20 md:text-lg"
           />
           <button
@@ -540,29 +487,12 @@ export default function AcademyIndexClient({
       ) : null}
 
       <ContentContainer className={`mx-auto max-w-7xl px-4 pb-16 md:pb-20 ${embedded ? "pt-0" : ""}`}>
-        {localeCode === "fr" ? (
-          <div className="space-y-12 md:space-y-16">
-            {PUBLIC_EDITORIAL_VISIBILITY.academyTutorials ? (
-              <AcademyContentRail
-                contents={tutorialContents}
-                eager
-                label="Tutoriels"
-                localeCode={localeCode}
-                onOpenContent={onOpenContent}
-              />
-            ) : null}
-            <AcademyContentRail
-              contents={formationContents}
-              eager={!PUBLIC_EDITORIAL_VISIBILITY.academyTutorials}
-              label="Formations"
-              localeCode={localeCode}
-              onOpenContent={onOpenContent}
-            />
-          </div>
-        ) : formationContents.length ? (
-          <section aria-label="Courses">
+        {filteredContents.length ? (
+          <section
+            aria-label={localeCode === "en" ? "Courses" : "Contenus pour structurer son entreprise"}
+          >
             <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-              {formationContents.map((content, index) => (
+              {filteredContents.map((content, index) => (
                 <AcademyCard
                   key={content.identity.slug}
                   content={content}

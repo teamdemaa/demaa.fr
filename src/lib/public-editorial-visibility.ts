@@ -5,6 +5,7 @@
  * Reactivation must be explicit, reviewed and accompanied by the backlog QA.
  */
 export const PUBLIC_EDITORIAL_VISIBILITY = Object.freeze({
+  academyFormations: false,
   academyLiveTrainings: false,
   academyTutorials: true,
   systemContextualCaseStudies: false,

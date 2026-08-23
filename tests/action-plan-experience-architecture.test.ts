@@ -291,9 +291,9 @@ describe("action plan experience architecture", () => {
     expect(experience).not.toContain("onOpenAccess={() => setAccessPromptOpen(true)}");
     expect(academyIndex).toContain("!embedded ? (");
     expect(academyIndex).toContain("<AppLibrarySearch");
-    expect(academyIndex).toContain("<HorizontalScrollHint");
-    expect(academyIndex).toContain('label="Tutoriels"');
-    expect(academyIndex).toContain('label="Formations"');
+    expect(academyIndex).toContain("grid grid-cols-1");
+    expect(academyIndex).not.toContain("<HorizontalScrollHint");
+    expect(academyIndex).not.toContain("BookOpenText");
     expect(systemPanel).toContain(
       'className="mx-auto mb-6 w-full max-w-xl xl:w-[min(40vw,36rem)]"',
     );

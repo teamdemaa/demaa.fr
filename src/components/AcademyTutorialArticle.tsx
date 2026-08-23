@@ -72,7 +72,7 @@ export default function AcademyTutorialArticle({
               <p className="mt-5 text-base leading-8 text-dema-muted sm:text-lg">
                 {lesson.body}
               </p>
-              <div className="mt-7 rounded-[1.25rem] bg-[#E7EEE8] p-4 sm:p-6">
+              <div className="mt-7 overflow-hidden rounded-[1rem]">
                 <AcademyLessonVisual lesson={lesson} eager={lessonIndex === 0} />
               </div>
               <aside className="mt-6 border-l-2 border-dema-forest/35 pl-4">

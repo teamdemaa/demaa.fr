@@ -87,7 +87,7 @@ describe("Academy live sessions and contextual cases", () => {
     }
   });
 
-  it("publishes Tutoriels and Formations as horizontal rails while keeping Webinars dormant", async () => {
+  it("publishes Tutorials as one simple grid while preserving dormant Formations and Webinars", async () => {
     const [clientSource, pageSource, articleSource, detailPageSource] = await Promise.all([
       readFile(
         new URL("../src/components/AcademyIndexClient.tsx", import.meta.url),
@@ -99,11 +99,13 @@ describe("Academy live sessions and contextual cases", () => {
     ]);
     expect(clientSource).not.toContain("Cours fondamentaux");
     expect(clientSource).not.toContain("<AcademyLiveTrainingSection");
-    expect(clientSource).toContain('label="Tutoriels"');
-    expect(clientSource).toContain('label="Formations"');
-    expect(clientSource).toContain("<HorizontalScrollHint");
-    expect(clientSource).toContain("overflow-x-auto");
-    expect(clientSource).toContain("snap-mandatory");
+    expect(clientSource).toContain("PUBLIC_EDITORIAL_VISIBILITY.academyTutorials");
+    expect(clientSource).toContain("PUBLIC_EDITORIAL_VISIBILITY.academyFormations");
+    expect(clientSource).toContain("grid grid-cols-1");
+    expect(clientSource).not.toContain("<HorizontalScrollHint");
+    expect(clientSource).not.toContain("overflow-x-auto");
+    expect(clientSource).not.toContain("snap-mandatory");
+    expect(clientSource).not.toContain("BookOpenText");
     expect(clientSource).not.toContain('label: "Ateliers"');
     expect(clientSource).not.toContain('label: "Cas concrets"');
     expect(clientSource).not.toContain("WEBINARS_ACADEMY_SECTION");
@@ -117,6 +119,7 @@ describe("Academy live sessions and contextual cases", () => {
     expect(articleSource).not.toContain("academy-course-progress");
     expect(articleSource).not.toContain("QuizScreen");
     expect(articleSource).toContain("<article");
+    expect(articleSource).not.toContain('bg-[#E7EEE8]');
   });
 
   it("does not present published case studies as fictitious", () => {
