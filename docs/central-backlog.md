@@ -1536,9 +1536,9 @@ manuel du marché France.
   navigation, puis la validation explicite d'un plan d'implémentation et de ses
   compromis responsive. Le contrat détaillé et les critères de recette sont
   définis ci-dessous.
-- [ ] Réactiver les `Tutoriels` de l'Académie par la bascule
-  `academyTutorials`, avec retour automatique de la navigation de sections et
-  recette desktop/mobile.
+- [x] Réactiver les `Tutoriels` dans `Structurer` par la bascule
+  `academyTutorials`, dans une grille unique sans navigation de sections ;
+  D-096 porte la recette desktop/mobile et maintient les Formations masquées.
 - [ ] Réactiver l'onglet `Webinaires` de l'Académie seulement
   après validation des créneaux, recette desktop/mobile et bascule explicite de
   `academyLiveTrainings` dans `src/lib/public-editorial-visibility.ts`.
@@ -1911,45 +1911,54 @@ différé après l'observation D-094 et la priorité D-091 afin de ne pas modifi
 simultanément `OpportunitySubmissionDialog`, `PublicOpportunitiesClient` et
 l'API de soumission.
 
-#### D-096 — Structurer : Tutoriels et Formations — PR prête, non fusionnée
+#### D-096 — Structurer : Tutoriels visibles, Formations conservées — PR prête, non fusionnée
 
 Référence : [ADR 0021](decisions/0021-demaa-academy-and-external-course-boundaries.md).
 
 Objectif : présenter la surface française sous le libellé visible `Structurer`
-tout en séparant clairement la lecture éditoriale des véritables parcours de
-formation. Les identifiants techniques `academy`, l'API et la route
-`/academie` restent inchangés ; l'anglais reste `Academy`.
+avec une seule grille de Tutoriels lisibles comme des articles. Les véritables
+parcours de Formation restent intégralement conservés mais masqués. Les
+identifiants techniques `academy`, l'API et la route `/academie` restent
+inchangés ; l'anglais reste `Academy` et demeure en pause.
 
-- [ ] Afficher deux sections horizontalement scrollables : `Tutoriels`, puis
-  `Formations`.
-- [ ] Réutiliser les contenus `case-study` pertinents pour les Tutoriels après
+- [x] Afficher une grille responsive unique de Tutoriels, sans titre de section
+  redondant et sans défilement horizontal.
+- [x] Réutiliser les contenus `case-study` pertinents pour les Tutoriels après
   revue éditoriale ; le clic ouvre un article lisible, sans progression, leçon
   ou quiz.
-- [ ] Présenter les actuels `Cours` comme `Formations` sans changer leurs
-  identifiants, leçons, quiz, actions, versions, cache ou progression.
-- [ ] Organiser les huit Formations, sans doublon, autour de cinq thèmes
+- [x] Masquer les actuels `Cours` derrière `academyFormations: false` sans
+  changer leurs identifiants, routes directes, leçons, quiz, actions, versions,
+  cache ou progression.
+- [x] Conserver les huit Formations, sans doublon, autour de cinq thèmes
   éditoriaux : `Finances et trésorerie`, `Prix et offre`, `Marketing et
   ventes`, `Délégation` et `Réalisation des prestations`.
-- [ ] Simplifier les miniatures avec une même composition et plusieurs thèmes
-  de couleur Demaa ; conserver des cibles tactiles, focus et textes alternatifs
-  accessibles.
-- [ ] Garder les Webinaires masqués et ne pas toucher l'anglais en pause.
-- [ ] Préserver les routes directes existantes ou fournir des redirections
-  explicites, sans supprimer les contenus masqués avant la fin du rollback.
-- [ ] Recetter desktop, mobile, PWA, clavier, lecteur d'écran, retour depuis un
-  article et reprise de progression d'une Formation.
+- [x] Conserver les miniatures existantes sans pastille d'icône supplémentaire
+  et retirer le second cadre vert autour des images similaires dans les
+  articles ; préserver cibles tactiles, focus et textes alternatifs.
+- [x] Garder les Webinaires masqués et ne pas toucher l'anglais en pause.
+- [x] Préserver les routes directes existantes sans supprimer les contenus
+  masqués avant la fin du rollback.
+- [x] Placer `Structurer` avant `Services` dans la navigation française, avec
+  un ordre partagé réutilisable par l'anglais lors de sa reprise.
+- [x] Recetter la Preview finale sur desktop, le rendu mobile local, les tests
+  PWA et la sémantique accessible, y compris le retour depuis un article.
+- [ ] Fusionner et vérifier Production uniquement après GO explicite.
 
-État d'exécution : la PR #194 porte le runtime et la Preview, avec les deux
-rails, les articles Tutoriels, les huit Formations, les miniatures existantes,
-le libellé `Structurer` et les cinq thèmes. Elle est prête pour la recette
-finale mais n'est pas fusionnée. La navigation française visée par ce lot est
-`Plan d'action · Services · Structurer · Opportunités`. Le remplacement
-ultérieur d'`Opportunités` par `Annonces` reste le lot D-095 séparé.
+Les Formations pourront être republiées plus tard par décision explicite et
+recette dédiée. Elles ne doivent pas être supprimées, recopiées ni converties
+en Tutoriels.
+
+État d'exécution : la PR #194 porte le runtime et la Preview, avec la grille de
+Tutoriels, leurs articles, le masquage réversible des Formations, le libellé
+`Structurer`, l'allègement visuel et l'ordre de navigation
+`Plan d'action · Structurer · Services · Opportunités`. CI, check complet,
+build Production et Preview sont verts ; elle reste non fusionnée jusqu'au GO.
+Le remplacement ultérieur
+d'`Opportunités` par `Annonces` reste le lot D-095 séparé.
 
 The Done Studio suit un handover informatif séparé : son onglet Ressources
-reçoit une section unique `Cours`, sans Tutoriels/Formations. Les applications
-ne partagent aucun contrat, modèle, identifiant, package, API, stockage, cache
-ou dépendance de déploiement.
+reçoit une section unique `Cours`. Les applications ne partagent aucun contrat,
+modèle, identifiant, package, API, stockage, cache ou dépendance de déploiement.
 
 ##### Mise à jour catalogue — Masquage du service Expert-comptable
 

@@ -6,11 +6,13 @@
 
 ## Contexte
 
-La surface Académie française affiche temporairement uniquement les `Cours`.
+La surface Académie française affichait temporairement uniquement les `Cours`.
 Les anciens Tutoriels techniques `case-study`, leurs routes et leurs contenus
-ont été conservés mais masqués. The Done Studio est désormais une application
-autonome déployée et souhaite ajouter une section `Cours` dans son propre
-onglet Ressources.
+avaient été conservés mais masqués. La décision courante inverse cette
+publication : les Tutoriels deviennent la seule section visible de l'index
+`Structurer`, tandis que les Formations restent conservées mais masquées.
+The Done Studio est désormais une application autonome déployée et souhaite
+ajouter une section `Cours` dans son propre onglet Ressources.
 
 La proximité éditoriale ne doit pas créer de dépendance technique entre les
 deux produits.
@@ -21,14 +23,15 @@ Demaa conserve les contrats et routes techniques Academy, mais la destination
 française visible s'appelle `Structurer`. L'identifiant `academy`, l'API et la
 route `/academie` ne sont pas renommés. L'anglais reste `Academy`.
 
-`Structurer` contient deux sections horizontalement scrollables :
+`Structurer` affiche une grille responsive unique de Tutoriels, sans titre de
+section redondant et sans défilement horizontal. Les contenus `case-study`
+existants sont réutilisés après revue éditoriale. Le clic ouvre une page de
+lecture simple, accessible, sans progression ni quiz.
 
-1. `Tutoriels` : contenus éditoriaux lisibles comme des articles, sans leçon,
-   progression ni quiz. Les `case-study` existants sont réutilisés uniquement
-   après revue éditoriale. Le clic ouvre une page de lecture simple et
-   accessible.
-2. `Formations` : les actuels `Cours` et leur lecteur. Les identifiants,
-   leçons, quiz, actions, versions, caches et progressions restent compatibles.
+Les actuels `Cours` deviennent des Formations conservées mais masquées par une
+gate dédiée. Leurs identifiants, routes directes, leçons, quiz, actions,
+versions, caches et progressions restent compatibles. Le masquage ne supprime
+ni ne migre aucune donnée et peut être levé par une future décision explicite.
 
 Les huit Formations existantes couvrent cinq axes, sans nouvelle copie de
 contenu :
@@ -40,12 +43,15 @@ contenu :
 - `Délégation` : déléguer sans perdre le contrôle ;
 - `Réalisation des prestations` : livrer sans tout réinventer.
 
-Les miniatures utilisent une composition simple et cohérente, déclinable en
-plusieurs thèmes de couleur Demaa. Les Webinaires restent masqués. L'anglais
-reste en pause et n'est pas activé par D-096.
+Les cartes Tutoriels conservent leurs miniatures et leur composition simple,
+sans pastille d'icône supplémentaire. Les images intégrées aux articles ne
+reçoivent pas un second cadre vert autour de leur propre cadre. Les Webinaires
+restent masqués. L'anglais reste en pause et n'est pas activé par D-096.
 
 La navigation française du lot D-096 est
-`Plan d'action · Services · Structurer · Opportunités`. Le renommage
+`Plan d'action · Structurer · Services · Opportunités`. Cette même structure
+d'ordre pourra être reprise par l'anglais lors de sa reprise, sans l'activer
+dans ce lot. Le renommage
 `Opportunités` → `Annonces` appartient exclusivement à D-095.
 
 ## Frontière avec The Done Studio
@@ -72,7 +78,7 @@ librement d'adapter dans son propre modèle.
 Avant de créer un composant, l'implémentation doit auditer et réutiliser autant
 que possible :
 
-- `AcademyIndexClient` pour l'index et les sections ;
+- `AcademyIndexClient` pour l'index et sa grille unique ;
 - `AcademyCoursePlayer` pour les seules Formations ;
 - les contrats, caches et progressions existants des Cours ;
 - les routes et contenus `case-study` pour les Tutoriels ;
@@ -86,7 +92,9 @@ petit rendu article dédié est préférable à une fausse leçon unique.
 - aucun contenu masqué n'est republié sans revue éditoriale ;
 - aucun état de progression existant n'est perdu ou réinitialisé ;
 - les anciennes routes restent compatibles ou redirigent explicitement ;
-- un rail vide ne rend ni titre ni faux état d'erreur ;
+- le masquage des Formations ne rend ni titre vide ni faux état d'erreur ;
+- aucun rail horizontal ou titre de section redondant n'est rendu ;
+- les cartes Tutoriels n'ajoutent ni pastille d'icône ni double cadre visuel ;
 - desktop, mobile, PWA, clavier et lecteur d'écran sont recettés ;
 - la PR française ne touche pas les PR anglaises en pause ;
 - The Done Studio est recetté et publié indépendamment.
