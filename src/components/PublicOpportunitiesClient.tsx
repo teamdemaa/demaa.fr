@@ -30,6 +30,11 @@ function OpportunityDetailsDialog({
   opportunity: PublicOpportunity;
 }) {
   const dialogRef = useAccessibleDialog({ onClose });
+  const isExternallySourced = Boolean(
+    opportunity.ingestionMode
+    && opportunity.ingestionMode !== "direct_submission"
+    && opportunity.sourceUrl,
+  );
   const metadata = [
     OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
     opportunity.category,
@@ -41,28 +46,30 @@ function OpportunityDetailsDialog({
     ? "Mission indépendante"
     : OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType];
   const details: [string, string][] = [];
-  if (opportunity.workMode) {
+  if (!isExternallySourced) {
+    if (opportunity.workMode) {
+      details.push([
+        "Modalité",
+        OPPORTUNITY_WORK_MODE_LABELS[opportunity.workMode],
+      ]);
+    }
+    if (opportunity.geography) details.push(["Zone", opportunity.geography]);
     details.push([
-      "Modalité",
-      OPPORTUNITY_WORK_MODE_LABELS[opportunity.workMode],
+      "Cadre",
+      frameLabel,
     ]);
-  }
-  if (opportunity.geography) details.push(["Zone", opportunity.geography]);
-  details.push([
-    "Cadre",
-    frameLabel,
-  ]);
-  if (opportunity.cadence) {
-    details.push(["Rythme / durée", opportunity.cadence]);
-  }
-  if (opportunity.startTiming) {
-    details.push(["Démarrage", opportunity.startTiming]);
-  }
-  if (opportunity.compensation) {
-    details.push(["Budget / rémunération", opportunity.compensation]);
-  }
-  if (opportunity.companyName) {
-    details.push(["Entreprise", opportunity.companyName]);
+    if (opportunity.cadence) {
+      details.push(["Rythme / durée", opportunity.cadence]);
+    }
+    if (opportunity.startTiming) {
+      details.push(["Démarrage", opportunity.startTiming]);
+    }
+    if (opportunity.compensation) {
+      details.push(["Budget / rémunération", opportunity.compensation]);
+    }
+    if (opportunity.companyName) {
+      details.push(["Entreprise", opportunity.companyName]);
+    }
   }
 
   return (
@@ -127,13 +134,24 @@ function OpportunityDetailsDialog({
             ))}
           </dl>
         ) : null}
-        <button
-          type="button"
-          onClick={onApply}
-          className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-dema-forest px-6 text-sm font-medium text-white transition hover:bg-brand-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest"
-        >
-          Intéressé(e)
-        </button>
+        {isExternallySourced ? (
+          <a
+            href={opportunity.sourceUrl ?? "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-dema-forest px-6 text-sm font-medium text-white transition hover:bg-brand-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest"
+          >
+            Voir l’annonce
+          </a>
+        ) : (
+          <button
+            type="button"
+            onClick={onApply}
+            className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-dema-forest px-6 text-sm font-medium text-white transition hover:bg-brand-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest"
+          >
+            Intéressé(e)
+          </button>
+        )}
       </div>
     </div>
   );

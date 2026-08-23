@@ -4,8 +4,6 @@ import { LoaderCircle, Pencil } from "lucide-react";
 import { type FormEvent, useCallback, useEffect, useState } from "react";
 import type { ExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
 import {
-  OPPORTUNITY_INGESTION_MODE_LABELS,
-  OPPORTUNITY_INGESTION_MODES,
   OPPORTUNITY_TYPE_LABELS,
   OPPORTUNITY_TYPES,
   OPPORTUNITY_WORK_MODE_LABELS,
@@ -189,38 +187,14 @@ export default function OpportunityAdminClient({
 
         <div className="space-y-4 border-t border-dema-line pt-4">
           <p className="text-xs font-medium uppercase tracking-[0.1em] text-dema-muted">
-            Source externe (facultatif, requis pour publier une annonce non soumise directement)
+            Annonce externe (facultatif)
           </p>
-          <select aria-label="Mode d’ingestion" name="ingestionMode" defaultValue={editingOpportunity?.ingestionMode ?? ""} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 text-sm outline-none focus:border-dema-forest">
-            <option value="">Soumission directe (par défaut)</option>
-            {OPPORTUNITY_INGESTION_MODES.filter((mode) => mode !== "direct_submission").map((mode) => (
-              <option key={mode} value={mode}>{OPPORTUNITY_INGESTION_MODE_LABELS[mode]}</option>
-            ))}
-          </select>
-          <input aria-label="Nom de la source" name="sourceName" defaultValue={editingOpportunity?.sourceName ?? ""} placeholder="Nom de la source" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
-          <input aria-label="URL de la source" name="sourceUrl" type="url" defaultValue={editingOpportunity?.sourceUrl ?? ""} placeholder="https://…" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
-          <label className="block space-y-2 text-sm text-brand-blue">
-            <span>Date de vérification</span>
-            <input name="verifiedAt" type="date" defaultValue={editingOpportunity?.verifiedAt?.slice(0, 10) ?? ""} className="w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" />
-          </label>
-          <details className="group text-sm text-brand-blue">
-            <summary className="cursor-pointer font-medium text-dema-muted [&::-webkit-details-marker]:hidden">
-              Plus de détails source (facultatif)
-            </summary>
-            <div className="mt-3 space-y-4">
-              <input aria-label="Type de source" name="sourceKind" defaultValue={editingOpportunity?.sourceKind ?? ""} placeholder="Ex. administrateur judiciaire, cédant direct, Bpifrance" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
-              <label className="block space-y-2 text-sm text-brand-blue">
-                <span>Date de publication source <span className="text-dema-muted">(facultatif)</span></span>
-                <input name="sourcePublishedAt" type="date" defaultValue={editingOpportunity?.sourcePublishedAt?.slice(0, 10) ?? ""} className="w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" />
-              </label>
-              {editingOpportunity ? (
-                <label className="block space-y-2 text-sm text-brand-blue">
-                  <span>Date de retrait par la source <span className="text-dema-muted">(facultatif)</span></span>
-                  <input name="sourceRemovedAt" type="date" defaultValue={editingOpportunity?.sourceRemovedAt?.slice(0, 10) ?? ""} className="w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" />
-                </label>
-              ) : null}
-            </div>
-          </details>
+          <p className="text-xs text-dema-muted">
+            Si l’annonce vient d’ailleurs, indiquez juste d’où et le lien —
+            le reste des détails reste sur l’annonce d’origine.
+          </p>
+          <input aria-label="Nom de la source" name="sourceName" defaultValue={editingOpportunity?.sourceName ?? ""} placeholder="Nom de la source, ex. Actify" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
+          <input aria-label="Lien vers l’annonce d’origine" name="sourceUrl" type="url" defaultValue={editingOpportunity?.sourceUrl ?? ""} placeholder="Lien vers l’annonce d’origine (https://…)" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
         </div>
         {error ? <p className="text-sm text-red-700">{error}</p> : null}
         <button type="submit" disabled={isLoading} className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-medium text-white disabled:opacity-60">
