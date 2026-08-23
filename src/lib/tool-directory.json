@@ -1111,9 +1111,9 @@
         "Usages de suivi chantier avec vision rentabilite"
       ],
       "sources": [
-        "https://www.vertuoza.com/"
+        "https://www.vertuoza.com/fr-fr"
       ],
-      "lastReviewedAt": "2026-07-02",
+      "lastReviewedAt": "2026-08-23",
       "status": "active",
       "scope": "business"
     },
@@ -1588,6 +1588,112 @@
         "https://recruitee.com/fr/"
       ],
       "lastReviewedAt": "2026-07-02",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "nicoka-cabs",
+      "name": "Nicoka CABS",
+      "url": "https://cabs.nicoka.com/",
+      "category": "RH & planning",
+      "sectors": [
+        "Conseil & services aux entreprises"
+      ],
+      "description": "ATS et CRM français conçu pour les cabinets de recrutement et chasseurs de têtes.",
+      "tags": [
+        "Recrutement",
+        "ATS",
+        "CRM"
+      ],
+      "bestFor": "Centraliser candidats, clients, missions et facturation dans un cabinet de recrutement français.",
+      "pricingHint": "Payant",
+      "keyFeatures": [
+        "ATS et vivier candidats",
+        "CRM clients et missions",
+        "Sourcing et multidiffusion",
+        "Portail client",
+        "Facturation et reporting"
+      ],
+      "idealFor": [
+        "Cabinets de recrutement et chasseurs de têtes en France",
+        "Equipes qui veulent réunir ATS, CRM et gestion commerciale",
+        "Structures sensibles à un éditeur et à un hébergement français"
+      ],
+      "sources": [
+        "https://cabs.nicoka.com/"
+      ],
+      "lastReviewedAt": "2026-08-23",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "recruit-crm",
+      "name": "Recruit CRM",
+      "url": "https://recruitcrm.io/",
+      "category": "RH & planning",
+      "sectors": [
+        "Conseil & services aux entreprises"
+      ],
+      "description": "ATS et CRM destiné aux agences de recrutement, avec sourcing, pipeline client et automatisations.",
+      "tags": [
+        "Recrutement",
+        "ATS",
+        "CRM"
+      ],
+      "bestFor": "Piloter candidats, clients et missions dans une petite agence ou une équipe en croissance.",
+      "pricingHint": "Payant",
+      "keyFeatures": [
+        "ATS et vivier candidats",
+        "CRM clients",
+        "Sourcing et diffusion",
+        "Automatisation des workflows",
+        "Rapports et facturation"
+      ],
+      "idealFor": [
+        "Petites agences de recrutement et équipes en croissance",
+        "Cabinets travaillant avec des clients et candidats internationaux",
+        "Equipes cherchant une plateforme agence rapide à déployer"
+      ],
+      "sources": [
+        "https://recruitcrm.io/",
+        "https://recruitcrm.io/features/"
+      ],
+      "lastReviewedAt": "2026-08-23",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "bullhorn",
+      "name": "Bullhorn",
+      "url": "https://www.bullhorn.com/fr/produits/applicant-tracking-crm/",
+      "category": "RH & planning",
+      "sectors": [
+        "Conseil & services aux entreprises"
+      ],
+      "description": "ATS et CRM pour agences de recrutement et sociétés d'intérim ayant des processus structurés.",
+      "tags": [
+        "Recrutement",
+        "ATS",
+        "CRM"
+      ],
+      "bestFor": "Structurer candidats, clients, placements et automatisations dans une agence établie.",
+      "pricingHint": "Sur devis",
+      "keyFeatures": [
+        "ATS et CRM",
+        "Gestion des candidats et missions",
+        "Automatisation",
+        "Analyses et reporting",
+        "Ecosystème d'intégrations"
+      ],
+      "idealFor": [
+        "Agences de recrutement structurées",
+        "Sociétés d'intérim et cabinets avec plusieurs équipes",
+        "Organisations ayant besoin d'intégrations et de reporting avancés"
+      ],
+      "sources": [
+        "https://www.bullhorn.com/fr/produits/applicant-tracking-crm/"
+      ],
+      "lastReviewedAt": "2026-08-23",
       "status": "active",
       "scope": "business"
     },

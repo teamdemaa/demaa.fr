@@ -14,6 +14,7 @@ import {
 import { getToolDirectorySlug, toolDirectory } from "@/lib/tool-directory";
 import {
   validateCuratedSelectionAgainstResearch,
+  validateReviewedSolutionCurationResearchManifest,
   validateSolutionCurationResearchManifest,
   type SolutionCurationResearchManifest,
 } from "@/lib/solution-curation-research-contract";
@@ -39,7 +40,7 @@ if (!candidatePath) {
 const activePath = args[1] ??
   "src/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json";
 const researchPath = args[2] ?? (pilotMode
-  ? "docs/research/d091-tools/pilot-reviewed-selections.v1.json"
+  ? "docs/research/d091-tools/pilot-reviewed-selections.v2.json"
   : undefined);
 if (!researchPath) {
   throw new Error(
@@ -58,10 +59,15 @@ const auditSystemSlugs = pilotMode
   ? [...D091_PILOT_SYSTEM_SLUGS]
   : canonicalSystemSlugs;
 const activeToolSlugs = new Set(toolDirectory.map(getToolDirectorySlug));
-const researchErrors = validateSolutionCurationResearchManifest(research, {
-  knownSystemSlugs: new Set(canonicalSystemSlugs),
-  knownToolSlugs: activeToolSlugs,
-});
+const researchErrors = pilotMode
+  ? validateReviewedSolutionCurationResearchManifest(research, {
+      knownSystemSlugs: new Set(canonicalSystemSlugs),
+      knownToolSlugs: activeToolSlugs,
+    })
+  : validateSolutionCurationResearchManifest(research, {
+      knownSystemSlugs: new Set(canonicalSystemSlugs),
+      knownToolSlugs: activeToolSlugs,
+    });
 const selectedToolSlugsBySystem = new Map(
   auditSystemSlugs.map((systemSlug) => [
     systemSlug,

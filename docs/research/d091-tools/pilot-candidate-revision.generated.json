@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "revisionId": "solutions-2026-08-22-d091-pilot-candidate-v1",
+  "revisionId": "solutions-2026-08-23-d091-pilot-candidate-v2",
   "revisionStatus": "draft",
-  "createdAt": "2026-08-22T10:30:00.000Z",
-  "createdBy": "D-091 second review",
-  "sourceFingerprint": "5327a3e91cfc3e97ffb34e3c3b4558137ec0508cf147dcf96d80eb27186741d5",
+  "createdAt": "2026-08-23T06:30:00.000Z",
+  "createdBy": "D-091 placement review v2",
+  "sourceFingerprint": "288ac89b880d6a7804f156ef5463adc162b27782108e0b36023122f187b2fe4c",
   "knownSystemSlugs": [
     "cabinet-comptable",
     "cabinet-davocat",
@@ -267,26 +267,28 @@
       "resource": {
         "evidence": [
           {
-            "evidenceId": "d091-resource-aircall",
+            "evidenceId": "firebase-migration-resource-centre-appels-support-client-aircall",
             "sourceRef": "https://aircall.io/fr/logiciel-centre-appels/",
-            "claim": "Aircall fournit téléphonie cloud, routage, supervision et intégrations CRM pour les équipes.",
-            "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "claim": "Aircall est une ressource actuellement affichée dans les Solutions Demaa.",
+            "evidenceType": "legacy_catalog_reference",
+            "capturedAt": "2026-08-08T12:00:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "Master Demaa",
+        "reviewedAt": "2026-08-08T12:00:00.000Z",
+        "expiresAt": "2027-02-08T12:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://aircall.io/fr/logiciel-centre-appels/",
         "resourceSlug": "aircall",
         "resourceType": "software",
         "name": "Aircall",
         "description": "Téléphonie cloud pour centres d’appels avec routage, files d’attente, supervision, enregistrement et analyse des performances.",
-        "commercialRelationship": "none",
-        "status": "published",
-        "resourceVersion": "d091.pilot.v1",
-        "publicationBlockers": []
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "firebase.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
       }
     },
     {
@@ -353,12 +355,12 @@
             "sourceRef": "https://www.alobees.com/",
             "claim": "Alobees fournit planning, suivi d’heures et suivi de chantier pour les équipes BTP.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.alobees.com/",
         "resourceSlug": "alobees",
@@ -367,7 +369,7 @@
         "description": "Suivi de chantier, planning d’équipe, heures et communication terrain pour le BTP.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -1075,26 +1077,28 @@
       "resource": {
         "evidence": [
           {
-            "evidenceId": "d091-resource-calendly",
-            "sourceRef": "https://calendly.com/fr",
-            "claim": "Calendly automatise la prise de rendez-vous et la synchronisation des agendas.",
-            "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "evidenceId": "firebase-migration-resource-freelance-calendly",
+            "sourceRef": "https://calendly.com/",
+            "claim": "Calendly est une ressource actuellement affichée dans les Solutions Demaa.",
+            "evidenceType": "legacy_catalog_reference",
+            "capturedAt": "2026-08-08T12:00:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "Master Demaa",
+        "reviewedAt": "2026-08-08T12:00:00.000Z",
+        "expiresAt": "2027-02-08T12:00:00.000Z",
         "interactionMode": "external_link",
-        "href": "https://calendly.com/fr",
+        "href": "https://calendly.com/",
         "resourceSlug": "calendly",
         "resourceType": "software",
         "name": "Calendly",
         "description": "Planification de rendez-vous synchronisée avec les agendas et liens de réservation.",
-        "commercialRelationship": "none",
-        "status": "published",
-        "resourceVersion": "d091.pilot.v1",
-        "publicationBlockers": []
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "firebase.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
       }
     },
     {
@@ -2197,12 +2201,12 @@
             "sourceRef": "https://www.fieldwire.com/fr/",
             "claim": "Fieldwire centralise plans, tâches et suivi de chantier entre terrain et bureau.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.fieldwire.com/fr/",
         "resourceSlug": "fieldwire",
@@ -2211,7 +2215,7 @@
         "description": "Logiciel de suivi de chantier terrain : plans, tâches, réserves, photos, rapports et coordination équipes.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -2223,12 +2227,12 @@
             "sourceRef": "https://www.figma.com/design/",
             "claim": "Figma permet la conception et le prototypage collaboratifs d’interfaces.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.figma.com/design/",
         "resourceSlug": "figma",
@@ -2237,7 +2241,7 @@
         "description": "Design collaboratif pour maquettes, interfaces, visuels et prototypes.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -2781,12 +2785,12 @@
             "sourceRef": "https://github.com/features",
             "claim": "GitHub fournit dépôts, collaboration, revues et automatisations de développement.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://github.com/features",
         "resourceSlug": "github",
@@ -2795,7 +2799,7 @@
         "description": "Plateforme de gestion de code, collaboration développeur, issues, pull requests et CI/CD.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -2919,12 +2923,12 @@
             "sourceRef": "https://workspace.google.com/intl/fr/",
             "claim": "Google Workspace regroupe messagerie, agenda, stockage et documents collaboratifs.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://workspace.google.com/intl/fr/",
         "resourceSlug": "google-workspace",
@@ -2933,7 +2937,7 @@
         "description": "Email pro, Drive, Docs, Sheets et agenda partagé pour structurer l’activité.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -3001,12 +3005,12 @@
             "sourceRef": "https://www.graneet.com/",
             "claim": "Graneet fournit un ERP de pilotage financier et de rentabilité pour entreprises du BTP.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.graneet.com/",
         "resourceSlug": "graneet",
@@ -3015,7 +3019,7 @@
         "description": "ERP BTP pour chiffrage, achats, factures de situation, main d’œuvre et marges chantier.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -3247,26 +3251,28 @@
       "resource": {
         "evidence": [
           {
-            "evidenceId": "d091-resource-hubspot",
-            "sourceRef": "https://www.hubspot.fr/products/crm",
-            "claim": "HubSpot fournit un CRM pour organiser contacts, opportunités et activités commerciales.",
-            "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "evidenceId": "firebase-migration-resource-cabinet-de-conseil-hubspot",
+            "sourceRef": "https://www.hubspot.com/",
+            "claim": "HubSpot est une ressource actuellement affichée dans les Solutions Demaa.",
+            "evidenceType": "legacy_catalog_reference",
+            "capturedAt": "2026-08-08T12:00:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "Master Demaa",
+        "reviewedAt": "2026-08-08T12:00:00.000Z",
+        "expiresAt": "2027-02-08T12:00:00.000Z",
         "interactionMode": "external_link",
-        "href": "https://www.hubspot.fr/products/crm",
+        "href": "https://www.hubspot.com/",
         "resourceSlug": "hubspot",
         "resourceType": "software",
         "name": "HubSpot",
         "description": "CRM, marketing, ventes et service client pour centraliser contacts, pipeline et campagnes.",
-        "commercialRelationship": "none",
-        "status": "published",
-        "resourceVersion": "d091.pilot.v1",
-        "publicationBlockers": []
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "firebase.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
       }
     },
     {
@@ -3555,12 +3561,12 @@
             "sourceRef": "https://www.kizeo-forms.com/fr/",
             "claim": "Kizeo Forms numérise formulaires, collecte de terrain et génération de rapports.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.kizeo-forms.com/fr/",
         "resourceSlug": "kizeo-forms",
@@ -3569,7 +3575,7 @@
         "description": "Formulaires terrain digitaux pour chantiers, interventions, relevés, contrôles et rapports personnalisés.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -4502,12 +4508,12 @@
             "sourceRef": "https://n8n.io/",
             "claim": "n8n permet de construire des workflows connectant applications et logique métier.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://n8n.io/",
         "resourceSlug": "n8n",
@@ -4516,7 +4522,7 @@
         "description": "Plateforme d’automatisation de workflows avec connecteurs, logique conditionnelle et option self-hosted.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -4724,12 +4730,12 @@
             "sourceRef": "https://www.obat.fr/",
             "claim": "Obat propose devis, factures et gestion commerciale pour artisans et entreprises du bâtiment.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.obat.fr/",
         "resourceSlug": "obat",
@@ -4738,7 +4744,7 @@
         "description": "Devis, facturation et suivi commercial conçus pour les professionnels du bâtiment.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -5338,12 +5344,12 @@
             "sourceRef": "https://www.pennylane.com/fr/expert-comptable",
             "claim": "Pennylane propose une plateforme de production et de collaboration dédiée aux cabinets comptables.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.pennylane.com/fr/expert-comptable",
         "resourceSlug": "pennylane",
@@ -5352,7 +5358,7 @@
         "description": "Production comptable, gestion financière, achats, facturation et trésorerie.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -5696,26 +5702,28 @@
       "resource": {
         "evidence": [
           {
-            "evidenceId": "d091-resource-recruitee",
+            "evidenceId": "firebase-migration-resource-agence-de-recrutement-recruitee",
             "sourceRef": "https://recruitee.com/fr/",
-            "claim": "Recruitee centralise ATS, viviers, diffusion, entretiens, automatisations et rapports.",
-            "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "claim": "Recruitee est une ressource actuellement affichée dans les Solutions Demaa.",
+            "evidenceType": "legacy_catalog_reference",
+            "capturedAt": "2026-08-08T12:00:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "Master Demaa",
+        "reviewedAt": "2026-08-08T12:00:00.000Z",
+        "expiresAt": "2027-02-08T12:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://recruitee.com/fr/",
         "resourceSlug": "recruitee",
         "resourceType": "software",
         "name": "Recruitee",
         "description": "ATS simple pour gérer recrutements, candidats et étapes d’entretien.",
-        "commercialRelationship": "none",
-        "status": "published",
-        "resourceVersion": "d091.pilot.v1",
-        "publicationBlockers": []
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "firebase.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
       }
     },
     {
@@ -6118,12 +6126,12 @@
             "sourceRef": "https://sentry.io/welcome/",
             "claim": "Sentry fournit suivi des erreurs et performance des applications.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://sentry.io/welcome/",
         "resourceSlug": "sentry",
@@ -6132,7 +6140,7 @@
         "description": "Monitoring d’erreurs, performance applicative et alertes pour produits web et logiciels.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -6228,12 +6236,12 @@
             "sourceRef": "https://www.silae.fr/solutions-paie/",
             "claim": "Silae propose une solution de paie et de gestion sociale destinée notamment aux professionnels.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.silae.fr/solutions-paie/",
         "resourceSlug": "silae",
@@ -6242,7 +6250,7 @@
         "description": "Solution de paie et de gestion RH destinée notamment aux cabinets et équipes sociales.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -6394,12 +6402,12 @@
             "sourceRef": "https://stripe.com/fr/billing",
             "claim": "Stripe Billing gère abonnements, facturation récurrente et paiements.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://stripe.com/fr/billing",
         "resourceSlug": "stripe",
@@ -6408,7 +6416,7 @@
         "description": "Paiements en ligne, abonnements, facturation et marketplace pour produits digitaux et SaaS.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7005,24 +7013,24 @@
         "evidence": [
           {
             "evidenceId": "d091-resource-vertuoza",
-            "sourceRef": "https://www.vertuoza.com/",
+            "sourceRef": "https://www.vertuoza.com/fr-fr",
             "claim": "Vertuoza regroupe gestion commerciale, planning, chantier et rentabilité pour le BTP.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
-        "href": "https://www.vertuoza.com/",
+        "href": "https://www.vertuoza.com/fr-fr",
         "resourceSlug": "vertuoza",
         "resourceType": "software",
         "name": "Vertuoza",
         "description": "Gestion commerciale, planning, suivi de chantier et rentabilité pour entreprises du bâtiment.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7202,12 +7210,12 @@
             "sourceRef": "https://webflow.com/",
             "claim": "Webflow fournit conception visuelle, CMS et publication de sites web.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://webflow.com/",
         "resourceSlug": "webflow",
@@ -7216,7 +7224,7 @@
         "description": "Création de sites web visuels avec un rendu professionnel.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7532,16 +7540,94 @@
       "resource": {
         "evidence": [
           {
+            "evidenceId": "d091-resource-nicoka-cabs",
+            "sourceRef": "https://cabs.nicoka.com/",
+            "claim": "Nicoka CABS réunit ATS, CRM client, sourcing, multidiffusion, portail client, facturation, automatisations et reporting pour cabinets de recrutement.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-23T06:30:00.000Z"
+          }
+        ],
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "interactionMode": "external_link",
+        "href": "https://cabs.nicoka.com/",
+        "resourceSlug": "nicoka-cabs",
+        "resourceType": "software",
+        "name": "Nicoka CABS",
+        "description": "ATS et CRM français conçu pour les cabinets de recrutement et chasseurs de têtes.",
+        "commercialRelationship": "none",
+        "status": "published",
+        "resourceVersion": "d091.pilot.v2",
+        "publicationBlockers": []
+      }
+    },
+    {
+      "resource": {
+        "evidence": [
+          {
+            "evidenceId": "d091-resource-recruit-crm",
+            "sourceRef": "https://recruitcrm.io/features/",
+            "claim": "Recruit CRM fournit aux agences de recrutement un ATS-CRM avec sourcing, candidats, clients, missions, automatisations, analyses et facturation.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-23T06:30:00.000Z"
+          }
+        ],
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "interactionMode": "external_link",
+        "href": "https://recruitcrm.io/features/",
+        "resourceSlug": "recruit-crm",
+        "resourceType": "software",
+        "name": "Recruit CRM",
+        "description": "ATS et CRM destiné aux agences de recrutement, avec sourcing, pipeline client et automatisations.",
+        "commercialRelationship": "none",
+        "status": "published",
+        "resourceVersion": "d091.pilot.v2",
+        "publicationBlockers": []
+      }
+    },
+    {
+      "resource": {
+        "evidence": [
+          {
+            "evidenceId": "d091-resource-bullhorn",
+            "sourceRef": "https://www.bullhorn.com/fr/produits/applicant-tracking-crm/",
+            "claim": "Bullhorn propose aux agences de recrutement un ATS et CRM couvrant candidats, missions, clients, placements, automatisations et analyses.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-23T06:30:00.000Z"
+          }
+        ],
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "interactionMode": "external_link",
+        "href": "https://www.bullhorn.com/fr/produits/applicant-tracking-crm/",
+        "resourceSlug": "bullhorn",
+        "resourceType": "software",
+        "name": "Bullhorn",
+        "description": "ATS et CRM pour agences de recrutement et sociétés d'intérim ayant des processus structurés.",
+        "commercialRelationship": "none",
+        "status": "published",
+        "resourceVersion": "d091.pilot.v2",
+        "publicationBlockers": []
+      }
+    },
+    {
+      "resource": {
+        "evidence": [
+          {
             "evidenceId": "d091-resource-attio",
             "sourceRef": "https://attio.com/",
             "claim": "Attio propose un CRM personnalisable avec données, workflows et collaboration.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://attio.com/",
         "resourceSlug": "attio",
@@ -7550,7 +7636,7 @@
         "description": "CRM flexible pour pipelines, relations, workflows et bases d’opportunités.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7562,12 +7648,12 @@
             "sourceRef": "https://vercel.com/docs",
             "claim": "Vercel fournit déploiements et previews pour applications web.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://vercel.com/docs",
         "resourceSlug": "vercel",
@@ -7576,7 +7662,7 @@
         "description": "Plateforme cloud pour déployer sites, applications frontend, APIs et produits web modernes.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7588,12 +7674,12 @@
             "sourceRef": "https://linear.app/features",
             "claim": "Linear fournit issues, cycles et roadmaps pour les équipes produit et engineering.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://linear.app/features",
         "resourceSlug": "linear",
@@ -7602,7 +7688,7 @@
         "description": "Gestion de tickets, roadmap, bugs et cycles produit pour équipes SaaS et dev.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7614,12 +7700,12 @@
             "sourceRef": "https://posthog.com/product",
             "claim": "PostHog propose analytics produit, replay, feature flags et expérimentation.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://posthog.com/product",
         "resourceSlug": "posthog",
@@ -7628,7 +7714,7 @@
         "description": "Analytics produit, feature flags, session replay et expérimentation pour SaaS et apps web.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7640,12 +7726,12 @@
             "sourceRef": "https://www.intercom.com/helpdesk",
             "claim": "Intercom fournit helpdesk, messagerie, base de connaissances et automatisation du support.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.intercom.com/helpdesk",
         "resourceSlug": "intercom",
@@ -7654,7 +7740,7 @@
         "description": "Plateforme de support client, messagerie, chat, base de connaissance et automatisation service client.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7666,12 +7752,12 @@
             "sourceRef": "https://wordpress.org/",
             "claim": "WordPress est un CMS open source extensible pour sites et contenus administrables.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://wordpress.org/",
         "resourceSlug": "wordpress",
@@ -7680,7 +7766,7 @@
         "description": "CMS open source pour sites vitrines, médias, blogs, contenus et e-commerce via extensions.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7692,12 +7778,12 @@
             "sourceRef": "https://asana.com/fr/product",
             "claim": "Asana organise projets, tâches, responsabilités, échéances et workflows.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://asana.com/fr/product",
         "resourceSlug": "asana",
@@ -7706,7 +7792,7 @@
         "description": "Outil de gestion de projet pour tâches, responsabilités, calendriers, workflows et suivi d’équipe.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7718,12 +7804,12 @@
             "sourceRef": "https://go.sellsy.com/",
             "claim": "Sellsy regroupe CRM, devis, facturation et suivi commercial pour TPE et PME.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://go.sellsy.com/",
         "resourceSlug": "sellsy",
@@ -7732,7 +7818,7 @@
         "description": "CRM français avec devis, factures, opportunités, relances, marketing et suivi commercial.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7744,12 +7830,12 @@
             "sourceRef": "https://myunisoft.fr/",
             "claim": "MyUnisoft fournit production comptable, gestion interne et collaboration client pour les cabinets.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://myunisoft.fr/",
         "resourceSlug": "myunisoft",
@@ -7758,7 +7844,7 @@
         "description": "Plateforme dédiée aux cabinets comptables : production, gestion interne et collaboration client.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7770,12 +7856,12 @@
             "sourceRef": "https://www.acd-groupe.fr/",
             "claim": "ACD propose des logiciels de comptabilité, fiscalité, paie et gestion pour cabinets.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.acd-groupe.fr/",
         "resourceSlug": "acd",
@@ -7784,7 +7870,7 @@
         "description": "Suite logicielle pour cabinets d’expertise comptable : comptabilité, paie, fiscalité et gestion.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7796,12 +7882,12 @@
             "sourceRef": "https://dext.com/fr/",
             "claim": "Dext automatise la collecte et le traitement des pièces pour les cabinets comptables.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://dext.com/fr/",
         "resourceSlug": "dext",
@@ -7810,7 +7896,7 @@
         "description": "Collecte et traitement de justificatifs comptables pour gagner du temps.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7822,12 +7908,12 @@
             "sourceRef": "https://rca.fr/logiciels-experts/",
             "claim": "RCA propose des logiciels de prévisionnel, pilotage et conseil pour experts-comptables.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://rca.fr/logiciels-experts/",
         "resourceSlug": "rca",
@@ -7836,7 +7922,7 @@
         "description": "Logiciels pour experts-comptables orientés conseil, pilotage, fiscalité, prévisionnel et RSE.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7845,24 +7931,24 @@
         "evidence": [
           {
             "evidenceId": "d091-resource-lefebvre-dalloz",
-            "sourceRef": "https://www.lefebvre-dalloz.fr/",
-            "claim": "Lefebvre Dalloz fournit documentation et solutions d’information juridique, fiscale et sociale.",
+            "sourceRef": "https://boutique.lefebvre-dalloz.fr/solution-expert-comptable.html",
+            "claim": "La Solution Expert-Comptable Lefebvre Dalloz réunit actualité, jurisprudence, documentation et outils pour sécuriser les missions quotidiennes du cabinet.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
-        "href": "https://www.lefebvre-dalloz.fr/",
+        "href": "https://boutique.lefebvre-dalloz.fr/solution-expert-comptable.html",
         "resourceSlug": "lefebvre-dalloz",
         "resourceType": "software",
         "name": "Lefebvre Dalloz",
         "description": "Documentation juridique, fiscale et sociale pour les professionnels du droit et du chiffre.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     },
@@ -7874,12 +7960,12 @@
             "sourceRef": "https://www.sage.com/fr-fr/produits/sage-batigest-connect/",
             "claim": "Sage Batigest Connect couvre devis, facturation et gestion pour les professionnels du bâtiment.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.sage.com/fr-fr/produits/sage-batigest-connect/",
         "resourceSlug": "sage-batigest-connect",
@@ -7888,7 +7974,7 @@
         "description": "Solution Sage pour devis, factures, suivi de chantier, bibliothèque de prix et gestion bâtiment.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v1",
+        "resourceVersion": "d091.pilot.v2",
         "publicationBlockers": []
       }
     }
@@ -8315,7 +8401,7 @@
           "Coût croissant avec les fonctions"
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "none",
+        "commercialRelationship": "unknown",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -8835,7 +8921,7 @@
           "Vérifier les intégrations"
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "none",
+        "commercialRelationship": "unknown",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -32603,7 +32689,7 @@
           "Vérifier les intégrations"
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "none",
+        "commercialRelationship": "unknown",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -32921,7 +33007,7 @@
           "Prévoir le paramétrage du pipeline"
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "none",
+        "commercialRelationship": "unknown",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -33039,7 +33125,7 @@
           "Contrôler les obligations d'enregistrement"
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "none",
+        "commercialRelationship": "unknown",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -34516,7 +34602,7 @@
           "Vérifier les modules, niveaux de licence et intégrations réellement nécessaires."
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "none",
+        "commercialRelationship": "unknown",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -35453,156 +35539,117 @@
       "placement": {
         "evidence": [
           {
-            "evidenceId": "d091-placement-agence-de-recrutement-recruitee",
-            "sourceRef": "https://recruitee.com/fr/",
-            "claim": "Recruitee centralise ATS, viviers, diffusion, entretiens, automatisations et rapports.",
+            "evidenceId": "d091-placement-agence-de-recrutement-nicoka-cabs",
+            "sourceRef": "https://cabs.nicoka.com/",
+            "claim": "Nicoka CABS réunit ATS, CRM client, sourcing, multidiffusion, portail client, facturation, automatisations et reporting pour cabinets de recrutement.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
-        "placementId": "agence-de-recrutement:recruitee:software:1",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "placementId": "agence-de-recrutement:nicoka-cabs:software",
         "systemSlug": "agence-de-recrutement",
-        "resourceSlug": "recruitee",
+        "resourceSlug": "nicoka-cabs",
         "rank": 1,
         "section": "software",
-        "usage": "Centraliser les candidatures, le vivier, les entretiens et la diffusion des offres dans un ATS unique.",
-        "fitRationale": "Recruitee couvre le cœur opérationnel d’une agence de recrutement sans multiplier les outils de suivi candidat.",
+        "usage": "Piloter candidats, clients, missions, multidiffusion, portail client et facturation dans une plateforme de cabinet unique.",
+        "fitRationale": "Nicoka CABS est l’option la plus directement alignée avec un cabinet de recrutement opérant en France et souhaitant limiter les briques annexes.",
         "fitConstraints": [
-          "Vérifier que les fonctions agence et la gestion des clients correspondent au modèle du cabinet.",
-          "Prévoir la reprise et la conformité des données candidats existantes."
+          "Comparer le périmètre fonctionnel et le coût par utilisateur avec le volume réel de missions.",
+          "Prévoir la migration et la gouvernance des données candidats et clients."
         ],
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
         "displayCategory": "RH & planning",
-        "nameOverride": "Recruitee",
-        "hrefOverride": "https://recruitee.com/fr/",
+        "nameOverride": "Nicoka CABS",
+        "hrefOverride": "https://cabs.nicoka.com/",
         "ctaLabel": "Voir l’outil",
-        "descriptionOverride": "ATS simple pour gérer recrutements, candidats et étapes d’entretien."
+        "descriptionOverride": "ATS et CRM français conçu pour les cabinets de recrutement et chasseurs de têtes."
       }
     },
     {
       "placement": {
         "evidence": [
           {
-            "evidenceId": "d091-placement-agence-de-recrutement-hubspot",
-            "sourceRef": "https://www.hubspot.fr/products/crm",
-            "claim": "HubSpot fournit un CRM pour organiser contacts, opportunités et activités commerciales.",
+            "evidenceId": "d091-placement-agence-de-recrutement-recruit-crm",
+            "sourceRef": "https://recruitcrm.io/features/",
+            "claim": "Recruit CRM fournit aux agences de recrutement un ATS-CRM avec sourcing, candidats, clients, missions, automatisations, analyses et facturation.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
-        "placementId": "agence-de-recrutement:hubspot:software:2",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "placementId": "agence-de-recrutement:recruit-crm:software",
         "systemSlug": "agence-de-recrutement",
-        "resourceSlug": "hubspot",
+        "resourceSlug": "recruit-crm",
         "rank": 2,
         "section": "software",
-        "usage": "Suivre les prospects entreprises, les missions ouvertes et les relances commerciales dans un CRM distinct du vivier candidat.",
-        "fitRationale": "HubSpot apporte une vraie couche de relation client que l’ATS ne remplace pas toujours dans une agence.",
+        "usage": "Gérer le vivier, les missions, le pipeline client, le sourcing et les automatisations dans un ATS-CRM conçu pour les agences.",
+        "fitRationale": "Recruit CRM convient aux petites agences et équipes en croissance qui veulent un socle agence complet, international et plus léger à déployer.",
         "fitConstraints": [
-          "Limiter le périmètre aux fonctions CRM réellement utilisées pour éviter une configuration trop lourde.",
-          "Les fonctions avancées deviennent payantes selon les hubs et le volume."
+          "Valider la localisation des données, les intégrations et les exigences RGPD propres au cabinet.",
+          "Comparer les fonctions de facturation et de diffusion nécessaires avec le plan choisi."
         ],
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
-        "displayCategory": "CRM & ventes",
-        "nameOverride": "HubSpot",
-        "hrefOverride": "https://www.hubspot.fr/products/crm",
+        "displayCategory": "RH & planning",
+        "nameOverride": "Recruit CRM",
+        "hrefOverride": "https://recruitcrm.io/features/",
         "ctaLabel": "Voir l’outil",
-        "descriptionOverride": "CRM, marketing, ventes et service client pour centraliser contacts, pipeline et campagnes."
+        "descriptionOverride": "ATS et CRM destiné aux agences de recrutement, avec sourcing, pipeline client et automatisations."
       }
     },
     {
       "placement": {
         "evidence": [
           {
-            "evidenceId": "d091-placement-agence-de-recrutement-calendly",
-            "sourceRef": "https://calendly.com/fr",
-            "claim": "Calendly automatise la prise de rendez-vous et la synchronisation des agendas.",
+            "evidenceId": "d091-placement-agence-de-recrutement-bullhorn",
+            "sourceRef": "https://www.bullhorn.com/fr/produits/applicant-tracking-crm/",
+            "claim": "Bullhorn propose aux agences de recrutement un ATS et CRM couvrant candidats, missions, clients, placements, automatisations et analyses.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
-        "placementId": "agence-de-recrutement:calendly:software:3",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "placementId": "agence-de-recrutement:bullhorn:software",
         "systemSlug": "agence-de-recrutement",
-        "resourceSlug": "calendly",
+        "resourceSlug": "bullhorn",
         "rank": 3,
         "section": "software",
-        "usage": "Planifier les entretiens candidats et rendez-vous clients sans multiplier les échanges de disponibilité.",
-        "fitRationale": "Calendly reste utile lorsque plusieurs recruteurs partagent des créneaux externes et des règles de réservation.",
+        "usage": "Structurer candidats, clients, missions, placements, automatisations et analyses dans une agence ayant plusieurs équipes ou un volume élevé.",
+        "fitRationale": "Bullhorn est l’alternative pour une agence établie qui a besoin d’une plateforme agence plus profonde et d’un écosystème d’intégrations étendu.",
         "fitConstraints": [
-          "L’ATS peut déjà couvrir une partie de la planification : vérifier le besoin avant d’ajouter l’outil.",
-          "Configurer les agendas et délais de disponibilité avec soin."
+          "Le déploiement, le paramétrage et le coût peuvent être disproportionnés pour une petite équipe.",
+          "Faire valider précisément les modules, intégrations, reprise de données et conditions contractuelles."
         ],
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
-        "displayCategory": "Gestion & équipe",
-        "nameOverride": "Calendly",
-        "hrefOverride": "https://calendly.com/fr",
+        "displayCategory": "RH & planning",
+        "nameOverride": "Bullhorn",
+        "hrefOverride": "https://www.bullhorn.com/fr/produits/applicant-tracking-crm/",
         "ctaLabel": "Voir l’outil",
-        "descriptionOverride": "Planification de rendez-vous synchronisée avec les agendas et liens de réservation."
-      }
-    },
-    {
-      "placement": {
-        "evidence": [
-          {
-            "evidenceId": "d091-placement-agence-de-recrutement-aircall",
-            "sourceRef": "https://aircall.io/fr/logiciel-centre-appels/",
-            "claim": "Aircall fournit téléphonie cloud, routage, supervision et intégrations CRM pour les équipes.",
-            "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
-          }
-        ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
-        "placementId": "agence-de-recrutement:aircall:software",
-        "systemSlug": "agence-de-recrutement",
-        "resourceSlug": "aircall",
-        "rank": 4,
-        "section": "software",
-        "usage": "Structurer les appels candidats et clients lorsque l’équipe gère un volume téléphonique réellement récurrent.",
-        "fitRationale": "Aircall est pertinent pour une agence dont la relation candidats-clients repose fortement sur le téléphone et le suivi d’équipe.",
-        "fitConstraints": [
-          "Surdimensionné pour une personne seule ou un faible volume d’appels.",
-          "Vérifier les intégrations avec le CRM et l’ATS retenus."
-        ],
-        "editorialStatus": "selected",
-        "commercialRelationship": "none",
-        "status": "published",
-        "placementVersion": "d091.pilot.v1",
-        "publicationBlockers": []
-      },
-      "presentation": {
-        "displayCategory": "Outils métier",
-        "nameOverride": "Aircall",
-        "hrefOverride": "https://aircall.io/fr/logiciel-centre-appels/",
-        "ctaLabel": "Voir l’outil",
-        "descriptionOverride": "Téléphonie cloud pour centres d’appels avec routage, files d’attente, supervision, enregistrement et analyse des performances."
+        "descriptionOverride": "ATS et CRM pour agences de recrutement et sociétés d'intérim ayant des processus structurés."
       }
     },
     {
@@ -35613,16 +35660,16 @@
             "sourceRef": "https://workspace.google.com/intl/fr/",
             "claim": "Google Workspace regroupe messagerie, agenda, stockage et documents collaboratifs.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "agence-de-recrutement:google-workspace:software",
         "systemSlug": "agence-de-recrutement",
         "resourceSlug": "google-workspace",
-        "rank": 5,
+        "rank": 4,
         "section": "software",
         "usage": "Partager les documents de mission, comptes rendus, modèles et agendas dans un socle bureautique commun.",
         "fitRationale": "Google Workspace couvre les documents et la collaboration transverses sans prétendre remplacer l’ATS ou le CRM.",
@@ -35633,7 +35680,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35648,55 +35695,16 @@
       "placement": {
         "evidence": [
           {
-            "evidenceId": "d091-placement-agence-de-recrutement-n8n",
-            "sourceRef": "https://n8n.io/",
-            "claim": "n8n permet de construire et exploiter des workflows d’automatisation connectés.",
-            "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
-          }
-        ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
-        "placementId": "agence-de-recrutement:n8n:software",
-        "systemSlug": "agence-de-recrutement",
-        "resourceSlug": "n8n",
-        "rank": 6,
-        "section": "software",
-        "usage": "Relier ATS, CRM et outils internes lorsque des ressaisies ou synchronisations récurrentes subsistent.",
-        "fitRationale": "n8n apporte une couche d’automatisation distincte uniquement lorsque les intégrations natives ne couvrent pas le processus.",
-        "fitConstraints": [
-          "Nécessite une personne capable de concevoir, surveiller et maintenir les workflows.",
-          "Ne pas automatiser des données sensibles sans valider sécurité et hébergement."
-        ],
-        "editorialStatus": "selected",
-        "commercialRelationship": "none",
-        "status": "published",
-        "placementVersion": "d091.pilot.v1",
-        "publicationBlockers": []
-      },
-      "presentation": {
-        "displayCategory": "Automatisation",
-        "nameOverride": "n8n",
-        "hrefOverride": "https://n8n.io/",
-        "ctaLabel": "Voir l’outil",
-        "descriptionOverride": "Plateforme d’automatisation de workflows avec connecteurs, logique conditionnelle et option self-hosted."
-      }
-    },
-    {
-      "placement": {
-        "evidence": [
-          {
             "evidenceId": "d091-placement-saas-stripe",
             "sourceRef": "https://stripe.com/fr/billing",
             "claim": "Stripe Billing gère abonnements, facturation récurrente et paiements.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "saas:stripe:software:2",
         "systemSlug": "saas",
         "resourceSlug": "stripe",
@@ -35711,7 +35719,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35730,12 +35738,12 @@
             "sourceRef": "https://attio.com/",
             "claim": "Attio propose un CRM personnalisable avec données, workflows et collaboration.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "saas:attio:software",
         "systemSlug": "saas",
         "resourceSlug": "attio",
@@ -35750,7 +35758,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35769,12 +35777,12 @@
             "sourceRef": "https://github.com/features",
             "claim": "GitHub regroupe dépôts, collaboration, issues, pull requests et automatisations.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "saas:github:software:1",
         "systemSlug": "saas",
         "resourceSlug": "github",
@@ -35789,7 +35797,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35808,12 +35816,12 @@
             "sourceRef": "https://vercel.com/docs",
             "claim": "Vercel fournit déploiements, previews et infrastructure pour applications web.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "saas:vercel:software",
         "systemSlug": "saas",
         "resourceSlug": "vercel",
@@ -35828,7 +35836,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35847,12 +35855,12 @@
             "sourceRef": "https://linear.app/features",
             "claim": "Linear fournit issues, cycles et roadmaps pour les équipes produit et engineering.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "saas:linear:software",
         "systemSlug": "saas",
         "resourceSlug": "linear",
@@ -35867,7 +35875,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35886,12 +35894,12 @@
             "sourceRef": "https://sentry.io/welcome/",
             "claim": "Sentry fournit suivi des erreurs et performance des applications.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "saas:sentry:software:3",
         "systemSlug": "saas",
         "resourceSlug": "sentry",
@@ -35906,7 +35914,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35925,12 +35933,12 @@
             "sourceRef": "https://posthog.com/product",
             "claim": "PostHog propose analytics produit, replay, feature flags et expérimentation.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "saas:posthog:software",
         "systemSlug": "saas",
         "resourceSlug": "posthog",
@@ -35945,7 +35953,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35964,12 +35972,12 @@
             "sourceRef": "https://www.intercom.com/helpdesk",
             "claim": "Intercom fournit helpdesk, messagerie, base de connaissances et automatisation du support.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "saas:intercom:software",
         "systemSlug": "saas",
         "resourceSlug": "intercom",
@@ -35984,7 +35992,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36003,12 +36011,12 @@
             "sourceRef": "https://www.figma.com/design/",
             "claim": "Figma permet la conception et le prototypage collaboratifs d’interfaces.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "agence-web:figma:software:1",
         "systemSlug": "agence-web",
         "resourceSlug": "figma",
@@ -36023,7 +36031,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36042,12 +36050,12 @@
             "sourceRef": "https://webflow.com/",
             "claim": "Webflow fournit conception visuelle, CMS et publication de sites web.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "agence-web:webflow:software:2",
         "systemSlug": "agence-web",
         "resourceSlug": "webflow",
@@ -36062,7 +36070,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36081,12 +36089,12 @@
             "sourceRef": "https://wordpress.org/",
             "claim": "WordPress est un CMS open source extensible pour sites et contenus administrables.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "agence-web:wordpress:software",
         "systemSlug": "agence-web",
         "resourceSlug": "wordpress",
@@ -36101,7 +36109,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36120,12 +36128,12 @@
             "sourceRef": "https://github.com/features",
             "claim": "GitHub fournit dépôts, collaboration, revues et automatisations de développement.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "agence-web:github:software:3",
         "systemSlug": "agence-web",
         "resourceSlug": "github",
@@ -36140,7 +36148,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36159,12 +36167,12 @@
             "sourceRef": "https://vercel.com/docs",
             "claim": "Vercel fournit déploiements et previews pour applications web.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "agence-web:vercel:software",
         "systemSlug": "agence-web",
         "resourceSlug": "vercel",
@@ -36179,7 +36187,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36198,12 +36206,12 @@
             "sourceRef": "https://asana.com/fr/product",
             "claim": "Asana organise projets, tâches, responsabilités, échéances et workflows.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "agence-web:asana:software",
         "systemSlug": "agence-web",
         "resourceSlug": "asana",
@@ -36218,7 +36226,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36237,12 +36245,12 @@
             "sourceRef": "https://go.sellsy.com/",
             "claim": "Sellsy regroupe CRM, devis, facturation et suivi commercial pour TPE et PME.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "agence-web:sellsy:software",
         "systemSlug": "agence-web",
         "resourceSlug": "sellsy",
@@ -36257,7 +36265,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36276,12 +36284,12 @@
             "sourceRef": "https://n8n.io/",
             "claim": "n8n permet de construire des workflows connectant applications et logique métier.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "agence-web:n8n:software",
         "systemSlug": "agence-web",
         "resourceSlug": "n8n",
@@ -36296,7 +36304,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36315,12 +36323,12 @@
             "sourceRef": "https://www.pennylane.com/fr/expert-comptable",
             "claim": "Pennylane propose une plateforme de production et de collaboration dédiée aux cabinets comptables.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "cabinet-comptable:pennylane:software:1",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "pennylane",
@@ -36335,7 +36343,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36354,12 +36362,12 @@
             "sourceRef": "https://myunisoft.fr/",
             "claim": "MyUnisoft fournit production comptable, gestion interne et collaboration client pour les cabinets.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "cabinet-comptable:myunisoft:software",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "myunisoft",
@@ -36374,7 +36382,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36393,12 +36401,12 @@
             "sourceRef": "https://www.acd-groupe.fr/",
             "claim": "ACD propose des logiciels de comptabilité, fiscalité, paie et gestion pour cabinets.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "cabinet-comptable:acd:software",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "acd",
@@ -36413,7 +36421,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36432,12 +36440,12 @@
             "sourceRef": "https://www.silae.fr/solutions-paie/",
             "claim": "Silae propose une solution de paie et de gestion sociale destinée notamment aux professionnels.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "cabinet-comptable:silae:software:3",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "silae",
@@ -36452,7 +36460,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36471,12 +36479,12 @@
             "sourceRef": "https://dext.com/fr/",
             "claim": "Dext automatise la collecte et le traitement des pièces pour les cabinets comptables.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "cabinet-comptable:dext:software",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "dext",
@@ -36491,7 +36499,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36510,12 +36518,12 @@
             "sourceRef": "https://rca.fr/logiciels-experts/",
             "claim": "RCA propose des logiciels de prévisionnel, pilotage et conseil pour experts-comptables.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "cabinet-comptable:rca:software",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "rca",
@@ -36530,7 +36538,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36546,15 +36554,15 @@
         "evidence": [
           {
             "evidenceId": "d091-placement-cabinet-comptable-lefebvre-dalloz",
-            "sourceRef": "https://www.lefebvre-dalloz.fr/",
-            "claim": "Lefebvre Dalloz fournit documentation et solutions d’information juridique, fiscale et sociale.",
+            "sourceRef": "https://boutique.lefebvre-dalloz.fr/solution-expert-comptable.html",
+            "claim": "La Solution Expert-Comptable Lefebvre Dalloz réunit actualité, jurisprudence, documentation et outils pour sécuriser les missions quotidiennes du cabinet.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "cabinet-comptable:lefebvre-dalloz:software",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "lefebvre-dalloz",
@@ -36569,13 +36577,13 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
         "displayCategory": "Outils métier",
         "nameOverride": "Lefebvre Dalloz",
-        "hrefOverride": "https://www.lefebvre-dalloz.fr/",
+        "hrefOverride": "https://boutique.lefebvre-dalloz.fr/solution-expert-comptable.html",
         "ctaLabel": "Voir l’outil",
         "descriptionOverride": "Documentation juridique, fiscale et sociale pour les professionnels du droit et du chiffre."
       }
@@ -36588,12 +36596,12 @@
             "sourceRef": "https://www.obat.fr/",
             "claim": "Obat propose devis, factures et gestion commerciale pour artisans et entreprises du bâtiment.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "batiment:obat:software:1",
         "systemSlug": "batiment",
         "resourceSlug": "obat",
@@ -36608,7 +36616,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36624,15 +36632,15 @@
         "evidence": [
           {
             "evidenceId": "d091-placement-batiment-vertuoza",
-            "sourceRef": "https://www.vertuoza.com/",
+            "sourceRef": "https://www.vertuoza.com/fr-fr",
             "claim": "Vertuoza regroupe gestion commerciale, planning, chantier et rentabilité pour le BTP.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "batiment:vertuoza:software:4",
         "systemSlug": "batiment",
         "resourceSlug": "vertuoza",
@@ -36647,13 +36655,13 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
         "displayCategory": "Outils métier",
         "nameOverride": "Vertuoza",
-        "hrefOverride": "https://www.vertuoza.com/",
+        "hrefOverride": "https://www.vertuoza.com/fr-fr",
         "ctaLabel": "Voir l’outil",
         "descriptionOverride": "Gestion commerciale, chantier et planning pour entreprises du bâtiment."
       }
@@ -36666,12 +36674,12 @@
             "sourceRef": "https://www.graneet.com/",
             "claim": "Graneet fournit un ERP de pilotage financier et de rentabilité pour entreprises du BTP.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "batiment:graneet:software",
         "systemSlug": "batiment",
         "resourceSlug": "graneet",
@@ -36686,7 +36694,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36705,12 +36713,12 @@
             "sourceRef": "https://www.sage.com/fr-fr/produits/sage-batigest-connect/",
             "claim": "Sage Batigest Connect couvre devis, facturation et gestion pour les professionnels du bâtiment.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "batiment:sage-batigest-connect:software",
         "systemSlug": "batiment",
         "resourceSlug": "sage-batigest-connect",
@@ -36725,7 +36733,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36744,12 +36752,12 @@
             "sourceRef": "https://www.alobees.com/",
             "claim": "Alobees fournit planning, suivi d’heures et suivi de chantier pour les équipes BTP.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "batiment:alobees:software",
         "systemSlug": "batiment",
         "resourceSlug": "alobees",
@@ -36764,7 +36772,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36783,12 +36791,12 @@
             "sourceRef": "https://www.fieldwire.com/fr/",
             "claim": "Fieldwire centralise plans, tâches et suivi de chantier entre terrain et bureau.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "batiment:fieldwire:software",
         "systemSlug": "batiment",
         "resourceSlug": "fieldwire",
@@ -36803,7 +36811,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36822,12 +36830,12 @@
             "sourceRef": "https://www.kizeo-forms.com/fr/",
             "claim": "Kizeo Forms numérise formulaires, collecte de terrain et génération de rapports.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-22T10:30:00.000Z"
+            "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 second review",
-        "reviewedAt": "2026-08-22T10:30:00.000Z",
-        "expiresAt": "2027-02-22T10:30:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-23T06:30:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "placementId": "batiment:kizeo-forms:software",
         "systemSlug": "batiment",
         "resourceSlug": "kizeo-forms",
@@ -36842,7 +36850,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v1",
+        "placementVersion": "d091.pilot.v2",
         "publicationBlockers": []
       },
       "presentation": {

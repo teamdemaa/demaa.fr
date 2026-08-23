@@ -6,16 +6,17 @@ import {
   parseFirebaseSolutionRegistryRevision,
 } from "@/lib/firebase-solution-registry-contract";
 import { buildStableSoftwarePlacementId } from "@/lib/curated-tools-candidate-audit";
+import { validateReviewedSolutionCurationResearchManifest } from "@/lib/solution-curation-research-contract";
 import { getToolDirectorySlug, toolDirectory } from "@/lib/tool-directory";
 
 const ACTIVE_REVISION_PATH =
   "src/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json";
 const REVIEWED_SELECTION_PATH =
-  "docs/research/d091-tools/pilot-reviewed-selections.v1.json";
+  "docs/research/d091-tools/pilot-reviewed-selections.v2.json";
 const OUTPUT_PATH =
   "docs/research/d091-tools/pilot-candidate-revision.generated.json";
-const CANDIDATE_CREATED_AT = "2026-08-22T10:30:00.000Z";
-const REVIEW_EXPIRES_AT = "2027-02-22T10:30:00.000Z";
+const CANDIDATE_CREATED_AT = "2026-08-23T06:30:00.000Z";
+const REVIEW_EXPIRES_AT = "2027-02-23T09:00:00.000Z";
 
 type ReviewedCandidate = {
   toolSlug: string;
@@ -23,6 +24,8 @@ type ReviewedCandidate = {
   usage: string;
   fitRationale: string;
   fitConstraints: string[];
+  targetProfile: string;
+  franceAvailability: string;
   officialSourceUrl: string;
   evidenceClaim: string;
   reviewedAt: string;
@@ -34,6 +37,7 @@ type ReviewedSystem = {
 };
 
 type ReviewedManifest = {
+  reviewStage: "placement-reviewed";
   systems: ReviewedSystem[];
 };
 
@@ -62,6 +66,18 @@ const active = parseFirebaseSolutionRegistryRevision(activeInput);
 const toolsBySlug = new Map(
   toolDirectory.map((tool) => [getToolDirectorySlug(tool), tool]),
 );
+const reviewedManifestErrors = validateReviewedSolutionCurationResearchManifest(
+  reviewedInput,
+  {
+    knownSystemSlugs: new Set(active.knownSystemSlugs),
+    knownToolSlugs: new Set(toolsBySlug.keys()),
+  },
+);
+if (reviewedManifestErrors.length > 0) {
+  throw new Error(
+    `Reviewed D-091 manifest is invalid:\n${reviewedManifestErrors.join("\n")}`,
+  );
+}
 const selectedSystems = new Set(
   reviewedInput.systems.map(({ systemSlug }) => systemSlug),
 );
@@ -101,14 +117,14 @@ const resources = active.resources.map((entry) => {
         claim: reviewed.evidenceClaim,
         capturedAt: reviewed.reviewedAt,
       }),
-      reviewer: "D-091 second review",
+      reviewer: "D-091 placement review v2",
       reviewedAt: reviewed.reviewedAt,
       expiresAt: REVIEW_EXPIRES_AT,
       interactionMode: "external_link" as const,
       href: reviewed.officialSourceUrl,
       commercialRelationship: "none" as const,
       status: "published" as const,
-      resourceVersion: "d091.pilot.v1",
+      resourceVersion: "d091.pilot.v2",
       publicationBlockers: [],
     },
   };
@@ -127,7 +143,7 @@ for (const toolSlug of selectedToolSlugs) {
         claim: reviewed.evidenceClaim,
         capturedAt: reviewed.reviewedAt,
       }),
-      reviewer: "D-091 second review",
+      reviewer: "D-091 placement review v2",
       reviewedAt: reviewed.reviewedAt,
       expiresAt: REVIEW_EXPIRES_AT,
       interactionMode: "external_link",
@@ -138,7 +154,7 @@ for (const toolSlug of selectedToolSlugs) {
       description: tool.description,
       commercialRelationship: "none",
       status: "published",
-      resourceVersion: "d091.pilot.v1",
+      resourceVersion: "d091.pilot.v2",
       publicationBlockers: [],
     },
   });
@@ -200,7 +216,7 @@ for (const system of reviewedInput.systems) {
           claim: reviewed.evidenceClaim,
           capturedAt: reviewed.reviewedAt,
         }),
-        reviewer: "D-091 second review",
+        reviewer: "D-091 placement review v2",
         reviewedAt: reviewed.reviewedAt,
         expiresAt: REVIEW_EXPIRES_AT,
         placementId,
@@ -214,7 +230,7 @@ for (const system of reviewedInput.systems) {
         editorialStatus: "selected",
         commercialRelationship: "none",
         status: "published",
-        placementVersion: "d091.pilot.v1",
+        placementVersion: "d091.pilot.v2",
         publicationBlockers: [],
       },
       presentation: {
@@ -230,10 +246,10 @@ for (const system of reviewedInput.systems) {
 
 const candidateWithoutFingerprint = {
   schemaVersion: 1,
-  revisionId: "solutions-2026-08-22-d091-pilot-candidate-v1",
+  revisionId: "solutions-2026-08-23-d091-pilot-candidate-v2",
   revisionStatus: "draft",
   createdAt: CANDIDATE_CREATED_AT,
-  createdBy: "D-091 second review",
+  createdBy: "D-091 placement review v2",
   sourceFingerprint: "0".repeat(64),
   knownSystemSlugs: [...active.knownSystemSlugs],
   resources,

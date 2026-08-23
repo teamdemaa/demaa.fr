@@ -5,6 +5,7 @@ import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 import { D091_PILOT_SYSTEM_SLUGS } from "@/lib/curated-tools-candidate-audit";
 import {
   validateCuratedSelectionAgainstResearch,
+  validateReviewedSolutionCurationResearchManifest,
   validateSolutionCurationResearchManifest,
   type SolutionCurationResearchManifest,
 } from "@/lib/solution-curation-research-contract";
@@ -17,7 +18,7 @@ import {
 async function manifest() {
   return JSON.parse(await readFile(
     new URL(
-      "../docs/research/d091-tools/pilot-reviewed-selections.v1.json",
+      "../docs/research/d091-tools/pilot-reviewed-selections.v2.json",
       import.meta.url,
     ),
     "utf8",
@@ -56,6 +57,8 @@ describe("D-091 pilot research selections", () => {
         const reviewed = candidate as typeof candidate & Record<string, unknown>;
         expect(String(reviewed.usage ?? "").length).toBeGreaterThan(20);
         expect(String(reviewed.fitRationale ?? "").length).toBeGreaterThan(30);
+        expect(String(reviewed.targetProfile ?? "").length).toBeGreaterThan(30);
+        expect(String(reviewed.franceAvailability ?? "").length).toBeGreaterThan(30);
         expect(reviewed.fitConstraints).toEqual(expect.arrayContaining([
           expect.any(String),
         ]));
@@ -68,6 +71,10 @@ describe("D-091 pilot research selections", () => {
       knownSystemSlugs: knownSystems,
       knownToolSlugs: knownTools,
     })).toEqual([]);
+    expect(validateReviewedSolutionCurationResearchManifest(payload, {
+      knownSystemSlugs: knownSystems,
+      knownToolSlugs: knownTools,
+    })).toEqual([]);
   });
 
   it("does not turn the recruitment example into a list of ten ATS", async () => {
@@ -76,12 +83,10 @@ describe("D-091 pilot research selections", () => {
     );
 
     expect(recruitment?.toolCandidatesByRank.map(({ toolSlug }) => toolSlug)).toEqual([
-      "recruitee",
-      "hubspot",
-      "calendly",
-      "aircall",
+      "nicoka-cabs",
+      "recruit-crm",
+      "bullhorn",
       "google-workspace",
-      "n8n",
     ]);
   });
 
@@ -112,10 +117,11 @@ describe("D-091 pilot research selections", () => {
 
     expect(validateCuratedSelectionAgainstResearch(
       payload,
-      new Map([["agence-de-recrutement", ["recruitee", "unknown-tool"]]]),
+      new Map([["agence-de-recrutement", ["unknown-tool"]]]),
       ["agence-de-recrutement"],
     )).toEqual(expect.arrayContaining([
       "agence-de-recrutement:unknown-tool: selected tool is absent from reviewed research",
+      "agence-de-recrutement: selected tools do not cover priority need candidatures-et-vivier",
       "agence-de-recrutement: selected tools do not cover priority need relation-clients",
       "agence-de-recrutement: selected tools do not cover priority need collaboration-et-documents",
     ]));
@@ -148,5 +154,24 @@ describe("D-091 pilot research selections", () => {
     )).toContain(
       "agence-de-recrutement: selected tool order differs from reviewed research",
     );
+  });
+
+  it("fails closed when a placement review omits target or France availability", async () => {
+    const payload = await manifest();
+    const knownSystems = new Set(enterpriseCatalog.map(({ slug }) => slug));
+    const knownTools = new Set(toolDirectory.map(getToolDirectorySlug));
+    const broken = structuredClone(payload) as unknown as {
+      systems: Array<{ toolCandidatesByRank: Array<Record<string, unknown>> }>;
+    };
+    delete broken.systems[0]!.toolCandidatesByRank[0]!.targetProfile;
+    delete broken.systems[0]!.toolCandidatesByRank[0]!.franceAvailability;
+
+    expect(validateReviewedSolutionCurationResearchManifest(broken, {
+      knownSystemSlugs: knownSystems,
+      knownToolSlugs: knownTools,
+    })).toEqual(expect.arrayContaining([
+      "systems[0].toolCandidatesByRank[0].targetProfile is too short",
+      "systems[0].toolCandidatesByRank[0].franceAvailability is too short",
+    ]));
   });
 });

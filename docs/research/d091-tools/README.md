@@ -57,9 +57,11 @@ dans Firebase maintenant créerait une migration sans bénéfice utilisateur.
 ## Pilote
 
 `pilot-selections.v2.json` conserve les cinq pools initiaux.
-`pilot-reviewed-selections.v1.json` contient leur seconde revue à volume
-variable, avec ordre, besoin, usage, contrainte et preuve officielle. Aucun
-remplacement n'est obligatoire lorsqu'un candidat est retiré.
+`pilot-reviewed-selections.v2.json` contient la revue placement par placement à
+volume variable, avec ordre, besoin, cible, usage, disponibilité en France,
+contraintes, preuve officielle et date de revue. Le générateur refuse désormais
+ce manifeste si l'un de ces champs manque. Aucun remplacement n'est obligatoire
+lorsqu'un candidat est retiré.
 
 Le gate pilote audite ces cinq systèmes dans une **révision candidate complète
 des 115 systèmes**. Il n'accepte pas une mini-révision incompatible avec le
