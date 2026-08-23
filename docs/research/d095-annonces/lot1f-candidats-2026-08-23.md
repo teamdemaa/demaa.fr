@@ -1,12 +1,14 @@
 # D-095 Lot 1F — Candidats de reprise repérés le 23 août 2026
 
-Statut : **recherche uniquement, rien n'est publié ni écrit en base**. Ce
-dossier ne constitue jamais une source runtime, comme
-`docs/research/d091-tools/`. Aucune de ces fiches n'a été créée dans
-Firestore : ce document réunit les informations nécessaires pour que
-l'équipe les saisisse via `/admin/opportunites` une fois relues.
+Statut : **les 3 candidats ci-dessous ont été créés en `draft` dans
+Firestore Production** le 23 août 2026 via `scripts/seed-d095-lot1f-drafts.ts`
+(traçable, gardé dans le dépôt). Ce dossier ne constitue jamais une
+source runtime : les brouillons ne sont visibles ni publiquement ni sur
+l'API publique (`status: draft`, `publishedAt: null`), vérifié après
+écriture. Rien n'est publié — la publication reste un GO contenu
+distinct, décidé par la Team via `/admin/opportunites`.
 
-## Candidats exploitables (3) — source officielle avec URL stable
+## Candidats créés en brouillon (3) — source officielle avec URL stable
 
 Trouvés sur [Actify](https://actify.fr), le site du Conseil National des
 Administrateurs Judiciaires et Mandataires Judiciaires (CNAJMJ) —
@@ -16,6 +18,7 @@ annonce, permettant de satisfaire le gate de publication du Lot 1E
 (`sourceName` + `sourceUrl` HTTPS + `verifiedAt`).
 
 ### 1. Fonds de commerce — salon de beauté, Le Teich (33)
+- `opportunityId` : `salon-de-beaute-a-reprendre-au-teich-20dfcd`
 - `sourceKind` : administrateur judiciaire
 - `sourceName` : Actify — SELARL EKIP'
 - `sourceUrl` : <https://actify.fr/entreprises-liquidation-judiciaire/50784_fonds-de-commerce/>
@@ -32,6 +35,7 @@ annonce, permettant de satisfaire le gate de publication du Lot 1E
   SELARL EKIP', accessible depuis l'annonce source).
 
 ### 2. Fonds de commerce — bar / café / restaurant, Bordeaux (33)
+- `opportunityId` : `bar-restaurant-a-reprendre-a-bordeaux-c0248a`
 - `sourceKind` : administrateur judiciaire
 - `sourceName` : Actify — SELARL EKIP'
 - `sourceUrl` : <https://actify.fr/entreprises-liquidation-judiciaire/50883_fonds-de-commerce/>
@@ -46,6 +50,7 @@ annonce, permettant de satisfaire le gate de publication du Lot 1E
   judiciaire. »
 
 ### 3. Association AIADL (loi 1901) — aide à domicile, Néac (33)
+- `opportunityId` : `association-d-aide-a-domicile-a-reprendre-en-gironde-7d30aa`
 - `sourceKind` : administrateur judiciaire
 - `sourceName` : Actify — ASCAGNE AJ SO
 - `sourceUrl` : <https://actify.fr/entreprises-liquidation-judiciaire/recherche-de-candidats-repreneurs-association-aiadl-loi-1901/>
@@ -101,8 +106,14 @@ deux voies n'a été engagée ici.
 
 ## Prochaine étape
 
-Saisir les 3 candidats Actify via `/admin/opportunites` (formulaire
-maintenant simplifié pour les reprises, cf. PR #205) : Type d'annonce
-= Reprise ou transmission, puis Secteur/Localisation/Date limite, puis
-la section Source externe avec les champs listés ci-dessus. Laisser en
-brouillon pour relecture avant publication.
+Les 3 candidats Actify existent en `draft` dans Firestore Production.
+Reste à faire par la Team, via `/admin/opportunites` :
+1. relire chaque fiche (titre, résumé, dates, source) ;
+2. pour l'association AIADL, trancher si le cas atypique (structure
+   loi 1901) est publiable tel quel ou à écarter ;
+3. cliquer « Publier » une fois chaque fiche validée — le gate du
+   Lot 1E empêche déjà toute publication si `sourceName`, `sourceUrl`
+   ou `verifiedAt` venait à manquer.
+
+Continuer ensuite la recherche (Actify BTP/informatique, CessionPME,
+Fusacq, vendeurs directs) pour se rapprocher de 30–50.
