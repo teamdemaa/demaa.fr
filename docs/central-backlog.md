@@ -7,8 +7,9 @@ Backlog de pilotage :
 
 Le Google Sheet a été resynchronisé le 23 août 2026 avec la décision finale
 D-091 sans quota fixe, D-094 livré et en observation, D-095 planifié, ainsi que
-la tête Production `69bbc336`. Aucun chantier ne doit être déclaré livré avant
-sa recette réelle.
+la tête Production alors courante `69bbc336`. Le dépôt a depuis avancé jusqu'à
+`1340898a` sur `origin/main`. Aucun chantier ne doit être déclaré livré avant sa
+recette réelle.
 
 Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
@@ -21,8 +22,9 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
 ## État courant Production — 23 août 2026
 
-- `origin/main` pointe sur `69bbc336`, après la clôture documentaire de la PR
-  191. `467f420f` reste le dernier checkpoint runtime de D-094, déployé après
+- `origin/main` pointe sur `1340898a`. `69bbc336` reste le checkpoint de la
+  clôture documentaire de la PR 191 et `467f420f` le dernier checkpoint runtime
+  initial de D-094, déployé après
   la fusion des PR 183 à 190 et son activation contrôlée. `dbb8b723` reste le
   dernier checkpoint antérieur à D-094. Les références `6d35805f`, `260ad7d`,
   `8020e04`, `ae5029d`, `a47d844`,
@@ -35,29 +37,30 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 - L'application conserve un seul domaine canonique et des groupes de routes
   distincts pour le marketing, l'application, l'authentification et
   l'administration.
-- L'authentification Firebase e-mail/mot de passe et Google partage la même
-  session Demaa. Sur `demaa.co`, Google utilise immédiatement la redirection
-  afin d'éviter les blocages de popup ; local et Preview peuvent conserver la
-  popup desktop. Le parcours Production a été vérifié jusqu'à la création du
-  contexte entreprise et au retour vers `/plans/new` pour un compte sans plan.
-- Le périmètre Plan d'action V4 reste `Actions + systemId`. Le Pilotage
-  d'entreprise D-084 est livré : Chiffres et Stratégie sont rattachés à
-  l'entreprise, séparés des plans et exclus du périmètre IA.
-- Depuis la PR 145, les trois consoles internes utilisent la session Demaa et
-  `DEMAA_ADMIN_EMAILS`. Leur accès authentifié a été vérifié en Production ;
-  les anciens secrets dédiés ont été retirés de Vercel.
+- Le parcours public ne crée plus de compte client. Le plan invité reste
+  accessible par son lien durable et peut être envoyé par e-mail. Firebase
+  e-mail/mot de passe et Google sont réservés à la session Team Demaa
+  indépendante ; l'ancien parcours client authentifié est conservé seulement
+  comme historique technique de D-082/D-084 et ne décrit plus la cible produit.
+- Le périmètre public du Plan d'action reste `Actions + systemId`. Le Pilotage
+  d'entreprise D-084 a bien été livré historiquement, puis Chiffres et
+  Stratégie ont été retirés du parcours public par D-094. Ils ne doivent pas
+  être réactivés implicitement par un lot Académie ou internationalisation.
+- Les trois consoles internes utilisent la session Team Demaa dédiée, le
+  cookie HttpOnly `demaa_admin_session` et l'allowlist `DEMAA_ADMIN_EMAILS`.
+  Cette session ne crée ni compte client, ni entreprise, ni appartenance. Les
+  anciens secrets dédiés ont été retirés de Vercel.
 - `/en` n'est pas publié en Production. L'implémentation anglaise partielle
   reste un prototype de Preview et ne constitue ni une bêta publique ni un
   catalogue validé.
-- Les PR 169 à 171 ont livré la cible française D-090 : sous-navigation
-  `Plan / Chiffres / Solutions`, Stratégie accessible sous le Plan, catalogue
-  Solutions enrichi, puis Services séparé entre deux accompagnements Demaa et
-  des partenaires de confiance. La navigation principale est désormais
-  `Plan d'action / Académie / Services / Opportunités`.
-- D-093 est livré par la PR 181 : entrée opérationnelle, prompt IA, ordre
-  `Plan / Solutions / Chiffres`, Stratégie masquée et partenaires Services
-  repliés. La PR 182 ajoute le service gratuit `Recruter un alternant` en
-  réutilisant le parcours Services existant.
+- Les PR 169 à 171 ont livré historiquement D-090. La sous-navigation
+  `Plan / Chiffres / Solutions` et l'accès Stratégie ont ensuite été simplifiés
+  par D-093 puis supersédés dans le parcours public par D-094. Le catalogue
+  Solutions et la destination Services restent actifs ; la navigation
+  principale est `Plan d'action / Académie / Services / Opportunités`.
+- D-093 est livré par la PR 181 : entrée opérationnelle, prompt IA et
+  simplification de l'interface. La PR 182 ajoute le service gratuit `Recruter
+  un alternant` en réutilisant le parcours Services existant.
 - D-094 est livré et activé en Production : produit public sans compte,
   génération invitée durable, livraison du plan et Diagnostic par e-mail,
   session Team Demaa indépendante et retrait de Chiffres/Stratégie/chat du
@@ -1533,9 +1536,9 @@ manuel du marché France.
   navigation, puis la validation explicite d'un plan d'implémentation et de ses
   compromis responsive. Le contrat détaillé et les critères de recette sont
   définis ci-dessous.
-- [ ] Réactiver les `Tutoriels` de l'Académie par la bascule
-  `academyTutorials`, avec retour automatique de la navigation de sections et
-  recette desktop/mobile.
+- [x] Réactiver les `Tutoriels` dans `Structurer` par la bascule
+  `academyTutorials`, dans une grille unique sans navigation de sections ;
+  D-096 porte la recette desktop/mobile et maintient les Formations masquées.
 - [ ] Réactiver l'onglet `Webinaires` de l'Académie seulement
   après validation des créneaux, recette desktop/mobile et bascule explicite de
   `academyLiveTrainings` dans `src/lib/public-editorial-visibility.ts`.
@@ -1862,8 +1865,8 @@ Firebase client utilisée par la session Team.
 
 Frontières : D-091 peut continuer ses recherches éditoriales hors registre
 actif, mais ne modifie pas les surfaces D-094. D-085 et les PR anglaises restent
-en pause. The Done Studio ne démarre pas sans GO et ne partage aucune collection
-Demaa.
+en pause. The Done Studio a reçu son GO, possède désormais son dépôt et sa
+Production autonomes, et ne partage aucune collection Demaa.
 
 #### D-095 — Faire évoluer Opportunités vers un espace d'Annonces — planifié
 
@@ -1907,6 +1910,55 @@ publics et l'e-mail est placé en dernier. Le runtime D-095 reste néanmoins
 différé après l'observation D-094 et la priorité D-091 afin de ne pas modifier
 simultanément `OpportunitySubmissionDialog`, `PublicOpportunitiesClient` et
 l'API de soumission.
+
+#### D-096 — Structurer : Tutoriels visibles, Formations conservées — PR prête, non fusionnée
+
+Référence : [ADR 0021](decisions/0021-demaa-academy-and-external-course-boundaries.md).
+
+Objectif : présenter la surface française sous le libellé visible `Structurer`
+avec une seule grille de Tutoriels lisibles comme des articles. Les véritables
+parcours de Formation restent intégralement conservés mais masqués. Les
+identifiants techniques `academy`, l'API et la route `/academie` restent
+inchangés ; l'anglais reste `Academy` et demeure en pause.
+
+- [x] Afficher une grille responsive unique de Tutoriels, sans titre de section
+  redondant et sans défilement horizontal.
+- [x] Réutiliser les contenus `case-study` pertinents pour les Tutoriels après
+  revue éditoriale ; le clic ouvre un article lisible, sans progression, leçon
+  ou quiz.
+- [x] Masquer les actuels `Cours` derrière `academyFormations: false` sans
+  changer leurs identifiants, routes directes, leçons, quiz, actions, versions,
+  cache ou progression.
+- [x] Conserver les huit Formations, sans doublon, autour de cinq thèmes
+  éditoriaux : `Finances et trésorerie`, `Prix et offre`, `Marketing et
+  ventes`, `Délégation` et `Réalisation des prestations`.
+- [x] Conserver les miniatures existantes sans pastille d'icône supplémentaire
+  et retirer le second cadre vert autour des images similaires dans les
+  articles ; préserver cibles tactiles, focus et textes alternatifs.
+- [x] Garder les Webinaires masqués et ne pas toucher l'anglais en pause.
+- [x] Préserver les routes directes existantes sans supprimer les contenus
+  masqués avant la fin du rollback.
+- [x] Placer `Structurer` avant `Services` dans la navigation française, avec
+  un ordre partagé réutilisable par l'anglais lors de sa reprise.
+- [x] Recetter la Preview finale sur desktop, le rendu mobile local, les tests
+  PWA et la sémantique accessible, y compris le retour depuis un article.
+- [ ] Fusionner et vérifier Production uniquement après GO explicite.
+
+Les Formations pourront être republiées plus tard par décision explicite et
+recette dédiée. Elles ne doivent pas être supprimées, recopiées ni converties
+en Tutoriels.
+
+État d'exécution : la PR #194 porte le runtime et la Preview, avec la grille de
+Tutoriels, leurs articles, le masquage réversible des Formations, le libellé
+`Structurer`, l'allègement visuel et l'ordre de navigation
+`Plan d'action · Structurer · Services · Opportunités`. CI, check complet,
+build Production et Preview sont verts ; elle reste non fusionnée jusqu'au GO.
+Le remplacement ultérieur
+d'`Opportunités` par `Annonces` reste le lot D-095 séparé.
+
+The Done Studio suit un handover informatif séparé : son onglet Ressources
+reçoit une section unique `Cours`. Les applications ne partagent aucun contrat,
+modèle, identifiant, package, API, stockage, cache ou dépendance de déploiement.
 
 ##### Mise à jour catalogue — Masquage du service Expert-comptable
 
