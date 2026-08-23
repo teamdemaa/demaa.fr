@@ -374,12 +374,12 @@ export default function PublicOpportunitiesClient({
               aria-haspopup="dialog"
               aria-expanded={selected?.opportunityId === opportunity.opportunityId}
               aria-controls="opportunity-details-dialog"
-              className={`group flex h-[13rem] w-full flex-col rounded-[1.2rem] border bg-white p-4 text-left shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/25 hover:bg-dema-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest sm:h-44 sm:p-5 ${selected?.opportunityId === opportunity.opportunityId ? "border-dema-forest/45" : "border-dema-line"}`}
+              className={`group flex min-h-[13rem] w-full flex-col rounded-[1.2rem] border bg-white p-4 text-left shadow-[0_8px_24px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/25 hover:bg-dema-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dema-forest sm:min-h-44 sm:p-5 ${selected?.opportunityId === opportunity.opportunityId ? "border-dema-forest/45" : "border-dema-line"}`}
             >
-              <h2 className={`line-clamp-2 ${LIBRARY_CARD_TITLE_CLASSNAME}`}>
+              <h2 className={`line-clamp-2 shrink-0 ${LIBRARY_CARD_TITLE_CLASSNAME}`}>
                 {opportunity.title}
               </h2>
-              <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-dema-muted">
+              <p className="mt-2 line-clamp-2 shrink-0 text-sm leading-relaxed text-dema-muted">
                 {opportunity.summary}
               </p>
               <div className="mt-auto flex flex-wrap gap-2 pt-5" aria-label="Caractéristiques de l’annonce">

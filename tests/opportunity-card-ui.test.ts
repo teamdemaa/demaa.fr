@@ -10,8 +10,8 @@ describe("public opportunity cards", () => {
   it("uses compact full-width rows with uniform tags", () => {
     expect(source).toContain('className="mt-6 grid gap-3"');
     expect(source).not.toContain("sm:grid-cols-2");
-    expect(source).toContain("h-[13rem]");
-    expect(source).toContain("sm:h-44");
+    expect(source).toContain("min-h-[13rem]");
+    expect(source).toContain("sm:min-h-44");
     expect(source).toContain('className="mt-2 line-clamp-2');
     expect(source).toContain("mt-auto flex flex-wrap gap-2");
     expect(source).toContain(".slice(0, 3).map((tag) =>");
