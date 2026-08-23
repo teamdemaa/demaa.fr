@@ -1,23 +1,40 @@
 import { describe, expect, it } from "vitest";
-import { getNextAcademySection } from "@/components/AcademyIndexClient";
+import {
+  getAcademyCaseStudies,
+  getAcademyFundamentals,
+} from "@/lib/academy-course-content";
 import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
 
-const visibleSections = [
-  { id: "courses" as const },
-];
+describe("Academy content sections", () => {
+  it("publishes only Tutorials in the Structurer index while preserving Formations", () => {
+    const fundamentals = getAcademyFundamentals();
+    const caseStudies = getAcademyCaseStudies();
 
-describe("Academy section keyboard navigation", () => {
-  it("keeps the temporary single-course surface without public tabs", () => {
-    expect(PUBLIC_EDITORIAL_VISIBILITY.academyTutorials).toBe(false);
-    expect(getNextAcademySection(visibleSections, "courses", "ArrowRight")).toBe(
-      "courses",
+    expect(PUBLIC_EDITORIAL_VISIBILITY.academyTutorials).toBe(true);
+    expect(PUBLIC_EDITORIAL_VISIBILITY.academyFormations).toBe(false);
+    expect(caseStudies).toHaveLength(6);
+    expect(fundamentals).toHaveLength(8);
+    expect(caseStudies.every((content) => content.kind === "case-study")).toBe(true);
+    expect(fundamentals.every((content) => content.kind === "course")).toBe(true);
+  });
+
+  it("groups the eight formations into the five Structurer themes", () => {
+    const categoriesBySlug = Object.fromEntries(
+      getAcademyFundamentals().map((content) => [
+        content.identity.slug,
+        content.identity.category,
+      ]),
     );
-    expect(getNextAcademySection(visibleSections, "courses", "Home")).toBe(
-      "courses",
-    );
-    expect(getNextAcademySection(visibleSections, "courses", "End")).toBe(
-      "courses",
-    );
-    expect(getNextAcademySection(visibleSections, "courses", "Enter")).toBeNull();
+
+    expect(categoriesBySlug).toEqual({
+      "comprendre-chiffre-affaires-benefice": "Finances et trésorerie",
+      "construire-offre-facile-a-acheter": "Prix et offre",
+      "construire-systeme-marketing-vente": "Marketing et ventes",
+      "deleguer-sans-perdre-le-controle": "Délégation",
+      "fixer-ses-prix-sans-vendre-a-perte": "Prix et offre",
+      "livrer-prestation-sans-tout-reinventer": "Réalisation des prestations",
+      "piloter-sa-tresorerie": "Finances et trésorerie",
+      "transformer-demande-en-client": "Marketing et ventes",
+    });
   });
 });

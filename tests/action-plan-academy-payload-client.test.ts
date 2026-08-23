@@ -112,7 +112,7 @@ describe("action plan Academy client payload cache", () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(jsonResponse({ contents: [] })));
 
     await expect(loadActionPlanAcademyPayload()).rejects.toThrow(
-      "Impossible de charger l’Académie.",
+      "Impossible de charger les contenus.",
     );
     expect(readCachedActionPlanAcademyPayload()).toBeNull();
   });

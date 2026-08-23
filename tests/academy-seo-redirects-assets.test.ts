@@ -52,7 +52,7 @@ function readPngDimensions(buffer: Buffer) {
 describe("Academy SEO, redirects and assets", () => {
   it("uses every short title and exact canonical URL in route metadata", async () => {
     for (const content of getAllAcademyContent()) {
-      const expectedTitle = `${content.identity.shortTitle} | Académie Demaa`;
+      const expectedTitle = `${content.identity.shortTitle} | Structurer avec Demaa`;
       const expectedCanonical = `https://demaa.co/academie/${content.identity.slug}`;
       const metadata = buildAcademyContentMetadata(content);
       const routeMetadata = await generateMetadata({
@@ -86,7 +86,7 @@ describe("Academy SEO, redirects and assets", () => {
           {
             "@type": "ListItem",
             position: 2,
-            name: "Académie",
+            name: "Structurer",
             item: "https://demaa.co/academie",
           },
           {

@@ -239,7 +239,7 @@ describe("action plan experience architecture", () => {
     const actionSource = solutions.slice(actionStart, actionEnd);
 
     expect(academy).toContain('<h1 className="sr-only">');
-    expect(academy).toContain('localeCode === "en" ? "Academy" : "Académie"');
+    expect(academy).toContain('localeCode === "en" ? "Academy" : "Structurer"');
     expect(actionSource).toContain("onClose();");
     expect(actionSource.indexOf("onClose();")).toBeLessThan(
       actionSource.indexOf('trackSystemSolutionEvent("system_solution_resource_cta_clicked"'),
@@ -289,9 +289,11 @@ describe("action plan experience architecture", () => {
     expect(academyPanel).toContain("embedded");
     expect(experience).toContain("<ActionPlanUtilityActions");
     expect(experience).not.toContain("onOpenAccess={() => setAccessPromptOpen(true)}");
-    expect(academyIndex).toContain("embedded || isSearching || showAllFundamentals");
     expect(academyIndex).toContain("!embedded ? (");
     expect(academyIndex).toContain("<AppLibrarySearch");
+    expect(academyIndex).toContain("grid grid-cols-1");
+    expect(academyIndex).not.toContain("<HorizontalScrollHint");
+    expect(academyIndex).not.toContain("BookOpenText");
     expect(systemPanel).toContain(
       'className="mx-auto mb-6 w-full max-w-xl xl:w-[min(40vw,36rem)]"',
     );
@@ -300,6 +302,7 @@ describe("action plan experience architecture", () => {
     expect(academyPanel).toContain("onContentChange?.(content.identity.slug)");
     expect(academyPanel).toContain("onContentChange?.(undefined)");
     expect(academyPanel).toContain("<AcademyCoursePlayer");
+    expect(academyPanel).toContain("<AcademyTutorialArticle");
     expect(academyPanel).toContain(
       'import AcademyIndexClient from "@/components/AcademyIndexClient"',
     );

@@ -11,12 +11,19 @@ export type ActionPlanView = "plan" | "services" | "academy" | "opportunities";
 const tabClassName =
   "group relative inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:min-h-11 xl:flex-row xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
 
-const navigationItems = [
-  { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
-  { view: "academy", labels: { fr: "Académie", en: "Academy" }, Icon: BookOpen },
-  { view: "services", labels: { fr: "Services", en: "Services" }, Icon: SquareCheckBig },
-  { view: "opportunities", labels: { fr: "Opportunités", en: "Opportunities" }, Icon: BriefcaseBusiness },
-] as const;
+const navigationItems = {
+  plan: { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
+  services: { view: "services", labels: { fr: "Services", en: "Services" }, Icon: SquareCheckBig },
+  academy: { view: "academy", labels: { fr: "Structurer", en: "Academy" }, Icon: BookOpen },
+  opportunities: { view: "opportunities", labels: { fr: "Opportunités", en: "Opportunities" }, Icon: BriefcaseBusiness },
+} as const;
+
+const navigationOrder: readonly ActionPlanView[] = [
+  "plan",
+  "academy",
+  "services",
+  "opportunities",
+];
 
 export default function ActionPlanNavbar({
   activeView,
@@ -48,15 +55,19 @@ export default function ActionPlanNavbar({
   }
 
   function navigation() {
+    const orderedItems = navigationOrder.map(
+      (view) => navigationItems[view],
+    );
+
     return (
       <div
         className="grid w-full gap-1"
         style={{
-          gridTemplateColumns: `repeat(${visibleViews?.length || navigationItems.length}, minmax(0, 1fr))`,
+          gridTemplateColumns: `repeat(${visibleViews?.length || orderedItems.length}, minmax(0, 1fr))`,
         }}
         aria-label={localeCode === "en" ? "Main navigation" : "Navigation principale"}
       >
-        {navigationItems.filter(({ view }) => !visibleViews || visibleViews.includes(view)).map(({ view, labels, Icon }) => {
+        {orderedItems.filter(({ view }) => !visibleViews || visibleViews.includes(view)).map(({ view, labels, Icon }) => {
           const label = labels[localeCode];
           const isActive = activeView === view;
           const className = `${tabClassName} ${isActive ? "bg-dema-sage text-dema-forest xl:bg-transparent xl:font-semibold" : "text-dema-muted hover:text-brand-blue"}`;

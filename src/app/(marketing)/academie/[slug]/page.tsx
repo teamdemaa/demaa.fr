@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import AcademyCoursePlayer from "@/components/AcademyCoursePlayer";
+import AcademyTutorialArticle from "@/components/AcademyTutorialArticle";
 import {
   getAcademyContentBySlug,
   getAllAcademyContent,
@@ -25,7 +26,7 @@ export async function generateMetadata(
   if (canonicalSlug) permanentRedirect(`/academie/${canonicalSlug}`);
   const content = getAcademyContentBySlug(slug);
 
-  if (!content) return { title: "Cours introuvable | Académie Demaa" };
+  if (!content) return { title: "Contenu introuvable | Structurer avec Demaa" };
 
   return buildAcademyContentMetadata(content);
 }
@@ -51,7 +52,11 @@ export default async function AcademyCoursePage(
           __html: serializeAcademyContentJsonLd(jsonLd),
         }}
       />
-      <AcademyCoursePlayer content={content} />
+      {content.kind === "case-study" ? (
+        <AcademyTutorialArticle content={content} />
+      ) : (
+        <AcademyCoursePlayer content={content} />
+      )}
     </>
   );
 }

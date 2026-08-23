@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, ChevronUp, Play, Search, SlidersHorizontal } from "lucide-react";
+import { Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import AppLibrarySearch from "@/components/AppLibrarySearch";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
@@ -75,41 +75,6 @@ const COURSE_TITLES: Record<string, string> = {
 };
 
 const ALL_ACADEMY_CATEGORIES = "Tous";
-
-export type AcademySection = "tutorials" | "courses";
-
-const CORE_ACADEMY_SECTIONS: ReadonlyArray<{
-  id: AcademySection;
-  label: string;
-  visible: boolean;
-}> = [
-  {
-    id: "tutorials",
-    label: "Tutoriels",
-    visible: PUBLIC_EDITORIAL_VISIBILITY.academyTutorials,
-  },
-  { id: "courses", label: "Cours", visible: true },
-];
-
-const VISIBLE_ACADEMY_SECTIONS = CORE_ACADEMY_SECTIONS.filter(
-  (section) => section.visible,
-);
-
-export function getNextAcademySection(
-  sections: ReadonlyArray<{ id: AcademySection }>,
-  current: AcademySection,
-  key: string,
-): AcademySection | null {
-  const currentIndex = sections.findIndex((section) => section.id === current);
-  if (currentIndex < 0) return null;
-  if (key === "Home") return sections[0].id;
-  if (key === "End") return sections[sections.length - 1].id;
-  if (key !== "ArrowLeft" && key !== "ArrowRight") return null;
-  const offset = key === "ArrowRight" ? 1 : -1;
-  return sections[
-    (currentIndex + offset + sections.length) % sections.length
-  ].id;
-}
 
 function CourseDiagram({ localeCode, slug }: { localeCode: "fr" | "en"; slug: string }) {
   if (localeCode === "en") {
@@ -280,7 +245,7 @@ function AcademyCard({
   const meta = caseStudy
     ? localeCode === "en"
       ? `Guided tutorial · ${caseStudy.sector} · ${identity.durationMinutes} min`
-      : `Tutoriel guidé · ${caseStudy.sector} · ${identity.durationMinutes} min`
+      : `Tutoriel · ${caseStudy.sector} · ${identity.durationMinutes} min`
     : `${identity.durationMinutes} min`;
 
   const card = (
@@ -291,23 +256,18 @@ function AcademyCard({
           }`}
         >
           {caseStudy ? (
-            <>
-              <div className="absolute inset-4 flex items-center justify-center overflow-hidden sm:inset-[1.125rem]">
-                <div className="relative aspect-square h-full overflow-hidden">
-                  <Image
-                    src={caseStudy.character}
-                    alt={caseStudy.characterAlt}
-                    fill
-                    priority={eager}
-                    sizes="(max-width: 767px) 92vw, (max-width: 1199px) 45vw, 30vw"
-                    className={`object-contain ${caseStudy.characterClassName ?? ""}`}
-                  />
-                </div>
+            <div className="absolute inset-4 flex items-center justify-center overflow-hidden sm:inset-[1.125rem]">
+              <div className="relative aspect-square h-full overflow-hidden">
+                <Image
+                  src={caseStudy.character}
+                  alt={caseStudy.characterAlt}
+                  fill
+                  loading={eager ? "eager" : "lazy"}
+                  unoptimized
+                  className={`object-contain ${caseStudy.characterClassName ?? ""}`}
+                />
               </div>
-              <span className="absolute bottom-3 left-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-dema-forest shadow-sm" aria-hidden="true">
-                <Play className="ml-0.5 h-4 w-4 fill-current" />
-              </span>
-            </>
+            </div>
           ) : (
             <CourseDiagram localeCode={localeCode} slug={identity.slug} />
           )}
@@ -359,35 +319,30 @@ export default function AcademyIndexClient({
 }: AcademyIndexClientProps) {
   const allCategoriesLabel = localeCode === "en" ? "All" : ALL_ACADEMY_CATEGORIES;
   const [searchQuery, setSearchQuery] = useState("");
-  const [showAllFundamentals, setShowAllFundamentals] = useState(false);
-  const [activeSection, setActiveSection] = useState<AcademySection>(
-    VISIBLE_ACADEMY_SECTIONS[0].id,
-  );
   const [activeCategory, setActiveCategory] = useState(allCategoriesLabel);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
 
-  const academySections = VISIBLE_ACADEMY_SECTIONS;
-  const hasSectionNavigation = academySections.length > 1;
-
-  const activeSectionContents = useMemo(
-    () => contents.filter((content) =>
-      activeSection === "tutorials"
-        ? content.kind === "case-study"
-        : content.kind === "course"
-    ),
-    [activeSection, contents],
+  const indexContents = useMemo(
+    () => contents.filter((content) => {
+      if (localeCode === "en") return content.kind === "course";
+      if (content.kind === "case-study") {
+        return PUBLIC_EDITORIAL_VISIBILITY.academyTutorials;
+      }
+      return PUBLIC_EDITORIAL_VISIBILITY.academyFormations;
+    }),
+    [contents, localeCode],
   );
 
   const categories = useMemo(
     () => [
       allCategoriesLabel,
-      ...Array.from(new Set(activeSectionContents.map((content) => content.identity.category))),
+      ...Array.from(new Set(indexContents.map((content) => content.identity.category))),
     ],
-    [activeSectionContents, allCategoriesLabel],
+    [allCategoriesLabel, indexContents],
   );
 
   const filteredContents = useMemo(() => {
-    return activeSectionContents.filter((content) => {
+    return indexContents.filter((content) => {
       const matchesCategory =
         activeCategory === allCategoriesLabel ||
         content.identity.category === activeCategory;
@@ -404,20 +359,8 @@ export default function AcademyIndexClient({
 
       return matchesCategory && matchesQuery;
     });
-  }, [activeCategory, activeSectionContents, allCategoriesLabel, searchQuery]);
-
-  const sectionContents = filteredContents;
-  const isSearching = searchQuery.trim().length > 0;
-  const visibleContents = embedded || isSearching || showAllFundamentals
-    ? sectionContents
-    : sectionContents.slice(0, 6);
-  const canToggleContents = !embedded && !isSearching && sectionContents.length > 6;
+  }, [activeCategory, allCategoriesLabel, indexContents, searchQuery]);
   const ContentContainer = embedded ? "div" : "main";
-  function selectSection(section: AcademySection) {
-    setActiveSection(section);
-    setActiveCategory(allCategoriesLabel);
-    setAreCategoryTagsVisible(false);
-  }
 
   const searchControl = embedded ? (
     <AppLibrarySearch
@@ -441,7 +384,7 @@ export default function AcademyIndexClient({
             open: "Show categories",
           }
         : undefined}
-      placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un cours ou une question…"}
+      placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un tutoriel…"}
       query={searchQuery}
     />
   ) : (
@@ -454,13 +397,13 @@ export default function AcademyIndexClient({
           />
           <input
             type="search"
-            aria-label={localeCode === "en" ? "Search the Academy" : "Rechercher dans l’Académie"}
+            aria-label={localeCode === "en" ? "Search the Academy" : "Rechercher un tutoriel"}
             value={searchQuery}
             onChange={(event) => {
               setSearchQuery(event.target.value);
               setActiveCategory(allCategoriesLabel);
             }}
-            placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un cours ou une question…"}
+            placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un tutoriel…"}
             className="w-full rounded-full bg-dema-paper py-4 pl-11 pr-12 text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 md:py-5 md:pl-16 md:pr-20 md:text-lg"
           />
           <button
@@ -511,7 +454,7 @@ export default function AcademyIndexClient({
       {embedded ? (
         <div className="mx-auto max-w-7xl px-4 pb-6 pt-3">
           <h1 className="sr-only">
-            {localeCode === "en" ? "Academy" : "Académie"}
+            {localeCode === "en" ? "Academy" : "Structurer"}
           </h1>
           {searchControl}
         </div>
@@ -533,8 +476,8 @@ export default function AcademyIndexClient({
               className="text-balance font-light leading-[0.94] tracking-tight"
               style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
             >
-              <span className="block text-brand-blue/62">Apprendre à</span>
-              <span className="demaa-hero-title block text-dema-forest">entreprendre</span>
+              <span className="block text-brand-blue/62">Structurer</span>
+              <span className="demaa-hero-title block text-dema-forest">son entreprise</span>
             </h1>
           </div>
 
@@ -544,61 +487,12 @@ export default function AcademyIndexClient({
       ) : null}
 
       <ContentContainer className={`mx-auto max-w-7xl px-4 pb-16 md:pb-20 ${embedded ? "pt-0" : ""}`}>
-        {hasSectionNavigation ? (
-          <div
-            className={`mb-8 grid w-full border-b border-dema-line md:mb-10 ${
-              academySections.length === 2 ? "grid-cols-2" : "grid-cols-3"
-            }`}
-            role="tablist"
-            aria-label={localeCode === "en" ? "Academy content" : "Contenus de l’Académie"}
-          >
-            {academySections.map((section) => (
-              <button
-                key={section.id}
-                id={`academy-section-${section.id}`}
-                type="button"
-                role="tab"
-                aria-selected={activeSection === section.id}
-                aria-controls={`academy-panel-${section.id}`}
-                tabIndex={activeSection === section.id ? 0 : -1}
-                onClick={() => selectSection(section.id)}
-                onKeyDown={(event) => {
-                  const nextSection = getNextAcademySection(
-                    academySections,
-                    section.id,
-                    event.key,
-                  );
-                  if (!nextSection) return;
-                  event.preventDefault();
-                  selectSection(nextSection);
-                  requestAnimationFrame(() => {
-                    document.getElementById(`academy-section-${nextSection}`)?.focus();
-                  });
-                }}
-                className={`-mb-px min-h-11 border-b-2 px-2 py-2.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:px-4 sm:text-sm ${
-                  activeSection === section.id
-                    ? "border-dema-forest font-semibold text-dema-forest"
-                    : "border-transparent font-medium text-dema-muted hover:border-dema-forest/25 hover:text-brand-blue"
-                }`}
-              >
-                {section.label}
-              </button>
-            ))}
-          </div>
-        ) : null}
-
-        {sectionContents.length ? (
+        {filteredContents.length ? (
           <section
-            {...(hasSectionNavigation
-              ? {
-                  id: `academy-panel-${activeSection}`,
-                  role: "tabpanel",
-                  "aria-labelledby": `academy-section-${activeSection}`,
-                }
-              : { "aria-label": localeCode === "en" ? "Courses" : "Cours" })}
+            aria-label={localeCode === "en" ? "Courses" : "Contenus pour structurer son entreprise"}
           >
             <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-              {visibleContents.map((content, index) => (
+              {filteredContents.map((content, index) => (
                 <AcademyCard
                   key={content.identity.slug}
                   content={content}
@@ -608,38 +502,12 @@ export default function AcademyIndexClient({
                 />
               ))}
             </div>
-
-            {canToggleContents ? (
-              <div className="mt-7 flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => setShowAllFundamentals((current) => !current)}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
-                  aria-expanded={showAllFundamentals}
-                >
-                  {showAllFundamentals
-                    ? localeCode === "en" ? "Show less" : "Voir moins"
-                    : localeCode === "en" ? "Show more courses" : "Voir plus de cours"}
-                  {showAllFundamentals ? (
-                    <ChevronUp className="h-4 w-4" aria-hidden="true" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4" aria-hidden="true" />
-                  )}
-                </button>
-              </div>
-            ) : null}
           </section>
         ) : null}
 
         {filteredContents.length === 0 ? (
           <section
-            {...(hasSectionNavigation
-              ? {
-                  id: `academy-panel-${activeSection}`,
-                  role: "tabpanel",
-                  "aria-labelledby": `academy-section-${activeSection}`,
-                }
-              : { "aria-label": localeCode === "en" ? "Courses" : "Cours" })}
+            aria-label={localeCode === "en" ? "Courses" : "Contenus pour structurer son entreprise"}
             className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-14 text-center"
           >
             <h2 className="text-xl font-semibold text-brand-blue">

@@ -64,7 +64,7 @@ export function loadActionPlanAcademyPayload(input: {
         throw new Error(
           localeCode === "en"
             ? "Unable to load the Academy."
-            : "Impossible de charger l’Académie.",
+            : "Impossible de charger les contenus.",
         );
       }
       if ((cacheVersions.get(cacheKey) ?? 0) === requestVersion) {
