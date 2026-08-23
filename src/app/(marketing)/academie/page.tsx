@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import AcademyIndexClient from "@/components/AcademyIndexClient";
 import { getAllAcademyContent } from "@/lib/academy-course-content";
 
-const title = "Apprendre à entreprendre | Académie Demaa";
+const title = "Structurer son entreprise | Demaa";
 const description =
   "Des tutoriels à lire et des formations courtes pour comprendre les sujets essentiels et mieux piloter son entreprise.";
 

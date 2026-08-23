@@ -26,7 +26,7 @@ export async function generateMetadata(
   if (canonicalSlug) permanentRedirect(`/academie/${canonicalSlug}`);
   const content = getAcademyContentBySlug(slug);
 
-  if (!content) return { title: "Cours introuvable | Académie Demaa" };
+  if (!content) return { title: "Contenu introuvable | Structurer avec Demaa" };
 
   return buildAcademyContentMetadata(content);
 }

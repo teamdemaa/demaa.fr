@@ -23,7 +23,7 @@ const collaborationLinks = [
 
 const resourceLinks = [
   { label: "Systèmes métier", href: "/systemes" },
-  { label: "Académie", href: "/academie" },
+  { label: "Structurer", href: "/academie" },
   { label: "Contenus", href: "/contenus" },
 ];
 

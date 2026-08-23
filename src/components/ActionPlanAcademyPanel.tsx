@@ -52,7 +52,7 @@ export default function ActionPlanAcademyPanel({
             ? fetchError.message
             : localeCode === "en"
               ? "Unable to load the Academy."
-              : "Impossible de charger l’Académie.",
+              : "Impossible de charger les contenus.",
         );
       });
 
@@ -86,7 +86,7 @@ export default function ActionPlanAcademyPanel({
     return (
       <div className="flex min-h-64 items-center justify-center text-sm text-dema-muted">
         <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-        {localeCode === "en" ? "Loading the Academy…" : "Chargement de l’Académie…"}
+        {localeCode === "en" ? "Loading the Academy…" : "Chargement des contenus…"}
       </div>
     );
   }

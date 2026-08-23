@@ -37,7 +37,7 @@ export default function AcademyTutorialArticle({
               className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              Retour à l’Académie
+              Retour à Structurer
             </Link>
           )}
         </div>

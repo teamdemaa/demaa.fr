@@ -450,7 +450,7 @@ export default function AcademyIndexClient({
           />
           <input
             type="search"
-            aria-label={localeCode === "en" ? "Search the Academy" : "Rechercher dans l’Académie"}
+            aria-label={localeCode === "en" ? "Search the Academy" : "Rechercher une formation ou un tutoriel"}
             value={searchQuery}
             onChange={(event) => {
               setSearchQuery(event.target.value);
@@ -507,7 +507,7 @@ export default function AcademyIndexClient({
       {embedded ? (
         <div className="mx-auto max-w-7xl px-4 pb-6 pt-3">
           <h1 className="sr-only">
-            {localeCode === "en" ? "Academy" : "Académie"}
+            {localeCode === "en" ? "Academy" : "Structurer"}
           </h1>
           {searchControl}
         </div>
@@ -529,8 +529,8 @@ export default function AcademyIndexClient({
               className="text-balance font-light leading-[0.94] tracking-tight"
               style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
             >
-              <span className="block text-brand-blue/62">Apprendre à</span>
-              <span className="demaa-hero-title block text-dema-forest">entreprendre</span>
+              <span className="block text-brand-blue/62">Structurer</span>
+              <span className="demaa-hero-title block text-dema-forest">son entreprise</span>
             </h1>
           </div>
 
@@ -577,7 +577,7 @@ export default function AcademyIndexClient({
 
         {filteredContents.length === 0 ? (
           <section
-            aria-label={localeCode === "en" ? "Courses" : "Contenus de l’Académie"}
+            aria-label={localeCode === "en" ? "Courses" : "Contenus pour structurer son entreprise"}
             className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-14 text-center"
           >
             <h2 className="text-xl font-semibold text-brand-blue">
