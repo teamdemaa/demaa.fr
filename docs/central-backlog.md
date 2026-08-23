@@ -9,7 +9,9 @@ Le Google Sheet a été resynchronisé le 23 août 2026 avec la décision finale
 D-091 sans quota fixe, D-094 livré et en observation, D-095 planifié, ainsi que
 la tête Production alors courante `69bbc336`. Le dépôt a depuis avancé jusqu'à
 `1340898a` sur `origin/main`. Aucun chantier ne doit être déclaré livré avant sa
-recette réelle.
+recette réelle. Décision produit ultérieure du 23 août 2026 : D-095 (Annonces)
+devient la priorité immédiate devant D-091, qui passe en validation métier
+différée ; voir les statuts détaillés de chaque chantier ci-dessous.
 
 Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
@@ -522,13 +524,41 @@ distinct. La page Opportunités française livrée reste inchangée.
 
 ##### Stratégie de sources du pilote
 
-- [ ] Ne pas limiter le pilote à LinkedIn. Utiliser exactement trois flux pour
-  les 6 premières semaines afin de comparer fraîcheur, structure, droits de
-  diffusion et capacité de conversion :
-  1. publications LinkedIn publiques et récentes ;
-  2. Bpifrance Transmission avec renvoi vers l'opérateur/l'annonce d'origine ;
-  3. opportunités soumises directement à Demaa par un cédant, une entreprise,
-     un partenaire ou un intermédiaire autorisé.
+- [ ] Nommer le chantier **ingestion autorisée d'annonces**, et non scraping :
+  une page publiquement consultable n'autorise ni son extraction automatisée,
+  ni sa republication, ni la collecte de coordonnées. Tout connecteur doit
+  enregistrer sa base de droit : soumission directe, accord/contrat de flux,
+  licence explicite ou simple lien vers la source.
+- [ ] Comparer quatre modes d'approvisionnement, dans cet ordre de confiance :
+  1. `direct_submission`, annonce confiée directement à Demaa ;
+  2. `authorized_feed`, API/CSV/flux transmis par un intermédiaire autorisé ;
+  3. `external_discovery`, synthèse originale minimale avec renvoi vers la
+     source, uniquement lorsque les conditions de la source l'autorisent ;
+  4. `authorized_crawl`, collecte automatisée seulement après autorisation
+     écrite précisant les champs, la fréquence, les retraits et la
+     republication. Aucun crawl HTML n'est activé par défaut.
+- [ ] Ne jamais aspirer, enrichir ou republier automatiquement e-mail, téléphone,
+  nom du cédant ou autre donnée personnelle. Pour une annonce externe, le CTA
+  renvoie vers la source. Pour une annonce directe ou un flux partenaire, un
+  formulaire public sans compte transmet l'intérêt selon le consentement du
+  déposant ; les coordonnées restent privées par défaut.
+- [ ] Utiliser la hiérarchie de sources suivante, sans confondre volume et droit
+  de réutilisation :
+  - soumissions Demaa et flux directs de cabinets/intermédiaires : meilleure
+    source pour la fraîcheur, les contacts et le retrait rapide ;
+  - CRA : inventaire PME contrôlé et récent, mais mise en relation médiée ;
+    demander un accord/flux plutôt que collecter les fiches ;
+  - CessionPME : volume très important et revalidation périodique, mais annonces
+    volontairement anonymes ; n'utiliser qu'avec licence/partenariat ou en
+    renvoi autorisé ;
+  - Bpifrance Transmission : agrégateur utile pour découvrir la source
+    d'origine, jamais source d'autorité à dupliquer ;
+  - Transentreprise et Fusacq : sources de découverte qualifiées, mais leurs
+    parcours protègent la mise en relation ; aucune collecte automatisée ni
+    prospection sans accord explicite ;
+  - BODACC/INPI et autres données ouvertes : utilisables pour vérifier une
+    entreprise ou une cession déjà réalisée, pas comme stock d'entreprises
+    actuellement à vendre.
 - [ ] Utiliser LinkedIn comme détecteur de signaux et canal relationnel, pas
   comme base de données unique : annonce récente, auteur identifiable,
   possibilité de contacter le cédant/intermédiaire et signaux parfois absents
@@ -541,14 +571,17 @@ distinct. La page Opportunités française livrée reste inchangée.
   insuffisamment couvert, sans ouvrir de nouveau flux permanent pendant le
   pilote : CRA pour une PME en bonne santé, Actify pour une procédure
   collective, Transmibat pour le BTP.
-- [ ] Constituer un lot initial de 20 opportunités publiques, vivantes et
-  vérifiables en France : cible de travail de 10 annonces LinkedIn et 10
-  annonces Bpifrance/opérateur d'origine. Cette répartition est un protocole de
-  comparaison et peut être ajustée si une source ne fournit pas assez
-  d'annonces conformes ; garder le total et tracer l'écart.
+- [ ] Viser un lot initial de **30 à 50 annonces actives, fraîches et
+  juridiquement diffusables** en France. Ce volume n'est pas un quota autorisant
+  le remplissage par copie : si le haut de la fourchette ne dispose pas d'une
+  provenance et d'un droit de diffusion suffisants, publier le sous-ensemble
+  conforme et tracer l'écart.
+  Privilégier un mix de soumissions directes, flux partenaires et renvois
+  externes autorisés ; ne pas dépendre d'un seul agrégateur.
 - [ ] En parallèle, solliciter les auteurs/intermédiaires des annonces repérées
-  et viser 5 premières soumissions ou autorisations explicites. Ne pas compter
-  une simple curation externe comme une soumission directe.
+  et viser au moins 10 soumissions directes ou autorisations/placements fournis
+  par des partenaires. Ne pas compter une simple curation externe comme une
+  soumission directe.
 - [ ] Pour chaque source et chaque annonce, tracer au minimum : URL source,
   nom de la source, URL canonique d'origine si agrégée, date de publication
   connue, date de dernière vérification, auteur/intermédiaire, caractère public
@@ -591,6 +624,10 @@ distinct. La page Opportunités française livrée reste inchangée.
   - `closedReason`: `expired | filled | withdrawn | unavailable | duplicate |
     moderation` pour fiabiliser l'analyse du stock ;
   - `sourceOpportunityId` ou une empreinte de déduplication quand disponible.
+- [ ] Ajouter aux métadonnées internes `ingestionMode`, `rightsBasis`,
+  `lastSeenAt`, `nextVerificationAt` et `sourceRemovedAt`. Ces champs doivent
+  permettre de prouver pourquoi la fiche peut être affichée et quand elle doit
+  être retirée, sans exposer la preuve contractuelle au public.
 - [ ] Réutiliser `expiresAt` pour toutes les offres. Si la source ne donne pas
   d'échéance, appliquer une date de revalidation interne plutôt que laisser une
   annonce ouverte indéfiniment.
@@ -641,8 +678,13 @@ distinct. La page Opportunités française livrée reste inchangée.
 - [ ] Désigner un responsable éditorial du pilote. Une offre ne doit jamais
   être publiée sans propriétaire de la vérification et prochaine date de
   contrôle.
-- [ ] Publier le lot initial de 20 offres puis tenir une cadence cible de 5
-  ajouts ou renouvellements qualifiés par semaine pendant 6 semaines.
+- [ ] Publier le lot initial de 30 à 50 offres conformes puis tenir une cadence
+  cible de 5 ajouts ou renouvellements qualifiés par semaine pendant 6 semaines.
+- [ ] Au lancement, exiger une vérification datant de moins de 7 jours. Contrôler
+  les flux au moins quotidiennement lorsqu'un statut machine est disponible et
+  chaque semaine dans les autres cas. Masquer immédiatement une annonce marquée
+  retirée/fermée par sa source et placer en attente toute annonce non revue
+  depuis 14 jours.
 - [ ] Réaliser une revue hebdomadaire de toutes les annonces ouvertes : URL
   encore accessible, statut toujours ouvert, données inchangées, date limite,
   autorisation et éventuel doublon.
@@ -715,7 +757,9 @@ distinct. La page Opportunités française livrée reste inchangée.
 - [ ] Réaliser une revue formelle après 6 semaines complètes d'exploitation.
   Les seuils ci-dessous sont des critères expérimentaux proposés, pas des
   résultats acquis :
-  - au moins 20 opportunités ouvertes, vérifiées et suffisamment renseignées ;
+  - tendre vers 50 opportunités ouvertes, vérifiées et suffisamment
+    renseignées, sans jamais abaisser les exigences de droit, de fraîcheur ou
+    de qualité pour atteindre le volume ;
   - au moins 5 actions d'intérêt qualifiées réparties sur au moins 3 offres ;
   - au moins 5 opportunités soumises ou expressément autorisées par des acteurs
     externes, distinctes de la seule curation Demaa ;
@@ -1606,7 +1650,8 @@ Référence : [ADR 0016](decisions/0016-plan-services-and-solutions-ecosystem.md
 Référence : [ADR 0017](decisions/0017-curated-tools-per-system.md).
 
 Statut : **fondation technique réalisée, validation éditoriale non commencée ;
-prochaine priorité après la période d'observation D-094**.
+validation métier différée après le lancement d'Annonces (D-095), qui devient
+la priorité produit immédiate depuis le 23 août 2026**.
 D-091 consolide et supersède D-068 à D-070 comme contrat d'exécution. Les gates
 pilote et final, la séparation publique de Services et la compatibilité des
 identifiants sont en place ; aucune révision Firebase candidate ou active n'a
@@ -1887,11 +1932,11 @@ coordonnée constitue l'action demandée, pas une étape de qualification.
 Le changement reste purement présentationnel : mêmes champs, validations,
 payloads, APIs, consentements, protections anti-spam et traitements serveur.
 
-#### D-095 — Faire évoluer Opportunités vers un espace d'Annonces — planifié
+#### D-095 — Faire évoluer Opportunités vers un espace d'Annonces — priorité immédiate
 
-Statut : **décision produit planifiée ; D-094 est fusionné et activé, mais la
-période d'observation et D-091 restent prioritaires. Aucun runtime D-095 n'a
-commencé**.
+Statut : **priorité produit immédiate depuis le 23 août 2026 ; D-094 est
+fusionné, activé et reste en observation, D-091 passe en validation métier
+différée le temps de ce lot. Le runtime D-095 démarre**.
 
 Objectif : élargir la surface française actuelle au-delà des seules
 opportunités commerciales, pour publier et consulter des annonces
@@ -1925,12 +1970,12 @@ vente ou à la transmission d'une entreprise.
 - [ ] Garder l'anglais hors périmètre tant que D-085 reste en pause.
 
 Dépendance technique satisfaite : D-094 est fusionné, les formulaires sont
-publics et l'e-mail est placé en dernier. Le runtime D-095 reste néanmoins
-différé après l'observation D-094 et la priorité D-091 afin de ne pas modifier
+publics et l'e-mail est placé en dernier. Le runtime D-095 démarre
+immédiatement ; D-091 reste en pause métier pendant ce lot pour ne pas modifier
 simultanément `OpportunitySubmissionDialog`, `PublicOpportunitiesClient` et
 l'API de soumission.
 
-#### D-096 — Structurer : Tutoriels visibles, Formations conservées — PR prête, non fusionnée
+#### D-096 — Structurer : Tutoriels visibles, Formations conservées — livré
 
 Référence : [ADR 0021](decisions/0021-demaa-academy-and-external-course-boundaries.md).
 
