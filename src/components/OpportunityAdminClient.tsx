@@ -190,8 +190,8 @@ export default function OpportunityAdminClient({
             Annonce externe (facultatif)
           </p>
           <p className="text-xs text-dema-muted">
-            Si l’annonce vient d’ailleurs, indiquez juste d’où et le lien —
-            le reste des détails reste sur l’annonce d’origine.
+            Si l’annonce vient d’ailleurs, indiquez juste d’où et le lien.
+            Le reste des détails reste sur l’annonce d’origine.
           </p>
           <input aria-label="Nom de la source" name="sourceName" defaultValue={editingOpportunity?.sourceName ?? ""} placeholder="Nom de la source, ex. Actify" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
           <input aria-label="Lien vers l’annonce d’origine" name="sourceUrl" type="url" defaultValue={editingOpportunity?.sourceUrl ?? ""} placeholder="Lien vers l’annonce d’origine (https://…)" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
