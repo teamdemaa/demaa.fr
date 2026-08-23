@@ -255,6 +255,23 @@ export default function AccountingAppointmentDialog({
               </div>
             ) : (
               <form className="mt-5 space-y-3" onSubmit={handleSubmit}>
+                <div>
+                  <label
+                    htmlFor={`${fieldId}-details`}
+                    className="mb-1.5 block text-sm font-medium text-brand-blue"
+                  >
+                    Comment pouvons-nous vous aider ?
+                  </label>
+                  <textarea
+                    id={`${fieldId}-details`}
+                    value={formData.details}
+                    onChange={(event) => handleChange("details", event.target.value)}
+                    rows={3}
+                    placeholder="Exemple : création d'entreprise, changement de cabinet, besoin en paie..."
+                    className="demaa-textarea"
+                  />
+                </div>
+
                 <div className="relative">
                   <label
                     htmlFor={`${fieldId}-company`}
@@ -343,23 +360,6 @@ export default function AccountingAppointmentDialog({
                     label="Téléphone / WhatsApp"
                     value={formData.phone}
                     onChange={(value) => handleChange("phone", value)}
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor={`${fieldId}-details`}
-                    className="mb-1.5 block text-sm font-medium text-brand-blue"
-                  >
-                    Besoin ou contexte facultatif
-                  </label>
-                  <textarea
-                    id={`${fieldId}-details`}
-                    value={formData.details}
-                    onChange={(event) => handleChange("details", event.target.value)}
-                    rows={3}
-                    placeholder="Exemple : création d'entreprise, changement de cabinet, besoin en paie..."
-                    className="demaa-textarea"
                   />
                 </div>
 

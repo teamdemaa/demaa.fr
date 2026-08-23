@@ -57,14 +57,14 @@ export default function CoachBusinessCallbackForm() {
 
   return (
     <form onSubmit={submit} className="mt-5 border-t border-dema-line/80 pt-5">
-      <label className="block text-sm font-medium text-brand-blue">Entreprise
+      <label className="block text-sm font-medium text-brand-blue">Quelle est votre priorité ?
+        <textarea value={situation} onChange={(event) => setSituation(event.target.value)} rows={2} className="mt-2 w-full rounded-xl border border-dema-line px-3 py-2 outline-none focus:border-dema-forest" />
+      </label>
+      <label className="mt-3 block text-sm font-medium text-brand-blue">Entreprise
         <input required value={company} onChange={(event) => setCompany(event.target.value)} className="mt-2 min-h-11 w-full rounded-xl border border-dema-line px-3 outline-none focus:border-dema-forest" />
       </label>
       <label className="mt-3 block text-sm font-medium text-brand-blue">Numéro WhatsApp
         <input required type="tel" value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="+33 6 12 34 56 78" className="mt-2 min-h-11 w-full rounded-xl border border-dema-line px-3 outline-none focus:border-dema-forest" />
-      </label>
-      <label className="mt-3 block text-sm font-medium text-brand-blue">Priorité <span className="font-normal text-dema-muted">(facultatif)</span>
-        <textarea value={situation} onChange={(event) => setSituation(event.target.value)} rows={2} className="mt-2 w-full rounded-xl border border-dema-line px-3 py-2 outline-none focus:border-dema-forest" />
       </label>
       {status === "error" ? <p className="mt-2 text-xs text-red-700" role="alert">Vérifiez vos informations puis réessayez.</p> : null}
       <button disabled={status === "sending"} className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-dema-forest px-4 text-sm font-semibold text-white disabled:opacity-60">

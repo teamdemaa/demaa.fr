@@ -26,7 +26,7 @@ export default function AcademyLiveRegistrationModal({
   training: PublicLiveTraining;
 }) {
   const dialogRef = useRef<HTMLElement>(null);
-  const nameInputRef = useRef<HTMLInputElement>(null);
+  const slotSelectRef = useRef<HTMLSelectElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
   const [company, setCompany] = useState("");
   const [email, setEmail] = useState("");
@@ -72,7 +72,7 @@ export default function AcademyLiveRegistrationModal({
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", handleKeyDown);
-    nameInputRef.current?.focus();
+    slotSelectRef.current?.focus();
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", handleKeyDown);
@@ -178,29 +178,29 @@ export default function AcademyLiveRegistrationModal({
                 2 h · 250 € HT. Demaa coordonne la session et vous adressera la facture après confirmation du créneau.
               </p>
               <form className="mt-6 space-y-4" onSubmit={handleSubmit} aria-busy={isSubmitting} noValidate>
-                <label className="block text-sm font-medium text-brand-blue" htmlFor="academy-live-name">
-                  Nom et prénom
+                <label className="block text-sm font-medium text-brand-blue" htmlFor="academy-live-slot">
+                  Créneau
                 </label>
-                <input ref={nameInputRef} id="academy-live-name" className="demaa-input" autoComplete="name" value={fullName} onChange={(event) => setFullName(event.target.value)} required />
-
-                <label className="block text-sm font-medium text-brand-blue" htmlFor="academy-live-email">
-                  E-mail professionnel
-                </label>
-                <input id="academy-live-email" className="demaa-input" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
+                <select ref={slotSelectRef} id="academy-live-slot" className="demaa-input" value={slotId} onChange={(event) => setSlotId(event.target.value)} required>
+                  {training.slots.map((slot) => (
+                    <option key={slot.id} value={slot.id}>{formatLiveSessionDate(slot.startsAt)}</option>
+                  ))}
+                </select>
 
                 <label className="block text-sm font-medium text-brand-blue" htmlFor="academy-live-company">
                   Entreprise
                 </label>
                 <input id="academy-live-company" className="demaa-input" autoComplete="organization" value={company} onChange={(event) => setCompany(event.target.value)} required />
 
-                <label className="block text-sm font-medium text-brand-blue" htmlFor="academy-live-slot">
-                  Créneau
+                <label className="block text-sm font-medium text-brand-blue" htmlFor="academy-live-name">
+                  Nom et prénom
                 </label>
-                <select id="academy-live-slot" className="demaa-input" value={slotId} onChange={(event) => setSlotId(event.target.value)} required>
-                  {training.slots.map((slot) => (
-                    <option key={slot.id} value={slot.id}>{formatLiveSessionDate(slot.startsAt)}</option>
-                  ))}
-                </select>
+                <input id="academy-live-name" className="demaa-input" autoComplete="name" value={fullName} onChange={(event) => setFullName(event.target.value)} required />
+
+                <label className="block text-sm font-medium text-brand-blue" htmlFor="academy-live-email">
+                  E-mail professionnel
+                </label>
+                <input id="academy-live-email" className="demaa-input" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
 
                 <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
                   <label htmlFor="academy-live-website">Site internet</label>

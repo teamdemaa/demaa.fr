@@ -1868,6 +1868,25 @@ actif, mais ne modifie pas les surfaces D-094. D-085 et les PR anglaises restent
 en pause. The Done Studio a reçu son GO, possède désormais son dépôt et sa
 Production autonomes, et ne partage aucune collection Demaa.
 
+##### Règle transverse — besoin avant coordonnées
+
+Décision validée le 23 août 2026 : un formulaire public qui qualifie une
+situation commence par le besoin, le contexte, l'expertise, le choix ou le
+créneau concerné. Le nom, l'e-mail et le téléphone viennent ensuite. L'ordre
+visuel et l'ordre clavier doivent raconter la même séquence ; un dialogue peut
+conserver son bouton Fermer comme focus initial pour l'accessibilité.
+
+Cette règle s'applique au Diagnostic, aux demandes de mise en relation, à la
+proposition d'une problématique Structure, au rappel Coach business, à la
+demande comptable et à l'inscription à une session. Les formulaires déjà
+conformes `Publier une annonce`, `Rejoindre Team Demaa` et Services conservent
+leur structure. Les formulaires dont l'unique objet est l'authentification,
+l'abonnement ou l'envoi d'un plan par e-mail sont explicitement exclus : leur
+coordonnée constitue l'action demandée, pas une étape de qualification.
+
+Le changement reste purement présentationnel : mêmes champs, validations,
+payloads, APIs, consentements, protections anti-spam et traitements serveur.
+
 #### D-095 — Faire évoluer Opportunités vers un espace d'Annonces — planifié
 
 Statut : **décision produit planifiée ; D-094 est fusionné et activé, mais la
