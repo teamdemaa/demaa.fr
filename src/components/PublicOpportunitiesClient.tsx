@@ -283,20 +283,20 @@ export default function PublicOpportunitiesClient({
         ok?: boolean;
       } | null;
       if (!response.ok || !payload?.ok) {
-        throw new Error(payload?.error || "L’opportunité n’a pas pu être envoyée.");
+        throw new Error(payload?.error || "L’annonce n’a pas pu être envoyée.");
       }
       window.sessionStorage.removeItem("demaa_opportunity_submission_draft");
       url.searchParams.delete("intent");
       url.searchParams.delete("draftToken");
       window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
-      setSubmissionNotice("Votre opportunité a été transmise à l’équipe Demaa pour modération.");
+      setSubmissionNotice("Votre annonce a été transmise à l’équipe Demaa pour modération.");
     }).catch((submissionError: unknown) => {
       autoSubmissionTokenRef.current = "";
       setSubmissionOpen(true);
       setSubmissionNotice(
         submissionError instanceof Error
           ? submissionError.message
-          : "L’opportunité n’a pas pu être envoyée.",
+          : "L’annonce n’a pas pu être envoyée.",
       );
     });
   }, [initialEmail]);
@@ -327,12 +327,12 @@ export default function PublicOpportunitiesClient({
         <button
           type="button"
           onClick={() => setSubmissionOpen(true)}
-          aria-label="Soumettre une opportunité"
-          title="Soumettre une opportunité"
+          aria-label="Publier une annonce"
+          title="Publier une annonce"
           className="inline-flex h-11 w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-dema-line bg-white text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 md:w-auto md:px-4"
         >
           <Plus className="h-4 w-4" aria-hidden="true" />
-          <span className="hidden text-sm font-medium md:inline">Soumettre</span>
+          <span className="hidden text-sm font-medium md:inline">Publier</span>
         </button>
       </div>
 
@@ -351,7 +351,7 @@ export default function PublicOpportunitiesClient({
                 setLocalSelected(opportunity);
                 onOpportunityChange?.(opportunity.opportunityId);
               }}
-              aria-label={`Ouvrir l’opportunité : ${opportunity.title}`}
+              aria-label={`Ouvrir l’annonce : ${opportunity.title}`}
               aria-haspopup="dialog"
               aria-expanded={selected?.opportunityId === opportunity.opportunityId}
               aria-controls="opportunity-details-dialog"
@@ -363,7 +363,7 @@ export default function PublicOpportunitiesClient({
               <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-dema-muted">
                 {opportunity.summary}
               </p>
-              <div className="mt-auto flex flex-wrap gap-2 pt-5" aria-label="Caractéristiques de l’opportunité">
+              <div className="mt-auto flex flex-wrap gap-2 pt-5" aria-label="Caractéristiques de l’annonce">
                 {Array.from(new Set([
                   opportunity.category,
                   opportunity.domainLabel,
@@ -381,7 +381,7 @@ export default function PublicOpportunitiesClient({
 
       {filtered.length === 0 ? (
         <p className="mt-10 rounded-[1.15rem] border border-dema-line bg-white px-5 py-8 text-center text-sm text-dema-muted">
-          Aucune opportunité ne correspond à votre recherche.
+          Aucune annonce ne correspond à votre recherche.
         </p>
       ) : null}
 
@@ -436,7 +436,7 @@ export default function PublicOpportunitiesClient({
               );
             }
             setSubmissionOpen(false);
-            setSubmissionNotice("Votre opportunité a été transmise à l’équipe Demaa pour modération.");
+            setSubmissionNotice("Votre annonce a été transmise à l’équipe Demaa pour modération.");
           }}
         />
       ) : null}

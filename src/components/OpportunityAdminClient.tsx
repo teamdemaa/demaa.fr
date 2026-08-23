@@ -116,7 +116,7 @@ export default function OpportunityAdminClient({
       <form key={editingOpportunity?.opportunityId ?? "new"} onSubmit={create} className="space-y-4 rounded-[1.2rem] border border-dema-line bg-white p-6">
         <div className="flex items-center justify-between gap-4">
           <h2 className="text-xl font-medium text-brand-blue">
-            {editingOpportunity ? "Modifier l’opportunité" : "Nouvelle opportunité"}
+            {editingOpportunity ? "Modifier l’annonce" : "Nouvelle annonce"}
           </h2>
           {editingOpportunity ? (
             <button type="button" onClick={() => setEditingOpportunity(null)} className="text-xs font-medium text-dema-muted underline underline-offset-4">
@@ -125,8 +125,8 @@ export default function OpportunityAdminClient({
           ) : null}
         </div>
         <input aria-label="Titre" name="title" required defaultValue={editingOpportunity?.title ?? ""} placeholder="Titre" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
-        <textarea aria-label="Description" name="summary" minLength={30} required rows={5} defaultValue={editingOpportunity?.summary ?? ""} placeholder="Décrivez l’opportunité de manière claire, sans information confidentielle" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
-        <select aria-label="Cadre de l’opportunité" name="opportunityType" required defaultValue={editingOpportunity?.opportunityType ?? "mission"} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 text-sm outline-none focus:border-dema-forest">
+        <textarea aria-label="Description" name="summary" minLength={30} required rows={5} defaultValue={editingOpportunity?.summary ?? ""} placeholder="Décrivez l’annonce de manière claire, sans information confidentielle" className="w-full rounded-xl border border-dema-line px-4 py-3 text-sm outline-none focus:border-dema-forest" />
+        <select aria-label="Cadre de l’annonce" name="opportunityType" required defaultValue={editingOpportunity?.opportunityType ?? "mission"} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 text-sm outline-none focus:border-dema-forest">
           {OPPORTUNITY_TYPES.map((type) => (
             <option key={type} value={type}>{OPPORTUNITY_TYPE_LABELS[type]}</option>
           ))}
@@ -156,12 +156,12 @@ export default function OpportunityAdminClient({
         {error ? <p className="text-sm text-red-700">{error}</p> : null}
         <button type="submit" disabled={isLoading} className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-dema-forest px-5 text-sm font-medium text-white disabled:opacity-60">
           {isLoading ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-          {editingOpportunity ? "Enregistrer les modifications" : "Publier l’opportunité"}
+          {editingOpportunity ? "Enregistrer les modifications" : "Publier l’annonce"}
         </button>
       </form>
 
       <section>
-        <h2 className="text-xl font-medium text-brand-blue">Opportunités enregistrées</h2>
+        <h2 className="text-xl font-medium text-brand-blue">Annonces enregistrées</h2>
         <div className="mt-4 space-y-3">
           {opportunities.map((opportunity) => (
             <article key={opportunity.opportunityId} className="rounded-[1rem] border border-dema-line bg-white p-5">

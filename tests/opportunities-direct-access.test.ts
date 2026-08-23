@@ -15,8 +15,8 @@ describe("Opportunities direct-link access", () => {
       readSource("src/app/(marketing)/opportunites/page.tsx"),
     ]);
 
-    expect(navigation).toContain('{ view: "opportunities", labels: { fr: "Opportunités", en: "Opportunities" }, Icon: BriefcaseBusiness }');
-    expect(footer).toContain('{ label: "Opportunités", href: "/opportunites" }');
+    expect(navigation).toContain('{ view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness }');
+    expect(footer).toContain('{ label: "Annonces", href: "/opportunites" }');
     expect(sitemap).toContain("`${base}/opportunites`");
     expect(page).toContain("export default async function OpportunitiesPage");
     expect(page).toContain("<PublicOpportunitiesClient");

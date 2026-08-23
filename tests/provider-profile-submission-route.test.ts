@@ -149,11 +149,11 @@ describe("provider profile submission route", () => {
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: expect.arrayContaining([
-        { label: "Identifiant opportunité", value: "campagne-google" },
-        { label: "Type d’opportunité", value: "Mission" },
+        { label: "Identifiant annonce", value: "campagne-google" },
+        { label: "Type d’annonce", value: "Mission" },
       ]),
       requestType: "opportunity_interest",
-      title: "Intérêt pour une opportunité - Campagne Google Ads",
+      title: "Intérêt pour une annonce - Campagne Google Ads",
     }));
   });
 
@@ -180,7 +180,7 @@ describe("provider profile submission route", () => {
     expect(mocks.getExpertiseById).not.toHaveBeenCalled();
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       requestType: "opportunity_interest",
-      title: "Intérêt pour une opportunité - Reprise d’une activité",
+      title: "Intérêt pour une annonce - Reprise d’une activité",
     }));
   });
 

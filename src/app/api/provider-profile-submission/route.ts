@@ -28,7 +28,7 @@ const PROVIDER_CONSENT_TEXT =
   "J’accepte que Demaa conserve ces informations afin de me contacter lorsqu’un besoin correspond à mon profil.";
 const OPPORTUNITY_CONSENT_VERSION = "opportunity-interest-v1";
 const OPPORTUNITY_CONSENT_TEXT =
-  "J’accepte que Demaa conserve ces informations afin de me recontacter au sujet de cette opportunité.";
+  "J’accepte que Demaa conserve ces informations afin de me recontacter au sujet de cette annonce.";
 
 type ProviderProfileSubmissionBody = {
   attribution?: unknown;
@@ -185,7 +185,7 @@ async function handlePost(request: Request) {
 
   const context = await resolveLeadContext({
     source: opportunity
-      ? `Opportunité - ${opportunity.title}`
+      ? `Annonce - ${opportunity.title}`
       : "Rejoindre Team Demaa - Profil",
     sourceUrl: request.headers.get("referer"),
   });
@@ -220,10 +220,10 @@ async function handlePost(request: Request) {
       ...(profileUrl ? [{ label: "Profil ou site", value: profileUrl }] : []),
       ...(opportunity
         ? [
-            { label: "Opportunité", value: opportunity.title },
-            { label: "Identifiant opportunité", value: opportunity.opportunityId },
+            { label: "Annonce", value: opportunity.title },
+            { label: "Identifiant annonce", value: opportunity.opportunityId },
             {
-              label: "Type d’opportunité",
+              label: "Type d’annonce",
               value: OPPORTUNITY_TYPE_LABELS[opportunity.opportunityType],
             },
           ]
@@ -241,7 +241,7 @@ async function handlePost(request: Request) {
       ? "opportunity_interest"
       : "provider_profile_submission",
     title: opportunity
-      ? `Intérêt pour une opportunité - ${opportunity.title}`
+      ? `Intérêt pour une annonce - ${opportunity.title}`
       : `Nouveau profil - ${expertiseLabels.join(", ")}`,
   });
 

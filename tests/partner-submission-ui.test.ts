@@ -103,7 +103,7 @@ describe("solution proposal UI contract", () => {
       readSource("src/components/OpportunitySubmissionDialog.tsx"),
     ]);
 
-    expect(page).toContain("Découvrez les opportunités actuellement disponibles.");
+    expect(page).toContain("Découvrez les annonces actuellement disponibles.");
     expect(catalog).not.toContain("Voir l’opportunité");
     expect(catalog).toContain("OpportunityDetailsDialog");
     expect(catalog).toContain("Intéressé(e)");
@@ -112,7 +112,7 @@ describe("solution proposal UI contract", () => {
     expect(catalog).toContain("Ce qui est attendu");
     expect(catalog).toContain("<AppLibrarySearch");
     expect(catalog).toContain("ALL_OPPORTUNITY_CATEGORIES");
-    expect(catalog).toContain('aria-label={`Ouvrir l’opportunité : ${opportunity.title}`}');
+    expect(catalog).toContain('aria-label={`Ouvrir l’annonce : ${opportunity.title}`}');
     expect(catalog).toContain('role="dialog"');
     expect(catalog).toContain("setApplicationOpportunity(selected)");
     expect(catalog).toContain("setLocalSelected(null)");
@@ -122,7 +122,7 @@ describe("solution proposal UI contract", () => {
       catalog.indexOf("<ProviderProfileModal"),
     );
     expect(catalog).toContain("Rejoindre Team Demaa");
-    expect(catalog).toContain('md:inline">Soumettre</span>');
+    expect(catalog).toContain('md:inline">Publier</span>');
     expect(catalog).toContain("setProfileOpen(true)");
     expect(catalog).toContain("profileOpen ? (");
     expect(modal).toContain("Manifester mon intérêt");
@@ -163,7 +163,7 @@ describe("solution proposal UI contract", () => {
       expect(admin).toContain(`name="${field}"`);
       expect(route).toContain(field);
     }
-    expect(admin).toContain("Modifier l’opportunité");
+    expect(admin).toContain("Modifier l’annonce");
     expect(admin).toContain("Enregistrer les modifications");
     expect(route).toContain("updateOpportunity");
   });

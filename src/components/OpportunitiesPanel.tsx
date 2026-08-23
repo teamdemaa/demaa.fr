@@ -45,7 +45,7 @@ export default function OpportunitiesPanel({
           throw new Error(
             localeCode === "en"
               ? "Opportunities are not available right now."
-              : "Les opportunités ne sont pas disponibles pour le moment.",
+              : "Les annonces ne sont pas disponibles pour le moment.",
           );
         }
         setPayload({
@@ -69,7 +69,7 @@ export default function OpportunitiesPanel({
   return (
     <section aria-labelledby="opportunities-panel-title">
       <h2 id="opportunities-panel-title" className="sr-only">
-        {localeCode === "en" ? "Opportunities" : "Opportunités"}
+        {localeCode === "en" ? "Opportunities" : "Annonces"}
       </h2>
 
       <PublicOpportunitiesClient
