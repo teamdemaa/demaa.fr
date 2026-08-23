@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 
 const GENERATION_QUESTIONS = [
+  "Si vous étiez absent un mois, votre entreprise tournerait-elle aussi bien ?",
   "Quelles tâches reviennent chaque semaine ?",
   "Où les informations sont-elles ressaisies ou recherchées ?",
   "Qu’est-ce qui attend encore votre validation ?",
@@ -12,6 +13,7 @@ const GENERATION_QUESTIONS = [
 ] as const;
 
 const GENERATION_QUESTIONS_EN = [
+  "If you were away for a month, would your business run just as well?",
   "Which tasks come back every week?",
   "Where is information re-entered or searched for?",
   "What is still waiting for your approval?",
