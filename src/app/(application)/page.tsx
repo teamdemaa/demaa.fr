@@ -4,7 +4,7 @@ import { loadActionPlanHomePage } from "@/lib/action-plan-pages.server";
 
 const title = "Un plan d’action concret pour votre entreprise | Demaa";
 const description =
-  "Décrivez la situation de votre entreprise et obtenez un plan d’action concret, accompagné du système métier adapté pour l’exécuter.";
+  "Demaa structure votre entreprise en mettant en place les bons systèmes, pour qu'elle dépende moins de vous.";
 
 export const metadata: Metadata = {
   title,
