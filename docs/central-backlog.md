@@ -9,7 +9,9 @@ Le Google Sheet a été resynchronisé le 23 août 2026 avec la décision finale
 D-091 sans quota fixe, D-094 livré et en observation, D-095 planifié, ainsi que
 la tête Production alors courante `69bbc336`. Le dépôt a depuis avancé jusqu'à
 `1340898a` sur `origin/main`. Aucun chantier ne doit être déclaré livré avant sa
-recette réelle.
+recette réelle. Décision produit ultérieure du 23 août 2026 : D-095 (Annonces)
+devient la priorité immédiate devant D-091, qui passe en validation métier
+différée ; voir les statuts détaillés de chaque chantier ci-dessous.
 
 Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
@@ -569,10 +571,11 @@ distinct. La page Opportunités française livrée reste inchangée.
   insuffisamment couvert, sans ouvrir de nouveau flux permanent pendant le
   pilote : CRA pour une PME en bonne santé, Actify pour une procédure
   collective, Transmibat pour le BTP.
-- [ ] Viser un lot initial de **50 annonces actives, fraîches et juridiquement
-  diffusables** en France. Ce volume n'est pas un quota autorisant le remplissage
-  par copie : si 50 annonces ne disposent pas d'une provenance et d'un droit de
-  diffusion suffisants, publier le sous-ensemble conforme et tracer l'écart.
+- [ ] Viser un lot initial de **30 à 50 annonces actives, fraîches et
+  juridiquement diffusables** en France. Ce volume n'est pas un quota autorisant
+  le remplissage par copie : si le haut de la fourchette ne dispose pas d'une
+  provenance et d'un droit de diffusion suffisants, publier le sous-ensemble
+  conforme et tracer l'écart.
   Privilégier un mix de soumissions directes, flux partenaires et renvois
   externes autorisés ; ne pas dépendre d'un seul agrégateur.
 - [ ] En parallèle, solliciter les auteurs/intermédiaires des annonces repérées
@@ -675,9 +678,8 @@ distinct. La page Opportunités française livrée reste inchangée.
 - [ ] Désigner un responsable éditorial du pilote. Une offre ne doit jamais
   être publiée sans propriétaire de la vérification et prochaine date de
   contrôle.
-- [ ] Publier le lot initial pouvant aller jusqu'à 50 offres conformes puis
-  tenir une cadence cible de 5 ajouts ou renouvellements qualifiés par semaine
-  pendant 6 semaines.
+- [ ] Publier le lot initial de 30 à 50 offres conformes puis tenir une cadence
+  cible de 5 ajouts ou renouvellements qualifiés par semaine pendant 6 semaines.
 - [ ] Au lancement, exiger une vérification datant de moins de 7 jours. Contrôler
   les flux au moins quotidiennement lorsqu'un statut machine est disponible et
   chaque semaine dans les autres cas. Masquer immédiatement une annonce marquée
@@ -1648,7 +1650,8 @@ Référence : [ADR 0016](decisions/0016-plan-services-and-solutions-ecosystem.md
 Référence : [ADR 0017](decisions/0017-curated-tools-per-system.md).
 
 Statut : **fondation technique réalisée, validation éditoriale non commencée ;
-prochaine priorité après la période d'observation D-094**.
+validation métier différée après le lancement d'Annonces (D-095), qui devient
+la priorité produit immédiate depuis le 23 août 2026**.
 D-091 consolide et supersède D-068 à D-070 comme contrat d'exécution. Les gates
 pilote et final, la séparation publique de Services et la compatibilité des
 identifiants sont en place ; aucune révision Firebase candidate ou active n'a
@@ -1929,11 +1932,11 @@ coordonnée constitue l'action demandée, pas une étape de qualification.
 Le changement reste purement présentationnel : mêmes champs, validations,
 payloads, APIs, consentements, protections anti-spam et traitements serveur.
 
-#### D-095 — Faire évoluer Opportunités vers un espace d'Annonces — planifié
+#### D-095 — Faire évoluer Opportunités vers un espace d'Annonces — priorité immédiate
 
-Statut : **décision produit planifiée ; D-094 est fusionné et activé, mais la
-période d'observation et D-091 restent prioritaires. Aucun runtime D-095 n'a
-commencé**.
+Statut : **priorité produit immédiate depuis le 23 août 2026 ; D-094 est
+fusionné, activé et reste en observation, D-091 passe en validation métier
+différée le temps de ce lot. Le runtime D-095 démarre**.
 
 Objectif : élargir la surface française actuelle au-delà des seules
 opportunités commerciales, pour publier et consulter des annonces
@@ -1967,12 +1970,12 @@ vente ou à la transmission d'une entreprise.
 - [ ] Garder l'anglais hors périmètre tant que D-085 reste en pause.
 
 Dépendance technique satisfaite : D-094 est fusionné, les formulaires sont
-publics et l'e-mail est placé en dernier. Le runtime D-095 reste néanmoins
-différé après l'observation D-094 et la priorité D-091 afin de ne pas modifier
+publics et l'e-mail est placé en dernier. Le runtime D-095 démarre
+immédiatement ; D-091 reste en pause métier pendant ce lot pour ne pas modifier
 simultanément `OpportunitySubmissionDialog`, `PublicOpportunitiesClient` et
 l'API de soumission.
 
-#### D-096 — Structurer : Tutoriels visibles, Formations conservées — PR prête, non fusionnée
+#### D-096 — Structurer : Tutoriels visibles, Formations conservées — livré
 
 Référence : [ADR 0021](decisions/0021-demaa-academy-and-external-course-boundaries.md).
 
