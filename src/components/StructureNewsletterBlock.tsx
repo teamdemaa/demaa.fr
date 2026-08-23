@@ -313,19 +313,19 @@ export default function StructureNewsletterBlock() {
 
               <form className="mt-6 space-y-4" onSubmit={submitProblem} aria-busy={problemSubmitting}>
                 <div>
-                  <label className="block text-sm font-medium text-brand-blue" htmlFor="structure-contact-email">
-                    Votre adresse e-mail
+                  <label className="block text-sm font-medium text-brand-blue" htmlFor="structure-problem">
+                    Votre problématique
                   </label>
-                  <input
-                    id="structure-contact-email"
-                    data-dialog-initial-focus
-                    className="demaa-input mt-2"
-                    type="email"
-                    value={problemEmail}
-                    onChange={(event) => setProblemEmail(event.target.value)}
-                    autoComplete="email"
+                  <textarea
+                    id="structure-problem"
+                    className="demaa-textarea mt-2 min-h-28"
+                    value={problemForm.problem}
+                    onChange={(event) => updateProblemField("problem", event.target.value)}
+                    rows={5}
                     required
-                    maxLength={160}
+                    minLength={20}
+                    maxLength={4000}
+                    placeholder="Expliquez ce qui bloque aujourd’hui et ce que vous avez déjà essayé."
                   />
                 </div>
                 <div>
@@ -362,19 +362,18 @@ export default function StructureNewsletterBlock() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-brand-blue" htmlFor="structure-problem">
-                    Votre problématique
+                  <label className="block text-sm font-medium text-brand-blue" htmlFor="structure-contact-email">
+                    Votre adresse e-mail
                   </label>
-                  <textarea
-                    id="structure-problem"
-                    className="demaa-textarea mt-2 min-h-28"
-                    value={problemForm.problem}
-                    onChange={(event) => updateProblemField("problem", event.target.value)}
-                    rows={5}
+                  <input
+                    id="structure-contact-email"
+                    className="demaa-input mt-2"
+                    type="email"
+                    value={problemEmail}
+                    onChange={(event) => setProblemEmail(event.target.value)}
+                    autoComplete="email"
                     required
-                    minLength={20}
-                    maxLength={4000}
-                    placeholder="Expliquez ce qui bloque aujourd’hui et ce que vous avez déjà essayé."
+                    maxLength={160}
                   />
                 </div>
 

@@ -188,6 +188,41 @@ export default function SolutionReferralForm({
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
+      <label className="block text-sm font-medium text-brand-blue">
+        Votre besoin
+        <textarea
+          name="need"
+          rows={4}
+          maxLength={2000}
+          placeholder={referralMode === "matching"
+            ? "Décrivez en quelques mots ce dont vous avez besoin."
+            : "Décrivez en quelques mots ce que vous souhaitez déléguer."}
+          value={fields.need}
+          onChange={(event) => updateField("need", event.target.value)}
+          aria-invalid={Boolean(errors.need)}
+          className={fieldClassName}
+        />
+        {errors.need ? (
+          <span className="mt-1.5 block text-xs text-red-700">{errors.need}</span>
+        ) : null}
+      </label>
+
+      <label className="block text-sm font-medium text-brand-blue">
+        Cabinet ou entreprise
+        <input
+          name="company"
+          autoComplete="organization"
+          maxLength={160}
+          value={fields.company}
+          onChange={(event) => updateField("company", event.target.value)}
+          aria-invalid={Boolean(errors.company)}
+          className={fieldClassName}
+        />
+        {errors.company ? (
+          <span className="mt-1.5 block text-xs text-red-700">{errors.company}</span>
+        ) : null}
+      </label>
+
       <div>
         <label className="block text-sm font-medium text-brand-blue">
           Prénom
@@ -220,41 +255,6 @@ export default function SolutionReferralForm({
         />
         {errors.email ? (
           <span className="mt-1.5 block text-xs text-red-700">{errors.email}</span>
-        ) : null}
-      </label>
-
-      <label className="block text-sm font-medium text-brand-blue">
-        Cabinet ou entreprise
-        <input
-          name="company"
-          autoComplete="organization"
-          maxLength={160}
-          value={fields.company}
-          onChange={(event) => updateField("company", event.target.value)}
-          aria-invalid={Boolean(errors.company)}
-          className={fieldClassName}
-        />
-        {errors.company ? (
-          <span className="mt-1.5 block text-xs text-red-700">{errors.company}</span>
-        ) : null}
-      </label>
-
-      <label className="block text-sm font-medium text-brand-blue">
-        Votre besoin
-        <textarea
-          name="need"
-          rows={4}
-          maxLength={2000}
-          placeholder={referralMode === "matching"
-            ? "Décrivez en quelques mots ce dont vous avez besoin."
-            : "Décrivez en quelques mots ce que vous souhaitez déléguer."}
-          value={fields.need}
-          onChange={(event) => updateField("need", event.target.value)}
-          aria-invalid={Boolean(errors.need)}
-          className={fieldClassName}
-        />
-        {errors.need ? (
-          <span className="mt-1.5 block text-xs text-red-700">{errors.need}</span>
         ) : null}
       </label>
 

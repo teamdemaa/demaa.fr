@@ -138,9 +138,18 @@ export default function GuestDiagnosticControl({
                 ) : (
                   <form onSubmit={requestDiagnostic} className="mt-6 space-y-3">
                     <label className="block text-sm text-brand-blue">
+                      Comment pouvons-nous vous aider ?
+                      <textarea
+                        data-dialog-initial-focus
+                        name="message"
+                        rows={3}
+                        maxLength={2_000}
+                        className="demaa-textarea mt-2"
+                      />
+                    </label>
+                    <label className="block text-sm text-brand-blue">
                       Adresse e-mail
                       <input
-                        data-dialog-initial-focus
                         name="email"
                         type="email"
                         required
@@ -155,15 +164,6 @@ export default function GuestDiagnosticControl({
                         type="tel"
                         autoComplete="tel"
                         className="demaa-input mt-2"
-                      />
-                    </label>
-                    <label className="block text-sm text-brand-blue">
-                      Comment pouvons-nous vous aider ?
-                      <textarea
-                        name="message"
-                        rows={3}
-                        maxLength={2_000}
-                        className="demaa-textarea mt-2"
                       />
                     </label>
                     <label className="flex items-start gap-2 text-xs leading-relaxed text-dema-muted">
