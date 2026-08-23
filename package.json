@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS=--experimental-transform-types next dev --webpack",
+    "dev": "DEMAA_GUEST_PRODUCT_ENABLED=true NODE_OPTIONS=--experimental-transform-types next dev --webpack",
+    "dev:legacy": "DEMAA_GUEST_PRODUCT_ENABLED=false NODE_OPTIONS=--experimental-transform-types next dev --webpack",
     "build": "NODE_OPTIONS=--experimental-transform-types DEMAA_FORCE_LOCAL_DATA=true DEMAA_BUILD_DIST_DIR=.next-build next build --webpack",
     "build:vercel": "NODE_OPTIONS=--experimental-transform-types DEMAA_FORCE_LOCAL_DATA=true next build --webpack",
     "build:stable": "NODE_OPTIONS=--experimental-transform-types DEMAA_FORCE_LOCAL_DATA=true DEMAA_BUILD_DIST_DIR=.next-build TMPDIR=/private/tmp next build --webpack",

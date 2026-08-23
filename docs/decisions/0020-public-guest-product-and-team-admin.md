@@ -95,6 +95,16 @@ conserve un instantané du plan et de la situation, car le job invité expire.
 Le dirigeant reçoit la réponse par e-mail ; aucune conversation ou boîte de
 réception client n'est créée.
 
+Après la génération, le même formulaire est accessible depuis la carte de fin
+du plan et depuis l'action compacte `Diagnostic` du header. Ces deux entrées
+réutilisent un composant unique et le même contrat d'envoi ; le bouton du header
+n'est pas présenté avant qu'un plan invité et son accès temporaire existent.
+
+Le développement local ouvre le produit invité courant par défaut. Le parcours
+historique de rollback reste testable explicitement avec `npm run dev:legacy`,
+afin qu'une prévisualisation locale sans variable Vercel ne fasse pas réapparaître
+par erreur l'ancienne authentification ou la barre de génération d'un plan vierge.
+
 ### 4. Administration séparée
 
 Firebase Authentication est conservé uniquement pour la Team Demaa. La session
