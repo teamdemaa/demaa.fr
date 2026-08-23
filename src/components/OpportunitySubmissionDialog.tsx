@@ -8,6 +8,7 @@ import {
   OPPORTUNITY_TYPES,
   OPPORTUNITY_WORK_MODE_LABELS,
   OPPORTUNITY_WORK_MODES,
+  type OpportunityType,
 } from "@/lib/opportunity-contract";
 
 const LOCAL_DRAFT_KEY = "demaa_opportunity_submission_draft";
@@ -39,12 +40,14 @@ export default function OpportunitySubmissionDialog({
       return {};
     }
   });
+  const [opportunityType, setOpportunityType] = useState<OpportunityType>(
+    () => (restoredDraft.opportunityType as OpportunityType) || "mission",
+  );
+  const isRepriseTransmission = opportunityType === "reprise-transmission";
   const hasRestoredOptionalDetails = [
     "cadence",
     "companyName",
-    "compensation",
     "expectations",
-    "geography",
     "startTiming",
     "workMode",
   ].some((key) => Boolean(restoredDraft[key]));
@@ -60,6 +63,7 @@ export default function OpportunitySubmissionDialog({
       companyName: formData.get("companyName"),
       compensation: formData.get("compensation"),
       expectations: formData.get("expectations"),
+      expiresAt: formData.get("expiresAt"),
       geography: formData.get("geography"),
       opportunityType: formData.get("opportunityType"),
       startTiming: formData.get("startTiming"),
@@ -141,6 +145,19 @@ export default function OpportunitySubmissionDialog({
 
         <form onSubmit={submit} className="mt-5 grid gap-4 sm:grid-cols-2">
           <label className="sm:col-span-2 text-sm font-medium text-brand-blue">
+            Type d’annonce
+            <select
+              name="opportunityType"
+              value={opportunityType}
+              onChange={(event) => setOpportunityType(event.target.value as OpportunityType)}
+              className="mt-2 min-h-12 w-full rounded-xl border border-dema-line bg-white px-4 outline-none focus:border-dema-forest"
+            >
+              {OPPORTUNITY_TYPES.map((type) => (
+                <option key={type} value={type}>{OPPORTUNITY_TYPE_LABELS[type]}</option>
+              ))}
+            </select>
+          </label>
+          <label className="sm:col-span-2 text-sm font-medium text-brand-blue">
             Titre
             <input name="title" required minLength={5} maxLength={140} defaultValue={restoredDraft.title} className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest" />
           </label>
@@ -149,17 +166,15 @@ export default function OpportunitySubmissionDialog({
             <textarea name="summary" required minLength={30} maxLength={700} rows={3} defaultValue={restoredDraft.summary} className="mt-2 w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" />
           </label>
           <label className="text-sm font-medium text-brand-blue">
-            Cadre
-            <select name="opportunityType" defaultValue={restoredDraft.opportunityType || "mission"} className="mt-2 min-h-12 w-full rounded-xl border border-dema-line bg-white px-4 outline-none focus:border-dema-forest">
-              {OPPORTUNITY_TYPES.map((type) => (
-                <option key={type} value={type}>{OPPORTUNITY_TYPE_LABELS[type]}</option>
-              ))}
-            </select>
+            Secteur
+            <input name="category" required maxLength={100} defaultValue={restoredDraft.category} placeholder="Ex. Marketing, BTP, Bâtiment" className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest" />
           </label>
+          <Field name="geography" label="Localisation" placeholder="France, ville ou pays" value={restoredDraft.geography} />
           <label className="text-sm font-medium text-brand-blue">
-            Catégorie
-            <input name="category" required maxLength={100} defaultValue={restoredDraft.category} placeholder="Ex. Marketing, BTP, Produit" className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest" />
+            Date limite <span className="font-normal text-dema-muted">(facultatif)</span>
+            <input name="expiresAt" type="date" defaultValue={restoredDraft.expiresAt} className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest" />
           </label>
+          <Field name="compensation" label="Prix ou budget" placeholder="Seulement s’il est défini" optional value={restoredDraft.compensation} />
           <details
             className="group sm:col-span-2 rounded-xl border border-dema-line bg-dema-paper/55"
             open={hasRestoredOptionalDetails}
@@ -172,24 +187,28 @@ export default function OpportunitySubmissionDialog({
               <ChevronDown className="h-4 w-4 shrink-0 text-dema-muted transition group-open:rotate-180" aria-hidden="true" />
             </summary>
             <div className="hidden gap-4 border-t border-dema-line p-4 group-open:grid sm:grid-cols-2">
-              <label className="text-sm font-medium text-brand-blue">
-                Modalité
-                <select name="workMode" defaultValue={restoredDraft.workMode || ""} className="mt-2 min-h-12 w-full rounded-xl border border-dema-line bg-white px-4 outline-none focus:border-dema-forest">
-                  <option value="">À préciser</option>
-                  {OPPORTUNITY_WORK_MODES.map((mode) => (
-                    <option key={mode} value={mode}>{OPPORTUNITY_WORK_MODE_LABELS[mode]}</option>
-                  ))}
-                </select>
-              </label>
-              <Field name="geography" label="Zone" placeholder="France, ville ou pays" value={restoredDraft.geography} />
-              <Field name="cadence" label="Rythme ou durée" placeholder="Ponctuel, 3 mois, récurrent…" value={restoredDraft.cadence} />
-              <Field name="startTiming" label="Démarrage" placeholder="Dès que possible, à convenir…" value={restoredDraft.startTiming} />
-              <Field name="compensation" label="Budget" placeholder="Seulement s’il est défini" value={restoredDraft.compensation} />
+              {isRepriseTransmission ? null : (
+                <>
+                  <label className="text-sm font-medium text-brand-blue">
+                    Modalité
+                    <select name="workMode" defaultValue={restoredDraft.workMode || ""} className="mt-2 min-h-12 w-full rounded-xl border border-dema-line bg-white px-4 outline-none focus:border-dema-forest">
+                      <option value="">À préciser</option>
+                      {OPPORTUNITY_WORK_MODES.map((mode) => (
+                        <option key={mode} value={mode}>{OPPORTUNITY_WORK_MODE_LABELS[mode]}</option>
+                      ))}
+                    </select>
+                  </label>
+                  <Field name="cadence" label="Rythme ou durée" placeholder="Ponctuel, 3 mois, récurrent…" value={restoredDraft.cadence} />
+                  <Field name="startTiming" label="Démarrage" placeholder="Dès que possible, à convenir…" value={restoredDraft.startTiming} />
+                </>
+              )}
               <Field name="companyName" label="Entreprise" placeholder="Uniquement avec son accord" value={restoredDraft.companyName} />
-              <label className="text-sm font-medium text-brand-blue sm:col-span-2">
-                Attentes
-                <textarea name="expectations" rows={3} defaultValue={restoredDraft.expectations} placeholder="Une attente par ligne, 4 maximum" className="mt-2 w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" />
-              </label>
+              {isRepriseTransmission ? null : (
+                <label className="text-sm font-medium text-brand-blue sm:col-span-2">
+                  Attentes
+                  <textarea name="expectations" rows={3} defaultValue={restoredDraft.expectations} placeholder="Une attente par ligne, 4 maximum" className="mt-2 w-full rounded-xl border border-dema-line px-4 py-3 outline-none focus:border-dema-forest" />
+                </label>
+              )}
             </div>
           </details>
           <label className="sm:col-span-2 text-sm font-medium text-brand-blue">
@@ -223,17 +242,20 @@ export default function OpportunitySubmissionDialog({
 function Field({
   label,
   name,
+  optional = false,
   placeholder,
   value,
 }: {
   label: string;
   name: string;
+  optional?: boolean;
   placeholder: string;
   value?: string;
 }) {
   return (
     <label className="text-sm font-medium text-brand-blue">
       {label}
+      {optional ? <span className="ml-1 font-normal text-dema-muted">(facultatif)</span> : null}
       <input name={name} maxLength={140} defaultValue={value} placeholder={placeholder} className="mt-2 min-h-12 w-full rounded-xl border border-dema-line px-4 outline-none focus:border-dema-forest" />
     </label>
   );
