@@ -191,6 +191,52 @@ describe("opportunity admin route", () => {
     }));
   });
 
+  it("rejects a non-HTTPS source URL at creation", async () => {
+    const response = await POST(request("POST", {
+      category: "Bâtiment",
+      opportunityType: "reprise-transmission",
+      sourceUrl: "http://exemple.fr/annonce",
+      summary: "Une reprise repérée sur un site tiers sans HTTPS.",
+      title: "Reprise à vérifier",
+    }));
+    expect(response.status).toBe(400);
+    expect(mocks.createOpportunity).not.toHaveBeenCalled();
+  });
+
+  it("refuses to publish an externally sourced draft missing source, URL or verification date", async () => {
+    mocks.getOpportunityById.mockResolvedValueOnce({
+      ingestionMode: "external_discovery",
+      opportunityId: "reprise-btp",
+      sourceName: null,
+      sourceUrl: "https://exemple.fr/annonce",
+      status: "draft",
+      verifiedAt: null,
+    });
+    const response = await PATCH(request("PATCH", {
+      opportunityId: "reprise-btp",
+      status: "open",
+    }));
+    expect(response.status).toBe(400);
+    expect(mocks.updateOpportunityStatus).not.toHaveBeenCalled();
+  });
+
+  it("publishes an externally sourced draft once source, URL and verification date are set", async () => {
+    mocks.getOpportunityById.mockResolvedValueOnce({
+      ingestionMode: "external_discovery",
+      opportunityId: "reprise-btp",
+      sourceName: "Étude Dupont & Associés",
+      sourceUrl: "https://exemple.fr/annonce",
+      status: "draft",
+      verifiedAt: "2026-08-09T00:00:00.000Z",
+    });
+    const response = await PATCH(request("PATCH", {
+      opportunityId: "reprise-btp",
+      status: "open",
+    }));
+    expect(response.status).toBe(200);
+    expect(mocks.updateOpportunityStatus).toHaveBeenCalledWith("reprise-btp", "open");
+  });
+
   it("closes an existing opportunity", async () => {
     const response = await PATCH(request("PATCH", {
       opportunityId: "campagne-google",

@@ -14,6 +14,14 @@ export type OpportunityType = (typeof OPPORTUNITY_TYPES)[number];
 export const OPPORTUNITY_WORK_MODES = ["remote", "onsite", "hybrid"] as const;
 export type OpportunityWorkMode = (typeof OPPORTUNITY_WORK_MODES)[number];
 
+export const OPPORTUNITY_INGESTION_MODES = [
+  "direct_submission",
+  "authorized_feed",
+  "external_discovery",
+  "authorized_crawl",
+] as const;
+export type OpportunityIngestionMode = (typeof OPPORTUNITY_INGESTION_MODES)[number];
+
 export const OPPORTUNITY_WORK_MODE_LABELS: Readonly<Record<OpportunityWorkMode, string>> = {
   remote: "À distance",
   onsite: "Sur site",
@@ -27,6 +35,13 @@ export const OPPORTUNITY_TYPE_LABELS: Readonly<Record<OpportunityType, string>> 
   "reprise-transmission": "Reprise ou transmission",
   collaboration: "Collaboration",
   autre: "Autre",
+};
+
+export const OPPORTUNITY_INGESTION_MODE_LABELS: Readonly<Record<OpportunityIngestionMode, string>> = {
+  direct_submission: "Soumission directe",
+  authorized_feed: "Flux partenaire autorisé",
+  external_discovery: "Découverte externe",
+  authorized_crawl: "Collecte automatisée autorisée",
 };
 
 export const ANNOUNCEMENT_FILTERS = [
@@ -63,15 +78,26 @@ export type PublicOpportunity = Readonly<{
   expiresAt: string | null;
   expectations: readonly string[];
   geography: string | null;
+  ingestionMode: OpportunityIngestionMode | null;
   opportunityId: string;
   opportunityType: OpportunityType;
   publishedAt: string | null;
+  sourceKind: string | null;
+  sourceName: string | null;
+  sourcePublishedAt: string | null;
+  sourceRemovedAt: string | null;
+  sourceUrl: string | null;
   startTiming: string | null;
   status: OpportunityStatus;
   summary: string;
   title: string;
+  verifiedAt: string | null;
   workMode: OpportunityWorkMode | null;
 }>;
+
+function isExternallySourced(ingestionMode: OpportunityIngestionMode | null) {
+  return ingestionMode !== null && ingestionMode !== "direct_submission";
+}
 
 export function parseOpportunity(
   input: unknown,
@@ -92,6 +118,10 @@ export function parseOpportunity(
   const expertiseId = nullableString("expertiseId");
   const opportunityType = string("opportunityType") || "mission";
   const workMode = nullableString("workMode");
+  const ingestionMode = nullableString("ingestionMode");
+  const sourceUrl = nullableString("sourceUrl");
+  const sourceName = nullableString("sourceName");
+  const verifiedAt = nullableString("verifiedAt");
   const expectations = entry.expectations === undefined
     ? []
     : Array.isArray(entry.expectations)
@@ -115,6 +145,15 @@ export function parseOpportunity(
     throw new TypeError(`${path}.workMode is invalid`);
   }
   if (
+    ingestionMode
+    && !(OPPORTUNITY_INGESTION_MODES as readonly string[]).includes(ingestionMode)
+  ) {
+    throw new TypeError(`${path}.ingestionMode is invalid`);
+  }
+  if (sourceUrl && !sourceUrl.startsWith("https://")) {
+    throw new TypeError(`${path}.sourceUrl must be HTTPS`);
+  }
+  if (
     !expectations
     || expectations.length > 4
     || expectations.some((expectation) => expectation.length > 180)
@@ -130,6 +169,15 @@ export function parseOpportunity(
   if (!Number.isFinite(Date.parse(string("createdAt")))) {
     throw new TypeError(`${path}.createdAt is invalid`);
   }
+  if (
+    status === "open"
+    && isExternallySourced(ingestionMode as OpportunityIngestionMode | null)
+    && (!sourceName || !sourceUrl || !verifiedAt)
+  ) {
+    throw new TypeError(
+      `${path} requires sourceName, sourceUrl and verifiedAt to publish an externally sourced announcement`,
+    );
+  }
 
   return {
     cadence: nullableString("cadence"),
@@ -142,13 +190,20 @@ export function parseOpportunity(
     expiresAt: nullableString("expiresAt"),
     expectations,
     geography: nullableString("geography"),
+    ingestionMode: ingestionMode as OpportunityIngestionMode | null,
     opportunityId,
     opportunityType: opportunityType as OpportunityType,
     publishedAt: nullableString("publishedAt"),
+    sourceKind: nullableString("sourceKind"),
+    sourceName,
+    sourcePublishedAt: nullableString("sourcePublishedAt"),
+    sourceRemovedAt: nullableString("sourceRemovedAt"),
+    sourceUrl,
     startTiming: nullableString("startTiming"),
     status: status as OpportunityStatus,
     summary: string("summary"),
     title: string("title"),
+    verifiedAt,
     workMode: workMode as OpportunityWorkMode | null,
   };
 }
@@ -161,6 +216,7 @@ export function isPublicOpenOpportunity(
   const publishedAt = Date.parse(opportunity.publishedAt ?? "");
   const expiresAt = Date.parse(opportunity.expiresAt ?? "");
   return opportunity.status === "open"
+    && !opportunity.sourceRemovedAt
     && Number.isFinite(publishedAt)
     && publishedAt <= nowMs
     && (!Number.isFinite(expiresAt) || expiresAt > nowMs);
