@@ -2,13 +2,19 @@
 
 **Date :** 22 août 2026
 
-**Statut :** PAUSE — NE COMMENCER AUCUNE IMPLÉMENTATION SANS GO EXPLICITE D’OUMOU
+**Statut historique au 22 août :** PAUSE — aucun démarrage sans GO explicite.
+
+**Mise à jour au 23 août 2026 :** GO reçu et implémentation réalisée dans le
+dépôt autonome The Done Studio. Sa Production est au commit `5275ecd`. Le
+présent document reste la trace du passage de relais initial ; il ne constitue
+plus une instruction de démarrage et n'autorise toujours aucun partage de
+stockage, compte ou runtime avec Demaa.
 
 **Projet source audité :** Demaa
 
 **Référence source :** `origin/main` au commit `dbb8b723`
 
-**Projet cible :** The Done Studio, dépôt et architecture à auditer avant toute modification
+**Projet cible :** The Done Studio, dépôt autonome désormais audité et déployé
 
 ## 1. Objet du passage de relais
 
@@ -343,6 +349,12 @@ Ne pas partager une entreprise technique Demaa entre les deux produits.
 - GO Production séparé.
 
 ## 10. Gates avant toute implémentation
+
+> Mise à jour du 23 août 2026 : ces gates appartiennent au cadrage initial.
+> Le GO, le dépôt, la branche et l'implémentation autonome ont depuis été
+> fournis. The Done Studio est déployé indépendamment au commit `5275ecd`.
+> Toute nouvelle évolution doit suivre les décisions du dépôt The Done Studio,
+> sans réouvrir automatiquement les choix historiques ci-dessous.
 
 Le chantier reste bloqué tant que les éléments suivants ne sont pas fournis ou
 validés :
