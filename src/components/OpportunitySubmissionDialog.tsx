@@ -95,7 +95,7 @@ export default function OpportunitySubmissionDialog({
         ok?: boolean;
       } | null;
       if (!submissionResponse.ok || !submissionPayload?.ok) {
-        throw new Error(submissionPayload?.error || "L’opportunité n’a pas pu être envoyée.");
+        throw new Error(submissionPayload?.error || "L’annonce n’a pas pu être envoyée.");
       }
       window.sessionStorage.removeItem(LOCAL_DRAFT_KEY);
       onSubmitted();
@@ -103,7 +103,7 @@ export default function OpportunitySubmissionDialog({
       setError(
         submitError instanceof Error
           ? submitError.message
-          : "L’opportunité n’a pas pu être envoyée.",
+          : "L’annonce n’a pas pu être envoyée.",
       );
       setStatus("error");
     }
@@ -133,7 +133,7 @@ export default function OpportunitySubmissionDialog({
           <X className="h-4 w-4" aria-hidden="true" />
         </button>
         <h2 id="opportunity-submission-title" className="pr-12 text-2xl font-semibold tracking-[-0.03em] text-brand-blue">
-          Soumettre une opportunité
+          Publier une annonce
         </h2>
         <p className="mt-2 text-sm leading-6 text-dema-muted">
           Décrivez le besoin. Demaa le vérifie avant publication.
@@ -212,7 +212,7 @@ export default function OpportunitySubmissionDialog({
             className="sm:col-span-2 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-semibold text-white disabled:opacity-60"
           >
             {status === "sending" ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-            {status === "sending" ? "Envoi…" : "Soumettre"}
+            {status === "sending" ? "Envoi…" : "Publier"}
           </button>
         </form>
       </section>

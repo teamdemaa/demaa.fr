@@ -255,12 +255,12 @@ export async function PATCH(request: Request) {
       updated = await updateOpportunityStatus(opportunityId, status);
     }
     if (!updated) {
-      return privateJson({ error: "Opportunité introuvable." }, { status: 404 });
+      return privateJson({ error: "Annonce introuvable." }, { status: 404 });
     }
     revalidateTag("provider-network-opportunities", { expire: 0 });
     return privateJson({ ok: true });
   } catch (error) {
     logOperationalError("opportunities.admin.update_failed", error);
-    return privateJson({ error: "Impossible de modifier l’opportunité." }, { status: 500 });
+    return privateJson({ error: "Impossible de modifier l’annonce." }, { status: 500 });
   }
 }

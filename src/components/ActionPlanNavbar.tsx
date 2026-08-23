@@ -15,7 +15,7 @@ const navigationItems = {
   plan: { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
   services: { view: "services", labels: { fr: "Services", en: "Services" }, Icon: SquareCheckBig },
   academy: { view: "academy", labels: { fr: "Structurer", en: "Academy" }, Icon: BookOpen },
-  opportunities: { view: "opportunities", labels: { fr: "Opportunités", en: "Opportunities" }, Icon: BriefcaseBusiness },
+  opportunities: { view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness },
 } as const;
 
 const navigationOrder: readonly ActionPlanView[] = [
