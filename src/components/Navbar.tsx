@@ -84,6 +84,11 @@ export default function Navbar({
                   </Link>
                 )}
               </div>
+            ) : minimal ? (
+              <div
+                id="action-plan-navbar-specialist"
+                className="shrink-0 empty:hidden"
+              />
             ) : null}
           </div>
         </div>

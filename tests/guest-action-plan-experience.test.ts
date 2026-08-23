@@ -45,6 +45,7 @@ describe("public guest action-plan experience", () => {
     const experience = source("src/components/GuestActionPlanExperience.tsx");
     const result = source("src/components/GuestActionPlanResult.tsx");
     const delivery = source("src/components/GuestActionPlanDelivery.tsx");
+    const diagnostic = source("src/components/GuestDiagnosticControl.tsx");
 
     expect(experience).toContain("startGuestActionPlanGeneration");
     expect(experience).toContain("readGuestActionPlan");
@@ -52,8 +53,11 @@ describe("public guest action-plan experience", () => {
     expect(experience).toContain("waitForGuestGeneration");
     expect(experience).toContain("<GuestActionPlanResult");
     expect(experience).toContain("<GuestActionPlanDelivery");
+    expect(experience).toContain("<GuestDiagnosticControl");
+    expect(experience).toContain("onOpenDiagnostic={() => setDiagnosticOpen(true)}");
     expect(experience).not.toContain("CustomerSpaceAccessForm");
     expect(experience).not.toContain("ActionPlanCoachingControl");
+    expect(experience).not.toContain("ActionPlanGenerationBar");
     expect(experience).not.toContain("CompanyPilotagePanel");
     expect(experience).not.toContain('import ActionPlanResult from');
     expect(experience).toContain('aria-label="Contenu du plan"');
@@ -66,13 +70,16 @@ describe("public guest action-plan experience", () => {
     expect(result).toContain("<details");
     expect(result).not.toContain("onWorkspaceChange");
     expect(result).not.toContain("Disponible pendant 24 h");
-    expect(delivery).toContain('submit("email"');
-    expect(delivery).toContain('submit("diagnostic"');
-    expect(delivery).toContain("contactConsent");
-    expect(delivery).toContain("Comment pouvons-nous vous aider ?");
+    expect(delivery).toContain('submitGuestActionPlanFollowUp("email"');
+    expect(delivery).toContain("onOpenDiagnostic");
+    expect(diagnostic).toContain('submitGuestActionPlanFollowUp("diagnostic"');
+    expect(diagnostic).toContain("contactConsent");
+    expect(diagnostic).toContain("Comment pouvons-nous vous aider ?");
+    expect(diagnostic).toContain('role="dialog"');
+    expect(diagnostic).toContain('aria-label="Ouvrir le diagnostic Demaa"');
     expect(delivery).toContain('rounded-full bg-dema-forest px-5 text-sm font-medium text-white');
-    expect(delivery).not.toContain("Précision <span");
-    expect(delivery).not.toContain("CoachBusinessPromo");
+    expect(diagnostic).not.toContain("Précision <span");
+    expect(diagnostic).not.toContain("CoachBusinessPromo");
 
     const authenticatedExperience = source("src/components/ActionPlanExperience.tsx");
     expect(authenticatedExperience).toContain(

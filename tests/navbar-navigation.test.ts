@@ -147,6 +147,8 @@ describe("Demaa application navbar", () => {
 
     expect(navbarSource).toContain('id="action-plan-navbar-desktop"');
     expect(navbarSource).toContain('id="action-plan-navbar-mobile"');
+    expect(navbarSource).toContain('minimal ? (');
+    expect(navbarSource.match(/id="action-plan-navbar-specialist"/g)).toHaveLength(2);
     expect(navbarSource).toContain('className="sticky top-0 z-40 bg-dema-cream/92');
     expect(navbarSource).not.toContain('className="sticky top-0 z-40 border-b');
     expect(navbarSource).toContain("fixed inset-x-0 bottom-0");

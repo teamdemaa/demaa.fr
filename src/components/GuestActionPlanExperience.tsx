@@ -10,6 +10,7 @@ import ActionPlanServicesPanel from "@/components/ActionPlanServicesPanel";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import GuestActionPlanDelivery from "@/components/GuestActionPlanDelivery";
 import GuestActionPlanResult from "@/components/GuestActionPlanResult";
+import GuestDiagnosticControl from "@/components/GuestDiagnosticControl";
 import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
@@ -138,6 +139,7 @@ export default function GuestActionPlanExperience({
   const [isGenerating, setIsGenerating] = useState(false);
   const [isRestoring, setIsRestoring] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const [workspace, setWorkspace] = useState<ActionPlanWorkspaceState>(() => ({
     ...createManualActionPlanWorkspaceState(),
     selectedSystemId: initialAppContext.systemId ?? null,
@@ -366,6 +368,7 @@ export default function GuestActionPlanExperience({
     setGenerationState(null);
     setSituation("");
     setError(null);
+    setDiagnosticOpen(false);
     navigateAppContext({ view: "plan", planSection: "actions" }, "replace");
   }
 
@@ -379,6 +382,14 @@ export default function GuestActionPlanExperience({
         onViewChange={selectAppView}
         visibleViews={visibleViews}
       />
+      {actionPlan && access ? (
+        <GuestDiagnosticControl
+          access={access}
+          onClose={() => setDiagnosticOpen(false)}
+          onOpen={() => setDiagnosticOpen(true)}
+          open={diagnosticOpen}
+        />
+      ) : null}
       <div className="mx-auto max-w-[68rem] pt-1">
         {appContext.view === "plan" ? (
           <nav className="mx-auto flex w-fit items-center gap-1 rounded-full border border-dema-line/70 bg-dema-sage/25 p-1" aria-label="Contenu du plan">
@@ -408,7 +419,10 @@ export default function GuestActionPlanExperience({
           actionPlan && access ? (
             <div className="mx-auto max-w-5xl pt-6 sm:pt-9">
               <GuestActionPlanResult actionPlan={actionPlan} />
-              <GuestActionPlanDelivery access={access} />
+              <GuestActionPlanDelivery
+                access={access}
+                onOpenDiagnostic={() => setDiagnosticOpen(true)}
+              />
               <div className="text-center">
                 <button type="button" onClick={resetPlan} className="min-h-11 px-4 text-sm text-dema-muted underline decoration-dema-line underline-offset-4 hover:text-dema-forest">
                   Créer un autre plan
