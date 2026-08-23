@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, ChevronUp, Play, Search, SlidersHorizontal } from "lucide-react";
+import { BookOpenText, Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import AppLibrarySearch from "@/components/AppLibrarySearch";
+import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { LIBRARY_CARD_TITLE_CLASSNAME } from "@/lib/library-card-ui";
 import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
@@ -76,39 +77,11 @@ const COURSE_TITLES: Record<string, string> = {
 
 const ALL_ACADEMY_CATEGORIES = "Tous";
 
-export type AcademySection = "tutorials" | "courses";
-
-const CORE_ACADEMY_SECTIONS: ReadonlyArray<{
-  id: AcademySection;
-  label: string;
-  visible: boolean;
-}> = [
-  {
-    id: "tutorials",
-    label: "Tutoriels",
-    visible: PUBLIC_EDITORIAL_VISIBILITY.academyTutorials,
-  },
-  { id: "courses", label: "Cours", visible: true },
-];
-
-const VISIBLE_ACADEMY_SECTIONS = CORE_ACADEMY_SECTIONS.filter(
-  (section) => section.visible,
-);
-
-export function getNextAcademySection(
-  sections: ReadonlyArray<{ id: AcademySection }>,
-  current: AcademySection,
-  key: string,
-): AcademySection | null {
-  const currentIndex = sections.findIndex((section) => section.id === current);
-  if (currentIndex < 0) return null;
-  if (key === "Home") return sections[0].id;
-  if (key === "End") return sections[sections.length - 1].id;
-  if (key !== "ArrowLeft" && key !== "ArrowRight") return null;
-  const offset = key === "ArrowRight" ? 1 : -1;
-  return sections[
-    (currentIndex + offset + sections.length) % sections.length
-  ].id;
+export function groupAcademyContents(contents: AcademyContentDefinition[]) {
+  return {
+    formations: contents.filter((content) => content.kind === "course"),
+    tutorials: contents.filter((content) => content.kind === "case-study"),
+  };
 }
 
 function CourseDiagram({ localeCode, slug }: { localeCode: "fr" | "en"; slug: string }) {
@@ -280,7 +253,7 @@ function AcademyCard({
   const meta = caseStudy
     ? localeCode === "en"
       ? `Guided tutorial · ${caseStudy.sector} · ${identity.durationMinutes} min`
-      : `Tutoriel guidé · ${caseStudy.sector} · ${identity.durationMinutes} min`
+      : `Tutoriel · ${caseStudy.sector} · ${identity.durationMinutes} min`
     : `${identity.durationMinutes} min`;
 
   const card = (
@@ -305,7 +278,7 @@ function AcademyCard({
                 </div>
               </div>
               <span className="absolute bottom-3 left-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-dema-forest shadow-sm" aria-hidden="true">
-                <Play className="ml-0.5 h-4 w-4 fill-current" />
+                <BookOpenText className="h-4 w-4" />
               </span>
             </>
           ) : (
@@ -349,6 +322,52 @@ function AcademyCard({
   );
 }
 
+function AcademyContentRail({
+  contents,
+  eager = false,
+  label,
+  localeCode,
+  onOpenContent,
+}: {
+  contents: AcademyContentDefinition[];
+  eager?: boolean;
+  label: string;
+  localeCode: "fr" | "en";
+  onOpenContent?: (content: AcademyContentDefinition) => void;
+}) {
+  if (contents.length === 0) return null;
+
+  const headingId = label === "Tutoriels"
+    ? "academy-tutorials"
+    : "academy-formations";
+
+  return (
+    <section aria-labelledby={headingId} className="min-w-0 max-w-full">
+      <h2
+        id={headingId}
+        className="mb-5 text-2xl font-light tracking-[-0.025em] text-brand-blue sm:text-[2rem]"
+      >
+        {label}
+      </h2>
+      <HorizontalScrollHint
+        className="grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[84%] gap-5 overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:none] sm:auto-cols-[48%] lg:auto-cols-[calc((100%_-_3rem)_/_3)] [&::-webkit-scrollbar]:hidden"
+        controlsClassName="absolute right-0 -top-12 z-10 flex items-center gap-1.5"
+      >
+        {contents.map((content, index) => (
+          <div key={content.identity.slug} className="min-w-0 snap-start">
+            <AcademyCard
+              content={content}
+              eager={eager && index < 3}
+              localeCode={localeCode}
+              onOpen={onOpenContent}
+            />
+          </div>
+        ))}
+      </HorizontalScrollHint>
+    </section>
+  );
+}
+
 export default function AcademyIndexClient({
   contents,
   embedded = false,
@@ -359,35 +378,19 @@ export default function AcademyIndexClient({
 }: AcademyIndexClientProps) {
   const allCategoriesLabel = localeCode === "en" ? "All" : ALL_ACADEMY_CATEGORIES;
   const [searchQuery, setSearchQuery] = useState("");
-  const [showAllFundamentals, setShowAllFundamentals] = useState(false);
-  const [activeSection, setActiveSection] = useState<AcademySection>(
-    VISIBLE_ACADEMY_SECTIONS[0].id,
-  );
   const [activeCategory, setActiveCategory] = useState(allCategoriesLabel);
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
-
-  const academySections = VISIBLE_ACADEMY_SECTIONS;
-  const hasSectionNavigation = academySections.length > 1;
-
-  const activeSectionContents = useMemo(
-    () => contents.filter((content) =>
-      activeSection === "tutorials"
-        ? content.kind === "case-study"
-        : content.kind === "course"
-    ),
-    [activeSection, contents],
-  );
 
   const categories = useMemo(
     () => [
       allCategoriesLabel,
-      ...Array.from(new Set(activeSectionContents.map((content) => content.identity.category))),
+      ...Array.from(new Set(contents.map((content) => content.identity.category))),
     ],
-    [activeSectionContents, allCategoriesLabel],
+    [allCategoriesLabel, contents],
   );
 
   const filteredContents = useMemo(() => {
-    return activeSectionContents.filter((content) => {
+    return contents.filter((content) => {
       const matchesCategory =
         activeCategory === allCategoriesLabel ||
         content.identity.category === activeCategory;
@@ -404,20 +407,13 @@ export default function AcademyIndexClient({
 
       return matchesCategory && matchesQuery;
     });
-  }, [activeCategory, activeSectionContents, allCategoriesLabel, searchQuery]);
+  }, [activeCategory, allCategoriesLabel, contents, searchQuery]);
 
-  const sectionContents = filteredContents;
-  const isSearching = searchQuery.trim().length > 0;
-  const visibleContents = embedded || isSearching || showAllFundamentals
-    ? sectionContents
-    : sectionContents.slice(0, 6);
-  const canToggleContents = !embedded && !isSearching && sectionContents.length > 6;
+  const {
+    formations: formationContents,
+    tutorials: tutorialContents,
+  } = groupAcademyContents(filteredContents);
   const ContentContainer = embedded ? "div" : "main";
-  function selectSection(section: AcademySection) {
-    setActiveSection(section);
-    setActiveCategory(allCategoriesLabel);
-    setAreCategoryTagsVisible(false);
-  }
 
   const searchControl = embedded ? (
     <AppLibrarySearch
@@ -441,7 +437,7 @@ export default function AcademyIndexClient({
             open: "Show categories",
           }
         : undefined}
-      placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un cours ou une question…"}
+      placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher une formation ou un tutoriel…"}
       query={searchQuery}
     />
   ) : (
@@ -460,7 +456,7 @@ export default function AcademyIndexClient({
               setSearchQuery(event.target.value);
               setActiveCategory(allCategoriesLabel);
             }}
-            placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un cours ou une question…"}
+            placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher une formation ou un tutoriel…"}
             className="w-full rounded-full bg-dema-paper py-4 pl-11 pr-12 text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 md:py-5 md:pl-16 md:pr-20 md:text-lg"
           />
           <button
@@ -544,61 +540,29 @@ export default function AcademyIndexClient({
       ) : null}
 
       <ContentContainer className={`mx-auto max-w-7xl px-4 pb-16 md:pb-20 ${embedded ? "pt-0" : ""}`}>
-        {hasSectionNavigation ? (
-          <div
-            className={`mb-8 grid w-full border-b border-dema-line md:mb-10 ${
-              academySections.length === 2 ? "grid-cols-2" : "grid-cols-3"
-            }`}
-            role="tablist"
-            aria-label={localeCode === "en" ? "Academy content" : "Contenus de l’Académie"}
-          >
-            {academySections.map((section) => (
-              <button
-                key={section.id}
-                id={`academy-section-${section.id}`}
-                type="button"
-                role="tab"
-                aria-selected={activeSection === section.id}
-                aria-controls={`academy-panel-${section.id}`}
-                tabIndex={activeSection === section.id ? 0 : -1}
-                onClick={() => selectSection(section.id)}
-                onKeyDown={(event) => {
-                  const nextSection = getNextAcademySection(
-                    academySections,
-                    section.id,
-                    event.key,
-                  );
-                  if (!nextSection) return;
-                  event.preventDefault();
-                  selectSection(nextSection);
-                  requestAnimationFrame(() => {
-                    document.getElementById(`academy-section-${nextSection}`)?.focus();
-                  });
-                }}
-                className={`-mb-px min-h-11 border-b-2 px-2 py-2.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:px-4 sm:text-sm ${
-                  activeSection === section.id
-                    ? "border-dema-forest font-semibold text-dema-forest"
-                    : "border-transparent font-medium text-dema-muted hover:border-dema-forest/25 hover:text-brand-blue"
-                }`}
-              >
-                {section.label}
-              </button>
-            ))}
+        {localeCode === "fr" ? (
+          <div className="space-y-12 md:space-y-16">
+            {PUBLIC_EDITORIAL_VISIBILITY.academyTutorials ? (
+              <AcademyContentRail
+                contents={tutorialContents}
+                eager
+                label="Tutoriels"
+                localeCode={localeCode}
+                onOpenContent={onOpenContent}
+              />
+            ) : null}
+            <AcademyContentRail
+              contents={formationContents}
+              eager={!PUBLIC_EDITORIAL_VISIBILITY.academyTutorials}
+              label="Formations"
+              localeCode={localeCode}
+              onOpenContent={onOpenContent}
+            />
           </div>
-        ) : null}
-
-        {sectionContents.length ? (
-          <section
-            {...(hasSectionNavigation
-              ? {
-                  id: `academy-panel-${activeSection}`,
-                  role: "tabpanel",
-                  "aria-labelledby": `academy-section-${activeSection}`,
-                }
-              : { "aria-label": localeCode === "en" ? "Courses" : "Cours" })}
-          >
+        ) : formationContents.length ? (
+          <section aria-label="Courses">
             <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-              {visibleContents.map((content, index) => (
+              {formationContents.map((content, index) => (
                 <AcademyCard
                   key={content.identity.slug}
                   content={content}
@@ -608,38 +572,12 @@ export default function AcademyIndexClient({
                 />
               ))}
             </div>
-
-            {canToggleContents ? (
-              <div className="mt-7 flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => setShowAllFundamentals((current) => !current)}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
-                  aria-expanded={showAllFundamentals}
-                >
-                  {showAllFundamentals
-                    ? localeCode === "en" ? "Show less" : "Voir moins"
-                    : localeCode === "en" ? "Show more courses" : "Voir plus de cours"}
-                  {showAllFundamentals ? (
-                    <ChevronUp className="h-4 w-4" aria-hidden="true" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4" aria-hidden="true" />
-                  )}
-                </button>
-              </div>
-            ) : null}
           </section>
         ) : null}
 
         {filteredContents.length === 0 ? (
           <section
-            {...(hasSectionNavigation
-              ? {
-                  id: `academy-panel-${activeSection}`,
-                  role: "tabpanel",
-                  "aria-labelledby": `academy-section-${activeSection}`,
-                }
-              : { "aria-label": localeCode === "en" ? "Courses" : "Cours" })}
+            aria-label={localeCode === "en" ? "Courses" : "Contenus de l’Académie"}
             className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-14 text-center"
           >
             <h2 className="text-xl font-semibold text-brand-blue">

@@ -289,9 +289,11 @@ describe("action plan experience architecture", () => {
     expect(academyPanel).toContain("embedded");
     expect(experience).toContain("<ActionPlanUtilityActions");
     expect(experience).not.toContain("onOpenAccess={() => setAccessPromptOpen(true)}");
-    expect(academyIndex).toContain("embedded || isSearching || showAllFundamentals");
     expect(academyIndex).toContain("!embedded ? (");
     expect(academyIndex).toContain("<AppLibrarySearch");
+    expect(academyIndex).toContain("<HorizontalScrollHint");
+    expect(academyIndex).toContain('label="Tutoriels"');
+    expect(academyIndex).toContain('label="Formations"');
     expect(systemPanel).toContain(
       'className="mx-auto mb-6 w-full max-w-xl xl:w-[min(40vw,36rem)]"',
     );
@@ -300,6 +302,7 @@ describe("action plan experience architecture", () => {
     expect(academyPanel).toContain("onContentChange?.(content.identity.slug)");
     expect(academyPanel).toContain("onContentChange?.(undefined)");
     expect(academyPanel).toContain("<AcademyCoursePlayer");
+    expect(academyPanel).toContain("<AcademyTutorialArticle");
     expect(academyPanel).toContain(
       'import AcademyIndexClient from "@/components/AcademyIndexClient"',
     );

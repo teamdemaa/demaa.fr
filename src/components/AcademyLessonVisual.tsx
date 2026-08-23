@@ -474,7 +474,13 @@ function BrandCaseVisual({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-function StoryVisual({ data }: { data: Record<string, unknown> }) {
+function StoryVisual({
+  data,
+  eager = false,
+}: {
+  data: Record<string, unknown>;
+  eager?: boolean;
+}) {
   const panel = Math.min(Math.max(Number(data.panel) || 1, 1), 4);
   const isRight = panel === 2 || panel === 4;
   const isBottom = panel === 3 || panel === 4;
@@ -487,6 +493,7 @@ function StoryVisual({ data }: { data: Record<string, unknown> }) {
           alt={text(data.alt)}
           width={1536}
           height={1024}
+          loading={eager ? "eager" : "lazy"}
           sizes="(max-width: 767px) 100vw, 42rem"
           className="absolute max-w-none"
           style={{
@@ -501,7 +508,13 @@ function StoryVisual({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-export default function AcademyLessonVisual({ lesson }: { lesson: AcademyLesson }) {
+export default function AcademyLessonVisual({
+  eager = false,
+  lesson,
+}: {
+  eager?: boolean;
+  lesson: AcademyLesson;
+}) {
   if (lesson.visual.type === "comparison") return <ComparisonVisual data={lesson.visual.data} />;
   if (lesson.visual.type === "timeline") return <TimelineVisual data={lesson.visual.data} />;
   if (lesson.visual.type === "calculation") return <CalculationVisual data={lesson.visual.data} />;
@@ -509,7 +522,9 @@ export default function AcademyLessonVisual({ lesson }: { lesson: AcademyLesson 
   if (lesson.visual.type === "steps") return <StepsVisual data={lesson.visual.data} />;
   if (lesson.visual.type === "pipeline") return <PipelineVisual data={lesson.visual.data} />;
   if (lesson.visual.type === "brand-case") return <BrandCaseVisual data={lesson.visual.data} />;
-  if (lesson.visual.type === "story") return <StoryVisual data={lesson.visual.data} />;
+  if (lesson.visual.type === "story") {
+    return <StoryVisual data={lesson.visual.data} eager={eager} />;
+  }
 
   return <FallbackVisual data={lesson.visual.data} />;
 }

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { LoaderCircle, RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 import AcademyIndexClient from "@/components/AcademyIndexClient";
+import AcademyTutorialArticle from "@/components/AcademyTutorialArticle";
 import {
   getActionPlanAcademyPayloadCacheKey,
   invalidateActionPlanAcademyPayload,
@@ -99,15 +100,26 @@ export default function ActionPlanAcademyPanel({
   if (selectedContent) {
     return (
       <div className="-mx-4 sm:-mx-6 lg:-mx-8">
-        <AcademyCoursePlayer
-          key={selectedContent.identity.slug}
-          content={selectedContent}
-          embedded
-          localeCode={localeCode}
-          onBack={() => {
-            onContentChange?.(undefined);
-          }}
-        />
+        {selectedContent.kind === "case-study" && localeCode === "fr" ? (
+          <AcademyTutorialArticle
+            key={selectedContent.identity.slug}
+            content={selectedContent}
+            embedded
+            onBack={() => {
+              onContentChange?.(undefined);
+            }}
+          />
+        ) : (
+          <AcademyCoursePlayer
+            key={selectedContent.identity.slug}
+            content={selectedContent}
+            embedded
+            localeCode={localeCode}
+            onBack={() => {
+              onContentChange?.(undefined);
+            }}
+          />
+        )}
       </div>
     );
   }

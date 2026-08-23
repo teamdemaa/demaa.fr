@@ -5,7 +5,7 @@ import { getAllAcademyContent } from "@/lib/academy-course-content";
 
 const title = "Apprendre à entreprendre | Académie Demaa";
 const description =
-  "Des cours courts, concrets et indépendants pour comprendre les sujets essentiels et mieux piloter son entreprise.";
+  "Des tutoriels à lire et des formations courtes pour comprendre les sujets essentiels et mieux piloter son entreprise.";
 
 export const metadata: Metadata = {
   title,

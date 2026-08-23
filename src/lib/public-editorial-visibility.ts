@@ -6,6 +6,6 @@
  */
 export const PUBLIC_EDITORIAL_VISIBILITY = Object.freeze({
   academyLiveTrainings: false,
-  academyTutorials: false,
+  academyTutorials: true,
   systemContextualCaseStudies: false,
 });

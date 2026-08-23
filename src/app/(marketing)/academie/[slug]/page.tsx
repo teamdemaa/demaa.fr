@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import AcademyCoursePlayer from "@/components/AcademyCoursePlayer";
+import AcademyTutorialArticle from "@/components/AcademyTutorialArticle";
 import {
   getAcademyContentBySlug,
   getAllAcademyContent,
@@ -51,7 +52,11 @@ export default async function AcademyCoursePage(
           __html: serializeAcademyContentJsonLd(jsonLd),
         }}
       />
-      <AcademyCoursePlayer content={content} />
+      {content.kind === "case-study" ? (
+        <AcademyTutorialArticle content={content} />
+      ) : (
+        <AcademyCoursePlayer content={content} />
+      )}
     </>
   );
 }
