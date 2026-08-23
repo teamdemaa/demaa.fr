@@ -1,7 +1,7 @@
 # D-091 — Gate métier des cinq pilotes Outils
 
-Date de revue : 23 août 2026  
-Candidate : `solutions-2026-08-23-d091-pilot-candidate-v2`  
+Date de revue : 23 août 2026
+Candidate : `solutions-2026-08-23-d091-pilot-candidate-v2`
 Statut : **prête pour Preview, non activée**.
 
 ## Décision appliquée
