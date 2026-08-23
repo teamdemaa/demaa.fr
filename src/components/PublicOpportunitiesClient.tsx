@@ -8,14 +8,17 @@ import ProviderProfileModal from "@/components/ProviderProfileModal";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import type { ExpertiseCatalogEntry } from "@/lib/expertise-catalog-contract";
 import {
+  ANNOUNCEMENT_FILTERS,
+  announcementFilterForType,
   OPPORTUNITY_TYPE_LABELS,
   OPPORTUNITY_WORK_MODE_LABELS,
+  type AnnouncementFilter,
   type PublicOpportunity,
 } from "@/lib/opportunity-contract";
 import { matchesSearchQuery } from "@/lib/search";
 import { LIBRARY_CARD_TITLE_CLASSNAME } from "@/lib/library-card-ui";
 
-const ALL_OPPORTUNITY_CATEGORIES = "Toutes";
+const ALL_ANNOUNCEMENT_FILTERS = ANNOUNCEMENT_FILTERS[0];
 
 function OpportunityDetailsDialog({
   onApply,
@@ -150,8 +153,8 @@ export default function PublicOpportunitiesClient({
   opportunities: readonly PublicOpportunity[];
 }) {
   const [query, setQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState(
-    ALL_OPPORTUNITY_CATEGORIES,
+  const [activeFilter, setActiveFilter] = useState<AnnouncementFilter>(
+    ALL_ANNOUNCEMENT_FILTERS,
   );
   const [areCategoryTagsVisible, setAreCategoryTagsVisible] = useState(false);
   const [localSelected, setLocalSelected] = useState<PublicOpportunity | null>(null);
@@ -195,18 +198,11 @@ export default function PublicOpportunitiesClient({
       `${url.pathname}${url.search}${url.hash}`,
     );
   }, []);
-  const categories = useMemo(
-    () => [
-      ALL_OPPORTUNITY_CATEGORIES,
-      ...Array.from(new Set(opportunities.map((opportunity) => opportunity.category))),
-    ],
-    [opportunities],
-  );
   const filtered = useMemo(
     () => opportunities.filter((opportunity) => {
-      const matchesCategory =
-        activeCategory === ALL_OPPORTUNITY_CATEGORIES
-        || opportunity.category === activeCategory;
+      const matchesFilter =
+        activeFilter === ALL_ANNOUNCEMENT_FILTERS
+        || announcementFilterForType(opportunity.opportunityType) === activeFilter;
       const matchesQuery = matchesSearchQuery(query, [
         opportunity.title,
         opportunity.summary,
@@ -223,9 +219,9 @@ export default function PublicOpportunitiesClient({
         opportunity.companyName ?? "",
         ...opportunity.expectations,
       ]);
-      return matchesCategory && matchesQuery;
+      return matchesFilter && matchesQuery;
     }),
-    [activeCategory, opportunities, query],
+    [activeFilter, opportunities, query],
   );
 
   useEffect(() => {
@@ -306,18 +302,23 @@ export default function PublicOpportunitiesClient({
       <div className="mx-auto grid w-full max-w-[39.25rem] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 pt-3">
         <div className="min-w-0 flex-1">
           <AppLibrarySearch
-            activeFilter={activeCategory}
-            filters={categories}
+            activeFilter={activeFilter}
+            filters={ANNOUNCEMENT_FILTERS}
             isFilterOpen={areCategoryTagsVisible}
-            onFilterSelect={(category) => {
-              setActiveCategory(category);
+            onFilterSelect={(filter) => {
+              setActiveFilter(filter as AnnouncementFilter);
               setQuery("");
               setAreCategoryTagsVisible(false);
             }}
             onFilterToggle={() => setAreCategoryTagsVisible((visible) => !visible)}
             onQueryChange={(value) => {
               setQuery(value);
-              setActiveCategory(ALL_OPPORTUNITY_CATEGORIES);
+              setActiveFilter(ALL_ANNOUNCEMENT_FILTERS);
+            }}
+            filterLabels={{
+              close: "Masquer les filtres",
+              group: "Filtrer par type d’annonce",
+              open: "Afficher les filtres",
             }}
             placeholder="Rechercher un besoin ou une expertise…"
             query={query}

@@ -111,7 +111,7 @@ describe("solution proposal UI contract", () => {
     expect(catalog).toContain("Rythme / durée");
     expect(catalog).toContain("Ce qui est attendu");
     expect(catalog).toContain("<AppLibrarySearch");
-    expect(catalog).toContain("ALL_OPPORTUNITY_CATEGORIES");
+    expect(catalog).toContain("ALL_ANNOUNCEMENT_FILTERS");
     expect(catalog).toContain('aria-label={`Ouvrir l’annonce : ${opportunity.title}`}');
     expect(catalog).toContain('role="dialog"');
     expect(catalog).toContain("setApplicationOpportunity(selected)");
