@@ -29,6 +29,29 @@ export const OPPORTUNITY_TYPE_LABELS: Readonly<Record<OpportunityType, string>> 
   autre: "Autre",
 };
 
+export const ANNOUNCEMENT_FILTERS = [
+  "Toutes",
+  "Reprises",
+  "Missions et partenariats",
+] as const;
+export type AnnouncementFilter = (typeof ANNOUNCEMENT_FILTERS)[number];
+
+const ANNOUNCEMENT_FILTER_BY_TYPE: Readonly<
+  Partial<Record<OpportunityType, Exclude<AnnouncementFilter, "Toutes">>>
+> = {
+  "reprise-transmission": "Reprises",
+  mission: "Missions et partenariats",
+  "sous-traitance": "Missions et partenariats",
+  collaboration: "Missions et partenariats",
+  partenariat: "Missions et partenariats",
+};
+
+export function announcementFilterForType(
+  type: OpportunityType,
+): Exclude<AnnouncementFilter, "Toutes"> | null {
+  return ANNOUNCEMENT_FILTER_BY_TYPE[type] ?? null;
+}
+
 export type PublicOpportunity = Readonly<{
   cadence: string | null;
   category: string;
