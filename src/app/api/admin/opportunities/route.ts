@@ -17,7 +17,6 @@ import {
   updateOpportunityStatus,
 } from "@/lib/provider-network.server";
 import {
-  OPPORTUNITY_INGESTION_MODES,
   OPPORTUNITY_TYPES,
   OPPORTUNITY_WORK_MODES,
   type OpportunityIngestionMode,
@@ -91,7 +90,10 @@ function normalizeExpectations(value: unknown) {
     .slice(0, 4);
 }
 
-async function normalizeOpportunityFields(body: CreateBody | null) {
+async function normalizeOpportunityFields(
+  body: CreateBody | null,
+  existing: PublicOpportunity | null = null,
+) {
   const title = normalizeText(body?.title, 140);
   const summary = normalizeText(body?.summary, 700, { multiline: true });
   const category = normalizeText(body?.category, 100);
@@ -112,24 +114,18 @@ async function normalizeOpportunityFields(body: CreateBody | null) {
   const expiresAt = expiresAtRaw
     ? new Date(`${expiresAtRaw}T23:59:59.999Z`).toISOString()
     : null;
-  const ingestionModeRaw = normalizeText(body?.ingestionMode, 30);
-  const ingestionMode = (ingestionModeRaw || null) as OpportunityIngestionMode | null;
-  const sourceKind = normalizeText(body?.sourceKind, 60) || null;
+  // Le formulaire ne demande que le nom et le lien de la source : le reste
+  // (mode d'ingestion, date de vérification) est déduit, pas ressaisi.
   const sourceName = normalizeText(body?.sourceName, 140) || null;
   const sourceUrl = normalizeText(body?.sourceUrl, 500) || null;
-  const sourcePublishedAtRaw = normalizeText(body?.sourcePublishedAt, 40);
-  const sourcePublishedAt = sourcePublishedAtRaw
-    ? new Date(`${sourcePublishedAtRaw}T00:00:00.000Z`).toISOString()
+  const isExternallySourced = Boolean(sourceName || sourceUrl);
+  const ingestionMode: OpportunityIngestionMode | null = isExternallySourced
+    ? "external_discovery"
     : null;
-  const verifiedAtRaw = normalizeText(body?.verifiedAt, 40);
-  const verifiedAt = verifiedAtRaw
-    ? new Date(`${verifiedAtRaw}T00:00:00.000Z`).toISOString()
-    : null;
-  const sourceRemovedAtRaw = normalizeText(body?.sourceRemovedAt, 40);
-  const sourceRemovedAt = sourceRemovedAtRaw
-    ? new Date(`${sourceRemovedAtRaw}T00:00:00.000Z`).toISOString()
-    : null;
-  const isExternallySourced = ingestionMode !== null && ingestionMode !== "direct_submission";
+  const verifiedAt = isExternallySourced ? new Date().toISOString() : null;
+  const sourceKind = existing?.sourceKind ?? null;
+  const sourcePublishedAt = existing?.sourcePublishedAt ?? null;
+  const sourceRemovedAt = existing?.sourceRemovedAt ?? null;
   const valid = Boolean(
     title
     && summary.length >= 30
@@ -137,12 +133,8 @@ async function normalizeOpportunityFields(body: CreateBody | null) {
     && OPPORTUNITY_TYPES.includes(opportunityType)
     && (!workMode || OPPORTUNITY_WORK_MODES.includes(workMode))
     && (!expiresAtRaw || Number.isFinite(Date.parse(expiresAt ?? "")))
-    && (!ingestionMode || OPPORTUNITY_INGESTION_MODES.includes(ingestionMode))
     && (!sourceUrl || sourceUrl.startsWith("https://"))
-    && (!sourcePublishedAtRaw || Number.isFinite(Date.parse(sourcePublishedAt ?? "")))
-    && (!verifiedAtRaw || Number.isFinite(Date.parse(verifiedAt ?? "")))
-    && (!sourceRemovedAtRaw || Number.isFinite(Date.parse(sourceRemovedAt ?? "")))
-    && (!isExternallySourced || (sourceName && sourceUrl && verifiedAt))
+    && (!isExternallySourced || (sourceName && sourceUrl))
     && (!expertiseId || await getExpertiseById(expertiseId)),
   );
 
@@ -279,7 +271,7 @@ export async function PATCH(request: Request) {
     let updated = false;
     if (isContentUpdate) {
       const existing = await getOpportunityById(opportunityId);
-      const { fields, valid } = await normalizeOpportunityFields(body);
+      const { fields, valid } = await normalizeOpportunityFields(body, existing);
       if (!existing || !valid) {
         return privateJson({ error: "Modification invalide." }, { status: 400 });
       }
