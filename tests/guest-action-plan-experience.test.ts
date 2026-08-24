@@ -54,6 +54,18 @@ describe("public guest action-plan experience", () => {
     expect(experience).toContain("<GuestActionPlanResult");
     expect(experience).toContain("<GuestActionPlanDelivery");
     expect(experience).toContain("<GuestDiagnosticControl");
+    expect(delivery).toContain("Demander un diagnostic de mon organisation");
+    expect(delivery).toContain(
+      "L’équipe Demaa analyse votre situation et vous propose des pistes concrètes pour améliorer votre organisation.",
+    );
+    expect(diagnostic).toContain("Demander un diagnostic de mon organisation");
+    expect(diagnostic).toContain(
+      "L’équipe Demaa analyse votre situation et vous propose des pistes concrètes pour améliorer votre organisation.",
+    );
+    expect(experience).toContain('access={actionPlan ? access : null}');
+    expect(experience).toContain('key={actionPlan && access ? access.generationId : "without-plan"}');
+    expect(experience).toContain("situation={situation}");
+    expect(experience).not.toContain("{actionPlan && access ? (\n        <GuestDiagnosticControl");
     expect(experience).toContain("onOpenDiagnostic={() => setDiagnosticOpen(true)}");
     expect(experience).not.toContain("CustomerSpaceAccessForm");
     expect(experience).not.toContain("ActionPlanCoachingControl");
@@ -73,6 +85,8 @@ describe("public guest action-plan experience", () => {
     expect(delivery).toContain('submitGuestActionPlanFollowUp("email"');
     expect(delivery).toContain("onOpenDiagnostic");
     expect(diagnostic).toContain('submitGuestActionPlanFollowUp("diagnostic"');
+    expect(diagnostic).toContain("submitGuestDiagnosticWithoutPlan");
+    expect(diagnostic).toContain("required={!access}");
     expect(diagnostic).toContain("contactConsent");
     expect(diagnostic).toContain("Comment pouvons-nous vous aider ?");
     expect(diagnostic).toContain('role="dialog"');

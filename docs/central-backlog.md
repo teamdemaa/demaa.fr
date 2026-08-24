@@ -1867,6 +1867,9 @@ son GO explicite. Aucune suppression de données n'est autorisée par ce statut.
   facultatif et instantané du plan/situation.
 - [x] Notifier la Team, exposer détail/statut dans l'admin et répondre par
   e-mail, sans conversation client.
+- [x] Garder `Diagnostic` visible dans la navbar publique avant et après la
+  génération ; avant le plan, transmettre le message et la situation saisie
+  sans créer de document artificiel, puis joindre le plan lorsqu'il existe.
 
 ##### Lot 4 — Formulaires publics et administration
 

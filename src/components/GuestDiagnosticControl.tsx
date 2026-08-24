@@ -9,6 +9,7 @@ import type { GuestAccess } from "@/lib/guest-action-plan.client";
 import {
   createGuestFollowUpIdempotencyKey,
   submitGuestActionPlanFollowUp,
+  submitGuestDiagnosticWithoutPlan,
 } from "@/lib/guest-action-plan-follow-up.client";
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -18,11 +19,13 @@ export default function GuestDiagnosticControl({
   onClose,
   onOpen,
   open,
+  situation,
 }: {
-  access: GuestAccess;
+  access: GuestAccess | null;
   onClose: () => void;
   onOpen: () => void;
   open: boolean;
+  situation: string;
 }) {
   const [target, setTarget] = useState<HTMLElement | null>(null);
   const [idempotencyKey] = useState(
@@ -52,15 +55,18 @@ export default function GuestDiagnosticControl({
     setStatus("sending");
     setError(null);
     try {
-      await submitGuestActionPlanFollowUp("diagnostic", access, {
+      const body = {
         attribution: getLeadAttributionPayload(),
         contactConsent: form.get("contactConsent") === "on",
         email: form.get("email"),
         idempotencyKey,
         message: form.get("message"),
         phone: form.get("phone"),
+        ...(!access ? { situation } : {}),
         website: form.get("website"),
-      });
+      };
+      if (access) await submitGuestActionPlanFollowUp("diagnostic", access, body);
+      else await submitGuestDiagnosticWithoutPlan(body);
       setStatus("success");
     } catch (requestError) {
       setStatus("error");
@@ -119,10 +125,10 @@ export default function GuestDiagnosticControl({
                   id="guest-diagnostic-title"
                   className="mt-4 pr-12 text-2xl font-medium tracking-[-0.03em] text-brand-blue"
                 >
-                  Demander un diagnostic
+                  Demander un diagnostic de mon organisation
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-                  L’équipe Demaa relit votre situation et vous répond par e-mail.
+                  L’équipe Demaa analyse votre situation et vous propose des pistes concrètes pour améliorer votre organisation.
                 </p>
 
                 {status === "success" ? (
@@ -144,6 +150,7 @@ export default function GuestDiagnosticControl({
                         name="message"
                         rows={3}
                         maxLength={2_000}
+                        required={!access}
                         className="demaa-textarea mt-2"
                       />
                     </label>
@@ -174,7 +181,7 @@ export default function GuestDiagnosticControl({
                         className="mt-0.5 h-4 w-4 accent-dema-forest"
                       />
                       <span>
-                        J’accepte que Demaa utilise mes coordonnées et ce plan pour me répondre par e-mail.
+                        J’accepte que Demaa utilise mes coordonnées{access ? " et ce plan" : ""} pour me répondre par e-mail.
                       </span>
                     </label>
                     <input

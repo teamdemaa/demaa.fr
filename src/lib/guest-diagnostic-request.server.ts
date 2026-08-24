@@ -40,10 +40,11 @@ function planFields(plan: StoredGuestActionPlan) {
 
 async function reserveIdempotency(input: {
   email: string;
-  generationId: string;
+  generationId: string | null;
   idempotencyKey: string;
   message: string | null;
   phone: string | null;
+  situation: string | null;
   now?: Date;
 }) {
   const database = getAdminFirestore();
@@ -55,6 +56,7 @@ async function reserveIdempotency(input: {
     generationId: input.generationId,
     message: input.message,
     phone: input.phone,
+    situation: input.situation,
   }));
   return database.runTransaction(async (transaction) => {
     const snapshot = await transaction.get(reference);
@@ -85,22 +87,25 @@ export async function submitGuestDiagnosticRequest(input: {
   idempotencyKey: string;
   message: string | null;
   phone: string | null;
-  plan: StoredGuestActionPlan;
+  plan?: StoredGuestActionPlan | null;
   request: Request;
+  situation?: string | null;
 }) {
+  const situation = input.situation?.trim() || null;
   const reservation = await reserveIdempotency({
     email: input.email,
-    generationId: input.plan.id,
+    generationId: input.plan?.id ?? null,
     idempotencyKey: input.idempotencyKey,
     message: input.message,
     phone: input.phone,
+    situation,
   });
   if (reservation.leadId) return { duplicate: true, leadId: reservation.leadId };
 
   const context = await resolveLeadContext({
     source: "Diagnostic Demaa",
     sourceUrl: input.request.headers.get("referer"),
-    systemSlug: input.plan.plan.systemId,
+    systemSlug: input.plan?.plan.systemId,
   });
   if (!context) throw new Error("guest_diagnostic_context_unavailable");
   const submittedAt = new Date().toISOString();
@@ -119,11 +124,12 @@ export async function submitGuestDiagnosticRequest(input: {
     emoji: "🧭",
     fields: [
       ...(input.message ? [{ label: "Message complémentaire", value: input.message }] : []),
-      ...planFields(input.plan),
+      ...(situation && !input.plan ? [{ label: "Situation saisie", value: situation }] : []),
+      ...(input.plan ? planFields(input.plan) : []),
     ],
     idempotencyKey: `guest-diagnostic:${reservation.id}`,
     requestType: "guest_plan_diagnostic",
-    title: `Diagnostic demandé - ${input.plan.title}`,
+    title: input.plan ? `Diagnostic demandé - ${input.plan.title}` : "Diagnostic demandé",
   });
 
   await getAdminFirestore()
