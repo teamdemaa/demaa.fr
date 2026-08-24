@@ -12,11 +12,6 @@ export default function ActionPlanHeroTitle({
 
   return (
     <div>
-      {localeCode === "fr" ? (
-        <p className="mb-4 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-dema-forest sm:text-xs">
-          Automatisation des process &amp; IA
-        </p>
-      ) : null}
       <h1
         aria-label={accessibleTitle}
         className="text-balance text-[clamp(2.1rem,5.25vw,3.9rem)] font-light leading-[0.98] tracking-[-0.055em] text-brand-blue/62"

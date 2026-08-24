@@ -1947,7 +1947,9 @@ Décision validée le 24 août 2026 : la promesse publique française explicite 
 Demaa aide les dirigeants à gagner du temps grâce à la mise en place de systèmes
 simples, d'automatisations et d'usages IA adaptés à leur entreprise. L'accueil
 conserve la question « Qu’est-ce qui vous prend trop de temps aujourd’hui ? »,
-précédée de « Automatisation des process & IA » et suivie de cette promesse.
+suivie de cette promesse. Aucun surtitre ne réduit Demaa à la seule
+automatisation ou à l'IA : ce sont des moyens possibles au service d'un système,
+pas la catégorie unique du produit.
 
 La navigation principale est `Plan d’action · Services · Structurer`. Annonces
 reste accessible directement sur `/opportunites`, depuis le footer et dans
