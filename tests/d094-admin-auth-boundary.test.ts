@@ -10,10 +10,11 @@ function source(path: string) {
 }
 
 describe("D-094 Team authentication boundary", () => {
-  it("accepts only the three existing admin destinations", () => {
+  it("accepts only the existing admin destinations", () => {
     expect(getSafeAdminReturnTo("/admin/coaching")).toBe("/admin/coaching");
     expect(getSafeAdminReturnTo("/admin/demandes")).toBe("/admin/demandes");
     expect(getSafeAdminReturnTo("/admin/opportunites")).toBe("/admin/opportunites");
+    expect(getSafeAdminReturnTo("/admin/outils")).toBe("/admin/outils");
     expect(getSafeAdminReturnTo("//evil.example")).toBe(DEFAULT_ADMIN_RETURN_TO);
     expect(getSafeAdminReturnTo("/plans")).toBe(DEFAULT_ADMIN_RETURN_TO);
   });
