@@ -1,4 +1,5 @@
 const ADMIN_RETURN_PATHS = new Set([
+  "/admin",
   "/admin/coaching",
   "/admin/demandes",
   "/admin/opportunites",

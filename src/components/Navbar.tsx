@@ -35,8 +35,14 @@ export default function Navbar({
         <div className="mx-auto w-full px-3 sm:px-6 md:px-10 lg:px-24">
           <div className="relative flex items-center justify-between py-3 md:min-h-16 md:py-4">
             <Link
-              href={localeCode === "en" ? "/en" : "/"}
-              aria-label={localeCode === "en" ? "Back to home" : "Retour à l'accueil"}
+              href={adminControls ? "/admin" : localeCode === "en" ? "/en" : "/"}
+              aria-label={
+                adminControls
+                  ? "Accueil administration"
+                  : localeCode === "en"
+                    ? "Back to home"
+                    : "Retour à l'accueil"
+              }
               className="z-50 inline-flex shrink-0 cursor-pointer items-center"
             >
               <DemaaWordmark className="text-[1.2rem] sm:text-[1.7rem]" />
