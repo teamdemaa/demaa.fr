@@ -163,9 +163,12 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).not.toContain('label: "Système"');
     expect(actionPlanNavSource).toContain("const navigationOrder: readonly ActionPlanView[]");
     expect(actionPlanNavSource).toContain(
-      '"plan",\n  "academy",\n  "services",\n  "opportunities"',
+      '"plan",\n  "services"',
     );
+    expect(actionPlanNavSource).not.toContain('  "academy",');
+    expect(actionPlanNavSource).not.toContain('  "opportunities",');
     expect(actionPlanNavSource).toContain("gridTemplateColumns");
+    expect(actionPlanNavSource).toContain("displayedItems.length");
     expect(actionPlanNavSource).toContain("visibleViews.includes(view)");
     expect(actionPlanNavSource).toContain("h-4 w-4 shrink-0 transition");
     expect(actionPlanNavSource).toContain("rounded-[1.1rem]");

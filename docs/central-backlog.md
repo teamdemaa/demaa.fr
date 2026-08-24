@@ -1941,6 +1941,24 @@ coordonnée constitue l'action demandée, pas une étape de qualification.
 Le changement reste purement présentationnel : mêmes champs, validations,
 payloads, APIs, consentements, protections anti-spam et traitements serveur.
 
+##### Règle transverse — promesse et navigation publiques
+
+Décision validée le 24 août 2026 : la promesse publique française explicite que
+Demaa aide les dirigeants à gagner du temps grâce à la mise en place de systèmes
+simples, d'automatisations et d'usages IA adaptés à leur entreprise. L'accueil
+conserve la question « Qu’est-ce qui vous prend trop de temps aujourd’hui ? »,
+suivie de cette promesse. Aucun surtitre ne réduit Demaa à la seule
+automatisation ou à l'IA : ce sont des moyens possibles au service d'un système,
+pas la catégorie unique du produit.
+
+La navigation principale livrée immédiatement est `Plan d’action · Services`.
+Structurer et Annonces restent accessibles directement par leurs routes, sans
+apparaître dans la navbar : Structurer y reviendra après finalisation de son
+contenu éditorial, tandis qu'Annonces reste volontairement un accès direct. Leurs
+identifiants techniques, données et formulaires sont conservés. Le CTA du header
+affiche intégralement `Diagnostic organisation` sur desktop et mobile et ouvre le
+même formulaire D-094 avant ou après la génération d'un plan.
+
 #### D-095 — Faire évoluer Opportunités vers un espace d'Annonces — priorité immédiate
 
 Statut : **priorité produit immédiate depuis le 23 août 2026 ; D-094 est
@@ -2028,6 +2046,13 @@ Tutoriels, leurs articles, le masquage réversible des Formations, le libellé
 build Production et Preview sont verts ; elle reste non fusionnée jusqu'au GO.
 Le remplacement ultérieur
 d'`Opportunités` par `Annonces` reste le lot D-095 séparé.
+
+Mise à jour du 24 août 2026 : le contenu et les routes Structurer restent
+conservés, mais son exposition dans la navigation est différée jusqu'à la fin de
+la revue éditoriale. La livraison immédiate affiche donc uniquement
+`Plan d'action · Services`. Cette décision de diffusion supersède uniquement la
+case d'ordre de navigation ci-dessus ; elle ne réouvre aucun travail runtime ou
+de contenu déjà livré par D-096.
 
 The Done Studio suit un handover informatif séparé : son onglet Ressources
 reçoit une section unique `Cours`. Les applications ne partagent aucun contrat,

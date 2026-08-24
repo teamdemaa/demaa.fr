@@ -90,7 +90,8 @@ describe("public guest action-plan experience", () => {
     expect(diagnostic).toContain("contactConsent");
     expect(diagnostic).toContain("Comment pouvons-nous vous aider ?");
     expect(diagnostic).toContain('role="dialog"');
-    expect(diagnostic).toContain('aria-label="Ouvrir le diagnostic Demaa"');
+    expect(diagnostic).toContain('aria-label="Ouvrir le diagnostic de mon organisation"');
+    expect(diagnostic).toContain("Diagnostic organisation");
     expect(delivery).toContain('rounded-full bg-dema-forest px-5 text-sm font-medium text-white');
     expect(diagnostic).not.toContain("Précision <span");
     expect(diagnostic).not.toContain("CoachBusinessPromo");

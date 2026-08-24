@@ -1,24 +1,25 @@
 import type { Metadata } from "next";
 import ActionPlanHomeView from "@/components/ActionPlanHomeView";
 import { loadActionPlanHomePage } from "@/lib/action-plan-pages.server";
-
-const title = "Un plan d’action concret pour votre entreprise | Demaa";
-const description =
-  "Demaa structure votre entreprise en mettant en place les bons systèmes, pour qu'elle dépende moins de vous.";
+import { DEMAA_HOME_DESCRIPTION, DEMAA_HOME_TITLE } from "@/lib/demaa-positioning";
 
 export const metadata: Metadata = {
-  title,
-  description,
+  title: DEMAA_HOME_TITLE,
+  description: DEMAA_HOME_DESCRIPTION,
   alternates: { canonical: "/" },
   openGraph: {
-    title,
-    description,
+    title: DEMAA_HOME_TITLE,
+    description: DEMAA_HOME_DESCRIPTION,
     url: "/",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
   },
-  twitter: { card: "summary_large_image", title, description },
+  twitter: {
+    card: "summary_large_image",
+    title: DEMAA_HOME_TITLE,
+    description: DEMAA_HOME_DESCRIPTION,
+  },
 };
 
 export default async function HomePage({

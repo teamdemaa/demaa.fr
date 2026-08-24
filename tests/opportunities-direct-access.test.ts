@@ -7,7 +7,7 @@ const readSource = (path: string) => readFile(
 );
 
 describe("Opportunities direct-link access", () => {
-  it("restores Opportunities in the embedded app tab and on public discovery surfaces", async () => {
+  it("keeps Annonces directly accessible without exposing it in the main navigation", async () => {
     const [navigation, footer, sitemap, page] = await Promise.all([
       readSource("src/components/ActionPlanNavbar.tsx"),
       readSource("src/components/Footer.tsx"),
@@ -16,6 +16,9 @@ describe("Opportunities direct-link access", () => {
     ]);
 
     expect(navigation).toContain('{ view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness }');
+    expect(navigation).toContain('"plan",\n  "services"');
+    expect(navigation).not.toContain('  "academy",');
+    expect(navigation).not.toContain('  "opportunities",');
     expect(footer).toContain('{ label: "Annonces", href: "/opportunites" }');
     expect(sitemap).toContain("`${base}/opportunites`");
     expect(page).toContain("export default async function OpportunitiesPage");

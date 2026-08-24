@@ -103,6 +103,10 @@ describe("action plan experience architecture", () => {
     expect(experience).not.toContain("uiCopy.heroDescription");
     expect(experience).toContain("<ActionPlanHeroTitle");
     expect(heroTitle).toContain("Qu’est-ce qui vous prend trop de temps aujourd’hui ?");
+    expect(heroTitle).not.toContain("Automatisation des process &amp; IA");
+    expect(heroTitle).toContain(
+      "Nous aidons les dirigeants à gagner du temps grâce à la mise en place de systèmes simples et adaptés à leur entreprise.",
+    );
     expect(heroTitle).toContain('aria-label={accessibleTitle}');
     expect(heroTitle).not.toContain("useEffect");
     expect(heroTitle).not.toContain("setTimeout");

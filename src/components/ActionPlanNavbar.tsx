@@ -20,9 +20,7 @@ const navigationItems = {
 
 const navigationOrder: readonly ActionPlanView[] = [
   "plan",
-  "academy",
   "services",
-  "opportunities",
 ];
 
 export default function ActionPlanNavbar({
@@ -54,20 +52,20 @@ export default function ActionPlanNavbar({
     if (onViewChange) onViewChange(view);
   }
 
-  function navigation() {
-    const orderedItems = navigationOrder.map(
-      (view) => navigationItems[view],
-    );
+  const displayedItems = navigationOrder
+    .map((view) => navigationItems[view])
+    .filter(({ view }) => !visibleViews || visibleViews.includes(view));
 
+  function navigation() {
     return (
       <div
         className="grid w-full gap-1"
         style={{
-          gridTemplateColumns: `repeat(${visibleViews?.length || orderedItems.length}, minmax(0, 1fr))`,
+          gridTemplateColumns: `repeat(${displayedItems.length}, minmax(0, 1fr))`,
         }}
         aria-label={localeCode === "en" ? "Main navigation" : "Navigation principale"}
       >
-        {orderedItems.filter(({ view }) => !visibleViews || visibleViews.includes(view)).map(({ view, labels, Icon }) => {
+        {displayedItems.map(({ view, labels, Icon }) => {
           const label = labels[localeCode];
           const isActive = activeView === view;
           const className = `${tabClassName} ${isActive ? "bg-dema-sage text-dema-forest xl:bg-transparent xl:font-semibold" : "text-dema-muted hover:text-brand-blue"}`;
@@ -112,7 +110,7 @@ export default function ActionPlanNavbar({
     );
   }
 
-  if (visibleViews?.length === 1) return null;
+  if (displayedItems.length <= 1) return null;
 
   return (
     <>

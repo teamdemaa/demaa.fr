@@ -95,8 +95,8 @@ conserve un instantané du plan et de la situation, car le job invité expire.
 Le dirigeant reçoit la réponse par e-mail ; aucune conversation ou boîte de
 réception client n'est créée.
 
-L'action compacte `Diagnostic` du header reste visible dans toute l'expérience
-publique, avant comme après la génération. Elle ouvre toujours le même formulaire
+L'action `Diagnostic organisation` du header reste visible dans toute l'expérience
+publique, sur desktop comme sur mobile, avant comme après la génération. Elle ouvre toujours le même formulaire
 et alimente la même file administrative. Avant génération, la demande conserve
 le message et la situation éventuellement saisie, sans créer de plan artificiel.
 Après génération, elle conserve en plus l'instantané du plan temporaire. La carte
@@ -144,8 +144,11 @@ contractuels et de confidentialité doivent refléter cette règle.
   routes client de la navigation publique ;
 - retirer Diagnostic conversationnel et son historique côté dirigeant ;
 - masquer Chiffres et Stratégie dans Demaa ;
-- conserver Plan, Solutions, Services, Académie et Opportunités selon leurs
-  décisions françaises courantes ;
+- livrer immédiatement la navigation principale `Plan d’action · Services` ;
+- conserver Structurer accessible directement, mais le retirer temporairement
+  de la navigation jusqu'à la finalisation de son contenu éditorial ;
+- conserver Annonces accessible directement par `/opportunites`, le footer et
+  ses surfaces administratives, sans l'afficher dans la navigation principale ;
 - conserver les données historiques et lecteurs compatibles pendant la
   période de rollback ;
 - ne pas publier les plans personnalisés dans le sitemap ou l'indexation.

@@ -50,7 +50,7 @@ export async function buildSocialImage() {
               color: brandImageGreen,
             }}
           >
-            Structurez efficacement
+            Gagnez du temps
           </span>
           <span
             style={{
@@ -61,7 +61,7 @@ export async function buildSocialImage() {
               color: brandImageText,
             }}
           >
-            votre entreprise
+            grâce à vos systèmes
           </span>
         </div>
 
@@ -79,8 +79,8 @@ export async function buildSocialImage() {
               color: brandImageMuted,
             }}
           >
-            Pour que tout ne repose plus uniquement sur vous, mettez en place les
-            bons process et creez les conditions d&apos;une croissance durable.
+            Demaa aide les dirigeants à mettre en place des systèmes simples,
+            des automatisations et des usages IA adaptés à leur entreprise.
           </span>
         </div>
       </div>

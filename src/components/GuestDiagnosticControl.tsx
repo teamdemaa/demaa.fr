@@ -85,12 +85,12 @@ export default function GuestDiagnosticControl({
             <button
               type="button"
               onClick={onOpen}
-              className="inline-flex min-h-10 items-center gap-2 rounded-full bg-dema-forest px-4 text-xs font-medium text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:min-h-11 sm:px-5 sm:text-sm"
-              aria-label="Ouvrir le diagnostic Demaa"
-              title="Ouvrir le diagnostic Demaa"
+              className="inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full bg-dema-forest px-3 text-xs font-medium text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:min-h-11 sm:px-5 sm:text-sm"
+              aria-label="Ouvrir le diagnostic de mon organisation"
+              title="Ouvrir le diagnostic de mon organisation"
             >
               <Stethoscope className="h-4 w-4" aria-hidden="true" />
-              <span>Diagnostic</span>
+              <span>Diagnostic organisation</span>
             </button>,
             target,
           )
