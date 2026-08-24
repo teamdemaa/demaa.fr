@@ -1670,7 +1670,8 @@ Référence : [ADR 0017](decisions/0017-curated-tools-per-system.md).
 
 Statut : **candidate TPE v4 et méthode pilote fusionnées par la PR 196, sans
 activation Firebase. Le Lot 1 Restauration est audité localement dans une
-candidate `draft` distincte ; Preview et validation visuelle restent à faire**.
+candidate `draft` distincte et recetté en Preview ; validation métier en
+attente**.
 D-091 consolide et supersède D-068 à D-070 comme contrat d'exécution. Les gates
 pilote et final, la séparation publique de Services et la compatibilité des
 identifiants sont en place. Cinq systèmes pilotes ont des sélections variables

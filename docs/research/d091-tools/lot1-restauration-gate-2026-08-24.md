@@ -4,7 +4,7 @@ Date de revue : 24 août 2026
 
 Candidate : `solutions-2026-08-24-d091-tpe-restauration-candidate-v1`
 
-Statut : **candidate locale auditée, non importée et non activée**.
+Statut : **candidate recettée en Preview, non importée et non activée**.
 
 ## Périmètre
 
@@ -61,14 +61,27 @@ hors sélection.
   après relance isolée du seul test ayant atteint son délai ; lint strict, TypeScript,
   Académie et validations de données verts.
 
+## Preview recettée
+
+- URL : <https://demaa-9d6qwigno-hiteamdemaa-2292s-projects.vercel.app> ;
+- déploiement Vercel `dpl_EECsN16QcsmzvfF57Gh951Dc6VC7`, statut `READY`,
+  cible non-Production ;
+- build et runtime forcés sur la fallback locale de la candidate, sans lecture
+  ni déplacement du pointeur Firebase ;
+- API des sept systèmes : 7/6/4/6/4/4/3 Outils, dans l'ordre documenté ;
+- Services reste présent dans le payload contextuel avec neuf entrées, mais ne
+  figure ni dans le rail public ni dans le JSON-LD Outils ;
+- les sept pages contiennent un `ItemList` exact, non tronqué, avec positions
+  continues et même ordre que l'API ;
+- contrôles visuels desktop Restaurant et mobile Food truck : contenu visible,
+  défilement horizontal normal, aucun overlay d'erreur ;
+- aucun log runtime Vercel de niveau `error` après la recette.
+
 ## Gates restant avant toute publication
 
-1. recetter la candidate en Preview isolée, sans lire ni déplacer le pointeur
-   Firebase actif ;
-2. valider visuellement l'ordre et la densité des sept compositions ;
-3. confirmer que les alternatives sont compréhensibles sans badge ni module
+1. valider métier l'ordre et la densité des sept compositions ;
+2. confirmer que les alternatives sont compréhensibles sans badge ni module
    d'aide au choix ;
-4. intégrer la candidate uniquement comme brouillon versionné ;
-5. poursuivre les autres familles avec la même méthode ;
-6. ne déplacer le pointeur Firebase qu'après couverture des 115 systèmes,
+3. poursuivre les autres familles avec la même méthode ;
+4. ne déplacer le pointeur Firebase qu'après couverture des 115 systèmes,
    recette globale, rollback vérifié et GO PROD explicite.

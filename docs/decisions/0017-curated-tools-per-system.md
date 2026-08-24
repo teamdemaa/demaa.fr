@@ -3,9 +3,9 @@
 - Décision : D-091
 - Statut : validée pour cadrage
 - Date : 22 août 2026
-- Phase : méthode pilote fusionnée sans activation ; Lot 1 Restauration audité
-  dans une candidate locale `draft` ; Preview du lot, généralisation restante
-  et publication non commencées
+- Phase : méthode pilote fusionnée sans activation ; Lot 1 Restauration recetté
+  en Preview depuis une candidate locale `draft` ; validation métier,
+  généralisation restante et publication non commencées
 
 ## Contexte
 
