@@ -54,6 +54,14 @@ describe("public guest action-plan experience", () => {
     expect(experience).toContain("<GuestActionPlanResult");
     expect(experience).toContain("<GuestActionPlanDelivery");
     expect(experience).toContain("<GuestDiagnosticControl");
+    expect(delivery).toContain("Demander un diagnostic de mon organisation");
+    expect(delivery).toContain(
+      "L’équipe Demaa analyse votre situation et vous propose des pistes concrètes pour améliorer votre organisation.",
+    );
+    expect(diagnostic).toContain("Demander un diagnostic de mon organisation");
+    expect(diagnostic).toContain(
+      "L’équipe Demaa analyse votre situation et vous propose des pistes concrètes pour améliorer votre organisation.",
+    );
     expect(experience).toContain('access={actionPlan ? access : null}');
     expect(experience).toContain('key={actionPlan && access ? access.generationId : "without-plan"}');
     expect(experience).toContain("situation={situation}");

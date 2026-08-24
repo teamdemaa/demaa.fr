@@ -125,10 +125,10 @@ export default function GuestDiagnosticControl({
                   id="guest-diagnostic-title"
                   className="mt-4 pr-12 text-2xl font-medium tracking-[-0.03em] text-brand-blue"
                 >
-                  Demander un diagnostic
+                  Demander un diagnostic de mon organisation
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-                  L’équipe Demaa relit votre situation et vous répond par e-mail.
+                  L’équipe Demaa analyse votre situation et vous propose des pistes concrètes pour améliorer votre organisation.
                 </p>
 
                 {status === "success" ? (
