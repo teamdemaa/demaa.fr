@@ -1668,16 +1668,18 @@ Référence : [ADR 0016](decisions/0016-plan-services-and-solutions-ecosystem.md
 
 Référence : [ADR 0017](decisions/0017-curated-tools-per-system.md).
 
-Statut : **candidate TPE v4 versionnée et recettée en Preview dans la PR
-brouillon 196, sans activation Firebase ni fusion ; gate métier en attente**.
+Statut : **candidate TPE v4 et méthode pilote fusionnées par la PR 196, sans
+activation Firebase. Le Lot 1 Restauration est audité localement dans une
+candidate `draft` distincte ; Preview et validation visuelle restent à faire**.
 D-091 consolide et supersède D-068 à D-070 comme contrat d'exécution. Les gates
 pilote et final, la séparation publique de Services et la compatibilité des
 identifiants sont en place. Cinq systèmes pilotes ont des sélections variables
-documentées ; le pointeur Firebase actif n'a pas été déplacé et aucune donnée
-Production n'a été modifiée. Les quantités restent indicatives et ne deviennent
-jamais un quota à remplir. Nicoka CABS, Recruit CRM et Bullhorn restent cachés
-de l'annuaire public et du sitemap tant que le pilote n'est pas validé puis
-activé séparément.
+documentées. Le premier lot de généralisation couvre sept systèmes restauration
+avec 3 à 7 outils chacun et douze sources officielles vérifiées. Le pointeur
+Firebase actif n'a pas été déplacé et aucune donnée Production n'a été modifiée.
+Les quantités restent indicatives et ne deviennent jamais un quota à remplir.
+Tous les nouveaux outils restent cachés de l'annuaire public et du sitemap tant
+que la candidate n'est pas validée puis activée séparément.
 
 - [x] Conserver exactement la carte actuelle et n'ajouter aucun badge, repère
   éditorial ou module « Aide au choix ».
@@ -1697,9 +1699,13 @@ activé séparément.
 - [ ] Valider chaque `toolRef` retenu à partir de sources officielles datées ;
   ne jamais importer automatiquement une association faible pour atteindre un
   volume prédéfini.
-- [ ] Piloter d'abord agence de recrutement, SaaS, agence web, cabinet
+- [x] Piloter d'abord agence de recrutement, SaaS, agence web, cabinet
   comptable et bâtiment, avec relecture contradictoire et sans règle propre à
   l'un de ces secteurs.
+- [x] Appliquer la méthode au Lot 1 Restauration : `restaurant`, `fast-food`,
+  `traiteur`, `dark-kitchen`, `boulangerie`, `bar-cafe` et `food-truck` ;
+  conserver une candidate complète `draft`, les nouveaux outils en `hidden`,
+  la parité des 103 autres systèmes et le pointeur Firebase actif inchangé.
 - [x] Poser le gate automatisé : sélection non vide et variable, couverture
   métier, unicité, rangs continus, liens sûrs, ressources actives, preuves et
   dates, justification contextuelle et limites factuelles. Le gate relie

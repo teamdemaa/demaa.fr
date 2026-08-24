@@ -12,6 +12,16 @@ export const D091_PILOT_SYSTEM_SLUGS = [
   "batiment",
 ] as const;
 
+export const D091_RESTAURATION_SYSTEM_SLUGS = [
+  "restaurant",
+  "fast-food",
+  "traiteur",
+  "dark-kitchen",
+  "boulangerie",
+  "bar-cafe",
+  "food-truck",
+] as const;
+
 const OFFICIAL_EVIDENCE_TYPES = new Set([
   "official_product_page",
   "technical_documentation",
