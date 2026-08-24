@@ -231,7 +231,7 @@ export async function POST(request: Request) {
     if (response) return withPrivateNoStore(response);
     const { fields, valid } = await normalizeOpportunityFields(body);
     if (!valid) {
-      return privateJson({ error: "Les informations de l’opportunité sont incomplètes." }, { status: 400 });
+      return privateJson({ error: "Les informations de l’annonce sont incomplètes." }, { status: 400 });
     }
 
     const now = new Date().toISOString();
@@ -247,7 +247,7 @@ export async function POST(request: Request) {
     return privateJson({ ok: true, opportunity }, { status: 201 });
   } catch (error) {
     logOperationalError("opportunities.admin.create_failed", error);
-    return privateJson({ error: "Impossible de créer l’opportunité." }, { status: 500 });
+    return privateJson({ error: "Impossible de créer l’annonce." }, { status: 500 });
   }
 }
 

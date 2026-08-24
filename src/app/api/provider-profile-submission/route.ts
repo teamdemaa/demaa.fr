@@ -149,7 +149,7 @@ async function handlePost(request: Request) {
     )
   ) {
     return NextResponse.json(
-      { error: "Cette opportunité n’est plus disponible." },
+      { error: "Cette annonce n’est plus disponible." },
       { status: 404 },
     );
   }
