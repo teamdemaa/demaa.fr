@@ -4,7 +4,7 @@
   "revisionStatus": "draft",
   "createdAt": "2026-08-23T06:30:00.000Z",
   "createdBy": "D-091 placement review v2",
-  "sourceFingerprint": "288ac89b880d6a7804f156ef5463adc162b27782108e0b36023122f187b2fe4c",
+  "sourceFingerprint": "8a02d503332b7782e286b0d707785d890a5ac65dac5a801d3df1e21956fdb6f3",
   "knownSystemSlugs": [
     "cabinet-comptable",
     "cabinet-davocat",
@@ -5702,28 +5702,26 @@
       "resource": {
         "evidence": [
           {
-            "evidenceId": "firebase-migration-resource-agence-de-recrutement-recruitee",
-            "sourceRef": "https://recruitee.com/fr/",
-            "claim": "Recruitee est une ressource actuellement affichée dans les Solutions Demaa.",
-            "evidenceType": "legacy_catalog_reference",
-            "capturedAt": "2026-08-08T12:00:00.000Z"
+            "evidenceId": "d091-resource-recruitee",
+            "sourceRef": "https://recruitee.com/fr",
+            "claim": "Recruitee fournit un ATS avec candidatures, site carrière, pipeline et étapes d’entretien pour structurer un process de recrutement.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-24T00:00:00.000Z"
           }
         ],
-        "reviewer": "Master Demaa",
-        "reviewedAt": "2026-08-08T12:00:00.000Z",
-        "expiresAt": "2027-02-08T12:00:00.000Z",
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-24T00:00:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
         "interactionMode": "external_link",
-        "href": "https://recruitee.com/fr/",
+        "href": "https://recruitee.com/fr",
         "resourceSlug": "recruitee",
         "resourceType": "software",
         "name": "Recruitee",
         "description": "ATS simple pour gérer recrutements, candidats et étapes d’entretien.",
-        "commercialRelationship": "unknown",
-        "status": "draft",
-        "resourceVersion": "firebase.v1",
-        "publicationBlockers": [
-          "commercial-relationship-unconfirmed"
-        ]
+        "commercialRelationship": "none",
+        "status": "published",
+        "resourceVersion": "d091.pilot.v2",
+        "publicationBlockers": []
       }
     },
     {
@@ -7608,6 +7606,32 @@
         "resourceType": "software",
         "name": "Bullhorn",
         "description": "ATS et CRM pour agences de recrutement et sociétés d'intérim ayant des processus structurés.",
+        "commercialRelationship": "none",
+        "status": "published",
+        "resourceVersion": "d091.pilot.v2",
+        "publicationBlockers": []
+      }
+    },
+    {
+      "resource": {
+        "evidence": [
+          {
+            "evidenceId": "d091-resource-teamtailor",
+            "sourceRef": "https://www.teamtailor.com/fr/",
+            "claim": "Teamtailor combine ATS, site carrière et marque employeur pour gérer candidatures, pipeline et coordination des entretiens.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-24T00:00:00.000Z"
+          }
+        ],
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-24T00:00:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "interactionMode": "external_link",
+        "href": "https://www.teamtailor.com/fr/",
+        "resourceSlug": "teamtailor",
+        "resourceType": "software",
+        "name": "Teamtailor",
+        "description": "ATS et site carrière pour gérer candidatures, pipeline et marque employeur.",
         "commercialRelationship": "none",
         "status": "published",
         "resourceVersion": "d091.pilot.v2",
@@ -33007,7 +33031,7 @@
           "Prévoir le paramétrage du pipeline"
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "unknown",
+        "commercialRelationship": "none",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -35656,6 +35680,84 @@
       "placement": {
         "evidence": [
           {
+            "evidenceId": "d091-placement-agence-de-recrutement-recruitee",
+            "sourceRef": "https://recruitee.com/fr",
+            "claim": "Recruitee fournit un ATS avec candidatures, site carrière, pipeline et étapes d’entretien pour structurer un process de recrutement.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-24T00:00:00.000Z"
+          }
+        ],
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-24T00:00:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "placementId": "agence-de-recrutement:recruitee:software:1",
+        "systemSlug": "agence-de-recrutement",
+        "resourceSlug": "recruitee",
+        "rank": 4,
+        "section": "software",
+        "usage": "Centraliser candidatures, site carrière et étapes d’entretien dans un ATS pensé pour le recrutement direct.",
+        "fitRationale": "Recruitee (Tellent) convient à une agence qui veut une alternative plus légère et moins coûteuse que les trois suites agence pour un volume de placements plus restreint, au prix d’un outil pensé pour le recrutement direct plutôt que pour la gestion multi-clients.",
+        "fitConstraints": [
+          "Pas de portail client ni de suivi des commissions par placement : la relation avec les entreprises clientes de l’agence doit être gérée ailleurs.",
+          "Vérifier le module « gestion agence » annoncé par l’éditeur avant de l’adopter, car l’outil reste conçu en priorité pour une structure qui recrute pour elle-même."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "none",
+        "status": "published",
+        "placementVersion": "d091.pilot.v2",
+        "publicationBlockers": []
+      },
+      "presentation": {
+        "displayCategory": "RH & planning",
+        "nameOverride": "Recruitee",
+        "hrefOverride": "https://recruitee.com/fr",
+        "ctaLabel": "Voir l’outil",
+        "descriptionOverride": "ATS simple pour gérer recrutements, candidats et étapes d’entretien."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
+            "evidenceId": "d091-placement-agence-de-recrutement-teamtailor",
+            "sourceRef": "https://www.teamtailor.com/fr/",
+            "claim": "Teamtailor combine ATS, site carrière et marque employeur pour gérer candidatures, pipeline et coordination des entretiens.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-24T00:00:00.000Z"
+          }
+        ],
+        "reviewer": "D-091 placement review v2",
+        "reviewedAt": "2026-08-24T00:00:00.000Z",
+        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "placementId": "agence-de-recrutement:teamtailor:software",
+        "systemSlug": "agence-de-recrutement",
+        "resourceSlug": "teamtailor",
+        "rank": 5,
+        "section": "software",
+        "usage": "Gérer candidatures, site carrière et marque employeur lorsque l’expérience candidat est un argument de vente de l’agence.",
+        "fitRationale": "Teamtailor apporte un site carrière et une marque employeur soignés, utile si l’agence veut aussi promouvoir sa propre marque auprès des candidats, mais reste explicitement conçu pour un recruteur unique plutôt que pour gérer plusieurs comptes clients.",
+        "fitConstraints": [
+          "Aucune fonction multi-clients ou de suivi de placements par entreprise cliente, contrairement à Nicoka CABS, Recruit CRM ou Bullhorn.",
+          "Le tarif et le positionnement ciblent des équipes de recrutement internes ; à comparer au volume réel de l’agence avant adoption."
+        ],
+        "editorialStatus": "selected",
+        "commercialRelationship": "none",
+        "status": "published",
+        "placementVersion": "d091.pilot.v2",
+        "publicationBlockers": []
+      },
+      "presentation": {
+        "displayCategory": "RH & planning",
+        "nameOverride": "Teamtailor",
+        "hrefOverride": "https://www.teamtailor.com/fr/",
+        "ctaLabel": "Voir l’outil",
+        "descriptionOverride": "ATS et site carrière pour gérer candidatures, pipeline et marque employeur."
+      }
+    },
+    {
+      "placement": {
+        "evidence": [
+          {
             "evidenceId": "d091-placement-agence-de-recrutement-google-workspace",
             "sourceRef": "https://workspace.google.com/intl/fr/",
             "claim": "Google Workspace regroupe messagerie, agenda, stockage et documents collaboratifs.",
@@ -35669,7 +35771,7 @@
         "placementId": "agence-de-recrutement:google-workspace:software",
         "systemSlug": "agence-de-recrutement",
         "resourceSlug": "google-workspace",
-        "rank": 4,
+        "rank": 6,
         "section": "software",
         "usage": "Partager les documents de mission, comptes rendus, modèles et agendas dans un socle bureautique commun.",
         "fitRationale": "Google Workspace couvre les documents et la collaboration transverses sans prétendre remplacer l’ATS ou le CRM.",
