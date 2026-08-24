@@ -81,11 +81,11 @@ describe("D-091 reviewed pilot candidate", () => {
     expect(Object.fromEntries(
       [...selectedBySystem].map(([systemSlug, tools]) => [systemSlug, tools.length]),
     )).toEqual({
-      "agence-de-recrutement": 6,
+      "agence-de-recrutement": 4,
       saas: 8,
       "agence-web": 8,
       "cabinet-comptable": 7,
-      batiment: 7,
+      batiment: 6,
     });
   });
 

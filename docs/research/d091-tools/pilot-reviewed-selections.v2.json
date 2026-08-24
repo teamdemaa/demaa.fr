@@ -81,44 +81,6 @@
           "reviewedAt": "2026-08-23T06:30:00.000Z"
         },
         {
-          "toolSlug": "recruitee",
-          "coveredNeedIds": [
-            "candidatures-et-vivier",
-            "sourcing-et-diffusion",
-            "qualification-et-entretiens"
-          ],
-          "usage": "Centraliser candidatures, site carrière et étapes d’entretien dans un ATS pensé pour le recrutement direct.",
-          "fitRationale": "Recruitee (Tellent) convient à une agence qui veut une alternative plus légère et moins coûteuse que les trois suites agence pour un volume de placements plus restreint, au prix d’un outil pensé pour le recrutement direct plutôt que pour la gestion multi-clients.",
-          "fitConstraints": [
-            "Pas de portail client ni de suivi des commissions par placement : la relation avec les entreprises clientes de l’agence doit être gérée ailleurs.",
-            "Vérifier le module « gestion agence » annoncé par l’éditeur avant de l’adopter, car l’outil reste conçu en priorité pour une structure qui recrute pour elle-même."
-          ],
-          "targetProfile": "Petite agence ou indépendant du recrutement cherchant un ATS simple, sans les fonctions multi-clients des suites agence dédiées.",
-          "franceAvailability": "Interface et page produit en français, offre commercialisée en France.",
-          "officialSourceUrl": "https://recruitee.com/fr",
-          "evidenceClaim": "Recruitee fournit un ATS avec candidatures, site carrière, pipeline et étapes d’entretien pour structurer un process de recrutement.",
-          "reviewedAt": "2026-08-24T00:00:00.000Z"
-        },
-        {
-          "toolSlug": "teamtailor",
-          "coveredNeedIds": [
-            "candidatures-et-vivier",
-            "sourcing-et-diffusion",
-            "qualification-et-entretiens"
-          ],
-          "usage": "Gérer candidatures, site carrière et marque employeur lorsque l’expérience candidat est un argument de vente de l’agence.",
-          "fitRationale": "Teamtailor apporte un site carrière et une marque employeur soignés, utile si l’agence veut aussi promouvoir sa propre marque auprès des candidats, mais reste explicitement conçu pour un recruteur unique plutôt que pour gérer plusieurs comptes clients.",
-          "fitConstraints": [
-            "Aucune fonction multi-clients ou de suivi de placements par entreprise cliente, contrairement à Nicoka CABS, Recruit CRM ou Bullhorn.",
-            "Le tarif et le positionnement ciblent des équipes de recrutement internes ; à comparer au volume réel de l’agence avant adoption."
-          ],
-          "targetProfile": "Agence ou structure de recrutement qui veut soigner sa marque employeur et l’expérience candidat autant que le suivi des placements.",
-          "franceAvailability": "Page produit et interface en français, support multilingue annoncé dans plus de 90 pays.",
-          "officialSourceUrl": "https://www.teamtailor.com/fr/",
-          "evidenceClaim": "Teamtailor combine ATS, site carrière et marque employeur pour gérer candidatures, pipeline et coordination des entretiens.",
-          "reviewedAt": "2026-08-24T00:00:00.000Z"
-        },
-        {
           "toolSlug": "google-workspace",
           "coveredNeedIds": [
             "collaboration-et-documents"
@@ -136,7 +98,7 @@
           "reviewedAt": "2026-08-23T06:30:00.000Z"
         }
       ],
-      "compositionRationale": "Trois ATS-CRM conçus pour les agences sont conservés comme alternatives nettement différenciées par cible : cabinet français, petite agence internationale et agence structurée. Recruitee et Teamtailor sont ajoutés comme alternatives plus légères pour une petite structure ou un besoin centré sur l’expérience candidat, avec la réserve explicite qu’ils ne gèrent pas plusieurs comptes clients contrairement aux trois suites agence. Google Workspace reste la seule brique transverse, pour les documents et agendas. Les CRM, planificateurs, téléphonie et automatisation génériques sont retirés car les suites agence couvrent déjà l’essentiel et leur ajout n’est pas universel."
+      "compositionRationale": "Trois ATS-CRM conçus pour les agences sont conservés comme alternatives nettement différenciées par cible : cabinet français, petite agence internationale et agence structurée. Recruitee et Teamtailor restent hors du pilote car ils ciblent d’abord le recrutement interne et ajouteraient deux alternatives moins alignées avec la gestion multi-clients d’une agence. Google Workspace reste la seule brique transverse, pour les documents et agendas. Les CRM, planificateurs, téléphonie et automatisation génériques sont retirés car les suites agence couvrent déjà l’essentiel et leur ajout n’est pas universel."
     },
     {
       "systemSlug": "saas",
@@ -167,21 +129,21 @@
           "reviewedAt": "2026-08-23T06:30:00.000Z"
         },
         {
-          "toolSlug": "attio",
+          "toolSlug": "pipedrive",
           "coveredNeedIds": [
             "vente-et-relation-client"
           ],
-          "usage": "Suivre prospects, essais, partenaires et comptes clients dans un CRM flexible pour une petite équipe SaaS.",
-          "fitRationale": "Attio apporte une couche commerciale structurée tout en restant adaptable aux objets et relations d’un SaaS.",
+          "usage": "Suivre prospects, essais, démonstrations, opportunités et relances dans un pipeline commercial simple.",
+          "fitRationale": "Pipedrive est plus immédiatement exploitable qu’un CRM très personnalisable pour une petite équipe SaaS ayant déjà un vrai volume commercial.",
           "fitConstraints": [
-            "La flexibilité demande de définir clairement le modèle de données et les étapes du pipeline.",
-            "Vérifier les automatisations nécessaires avant de remplacer un CRM existant."
+            "Ne pas ajouter de CRM tant que le volume de prospects et de relances reste faible.",
+            "Définir un pipeline court et éviter les automatisations prématurées."
           ],
-          "targetProfile": "Petite équipe SaaS B2B souhaitant modéliser librement comptes, contacts, essais, partenaires et opportunités.",
-          "franceAvailability": "Service SaaS international accessible depuis la France ; l’interface et le support principalement anglophones doivent être acceptables pour l’équipe.",
-          "officialSourceUrl": "https://attio.com/",
-          "evidenceClaim": "Attio propose un CRM personnalisable avec données, workflows et collaboration.",
-          "reviewedAt": "2026-08-23T06:30:00.000Z"
+          "targetProfile": "Petite équipe SaaS B2B avec plusieurs opportunités et relances actives, qui veut un CRM visuel sans projet de paramétrage lourd.",
+          "franceAvailability": "Offre officielle en français destinée notamment aux petites entreprises et utilisable depuis la France.",
+          "officialSourceUrl": "https://www.pipedrive.com/fr/industries/crm-solutions-for-small-business",
+          "evidenceClaim": "Pipedrive présente un CRM pour petites entreprises avec pipeline commercial, suivi des prospects, activités et automatisations.",
+          "reviewedAt": "2026-08-24T17:02:00.000Z"
         },
         {
           "toolSlug": "github",
@@ -626,23 +588,6 @@
           "reviewedAt": "2026-08-23T06:30:00.000Z"
         },
         {
-          "toolSlug": "graneet",
-          "coveredNeedIds": [
-            "couts-et-rentabilite-chantier"
-          ],
-          "usage": "Suivre budgets, achats, marges et rentabilité par chantier dans une PME du bâtiment.",
-          "fitRationale": "Graneet est retenu pour sa spécialisation sur le pilotage financier chantier, distincte du devis simple et du suivi terrain.",
-          "fitConstraints": [
-            "Plus pertinent pour une structure qui suit plusieurs chantiers et des coûts détaillés.",
-            "Vérifier l’articulation avec la comptabilité et les outils déjà en place."
-          ],
-          "targetProfile": "PME du BTP réalisant environ 2 à 100 M€ de chiffre d’affaires et pilotant achats, main-d’œuvre, budgets et marges par chantier.",
-          "franceAvailability": "Solution française conçue pour les PME du BTP, commercialisée avec accompagnement en France ; valider intégrations comptables et reprise des historiques.",
-          "officialSourceUrl": "https://www.graneet.com/",
-          "evidenceClaim": "Graneet fournit un ERP de pilotage financier et de rentabilité pour entreprises du BTP.",
-          "reviewedAt": "2026-08-23T06:30:00.000Z"
-        },
-        {
           "toolSlug": "sage-batigest-connect",
           "coveredNeedIds": [
             "devis-et-facturation",
@@ -715,7 +660,7 @@
           "reviewedAt": "2026-08-23T06:30:00.000Z"
         }
       ],
-      "compositionRationale": "La sélection distingue quatre profils de gestion à comparer puis trois briques terrain réellement complémentaires. ProGBat et Oryka sont retirés du pilote pour éviter les doublons ; Google Workspace est trop transverse pour cette liste métier."
+      "compositionRationale": "La sélection privilégie trois profils de gestion adaptés à une TPE ou petite PME, puis trois briques terrain réellement complémentaires. Graneet reste hors du pilote car sa cible annoncée commence autour de 2 M€ de chiffre d’affaires et dépasse souvent la petite entreprise visée. ProGBat et Oryka sont retirés pour éviter les doublons ; Google Workspace est trop transverse pour cette liste métier."
     }
   ],
   "activationBlockers": [

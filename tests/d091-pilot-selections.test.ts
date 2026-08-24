@@ -86,8 +86,6 @@ describe("D-091 pilot research selections", () => {
       "nicoka-cabs",
       "recruit-crm",
       "bullhorn",
-      "recruitee",
-      "teamtailor",
       "google-workspace",
     ]);
   });

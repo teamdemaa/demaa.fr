@@ -15,8 +15,8 @@ const REVIEWED_SELECTION_PATH =
   "docs/research/d091-tools/pilot-reviewed-selections.v2.json";
 const OUTPUT_PATH =
   "docs/research/d091-tools/pilot-candidate-revision.generated.json";
-const CANDIDATE_CREATED_AT = "2026-08-23T06:30:00.000Z";
-const REVIEW_EXPIRES_AT = "2027-02-23T09:00:00.000Z";
+const CANDIDATE_CREATED_AT = "2026-08-24T17:02:00.000Z";
+const REVIEW_EXPIRES_AT = "2027-02-24T17:02:00.000Z";
 
 type ReviewedCandidate = {
   toolSlug: string;
@@ -117,14 +117,14 @@ const resources = active.resources.map((entry) => {
         claim: reviewed.evidenceClaim,
         capturedAt: reviewed.reviewedAt,
       }),
-      reviewer: "D-091 placement review v2",
+      reviewer: "D-091 TPE pilot review v3",
       reviewedAt: reviewed.reviewedAt,
       expiresAt: REVIEW_EXPIRES_AT,
       interactionMode: "external_link" as const,
       href: reviewed.officialSourceUrl,
       commercialRelationship: "none" as const,
       status: "published" as const,
-      resourceVersion: "d091.pilot.v2",
+      resourceVersion: "d091.pilot.v3",
       publicationBlockers: [],
     },
   };
@@ -143,7 +143,7 @@ for (const toolSlug of selectedToolSlugs) {
         claim: reviewed.evidenceClaim,
         capturedAt: reviewed.reviewedAt,
       }),
-      reviewer: "D-091 placement review v2",
+      reviewer: "D-091 TPE pilot review v3",
       reviewedAt: reviewed.reviewedAt,
       expiresAt: REVIEW_EXPIRES_AT,
       interactionMode: "external_link",
@@ -154,7 +154,7 @@ for (const toolSlug of selectedToolSlugs) {
       description: tool.description,
       commercialRelationship: "none",
       status: "published",
-      resourceVersion: "d091.pilot.v2",
+      resourceVersion: "d091.pilot.v3",
       publicationBlockers: [],
     },
   });
@@ -216,7 +216,7 @@ for (const system of reviewedInput.systems) {
           claim: reviewed.evidenceClaim,
           capturedAt: reviewed.reviewedAt,
         }),
-        reviewer: "D-091 placement review v2",
+        reviewer: "D-091 TPE pilot review v3",
         reviewedAt: reviewed.reviewedAt,
         expiresAt: REVIEW_EXPIRES_AT,
         placementId,
@@ -230,7 +230,7 @@ for (const system of reviewedInput.systems) {
         editorialStatus: "selected",
         commercialRelationship: "none",
         status: "published",
-        placementVersion: "d091.pilot.v2",
+        placementVersion: "d091.pilot.v3",
         publicationBlockers: [],
       },
       presentation: {
@@ -246,10 +246,10 @@ for (const system of reviewedInput.systems) {
 
 const candidateWithoutFingerprint = {
   schemaVersion: 1,
-  revisionId: "solutions-2026-08-23-d091-pilot-candidate-v2",
+  revisionId: "solutions-2026-08-24-d091-tpe-pilot-candidate-v3",
   revisionStatus: "draft",
   createdAt: CANDIDATE_CREATED_AT,
-  createdBy: "D-091 placement review v2",
+  createdBy: "D-091 TPE pilot review v3",
   sourceFingerprint: "0".repeat(64),
   knownSystemSlugs: [...active.knownSystemSlugs],
   resources,

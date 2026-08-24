@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "revisionId": "solutions-2026-08-23-d091-pilot-candidate-v2",
+  "revisionId": "solutions-2026-08-24-d091-tpe-pilot-candidate-v3",
   "revisionStatus": "draft",
-  "createdAt": "2026-08-23T06:30:00.000Z",
-  "createdBy": "D-091 placement review v2",
-  "sourceFingerprint": "8a02d503332b7782e286b0d707785d890a5ac65dac5a801d3df1e21956fdb6f3",
+  "createdAt": "2026-08-24T17:02:00.000Z",
+  "createdBy": "D-091 TPE pilot review v3",
+  "sourceFingerprint": "5aad778ecec358e7f88cd22309d28882919ac6c7b59d79568e9c34210a0bb9ba",
   "knownSystemSlugs": [
     "cabinet-comptable",
     "cabinet-davocat",
@@ -358,9 +358,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.alobees.com/",
         "resourceSlug": "alobees",
@@ -369,7 +369,7 @@
         "description": "Suivi de chantier, planning d’équipe, heures et communication terrain pour le BTP.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -2204,9 +2204,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.fieldwire.com/fr/",
         "resourceSlug": "fieldwire",
@@ -2215,7 +2215,7 @@
         "description": "Logiciel de suivi de chantier terrain : plans, tâches, réserves, photos, rapports et coordination équipes.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -2230,9 +2230,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.figma.com/design/",
         "resourceSlug": "figma",
@@ -2241,7 +2241,7 @@
         "description": "Design collaboratif pour maquettes, interfaces, visuels et prototypes.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -2788,9 +2788,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://github.com/features",
         "resourceSlug": "github",
@@ -2799,7 +2799,7 @@
         "description": "Plateforme de gestion de code, collaboration développeur, issues, pull requests et CI/CD.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -2926,9 +2926,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://workspace.google.com/intl/fr/",
         "resourceSlug": "google-workspace",
@@ -2937,7 +2937,7 @@
         "description": "Email pro, Drive, Docs, Sheets et agenda partagé pour structurer l’activité.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -3001,26 +3001,28 @@
       "resource": {
         "evidence": [
           {
-            "evidenceId": "d091-resource-graneet",
+            "evidenceId": "firebase-migration-resource-renovation-interieur-graneet",
             "sourceRef": "https://www.graneet.com/",
-            "claim": "Graneet fournit un ERP de pilotage financier et de rentabilité pour entreprises du BTP.",
-            "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-23T06:30:00.000Z"
+            "claim": "Graneet est une ressource actuellement affichée dans les Solutions Demaa.",
+            "evidenceType": "legacy_catalog_reference",
+            "capturedAt": "2026-08-08T12:00:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
-        "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "reviewer": "Master Demaa",
+        "reviewedAt": "2026-08-08T12:00:00.000Z",
+        "expiresAt": "2027-02-08T12:00:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.graneet.com/",
         "resourceSlug": "graneet",
         "resourceType": "software",
         "name": "Graneet",
         "description": "ERP BTP pour chiffrage, achats, factures de situation, main d’œuvre et marges chantier.",
-        "commercialRelationship": "none",
-        "status": "published",
-        "resourceVersion": "d091.pilot.v2",
-        "publicationBlockers": []
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "firebase.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
       }
     },
     {
@@ -3564,9 +3566,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.kizeo-forms.com/fr/",
         "resourceSlug": "kizeo-forms",
@@ -3575,7 +3577,7 @@
         "description": "Formulaires terrain digitaux pour chantiers, interventions, relevés, contrôles et rapports personnalisés.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -4511,9 +4513,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://n8n.io/",
         "resourceSlug": "n8n",
@@ -4522,7 +4524,7 @@
         "description": "Plateforme d’automatisation de workflows avec connecteurs, logique conditionnelle et option self-hosted.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -4733,9 +4735,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.obat.fr/",
         "resourceSlug": "obat",
@@ -4744,7 +4746,7 @@
         "description": "Devis, facturation et suivi commercial conçus pour les professionnels du bâtiment.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -5347,9 +5349,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.pennylane.com/fr/expert-comptable",
         "resourceSlug": "pennylane",
@@ -5358,7 +5360,7 @@
         "description": "Production comptable, gestion financière, achats, facturation et trésorerie.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -5366,28 +5368,26 @@
       "resource": {
         "evidence": [
           {
-            "evidenceId": "firebase-migration-resource-marchand-de-biens-pipedrive",
-            "sourceRef": "https://www.pipedrive.com/fr",
-            "claim": "Pipedrive est une ressource actuellement affichée dans les Solutions Demaa.",
-            "evidenceType": "legacy_catalog_reference",
-            "capturedAt": "2026-08-08T12:00:00.000Z"
+            "evidenceId": "d091-resource-pipedrive",
+            "sourceRef": "https://www.pipedrive.com/fr/industries/crm-solutions-for-small-business",
+            "claim": "Pipedrive présente un CRM pour petites entreprises avec pipeline commercial, suivi des prospects, activités et automatisations.",
+            "evidenceType": "official_product_page",
+            "capturedAt": "2026-08-24T17:02:00.000Z"
           }
         ],
-        "reviewer": "Master Demaa",
-        "reviewedAt": "2026-08-08T12:00:00.000Z",
-        "expiresAt": "2027-02-08T12:00:00.000Z",
+        "reviewer": "D-091 TPE pilot review v3",
+        "reviewedAt": "2026-08-24T17:02:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
-        "href": "https://www.pipedrive.com/fr",
+        "href": "https://www.pipedrive.com/fr/industries/crm-solutions-for-small-business",
         "resourceSlug": "pipedrive",
         "resourceType": "software",
         "name": "Pipedrive",
         "description": "CRM visuel pour suivre prospects, opportunités et relances commerciales.",
-        "commercialRelationship": "unknown",
-        "status": "draft",
-        "resourceVersion": "firebase.v1",
-        "publicationBlockers": [
-          "commercial-relationship-unconfirmed"
-        ]
+        "commercialRelationship": "none",
+        "status": "published",
+        "resourceVersion": "d091.pilot.v3",
+        "publicationBlockers": []
       }
     },
     {
@@ -5702,26 +5702,28 @@
       "resource": {
         "evidence": [
           {
-            "evidenceId": "d091-resource-recruitee",
-            "sourceRef": "https://recruitee.com/fr",
-            "claim": "Recruitee fournit un ATS avec candidatures, site carrière, pipeline et étapes d’entretien pour structurer un process de recrutement.",
-            "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-24T00:00:00.000Z"
+            "evidenceId": "firebase-migration-resource-agence-de-recrutement-recruitee",
+            "sourceRef": "https://recruitee.com/fr/",
+            "claim": "Recruitee est une ressource actuellement affichée dans les Solutions Demaa.",
+            "evidenceType": "legacy_catalog_reference",
+            "capturedAt": "2026-08-08T12:00:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
-        "reviewedAt": "2026-08-24T00:00:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "reviewer": "Master Demaa",
+        "reviewedAt": "2026-08-08T12:00:00.000Z",
+        "expiresAt": "2027-02-08T12:00:00.000Z",
         "interactionMode": "external_link",
-        "href": "https://recruitee.com/fr",
+        "href": "https://recruitee.com/fr/",
         "resourceSlug": "recruitee",
         "resourceType": "software",
         "name": "Recruitee",
         "description": "ATS simple pour gérer recrutements, candidats et étapes d’entretien.",
-        "commercialRelationship": "none",
-        "status": "published",
-        "resourceVersion": "d091.pilot.v2",
-        "publicationBlockers": []
+        "commercialRelationship": "unknown",
+        "status": "draft",
+        "resourceVersion": "firebase.v1",
+        "publicationBlockers": [
+          "commercial-relationship-unconfirmed"
+        ]
       }
     },
     {
@@ -6127,9 +6129,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://sentry.io/welcome/",
         "resourceSlug": "sentry",
@@ -6138,7 +6140,7 @@
         "description": "Monitoring d’erreurs, performance applicative et alertes pour produits web et logiciels.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -6237,9 +6239,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.silae.fr/solutions-paie/",
         "resourceSlug": "silae",
@@ -6248,7 +6250,7 @@
         "description": "Solution de paie et de gestion RH destinée notamment aux cabinets et équipes sociales.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -6403,9 +6405,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://stripe.com/fr/billing",
         "resourceSlug": "stripe",
@@ -6414,7 +6416,7 @@
         "description": "Paiements en ligne, abonnements, facturation et marketplace pour produits digitaux et SaaS.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7017,9 +7019,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.vertuoza.com/fr-fr",
         "resourceSlug": "vertuoza",
@@ -7028,7 +7030,7 @@
         "description": "Gestion commerciale, planning, suivi de chantier et rentabilité pour entreprises du bâtiment.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7211,9 +7213,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://webflow.com/",
         "resourceSlug": "webflow",
@@ -7222,7 +7224,7 @@
         "description": "Création de sites web visuels avec un rendu professionnel.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7545,9 +7547,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://cabs.nicoka.com/",
         "resourceSlug": "nicoka-cabs",
@@ -7556,7 +7558,7 @@
         "description": "ATS et CRM français conçu pour les cabinets de recrutement et chasseurs de têtes.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7571,9 +7573,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://recruitcrm.io/features/",
         "resourceSlug": "recruit-crm",
@@ -7582,7 +7584,7 @@
         "description": "ATS et CRM destiné aux agences de recrutement, avec sourcing, pipeline client et automatisations.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7597,9 +7599,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.bullhorn.com/fr/produits/applicant-tracking-crm/",
         "resourceSlug": "bullhorn",
@@ -7608,59 +7610,7 @@
         "description": "ATS et CRM pour agences de recrutement et sociétés d'intérim ayant des processus structurés.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
-        "publicationBlockers": []
-      }
-    },
-    {
-      "resource": {
-        "evidence": [
-          {
-            "evidenceId": "d091-resource-teamtailor",
-            "sourceRef": "https://www.teamtailor.com/fr/",
-            "claim": "Teamtailor combine ATS, site carrière et marque employeur pour gérer candidatures, pipeline et coordination des entretiens.",
-            "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-24T00:00:00.000Z"
-          }
-        ],
-        "reviewer": "D-091 placement review v2",
-        "reviewedAt": "2026-08-24T00:00:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
-        "interactionMode": "external_link",
-        "href": "https://www.teamtailor.com/fr/",
-        "resourceSlug": "teamtailor",
-        "resourceType": "software",
-        "name": "Teamtailor",
-        "description": "ATS et site carrière pour gérer candidatures, pipeline et marque employeur.",
-        "commercialRelationship": "none",
-        "status": "published",
-        "resourceVersion": "d091.pilot.v2",
-        "publicationBlockers": []
-      }
-    },
-    {
-      "resource": {
-        "evidence": [
-          {
-            "evidenceId": "d091-resource-attio",
-            "sourceRef": "https://attio.com/",
-            "claim": "Attio propose un CRM personnalisable avec données, workflows et collaboration.",
-            "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-23T06:30:00.000Z"
-          }
-        ],
-        "reviewer": "D-091 placement review v2",
-        "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
-        "interactionMode": "external_link",
-        "href": "https://attio.com/",
-        "resourceSlug": "attio",
-        "resourceType": "software",
-        "name": "Attio",
-        "description": "CRM flexible pour pipelines, relations, workflows et bases d’opportunités.",
-        "commercialRelationship": "none",
-        "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7675,9 +7625,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://vercel.com/docs",
         "resourceSlug": "vercel",
@@ -7686,7 +7636,7 @@
         "description": "Plateforme cloud pour déployer sites, applications frontend, APIs et produits web modernes.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7701,9 +7651,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://linear.app/features",
         "resourceSlug": "linear",
@@ -7712,7 +7662,7 @@
         "description": "Gestion de tickets, roadmap, bugs et cycles produit pour équipes SaaS et dev.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7727,9 +7677,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://posthog.com/product",
         "resourceSlug": "posthog",
@@ -7738,7 +7688,7 @@
         "description": "Analytics produit, feature flags, session replay et expérimentation pour SaaS et apps web.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7753,9 +7703,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.intercom.com/helpdesk",
         "resourceSlug": "intercom",
@@ -7764,7 +7714,7 @@
         "description": "Plateforme de support client, messagerie, chat, base de connaissance et automatisation service client.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7779,9 +7729,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://wordpress.org/",
         "resourceSlug": "wordpress",
@@ -7790,7 +7740,7 @@
         "description": "CMS open source pour sites vitrines, médias, blogs, contenus et e-commerce via extensions.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7805,9 +7755,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://asana.com/fr/product",
         "resourceSlug": "asana",
@@ -7816,7 +7766,7 @@
         "description": "Outil de gestion de projet pour tâches, responsabilités, calendriers, workflows et suivi d’équipe.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7831,9 +7781,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://go.sellsy.com/",
         "resourceSlug": "sellsy",
@@ -7842,7 +7792,7 @@
         "description": "CRM français avec devis, factures, opportunités, relances, marketing et suivi commercial.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7857,9 +7807,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://myunisoft.fr/",
         "resourceSlug": "myunisoft",
@@ -7868,7 +7818,7 @@
         "description": "Plateforme dédiée aux cabinets comptables : production, gestion interne et collaboration client.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7883,9 +7833,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.acd-groupe.fr/",
         "resourceSlug": "acd",
@@ -7894,7 +7844,7 @@
         "description": "Suite logicielle pour cabinets d’expertise comptable : comptabilité, paie, fiscalité et gestion.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7909,9 +7859,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://dext.com/fr/",
         "resourceSlug": "dext",
@@ -7920,7 +7870,7 @@
         "description": "Collecte et traitement de justificatifs comptables pour gagner du temps.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7935,9 +7885,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://rca.fr/logiciels-experts/",
         "resourceSlug": "rca",
@@ -7946,7 +7896,7 @@
         "description": "Logiciels pour experts-comptables orientés conseil, pilotage, fiscalité, prévisionnel et RSE.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7961,9 +7911,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://boutique.lefebvre-dalloz.fr/solution-expert-comptable.html",
         "resourceSlug": "lefebvre-dalloz",
@@ -7972,7 +7922,7 @@
         "description": "Documentation juridique, fiscale et sociale pour les professionnels du droit et du chiffre.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     },
@@ -7987,9 +7937,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "interactionMode": "external_link",
         "href": "https://www.sage.com/fr-fr/produits/sage-batigest-connect/",
         "resourceSlug": "sage-batigest-connect",
@@ -7998,7 +7948,7 @@
         "description": "Solution Sage pour devis, factures, suivi de chantier, bibliothèque de prix et gestion bâtiment.",
         "commercialRelationship": "none",
         "status": "published",
-        "resourceVersion": "d091.pilot.v2",
+        "resourceVersion": "d091.pilot.v3",
         "publicationBlockers": []
       }
     }
@@ -11055,7 +11005,7 @@
           "Comparer le coût complet : utilisateurs, biens, diffusion, signature et support."
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "unknown",
+        "commercialRelationship": "none",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -18356,7 +18306,7 @@
           "Comparer les fonctions, les intégrations, le coût total et les conditions avant de choisir."
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "none",
+        "commercialRelationship": "unknown",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -22812,7 +22762,7 @@
           "Comparer les fonctions, les intégrations, le coût total et les conditions avant de choisir."
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "none",
+        "commercialRelationship": "unknown",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -23053,7 +23003,7 @@
           "Vérifier les automatisations utiles"
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "unknown",
+        "commercialRelationship": "none",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -26977,7 +26927,7 @@
           "Vérifier les automatisations utiles"
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "unknown",
+        "commercialRelationship": "none",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -27218,7 +27168,7 @@
           "Vérifier les automatisations utiles"
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "unknown",
+        "commercialRelationship": "none",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -31714,7 +31664,7 @@
           "Comparer le coût complet : utilisateurs, biens, diffusion, signature et support."
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "unknown",
+        "commercialRelationship": "none",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -33031,7 +32981,7 @@
           "Prévoir le paramétrage du pipeline"
         ],
         "editorialStatus": "selected",
-        "commercialRelationship": "none",
+        "commercialRelationship": "unknown",
         "status": "draft",
         "placementVersion": "firebase.v1",
         "publicationBlockers": [
@@ -35570,9 +35520,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "agence-de-recrutement:nicoka-cabs:software",
         "systemSlug": "agence-de-recrutement",
         "resourceSlug": "nicoka-cabs",
@@ -35587,7 +35537,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35609,9 +35559,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "agence-de-recrutement:recruit-crm:software",
         "systemSlug": "agence-de-recrutement",
         "resourceSlug": "recruit-crm",
@@ -35626,7 +35576,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35648,9 +35598,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "agence-de-recrutement:bullhorn:software",
         "systemSlug": "agence-de-recrutement",
         "resourceSlug": "bullhorn",
@@ -35665,7 +35615,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35680,84 +35630,6 @@
       "placement": {
         "evidence": [
           {
-            "evidenceId": "d091-placement-agence-de-recrutement-recruitee",
-            "sourceRef": "https://recruitee.com/fr",
-            "claim": "Recruitee fournit un ATS avec candidatures, site carrière, pipeline et étapes d’entretien pour structurer un process de recrutement.",
-            "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-24T00:00:00.000Z"
-          }
-        ],
-        "reviewer": "D-091 placement review v2",
-        "reviewedAt": "2026-08-24T00:00:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
-        "placementId": "agence-de-recrutement:recruitee:software:1",
-        "systemSlug": "agence-de-recrutement",
-        "resourceSlug": "recruitee",
-        "rank": 4,
-        "section": "software",
-        "usage": "Centraliser candidatures, site carrière et étapes d’entretien dans un ATS pensé pour le recrutement direct.",
-        "fitRationale": "Recruitee (Tellent) convient à une agence qui veut une alternative plus légère et moins coûteuse que les trois suites agence pour un volume de placements plus restreint, au prix d’un outil pensé pour le recrutement direct plutôt que pour la gestion multi-clients.",
-        "fitConstraints": [
-          "Pas de portail client ni de suivi des commissions par placement : la relation avec les entreprises clientes de l’agence doit être gérée ailleurs.",
-          "Vérifier le module « gestion agence » annoncé par l’éditeur avant de l’adopter, car l’outil reste conçu en priorité pour une structure qui recrute pour elle-même."
-        ],
-        "editorialStatus": "selected",
-        "commercialRelationship": "none",
-        "status": "published",
-        "placementVersion": "d091.pilot.v2",
-        "publicationBlockers": []
-      },
-      "presentation": {
-        "displayCategory": "RH & planning",
-        "nameOverride": "Recruitee",
-        "hrefOverride": "https://recruitee.com/fr",
-        "ctaLabel": "Voir l’outil",
-        "descriptionOverride": "ATS simple pour gérer recrutements, candidats et étapes d’entretien."
-      }
-    },
-    {
-      "placement": {
-        "evidence": [
-          {
-            "evidenceId": "d091-placement-agence-de-recrutement-teamtailor",
-            "sourceRef": "https://www.teamtailor.com/fr/",
-            "claim": "Teamtailor combine ATS, site carrière et marque employeur pour gérer candidatures, pipeline et coordination des entretiens.",
-            "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-24T00:00:00.000Z"
-          }
-        ],
-        "reviewer": "D-091 placement review v2",
-        "reviewedAt": "2026-08-24T00:00:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
-        "placementId": "agence-de-recrutement:teamtailor:software",
-        "systemSlug": "agence-de-recrutement",
-        "resourceSlug": "teamtailor",
-        "rank": 5,
-        "section": "software",
-        "usage": "Gérer candidatures, site carrière et marque employeur lorsque l’expérience candidat est un argument de vente de l’agence.",
-        "fitRationale": "Teamtailor apporte un site carrière et une marque employeur soignés, utile si l’agence veut aussi promouvoir sa propre marque auprès des candidats, mais reste explicitement conçu pour un recruteur unique plutôt que pour gérer plusieurs comptes clients.",
-        "fitConstraints": [
-          "Aucune fonction multi-clients ou de suivi de placements par entreprise cliente, contrairement à Nicoka CABS, Recruit CRM ou Bullhorn.",
-          "Le tarif et le positionnement ciblent des équipes de recrutement internes ; à comparer au volume réel de l’agence avant adoption."
-        ],
-        "editorialStatus": "selected",
-        "commercialRelationship": "none",
-        "status": "published",
-        "placementVersion": "d091.pilot.v2",
-        "publicationBlockers": []
-      },
-      "presentation": {
-        "displayCategory": "RH & planning",
-        "nameOverride": "Teamtailor",
-        "hrefOverride": "https://www.teamtailor.com/fr/",
-        "ctaLabel": "Voir l’outil",
-        "descriptionOverride": "ATS et site carrière pour gérer candidatures, pipeline et marque employeur."
-      }
-    },
-    {
-      "placement": {
-        "evidence": [
-          {
             "evidenceId": "d091-placement-agence-de-recrutement-google-workspace",
             "sourceRef": "https://workspace.google.com/intl/fr/",
             "claim": "Google Workspace regroupe messagerie, agenda, stockage et documents collaboratifs.",
@@ -35765,13 +35637,13 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "agence-de-recrutement:google-workspace:software",
         "systemSlug": "agence-de-recrutement",
         "resourceSlug": "google-workspace",
-        "rank": 6,
+        "rank": 4,
         "section": "software",
         "usage": "Partager les documents de mission, comptes rendus, modèles et agendas dans un socle bureautique commun.",
         "fitRationale": "Google Workspace couvre les documents et la collaboration transverses sans prétendre remplacer l’ATS ou le CRM.",
@@ -35782,7 +35654,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35804,9 +35676,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "saas:stripe:software:2",
         "systemSlug": "saas",
         "resourceSlug": "stripe",
@@ -35821,7 +35693,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35836,39 +35708,39 @@
       "placement": {
         "evidence": [
           {
-            "evidenceId": "d091-placement-saas-attio",
-            "sourceRef": "https://attio.com/",
-            "claim": "Attio propose un CRM personnalisable avec données, workflows et collaboration.",
+            "evidenceId": "d091-placement-saas-pipedrive",
+            "sourceRef": "https://www.pipedrive.com/fr/industries/crm-solutions-for-small-business",
+            "claim": "Pipedrive présente un CRM pour petites entreprises avec pipeline commercial, suivi des prospects, activités et automatisations.",
             "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-23T06:30:00.000Z"
+            "capturedAt": "2026-08-24T17:02:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
-        "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
-        "placementId": "saas:attio:software",
+        "reviewer": "D-091 TPE pilot review v3",
+        "reviewedAt": "2026-08-24T17:02:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
+        "placementId": "saas:pipedrive:software",
         "systemSlug": "saas",
-        "resourceSlug": "attio",
+        "resourceSlug": "pipedrive",
         "rank": 2,
         "section": "software",
-        "usage": "Suivre prospects, essais, partenaires et comptes clients dans un CRM flexible pour une petite équipe SaaS.",
-        "fitRationale": "Attio apporte une couche commerciale structurée tout en restant adaptable aux objets et relations d’un SaaS.",
+        "usage": "Suivre prospects, essais, démonstrations, opportunités et relances dans un pipeline commercial simple.",
+        "fitRationale": "Pipedrive est plus immédiatement exploitable qu’un CRM très personnalisable pour une petite équipe SaaS ayant déjà un vrai volume commercial.",
         "fitConstraints": [
-          "La flexibilité demande de définir clairement le modèle de données et les étapes du pipeline.",
-          "Vérifier les automatisations nécessaires avant de remplacer un CRM existant."
+          "Ne pas ajouter de CRM tant que le volume de prospects et de relances reste faible.",
+          "Définir un pipeline court et éviter les automatisations prématurées."
         ],
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
         "displayCategory": "CRM & ventes",
-        "nameOverride": "Attio",
-        "hrefOverride": "https://attio.com/",
+        "nameOverride": "Pipedrive",
+        "hrefOverride": "https://www.pipedrive.com/fr/industries/crm-solutions-for-small-business",
         "ctaLabel": "Voir l’outil",
-        "descriptionOverride": "CRM flexible pour pipelines, relations, workflows et bases d’opportunités."
+        "descriptionOverride": "CRM visuel pour suivre prospects, opportunités et relances commerciales."
       }
     },
     {
@@ -35882,9 +35754,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "saas:github:software:1",
         "systemSlug": "saas",
         "resourceSlug": "github",
@@ -35899,7 +35771,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35921,9 +35793,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "saas:vercel:software",
         "systemSlug": "saas",
         "resourceSlug": "vercel",
@@ -35938,7 +35810,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35960,9 +35832,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "saas:linear:software",
         "systemSlug": "saas",
         "resourceSlug": "linear",
@@ -35977,7 +35849,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -35999,9 +35871,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "saas:sentry:software:3",
         "systemSlug": "saas",
         "resourceSlug": "sentry",
@@ -36016,7 +35888,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36038,9 +35910,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "saas:posthog:software",
         "systemSlug": "saas",
         "resourceSlug": "posthog",
@@ -36055,7 +35927,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36077,9 +35949,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "saas:intercom:software",
         "systemSlug": "saas",
         "resourceSlug": "intercom",
@@ -36094,7 +35966,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36116,9 +35988,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "agence-web:figma:software:1",
         "systemSlug": "agence-web",
         "resourceSlug": "figma",
@@ -36133,7 +36005,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36155,9 +36027,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "agence-web:webflow:software:2",
         "systemSlug": "agence-web",
         "resourceSlug": "webflow",
@@ -36172,7 +36044,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36194,9 +36066,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "agence-web:wordpress:software",
         "systemSlug": "agence-web",
         "resourceSlug": "wordpress",
@@ -36211,7 +36083,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36233,9 +36105,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "agence-web:github:software:3",
         "systemSlug": "agence-web",
         "resourceSlug": "github",
@@ -36250,7 +36122,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36272,9 +36144,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "agence-web:vercel:software",
         "systemSlug": "agence-web",
         "resourceSlug": "vercel",
@@ -36289,7 +36161,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36311,9 +36183,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "agence-web:asana:software",
         "systemSlug": "agence-web",
         "resourceSlug": "asana",
@@ -36328,7 +36200,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36350,9 +36222,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "agence-web:sellsy:software",
         "systemSlug": "agence-web",
         "resourceSlug": "sellsy",
@@ -36367,7 +36239,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36389,9 +36261,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "agence-web:n8n:software",
         "systemSlug": "agence-web",
         "resourceSlug": "n8n",
@@ -36406,7 +36278,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36428,9 +36300,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "cabinet-comptable:pennylane:software:1",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "pennylane",
@@ -36445,7 +36317,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36467,9 +36339,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "cabinet-comptable:myunisoft:software",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "myunisoft",
@@ -36484,7 +36356,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36506,9 +36378,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "cabinet-comptable:acd:software",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "acd",
@@ -36523,7 +36395,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36545,9 +36417,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "cabinet-comptable:silae:software:3",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "silae",
@@ -36562,7 +36434,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36584,9 +36456,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "cabinet-comptable:dext:software",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "dext",
@@ -36601,7 +36473,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36623,9 +36495,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "cabinet-comptable:rca:software",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "rca",
@@ -36640,7 +36512,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36662,9 +36534,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "cabinet-comptable:lefebvre-dalloz:software",
         "systemSlug": "cabinet-comptable",
         "resourceSlug": "lefebvre-dalloz",
@@ -36679,7 +36551,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36701,9 +36573,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "batiment:obat:software:1",
         "systemSlug": "batiment",
         "resourceSlug": "obat",
@@ -36718,7 +36590,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36740,9 +36612,9 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "batiment:vertuoza:software:4",
         "systemSlug": "batiment",
         "resourceSlug": "vertuoza",
@@ -36757,7 +36629,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36772,45 +36644,6 @@
       "placement": {
         "evidence": [
           {
-            "evidenceId": "d091-placement-batiment-graneet",
-            "sourceRef": "https://www.graneet.com/",
-            "claim": "Graneet fournit un ERP de pilotage financier et de rentabilité pour entreprises du BTP.",
-            "evidenceType": "official_product_page",
-            "capturedAt": "2026-08-23T06:30:00.000Z"
-          }
-        ],
-        "reviewer": "D-091 placement review v2",
-        "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
-        "placementId": "batiment:graneet:software",
-        "systemSlug": "batiment",
-        "resourceSlug": "graneet",
-        "rank": 3,
-        "section": "software",
-        "usage": "Suivre budgets, achats, marges et rentabilité par chantier dans une PME du bâtiment.",
-        "fitRationale": "Graneet est retenu pour sa spécialisation sur le pilotage financier chantier, distincte du devis simple et du suivi terrain.",
-        "fitConstraints": [
-          "Plus pertinent pour une structure qui suit plusieurs chantiers et des coûts détaillés.",
-          "Vérifier l’articulation avec la comptabilité et les outils déjà en place."
-        ],
-        "editorialStatus": "selected",
-        "commercialRelationship": "none",
-        "status": "published",
-        "placementVersion": "d091.pilot.v2",
-        "publicationBlockers": []
-      },
-      "presentation": {
-        "displayCategory": "Outils métier",
-        "nameOverride": "Graneet",
-        "hrefOverride": "https://www.graneet.com/",
-        "ctaLabel": "Voir l’outil",
-        "descriptionOverride": "ERP BTP pour chiffrage, achats, factures de situation, main d’œuvre et marges chantier."
-      }
-    },
-    {
-      "placement": {
-        "evidence": [
-          {
             "evidenceId": "d091-placement-batiment-sage-batigest-connect",
             "sourceRef": "https://www.sage.com/fr-fr/produits/sage-batigest-connect/",
             "claim": "Sage Batigest Connect couvre devis, facturation et gestion pour les professionnels du bâtiment.",
@@ -36818,13 +36651,13 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "batiment:sage-batigest-connect:software",
         "systemSlug": "batiment",
         "resourceSlug": "sage-batigest-connect",
-        "rank": 4,
+        "rank": 3,
         "section": "software",
         "usage": "Conserver une gestion BTP structurée avec devis, facturation et suivi lorsque l’entreprise utilise déjà l’écosystème Sage.",
         "fitRationale": "Sage Batigest Connect reste une alternative pertinente pour les structures établies recherchant continuité et profondeur de gestion.",
@@ -36835,7 +36668,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36857,13 +36690,13 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "batiment:alobees:software",
         "systemSlug": "batiment",
         "resourceSlug": "alobees",
-        "rank": 5,
+        "rank": 4,
         "section": "software",
         "usage": "Planifier les équipes, suivre les heures et partager l’avancement des chantiers avec le terrain.",
         "fitRationale": "Alobees apporte un suivi opérationnel d’équipe distinct des outils de devis et de rentabilité.",
@@ -36874,7 +36707,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36896,13 +36729,13 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "batiment:fieldwire:software",
         "systemSlug": "batiment",
         "resourceSlug": "fieldwire",
-        "rank": 6,
+        "rank": 5,
         "section": "software",
         "usage": "Partager plans, tâches, observations et réserves entre chantier et bureau sur les opérations complexes.",
         "fitRationale": "Fieldwire couvre la coordination d’exécution et les plans terrain, un besoin différent du planning d’équipe.",
@@ -36913,7 +36746,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
@@ -36935,13 +36768,13 @@
             "capturedAt": "2026-08-23T06:30:00.000Z"
           }
         ],
-        "reviewer": "D-091 placement review v2",
+        "reviewer": "D-091 TPE pilot review v3",
         "reviewedAt": "2026-08-23T06:30:00.000Z",
-        "expiresAt": "2027-02-23T09:00:00.000Z",
+        "expiresAt": "2027-02-24T17:02:00.000Z",
         "placementId": "batiment:kizeo-forms:software",
         "systemSlug": "batiment",
         "resourceSlug": "kizeo-forms",
-        "rank": 7,
+        "rank": 6,
         "section": "software",
         "usage": "Remplacer les fiches papier par des formulaires et rapports terrain adaptés aux contrôles de l’entreprise.",
         "fitRationale": "Kizeo Forms est retenu pour les relevés et rapports sur mesure qui ne sont pas bien couverts par une suite chantier standard.",
@@ -36952,7 +36785,7 @@
         "editorialStatus": "selected",
         "commercialRelationship": "none",
         "status": "published",
-        "placementVersion": "d091.pilot.v2",
+        "placementVersion": "d091.pilot.v3",
         "publicationBlockers": []
       },
       "presentation": {
