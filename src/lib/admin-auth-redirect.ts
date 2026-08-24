@@ -3,6 +3,7 @@ const ADMIN_RETURN_PATHS = new Set([
   "/admin/coaching",
   "/admin/demandes",
   "/admin/opportunites",
+  "/admin/outils",
 ]);
 
 export const DEFAULT_ADMIN_RETURN_TO = "/admin/demandes";

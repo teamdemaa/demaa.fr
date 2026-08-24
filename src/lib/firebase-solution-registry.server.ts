@@ -115,9 +115,26 @@ export async function fetchActiveFirebaseSolutionRegistryRevisionFromFirestore(
     throw new Error("Firebase Solutions active pointer is missing");
   }
   const pointer = parseActivePointer(pointerSnapshot.data());
+  const parsed = await fetchFirebaseSolutionRegistryRevisionByIdFromFirestore(
+    pointer.revisionId,
+    database,
+  );
+  if (parsed.sourceFingerprint !== pointer.sourceFingerprint) {
+    throw new Error("Firebase Solutions pointer fingerprint mismatch");
+  }
+  return parsed;
+}
+
+export async function fetchFirebaseSolutionRegistryRevisionByIdFromFirestore(
+  revisionId: string,
+  database: Firestore = getAdminFirestore(),
+) {
+  if (!revisionId || revisionId.includes("/")) {
+    throw new TypeError("Firebase Solutions revision ID is invalid");
+  }
   const revisionReference = database
     .collection(FIREBASE_SOLUTION_REGISTRY_REVISIONS_COLLECTION)
-    .doc(pointer.revisionId);
+    .doc(revisionId);
   const [revisionSnapshot, resourcesSnapshot, placementsSnapshot] =
     await Promise.all([
       revisionReference.get(),
@@ -132,11 +149,7 @@ export async function fetchActiveFirebaseSolutionRegistryRevisionFromFirestore(
     resources: resourcesSnapshot.docs.map((document) => document.data()),
     placements: placementsSnapshot.docs.map((document) => document.data()),
   };
-  const parsed = normalizeRevisionEntryOrder(revision);
-  if (parsed.sourceFingerprint !== pointer.sourceFingerprint) {
-    throw new Error("Firebase Solutions pointer fingerprint mismatch");
-  }
-  return parsed;
+  return normalizeRevisionEntryOrder(revision);
 }
 
 export async function loadFirebaseSolutionRegistryRevision(

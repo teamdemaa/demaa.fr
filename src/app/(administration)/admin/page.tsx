@@ -11,14 +11,19 @@ export const metadata: Metadata = {
 
 const SECTIONS = [
   {
+    href: "/admin/demandes",
+    label: "Demandes",
+    description: "Récapitulatif des demandes reçues via le site, avec coordonnées et contexte.",
+  },
+  {
     href: "/admin/opportunites",
     label: "Annonces",
     description: "Créer, publier et gérer les annonces (Reprises, Missions et partenariats).",
   },
   {
-    href: "/admin/demandes",
-    label: "Demandes",
-    description: "Récapitulatif des demandes reçues via le site, avec coordonnées et contexte.",
+    href: "/admin/outils",
+    label: "Outils",
+    description: "Contrôler en lecture seule les sélections par métier et leurs preuves.",
   },
 ] as const;
 
