@@ -3,6 +3,17 @@ export type CuratedToolResearchCandidate = Readonly<{
   coveredNeedIds: readonly string[];
 }>;
 
+export type ReviewedCuratedToolResearchCandidate = CuratedToolResearchCandidate & Readonly<{
+  usage: string;
+  fitRationale: string;
+  fitConstraints: readonly string[];
+  targetProfile: string;
+  franceAvailability: string;
+  officialSourceUrl: string;
+  evidenceClaim: string;
+  reviewedAt: string;
+}>;
+
 export type SystemToolCurationResearch = Readonly<{
   systemSlug: string;
   priorityNeeds: readonly string[];
@@ -18,6 +29,16 @@ export type SolutionCurationResearchManifest = Readonly<{
   runtimeActivation: false;
   systems: readonly SystemToolCurationResearch[];
   activationBlockers: readonly string[];
+}>;
+
+export type ReviewedSolutionCurationResearchManifest = Omit<
+  SolutionCurationResearchManifest,
+  "systems"
+> & Readonly<{
+  reviewStage: "placement-reviewed";
+  systems: readonly (Omit<SystemToolCurationResearch, "toolCandidatesByRank"> & Readonly<{
+    toolCandidatesByRank: readonly ReviewedCuratedToolResearchCandidate[];
+  }>)[];
 }>;
 
 type CuratedSelectionBySystem = ReadonlyMap<string, readonly string[]>;
@@ -133,6 +154,71 @@ export function validateSolutionCurationResearchManifest(
       rawSystem.compositionRationale.trim().length < 50
     ) {
       errors.push(`${path}.compositionRationale is too short`);
+    }
+  }
+
+  return errors;
+}
+
+/**
+ * Tightens the generic research contract for a placement-level business
+ * review. A candidate revision may only be built from this richer manifest:
+ * every placement carries its target, France fit, constraints, official proof
+ * and review date. The validator remains read-only and fail-closed.
+ */
+export function validateReviewedSolutionCurationResearchManifest(
+  input: unknown,
+  options: Readonly<{
+    knownSystemSlugs: ReadonlySet<string>;
+    knownToolSlugs: ReadonlySet<string>;
+  }>,
+): string[] {
+  const errors = validateSolutionCurationResearchManifest(input, options);
+  if (!isRecord(input)) return errors;
+  if (input.reviewStage !== "placement-reviewed") {
+    errors.push("reviewed research manifest reviewStage is invalid");
+  }
+  if (!Array.isArray(input.systems)) return errors;
+
+  for (const [systemIndex, rawSystem] of input.systems.entries()) {
+    if (!isRecord(rawSystem) || !Array.isArray(rawSystem.toolCandidatesByRank)) continue;
+    for (const [toolIndex, rawTool] of rawSystem.toolCandidatesByRank.entries()) {
+      const path = `systems[${systemIndex}].toolCandidatesByRank[${toolIndex}]`;
+      if (!isRecord(rawTool)) continue;
+      for (const [field, minimumLength] of [
+        ["usage", 20],
+        ["fitRationale", 30],
+        ["targetProfile", 30],
+        ["franceAvailability", 30],
+        ["evidenceClaim", 30],
+      ] as const) {
+        if (
+          typeof rawTool[field] !== "string" ||
+          rawTool[field].trim().length < minimumLength
+        ) {
+          errors.push(`${path}.${field} is too short`);
+        }
+      }
+      const constraints = stringArray(rawTool.fitConstraints);
+      if (
+        !constraints ||
+        constraints.length === 0 ||
+        constraints.some((constraint) => constraint.trim().length < 20)
+      ) {
+        errors.push(`${path}.fitConstraints requires factual constraints`);
+      }
+      if (
+        typeof rawTool.officialSourceUrl !== "string" ||
+        !rawTool.officialSourceUrl.startsWith("https://")
+      ) {
+        errors.push(`${path}.officialSourceUrl must be HTTPS`);
+      }
+      if (
+        typeof rawTool.reviewedAt !== "string" ||
+        !Number.isFinite(Date.parse(rawTool.reviewedAt))
+      ) {
+        errors.push(`${path}.reviewedAt is invalid`);
+      }
     }
   }
 

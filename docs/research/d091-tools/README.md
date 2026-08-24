@@ -10,6 +10,12 @@ retenue si elle couvre un besoin prioritaire du métier, possède une preuve
 officielle encore valable, expose une contrainte réelle et apporte quelque
 chose que les autres cartes ne couvrent pas déjà suffisamment.
 
+Les `priorityNeeds` du manifeste sont les besoins qui justifient une carte,
+pas une cartographie exhaustive de tout ce dont l'entreprise a besoin. Un
+socle bureautique évident n'est pas conservé uniquement pour cocher un besoin.
+Un outil transverse peut en revanche être retenu si son usage opérationnel est
+précis, structurant pour ce métier et proportionné à une TPE.
+
 Les cartes et rails existants sont conservés. Aucun badge, score visible ou
 module d'aide au choix n'est ajouté.
 
@@ -43,8 +49,10 @@ dans Firebase maintenant créerait une migration sans bénéfice utilisateur.
 
 ## Gates propres aux rubriques
 
-- **Outils** : couverture des besoins opérationnels prioritaires et composition
-  complémentaire ; aucun outil ajouté pour remplir la liste.
+- **Outils** : couverture des besoins opérationnels qui justifient réellement
+  une recommandation et composition complémentaire ; aucun outil évident,
+  générique ou ajouté pour remplir la liste. La notoriété ne suffit ni à
+  inclure ni à exclure un outil transverse : son usage métier doit être précis.
 - **Fournisseurs** : relation réellement disponible, zone desservie, capacité
   et mode de mise en relation vérifiés.
 - **Financement** : besoin de financement cohérent avec le métier et le cycle
@@ -57,9 +65,11 @@ dans Firebase maintenant créerait une migration sans bénéfice utilisateur.
 ## Pilote
 
 `pilot-selections.v2.json` conserve les cinq pools initiaux.
-`pilot-reviewed-selections.v1.json` contient leur seconde revue à volume
-variable, avec ordre, besoin, usage, contrainte et preuve officielle. Aucun
-remplacement n'est obligatoire lorsqu'un candidat est retiré.
+`pilot-reviewed-selections.v2.json` contient la revue placement par placement à
+volume variable, avec ordre, besoin, cible, usage, disponibilité en France,
+contraintes, preuve officielle et date de revue. Le générateur refuse désormais
+ce manifeste si l'un de ces champs manque. Aucun remplacement n'est obligatoire
+lorsqu'un candidat est retiré.
 
 Le gate pilote audite ces cinq systèmes dans une **révision candidate complète
 des 115 systèmes**. Il n'accepte pas une mini-révision incompatible avec le

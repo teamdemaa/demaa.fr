@@ -95,7 +95,11 @@ function getToolDirectoryAliases(tool: Pick<ToolDirectoryItem, "name" | "slug">)
   return Array.from(aliases);
 }
 
-export const toolDirectory = toolDirectoryPayload.tools.filter(
+export const toolDirectoryCandidatePool = toolDirectoryPayload.tools.filter(
+  (tool) => tool.status !== "deprecated",
+);
+
+export const toolDirectory = toolDirectoryCandidatePool.filter(
   (tool) => tool.status !== "hidden" && tool.status !== "deprecated",
 );
 
@@ -127,6 +131,12 @@ export function findToolDirectoryItemBySlug(
 
 export function getToolDirectoryItemBySlug(slug: string): ToolDirectoryItem | null {
   return toolDirectoryBySlug[slug] ?? null;
+}
+
+export function getToolDirectoryCandidateItemBySlug(
+  slug: string,
+): ToolDirectoryItem | null {
+  return findToolDirectoryItemBySlug(toolDirectoryCandidatePool, slug);
 }
 
 export function resolveToolDirectorySlugInList(
