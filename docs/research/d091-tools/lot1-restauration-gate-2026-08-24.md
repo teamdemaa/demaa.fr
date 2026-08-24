@@ -77,11 +77,13 @@ hors sélection.
   défilement horizontal normal, aucun overlay d'erreur ;
 - aucun log runtime Vercel de niveau `error` après la recette.
 
-## Gates restant avant toute publication
+## Décision de clôture du lot
 
-1. valider métier l'ordre et la densité des sept compositions ;
-2. confirmer que les alternatives sont compréhensibles sans badge ni module
-   d'aide au choix ;
-3. poursuivre les autres familles avec la même méthode ;
-4. ne déplacer le pointeur Firebase qu'après couverture des 115 systèmes,
-   recette globale, rollback vérifié et GO PROD explicite.
+L'utilisatrice accepte la conservation de ces sept compositions sans demander
+une revue carte par carte supplémentaire. Cette décision clôt le Lot 1 comme
+recherche versionnée ; elle n'autorise ni son import ni son activation.
+
+La généralisation aux 103 autres systèmes est différée. Si elle reprend, elle
+doit appliquer la même méthode, couvrir les 115 systèmes, passer une recette
+globale et vérifier le rollback. Le pointeur Firebase ne peut être déplacé
+qu'après un nouveau GO PROD explicite.

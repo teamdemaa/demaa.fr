@@ -1,6 +1,6 @@
 # ADR 0022 - Administration éditoriale des Outils
 
-- Statut : `validated`
+- Statut : lecture seule livrée ; édition et activation différées
 - Décision : D-097
 - Date : 24 août 2026
 - Portée : administration Team Demaa, curation D-091 et activation Firebase
@@ -76,5 +76,7 @@ reste une opération séparée et auditée. L'activation exige :
 5. recette Preview.
 6. activation Firebase seulement après GO PROD séparé.
 
-La vue lecture seule est livrée. Les mutations, la création d'une candidate et
-l'activation attendent la validation métier du pilote D-091 et des GO séparés.
+La vue lecture seule est livrée et constitue la cible actuelle. Les mutations,
+la création d'une candidate et l'activation sont différées sans échéance ; leur
+présence dans ce séquencement ne constitue pas un chantier actif. Toute reprise
+exigera un nouveau GO et conservera les gates D-091 et Production ci-dessus.

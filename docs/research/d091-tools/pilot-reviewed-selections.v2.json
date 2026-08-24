@@ -646,9 +646,7 @@
     }
   ],
   "activationBlockers": [
-    "Construire une révision Firebase candidate complète des 115 systèmes sans changer le pointeur actif.",
-    "Auditer la révision candidate contre cette sélection revue et l’export actif figé.",
-    "Recetter API, interface, pages publiques, HTML et JSON-LD sur Preview.",
+    "Terminer la revue éditoriale des 115 systèmes avant toute activation globale D-091.",
     "Obtenir un GO PROD explicite avant tout déplacement du pointeur Firebase."
   ]
 }

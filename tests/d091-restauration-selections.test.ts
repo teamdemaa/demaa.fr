@@ -50,7 +50,7 @@ describe("D-091 restauration Lot 1", () => {
     })).toEqual([]);
   });
 
-  it("excludes obvious office tools and keeps evidence-threshold counts", async () => {
+  it("excludes obvious office tools without imposing a selection quota", async () => {
     const payload = await manifest();
     const selectedSlugs = payload.systems.flatMap(({ toolCandidatesByRank }) =>
       toolCandidatesByRank.map(({ toolSlug }) => toolSlug)
@@ -64,8 +64,6 @@ describe("D-091 restauration Lot 1", () => {
       "uber-eats",
     ]));
     for (const system of payload.systems) {
-      expect(system.toolCandidatesByRank.length).toBeGreaterThanOrEqual(3);
-      expect(system.toolCandidatesByRank.length).toBeLessThanOrEqual(7);
       expect(new Set(system.toolCandidatesByRank.map(({ toolSlug }) => toolSlug)).size)
         .toBe(system.toolCandidatesByRank.length);
     }

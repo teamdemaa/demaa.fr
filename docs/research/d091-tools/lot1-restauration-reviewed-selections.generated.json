@@ -686,9 +686,7 @@
     }
   ],
   "activationBlockers": [
-    "Faire valider la composition et l’ordre des sept métiers restauration par l’utilisatrice.",
-    "Recetter le candidat complet en Preview sans modifier le pointeur Firebase actif.",
-    "Terminer la revue des 115 métiers avant toute activation globale D-091.",
-    "Obtenir un GO PROD séparé pour l’import et le déplacement atomique du pointeur Firebase."
+    "Terminer la revue éditoriale des 115 systèmes avant toute activation globale D-091.",
+    "Obtenir un GO PROD explicite avant tout déplacement du pointeur Firebase."
   ]
 }

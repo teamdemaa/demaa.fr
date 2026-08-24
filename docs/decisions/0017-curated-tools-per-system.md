@@ -4,8 +4,8 @@
 - Statut : validée pour cadrage
 - Date : 22 août 2026
 - Phase : méthode pilote fusionnée sans activation ; Lot 1 Restauration recetté
-  en Preview depuis une candidate locale `draft` ; validation métier,
-  généralisation restante et publication non commencées
+  en Preview et accepté comme recherche versionnée ; généralisation aux 103
+  autres systèmes et publication différées
 
 ## Contexte
 
