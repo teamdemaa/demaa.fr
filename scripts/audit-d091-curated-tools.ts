@@ -3,6 +3,7 @@ import path from "node:path";
 
 import {
   D091_PILOT_SYSTEM_SLUGS,
+  D091_RESTAURATION_SYSTEM_SLUGS,
   validateCuratedEcosystemCandidateRevision,
   validateCuratedToolsCandidateRevision,
 } from "@/lib/curated-tools-candidate-audit";
@@ -31,11 +32,15 @@ async function readRevision(filePath: string) {
 const args = process.argv.slice(2);
 const pilotMode = args[0] === "--pilot";
 if (pilotMode) args.shift();
+const restaurationMode = args[0] === "--restauration";
+if (restaurationMode) args.shift();
 const candidatePath = args[0];
 if (!candidatePath) {
   throw new Error(
     pilotMode
       ? "Usage: npm run audit:d091:pilot -- <candidate.json> [active-revision.json] [research.json]"
+      : restaurationMode
+      ? "Usage: npm run audit:d091:restauration -- <candidate.json> [active-revision.json] [research.json]"
       : "Usage: npm run audit:d091 -- <candidate.json> <active-revision.json> <research.json>",
   );
 }
@@ -44,6 +49,8 @@ const activePath = args[1] ??
   "src/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json";
 const researchPath = args[2] ?? (pilotMode
   ? "docs/research/d091-tools/pilot-reviewed-selections.v2.json"
+  : restaurationMode
+  ? "docs/research/d091-tools/lot1-restauration-plus-pilot-reviewed-selections.generated.json"
   : undefined);
 if (!researchPath) {
   throw new Error(
@@ -60,9 +67,11 @@ const [candidate, activeRevision, research] = await Promise.all([
 const canonicalSystemSlugs = enterpriseCatalog.map(({ slug }) => slug);
 const auditSystemSlugs = pilotMode
   ? [...D091_PILOT_SYSTEM_SLUGS]
+  : restaurationMode
+  ? [...D091_PILOT_SYSTEM_SLUGS, ...D091_RESTAURATION_SYSTEM_SLUGS]
   : canonicalSystemSlugs;
 const activeToolSlugs = new Set(toolDirectoryCandidatePool.map(getToolDirectorySlug));
-const researchErrors = pilotMode
+const researchErrors = pilotMode || restaurationMode
   ? validateReviewedSolutionCurationResearchManifest(research, {
       knownSystemSlugs: new Set(canonicalSystemSlugs),
       knownToolSlugs: activeToolSlugs,
@@ -117,12 +126,20 @@ if (errors.length > 0) {
 } else {
   console.log(JSON.stringify({
     revisionId: candidate.revisionId,
-    scope: pilotMode ? "five-system-pilot" : "all-115-systems",
+    scope: pilotMode
+      ? "five-system-pilot"
+      : restaurationMode
+      ? "pilot-plus-seven-restauration-systems"
+      : "all-115-systems",
     systems: auditSystemSlugs.length,
     softwarePlacements: candidate.placements.filter(
       ({ placement }) => placement.section === "software",
     ).length,
     researchManifest: researchPath,
-    status: pilotMode ? "pilot-ready-for-preview" : "ready-for-final-preview",
+    status: pilotMode
+      ? "pilot-ready-for-preview"
+      : restaurationMode
+      ? "restauration-lot-ready-for-preview"
+      : "ready-for-final-preview",
   }, null, 2));
 }

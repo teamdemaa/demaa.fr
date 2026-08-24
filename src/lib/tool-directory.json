@@ -6166,6 +6166,10 @@
       "slug": "innovorder",
       "name": "Innovorder",
       "url": "https://www.innovorder.com/",
+      "sources": [
+        "https://www.innovorder.com/"
+      ],
+      "lastReviewedAt": "2026-08-24",
       "category": "Caisse & réservation",
       "sectors": [
         "Restauration"
@@ -9654,6 +9658,156 @@
       ],
       "lastReviewedAt": "2026-07-23",
       "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "combo",
+      "name": "Combo",
+      "url": "https://combohr.com/fr/secteur/restauration-traditionnelle",
+      "category": "RH & planning",
+      "sectors": [
+        "Restauration",
+        "Commerce local"
+      ],
+      "description": "Planning, pointage, dossiers salariés et préparation de la paie pour les équipes de restauration et de boulangerie.",
+      "tags": [
+        "Planning",
+        "Pointage",
+        "Paie",
+        "Restauration"
+      ],
+      "bestFor": "Réduire le temps consacré aux plannings, aux heures et à la préparation de la paie lorsque l’établissement emploie une équipe.",
+      "pricingHint": "Payant",
+      "keyFeatures": [
+        "Planning des équipes",
+        "Pointeuse numérique",
+        "Suivi des absences et heures",
+        "Export des variables de paie",
+        "Dossiers et documents salariés"
+      ],
+      "idealFor": [
+        "Restaurants et cafés avec plusieurs salariés",
+        "Boulangeries avec équipes de vente et de production",
+        "Établissements soumis aux conventions de la restauration"
+      ],
+      "sources": [
+        "https://combohr.com/fr/secteur/restauration-traditionnelle",
+        "https://combohr.com/fr/secteur/boulangerie"
+      ],
+      "lastReviewedAt": "2026-08-24",
+      "status": "hidden",
+      "scope": "business"
+    },
+    {
+      "slug": "traqfood",
+      "name": "Traqfood",
+      "url": "https://www.traqfood.com/fr/",
+      "category": "Conformité & qualité",
+      "sectors": [
+        "Restauration",
+        "Commerce local"
+      ],
+      "description": "Application HACCP pour la traçabilité alimentaire, les températures, le nettoyage, les contrôles à réception et l’étiquetage.",
+      "tags": [
+        "HACCP",
+        "Traçabilité",
+        "Températures",
+        "Hygiène"
+      ],
+      "bestFor": "Remplacer les relevés et classeurs papier par un suivi HACCP simple et retrouvable lors d’un contrôle.",
+      "pricingHint": "À partir de 19,99 € / mois",
+      "keyFeatures": [
+        "Traçabilité des produits",
+        "Relevés de température",
+        "Plan de nettoyage",
+        "Contrôle à réception",
+        "Étiquetage DLC et DDM"
+      ],
+      "idealFor": [
+        "Restaurants indépendants",
+        "Food trucks et dark kitchens",
+        "Traiteurs et commerces de bouche"
+      ],
+      "sources": [
+        "https://www.traqfood.com/fr/"
+      ],
+      "lastReviewedAt": "2026-08-24",
+      "status": "hidden",
+      "scope": "business"
+    },
+    {
+      "slug": "melba",
+      "name": "Melba",
+      "url": "https://melba.io/fr/",
+      "category": "Gestion & production",
+      "sectors": [
+        "Restauration",
+        "Commerce local"
+      ],
+      "description": "Gestion des recettes, coûts, marges, stocks, achats, production et traçabilité pour les professionnels de la restauration.",
+      "tags": [
+        "Fiches techniques",
+        "Marge",
+        "Stock",
+        "Production"
+      ],
+      "bestFor": "Structurer les recettes et la production lorsque le coût matière, les achats ou les volumes ne sont plus pilotables dans un simple tableur.",
+      "pricingHint": "Sur devis",
+      "keyFeatures": [
+        "Fiches techniques et coûts de revient",
+        "Stocks et commandes fournisseurs",
+        "Planning et bons de production",
+        "Devis et ventes pour traiteurs",
+        "Traçabilité"
+      ],
+      "idealFor": [
+        "Traiteurs avec devis et production planifiée",
+        "Restaurants qui doivent piloter précisément leur coût matière",
+        "Boulangeries avec recettes et production structurées"
+      ],
+      "sources": [
+        "https://melba.io/fr/gestion-ventes-restauration",
+        "https://melba.io/fr/logiciel-traiteurs"
+      ],
+      "lastReviewedAt": "2026-08-24",
+      "status": "hidden",
+      "scope": "business"
+    },
+    {
+      "slug": "toporder",
+      "name": "Toporder",
+      "url": "https://toporder.fr/",
+      "category": "Caisse & réservation",
+      "sectors": [
+        "Commerce local",
+        "Restauration"
+      ],
+      "description": "Caisse et pilotage conçus pour les commerces de bouche, avec commandes, stocks, aide à la production, fidélité et vente en ligne.",
+      "tags": [
+        "Boulangerie",
+        "Caisse",
+        "Production",
+        "Stock"
+      ],
+      "bestFor": "Relier l’encaissement, les commandes et la préparation dans une boulangerie ou pâtisserie de proximité.",
+      "pricingHint": "À partir de 39 € HT / mois",
+      "keyFeatures": [
+        "Caisse certifiée NF525",
+        "Commandes centralisées",
+        "Aide à la production",
+        "Suivi des stocks",
+        "Vente en ligne et fidélité"
+      ],
+      "idealFor": [
+        "Boulangeries et pâtisseries indépendantes",
+        "Commerces de bouche qui préparent sur commande",
+        "Petits réseaux de points de vente"
+      ],
+      "sources": [
+        "https://toporder.fr/"
+      ],
+      "lastReviewedAt": "2026-08-24",
+      "status": "hidden",
       "scope": "business"
     }
   ]

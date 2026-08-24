@@ -14,12 +14,30 @@ import {
 
 const ACTIVE_REVISION_PATH =
   "src/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json";
-const REVIEWED_SELECTION_PATH =
+const PILOT_REVIEWED_SELECTION_PATH =
   "docs/research/d091-tools/pilot-reviewed-selections.v2.json";
-const OUTPUT_PATH =
-  "docs/research/d091-tools/pilot-candidate-revision.generated.json";
-const CANDIDATE_CREATED_AT = "2026-08-24T18:30:00.000Z";
+const RESTAURATION_REVIEWED_SELECTION_PATH =
+  "docs/research/d091-tools/lot1-restauration-reviewed-selections.generated.json";
+const IS_RESTAURATION_GENERALIZATION = process.argv.includes("--restauration");
+const REVIEWED_SELECTION_PATHS = IS_RESTAURATION_GENERALIZATION
+  ? [PILOT_REVIEWED_SELECTION_PATH, RESTAURATION_REVIEWED_SELECTION_PATH]
+  : [PILOT_REVIEWED_SELECTION_PATH];
+const OUTPUT_PATH = IS_RESTAURATION_GENERALIZATION
+  ? "docs/research/d091-tools/lot1-restauration-candidate-revision.generated.json"
+  : "docs/research/d091-tools/pilot-candidate-revision.generated.json";
+const CANDIDATE_CREATED_AT = IS_RESTAURATION_GENERALIZATION
+  ? "2026-08-24T19:45:00.000Z"
+  : "2026-08-24T18:30:00.000Z";
 const REVIEW_EXPIRES_AT = "2027-02-24T18:30:00.000Z";
+const CANDIDATE_REVISION_ID = IS_RESTAURATION_GENERALIZATION
+  ? "solutions-2026-08-24-d091-tpe-restauration-candidate-v1"
+  : "solutions-2026-08-24-d091-tpe-pilot-candidate-v4";
+const CANDIDATE_REVIEWER = IS_RESTAURATION_GENERALIZATION
+  ? "D-091 TPE pilot plus restauration review v1"
+  : "D-091 TPE pilot review v4";
+const CANDIDATE_VERSION = IS_RESTAURATION_GENERALIZATION
+  ? "d091.restauration.v1"
+  : "d091.pilot.v4";
 
 type ReviewedCandidate = {
   toolSlug: string;
@@ -42,6 +60,7 @@ type ReviewedSystem = {
 type ReviewedManifest = {
   reviewStage: "placement-reviewed";
   systems: ReviewedSystem[];
+  activationBlockers?: string[];
 };
 
 function officialEvidence(input: {
@@ -59,13 +78,22 @@ function officialEvidence(input: {
   }];
 }
 
-const [activeInput, reviewedInput] = await Promise.all([
+const [activeInput, ...reviewedInputs] = await Promise.all([
   readFile(path.resolve(ACTIVE_REVISION_PATH), "utf8").then(JSON.parse),
-  readFile(path.resolve(REVIEWED_SELECTION_PATH), "utf8").then(
-    (value) => JSON.parse(value) as ReviewedManifest,
+  ...REVIEWED_SELECTION_PATHS.map((selectionPath) =>
+    readFile(path.resolve(selectionPath), "utf8").then(
+      (value) => JSON.parse(value) as ReviewedManifest,
+    )
   ),
 ]);
 const active = parseFirebaseSolutionRegistryRevision(activeInput);
+const reviewedInput = {
+  ...reviewedInputs[0],
+  systems: reviewedInputs.flatMap(({ systems }) => systems),
+  activationBlockers: [...new Set(
+    reviewedInputs.flatMap(({ activationBlockers }) => activationBlockers ?? []),
+  )],
+};
 const toolsBySlug = new Map(
   toolDirectoryCandidatePool.map((tool) => [getToolDirectorySlug(tool), tool]),
 );
@@ -120,14 +148,14 @@ const resources = active.resources.map((entry) => {
         claim: reviewed.evidenceClaim,
         capturedAt: reviewed.reviewedAt,
       }),
-      reviewer: "D-091 TPE pilot review v4",
+      reviewer: CANDIDATE_REVIEWER,
       reviewedAt: reviewed.reviewedAt,
       expiresAt: REVIEW_EXPIRES_AT,
       interactionMode: "external_link" as const,
       href: reviewed.officialSourceUrl,
       commercialRelationship: "none" as const,
       status: "published" as const,
-      resourceVersion: "d091.pilot.v4",
+      resourceVersion: CANDIDATE_VERSION,
       publicationBlockers: [],
     },
   };
@@ -146,7 +174,7 @@ for (const toolSlug of selectedToolSlugs) {
         claim: reviewed.evidenceClaim,
         capturedAt: reviewed.reviewedAt,
       }),
-      reviewer: "D-091 TPE pilot review v4",
+      reviewer: CANDIDATE_REVIEWER,
       reviewedAt: reviewed.reviewedAt,
       expiresAt: REVIEW_EXPIRES_AT,
       interactionMode: "external_link",
@@ -157,7 +185,7 @@ for (const toolSlug of selectedToolSlugs) {
       description: tool.description,
       commercialRelationship: "none",
       status: "published",
-      resourceVersion: "d091.pilot.v4",
+      resourceVersion: CANDIDATE_VERSION,
       publicationBlockers: [],
     },
   });
@@ -219,7 +247,7 @@ for (const system of reviewedInput.systems) {
           claim: reviewed.evidenceClaim,
           capturedAt: reviewed.reviewedAt,
         }),
-        reviewer: "D-091 TPE pilot review v4",
+        reviewer: CANDIDATE_REVIEWER,
         reviewedAt: reviewed.reviewedAt,
         expiresAt: REVIEW_EXPIRES_AT,
         placementId,
@@ -233,7 +261,7 @@ for (const system of reviewedInput.systems) {
         editorialStatus: "selected",
         commercialRelationship: "none",
         status: "published",
-        placementVersion: "d091.pilot.v4",
+        placementVersion: CANDIDATE_VERSION,
         publicationBlockers: [],
       },
       presentation: {
@@ -249,10 +277,10 @@ for (const system of reviewedInput.systems) {
 
 const candidateWithoutFingerprint = {
   schemaVersion: 1,
-  revisionId: "solutions-2026-08-24-d091-tpe-pilot-candidate-v4",
+  revisionId: CANDIDATE_REVISION_ID,
   revisionStatus: "draft",
   createdAt: CANDIDATE_CREATED_AT,
-  createdBy: "D-091 TPE pilot review v4",
+  createdBy: CANDIDATE_REVIEWER,
   sourceFingerprint: "0".repeat(64),
   knownSystemSlugs: [...active.knownSystemSlugs],
   resources,

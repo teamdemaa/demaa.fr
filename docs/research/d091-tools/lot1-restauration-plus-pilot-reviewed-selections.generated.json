@@ -1,0 +1,1330 @@
+{
+  "schemaVersion": 2,
+  "decisionId": "D-091",
+  "status": "research-candidate",
+  "selectionPolicy": "evidence-threshold",
+  "runtimeActivation": false,
+  "reviewStage": "placement-reviewed",
+  "systems": [
+    {
+      "systemSlug": "agence-de-recrutement",
+      "priorityNeeds": [
+        "candidatures-et-vivier",
+        "sourcing-et-diffusion",
+        "relation-clients",
+        "qualification-et-entretiens",
+        "automatisation-et-reporting"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "nicoka-cabs",
+          "coveredNeedIds": [
+            "candidatures-et-vivier",
+            "sourcing-et-diffusion",
+            "relation-clients",
+            "qualification-et-entretiens",
+            "automatisation-et-reporting"
+          ],
+          "usage": "Piloter candidats, clients, missions, multidiffusion, portail client et facturation dans une plateforme de cabinet unique.",
+          "fitRationale": "Nicoka CABS est l’option la plus directement alignée avec un cabinet de recrutement opérant en France et souhaitant limiter les briques annexes.",
+          "fitConstraints": [
+            "Comparer le périmètre fonctionnel et le coût par utilisateur avec le volume réel de missions.",
+            "Prévoir la migration et la gouvernance des données candidats et clients."
+          ],
+          "targetProfile": "Cabinet de recrutement ou de chasse de têtes, de la petite équipe à la structure multi-utilisateurs, opérant principalement en France.",
+          "franceAvailability": "Solution française commercialisée en France, équipe basée en France et données annoncées comme hébergées en France par l’éditeur.",
+          "officialSourceUrl": "https://cabs.nicoka.com/",
+          "evidenceClaim": "Nicoka CABS réunit ATS, CRM client, sourcing, multidiffusion, portail client, facturation, automatisations et reporting pour cabinets de recrutement.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "recruit-crm",
+          "coveredNeedIds": [
+            "candidatures-et-vivier",
+            "sourcing-et-diffusion",
+            "relation-clients",
+            "qualification-et-entretiens",
+            "automatisation-et-reporting"
+          ],
+          "usage": "Gérer le vivier, les missions, le pipeline client, le sourcing et les automatisations dans un ATS-CRM conçu pour les agences.",
+          "fitRationale": "Recruit CRM convient aux petites agences et équipes en croissance qui veulent un socle agence complet, international et plus léger à déployer.",
+          "fitConstraints": [
+            "Valider la localisation des données, les intégrations et les exigences RGPD propres au cabinet.",
+            "Comparer les fonctions de facturation et de diffusion nécessaires avec le plan choisi."
+          ],
+          "targetProfile": "Petite agence de recrutement ou cabinet en croissance, travaillant éventuellement avec des clients et candidats internationaux.",
+          "franceAvailability": "Service international accessible depuis la France avec interface française et engagement RGPD annoncé ; vérifier contractuellement hébergement et support attendus.",
+          "officialSourceUrl": "https://recruitcrm.io/features/",
+          "evidenceClaim": "Recruit CRM fournit aux agences de recrutement un ATS-CRM avec sourcing, candidats, clients, missions, automatisations, analyses et facturation.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "bullhorn",
+          "coveredNeedIds": [
+            "candidatures-et-vivier",
+            "sourcing-et-diffusion",
+            "relation-clients",
+            "qualification-et-entretiens",
+            "automatisation-et-reporting"
+          ],
+          "usage": "Centraliser candidats, clients, postes, placements et automatisations dans une plateforme conçue pour les petites agences et capable d'accompagner leur croissance.",
+          "fitRationale": "Bullhorn est l’alternative métier pour une petite agence qui veut démarrer avec un ATS-CRM complet et conserver la même plateforme en grandissant.",
+          "fitConstraints": [
+            "Le tarif est communiqué sur devis : comparer le coût total et les modules inclus avec Nicoka CABS et Recruit CRM.",
+            "Faire valider précisément l'onboarding, les intégrations, la reprise de données et les conditions contractuelles."
+          ],
+          "targetProfile": "Petite agence de recrutement ou cabinet en démarrage qui veut réunir candidats, clients, postes et automatisations dans un outil évolutif.",
+          "franceAvailability": "L'éditeur publie une offre française dédiée aux petites agences ; le tarif, les modules et le périmètre d'accompagnement restent à confirmer sur devis.",
+          "officialSourceUrl": "https://www.bullhorn.com/fr/logiciel-recrutement-petites-agences/",
+          "evidenceClaim": "Bullhorn présente pour les petites agences une plateforme centralisant ventes, opérations, postes, candidatures, clients, automatisations et suivi du recrutement.",
+          "reviewedAt": "2026-08-24T18:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "Trois ATS-CRM conçus pour les agences sont conservés comme alternatives réellement différenciées : cabinet français, petite agence internationale et petite agence recherchant une plateforme évolutive. Recruitee et Teamtailor restent hors du pilote car ils ciblent d’abord le recrutement interne. Google Workspace, les CRM, planificateurs, outils bureautiques et automatisations génériques sont retirés : ils n’apportent pas assez de valeur de décision ici, et les suites agence couvrent déjà l’essentiel."
+    },
+    {
+      "systemSlug": "saas",
+      "priorityNeeds": [
+        "paiement-et-revenu-recurrent",
+        "vente-et-relation-client",
+        "developpement-et-deploiement",
+        "pilotage-produit-et-qualite",
+        "support-et-automatisation",
+        "collaboration-interne"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "stripe",
+          "coveredNeedIds": [
+            "paiement-et-revenu-recurrent"
+          ],
+          "usage": "Encaisser les abonnements et paiements du produit avec une infrastructure adaptée aux revenus récurrents.",
+          "fitRationale": "Stripe couvre directement le paiement et la facturation d’un SaaS sans ajouter un système financier parallèle.",
+          "fitConstraints": [
+            "Valider frais, fiscalité, remboursements et gestion des impayés selon les marchés servis.",
+            "La mise en œuvre technique et les webhooks doivent être maintenus."
+          ],
+          "targetProfile": "SaaS vendant des abonnements ou paiements en ligne et disposant des compétences pour intégrer et maintenir les flux de paiement.",
+          "franceAvailability": "Stripe Billing est officiellement commercialisé en France et documenté en français ; valider fiscalité, moyens de paiement et entité contractante selon les marchés servis.",
+          "officialSourceUrl": "https://stripe.com/fr/billing",
+          "evidenceClaim": "Stripe Billing gère abonnements, facturation récurrente et paiements.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "pipedrive",
+          "coveredNeedIds": [
+            "vente-et-relation-client"
+          ],
+          "usage": "Suivre prospects, essais, démonstrations, opportunités et relances dans un pipeline commercial simple.",
+          "fitRationale": "Pipedrive est plus immédiatement exploitable qu’un CRM très personnalisable pour une petite équipe SaaS ayant déjà un vrai volume commercial.",
+          "fitConstraints": [
+            "Ne pas ajouter de CRM tant que le volume de prospects et de relances reste faible.",
+            "Définir un pipeline court et éviter les automatisations prématurées."
+          ],
+          "targetProfile": "Petite équipe SaaS B2B avec plusieurs opportunités et relances actives, qui veut un CRM visuel sans projet de paramétrage lourd.",
+          "franceAvailability": "Offre officielle en français destinée notamment aux petites entreprises et utilisable depuis la France.",
+          "officialSourceUrl": "https://www.pipedrive.com/fr/industries/crm-solutions-for-small-business",
+          "evidenceClaim": "Pipedrive présente un CRM pour petites entreprises avec pipeline commercial, suivi des prospects, activités et automatisations.",
+          "reviewedAt": "2026-08-24T17:02:00.000Z"
+        },
+        {
+          "toolSlug": "github",
+          "coveredNeedIds": [
+            "developpement-et-deploiement",
+            "collaboration-interne"
+          ],
+          "usage": "Centraliser le code, les revues, les issues techniques et les automatisations de livraison du produit.",
+          "fitRationale": "GitHub constitue le socle de collaboration et de traçabilité technique pour une équipe qui développe son SaaS.",
+          "fitConstraints": [
+            "Définir les droits, protections de branches et règles de revue.",
+            "Ne remplace pas à lui seul le pilotage produit ou la supervision en production."
+          ],
+          "targetProfile": "Équipe SaaS développant et maintenant son propre code avec revues, branches et automatisations de livraison.",
+          "franceAvailability": "Service mondial accessible en France ; vérifier localisation, politique de sécurité et clauses contractuelles selon la sensibilité du code.",
+          "officialSourceUrl": "https://github.com/features",
+          "evidenceClaim": "GitHub regroupe dépôts, collaboration, issues, pull requests et automatisations.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "vercel",
+          "coveredNeedIds": [
+            "developpement-et-deploiement"
+          ],
+          "usage": "Déployer et prévisualiser une application web lorsque l’architecture du SaaS est compatible avec la plateforme.",
+          "fitRationale": "Vercel apporte une valeur distincte de GitHub pour le déploiement, les previews et l’exploitation du frontend.",
+          "fitConstraints": [
+            "Pertinent surtout pour les applications et frameworks compatibles avec la plateforme.",
+            "Surveiller coûts, régions, limites et dépendance à l’hébergement choisi."
+          ],
+          "targetProfile": "SaaS web utilisant un framework et une architecture compatibles avec Vercel, notamment pour le frontend et les previews.",
+          "franceAvailability": "Plateforme mondiale utilisable depuis la France ; sélectionner les régions disponibles et valider résidence, transferts et coûts des données.",
+          "officialSourceUrl": "https://vercel.com/docs",
+          "evidenceClaim": "Vercel fournit déploiements, previews et infrastructure pour applications web.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "linear",
+          "coveredNeedIds": [
+            "pilotage-produit-et-qualite",
+            "collaboration-interne"
+          ],
+          "usage": "Prioriser bugs, cycles et évolutions produit dans un espace commun à l’équipe produit et technique.",
+          "fitRationale": "Linear couvre le pilotage de l’exécution produit sans dupliquer le suivi de code de GitHub.",
+          "fitConstraints": [
+            "Peut être superflu pour une équipe très petite utilisant déjà efficacement les issues GitHub.",
+            "Définir une frontière claire entre demandes produit et tâches techniques."
+          ],
+          "targetProfile": "Équipe produit et engineering ayant plusieurs sujets en parallèle et un besoin réel de cycles, projets et roadmap.",
+          "franceAvailability": "Service SaaS international accessible depuis la France, principalement anglophone ; vérifier les exigences de traitement des données internes.",
+          "officialSourceUrl": "https://linear.app/features",
+          "evidenceClaim": "Linear fournit issues, cycles et roadmaps pour les équipes produit et engineering.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "sentry",
+          "coveredNeedIds": [
+            "pilotage-produit-et-qualite"
+          ],
+          "usage": "Détecter et prioriser les erreurs rencontrées par les utilisateurs dans l’application en production.",
+          "fitRationale": "Sentry apporte une observation des erreurs distincte de l’analytics produit et du suivi des tickets.",
+          "fitConstraints": [
+            "Configurer l’échantillonnage et la protection des données sensibles.",
+            "Un bon triage reste nécessaire pour éviter le bruit d’alertes."
+          ],
+          "targetProfile": "SaaS en production dont l’équipe technique doit diagnostiquer erreurs applicatives, régressions et problèmes de performance.",
+          "franceAvailability": "Service mondial accessible en France ; configurer scrubbing, échantillonnage et région d’hébergement compatible avec les obligations de données.",
+          "officialSourceUrl": "https://sentry.io/welcome/",
+          "evidenceClaim": "Sentry fournit suivi des erreurs et performance des applications.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "posthog",
+          "coveredNeedIds": [
+            "pilotage-produit-et-qualite"
+          ],
+          "usage": "Comprendre l’usage réel du produit, les parcours et l’impact des évolutions sur l’activation et la rétention.",
+          "fitRationale": "PostHog couvre l’analytics produit et l’expérimentation, un besoin différent de la détection d’erreurs.",
+          "fitConstraints": [
+            "Définir un plan de mesure limité avant d’instrumenter.",
+            "Respecter le consentement et minimiser les données collectées."
+          ],
+          "targetProfile": "Équipe SaaS ayant déjà des utilisateurs et des décisions produit à éclairer par événements, parcours, replay ou expérimentations.",
+          "franceAvailability": "Cloud et auto-hébergement utilisables depuis la France ; choisir le mode et la région adaptés au consentement et à la minimisation des données.",
+          "officialSourceUrl": "https://posthog.com/product",
+          "evidenceClaim": "PostHog propose analytics produit, replay, feature flags et expérimentation.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "intercom",
+          "coveredNeedIds": [
+            "support-et-automatisation"
+          ],
+          "usage": "Centraliser les demandes d’aide, la messagerie client et le libre-service lorsque le volume de support le justifie.",
+          "fitRationale": "Intercom couvre la relation support dans le produit et ses automatisations sans être présenté comme indispensable au démarrage.",
+          "fitConstraints": [
+            "Le coût et la complexité peuvent être disproportionnés pour un très faible volume de support.",
+            "Définir précisément les données utilisateur transmises au service."
+          ],
+          "targetProfile": "SaaS avec un volume de support récurrent justifiant une boîte partagée, une base de connaissances et des automatisations.",
+          "franceAvailability": "Service international accessible en France ; confirmer langue de support, conditions contractuelles et données utilisateur transférées.",
+          "officialSourceUrl": "https://www.intercom.com/helpdesk",
+          "evidenceClaim": "Intercom fournit helpdesk, messagerie, base de connaissances et automatisation du support.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "La sélection suit la chaîne revenu, vente, développement, déploiement, qualité, apprentissage produit et support. Les outils génériques de bureautique et d’automatisation sont retirés car le socle retenu couvre déjà la collaboration et les besoins prioritaires."
+    },
+    {
+      "systemSlug": "agence-web",
+      "priorityNeeds": [
+        "conception-et-production",
+        "developpement-et-deploiement",
+        "gestion-projets-clients",
+        "vente-et-facturation",
+        "collaboration-et-automatisation"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "figma",
+          "coveredNeedIds": [
+            "conception-et-production",
+            "collaboration-et-automatisation"
+          ],
+          "usage": "Concevoir, prototyper et faire valider les interfaces avec les clients avant la production.",
+          "fitRationale": "Figma couvre la conception collaborative, un besoin distinct des outils de construction et de déploiement.",
+          "fitConstraints": [
+            "Définir les règles de partage et de validation client.",
+            "Le design system doit rester proportionné à la taille des projets."
+          ],
+          "targetProfile": "Agence web produisant des interfaces, prototypes et validations visuelles avec designers, développeurs et clients.",
+          "franceAvailability": "Service mondial accessible en France avec interface web ; vérifier accès invités, traitement des fichiers clients et clauses de données.",
+          "officialSourceUrl": "https://www.figma.com/design/",
+          "evidenceClaim": "Figma permet la conception et le prototypage collaboratifs d’interfaces.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "webflow",
+          "coveredNeedIds": [
+            "conception-et-production",
+            "developpement-et-deploiement"
+          ],
+          "usage": "Produire des sites marketing visuels lorsque le projet correspond au CMS et au modèle d’hébergement Webflow.",
+          "fitRationale": "Webflow constitue une option de production visuelle distincte pour les projets où la liberté de mise en page prime.",
+          "fitConstraints": [
+            "Vérifier coûts d’hébergement, export, CMS et besoins fonctionnels avant de standardiser.",
+            "Ne convient pas à tous les projets applicatifs ou fortement personnalisés."
+          ],
+          "targetProfile": "Agence livrant des sites marketing ou éditoriaux visuels compatibles avec le CMS et l’hébergement managé Webflow.",
+          "franceAvailability": "Service international accessible en France ; valider langue de l’équipe, hébergement, transfert de données et modalités de remise au client.",
+          "officialSourceUrl": "https://webflow.com/",
+          "evidenceClaim": "Webflow fournit conception visuelle, CMS et publication de sites web.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "wordpress",
+          "coveredNeedIds": [
+            "conception-et-production",
+            "developpement-et-deploiement"
+          ],
+          "usage": "Livrer des sites éditoriaux ou vitrines extensibles lorsque le client doit garder la main sur ses contenus.",
+          "fitRationale": "WordPress reste une alternative distincte à Webflow pour les projets nécessitant extensions, portabilité ou écosystème CMS ouvert.",
+          "fitConstraints": [
+            "Prévoir maintenance, mises à jour, sécurité et qualité des extensions.",
+            "Le choix d’hébergement et de thème influence fortement la performance."
+          ],
+          "targetProfile": "Agence livrant des sites administrables qui nécessitent portabilité, extensions ou maîtrise du choix d’hébergement.",
+          "franceAvailability": "Logiciel open source utilisable et hébergeable en France ; la disponibilité réelle dépend de l’hébergeur, des extensions et de la maintenance retenus.",
+          "officialSourceUrl": "https://wordpress.org/",
+          "evidenceClaim": "WordPress est un CMS open source extensible pour sites et contenus administrables.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "github",
+          "coveredNeedIds": [
+            "developpement-et-deploiement",
+            "collaboration-et-automatisation"
+          ],
+          "usage": "Versionner le code, organiser les revues et automatiser la livraison des projets développés sur mesure.",
+          "fitRationale": "GitHub est pertinent pour la partie développement de l’agence sans être imposé aux projets entièrement no-code.",
+          "fitConstraints": [
+            "Inutile pour un projet sans code ni fichiers versionnés.",
+            "Configurer les accès clients et protections de branches."
+          ],
+          "targetProfile": "Agence réalisant des sites ou applications sur mesure avec code versionné et collaboration entre développeurs.",
+          "franceAvailability": "Service mondial accessible en France ; vérifier droits des clients, sécurité des dépôts et exigences contractuelles sur le code.",
+          "officialSourceUrl": "https://github.com/features",
+          "evidenceClaim": "GitHub fournit dépôts, collaboration, revues et automatisations de développement.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "vercel",
+          "coveredNeedIds": [
+            "developpement-et-deploiement"
+          ],
+          "usage": "Déployer les sites et applications web codés avec des previews partageables pour la recette client.",
+          "fitRationale": "Vercel apporte une couche de déploiement distincte pour les projets compatibles, complémentaire au dépôt GitHub.",
+          "fitConstraints": [
+            "Réservé aux architectures compatibles ; ne remplace pas tous les hébergeurs.",
+            "Surveiller coûts et limites selon le trafic et les fonctions serveur."
+          ],
+          "targetProfile": "Agence développant des projets web compatibles avec Vercel et souhaitant partager des previews de recette aux clients.",
+          "franceAvailability": "Plateforme mondiale utilisable depuis la France ; valider régions, résidence des données, limites et responsabilités d’hébergement client.",
+          "officialSourceUrl": "https://vercel.com/docs",
+          "evidenceClaim": "Vercel fournit déploiements et previews pour applications web.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "asana",
+          "coveredNeedIds": [
+            "gestion-projets-clients",
+            "collaboration-et-automatisation"
+          ],
+          "usage": "Planifier les projets clients, responsabilités, validations et échéances dans une vue partagée par l’équipe.",
+          "fitRationale": "Asana structure le delivery multi-projets sans dupliquer les outils de production ou de vente.",
+          "fitConstraints": [
+            "Définir des modèles de projet simples pour éviter la surcharge de gestion.",
+            "Limiter l’accès client aux informations qui le concernent."
+          ],
+          "targetProfile": "Agence gérant plusieurs projets clients, dépendances, validations et responsabilités au sein d’une équipe.",
+          "franceAvailability": "Offre et interface disponibles en français ; contrôler les accès invités, données clients et paramètres de sécurité du contrat.",
+          "officialSourceUrl": "https://asana.com/fr/product",
+          "evidenceClaim": "Asana organise projets, tâches, responsabilités, échéances et workflows.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "sellsy",
+          "coveredNeedIds": [
+            "vente-et-facturation"
+          ],
+          "usage": "Relier prospection, devis, factures et relances commerciales pour suivre la rentabilité du portefeuille client.",
+          "fitRationale": "Sellsy couvre le cycle commercial et administratif d’une agence française dans un outil distinct du suivi de production.",
+          "fitConstraints": [
+            "Vérifier les modules réellement nécessaires et l’intégration comptable.",
+            "Ne pas dupliquer les données avec un autre CRM déjà installé."
+          ],
+          "targetProfile": "Agence française souhaitant relier CRM, devis, facturation et relances dans un même environnement commercial.",
+          "franceAvailability": "Solution française commercialisée et accompagnée en France, adaptée aux règles de facturation françaises ; vérifier modules et plateforme agréée retenus.",
+          "officialSourceUrl": "https://go.sellsy.com/",
+          "evidenceClaim": "Sellsy regroupe CRM, devis, facturation et suivi commercial pour TPE et PME.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "n8n",
+          "coveredNeedIds": [
+            "collaboration-et-automatisation"
+          ],
+          "usage": "Automatiser les transferts entre formulaires, CRM, gestion de projet et outils de production lorsque les intégrations natives sont insuffisantes.",
+          "fitRationale": "n8n est retenu uniquement comme couche d’intégration pour les agences capables de maintenir leurs workflows.",
+          "fitConstraints": [
+            "Demande conception, surveillance et maintenance des automatisations.",
+            "Valider les accès et données clients traités par chaque workflow."
+          ],
+          "targetProfile": "Agence disposant d’une compétence technique interne et de ressaisies récurrentes non couvertes par les intégrations natives.",
+          "franceAvailability": "Cloud et auto-hébergement accessibles en France ; choisir l’architecture adaptée à la sécurité, aux données clients et à la capacité de maintenance.",
+          "officialSourceUrl": "https://n8n.io/",
+          "evidenceClaim": "n8n permet de construire des workflows connectant applications et logique métier.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "La sélection sépare clairement conception, deux modes de production de sites, développement, déploiement, gestion de projets, commerce et automatisation. Slack et Google Workspace sont retirés car trop transverses pour améliorer cette sélection métier."
+    },
+    {
+      "systemSlug": "cabinet-comptable",
+      "priorityNeeds": [
+        "production-comptable",
+        "collecte-et-collaboration-client",
+        "paie-et-social",
+        "pilotage-et-conseil",
+        "documentation-et-organisation"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "pennylane",
+          "coveredNeedIds": [
+            "production-comptable",
+            "collecte-et-collaboration-client"
+          ],
+          "usage": "Gérer la production comptable et partager les flux financiers avec les clients dans une plateforme commune.",
+          "fitRationale": "Pennylane constitue une option intégrée pour les cabinets recherchant production, collaboration client et données financières.",
+          "fitConstraints": [
+            "Valider migration, modules, intégrations et couverture des dossiers du cabinet.",
+            "Ne couvre pas seul toutes les obligations sociales et documentaires."
+          ],
+          "targetProfile": "Cabinet français souhaitant réunir production comptable, gestion interne et collaboration financière avec ses clients.",
+          "franceAvailability": "Solution explicitement destinée aux cabinets d’expertise comptable français ; valider migration, couverture réglementaire et plateforme agréée selon le calendrier légal.",
+          "officialSourceUrl": "https://www.pennylane.com/fr/expert-comptable",
+          "evidenceClaim": "Pennylane propose une plateforme de production et de collaboration dédiée aux cabinets comptables.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "myunisoft",
+          "coveredNeedIds": [
+            "production-comptable",
+            "collecte-et-collaboration-client"
+          ],
+          "usage": "Structurer la production et la relation cabinet-client avec une plateforme pensée pour les cabinets français.",
+          "fitRationale": "MyUnisoft reste une alternative métier distincte pour les cabinets qui privilégient un environnement cabinet-client intégré.",
+          "fitConstraints": [
+            "Comparer profondeur fonctionnelle, migration et interopérabilité avec le système existant.",
+            "Une suite principale doit être choisie plutôt que cumulée avec une autre."
+          ],
+          "targetProfile": "Cabinet comptable français recherchant une suite souveraine de production, gestion interne et relation client.",
+          "franceAvailability": "Éditeur français destiné à la profession comptable française ; confirmer migration, hébergement, support et interopérabilité dans le contrat.",
+          "officialSourceUrl": "https://myunisoft.fr/",
+          "evidenceClaim": "MyUnisoft fournit production comptable, gestion interne et collaboration client pour les cabinets.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "acd",
+          "coveredNeedIds": [
+            "production-comptable",
+            "paie-et-social"
+          ],
+          "usage": "Couvrir une production cabinet plus profonde incluant comptabilité, fiscalité et paie dans une suite établie.",
+          "fitRationale": "ACD est conservé comme alternative structurée pour les cabinets ayant un périmètre de production plus large.",
+          "fitConstraints": [
+            "Comparer le coût et la complexité de déploiement avec la taille du cabinet.",
+            "Éviter de cumuler plusieurs suites principales de production."
+          ],
+          "targetProfile": "Cabinet français structuré ayant besoin d’une suite modulaire couvrant comptabilité, fiscalité, social, GED et gestion interne.",
+          "franceAvailability": "Suite éditée et supportée en France pour les experts-comptables ; valider le périmètre de modules, le déploiement et la migration.",
+          "officialSourceUrl": "https://www.acd-groupe.fr/",
+          "evidenceClaim": "ACD propose des logiciels de comptabilité, fiscalité, paie et gestion pour cabinets.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "silae",
+          "coveredNeedIds": [
+            "paie-et-social"
+          ],
+          "usage": "Fiabiliser la production de paie et les obligations sociales lorsque le cabinet réalise cette mission.",
+          "fitRationale": "Silae couvre le domaine paie-social distinct des fonctions de production comptable principales.",
+          "fitConstraints": [
+            "Pertinent uniquement si le cabinet assure effectivement la paie ou le social.",
+            "Vérifier formation, paramétrage et responsabilités de conformité."
+          ],
+          "targetProfile": "Cabinet produisant la paie et les déclarations sociales pour des TPE-PME françaises.",
+          "franceAvailability": "Solution française conçue pour la paie et les conventions françaises, partenaire historique des cabinets ; maintenir paramétrage, formation et veille de conformité.",
+          "officialSourceUrl": "https://www.silae.fr/solutions-paie/",
+          "evidenceClaim": "Silae propose une solution de paie et de gestion sociale destinée notamment aux professionnels.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "dext",
+          "coveredNeedIds": [
+            "collecte-et-collaboration-client"
+          ],
+          "usage": "Collecter, classer et transmettre les justificatifs pour réduire les ressaisies entre clients et cabinet.",
+          "fitRationale": "Dext répond à un point opérationnel précis de collecte documentaire, distinct du choix de la suite comptable.",
+          "fitConstraints": [
+            "Vérifier la compatibilité avec la suite de production retenue.",
+            "Définir les règles de contrôle malgré l’automatisation de la collecte."
+          ],
+          "targetProfile": "Cabinet ayant un volume significatif de justificatifs clients à collecter, extraire, classer et publier vers la production.",
+          "franceAvailability": "Offre cabinet commercialisée en France avec connecteurs comptables français ; vérifier compatibilité exacte, stockage et contrôles avant publication automatique.",
+          "officialSourceUrl": "https://dext.com/fr/",
+          "evidenceClaim": "Dext automatise la collecte et le traitement des pièces pour les cabinets comptables.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "rca",
+          "coveredNeedIds": [
+            "pilotage-et-conseil"
+          ],
+          "usage": "Produire prévisionnels, tableaux de bord et missions de conseil au-delà de la tenue comptable.",
+          "fitRationale": "RCA est retenu pour développer les missions de pilotage et de conseil, un besoin différent de la production courante.",
+          "fitConstraints": [
+            "Nécessite une offre de conseil structurée et du temps d’accompagnement client.",
+            "Vérifier les modules adaptés aux missions réellement vendues."
+          ],
+          "targetProfile": "Cabinet français développant des missions facturées de prévisionnel, pilotage, simulation, diagnostic ou restitution client.",
+          "franceAvailability": "Éditeur français dédié aux experts-comptables, avec données annoncées hébergées en France ; sélectionner uniquement les modules correspondant aux missions vendues.",
+          "officialSourceUrl": "https://rca.fr/logiciels-experts/",
+          "evidenceClaim": "RCA propose des logiciels de prévisionnel, pilotage et conseil pour experts-comptables.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "lefebvre-dalloz",
+          "coveredNeedIds": [
+            "documentation-et-organisation"
+          ],
+          "usage": "Accéder à une documentation professionnelle pour sécuriser les recherches fiscales, sociales et juridiques du cabinet.",
+          "fitRationale": "Lefebvre Dalloz couvre la documentation de référence sans être présenté comme une suite de production comptable.",
+          "fitConstraints": [
+            "Choisir les fonds documentaires correspondant aux missions du cabinet.",
+            "La documentation ne remplace pas la validation professionnelle d’un cas particulier."
+          ],
+          "targetProfile": "Experts-comptables et collaborateurs traitant des recherches fiscales, sociales et juridiques françaises récurrentes ou complexes.",
+          "franceAvailability": "Fonds documentaire français mis à jour en continu et destiné notamment aux cabinets ; choisir le niveau et les matières réellement nécessaires compte tenu du prix.",
+          "officialSourceUrl": "https://boutique.lefebvre-dalloz.fr/solution-expert-comptable.html",
+          "evidenceClaim": "La Solution Expert-Comptable Lefebvre Dalloz réunit actualité, jurisprudence, documentation et outils pour sécuriser les missions quotidiennes du cabinet.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "Trois suites principales sont conservées comme alternatives à comparer, puis quatre briques distinctes couvrent paie, collecte, conseil et documentation. Tiimora reste exclu tant que transparence, sécurité et relation commerciale ne sont pas validées."
+    },
+    {
+      "systemSlug": "batiment",
+      "priorityNeeds": [
+        "devis-et-facturation",
+        "couts-et-rentabilite-chantier",
+        "planning-equipes",
+        "suivi-terrain-et-reserves",
+        "documents-et-coordination"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "obat",
+          "coveredNeedIds": [
+            "devis-et-facturation"
+          ],
+          "usage": "Créer devis et factures avec un outil simple lorsque l’entreprise artisanale veut cadrer d’abord sa gestion commerciale.",
+          "fitRationale": "Obat est conservé comme option accessible pour les artisans et petites structures qui n’ont pas besoin d’un ERP complet.",
+          "fitConstraints": [
+            "Peut devenir limité pour le pilotage multi-chantiers ou une organisation plus complexe.",
+            "Comparer les fonctions de rentabilité et planning avant de choisir."
+          ],
+          "targetProfile": "Artisan seul, microentreprise ou petite TPE du bâtiment voulant d’abord fiabiliser devis, factures et paiements.",
+          "franceAvailability": "Solution française commercialisée pour les professionnels du bâtiment en France, avec conformité de facturation annoncée ; vérifier les fonctions nécessaires au-delà du devis.",
+          "officialSourceUrl": "https://www.obat.fr/",
+          "evidenceClaim": "Obat propose devis, factures et gestion commerciale pour artisans et entreprises du bâtiment.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "vertuoza",
+          "coveredNeedIds": [
+            "devis-et-facturation",
+            "couts-et-rentabilite-chantier",
+            "planning-equipes"
+          ],
+          "usage": "Relier gestion commerciale, planning et suivi de rentabilité dans une entreprise BTP en croissance.",
+          "fitRationale": "Vertuoza constitue l’option intégrée pour les équipes qui veulent piloter le chantier de la vente à l’exécution.",
+          "fitConstraints": [
+            "Plus structurant et coûteux qu’un simple outil de devis.",
+            "Prévoir paramétrage, reprise des données et adoption des équipes."
+          ],
+          "targetProfile": "TPE ou PME du bâtiment en croissance souhaitant une plateforme intégrée pour devis, équipes, chantiers, stock et rentabilité.",
+          "franceAvailability": "Offre officielle en français destinée aux artisans, TPE et PME ; confirmer accompagnement, facturation française et conditions contractuelles pour l’entité France.",
+          "officialSourceUrl": "https://www.vertuoza.com/fr-fr",
+          "evidenceClaim": "Vertuoza regroupe gestion commerciale, planning, chantier et rentabilité pour le BTP.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "sage-batigest-connect",
+          "coveredNeedIds": [
+            "devis-et-facturation",
+            "couts-et-rentabilite-chantier"
+          ],
+          "usage": "Conserver une gestion BTP structurée avec devis, facturation et suivi lorsque l’entreprise utilise déjà l’écosystème Sage.",
+          "fitRationale": "Sage Batigest Connect reste une alternative pertinente pour les structures établies recherchant continuité et profondeur de gestion.",
+          "fitConstraints": [
+            "Comparer ergonomie, migration et coût avec les solutions plus récentes.",
+            "Le bénéfice est plus fort lorsque l’entreprise utilise déjà des produits Sage."
+          ],
+          "targetProfile": "Artisan ou PME française du BTP, particulièrement si elle utilise déjà Sage 50, Sage 100 ou Batigest i7.",
+          "franceAvailability": "Produit Sage France destiné aux artisans et PME du bâtiment, compatible avec la réglementation française annoncée ; vérifier poste Windows, options et migration.",
+          "officialSourceUrl": "https://www.sage.com/fr-fr/produits/sage-batigest-connect/",
+          "evidenceClaim": "Sage Batigest Connect couvre devis, facturation et gestion pour les professionnels du bâtiment.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "alobees",
+          "coveredNeedIds": [
+            "planning-equipes",
+            "suivi-terrain-et-reserves"
+          ],
+          "usage": "Planifier les équipes, suivre les heures et partager l’avancement des chantiers avec le terrain.",
+          "fitRationale": "Alobees apporte un suivi opérationnel d’équipe distinct des outils de devis et de rentabilité.",
+          "fitConstraints": [
+            "Vérifier l’intégration avec la gestion commerciale et la paie.",
+            "La qualité dépend de l’adoption quotidienne par les équipes terrain."
+          ],
+          "targetProfile": "Entreprise BTP ayant plusieurs compagnons ou équipes à planifier, pointer et suivre quotidiennement sur les chantiers.",
+          "franceAvailability": "Solution française commercialisée en France, avec variables de paie et intégrations BTP ; valider connecteurs avec le système de gestion retenu.",
+          "officialSourceUrl": "https://www.alobees.com/",
+          "evidenceClaim": "Alobees fournit planning, suivi d’heures et suivi de chantier pour les équipes BTP.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "fieldwire",
+          "coveredNeedIds": [
+            "suivi-terrain-et-reserves",
+            "documents-et-coordination"
+          ],
+          "usage": "Partager plans, tâches, observations et réserves entre chantier et bureau sur les opérations complexes.",
+          "fitRationale": "Fieldwire couvre la coordination d’exécution et les plans terrain, un besoin différent du planning d’équipe.",
+          "fitConstraints": [
+            "Peut être trop riche pour de petits chantiers sans plans ni coordination multi-intervenants.",
+            "Définir les règles de classement et de mise à jour des plans."
+          ],
+          "targetProfile": "Entreprise générale, entreprise spécialisée, maître d’ouvrage ou maître d’œuvre coordonnant plans, tâches, réserves et intervenants.",
+          "franceAvailability": "Offre officielle en français avec références clients en France ; vérifier plan tarifaire, accès hors ligne, hébergement et droits des intervenants.",
+          "officialSourceUrl": "https://www.fieldwire.com/fr/",
+          "evidenceClaim": "Fieldwire centralise plans, tâches et suivi de chantier entre terrain et bureau.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        },
+        {
+          "toolSlug": "kizeo-forms",
+          "coveredNeedIds": [
+            "suivi-terrain-et-reserves",
+            "documents-et-coordination"
+          ],
+          "usage": "Remplacer les fiches papier par des formulaires et rapports terrain adaptés aux contrôles de l’entreprise.",
+          "fitRationale": "Kizeo Forms est retenu pour les relevés et rapports sur mesure qui ne sont pas bien couverts par une suite chantier standard.",
+          "fitConstraints": [
+            "Concevoir des formulaires simples et gouverner leurs versions.",
+            "Vérifier les exports et intégrations nécessaires avant le déploiement."
+          ],
+          "targetProfile": "Entreprise BTP ayant des formulaires terrain spécifiques à numériser : visites, contrôles, états des lieux, bons ou rapports.",
+          "franceAvailability": "Solution française disponible en français et adaptée aux métiers du BTP ; valider hébergement, exports, signatures et intégrations nécessaires.",
+          "officialSourceUrl": "https://www.kizeo-forms.com/fr/",
+          "evidenceClaim": "Kizeo Forms numérise formulaires, collecte de terrain et génération de rapports.",
+          "reviewedAt": "2026-08-23T06:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "La sélection privilégie trois profils de gestion adaptés à une TPE ou petite PME, puis trois briques terrain réellement complémentaires. Graneet reste hors du pilote car sa cible annoncée commence autour de 2 M€ de chiffre d’affaires et dépasse souvent la petite entreprise visée. ProGBat et Oryka sont retirés pour éviter les doublons ; Google Workspace est trop transverse pour cette liste métier."
+    },
+    {
+      "systemSlug": "restaurant",
+      "priorityNeeds": [
+        "prise-de-commande-et-encaissement",
+        "reservations-et-salle",
+        "cout-matiere-stocks-et-marge",
+        "planning-equipe",
+        "hygiene-et-tracabilite",
+        "commandes-livraison"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "l-addition",
+          "coveredNeedIds": [
+            "prise-de-commande-et-encaissement"
+          ],
+          "usage": "Prendre les commandes, encaisser, envoyer en cuisine et suivre l’activité quotidienne dans une caisse conçue pour les CHR.",
+          "fitRationale": "Premier choix pour un restaurant indépendant français qui veut un socle caisse métier complet sans empiler plusieurs outils généralistes.",
+          "fitConstraints": [
+            "Demander un devis complet incluant matériel, installation, modules et durée d’engagement.",
+            "Ne pas cumuler avec une autre caisse généraliste sans besoin d’intégration clairement identifié."
+          ],
+          "targetProfile": "Restaurant, bar, brasserie ou établissement de restauration en France qui veut réunir prise de commande, caisse, paiement et suivi d’activité.",
+          "franceAvailability": "Solution conçue en France, commercialisée et accompagnée en France pour les professionnels des cafés, hôtels et restaurants.",
+          "officialSourceUrl": "https://www.laddition.com/fr",
+          "evidenceClaim": "L’Addition réunit prise de commande, encaissement, paiement, réservation, commande en ligne, stocks et reporting pour les établissements de restauration.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "zenchef",
+          "coveredNeedIds": [
+            "reservations-et-salle"
+          ],
+          "usage": "Centraliser les réservations, le plan de salle, les rappels et les prépaiements afin de réduire les appels et les no-shows.",
+          "fitRationale": "Apporte une valeur distincte de la caisse lorsque la réservation et le remplissage des tables sont un vrai sujet opérationnel.",
+          "fitConstraints": [
+            "Ne devient pertinent que si les réservations, appels ou no-shows représentent un volume réel.",
+            "Comparer le forfait choisi avec les fonctions de réservation éventuellement déjà incluses dans la caisse."
+          ],
+          "targetProfile": "Restaurant indépendant qui prend suffisamment de réservations pour devoir centraliser les tables, rappels, no-shows et données clients.",
+          "franceAvailability": "Offre française sans commission par couvert, avec forfaits publiés pour les restaurants indépendants et support commercial en France.",
+          "officialSourceUrl": "https://www.zenchef.com/fr/formules",
+          "evidenceClaim": "Zenchef centralise réservations, plan de salle, rappels, prépaiements et relation client pour les restaurants indépendants, sans commission par couvert.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "melba",
+          "coveredNeedIds": [
+            "cout-matiere-stocks-et-marge"
+          ],
+          "usage": "Relier fiches techniques, tarifs fournisseurs, ventes et stocks pour suivre le coût matière et la marge par plat.",
+          "fitRationale": "Couvre le pilotage cuisine et marge que les caisses généralistes traitent moins finement.",
+          "fitConstraints": [
+            "Le paramétrage des recettes, articles et fournisseurs demande un investissement initial réel.",
+            "Ne pas recommander si quelques références simples peuvent encore être suivies correctement sans nouvel outil."
+          ],
+          "targetProfile": "Professionnel de la restauration dont les recettes, coûts matière, achats, stocks ou volumes de production ne sont plus pilotables de façon fiable dans un tableur.",
+          "franceAvailability": "Éditeur et documentation en français ; la tarification et l’accompagnement sont à confirmer directement selon le métier et le volume.",
+          "officialSourceUrl": "https://melba.io/fr/help",
+          "evidenceClaim": "Melba couvre fiches techniques, coûts, stocks, commandes fournisseurs, production, ventes, devis et traçabilité pour les professionnels de la restauration.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "combo",
+          "coveredNeedIds": [
+            "planning-equipe"
+          ],
+          "usage": "Créer les plannings, suivre les heures et préparer les variables de paie sans ressaisie hebdomadaire.",
+          "fitRationale": "Pertinent pour une TPE avec une équipe et des horaires variables, pas comme outil administratif par défaut.",
+          "fitConstraints": [
+            "Inutile pour une activité exploitée seule ou avec un planning d’équipe très stable et simple.",
+            "Valider la convention collective, l’intégration paie et le coût par établissement et salarié."
+          ],
+          "targetProfile": "TPE de restauration ou commerce de bouche avec plusieurs salariés, des plannings variables et une préparation de paie qui consomment du temps chaque semaine.",
+          "franceAvailability": "Solution française disponible en France avec règles de conventions collectives, support et intégrations de paie adaptés au marché français.",
+          "officialSourceUrl": "https://combohr.com/fr/",
+          "evidenceClaim": "Combo centralise plannings, pointage, absences, dossiers salariés, DPAE et variables de paie pour les équipes opérationnelles.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "traqfood",
+          "coveredNeedIds": [
+            "hygiene-et-tracabilite"
+          ],
+          "usage": "Enregistrer températures, traçabilité, réceptions et nettoyage dans un dossier HACCP numérique accessible en contrôle.",
+          "fitRationale": "Répond à une obligation opérationnelle concrète avec un outil simple et abordable pour un indépendant.",
+          "fitConstraints": [
+            "L’outil ne remplace ni la formation HACCP ni la responsabilité de tenir les procédures à jour.",
+            "Vérifier le matériel connecté et l’engagement nécessaires au-delà de l’usage logiciel de base."
+          ],
+          "targetProfile": "Restaurant, traiteur, boulangerie, dark kitchen ou food truck qui doit fiabiliser ses relevés HACCP et retrouver rapidement ses preuves de traçabilité.",
+          "franceAvailability": "Application française disponible sur iOS, Android et Web, avec support en France et tarif officiel annoncé à partir de 19,99 euros.",
+          "officialSourceUrl": "https://www.traqfood.com/fr/",
+          "evidenceClaim": "Traqfood digitalise traçabilité, températures, nettoyage, contrôles à réception, productions et étiquetage HACCP.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "deliverect",
+          "coveredNeedIds": [
+            "commandes-livraison"
+          ],
+          "usage": "Faire arriver les commandes des plateformes directement dans le flux de caisse ou de production sans ressaisie.",
+          "fitRationale": "À retenir uniquement lorsque la livraison représente un volume suffisant pour créer du travail et des erreurs.",
+          "fitConstraints": [
+            "N’est utile que lorsque plusieurs canaux ou un volume de commandes créent réellement de la ressaisie.",
+            "Confirmer les connecteurs avec la caisse et les plateformes exactes avant de souscrire."
+          ],
+          "targetProfile": "Établissement qui reçoit un volume significatif de commandes depuis plusieurs plateformes et veut supprimer la ressaisie entre canaux et caisse.",
+          "franceAvailability": "Service et documentation disponibles en français avec intégrations aux plateformes et caisses utilisées en France.",
+          "officialSourceUrl": "https://www.deliverect.com/fr-fr/customer-type/restaurant",
+          "evidenceClaim": "Deliverect centralise les commandes de livraison et les transmet au point de vente ou à son application de gestion des commandes.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "lightspeed",
+          "coveredNeedIds": [
+            "prise-de-commande-et-encaissement",
+            "cout-matiere-stocks-et-marge"
+          ],
+          "usage": "Gérer caisse, commandes, inventaire et rapports dans une alternative connectée adaptée aux restaurants ayant plusieurs besoins de pilotage.",
+          "fitRationale": "Alternative crédible à L’Addition lorsque les intégrations, l’inventaire ou une trajectoire multi-établissements priment.",
+          "fitConstraints": [
+            "Comparer le coût total des modules et du matériel avec les besoins réels de l’établissement.",
+            "Ne pas retenir une suite internationale plus large si une caisse métier plus simple couvre déjà le fonctionnement."
+          ],
+          "targetProfile": "Restaurant ou café qui veut une caisse connectée avec commandes, inventaire et pilotage, notamment lorsque plusieurs canaux ou points de vente doivent être suivis.",
+          "franceAvailability": "Offre officielle en français disponible en France ; le matériel, les modules et les conditions varient selon la configuration retenue.",
+          "officialSourceUrl": "https://www.lightspeedhq.fr/caisse/restaurant/",
+          "evidenceClaim": "Lightspeed Restaurant propose caisse, commandes, paiements, gestion de menu, inventaire et rapports pour les établissements de restauration.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "La sélection couvre le service, la réservation, la marge, l’équipe, l’hygiène et la livraison. Deux caisses restent comme alternatives, jamais comme outils à cumuler. Chaque brique secondaire n’apparaît que lorsque son volume justifie réellement un outil dédié."
+    },
+    {
+      "systemSlug": "fast-food",
+      "priorityNeeds": [
+        "commande-encaissement-et-production",
+        "commandes-multicanales",
+        "cout-matiere-et-stocks",
+        "planning-equipe",
+        "hygiene-et-tracabilite"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "zelty",
+          "coveredNeedIds": [
+            "commande-encaissement-et-production",
+            "commandes-multicanales"
+          ],
+          "usage": "Centraliser caisse, commandes en ligne, click and collect, livraison et pilotage d’un point de vente de restauration rapide.",
+          "fitRationale": "Suite métier française directement alignée avec les flux multicanaux d’un fast-food, à dimensionner selon le nombre de sites.",
+          "fitConstraints": [
+            "La proposition est orientée multicanal et multisite : vérifier qu’elle n’est pas surdimensionnée pour un point de vente très simple.",
+            "Comparer modules, matériel, intégrations et coût total avec une caisse plus légère."
+          ],
+          "targetProfile": "Restaurant rapide ou dark kitchen avec plusieurs canaux de commande, éventuellement plusieurs points de vente, qui cherche une suite intégrée.",
+          "franceAvailability": "Solution française avec équipe de support basée en France et intégrations aux plateformes courantes du marché français.",
+          "officialSourceUrl": "https://www.zelty.fr/",
+          "evidenceClaim": "Zelty regroupe caisse, commandes en ligne, livraison, stocks, fidélité et pilotage à distance pour la restauration rapide et les dark kitchens.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "innovorder",
+          "coveredNeedIds": [
+            "commande-encaissement-et-production",
+            "commandes-multicanales"
+          ],
+          "usage": "Relier bornes, caisse, commande en ligne, écrans cuisine et reporting lorsque le débit rend les flux complexes.",
+          "fitRationale": "Alternative plus orientée gros volumes et parcours de commande ; elle ne doit pas être cumulée avec Zelty par défaut.",
+          "fitConstraints": [
+            "La suite devient pertinente avec des volumes, bornes ou flux cuisine qui justifient son déploiement.",
+            "Demander un devis détaillé et éviter les modules non nécessaires à un établissement indépendant."
+          ],
+          "targetProfile": "Fast-food ou dark kitchen avec des flux importants qui veut relier commande, encaissement, préparation en cuisine et pilotage.",
+          "franceAvailability": "Éditeur français avec support en France et solutions officiellement destinées aux indépendants, fast-foods et dark kitchens.",
+          "officialSourceUrl": "https://www.innovorder.com/",
+          "evidenceClaim": "Innovorder propose une suite synchronisée de prise de commande, caisse, préparation, commande en ligne et pilotage pour la restauration rapide et les dark kitchens.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "deliverect",
+          "coveredNeedIds": [
+            "commandes-multicanales"
+          ],
+          "usage": "Supprimer la ressaisie lorsque plusieurs plateformes de livraison alimentent le même point de vente.",
+          "fitRationale": "Complément seulement si la caisse choisie ne centralise pas déjà correctement les canaux utilisés.",
+          "fitConstraints": [
+            "N’est utile que lorsque plusieurs canaux ou un volume de commandes créent réellement de la ressaisie.",
+            "Confirmer les connecteurs avec la caisse et les plateformes exactes avant de souscrire."
+          ],
+          "targetProfile": "Établissement qui reçoit un volume significatif de commandes depuis plusieurs plateformes et veut supprimer la ressaisie entre canaux et caisse.",
+          "franceAvailability": "Service et documentation disponibles en français avec intégrations aux plateformes et caisses utilisées en France.",
+          "officialSourceUrl": "https://www.deliverect.com/fr-fr/customer-type/restaurant",
+          "evidenceClaim": "Deliverect centralise les commandes de livraison et les transmet au point de vente ou à son application de gestion des commandes.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "melba",
+          "coveredNeedIds": [
+            "cout-matiere-et-stocks"
+          ],
+          "usage": "Suivre recettes, coûts, pertes, stocks et besoins d’achat lorsque la marge matière devient difficile à contrôler.",
+          "fitRationale": "Ajoute une vraie couche de pilotage des coûts, sans recommander un outil de prévision lourd destiné aux chaînes.",
+          "fitConstraints": [
+            "Le paramétrage des recettes, articles et fournisseurs demande un investissement initial réel.",
+            "Ne pas recommander si quelques références simples peuvent encore être suivies correctement sans nouvel outil."
+          ],
+          "targetProfile": "Professionnel de la restauration dont les recettes, coûts matière, achats, stocks ou volumes de production ne sont plus pilotables de façon fiable dans un tableur.",
+          "franceAvailability": "Éditeur et documentation en français ; la tarification et l’accompagnement sont à confirmer directement selon le métier et le volume.",
+          "officialSourceUrl": "https://melba.io/fr/help",
+          "evidenceClaim": "Melba couvre fiches techniques, coûts, stocks, commandes fournisseurs, production, ventes, devis et traçabilité pour les professionnels de la restauration.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "combo",
+          "coveredNeedIds": [
+            "planning-equipe"
+          ],
+          "usage": "Planifier les équipes et préparer la paie dans un métier marqué par les rotations, temps partiels et amplitudes variables.",
+          "fitRationale": "Pertinent dès que les plannings et heures deviennent une tâche récurrente du dirigeant.",
+          "fitConstraints": [
+            "Inutile pour une activité exploitée seule ou avec un planning d’équipe très stable et simple.",
+            "Valider la convention collective, l’intégration paie et le coût par établissement et salarié."
+          ],
+          "targetProfile": "TPE de restauration ou commerce de bouche avec plusieurs salariés, des plannings variables et une préparation de paie qui consomment du temps chaque semaine.",
+          "franceAvailability": "Solution française disponible en France avec règles de conventions collectives, support et intégrations de paie adaptés au marché français.",
+          "officialSourceUrl": "https://combohr.com/fr/",
+          "evidenceClaim": "Combo centralise plannings, pointage, absences, dossiers salariés, DPAE et variables de paie pour les équipes opérationnelles.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "traqfood",
+          "coveredNeedIds": [
+            "hygiene-et-tracabilite"
+          ],
+          "usage": "Digitaliser les contrôles HACCP, températures, nettoyage et traçabilité sans classeurs papier.",
+          "fitRationale": "Brique simple et directement utile à la conformité quotidienne d’un fast-food.",
+          "fitConstraints": [
+            "L’outil ne remplace ni la formation HACCP ni la responsabilité de tenir les procédures à jour.",
+            "Vérifier le matériel connecté et l’engagement nécessaires au-delà de l’usage logiciel de base."
+          ],
+          "targetProfile": "Restaurant, traiteur, boulangerie, dark kitchen ou food truck qui doit fiabiliser ses relevés HACCP et retrouver rapidement ses preuves de traçabilité.",
+          "franceAvailability": "Application française disponible sur iOS, Android et Web, avec support en France et tarif officiel annoncé à partir de 19,99 euros.",
+          "officialSourceUrl": "https://www.traqfood.com/fr/",
+          "evidenceClaim": "Traqfood digitalise traçabilité, températures, nettoyage, contrôles à réception, productions et étiquetage HACCP.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "Deux suites de commande restent comme alternatives selon le volume, puis trois briques distinctes couvrent marge, équipe et HACCP. Deliverect n’est conservé que comme complément conditionnel lorsque la suite choisie ne suffit pas."
+    },
+    {
+      "systemSlug": "traiteur",
+      "priorityNeeds": [
+        "devis-et-vente",
+        "recettes-achats-et-production",
+        "planning-equipe",
+        "hygiene-et-tracabilite",
+        "encaissement"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "melba",
+          "coveredNeedIds": [
+            "devis-et-vente",
+            "recettes-achats-et-production",
+            "hygiene-et-tracabilite"
+          ],
+          "usage": "Transformer un devis en production, achats, bons de préparation et suivi de marge pour chaque prestation.",
+          "fitRationale": "Outil le plus spécifiquement aligné avec le flux complet d’un traiteur, de la demande client au dispatch de production.",
+          "fitConstraints": [
+            "Le paramétrage des recettes, articles et fournisseurs demande un investissement initial réel.",
+            "Ne pas recommander si quelques références simples peuvent encore être suivies correctement sans nouvel outil."
+          ],
+          "targetProfile": "Professionnel de la restauration dont les recettes, coûts matière, achats, stocks ou volumes de production ne sont plus pilotables de façon fiable dans un tableur.",
+          "franceAvailability": "Éditeur et documentation en français ; la tarification et l’accompagnement sont à confirmer directement selon le métier et le volume.",
+          "officialSourceUrl": "https://melba.io/fr/help",
+          "evidenceClaim": "Melba couvre fiches techniques, coûts, stocks, commandes fournisseurs, production, ventes, devis et traçabilité pour les professionnels de la restauration.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "l-addition",
+          "coveredNeedIds": [
+            "encaissement"
+          ],
+          "usage": "Encaisser les ventes comptoir ou événements et suivre l’activité lorsqu’une vraie caisse est nécessaire en complément.",
+          "fitRationale": "À utiliser comme caisse métier, sans dupliquer les devis et la production déjà pilotés dans Melba.",
+          "fitConstraints": [
+            "Demander un devis complet incluant matériel, installation, modules et durée d’engagement.",
+            "Ne pas cumuler avec une autre caisse généraliste sans besoin d’intégration clairement identifié."
+          ],
+          "targetProfile": "Restaurant, bar, brasserie ou établissement de restauration en France qui veut réunir prise de commande, caisse, paiement et suivi d’activité.",
+          "franceAvailability": "Solution conçue en France, commercialisée et accompagnée en France pour les professionnels des cafés, hôtels et restaurants.",
+          "officialSourceUrl": "https://www.laddition.com/fr",
+          "evidenceClaim": "L’Addition réunit prise de commande, encaissement, paiement, réservation, commande en ligne, stocks et reporting pour les établissements de restauration.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "combo",
+          "coveredNeedIds": [
+            "planning-equipe"
+          ],
+          "usage": "Organiser les salariés et extras sur les productions et événements, puis consolider les heures pour la paie.",
+          "fitRationale": "Utile lorsque la variation des équipes et des événements rend le planning manuel fragile.",
+          "fitConstraints": [
+            "Inutile pour une activité exploitée seule ou avec un planning d’équipe très stable et simple.",
+            "Valider la convention collective, l’intégration paie et le coût par établissement et salarié."
+          ],
+          "targetProfile": "TPE de restauration ou commerce de bouche avec plusieurs salariés, des plannings variables et une préparation de paie qui consomment du temps chaque semaine.",
+          "franceAvailability": "Solution française disponible en France avec règles de conventions collectives, support et intégrations de paie adaptés au marché français.",
+          "officialSourceUrl": "https://combohr.com/fr/",
+          "evidenceClaim": "Combo centralise plannings, pointage, absences, dossiers salariés, DPAE et variables de paie pour les équipes opérationnelles.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "traqfood",
+          "coveredNeedIds": [
+            "hygiene-et-tracabilite"
+          ],
+          "usage": "Tracer réceptions, températures, productions, lots et nettoyage dans le laboratoire et sur les prestations.",
+          "fitRationale": "Complète le pilotage de production par une preuve HACCP simple à retrouver.",
+          "fitConstraints": [
+            "L’outil ne remplace ni la formation HACCP ni la responsabilité de tenir les procédures à jour.",
+            "Vérifier le matériel connecté et l’engagement nécessaires au-delà de l’usage logiciel de base."
+          ],
+          "targetProfile": "Restaurant, traiteur, boulangerie, dark kitchen ou food truck qui doit fiabiliser ses relevés HACCP et retrouver rapidement ses preuves de traçabilité.",
+          "franceAvailability": "Application française disponible sur iOS, Android et Web, avec support en France et tarif officiel annoncé à partir de 19,99 euros.",
+          "officialSourceUrl": "https://www.traqfood.com/fr/",
+          "evidenceClaim": "Traqfood digitalise traçabilité, températures, nettoyage, contrôles à réception, productions et étiquetage HACCP.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "Melba porte le cœur devis-production-marge. La caisse, le planning et HACCP restent des compléments distincts uniquement si l’activité a ces besoins ; aucune suite bureautique ou marketing générique ne dilue la sélection."
+    },
+    {
+      "systemSlug": "dark-kitchen",
+      "priorityNeeds": [
+        "commande-et-production",
+        "commandes-multicanales",
+        "cout-matiere-et-stocks",
+        "planning-equipe",
+        "hygiene-et-tracabilite"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "zelty",
+          "coveredNeedIds": [
+            "commande-et-production",
+            "commandes-multicanales"
+          ],
+          "usage": "Centraliser commandes, marques, canaux de livraison, caisse et pilotage de la cuisine dans une suite restaurant.",
+          "fitRationale": "Premier choix intégré pour une petite dark kitchen multicanale, à condition que le périmètre ne soit pas surdimensionné.",
+          "fitConstraints": [
+            "La proposition est orientée multicanal et multisite : vérifier qu’elle n’est pas surdimensionnée pour un point de vente très simple.",
+            "Comparer modules, matériel, intégrations et coût total avec une caisse plus légère."
+          ],
+          "targetProfile": "Restaurant rapide ou dark kitchen avec plusieurs canaux de commande, éventuellement plusieurs points de vente, qui cherche une suite intégrée.",
+          "franceAvailability": "Solution française avec équipe de support basée en France et intégrations aux plateformes courantes du marché français.",
+          "officialSourceUrl": "https://www.zelty.fr/",
+          "evidenceClaim": "Zelty regroupe caisse, commandes en ligne, livraison, stocks, fidélité et pilotage à distance pour la restauration rapide et les dark kitchens.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "innovorder",
+          "coveredNeedIds": [
+            "commande-et-production",
+            "commandes-multicanales"
+          ],
+          "usage": "Orchestrer réception des commandes, préparation cuisine et pilotage lorsque les volumes ou plusieurs marques complexifient le flux.",
+          "fitRationale": "Alternative orientée volumes et préparation ; elle ne s’ajoute pas automatiquement à Zelty.",
+          "fitConstraints": [
+            "La suite devient pertinente avec des volumes, bornes ou flux cuisine qui justifient son déploiement.",
+            "Demander un devis détaillé et éviter les modules non nécessaires à un établissement indépendant."
+          ],
+          "targetProfile": "Fast-food ou dark kitchen avec des flux importants qui veut relier commande, encaissement, préparation en cuisine et pilotage.",
+          "franceAvailability": "Éditeur français avec support en France et solutions officiellement destinées aux indépendants, fast-foods et dark kitchens.",
+          "officialSourceUrl": "https://www.innovorder.com/",
+          "evidenceClaim": "Innovorder propose une suite synchronisée de prise de commande, caisse, préparation, commande en ligne et pilotage pour la restauration rapide et les dark kitchens.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "deliverect",
+          "coveredNeedIds": [
+            "commandes-multicanales"
+          ],
+          "usage": "Rassembler les commandes de plusieurs plateformes et marques sans les recopier dans le système de production.",
+          "fitRationale": "Complément pertinent si la suite principale ne couvre pas les canaux exacts de la dark kitchen.",
+          "fitConstraints": [
+            "N’est utile que lorsque plusieurs canaux ou un volume de commandes créent réellement de la ressaisie.",
+            "Confirmer les connecteurs avec la caisse et les plateformes exactes avant de souscrire."
+          ],
+          "targetProfile": "Établissement qui reçoit un volume significatif de commandes depuis plusieurs plateformes et veut supprimer la ressaisie entre canaux et caisse.",
+          "franceAvailability": "Service et documentation disponibles en français avec intégrations aux plateformes et caisses utilisées en France.",
+          "officialSourceUrl": "https://www.deliverect.com/fr-fr/customer-type/restaurant",
+          "evidenceClaim": "Deliverect centralise les commandes de livraison et les transmet au point de vente ou à son application de gestion des commandes.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "melba",
+          "coveredNeedIds": [
+            "cout-matiere-et-stocks"
+          ],
+          "usage": "Piloter recettes, coût matière, pertes, inventaires et commandes fournisseurs par marque ou production.",
+          "fitRationale": "Couvre la rentabilité de production, distincte du simple suivi des commandes.",
+          "fitConstraints": [
+            "Le paramétrage des recettes, articles et fournisseurs demande un investissement initial réel.",
+            "Ne pas recommander si quelques références simples peuvent encore être suivies correctement sans nouvel outil."
+          ],
+          "targetProfile": "Professionnel de la restauration dont les recettes, coûts matière, achats, stocks ou volumes de production ne sont plus pilotables de façon fiable dans un tableur.",
+          "franceAvailability": "Éditeur et documentation en français ; la tarification et l’accompagnement sont à confirmer directement selon le métier et le volume.",
+          "officialSourceUrl": "https://melba.io/fr/help",
+          "evidenceClaim": "Melba couvre fiches techniques, coûts, stocks, commandes fournisseurs, production, ventes, devis et traçabilité pour les professionnels de la restauration.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "combo",
+          "coveredNeedIds": [
+            "planning-equipe"
+          ],
+          "usage": "Construire les plannings et suivre les heures lorsque plusieurs équipes ou amplitudes se croisent en cuisine.",
+          "fitRationale": "À retenir seulement si la structure emploie une équipe suffisamment variable.",
+          "fitConstraints": [
+            "Inutile pour une activité exploitée seule ou avec un planning d’équipe très stable et simple.",
+            "Valider la convention collective, l’intégration paie et le coût par établissement et salarié."
+          ],
+          "targetProfile": "TPE de restauration ou commerce de bouche avec plusieurs salariés, des plannings variables et une préparation de paie qui consomment du temps chaque semaine.",
+          "franceAvailability": "Solution française disponible en France avec règles de conventions collectives, support et intégrations de paie adaptés au marché français.",
+          "officialSourceUrl": "https://combohr.com/fr/",
+          "evidenceClaim": "Combo centralise plannings, pointage, absences, dossiers salariés, DPAE et variables de paie pour les équipes opérationnelles.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "traqfood",
+          "coveredNeedIds": [
+            "hygiene-et-tracabilite"
+          ],
+          "usage": "Centraliser le plan de maîtrise sanitaire, les températures et les lots d’une cuisine sans salle.",
+          "fitRationale": "Rend la conformité accessible sans créer une administration papier parallèle.",
+          "fitConstraints": [
+            "L’outil ne remplace ni la formation HACCP ni la responsabilité de tenir les procédures à jour.",
+            "Vérifier le matériel connecté et l’engagement nécessaires au-delà de l’usage logiciel de base."
+          ],
+          "targetProfile": "Restaurant, traiteur, boulangerie, dark kitchen ou food truck qui doit fiabiliser ses relevés HACCP et retrouver rapidement ses preuves de traçabilité.",
+          "franceAvailability": "Application française disponible sur iOS, Android et Web, avec support en France et tarif officiel annoncé à partir de 19,99 euros.",
+          "officialSourceUrl": "https://www.traqfood.com/fr/",
+          "evidenceClaim": "Traqfood digitalise traçabilité, températures, nettoyage, contrôles à réception, productions et étiquetage HACCP.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "La sélection distingue orchestration des commandes, rentabilité de production, gestion d’équipe et HACCP. Les deux suites principales sont des alternatives ; Deliverect reste conditionnel aux canaux non couverts."
+    },
+    {
+      "systemSlug": "boulangerie",
+      "priorityNeeds": [
+        "caisse-commandes-et-production",
+        "recettes-couts-et-stocks",
+        "planning-equipe",
+        "hygiene-et-tracabilite"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "toporder",
+          "coveredNeedIds": [
+            "caisse-commandes-et-production"
+          ],
+          "usage": "Centraliser caisse, commandes clients et informations transmises au laboratoire pour éviter les Post-it et doubles saisies.",
+          "fitRationale": "Outil métier directement conçu pour les boulangeries et pâtisseries, avec un niveau de complexité compatible avec une TPE.",
+          "fitConstraints": [
+            "Comparer les offres iPad et Android ainsi que les modules nécessaires au laboratoire et aux points de vente.",
+            "Valider le coût du matériel, des intégrations et de la reprise des articles avant décision."
+          ],
+          "targetProfile": "Boulangerie ou pâtisserie de proximité qui veut relier caisse, commandes clients, informations de production, stocks et fidélité.",
+          "franceAvailability": "Solution conçue en France, certifiée NF525 et accompagnée par un support français ; tarifs de départ publiés par l’éditeur.",
+          "officialSourceUrl": "https://toporder.fr/",
+          "evidenceClaim": "Toporder fournit aux commerces de bouche une caisse avec commandes centralisées, aide à la production, stocks, fidélité et vente en ligne.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "melba",
+          "coveredNeedIds": [
+            "recettes-couts-et-stocks"
+          ],
+          "usage": "Structurer recettes, rendements, coûts, achats et bons de production lorsque le laboratoire a besoin d’un pilotage précis.",
+          "fitRationale": "Complète la caisse sur la maîtrise des coûts et de la production, sans remplacer Toporder pour l’encaissement.",
+          "fitConstraints": [
+            "Le paramétrage des recettes, articles et fournisseurs demande un investissement initial réel.",
+            "Ne pas recommander si quelques références simples peuvent encore être suivies correctement sans nouvel outil."
+          ],
+          "targetProfile": "Professionnel de la restauration dont les recettes, coûts matière, achats, stocks ou volumes de production ne sont plus pilotables de façon fiable dans un tableur.",
+          "franceAvailability": "Éditeur et documentation en français ; la tarification et l’accompagnement sont à confirmer directement selon le métier et le volume.",
+          "officialSourceUrl": "https://melba.io/fr/help",
+          "evidenceClaim": "Melba couvre fiches techniques, coûts, stocks, commandes fournisseurs, production, ventes, devis et traçabilité pour les professionnels de la restauration.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "combo",
+          "coveredNeedIds": [
+            "planning-equipe"
+          ],
+          "usage": "Gérer les horaires décalés des équipes de vente et de production, les absences et la préparation de paie.",
+          "fitRationale": "Répond à une charge récurrente spécifique aux boulangeries qui emploient plusieurs personnes.",
+          "fitConstraints": [
+            "Inutile pour une activité exploitée seule ou avec un planning d’équipe très stable et simple.",
+            "Valider la convention collective, l’intégration paie et le coût par établissement et salarié."
+          ],
+          "targetProfile": "TPE de restauration ou commerce de bouche avec plusieurs salariés, des plannings variables et une préparation de paie qui consomment du temps chaque semaine.",
+          "franceAvailability": "Solution française disponible en France avec règles de conventions collectives, support et intégrations de paie adaptés au marché français.",
+          "officialSourceUrl": "https://combohr.com/fr/",
+          "evidenceClaim": "Combo centralise plannings, pointage, absences, dossiers salariés, DPAE et variables de paie pour les équipes opérationnelles.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "traqfood",
+          "coveredNeedIds": [
+            "hygiene-et-tracabilite"
+          ],
+          "usage": "Enregistrer températures, lots, DLC, nettoyage et réceptions dans un suivi HACCP partagé entre laboratoire et vente.",
+          "fitRationale": "Apporte une preuve de conformité simple sans alourdir la sélection avec une suite destinée aux grands réseaux.",
+          "fitConstraints": [
+            "L’outil ne remplace ni la formation HACCP ni la responsabilité de tenir les procédures à jour.",
+            "Vérifier le matériel connecté et l’engagement nécessaires au-delà de l’usage logiciel de base."
+          ],
+          "targetProfile": "Restaurant, traiteur, boulangerie, dark kitchen ou food truck qui doit fiabiliser ses relevés HACCP et retrouver rapidement ses preuves de traçabilité.",
+          "franceAvailability": "Application française disponible sur iOS, Android et Web, avec support en France et tarif officiel annoncé à partir de 19,99 euros.",
+          "officialSourceUrl": "https://www.traqfood.com/fr/",
+          "evidenceClaim": "Traqfood digitalise traçabilité, températures, nettoyage, contrôles à réception, productions et étiquetage HACCP.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "Toporder couvre le flux boutique-laboratoire, puis Melba, Combo et Traqfood ne sont proposés que pour les besoins distincts de coûts, équipe et HACCP. Les outils généralistes et les solutions de chaîne sont volontairement écartés."
+    },
+    {
+      "systemSlug": "bar-cafe",
+      "priorityNeeds": [
+        "commande-et-encaissement",
+        "stocks-et-pilotage",
+        "planning-equipe",
+        "hygiene-et-tracabilite"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "l-addition",
+          "coveredNeedIds": [
+            "commande-et-encaissement",
+            "stocks-et-pilotage"
+          ],
+          "usage": "Prendre les commandes, gérer les tables, encaisser rapidement et suivre ventes et stocks dans une caisse CHR française.",
+          "fitRationale": "Premier choix métier pour un bar ou café indépendant qui a un vrai service et plusieurs modes d’encaissement.",
+          "fitConstraints": [
+            "Demander un devis complet incluant matériel, installation, modules et durée d’engagement.",
+            "Ne pas cumuler avec une autre caisse généraliste sans besoin d’intégration clairement identifié."
+          ],
+          "targetProfile": "Restaurant, bar, brasserie ou établissement de restauration en France qui veut réunir prise de commande, caisse, paiement et suivi d’activité.",
+          "franceAvailability": "Solution conçue en France, commercialisée et accompagnée en France pour les professionnels des cafés, hôtels et restaurants.",
+          "officialSourceUrl": "https://www.laddition.com/fr",
+          "evidenceClaim": "L’Addition réunit prise de commande, encaissement, paiement, réservation, commande en ligne, stocks et reporting pour les établissements de restauration.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "lightspeed",
+          "coveredNeedIds": [
+            "commande-et-encaissement",
+            "stocks-et-pilotage"
+          ],
+          "usage": "Piloter caisse, inventaire et rapports dans une alternative connectée lorsque les intégrations ou plusieurs établissements le justifient.",
+          "fitRationale": "Alternative à L’Addition, pas un outil supplémentaire à empiler avec elle.",
+          "fitConstraints": [
+            "Comparer le coût total des modules et du matériel avec les besoins réels de l’établissement.",
+            "Ne pas retenir une suite internationale plus large si une caisse métier plus simple couvre déjà le fonctionnement."
+          ],
+          "targetProfile": "Restaurant ou café qui veut une caisse connectée avec commandes, inventaire et pilotage, notamment lorsque plusieurs canaux ou points de vente doivent être suivis.",
+          "franceAvailability": "Offre officielle en français disponible en France ; le matériel, les modules et les conditions varient selon la configuration retenue.",
+          "officialSourceUrl": "https://www.lightspeedhq.fr/caisse/restaurant/",
+          "evidenceClaim": "Lightspeed Restaurant propose caisse, commandes, paiements, gestion de menu, inventaire et rapports pour les établissements de restauration.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "combo",
+          "coveredNeedIds": [
+            "planning-equipe"
+          ],
+          "usage": "Gérer plannings, pointage et heures des équipes en tenant compte des amplitudes et variations d’activité.",
+          "fitRationale": "À retenir lorsque la gestion d’équipe prend régulièrement du temps au dirigeant.",
+          "fitConstraints": [
+            "Inutile pour une activité exploitée seule ou avec un planning d’équipe très stable et simple.",
+            "Valider la convention collective, l’intégration paie et le coût par établissement et salarié."
+          ],
+          "targetProfile": "TPE de restauration ou commerce de bouche avec plusieurs salariés, des plannings variables et une préparation de paie qui consomment du temps chaque semaine.",
+          "franceAvailability": "Solution française disponible en France avec règles de conventions collectives, support et intégrations de paie adaptés au marché français.",
+          "officialSourceUrl": "https://combohr.com/fr/",
+          "evidenceClaim": "Combo centralise plannings, pointage, absences, dossiers salariés, DPAE et variables de paie pour les équipes opérationnelles.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "traqfood",
+          "coveredNeedIds": [
+            "hygiene-et-tracabilite"
+          ],
+          "usage": "Centraliser températures, réception, nettoyage et traçabilité alimentaire sans feuilles papier dispersées.",
+          "fitRationale": "Utile dès que le café ou bar prépare et conserve des denrées soumises au suivi HACCP.",
+          "fitConstraints": [
+            "L’outil ne remplace ni la formation HACCP ni la responsabilité de tenir les procédures à jour.",
+            "Vérifier le matériel connecté et l’engagement nécessaires au-delà de l’usage logiciel de base."
+          ],
+          "targetProfile": "Restaurant, traiteur, boulangerie, dark kitchen ou food truck qui doit fiabiliser ses relevés HACCP et retrouver rapidement ses preuves de traçabilité.",
+          "franceAvailability": "Application française disponible sur iOS, Android et Web, avec support en France et tarif officiel annoncé à partir de 19,99 euros.",
+          "officialSourceUrl": "https://www.traqfood.com/fr/",
+          "evidenceClaim": "Traqfood digitalise traçabilité, températures, nettoyage, contrôles à réception, productions et étiquetage HACCP.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "Deux caisses métier sont conservées comme alternatives et non comme cumul. Combo et Traqfood couvrent uniquement les besoins distincts d’équipe et d’hygiène, sans ajouter d’outil marketing ou bureautique évident."
+    },
+    {
+      "systemSlug": "food-truck",
+      "priorityNeeds": [
+        "commandes-et-flux-de-production",
+        "encaissement-mobile",
+        "stocks-et-creneaux",
+        "hygiene-et-tracabilite"
+      ],
+      "toolCandidatesByRank": [
+        {
+          "toolSlug": "nomad",
+          "coveredNeedIds": [
+            "commandes-et-flux-de-production",
+            "stocks-et-creneaux"
+          ],
+          "usage": "Unifier comptoir, click and collect, Uber Eats, créneaux, stock, cuisine et emballage dans un flux conçu pour le food truck.",
+          "fitRationale": "Outil le plus directement métier du lot, qui répond à l’organisation du rush plutôt qu’à la seule fonction de caisse.",
+          "fitConstraints": [
+            "Nomad n’est pas une caisse fiscale autonome et doit être relié à une solution d’encaissement compatible.",
+            "L’offre vise surtout les food trucks réguliers et à fort débit ; elle peut être excessive pour une activité occasionnelle."
+          ],
+          "targetProfile": "Food truck à emplacement régulier et débit soutenu qui doit unifier comptoir, click and collect, cuisine, emballage et commandes Uber Eats.",
+          "franceAvailability": "Solution française avec tarifs et support publiés ; mise en service et frais de paiement dépendent du forfait choisi.",
+          "officialSourceUrl": "https://www.nomadcaisse.fr/",
+          "evidenceClaim": "Nomad organise les commandes, créneaux, stocks et postes de préparation d’un food truck en unifiant comptoir, click and collect et Uber Eats.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "sumup-caisse",
+          "coveredNeedIds": [
+            "encaissement-mobile"
+          ],
+          "usage": "Encaisser simplement en mobilité et tenir un catalogue de vente lorsque les besoins de caisse restent limités.",
+          "fitRationale": "Complément d’encaissement proportionné pour une petite activité, à condition de vérifier sa compatibilité avec le flux Nomad choisi.",
+          "fitConstraints": [
+            "Comparer les frais de transaction, le matériel et les fonctions métier réellement nécessaires.",
+            "Ne couvre pas à lui seul les flux spécialisés de production et de commandes d’un food truck soutenu.",
+            "Confirmer directement avec Nomad et SumUp la compatibilité de la configuration retenue."
+          ],
+          "targetProfile": "Petite activité avec encaissement simple qui cherche une caisse et un paiement intégrés sans déployer une suite restaurant complexe.",
+          "franceAvailability": "Offre française commercialisée en France avec matériel, logiciel de caisse et paiement ; coûts variables selon équipement et transactions.",
+          "officialSourceUrl": "https://www.sumup.com/fr-fr/logiciel-de-caisse-sumup/",
+          "evidenceClaim": "SumUp Caisse associe encaissement, catalogue, suivi des ventes et paiements pour les petits commerces et établissements de restauration.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        },
+        {
+          "toolSlug": "traqfood",
+          "coveredNeedIds": [
+            "hygiene-et-tracabilite"
+          ],
+          "usage": "Conserver les relevés de température, la traçabilité, les nettoyages et contrôles malgré un espace de travail mobile.",
+          "fitRationale": "Répond au besoin réglementaire sans ajouter une suite de gestion disproportionnée.",
+          "fitConstraints": [
+            "L’outil ne remplace ni la formation HACCP ni la responsabilité de tenir les procédures à jour.",
+            "Vérifier le matériel connecté et l’engagement nécessaires au-delà de l’usage logiciel de base."
+          ],
+          "targetProfile": "Restaurant, traiteur, boulangerie, dark kitchen ou food truck qui doit fiabiliser ses relevés HACCP et retrouver rapidement ses preuves de traçabilité.",
+          "franceAvailability": "Application française disponible sur iOS, Android et Web, avec support en France et tarif officiel annoncé à partir de 19,99 euros.",
+          "officialSourceUrl": "https://www.traqfood.com/fr/",
+          "evidenceClaim": "Traqfood digitalise traçabilité, températures, nettoyage, contrôles à réception, productions et étiquetage HACCP.",
+          "reviewedAt": "2026-08-24T19:30:00.000Z"
+        }
+      ],
+      "compositionRationale": "La sélection reste volontairement courte : Nomad organise le métier, SumUp couvre l’encaissement simple sous réserve de compatibilité, et Traqfood couvre HACCP. Uber Eats et les outils marketing évidents ne sont pas répétés comme recommandations autonomes."
+    }
+  ],
+  "activationBlockers": [
+    "Terminer la revue éditoriale des 115 systèmes avant toute activation globale D-091.",
+    "Obtenir un GO PROD explicite avant tout déplacement du pointeur Firebase."
+  ]
+}

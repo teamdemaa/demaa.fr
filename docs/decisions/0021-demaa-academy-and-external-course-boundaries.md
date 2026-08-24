@@ -1,7 +1,7 @@
 # ADR 0021 — Structurer dans Demaa et frontières avec les Cours externes
 
 - Décision : D-096
-- Statut : validé, PR #194 prête, non livré
+- Statut : livré par la PR 194 ; exposition navbar différée par la PR 218
 - Date : 23 août 2026
 
 ## Contexte
@@ -86,6 +86,26 @@ que possible :
 
 Les Tutoriels ne doivent pas être forcés dans le contrat d'une Formation. Un
 petit rendu article dédié est préférable à une fausse leçon unique.
+
+## Revue éditoriale différée
+
+Avant de réexposer `Structurer` dans la navigation, les Tutoriels doivent être
+réalignés sur la promesse publique Demaa : aider une TPE à gagner du temps en
+mettant en place des systèmes simples et adaptés. Les cas d'acquisition actuels
+restent une base technique et visuelle, pas une obligation éditoriale.
+
+Chaque article futur part d'une perte de temps concrète, décrit un système
+simple, fournit des étapes courtes et un exemple métier, puis mentionne
+seulement les outils nécessaires. Les sujets prioritaires à expertiser sont la
+centralisation des demandes et relances, les devis et commandes, le planning et
+les interventions, la délégation sans réexplication, l'automatisation
+administrative récurrente et le suivi d'activité. Aucun outil évident, texte
+long ou quota de recommandations n'est ajouté pour remplir une carte.
+
+La grille, les cartes, miniatures et articles D-096 sont réutilisés. Un slug
+existant n'est conservé que si le sens du contenu reste cohérent ; tout nouveau
+sujet reçoit sinon une identité versionnée avec compatibilité des anciens
+liens. Cette revue reste différée et exige un nouveau GO avant tout runtime.
 
 ## Gates
 

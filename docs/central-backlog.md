@@ -1668,16 +1668,24 @@ Référence : [ADR 0016](decisions/0016-plan-services-and-solutions-ecosystem.md
 
 Référence : [ADR 0017](decisions/0017-curated-tools-per-system.md).
 
-Statut : **candidate TPE v4 versionnée et recettée en Preview dans la PR
-brouillon 196, sans activation Firebase ni fusion ; gate métier en attente**.
+Statut : **candidate TPE v4 et méthode pilote fusionnées par la PR 196, sans
+activation Firebase. Le Lot 1 Restauration est audité dans une candidate
+`draft`, recetté en Preview et accepté comme recherche versionnée. La
+généralisation aux 103 autres systèmes et toute publication sont différées**.
 D-091 consolide et supersède D-068 à D-070 comme contrat d'exécution. Les gates
 pilote et final, la séparation publique de Services et la compatibilité des
 identifiants sont en place. Cinq systèmes pilotes ont des sélections variables
-documentées ; le pointeur Firebase actif n'a pas été déplacé et aucune donnée
-Production n'a été modifiée. Les quantités restent indicatives et ne deviennent
-jamais un quota à remplir. Nicoka CABS, Recruit CRM et Bullhorn restent cachés
-de l'annuaire public et du sitemap tant que le pilote n'est pas validé puis
-activé séparément.
+documentées. Le premier lot de généralisation couvre sept systèmes restauration
+avec 3 à 7 outils chacun et douze sources officielles vérifiées. Le pointeur
+Firebase actif n'a pas été déplacé et aucune donnée Production n'a été modifiée.
+Les quantités restent indicatives et ne deviennent jamais un quota à remplir.
+Tous les nouveaux outils restent cachés de l'annuaire public et du sitemap tant
+que la candidate n'est pas validée puis activée séparément.
+
+Décision de clôture du 24 août 2026 : aucune revue manuelle carte par carte
+supplémentaire n'est demandée pour le Lot 1 Restauration. Les cases ouvertes
+ci-dessous restent le contrat d'une éventuelle reprise, pas un chantier actif
+ni urgent. La révision active de Production reste inchangée.
 
 - [x] Conserver exactement la carte actuelle et n'ajouter aucun badge, repère
   éditorial ou module « Aide au choix ».
@@ -1697,9 +1705,13 @@ activé séparément.
 - [ ] Valider chaque `toolRef` retenu à partir de sources officielles datées ;
   ne jamais importer automatiquement une association faible pour atteindre un
   volume prédéfini.
-- [ ] Piloter d'abord agence de recrutement, SaaS, agence web, cabinet
+- [x] Piloter d'abord agence de recrutement, SaaS, agence web, cabinet
   comptable et bâtiment, avec relecture contradictoire et sans règle propre à
   l'un de ces secteurs.
+- [x] Appliquer la méthode au Lot 1 Restauration : `restaurant`, `fast-food`,
+  `traiteur`, `dark-kitchen`, `boulangerie`, `bar-cafe` et `food-truck` ;
+  conserver une candidate complète `draft`, les nouveaux outils en `hidden`,
+  la parité des 103 autres systèmes et le pointeur Firebase actif inchangé.
 - [x] Poser le gate automatisé : sélection non vide et variable, couverture
   métier, unicité, rangs continus, liens sûrs, ressources actives, preuves et
   dates, justification contextuelle et limites factuelles. Le gate relie
@@ -2073,6 +2085,30 @@ la revue éditoriale. La livraison immédiate affiche donc uniquement
 case d'ordre de navigation ci-dessus ; elle ne réouvre aucun travail runtime ou
 de contenu déjà livré par D-096.
 
+La revue éditoriale attendue avant le retour de `Structurer` dans la navbar est
+désormais explicitement différée. Elle doit recentrer la grille sur des sujets
+courts, concrets et directement applicables par une TPE pour gagner du temps
+grâce à de meilleurs systèmes. Les six Tutoriels d'acquisition actuellement
+conservés constituent une base technique et visuelle, pas la cible éditoriale
+définitive.
+
+Chaque futur Tutoriel doit partir d'une perte de temps observable, proposer un
+système simple, donner les étapes de mise en place et un exemple métier, puis
+citer uniquement les outils réellement utiles. Il ne doit ni devenir un cours
+théorique, ni accumuler du texte, ni remplir un quota de recommandations. Les
+premiers sujets à expertiser sont : centraliser les demandes et relances,
+standardiser devis et commandes, organiser planning et interventions,
+déléguer sans réexpliquer, automatiser une tâche administrative récurrente et
+suivre l'activité sans multiplier les tableaux. Les outils restent issus du
+répertoire canonique et suivent les mêmes exigences de pertinence TPE que
+D-091 ; un outil bureautique évident n'est pas cité par défaut.
+
+Cette évolution réutilise en priorité la grille, les cartes, les miniatures et
+le rendu article D-096. Les slugs existants ne sont conservés que si leur sens
+reste cohérent ; sinon le contenu reçoit une nouvelle identité versionnée et
+les anciens liens restent compatibles. Aucun runtime n'est autorisé sans un
+nouveau GO et une recette éditoriale dédiée.
+
 The Done Studio suit un handover informatif séparé : son onglet Ressources
 reçoit une section unique `Cours`. Les applications ne partagent aucun contrat,
 modèle, identifiant, package, API, stockage, cache ou dépendance de déploiement.
@@ -2089,6 +2125,10 @@ accessible par son URL historique mais disparaît de l'accueil admin.
 `/admin/outils` livre la première vue strictement en lecture seule sous la
 session Team existante. Aucune mutation, création de candidate Firebase ou
 activation du pointeur n'est livrée.
+
+Décision de clôture : la lecture seule constitue la cible livrée actuelle.
+L'édition, la création de candidate et l'activation depuis l'administration
+sont différées sans échéance et ne forment pas un chantier actif.
 
 - [x] Fusionner d'abord la PR 214 après recette de sa Preview.
 - [x] Ajouter ensuite `/admin/outils` à la navigation Team et à l'allowlist de

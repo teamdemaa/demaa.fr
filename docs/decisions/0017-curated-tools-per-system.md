@@ -3,9 +3,9 @@
 - Décision : D-091
 - Statut : validée pour cadrage
 - Date : 22 août 2026
-- Phase : fondation technique réalisée ; cinq pools de recherche Outils
-  préparés ; prochaine priorité après observation D-094 ; validation métier,
-  révision Firebase et publication non commencées
+- Phase : méthode pilote fusionnée sans activation ; Lot 1 Restauration recetté
+  en Preview et accepté comme recherche versionnée ; généralisation aux 103
+  autres systèmes et publication différées
 
 ## Contexte
 
