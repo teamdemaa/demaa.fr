@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import CookieConsentManager from "@/components/CookieConsentManager";
+import { DEMAA_HOME_DESCRIPTION, DEMAA_HOME_TITLE } from "@/lib/demaa-positioning";
 import { getCanonicalOrigin } from "@/lib/site-url";
 
 const satoshi = localFont({
@@ -52,23 +53,20 @@ const gambetta = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Demaa | Structurez votre entreprise",
-  description:
-    "Demaa structure votre entreprise en mettant en place les bons systèmes, pour qu'elle dépende moins de vous.",
+  title: DEMAA_HOME_TITLE,
+  description: DEMAA_HOME_DESCRIPTION,
   metadataBase: new URL(getCanonicalOrigin()),
   openGraph: {
-    title: "Demaa | Structurez votre entreprise",
-    description:
-      "Demaa structure votre entreprise en mettant en place les bons systèmes, pour qu'elle dépende moins de vous.",
+    title: DEMAA_HOME_TITLE,
+    description: DEMAA_HOME_DESCRIPTION,
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Demaa | Structurez votre entreprise",
-    description:
-      "Demaa structure votre entreprise en mettant en place les bons systèmes, pour qu'elle dépende moins de vous.",
+    title: DEMAA_HOME_TITLE,
+    description: DEMAA_HOME_DESCRIPTION,
   },
   applicationName: "Demaa",
   manifest: "/manifest.webmanifest",

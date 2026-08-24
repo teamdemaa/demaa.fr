@@ -1941,6 +1941,21 @@ coordonnée constitue l'action demandée, pas une étape de qualification.
 Le changement reste purement présentationnel : mêmes champs, validations,
 payloads, APIs, consentements, protections anti-spam et traitements serveur.
 
+##### Règle transverse — promesse et navigation publiques
+
+Décision validée le 24 août 2026 : la promesse publique française explicite que
+Demaa aide les dirigeants à gagner du temps grâce à la mise en place de systèmes
+simples, d'automatisations et d'usages IA adaptés à leur entreprise. L'accueil
+conserve la question « Qu’est-ce qui vous prend trop de temps aujourd’hui ? »,
+précédée de « Automatisation des process & IA » et suivie de cette promesse.
+
+La navigation principale est `Plan d’action · Services · Structurer`. Annonces
+reste accessible directement sur `/opportunites`, depuis le footer et dans
+l'administration, mais n'apparaît plus dans la navbar. Son identifiant
+technique `opportunities`, ses données et ses formulaires sont conservés. Le CTA
+du header affiche intégralement `Diagnostic organisation` sur desktop et mobile
+et ouvre le même formulaire D-094 avant ou après la génération d'un plan.
+
 #### D-095 — Faire évoluer Opportunités vers un espace d'Annonces — priorité immédiate
 
 Statut : **priorité produit immédiate depuis le 23 août 2026 ; D-094 est
