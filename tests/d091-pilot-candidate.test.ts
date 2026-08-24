@@ -28,7 +28,10 @@ import {
   validateCuratedSelectionAgainstResearch,
   type SolutionCurationResearchManifest,
 } from "@/lib/solution-curation-research-contract";
-import { getToolDirectorySlug, toolDirectory } from "@/lib/tool-directory";
+import {
+  getToolDirectorySlug,
+  toolDirectoryCandidatePool,
+} from "@/lib/tool-directory";
 
 async function readJson(relativePath: string) {
   return JSON.parse(await readFile(new URL(relativePath, import.meta.url), "utf8"));
@@ -44,7 +47,9 @@ describe("D-091 reviewed pilot candidate", () => {
     const candidate = parseFirebaseSolutionRegistryRevision(candidateInput);
     const active = parseFirebaseSolutionRegistryRevision(activeInput);
     const canonicalSystemSlugs = enterpriseCatalog.map(({ slug }) => slug);
-    const activeToolSlugs = new Set(toolDirectory.map(getToolDirectorySlug));
+    const activeToolSlugs = new Set(
+      toolDirectoryCandidatePool.map(getToolDirectorySlug),
+    );
 
     expect(candidate.knownSystemSlugs).toEqual(canonicalSystemSlugs);
     expect(candidate.revisionStatus).toBe("draft");

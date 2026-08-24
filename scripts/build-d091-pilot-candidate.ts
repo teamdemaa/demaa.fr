@@ -7,7 +7,10 @@ import {
 } from "@/lib/firebase-solution-registry-contract";
 import { buildStableSoftwarePlacementId } from "@/lib/curated-tools-candidate-audit";
 import { validateReviewedSolutionCurationResearchManifest } from "@/lib/solution-curation-research-contract";
-import { getToolDirectorySlug, toolDirectory } from "@/lib/tool-directory";
+import {
+  getToolDirectorySlug,
+  toolDirectoryCandidatePool,
+} from "@/lib/tool-directory";
 
 const ACTIVE_REVISION_PATH =
   "src/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json";
@@ -64,7 +67,7 @@ const [activeInput, reviewedInput] = await Promise.all([
 ]);
 const active = parseFirebaseSolutionRegistryRevision(activeInput);
 const toolsBySlug = new Map(
-  toolDirectory.map((tool) => [getToolDirectorySlug(tool), tool]),
+  toolDirectoryCandidatePool.map((tool) => [getToolDirectorySlug(tool), tool]),
 );
 const reviewedManifestErrors = validateReviewedSolutionCurationResearchManifest(
   reviewedInput,

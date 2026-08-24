@@ -34,6 +34,8 @@ trouve dans `pilot-reviewed-selections.v2.json`.
   répond en HTTP 200 ;
 - les trois outils agence absents du répertoire canonique ont été ajoutés avec
   source et date de revue : Nicoka CABS, Recruit CRM et Bullhorn ;
+- ces trois entrées restent `hidden` dans l'annuaire public et le sitemap tant
+  que la candidate D-091 n'a pas reçu son GO métier et son activation séparée ;
 - manifeste placement-level fail-closed : cible, France, usage, justification,
   contrainte, HTTPS, preuve et date sont obligatoires ;
 - candidate complète des 115 systèmes, `draft`, sans déplacement du pointeur

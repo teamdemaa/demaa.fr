@@ -10,9 +10,11 @@ import {
   type SolutionCurationResearchManifest,
 } from "@/lib/solution-curation-research-contract";
 import {
+  getToolDirectoryCandidateItemBySlug,
   getToolDirectoryItemBySlug,
   getToolDirectorySlug,
   toolDirectory,
+  toolDirectoryCandidatePool,
 } from "@/lib/tool-directory";
 
 async function manifest() {
@@ -29,7 +31,7 @@ describe("D-091 pilot research selections", () => {
   it("keeps five evidence-threshold pilots with canonical tools and complete need coverage", async () => {
     const payload = await manifest();
     const knownSystems = new Set(enterpriseCatalog.map(({ slug }) => slug));
-    const knownTools = new Set(toolDirectory.map(getToolDirectorySlug));
+    const knownTools = new Set(toolDirectoryCandidatePool.map(getToolDirectorySlug));
 
     expect(payload.status).toBe("research-candidate");
     expect(payload.selectionPolicy).toBe("evidence-threshold");
@@ -47,7 +49,7 @@ describe("D-091 pilot research selections", () => {
       expect(system.compositionRationale.length).toBeGreaterThan(50);
       for (const candidate of system.toolCandidatesByRank) {
         const { toolSlug } = candidate;
-        const tool = getToolDirectoryItemBySlug(toolSlug);
+        const tool = getToolDirectoryCandidateItemBySlug(toolSlug);
         expect(tool, `${system.systemSlug}:${toolSlug}`).toBeDefined();
         expect(tool?.sources?.some((source) => source.startsWith("https://")))
           .toBe(true);
@@ -90,10 +92,18 @@ describe("D-091 pilot research selections", () => {
     ]);
   });
 
+  it("keeps unapproved pilot tools out of the public directory", () => {
+    for (const slug of ["nicoka-cabs", "recruit-crm", "bullhorn"]) {
+      expect(getToolDirectoryCandidateItemBySlug(slug)).not.toBeNull();
+      expect(getToolDirectoryItemBySlug(slug)).toBeNull();
+      expect(toolDirectory.some((tool) => getToolDirectorySlug(tool) === slug)).toBe(false);
+    }
+  });
+
   it("rejects a research pool that could be mistaken for activable runtime data", async () => {
     const payload = await manifest();
     const knownSystems = new Set(enterpriseCatalog.map(({ slug }) => slug));
-    const knownTools = new Set(toolDirectory.map(getToolDirectorySlug));
+    const knownTools = new Set(toolDirectoryCandidatePool.map(getToolDirectorySlug));
 
     expect(validateSolutionCurationResearchManifest({
       ...payload,
@@ -159,7 +169,7 @@ describe("D-091 pilot research selections", () => {
   it("fails closed when a placement review omits target or France availability", async () => {
     const payload = await manifest();
     const knownSystems = new Set(enterpriseCatalog.map(({ slug }) => slug));
-    const knownTools = new Set(toolDirectory.map(getToolDirectorySlug));
+    const knownTools = new Set(toolDirectoryCandidatePool.map(getToolDirectorySlug));
     const broken = structuredClone(payload) as unknown as {
       systems: Array<{ toolCandidatesByRank: Array<Record<string, unknown>> }>;
     };

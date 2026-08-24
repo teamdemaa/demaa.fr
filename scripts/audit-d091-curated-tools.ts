@@ -11,7 +11,10 @@ import {
   parseFirebaseSolutionRegistryRevision,
   validateFirebaseSolutionRegistryRevision,
 } from "@/lib/firebase-solution-registry-contract";
-import { getToolDirectorySlug, toolDirectory } from "@/lib/tool-directory";
+import {
+  getToolDirectorySlug,
+  toolDirectoryCandidatePool,
+} from "@/lib/tool-directory";
 import {
   validateCuratedSelectionAgainstResearch,
   validateReviewedSolutionCurationResearchManifest,
@@ -58,7 +61,7 @@ const canonicalSystemSlugs = enterpriseCatalog.map(({ slug }) => slug);
 const auditSystemSlugs = pilotMode
   ? [...D091_PILOT_SYSTEM_SLUGS]
   : canonicalSystemSlugs;
-const activeToolSlugs = new Set(toolDirectory.map(getToolDirectorySlug));
+const activeToolSlugs = new Set(toolDirectoryCandidatePool.map(getToolDirectorySlug));
 const researchErrors = pilotMode
   ? validateReviewedSolutionCurationResearchManifest(research, {
       knownSystemSlugs: new Set(canonicalSystemSlugs),
