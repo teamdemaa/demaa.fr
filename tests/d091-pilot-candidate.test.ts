@@ -86,7 +86,7 @@ describe("D-091 reviewed pilot candidate", () => {
     expect(Object.fromEntries(
       [...selectedBySystem].map(([systemSlug, tools]) => [systemSlug, tools.length]),
     )).toEqual({
-      "agence-de-recrutement": 4,
+      "agence-de-recrutement": 3,
       saas: 8,
       "agence-web": 8,
       "cabinet-comptable": 7,

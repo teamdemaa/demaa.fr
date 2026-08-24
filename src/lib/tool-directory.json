@@ -1665,18 +1665,18 @@
     {
       "slug": "bullhorn",
       "name": "Bullhorn",
-      "url": "https://www.bullhorn.com/fr/produits/applicant-tracking-crm/",
+      "url": "https://www.bullhorn.com/fr/logiciel-recrutement-petites-agences/",
       "category": "RH & planning",
       "sectors": [
         "Conseil & services aux entreprises"
       ],
-      "description": "ATS et CRM pour agences de recrutement et sociétés d'intérim ayant des processus structurés.",
+      "description": "ATS et CRM pour petites agences de recrutement souhaitant centraliser candidats, clients et placements.",
       "tags": [
         "Recrutement",
         "ATS",
         "CRM"
       ],
-      "bestFor": "Structurer candidats, clients, placements et automatisations dans une agence établie.",
+      "bestFor": "Démarrer avec un ATS-CRM complet et conserver la même plateforme pendant la croissance de l'agence.",
       "pricingHint": "Sur devis",
       "keyFeatures": [
         "ATS et CRM",
@@ -1686,14 +1686,14 @@
         "Ecosystème d'intégrations"
       ],
       "idealFor": [
-        "Agences de recrutement structurées",
-        "Sociétés d'intérim et cabinets avec plusieurs équipes",
-        "Organisations ayant besoin d'intégrations et de reporting avancés"
+        "Petites agences de recrutement et cabinets en démarrage",
+        "Equipes qui veulent centraliser ventes, candidats et placements",
+        "Agences souhaitant une plateforme évolutive avec automatisations"
       ],
       "sources": [
-        "https://www.bullhorn.com/fr/produits/applicant-tracking-crm/"
+        "https://www.bullhorn.com/fr/logiciel-recrutement-petites-agences/"
       ],
-      "lastReviewedAt": "2026-08-23",
+      "lastReviewedAt": "2026-08-24",
       "status": "hidden",
       "scope": "business"
     },

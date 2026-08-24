@@ -13,7 +13,6 @@
         "sourcing-et-diffusion",
         "relation-clients",
         "qualification-et-entretiens",
-        "collaboration-et-documents",
         "automatisation-et-reporting"
       ],
       "toolCandidatesByRank": [
@@ -68,37 +67,20 @@
             "qualification-et-entretiens",
             "automatisation-et-reporting"
           ],
-          "usage": "Structurer candidats, clients, missions, placements, automatisations et analyses dans une agence ayant plusieurs équipes ou un volume élevé.",
-          "fitRationale": "Bullhorn est l’alternative pour une agence établie qui a besoin d’une plateforme agence plus profonde et d’un écosystème d’intégrations étendu.",
+          "usage": "Centraliser candidats, clients, postes, placements et automatisations dans une plateforme conçue pour les petites agences et capable d'accompagner leur croissance.",
+          "fitRationale": "Bullhorn est l’alternative métier pour une petite agence qui veut démarrer avec un ATS-CRM complet et conserver la même plateforme en grandissant.",
           "fitConstraints": [
-            "Le déploiement, le paramétrage et le coût peuvent être disproportionnés pour une petite équipe.",
-            "Faire valider précisément les modules, intégrations, reprise de données et conditions contractuelles."
+            "Le tarif est communiqué sur devis : comparer le coût total et les modules inclus avec Nicoka CABS et Recruit CRM.",
+            "Faire valider précisément l'onboarding, les intégrations, la reprise de données et les conditions contractuelles."
           ],
-          "targetProfile": "Agence de recrutement structurée, cabinet multi-équipe ou société d’intérim avec processus, reporting et intégrations avancés.",
-          "franceAvailability": "Offre officielle en français destinée aux agences de recrutement et sociétés d’intérim ; disponibilité commerciale en France à confirmer avec le périmètre contractuel retenu.",
-          "officialSourceUrl": "https://www.bullhorn.com/fr/produits/applicant-tracking-crm/",
-          "evidenceClaim": "Bullhorn propose aux agences de recrutement un ATS et CRM couvrant candidats, missions, clients, placements, automatisations et analyses.",
-          "reviewedAt": "2026-08-23T06:30:00.000Z"
-        },
-        {
-          "toolSlug": "google-workspace",
-          "coveredNeedIds": [
-            "collaboration-et-documents"
-          ],
-          "usage": "Partager les documents de mission, comptes rendus, modèles et agendas dans un socle bureautique commun.",
-          "fitRationale": "Google Workspace couvre les documents et la collaboration transverses sans prétendre remplacer l’ATS ou le CRM.",
-          "fitConstraints": [
-            "Définir les droits d’accès aux données candidats et clients.",
-            "Éviter de recréer dans Drive les dossiers déjà structurés dans l’ATS."
-          ],
-          "targetProfile": "Cabinet utilisant Google comme socle de messagerie, agenda, visioconférence, stockage et documents collaboratifs.",
-          "franceAvailability": "Offre Google Workspace commercialisée en France avec pages et assistance en français ; valider région des données et configuration de conformité selon le contrat.",
-          "officialSourceUrl": "https://workspace.google.com/intl/fr/",
-          "evidenceClaim": "Google Workspace regroupe messagerie, agenda, stockage et documents collaboratifs.",
-          "reviewedAt": "2026-08-23T06:30:00.000Z"
+          "targetProfile": "Petite agence de recrutement ou cabinet en démarrage qui veut réunir candidats, clients, postes et automatisations dans un outil évolutif.",
+          "franceAvailability": "L'éditeur publie une offre française dédiée aux petites agences ; le tarif, les modules et le périmètre d'accompagnement restent à confirmer sur devis.",
+          "officialSourceUrl": "https://www.bullhorn.com/fr/logiciel-recrutement-petites-agences/",
+          "evidenceClaim": "Bullhorn présente pour les petites agences une plateforme centralisant ventes, opérations, postes, candidatures, clients, automatisations et suivi du recrutement.",
+          "reviewedAt": "2026-08-24T18:30:00.000Z"
         }
       ],
-      "compositionRationale": "Trois ATS-CRM conçus pour les agences sont conservés comme alternatives nettement différenciées par cible : cabinet français, petite agence internationale et agence structurée. Recruitee et Teamtailor restent hors du pilote car ils ciblent d’abord le recrutement interne et ajouteraient deux alternatives moins alignées avec la gestion multi-clients d’une agence. Google Workspace reste la seule brique transverse, pour les documents et agendas. Les CRM, planificateurs, téléphonie et automatisation génériques sont retirés car les suites agence couvrent déjà l’essentiel et leur ajout n’est pas universel."
+      "compositionRationale": "Trois ATS-CRM conçus pour les agences sont conservés comme alternatives réellement différenciées : cabinet français, petite agence internationale et petite agence recherchant une plateforme évolutive. Recruitee et Teamtailor restent hors du pilote car ils ciblent d’abord le recrutement interne. Google Workspace, les CRM, planificateurs, outils bureautiques et automatisations génériques sont retirés : ils n’apportent pas assez de valeur de décision ici, et les suites agence couvrent déjà l’essentiel."
     },
     {
       "systemSlug": "saas",

@@ -79,7 +79,7 @@ describe("D-091 pilot research selections", () => {
     })).toEqual([]);
   });
 
-  it("does not turn the recruitment example into a list of ten ATS", async () => {
+  it("keeps only differentiated recruitment tools and excludes obvious office suites", async () => {
     const recruitment = (await manifest()).systems.find(
       ({ systemSlug }) => systemSlug === "agence-de-recrutement",
     );
@@ -88,8 +88,9 @@ describe("D-091 pilot research selections", () => {
       "nicoka-cabs",
       "recruit-crm",
       "bullhorn",
-      "google-workspace",
     ]);
+    expect(recruitment?.priorityNeeds).not.toContain("collaboration-et-documents");
+    expect(getToolDirectoryItemBySlug("google-workspace")).not.toBeNull();
   });
 
   it("keeps unapproved pilot tools out of the public directory", () => {
@@ -133,7 +134,7 @@ describe("D-091 pilot research selections", () => {
       "agence-de-recrutement:unknown-tool: selected tool is absent from reviewed research",
       "agence-de-recrutement: selected tools do not cover priority need candidatures-et-vivier",
       "agence-de-recrutement: selected tools do not cover priority need relation-clients",
-      "agence-de-recrutement: selected tools do not cover priority need collaboration-et-documents",
+      "agence-de-recrutement: selected tools do not cover priority need automatisation-et-reporting",
     ]));
 
     expect(validateCuratedSelectionAgainstResearch(

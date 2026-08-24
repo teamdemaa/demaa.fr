@@ -1668,8 +1668,8 @@ Référence : [ADR 0016](decisions/0016-plan-services-and-solutions-ecosystem.md
 
 Référence : [ADR 0017](decisions/0017-curated-tools-per-system.md).
 
-Statut : **pilote éditorial versionné dans la PR brouillon 196, sans activation
-Firebase ni fusion ; gate métier et décision de généralisation en attente**.
+Statut : **candidate TPE v4 versionnée dans la PR brouillon 196, sans activation
+Firebase ni fusion ; nouvelle Preview et gate métier en attente**.
 D-091 consolide et supersède D-068 à D-070 comme contrat d'exécution. Les gates
 pilote et final, la séparation publique de Services et la compatibilité des
 identifiants sont en place. Cinq systèmes pilotes ont des sélections variables
@@ -1688,6 +1688,12 @@ activé séparément.
 - [ ] Couvrir les besoins essentiels du métier dans son ensemble : ne pas
   accumuler des outils génériques ou des concurrents d'une même catégorie, et
   n'imposer aucun quota d'ATS, CRM, ERP ou autre famille.
+- [ ] Réserver les cartes aux outils apportant une vraie valeur de décision :
+  un socle bureautique évident ne suffit pas. Conserver un outil transverse
+  seulement si son usage est précis, structurant pour le métier, complémentaire
+  et proportionné à une TPE. Google Workspace est ainsi retiré du pilote
+  Recrutement sans remplacement automatique ; Airtable, Brevo, Pipedrive ou
+  n8n restent admissibles uniquement dans un contexte métier démontré.
 - [ ] Valider chaque `toolRef` retenu à partir de sources officielles datées ;
   ne jamais importer automatiquement une association faible pour atteindre un
   volume prédéfini.

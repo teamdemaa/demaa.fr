@@ -49,6 +49,10 @@ concurrent.
 4. Les cartes sont simplement classées par pertinence éditoriale pour le
    métier et ses problèmes prioritaires. Un outil généraliste d'appui ne doit
    pas être placé avant un logiciel métier central sans justification réelle.
+   Un socle bureautique évident n'occupe pas une carte uniquement parce qu'il
+   est utile à presque toutes les entreprises. Un outil transverse reste
+   admissible lorsque son usage opérationnel est précis, structurant pour ce
+   métier, complémentaire et proportionné à une TPE.
 5. Les 1 042 `toolRefs` constituent un corpus de départ, pas une vérité à
    importer. Chaque association doit être validée avant activation.
 6. La vérification s'appuie en priorité sur les sites officiels et documente au
