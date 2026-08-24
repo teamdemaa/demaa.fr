@@ -21,7 +21,6 @@ const navigationItems = {
 const navigationOrder: readonly ActionPlanView[] = [
   "plan",
   "services",
-  "academy",
 ];
 
 export default function ActionPlanNavbar({

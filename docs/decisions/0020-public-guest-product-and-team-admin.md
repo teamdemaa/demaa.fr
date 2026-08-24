@@ -144,7 +144,9 @@ contractuels et de confidentialité doivent refléter cette règle.
   routes client de la navigation publique ;
 - retirer Diagnostic conversationnel et son historique côté dirigeant ;
 - masquer Chiffres et Stratégie dans Demaa ;
-- conserver la navigation principale `Plan d’action · Services · Structurer` ;
+- livrer immédiatement la navigation principale `Plan d’action · Services` ;
+- conserver Structurer accessible directement, mais le retirer temporairement
+  de la navigation jusqu'à la finalisation de son contenu éditorial ;
 - conserver Annonces accessible directement par `/opportunites`, le footer et
   ses surfaces administratives, sans l'afficher dans la navigation principale ;
 - conserver les données historiques et lecteurs compatibles pendant la
