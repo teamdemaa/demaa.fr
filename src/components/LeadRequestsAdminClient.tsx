@@ -16,7 +16,7 @@ const REQUEST_TYPE_LABELS: Record<string, string> = {
   accounting_request: "Demande comptable",
   coaching_recommendation_introduction: "Mise en relation coaching",
   guest_plan_diagnostic: "Diagnostic de plan",
-  opportunity_interest: "Intérêt opportunité",
+  opportunity_interest: "Intérêt annonce",
   provider_profile_submission: "Profil prestataire",
   service_callback_request: "Rappel service",
   service_request: "Demande de service",

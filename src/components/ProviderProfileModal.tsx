@@ -245,7 +245,7 @@ export default function ProviderProfileModal({
                 <input type="checkbox" required checked={consent} onChange={(event) => setConsent(event.target.checked)} className="mt-0.5 h-4 w-4 rounded border-dema-line accent-dema-forest" />
                 <span>
                   {opportunity
-                    ? "J’accepte que Demaa conserve ces informations afin de me recontacter au sujet de cette opportunité."
+                    ? "J’accepte que Demaa conserve ces informations afin de me recontacter au sujet de cette annonce."
                     : "J’accepte que Demaa conserve ces informations afin de me contacter lorsqu’un besoin correspond à mon profil."}
                 </span>
               </label>

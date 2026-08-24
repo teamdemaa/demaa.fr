@@ -107,7 +107,7 @@ describe("coaching draft retention", () => {
     expect(privacy).toContain("utilisable pendant 60 minutes maximum");
     expect(privacy).toContain("des brouillons temporaires");
     expect(privacy).toContain(
-      "Brouillon de proposition d&apos;opportunité avant connexion",
+      "Brouillon de proposition d&apos;annonce avant connexion",
     );
     expect(privacy).toContain("utilisable pendant 2 heures maximum");
     expect(privacy).not.toContain("draftToken");
