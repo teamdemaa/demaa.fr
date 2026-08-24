@@ -382,14 +382,14 @@ export default function GuestActionPlanExperience({
         onViewChange={selectAppView}
         visibleViews={visibleViews}
       />
-      {actionPlan && access ? (
-        <GuestDiagnosticControl
-          access={access}
-          onClose={() => setDiagnosticOpen(false)}
-          onOpen={() => setDiagnosticOpen(true)}
-          open={diagnosticOpen}
-        />
-      ) : null}
+      <GuestDiagnosticControl
+        access={actionPlan ? access : null}
+        key={actionPlan && access ? access.generationId : "without-plan"}
+        onClose={() => setDiagnosticOpen(false)}
+        onOpen={() => setDiagnosticOpen(true)}
+        open={diagnosticOpen}
+        situation={situation}
+      />
       <div className="mx-auto max-w-[68rem] pt-1">
         {appContext.view === "plan" ? (
           <nav className="mx-auto flex w-fit items-center gap-1 rounded-full border border-dema-line/70 bg-dema-sage/25 p-1" aria-label="Contenu du plan">

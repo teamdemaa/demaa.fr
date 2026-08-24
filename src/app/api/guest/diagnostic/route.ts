@@ -3,8 +3,7 @@ import { noStoreHeaders, withNoStore } from "@/lib/action-plan-api.server";
 import { readJsonBody } from "@/lib/api-security";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { guestProductUnavailableResponse } from "@/lib/guest-action-plan-api.server";
-import { getGuestActionPlanGenerationForAccess } from "@/lib/guest-action-plan-generation.server";
-import { isGuestProductEnabled, readGuestAccessKey } from "@/lib/guest-action-plan-security.server";
+import { isGuestProductEnabled } from "@/lib/guest-action-plan-security.server";
 import {
   guestDiagnosticRequestSchema,
   normalizeGuestDiagnosticPhone,
@@ -19,16 +18,14 @@ import { enforceServiceRequestRateLimit } from "@/lib/service-request-security.s
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
-type RouteContext = { params: Promise<{ id: string }> };
-
-export async function POST(request: Request, context: RouteContext) {
+export async function POST(request: Request) {
   if (!isGuestProductEnabled()) return guestProductUnavailableResponse();
   const blockedHost = enforceAllowedHost(request);
   if (blockedHost) return withNoStore(blockedHost);
   const blockedOrigin = enforceSameOrigin(request);
   if (blockedOrigin) return withNoStore(blockedOrigin);
 
-  const { data, response } = await readJsonBody<unknown>(request, 16 * 1_024);
+  const { data, response } = await readJsonBody<unknown>(request, 20 * 1_024);
   if (response) return withNoStore(response);
   const parsed = guestDiagnosticRequestSchema.safeParse(data);
   if (!parsed.success) {
@@ -40,6 +37,13 @@ export async function POST(request: Request, context: RouteContext) {
   if (parsed.data.website?.trim()) {
     return NextResponse.json({ ok: true }, { status: 202, headers: noStoreHeaders() });
   }
+  if (!parsed.data.message?.trim()) {
+    return NextResponse.json({ error: "Décrivez brièvement comment nous pouvons vous aider." }, {
+      status: 400,
+      headers: noStoreHeaders(),
+    });
+  }
+
   const email = normalizeEmail(parsed.data.email);
   const phone = normalizeGuestDiagnosticPhone(parsed.data.phone);
   if (!isValidEmail(email) || phone === undefined) {
@@ -61,31 +65,16 @@ export async function POST(request: Request, context: RouteContext) {
   });
   if (limited) return withNoStore(limited);
 
-  const { id } = await context.params;
-  const accessKey = readGuestAccessKey(request);
-  if (!/^gpl_[A-Za-z0-9_-]{40}$/.test(id) || !accessKey) {
-    return NextResponse.json({ error: "Accès au plan invalide." }, {
-      status: 401,
-      headers: noStoreHeaders(),
-    });
-  }
-  const state = await getGuestActionPlanGenerationForAccess({ id, accessKey });
-  if (!state || state.status !== "active") {
-    return NextResponse.json({ error: "Ce plan est introuvable, incomplet ou expiré." }, {
-      status: 404,
-      headers: noStoreHeaders(),
-    });
-  }
-
   try {
     const result = await submitGuestDiagnosticRequest({
       attribution: parsed.data.attribution,
       email,
       idempotencyKey: parsed.data.idempotencyKey,
-      message: parsed.data.message?.trim() || null,
+      message: parsed.data.message.trim(),
       phone,
-      plan: state.actionPlan,
+      plan: null,
       request,
+      situation: parsed.data.situation?.trim() || null,
     });
     return NextResponse.json({ ok: true, requestId: result.leadId }, {
       status: result.duplicate ? 200 : 201,

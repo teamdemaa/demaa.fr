@@ -95,10 +95,12 @@ conserve un instantané du plan et de la situation, car le job invité expire.
 Le dirigeant reçoit la réponse par e-mail ; aucune conversation ou boîte de
 réception client n'est créée.
 
-Après la génération, le même formulaire est accessible depuis la carte de fin
-du plan et depuis l'action compacte `Diagnostic` du header. Ces deux entrées
-réutilisent un composant unique et le même contrat d'envoi ; le bouton du header
-n'est pas présenté avant qu'un plan invité et son accès temporaire existent.
+L'action compacte `Diagnostic` du header reste visible dans toute l'expérience
+publique, avant comme après la génération. Elle ouvre toujours le même formulaire
+et alimente la même file administrative. Avant génération, la demande conserve
+le message et la situation éventuellement saisie, sans créer de plan artificiel.
+Après génération, elle conserve en plus l'instantané du plan temporaire. La carte
+de fin du plan ouvre exactement cette même modale.
 
 Le développement local ouvre le produit invité courant par défaut. Le parcours
 historique de rollback reste testable explicitement avec `npm run dev:legacy`,

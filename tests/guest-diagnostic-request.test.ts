@@ -145,6 +145,29 @@ describe("guest diagnostic request", () => {
     expect(mocks.submitLeadRequest).toHaveBeenCalledTimes(1);
   });
 
+  it("stores a diagnostic without a plan in the same admin request stream", async () => {
+    const result = await submitGuestDiagnosticRequest({
+      attribution: null,
+      email: "owner@example.com",
+      idempotencyKey: "diagnostic-without-plan-123456",
+      message: "Je souhaite clarifier mon organisation.",
+      phone: null,
+      plan: null,
+      request: request(),
+      situation: "Je perds du temps dans le suivi des demandes.",
+    });
+
+    expect(result).toEqual({ duplicate: false, leadId: "lead-123" });
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      fields: [
+        { label: "Message complémentaire", value: "Je souhaite clarifier mon organisation." },
+        { label: "Situation saisie", value: "Je perds du temps dans le suivi des demandes." },
+      ],
+      requestType: "guest_plan_diagnostic",
+      title: "Diagnostic demandé",
+    }));
+  });
+
   it("rejects reuse of an idempotency key with different personal data", async () => {
     await submitGuestDiagnosticRequest({
       attribution: null,

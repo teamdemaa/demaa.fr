@@ -28,3 +28,20 @@ export async function submitGuestActionPlanFollowUp(
     throw new Error(payload?.error ?? "La demande n’a pas pu être envoyée.");
   }
 }
+
+export async function submitGuestDiagnosticWithoutPlan(
+  body: Record<string, unknown>,
+) {
+  const response = await fetch("/api/guest/diagnostic", {
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  });
+  const payload = await response.json().catch(() => null) as {
+    error?: string;
+    ok?: boolean;
+  } | null;
+  if (!response.ok || payload?.ok !== true) {
+    throw new Error(payload?.error ?? "La demande n’a pas pu être envoyée.");
+  }
+}
