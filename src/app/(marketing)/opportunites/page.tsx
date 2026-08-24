@@ -3,6 +3,10 @@ import { connection } from "next/server";
 import Navbar from "@/components/Navbar";
 import PublicOpportunitiesClient from "@/components/PublicOpportunitiesClient";
 import {
+  buildOpportunitiesJsonLd,
+  serializeOpportunitiesJsonLd,
+} from "@/lib/opportunities-seo";
+import {
   getPublicExpertises,
   getPublicOpenOpportunities,
 } from "@/lib/provider-network.server";
@@ -35,6 +39,12 @@ export default async function OpportunitiesPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeOpportunitiesJsonLd(buildOpportunitiesJsonLd(opportunities)),
+        }}
+      />
       <Navbar />
       <main className="flex-1 bg-dema-cream px-5 pb-20 pt-12 sm:pb-24 sm:pt-16">
         <div className="mx-auto max-w-4xl">
