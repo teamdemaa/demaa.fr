@@ -23,7 +23,8 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
 ## État courant Production — 24 août 2026
 
-- `origin/main` pointe sur `6462b7d8`, fusion de la PR 218. `1340898a` et
+- `origin/main` pointe sur `32542ee9`, fusion de la PR 216. `6462b7d8`,
+  fusion de la PR 218, `1340898a` et
   `69bbc336` restent des checkpoints historiques de la
   clôture documentaire de la PR 191 et `467f420f` le dernier checkpoint runtime
   initial de D-094, déployé après
@@ -78,10 +79,10 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 - D-096 est livré par la PR 194 : les Tutoriels sont présentés comme des
   articles et les Formations restent conservées mais masquées de manière
   réversible. Son retour dans la navigation attend une revue éditoriale séparée.
-- La PR 213 a livré l'accueil `/admin`. La PR 214, réalignée sur la Production
-  actuelle, propose de retirer Coaching de cet accueil tout en conservant son
-  accès historique direct. La PR 216 ajoute ensuite `/admin/outils` en lecture
-  seule ; aucune de ces deux PR n'est fusionnée par le présent document.
+- La PR 213 a livré l'accueil `/admin`. Les PR 214 et 216 ont ensuite retiré
+  Coaching de cet accueil tout en conservant son accès historique direct, puis
+  ajouté `/admin/outils` en lecture seule. Cette vue n'écrit aucune donnée et
+  ne peut ni créer une candidate ni déplacer le pointeur Firebase actif.
 - Décision de positionnement du 23 août 2026 : la description meta globale
   (layout racine et page d'accueil, OG/Twitter compris) devient « Demaa
   structure votre entreprise en mettant en place les bons systèmes, pour
@@ -1674,7 +1675,9 @@ pilote et final, la séparation publique de Services et la compatibilité des
 identifiants sont en place. Cinq systèmes pilotes ont des sélections variables
 documentées ; le pointeur Firebase actif n'a pas été déplacé et aucune donnée
 Production n'a été modifiée. Les quantités restent indicatives et ne deviennent
-jamais un quota à remplir.
+jamais un quota à remplir. Nicoka CABS, Recruit CRM et Bullhorn restent cachés
+de l'annuaire public et du sitemap tant que le pilote n'est pas validé puis
+activé séparément.
 
 - [x] Conserver exactement la carte actuelle et n'ajouter aucun badge, repère
   éditorial ou module « Aide au choix ».
@@ -2068,24 +2071,23 @@ The Done Studio suit un handover informatif séparé : son onglet Ressources
 reçoit une section unique `Cours`. Les applications ne partagent aucun contrat,
 modèle, identifiant, package, API, stockage, cache ou dépendance de déploiement.
 
-#### D-097 — Administration éditoriale des Outils — premier lot en PR
+#### D-097 — Administration éditoriale des Outils — lecture seule livrée
 
 Référence : [ADR 0022](decisions/0022-admin-tool-curation.md).
 
 Objectif : permettre à la Team Demaa de contrôler la curation D-091 sans
 transformer l'administration en éditeur direct de la Production.
 
-État au 24 août 2026 : la PR brouillon 216 prépare la première vue strictement
-en lecture seule. Elle est empilée sur la PR 214, qui conserve Coaching en accès
-historique direct tout en le retirant de l'accueil admin. Les deux branches ont
-été réalignées sur `6462b7d8` et validées localement ; elles restent non
-fusionnées. Aucune mutation, candidate Firebase ou activation du pointeur n'est
-livrée.
+État au 24 août 2026 : les PR 214 et 216 sont fusionnées. Coaching reste
+accessible par son URL historique mais disparaît de l'accueil admin.
+`/admin/outils` livre la première vue strictement en lecture seule sous la
+session Team existante. Aucune mutation, création de candidate Firebase ou
+activation du pointeur n'est livrée.
 
-- [ ] Fusionner d'abord la PR 214 après recette de sa Preview.
-- [ ] Ajouter ensuite `/admin/outils` à la navigation Team et à l'allowlist de
+- [x] Fusionner d'abord la PR 214 après recette de sa Preview.
+- [x] Ajouter ensuite `/admin/outils` à la navigation Team et à l'allowlist de
   retour, sous la session admin D-094 existante.
-- [ ] Livrer une vue strictement en lecture seule : révision active, candidate,
+- [x] Livrer une vue strictement en lecture seule : révision active, candidate,
   recherche parmi les 115 métiers, rangs, preuves, dates, limites et différences
   actif/candidat.
 - [ ] Construire ultérieurement un brouillon éditorial distinct de la révision

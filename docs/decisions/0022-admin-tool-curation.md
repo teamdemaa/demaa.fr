@@ -30,7 +30,8 @@ lecture de l'actif
 → activation explicite avec rollback
 ```
 
-La première PR runtime livre uniquement `/admin/outils` en lecture seule. Elle
+Le premier lot runtime, livré par les PR 214 et 216, expose uniquement
+`/admin/outils` en lecture seule. Il
 utilise la session Team D-094 et montre au minimum :
 
 - l'identifiant et le statut de la révision active ;
@@ -75,5 +76,5 @@ reste une opération séparée et auditée. L'activation exige :
 5. recette Preview.
 6. activation Firebase seulement après GO PROD séparé.
 
-La PR lecture seule peut avancer pendant le gate métier du pilote D-091. Les
-mutations et l'activation attendent sa validation.
+La vue lecture seule est livrée. Les mutations, la création d'une candidate et
+l'activation attendent la validation métier du pilote D-091 et des GO séparés.
