@@ -46,16 +46,18 @@ trouve dans `pilot-reviewed-selections.v2.json`.
   le JSON-LD public ; aucune troncature à huit ou dix ;
 - audit pilote vert et 11 tests ciblés verts.
 
-## Preview à renouveler
+## Preview recettée
 
-- La Preview v2 reste une preuve historique et ne doit plus servir au gate
-  métier de la candidate v3.
-- Une nouvelle Preview doit être construite sur la candidate v3, sans lecture
-  ni déplacement du pointeur Firebase.
-- L'API des cinq pilotes doit exposer 4/8/8/7/6 Outils dans l'ordre revu, avec
-  Services contextuels présents séparément.
-- Les cinq pages et leur JSON-LD doivent contenir chaque Outil une fois, sans
-  troncature, avec les positions continues de 1 à N.
+- URL : <https://demaa-pj8qu8cq5-hiteamdemaa-2292s-projects.vercel.app> ;
+- déploiement Vercel `dpl_7fmy7MZYmspmAX6YK88XaL9qib3r`, cible `preview`,
+  statut `Ready` ;
+- build et runtime forcés sur les données locales de la candidate, sans lecture
+  ni déplacement du pointeur Firebase ;
+- API des cinq pilotes : 4/8/8/7/6 Outils dans l'ordre revu ; les Services
+  contextuels restent présents dans une section distincte ;
+- les cinq pages répondent correctement et leur JSON-LD contient chaque Outil
+  une fois, sans troncature, avec les positions continues de 1 à N ;
+- aucun log runtime de niveau erreur relevé après la recette.
 
 ## Gate de validation métier
 
