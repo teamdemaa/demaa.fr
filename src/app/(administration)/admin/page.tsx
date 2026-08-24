@@ -20,11 +20,6 @@ const SECTIONS = [
     label: "Demandes",
     description: "Récapitulatif des demandes reçues via le site, avec coordonnées et contexte.",
   },
-  {
-    href: "/admin/coaching",
-    label: "Coaching",
-    description: "Conversations spécialiste et suivi des demandes de coaching.",
-  },
 ] as const;
 
 export default async function AdminHomePage() {
