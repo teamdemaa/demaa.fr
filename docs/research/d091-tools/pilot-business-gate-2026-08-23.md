@@ -2,7 +2,7 @@
 
 Date de revue : 24 août 2026
 Candidate : `solutions-2026-08-24-d091-tpe-pilot-candidate-v4`
-Statut : **candidate TPE à recetter en Preview, non activée**.
+Statut : **candidate TPE recettée en Preview, non activée**.
 
 ## Décision appliquée
 
@@ -49,16 +49,18 @@ trouve dans `pilot-reviewed-selections.v2.json`.
 - audit pilote vert ; tests ciblés verts et `npm run check` vert : 273 fichiers,
   1 547 tests, lint strict, TypeScript, Académie et validations de données.
 
-## Preview à renouveler
+## Preview recettée
 
-- La Preview v3 reste une preuve historique et ne doit plus servir au gate
-  métier de la candidate v4.
-- La nouvelle Preview doit charger la candidate v4 localement, sans lecture ni
-  déplacement du pointeur Firebase.
-- L'API des cinq pilotes doit exposer 3/8/8/7/6 Outils dans l'ordre revu, avec
-  les Services contextuels présents séparément.
-- Les cinq pages et leur JSON-LD doivent contenir chaque Outil une fois, sans
-  troncature, avec les positions continues de 1 à N.
+- URL : <https://demaa-7dxh2xtwp-hiteamdemaa-2292s-projects.vercel.app> ;
+- déploiement Vercel `dpl_J8aGzwrwQ1hm1sKmgTfuhumFNpF3`, cible `preview`,
+  statut `Ready` ;
+- build et runtime forcés sur les données locales de la candidate v4, sans
+  lecture ni déplacement du pointeur Firebase ;
+- API des cinq pilotes : 3/8/8/7/6 Outils dans l'ordre revu ; les Services
+  contextuels restent présents dans une section distincte ;
+- les cinq pages répondent correctement et leur JSON-LD contient chaque Outil
+  une fois, sans troncature, avec les positions continues de 1 à N ;
+- aucun log runtime de niveau erreur relevé après la recette.
 
 ## Gate de validation métier
 

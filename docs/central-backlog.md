@@ -1668,8 +1668,8 @@ Référence : [ADR 0016](decisions/0016-plan-services-and-solutions-ecosystem.md
 
 Référence : [ADR 0017](decisions/0017-curated-tools-per-system.md).
 
-Statut : **candidate TPE v4 versionnée dans la PR brouillon 196, sans activation
-Firebase ni fusion ; nouvelle Preview et gate métier en attente**.
+Statut : **candidate TPE v4 versionnée et recettée en Preview dans la PR
+brouillon 196, sans activation Firebase ni fusion ; gate métier en attente**.
 D-091 consolide et supersède D-068 à D-070 comme contrat d'exécution. Les gates
 pilote et final, la séparation publique de Services et la compatibilité des
 identifiants sont en place. Cinq systèmes pilotes ont des sélections variables
