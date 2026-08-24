@@ -1,17 +1,16 @@
 # Backlog central Demaa
 
-Dernière consolidation : 23 août 2026.
+Dernière consolidation : 24 août 2026.
 
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
 
 Le Google Sheet a été resynchronisé le 23 août 2026 avec la décision finale
-D-091 sans quota fixe, D-094 livré et en observation, D-095 planifié, ainsi que
-la tête Production alors courante `69bbc336`. Le dépôt a depuis avancé jusqu'à
-`1340898a` sur `origin/main`. Aucun chantier ne doit être déclaré livré avant sa
-recette réelle. Décision produit ultérieure du 23 août 2026 : D-095 (Annonces)
-devient la priorité immédiate devant D-091, qui passe en validation métier
-différée ; voir les statuts détaillés de chaque chantier ci-dessous.
+D-091 sans quota fixe et D-094 livré. Il précède encore les livraisons D-095,
+D-096 et la simplification de navigation du 24 août ; le Markdown présent est
+donc la source la plus récente jusqu'à la prochaine resynchronisation
+contrôlée. La tête `origin/main` vérifiée lors de cette consolidation est
+`6462b7d8`. Aucun chantier ne doit être déclaré livré avant sa recette réelle.
 
 Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
@@ -22,9 +21,10 @@ Plan directeur actif :
 Il fixe l'ordre des lots, leurs responsables, les branches/PR et les gates de
 release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 
-## État courant Production — 23 août 2026
+## État courant Production — 24 août 2026
 
-- `origin/main` pointe sur `1340898a`. `69bbc336` reste le checkpoint de la
+- `origin/main` pointe sur `6462b7d8`, fusion de la PR 218. `1340898a` et
+  `69bbc336` restent des checkpoints historiques de la
   clôture documentaire de la PR 191 et `467f420f` le dernier checkpoint runtime
   initial de D-094, déployé après
   la fusion des PR 183 à 190 et son activation contrôlée. `dbb8b723` reste le
@@ -48,7 +48,7 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
   d'entreprise D-084 a bien été livré historiquement, puis Chiffres et
   Stratégie ont été retirés du parcours public par D-094. Ils ne doivent pas
   être réactivés implicitement par un lot Académie ou internationalisation.
-- Les trois consoles internes utilisent la session Team Demaa dédiée, le
+- Les consoles internes utilisent la session Team Demaa dédiée, le
   cookie HttpOnly `demaa_admin_session` et l'allowlist `DEMAA_ADMIN_EMAILS`.
   Cette session ne crée ni compte client, ni entreprise, ni appartenance. Les
   anciens secrets dédiés ont été retirés de Vercel.
@@ -58,8 +58,10 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
 - Les PR 169 à 171 ont livré historiquement D-090. La sous-navigation
   `Plan / Chiffres / Solutions` et l'accès Stratégie ont ensuite été simplifiés
   par D-093 puis supersédés dans le parcours public par D-094. Le catalogue
-  Solutions et la destination Services restent actifs ; la navigation
-  principale est `Plan d'action / Académie / Services / Opportunités`.
+  Solutions et la destination Services restent actifs. La navigation
+  principale immédiate est `Plan d'action / Services` ; les routes Structurer
+  et Annonces restent accessibles directement mais masquées de la navbar par la
+  PR 218.
 - D-093 est livré par la PR 181 : entrée opérationnelle, prompt IA et
   simplification de l'interface. La PR 182 ajoute le service gratuit `Recruter
   un alternant` en réutilisant le parcours Services existant.
@@ -68,8 +70,18 @@ release. Aucun lot runtime n'est autorisé par ce lien sans GO explicite.
   session Team Demaa indépendante et retrait de Chiffres/Stratégie/chat du
   parcours public. Une génération réelle, l'envoi du plan, la demande
   Diagnostic et sa présence dans l'administration Team ont été vérifiés le
-  23 août 2026. La période d'observation est en cours ; aucun compte ou donnée
-  de test ne sera supprimé sans inventaire et autorisation destructive séparée.
+  23 août 2026. La période d'observation et le nettoyage différé restent ouverts.
+- D-095 est livré : les libellés visibles parlent désormais d'Annonces tandis
+  que les routes, APIs, collections et identifiants historiques restent stables.
+  La transformation en marketplace, le paiement et la messagerie restent hors
+  périmètre.
+- D-096 est livré par la PR 194 : les Tutoriels sont présentés comme des
+  articles et les Formations restent conservées mais masquées de manière
+  réversible. Son retour dans la navigation attend une revue éditoriale séparée.
+- La PR 213 a livré l'accueil `/admin`. La PR 214, réalignée sur la Production
+  actuelle, propose de retirer Coaching de cet accueil tout en conservant son
+  accès historique direct. La PR 216 ajoute ensuite `/admin/outils` en lecture
+  seule ; aucune de ces deux PR n'est fusionnée par le présent document.
 - Décision de positionnement du 23 août 2026 : la description meta globale
   (layout racine et page d'accueil, OG/Twitter compris) devient « Demaa
   structure votre entreprise en mettant en place les bons systèmes, pour
@@ -1655,13 +1667,14 @@ Référence : [ADR 0016](decisions/0016-plan-services-and-solutions-ecosystem.md
 
 Référence : [ADR 0017](decisions/0017-curated-tools-per-system.md).
 
-Statut : **fondation technique réalisée, validation éditoriale non commencée ;
-validation métier différée après le lancement d'Annonces (D-095), qui devient
-la priorité produit immédiate depuis le 23 août 2026**.
+Statut : **pilote éditorial versionné dans la PR brouillon 196, sans activation
+Firebase ni fusion ; gate métier et décision de généralisation en attente**.
 D-091 consolide et supersède D-068 à D-070 comme contrat d'exécution. Les gates
 pilote et final, la séparation publique de Services et la compatibilité des
-identifiants sont en place ; aucune révision Firebase candidate ou active n'a
-été créée ou publiée.
+identifiants sont en place. Cinq systèmes pilotes ont des sélections variables
+documentées ; le pointeur Firebase actif n'a pas été déplacé et aucune donnée
+Production n'a été modifiée. Les quantités restent indicatives et ne deviennent
+jamais un quota à remplir.
 
 - [x] Conserver exactement la carte actuelle et n'ajouter aucun badge, repère
   éditorial ou module « Aide au choix ».
@@ -1959,48 +1972,46 @@ identifiants techniques, données et formulaires sont conservés. Le CTA du head
 affiche intégralement `Diagnostic organisation` sur desktop et mobile et ouvre le
 même formulaire D-094 avant ou après la génération d'un plan.
 
-#### D-095 — Faire évoluer Opportunités vers un espace d'Annonces — priorité immédiate
+#### D-095 — Faire évoluer Opportunités vers un espace d'Annonces — livré
 
-Statut : **priorité produit immédiate depuis le 23 août 2026 ; D-094 est
-fusionné, activé et reste en observation, D-091 passe en validation métier
-différée le temps de ce lot. Le runtime D-095 démarre**.
+Statut : **livré ; les derniers écarts de vocabulaire ont été fermés par la
+PR 212. Les identifiants techniques historiques restent volontairement
+inchangés**.
 
 Objectif : élargir la surface française actuelle au-delà des seules
 opportunités commerciales, pour publier et consulter des annonces
 professionnelles utiles à l'exploitation, au développement, à l'achat, à la
 vente ou à la transmission d'une entreprise.
 
-- [ ] Renommer les libellés visibles `Opportunités` en `Annonces`, notamment la
+- [x] Renommer les libellés visibles `Opportunités` en `Annonces`, notamment la
   navigation, le titre, la recherche, les états vides, les CTA et les noms
   accessibles.
-- [ ] Réutiliser les cartes, filtres, détail, soumission, modération,
+- [x] Réutiliser les cartes, filtres, détail, soumission, modération,
   notifications et administration spécialisés existants ; ne créer ni second
   catalogue ni nouvelle collection par défaut.
-- [ ] Conserver provisoirement les identifiants techniques historiques
+- [x] Conserver provisoirement les identifiants techniques historiques
   (`view=opportunities`, `/opportunites`, APIs, collection, `opportunityId` et
   routes admin) afin d'éviter une migration risquée sans bénéfice utilisateur.
-- [ ] Faire évoluer le formulaire avec une copie plus générique : `Type
+- [x] Faire évoluer le formulaire avec une copie plus générique : `Type
   d'annonce`, `Détails utiles`, `Budget ou prix`, puis coordonnées avec
   l'adresse e-mail en dernier ; préserver la validation et l'anti-abus de
   D-094.
-- [ ] Couvrir au minimum les intentions `recherche`, `propose`, `achète`,
+- [x] Couvrir au minimum les intentions `recherche`, `propose`, `achète`,
   `vend`, `partenariat` et `transmission`, avec une taxonomie courte validée
   avant de modifier les données existantes.
-- [ ] Conserver les trois publications actuelles et les reclasser seulement
+- [x] Conserver les publications actuelles et les reclasser seulement
   après revue éditoriale ; ne pas réécrire leur stockage pour un simple
   changement de vocabulaire.
-- [ ] Limiter la surface aux annonces professionnelles liées à l'entreprise :
+- [x] Limiter la surface aux annonces professionnelles liées à l'entreprise :
   ne pas construire une place de marché généraliste, un paiement, une
   messagerie ou un portail partenaire dans ce lot.
-- [ ] Vérifier SEO, données structurées, sitemap, URL canonique, mobile/PWA,
+- [x] Vérifier SEO, données structurées, sitemap, URL canonique, mobile/PWA,
   clavier, lecteur d'écran, accès direct et administration avant activation.
-- [ ] Garder l'anglais hors périmètre tant que D-085 reste en pause.
+- [x] Garder l'anglais hors périmètre tant que D-085 reste en pause.
 
-Dépendance technique satisfaite : D-094 est fusionné, les formulaires sont
-publics et l'e-mail est placé en dernier. Le runtime D-095 démarre
-immédiatement ; D-091 reste en pause métier pendant ce lot pour ne pas modifier
-simultanément `OpportunitySubmissionDialog`, `PublicOpportunitiesClient` et
-l'API de soumission.
+D-095 n'a renommé aucun identifiant technique historique. Toute future
+extension éditoriale du nombre d'annonces exige des sources réelles et une
+modération ; elle ne rouvre pas ce lot de structure.
 
 #### D-096 — Structurer : Tutoriels visibles, Formations conservées — livré
 
@@ -2033,19 +2044,18 @@ inchangés ; l'anglais reste `Academy` et demeure en pause.
   un ordre partagé réutilisable par l'anglais lors de sa reprise.
 - [x] Recetter la Preview finale sur desktop, le rendu mobile local, les tests
   PWA et la sémantique accessible, y compris le retour depuis un article.
-- [ ] Fusionner et vérifier Production uniquement après GO explicite.
+- [x] Fusionner et vérifier Production uniquement après GO explicite.
 
 Les Formations pourront être republiées plus tard par décision explicite et
 recette dédiée. Elles ne doivent pas être supprimées, recopiées ni converties
 en Tutoriels.
 
-État d'exécution : la PR #194 porte le runtime et la Preview, avec la grille de
+État d'exécution : la PR #194 a livré le runtime, avec la grille de
 Tutoriels, leurs articles, le masquage réversible des Formations, le libellé
 `Structurer`, l'allègement visuel et l'ordre de navigation
-`Plan d'action · Structurer · Services · Opportunités`. CI, check complet,
-build Production et Preview sont verts ; elle reste non fusionnée jusqu'au GO.
-Le remplacement ultérieur
-d'`Opportunités` par `Annonces` reste le lot D-095 séparé.
+`Plan d'action · Structurer · Services · Annonces`. CI, check complet, build et
+recette Production ont été passés avant clôture. La PR 218 a ensuite masqué
+Structurer de la navbar sans supprimer sa route ni ses contenus.
 
 Mise à jour du 24 août 2026 : le contenu et les routes Structurer restent
 conservés, mais son exposition dans la navigation est différée jusqu'à la fin de
@@ -2057,6 +2067,43 @@ de contenu déjà livré par D-096.
 The Done Studio suit un handover informatif séparé : son onglet Ressources
 reçoit une section unique `Cours`. Les applications ne partagent aucun contrat,
 modèle, identifiant, package, API, stockage, cache ou dépendance de déploiement.
+
+#### D-097 — Administration éditoriale des Outils — premier lot en PR
+
+Référence : [ADR 0022](decisions/0022-admin-tool-curation.md).
+
+Objectif : permettre à la Team Demaa de contrôler la curation D-091 sans
+transformer l'administration en éditeur direct de la Production.
+
+État au 24 août 2026 : la PR brouillon 216 prépare la première vue strictement
+en lecture seule. Elle est empilée sur la PR 214, qui conserve Coaching en accès
+historique direct tout en le retirant de l'accueil admin. Les deux branches ont
+été réalignées sur `6462b7d8` et validées localement ; elles restent non
+fusionnées. Aucune mutation, candidate Firebase ou activation du pointeur n'est
+livrée.
+
+- [ ] Fusionner d'abord la PR 214 après recette de sa Preview.
+- [ ] Ajouter ensuite `/admin/outils` à la navigation Team et à l'allowlist de
+  retour, sous la session admin D-094 existante.
+- [ ] Livrer une vue strictement en lecture seule : révision active, candidate,
+  recherche parmi les 115 métiers, rangs, preuves, dates, limites et différences
+  actif/candidat.
+- [ ] Construire ultérieurement un brouillon éditorial distinct de la révision
+  active. Une modification ne doit jamais écrire dans le pointeur actif.
+- [ ] Soumettre tout brouillon aux contrats D-091 et aux audits de preuve avant
+  de produire une révision candidate immuable.
+- [ ] Recetter la candidate sur Preview, y compris API, interface, pages Système,
+  HTML et JSON-LD.
+- [ ] Réserver l'activation du pointeur Firebase à une action explicite,
+  journalisée, confirmée et couverte par un GO PROD séparé avec rollback.
+- [ ] Conserver Services, Fournisseurs, Financement, Aides et Réseaux comme
+  domaines distincts avec leurs propres règles ; `/admin/outils` ne les fusionne
+  pas dans un catalogue générique.
+- [ ] Ne pas créer de recommandation par IA, de badge éditorial ou de quota
+  artificiel dans ce chantier.
+
+La première PR runtime de D-097 doit s'arrêter à la lecture seule. Les mutations,
+la création de candidate et l'activation appartiennent à des PR ultérieures.
 
 ##### Mise à jour catalogue — Masquage du service Expert-comptable
 
