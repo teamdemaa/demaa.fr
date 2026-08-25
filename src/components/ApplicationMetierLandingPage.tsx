@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import ActionPlanNavbar from "@/components/ActionPlanNavbar";
@@ -102,7 +102,7 @@ export default function ApplicationMetierLandingPage() {
           <div className="mx-auto max-w-6xl">
             <SectionIntroduction
               id="daily-change-heading"
-              title="Qu’est-ce que l’application change dans votre quotidien ?"
+              title="Qu’est-ce qu’une application métier change dans votre quotidien ?"
               description="Un outil de travail adapté à votre façon de travailler."
             />
             <div className="mt-12 grid gap-10 md:grid-cols-3 md:gap-12">
@@ -133,19 +133,13 @@ export default function ApplicationMetierLandingPage() {
             </h2>
             <ol className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
               {content.method.steps.map((step, index) => (
-                <li key={step.title} className="relative border-l border-dema-paper/22 pl-5 lg:border-l-0 lg:pl-0 lg:pr-7">
+                <li key={step.title} className="border-l border-dema-paper/22 pl-5 lg:border-l-0 lg:pl-0">
                   <span className="demaa-section-title text-4xl text-dema-sage">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <h3 className="mt-5 text-base font-medium leading-6">
                     {step.title}
                   </h3>
-                  {index < content.method.steps.length - 1 ? (
-                    <ArrowRight
-                      className="absolute right-0 top-2 hidden h-5 w-5 text-dema-sage/75 lg:block"
-                      aria-hidden="true"
-                    />
-                  ) : null}
                 </li>
               ))}
             </ol>
@@ -206,7 +200,8 @@ export default function ApplicationMetierLandingPage() {
                 id="pricing-heading"
                 className="mt-4 text-[2.35rem] font-light leading-none tracking-[-0.05em] sm:text-[3.25rem]"
               >
-                À partir de 4 500 € HT
+                <span className="block">À partir de</span>
+                <span className="mt-1 block whitespace-nowrap">4 500 € HT</span>
               </h2>
               <p className="mt-4 text-sm text-dema-muted">
                 Base de calcul : 700 € HT / jour

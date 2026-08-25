@@ -27,14 +27,16 @@ describe("Application métier landing page", () => {
 
     expect(source).toContain("Gagnez du temps");
     expect(source).toContain("et rendez votre entreprise plus autonome.");
-    expect(source).toContain("Qu’est-ce que l’application change dans votre quotidien ?");
+    expect(source).toContain("Qu’est-ce qu’une application métier change dans votre quotidien ?");
     expect(source).toContain("Moins de tâches chronophages");
     expect(source).toContain("Tout est centralisé");
     expect(source).toContain("Chacun sait quoi faire");
     expect(source).not.toContain("block h-0.5 w-8 rounded-full bg-dema-forest");
     expect(source).toContain("Comment ça se passe concrètement ?");
+    expect(source).not.toContain("ArrowRight");
     expect(source).toContain("Certaines applications réalisées par notre équipe");
-    expect(source).toContain("À partir de 4 500 € HT");
+    expect(source).toContain('<span className="block">À partir de</span>');
+    expect(source).toContain('<span className="mt-1 block whitespace-nowrap">4 500 € HT</span>');
     expect(source).toContain("700 € HT / jour");
     expect(source).toContain("Questions-réponses");
     expect(diagnosticSource).toContain("Diagnostic organisation");
