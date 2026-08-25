@@ -143,7 +143,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(callbackForm).not.toContain("CustomerSpaceAccessForm");
   });
 
-  it("packages process automation and the business application without a checkout", () => {
+  it("keeps one quoted starting point for automation and the business application", () => {
     const automation = getCanonicalServiceBySlug("automatisation-processus");
     const application = getCanonicalServiceBySlug("application-metier");
 
@@ -154,14 +154,15 @@ describe("canonical Accompagnement catalog", () => {
     });
     expect(automation?.packages.map(({ slug, pricing }) => [slug, pricing.amountMinor])).toEqual([
       ["automatisation-essentielle", 150000],
-      ["automatisation-avancee-ia", 300000],
     ]);
     expect(automation?.packages[0]).toMatchObject({
-      name: "Automatisation essentielle + IA",
+      name: "Automatisation des processus et IA",
+      pricing: {
+        label: "À partir de 1 500 € HT",
+      },
     });
-    expect(automation?.packages[0]?.included).toContain(
-      "Un usage IA simple et contrôlé lorsqu’il est pertinent",
-    );
+    expect(automation?.packages[0]?.pricing.note).toContain("500 € HT par jour");
+    expect(automation?.packages[0]?.pricing.note).toContain("Aucun dépassement sans validation");
     expect(application).toMatchObject({
       detailHref: "/sur-mesure",
       name: "Application métier",
@@ -169,8 +170,14 @@ describe("canonical Accompagnement catalog", () => {
     });
     expect(application?.packages.map(({ slug, pricing }) => [slug, pricing.amountMinor])).toEqual([
       ["application-metier-essentielle", 450000],
-      ["application-metier-avancee", 750000],
     ]);
+    expect(application?.packages[0]).toMatchObject({
+      name: "Application métier",
+      pricing: {
+        label: "À partir de 4 500 € HT",
+      },
+    });
+    expect(application?.packages[0]?.pricing.note).toContain("500 € HT par jour");
   });
 
   it("retains the hidden accounting price only in the historical record", () => {

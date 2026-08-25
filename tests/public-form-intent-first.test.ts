@@ -80,7 +80,6 @@ describe("public qualification forms", () => {
       "Adresse e-mail",
     ]);
     expectInOrder(source("src/components/ServiceCallbackForm.tsx"), [
-      "Choisissez le forfait à étudier",
       '"Entreprise"',
       '"Numéro WhatsApp"',
     ]);

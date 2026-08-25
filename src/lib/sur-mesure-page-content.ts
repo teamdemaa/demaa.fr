@@ -3,7 +3,7 @@ export const surMesurePageContent = {
     title: "Votre application métier, conçue autour de votre façon de travailler.",
     introduction:
       "Vous suivez encore une activité dans Excel, par e-mail ou avec des tâches manuelles ? Demaa simplifie le fonctionnement et crée une application adaptée à votre métier.",
-    ctaLabel: "Voir les forfaits",
+    ctaLabel: "Voir le tarif",
     reassurance: "Premier échange offert · Sans engagement",
   },
   startingPoint: {
@@ -87,9 +87,9 @@ export const surMesurePageContent = {
     ],
   },
   commercialFrame: {
-    title: "Deux forfaits clairs, avec un périmètre borné.",
+    title: "Un budget clair, confirmé avant de commencer.",
     description:
-      "Choisissez le niveau le plus proche de votre besoin. Nous confirmons le périmètre, les prérequis et les critères d’acceptation avant tout démarrage.",
+      "Le projet démarre à 4 500 € HT. Le budget est calculé sur une base de 500 € HT par jour, puis le périmètre, le nombre de jours et le prix total sont confirmés dans un devis.",
   },
   faq: {
     title: "Questions fréquentes",
@@ -104,7 +104,7 @@ export const surMesurePageContent = {
       },
       {
         question: "Comment la réalisation est-elle estimée ?",
-        answer: "Deux forfaits couvrent les projets bornés. Toute migration importante, intégration complexe ou évolution du périmètre fait l’objet d’un devis séparé.",
+        answer: "Le budget est établi sur une base de 500 € HT par jour, avec un démarrage à 4 500 € HT. Le devis confirme le périmètre, le nombre de jours et le prix total avant la réalisation. Aucun dépassement n’est engagé sans validation.",
       },
       {
         question: "La maintenance est-elle incluse ?",
