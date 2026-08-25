@@ -67,15 +67,6 @@ import {
   getCoachBusinessSubscriptionForUid,
   projectCoachBusinessSubscription,
 } from "@/lib/coach-business-subscription.server";
-import {
-  getMonthlyAccompanimentBenefitForUid,
-  resolveMonthlyAccompanimentDiscount,
-  setExpertAccountantBenefitForUid,
-} from "@/lib/monthly-accompaniment-benefit.server";
-import {
-  getCanonicalServiceBySlug,
-  getCanonicalServiceRecordBySlug,
-} from "@/lib/canonical-service-catalog";
 
 function subscription(overrides: Partial<Stripe.Subscription> = {}) {
   return {
@@ -89,7 +80,7 @@ function subscription(overrides: Partial<Stripe.Subscription> = {}) {
   } as unknown as Stripe.Subscription;
 }
 
-describe("monthly accompaniment benefit", () => {
+describe("coach business subscription storage", () => {
   beforeEach(() => firestore.documents.clear());
 
   it("projects a signed Stripe entitlement once and reads it by Firebase UID", async () => {
@@ -112,70 +103,6 @@ describe("monthly accompaniment benefit", () => {
       status: "active",
       subscriptionId: "sub_coach",
     });
-  });
-
-  it("applies 12% only to an eligible Demaa service for an active subscriber", async () => {
-    firestore.documents.set("customer_subscriptions/owner-uid", {
-      offer: "coach_business",
-      status: "active",
-    });
-    const eligible = getCanonicalServiceBySlug("automatisation-processus");
-    const partner = getCanonicalServiceRecordBySlug("expert-comptable");
-    const coach = getCanonicalServiceBySlug("coach-business");
-    if (!eligible || !partner || !coach) throw new Error("test catalog is incomplete");
-
-    await expect(resolveMonthlyAccompanimentDiscount({ service: eligible, uid: "owner-uid" }))
-      .resolves.toEqual({ apply: true, eligible: true, percent: 12, source: "coach_business", validUntil: null });
-    await expect(resolveMonthlyAccompanimentDiscount({ service: eligible, uid: null }))
-      .resolves.toEqual({ apply: false, eligible: true, percent: 0, source: null, validUntil: null });
-    await expect(resolveMonthlyAccompanimentDiscount({ service: partner, uid: "owner-uid" }))
-      .resolves.toEqual({ apply: false, eligible: false, percent: 0, source: null, validUntil: null });
-    await expect(resolveMonthlyAccompanimentDiscount({ service: coach, uid: "owner-uid" }))
-      .resolves.toEqual({ apply: false, eligible: false, percent: 0, source: null, validUntil: null });
-  });
-
-  it("accepts a current manually confirmed expert-accountant relationship", async () => {
-    firestore.documents.set("customer_accompaniment_benefits/owner-uid", {
-      expert_accountant_active: true,
-      expert_accountant_valid_until: null,
-    });
-    await expect(getMonthlyAccompanimentBenefitForUid("owner-uid")).resolves.toEqual({
-      active: true,
-      source: "expert_accountant",
-      validUntil: null,
-    });
-  });
-
-  it("keeps the manually confirmed relationship active until the Team disables it", async () => {
-    await expect(setExpertAccountantBenefitForUid({
-      active: true,
-      uid: "owner-uid",
-    })).resolves.toEqual({
-      active: true,
-      source: "expert_accountant",
-      validUntil: null,
-    });
-    await expect(getMonthlyAccompanimentBenefitForUid("owner-uid")).resolves.toEqual({
-      active: true,
-      source: "expert_accountant",
-      validUntil: null,
-    });
-
-    await setExpertAccountantBenefitForUid({ active: false, uid: "owner-uid" });
-    await expect(getMonthlyAccompanimentBenefitForUid("owner-uid")).resolves.toEqual({
-      active: false,
-      source: null,
-      validUntil: null,
-    });
-  });
-
-  it("refuses an invalid explicit expiration instead of granting an unlimited benefit", async () => {
-    await expect(setExpertAccountantBenefitForUid({
-      active: true,
-      uid: "owner-uid",
-      validUntil: "2020-01-01T00:00:00.000Z",
-    })).rejects.toThrow("The benefit expiration must be a future date.");
-    expect(firestore.documents.has("customer_accompaniment_benefits/owner-uid")).toBe(false);
   });
 
   it("fails closed for another offer or a non-active status", async () => {

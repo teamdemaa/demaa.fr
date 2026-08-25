@@ -17,11 +17,6 @@ type Conversation = Readonly<{
   id: string;
   messages: readonly CoachingMessage[];
   recommendations: readonly CoachingRecommendation[];
-  monthlyBenefit: Readonly<{
-    active: boolean;
-    source: "coach_business" | "expert_accountant" | null;
-    validUntil: string | null;
-  }>;
   openedAt: string | null;
 }>;
 
@@ -59,7 +54,6 @@ export default function CoachingAdminClient() {
       freeStatus?: CoachingFreeStatus;
       recommendation?: CoachingRecommendation;
       recommendationCatalog?: CoachingRecommendationCatalogOption[];
-      monthlyBenefit?: Conversation["monthlyBenefit"];
       openedAt?: string;
     } | null;
     if (!response.ok) throw new Error(payload?.error ?? "Une erreur est survenue.");
@@ -166,31 +160,6 @@ export default function CoachingAdminClient() {
     }
   }
 
-  async function toggleExpertAccountantBenefit() {
-    if (!selected || selected.monthlyBenefit.source === "coach_business") return;
-    setIsLoading(true);
-    setError(null);
-    try {
-      const payload = await request("/api/admin/coaching", {
-        method: "POST",
-        body: JSON.stringify({
-          action: "benefit",
-          benefitActive: !selected.monthlyBenefit.active,
-          conversationId: selected.id,
-        }),
-      });
-      if (payload?.monthlyBenefit) {
-        setSelected((current) => current
-          ? { ...current, monthlyBenefit: payload.monthlyBenefit as Conversation["monthlyBenefit"] }
-          : current);
-      }
-    } catch (submitError) {
-      setError(submitError instanceof Error ? submitError.message : "Mise à jour impossible.");
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
   if (!isLoaded) {
     return (
       <div className="mx-auto mt-10 max-w-lg rounded-[1.2rem] border border-dema-line bg-white p-6 text-center">
@@ -246,13 +215,6 @@ export default function CoachingAdminClient() {
                 ) : null}
               </div>
               <div className="flex flex-wrap justify-end gap-2">
-                <button type="button" onClick={() => void toggleExpertAccountantBenefit()} disabled={isLoading || selected.monthlyBenefit.source === "coach_business"} className="inline-flex min-h-9 items-center rounded-full border border-dema-line px-3 text-xs font-medium text-dema-forest hover:bg-dema-sage/40 disabled:opacity-50">
-                  {selected.monthlyBenefit.source === "coach_business"
-                    ? "Avantage actif · Coach business"
-                    : selected.monthlyBenefit.active
-                      ? "Désactiver l’avantage Expert-comptable"
-                      : "Activer l’avantage Expert-comptable"}
-                </button>
                 {selected.freeStatus === "completed" ? (
                   <button type="button" onClick={() => void reopenClarification()} disabled={isLoading} className="inline-flex min-h-9 items-center gap-2 rounded-full border border-dema-line px-3 text-xs font-medium text-dema-forest hover:bg-dema-sage/40 disabled:opacity-50">
                     <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />

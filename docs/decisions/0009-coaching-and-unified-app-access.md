@@ -41,25 +41,9 @@ travaillés. Le CTA `Être rappelé(e)` transmet une demande de contact sans
 connexion ni paiement. Demaa qualifie ensuite le besoin et le matching avec le
 dirigeant. La clôture de la clarification gratuite ne déclenche jamais Stripe.
 
-Tant qu'un accompagnement mensuel éligible est actif, le client bénéficie de
-12 % de réduction sur les autres prestations directement facturées par Demaa.
-Coach business est confirmé par Stripe et la relation Expert-comptable par la
-Team Demaa. Cette confirmation manuelle reste active jusqu'à sa désactivation
-par la Team ; une date d'expiration explicite peut être enregistrée si le cas
-l'exige, mais aucune échéance annuelle arbitraire n'est créée. Les avantages ne
-se cumulent pas. La réduction ne s'applique pas :
-
-- au prix du Coach business lui-même ;
-- aux honoraires d'un expert-comptable, d'un coach ou d'un autre partenaire ;
-- aux budgets publicitaires ;
-- aux logiciels, licences et frais facturés par des tiers.
-
-Pour une prestation éligible, le navigateur affiche seulement l'avantage. Le
-serveur recalcule le droit à partir de l'UID Firebase, du catalogue canonique et
-du statut Stripe projeté. Seul un webhook Stripe signé peut activer ou retirer
-ce statut. Une valeur envoyée par le navigateur ne peut jamais accorder la
-réduction. Cette même résolution doit être réutilisée avant l'émission d'un
-devis et avant la création d'un paiement lorsque ces parcours seront automatisés.
+D-098 retire l'ancien avantage mensuel en pourcentage. Le catalogue, les
+demandes et l'administration n'affichent ni n'appliquent de remise liée au
+statut d'un accompagnement.
 
 ## Sécurité de la session Firebase
 
@@ -89,13 +73,8 @@ authentification puis ouvre son URL canonique avec le brouillon de clarification
 - aucun paiement Stripe n'est créé par l'interface publique ;
 - l'abonnement et l'avantage restent inactifs tant qu'un statut confirmé n'a
   pas été projeté côté serveur ;
-- les cartes éligibles affichent `Avantage abonné : −12 %` sous le prix ;
-- les cartes Coach business et Expert-comptable n'affichent aucune mention de
-  l'avantage qu'elles peuvent ouvrir ;
-- les exclusions de tiers et de budgets sont explicites dans la fiche ;
-- le serveur n'accorde la réduction qu'à un UID disposant d'un accompagnement
-  mensuel actif : période Stripe valide pour Coach business, ou confirmation
-  Team active et éventuellement non expirée pour Expert-comptable.
+- aucune carte, demande ou réponse admin ne mentionne un avantage mensuel en
+  pourcentage ;
 
 ## Extensions différées
 

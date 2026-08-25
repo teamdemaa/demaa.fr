@@ -10,9 +10,7 @@ const mocks = vi.hoisted(() => ({
   getCoachingConversationForAdmin: vi.fn(),
   getCoachingConversationSummaries: vi.fn(),
   getCurrentAdminIdentity: vi.fn(),
-  getMonthlyAccompanimentBenefitForUid: vi.fn(),
   reopenFreeCoachingClarification: vi.fn(),
-  setExpertAccountantBenefitForUid: vi.fn(),
 }));
 
 vi.mock("@/lib/admin-auth.server", () => ({
@@ -31,10 +29,6 @@ vi.mock("@/lib/coaching-conversation.server", () => ({
   getCoachingConversationForAdmin: mocks.getCoachingConversationForAdmin,
   getCoachingConversationSummaries: mocks.getCoachingConversationSummaries,
   reopenFreeCoachingClarification: mocks.reopenFreeCoachingClarification,
-}));
-vi.mock("@/lib/monthly-accompaniment-benefit.server", () => ({
-  getMonthlyAccompanimentBenefitForUid: mocks.getMonthlyAccompanimentBenefitForUid,
-  setExpertAccountantBenefitForUid: mocks.setExpertAccountantBenefitForUid,
 }));
 vi.mock("@/lib/operational-log", () => ({ logOperationalError: vi.fn(), logOperationalEvent: vi.fn() }));
 vi.mock("@/lib/request-guard", () => ({
@@ -90,16 +84,6 @@ describe("coaching admin route", () => {
       openedAt: "2026-08-15T09:00:00.000Z",
       previousStatus: "completed",
       reopened: true,
-    });
-    mocks.getMonthlyAccompanimentBenefitForUid.mockResolvedValue({
-      active: false,
-      source: null,
-      validUntil: null,
-    });
-    mocks.setExpertAccountantBenefitForUid.mockResolvedValue({
-      active: true,
-      source: "expert_accountant",
-      validUntil: "2027-08-14T00:00:00.000Z",
     });
   });
 
@@ -252,15 +236,7 @@ describe("coaching admin route", () => {
     expect(mocks.appendSpecialistCoachingMessage).not.toHaveBeenCalled();
   });
 
-  it("lets the Team activate the expert-accountant benefit for the conversation owner", async () => {
-    mocks.getCoachingConversationForAdmin.mockResolvedValueOnce({
-      customerEmail: "owner@example.com",
-      freeStatus: "open",
-      id: conversationId,
-      messages: [],
-      ownerUid: "owner-uid",
-      recommendations: [],
-    });
+  it("rejects the retired monthly benefit action", async () => {
     const response = await POST(request("", {
       method: "POST",
       body: JSON.stringify({
@@ -269,10 +245,7 @@ describe("coaching admin route", () => {
         conversationId,
       }),
     }));
-    expect(response.status).toBe(200);
-    expect(mocks.setExpertAccountantBenefitForUid).toHaveBeenCalledWith({
-      active: true,
-      uid: "owner-uid",
-    });
+    expect(response.status).toBe(400);
+    expect(mocks.appendSpecialistCoachingMessage).not.toHaveBeenCalled();
   });
 });

@@ -87,7 +87,6 @@ export async function submitCallbackRequest(
 
 export default function ServiceCallbackForm({
   packages = [],
-  serviceName,
   serviceSlug,
   localeCode = "fr",
   marketCode = "fr-fr",
@@ -95,7 +94,6 @@ export default function ServiceCallbackForm({
   systemSlug,
 }: {
   packages?: readonly CallbackPackage[];
-  serviceName: string;
   serviceSlug: string;
   localeCode?: "fr" | "en";
   marketCode?: string;
@@ -256,14 +254,9 @@ export default function ServiceCallbackForm({
           value={fields.phone}
           onChange={(event) => updateField("phone", event.target.value)}
           aria-invalid={Boolean(errors.phone)}
-          aria-describedby={errors.phone
-            ? "callback-phone-help callback-phone-error"
-            : "callback-phone-help"}
+          aria-describedby={errors.phone ? "callback-phone-error" : undefined}
           className={fieldClassName}
         />
-        <span id="callback-phone-help" className="mt-1.5 block text-xs font-normal leading-relaxed text-dema-muted">
-          {localeCode === "en" ? "We will contact you about this request within 24 to 48 hours." : "Nous vous recontacterons sur WhatsApp, uniquement au sujet de cette demande."}
-        </span>
         {errors.phone ? (
           <span id="callback-phone-error" className="mt-1.5 block text-xs font-medium text-red-700">
             {errors.phone}
@@ -292,12 +285,11 @@ export default function ServiceCallbackForm({
       </button>
 
       <p className="text-xs leading-relaxed text-dema-muted">
-        {localeCode === "en" ? `By sending this request, you agree that Demaa may contact you about ${serviceName}.` : `En envoyant cette demande, vous acceptez que Demaa vous contacte sur WhatsApp au sujet de ${serviceName}.`}{" "}
         <Link
           href="/politique-de-confidentialite"
           className="font-medium text-dema-forest underline underline-offset-2"
         >
-          {localeCode === "en" ? "Privacy policy (French)" : "Politique de confidentialité"}
+          {localeCode === "en" ? "Privacy policy" : "Politique de confidentialité"}
         </Link>
       </p>
 

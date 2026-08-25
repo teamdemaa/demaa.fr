@@ -78,18 +78,16 @@ describe("canonical Accompagnement catalog", () => {
     });
     expect(getCanonicalServiceBySlug("assistance-administrative")?.pricing?.note).toContain("20 heures");
     expect(getCanonicalServiceBySlug("assistance-administrative")?.pricing?.note).toContain("25 € HT");
-    expect(getCanonicalServiceBySlug("coach-business")?.monthlyAccompanimentDiscountEligible).toBe(false);
-    expect(getCanonicalServiceBySlug("automatisation-processus")?.monthlyAccompanimentDiscountEligible).toBe(true);
-    expect(getCanonicalServiceRecordBySlug("expert-comptable")?.monthlyAccompanimentDiscountEligible).toBe(false);
+    expect(getCanonicalServiceBySlug("coach-business")).not.toHaveProperty("monthlyAccompanimentDiscountEligible");
+    expect(getCanonicalServiceBySlug("automatisation-processus")).not.toHaveProperty("monthlyAccompanimentDiscountEligible");
+    expect(getCanonicalServiceRecordBySlug("expert-comptable")).not.toHaveProperty("monthlyAccompanimentDiscountEligible");
     expect(getCanonicalServiceRecordBySlug("expert-comptable")?.summary).toContain("inscrit à l’Ordre");
     expect(getCanonicalServiceBySlug("formalites-entreprise")).toMatchObject({
       delivery: "third-party",
-      monthlyAccompanimentDiscountEligible: false,
       pricing: { label: "Sur devis" },
     });
     expect(getCanonicalServiceBySlug("recruter-un-alternant")).toMatchObject({
       delivery: "third-party",
-      monthlyAccompanimentDiscountEligible: false,
       pricing: {
         amountMinor: 0,
         label: "Gratuit",
@@ -103,7 +101,6 @@ describe("canonical Accompagnement catalog", () => {
     ] as const) {
       expect(getCanonicalServiceBySlug(slug)).toMatchObject({
         delivery: "third-party",
-        monthlyAccompanimentDiscountEligible: false,
       });
       expect(getCanonicalServiceBySlug(slug)?.description).toContain(
         "organise la mise en relation",
@@ -119,7 +116,6 @@ describe("canonical Accompagnement catalog", () => {
     expect(getCanonicalServices()[0]?.slug).toBe("automatisation-processus");
     expect(coach).toMatchObject({
       cta: { kind: "callback", label: "Envoyer ma demande" },
-      monthlyAccompanimentDiscountEligible: false,
       pricing: {
         amountMinor: 75000,
         label: "750 € HT / mois",
@@ -282,7 +278,9 @@ describe("canonical Accompagnement catalog", () => {
     expect(formSource).toContain('name="company"');
     expect(formSource).toContain('name="phone"');
     expect(formSource).toContain("Numéro WhatsApp");
-    expect(formSource).toContain("uniquement au sujet de cette demande");
+    expect(formSource).not.toContain("uniquement au sujet de cette demande");
+    expect(formSource).not.toContain("En envoyant cette demande, vous acceptez");
+    expect(formSource).toContain("Politique de confidentialité");
     expect(formSource).not.toContain('name="email"');
     expect(formSource).not.toContain('name="firstName"');
     expect(formSource).toContain('name="packageSlug"');

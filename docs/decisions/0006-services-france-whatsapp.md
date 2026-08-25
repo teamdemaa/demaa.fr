@@ -43,10 +43,8 @@ technique `/services` reste canonique. Une carte entière est cliquable, de
 hauteur fixe, et ouvre la même fiche détaillée depuis le catalogue ou un
 Système. Aucun badge public n'indique « réalisé par Demaa » ou « partenaire ».
 Les cartes n'utilisent aucun séparateur horizontal entre le descriptif et le
-tarif. Le tarif reprend la couleur et le poids du texte courant. Seules les
-prestations éligibles affichent la mention courte
-`Avantage abonné : −12 %` ; Coach business et Expert-comptable n'affichent
-aucune mention d'avantage sur leur propre carte.
+tarif. Le tarif reprend la couleur et le poids du texte courant. La décision
+D-098 retire tout avantage mensuel en pourcentage du catalogue et des demandes.
 
 ## Matrice d'éligibilité
 
@@ -65,16 +63,9 @@ dépendent.
 ## Nature des offres et SEO
 
 Les offres directement tarifées par Demaa peuvent être publiées comme `Offer`
-Demaa dans les données structurées. L'avantage mensuel de 12 % s'applique
-uniquement à Automatisation, Application métier, Gestion des réseaux sociaux,
-Publicité en ligne et Prospection ciblée. Il ne s'applique jamais au Coach, à
-l'Expert-comptable, à Assistante administrative, à Formalités d'entreprise ou
-aux prestations recommandées facturées par un tiers. Pour Publicité en ligne,
-la remise porte uniquement sur les honoraires Demaa, jamais sur le budget
-média.
-Les logiciels, licences et autres frais facturés par des tiers sont également
-exclus. Le droit est recalculé côté serveur à partir de l'UID Firebase et d'un
-accompagnement mensuel actif avant tout devis ou paiement.
+Demaa dans les données structurées. Aucun avantage mensuel en pourcentage n'est
+affiché ou appliqué. Les prix du catalogue et du devis restent les seules
+références commerciales.
 
 Expert-comptable, Formalités d'entreprise et les prestations privées
 recommandées sont délivrés par un tiers. Ils ne doivent jamais attribuer à
