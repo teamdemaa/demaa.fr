@@ -7,6 +7,7 @@ import {
   ApplicationDiagnosticProvider,
 } from "@/components/ApplicationDiagnosticExperience";
 import Navbar from "@/components/Navbar";
+import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
 import { surMesurePageContent as content } from "@/lib/sur-mesure-page-content";
 
 const dailyChanges = [
@@ -80,8 +81,8 @@ export default function ApplicationMetierLandingPage() {
       <main className="overflow-x-clip bg-dema-cream pb-24 text-brand-blue xl:pb-0">
         <section className="border-b border-dema-line px-5 pb-20 pt-14 text-center sm:pb-24 sm:pt-20 lg:pb-28 lg:pt-24">
           <div className="mx-auto max-w-5xl">
-            <h1 className="mx-auto max-w-4xl text-balance text-[2.7rem] font-light leading-[0.98] tracking-[-0.055em] sm:text-[4rem] lg:text-[5rem]">
-              <span className="block text-brand-blue">Gagnez du temps</span>
+            <h1 className={`${satoshiHeroTitleClassName} mx-auto max-w-4xl`}>
+              <span className="block">Gagnez du temps</span>
               <span className="demaa-hero-title mt-2 block text-dema-forest">
                 et rendez votre entreprise plus autonome.
               </span>

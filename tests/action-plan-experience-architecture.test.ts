@@ -105,7 +105,7 @@ describe("action plan experience architecture", () => {
     expect(heroTitle).toContain("Qu’est-ce qui vous prend trop de temps aujourd’hui ?");
     expect(heroTitle).not.toContain("Automatisation des process &amp; IA");
     expect(heroTitle).toContain(
-      "On aide les TPE à mieux s’organiser grâce à des applications métier adaptées.",
+      "On aide les dirigeants à mieux s’organiser grâce à des applications métier adaptées.",
     );
     expect(heroTitle).toContain('aria-label={accessibleTitle}');
     expect(heroTitle).not.toContain("useEffect");

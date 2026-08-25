@@ -1,4 +1,5 @@
 import type { InterfaceLocaleCode } from "@/lib/international-context";
+import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
 
 export default function ActionPlanHeroTitle({
   localeCode,
@@ -14,7 +15,7 @@ export default function ActionPlanHeroTitle({
     <div>
       <h1
         aria-label={accessibleTitle}
-        className="text-balance text-[clamp(2.1rem,5.25vw,3.9rem)] font-light leading-[0.98] tracking-[-0.055em] text-brand-blue/62"
+        className={satoshiHeroTitleClassName}
       >
         <span aria-hidden="true">
           {localeCode === "en" ? "What takes too much" : "Qu’est-ce qui vous prend"}
@@ -26,7 +27,7 @@ export default function ActionPlanHeroTitle({
       </h1>
       {localeCode === "fr" ? (
         <p className="mx-auto mt-5 max-w-2xl text-balance text-sm font-light leading-relaxed text-dema-muted sm:text-base">
-          On aide les TPE à mieux s’organiser grâce à des applications métier adaptées.
+          On aide les dirigeants à mieux s’organiser grâce à des applications métier adaptées.
         </p>
       ) : null}
     </div>

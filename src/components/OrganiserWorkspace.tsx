@@ -17,6 +17,7 @@ import {
   buildOrganiserHref,
   type OrganiserTab,
 } from "@/lib/organiser-navigation";
+import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
 
 type OrganiserWorkspaceProps = {
   contents: AcademyContentDefinition[];
@@ -134,10 +135,7 @@ export default function OrganiserWorkspace({
       {activeTab === "solutions" ? (
         <main className="mx-auto max-w-7xl px-4 pb-20 pt-10 sm:pt-14">
           <header className="mx-auto max-w-3xl text-center">
-            <h1
-              className="text-balance font-light leading-[0.96] tracking-tight text-dema-forest"
-              style={{ fontSize: "clamp(2.35rem, 6vw, 4.5rem)" }}
-            >
+            <h1 className={satoshiHeroTitleClassName}>
               Organiser votre activité
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-balance text-base leading-7 text-dema-muted md:text-lg">

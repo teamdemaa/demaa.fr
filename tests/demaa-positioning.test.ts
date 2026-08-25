@@ -18,7 +18,7 @@ describe("Demaa positioning", () => {
       "Demaa : organisez votre entreprise avec des systèmes simples",
     );
     expect(DEMAA_HOME_DESCRIPTION).toBe(
-      "On aide les TPE à mieux s’organiser grâce à des applications métier adaptées.",
+      "On aide les dirigeants à mieux s’organiser grâce à des applications métier adaptées.",
     );
     expect(layout).toContain("title: DEMAA_HOME_TITLE");
     expect(layout).toContain("description: DEMAA_HOME_DESCRIPTION");
