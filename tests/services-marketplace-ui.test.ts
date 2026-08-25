@@ -160,7 +160,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(automation?.packages[0]?.pricing.note).toContain("500 € HT par jour");
     expect(automation?.packages[0]?.pricing.note).toContain("Aucun dépassement sans validation");
     expect(application).toMatchObject({
-      detailHref: "/sur-mesure",
+      detailHref: "/application-metier",
       name: "Application métier",
       pricing: null,
     });
@@ -173,7 +173,7 @@ describe("canonical Accompagnement catalog", () => {
         label: "À partir de 4 500 € HT",
       },
     });
-    expect(application?.packages[0]?.pricing.note).toContain("500 € HT par jour");
+    expect(application?.packages[0]?.pricing.note).toContain("700 € HT par jour");
   });
 
   it("retains the hidden accounting price only in the historical record", () => {
@@ -209,7 +209,7 @@ describe("canonical Accompagnement catalog", () => {
     for (const service of getCanonicalServices().filter(({ delivery }) => delivery === "demaa")) {
       expect(markup).toContain(service.detailHref);
     }
-    expect(markup).toContain("/sur-mesure");
+    expect(markup).toContain("/application-metier");
     expect(markup).not.toContain("Coach business");
     expect(markup).not.toContain("Assistante administrative");
     expect(markup).not.toContain("Recruter un alternant");

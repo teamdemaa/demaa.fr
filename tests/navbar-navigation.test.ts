@@ -56,6 +56,30 @@ describe("Demaa application navbar", () => {
     );
   });
 
+  it("uses Organiser as the public French destination", async () => {
+    const source = await readFile(
+      new URL("../src/components/ActionPlanNavbar.tsx", import.meta.url),
+      "utf8",
+    );
+    const organiserIndex = await readFile(
+      new URL("../src/app/(marketing)/organiser/page.tsx", import.meta.url),
+      "utf8",
+    );
+    const academyIndex = await readFile(
+      new URL("../src/app/(marketing)/academie/page.tsx", import.meta.url),
+      "utf8",
+    );
+
+    expect(source).toContain('view === "academy"');
+    expect(source).toContain('? "/organiser"');
+    expect(source).toContain('view === "plan"');
+    expect(source).toContain('? "/"');
+    expect(source).toContain(': "/application-metier"');
+    expect(organiserIndex).toContain('from "../academie/page"');
+    expect(academyIndex).toContain("<Navbar />");
+    expect(academyIndex).toContain('<ActionPlanNavbar activeView="academy" routeNavigation />');
+  });
+
   it("replaces the sign-in action with account access once a session is active", async () => {
     const [navbarSource, savedPlanSource] = await Promise.all([
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
@@ -147,8 +171,10 @@ describe("Demaa application navbar", () => {
 
     expect(navbarSource).toContain('id="action-plan-navbar-desktop"');
     expect(navbarSource).toContain('id="action-plan-navbar-mobile"');
-    expect(navbarSource).toContain('minimal ? (');
+    expect(navbarSource).toContain('data-minimal={minimal ? "true" : undefined}');
     expect(navbarSource.match(/id="action-plan-navbar-specialist"/g)).toHaveLength(2);
+    expect(navbarSource).toContain("showDiagnostic = true");
+    expect(navbarSource).toContain("<GuestDiagnosticControl");
     expect(navbarSource).toContain('className="sticky top-0 z-40 bg-dema-cream/92');
     expect(navbarSource).not.toContain('className="sticky top-0 z-40 border-b');
     expect(navbarSource).toContain("fixed inset-x-0 bottom-0");
@@ -156,16 +182,17 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain("empty:hidden xl:block");
     expect(navbarSource).toContain("empty:hidden xl:hidden");
     expect(actionPlanNavSource).toContain("Plan d’action");
-    expect(actionPlanNavSource).toContain("Services");
-    expect(actionPlanNavSource).toContain("Structurer");
+    expect(actionPlanNavSource).toContain("Application métier");
+    expect(actionPlanNavSource).not.toContain('label: "Services"');
+    expect(actionPlanNavSource).toContain("Organiser");
     expect(actionPlanNavSource).not.toContain("Ressources");
     expect(actionPlanNavSource).toContain("Annonces");
     expect(actionPlanNavSource).not.toContain('label: "Système"');
     expect(actionPlanNavSource).toContain("const navigationOrder: readonly ActionPlanView[]");
     expect(actionPlanNavSource).toContain(
-      '"plan",\n  "services"',
+      '"plan",\n  "academy",\n  "services"',
     );
-    expect(actionPlanNavSource).not.toContain('  "academy",');
+    expect(actionPlanNavSource).toContain('  "academy",');
     expect(actionPlanNavSource).not.toContain('  "opportunities",');
     expect(actionPlanNavSource).toContain("gridTemplateColumns");
     expect(actionPlanNavSource).toContain("displayedItems.length");

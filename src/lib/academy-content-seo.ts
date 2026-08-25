@@ -5,7 +5,7 @@ import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { getCanonicalOrigin } from "@/lib/site-url";
 
 function getAcademyContentUrl(content: AcademyContentDefinition) {
-  return `${getCanonicalOrigin()}/academie/${content.identity.slug}`;
+  return `${getCanonicalOrigin()}/organiser/${content.identity.slug}`;
 }
 
 function getAcademyContentImageUrl(content: AcademyContentDefinition) {
@@ -13,10 +13,19 @@ function getAcademyContentImageUrl(content: AcademyContentDefinition) {
   return image ? `${getCanonicalOrigin()}${image}` : null;
 }
 
+function getAcademyContentStructuredDataImageUrl(
+  content: AcademyContentDefinition,
+) {
+  return getAcademyContentImageUrl(content)
+    ?? (content.processGuide
+      ? `${getAcademyContentUrl(content)}/process-map.png`
+      : null);
+}
+
 export function buildAcademyContentMetadata(
   content: AcademyContentDefinition,
 ): Metadata {
-  const title = `${content.identity.shortTitle} | Structurer avec Demaa`;
+  const title = `${content.identity.shortTitle} | Organiser avec Demaa`;
   const description = content.identity.promise;
   const canonicalUrl = getAcademyContentUrl(content);
   const imageUrl = getAcademyContentImageUrl(content);
@@ -24,6 +33,9 @@ export function buildAcademyContentMetadata(
   return {
     title,
     description,
+    robots: content.processGuide
+      ? undefined
+      : { index: false, follow: true },
     alternates: {
       canonical: canonicalUrl,
     },
@@ -34,15 +46,15 @@ export function buildAcademyContentMetadata(
       siteName: "Demaa",
       locale: "fr_FR",
       type: "article",
-      images: imageUrl
-        ? [{ url: imageUrl, alt: content.identity.card.imageAlt }]
-        : undefined,
+      ...(imageUrl
+        ? { images: [{ url: imageUrl, alt: content.identity.card.imageAlt }] }
+        : {}),
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: imageUrl ? [imageUrl] : undefined,
+      ...(imageUrl ? { images: [imageUrl] } : {}),
     },
   };
 }
@@ -52,7 +64,7 @@ export function buildAcademyContentJsonLd(
 ) {
   const origin = getCanonicalOrigin();
   const pageUrl = getAcademyContentUrl(content);
-  const imageUrl = getAcademyContentImageUrl(content);
+  const imageUrl = getAcademyContentStructuredDataImageUrl(content);
   const breadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -66,8 +78,8 @@ export function buildAcademyContentJsonLd(
       {
         "@type": "ListItem",
         position: 2,
-        name: "Structurer",
-        item: `${origin}/academie`,
+        name: "Organiser",
+        item: `${origin}/organiser`,
       },
       {
         "@type": "ListItem",

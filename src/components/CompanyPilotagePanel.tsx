@@ -19,7 +19,6 @@ const CompanyStrategyPanel = dynamic(() => import("@/components/CompanyStrategyP
 
 const SECTIONS = [
   { key: "actions", labels: { fr: "Plan", en: "Plan" } },
-  { key: "solutions", labels: { fr: "Solutions", en: "Solutions" } },
   { key: "figures", labels: { fr: "Chiffres", en: "Key figures" } },
 ] as const;
 

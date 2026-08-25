@@ -13,6 +13,14 @@ export const ACADEMY_CONTENT_SLUGS = [
   "nettoyage-professionnel-acquisition",
   "formation-b2b-acquisition",
   "bureau-etudes-acquisition",
+  "organiser-entreprise-plomberie",
+  "organiser-demandes-devis-renovation",
+  "organiser-chantier-menuiserie",
+  "organiser-interventions-nettoyage",
+  "organiser-parcours-client-garage",
+  "organiser-commandes-stocks-restaurant",
+  "organiser-suivi-administratif-formation",
+  "organiser-mission-agence",
 ] as const;
 
 export const LEGACY_ACADEMY_SLUG_ALIASES = {
@@ -25,39 +33,54 @@ export const LEGACY_ACADEMY_SLUG_ALIASES = {
 export const ACADEMY_PERMANENT_REDIRECTS = [
   {
     source: "/cours",
-    destination: "/academie",
+    destination: "/organiser",
     permanent: true,
   },
   {
     source: "/academy",
-    destination: "/academie",
+    destination: "/organiser",
+    permanent: true,
+  },
+  {
+    source: "/academie",
+    destination: "/organiser",
     permanent: true,
   },
   ...ACADEMY_CONTENT_SLUGS.map((slug) => ({
     source: `/cours/${slug}`,
-    destination: `/academie/${slug}`,
+    destination: `/organiser/${slug}`,
     permanent: true,
   })),
   ...ACADEMY_CONTENT_SLUGS.map((slug) => ({
     source: `/academy/${slug}`,
-    destination: `/academie/${slug}`,
+    destination: `/organiser/${slug}`,
+    permanent: true,
+  })),
+  ...ACADEMY_CONTENT_SLUGS.map((slug) => ({
+    source: `/academie/${slug}`,
+    destination: `/organiser/${slug}`,
     permanent: true,
   })),
   ...Object.entries(LEGACY_ACADEMY_SLUG_ALIASES).flatMap(
     ([legacySlug, canonicalSlug]) => [
       {
         source: `/cours/${legacySlug}`,
-        destination: `/academie/${canonicalSlug}`,
+        destination: `/organiser/${canonicalSlug}`,
         permanent: true,
       },
       {
         source: `/academie/${legacySlug}`,
-        destination: `/academie/${canonicalSlug}`,
+        destination: `/organiser/${canonicalSlug}`,
         permanent: true,
       },
       {
         source: `/academy/${legacySlug}`,
-        destination: `/academie/${canonicalSlug}`,
+        destination: `/organiser/${canonicalSlug}`,
+        permanent: true,
+      },
+      {
+        source: `/organiser/${legacySlug}`,
+        destination: `/organiser/${canonicalSlug}`,
         permanent: true,
       },
     ],
@@ -74,7 +97,7 @@ export const ACADEMY_PERMANENT_REDIRECTS = [
   },
   {
     source: "/cours/organisation-marketing-vente",
-    destination: "/academie/construire-systeme-marketing-vente",
+    destination: "/organiser/construire-systeme-marketing-vente",
     permanent: true,
   },
 ] as const;

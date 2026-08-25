@@ -5,9 +5,9 @@ import {
   serializeServicesJsonLd,
 } from "@/lib/services-seo";
 
-const title = "Accompagnement pour structurer et développer votre entreprise | Demaa";
+const title = "Services pour organiser votre entreprise et gagner du temps | Demaa";
 const description =
-  "Des accompagnements concrets pour structurer votre activité, la digitaliser et développer votre visibilité.";
+  "Des services concrets pour gagner du temps et faire en sorte que votre entreprise dépende moins de vous.";
 
 export const metadata: Metadata = {
   title,

@@ -80,7 +80,7 @@ describe("canonical Services SEO and redirects", () => {
 
     expect(buildServicePageJsonLd(application)[1]).toMatchObject({
       name: "Application métier",
-      url: "https://demaa.co/sur-mesure",
+      url: "https://demaa.co/application-metier",
       offers: [
         { name: "Application métier", price: "4500.00" },
       ],

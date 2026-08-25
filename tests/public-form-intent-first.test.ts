@@ -20,12 +20,12 @@ describe("public qualification forms", () => {
     const diagnostic = source("src/components/GuestDiagnosticControl.tsx");
 
     expectInOrder(diagnostic, [
-      "Comment pouvons-nous vous aider ?",
+      "Qu’est-ce qui vous prend trop de temps aujourd’hui ?",
       "Adresse e-mail",
       "Téléphone",
     ]);
     expect(diagnostic.indexOf("data-dialog-initial-focus")).toBeGreaterThan(
-      diagnostic.indexOf("Comment pouvons-nous vous aider ?"),
+      diagnostic.indexOf("Qu’est-ce qui vous prend trop de temps aujourd’hui ?"),
     );
     expect(diagnostic.indexOf("data-dialog-initial-focus")).toBeLessThan(
       diagnostic.indexOf("Adresse e-mail"),

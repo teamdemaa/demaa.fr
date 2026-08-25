@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Oryka</title>
+  <rect width="64" height="64" rx="14" fill="#000" />
+  <path
+    fill="#fff"
+    fill-rule="evenodd"
+    d="M32 8C17.64 8 8 17.64 8 32s9.64 24 24 24 24-9.64 24-24S46.36 8 32 8Zm0 9c8.55 0 15 6.45 15 15s-6.45 15-15 15-15-6.45-15-15 6.45-15 15-15Z"
+    clip-rule="evenodd"
+  />
+</svg>

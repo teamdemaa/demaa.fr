@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
+import ActionPlanNavbar from "@/components/ActionPlanNavbar";
 import AcademyCoursePlayer from "@/components/AcademyCoursePlayer";
 import AcademyTutorialArticle from "@/components/AcademyTutorialArticle";
 import {
@@ -23,10 +24,10 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = await props.params;
   const canonicalSlug = getCanonicalAcademySlugForLegacySlug(slug);
-  if (canonicalSlug) permanentRedirect(`/academie/${canonicalSlug}`);
+  if (canonicalSlug) permanentRedirect(`/organiser/${canonicalSlug}`);
   const content = getAcademyContentBySlug(slug);
 
-  if (!content) return { title: "Contenu introuvable | Structurer avec Demaa" };
+  if (!content) return { title: "Contenu introuvable | Organiser avec Demaa" };
 
   return buildAcademyContentMetadata(content);
 }
@@ -36,7 +37,7 @@ export default async function AcademyCoursePage(
 ) {
   const { slug } = await props.params;
   const canonicalSlug = getCanonicalAcademySlugForLegacySlug(slug);
-  if (canonicalSlug) permanentRedirect(`/academie/${canonicalSlug}`);
+  if (canonicalSlug) permanentRedirect(`/organiser/${canonicalSlug}`);
   const content = getAcademyContentBySlug(slug);
 
   if (!content) notFound();
@@ -46,6 +47,7 @@ export default async function AcademyCoursePage(
   return (
     <>
       <Navbar />
+      <ActionPlanNavbar activeView="academy" routeNavigation />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

@@ -102,7 +102,7 @@ export async function POST(request: Request) {
     }
     if (!consentGranted) {
       return NextResponse.json(
-        { error: "Votre accord est nécessaire pour proposer ce cas à Structure." },
+        { error: "Votre accord est nécessaire pour proposer ce cas à Organiser." },
         { status: 400 },
       );
     }
@@ -114,7 +114,7 @@ export async function POST(request: Request) {
     }
 
     const context = await resolveLeadContext({
-      source: "Newsletter Structure - Proposition de problématique",
+      source: "Newsletter Organiser - Proposition de problématique",
       sourceUrl: request.headers.get("referer"),
     });
     if (!context) {
@@ -146,7 +146,7 @@ export async function POST(request: Request) {
       ],
       idempotencyKey,
       requestType: STRUCTURE_PROBLEM_REQUEST_TYPE,
-      title: "Proposition de problématique - Structure",
+      title: "Proposition de problématique - Organiser",
     });
 
     return successResponse();

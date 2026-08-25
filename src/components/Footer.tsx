@@ -16,6 +16,7 @@ const directoryLinks = [
 ];
 
 const collaborationLinks = [
+  { label: "Application métier", href: "/application-metier" },
   { label: "Annonces", href: "/opportunites" },
   { label: "Rejoindre Team Demaa", href: "/rejoindre-team-demaa" },
   { label: "Nous contacter", href: "mailto:team@demaa.fr" },
@@ -23,7 +24,7 @@ const collaborationLinks = [
 
 const resourceLinks = [
   { label: "Systèmes métier", href: "/systemes" },
-  { label: "Structurer", href: "/academie" },
+  { label: "Organiser", href: "/organiser" },
   { label: "Contenus", href: "/contenus" },
 ];
 
@@ -46,7 +47,7 @@ export default function Footer() {
               />
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
-              Structurez votre entreprise pour qu’elle dépende moins de vous.
+              Organisez votre entreprise pour qu’elle dépende moins de vous.
             </p>
           </div>
 

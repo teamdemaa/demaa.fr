@@ -1,12 +1,12 @@
-export const STRUCTURE_NEWSLETTER_NAME = "Structure.";
+export const STRUCTURE_NEWSLETTER_NAME = "Organiser.";
 
 export const STRUCTURE_NEWSLETTER_PROMISE =
   "Tous les quinze jours, l’équipe Demaa étudie une problématique réelle d’entreprise et construit une réponse concrète, utile à tous.";
 
 export const STRUCTURE_PUBLICATION_CONSENT = {
   purpose: "structure_case_publication",
-  text: "J’accepte que mon entreprise, mon site et ma problématique soient présentés dans Structure si ma proposition est sélectionnée.",
-  version: "structure-case-publication-v1",
+  text: "J’accepte que mon entreprise, mon site et ma problématique soient présentés dans Organiser si ma proposition est sélectionnée.",
+  version: "structure-case-publication-v2",
 } as const;
 
 export const STRUCTURE_VOICE_SUBMISSION = {

@@ -16,6 +16,7 @@ import {
   ACADEMY_CONTENT_SLUGS,
   LEGACY_ACADEMY_SLUG_ALIASES,
 } from "@/lib/academy-course-routes";
+import { ORGANISER_PROCESS_GUIDES } from "@/lib/organiser-process-guides";
 
 export type AcademyContentKind = "course" | "case-study";
 
@@ -64,6 +65,87 @@ export interface AcademyAction {
   deliveryMode: "email" | "internal" | "external";
 }
 
+export interface AcademyProcessStep {
+  label: string;
+  title: string;
+  input: string;
+  description: string;
+  owner: string;
+  output: string;
+  control: string;
+}
+
+export interface AcademyProcessGuideEditorialReview {
+  clarity: 0 | 1 | 2 | 3 | 4;
+  realism: 0 | 1 | 2 | 3 | 4;
+  immediateUsefulness: 0 | 1 | 2 | 3 | 4;
+  exampleQuality: 0 | 1 | 2;
+  toolRelevance: 0 | 1 | 2;
+  consistency: 0 | 1 | 2;
+  readability: 0 | 1 | 2;
+  reviewedAt: string;
+}
+
+export interface AcademyProcessGuide {
+  sector: string;
+  company: {
+    profile: string;
+    friction: string;
+  };
+  processTitle: string;
+  processIntroduction: string;
+  steps: [
+    AcademyProcessStep,
+    AcademyProcessStep,
+    AcademyProcessStep,
+    AcademyProcessStep,
+    AcademyProcessStep,
+    AcademyProcessStep,
+  ];
+  rulesTitle: string;
+  rules: Array<{
+    title: string;
+    description: string;
+  }>;
+  implementation: {
+    startingPoint: string;
+    cadence: string;
+    escalation: string;
+  };
+  example: {
+    title: string;
+    body: string;
+  };
+  tools: Array<{
+    slug: string;
+    name: string;
+    description: string;
+  }>;
+  system: {
+    slug: string;
+    label: string;
+  };
+  checklist: string[];
+  faqs: Array<{
+    question: string;
+    answer: string;
+  }>;
+  conclusion: string;
+  editorialReview: AcademyProcessGuideEditorialReview;
+}
+
+export function getAcademyProcessGuideEditorialScore(
+  review: AcademyProcessGuideEditorialReview,
+) {
+  return review.clarity
+    + review.realism
+    + review.immediateUsefulness
+    + review.exampleQuality
+    + review.toolRelevance
+    + review.consistency
+    + review.readability;
+}
+
 export interface AcademyContentDefinition {
   version: "1.0";
   kind: AcademyContentKind;
@@ -105,6 +187,7 @@ export interface AcademyContentDefinition {
     questions: AcademyQuizQuestion[];
   };
   action: AcademyAction | null;
+  processGuide?: AcademyProcessGuide;
 }
 
 const fundamentals = [
@@ -127,7 +210,11 @@ const caseStudies = [
   engineeringCase,
 ] as unknown as AcademyContentDefinition[];
 
-const allAcademyContent = [...fundamentals, ...caseStudies].filter(
+const allAcademyContent = [
+  ...fundamentals,
+  ...caseStudies,
+  ...ORGANISER_PROCESS_GUIDES,
+].filter(
   (content) => content.status === "ready",
 );
 
@@ -164,7 +251,15 @@ export function getAcademyFundamentals() {
 }
 
 export function getAcademyCaseStudies() {
-  return caseStudies.filter((content) => content.status === "ready");
+  return [...caseStudies, ...ORGANISER_PROCESS_GUIDES].filter(
+    (content) => content.status === "ready",
+  );
+}
+
+export function getPublicOrganiserContent() {
+  return ORGANISER_PROCESS_GUIDES.filter(
+    (content) => content.status === "ready",
+  );
 }
 
 export function getAllAcademyContent() {

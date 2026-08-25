@@ -7,12 +7,12 @@ import { COMPANY_STRATEGY_PILLARS } from "@/lib/company-pilotage-contract";
 const source = (file: string) => readFileSync(new URL(`../src/components/${file}`, import.meta.url), "utf8");
 
 describe("company Pilotage UI contract", () => {
-  it("owns one compact Plan, Solutions, Figures navigation and hides Strategy", () => {
+  it("owns one compact Plan and Figures navigation, with Solutions moved to Organiser", () => {
     const owner = source("CompanyPilotagePanel.tsx");
     const navbar = source("ActionPlanNavbar.tsx");
     expect(owner).toContain('labels: { fr: "Plan", en: "Plan" }');
     expect(owner).toContain("Chiffres");
-    expect(owner).toContain("Solutions");
+    expect(owner).not.toContain('{ key: "solutions"');
     expect(owner).toContain("mx-auto mb-5 flex w-fit max-w-full items-center gap-1");
     expect(owner).toContain("min-h-10 shrink-0 items-center justify-center rounded-full px-4");
     expect(owner).toContain("bg-dema-sage/60 text-dema-forest");
@@ -20,8 +20,7 @@ describe("company Pilotage UI contract", () => {
     expect(owner).not.toContain("border border-dema-line/70 bg-dema-sage/20 p-1");
     expect(owner).not.toContain("shadow-[0_5px_16px");
     expect(owner).not.toContain('key: "strategy"');
-    expect(owner.indexOf('{ key: "actions"')).toBeLessThan(owner.indexOf('{ key: "solutions"'));
-    expect(owner.indexOf('{ key: "solutions"')).toBeLessThan(owner.indexOf('{ key: "figures"'));
+    expect(owner.indexOf('{ key: "actions"')).toBeLessThan(owner.indexOf('{ key: "figures"'));
     expect(owner).toContain('COMPANY_STRATEGY_VISIBLE && visibleSection === "strategy"');
     expect(owner).toContain('section === "strategy" && !COMPANY_STRATEGY_VISIBLE');
     expect(owner).toContain("Retour au plan");

@@ -3,6 +3,7 @@ import {
   normalizeSystemDetailTab,
   type SystemDetailTab,
 } from "@/lib/system-detail-tabs";
+import { buildOrganiserHref } from "@/lib/organiser-navigation";
 
 const ACTION_PLAN_VIEWS = [
   "plan",
@@ -249,16 +250,9 @@ export function buildPublicSystemAppHref(input: {
   systemTab?: SystemDetailTab;
   solutionResourceSlug?: string;
 }) {
-  return buildActionPlanAppHref({
-    pathname: "/",
-    context: {
-      view: "plan",
-      planSection: "solutions",
-      systemId: input.systemId,
-      systemTab: input.systemTab ?? "solutions",
-      ...(input.solutionResourceSlug
-        ? { solutionResourceSlug: input.solutionResourceSlug }
-        : {}),
-    },
+  return buildOrganiserHref({
+    tab: "solutions",
+    systemId: input.systemId,
+    solutionResourceSlug: input.solutionResourceSlug,
   });
 }

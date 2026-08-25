@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { CircleUserRound } from "lucide-react";
+import { useState } from "react";
 import AdminLogoutButton from "@/components/AdminLogoutButton";
 import CustomerLogoutButton from "@/components/CustomerLogoutButton";
 import DemaaWordmark from "@/components/DemaaWordmark";
+import GuestDiagnosticControl from "@/components/GuestDiagnosticControl";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
 
@@ -14,13 +16,16 @@ export default function Navbar({
   isAuthenticated = false,
   minimal = false,
   localeCode = "fr",
+  showDiagnostic = true,
 }: {
   adminControls?: boolean;
   anonymousLanding?: boolean;
   isAuthenticated?: boolean;
   minimal?: boolean;
   localeCode?: InterfaceLocaleCode;
+  showDiagnostic?: boolean;
 }) {
+  const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const accountAccessClassName =
     "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
   const connectionLinkClassName =
@@ -28,6 +33,15 @@ export default function Navbar({
 
   return (
     <>
+      {showDiagnostic && !adminControls ? (
+        <GuestDiagnosticControl
+          access={null}
+          onClose={() => setDiagnosticOpen(false)}
+          onOpen={() => setDiagnosticOpen(true)}
+          open={diagnosticOpen}
+          situation=""
+        />
+      ) : null}
       <nav
         data-minimal={minimal ? "true" : undefined}
         className="sticky top-0 z-40 bg-dema-cream/92 py-1 backdrop-blur-md"
@@ -90,12 +104,12 @@ export default function Navbar({
                   </Link>
                 )}
               </div>
-            ) : minimal ? (
+            ) : (
               <div
                 id="action-plan-navbar-specialist"
                 className="shrink-0 empty:hidden"
               />
-            ) : null}
+            )}
           </div>
         </div>
       </nav>

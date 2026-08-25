@@ -10,6 +10,7 @@ import {
   getAcademyCaseStudies,
   getAllAcademyContent,
   getCanonicalAcademySlugForLegacySlug,
+  getPublicOrganiserContent,
 } from "@/lib/academy-course-content";
 
 function hasForbiddenVideoField(value: unknown): boolean {
@@ -25,10 +26,12 @@ function hasForbiddenVideoField(value: unknown): boolean {
 }
 
 describe("academy course content", () => {
-  it("publishes eight fundamentals and six B2B cases", () => {
+  it("preserves the fourteen historical items and publishes eight process guides", () => {
     expect(getAcademyFundamentals()).toHaveLength(8);
-    expect(getAcademyCaseStudies()).toHaveLength(6);
-    expect(getAllAcademyContent()).toHaveLength(14);
+    expect(getAcademyCaseStudies()).toHaveLength(14);
+    expect(getAcademyCaseStudies().filter((content) => content.processGuide)).toHaveLength(8);
+    expect(getPublicOrganiserContent()).toHaveLength(8);
+    expect(getAllAcademyContent()).toHaveLength(22);
     expect(getAcademyContentBySlug("juste-systeme-marketing")).toBeNull();
   });
 
@@ -38,14 +41,21 @@ describe("academy course content", () => {
 
   it("keeps every ready item structurally complete and video-free", () => {
     const content = getAllAcademyContent();
-    expect(new Set(content.map((item) => item.identity.slug)).size).toBe(14);
+    expect(new Set(content.map((item) => item.identity.slug)).size).toBe(22);
 
     for (const item of content) {
       expect(item.status).toBe("ready");
-      expect(item.lessons.length).toBeGreaterThanOrEqual(4);
-      expect(item.lessons.length).toBeLessThanOrEqual(7);
-      expect(item.recap.points).toHaveLength(4);
-      expect(item.quiz.questions).toHaveLength(3);
+      if (item.processGuide) {
+        expect(item.lessons).toHaveLength(0);
+        expect(item.processGuide.steps).toHaveLength(6);
+        expect(item.recap.points).toHaveLength(5);
+        expect(item.quiz.questions).toHaveLength(0);
+      } else {
+        expect(item.lessons.length).toBeGreaterThanOrEqual(4);
+        expect(item.lessons.length).toBeLessThanOrEqual(7);
+        expect(item.recap.points).toHaveLength(4);
+        expect(item.quiz.questions).toHaveLength(3);
+      }
       if (item.kind === "course") {
         expect(item.identity.card.meta).toBe(
           `${item.identity.durationMinutes} min · Quiz de connaissances`,
@@ -60,7 +70,7 @@ describe("academy course content", () => {
           ),
         ).toBe(true);
       } else {
-        expect(item.kind).toBe("course");
+        expect(item.kind === "course" || Boolean(item.processGuide)).toBe(true);
       }
     }
   });
@@ -96,8 +106,8 @@ describe("academy course content", () => {
 
   it("contains no old Academy video implementation in public routes", () => {
     const files = [
-      "src/app/(marketing)/academie/page.tsx",
-      "src/app/(marketing)/academie/[slug]/page.tsx",
+      "src/app/(marketing)/organiser/page.tsx",
+      "src/app/(marketing)/organiser/[slug]/page.tsx",
       "src/app/sitemap.ts",
       "src/app/robots.ts",
     ];
@@ -105,5 +115,14 @@ describe("academy course content", () => {
       const source = readFileSync(resolve(process.cwd(), file), "utf8");
       expect(source).not.toMatch(/academy-video|AcademyVideo|video-sitemap|youtube/i);
     }
+  });
+
+  it("keeps historical content reachable but out of the public sitemap", () => {
+    const sitemap = readFileSync(resolve(process.cwd(), "src/app/sitemap.ts"), "utf8");
+    const seo = readFileSync(resolve(process.cwd(), "src/lib/academy-content-seo.ts"), "utf8");
+
+    expect(sitemap).toContain("getPublicOrganiserContent");
+    expect(sitemap).not.toContain("getAllAcademyContent");
+    expect(seo).toContain("{ index: false, follow: true }");
   });
 });

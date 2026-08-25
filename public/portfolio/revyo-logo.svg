@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192" role="img" aria-labelledby="title">
+  <title id="title">Revyo</title>
+  <rect width="192" height="192" rx="42" fill="#2563eb" />
+  <path fill="#fff" d="M42 42h42v42H42zm11 11v20h20V53zm55-11h42v42h-42zm11 11v20h20V53zM42 108h42v42H42zm11 11v20h20v-20zm55-11h12v12h-12zm18 0h24v12h-24zm-18 18h12v24h-12zm18 6h12v18h-12zm18-6h6v24h-6z" />
+</svg>

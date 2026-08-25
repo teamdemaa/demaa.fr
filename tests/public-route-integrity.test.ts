@@ -20,10 +20,12 @@ describe("public route integrity", () => {
     expect(validator).not.toContain('"/organisation"');
   });
 
-  it("publishes the active Services index in the sitemap", async () => {
+  it("publishes the canonical Application métier page in the sitemap", async () => {
     const sitemap = await readSource("src/app/sitemap.ts");
 
-    expect(sitemap).toContain('`${base}/services`');
+    expect(sitemap).toContain('`${base}/application-metier`');
+    expect(sitemap).not.toContain('`${base}/services`');
+    expect(sitemap).not.toContain('`${base}/sur-mesure`');
   });
 
   it("does not reintroduce the retired callback flow", async () => {

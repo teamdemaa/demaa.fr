@@ -89,7 +89,7 @@ export const surMesurePageContent = {
   commercialFrame: {
     title: "Un budget clair, confirmé avant de commencer.",
     description:
-      "Le projet démarre à 4 500 € HT. Le budget est calculé sur une base de 500 € HT par jour, puis le périmètre, le nombre de jours et le prix total sont confirmés dans un devis.",
+      "Le projet démarre à 4 500 € HT. Le budget est calculé sur une base de 700 € HT par jour, puis le périmètre, le nombre de jours et le prix total sont confirmés dans un devis.",
   },
   faq: {
     title: "Questions fréquentes",
@@ -104,7 +104,7 @@ export const surMesurePageContent = {
       },
       {
         question: "Comment la réalisation est-elle estimée ?",
-        answer: "Le budget est établi sur une base de 500 € HT par jour, avec un démarrage à 4 500 € HT. Le devis confirme le périmètre, le nombre de jours et le prix total avant la réalisation. Aucun dépassement n’est engagé sans validation.",
+        answer: "Le budget est établi sur une base de 700 € HT par jour, avec un démarrage à 4 500 € HT. Le devis confirme le périmètre, le nombre de jours et le prix total avant la réalisation. Aucun dépassement n’est engagé sans validation.",
       },
       {
         question: "La maintenance est-elle incluse ?",

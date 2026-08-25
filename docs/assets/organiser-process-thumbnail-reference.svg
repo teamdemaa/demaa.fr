@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title description">
+  <title id="title">Processus de la demande à la facture</title>
+  <desc id="description">Six étapes disposées en deux rangées : demande reçue, fiche créée, priorité définie, intervention planifiée, intervention clôturée et facture envoyée.</desc>
+  <rect width="1280" height="720" fill="#FBFCFA"/>
+  <rect x="30" y="118" width="1220" height="484" rx="42" fill="#F0F4F1"/>
+
+  <g fill="#FFFFFF" stroke="#C7D4CB" stroke-width="2">
+    <rect x="72" y="169" width="335" height="151" rx="22"/>
+    <rect x="473" y="169" width="335" height="151" rx="22"/>
+    <rect x="874" y="169" width="335" height="151" rx="22"/>
+    <rect x="72" y="400" width="335" height="151" rx="22"/>
+    <rect x="473" y="400" width="335" height="151" rx="22"/>
+    <rect x="874" y="400" width="335" height="151" rx="22"/>
+  </g>
+
+  <g fill="none" stroke="#789083" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M426 244.5h24"/>
+    <path d="m442 235 9.5 9.5-9.5 9.5"/>
+    <path d="M827 244.5h24"/>
+    <path d="m843 235 9.5 9.5-9.5 9.5"/>
+    <path d="M1041.5 340v34"/>
+    <path d="m1032 366 9.5 9.5 9.5-9.5"/>
+    <path d="M851 475.5h-24"/>
+    <path d="m835 466-9.5 9.5 9.5 9.5"/>
+    <path d="M450 475.5h-24"/>
+    <path d="m434 466-9.5 9.5 9.5 9.5"/>
+  </g>
+
+  <g fill="#2D3B33" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="500" text-anchor="middle">
+    <text x="239.5" y="253">Demande reçue</text>
+    <text x="640.5" y="253">Fiche créée</text>
+    <text x="1041.5" y="253">Priorité définie</text>
+    <text x="1041.5" y="484">Intervention planifiée</text>
+    <text x="640.5" y="484">Intervention clôturée</text>
+    <text x="239.5" y="484">Facture envoyée</text>
+  </g>
+</svg>

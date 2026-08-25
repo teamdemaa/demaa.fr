@@ -9,11 +9,11 @@ import {
 
 const read = (path: string) => readFileSync(path, "utf8");
 
-describe("Structure newsletter public contract", () => {
+describe("Organiser newsletter public contract", () => {
   const component = read("src/components/StructureNewsletterBlock.tsx");
 
   it("keeps one exact editorial promise and a direct subscription", () => {
-    expect(STRUCTURE_NEWSLETTER_NAME).toBe("Structure.");
+    expect(STRUCTURE_NEWSLETTER_NAME).toBe("Organiser.");
     expect(STRUCTURE_NEWSLETTER_PROMISE).toBe(
       "Tous les quinze jours, l’équipe Demaa étudie une problématique réelle d’entreprise et construit une réponse concrète, utile à tous.",
     );
@@ -23,7 +23,7 @@ describe("Structure newsletter public contract", () => {
     expect(component).not.toContain("La lettre Demaa");
   });
 
-  it("keeps both Structure forms public with an explicit contact email", () => {
+  it("keeps both Organiser forms public with an explicit contact email", () => {
     expect(component).toContain('intent === "structure-problem"');
     expect(component).toContain("setIsProblemOpen(true)");
     expect(component).toContain('id="structure-newsletter-email"');
@@ -34,8 +34,8 @@ describe("Structure newsletter public contract", () => {
   it("requires the versioned publication consent", () => {
     expect(STRUCTURE_PUBLICATION_CONSENT).toEqual({
       purpose: "structure_case_publication",
-      text: "J’accepte que mon entreprise, mon site et ma problématique soient présentés dans Structure si ma proposition est sélectionnée.",
-      version: "structure-case-publication-v1",
+      text: "J’accepte que mon entreprise, mon site et ma problématique soient présentés dans Organiser si ma proposition est sélectionnée.",
+      version: "structure-case-publication-v2",
     });
     expect(component.replace(/\s+/g, " ")).toContain(
       "Toutes les propositions ne pourront pas être traitées",

@@ -70,7 +70,7 @@ describe("Sur mesure commercial page", () => {
     const markup = renderToStaticMarkup(createElement(SurMesurePage));
 
     expect(markup).toContain("4 500 € HT");
-    expect(markup).toContain("500 € HT par jour");
+    expect(markup).toContain("700 € HT par jour");
     expect(markup).not.toContain("7 500 € HT");
     expect(markup).not.toMatch(/2 500 €|110 €\/heure|99 €\/mois/);
     expect(markup).not.toMatch(/Conformité RGPD|Application 100 % à vous|confidentialité garantie/);
@@ -87,11 +87,17 @@ describe("Sur mesure commercial page", () => {
     expect(pageSource).toContain("<ServiceCallbackForm");
     expect(pageSource).toContain('href="#demande-application"');
     expect(pageSource).not.toContain("OrganisationSessionBookingButton");
-    expect(sitemapSource).toContain("`${base}/sur-mesure`");
+    expect(sitemapSource).toContain("`${base}/application-metier`");
+    expect(sitemapSource).not.toContain("`${base}/sur-mesure`");
     expect(sitemapSource).toContain("`${base}/systemes`");
     expect(nextConfigSource).toMatch(
-      /source: '\/accompagnement',[\s\S]*?destination: '\/services',/,
+      /source: '\/accompagnement',[\s\S]*?destination: '\/application-metier',/,
     );
-    expect(nextConfigSource).not.toMatch(/source: '\/sur-mesure',/);
+    expect(nextConfigSource).toMatch(
+      /source: '\/services',[\s\S]*?destination: '\/application-metier',/,
+    );
+    expect(nextConfigSource).toMatch(
+      /source: '\/sur-mesure',[\s\S]*?destination: '\/application-metier',/,
+    );
   });
 });

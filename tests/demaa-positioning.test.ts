@@ -15,10 +15,10 @@ describe("Demaa positioning", () => {
     ]);
 
     expect(DEMAA_HOME_TITLE).toBe(
-      "Demaa : gagnez du temps grâce à des systèmes adaptés",
+      "Demaa : organisez votre entreprise avec des systèmes simples",
     );
     expect(DEMAA_HOME_DESCRIPTION).toBe(
-      "Demaa aide les dirigeants à gagner du temps grâce à la mise en place de systèmes simples, d’automatisations et d’usages IA adaptés à leur entreprise.",
+      "On aide les TPE à mieux s’organiser grâce à des applications métier adaptées.",
     );
     expect(layout).toContain("title: DEMAA_HOME_TITLE");
     expect(layout).toContain("description: DEMAA_HOME_DESCRIPTION");

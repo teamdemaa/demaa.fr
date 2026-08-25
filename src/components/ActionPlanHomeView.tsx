@@ -60,7 +60,7 @@ export default function ActionPlanHomeView({
 
   return (
     <>
-      <Navbar localeCode={config.localeCode} minimal />
+      <Navbar localeCode={config.localeCode} minimal showDiagnostic={false} />
       <GuestActionPlanExperience
         contentLocaleCode={config.localeCode}
         initialAppContext={initialAppContext}

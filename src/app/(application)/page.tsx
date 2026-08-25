@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import ActionPlanHomeView from "@/components/ActionPlanHomeView";
 import { loadActionPlanHomePage } from "@/lib/action-plan-pages.server";
 import { DEMAA_HOME_DESCRIPTION, DEMAA_HOME_TITLE } from "@/lib/demaa-positioning";
+import { buildLegacySolutionsRedirect } from "@/lib/organiser-navigation";
 
 export const metadata: Metadata = {
   title: DEMAA_HOME_TITLE,
@@ -32,15 +34,20 @@ export default async function HomePage({
     opportunity?: string | string[];
     opportunityId?: string | string[];
     planTab?: string | string[];
+    section?: string | string[];
     resource?: string | string[];
     resourceSlug?: string | string[];
     system?: string | string[];
     systemSlug?: string | string[];
     systemTab?: string | string[];
+    toolSource?: string | string[];
     view?: string | string[];
   }>;
 }) {
   const query = await searchParams;
+  const organiserRedirect = buildLegacySolutionsRedirect(query);
+  if (organiserRedirect) redirect(organiserRedirect);
+
   return (
     <ActionPlanHomeView
       {...await loadActionPlanHomePage({ localeCode: "fr", searchParams: query })}

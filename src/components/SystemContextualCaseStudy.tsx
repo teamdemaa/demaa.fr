@@ -15,7 +15,7 @@ export default function SystemContextualCaseStudy({
         Cas concret
       </h3>
       <Link
-        href={`/academie/${content.contentSlug}`}
+        href={`/organiser/${content.contentSlug}`}
         className="group mt-4 block rounded-[1.2rem] border border-dema-line bg-dema-forest p-6 text-white shadow-[0_10px_28px_rgba(23,35,29,0.06)] transition hover:-translate-y-px hover:shadow-[0_14px_32px_rgba(23,35,29,0.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-7"
       >
         <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/65">

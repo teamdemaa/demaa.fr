@@ -243,20 +243,16 @@ envoyé ou conservé par Demaa dans ce lot.
 
 ### Avant connexion
 
-La homepage conserve le grand champ comme entrée principale, mais la navigation
-`Plan d’action / Solutions / Académie / Opportunités` est visible et utilisable
-dès l'arrivée. `Plan d'action` affiche directement les Actions, sans
-sous-navigation locale. Le visiteur peut aussi consulter les Solutions,
-l'Académie ou les Opportunités sans générer de plan et sans créer de compte.
-Les anciennes URLs utilisant `view=system` ou
-`view=plan&planTab=solutions` restent acceptées, mais tout nouveau lien
-applicatif vers les Solutions utilise `view=solutions` et conserve le contexte
-`system`, `systemTab` et `resource`. Les routes publiques `/systemes` ne sont
-pas renommées. Les fiches publiques conservent
-`Organisation / Solutions / Ressources`, tandis que la vue intégrée présente
-`Outils / Accompagnement / Ressources`. La première ressource est une liste
-imprimable des seuls processus métier. Ses choix Système restent en mémoire
-de page jusqu'à une sauvegarde volontaire.
+La homepage conserve le grand champ comme entrée principale. La navigation
+française visible est `Plan d’action / Organiser / Services`. `Plan d’action`
+affiche directement les Actions, sans sous-navigation Solutions. `Organiser`
+présente `Solutions / Processus`, dans cet ordre, et ouvre Solutions par défaut.
+Le visiteur choisit son activité avant de voir les outils, ressources et autres
+rails publiés pour ce métier. Les anciennes URLs utilisant
+`view=system`, `view=solutions` ou `view=plan&planTab=solutions` restent
+acceptées par redirection. Tout nouveau lien applicatif vers les Solutions
+utilise `/organiser?tab=solutions` et conserve les contextes `system` et
+`resource`. Les routes publiques `/systemes` ne sont pas renommées.
 
 Les univers publics `/systemes` et `/academie`, leur navigation et leur SEO
 restent accessibles. L'ADR 0008 ne transforme pas ces routes en espace privé.

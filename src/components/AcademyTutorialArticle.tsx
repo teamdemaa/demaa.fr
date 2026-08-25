@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import AcademyLessonVisual from "@/components/AcademyLessonVisual";
+import AcademyProcessGuideArticle from "@/components/AcademyProcessGuideArticle";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 
 type AcademyTutorialArticleProps = {
@@ -16,6 +17,16 @@ export default function AcademyTutorialArticle({
   embedded = false,
   onBack,
 }: AcademyTutorialArticleProps) {
+  if (content.processGuide) {
+    return (
+      <AcademyProcessGuideArticle
+        content={content}
+        embedded={embedded}
+        onBack={onBack}
+      />
+    );
+  }
+
   const ArticleContainer = embedded ? "div" : "main";
 
   return (
@@ -33,11 +44,11 @@ export default function AcademyTutorialArticle({
             </button>
           ) : (
             <Link
-              href="/academie"
+              href="/organiser?tab=processus"
               className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              Retour à Structurer
+              Retour à Organiser
             </Link>
           )}
         </div>

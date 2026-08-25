@@ -30,6 +30,7 @@ export default function ActionPlanSystemPanel({
   localeCode = "fr",
   marketCode = "fr-fr",
   toolOutboundSurface = "solutions",
+  showHeading = true,
 }: {
   options: readonly ActionPlanSystemOption[];
   selectedSystemId: string;
@@ -43,6 +44,7 @@ export default function ActionPlanSystemPanel({
   localeCode?: "fr" | "en";
   marketCode?: string;
   toolOutboundSurface?: ToolOutboundSurface;
+  showHeading?: boolean;
 }) {
   const [payload, setPayload] = useState<ActionPlanSystemPayload | null>(null);
   const [error, setError] = useState<{ slug: string; message: string } | null>(null);
@@ -120,9 +122,11 @@ export default function ActionPlanSystemPanel({
 
   return (
     <section aria-label={localeCode === "en" ? "Activity solutions" : "Solutions par activité"} className="pt-3">
-      <h1 className="sr-only">
-        {localeCode === "en" ? "Solutions for your activity" : "Solutions pour votre activité"}
-      </h1>
+      {showHeading ? (
+        <h1 className="sr-only">
+          {localeCode === "en" ? "Solutions for your activity" : "Solutions pour votre activité"}
+        </h1>
+      ) : null}
       <div className="mx-auto mb-6 w-full max-w-xl xl:w-[min(40vw,36rem)]">
         <div className="flex items-center gap-2">
           <div className="min-w-0 flex-1">

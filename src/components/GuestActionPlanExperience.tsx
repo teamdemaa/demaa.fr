@@ -7,7 +7,6 @@ import ActionPlanGenerationScreen from "@/components/ActionPlanGenerationScreen"
 import ActionPlanHeroTitle from "@/components/ActionPlanHeroTitle";
 import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNavbar";
 import ActionPlanServicesPanel from "@/components/ActionPlanServicesPanel";
-import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import GuestActionPlanDelivery from "@/components/GuestActionPlanDelivery";
 import GuestActionPlanResult from "@/components/GuestActionPlanResult";
 import GuestDiagnosticControl from "@/components/GuestDiagnosticControl";
@@ -47,33 +46,11 @@ import type { CanonicalService } from "@/lib/canonical-service-catalog";
 const POLL_DELAY_MS = 1_500;
 const POLL_TIMEOUT_MS = 2 * 60_000;
 
-function updateSolutionSelection(
-  workspace: ActionPlanWorkspaceState,
-  input: { placementId: string; systemId: string },
-) {
-  const selected = new Set(
-    workspace.selectedSolutionPlacementIdsBySystem[input.systemId] ?? [],
-  );
-  if (selected.has(input.placementId)) selected.delete(input.placementId);
-  else selected.add(input.placementId);
-  return {
-    ...workspace,
-    selectedSystemId: input.systemId,
-    savedSystemIds: workspace.savedSystemIds.includes(input.systemId)
-      ? workspace.savedSystemIds
-      : [...workspace.savedSystemIds, input.systemId],
-    selectedSolutionPlacementIdsBySystem: {
-      ...workspace.selectedSolutionPlacementIdsBySystem,
-      [input.systemId]: [...selected],
-    },
-  };
-}
-
 function normalizeGuestContext(context: ActionPlanAppContext): ActionPlanAppContext {
   if (context.view !== "plan") return context;
   return {
     ...context,
-    planSection: context.planSection === "solutions" ? "solutions" : "actions",
+    planSection: "actions",
   };
 }
 
@@ -140,7 +117,7 @@ export default function GuestActionPlanExperience({
   const [isRestoring, setIsRestoring] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
-  const [workspace, setWorkspace] = useState<ActionPlanWorkspaceState>(() => ({
+  const [, setWorkspace] = useState<ActionPlanWorkspaceState>(() => ({
     ...createManualActionPlanWorkspaceState(),
     selectedSystemId: initialAppContext.systemId ?? null,
     savedSystemIds: initialAppContext.systemId ? [initialAppContext.systemId] : [],
@@ -350,16 +327,6 @@ export default function GuestActionPlanExperience({
     });
   }
 
-  function selectSystem(systemId: string) {
-    setSelectedSystemId(systemId);
-    navigateAppContext({
-      view: "plan",
-      planSection: "solutions",
-      systemId,
-      systemTab: "solutions",
-    });
-  }
-
   function resetPlan() {
     requestControllerRef.current?.abort();
     clearGuestAccess();
@@ -391,30 +358,6 @@ export default function GuestActionPlanExperience({
         situation={situation}
       />
       <div className="mx-auto max-w-[68rem] pt-1">
-        {appContext.view === "plan" ? (
-          <nav className="mx-auto flex w-fit items-center gap-1 rounded-full border border-dema-line/70 bg-dema-sage/25 p-1" aria-label="Contenu du plan">
-            <button
-              type="button"
-              aria-current={appContext.planSection === "actions" ? "page" : undefined}
-              onClick={() => navigateAppContext({ view: "plan", planSection: "actions" })}
-              className={`min-h-10 rounded-full px-5 text-sm transition ${appContext.planSection === "actions" ? "bg-dema-paper text-dema-forest" : "text-dema-muted hover:text-brand-blue"}`}
-            >
-              Plan
-            </button>
-            <button
-              type="button"
-              aria-current={appContext.planSection === "solutions" ? "page" : undefined}
-              onClick={() => navigateAppContext({
-                view: "plan",
-                planSection: "solutions",
-                ...(selectedSystemId ? { systemId: selectedSystemId, systemTab: "solutions" } : {}),
-              })}
-              className={`min-h-10 rounded-full px-5 text-sm transition ${appContext.planSection === "solutions" ? "bg-dema-paper text-dema-forest" : "text-dema-muted hover:text-brand-blue"}`}
-            >
-              Solutions
-            </button>
-          </nav>
-        ) : null}
         {appContext.view === "plan" && appContext.planSection === "actions" ? (
           actionPlan && access ? (
             <div className="mx-auto max-w-5xl pt-6 sm:pt-9">
@@ -473,29 +416,6 @@ export default function GuestActionPlanExperience({
               </form>
             </section>
           )
-        ) : null}
-
-        {appContext.view === "plan" && appContext.planSection === "solutions" ? (
-          <ActionPlanSystemPanel
-            initialResourceSlug={appContext.solutionResourceSlug}
-            localeCode={contentLocaleCode}
-            marketCode={marketCodeAtCreation}
-            onResourceSlugChange={(solutionResourceSlug) => navigateAppContext({
-              ...appContext,
-              solutionResourceSlug,
-            })}
-            onSystemChange={selectSystem}
-            onToggleSolutionSelection={(placementId) => {
-              const systemId = selectedSystemId || workspace.selectedSystemId;
-              if (!systemId) return;
-              setWorkspace((current) => updateSolutionSelection(current, { placementId, systemId }));
-            }}
-            options={systemOptions}
-            selectedSystemId={selectedSystemId}
-            toolOutboundSurface="solutions"
-            workspace={workspace}
-            onWorkspaceChange={setWorkspace}
-          />
         ) : null}
 
         {appContext.view === "services" ? (

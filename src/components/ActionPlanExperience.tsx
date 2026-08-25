@@ -74,6 +74,7 @@ import {
 } from "@/lib/action-plan-localization";
 import { getActionPlanUiCopy } from "@/lib/action-plan-ui-copy";
 import type { CanonicalService } from "@/lib/canonical-service-catalog";
+import { buildOrganiserHref } from "@/lib/organiser-navigation";
 import type { CompanyMonth } from "@/lib/company-pilotage-contract";
 
 type PendingSolutionSelection = {
@@ -1227,15 +1228,12 @@ export default function ActionPlanExperience({
                 }
                 onOpenSolution={({ resourceSlug, systemId }) => {
                   setSelectedSystemId(systemId);
-                  navigateAppContext({
-                    ...appContext,
-                    view: "plan",
-                    planSection: "solutions",
+                  window.location.assign(buildOrganiserHref({
+                    tab: "solutions",
                     systemId,
-                    systemTab: "solutions",
                     solutionResourceSlug: resourceSlug,
                     solutionEntrySource: "action_recommendation",
-                  });
+                  }));
                 }}
                 onOpenService={(serviceSlug) => navigateAppContext({
                   ...appContext,

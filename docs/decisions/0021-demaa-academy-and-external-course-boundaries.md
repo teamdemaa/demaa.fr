@@ -1,5 +1,10 @@
 # ADR 0021 — Structurer dans Demaa et frontières avec les Cours externes
 
+> Mise à jour du 25 août 2026 : le libellé français `Structurer` et la direction
+> éditoriale associée sont supersédés par l’ADR 0023. Les frontières techniques
+> avec The Done Studio, la conservation d’`academy`, de `/academie`, des caches
+> et des progressions restent actives.
+
 - Décision : D-096
 - Statut : livré par la PR 194 ; exposition navbar différée par la PR 218
 - Date : 23 août 2026

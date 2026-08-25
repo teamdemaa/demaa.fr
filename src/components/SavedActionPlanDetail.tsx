@@ -44,6 +44,7 @@ import {
 } from "@/lib/action-plan-localization";
 import type { MarketCode } from "@/lib/international-context";
 import type { CanonicalService } from "@/lib/canonical-service-catalog";
+import { buildOrganiserHref } from "@/lib/organiser-navigation";
 
 export default function SavedActionPlanDetail({
   plan,
@@ -615,15 +616,12 @@ export default function SavedActionPlanDetail({
                 appContext.systemId || workspace.selectedSystemId || currentPlan.systemId || ""
               }
               sourceText={initialSourceText}
-              onOpenSolution={({ resourceSlug, systemId }) => navigateAppContext({
-                ...appContext,
-                view: "plan",
-                planSection: "solutions",
+              onOpenSolution={({ resourceSlug, systemId }) => router.push(buildOrganiserHref({
+                tab: "solutions",
                 systemId,
-                systemTab: "solutions",
                 solutionResourceSlug: resourceSlug,
                 solutionEntrySource: "action_recommendation",
-              })}
+              }))}
               onOpenService={(serviceSlug) => navigateAppContext({
                 ...appContext,
                 view: "services",

@@ -12,7 +12,7 @@ describe("legacy public route retirement", () => {
       expect.arrayContaining([
         expect.objectContaining({
           source: "/modeles-de-documents",
-          destination: "/academie",
+          destination: "/organiser",
           permanent: true,
         }),
         expect.objectContaining({
@@ -22,7 +22,7 @@ describe("legacy public route retirement", () => {
         }),
         expect.objectContaining({
           source: "/ressources",
-          destination: "/academie",
+          destination: "/organiser",
           permanent: true,
         }),
         expect.objectContaining({

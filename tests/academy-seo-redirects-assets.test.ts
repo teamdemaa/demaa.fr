@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("server-only", () => ({}));
 
 import nextConfig from "../next.config";
-import { generateMetadata } from "@/app/(marketing)/academie/[slug]/page";
+import { generateMetadata } from "@/app/(marketing)/organiser/[slug]/page";
 import {
   buildAcademyContentJsonLd,
   buildAcademyContentMetadata,
@@ -52,8 +52,8 @@ function readPngDimensions(buffer: Buffer) {
 describe("Academy SEO, redirects and assets", () => {
   it("uses every short title and exact canonical URL in route metadata", async () => {
     for (const content of getAllAcademyContent()) {
-      const expectedTitle = `${content.identity.shortTitle} | Structurer avec Demaa`;
-      const expectedCanonical = `https://demaa.co/academie/${content.identity.slug}`;
+      const expectedTitle = `${content.identity.shortTitle} | Organiser avec Demaa`;
+      const expectedCanonical = `https://demaa.co/organiser/${content.identity.slug}`;
       const metadata = buildAcademyContentMetadata(content);
       const routeMetadata = await generateMetadata({
         params: Promise.resolve({ slug: content.identity.slug }),
@@ -62,6 +62,9 @@ describe("Academy SEO, redirects and assets", () => {
       expect(metadata.title).toBe(expectedTitle);
       expect(metadata.alternates?.canonical).toBe(expectedCanonical);
       expect(metadata.openGraph?.url).toBe(expectedCanonical);
+      expect(metadata.robots).toEqual(
+        content.processGuide ? undefined : { index: false, follow: true },
+      );
       expect(routeMetadata.title).toBe(expectedTitle);
       expect(routeMetadata.alternates?.canonical).toBe(expectedCanonical);
     }
@@ -70,7 +73,7 @@ describe("Academy SEO, redirects and assets", () => {
   it("emits BreadcrumbList plus Course/LearningResource for fundamentals", () => {
     for (const content of getAcademyFundamentals()) {
       const jsonLd = buildAcademyContentJsonLd(content);
-      const canonicalUrl = `https://demaa.co/academie/${content.identity.slug}`;
+      const canonicalUrl = `https://demaa.co/organiser/${content.identity.slug}`;
 
       expect(jsonLd).toHaveLength(2);
       expect(jsonLd[0]).toEqual({
@@ -86,8 +89,8 @@ describe("Academy SEO, redirects and assets", () => {
           {
             "@type": "ListItem",
             position: 2,
-            name: "Structurer",
-            item: "https://demaa.co/academie",
+            name: "Organiser",
+            item: "https://demaa.co/organiser",
           },
           {
             "@type": "ListItem",
@@ -118,7 +121,10 @@ describe("Academy SEO, redirects and assets", () => {
   it("emits BreadcrumbList plus Article for case studies", () => {
     for (const content of getAcademyCaseStudies()) {
       const jsonLd = buildAcademyContentJsonLd(content);
-      const canonicalUrl = `https://demaa.co/academie/${content.identity.slug}`;
+      const canonicalUrl = `https://demaa.co/organiser/${content.identity.slug}`;
+      const expectedImage = content.processGuide
+        ? `${canonicalUrl}/process-map.png`
+        : `https://demaa.co${content.identity.card.image}`;
 
       expect(jsonLd).toHaveLength(2);
       expect(jsonLd[0]).toMatchObject({ "@type": "BreadcrumbList" });
@@ -131,6 +137,7 @@ describe("Academy SEO, redirects and assets", () => {
         headline: content.identity.title,
         name: content.identity.shortTitle,
         articleSection: content.identity.category,
+        image: expectedImage,
       });
       expect(JSON.stringify(jsonLd)).not.toContain("VideoObject");
     }
@@ -151,7 +158,7 @@ describe("Academy SEO, redirects and assets", () => {
     }
 
     expect(ACADEMY_PERMANENT_REDIRECTS).toHaveLength(
-      5 + 2 * ACADEMY_CONTENT_SLUGS.length + 3 * Object.keys(LEGACY_ACADEMY_SLUG_ALIASES).length,
+      6 + 3 * ACADEMY_CONTENT_SLUGS.length + 4 * Object.keys(LEGACY_ACADEMY_SLUG_ALIASES).length,
     );
     expect(redirects).not.toContainEqual(
       expect.objectContaining({ source: "/cours/:slug" }),
@@ -164,13 +171,23 @@ describe("Academy SEO, redirects and assets", () => {
     );
     expect(redirects).toContainEqual({
       source: "/academy",
-      destination: "/academie",
+      destination: "/organiser",
+      permanent: true,
+    });
+    expect(redirects).toContainEqual({
+      source: "/academie",
+      destination: "/organiser",
       permanent: true,
     });
     for (const slug of ACADEMY_CONTENT_SLUGS) {
       expect(redirects).toContainEqual({
         source: `/academy/${slug}`,
-        destination: `/academie/${slug}`,
+        destination: `/organiser/${slug}`,
+        permanent: true,
+      });
+      expect(redirects).toContainEqual({
+        source: `/academie/${slug}`,
+        destination: `/organiser/${slug}`,
         permanent: true,
       });
     }

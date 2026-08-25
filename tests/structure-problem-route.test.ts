@@ -89,7 +89,7 @@ describe("Structure problem submission route", () => {
       response: null,
     });
     mocks.resolveLeadContext.mockResolvedValue({
-      source: "Newsletter Structure - Proposition de problématique",
+      source: "Newsletter Organiser - Proposition de problématique",
       sourceUrl: "https://demaa.fr/academie",
     });
     mocks.submitLeadRequest.mockResolvedValue({ duplicate: false, leadId: "structure-1" });
@@ -107,13 +107,13 @@ describe("Structure problem submission route", () => {
         email: "maya@example.com",
       },
       requestType: "structure_problem_submission",
-      title: "Proposition de problématique - Structure",
+      title: "Proposition de problématique - Organiser",
     }));
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       consents: [expect.objectContaining({
         granted: true,
         purpose: "structure_case_publication",
-        version: "structure-case-publication-v1",
+        version: "structure-case-publication-v2",
       })],
       fields: expect.arrayContaining([
         { label: "Site ou page professionnelle", value: "https://atelier-horizon.example/a-propos" },

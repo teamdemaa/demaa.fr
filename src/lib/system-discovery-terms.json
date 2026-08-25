@@ -225,6 +225,8 @@
     ],
     "architecte-maitre-oeuvre": [
       { "value": "maître d’œuvre", "kind": "alias", "status": "published" },
+      { "value": "architecte d’intérieur", "kind": "alias", "status": "published" },
+      { "value": "architecte intérieur", "kind": "alias", "status": "published" },
       { "value": "inspection de chantier", "kind": "specialty", "status": "published" },
       { "value": "suivi de chantier", "kind": "problem", "status": "published" }
     ],

@@ -16,8 +16,7 @@ describe("Opportunities direct-link access", () => {
     ]);
 
     expect(navigation).toContain('{ view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness }');
-    expect(navigation).toContain('"plan",\n  "services"');
-    expect(navigation).not.toContain('  "academy",');
+    expect(navigation).toContain('"plan",\n  "academy",\n  "services"');
     expect(navigation).not.toContain('  "opportunities",');
     expect(footer).toContain('{ label: "Annonces", href: "/opportunites" }');
     expect(sitemap).toContain("`${base}/opportunites`");

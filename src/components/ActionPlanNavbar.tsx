@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, BriefcaseBusiness, ListChecks, SquareCheckBig } from "lucide-react";
+import { BookOpen, BriefcaseBusiness, ListChecks, PanelsTopLeft } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -13,13 +13,14 @@ const tabClassName =
 
 const navigationItems = {
   plan: { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
-  services: { view: "services", labels: { fr: "Services", en: "Services" }, Icon: SquareCheckBig },
-  academy: { view: "academy", labels: { fr: "Structurer", en: "Academy" }, Icon: BookOpen },
+  services: { view: "services", labels: { fr: "Application métier", en: "Business app" }, Icon: PanelsTopLeft },
+  academy: { view: "academy", labels: { fr: "Organiser", en: "Academy" }, Icon: BookOpen },
   opportunities: { view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness },
 } as const;
 
 const navigationOrder: readonly ActionPlanView[] = [
   "plan",
+  "academy",
   "services",
 ];
 
@@ -85,10 +86,20 @@ export default function ActionPlanNavbar({
             </>
           );
 
-          return routeNavigation ? (
+          const routeHref = localeCode === "en"
+            ? `/en?view=${view}`
+            : view === "plan"
+              ? "/"
+              : view === "academy"
+                ? "/organiser"
+                : "/application-metier";
+          const usesPublicRoute = routeNavigation
+            || (localeCode === "fr" && (view === "academy" || view === "services"));
+
+          return usesPublicRoute ? (
             <Link
               key={view}
-              href={`${localeCode === "en" ? "/en" : "/"}?view=${view}`}
+              href={routeHref}
               aria-current={isActive ? "page" : undefined}
               className={className}
             >

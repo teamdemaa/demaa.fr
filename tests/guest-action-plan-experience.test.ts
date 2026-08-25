@@ -16,7 +16,7 @@ describe("public guest action-plan experience", () => {
 
     expect(home).toContain("<GuestActionPlanExperience");
     expect(home).toContain("if (!guestProductEnabled)");
-    expect(home).toContain("<Navbar localeCode={config.localeCode} minimal />");
+    expect(home).toContain("<Navbar localeCode={config.localeCode} minimal showDiagnostic={false} />");
     expect(guestLoader).not.toContain("getCurrentCustomerAppIdentityFromSession");
     expect(guestLoader).not.toContain("ensureDefaultCompanyForIdentity");
     expect(guestLoader).not.toContain("paths.latest");
@@ -72,10 +72,8 @@ describe("public guest action-plan experience", () => {
     expect(experience).not.toContain("ActionPlanGenerationBar");
     expect(experience).not.toContain("CompanyPilotagePanel");
     expect(experience).not.toContain('import ActionPlanResult from');
-    expect(experience).toContain('aria-label="Contenu du plan"');
-    expect(experience).toContain("aria-current={appContext.planSection");
-    expect(experience).toContain('>\n              Plan\n');
-    expect(experience).toContain('>\n              Solutions\n');
+    expect(experience).not.toContain('aria-label="Contenu du plan"');
+    expect(experience).not.toContain("<ActionPlanSystemPanel");
     expect(experience).not.toContain('>Chiffres<');
     expect(experience).not.toContain('>Stratégie<');
     expect(experience).toContain('text-[0.8rem] font-light leading-relaxed text-brand-blue/28');
@@ -88,7 +86,7 @@ describe("public guest action-plan experience", () => {
     expect(diagnostic).toContain("submitGuestDiagnosticWithoutPlan");
     expect(diagnostic).toContain("required={!access}");
     expect(diagnostic).toContain("contactConsent");
-    expect(diagnostic).toContain("Comment pouvons-nous vous aider ?");
+    expect(diagnostic).toContain("Qu’est-ce qui vous prend trop de temps aujourd’hui ?");
     expect(diagnostic).toContain('role="dialog"');
     expect(diagnostic).toContain('aria-label="Ouvrir le diagnostic de mon organisation"');
     expect(diagnostic).toContain("Diagnostic organisation");

@@ -105,13 +105,13 @@ describe("action plan app context", () => {
     );
   });
 
-  it("builds system sharing on the public app entry, never on a saved plan", () => {
+  it("builds system sharing on Organiser, never inside a plan", () => {
     const href = buildPublicSystemAppHref({
       systemId: "restaurant",
     });
 
     expect(href).toBe(
-      "/?view=plan&section=solutions&system=restaurant&systemTab=solutions",
+      "/organiser?tab=solutions&system=restaurant",
     );
     expect(href).not.toContain("/plans/");
   });

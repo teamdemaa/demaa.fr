@@ -105,7 +105,7 @@ describe("action plan experience architecture", () => {
     expect(heroTitle).toContain("Qu’est-ce qui vous prend trop de temps aujourd’hui ?");
     expect(heroTitle).not.toContain("Automatisation des process &amp; IA");
     expect(heroTitle).toContain(
-      "On aide les dirigeants à structurer leur entreprise avec des systèmes simples, pour gagner du temps et la rendre moins dépendante d’eux.",
+      "On aide les TPE à mieux s’organiser grâce à des applications métier adaptées.",
     );
     expect(heroTitle).toContain('aria-label={accessibleTitle}');
     expect(heroTitle).not.toContain("useEffect");
@@ -243,7 +243,7 @@ describe("action plan experience architecture", () => {
     const actionSource = solutions.slice(actionStart, actionEnd);
 
     expect(academy).toContain('<h1 className="sr-only">');
-    expect(academy).toContain('localeCode === "en" ? "Academy" : "Structurer"');
+    expect(academy).toContain('localeCode === "en" ? "Academy" : "Organiser son entreprise"');
     expect(actionSource).toContain("onClose();");
     expect(actionSource.indexOf("onClose();")).toBeLessThan(
       actionSource.indexOf('trackSystemSolutionEvent("system_solution_resource_cta_clicked"'),

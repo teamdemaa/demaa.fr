@@ -108,7 +108,7 @@ describe("canonical Services composition in every system", () => {
       expect(services?.placements.every(({ resource }) =>
         resource.interaction.interactionMode === "detail" &&
         resource.interaction.href ===
-          `${resource.resourceSlug === "application-metier" ? "/sur-mesure" : `/services/${resource.resourceSlug}`}?systemSlug=${system.slug}&source=solutions-systeme`
+          `${resource.resourceSlug === "application-metier" ? "/application-metier" : `/services/${resource.resourceSlug}`}?systemSlug=${system.slug}&source=solutions-systeme`
       )).toBe(true);
       expect(services?.placements.every(({ resource }) =>
         resource.indicativePricing === undefined

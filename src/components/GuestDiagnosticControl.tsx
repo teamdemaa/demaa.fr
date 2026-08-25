@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, LoaderCircle, Stethoscope, X } from "lucide-react";
+import { Check, ClipboardCheck, LoaderCircle, X } from "lucide-react";
 import { type FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
@@ -19,12 +19,14 @@ export default function GuestDiagnosticControl({
   onClose,
   onOpen,
   open,
+  showNavbarTrigger = true,
   situation,
 }: {
   access: GuestAccess | null;
   onClose: () => void;
   onOpen: () => void;
   open: boolean;
+  showNavbarTrigger?: boolean;
   situation: string;
 }) {
   const [target, setTarget] = useState<HTMLElement | null>(null);
@@ -80,7 +82,7 @@ export default function GuestDiagnosticControl({
 
   return (
     <>
-      {target
+      {showNavbarTrigger && target
         ? createPortal(
             <button
               type="button"
@@ -89,7 +91,7 @@ export default function GuestDiagnosticControl({
               aria-label="Ouvrir le diagnostic de mon organisation"
               title="Ouvrir le diagnostic de mon organisation"
             >
-              <Stethoscope className="h-4 w-4" aria-hidden="true" />
+              <ClipboardCheck className="h-4 w-4" aria-hidden="true" />
               <span>Diagnostic organisation</span>
             </button>,
             target,
@@ -120,7 +122,7 @@ export default function GuestDiagnosticControl({
                 >
                   <X className="h-4 w-4" aria-hidden="true" />
                 </button>
-                <Stethoscope className="h-5 w-5 text-dema-forest" aria-hidden="true" />
+                <ClipboardCheck className="h-5 w-5 text-dema-forest" aria-hidden="true" />
                 <h2
                   id="guest-diagnostic-title"
                   className="mt-4 pr-12 text-2xl font-medium tracking-[-0.03em] text-brand-blue"
@@ -144,7 +146,7 @@ export default function GuestDiagnosticControl({
                 ) : (
                   <form onSubmit={requestDiagnostic} className="mt-6 space-y-3">
                     <label className="block text-sm text-brand-blue">
-                      Comment pouvons-nous vous aider ?
+                      Qu’est-ce qui vous prend trop de temps aujourd’hui ?
                       <textarea
                         data-dialog-initial-focus
                         name="message"

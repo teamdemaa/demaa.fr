@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 import { getCanonicalServices } from "@/lib/canonical-service-catalog";
 import { getAllPublishedContent } from "@/lib/content-catalog";
-import { getAllAcademyContent } from "@/lib/academy-course-content";
+import { getPublicOrganiserContent } from "@/lib/academy-course-content";
 import { getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
 import { getAccountingFirms } from "@/lib/accounting-directory";
@@ -33,8 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 1 },
     { url: `${base}/systemes`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
-    { url: `${base}/services`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.65 },
-    { url: `${base}/sur-mesure`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/application-metier`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/annuaire-outils`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/annuaire-fournisseurs`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-financement`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
@@ -44,7 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-recrutement`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-newsletters`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/academie`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/organiser`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/contenus`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/opportunites`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.65 },
     { url: `${base}/rejoindre-team-demaa`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.6 },
@@ -55,9 +54,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/cgv`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  const academyEntries: MetadataRoute.Sitemap = getAllAcademyContent().map(
+  const academyEntries: MetadataRoute.Sitemap = getPublicOrganiserContent().map(
     (content) => ({
-      url: `${base}/academie/${content.identity.slug}`,
+      url: `${base}/organiser/${content.identity.slug}`,
       lastModified: siteUpdatedAt,
       changeFrequency: "monthly" as const,
       priority: content.kind === "case-study" ? 0.72 : 0.78,

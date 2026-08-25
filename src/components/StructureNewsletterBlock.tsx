@@ -200,7 +200,7 @@ export default function StructureNewsletterBlock() {
                 className="flex min-h-13 items-center rounded-xl border border-dema-forest/20 bg-dema-sage/55 px-4 text-sm text-dema-forest"
                 role="status"
               >
-                Merci, votre inscription à Structure est confirmée.
+                Merci, votre inscription à Organiser est confirmée.
               </div>
             ) : (
               <form
@@ -272,7 +272,7 @@ export default function StructureNewsletterBlock() {
 
       {isProblemOpen ? (
         <DirectoryDetailDialogShell
-          ariaLabel="Proposer une problématique à Structure"
+          ariaLabel="Proposer une problématique à Organiser"
           maxWidthClassName="max-w-2xl"
           onClose={closeProblem}
         >

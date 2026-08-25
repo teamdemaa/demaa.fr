@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import AppLibrarySearch from "@/components/AppLibrarySearch";
+import OrganiserProcessMap from "@/components/OrganiserProcessMap";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { LIBRARY_CARD_TITLE_CLASSNAME } from "@/lib/library-card-ui";
 import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
@@ -238,11 +239,16 @@ function AcademyCard({
 }) {
   const { identity, kind } = content;
   const isCaseStudy = kind === "case-study";
+  const isProcessGuide = Boolean(content.processGuide);
   const caseStudy = isCaseStudy ? CASE_STUDY_PRESENTATIONS[identity.slug] : undefined;
-  const title = caseStudy?.title
+  const title = isProcessGuide
+    ? identity.title
+    : caseStudy?.title
     ?? (localeCode === "fr" ? COURSE_TITLES[identity.slug] : undefined)
     ?? identity.card.title;
-  const meta = caseStudy
+  const meta = isProcessGuide && content.processGuide
+    ? `Process · ${content.processGuide.system.label} · ${identity.durationMinutes} min`
+    : caseStudy
     ? localeCode === "en"
       ? `Guided tutorial · ${caseStudy.sector} · ${identity.durationMinutes} min`
       : `Tutoriel · ${caseStudy.sector} · ${identity.durationMinutes} min`
@@ -252,10 +258,14 @@ function AcademyCard({
       <article className="transition-transform duration-200 ease-out group-hover:-translate-y-px motion-reduce:transform-none">
         <div
           className={`relative aspect-video overflow-hidden rounded-[1.25rem] transition-colors duration-200 ${
-            isCaseStudy ? "bg-dema-forest" : "border border-[#E7EBE8] bg-[#F1F3F0]"
+            isProcessGuide
+              ? "bg-[#F0F4F1]"
+              : isCaseStudy ? "bg-dema-forest" : "border border-[#E7EBE8] bg-[#F1F3F0]"
           }`}
         >
-          {caseStudy ? (
+          {isProcessGuide && content.processGuide ? (
+            <OrganiserProcessMap steps={content.processGuide.steps} compact />
+          ) : caseStudy ? (
             <div className="absolute inset-4 flex items-center justify-center overflow-hidden sm:inset-[1.125rem]">
               <div className="relative aspect-square h-full overflow-hidden">
                 <Image
@@ -274,10 +284,20 @@ function AcademyCard({
         </div>
 
         <div className="px-0.5 pb-1 pt-3.5">
-          <h3 className={`${LIBRARY_CARD_TITLE_CLASSNAME} transition-colors group-hover:text-dema-forest`}>
+          <h3 className={`${
+            isProcessGuide
+              ? "line-clamp-2 text-[0.84rem] font-normal leading-[1.3] text-brand-blue opacity-[0.59] sm:text-[0.9rem]"
+              : LIBRARY_CARD_TITLE_CLASSNAME
+          } transition-colors group-hover:text-dema-forest`}>
             {title}
           </h3>
-          <p className="mt-1.5 text-sm text-dema-muted">{meta}</p>
+          <p className={`${
+            isProcessGuide
+              ? "line-clamp-1 text-[0.7rem] text-dema-muted opacity-[0.59]"
+              : "text-sm text-dema-muted"
+          } mt-1.5`}>
+            {meta}
+          </p>
         </div>
       </article>
   );
@@ -300,7 +320,7 @@ function AcademyCard({
 
   return (
     <Link
-      href={localeCode === "en" ? `/en?view=academy&academy=${identity.slug}` : `/academie/${identity.slug}`}
+      href={localeCode === "en" ? `/en?view=academy&academy=${identity.slug}` : `/organiser/${identity.slug}`}
       className={className}
       aria-label={localeCode === "en" ? `Open ${title}` : `Ouvrir ${title}`}
     >
@@ -326,7 +346,8 @@ export default function AcademyIndexClient({
     () => contents.filter((content) => {
       if (localeCode === "en") return content.kind === "course";
       if (content.kind === "case-study") {
-        return PUBLIC_EDITORIAL_VISIBILITY.academyTutorials;
+        return Boolean(content.processGuide)
+          && PUBLIC_EDITORIAL_VISIBILITY.academyTutorials;
       }
       return PUBLIC_EDITORIAL_VISIBILITY.academyFormations;
     }),
@@ -384,7 +405,7 @@ export default function AcademyIndexClient({
             open: "Show categories",
           }
         : undefined}
-      placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un tutoriel…"}
+      placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un processus…"}
       query={searchQuery}
     />
   ) : (
@@ -397,13 +418,13 @@ export default function AcademyIndexClient({
           />
           <input
             type="search"
-            aria-label={localeCode === "en" ? "Search the Academy" : "Rechercher un tutoriel"}
+            aria-label={localeCode === "en" ? "Search the Academy" : "Rechercher un processus"}
             value={searchQuery}
             onChange={(event) => {
               setSearchQuery(event.target.value);
               setActiveCategory(allCategoriesLabel);
             }}
-            placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un tutoriel…"}
+            placeholder={localeCode === "en" ? "Search courses or questions…" : "Rechercher un processus…"}
             className="w-full rounded-full bg-dema-paper py-4 pl-11 pr-12 text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 md:py-5 md:pl-16 md:pr-20 md:text-lg"
           />
           <button
@@ -454,8 +475,18 @@ export default function AcademyIndexClient({
       {embedded ? (
         <div className="mx-auto max-w-7xl px-4 pb-6 pt-3">
           <h1 className="sr-only">
-            {localeCode === "en" ? "Academy" : "Structurer"}
+            {localeCode === "en" ? "Academy" : "Organiser son entreprise"}
           </h1>
+          {localeCode === "fr" ? (
+            <div className="pb-2 pt-4 text-center">
+              <p className="text-balance text-3xl font-light tracking-tight text-dema-forest sm:text-4xl">
+                Organiser son entreprise
+              </p>
+              <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-dema-muted sm:text-base">
+                Des processus concrets pour mieux gérer les demandes, les interventions, les documents et le suivi de l’activité.
+              </p>
+            </div>
+          ) : null}
           {searchControl}
         </div>
       ) : null}
@@ -476,9 +507,12 @@ export default function AcademyIndexClient({
               className="text-balance font-light leading-[0.94] tracking-tight"
               style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
             >
-              <span className="block text-brand-blue/62">Structurer</span>
+              <span className="block text-brand-blue/62">Organiser</span>
               <span className="demaa-hero-title block text-dema-forest">son entreprise</span>
             </h1>
+            <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-dema-muted md:text-lg">
+              Des processus concrets pour mieux gérer les demandes, les interventions, les documents et le suivi de l’activité.
+            </p>
           </div>
 
           {searchControl}
@@ -489,7 +523,7 @@ export default function AcademyIndexClient({
       <ContentContainer className={`mx-auto max-w-7xl px-4 pb-16 md:pb-20 ${embedded ? "pt-0" : ""}`}>
         {filteredContents.length ? (
           <section
-            aria-label={localeCode === "en" ? "Courses" : "Contenus pour structurer son entreprise"}
+            aria-label={localeCode === "en" ? "Courses" : "Processus pour organiser son entreprise"}
           >
             <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
               {filteredContents.map((content, index) => (
@@ -507,7 +541,7 @@ export default function AcademyIndexClient({
 
         {filteredContents.length === 0 ? (
           <section
-            aria-label={localeCode === "en" ? "Courses" : "Contenus pour structurer son entreprise"}
+            aria-label={localeCode === "en" ? "Courses" : "Processus pour organiser son entreprise"}
             className="rounded-[1.25rem] border border-dashed border-dema-line bg-white px-6 py-14 text-center"
           >
             <h2 className="text-xl font-semibold text-brand-blue">
