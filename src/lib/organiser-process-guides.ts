@@ -56,7 +56,7 @@ export const ORGANISER_PROCESS_GUIDES: AcademyContentDefinition[] = [
     shortTitle: "Organiser une entreprise de plomberie",
     category: "Planning et interventions",
     promise:
-      "Un processus simple pour que chaque intervention avance avec un responsable, une prochaine action et un statut clair — sans que la direction reste le point de passage obligatoire.",
+      "Un processus simple pour que chaque intervention avance avec un responsable, une prochaine action et un statut clair, sans que la direction reste le point de passage obligatoire.",
     guide: {
       sector: "Organisation d’une entreprise de plomberie",
       company: {

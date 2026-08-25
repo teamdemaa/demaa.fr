@@ -195,7 +195,7 @@ describe("Organiser process guides", () => {
       "Facture envoyée",
     ]);
     expect(plumbing?.identity.promise).toBe(
-      "Un processus simple pour que chaque intervention avance avec un responsable, une prochaine action et un statut clair — sans que la direction reste le point de passage obligatoire.",
+      "Un processus simple pour que chaque intervention avance avec un responsable, une prochaine action et un statut clair, sans que la direction reste le point de passage obligatoire.",
     );
     expect(plumbing?.processGuide?.conclusion).toBe(
       "Une demande entre une seule fois dans l’organisation et avance jusqu’à la facture, avec la bonne information au bon moment.",

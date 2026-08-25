@@ -108,7 +108,7 @@ export default function AcademyProcessGuideArticle({
         >
           <p className="leading-8 text-dema-muted">
             <strong className="font-semibold text-[#25352C]">
-              Exemple — {guide.example.title} :
+              Exemple : {guide.example.title}.
             </strong>{" "}
             {guide.example.body}
           </p>
