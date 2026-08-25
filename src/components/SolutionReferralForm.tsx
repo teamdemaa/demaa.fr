@@ -109,7 +109,6 @@ export async function submitSolutionReferral(
 export default function SolutionReferralForm({
   initialEmail = "",
   referralMode = "direct",
-  resourceName,
   resourceSlug,
   systemSlug,
 }: {
@@ -259,9 +258,6 @@ export default function SolutionReferralForm({
       </label>
 
       <p className="text-xs leading-relaxed text-dema-muted">
-        {referralMode === "matching"
-          ? "En envoyant cette demande, vous acceptez que Demaa utilise ces informations pour étudier votre besoin et vous recontacter au sujet d’une éventuelle mise en relation."
-          : `En envoyant cette demande, vous acceptez que Demaa transmette ces informations à ${resourceName} afin d’organiser la mise en relation.`} {" "}
         <Link
           href="/politique-de-confidentialite"
           className="font-medium text-dema-forest underline underline-offset-2"

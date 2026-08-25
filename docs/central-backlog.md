@@ -2151,6 +2151,25 @@ sont différées sans échéance et ne forment pas un chantier actif.
 La première PR runtime de D-097 doit s'arrêter à la lecture seule. Les mutations,
 la création de candidate et l'activation appartiennent à des PR ultérieures.
 
+#### D-098 — Retrait de l'avantage mensuel et formulaire Services allégé — livré
+
+Décision du 25 août 2026 : aucun service ne bénéficie d'une remise mensuelle en
+pourcentage. L'ancien avantage est retiré des cartes, des fiches, des demandes,
+de l'administration, des CGV, de la politique de confidentialité et des
+contrats actifs. Aucune vérification manuelle ne le remplace et les anciennes
+données éventuelles restent simplement ignorées.
+
+Le formulaire Services conserve Entreprise, Numéro WhatsApp, le CTA et le lien
+`Politique de confidentialité`. Les phrases expliquant le contact WhatsApp et
+le consentement redondant sont supprimées. Les validations, l'anti-abus, le
+stockage et les notifications restent inchangés.
+
+- [x] Retirer le champ d'éligibilité du catalogue canonique.
+- [x] Retirer le résolveur serveur et le contrôle de remise de la demande.
+- [x] Retirer la commande de remise de l'administration Team.
+- [x] Retirer les mentions publiques, contractuelles et de confidentialité.
+- [x] Conserver les prix et les demandes existants sans migration destructive.
+
 ##### Mise à jour catalogue — Masquage du service Expert-comptable
 
 - [x] Masquer l'offre `expert-comptable` des cartes Services et des

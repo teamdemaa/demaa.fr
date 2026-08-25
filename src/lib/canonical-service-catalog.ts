@@ -55,7 +55,6 @@ export type CanonicalServicePackage = Readonly<{
 }>;
 
 export type CanonicalService = Readonly<{
-  monthlyAccompanimentDiscountEligible: boolean;
   conditions: readonly string[];
   cta: Readonly<{ kind: "callback"; label: "Envoyer ma demande" }>;
   delivery: "demaa" | "third-party";
@@ -81,7 +80,7 @@ const canonicalServiceDefinitions = deepFreeze([
     summary: "Un accompagnement mensuel pour clarifier vos priorités, prendre les bonnes décisions et avancer dans leur mise en œuvre.",
     description: "Demaa qualifie votre besoin et organise le matching avec un coach business pertinent. L’accompagnement comprend deux rendez-vous individuels de 60 minutes par mois, la préparation des priorités et un suivi entre les rendez-vous sur les sujets travaillés.",
     result: "Un espace de recul régulier pour décider plus vite, garder vos priorités visibles et avancer sans perdre la maîtrise de votre entreprise.",
-    delivery: "third-party", monthlyAccompanimentDiscountEligible: false,
+    delivery: "third-party",
     pricing: { mode: "fixed", amountMinor: 75000, currency: "EUR", heading: "Tarif", label: "750 € HT / mois", note: "Deux rendez-vous individuels de 60 minutes et un suivi entre les rendez-vous sont inclus. Aucun paiement n’est déclenché par la demande de rappel." },
     cta: callback,
     included: ["Qualification et matching avec un coach adapté", "Deux rendez-vous individuels de 60 minutes par mois", "Préparation des priorités et suivi entre les rendez-vous"],
@@ -94,7 +93,7 @@ const canonicalServiceDefinitions = deepFreeze([
     summary: "Faites prendre en charge une formalité de création, de modification ou de fermeture par un professionnel adapté.",
     description: "Demaa précise la formalité attendue puis organise une mise en relation avec un professionnel habilité. Vous choisissez librement de poursuivre avec le professionnel retenu.",
     result: "Une formalité clairement cadrée et confiée à un professionnel adapté, sans chercher seul le bon interlocuteur.",
-    delivery: "third-party", monthlyAccompanimentDiscountEligible: false,
+    delivery: "third-party",
     pricing: { mode: "quote", heading: "Tarif", label: "Sur devis", note: "Le professionnel confirme son périmètre et son tarif. Il facture directement son intervention ; les frais administratifs et de publication restent séparés." },
     cta: callback,
     included: ["Qualification de la formalité : création, modification ou fermeture", "Recherche d’un professionnel adapté", "Mise en relation et transmission du contexte utile"],
@@ -107,7 +106,7 @@ const canonicalServiceDefinitions = deepFreeze([
     summary: "Trouvez un expert-comptable inscrit à l’Ordre, adapté à votre activité et à votre organisation.",
     description: "Demaa qualifie votre besoin puis organise la mise en relation avec un expert-comptable inscrit à l’Ordre. Vous choisissez librement le professionnel avec lequel poursuivre.",
     result: "Un échange avec des cabinets qui comprennent votre contexte, sans parcourir seul des dizaines de profils.",
-    delivery: "third-party", monthlyAccompanimentDiscountEligible: false,
+    delivery: "third-party",
     pricing: { mode: "starting", amountMinor: 25000, currency: "EUR", heading: "Honoraires du cabinet", label: "À partir de 250 € HT / mois", note: "Le montant dépend de l’activité, du volume, de la paie et des obligations. La mise en relation Demaa est sans frais." },
     cta: callback,
     included: ["Qualification de votre activité et de votre besoin", "Recherche d’un cabinet adapté", "Mise en relation avec l’interlocuteur retenu"],
@@ -120,7 +119,7 @@ const canonicalServiceDefinitions = deepFreeze([
     summary: "Trouvez une assistante administrative adaptée pour déléguer des tâches clairement définies et retrouver du temps.",
     description: "Demaa qualifie les tâches, le volume et le rythme attendus, puis organise la mise en relation avec une assistante administrative adaptée. Vous choisissez librement de poursuivre avec la professionnelle retenue.",
     result: "Un renfort administratif cadré, avec des responsabilités et un rythme clairement définis avant le démarrage.",
-    delivery: "third-party", monthlyAccompanimentDiscountEligible: false,
+    delivery: "third-party",
     pricing: { mode: "starting", amountMinor: 50000, currency: "EUR", heading: "Tarif", label: "À partir de 500 € HT / mois", note: "Base minimale de 20 heures à 25 € HT / heure. Toute heure supplémentaire est facturée 25 € HT. La professionnelle facture directement son intervention ; la mise en relation Demaa est sans frais." },
     cta: callback,
     included: ["Qualification des tâches, du volume et du rythme", "Recherche d’une assistante administrative adaptée", "Mise en relation et transmission du contexte utile"],
@@ -133,7 +132,7 @@ const canonicalServiceDefinitions = deepFreeze([
     summary: "Recevez des profils d’alternants correspondant aux fonctions actuellement proposées par notre école partenaire.",
     description: "Demaa qualifie votre besoin et le transmet à l’école partenaire. L’école vérifie les profils disponibles et vous accompagne dans la mise en relation.",
     result: "Des profils présélectionnés à étudier, sans frais de mise en relation.",
-    delivery: "third-party", monthlyAccompanimentDiscountEligible: false,
+    delivery: "third-party",
     pricing: { mode: "fixed", amountMinor: 0, currency: "EUR", heading: "Tarif", label: "Gratuit", note: "La demande, la présentation des profils et l’accompagnement par l’école sont gratuits. Aucun paiement n’est déclenché." },
     cta: callback,
     included: ["Profil commercial", "Profil administratif polyvalent", "Profil montage vidéo ou création de contenu"],
@@ -146,7 +145,7 @@ const canonicalServiceDefinitions = deepFreeze([
     summary: "Réduisez les tâches manuelles avec des workflows fiables et des usages IA ciblés, intégrés à vos outils existants.",
     description: "Nous simplifions d’abord le processus, automatisons les étapes répétitives, puis intégrons l’IA uniquement lorsqu’elle apporte un gain concret avec des points de contrôle humains.",
     result: "Un processus plus fluide, plus fiable et documenté, avec moins d’actions manuelles à contrôler.",
-    delivery: "demaa", monthlyAccompanimentDiscountEligible: true,
+    delivery: "demaa",
     pricing: null,
     packages: [
       {
@@ -168,7 +167,7 @@ const canonicalServiceDefinitions = deepFreeze([
     summary: "Centralisez un processus métier dans une application claire lorsque vos outils actuels ne suffisent plus.",
     description: "Nous clarifions le processus, concevons les écrans utiles et construisons une application métier bornée autour du cas d’usage validé.",
     result: "Un espace de travail partagé qui centralise les données, les étapes et les responsabilités utiles.",
-    delivery: "demaa", monthlyAccompanimentDiscountEligible: true,
+    delivery: "demaa",
     pricing: null,
     packages: [
       {
@@ -190,7 +189,7 @@ const canonicalServiceDefinitions = deepFreeze([
     summary: "Organisez une présence régulière et cohérente sur les réseaux utiles à votre activité.",
     description: "Demaa qualifie votre besoin puis organise la mise en relation avec un professionnel adapté. Le périmètre éditorial, le rythme, les formats et le circuit de validation sont définis avant la production récurrente.",
     result: "Une mission de communication clairement cadrée et confiée à un professionnel adapté.",
-    delivery: "third-party", monthlyAccompanimentDiscountEligible: false,
+    delivery: "third-party",
     pricing: { mode: "fixed", amountMinor: 80000, currency: "EUR", heading: "Forfait", label: "800 € HT / mois", note: "Le professionnel confirme le périmètre, applique ce tarif dans le cadre défini et facture directement son intervention. Aucun paiement n’est déclenché par la demande." },
     cta: callback,
     included: ["Cadrage éditorial", "Calendrier et production des contenus convenus", "Suivi des validations et publications"],
@@ -203,7 +202,7 @@ const canonicalServiceDefinitions = deepFreeze([
     summary: "Cadrez, lancez et suivez des campagnes publicitaires alignées avec un objectif commercial précis.",
     description: "Demaa qualifie votre besoin puis organise la mise en relation avec un professionnel adapté. L’offre, la cible, les messages, le budget et les indicateurs sont cadrés avant le lancement des campagnes.",
     result: "Une mission d’acquisition clairement cadrée et confiée à un professionnel adapté.",
-    delivery: "third-party", monthlyAccompanimentDiscountEligible: false,
+    delivery: "third-party",
     pricing: { mode: "fixed", amountMinor: 75000, currency: "EUR", heading: "Forfait", label: "750 € HT / mois", note: "Le professionnel confirme le périmètre, applique ce tarif dans le cadre défini et facture directement son intervention. Le budget média reste séparé. Aucun paiement n’est déclenché par la demande." },
     cta: callback,
     included: ["Cadrage de la cible et des campagnes", "Paramétrage et suivi", "Bilan et optimisations régulières"],
@@ -216,7 +215,7 @@ const canonicalServiceDefinitions = deepFreeze([
     summary: "Structurez une prospection concentrée sur les bons profils, avec des messages et un suivi cohérents.",
     description: "Demaa qualifie votre besoin puis organise la mise en relation avec un professionnel adapté. La cible, les critères de qualification, les messages et le volume sont cadrés avant la recherche et l’approche des prospects.",
     result: "Une mission de prospection clairement cadrée et confiée à un professionnel adapté.",
-    delivery: "third-party", monthlyAccompanimentDiscountEligible: false,
+    delivery: "third-party",
     pricing: { mode: "fixed", amountMinor: 150000, currency: "EUR", heading: "Forfait", label: "1 500 € HT / mois", note: "Le professionnel confirme le périmètre, applique ce tarif dans le cadre défini et facture directement son intervention. Aucun paiement n’est déclenché par la demande." },
     cta: callback,
     included: ["Définition des critères de ciblage", "Recherche et qualification selon le périmètre", "Messages et suivi des approches"],

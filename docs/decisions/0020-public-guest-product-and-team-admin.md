@@ -134,9 +134,8 @@ validé côté serveur. Les routes existantes déjà publiques sont conservées.
 Les routes encore liées à l'UID sont soit converties avec le même contrat
 anti-abus, soit retirées si elles doublonnent un parcours public existant.
 
-L'avantage commercial mensuel de 12 % ne peut plus être déduit automatiquement
-d'un UID client ; la Team le vérifie lors de la qualification. Les textes
-contractuels et de confidentialité doivent refléter cette règle.
+D-098 retire l'ancien avantage commercial mensuel du catalogue, des demandes
+et de l'administration. Aucune vérification manuelle ne le remplace.
 
 ### 6. Interface Demaa
 

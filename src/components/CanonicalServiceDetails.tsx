@@ -92,12 +92,6 @@ function ServicePricingAndCta({
           </p>
         </>
       )}
-      {service.monthlyAccompanimentDiscountEligible ? (
-        <p className="mt-3 text-xs font-normal text-dema-muted">
-          Avantage accompagnement mensuel : −12 % sur les prestations Demaa éligibles.
-        </p>
-      ) : null}
-
       <Suspense fallback={<ServiceCtaFallback label={service.cta.label} />}>
         {service.slug === "coach-business" ? (
           <CoachBusinessCallbackForm />
@@ -105,7 +99,6 @@ function ServicePricingAndCta({
           <ServiceCallbackForm
             key={service.slug}
             packages={service.packages}
-            serviceName={service.name}
             serviceSlug={service.slug}
           />
         )}

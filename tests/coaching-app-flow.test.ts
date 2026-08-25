@@ -61,7 +61,7 @@ describe("unified app and coaching", () => {
     expect(serviceCatalog).toContain("750 €");
     expect(serviceCatalog).toContain("Deux rendez-vous individuels de 60 minutes par mois");
     expect(serviceCatalog).toContain("suivi entre les rendez-vous");
-    expect(serviceCatalog).toMatch(/slug: "coach-business"[\s\S]*?monthlyAccompanimentDiscountEligible: false/);
+    expect(serviceCatalog).not.toContain("monthlyAccompanimentDiscountEligible");
     expect(services).not.toContain("CoachBusinessServiceCard");
     expect(offers).toContain('title: "Coach business · accompagnement mensuel"');
     expect(offers).not.toContain("149 €");

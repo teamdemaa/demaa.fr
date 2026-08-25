@@ -450,14 +450,9 @@ travaillés. Son CTA `Être rappelé(e)` transmet une intention sans connexion n
 paiement public. La Team Demaa qualifie ensuite le besoin et le matching avec
 le dirigeant ; aucun accès illimité n'est promis.
 
-Un accompagnement mensuel actif ouvre 12 % de réduction sur les autres
-prestations directement facturées par Demaa. Coach business est confirmé par
-Stripe ; une relation Expert-comptable est confirmée manuellement par la Team
-Demaa et reste active jusqu'à sa désactivation, sauf date d'expiration explicite.
-Aucune échéance annuelle automatique n'est appliquée. Les avantages ne se cumulent pas. Les honoraires de partenaires ou
-d'experts-comptables, les budgets média, logiciels et frais de tiers restent
-exclus. Le droit est vérifié côté serveur à partir de l'UID avant devis ou
-paiement.
+Le catalogue ne publie ni n'applique d'avantage mensuel en pourcentage. Les
+prix affichés et les conditions du devis constituent l'unique référence
+commerciale.
 Restent
 au backlog, sans modifier cette première version :
 

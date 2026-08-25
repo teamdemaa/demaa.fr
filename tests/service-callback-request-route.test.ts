@@ -4,21 +4,10 @@ vi.mock("server-only", () => ({}));
 
 const mocks = vi.hoisted(() => ({
   enforceRateLimit: vi.fn(),
-  getCurrentCustomerIdentityFromSession: vi.fn(),
   logOperationalError: vi.fn(),
-  resolveMonthlyAccompanimentDiscount: vi.fn(),
   resolveLeadAttribution: vi.fn(),
   resolveLeadContext: vi.fn(),
   submitLeadRequest: vi.fn(),
-}));
-
-vi.mock("@/lib/monthly-accompaniment-benefit.server", () => ({
-  isMonthlyAccompanimentDiscountEligible: (service: { monthlyAccompanimentDiscountEligible: boolean; delivery: string; slug: string }) =>
-    service.monthlyAccompanimentDiscountEligible && service.delivery === "demaa" && service.slug !== "coach-business",
-  resolveMonthlyAccompanimentDiscount: mocks.resolveMonthlyAccompanimentDiscount,
-}));
-vi.mock("@/lib/customer-space-session.server", () => ({
-  getCurrentCustomerIdentityFromSession: mocks.getCurrentCustomerIdentityFromSession,
 }));
 
 vi.mock("@/lib/lead-attribution-server", () => ({
@@ -71,14 +60,6 @@ describe("service callback request route", () => {
     vi.clearAllMocks();
     process.env.SITE_URL = "https://demaa.co";
     mocks.enforceRateLimit.mockResolvedValue(null);
-    mocks.getCurrentCustomerIdentityFromSession.mockResolvedValue(null);
-    mocks.resolveMonthlyAccompanimentDiscount.mockResolvedValue({
-      apply: false,
-      eligible: false,
-      percent: 0,
-      source: null,
-      validUntil: null,
-    });
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
     mocks.resolveLeadContext.mockResolvedValue({
       sectorLabel: null,
@@ -185,18 +166,6 @@ describe("service callback request route", () => {
   });
 
   it("accepts the simple callback journey for process automation", async () => {
-    mocks.getCurrentCustomerIdentityFromSession.mockResolvedValue({
-      email: "owner@example.com",
-      provider: "password",
-      uid: "owner-uid",
-    });
-    mocks.resolveMonthlyAccompanimentDiscount.mockResolvedValue({
-      apply: true,
-      eligible: true,
-      percent: 12,
-      source: "coach_business",
-      validUntil: "2027-08-14T00:00:00.000Z",
-    });
     const response = await POST(request(validBody({
       packageSlug: "automatisation-essentielle",
       serviceSlug: "automatisation-processus",
@@ -214,53 +183,12 @@ describe("service callback request route", () => {
         { label: "Locale", value: "fr" },
         { label: "Marché", value: "fr-fr" },
         { label: "Page source", value: "/services/assistance-administrative" },
-        {
-          label: "Avantage accompagnement mensuel",
-          value: "−12 % confirmé côté serveur sur les honoraires Demaa",
-        },
       ],
       requestType: "service_callback_request",
     }));
-    expect(mocks.resolveMonthlyAccompanimentDiscount).toHaveBeenCalledWith(expect.objectContaining({
-      uid: "owner-uid",
-    }));
-  });
-
-  it("fails closed on the discount without losing the callback when entitlement storage is unavailable", async () => {
-    mocks.getCurrentCustomerIdentityFromSession.mockResolvedValue({
-      email: "owner@example.com",
-      provider: "password",
-      uid: "owner-uid",
-    });
-    mocks.resolveMonthlyAccompanimentDiscount.mockRejectedValue(new Error("firestore_unavailable"));
-
-    const response = await POST(request(validBody({
-      packageSlug: "automatisation-essentielle",
-      serviceSlug: "automatisation-processus",
-    })));
-
-    expect(response.status).toBe(202);
-    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
-      fields: expect.arrayContaining([{
-        label: "Avantage accompagnement mensuel",
-        value: "Prestation éligible, accompagnement mensuel actif non confirmé",
-      }]),
-    }));
-    expect(mocks.logOperationalError).toHaveBeenCalledWith(
-      "service_callback_request.monthly_discount_verification_failed",
-      expect.any(Error),
-      { serviceSlug: "automatisation-processus" },
-    );
   });
 
   it("accepts the canonical Application métier package and resolves its price server-side", async () => {
-    mocks.resolveMonthlyAccompanimentDiscount.mockResolvedValue({
-      apply: false,
-      eligible: true,
-      percent: 0,
-      source: null,
-      validUntil: null,
-    });
     const response = await POST(request(validBody({
       packageSlug: "application-metier-essentielle",
       serviceSlug: "application-metier",

@@ -71,13 +71,9 @@ précise ensuite la base de 500 EUR HT par jour et la validation du devis. Une
 source de vérité unique alimente la carte, la modale, `/sur-mesure`, la demande
 et les données structurées SEO. Aucun montant n'est recopié dans un composant.
 
-Automatisation et Application métier sont directement facturées par Demaa et
-éligibles à l'avantage de 12 %. Coach business et Expert-comptable n'affichent
-pas d'avantage sur leur propre offre, mais un accompagnement mensuel actif issu
-de l'un ou l'autre peut ouvrir l'avantage sur les prestations Demaa éligibles.
-La formulation canonique est :
-
-> Avantage accompagnement mensuel : −12 % sur les prestations Demaa éligibles.
+Automatisation et Application métier sont directement facturées par Demaa.
+D-098 retire tout avantage mensuel en pourcentage : le prix du catalogue et le
+montant validé sur le devis sont les seules références.
 
 Assistante administrative est facturée directement par la professionnelle :
 la carte et la fiche indiquent `À partir de 500 EUR HT / mois`, correspondant
@@ -87,14 +83,13 @@ autres accompagnements. Elle est masquée des projections Système des
 professionnels qui proposent déjà ce service eux-mêmes.
 
 Gestion des réseaux sociaux, Publicité en ligne et Prospection ciblée sont des
-prestations partenaires facturées directement par le professionnel. Elles ne
-sont pas éligibles à l'avantage de 12 % réservé aux prestations Demaa.
+prestations partenaires facturées directement par le professionnel.
 
 ## Demande
 
 Le CTA canonique reste `Envoyer ma demande`. Il ne déclenche aucun paiement.
 Le navigateur transmet uniquement l'intention ; le serveur retrouve le point
-d’entrée tarifaire dans le catalogue et vérifie l'éligibilité à l'avantage.
+d’entrée tarifaire dans le catalogue.
 
 La demande conserve au minimum :
 

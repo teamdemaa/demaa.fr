@@ -85,7 +85,7 @@ Routes critiques:
 - `/api/cron/system-kit-followups`: clôt les anciennes séquences gratuites et exécute la maintenance opérationnelle.
 - `/api/customer-space/*`: acces securise aux plans sauvegardes.
 - `/api/webhooks/stripe`: seule route autorisee a projeter le statut Coach business depuis un evenement Stripe signe.
-- `/api/service-callback-request`: recalcule côté serveur l'éligibilité et le droit aux 12 % avant d'enregistrer une demande.
+- `/api/service-callback-request`: valide le service et son tarif canonique avant d'enregistrer une demande.
 - `/api/coaching-recommendation-request`: demande authentifiée et gratuite de mise en relation depuis une recommandation privée.
 - `/api/service-introduction-request`: demande de mise en relation avec un service.
 - `/api/system-setup-request`: ancien endpoint conserve en garde-fou et retourne `410 Gone`.
@@ -98,7 +98,6 @@ Helpers utiles:
   natif ; `/api/auth/session` est l'unique frontière HTTP de création, lecture
   et suppression de la session applicative.
 - `src/lib/coach-business-subscription.server.ts`: projection Stripe idempotente de l'abonnement Coach business.
-- `src/lib/monthly-accompaniment-benefit.server.ts`: résolution serveur du droit non cumulable aux 12 % par UID.
 - `src/lib/slack.ts`: envoi Slack commun.
 
 ## Checklist avant livraison

@@ -200,7 +200,6 @@ function SolutionDialog({
           <ServiceCallbackForm
             localeCode="en"
             marketCode={marketCode}
-            serviceName={resource.name}
             serviceSlug={resource.resourceSlug}
             source="english-solutions"
             systemSlug={placement.systemSlug}

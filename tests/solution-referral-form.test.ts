@@ -44,11 +44,8 @@ describe("solution referral form", () => {
       systemSlug: "cabinet-comptable",
     }));
 
-    expect(markup).toContain("Demaa utilise ces informations pour étudier votre besoin");
-    expect(markup).toContain("éventuelle mise en relation");
-    expect(markup).not.toContain(
-      "transmette ces informations à Délégation et formalités juridiques",
-    );
+    expect(markup).toContain("Politique de confidentialité");
+    expect(markup).not.toContain("En envoyant cette demande, vous acceptez");
   });
 
   it("builds only the server contract fields", () => {

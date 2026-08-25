@@ -18,10 +18,6 @@ import {
   getExternalRecommendationCatalog,
   isValidExternalRecommendationNeed,
 } from "@/lib/external-recommendation-catalog.server";
-import {
-  getMonthlyAccompanimentBenefitForUid,
-  setExpertAccountantBenefitForUid,
-} from "@/lib/monthly-accompaniment-benefit.server";
 
 export const runtime = "nodejs";
 
@@ -33,7 +29,6 @@ type ReplyBody = {
   recommendationNeedKey?: unknown;
   recommendationResourceSlug?: unknown;
   systemSlug?: unknown;
-  benefitActive?: unknown;
 };
 
 const PRIVATE_NO_STORE_HEADERS = {
@@ -108,12 +103,9 @@ export async function GET(request: Request) {
           { status: 404, headers: PRIVATE_NO_STORE_HEADERS },
         );
       }
-      const monthlyBenefit = conversation.ownerUid
-        ? await getMonthlyAccompanimentBenefitForUid(conversation.ownerUid)
-        : { active: false, source: null, validUntil: null };
       return NextResponse.json(
         {
-          conversation: { ...conversation, monthlyBenefit },
+          conversation,
           recommendationCatalog: getExternalRecommendationCatalog().map((item) => ({
             category: item.category,
             name: item.name,
@@ -166,7 +158,7 @@ export async function POST(request: Request) {
     const systemSlug = normalizeText(data?.systemSlug, 120);
     if (
       !/^[a-f0-9]{64}$/.test(conversationId)
-      || !["benefit", "reply", "reopen"].includes(action)
+      || !["reply", "reopen"].includes(action)
       || (action === "reply" && message.length < 2)
     ) {
       return NextResponse.json(
@@ -213,28 +205,6 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { freeStatus: result.freeStatus, ok: true, openedAt: result.openedAt },
         { status: 200, headers: PRIVATE_NO_STORE_HEADERS },
-      );
-    }
-
-    if (action === "benefit") {
-      const conversation = await getCoachingConversationForAdmin(conversationId);
-      if (!conversation?.ownerUid) {
-        return NextResponse.json(
-          { error: "Conversation introuvable." },
-          { status: 404, headers: PRIVATE_NO_STORE_HEADERS },
-        );
-      }
-      const benefit = await setExpertAccountantBenefitForUid({
-        active: data?.benefitActive === true,
-        uid: conversation.ownerUid,
-      });
-      logOperationalEvent("coaching.expert_accountant_benefit_updated", {
-        active: benefit.active,
-        conversationId,
-      });
-      return NextResponse.json(
-        { monthlyBenefit: benefit, ok: true },
-        { headers: PRIVATE_NO_STORE_HEADERS },
       );
     }
 

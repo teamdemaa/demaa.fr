@@ -410,7 +410,6 @@ export default function SurMesureLandingPage() {
                 <ServiceCallbackForm
                   key={applicationService.slug}
                   packages={applicationService.packages}
-                  serviceName={applicationService.name}
                   serviceSlug={applicationService.slug}
                 />
               </aside>

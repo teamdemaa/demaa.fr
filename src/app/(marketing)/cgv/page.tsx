@@ -92,9 +92,6 @@ export default function CgvPage() {
             <p>
               Une première clarification est offerte dans l&apos;application. Elle est clôturée manuellement par l&apos;équipe Demaa après sa réponse finale et ne déclenche aucune facturation automatique.
             </p>
-            <p>
-              Tant qu&apos;un accompagnement mensuel éligible est actif, le client bénéficie de 12 % de réduction sur les autres prestations directement facturées par Demaa. Cet avantage ne se cumule pas et ne s&apos;applique ni à l&apos;accompagnement qui l&apos;ouvre, ni aux honoraires d&apos;un expert-comptable ou d&apos;un partenaire, ni aux budgets publicitaires, logiciels ou frais facturés par des tiers.
-            </p>
       </CgvSection>
 
       <CgvSection title="6. Modalités de paiement">
