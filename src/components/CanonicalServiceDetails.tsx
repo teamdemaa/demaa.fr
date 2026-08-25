@@ -48,6 +48,10 @@ function ServicePricingAndCta({
   compact?: boolean;
   service: CanonicalService;
 }) {
+  const singlePackage = service.packages.length === 1
+    ? service.packages[0]
+    : null;
+
   return (
     <aside
       className={compact
@@ -64,6 +68,18 @@ function ServicePricingAndCta({
           </p>
           <p className="mt-3 text-sm leading-relaxed text-dema-muted">
             {service.pricing.note}
+          </p>
+        </>
+      ) : singlePackage ? (
+        <>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-muted">
+            Tarif
+          </p>
+          <p className="mt-3 text-base font-normal text-dema-muted">
+            {singlePackage.pricing.label}
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+            {singlePackage.pricing.note}
           </p>
         </>
       ) : (

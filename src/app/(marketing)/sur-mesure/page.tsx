@@ -371,7 +371,7 @@ export default function SurMesureLandingPage() {
               </p>
             </div>
             <div className="mt-9 grid gap-5 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-4">
                 {applicationService.packages.map((servicePackage) => (
                   <article
                     key={servicePackage.slug}
@@ -405,7 +405,7 @@ export default function SurMesureLandingPage() {
                   Envoyer ma demande
                 </p>
                 <p className="mt-3 text-sm leading-6 text-dema-muted">
-                  Aucun paiement n’est déclenché. La Team confirme d’abord le forfait et le périmètre adaptés.
+                  Aucun paiement n’est déclenché. La Team confirme d’abord le périmètre, le nombre de jours et le prix total.
                 </p>
                 <ServiceCallbackForm
                   key={applicationService.slug}

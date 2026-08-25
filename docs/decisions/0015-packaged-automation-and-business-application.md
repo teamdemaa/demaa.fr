@@ -1,4 +1,4 @@
-# ADR 0015 — Automatisation, IA et Application métier en forfaits
+# ADR 0015 — Tarification d’Automatisation, IA et Application métier
 
 - Statut : `validated`
 - Date : 16 août 2026
@@ -29,50 +29,28 @@ le slug métier de l'offre Application, mais `/sur-mesure` reste sa page
 canonique. Aucun deuxième contenu, prix ou parcours commercial concurrent ne
 doit être créé sous `/services/application-metier`.
 
-## Forfaits
+## Tarification simplifiée
 
-### Automatisation essentielle + IA — 1 500 EUR HT
+Chaque prestation conserve un seul point d’entrée public :
 
-- un processus ;
-- jusqu'à deux outils standards ;
-- jusqu'à cinq étapes métier déterministes ;
-- un usage IA simple et contrôlé lorsqu'il apporte un gain concret ;
-- tests, documentation et prise en main.
+- `Automatisation des processus et IA` : à partir de 1 500 EUR HT ;
+- `Application métier` : à partir de 4 500 EUR HT.
 
-### Automatisation avancée + IA — 3 000 EUR HT
+Le budget est établi sur une base commune de 500 EUR HT par jour. Le taux
+journalier sert uniquement au calcul du devis : il n’est pas additionné au prix
+d’entrée sur la carte. Le périmètre, le nombre de jours et le prix total sont
+confirmés avant le démarrage. Aucun dépassement n’est engagé sans validation.
 
-- un processus ;
-- jusqu'à quatre outils standards ;
-- jusqu'à dix étapes métier ;
-- une intégration à une API existante et documentée ou un usage IA ciblé avec
-  entrées, sorties et validation humaine définies ;
-- gestion des erreurs, tests, documentation et prise en main.
+Les anciennes variantes `essentielle` et `avancée` ne sont plus présentées
+comme des offres distinctes. Le premier slug technique historique de chaque
+prestation est conservé dans les demandes afin d’éviter une migration de
+contrat et d’API ; les variantes avancées ne sont plus sélectionnables.
 
-### Application métier essentielle — 4 500 EUR HT
-
-- un processus ;
-- une base de données ;
-- jusqu'à quatre écrans ;
-- un rôle utilisateur principal et un rôle administrateur ;
-- authentification standard, automatisations simples, mise en ligne, formation
-  et trente jours de correction des anomalies.
-
-### Application métier avancée — 7 500 EUR HT
-
-- jusqu'à deux processus ;
-- une base de données ;
-- jusqu'à huit écrans ;
-- deux à trois rôles ;
-- logique métier avancée, automatisations et une intégration documentée ;
-- mise en ligne, formation, documentation et trente jours de correction des
-  anomalies.
-
-Ces prix restent fixes uniquement si les prérequis, critères d'acceptation,
-données, intégrations et délais de validation client sont confirmés. Toute
-migration importante, API non documentée, application mobile native, moteur
-métier critique, droits très fins, intégration ERP complexe ou changement de
-périmètre passe sur devis. Les licences, consommations IA, budgets tiers,
-hébergements spécifiques et frais externes restent séparés.
+Toute migration importante, API non documentée, application mobile native,
+moteur métier critique, droits très fins, intégration ERP complexe ou changement
+de périmètre est chiffré dans le devis ou fait l’objet d’un devis séparé. Les
+licences, consommations IA, budgets tiers, hébergements spécifiques et frais
+externes restent séparés.
 
 Une correction rétablit le comportement accepté dans le périmètre signé. Une
 évolution modifie ce périmètre et n'est pas incluse dans les trente jours de
@@ -83,17 +61,15 @@ livraison du nouveau runtime.
 
 ## Présentation
 
-Le catalogue contient neuf accompagnements publics. `Nos accompagnements`
-contient Automatisation des processus et IA puis Application métier, réalisées
-directement par Demaa. `Proposé par nos partenaires de confiance` contient les sept
-prestations de mise en relation. Seule la sous-traitance de formalités
-juridiques reste réservée aux recommandations de la Team. Les deux sections
-réutilisent la même carte, la même fiche et le même formulaire.
+`Nos accompagnements` affiche Automatisation des processus et IA puis
+Application métier, réalisées directement par Demaa. Les prestations de mise en
+relation restent dans le catalogue canonique pour leurs parcours historiques,
+mais leur section publique est masquée.
 
-Les cartes affichent le prix canonique ou le forfait le moins cher avec
-`À partir de` lorsqu'il existe plusieurs forfaits. Une source de vérité unique
-alimente la carte, la modale interceptée, la page `/sur-mesure`, la demande et
-les données structurées SEO. Aucun montant n'est recopié dans le composant.
+Les cartes affichent uniquement le prix d’entrée avec `À partir de`. La fiche
+précise ensuite la base de 500 EUR HT par jour et la validation du devis. Une
+source de vérité unique alimente la carte, la modale, `/sur-mesure`, la demande
+et les données structurées SEO. Aucun montant n'est recopié dans un composant.
 
 Automatisation et Application métier sont directement facturées par Demaa et
 éligibles à l'avantage de 12 %. Coach business et Expert-comptable n'affichent
@@ -116,9 +92,9 @@ sont pas éligibles à l'avantage de 12 % réservé aux prestations Demaa.
 
 ## Demande
 
-Le CTA canonique devient `Envoyer ma demande`. Il ne déclenche aucun paiement.
-Le navigateur transmet uniquement l'intention ; le serveur retrouve le forfait
-et son montant dans le catalogue et vérifie l'éligibilité à l'avantage.
+Le CTA canonique reste `Envoyer ma demande`. Il ne déclenche aucun paiement.
+Le navigateur transmet uniquement l'intention ; le serveur retrouve le point
+d’entrée tarifaire dans le catalogue et vérifie l'éligibilité à l'avantage.
 
 La demande conserve au minimum :
 
@@ -131,12 +107,13 @@ marketCode
 sourcePage
 ```
 
-`packageSlug` est obligatoire pour Automatisation et Application métier et doit
-appartenir au service. Il reste absent pour une prestation à prix unique ou sur
-devis. Aucun montant, pourcentage ou droit à une remise envoyé par le navigateur
-n'est accepté comme autorité. La clé d'idempotence distingue le service et le
-forfait lorsqu'il existe. Le parcours reste le formulaire minimal Entreprise +
-numéro WhatsApp, le pipeline de leads et la notification Team existants.
+`packageSlug` reste renseigné automatiquement avec l’identifiant technique
+historique unique pour Automatisation et Application métier. Aucun choix de
+forfait n’est demandé à l’utilisateur. Aucun montant, nombre de jours,
+pourcentage ou droit à une remise envoyé par le navigateur n'est accepté comme
+autorité. La clé d'idempotence distingue le service et son point d’entrée. Le
+parcours reste le formulaire minimal Entreprise + numéro WhatsApp, le pipeline
+de leads et la notification Team existants.
 
 ## International
 
@@ -148,10 +125,12 @@ en anglais. Aucun prix en USD n'est déduit de la langue.
 
 ## Gates
 
-- aucune occurrence publique des anciens prix 500 EUR/jour ou 2 500 EUR ;
+- aucune occurrence publique des anciennes variantes à 3 000 ou 7 500 EUR ;
+- le taux de 500 EUR HT/jour apparaît dans la fiche, jamais comme supplément
+  ambigu sur la carte ;
 - aucune définition tarifaire dupliquée ;
 - aucune page SEO concurrente à `/sur-mesure` ;
-- forfait validé côté serveur et présent dans la notification Team ;
+- point d’entrée validé côté serveur et présent dans la notification Team ;
 - remise vérifiée côté serveur, jamais par le navigateur ;
 - cartes, modales, pages, données structurées et tests cohérents ;
 - desktop, mobile, PWA, clavier et lecteur d'écran vérifiés ;

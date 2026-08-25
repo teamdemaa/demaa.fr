@@ -329,14 +329,12 @@ Alignement France livré avant les projections anglaises :
 - [x] Exclusions à rendre explicites : refonte indistincte de tous les
   processus, licences et consommations d'outils ou de modèles tiers, promesse
   d'autonomie totale de l'IA ou résultat métier garanti sans mesure préalable.
-- [x] Remplacer le prix 500 EUR HT/jour par les forfaits validés
-  Automatisation essentielle + IA à 1 500 EUR HT et Automatisation avancée +
-  IA à 3 000 EUR HT, avec les limites de D-089. Le premier forfait autorise un
-  usage IA simple et contrôlé uniquement lorsqu'il apporte un gain concret.
-- [x] Ajouter `Application métier` immédiatement après Automatisation, avec le
-  forfait essentiel à 4 500 EUR HT et le forfait avancé à 7 500 EUR HT. Conserver
-  `/sur-mesure` comme unique page canonique et supprimer toute occurrence
-  publique de l'ancien prix 2 500 EUR.
+- [x] Simplifier Automatisation en une seule offre publique à partir de
+  1 500 EUR HT et Application métier en une seule offre publique à partir de
+  4 500 EUR HT. Le budget est calculé sur une base de 500 EUR HT/jour ; le
+  périmètre, le nombre de jours et le total sont confirmés dans un devis avant
+  le démarrage, sans dépassement automatique. Les anciennes variantes à
+  3 000 et 7 500 EUR ne sont plus présentées.
 - [x] Faire consommer une seule source de forfaits au catalogue, aux modales,
   à `/sur-mesure`, aux données structurées et aux notifications ; ne pas créer
   de page SEO concurrente `/services/application-metier`.

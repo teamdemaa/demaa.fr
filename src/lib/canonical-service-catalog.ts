@@ -48,7 +48,7 @@ export type CanonicalServicePackage = Readonly<{
   pricing: CanonicalServicePricing & Readonly<{
     amountMinor: number;
     currency: "EUR";
-    mode: "fixed";
+    mode: "fixed" | "starting";
   }>;
   slug: CanonicalServicePackageSlug;
   summary: string;
@@ -151,17 +151,10 @@ const canonicalServiceDefinitions = deepFreeze([
     packages: [
       {
         slug: "automatisation-essentielle",
-        name: "Automatisation essentielle + IA",
-        summary: "Un flux métier complet, cadré et automatisé avec un usage IA simple lorsque celui-ci apporte un gain concret.",
-        pricing: { mode: "fixed", amountMinor: 150000, currency: "EUR", heading: "Forfait", label: "1 500 € HT", note: "Prix fixe dans les limites du forfait validé avant le démarrage." },
-        included: ["Un processus", "Jusqu’à deux outils standards", "Jusqu’à cinq étapes métier", "Un usage IA simple et contrôlé lorsqu’il est pertinent", "Tests, documentation et prise en main"],
-      },
-      {
-        slug: "automatisation-avancee-ia",
-        name: "Automatisation avancée + IA",
-        summary: "Un processus plus riche avec conditions, API ou usage IA ciblé et contrôlé.",
-        pricing: { mode: "fixed", amountMinor: 300000, currency: "EUR", heading: "Forfait", label: "3 000 € HT", note: "Prix fixe dans les limites du forfait validé avant le démarrage." },
-        included: ["Un processus", "Jusqu’à quatre outils standards", "Jusqu’à dix étapes métier", "Une API documentée ou un usage IA ciblé avec validation humaine", "Gestion des erreurs, tests, documentation et prise en main"],
+        name: "Automatisation des processus et IA",
+        summary: "Un premier périmètre clairement cadré pour réduire les tâches manuelles dans vos outils existants.",
+        pricing: { mode: "starting", amountMinor: 150000, currency: "EUR", heading: "Forfait", label: "À partir de 1 500 € HT", note: "Budget établi sur une base de 500 € HT par jour. Le périmètre, le nombre de jours et le prix total sont confirmés dans un devis avant le démarrage. Aucun dépassement sans validation." },
+        included: ["Cadrage du processus et du résultat attendu", "Automatisation des étapes et intégrations validées", "Usage IA ciblé uniquement lorsqu’il apporte un gain concret", "Tests, gestion des erreurs, documentation et prise en main"],
       },
     ],
     cta: callback,
@@ -180,17 +173,10 @@ const canonicalServiceDefinitions = deepFreeze([
     packages: [
       {
         slug: "application-metier-essentielle",
-        name: "Application métier essentielle",
-        summary: "Un processus métier complet, sa base de données et les écrans nécessaires au quotidien.",
-        pricing: { mode: "fixed", amountMinor: 450000, currency: "EUR", heading: "Forfait", label: "4 500 € HT", note: "Prix fixe dans les limites du forfait validé avant le démarrage." },
-        included: ["Un processus et une base de données", "Jusqu’à quatre écrans", "Un rôle utilisateur principal et un rôle administrateur", "Authentification standard et automatisations simples", "Mise en ligne, formation et trente jours de correction des anomalies"],
-      },
-      {
-        slug: "application-metier-avancee",
-        name: "Application métier avancée",
-        summary: "Plusieurs parcours et rôles avec logique métier et intégration documentée.",
-        pricing: { mode: "fixed", amountMinor: 750000, currency: "EUR", heading: "Forfait", label: "7 500 € HT", note: "Prix fixe dans les limites du forfait validé avant le démarrage." },
-        included: ["Jusqu’à deux processus et une base de données", "Jusqu’à huit écrans", "Deux à trois rôles", "Logique métier avancée, automatisations et une intégration documentée", "Mise en ligne, formation, documentation et trente jours de correction des anomalies"],
+        name: "Application métier",
+        summary: "Un premier périmètre clairement cadré autour du processus réellement utilisé par votre équipe.",
+        pricing: { mode: "starting", amountMinor: 450000, currency: "EUR", heading: "Forfait", label: "À partir de 4 500 € HT", note: "Budget établi sur une base de 500 € HT par jour. Le périmètre, le nombre de jours et le prix total sont confirmés dans un devis avant le démarrage. Aucun dépassement sans validation." },
+        included: ["Cadrage du processus et des critères d’acceptation", "Conception des écrans et de la base de données utiles", "Développement et tests du périmètre validé", "Mise en ligne, formation et documentation"],
       },
     ],
     cta: callback,

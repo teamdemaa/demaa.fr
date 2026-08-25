@@ -66,21 +66,11 @@ describe("canonical Services SEO and redirects", () => {
     expect(buildServicePageJsonLd(automation)[1]).toMatchObject({
       offers: [
         {
-          name: "Automatisation essentielle + IA",
+          name: "Automatisation des processus et IA",
           price: "1500.00",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
             price: "1500.00",
-            priceCurrency: "EUR",
-            valueAddedTaxIncluded: false,
-          },
-        },
-        {
-          name: "Automatisation avancée + IA",
-          price: "3000.00",
-          priceSpecification: {
-            "@type": "UnitPriceSpecification",
-            price: "3000.00",
             priceCurrency: "EUR",
             valueAddedTaxIncluded: false,
           },
@@ -92,8 +82,7 @@ describe("canonical Services SEO and redirects", () => {
       name: "Application métier",
       url: "https://demaa.co/sur-mesure",
       offers: [
-        { name: "Application métier essentielle", price: "4500.00" },
-        { name: "Application métier avancée", price: "7500.00" },
+        { name: "Application métier", price: "4500.00" },
       ],
     });
 

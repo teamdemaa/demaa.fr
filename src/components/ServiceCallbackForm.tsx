@@ -173,7 +173,7 @@ export default function ServiceCallbackForm({
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
-      {packages.length > 0 ? (
+      {packages.length > 1 ? (
         <fieldset
           disabled={status === "submitting"}
           aria-busy={status === "submitting"}

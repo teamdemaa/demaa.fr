@@ -13,12 +13,14 @@ vi.mock("@/components/ServiceCallbackForm", () => ({
   default: (props: { packages?: readonly { slug: string }[]; serviceSlug: string }) => createElement(
     "form",
     { "data-service": props.serviceSlug },
-    props.packages?.map(({ slug }) => createElement("input", {
+    props.packages && props.packages.length > 1
+      ? props.packages.map(({ slug }) => createElement("input", {
       key: slug,
       name: "packageSlug",
       type: "radio",
       value: slug,
-    })),
+      }))
+      : null,
   ),
 }));
 
@@ -54,25 +56,25 @@ describe("Sur mesure commercial page", () => {
     expect(markup).toContain(content.faq.title);
     expect(markup.match(/<section/g)).toHaveLength(9);
     expect(markup.match(/<details/g)).toHaveLength(4);
-    expect(markup).toContain(">Voir les forfaits<");
+    expect(markup).toContain(">Voir le tarif<");
     expect(markup).toContain(">Envoyer ma demande<");
     expect(markup).toContain('data-service="application-metier"');
-    expect(markup).toContain('value="application-metier-essentielle"');
-    expect(markup).toContain('value="application-metier-avancee"');
+    expect(markup).not.toContain('type="radio"');
     expect(markup).toContain('aria-label="Navigation principale"');
     expect(markup).not.toContain("Exemple d’interface");
     expect(markup).not.toMatch(/marketplace|partenariat|200 dirigeants|30 000 €|1 500 €/i);
     expect(markup).toContain('type="application/ld+json"');
   });
 
-  it("publishes only the two approved packages and removes obsolete promises", () => {
+  it("publishes one quoted starting point and removes obsolete promises", () => {
     const markup = renderToStaticMarkup(createElement(SurMesurePage));
 
     expect(markup).toContain("4 500 € HT");
-    expect(markup).toContain("7 500 € HT");
+    expect(markup).toContain("500 € HT par jour");
+    expect(markup).not.toContain("7 500 € HT");
     expect(markup).not.toMatch(/2 500 €|110 €\/heure|99 €\/mois/);
     expect(markup).not.toMatch(/Conformité RGPD|Application 100 % à vous|confidentialité garantie/);
-    expect(content.commercialFrame.title).toBe("Deux forfaits clairs, avec un périmètre borné.");
+    expect(content.commercialFrame.title).toBe("Un budget clair, confirmé avant de commencer.");
   });
 
   it("keeps attribution, the sitemap and legacy redirects aligned", async () => {

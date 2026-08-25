@@ -198,7 +198,7 @@ describe("service callback request route", () => {
       validUntil: "2027-08-14T00:00:00.000Z",
     });
     const response = await POST(request(validBody({
-      packageSlug: "automatisation-avancee-ia",
+      packageSlug: "automatisation-essentielle",
       serviceSlug: "automatisation-processus",
     })));
 
@@ -207,9 +207,9 @@ describe("service callback request route", () => {
       fields: [
         { label: "Service", value: "Automatisation des processus et IA" },
         { label: "Slug du service", value: "automatisation-processus" },
-        { label: "Forfait", value: "Automatisation avancée + IA" },
-        { label: "Slug du forfait", value: "automatisation-avancee-ia" },
-        { label: "Prix de référence", value: "3 000 € HT" },
+        { label: "Forfait", value: "Automatisation des processus et IA" },
+        { label: "Slug du forfait", value: "automatisation-essentielle" },
+        { label: "Prix de référence", value: "À partir de 1 500 € HT" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
         { label: "Locale", value: "fr" },
         { label: "Marché", value: "fr-fr" },
@@ -271,12 +271,12 @@ describe("service callback request route", () => {
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: expect.arrayContaining([
         { label: "Service", value: "Application métier" },
-        { label: "Forfait", value: "Application métier essentielle" },
+        { label: "Forfait", value: "Application métier" },
         { label: "Slug du forfait", value: "application-metier-essentielle" },
-        { label: "Prix de référence", value: "4 500 € HT" },
+        { label: "Prix de référence", value: "À partir de 4 500 € HT" },
         { label: "Page source", value: "/sur-mesure?source=solutions-systeme" },
       ]),
-      title: "Demande de contact WhatsApp - Application métier - Application métier essentielle",
+      title: "Demande de contact WhatsApp - Application métier - Application métier",
     }));
   });
 
@@ -341,6 +341,8 @@ describe("service callback request route", () => {
   it.each([
     ["automatisation-processus", undefined],
     ["automatisation-processus", "application-metier-essentielle"],
+    ["automatisation-processus", "automatisation-avancee-ia"],
+    ["application-metier", "application-metier-avancee"],
     ["application-metier", "forfait-inconnu"],
   ])("rejects a missing or cross-service package for %s", async (serviceSlug, packageSlug) => {
     const response = await POST(request(validBody({ packageSlug, serviceSlug })));
