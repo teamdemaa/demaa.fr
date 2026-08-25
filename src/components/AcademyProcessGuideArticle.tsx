@@ -51,7 +51,7 @@ export default function AcademyProcessGuideArticle({
           <p className="text-xs font-semibold uppercase tracking-[0.17em] text-dema-forest">
             {guide.sector} · {content.identity.durationMinutes} min
           </p>
-          <h1 className="mt-5 text-balance font-serif text-[2.65rem] font-medium leading-[1.02] tracking-[-0.045em] text-[#1F2D25] sm:text-[4.25rem]">
+          <h1 className="mt-5 text-balance font-serif text-[2.65rem] font-normal leading-[1.02] tracking-[-0.045em] text-[#1F2D25] sm:text-[4.25rem]">
             {content.identity.title}
           </h1>
           <p className="mt-7 max-w-3xl text-lg leading-8 text-dema-muted sm:text-xl">

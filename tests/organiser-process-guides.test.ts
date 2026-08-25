@@ -180,6 +180,7 @@ describe("Organiser process guides", () => {
     expect(articleSource).not.toContain("Point de départ");
     expect(articleSource).not.toContain("Rythme de pilotage");
     expect(articleSource).not.toContain("Exceptions à remonter");
+    expect(articleSource).toContain("font-serif text-[2.65rem] font-normal");
 
     const rulesPosition = articleSource.indexOf('aria-labelledby="rules-title"');
     const examplePosition = articleSource.indexOf('aria-label="Exemple concret"');
