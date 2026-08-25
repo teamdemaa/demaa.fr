@@ -26,7 +26,7 @@ export default function ActionPlanHeroTitle({
       </h1>
       {localeCode === "fr" ? (
         <p className="mx-auto mt-5 max-w-2xl text-balance text-sm font-light leading-relaxed text-dema-muted sm:text-base">
-          Nous aidons les dirigeants à structurer leur entreprise avec des systèmes simples, pour gagner du temps et la rendre moins dépendante d’eux.
+          On aide les dirigeants à structurer leur entreprise avec des systèmes simples, pour gagner du temps et la rendre moins dépendante d’eux.
         </p>
       ) : null}
     </div>
