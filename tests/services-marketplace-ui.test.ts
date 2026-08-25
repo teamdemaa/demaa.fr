@@ -200,56 +200,43 @@ describe("canonical Accompagnement catalog", () => {
       readSource("src/components/SystemSolutionsTab.tsx"),
     ]);
 
-    expect(markup.match(/<article/g)).toHaveLength(9);
+    expect(markup.match(/<article/g)).toHaveLength(2);
     expect(getCanonicalServices().filter(({ delivery }) => delivery === "demaa")).toHaveLength(2);
     expect(getCanonicalServices().filter(({ delivery }) => delivery === "third-party")).toHaveLength(7);
-    for (const service of getCanonicalServices()) {
+    for (const service of getCanonicalServices().filter(({ delivery }) => delivery === "demaa")) {
       expect(markup).toContain(service.detailHref);
     }
     expect(markup).toContain("/sur-mesure");
-    expect(markup).toContain("Coach business");
-    expect(markup).toContain("Assistante administrative");
-    expect(markup).toContain("Recruter un alternant");
+    expect(markup).not.toContain("Coach business");
+    expect(markup).not.toContain("Assistante administrative");
+    expect(markup).not.toContain("Recruter un alternant");
     expect(markup).not.toContain("Expert-comptable");
     expect(markup).toContain("À partir de 1 500 € HT");
     expect(markup).toContain("À partir de 4 500 € HT");
-    expect(markup).toContain("750 € HT / mois");
-    expect(markup).toContain("Sur devis");
-    expect(markup).toContain("Gratuit");
+    expect(markup).not.toContain("750 € HT / mois");
+    expect(markup).not.toContain("Sur devis");
+    expect(markup).not.toContain("Gratuit");
     expect(markup).toContain("Nos accompagnements");
     expect(markup).toContain("Pour faire en sorte que votre entreprise dépende moins de vous.");
-    expect(markup).toContain("Avec nos partenaires de confiance");
-    expect(markup).toContain("Demaa qualifie votre besoin et organise la mise en relation.");
-    expect(markup).toContain("<details");
-    expect(markup).toContain("<summary");
-    expect(markup).not.toContain("<details open");
-    expect(markup).toContain('<details class="group">');
+    expect(markup).not.toContain("Avec nos partenaires de confiance");
+    expect(markup).not.toContain("Demaa qualifie votre besoin et organise la mise en relation.");
+    expect(markup).not.toContain("<details");
+    expect(markup).not.toContain("<summary");
     expect(markup).not.toContain(
       'group rounded-[1.25rem] border border-dema-line bg-dema-paper',
     );
     expect(markup).not.toContain("Catalogue Demaa");
     expect(markup).not.toContain("L’accompagnement utile, au même endroit");
     expect(markup).not.toContain("Le professionnel confirme son tarif et facture directement son intervention.");
-    expect(markup.indexOf("Nos accompagnements")).toBeLessThan(
-      markup.indexOf("Avec nos partenaires de confiance"),
-    );
-    expect(markup.indexOf("Assistante administrative")).toBeLessThan(
-      markup.indexOf("Coach business"),
-    );
-    expect(markup.indexOf("Coach business")).toBeLessThan(
-      markup.indexOf("Recruter un alternant"),
-    );
     expect(markup).not.toMatch(/Avantage abonné|−12 %/);
     expect(markup).not.toContain("−15 %");
     expect(markup).not.toContain("Découvrir le service");
     expect(catalogSource).toContain("service.pricing.label");
     expect(catalogSource).toContain('service.delivery === "demaa"');
-    expect(catalogSource).toContain('service.delivery === "third-party"');
+    expect(catalogSource).not.toContain('service.delivery === "third-party"');
     expect(catalogSource).not.toContain("service.eyebrow");
-    expect(catalogSource).toContain("<details");
-    expect(catalogSource).toContain("<summary");
-    expect(catalogSource).toContain("group-open:rotate-180");
-    expect(catalogSource).not.toContain("<details open");
+    expect(catalogSource).not.toContain("<details");
+    expect(catalogSource).not.toContain("<summary");
     for (const source of [academySource, catalogSource, opportunitySource]) {
       expect(source).toContain("LIBRARY_CARD_TITLE_CLASSNAME");
     }
