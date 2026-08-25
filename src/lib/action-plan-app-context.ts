@@ -3,14 +3,14 @@ import {
   normalizeSystemDetailTab,
   type SystemDetailTab,
 } from "@/lib/system-detail-tabs";
-import { buildOrganiserHref } from "@/lib/organiser-navigation";
+import { buildSolutionsHref } from "@/lib/organiser-navigation";
 
-const ACTION_PLAN_VIEWS = [
+const ACTION_PLAN_VIEWS: readonly ActionPlanView[] = [
   "plan",
   "services",
   "academy",
   "opportunities",
-] as const satisfies readonly ActionPlanView[];
+];
 
 const SAFE_SLUG_PATTERN = /^[A-Za-z0-9_-]{1,160}$/;
 const OPPORTUNITY_DRAFT_TOKEN_PATTERN = /^[A-Za-z0-9_-]{43}$/;
@@ -164,7 +164,7 @@ export function parseActionPlanAppContext(
   return {
     view,
     planSection,
-    ...(isSolutionsContext && systemId ? { systemId } : {}),
+    ...(view === "plan" && systemId ? { systemId } : {}),
     ...(isSolutionsContext && requestedSystemTab ? { systemTab: requestedSystemTab } : {}),
     ...(isSolutionsContext && solutionResourceSlug ? { solutionResourceSlug } : {}),
     ...(isSolutionsContext && solutionEntrySource ? { solutionEntrySource } : {}),
@@ -218,8 +218,11 @@ export function buildActionPlanAppHref(input: {
     params.set("section", planSection);
   }
 
+  if (view === "plan" && input.context.systemId) {
+    params.set("system", input.context.systemId);
+  }
+
   if (view === "plan" && planSection === "solutions") {
-    if (input.context.systemId) params.set("system", input.context.systemId);
     if (input.context.systemTab) params.set("systemTab", input.context.systemTab);
     if (input.context.solutionResourceSlug) {
       params.set("resource", input.context.solutionResourceSlug);
@@ -250,9 +253,18 @@ export function buildPublicSystemAppHref(input: {
   systemTab?: SystemDetailTab;
   solutionResourceSlug?: string;
 }) {
-  return buildOrganiserHref({
-    tab: "solutions",
+  return buildSolutionsHref({
     systemId: input.systemId,
     solutionResourceSlug: input.solutionResourceSlug,
   });
+}
+
+export function buildDiagnosticOrganisationHref(input: {
+  systemId?: string;
+} = {}) {
+  const params = new URLSearchParams({ view: "plan" });
+  if (input.systemId && SAFE_SLUG_PATTERN.test(input.systemId)) {
+    params.set("system", input.systemId);
+  }
+  return `/?${params.toString()}`;
 }

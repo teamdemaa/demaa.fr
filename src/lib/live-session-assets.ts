@@ -42,7 +42,7 @@ function getAssets(trainingSlug: string, sourceSystemSlug: string | null) {
                 id: "tableau-pilotage-metier",
                 label: `Système métier ${system.name}`,
                 description: "Les process, tâches, responsables et récurrences adaptés à votre activité.",
-                href: `/systemes/${system.slug}`,
+                href: `/solutions/${system.slug}`,
               },
             ]
           : []),
@@ -82,7 +82,7 @@ function getAssets(trainingSlug: string, sourceSystemSlug: string | null) {
               id: "kit-process-systeme",
               label: `Système métier ${system.name}`,
               description: "Les process, tâches, responsables et récurrences adaptés à votre métier.",
-              href: `/systemes/${system.slug}`,
+              href: `/solutions/${system.slug}`,
             },
           ]
         : [];

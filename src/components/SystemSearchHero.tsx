@@ -161,7 +161,7 @@ export default function SystemSearchHero({
 
     trackSelection(index, "keyboard");
     setIsOpen(false);
-    router.push(`/systemes/${suggestion.slug}`);
+    router.push(`/solutions/${suggestion.slug}`);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -212,13 +212,13 @@ export default function SystemSearchHero({
           <h1
             className="text-balance font-light leading-[0.94] tracking-tight"
             style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
-            aria-label="Trouvez le système métier de votre entreprise"
+            aria-label="Trouvez les solutions adaptées à votre activité"
           >
             <span className="block font-sans font-light not-italic text-brand-blue/62 md:whitespace-nowrap">
-              Trouvez le système métier
+              Les solutions adaptées
             </span>
             <span className="demaa-hero-title block text-dema-forest" aria-hidden="true">
-              pour votre entreprise
+              à votre activité
             </span>
           </h1>
 
@@ -309,7 +309,7 @@ export default function SystemSearchHero({
                   <Link
                     key={suggestion.slug}
                     id={`system-search-suggestion-${suggestion.slug}`}
-                    href={`/systemes/${suggestion.slug}`}
+                    href={`/solutions/${suggestion.slug}`}
                     prefetch
                     onClick={() => trackSelection(index, "click")}
                     onMouseEnter={() => setActiveIndex(index)}
@@ -331,7 +331,7 @@ export default function SystemSearchHero({
                       </p>
                     </div>
                     <span className="inline-flex shrink-0 items-center gap-2 text-xs text-dema-muted md:text-sm">
-                      Voir le système métier
+                      Voir les solutions
                       {activeIndex === index ? (
                         <CornerDownLeft className="h-3.5 w-3.5" aria-hidden="true" />
                       ) : null}
@@ -344,7 +344,7 @@ export default function SystemSearchHero({
 
           {showEmptyState ? (
             <div className="absolute left-0 right-0 top-full z-30 mt-3 rounded-[1.35rem] border border-dashed border-dema-line bg-dema-paper px-5 py-5 text-center text-sm text-dema-muted shadow-[0_22px_48px_rgba(23,35,29,0.09)]">
-              Aucune activité trouvée. Essayez un autre mot-clé plus large.
+              Aucune activité trouvée. Essayez un autre mot-clé.
             </div>
           ) : null}
         </div>
@@ -371,7 +371,7 @@ export default function SystemSearchHero({
           </div>
         ) : (
           <div className="mx-auto mt-10 max-w-2xl rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper p-8 text-center">
-            <p className="text-base text-brand-blue">Aucun système métier trouvé.</p>
+            <p className="text-base text-brand-blue">Aucune activité trouvée.</p>
             <p className="mt-2 text-sm text-dema-muted">Essayez un autre mot-clé ou un autre secteur.</p>
           </div>
         )}
@@ -388,7 +388,7 @@ function SystemDirectoryCard({ system }: { system: System }) {
 
   return (
     <Link
-      href={`/systemes/${system.slug}`}
+      href={`/solutions/${system.slug}`}
       className="demaa-card group relative flex aspect-square w-[74vw] max-w-[15rem] shrink-0 flex-col overflow-hidden rounded-[1.2rem] p-4 sm:w-[15rem] sm:p-5 [content-visibility:auto] [contain-intrinsic-size:15rem_15rem]"
     >
       <span className="relative z-10 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper sm:h-10 sm:w-10">

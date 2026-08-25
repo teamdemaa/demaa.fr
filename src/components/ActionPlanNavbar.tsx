@@ -1,25 +1,26 @@
 "use client";
 
-import { BookOpen, BriefcaseBusiness, ListChecks, PanelsTopLeft } from "lucide-react";
+import { BookOpen, BriefcaseBusiness, LayoutGrid, ListChecks, PanelsTopLeft } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 
-export type ActionPlanView = "plan" | "services" | "academy" | "opportunities";
+export type ActionPlanView = "plan" | "solutions" | "services" | "academy" | "opportunities";
 
 const tabClassName =
   "group relative inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:min-h-11 xl:flex-row xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
 
 const navigationItems = {
   plan: { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
+  solutions: { view: "solutions", labels: { fr: "Solutions", en: "Solutions" }, Icon: LayoutGrid },
   services: { view: "services", labels: { fr: "Application métier", en: "Business app" }, Icon: PanelsTopLeft },
   academy: { view: "academy", labels: { fr: "Organiser", en: "Academy" }, Icon: BookOpen },
   opportunities: { view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness },
 } as const;
 
 const navigationOrder: readonly ActionPlanView[] = [
-  "plan",
+  "solutions",
   "academy",
   "services",
 ];
@@ -55,7 +56,7 @@ export default function ActionPlanNavbar({
 
   const displayedItems = navigationOrder
     .map((view) => navigationItems[view])
-    .filter(({ view }) => !visibleViews || visibleViews.includes(view));
+    .filter(({ view }) => view === "solutions" || !visibleViews || visibleViews.includes(view));
 
   function navigation() {
     return (
@@ -88,13 +89,15 @@ export default function ActionPlanNavbar({
 
           const routeHref = localeCode === "en"
             ? `/en?view=${view}`
-            : view === "plan"
+            : view === "solutions"
+              ? "/solutions"
+              : view === "plan"
               ? "/"
               : view === "academy"
                 ? "/organiser"
                 : "/application-metier";
           const usesPublicRoute = routeNavigation
-            || (localeCode === "fr" && (view === "academy" || view === "services"));
+            || (localeCode === "fr" && (view === "solutions" || view === "academy" || view === "services"));
 
           return usesPublicRoute ? (
             <Link

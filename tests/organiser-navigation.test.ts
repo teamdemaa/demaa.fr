@@ -5,6 +5,7 @@ import { getSystemDiscoveryOptionScore } from "@/lib/system-discovery";
 import {
   buildLegacySolutionsRedirect,
   buildOrganiserHref,
+  buildSolutionsHref,
   parseOrganiserTab,
 } from "@/lib/organiser-navigation";
 
@@ -13,24 +14,23 @@ function source(path: string) {
 }
 
 describe("Organiser navigation", () => {
-  it("uses Solutions by default and keeps Processus explicit", () => {
+  it("keeps Organiser focused on processes and gives Solutions its own route", () => {
     expect(parseOrganiserTab(undefined)).toBe("solutions");
     expect(parseOrganiserTab("solutions")).toBe("solutions");
     expect(parseOrganiserTab("processus")).toBe("processus");
-    expect(buildOrganiserHref()).toBe("/organiser?tab=solutions");
+    expect(buildOrganiserHref()).toBe("/organiser");
     expect(buildOrganiserHref({ tab: "processus", systemId: "restaurant" }))
-      .toBe("/organiser?tab=processus");
-    expect(buildOrganiserHref({
-      tab: "solutions",
+      .toBe("/organiser");
+    expect(buildSolutionsHref({
       systemId: "restaurant",
       solutionResourceSlug: "lightspeed",
       solutionEntrySource: "action_recommendation",
     })).toBe(
-      "/organiser?tab=solutions&system=restaurant&resource=lightspeed&toolSource=action_recommendation",
+      "/solutions/restaurant?resource=lightspeed&toolSource=action_recommendation",
     );
   });
 
-  it("migrates every legacy Solutions entry to Organiser", () => {
+  it("migrates every legacy Solutions entry to the Solutions directory", () => {
     for (const query of [
       "view=solutions&system=restaurant",
       "view=system&system=restaurant",
@@ -38,32 +38,26 @@ describe("Organiser navigation", () => {
       "view=plan&section=solutions&system=restaurant",
     ]) {
       expect(buildLegacySolutionsRedirect(new URLSearchParams(query)))
-        .toBe("/organiser?tab=solutions&system=restaurant");
+        .toBe("/solutions/restaurant");
     }
 
     expect(buildLegacySolutionsRedirect(new URLSearchParams(
       "intent=solution-referral&systemSlug=restaurant&resourceSlug=lightspeed",
     ))).toBe(
-      "/organiser?tab=solutions&system=restaurant&resource=lightspeed",
+      "/solutions/restaurant?resource=lightspeed",
     );
     expect(buildLegacySolutionsRedirect(new URLSearchParams("view=plan")))
       .toBeNull();
   });
 
-  it("renders the Organiser pills in the validated order and removes the Plan Solutions pill", () => {
-    const organiser = source("src/components/OrganiserWorkspace.tsx");
+  it("renders only the process library on Organiser", () => {
     const organiserPage = source("src/app/(marketing)/academie/page.tsx");
     const companyPilotage = source("src/components/CompanyPilotagePanel.tsx");
     const guestPlan = source("src/components/GuestActionPlanExperience.tsx");
 
-    expect(organiser).toContain('(["solutions", "processus"] as const)');
-    expect(organiser).toContain("<ActionPlanSystemPanel");
-    expect(organiser).toContain("showHeading={false}");
-    expect(organiser).toContain("toolOutboundSurface={toolOutboundSurface}");
-    expect(organiser).toContain("readGuestSelectedSystemId()");
-    expect(organiserPage).toContain('=== "action_recommendation"');
-    expect(organiser).toContain("<AcademyIndexClient");
-    expect(organiserPage).toContain('key={[initialTab, initialSystemId ?? "", initialResourceSlug ?? ""].join(":")}');
+    expect(organiserPage).toContain("<AcademyIndexClient");
+    expect(organiserPage).not.toContain("<OrganiserWorkspace");
+    expect(organiserPage).not.toContain("<ActionPlanSystemPanel");
     expect(companyPilotage).not.toContain('{ key: "solutions"');
     expect(guestPlan).not.toContain("<ActionPlanSystemPanel");
     expect(guestPlan).not.toContain('aria-label="Contenu du plan"');

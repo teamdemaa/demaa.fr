@@ -4,13 +4,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { type KeyboardEvent, type ReactNode, useMemo, useState } from "react";
+import LeaderDailyRail from "@/components/LeaderDailyRail";
+import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import SystemContextualCaseStudy from "@/components/SystemContextualCaseStudy";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
-import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
+import SystemSolutionNextSteps from "@/components/SystemSolutionNextSteps";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import SystemeTabContent from "@/components/SystemeTabContent";
-import { getAvailableSystemTemplatesForSystem } from "@/lib/system-resource-catalog";
 import { getVisibleContextualAcademyCaseStudy } from "@/lib/academy-case-study-placement";
+import { getAvailableSystemTemplatesForSystem } from "@/lib/system-resource-catalog";
 import type { SystemeDetail } from "@/lib/systeme-catalog";
 import {
   getVisibleSystemDetailTabs,
@@ -19,6 +21,7 @@ import {
   type SystemDetailTab,
 } from "@/lib/system-detail-tabs";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
+import type { ToolOutboundSurface } from "@/lib/tool-outbound-attribution";
 import type { System } from "@/lib/types";
 
 type SystemDetailContentProps = {
@@ -31,6 +34,7 @@ type SystemDetailContentProps = {
   headingAs?: "h1" | "h2" | "h3";
   headingId?: string;
   solutionSections?: readonly RenderableSolutionSectionDto[];
+  toolOutboundSurface?: Extract<ToolOutboundSurface, "action_recommendation" | "solutions">;
   embedded?: boolean;
   checkableProcess?: boolean;
   selectableSolutions?: boolean;
@@ -47,8 +51,8 @@ const systemTabDefinitions: ReadonlyArray<{
   slug: SystemDetailTab;
   label: string;
 }> = [
-  { slug: "process", label: "Organisation" },
   { slug: "solutions", label: "Solutions" },
+  { slug: "process", label: "Organisation" },
 ];
 
 const EMPTY_SOLUTION_SECTIONS: readonly RenderableSolutionSectionDto[] = [];
@@ -63,6 +67,7 @@ export default function SystemDetailContent({
   headingAs: Heading = "h2",
   headingId,
   solutionSections = EMPTY_SOLUTION_SECTIONS,
+  toolOutboundSurface = "solutions",
   embedded = false,
   checkableProcess = false,
   selectableSolutions = false,
@@ -91,7 +96,7 @@ export default function SystemDetailContent({
     isVisibleSystemDetailTab(initialActiveTab) &&
       tabs.some((tab) => tab.slug === initialActiveTab)
       ? initialActiveTab
-      : "process",
+      : embedded ? "process" : "solutions",
   );
   const activeTab = controlledActiveTab && tabs.some((tab) => tab.slug === controlledActiveTab)
     ? controlledActiveTab
@@ -154,11 +159,11 @@ export default function SystemDetailContent({
   return (
     <article className={`w-full max-w-[55.2rem] ${embedded ? "mx-auto" : ""}`}>
       {!embedded ? <Link
-        href="/systemes"
+        href="/solutions"
         className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-        Retour aux systèmes
+        Retour aux solutions
       </Link> : null}
 
       <div className="max-w-4xl">
@@ -227,12 +232,14 @@ export default function SystemDetailContent({
 
         {activeTab === "solutions" ? (
           <div className="space-y-10">
+            <h2 className="sr-only">Solutions pour {system.name}</h2>
             <SystemSolutionsTab
               sections={solutionSections}
               initialResourceSlug={initialResourceSlug}
               onResourceSlugChange={onResourceSlugChange}
               selectedPlacementIds={selectableSolutions ? selectedSolutionIds : undefined}
               onToggleSelection={selectableSolutions ? toggleSolution : undefined}
+              toolOutboundSurface={toolOutboundSurface}
             />
             <SystemResourcesTab
               layout="rail"
@@ -243,6 +250,10 @@ export default function SystemDetailContent({
               <SystemContextualCaseStudy content={contextualCaseStudy} />
             ) : null}
             {!embedded ? <StructureNewsletterBlock /> : null}
+            {!embedded ? <LeaderDailyRail /> : null}
+            {!embedded ? (
+              <SystemSolutionNextSteps systemId={system.slug} systemName={system.name} />
+            ) : null}
           </div>
         ) : null}
       </section>

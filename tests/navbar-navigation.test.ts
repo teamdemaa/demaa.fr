@@ -16,9 +16,9 @@ describe("Demaa application navbar", () => {
     expect(source).toContain('id="action-plan-navbar-mobile"');
   });
 
-  it("keeps the navbar on system detail and loading states", async () => {
+  it("keeps the navbar on solution detail and loading states", async () => {
     const [pageSource, loadingSource] = await Promise.all([
-      readFile(new URL("../src/app/(marketing)/systemes/[slug]/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(marketing)/solutions/[slug]/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/(marketing)/systemes/[slug]/loading.tsx", import.meta.url), "utf8"),
     ]);
 
@@ -26,16 +26,16 @@ describe("Demaa application navbar", () => {
     expect(loadingSource).toContain("<Navbar minimal />");
     expect(pageSource.indexOf("<Navbar minimal />")).toBeLessThan(pageSource.indexOf("<main"));
     expect(loadingSource.indexOf("<Navbar minimal />")).toBeLessThan(loadingSource.indexOf("<main"));
-    expect(pageSource).toContain("buildPublicSystemAppHref");
-    expect(pageSource).not.toContain("systemTab: normalizedInitialTab");
+    expect(pageSource).toContain('<ActionPlanNavbar activeView="solutions" routeNavigation />');
+    expect(pageSource).toContain('initialActiveTab={getParamValue(resolvedSearchParams.tab) ?? "solutions"}');
     expect(pageSource).not.toContain("/?view=system");
   });
 
   it("keeps a distinct canonical homepage and one URL for each public universe", async () => {
-    const [homeSource, sharedHomeSource, systemsSource, nextConfigSource] = await Promise.all([
+    const [homeSource, sharedHomeSource, solutionsSource, nextConfigSource] = await Promise.all([
       readFile(new URL("../src/app/(application)/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanHomeView.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/(marketing)/systemes/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(marketing)/solutions/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
     ]);
 
@@ -47,12 +47,12 @@ describe("Demaa application navbar", () => {
     expect(sharedHomeSource).toContain("<GuestActionPlanExperience");
     expect(sharedHomeSource).toContain("if (!guestProductEnabled)");
     expect(sharedHomeSource).toContain("<Navbar");
-    expect(systemsSource).toContain('canonical: "/systemes"');
-    expect(nextConfigSource).not.toMatch(
-      /source: '\/systemes',[\s\S]*?destination: '\/',/,
+    expect(solutionsSource).toContain('canonical: "/solutions"');
+    expect(nextConfigSource).toMatch(
+      /source: '\/systemes',[\s\S]*?destination: '\/solutions',/,
     );
     expect(nextConfigSource).toMatch(
-      /source: '\/kits-operationnels',[\s\S]*?destination: '\/systemes',/,
+      /source: '\/kits-operationnels',[\s\S]*?destination: '\/solutions',/,
     );
   });
 
@@ -174,7 +174,8 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain('data-minimal={minimal ? "true" : undefined}');
     expect(navbarSource.match(/id="action-plan-navbar-specialist"/g)).toHaveLength(2);
     expect(navbarSource).toContain("showDiagnostic = true");
-    expect(navbarSource).toContain("<GuestDiagnosticControl");
+    expect(navbarSource).toContain("buildDiagnosticOrganisationHref");
+    expect(navbarSource).toContain("<DiagnosticOrganisationLink");
     expect(navbarSource).toContain('className="sticky top-0 z-40 bg-dema-cream/92');
     expect(navbarSource).not.toContain('className="sticky top-0 z-40 border-b');
     expect(navbarSource).toContain("fixed inset-x-0 bottom-0");
@@ -190,7 +191,7 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).not.toContain('label: "Système"');
     expect(actionPlanNavSource).toContain("const navigationOrder: readonly ActionPlanView[]");
     expect(actionPlanNavSource).toContain(
-      '"plan",\n  "academy",\n  "services"',
+      '"solutions",\n  "academy",\n  "services"',
     );
     expect(actionPlanNavSource).toContain('  "academy",');
     expect(actionPlanNavSource).not.toContain('  "opportunities",');

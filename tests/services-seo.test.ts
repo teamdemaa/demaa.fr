@@ -122,8 +122,8 @@ describe("canonical Services SEO and redirects", () => {
     expect(getCanonicalServiceBySlug("assistance-administrative")?.detailHref).toBe("/services/assistance-administrative");
     expect(proxy).not.toContain('"/services/"');
     expect(proxy).toContain('"/annuaire-services/"');
-    expect(sitemap).toContain('`${base}${service.detailHref}`');
-    expect(sitemap).toContain('service.detailHref.startsWith("/services/")');
+    expect(sitemap).not.toContain('`${base}${service.detailHref}`');
+    expect(sitemap).not.toContain('service.detailHref.startsWith("/services/")');
     expect(sitemap).not.toContain('`${base}/annuaire-services/${service.slug}`');
   });
 });

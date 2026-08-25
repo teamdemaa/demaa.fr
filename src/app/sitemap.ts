@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
-import { getCanonicalServices } from "@/lib/canonical-service-catalog";
 import { getAllPublishedContent } from "@/lib/content-catalog";
 import { getPublicOrganiserContent } from "@/lib/academy-course-content";
 import { getAllNewsletters } from "@/lib/newsletter-content";
@@ -12,8 +11,6 @@ import { demaaProNetworks } from "@/lib/pro-network-catalog";
 import { sectorPageDefinitions } from "@/lib/sector-pages";
 import { sectorTaxonomy } from "@/lib/sector-taxonomy";
 import { demaaSuppliers } from "@/lib/supplier-catalog";
-import { getDemaaRecruitmentItems } from "@/lib/recruitment-catalog";
-import { getDemaaTrainings } from "@/lib/training-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 
@@ -32,15 +29,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 1 },
-    { url: `${base}/systemes`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
+    { url: `${base}/solutions`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
     { url: `${base}/application-metier`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/annuaire-outils`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/annuaire-fournisseurs`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-financement`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/aides-et-subventions`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-reseaux-pro`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/annuaire-formations`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/annuaire-recrutement`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-newsletters`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/organiser`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
@@ -111,15 +106,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const serviceEntries: MetadataRoute.Sitemap = getCanonicalServices()
-    .filter((service) => service.detailHref.startsWith("/services/"))
-    .map((service) => ({
-      url: `${base}${service.detailHref}`,
-      lastModified: siteUpdatedAt,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    }));
-
   const supplierEntries: MetadataRoute.Sitemap = demaaSuppliers.map((supplier) => ({
     url: `${base}/annuaire-fournisseurs/${supplier.slug}`,
     lastModified: siteUpdatedAt,
@@ -155,20 +141,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const trainingEntries: MetadataRoute.Sitemap = getDemaaTrainings().map((training) => ({
-    url: `${base}/annuaire-formations/${training.slug}`,
-    lastModified: siteUpdatedAt,
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
-  const recruitmentEntries: MetadataRoute.Sitemap = getDemaaRecruitmentItems().map((item) => ({
-    url: `${base}/annuaire-recrutement/${item.slug}`,
-    lastModified: siteUpdatedAt,
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
   const accountingFirmEntries: MetadataRoute.Sitemap = accountingFirms.map((firm) => ({
     url: `${base}/annuaire-experts-comptables/cabinets/${firm.slug}`,
     lastModified: siteUpdatedAt,
@@ -191,7 +163,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const systemEntries: MetadataRoute.Sitemap = enterprises.map((enterprise) => ({
-    url: `${base}/systemes/${enterprise.slug}`,
+    url: `${base}/solutions/${enterprise.slug}`,
     lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.75,
@@ -204,14 +176,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...newsletterSitemapEntries,
     ...toolEntries,
     ...freeToolEntries,
-    ...serviceEntries,
     ...supplierEntries,
     ...financeEntries,
     ...aidFamilyEntries,
     ...aidEntries,
     ...proNetworkEntries,
-    ...trainingEntries,
-    ...recruitmentEntries,
     ...accountingFirmEntries,
     ...sectorEntries,
     ...toolSectorEntries,

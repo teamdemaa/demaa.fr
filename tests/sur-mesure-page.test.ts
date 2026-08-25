@@ -89,7 +89,7 @@ describe("Sur mesure commercial page", () => {
     expect(pageSource).not.toContain("OrganisationSessionBookingButton");
     expect(sitemapSource).toContain("`${base}/application-metier`");
     expect(sitemapSource).not.toContain("`${base}/sur-mesure`");
-    expect(sitemapSource).toContain("`${base}/systemes`");
+    expect(sitemapSource).toContain("`${base}/solutions`");
     expect(nextConfigSource).toMatch(
       /source: '\/accompagnement',[\s\S]*?destination: '\/application-metier',/,
     );

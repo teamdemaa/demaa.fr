@@ -19,7 +19,8 @@ async function collectSourceFiles(directory: string): Promise<string[]> {
 }
 
 describe("canonical system detail routes", () => {
-  it("serves system pages from the public Système métier namespace", async () => {
+  it("serves métier pages from the public Solutions namespace", async () => {
+    await expect(access(path.join(root, "src/app/(marketing)/solutions/[slug]/page.tsx"))).resolves.toBeUndefined();
     await expect(access(path.join(root, "src/app/(marketing)/systemes/[slug]/page.tsx"))).resolves.toBeUndefined();
     await expect(
       access(path.join(root, "src/app/(marketing)/systemes/[slug]/recapitulatif/page.tsx")),
@@ -42,7 +43,7 @@ describe("canonical system detail routes", () => {
         expect.arrayContaining([
           expect.objectContaining({
             source,
-            destination: "/systemes/:slug",
+            destination: "/solutions/:slug",
             permanent: true,
           }),
         ]),
@@ -70,9 +71,9 @@ describe("canonical system detail routes", () => {
       readFile(path.join(root, "src/app/sitemap.ts"), "utf8"),
     ]);
 
-    expect(detailSource).toContain('const url = `/systemes/${data.system.slug}`');
-    expect(detailSource).toContain('`${origin}/systemes/${data.system.slug}`');
-    expect(sitemapSource).toContain('`${base}/systemes/${enterprise.slug}`');
+    expect(detailSource).toContain('const url = `/solutions/${data.system.slug}`');
+    expect(detailSource).toContain('`${origin}/solutions/${data.system.slug}`');
+    expect(sitemapSource).toContain('`${base}/solutions/${enterprise.slug}`');
     expect(sitemapSource).not.toContain('`${base}/kit-operationnel/${enterprise.slug}`');
   });
 });

@@ -63,28 +63,28 @@ function toolItemList(jsonLd: ReturnType<typeof buildSystemPageJsonLd>) {
 }
 
 describe("system page SEO published Solutions boundary", () => {
-  it("describes Organisation and contextual Resources without archived presentations", () => {
+  it("describes Solutions, Organisation and contextual Resources without archived presentations", () => {
     const metadata = buildSystemPageMetadata(processOnlyData, []);
     const jsonLd = buildSystemPageJsonLd(processOnlyData, []);
     const exposed = JSON.stringify({ metadata, jsonLd });
     const { system } = processOnlyData;
 
     expect(metadata.title).toBe(
-      `Système métier ${system.name} : Organisation et Ressources | Demaa`,
+      `Solutions pour ${system.name} : outils, aides et réseaux | Demaa`,
     );
     expect(metadata.description).toContain("process");
     expect(metadata.keywords).toEqual(expect.arrayContaining([
       system.name,
       `système métier ${system.name.toLowerCase()}`,
       `process ${system.name.toLowerCase()}`,
-      `modèle entreprise ${system.name.toLowerCase()}`,
+      `solutions entreprise ${system.name.toLowerCase()}`,
       "Suivi et prévisionnel financier",
       "CRM - suivi commercial",
     ]));
     expect(itemList(jsonLd)?.name).toBe(
-      `Organisation et Ressources du système métier ${system.name}`,
+      `Organisation, solutions et ressources pour ${system.name}`,
     );
-    expect(exposed).not.toMatch(/Legacy Outil Fantôme|\boutils?\b|annuaire-outils|écosystème/i);
+    expect(exposed).not.toMatch(/Legacy Outil Fantôme|annuaire-outils|écosystème/i);
     expect(exposed).not.toMatch(
       /La facturation électronique|Maîtriser les obligations et les finances de son entreprise/,
     );
@@ -100,18 +100,18 @@ describe("system page SEO published Solutions boundary", () => {
       const exposed = JSON.stringify({ metadata, jsonLd });
 
       expect(metadata.title).toBe(
-        `Système métier ${currentData.system.name} : Organisation et Ressources | Demaa`,
+        `Solutions pour ${currentData.system.name} : outils, aides et réseaux | Demaa`,
       );
       expect(metadata.description).toMatch(/process/i);
       expect(exposed).not.toMatch(
-        /Legacy Outil Fantôme|\boutils?\b|annuaire-outils|écosystème|Solutions publiées|Levier/i,
+        /Legacy Outil Fantôme|annuaire-outils|écosystème|Solutions publiées|Levier/i,
       );
       expect(exposed).not.toContain("Tableau de pilotage opérationnel");
       expect(exposed).toContain("Suivi et prévisionnel financier");
     }
   });
 
-  it("uses Organisation, Solutions et Ressources and only renderable published resources", () => {
+  it("uses the Solutions title and only renderable published resources", () => {
     const metadata = buildSystemPageMetadata(
       publishedSolutionsData,
       publishedSolutionSectionsFixture,
@@ -124,7 +124,7 @@ describe("system page SEO published Solutions boundary", () => {
     const { system } = publishedSolutionsData;
 
     expect(metadata.title).toBe(
-      `Système métier ${system.name} : Organisation, Solutions et Ressources | Demaa`,
+      `Solutions pour ${system.name} : outils, aides et réseaux | Demaa`,
     );
     expect(metadata.description).toContain("3 Solutions publiées");
     expect(metadata.description).toContain("Qonto, Demaa Pilotage, Prestataire Facturation");
@@ -135,7 +135,7 @@ describe("system page SEO published Solutions boundary", () => {
       "Prestataire Facturation",
     ]));
     expect(itemList(jsonLd)?.name).toBe(
-      `Organisation, Solutions et Ressources du système métier ${system.name}`,
+      `Organisation, solutions et ressources pour ${system.name}`,
     );
     expect(exposed).toContain("https://qonto.com/fr");
     expect(exposed).toContain("https://demaa.co/solutions/prestataire-facturation");
@@ -194,7 +194,7 @@ describe("system page SEO published Solutions boundary", () => {
 
   it("feeds metadata and JSON-LD from the same server-only selector", async () => {
     const pageSource = await readFile(
-      new URL("../src/app/(marketing)/systemes/[slug]/page.tsx", import.meta.url),
+      new URL("../src/app/(marketing)/solutions/[slug]/page.tsx", import.meta.url),
       "utf8",
     );
     const detailSource = await readFile(
@@ -205,8 +205,9 @@ describe("system page SEO published Solutions boundary", () => {
     expect(pageSource.match(/getActivePublicRenderableSolutionSectionsForSystem\(slug\)/g)).toHaveLength(1);
     expect(pageSource.match(/getActivePublishedRenderableSolutionSectionsForSystem\(slug\)/g))
       .toHaveLength(2);
+    expect(pageSource).toContain("buildSystemPageMetadata(");
     expect(pageSource).toContain(
-      "buildSystemPageMetadata(data, filterPublicSolutionSections(solutionSections))",
+      "filterPublicSystemRecommendationSections(solutionSections)",
     );
     expect(pageSource).toContain(
       "buildSystemPageJsonLd(data, visiblePublishedSolutionSections)",

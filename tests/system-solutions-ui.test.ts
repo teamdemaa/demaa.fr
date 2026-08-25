@@ -100,7 +100,7 @@ describe("system Solutions UI", () => {
       servicesSection,
     ])).toEqual([softwareSection]);
 
-    const pageSource = await readSource("src/app/(marketing)/systemes/[slug]/page.tsx");
+    const pageSource = await readSource("src/app/(marketing)/solutions/[slug]/page.tsx");
     const recapSource = await readSource(
       "src/app/(marketing)/systemes/[slug]/recapitulatif/page.tsx",
     );
@@ -110,6 +110,60 @@ describe("system Solutions UI", () => {
     expect(recapSource).toContain("filterPublicSystemRecommendationSections");
     expect(apiSource).toContain("composePublicSolutionSectionsForSystem");
     expect(apiSource).not.toContain("filterPublicSystemRecommendationSections");
+  });
+
+  it("keeps recruitment and training recommendations out of public métier pages", () => {
+    const visiblePlacement = publishedSolutionSectionsFixture[0]!.placements[0]!;
+    const hiddenRecruitmentPlacement = {
+      ...visiblePlacement,
+      placementId: "hidden-recruitment",
+      resource: {
+        ...visiblePlacement.resource,
+        resourceSlug: "hidden-recruitment",
+        displayCategory: "Recrutement & alternance",
+      },
+    };
+    const hiddenTrainingPlacement = {
+      ...visiblePlacement,
+      placementId: "hidden-training",
+      resource: {
+        ...visiblePlacement.resource,
+        resourceSlug: "hidden-training",
+        displayCategory: "Formation",
+      },
+    };
+
+    const [visibleSection] = filterPublicSystemRecommendationSections([
+      {
+        section: "software",
+        placements: [
+          visiblePlacement,
+          hiddenRecruitmentPlacement,
+          hiddenTrainingPlacement,
+        ],
+      },
+    ]);
+
+    expect(visibleSection?.placements).toEqual([visiblePlacement]);
+  });
+
+  it("enforces the public exclusions across every métier selection", () => {
+    for (const system of enterpriseCatalog) {
+      const visibleSections = filterPublicSystemRecommendationSections(
+        getRenderableSolutionSectionsForSystem(system.slug),
+      );
+
+      expect(visibleSections.map(({ section }) => section)).not.toContain("services");
+      expect(
+        visibleSections.flatMap(({ placements }) =>
+          placements.map(({ resource }) => resource.displayCategory ?? ""),
+        ),
+      ).not.toEqual(
+        expect.arrayContaining([
+          expect.stringMatching(/\b(?:formation|recrutement)\b/i),
+        ]),
+      );
+    }
   });
 
   it("shows saved cards first in a dedicated selection rail", () => {
@@ -485,7 +539,7 @@ describe("system Solutions UI", () => {
   });
 
   it("keeps the registry server-side and crosses RSC with public DTOs only", async () => {
-    const pageSource = await readSource("src/app/(marketing)/systemes/[slug]/page.tsx");
+    const pageSource = await readSource("src/app/(marketing)/solutions/[slug]/page.tsx");
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const solutionsSource = await readSource("src/components/SystemSolutionsTab.tsx");
 
@@ -494,7 +548,7 @@ describe("system Solutions UI", () => {
       'from "@/lib/firebase-solution-registry-selection.server"',
     );
     expect(pageSource).toContain("solutionSections={visibleSolutionSections}");
-    expect(pageSource).toContain("filterPublicSolutionSections");
+    expect(pageSource).toContain("filterPublicSystemRecommendationSections");
     expect(pageSource).toContain("composePublicSolutionSectionsForSystem");
     expect(pageSource).not.toContain("getRenderableExpertiseSectionForSystem");
     expect(pageSource).not.toContain("getMigrationSafe");
@@ -593,7 +647,7 @@ describe("system Solutions UI", () => {
 
   it("keeps the W6 SEO and JSON-LD integration gate explicit", async () => {
     const gate = await readSource("docs/system-solutions-ui-w6-integration-gate.md");
-    const pageSource = await readSource("src/app/(marketing)/systemes/[slug]/page.tsx");
+    const pageSource = await readSource("src/app/(marketing)/solutions/[slug]/page.tsx");
 
     expect(gate).toContain("bloqué avant W6");
     expect(gate).toContain("JSON-LD");

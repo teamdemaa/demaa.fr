@@ -100,13 +100,23 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/systemes',
+        destination: '/solutions',
+        permanent: true,
+      },
+      {
+        source: '/systemes/:slug',
+        destination: '/solutions/:slug',
+        permanent: true,
+      },
+      {
         source: '/systemes-operationnels',
-        destination: '/systemes',
+        destination: '/solutions',
         permanent: true,
       },
       {
         source: '/kits-operationnels',
-        destination: '/systemes',
+        destination: '/solutions',
         permanent: true,
       },
       {
@@ -171,17 +181,17 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/systemes-operationnels/:slug',
-        destination: '/systemes/:slug',
+        destination: '/solutions/:slug',
         permanent: true,
       },
       {
         source: '/kit-operationnel/:slug',
-        destination: '/systemes/:slug',
+        destination: '/solutions/:slug',
         permanent: true,
       },
       {
         source: '/kit-systeme/:slug',
-        destination: '/systemes/:slug',
+        destination: '/solutions/:slug',
         permanent: true,
       },
       {
@@ -191,7 +201,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/modeles-de-documents/tableau-de-pilotage-:slug',
-        destination: '/systemes/:slug?tab=resources',
+        destination: '/solutions/:slug',
         permanent: true,
       },
       {
@@ -211,12 +221,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/plans-organisation/:slug',
-        destination: '/systemes/:slug',
+        destination: '/solutions/:slug',
         permanent: true,
       },
       {
         source: '/documents-structuration/:slug',
-        destination: '/systemes/:slug',
+        destination: '/solutions/:slug',
         permanent: true,
       },
       {
@@ -291,12 +301,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/ressources/obligations-tpe',
-        destination: '/systemes',
+        destination: '/solutions',
         permanent: true,
       },
       {
         source: '/ressources/obligations-tpe-template',
-        destination: '/systemes',
+        destination: '/solutions',
         permanent: true,
       },
       {

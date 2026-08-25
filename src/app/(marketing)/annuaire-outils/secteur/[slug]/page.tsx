@@ -127,7 +127,7 @@ export default async function ToolSectorPage({
   const sectorHubPath = getSectorHubPath(sector.publicLabel) ?? "/secteurs";
   const backLink = returnEnterprise
     ? {
-        href: `/systemes/${encodeURIComponent(returnEnterprise.slug)}?tab=solutions`,
+        href: `/solutions/${encodeURIComponent(returnEnterprise.slug)}`,
         label: `Retour à ${returnEnterprise.name}`,
       }
     : {
@@ -275,7 +275,7 @@ export default async function ToolSectorPage({
                 {featuredSystems.map((system) => (
                   <Link
                     key={system.slug}
-                    href={`/systemes/${system.slug}`}
+                    href={`/solutions/${system.slug}`}
                     className="inline-flex rounded-full bg-brand-blue px-3 py-1.5 text-xs font-medium text-white transition hover:bg-dema-forest"
                   >
                     Voir {system.name}

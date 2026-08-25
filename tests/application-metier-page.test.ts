@@ -27,6 +27,9 @@ describe("Application métier landing page", () => {
 
     expect(source).toContain("Gagnez du temps");
     expect(source).toContain("et rendez votre entreprise plus autonome.");
+    expect(source).toContain(
+      'aria-label="Gagnez du temps et rendez votre entreprise plus autonome."',
+    );
     expect(source).toContain("Qu’est-ce qu’une application métier change dans votre quotidien ?");
     expect(source).toContain("Moins de tâches chronophages");
     expect(source).toContain("Tout est centralisé");
@@ -42,7 +45,7 @@ describe("Application métier landing page", () => {
     expect(diagnosticSource).toContain("Diagnostic organisation");
     expect(diagnosticSource).toContain("<ClipboardCheck");
     expect(diagnosticSource).toContain("showNavbarTrigger={false}");
-    expect(source).toContain("<Navbar minimal showDiagnostic={false} />");
+    expect(source).toContain("<Navbar minimal />");
   });
 
   it("uses the real brand colors and links the three verified public projects", async () => {

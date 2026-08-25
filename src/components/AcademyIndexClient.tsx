@@ -504,11 +504,14 @@ export default function AcademyIndexClient({
 
           <div className="text-center">
             <h1
+              aria-label={localeCode === "en" ? "Academy" : "Organiser son entreprise"}
               className="text-balance font-light leading-[0.94] tracking-tight"
               style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
             >
-              <span className="block text-brand-blue/62">Organiser</span>
-              <span className="demaa-hero-title block text-dema-forest">son entreprise</span>
+              <span aria-hidden="true">
+                <span className="block text-brand-blue/62">Organiser</span>
+                <span className="demaa-hero-title block text-dema-forest">son entreprise</span>
+              </span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-dema-muted md:text-lg">
               Des processus concrets pour mieux gérer les demandes, les interventions, les documents et le suivi de l’activité.
@@ -523,8 +526,11 @@ export default function AcademyIndexClient({
       <ContentContainer className={`mx-auto max-w-7xl px-4 pb-16 md:pb-20 ${embedded ? "pt-0" : ""}`}>
         {filteredContents.length ? (
           <section
-            aria-label={localeCode === "en" ? "Courses" : "Processus pour organiser son entreprise"}
+            aria-labelledby="organiser-content-heading"
           >
+            <h2 id="organiser-content-heading" className="sr-only">
+              {localeCode === "en" ? "Courses" : "Processus pour organiser son entreprise"}
+            </h2>
             <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
               {filteredContents.map((content, index) => (
                 <AcademyCard

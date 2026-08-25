@@ -1,14 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { CircleUserRound } from "lucide-react";
-import { useState } from "react";
+import { CircleUserRound, ClipboardCheck } from "lucide-react";
 import AdminLogoutButton from "@/components/AdminLogoutButton";
 import CustomerLogoutButton from "@/components/CustomerLogoutButton";
 import DemaaWordmark from "@/components/DemaaWordmark";
-import GuestDiagnosticControl from "@/components/GuestDiagnosticControl";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
+import { buildDiagnosticOrganisationHref } from "@/lib/action-plan-app-context";
+
+function DiagnosticOrganisationLink({ localeCode }: { localeCode: InterfaceLocaleCode }) {
+  return (
+    <Link
+      href={buildDiagnosticOrganisationHref()}
+      className="inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full bg-dema-forest px-3 text-xs font-medium text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:min-h-11 sm:px-5 sm:text-sm"
+    >
+      <ClipboardCheck className="h-4 w-4" aria-hidden="true" />
+      <span>{localeCode === "en" ? "Organization diagnostic" : "Diagnostic organisation"}</span>
+    </Link>
+  );
+}
 
 export default function Navbar({
   adminControls = false,
@@ -25,7 +36,6 @@ export default function Navbar({
   localeCode?: InterfaceLocaleCode;
   showDiagnostic?: boolean;
 }) {
-  const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const accountAccessClassName =
     "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
   const connectionLinkClassName =
@@ -33,15 +43,6 @@ export default function Navbar({
 
   return (
     <>
-      {showDiagnostic && !adminControls ? (
-        <GuestDiagnosticControl
-          access={null}
-          onClose={() => setDiagnosticOpen(false)}
-          onOpen={() => setDiagnosticOpen(true)}
-          open={diagnosticOpen}
-          situation=""
-        />
-      ) : null}
       <nav
         data-minimal={minimal ? "true" : undefined}
         className="sticky top-0 z-40 bg-dema-cream/92 py-1 backdrop-blur-md"
@@ -72,7 +73,9 @@ export default function Navbar({
                 <div
                   id="action-plan-navbar-specialist"
                   className="shrink-0 empty:hidden"
-                />
+                >
+                  {showDiagnostic ? <DiagnosticOrganisationLink localeCode={localeCode} /> : null}
+                </div>
                 {isAuthenticated ? (
                   <details className="group relative">
                     <summary
@@ -108,7 +111,9 @@ export default function Navbar({
               <div
                 id="action-plan-navbar-specialist"
                 className="shrink-0 empty:hidden"
-              />
+              >
+                {showDiagnostic ? <DiagnosticOrganisationLink localeCode={localeCode} /> : null}
+              </div>
             )}
           </div>
         </div>

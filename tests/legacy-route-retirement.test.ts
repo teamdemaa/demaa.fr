@@ -17,7 +17,7 @@ describe("legacy public route retirement", () => {
         }),
         expect.objectContaining({
           source: "/modeles-de-documents/tableau-de-pilotage-:slug",
-          destination: "/systemes/:slug?tab=resources",
+          destination: "/solutions/:slug",
           permanent: true,
         }),
         expect.objectContaining({
@@ -42,17 +42,17 @@ describe("legacy public route retirement", () => {
       expect.arrayContaining([
         expect.objectContaining({
           source: "/kit-operationnel/:slug",
-          destination: "/systemes/:slug",
+          destination: "/solutions/:slug",
           permanent: true,
         }),
         expect.objectContaining({
           source: "/systemes-operationnels/:slug",
-          destination: "/systemes/:slug",
+          destination: "/solutions/:slug",
           permanent: true,
         }),
         expect.objectContaining({
           source: "/kit-systeme/:slug",
-          destination: "/systemes/:slug",
+          destination: "/solutions/:slug",
           permanent: true,
         }),
       ]),

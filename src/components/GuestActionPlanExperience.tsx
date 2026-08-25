@@ -355,6 +355,7 @@ export default function GuestActionPlanExperience({
         onClose={() => setDiagnosticOpen(false)}
         onOpen={() => setDiagnosticOpen(true)}
         open={diagnosticOpen}
+        showNavbarTrigger={false}
         situation={situation}
       />
       <div className="mx-auto max-w-[68rem] pt-1">

@@ -16,7 +16,7 @@ describe("public guest action-plan experience", () => {
 
     expect(home).toContain("<GuestActionPlanExperience");
     expect(home).toContain("if (!guestProductEnabled)");
-    expect(home).toContain("<Navbar localeCode={config.localeCode} minimal showDiagnostic={false} />");
+    expect(home).toContain("<Navbar localeCode={config.localeCode} minimal />");
     expect(guestLoader).not.toContain("getCurrentCustomerAppIdentityFromSession");
     expect(guestLoader).not.toContain("ensureDefaultCompanyForIdentity");
     expect(guestLoader).not.toContain("paths.latest");

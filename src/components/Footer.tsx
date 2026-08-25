@@ -9,8 +9,6 @@ const directoryLinks = [
   { label: "Aides et subventions", href: "/aides-et-subventions" },
   { label: "Annuaire fournisseurs", href: "/annuaire-fournisseurs" },
   { label: "Annuaire réseaux professionnels", href: "/annuaire-reseaux-pro" },
-  { label: "Annuaire formations", href: "/annuaire-formations" },
-  { label: "Annuaire recrutement", href: "/annuaire-recrutement" },
   { label: "Annuaire newsletters", href: "/annuaire-newsletters" },
   { label: "Annuaire experts-comptables", href: "/annuaire-experts-comptables" },
 ];
@@ -23,7 +21,7 @@ const collaborationLinks = [
 ];
 
 const resourceLinks = [
-  { label: "Systèmes métier", href: "/systemes" },
+  { label: "Solutions", href: "/solutions" },
   { label: "Organiser", href: "/organiser" },
   { label: "Contenus", href: "/contenus" },
 ];

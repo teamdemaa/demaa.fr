@@ -98,7 +98,7 @@ export const ACADEMY_PERMANENT_REDIRECTS = [
   },
   {
     source: "/cours/obligations-finances-entreprise",
-    destination: "/systemes",
+    destination: "/solutions",
     permanent: true,
   },
   {

@@ -25,12 +25,12 @@ describe("tool outbound surfaces", () => {
   });
 
   it("carries the Action source without storing plan or user identifiers", async () => {
-    const [experience, saved, context, organiserPage, organiserWorkspace] = await Promise.all([
+    const [experience, saved, context, solutionsPage, systemDetail] = await Promise.all([
       source("components/ActionPlanExperience.tsx"),
       source("components/SavedActionPlanDetail.tsx"),
       source("lib/action-plan-app-context.ts"),
-      source("app/(marketing)/academie/page.tsx"),
-      source("components/OrganiserWorkspace.tsx"),
+      source("app/(marketing)/solutions/[slug]/page.tsx"),
+      source("components/SystemDetailContent.tsx"),
     ]);
 
     for (const implementation of [experience, saved]) {
@@ -42,8 +42,8 @@ describe("tool outbound surfaces", () => {
       );
     }
     expect(context).toContain('"toolSource"');
-    expect(organiserPage).toContain('=== "action_recommendation"');
-    expect(organiserWorkspace).toContain(
+    expect(solutionsPage).toContain('=== "action_recommendation"');
+    expect(systemDetail).toContain(
       "toolOutboundSurface={toolOutboundSurface}",
     );
     expect(context).not.toContain("owner_uid");

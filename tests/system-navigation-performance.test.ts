@@ -41,22 +41,22 @@ describe("system navigation performance contract", () => {
     expect(searchSource).not.toContain("prefetch={false}");
     expect(searchSource).not.toContain("useLinkStatus");
     expect(searchSource).not.toContain("SystemDirectoryCardPendingOverlay");
-    expect(detailSource).toMatch(/<Link\s+href="\/systemes"/);
-    expect(detailSource).toContain("Retour aux systèmes");
+    expect(detailSource).toMatch(/<Link\s+href="\/solutions"/);
+    expect(detailSource).toContain("Retour aux solutions");
     expect(detailSource).not.toContain("router.back()");
   });
 
-  it("uses the validated system métier wording on the homepage", async () => {
+  it("uses the validated Solutions wording on the directory", async () => {
     const [pageSource, searchSource] = await Promise.all([
-      readSource("src/app/(marketing)/systemes/page.tsx"),
+      readSource("src/app/(marketing)/solutions/page.tsx"),
       readSource("src/components/SystemSearchHero.tsx"),
     ]);
 
     expect(pageSource).toContain(
-      "Trouvez le système métier de votre entreprise | Demaa",
+      "Solutions adaptées à votre activité | Demaa",
     );
     expect(searchSource).toContain(
-      'aria-label="Trouvez le système métier de votre entreprise"',
+      'aria-label="Trouvez les solutions adaptées à votre activité"',
     );
     expect(searchSource).toContain(
       '<h2 className="text-xl font-light tracking-tight text-brand-blue/85 sm:text-2xl">',

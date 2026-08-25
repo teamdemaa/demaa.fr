@@ -75,16 +75,21 @@ function SectionIntroduction({
 export default function ApplicationMetierLandingPage() {
   return (
     <ApplicationDiagnosticProvider>
-      <Navbar minimal showDiagnostic={false} />
+      <Navbar minimal />
       <ActionPlanNavbar activeView="services" routeNavigation />
 
       <main className="overflow-x-clip bg-dema-cream pb-24 text-brand-blue xl:pb-0">
         <section className="border-b border-dema-line px-5 pb-20 pt-14 text-center sm:pb-24 sm:pt-20 lg:pb-28 lg:pt-24">
           <div className="mx-auto max-w-5xl">
-            <h1 className={`${satoshiHeroTitleClassName} mx-auto max-w-4xl`}>
-              <span className="block">Gagnez du temps</span>
-              <span className="demaa-hero-title mt-2 block text-dema-forest">
-                et rendez votre entreprise plus autonome.
+            <h1
+              aria-label="Gagnez du temps et rendez votre entreprise plus autonome."
+              className={`${satoshiHeroTitleClassName} mx-auto max-w-4xl`}
+            >
+              <span aria-hidden="true">
+                <span className="block">Gagnez du temps</span>
+                <span className="demaa-hero-title mt-2 block text-dema-forest">
+                  et rendez votre entreprise plus autonome.
+                </span>
               </span>
             </h1>
             <div className="mt-9 flex flex-col items-center gap-3">

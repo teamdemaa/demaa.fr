@@ -51,7 +51,6 @@ export const SOLUTION_RAIL_DISPLAY_ORDER: readonly VisibleSolutionSection[] = [
   "services",
   "providers",
   "financing",
-  "aids",
   "networks",
 ];
 
@@ -309,9 +308,19 @@ export default function SystemSolutionsTab({
 }) {
   const ui = getSolutionsUiCopy(localeCode);
   const visibleSections = useMemo(
-    () => SOLUTION_RAIL_DISPLAY_ORDER.flatMap((section) =>
-      sections.filter((group) => group.section === section && group.placements.length > 0),
-    ),
+    () => SOLUTION_RAIL_DISPLAY_ORDER.flatMap((section) => {
+      if (section === "financing") {
+        const placements = sections
+          .filter((group) => group.section === "financing" || group.section === "aids")
+          .flatMap((group) => group.placements)
+          .toSorted((left, right) => left.rank - right.rank);
+        return placements.length > 0 ? [{ section: "financing" as const, placements }] : [];
+      }
+
+      return sections.filter(
+        (group) => group.section === section && group.placements.length > 0,
+      );
+    }),
     [sections],
   );
   const railRefs = useRef<Partial<Record<SolutionSection, HTMLDivElement | null>>>({});

@@ -26,7 +26,7 @@ describe("system UX contract", () => {
       "src/app/api/systeme-kit/open/[resourceSlug]/route.ts",
     );
     const pageSource = await readSource(
-      "src/app/(marketing)/systemes/[slug]/page.tsx",
+      "src/app/(marketing)/solutions/[slug]/page.tsx",
     );
 
     expect(detailSource).not.toContain("Voir le système");

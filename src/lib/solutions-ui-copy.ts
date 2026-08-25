@@ -9,10 +9,10 @@ type ResourceType = RenderableSolutionPlacementDto["resource"]["resourceType"];
 const copy = defineLocaleDictionary({
   fr: {
     sectionLabels: {
-      software: "Outils",
+      software: "Outils et logiciels",
       services: "Accompagnement",
       providers: "Fournisseurs",
-      financing: "Financement",
+      financing: "Financement et aides",
       aids: "Aides et subventions",
       networks: "Réseaux professionnels",
     } satisfies Record<VisibleSolutionSection, string>,

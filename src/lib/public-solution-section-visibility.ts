@@ -1,5 +1,6 @@
 import visibility from "@/lib/public-solution-section-visibility.json";
 import type { SolutionSection } from "@/lib/solution-registry-dto";
+import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 
 export const PUBLIC_SOLUTION_SECTION_VISIBILITY: Readonly<
   Record<SolutionSection, boolean>
@@ -20,10 +21,18 @@ export function filterPublicSolutionSections<
  * Demaa Services keep travelling in the system payload for strict contextual
  * Action aids, but their public destination remains `/services`.
  */
-export function filterPublicSystemRecommendationSections<
-  T extends Readonly<{ section: SolutionSection }>,
->(sections: readonly T[]): T[] {
-  return filterPublicSolutionSections(sections).filter(
-    ({ section }) => section !== "services",
-  );
+const HIDDEN_RECOMMENDATION_CATEGORY = /\b(?:formation|recrutement)\b/i;
+
+export function filterPublicSystemRecommendationSections(
+  sections: readonly RenderableSolutionSectionDto[],
+): RenderableSolutionSectionDto[] {
+  return filterPublicSolutionSections(sections)
+    .filter(({ section }) => section !== "services")
+    .map((group) => ({
+      ...group,
+      placements: group.placements.filter(
+        ({ resource }) =>
+          !HIDDEN_RECOMMENDATION_CATEGORY.test(resource.displayCategory ?? ""),
+      ),
+    }));
 }

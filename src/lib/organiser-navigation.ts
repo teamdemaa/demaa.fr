@@ -29,21 +29,34 @@ export function buildOrganiserHref(input: {
   solutionResourceSlug?: string;
   solutionEntrySource?: "action_recommendation";
 } = {}) {
-  const tab = input.tab ?? "solutions";
-  const params = new URLSearchParams();
-
-  params.set("tab", tab);
-  if (tab === "solutions") {
-    const systemId = safeValue(input.systemId);
-    const resource = safeValue(input.solutionResourceSlug);
-    if (systemId) params.set("system", systemId);
-    if (resource) params.set("resource", resource);
-    if (input.solutionEntrySource === "action_recommendation") {
-      params.set("toolSource", input.solutionEntrySource);
-    }
+  if (input.tab === "solutions") {
+    return buildSolutionsHref({
+      systemId: input.systemId,
+      solutionResourceSlug: input.solutionResourceSlug,
+      solutionEntrySource: input.solutionEntrySource,
+    });
   }
 
-  return `/organiser?${params.toString()}`;
+  return "/organiser";
+}
+
+export function buildSolutionsHref(input: {
+  systemId?: string;
+  solutionResourceSlug?: string;
+  solutionEntrySource?: "action_recommendation";
+} = {}) {
+  const systemId = safeValue(input.systemId);
+  const resource = safeValue(input.solutionResourceSlug);
+  const params = new URLSearchParams();
+
+  if (resource) params.set("resource", resource);
+  if (input.solutionEntrySource === "action_recommendation") {
+    params.set("toolSource", input.solutionEntrySource);
+  }
+
+  const pathname = systemId ? `/solutions/${systemId}` : "/solutions";
+  const query = params.toString();
+  return `${pathname}${query ? `?${query}` : ""}`;
 }
 
 export function buildLegacySolutionsRedirect(input: SearchInput) {
@@ -58,8 +71,7 @@ export function buildLegacySolutionsRedirect(input: SearchInput) {
 
   if (!isLegacySolutionsEntry) return null;
 
-  return buildOrganiserHref({
-    tab: "solutions",
+  return buildSolutionsHref({
     systemId: safeValue(
       readValue(input, "system")
         ?? (intent === "solution-referral" ? readValue(input, "systemSlug") : undefined),

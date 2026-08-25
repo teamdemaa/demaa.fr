@@ -6,7 +6,6 @@ import { cache } from "react";
 import { enterpriseToSystem, type EnterpriseDefinition } from "@/lib/enterprise-annuaire";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
-import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
 import { buildSystemeDetail } from "@/lib/systeme-catalog";
@@ -331,12 +330,8 @@ function getPublishedToolPlacements(sections: SystemPageSolutionSections) {
 
 function buildSystemPageTitle(
   data: SystemDetailPageData,
-  solutionSections: SystemPageSolutionSections,
 ): string {
-  const contentLabel = solutionSections.length > 0
-    ? "Organisation, Solutions et Ressources"
-    : "Organisation et Ressources";
-  return `Système métier ${data.system.name} : ${contentLabel} | Demaa`;
+  return `Solutions pour ${data.system.name} : outils, aides et réseaux | Demaa`;
 }
 
 export function buildSystemPageIntro(data: SystemDetailPageData): string {
@@ -365,16 +360,13 @@ function buildSystemPageDescription(
   const availableResourceCount = getSystemResourcesForSystem(data.system.slug).filter(
     (resource) => resource.availability === "available",
   ).length;
-
   if (override) {
     parts.push(`${processCount} process opérationnels structurent ce système.`);
   }
 
-  if (hasEditableOperationalSystemAsset(data.system.slug)) {
-    parts.push(
-      `${availableResourceCount} ressources pratiques sont disponibles en accès direct ou par e-mail.`,
-    );
-  }
+  parts.push(
+    `${availableResourceCount} ressources pratiques sont disponibles en accès direct ou par e-mail.`,
+  );
 
   if (publishedResources.length > 0) {
     const names = publishedResources.slice(0, 3).map((resource) => resource.name);
@@ -390,9 +382,9 @@ export function buildSystemPageMetadata(
   data: SystemDetailPageData,
   solutionSections: SystemPageSolutionSections,
 ): Metadata {
-  const title = buildSystemPageTitle(data, solutionSections);
+  const title = buildSystemPageTitle(data);
   const description = buildSystemPageDescription(data, solutionSections);
-  const url = `/systemes/${data.system.slug}`;
+  const url = `/solutions/${data.system.slug}`;
   const publishedResources = getPublishedSolutionResources(solutionSections);
   const scopedResources = getSystemResourcesForSystem(data.system.slug);
 
@@ -404,7 +396,7 @@ export function buildSystemPageMetadata(
         data.system.name,
         `système métier ${data.system.name.toLowerCase()}`,
         `process ${data.system.name.toLowerCase()}`,
-        `modèle entreprise ${data.system.name.toLowerCase()}`,
+        `solutions entreprise ${data.system.name.toLowerCase()}`,
         ...scopedResources.map((resource) => resource.title),
         ...(publishedResources.length > 0
           ? [
@@ -437,9 +429,9 @@ export function buildSystemPageJsonLd(
   solutionSections: SystemPageSolutionSections,
 ) {
   const origin = getCanonicalOrigin();
-  const url = `${origin}/systemes/${data.system.slug}`;
+  const url = `${origin}/solutions/${data.system.slug}`;
   const description = buildSystemPageDescription(data, solutionSections);
-  const pageName = buildSystemPageTitle(data, solutionSections).replace(/ \| Demaa$/, "");
+  const pageName = buildSystemPageTitle(data).replace(/ \| Demaa$/, "");
   const listedProcesses = (
     data.detail.systeme?.cards.flatMap((card) =>
       card.items.map((item) => ({ title: item.process })),
@@ -470,9 +462,7 @@ export function buildSystemPageJsonLd(
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: listedSolutions.length > 0
-        ? `Organisation, Solutions et Ressources du système métier ${data.system.name}`
-        : `Organisation et Ressources du système métier ${data.system.name}`,
+      name: `Organisation, solutions et ressources pour ${data.system.name}`,
       numberOfItems: listedProcesses.length + listedSolutions.length + listedResources.length,
       itemListElement: [
         ...listedProcesses.map((process, index) => ({
@@ -543,8 +533,8 @@ export function buildSystemPageJsonLd(
         {
           "@type": "ListItem",
           position: 2,
-          name: "Systèmes métier",
-          item: `${origin}/systemes`,
+          name: "Solutions",
+          item: `${origin}/solutions`,
         },
         {
           "@type": "ListItem",
