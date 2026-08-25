@@ -9,22 +9,23 @@ permanente vers `/organiser`.
 
 La phrase de référence est :
 
-> Demaa aide les dirigeants de TPE à organiser leur entreprise grâce à des
-> processus simples, concrets et adaptés à leur métier.
+> On aide les dirigeants à mieux s’organiser grâce à des applications métier
+> adaptées.
 
 La navigation publique suit le parcours :
 
-`Plan d’action → Organiser → Services`
+`Plan d’action → Organiser → Application métier`
 
 - `Plan d’action` aide le dirigeant à choisir ses priorités ;
 - `Organiser` regroupe les solutions par métier et montre comment un travail
   réel doit circuler ;
-- `Services` permet de trouver une aide à la mise en place.
+- `Application métier` présente l’accompagnement pour construire un outil
+  adapté lorsque les logiciels existants ne suffisent plus.
 
 Dans `Organiser`, la sous-navigation est verrouillée dans l’ordre
 `Solutions → Processus`. `Solutions` est l’entrée par défaut et demande
 l’activité avant d’afficher un contenu contextualisé. `Processus` contient les
-huit guides. Aucun onglet Solutions n’est affiché dans le Plan d’action.
+quatorze guides. Aucun onglet Solutions n’est affiché dans le Plan d’action.
 
 `Organiser` n’est ni une académie classique ni un blog généraliste. C’est une
 bibliothèque de processus opérationnels pour les TPE.
@@ -133,7 +134,7 @@ l’article public. Les blocs « point de départ », « rythme de pilotage » e
   proportion horizontale de la référence validée, soit environ `2,48:1`, avec
   l’espace vertical réparti autour de la grille.
 
-## Les huit guides de la première collection
+## Les quatorze guides de la collection
 
 1. Entreprise de plomberie : de la demande à la facture.
 2. Entreprise de rénovation : du premier contact au devis signé.
@@ -143,9 +144,12 @@ l’article public. Les blocs « point de départ », « rythme de pilotage » e
 6. Restaurant : commandes, livraisons et stocks.
 7. Organisme de formation : de l’inscription à l’attestation.
 8. Agence : du brief à la facturation.
-
-Les sujets 9 et 10 restent réservés. Ils seront choisis après observation des
-besoins non couverts, sans remplir artificiellement un quota de métiers.
+9. Centraliser les demandes reçues par téléphone, SMS et WhatsApp.
+10. Organiser le planning de plusieurs techniciens.
+11. Passer d’un bon d’intervention à la facture sans ressaisie.
+12. Choisir un logiciel quand Excel ne suffit plus.
+13. Évaluer la rentabilité d’une application métier.
+14. Choisir un logiciel existant ou construire son propre outil.
 
 ## Outils et liens
 

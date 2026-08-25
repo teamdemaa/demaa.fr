@@ -26,12 +26,12 @@ function hasForbiddenVideoField(value: unknown): boolean {
 }
 
 describe("academy course content", () => {
-  it("preserves the fourteen historical items and publishes eight process guides", () => {
+  it("preserves the fourteen historical items and publishes fourteen process guides", () => {
     expect(getAcademyFundamentals()).toHaveLength(8);
-    expect(getAcademyCaseStudies()).toHaveLength(14);
-    expect(getAcademyCaseStudies().filter((content) => content.processGuide)).toHaveLength(8);
-    expect(getPublicOrganiserContent()).toHaveLength(8);
-    expect(getAllAcademyContent()).toHaveLength(22);
+    expect(getAcademyCaseStudies()).toHaveLength(20);
+    expect(getAcademyCaseStudies().filter((content) => content.processGuide)).toHaveLength(14);
+    expect(getPublicOrganiserContent()).toHaveLength(14);
+    expect(getAllAcademyContent()).toHaveLength(28);
     expect(getAcademyContentBySlug("juste-systeme-marketing")).toBeNull();
   });
 
@@ -41,7 +41,7 @@ describe("academy course content", () => {
 
   it("keeps every ready item structurally complete and video-free", () => {
     const content = getAllAcademyContent();
-    expect(new Set(content.map((item) => item.identity.slug)).size).toBe(22);
+    expect(new Set(content.map((item) => item.identity.slug)).size).toBe(28);
 
     for (const item of content) {
       expect(item.status).toBe("ready");

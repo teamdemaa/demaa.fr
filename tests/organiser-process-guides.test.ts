@@ -34,6 +34,8 @@ function countGuideWords(content: (typeof ORGANISER_PROCESS_GUIDES)[number]) {
     guide.implementation.escalation,
     guide.example.title,
     guide.example.body,
+    guide.toolsTitle ?? "",
+    guide.toolsIntroduction ?? "",
     ...guide.tools.flatMap((tool) => [tool.name, tool.description]),
     ...guide.checklist,
     ...guide.faqs.flatMap((faq) => [faq.question, faq.answer]),
@@ -42,8 +44,8 @@ function countGuideWords(content: (typeof ORGANISER_PROCESS_GUIDES)[number]) {
 }
 
 describe("Organiser process guides", () => {
-  it("publishes the eight validated subjects from one six-step source", () => {
-    expect(ORGANISER_PROCESS_GUIDES).toHaveLength(8);
+  it("publishes the fourteen validated subjects from one six-step source", () => {
+    expect(ORGANISER_PROCESS_GUIDES).toHaveLength(14);
 
     for (const content of ORGANISER_PROCESS_GUIDES) {
       expect(content.kind).toBe("case-study");
@@ -52,7 +54,7 @@ describe("Organiser process guides", () => {
       expect(content.processGuide?.rules.length).toBeGreaterThanOrEqual(4);
       expect(content.processGuide?.checklist.length).toBeGreaterThanOrEqual(4);
       expect(content.processGuide?.faqs).toHaveLength(3);
-      expect(content.identity.title).toMatch(/^Comment organiser/);
+      expect(content.identity.title).toMatch(/^(Comment|Quel|À partir|Faut-il)/);
       expect(content.identity.card.image).toBeNull();
       expect(`${content.identity.shortTitle} | Organiser avec Demaa`.length)
         .toBeLessThanOrEqual(60);
@@ -77,6 +79,40 @@ describe("Organiser process guides", () => {
       expect(guide.editorialReview.immediateUsefulness).toBeGreaterThanOrEqual(3);
       expect(getAcademyProcessGuideEditorialScore(guide.editorialReview))
         .toBeGreaterThanOrEqual(17);
+    }
+  });
+
+  it("locks the six new search-led process maps", () => {
+    const expectedStepsBySlug = {
+      "centraliser-demandes-telephone-sms-whatsapp": ["Demande reçue", "Fiche créée", "Urgence qualifiée", "Responsable affecté", "Réponse suivie", "Demande clôturée"],
+      "organiser-planning-plusieurs-techniciens": ["Interventions prêtes", "Contraintes vérifiées", "Priorités classées", "Techniciens affectés", "Planning confirmé", "Écarts replanifiés"],
+      "bon-intervention-facture-sans-ressaisie": ["Bon signé", "Données contrôlées", "Prestations validées", "Écarts traités", "Facture générée", "Facture envoyée"],
+      "quel-logiciel-quand-excel-ne-suffit-plus": ["Usage observé", "Irritants recensés", "Risques mesurés", "Besoins cadrés", "Options comparées", "Décision prise"],
+      "rentabilite-application-metier": ["Temps mesuré", "Erreurs chiffrées", "Coût actuel calculé", "Gains estimés", "Investissement comparé", "Seuil validé"],
+      "logiciel-existant-ou-application-metier": ["Besoin cadré", "Marché recherché", "Écarts listés", "Coûts comparés", "Risques évalués", "Choix documenté"],
+    } as const;
+
+    for (const [slug, expectedSteps] of Object.entries(expectedStepsBySlug)) {
+      const content = ORGANISER_PROCESS_GUIDES.find((item) => item.identity.slug === slug);
+      expect(content, `${slug} is published`).toBeDefined();
+      expect(content?.processGuide?.steps.map((step) => step.label)).toEqual(expectedSteps);
+    }
+  });
+
+  it("keeps decision guides neutral until the comparison is complete", () => {
+    const decisionGuideSlugs = [
+      "quel-logiciel-quand-excel-ne-suffit-plus",
+      "rentabilite-application-metier",
+      "logiciel-existant-ou-application-metier",
+    ];
+
+    for (const slug of decisionGuideSlugs) {
+      const guide = ORGANISER_PROCESS_GUIDES.find(
+        (content) => content.identity.slug === slug,
+      )?.processGuide;
+      expect(guide?.toolsTitle).toBeTruthy();
+      expect(guide?.toolsIntroduction).toBeTruthy();
+      expect(guide?.system.slug).toBe("batiment");
     }
   });
 
@@ -163,6 +199,19 @@ describe("Organiser process guides", () => {
     );
     expect(plumbing?.processGuide?.conclusion).toBe(
       "Une demande entre une seule fois dans l’organisation et avance jusqu’à la facture, avec la bonne information au bon moment.",
+    );
+  });
+
+  it("keeps the long renovation H1 while using a mobile-safe card title", () => {
+    const renovation = ORGANISER_PROCESS_GUIDES.find(
+      (content) => content.identity.slug === "organiser-demandes-devis-renovation",
+    );
+
+    expect(renovation?.identity.title).toBe(
+      "Comment organiser les demandes de devis d’une entreprise de rénovation, du premier contact à la signature",
+    );
+    expect(renovation?.identity.card.title).toBe(
+      "Comment organiser les demandes de devis d’une entreprise de rénovation ?",
     );
   });
 

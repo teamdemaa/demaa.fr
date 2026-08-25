@@ -121,6 +121,8 @@ export interface AcademyProcessGuide {
     name: string;
     description: string;
   }>;
+  toolsTitle?: string;
+  toolsIntroduction?: string;
   system: {
     slug: string;
     label: string;

@@ -242,7 +242,7 @@ function AcademyCard({
   const isProcessGuide = Boolean(content.processGuide);
   const caseStudy = isCaseStudy ? CASE_STUDY_PRESENTATIONS[identity.slug] : undefined;
   const title = isProcessGuide
-    ? identity.title
+    ? identity.card.title
     : caseStudy?.title
     ?? (localeCode === "fr" ? COURSE_TITLES[identity.slug] : undefined)
     ?? identity.card.title;

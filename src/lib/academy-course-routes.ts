@@ -21,6 +21,12 @@ export const ACADEMY_CONTENT_SLUGS = [
   "organiser-commandes-stocks-restaurant",
   "organiser-suivi-administratif-formation",
   "organiser-mission-agence",
+  "centraliser-demandes-telephone-sms-whatsapp",
+  "organiser-planning-plusieurs-techniciens",
+  "bon-intervention-facture-sans-ressaisie",
+  "quel-logiciel-quand-excel-ne-suffit-plus",
+  "rentabilite-application-metier",
+  "logiciel-existant-ou-application-metier",
 ] as const;
 
 export const LEGACY_ACADEMY_SLUG_ALIASES = {

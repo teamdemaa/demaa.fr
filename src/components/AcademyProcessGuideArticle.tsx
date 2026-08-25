@@ -119,10 +119,11 @@ export default function AcademyProcessGuideArticle({
             <h2 id="tools-title" className="text-2xl font-semibold tracking-[-0.025em] text-[#25352C] sm:text-3xl">
               {isPlumbingGoldenMaster
                 ? "Quel logiciel choisir pour gérer les interventions ?"
-                : "Quels logiciels choisir pour soutenir ce processus ?"}
+                : guide.toolsTitle ?? "Quels logiciels choisir pour soutenir ce processus ?"}
             </h2>
             <p className="mt-4 leading-7 text-dema-muted">
-              Choisissez d’abord une solution métier unique. Les automatisations viennent ensuite, lorsque le circuit fonctionne déjà sans ambiguïté.
+              {guide.toolsIntroduction
+                ?? "Choisissez d’abord une solution métier unique. Les automatisations viennent ensuite, lorsque le circuit fonctionne déjà sans ambiguïté."}
             </p>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               {guide.tools.map((tool, index) => (

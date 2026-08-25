@@ -6,6 +6,7 @@ import type {
 type ProcessGuideInput = {
   slug: string;
   title: string;
+  cardTitle?: string;
   shortTitle: string;
   category: string;
   promise: string;
@@ -28,7 +29,7 @@ function defineProcessGuide(input: ProcessGuideInput): AcademyContentDefinition 
       durationMinutes: input.durationMinutes ?? 7,
       card: {
         section: "Organiser",
-        title: input.title,
+        title: input.cardTitle ?? input.title,
         meta: `${input.durationMinutes ?? 7} min de lecture`,
         image: null,
         imageAlt: `Processus présenté dans l’article : ${input.guide.steps.map((step) => step.label).join(", ")}.`,
@@ -246,6 +247,7 @@ export const ORGANISER_PROCESS_GUIDES: AcademyContentDefinition[] = [
   defineProcessGuide({
     slug: "organiser-demandes-devis-renovation",
     title: "Comment organiser les demandes de devis d’une entreprise de rénovation, du premier contact à la signature",
+    cardTitle: "Comment organiser les demandes de devis d’une entreprise de rénovation ?",
     shortTitle: "Devis d’une entreprise de rénovation",
     category: "Devis et commandes",
     promise:
@@ -578,6 +580,462 @@ export const ORGANISER_PROCESS_GUIDES: AcademyContentDefinition[] = [
       ],
       conclusion: "L’agence gagne en marge et en sérénité lorsque le brief, le périmètre, les validations et la facturation appartiennent au même processus.",
       editorialReview: { clarity: 4, realism: 4, immediateUsefulness: 4, exampleQuality: 2, toolRelevance: 1, consistency: 2, readability: 1, reviewedAt: "2026-08-25" },
+    },
+  }),
+  defineProcessGuide({
+    slug: "centraliser-demandes-telephone-sms-whatsapp",
+    title: "Comment centraliser les demandes reçues par téléphone, SMS et WhatsApp ?",
+    shortTitle: "Centraliser les demandes clients",
+    category: "Demandes et interventions",
+    promise:
+      "Une méthode pour conserver les canaux préférés des clients tout en transformant chaque message en demande visible, attribuée et suivie jusqu’à sa clôture.",
+    guide: {
+      sector: "Centralisation des demandes clients",
+      company: {
+        profile:
+          "Cette entreprise de maintenance compte six techniciens et reçoit vingt-cinq à quarante demandes par semaine par téléphone, SMS ou WhatsApp.",
+        friction:
+          "L’entreprise ne possède pas de file commune. Une photo reste dans un téléphone, une urgence est transmise oralement et la direction doit reconstituer la situation puis relancer l’équipe.",
+      },
+      processTitle: "Le processus de centralisation à mettre en place",
+      processIntroduction:
+        "Il n’est pas nécessaire d’imposer un formulaire aux clients. La discipline est interne : quel que soit le canal d’entrée, chaque demande devient une fiche unique avec une priorité, un responsable et une prochaine action.",
+      steps: [
+        {
+          label: "Demande reçue",
+          title: "Accueillir la demande sur le canal choisi",
+          input:
+            "Un appel téléphonique, un SMS, un message WhatsApp, une photo ou un message vocal envoyé à une personne de l’entreprise.",
+          description:
+            "La personne qui reçoit le contact confirme sa prise en compte sans promettre un délai qu’elle ne maîtrise pas, puis conserve le message jusqu’à la création de la trace commune.",
+          owner: "La personne qui reçoit le message ou l’appel",
+          output:
+            "Une demande reconnue avec l’identité du client, son moyen de contact, le lieu concerné et le motif exprimé.",
+          control:
+            "Toute demande professionnelle reçue sur un téléphone personnel ou partagé doit être enregistrée avant la fin de la demi-journée.",
+        },
+        {
+          label: "Fiche créée",
+          title: "Transformer l’échange en travail visible",
+          input:
+            "Le message initial, les coordonnées disponibles, l’adresse d’intervention et les photos ou documents déjà transmis.",
+          description:
+            "Une fiche unique extrait les faits utiles : client, site, demande, contraintes connues et date de réponse attendue.",
+          owner: "L’accueil ou la personne qui a reçu la demande",
+          output:
+            "Une fiche horodatée avec un identifiant, un demandeur, un site, un besoin résumé et les pièces jointes utiles.",
+          control:
+            "La fiche reste incomplète si le client, le moyen de le rappeler, le lieu ou le besoin observable ne peuvent pas être identifiés.",
+        },
+        {
+          label: "Urgence qualifiée",
+          title: "Appliquer des critères communs",
+          input:
+            "La fiche créée, les conséquences décrites par le client, les risques éventuels et les engagements contractuels applicables.",
+          description:
+            "Une règle écrite distingue sécurité, activité bloquée, planification, devis ou information manquante. Le ton du message ne décide pas seul de la priorité.",
+          owner: "La personne de permanence ou le responsable du planning",
+          output:
+            "Une priorité justifiée, un délai de première réponse et une décision claire sur le traitement à engager.",
+          control:
+            "Chaque priorité urgente doit correspondre à un critère vérifiable ; les autres fiches conservent une échéance visible de réponse.",
+        },
+        {
+          label: "Responsable affecté",
+          title: "Donner la prochaine action à une personne",
+          input:
+            "Une demande qualifiée, la compétence requise, la disponibilité de l’équipe et les informations restant à obtenir.",
+          description:
+            "La fiche est attribuée à la personne qui doit agir maintenant. La prochaine action et son échéance sont écrites au même endroit.",
+          owner: "Le responsable du planning ou du service concerné",
+          output:
+            "Un responsable actuel, une prochaine action datée et, lorsque cela est possible, la personne prévue pour la suite.",
+          control:
+            "Aucune fiche ouverte ne peut rester sans responsable ni date. Les absences entraînent une réaffectation explicite, jamais une attente implicite.",
+        },
+        {
+          label: "Réponse suivie",
+          title: "Conserver la continuité avec le client",
+          input:
+            "La fiche attribuée, l’action réalisée, les informations nouvelles et le canal sur lequel le client attend une réponse.",
+          description:
+            "L’équipe répond sur le canal approprié puis note le résultat. Tout rappel, demande de photo ou proposition de créneau devient une action datée.",
+          owner: "Le responsable actuel de la demande",
+          output:
+            "Un échange client tracé, un statut à jour et soit une décision, soit une prochaine action avec une échéance.",
+          control:
+            "La file des demandes sans mouvement depuis le délai convenu est revue chaque jour et chaque retard reçoit une décision documentée.",
+        },
+        {
+          label: "Demande clôturée",
+          title: "Fermer avec un résultat compréhensible",
+          input:
+            "La dernière action réalisée, la réponse du client, le compte rendu éventuel et les suites administratives associées.",
+          description:
+            "La demande est clôturée lorsque le résultat est connu : intervention terminée, devis envoyé, refus motivé, doublon fusionné ou transfert suivi.",
+          owner: "La personne responsable au moment du résultat final",
+          output:
+            "Une demande fermée avec un motif, une date, le résultat transmis au client et une suite éventuelle clairement rattachée.",
+          control:
+            "Une revue hebdomadaire repère les demandes fermées sans résultat, les doublons et les motifs récurrents qui justifient une nouvelle règle.",
+        },
+      ],
+      rulesTitle: "Les cinq règles qui empêchent les messages de se perdre",
+      rules: [
+        {
+          title: "Tous les canaux aboutissent à une seule file",
+          description:
+            "Les clients gardent leurs canaux, mais l’équipe consulte un seul endroit pour savoir ce qui attend une réponse.",
+        },
+        {
+          title: "La fiche résume les faits utiles",
+          description:
+            "Elle contient demandeur, lieu, besoin, pièces utiles, priorité et prochaine action, sans recopier toute la conversation.",
+        },
+        {
+          title: "Une priorité se justifie",
+          description:
+            "Sécurité, activité bloquée, engagement contractuel ou délai convenu sont des critères ; l’insistance seule n’en est pas un.",
+        },
+        {
+          title: "Chaque demande ouverte a un responsable",
+          description:
+            "Le nom indique qui doit agir maintenant et change lorsque le travail passe réellement à une autre personne.",
+        },
+        {
+          title: "Clôturer signifie obtenir un résultat",
+          description:
+            "Une réponse envoyée ne suffit pas si une action reste attendue. La fiche se ferme avec un motif compréhensible et une suite éventuelle.",
+        },
+      ],
+      implementation: {
+        startingPoint:
+          "Pendant cinq jours, notez le canal, le destinataire et le lieu de suivi de chaque demande. Créez ensuite une fiche avec client, contact, site, besoin, priorité et prochaine action. Centralisez avant d’automatiser.",
+        cadence:
+          "Contrôlez la file au début et à la fin de la journée. Une revue hebdomadaire examine les fiches anciennes, les doublons et les motifs récurrents afin d’ajuster les règles.",
+        escalation:
+          "La direction intervient pour un risque de sécurité, un engagement financier important, une réclamation sensible ou une demande bloquée malgré la règle. L’équipe traite les cas courants.",
+      },
+      example: {
+        title: "un message WhatsApp avec la photo d’une panne",
+        body:
+          "Un client envoie une photo à un technicien, qui crée la fiche. Le bureau qualifie la demande, l’attribue et propose un créneau par WhatsApp. Après l’intervention, le compte rendu est rattaché, le client est informé et la fiche est clôturée.",
+      },
+      tools: [
+        {
+          slug: "organilog",
+          name: "Organilog",
+          description:
+            "Pour convertir les demandes en interventions, attribuer les actions, planifier les techniciens et conserver les comptes rendus dans un même flux.",
+        },
+        {
+          slug: "praxedo",
+          name: "Praxedo",
+          description:
+            "Pour des équipes terrain plus structurées qui ont besoin de distribuer les interventions et de faire remonter leur résultat depuis le mobile.",
+        },
+      ],
+      system: {
+        slug: "batiment",
+        label: "Bâtiment",
+      },
+      checklist: [
+        "Lister tous les numéros et comptes qui reçoivent des demandes clients.",
+        "Créer une file commune et une fiche avec les six informations minimales.",
+        "Écrire les critères qui distinguent urgence, planification, devis et information manquante.",
+        "Attribuer un responsable et une échéance à chaque fiche ouverte.",
+        "Revoir chaque semaine les demandes sans résultat ou restées trop longtemps ouvertes.",
+      ],
+      faqs: [
+        {
+          question: "Faut-il supprimer WhatsApp pour mieux organiser les demandes ?",
+          answer:
+            "Non. WhatsApp peut rester pratique. Le risque apparaît lorsque le message constitue l’unique trace : une fiche commune doit être créée dès qu’une demande exploitable arrive.",
+        },
+        {
+          question: "Qui doit créer la fiche lorsqu’un technicien reçoit directement le message ?",
+          answer:
+            "La personne qui reçoit la demande crée au moins la trace minimale. Le bureau peut ensuite la compléter, la qualifier et l’affecter.",
+        },
+        {
+          question: "Comment éviter de saisir deux fois les mêmes informations ?",
+          answer:
+            "Recopiez uniquement les données nécessaires et rattachez les pièces à la fiche. Une intégration peut créer le brouillon, mais la qualification humaine reste nécessaire.",
+        },
+      ],
+      conclusion:
+        "Les clients continuent à appeler ou à écrire comme ils le souhaitent, mais aucune demande ne dépend plus d’un téléphone ou de la mémoire d’une seule personne.",
+      editorialReview: {
+        clarity: 4,
+        realism: 4,
+        immediateUsefulness: 4,
+        exampleQuality: 2,
+        toolRelevance: 2,
+        consistency: 2,
+        readability: 1,
+        reviewedAt: "2026-08-25",
+      },
+    },
+  }),
+  defineProcessGuide({
+    slug: "organiser-planning-plusieurs-techniciens",
+    title: "Comment organiser le planning de plusieurs techniciens ?",
+    shortTitle: "Planning de plusieurs techniciens",
+    category: "Planning et interventions",
+    promise: "Une méthode pour affecter les interventions selon les priorités, les compétences et les trajets, puis absorber les urgences sans reconstruire tout le planning.",
+    guide: {
+      sector: "Planning d’une équipe technique",
+      company: {
+        profile: "Cette entreprise de services techniques emploie huit techniciens. Elle combine visites récurrentes, dépannages urgents et interventions nécessitant des compétences ou du matériel précis.",
+        friction: "Le planning est construit dans un agenda partagé puis corrigé par téléphone. Les durées, trajets et absences sont connus séparément. Chaque urgence oblige la direction à déplacer plusieurs rendez-vous et à prévenir elle-même les clients.",
+      },
+      processTitle: "Le processus de planification à mettre en place",
+      processIntroduction: "Le planning ne commence pas par des cases vides à remplir. Il commence par une file d’interventions suffisamment préparées pour être comparées, affectées et confirmées selon des règles communes.",
+      steps: [
+        { label: "Interventions prêtes", title: "Séparer les demandes planifiables", input: "Les demandes qualifiées, les contrats récurrents, les retours à effectuer et les travaux déjà acceptés par les clients.", description: "Seules les interventions dont le lieu, le besoin, la durée estimée et la prochaine décision sont connus entrent dans la file à planifier.", owner: "Le responsable du planning", output: "Une file de travail planifiable avec site, client, durée estimée, échéance et nature de l’intervention.", control: "Toute fiche incomplète retourne à la qualification au lieu d’occuper provisoirement un créneau impossible à confirmer." },
+        { label: "Contraintes vérifiées", title: "Rendre visibles les conditions réelles", input: "La file planifiable, les compétences requises, les pièces nécessaires, les accès, les disponibilités clients et les absences.", description: "Chaque intervention reçoit les contraintes qui limitent son affectation : habilitation, véhicule, matériel, binôme, fenêtre client ou dépendance externe.", owner: "Le responsable du planning avec l’appui technique", output: "Une intervention enrichie des compétences, moyens, disponibilités et dépendances nécessaires à sa réalisation.", control: "Une contrainte bloquante doit être résolue ou recevoir une action avant que l’intervention soit proposée à un technicien." },
+        { label: "Priorités classées", title: "Arbitrer avant de remplir le calendrier", input: "Les interventions prêtes, leurs échéances contractuelles, leur niveau de risque et leur impact pour le client.", description: "Une règle distingue sécurité, activité bloquée, engagement daté, intervention récurrente et confort. L’ancienneté départage les demandes de même niveau.", owner: "Le responsable du planning selon les règles validées", output: "Une file ordonnée avec une priorité justifiée, une date limite et les interventions réellement déplaçables.", control: "Les priorités exceptionnelles sont accompagnées d’un motif ; une urgence commerciale ne remplace pas silencieusement une urgence de sécurité." },
+        { label: "Techniciens affectés", title: "Associer la bonne capacité au bon travail", input: "La file priorisée, les contraintes vérifiées, les horaires disponibles, les zones géographiques et la charge de chaque technicien.", description: "Les créneaux sont attribués en combinant priorité, compétence, durée et trajet. Les marges prévues évitent qu’un retard mineur désorganise toute la journée.", owner: "Le responsable du planning", output: "Un planning provisoire avec technicien, ordre de passage, durée, trajet et marge pour chaque intervention.", control: "Aucun technicien n’est affecté sans compétence requise, temps de déplacement réaliste ni accès aux informations de préparation." },
+        { label: "Planning confirmé", title: "Partager un engagement réalisable", input: "Le planning provisoire, les disponibilités confirmées des techniciens et les fenêtres acceptables pour les clients.", description: "L’équipe valide le lendemain ou la semaine utile, puis les clients reçoivent le créneau et les consignes. Une modification devient visible pour tous.", owner: "Le responsable du planning puis chaque technicien", output: "Un planning publié, des clients informés et des fiches accessibles avec adresse, contact, besoin et préparation.", control: "Chaque technicien confirme sa lecture ; les rendez-vous non confirmés par le client restent signalés et possèdent une relance attribuée." },
+        { label: "Écarts replanifiés", title: "Traiter les imprévus sans repartir de zéro", input: "Une urgence nouvelle, une absence, un retard, une pièce manquante ou une intervention dont la durée réelle dépasse l’estimation.", description: "L’écart est enregistré, puis la règle choisit quoi déplacer. Les clients affectés sont prévenus et les interventions reportées conservent leur priorité et leur historique.", owner: "Le responsable du planning ; la direction seulement pour les arbitrages majeurs", output: "Un planning mis à jour, des changements expliqués et chaque intervention déplacée rattachée à une nouvelle date.", control: "La revue hebdomadaire compare prévu et réalisé afin d’ajuster durées, marges, secteurs et critères d’escalade." },
+      ],
+      rulesTitle: "Les cinq règles d’un planning qui reste fiable",
+      rules: [
+        { title: "On ne planifie que du travail préparé", description: "Une demande incomplète reçoit une action de qualification ; elle ne bloque pas un créneau fictif dans le calendrier." },
+        { title: "La priorité précède la disponibilité", description: "Le premier technicien libre n’est pas toujours le bon. Risque, engagement et ancienneté guident d’abord l’ordre." },
+        { title: "Compétences et trajets sont des contraintes", description: "Ils apparaissent dans la fiche et ne reposent pas sur la connaissance personnelle de la direction." },
+        { title: "Le planning conserve une marge", description: "Un taux de remplissage maximal et des créneaux tampons absorbent les écarts normaux sans promesses irréalistes." },
+        { title: "Tout déplacement préserve une trace", description: "Le motif, la nouvelle date et l’information du client restent visibles pour éviter les oublis et reports successifs." },
+      ],
+      implementation: {
+        startingPoint: "Prenez la semaine passée et comparez chaque intervention prévue à sa réalisation. Notez les retards, déplacements, compétences manquantes et temps de trajet. Définissez ensuite la fiche minimale et quatre niveaux de priorité avant de refaire un planning.",
+        cadence: "Préparez le lendemain à heure fixe et la semaine à un niveau moins détaillé. Un point court traite les écarts chaque matin. La revue hebdomadaire compare charge, durée prévue, durée réelle, kilomètres et reports.",
+        escalation: "La direction arbitre une urgence qui déplace plusieurs clients, une surcharge durable, un engagement contractuel menacé ou un manque de compétence. Les ajustements ordinaires restent au responsable du planning.",
+      },
+      example: { title: "une panne urgente au milieu d’une journée chargée", body: "La demande entre avec un critère d’activité bloquée. Le planning identifie le technicien habilité dans la même zone et le rendez-vous déplaçable selon la règle. Le client concerné accepte un nouveau créneau, les deux fiches sont mises à jour et les techniciens voient immédiatement le nouvel ordre de passage." },
+      tools: [
+        { slug: "organilog", name: "Organilog", description: "Pour relier demandes, planning, fiches d’intervention et comptes rendus dans une petite équipe terrain." },
+        { slug: "synchroteam", name: "Synchroteam", description: "Pour optimiser l’affectation et le suivi d’équipes mobiles lorsque les volumes, zones et contraintes augmentent." },
+      ],
+      system: { slug: "batiment", label: "Bâtiment" },
+      checklist: ["Créer une file séparée des interventions réellement planifiables.", "Écrire les quatre niveaux de priorité et leurs critères.", "Renseigner compétences, durée, zone et matériel nécessaires.", "Définir la marge quotidienne à conserver pour les imprévus.", "Comparer chaque semaine le planning prévu au travail réalisé."],
+      faqs: [
+        { question: "Faut-il remplir chaque journée à 100 % ?", answer: "Non. Un planning sans marge transforme chaque retard en cascade. Le niveau de marge dépend de la fréquence des urgences, des trajets et de la variabilité des interventions." },
+        { question: "Qui décide quelle intervention déplacer ?", answer: "Le responsable du planning applique les priorités et les règles de déplacement. La direction intervient uniquement lorsque plusieurs engagements importants entrent réellement en conflit." },
+        { question: "Comment planifier quand les durées sont incertaines ?", answer: "Utilisez des durées de référence par type d’intervention, conservez une marge puis comparez prévu et réel. Les estimations deviennent progressivement plus fiables." },
+      ],
+      conclusion: "Le planning devient un engagement collectif fondé sur des règles visibles, et non un puzzle que la direction doit reconstruire à chaque imprévu.",
+      editorialReview: { clarity: 4, realism: 4, immediateUsefulness: 4, exampleQuality: 2, toolRelevance: 2, consistency: 2, readability: 1, reviewedAt: "2026-08-25" },
+    },
+  }),
+  defineProcessGuide({
+    slug: "bon-intervention-facture-sans-ressaisie",
+    title: "Comment passer d’un bon d’intervention à la facture sans ressaisie ?",
+    shortTitle: "Bon d’intervention sans ressaisie",
+    category: "Documents et facturation",
+    promise: "Un circuit pour recueillir les bonnes données sur le terrain, contrôler les écarts et produire la facture depuis un bon d’intervention réellement exploitable.",
+    guide: {
+      sector: "Facturation des interventions",
+      company: {
+        profile: "Cette entreprise de maintenance réalise cinquante à quatre-vingts interventions par mois. Les techniciens remplissent encore des bons papier ou des PDF envoyés au bureau.",
+        friction: "L’administration ressaisit le client, les heures, les pièces et les prestations dans le logiciel de facturation. Les écritures illisibles, références absentes et travaux supplémentaires imposent des appels aux techniciens et retardent l’envoi.",
+      },
+      processTitle: "Le processus du bon signé à la facture",
+      processIntroduction: "Supprimer la ressaisie ne consiste pas seulement à numériser le bon. Les données terrain doivent être structurées, contrôlées et reliées aux conditions commerciales avant de déclencher la facture.",
+      steps: [
+        { label: "Bon signé", title: "Capturer la preuve sur le terrain", input: "L’intervention réalisée, la fiche de mission, le client présent et les informations relevées par le technicien.", description: "Le bon identifie l’intervention, décrit le travail, enregistre temps, pièces, observations et signature ou motif d’absence du client.", owner: "Le technicien qui réalise l’intervention", output: "Un bon horodaté rattaché à l’intervention avec résultat, temps, fournitures, réserves et preuve de passage.", control: "La clôture terrain reste bloquée si le résultat, le temps, les pièces ou le statut de signature nécessaires manquent." },
+        { label: "Données contrôlées", title: "Vérifier la complétude avant transmission", input: "Le bon clôturé, les données du client, le contrat ou devis et les règles de facturation applicables.", description: "Des contrôles repèrent champs manquants, temps incohérents, références inconnues, signature absente et intervention sans base commerciale.", owner: "Le technicien pour la correction immédiate, puis l’administration", output: "Un bon complet ou une anomalie attribuée avec l’information précise à corriger et une échéance de retour.", control: "Les anomalies sont signalées avant que le technicien perde le contexte ; elles ne sont pas compensées par une ressaisie approximative." },
+        { label: "Prestations validées", title: "Relier le réalisé au facturable", input: "Le bon complet, le devis, le contrat, le catalogue des prestations et les conditions propres au client.", description: "Chaque temps, forfait, déplacement et pièce est rapproché d’une ligne facturable ou identifié comme inclus, offert ou non facturable.", owner: "L’administration selon les règles commerciales validées", output: "Un ensemble de lignes facturables avec quantité, prix, taxe, rattachement contractuel et justification des éléments exclus.", control: "Aucune quantité ni tarif ne vient d’une interprétation libre du texte du technicien ; les écarts sont isolés pour décision." },
+        { label: "Écarts traités", title: "Décider les cas non prévus", input: "Les prestations validées et la liste des travaux supplémentaires, temps inhabituels, pièces non prévues ou désaccords.", description: "Chaque écart reçoit une décision : facturer selon une règle, demander un accord, absorber, corriger le bon ou créer un devis complémentaire.", owner: "Le responsable commercial ou la direction selon le seuil", output: "Une décision tracée pour chaque écart avec montant, justification, accord éventuel et personne autorisant la suite.", control: "Les écarts au-dessus du seuil ne rejoignent pas la facture sans preuve d’accord ; les petits écarts suivent une règle commune." },
+        { label: "Facture générée", title: "Créer le document depuis les données validées", input: "Les lignes facturables approuvées, l’identité client, les références obligatoires et les conditions de règlement.", description: "Le système compose le brouillon de facture depuis le bon et les règles commerciales sans recopier les informations déjà validées.", owner: "Le logiciel prépare ; l’administration vérifie", output: "Un brouillon rattaché au bon d’intervention avec lignes, taxes, références, échéance et pièces justificatives.", control: "Un contrôle final rapproche total, client, adresse de facturation, commande éventuelle et conditions avant validation comptable." },
+        { label: "Facture envoyée", title: "Transmettre et ouvrir le suivi du paiement", input: "La facture validée, l’adresse ou le portail de dépôt du client et les justificatifs exigés par son processus achat.", description: "La facture et les pièces sont envoyées par le canal convenu. La date, l’échéance et le statut de transmission alimentent le suivi des règlements.", owner: "L’administration ou la comptabilité", output: "Une facture transmise avec preuve d’envoi, échéance, statut de paiement et relance planifiée si nécessaire.", control: "Chaque semaine, les interventions terminées sans facture et les factures rejetées sont rapprochées de leur bon d’origine." },
+      ],
+      rulesTitle: "Les cinq règles qui éliminent la ressaisie",
+      rules: [
+        { title: "Le bon contient des données, pas seulement du texte", description: "Temps, pièces, résultat et statuts utilisent des champs exploitables ; les commentaires servent uniquement à préciser le contexte." },
+        { title: "Une donnée est saisie à sa source", description: "Le technicien confirme le réalisé, l’administration ne le reconstitue pas plusieurs jours plus tard." },
+        { title: "Le catalogue relie terrain et facturation", description: "Les codes et règles permettent de transformer une prestation réalisée en ligne facturable sans interprétation libre." },
+        { title: "Les écarts suivent un circuit séparé", description: "Travaux supplémentaires et temps exceptionnels sont décidés, pas noyés dans le flux normal ni supprimés sans trace." },
+        { title: "La facture reste contrôlée", description: "L’automatisation prépare le document ; un contrôle proportionné vérifie l’identité, les montants et les exigences du client." },
+      ],
+      implementation: {
+        startingPoint: "Prenez vingt bons récents et listez toutes les informations que l’administration a dû rechercher ou ressaisir. Transformez les plus fréquentes en champs obligatoires et reliez les prestations courantes au catalogue de facturation.",
+        cadence: "Contrôlez les bons le jour même. Traitez quotidiennement les anomalies et générez les factures à fréquence fixe. Chaque mois, analysez les causes de rejet, les écarts et le délai entre intervention et envoi.",
+        escalation: "La direction arbitre un travail non autorisé, un écart commercial important, un litige ou une remise hors règle. Les corrections de complétude restent entre technicien et administration.",
+      },
+      example: { title: "un remplacement de pièce non prévu", body: "Le technicien sélectionne l’équipement, renseigne son temps et ajoute la pièce avec la photo de l’accord client. Le bon signé arrive dans la file de contrôle. Le système reconnaît le forfait, isole la pièce supplémentaire puis applique la règle validée. Après vérification, la facture est générée et envoyée avec le bon en pièce jointe." },
+      tools: [
+        { slug: "organilog", name: "Organilog", description: "Pour relier fiches terrain, comptes rendus, temps, fournitures et préparation de la facturation." },
+        { slug: "obat", name: "Obat", description: "Pour gérer devis et factures lorsque la continuité commerciale et administrative du BTP est prioritaire." },
+      ],
+      system: { slug: "plomberie-chauffage", label: "Plomberie et chauffage" },
+      checklist: ["Analyser vingt bons et repérer chaque information ressaisie.", "Créer les champs obligatoires utiles à la facturation.", "Relier les prestations courantes à un catalogue de prix.", "Définir le circuit et les seuils des travaux supplémentaires.", "Mesurer le délai entre clôture terrain et facture envoyée."],
+      faqs: [
+        { question: "Une signature électronique est-elle toujours obligatoire ?", answer: "Cela dépend du contrat et de la preuve attendue. Si le client est absent, prévoyez un statut, des photos et un mode de validation adapté plutôt qu’une fausse signature." },
+        { question: "Faut-il générer automatiquement la facture définitive ?", answer: "Commencez par un brouillon automatique contrôlé. La validation peut devenir plus légère lorsque les données, tarifs et exceptions sont suffisamment fiables." },
+        { question: "Que faire des travaux supplémentaires ?", answer: "Isolez-les, rattachez une preuve d’accord et appliquez un seuil de décision. Ils ne doivent être ni facturés sans base ni absorbés silencieusement." },
+      ],
+      conclusion: "Le bon d’intervention devient la source fiable de la facture : le terrain renseigne le réalisé une fois, puis l’administration contrôle au lieu de reconstruire.",
+      editorialReview: { clarity: 4, realism: 4, immediateUsefulness: 4, exampleQuality: 2, toolRelevance: 2, consistency: 2, readability: 1, reviewedAt: "2026-08-25" },
+    },
+  }),
+  defineProcessGuide({
+    slug: "quel-logiciel-quand-excel-ne-suffit-plus",
+    title: "Quel logiciel choisir quand Excel ne suffit plus ?",
+    shortTitle: "Choisir un logiciel après Excel",
+    category: "Outils et organisation",
+    promise: "Une méthode pour reconnaître les limites réelles d’Excel, cadrer le besoin et comparer les solutions sans remplacer trop vite un fichier qui fonctionne encore.",
+    guide: {
+      sector: "Choix d’un logiciel pour une TPE",
+      company: {
+        profile: "Cette TPE du bâtiment compte dix personnes et pilote demandes, planning et suivi client dans plusieurs fichiers Excel, complétés par des e-mails et un agenda partagé.",
+        friction: "Le fichier principal reste utile, mais les versions se multiplient, les relances sont manuelles et personne ne sait toujours quelle ligne est à jour. Le dirigeant hésite entre réparer Excel, acheter plusieurs outils ou lancer un projet sur mesure.",
+      },
+      processTitle: "Le processus de choix à mettre en place",
+      processIntroduction: "Le bon logiciel ne se choisit pas à partir d’une liste de fonctionnalités. Il se choisit en observant le travail réel, en mesurant ce qui bloque puis en comparant des options sur un même scénario.",
+      steps: [
+        { label: "Usage observé", title: "Regarder comment le fichier est réellement utilisé", input: "Les fichiers actifs, leurs propriétaires, les échanges associés et plusieurs dossiers récents suivis du début à la fin.", description: "L’équipe décrit qui saisit quoi, à quel moment, avec quelles sources et quelles décisions. Les contournements comptent autant que le fichier officiel.", owner: "La personne qui pilote le diagnostic avec les utilisateurs", output: "Une carte du flux actuel avec fichiers, rôles, passages manuels, décisions et canaux parallèles réellement utilisés.", control: "L’observation porte sur des cas récents et inclut les personnes qui saisissent, contrôlent et utilisent les informations." },
+        { label: "Irritants recensés", title: "Distinguer gêne et blocage opérationnel", input: "La carte d’usage, les erreurs récentes, les recherches d’information, les doubles saisies et les relances effectuées.", description: "Chaque irritation est décrite par sa fréquence, les personnes touchées et sa conséquence : retard, erreur, travail inutile ou dépendance au dirigeant.", owner: "Le pilote du diagnostic avec l’équipe", output: "Une liste priorisée d’irritants observables avec fréquence, temps perdu, conséquence et cause probable.", control: "Une préférence d’interface n’est pas confondue avec un problème ; chaque irritant doit être relié à un cas réel." },
+        { label: "Risques mesurés", title: "Identifier le moment où Excel devient fragile", input: "Les irritants recensés, les volumes, le nombre d’utilisateurs, les données sensibles et les conséquences d’une erreur.", description: "L’entreprise mesure versions concurrentes, droits insuffisants, historique absent, automatisations instables, dépendance à une personne et impossibilité de travailler simultanément.", owner: "Le dirigeant avec la personne responsable des données", output: "Un diagnostic distinguant les limites acceptables, les risques à corriger et les points qui imposent un changement d’outil.", control: "Le changement n’est justifié que si le coût ou le risque du système actuel dépasse clairement l’effort d’amélioration ou de migration." },
+        { label: "Besoins cadrés", title: "Décrire le résultat avant les fonctionnalités", input: "Les problèmes prioritaires, les utilisateurs concernés, les règles du processus et les contraintes techniques ou réglementaires.", description: "Le besoin est formulé comme un flux : événement de départ, étapes, responsables, exceptions, résultat attendu et informations nécessaires.", owner: "Le pilote du projet avec les futurs utilisateurs", output: "Un scénario prioritaire, des critères obligatoires, des critères souhaitables, des contraintes et un volume de référence.", control: "Le périmètre tient dans une première version testable ; les demandes sans lien avec le scénario prioritaire restent hors sélection." },
+        { label: "Options comparées", title: "Tester chaque solution sur le même scénario", input: "Le besoin cadré, une courte liste d’outils, un jeu de données réaliste et les personnes qui utiliseront la solution.", description: "Excel amélioré, outil existant, assemblage no-code ou application métier sont testés sur un dossier identique, pas comparés sur leurs pages marketing.", owner: "Deux utilisateurs représentatifs avec le décideur", output: "Une comparaison fondée sur usage, couverture, simplicité, coût total, migration, support et limites résiduelles.", control: "Chaque option réalise le scénario de bout en bout et expose ses compromis ; une démonstration guidée ne remplace pas le test utilisateur." },
+        { label: "Décision prise", title: "Choisir avec un coût et une responsabilité visibles", input: "La comparaison, le budget, le temps de migration, les risques, les dépendances et l’impact attendu sur l’équipe.", description: "La décision précise ce qui change, ce qui reste, qui porte la mise en place, comment les données migrent et à quelle date le résultat sera évalué.", owner: "Le dirigeant avec le responsable de la mise en œuvre", output: "Une option choisie, un périmètre, un responsable, un budget complet, un calendrier et des critères de réussite.", control: "Une date de revue vérifie adoption, temps gagné, erreurs et qualité du suivi avant toute extension du périmètre." },
+      ],
+      rulesTitle: "Les cinq règles pour choisir sans suréquiper l’entreprise",
+      rules: [
+        { title: "Excel n’est pas le problème par principe", description: "Un fichier stable, compris et détenu par une petite équipe peut rester la solution la plus simple." },
+        { title: "Le signal vient du processus", description: "Versions, droits, historique, relances et travail simultané indiquent une limite plus utile que le nombre de lignes." },
+        { title: "Un scénario vaut mieux qu’une liste de fonctions", description: "Faites passer un vrai dossier de l’entrée au résultat pour révéler les ruptures et les manipulations cachées." },
+        { title: "Le coût comprend la mise en place", description: "Licence, paramétrage, migration, formation, maintenance et temps interne doivent être comparés ensemble." },
+        { title: "La première version reste étroite", description: "Résolvez le flux qui coûte le plus avant de centraliser tous les processus de l’entreprise." },
+      ],
+      implementation: {
+        startingPoint: "Choisissez un seul fichier critique et suivez trois dossiers récents. Notez les saisies, recherches, relances, erreurs et décisions. Ne lancez aucune démonstration avant d’avoir formulé le scénario prioritaire.",
+        cadence: "Cadrez le besoin en une semaine, testez au plus trois options, puis organisez une revue avec les utilisateurs. Après choix, mesurez chaque mois adoption, temps de traitement et erreurs.",
+        escalation: "La direction arbitre le budget, les données sensibles, une dépendance fournisseur ou une modification de processus. Les préférences d’écran ne deviennent pas des exigences sans impact opérationnel." ,
+      },
+      example: { title: "un fichier de suivi des demandes devenu trop fragile", body: "L’équipe observe trois demandes et constate deux saisies, quatre relances manuelles et aucune trace des changements. Elle cadre un flux de la demande à la clôture, puis teste Excel amélioré, Airtable et un logiciel métier avec les mêmes données. L’outil métier couvre le planning mais pas une validation propre à l’activité ; ce compromis est chiffré avant décision." },
+      tools: [
+        { slug: "organilog", name: "Organilog", description: "Pour tester une solution métier qui relie demandes, planning, interventions et suivi terrain dans une petite équipe technique." },
+        { slug: "airtable", name: "Airtable", description: "Pour structurer une base partagée et des vues par rôle lorsque le processus dépasse Excel sans nécessiter immédiatement une application dédiée." },
+      ],
+      toolsTitle: "Quelles solutions tester avant de quitter Excel ?",
+      toolsIntroduction: "Testez chaque option avec le même dossier réel. Un outil n’est pertinent que s’il réduit les doubles saisies, clarifie les responsabilités et reste utilisable par l’équipe sans nouveau contournement.",
+      system: { slug: "batiment", label: "Bâtiment" },
+      checklist: ["Observer trois dossiers dans le fichier le plus critique.", "Mesurer fréquence et conséquence des irritants.", "Écrire un scénario prioritaire de bout en bout.", "Tester au maximum trois options avec les mêmes données.", "Comparer licence, mise en place, migration et maintenance."],
+      faqs: [
+        { question: "À partir de combien de lignes faut-il quitter Excel ?", answer: "Il n’existe pas de seuil universel. Les vrais signaux sont les versions concurrentes, les droits, le manque d’historique, les relances manuelles et le travail simultané." },
+        { question: "Faut-il choisir un outil tout-en-un ?", answer: "Seulement s’il couvre correctement le flux prioritaire sans complexifier le quotidien. Un outil plus étroit et bien adopté vaut mieux qu’une suite complète contournée par l’équipe." },
+        { question: "Peut-on améliorer Excel avant de migrer ?", answer: "Oui. Clarifier les règles, réduire les colonnes, protéger les données et attribuer la propriété du fichier peut suffire, ou préparer une migration beaucoup plus propre." },
+      ],
+      conclusion: "Le moment de quitter Excel arrive lorsque ses contournements coûtent plus que sa simplicité ; le choix se fait alors sur un processus réel, pas sur une promesse logicielle.",
+      editorialReview: { clarity: 4, realism: 4, immediateUsefulness: 4, exampleQuality: 2, toolRelevance: 2, consistency: 2, readability: 1, reviewedAt: "2026-08-25" },
+    },
+  }),
+  defineProcessGuide({
+    slug: "rentabilite-application-metier",
+    title: "À partir de quand une application métier devient-elle rentable ?",
+    shortTitle: "Rentabilité d’une application métier",
+    category: "Outils et rentabilité",
+    promise: "Une méthode pour chiffrer le coût du fonctionnement actuel, estimer des gains crédibles et décider d’investir sans confondre automatisation et économie réelle.",
+    guide: {
+      sector: "Rentabilité d’une application métier",
+      company: {
+        profile: "Cette entreprise de services techniques compte huit personnes. Son équipe consacre environ douze heures par semaine à recopier des demandes, relancer des dossiers et produire des comptes rendus.",
+        friction: "Le dirigeant voit le temps perdu mais ne sait pas quelle part une application supprimera réellement. Un devis paraît élevé face à un abonnement, tandis que les erreurs, les retards de facturation et la dépendance à la direction restent invisibles.",
+      },
+      processTitle: "Le calcul de rentabilité à mettre en place",
+      processIntroduction: "Une application devient rentable lorsqu’elle réduit durablement un coût réel ou permet une capacité utile supérieure à son coût complet. Le calcul part du travail observé, puis applique des hypothèses prudentes.",
+      steps: [
+        { label: "Temps mesuré", title: "Observer le travail réellement consommé", input: "Un processus précis, plusieurs dossiers récents, les personnes qui interviennent et le temps consacré aux opérations manuelles.", description: "Pendant deux semaines, l’équipe mesure saisie, recherche, relance, correction, transmission et contrôle sans inclure le travail métier qui restera nécessaire.", owner: "Le pilote du diagnostic avec chaque rôle concerné", output: "Un volume mensuel, un temps moyen par opération, les personnes mobilisées et la part réellement automatisable.", control: "Les mesures viennent de dossiers réels et distinguent temps supprimable, temps réduit et temps indispensable à la décision humaine." },
+        { label: "Erreurs chiffrées", title: "Rendre visibles les coûts autres que le temps", input: "Les corrections, oublis, déplacements inutiles, retards de facturation, remises commerciales et réclamations liés au processus.", description: "Chaque erreur reçoit une fréquence et une conséquence financière ou opérationnelle prudente. Les risques rares restent séparés des pertes récurrentes.", owner: "Le pilote avec l’administration et les responsables opérationnels", output: "Une estimation mensuelle des corrections, retards, pertes évitables et risques importants liés au fonctionnement actuel.", control: "Une erreur n’est comptée que si son lien avec le processus est démontrable ; les bénéfices hypothétiques restent identifiés comme tels." },
+        { label: "Coût actuel calculé", title: "Établir la base de comparaison", input: "Les temps mesurés, les coûts horaires complets, les erreurs chiffrées et les abonnements ou outils déjà payés.", description: "Le coût mensuel additionne travail évitable, pertes récurrentes et outils concernés. La dépendance au dirigeant est valorisée avec son vrai coût d’opportunité.", owner: "Le dirigeant avec la personne qui suit les coûts", output: "Un coût actuel mensuel et annuel, détaillé par temps, erreur, retard et outil, avec hypothèses documentées.", control: "Le calcul évite de compter deux fois le même effet et conserve une version basse lorsque le montant reste incertain." },
+        { label: "Gains estimés", title: "Appliquer un scénario d’amélioration prudent", input: "Le coût actuel, le périmètre de l’application, les étapes réellement couvertes et les changements attendus dans l’équipe.", description: "L’entreprise estime ce qui sera supprimé, réduit ou fiabilisé. Elle retire le temps de contrôle, d’apprentissage et de maintenance qui restera après lancement.", owner: "Le pilote du projet avec les futurs utilisateurs", output: "Trois scénarios de gains, prudent, central et haut, avec adoption, volume et réduction attendue par opération.", control: "La décision utilise le scénario prudent ; aucun gain ne dépasse la part du processus effectivement couverte par l’application." },
+        { label: "Investissement comparé", title: "Inclure le coût complet de la solution", input: "Le devis ou les licences, le paramétrage, la migration, la formation, le temps interne, l’hébergement et la maintenance.", description: "Le coût initial et le coût récurrent sont comparés aux gains nets. Le calcul distingue trésorerie, délai de retour et valeur créée après amortissement.", owner: "Le dirigeant avec le prestataire ou l’éditeur", output: "Un investissement complet, un gain mensuel net, un délai de retour et un coût de fonctionnement après lancement.", control: "Les évolutions probables, le support et le temps interne sont inclus ; un prix d’achat isolé n’est jamais présenté comme le coût total." },
+        { label: "Seuil validé", title: "Décider avec des conditions de réussite", input: "Les scénarios de gains, le coût complet, le délai de retour, les risques d’adoption et les priorités financières de l’entreprise.", description: "L’entreprise fixe le délai acceptable, le volume minimal et les indicateurs à atteindre. Elle peut investir, réduire le périmètre, différer ou renoncer.", owner: "Le dirigeant", output: "Une décision documentée avec périmètre, budget, seuil de rentabilité, indicateurs, responsable et date de revue.", control: "Après lancement, les gains réels sont mesurés aux mêmes endroits que la base initiale et les extensions dépendent des résultats obtenus." },
+      ],
+      rulesTitle: "Les cinq règles d’un calcul crédible",
+      rules: [
+        { title: "Mesurer un processus précis", description: "Le calcul porte sur un flux identifiable et un volume réel, pas sur une promesse générale de transformation numérique." },
+        { title: "Valoriser le coût complet", description: "Temps interne, migration, formation, support et maintenance comptent autant que le prix affiché." },
+        { title: "Utiliser une hypothèse prudente", description: "L’application ne supprime ni toutes les tâches ni toutes les erreurs ; l’adoption et le contrôle conservent un coût." },
+        { title: "Séparer économie et capacité", description: "Du temps libéré ne devient une économie que s’il est supprimé ou réaffecté à un travail utile et réellement réalisé." },
+        { title: "Mesurer après le lancement", description: "Le dossier d’investissement définit dès le départ les indicateurs et la date auxquels le résultat sera vérifié." },
+      ],
+      implementation: {
+        startingPoint: "Choisissez un seul processus répétitif et mesurez-le pendant deux semaines. Comptez dossiers, minutes, corrections et délais. Construisez ensuite un scénario prudent avant de demander ou comparer des devis.",
+        cadence: "Validez la base avec les utilisateurs, puis révisez les hypothèses au moment du cadrage. Après lancement, mesurez à un mois, trois mois et six mois avec la même méthode.",
+        escalation: "La direction arbitre le délai de retour acceptable, les gains de capacité difficiles à valoriser et les risques stratégiques. Les estimations opérationnelles restent justifiées par les utilisateurs du processus.",
+      },
+      example: { title: "douze heures administratives par semaine", body: "L’entreprise mesure huit heures de ressaisie et quatre heures de relance. Le scénario prudent réduit seulement sept heures et conserve deux heures de contrôle. Après valorisation des erreurs évitées, le gain net estimé atteint 1 100 euros par mois. Un projet à 5 500 euros plus ses coûts récurrents atteint son seuil en environ six mois ; cette hypothèse devient l’objectif à vérifier." },
+      tools: [
+        { slug: "airtable", name: "Airtable", description: "Pour tester un flux structuré à coût limité et vérifier les usages avant d’engager une construction plus spécifique." },
+        { slug: "make", name: "Make", description: "Pour automatiser des passages entre outils existants lorsque la rupture vient surtout de transferts manuels répétitifs." },
+      ],
+      toolsTitle: "Quels outils utiliser pour tester l’hypothèse ?",
+      toolsIntroduction: "Un prototype ou une automatisation limitée permet de mesurer l’usage et le temps réellement gagné avant un investissement plus important. Ce test ne remplace pas le calcul du coût complet.",
+      system: { slug: "batiment", label: "Bâtiment" },
+      checklist: ["Choisir un seul processus et mesurer son volume.", "Séparer temps supprimable, réduit et indispensable.", "Chiffrer erreurs et retards sans double comptage.", "Inclure mise en place, adoption et maintenance.", "Fixer le seuil et les dates de mesure après lancement."],
+      faqs: [
+        { question: "Quel délai de retour viser ?", answer: "Il dépend de la trésorerie, du risque et de la durée de vie attendue. L’important est de fixer le délai avant la décision et de tester un scénario prudent." },
+        { question: "Le temps gagné est-il toujours une économie ?", answer: "Non. Il devient une économie si une dépense disparaît, ou une capacité si l’équipe réalise davantage de travail utile sans augmenter ses moyens." },
+        { question: "Comment valoriser le temps du dirigeant ?", answer: "Utilisez son coût complet ou la valeur du travail qu’il ne peut pas réaliser pendant ce temps. Gardez une hypothèse basse pour éviter de gonfler artificiellement le résultat." },
+      ],
+      conclusion: "Une application métier est rentable quand son gain prudent, mesuré sur un processus réel, couvre son coût complet dans un délai acceptable pour l’entreprise.",
+      editorialReview: { clarity: 4, realism: 4, immediateUsefulness: 4, exampleQuality: 2, toolRelevance: 2, consistency: 2, readability: 1, reviewedAt: "2026-08-25" },
+    },
+  }),
+  defineProcessGuide({
+    slug: "logiciel-existant-ou-application-metier",
+    title: "Faut-il choisir un logiciel existant ou construire son propre outil ?",
+    shortTitle: "Logiciel existant ou outil propre",
+    category: "Outils et organisation",
+    promise: "Une méthode pour comparer couverture, adaptations, coût total et dépendances avant de choisir un logiciel du marché ou une application métier adaptée.",
+    guide: {
+      sector: "Choix entre logiciel et application métier",
+      company: {
+        profile: "Cette entreprise de services techniques de douze personnes a testé plusieurs logiciels standards pour gérer demandes, affectations, comptes rendus et facturation.",
+        friction: "Chaque outil couvre une partie du travail, mais l’équipe revient aux messages et aux fichiers pour une validation propre à l’activité. Le dirigeant hésite entre accepter ce compromis, multiplier les connexions ou construire une application dédiée.",
+      },
+      processTitle: "Le processus de décision à mettre en place",
+      processIntroduction: "La décision n’oppose pas une solution simple à une solution parfaite. Elle compare le coût des écarts au coût de l’adaptation, puis rend visibles les risques de mise en place et de dépendance.",
+      steps: [
+        { label: "Besoin cadré", title: "Définir le flux qui doit fonctionner", input: "Un processus prioritaire, des dossiers récents, les rôles concernés, les règles métier et le résultat attendu par l’entreprise.", description: "Le besoin décrit déclencheur, étapes, données, responsables, exceptions, volumes et contrôles. Les souhaits éloignés du problème principal restent hors périmètre.", owner: "Le pilote du projet avec les utilisateurs et le décideur", output: "Un scénario de référence, des critères obligatoires, des critères souhaitables, des volumes et des contraintes documentées.", control: "Chaque exigence est reliée à une action, un risque ou un résultat ; une préférence sans conséquence reste un critère secondaire." },
+        { label: "Marché recherché", title: "Chercher d’abord les solutions disponibles", input: "Le besoin cadré, le secteur, la taille de l’équipe, le budget indicatif et les systèmes avec lesquels la solution doit communiquer.", description: "L’entreprise identifie trois à cinq solutions crédibles, consulte leur documentation et demande une démonstration fondée sur son scénario réel.", owner: "Le pilote du projet", output: "Une courte liste d’outils du marché capables de couvrir le cœur du besoin, avec prix, limites connues et conditions d’essai.", control: "La recherche inclut les logiciels métier spécialisés avant les outils génériques et écarte les options sans preuve sur le scénario prioritaire." },
+        { label: "Écarts listés", title: "Mesurer ce que chaque option laisse dehors", input: "Les essais, le scénario de référence, les retours des utilisateurs et les possibilités de paramétrage ou d’intégration.", description: "Pour chaque solution, l’équipe note les étapes couvertes, les contournements, les doubles saisies, les adaptations et les limites qui resteront acceptables.", owner: "Deux utilisateurs représentatifs avec le pilote", output: "Une matrice d’écarts distinguant blocage, adaptation raisonnable, changement de pratique acceptable et fonction seulement souhaitée.", control: "Un écart est évalué par sa fréquence et son coût ; la construction n’est pas justifiée par une différence rare ou purement esthétique." },
+        { label: "Coûts comparés", title: "Calculer le coût total sur la même période", input: "Les licences, devis, paramétrages, intégrations, migration, formation, hébergement, support, maintenance et temps interne.", description: "Les options sont comparées sur trois ans avec un scénario de volume cohérent. Le coût des contournements résiduels est ajouté au logiciel existant.", owner: "Le dirigeant avec le pilote et les fournisseurs", output: "Un coût total comparable par option, séparant investissement initial, fonctionnement récurrent et coût des écarts conservés.", control: "Les évolutions, la reprise de données et le temps de décision interne apparaissent ; un tarif mensuel n’est pas comparé seul à un devis complet." },
+        { label: "Risques évalués", title: "Regarder au-delà des fonctionnalités", input: "Les options chiffrées, les conditions contractuelles, les modes d’export, la sécurité, le support et les compétences disponibles.", description: "L’entreprise évalue adoption, fiabilité du fournisseur, dépendance technique, évolutivité, réversibilité et capacité à maintenir une solution sur mesure.", owner: "Le dirigeant avec les responsables métier et technique", output: "Un registre de risques avec probabilité, impact, mesure de réduction, responsable et condition pouvant remettre en cause l’option.", control: "Une application dédiée n’est retenue sans propriétaire, maintenance et réversibilité ; un logiciel n’est retenu sans export et niveau de service compris." },
+        { label: "Choix documenté", title: "Décider et préparer la première version", input: "La couverture, les écarts, les coûts, les risques, les préférences utilisateurs et les priorités stratégiques de l’entreprise.", description: "La décision peut être acheter, paramétrer, connecter, construire ou commencer par un hybride. Elle précise le périmètre, les compromis et les critères de réussite.", owner: "Le dirigeant", output: "Une décision argumentée, un budget, un responsable, un calendrier, une stratégie de données et un plan de première mise en service.", control: "La décision est revue après usage réel ; toute extension dépend de l’adoption, du résultat et des écarts encore observés." },
+      ],
+      rulesTitle: "Les cinq règles pour choisir sans biais",
+      rules: [
+        { title: "Chercher avant de construire", description: "Un logiciel métier existant mérite toujours un test réel avant d’engager un projet spécifique." },
+        { title: "Comparer sur le même scénario", description: "Chaque option traite le même dossier, avec les mêmes utilisateurs et le même résultat attendu." },
+        { title: "Chiffrer le coût des écarts", description: "Un contournement quotidien peut rendre une licence peu chère plus coûteuse qu’une adaptation bien ciblée." },
+        { title: "Prévoir la vie après le lancement", description: "Support, maintenance, évolutions, sécurité, données et réversibilité appartiennent à la décision initiale." },
+        { title: "Construire la différence, acheter le standard", description: "Le sur-mesure se concentre sur les règles propres à l’activité et s’appuie sur des services éprouvés pour le reste." },
+      ],
+      implementation: {
+        startingPoint: "Cadrez un seul processus et testez deux logiciels métier avec trois dossiers réels. Listez les écarts avant de parler de construction. Si les écarts critiques persistent, faites chiffrer une première version limitée.",
+        cadence: "Menez recherche, essais et comparaison dans une période courte. Après la décision, organisez des points hebdomadaires de mise en place puis des revues à un, trois et six mois.",
+        escalation: "La direction arbitre les compromis de processus, les risques de données, le budget et la dépendance fournisseur. Les préférences d’interface restent au niveau de l’équipe projet." ,
+      },
+      example: { title: "une validation terrain absente des logiciels testés", body: "Deux logiciels couvrent demandes, planning et facturation, mais aucun ne gère la validation technique qui conditionne la suite. L’équipe chiffre le contournement à six heures par semaine et teste une intégration. Comme l’écart reste central, elle retient une application limitée à ce flux, connectée au logiciel comptable plutôt qu’une reconstruction de toutes les fonctions standards." },
+      tools: [
+        { slug: "organilog", name: "Organilog", description: "Pour tester une couverture métier existante des demandes, interventions, comptes rendus et opérations terrain." },
+        { slug: "airtable", name: "Airtable", description: "Pour prototyper un flux propre à l’entreprise et vérifier les règles avant une éventuelle application plus dédiée." },
+      ],
+      toolsTitle: "Quels outils tester avant de construire ?",
+      toolsIntroduction: "Commencez par éprouver un logiciel métier sur le scénario prioritaire. Un prototype sert ensuite à vérifier uniquement l’écart qui reste critique, pas à reconstruire toutes les fonctions standards.",
+      system: { slug: "batiment", label: "Bâtiment" },
+      checklist: ["Cadrer un scénario prioritaire et ses règles métier.", "Tester d’abord deux logiciels spécialisés avec de vraies données.", "Classer chaque écart par fréquence et conséquence.", "Comparer les coûts complets sur trois ans.", "Documenter maintenance, données, réversibilité et critères de réussite."],
+      faqs: [
+        { question: "Le sur-mesure coûte-t-il toujours plus cher ?", answer: "Son investissement initial est souvent supérieur, mais le coût total dépend des contournements, des licences, des intégrations et de la durée d’usage. Il faut comparer sur la même période." },
+        { question: "Quand faut-il privilégier un logiciel existant ?", answer: "Lorsqu’il couvre le flux prioritaire avec des adaptations acceptables, que l’équipe peut l’adopter et que ses conditions de données, support et coût sont compatibles." },
+        { question: "Peut-on combiner logiciel existant et application métier ?", answer: "Oui. C’est souvent le choix le plus raisonnable : conserver facturation ou comptabilité standard et construire uniquement le flux différenciant, avec une intégration maîtrisée." },
+      ],
+      conclusion: "Le bon choix conserve les fonctions standards lorsqu’elles existent et ne construit que ce qui réduit un écart métier fréquent, coûteux et réellement stratégique.",
+      editorialReview: { clarity: 4, realism: 4, immediateUsefulness: 4, exampleQuality: 2, toolRelevance: 2, consistency: 2, readability: 1, reviewedAt: "2026-08-25" },
     },
   }),
 ];
