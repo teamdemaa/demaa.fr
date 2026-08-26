@@ -25,10 +25,7 @@ export default function ApplicationMetierCaseStudies({
             }`}
             aria-label={`Voir le fonctionnement pour ${caseStudy.sector}`}
           >
-            <span className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">
-              Projet réalisé
-            </span>
-            <strong className="mt-5 text-2xl font-light leading-tight tracking-[-0.035em] text-brand-blue">
+            <strong className="text-2xl font-light leading-tight tracking-[-0.035em] text-brand-blue">
               {caseStudy.sector}
             </strong>
             <span className="mt-4 text-sm leading-6 text-dema-muted">

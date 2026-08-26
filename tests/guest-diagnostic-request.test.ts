@@ -111,6 +111,7 @@ describe("guest diagnostic request", () => {
   it("stores one admin lead with contact consent and no marketing delivery", async () => {
     const result = await submitGuestDiagnosticRequest({
       attribution: { version: 1 },
+      callbackAvailability: "Mardi entre 9 h et 11 h",
       email: "owner@example.com",
       idempotencyKey: "diagnostic-request-123456",
       message: "Je souhaite un regard extérieur.",
@@ -126,6 +127,7 @@ describe("guest diagnostic request", () => {
       consents: [expect.objectContaining({ granted: true, purpose: "diagnostic_contact" })],
       fields: expect.arrayContaining([
         { label: "Message complémentaire", value: "Je souhaite un regard extérieur." },
+        { label: "Disponibilités pour un rappel", value: "Mardi entre 9 h et 11 h" },
         { label: "Plan", value: "Clarifier les priorités" },
         { label: "Situation", value: plan.sourceText },
       ]),
@@ -134,6 +136,7 @@ describe("guest diagnostic request", () => {
 
     const duplicate = await submitGuestDiagnosticRequest({
       attribution: { version: 1 },
+      callbackAvailability: "Mardi entre 9 h et 11 h",
       email: "owner@example.com",
       idempotencyKey: "diagnostic-request-123456",
       message: "Je souhaite un regard extérieur.",

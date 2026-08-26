@@ -36,7 +36,7 @@ describe("public guest action-plan experience", () => {
     expect(experience).toContain("closeFocusedDiagnostic");
     expect(experience).toContain("Fermer le diagnostic et revenir à la page précédente");
     expect(experience).toContain('variant={focusedDiagnostic ? "diagnostic" : "default"}');
-    expect(hero).toContain("Trouvez ce qu’il faut mettre en place pour gagner du temps.");
+    expect(hero).toContain("Identifier ce qu’il faut mettre en place pour gagner du temps.");
     expect(hero).toContain("processus, ressources et solutions adaptés");
   });
 

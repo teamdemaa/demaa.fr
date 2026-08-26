@@ -39,6 +39,7 @@ function planFields(plan: StoredGuestActionPlan) {
 }
 
 async function reserveIdempotency(input: {
+  callbackAvailability: string | null;
   email: string;
   generationId: string | null;
   idempotencyKey: string;
@@ -52,6 +53,7 @@ async function reserveIdempotency(input: {
   const id = hash(`guest-diagnostic:${input.idempotencyKey}`);
   const reference = database.collection(GUEST_DIAGNOSTIC_IDEMPOTENCY_COLLECTION).doc(id);
   const requestFingerprint = hash(JSON.stringify({
+    callbackAvailability: input.callbackAvailability,
     email: input.email.toLowerCase(),
     generationId: input.generationId,
     message: input.message,
@@ -83,6 +85,7 @@ async function reserveIdempotency(input: {
 
 export async function submitGuestDiagnosticRequest(input: {
   attribution: unknown;
+  callbackAvailability?: string | null;
   email: string;
   idempotencyKey: string;
   message: string | null;
@@ -92,7 +95,9 @@ export async function submitGuestDiagnosticRequest(input: {
   situation?: string | null;
 }) {
   const situation = input.situation?.trim() || null;
+  const callbackAvailability = input.callbackAvailability?.trim() || null;
   const reservation = await reserveIdempotency({
+    callbackAvailability,
     email: input.email,
     generationId: input.plan?.id ?? null,
     idempotencyKey: input.idempotencyKey,
@@ -117,13 +122,16 @@ export async function submitGuestDiagnosticRequest(input: {
       capturedAt: submittedAt,
       granted: true,
       purpose: "diagnostic_contact",
-      text: "J’accepte que l’équipe Demaa me contacte par e-mail au sujet de ce diagnostic.",
+      text: callbackAvailability
+        ? "J’accepte que l’équipe Demaa me contacte par e-mail ou téléphone au sujet de ce diagnostic."
+        : "J’accepte que l’équipe Demaa me contacte par e-mail au sujet de ce diagnostic.",
       version: "guest-diagnostic-contact-v1",
     }],
     context,
     emoji: "🧭",
     fields: [
       ...(input.message ? [{ label: "Message complémentaire", value: input.message }] : []),
+      ...(callbackAvailability ? [{ label: "Disponibilités pour un rappel", value: callbackAvailability }] : []),
       ...(situation && !input.plan ? [{ label: "Situation saisie", value: situation }] : []),
       ...(input.plan ? planFields(input.plan) : []),
     ],

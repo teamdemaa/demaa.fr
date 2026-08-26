@@ -53,6 +53,7 @@ describe("guest diagnostic without a generated plan", () => {
   it("submits the current situation without creating or requiring a plan", async () => {
     const response = await POST(request({
       contactConsent: true,
+      callbackAvailability: "Mardi entre 9 h et 11 h",
       email: "owner@example.com",
       idempotencyKey: "diagnostic-request-123456",
       message: "J’aimerais comprendre comment mieux organiser mon activité.",
@@ -63,6 +64,7 @@ describe("guest diagnostic without a generated plan", () => {
 
     expect(response.status).toBe(201);
     expect(mocks.submitDiagnostic).toHaveBeenCalledWith(expect.objectContaining({
+      callbackAvailability: "Mardi entre 9 h et 11 h",
       email: "owner@example.com",
       phone: "06 12 34 56 78",
       plan: null,

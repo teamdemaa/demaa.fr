@@ -26,6 +26,7 @@ export function ApplicationDiagnosticProvider({ children }: { children: ReactNod
         onClose={closeDiagnostic}
         onOpen={openDiagnostic}
         open={open}
+        showCallbackAvailability
         showNavbarTrigger={false}
         situation=""
       />

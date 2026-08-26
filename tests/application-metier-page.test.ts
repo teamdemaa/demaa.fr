@@ -20,9 +20,10 @@ describe("Application métier landing page", () => {
   });
 
   it("keeps the approved short promise and section hierarchy", async () => {
-    const [source, diagnosticSource] = await Promise.all([
+    const [source, diagnosticSource, diagnosticControlSource] = await Promise.all([
       readSource("src/components/ApplicationMetierLandingPage.tsx"),
       readSource("src/components/ApplicationDiagnosticExperience.tsx"),
+      readSource("src/components/GuestDiagnosticControl.tsx"),
     ]);
 
     expect(source).toContain("Gagnez du temps");
@@ -47,7 +48,11 @@ describe("Application métier landing page", () => {
     expect(diagnosticSource).toContain('dialogTitle="Discuter de votre projet"');
     expect(diagnosticSource).toContain("si une application métier est adaptée");
     expect(diagnosticSource).toContain("<ClipboardCheck");
+    expect(diagnosticSource).toContain("showCallbackAvailability");
     expect(diagnosticSource).toContain("showNavbarTrigger={false}");
+    expect(diagnosticControlSource).toContain("Disponibilités pour un rappel");
+    expect(diagnosticControlSource).toContain('name="callbackAvailability"');
+    expect(diagnosticControlSource).not.toContain('Disponibilités pour un rappel <span');
     expect(source).toContain("<Navbar minimal showDiagnostic={false} />");
   });
 
@@ -83,6 +88,7 @@ describe("Application métier landing page", () => {
     expect(component).toContain("Le problème de départ");
     expect(component).toContain("L’application construite");
     expect(component).toContain("Le flux de travail");
+    expect(component).not.toContain("Projet réalisé");
     expect(component).not.toContain("next/image");
   });
 });

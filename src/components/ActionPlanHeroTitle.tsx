@@ -11,7 +11,7 @@ export default function ActionPlanHeroTitle({
 }) {
   const isFocusedDiagnostic = localeCode === "fr" && variant === "diagnostic";
   const accessibleTitle = isFocusedDiagnostic
-    ? "Trouvez ce qu’il faut mettre en place pour gagner du temps."
+    ? "Identifier ce qu’il faut mettre en place pour gagner du temps."
     : localeCode === "en"
     ? "What takes too much of your time today?"
     : "Qu’est-ce qui vous prend trop de temps aujourd’hui ?";
@@ -24,7 +24,7 @@ export default function ActionPlanHeroTitle({
       >
         <span aria-hidden="true">
           {isFocusedDiagnostic
-            ? "Trouvez ce qu’il faut mettre en place"
+            ? "Identifier ce qu’il faut mettre en place"
             : localeCode === "en" ? "What takes too much" : "Qu’est-ce qui vous prend"}
           <br />
           <span className="demaa-hero-title text-dema-forest">

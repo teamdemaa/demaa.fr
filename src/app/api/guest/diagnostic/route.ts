@@ -68,6 +68,7 @@ export async function POST(request: Request) {
   try {
     const result = await submitGuestDiagnosticRequest({
       attribution: parsed.data.attribution,
+      callbackAvailability: parsed.data.callbackAvailability?.trim() || null,
       email,
       idempotencyKey: parsed.data.idempotencyKey,
       message: parsed.data.message.trim(),

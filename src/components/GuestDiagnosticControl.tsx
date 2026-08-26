@@ -21,6 +21,7 @@ export default function GuestDiagnosticControl({
   onClose,
   onOpen,
   open,
+  showCallbackAvailability = false,
   showNavbarTrigger = true,
   situation,
 }: {
@@ -30,6 +31,7 @@ export default function GuestDiagnosticControl({
   onClose: () => void;
   onOpen: () => void;
   open: boolean;
+  showCallbackAvailability?: boolean;
   showNavbarTrigger?: boolean;
   situation: string;
 }) {
@@ -58,6 +60,7 @@ export default function GuestDiagnosticControl({
     event.preventDefault();
     if (status === "sending") return;
     const form = new FormData(event.currentTarget);
+    const callbackAvailability = form.get("callbackAvailability");
     setStatus("sending");
     setError(null);
     try {
@@ -68,6 +71,9 @@ export default function GuestDiagnosticControl({
         idempotencyKey,
         message: form.get("message"),
         phone: form.get("phone"),
+        ...(typeof callbackAvailability === "string"
+          ? { callbackAvailability }
+          : {}),
         ...(!access ? { situation } : {}),
         website: form.get("website"),
       };
@@ -179,6 +185,19 @@ export default function GuestDiagnosticControl({
                         className="demaa-input mt-2"
                       />
                     </label>
+                    {showCallbackAvailability ? (
+                      <label className="block text-sm text-brand-blue">
+                        Disponibilités pour un rappel
+                        <input
+                          name="callbackAvailability"
+                          type="text"
+                          maxLength={160}
+                          placeholder="Ex. mardi entre 9 h et 11 h"
+                          required
+                          className="demaa-input mt-2"
+                        />
+                      </label>
+                    ) : null}
                     <label className="flex items-start gap-2 text-xs leading-relaxed text-dema-muted">
                       <input
                         name="contactConsent"
@@ -187,7 +206,8 @@ export default function GuestDiagnosticControl({
                         className="mt-0.5 h-4 w-4 accent-dema-forest"
                       />
                       <span>
-                        J’accepte que Demaa utilise mes coordonnées{access ? " et ce plan" : ""} pour me répondre par e-mail.
+                        J’accepte que Demaa utilise mes coordonnées{access ? " et ce plan" : ""} pour me répondre par e-mail
+                        {showCallbackAvailability ? " ou me rappeler par téléphone." : "."}
                       </span>
                     </label>
                     <input

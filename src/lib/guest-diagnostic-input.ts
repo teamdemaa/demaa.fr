@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const guestDiagnosticRequestSchema = z.object({
   attribution: z.unknown().optional(),
+  callbackAvailability: z.string().trim().max(160).optional(),
   contactConsent: z.literal(true),
   email: z.string().trim().max(160),
   idempotencyKey: z.string().trim().regex(/^[A-Za-z0-9:_-]{16,160}$/),
