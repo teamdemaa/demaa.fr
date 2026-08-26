@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import ActionPlanNavbar from "@/components/ActionPlanNavbar";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
@@ -11,6 +11,7 @@ import {
 } from "@/lib/firebase-solution-registry-selection.server";
 import { filterPublicSystemRecommendationSections } from "@/lib/public-solution-section-visibility";
 import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
+import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
   buildSystemPageIntro,
   buildSystemPageJsonLd,
@@ -72,6 +73,9 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
   const jsonLd = buildSystemPageJsonLd(data, visiblePublishedSolutionSections);
 
   if (!hasEditableOperationalSystemAsset(data.system.slug)) notFound();
+  if (normalizeSystemDetailTab(getParamValue(resolvedSearchParams.tab)) === "process") {
+    redirect(`/systemes/${data.system.slug}/processus`);
+  }
 
   return (
     <>
@@ -87,9 +91,7 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
         <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-3 sm:px-6 lg:px-8">
           <SystemDetailContent
             system={data.system}
-            systeme={data.detail.systeme}
             intro={buildSystemPageIntro(data)}
-            initialActiveTab={getParamValue(resolvedSearchParams.tab) ?? "solutions"}
             initialResourceSlug={getParamValue(resolvedSearchParams.resource)}
             headingAs="h1"
             solutionSections={visibleSolutionSections}

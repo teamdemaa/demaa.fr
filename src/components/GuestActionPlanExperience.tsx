@@ -1,12 +1,13 @@
 "use client";
 
-import { ArrowRight, LoaderCircle, Mic } from "lucide-react";
+import { ArrowRight, LoaderCircle, Mic, X } from "lucide-react";
 import { type FormEvent, useEffect, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
 import ActionPlanGenerationScreen from "@/components/ActionPlanGenerationScreen";
 import ActionPlanHeroTitle from "@/components/ActionPlanHeroTitle";
 import ActionPlanNavbar, { type ActionPlanView } from "@/components/ActionPlanNavbar";
 import ActionPlanServicesPanel from "@/components/ActionPlanServicesPanel";
+import DemaaWordmark from "@/components/DemaaWordmark";
 import GuestActionPlanDelivery from "@/components/GuestActionPlanDelivery";
 import GuestActionPlanResult from "@/components/GuestActionPlanResult";
 import GuestDiagnosticControl from "@/components/GuestDiagnosticControl";
@@ -88,6 +89,7 @@ async function waitForGuestGeneration(
 
 export default function GuestActionPlanExperience({
   contentLocaleCode,
+  focusedDiagnostic = false,
   initialAppContext,
   initialStructureIntent,
   marketCodeAtCreation,
@@ -96,6 +98,7 @@ export default function GuestActionPlanExperience({
   visibleViews,
 }: {
   contentLocaleCode: ActionPlanContentLocaleCode;
+  focusedDiagnostic?: boolean;
   initialAppContext: ActionPlanAppContext;
   initialStructureIntent: boolean;
   marketCodeAtCreation: ActionPlanCreationMarketCode;
@@ -339,16 +342,47 @@ export default function GuestActionPlanExperience({
     navigateAppContext({ view: "plan", planSection: "actions" }, "replace");
   }
 
+  function closeFocusedDiagnostic() {
+    try {
+      const referrer = document.referrer ? new URL(document.referrer) : null;
+      if (
+        referrer?.origin === window.location.origin
+        && window.history.length > 1
+      ) {
+        window.history.back();
+        return;
+      }
+    } catch {
+      // Ignore a malformed referrer and use the stable public fallback.
+    }
+    window.location.assign("/solutions");
+  }
+
   if (isGenerating) return <ActionPlanGenerationScreen localeCode={contentLocaleCode} />;
 
   return (
     <main data-action-plan-workspace className="min-h-screen bg-dema-cream px-4 pb-24 pt-2 sm:px-6 lg:px-8">
-      <ActionPlanNavbar
-        activeView={appContext.view}
-        localeCode={contentLocaleCode}
-        onViewChange={selectAppView}
-        visibleViews={visibleViews}
-      />
+      {focusedDiagnostic ? (
+        <header className="mx-auto flex w-full max-w-[80rem] items-center justify-between py-4 sm:py-6">
+          <DemaaWordmark className="text-[1.35rem] sm:text-[1.7rem]" />
+          <button
+            type="button"
+            onClick={closeFocusedDiagnostic}
+            className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/28 hover:bg-dema-sage/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30"
+            aria-label="Fermer le diagnostic et revenir à la page précédente"
+            title="Fermer"
+          >
+            <X className="h-6 w-6" aria-hidden="true" />
+          </button>
+        </header>
+      ) : (
+        <ActionPlanNavbar
+          activeView={appContext.view}
+          localeCode={contentLocaleCode}
+          onViewChange={selectAppView}
+          visibleViews={visibleViews}
+        />
+      )}
       <GuestDiagnosticControl
         access={actionPlan ? access : null}
         key={actionPlan && access ? access.generationId : "without-plan"}
@@ -374,8 +408,11 @@ export default function GuestActionPlanExperience({
               </div>
             </div>
           ) : (
-            <section className="mx-auto max-w-5xl pt-5 text-center sm:pt-7 lg:pt-10">
-              <ActionPlanHeroTitle localeCode={contentLocaleCode} />
+            <section className={`mx-auto max-w-5xl text-center ${focusedDiagnostic ? "pt-3 sm:pt-6 lg:pt-8" : "pt-5 sm:pt-7 lg:pt-10"}`}>
+              <ActionPlanHeroTitle
+                localeCode={contentLocaleCode}
+                variant={focusedDiagnostic ? "diagnostic" : "default"}
+              />
               <form onSubmit={generate} className="mx-auto mt-7 max-w-[42rem] text-left sm:mt-8">
                 <div className="rounded-[1.45rem] border border-dema-line bg-dema-paper p-2 shadow-[0_14px_38px_rgba(23,35,29,0.055)] focus-within:border-dema-forest/20">
                   <label htmlFor="guest-business-situation" className="sr-only">{uiCopy.situationLabel}</label>

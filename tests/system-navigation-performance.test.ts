@@ -58,6 +58,10 @@ describe("system navigation performance contract", () => {
     expect(searchSource).toContain(
       'aria-label="Trouvez les solutions adaptées à votre activité"',
     );
+    expect(searchSource).toContain("Trouvez les solutions adaptées");
+    expect(searchSource).toContain(
+      "Outils, partenaires et ressources sélectionnés selon votre métier.",
+    );
     expect(searchSource).toContain(
       '<h2 className="text-xl font-light tracking-tight text-brand-blue/85 sm:text-2xl">',
     );

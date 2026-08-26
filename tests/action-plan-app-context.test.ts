@@ -1,12 +1,23 @@
 import { describe, expect, it } from "vitest";
 import {
   buildActionPlanAppHref,
+  buildDiagnosticOrganisationHref,
   buildLegacyOpportunitiesHref,
   buildPublicSystemAppHref,
   parseActionPlanAppContext,
 } from "@/lib/action-plan-app-context";
 
 describe("action plan app context", () => {
+  it("opens the focused Diagnostic route and keeps a valid métier context", () => {
+    expect(buildDiagnosticOrganisationHref()).toBe("/diagnostic-organisation");
+    expect(buildDiagnosticOrganisationHref({ systemId: "cabinet-comptable" })).toBe(
+      "/diagnostic-organisation?system=cabinet-comptable",
+    );
+    expect(buildDiagnosticOrganisationHref({ systemId: "../externe" })).toBe(
+      "/diagnostic-organisation",
+    );
+  });
+
   it("normalizes the legacy system view into the local Solutions section", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=system&system=restaurant&systemTab=solutions&resource=lightspeed",

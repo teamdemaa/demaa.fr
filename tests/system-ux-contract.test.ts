@@ -112,24 +112,15 @@ describe("system UX contract", () => {
     );
   });
 
-  it("keeps Organisation and unified Solutions as lightweight balanced tabs", async () => {
+  it("keeps the public métier page linear and exposes processes once through Resources", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );
 
-    expect(detailSource).toContain(
-      "grid w-full grid-cols-2 border-b border-dema-line",
-    );
-    expect(detailSource).toContain("min-h-11");
-    expect(detailSource).toContain(
-      "border-dema-forest font-semibold text-dema-forest",
-    );
-    expect(detailSource).toContain(
-      "border-transparent font-medium text-dema-muted",
-    );
-    expect(detailSource).not.toContain(
-      "grid w-full grid-cols-2 gap-1 rounded-full",
-    );
+    expect(detailSource).not.toContain('role="tablist"');
+    expect(detailSource).not.toContain('role="tab"');
+    expect(detailSource).not.toContain("SystemeTabContent");
+    expect(detailSource).toContain("<SystemSolutionsTab");
     expect(detailSource).toContain("<SystemResourcesTab");
     expect(detailSource).toContain('layout="rail"');
   });

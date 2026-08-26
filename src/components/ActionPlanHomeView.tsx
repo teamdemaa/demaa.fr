@@ -11,6 +11,7 @@ type ActionPlanPageConfig = ReturnType<typeof getActionPlanPageConfig>;
 
 export default function ActionPlanHomeView({
   config,
+  focusedDiagnostic = false,
   guestProductEnabled,
   initialAccessIntent,
   initialAppContext,
@@ -20,6 +21,7 @@ export default function ActionPlanHomeView({
   initialStructureIntent,
 }: {
   config: ActionPlanPageConfig;
+  focusedDiagnostic?: boolean;
   guestProductEnabled: boolean;
   initialAccessIntent: ActionPlanAccessIntent | null;
   initialAppContext: ActionPlanAppContext;
@@ -60,9 +62,10 @@ export default function ActionPlanHomeView({
 
   return (
     <>
-      <Navbar localeCode={config.localeCode} minimal />
+      {!focusedDiagnostic ? <Navbar localeCode={config.localeCode} minimal /> : null}
       <GuestActionPlanExperience
         contentLocaleCode={config.localeCode}
+        focusedDiagnostic={focusedDiagnostic}
         initialAppContext={initialAppContext}
         initialStructureIntent={initialStructureIntent}
         marketCodeAtCreation={config.marketCode}

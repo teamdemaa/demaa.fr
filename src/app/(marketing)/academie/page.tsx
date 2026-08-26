@@ -4,9 +4,9 @@ import ActionPlanNavbar from "@/components/ActionPlanNavbar";
 import Navbar from "@/components/Navbar";
 import { getAllAcademyContent } from "@/lib/academy-course-content";
 
-const title = "Organiser son entreprise | Demaa";
+const title = "Des cas concrets pour mieux organiser votre entreprise | Demaa";
 const description =
-  "Des processus concrets pour organiser les demandes, les interventions, les documents et le suivi d’une TPE.";
+  "Des processus concrets pour simplifier ce qui prend du temps et rendre votre entreprise moins dépendante de vous.";
 
 export const metadata: Metadata = {
   title,

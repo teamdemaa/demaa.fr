@@ -262,9 +262,10 @@ export function buildPublicSystemAppHref(input: {
 export function buildDiagnosticOrganisationHref(input: {
   systemId?: string;
 } = {}) {
-  const params = new URLSearchParams({ view: "plan" });
+  const params = new URLSearchParams();
   if (input.systemId && SAFE_SLUG_PATTERN.test(input.systemId)) {
     params.set("system", input.systemId);
   }
-  return `/?${params.toString()}`;
+  const query = params.toString();
+  return `/diagnostic-organisation${query ? `?${query}` : ""}`;
 }

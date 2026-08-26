@@ -215,13 +215,15 @@ export default function SystemSearchHero({
             aria-label="Trouvez les solutions adaptées à votre activité"
           >
             <span className="block font-sans font-light not-italic text-brand-blue/62 md:whitespace-nowrap">
-              Les solutions adaptées
+              Trouvez les solutions adaptées
             </span>
             <span className="demaa-hero-title block text-dema-forest" aria-hidden="true">
               à votre activité
             </span>
           </h1>
-
+          <p className="mx-auto mt-6 max-w-2xl text-balance text-base font-light leading-7 text-dema-muted md:text-lg">
+            Outils, partenaires et ressources sélectionnés selon votre métier.
+          </p>
         </div>
 
         <div ref={containerRef} className="relative mx-auto mt-9 max-w-4xl text-left md:mt-11">

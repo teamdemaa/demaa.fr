@@ -27,7 +27,9 @@ describe("Demaa application navbar", () => {
     expect(pageSource.indexOf("<Navbar minimal />")).toBeLessThan(pageSource.indexOf("<main"));
     expect(loadingSource.indexOf("<Navbar minimal />")).toBeLessThan(loadingSource.indexOf("<main"));
     expect(pageSource).toContain('<ActionPlanNavbar activeView="solutions" routeNavigation />');
-    expect(pageSource).toContain('initialActiveTab={getParamValue(resolvedSearchParams.tab) ?? "solutions"}');
+    expect(pageSource).toContain('normalizeSystemDetailTab(getParamValue(resolvedSearchParams.tab)) === "process"');
+    expect(pageSource).toContain('redirect(`/systemes/${data.system.slug}/processus`)');
+    expect(pageSource).not.toContain("initialActiveTab=");
     expect(pageSource).not.toContain("/?view=system");
   });
 

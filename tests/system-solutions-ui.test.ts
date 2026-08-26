@@ -561,22 +561,19 @@ describe("system Solutions UI", () => {
     expect(solutionsSource).toContain("SolutionReferralForm");
   });
 
-  it("preserves query reset and keyboard focus contracts", async () => {
+  it("removes public tab state while preserving the unified Solutions and Resources flow", async () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
 
-    expect(detailSource).toContain('url.searchParams.set("tab", tab)');
-    expect(detailSource).toContain('url.searchParams.delete("service")');
+    expect(detailSource).not.toContain('url.searchParams.set("tab", tab)');
+    expect(detailSource).not.toContain('role="tablist"');
+    expect(detailSource).not.toContain("getVisibleSystemDetailTabs()");
+    expect(detailSource).not.toContain("requestAnimationFrame");
+    expect(detailSource).not.toContain("SystemeTabContent");
     expect(detailSource).not.toContain("solutionsAvailable");
-    expect(detailSource).toContain("getVisibleSystemDetailTabs()");
-    expect(detailSource).toContain("requestAnimationFrame");
-    expect(detailSource).toContain("?.focus()");
-    expect(detailSource).toContain('activeTab === "solutions"');
-    expect(detailSource).not.toContain(
-      'solutionsAvailable && activeTab === "solutions"',
-    );
-    expect(detailSource).not.toMatch(/activeTab === "(?:outils|ecosysteme)"/);
     expect(detailSource).not.toContain("detail: OperationalSystemDetail");
-    expect(detailSource).toContain("systeme: SystemeDetail | null");
+    expect(detailSource).not.toContain("systeme: SystemeDetail | null");
+    expect(detailSource).toContain("<SystemSolutionsTab");
+    expect(detailSource).toContain("<SystemResourcesTab");
   });
 
   it("uses the neutral Resources catalog as the public delivery entry point", async () => {

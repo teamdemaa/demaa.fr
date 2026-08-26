@@ -23,6 +23,23 @@ describe("public guest action-plan experience", () => {
     expect(guestLoader).toContain("guestProductEnabled: true");
   });
 
+  it("provides a focused Diagnostic page with an explicit close control and no public navbar", () => {
+    const page = source("src/app/(application)/diagnostic-organisation/page.tsx");
+    const home = source("src/components/ActionPlanHomeView.tsx");
+    const experience = source("src/components/GuestActionPlanExperience.tsx");
+    const hero = source("src/components/ActionPlanHeroTitle.tsx");
+
+    expect(page).toContain("focusedDiagnostic");
+    expect(page).toContain('robots: { index: false, follow: true }');
+    expect(home).toContain("!focusedDiagnostic ? <Navbar");
+    expect(experience).toContain("focusedDiagnostic ? (");
+    expect(experience).toContain("closeFocusedDiagnostic");
+    expect(experience).toContain("Fermer le diagnostic et revenir à la page précédente");
+    expect(experience).toContain('variant={focusedDiagnostic ? "diagnostic" : "default"}');
+    expect(hero).toContain("Trouvez ce qu’il faut mettre en place pour gagner du temps.");
+    expect(hero).toContain("processus, ressources et solutions adaptés");
+  });
+
   it("removes customer entry points while keeping the rollback code behind the flag", () => {
     const pages = source("src/lib/action-plan-pages.server.ts");
     const footer = source("src/components/Footer.tsx");
