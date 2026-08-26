@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { parseActionPlanAppContext } from "@/lib/action-plan-app-context";
 import { parseActionPlanAccessIntent } from "@/lib/action-plan-access-intent";
-import { shouldRedirectAuthenticatedHomeToPlans } from "@/lib/action-plan-home-routing";
+import {
+  buildDefaultHomeSolutionsHref,
+  shouldRedirectAuthenticatedHomeToPlans,
+} from "@/lib/action-plan-home-routing";
 
 function shouldRedirect(input: {
   isAuthenticated: boolean;
@@ -21,6 +24,25 @@ function shouldRedirect(input: {
 }
 
 describe("authenticated homepage routing", () => {
+  it("opens Solutions by default while preserving campaign parameters", () => {
+    expect(buildDefaultHomeSolutionsHref({})).toBe("/solutions");
+    expect(buildDefaultHomeSolutionsHref({
+      utm_campaign: "lancement",
+      utm_source: "newsletter",
+    })).toBe("/solutions?utm_campaign=lancement&utm_source=newsletter");
+  });
+
+  it("keeps every explicit Diagnostic or contextual entry on the application homepage", () => {
+    for (const query of [
+      { view: "plan" },
+      { intent: "generate-plan" },
+      { section: "solutions", system: "restaurant" },
+      { new: "1" },
+    ]) {
+      expect(buildDefaultHomeSolutionsHref(query)).toBeNull();
+    }
+  });
+
   it("redirects the default connected plan entry to saved plans", () => {
     expect(shouldRedirect({ isAuthenticated: true })).toBe(true);
   });

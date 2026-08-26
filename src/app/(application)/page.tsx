@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import ActionPlanHomeView from "@/components/ActionPlanHomeView";
+import { buildDefaultHomeSolutionsHref } from "@/lib/action-plan-home-routing";
 import { loadActionPlanHomePage } from "@/lib/action-plan-pages.server";
 import { DEMAA_HOME_DESCRIPTION, DEMAA_HOME_TITLE } from "@/lib/demaa-positioning";
 import { buildLegacySolutionsRedirect } from "@/lib/organiser-navigation";
@@ -47,6 +48,8 @@ export default async function HomePage({
   const query = await searchParams;
   const organiserRedirect = buildLegacySolutionsRedirect(query);
   if (organiserRedirect) redirect(organiserRedirect);
+  const defaultSolutionsHref = buildDefaultHomeSolutionsHref(query);
+  if (defaultSolutionsHref) redirect(defaultSolutionsHref);
 
   return (
     <ActionPlanHomeView
