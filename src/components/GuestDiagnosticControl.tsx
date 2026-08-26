@@ -21,6 +21,7 @@ export default function GuestDiagnosticControl({
   onClose,
   onOpen,
   open,
+  requirePhone = false,
   showCallbackAvailability = false,
   showNavbarTrigger = true,
   situation,
@@ -31,6 +32,7 @@ export default function GuestDiagnosticControl({
   onClose: () => void;
   onOpen: () => void;
   open: boolean;
+  requirePhone?: boolean;
   showCallbackAvailability?: boolean;
   showNavbarTrigger?: boolean;
   situation: string;
@@ -177,10 +179,12 @@ export default function GuestDiagnosticControl({
                       />
                     </label>
                     <label className="block text-sm text-brand-blue">
-                      Téléphone <span className="text-dema-muted">(facultatif)</span>
+                      Téléphone
+                      {!requirePhone ? <span className="text-dema-muted"> (facultatif)</span> : null}
                       <input
                         name="phone"
                         type="tel"
+                        required={requirePhone}
                         autoComplete="tel"
                         className="demaa-input mt-2"
                       />

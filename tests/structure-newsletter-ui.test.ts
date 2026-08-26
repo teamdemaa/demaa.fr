@@ -13,7 +13,7 @@ describe("Organiser newsletter public contract", () => {
   const component = read("src/components/StructureNewsletterBlock.tsx");
 
   it("keeps one exact editorial promise and a direct subscription", () => {
-    expect(STRUCTURE_NEWSLETTER_NAME).toBe("Organiser.");
+    expect(STRUCTURE_NEWSLETTER_NAME).toBe("Structurer.");
     expect(STRUCTURE_NEWSLETTER_PROMISE).toBe(
       "Tous les quinze jours, l’équipe Demaa étudie une problématique réelle d’entreprise et construit une réponse concrète, utile à tous.",
     );
@@ -49,6 +49,7 @@ describe("Organiser newsletter public contract", () => {
     const approved = [
       "src/components/SystemDetailContent.tsx",
       "src/components/AcademyIndexClient.tsx",
+      "src/components/OrganiserLandingPage.tsx",
       "src/app/(marketing)/sur-mesure/page.tsx",
     ];
 

@@ -171,12 +171,17 @@ describe("Academy SEO, redirects and assets", () => {
     );
     expect(redirects).toContainEqual({
       source: "/academy",
-      destination: "/organiser",
+      destination: "/organiser/processus",
       permanent: true,
     });
     expect(redirects).toContainEqual({
       source: "/academie",
-      destination: "/organiser",
+      destination: "/organiser/processus",
+      permanent: true,
+    });
+    expect(redirects).toContainEqual({
+      source: "/cours",
+      destination: "/organiser/processus",
       permanent: true,
     });
     for (const slug of ACADEMY_CONTENT_SLUGS) {

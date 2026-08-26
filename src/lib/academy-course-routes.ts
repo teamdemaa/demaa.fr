@@ -39,17 +39,17 @@ export const LEGACY_ACADEMY_SLUG_ALIASES = {
 export const ACADEMY_PERMANENT_REDIRECTS = [
   {
     source: "/cours",
-    destination: "/organiser",
+    destination: "/organiser/processus",
     permanent: true,
   },
   {
     source: "/academy",
-    destination: "/organiser",
+    destination: "/organiser/processus",
     permanent: true,
   },
   {
     source: "/academie",
-    destination: "/organiser",
+    destination: "/organiser/processus",
     permanent: true,
   },
   ...ACADEMY_CONTENT_SLUGS.map((slug) => ({

@@ -243,7 +243,7 @@ describe("action plan experience architecture", () => {
     const actionSource = solutions.slice(actionStart, actionEnd);
 
     expect(academy).toContain('<h1 className="sr-only">');
-    expect(academy).toContain('localeCode === "en" ? "Academy" : "Des cas concrets pour mieux organiser votre entreprise"');
+    expect(academy).toContain('localeCode === "en" ? "Academy" : "Des cas concrets pour organiser votre activité"');
     expect(actionSource).toContain("onClose();");
     expect(actionSource.indexOf("onClose();")).toBeLessThan(
       actionSource.indexOf('trackSystemSolutionEvent("system_solution_resource_cta_clicked"'),

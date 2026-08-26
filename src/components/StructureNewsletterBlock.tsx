@@ -200,7 +200,7 @@ export default function StructureNewsletterBlock() {
                 className="flex min-h-13 items-center rounded-xl border border-dema-forest/20 bg-dema-sage/55 px-4 text-sm text-dema-forest"
                 role="status"
               >
-                Merci, votre inscription à Organiser est confirmée.
+                Merci, votre inscription à Structurer est confirmée.
               </div>
             ) : (
               <form

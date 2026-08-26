@@ -77,7 +77,8 @@ describe("Demaa application navbar", () => {
     expect(source).toContain('view === "plan"');
     expect(source).toContain('? "/"');
     expect(source).toContain(': "/application-metier"');
-    expect(organiserIndex).toContain('from "../academie/page"');
+    expect(organiserIndex).toContain('OrganiserLandingPage');
+    expect(organiserIndex).toContain('canonical: "/organiser"');
     expect(academyIndex).toContain("<Navbar />");
     expect(academyIndex).toContain('<ActionPlanNavbar activeView="academy" routeNavigation />');
   });
@@ -175,9 +176,9 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain('id="action-plan-navbar-mobile"');
     expect(navbarSource).toContain('data-minimal={minimal ? "true" : undefined}');
     expect(navbarSource.match(/id="action-plan-navbar-specialist"/g)).toHaveLength(2);
-    expect(navbarSource).toContain("showDiagnostic = true");
-    expect(navbarSource).toContain("buildDiagnosticOrganisationHref");
-    expect(navbarSource).toContain("<DiagnosticOrganisationLink");
+    expect(navbarSource).not.toContain("showDiagnostic");
+    expect(navbarSource).not.toContain("buildDiagnosticOrganisationHref");
+    expect(navbarSource).not.toContain("DiagnosticOrganisationLink");
     expect(navbarSource).toContain('className="sticky top-0 z-40 bg-dema-cream/92');
     expect(navbarSource).not.toContain('className="sticky top-0 z-40 border-b');
     expect(navbarSource).toContain("fixed inset-x-0 bottom-0");
@@ -193,7 +194,7 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).not.toContain('label: "Système"');
     expect(actionPlanNavSource).toContain("const navigationOrder: readonly ActionPlanView[]");
     expect(actionPlanNavSource).toContain(
-      '"solutions",\n  "services",\n  "academy"',
+      '"solutions",\n  "academy",\n  "services"',
     );
     expect(actionPlanNavSource).toContain('  "academy",');
     expect(actionPlanNavSource).not.toContain('  "opportunities",');

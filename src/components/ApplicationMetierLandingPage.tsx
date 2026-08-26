@@ -57,7 +57,7 @@ function SectionIntroduction({
 export default function ApplicationMetierLandingPage() {
   return (
     <ApplicationDiagnosticProvider>
-      <Navbar minimal showDiagnostic={false} />
+      <Navbar minimal />
       <ActionPlanNavbar activeView="services" routeNavigation />
 
       <main className="overflow-x-clip bg-dema-cream pb-24 text-brand-blue xl:pb-0">

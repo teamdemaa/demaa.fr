@@ -12,10 +12,10 @@ type Status = "idle" | "sending" | "success" | "error";
 
 export default function GuestActionPlanDelivery({
   access,
-  onOpenDiagnostic,
+  onOpenProjectDiscussion,
 }: {
   access: GuestAccess;
-  onOpenDiagnostic: () => void;
+  onOpenProjectDiscussion: () => void;
 }) {
   const [emailKey] = useState(() => (
     createGuestFollowUpIdempotencyKey("guest-plan-email")
@@ -49,7 +49,7 @@ export default function GuestActionPlanDelivery({
 
   return (
     <section aria-labelledby="guest-plan-next-title" className="grid gap-4 pb-24 md:grid-cols-2">
-      <h2 id="guest-plan-next-title" className="sr-only">Conserver le plan ou demander un diagnostic</h2>
+      <h2 id="guest-plan-next-title" className="sr-only">Conserver le plan ou discuter de sa mise en place</h2>
       <div className="rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 sm:p-6">
         <Mail className="h-5 w-5 text-dema-forest" aria-hidden="true" />
         <h3 className="mt-4 text-lg font-medium text-brand-blue">Recevoir ce plan par e-mail</h3>
@@ -75,10 +75,10 @@ export default function GuestActionPlanDelivery({
 
       <div className="rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 sm:p-6">
         <ClipboardCheck className="h-5 w-5 text-dema-forest" aria-hidden="true" />
-        <h3 className="mt-4 text-lg font-medium text-brand-blue">Demander un diagnostic de mon organisation</h3>
-        <p className="mt-2 text-sm leading-relaxed text-dema-muted">L’équipe Demaa analyse votre situation et vous propose des pistes concrètes pour améliorer votre organisation.</p>
-        <button type="button" onClick={onOpenDiagnostic} className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2">
-          Demander un diagnostic
+        <h3 className="mt-4 text-lg font-medium text-brand-blue">Vous souhaitez mettre ce plan en place avec nous ?</h3>
+        <p className="mt-2 text-sm leading-relaxed text-dema-muted">Votre plan nous donne déjà le contexte. Laissez-nous vos coordonnées et vos disponibilités pour en discuter.</p>
+        <button type="button" onClick={onOpenProjectDiscussion} className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2">
+          Discuter de votre projet
         </button>
       </div>
     </section>

@@ -71,9 +71,9 @@ describe("public guest action-plan experience", () => {
     expect(experience).toContain("<GuestActionPlanResult");
     expect(experience).toContain("<GuestActionPlanDelivery");
     expect(experience).toContain("<GuestDiagnosticControl");
-    expect(delivery).toContain("Demander un diagnostic de mon organisation");
+    expect(delivery).toContain("Vous souhaitez mettre ce plan en place avec nous ?");
     expect(delivery).toContain(
-      "L’équipe Demaa analyse votre situation et vous propose des pistes concrètes pour améliorer votre organisation.",
+      "Votre plan nous donne déjà le contexte. Laissez-nous vos coordonnées et vos disponibilités pour en discuter.",
     );
     expect(diagnostic).toContain("Demander un diagnostic de mon organisation");
     expect(diagnostic).toContain(
@@ -83,7 +83,10 @@ describe("public guest action-plan experience", () => {
     expect(experience).toContain('key={actionPlan && access ? access.generationId : "without-plan"}');
     expect(experience).toContain("situation={situation}");
     expect(experience).not.toContain("{actionPlan && access ? (\n        <GuestDiagnosticControl");
-    expect(experience).toContain("onOpenDiagnostic={() => setDiagnosticOpen(true)}");
+    expect(experience).toContain("onOpenProjectDiscussion={() => setDiagnosticOpen(true)}");
+    expect(experience).toContain('dialogTitle={actionPlan ? "Discuter de votre projet" : undefined}');
+    expect(experience).toContain("showCallbackAvailability={Boolean(actionPlan)}");
+    expect(experience).toContain("requirePhone={Boolean(actionPlan)}");
     expect(experience).not.toContain("CustomerSpaceAccessForm");
     expect(experience).not.toContain("ActionPlanCoachingControl");
     expect(experience).not.toContain("ActionPlanGenerationBar");
@@ -98,7 +101,7 @@ describe("public guest action-plan experience", () => {
     expect(result).not.toContain("onWorkspaceChange");
     expect(result).not.toContain("Disponible pendant 24 h");
     expect(delivery).toContain('submitGuestActionPlanFollowUp("email"');
-    expect(delivery).toContain("onOpenDiagnostic");
+    expect(delivery).toContain("onOpenProjectDiscussion");
     expect(diagnostic).toContain('submitGuestActionPlanFollowUp("diagnostic"');
     expect(diagnostic).toContain("submitGuestDiagnosticWithoutPlan");
     expect(diagnostic).toContain("required={!access}");

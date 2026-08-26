@@ -385,10 +385,16 @@ export default function GuestActionPlanExperience({
       )}
       <GuestDiagnosticControl
         access={actionPlan ? access : null}
+        dialogDescription={actionPlan
+          ? "Votre plan nous donne déjà le contexte. Indiquez vos coordonnées et vos disponibilités pour que l’équipe Demaa puisse vous rappeler."
+          : undefined}
+        dialogTitle={actionPlan ? "Discuter de votre projet" : undefined}
         key={actionPlan && access ? access.generationId : "without-plan"}
         onClose={() => setDiagnosticOpen(false)}
         onOpen={() => setDiagnosticOpen(true)}
         open={diagnosticOpen}
+        requirePhone={Boolean(actionPlan)}
+        showCallbackAvailability={Boolean(actionPlan)}
         showNavbarTrigger={false}
         situation={situation}
       />
@@ -399,7 +405,7 @@ export default function GuestActionPlanExperience({
               <GuestActionPlanResult actionPlan={actionPlan} />
               <GuestActionPlanDelivery
                 access={access}
-                onOpenDiagnostic={() => setDiagnosticOpen(true)}
+                onOpenProjectDiscussion={() => setDiagnosticOpen(true)}
               />
               <div className="text-center">
                 <button type="button" onClick={resetPlan} className="min-h-11 px-4 text-sm text-dema-muted underline decoration-dema-line underline-offset-4 hover:text-dema-forest">

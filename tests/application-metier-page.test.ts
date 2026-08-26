@@ -52,8 +52,9 @@ describe("Application métier landing page", () => {
     expect(diagnosticSource).toContain("showNavbarTrigger={false}");
     expect(diagnosticControlSource).toContain("Disponibilités pour un rappel");
     expect(diagnosticControlSource).toContain('name="callbackAvailability"');
+    expect(diagnosticSource).toContain("requirePhone");
     expect(diagnosticControlSource).not.toContain('Disponibilités pour un rappel <span');
-    expect(source).toContain("<Navbar minimal showDiagnostic={false} />");
+    expect(source).toContain("<Navbar minimal />");
   });
 
   it("presents three real anonymized cases without mixing them with Studio", async () => {

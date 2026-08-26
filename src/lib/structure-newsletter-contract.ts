@@ -1,4 +1,4 @@
-export const STRUCTURE_NEWSLETTER_NAME = "Organiser.";
+export const STRUCTURE_NEWSLETTER_NAME = "Structurer.";
 
 export const STRUCTURE_NEWSLETTER_PROMISE =
   "Tous les quinze jours, l’équipe Demaa étudie une problématique réelle d’entreprise et construit une réponse concrète, utile à tous.";

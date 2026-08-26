@@ -475,12 +475,12 @@ export default function AcademyIndexClient({
       {embedded ? (
         <div className="mx-auto max-w-7xl px-4 pb-6 pt-3">
           <h1 className="sr-only">
-            {localeCode === "en" ? "Academy" : "Des cas concrets pour mieux organiser votre entreprise"}
+            {localeCode === "en" ? "Academy" : "Des cas concrets pour organiser votre activité"}
           </h1>
           {localeCode === "fr" ? (
             <div className="pb-2 pt-4 text-center">
               <p className="text-balance text-3xl font-light tracking-tight text-dema-forest sm:text-4xl">
-                Des cas concrets pour mieux organiser votre entreprise
+                Des cas concrets pour organiser votre activité
               </p>
               <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-dema-muted sm:text-base">
                 Des processus concrets pour simplifier ce qui vous prend du temps et rendre votre entreprise moins dépendante de vous.
@@ -504,13 +504,13 @@ export default function AcademyIndexClient({
 
           <div className="text-center">
             <h1
-              aria-label={localeCode === "en" ? "Academy" : "Des cas concrets pour mieux organiser votre entreprise"}
+              aria-label={localeCode === "en" ? "Academy" : "Des cas concrets pour organiser votre activité"}
               className="text-balance font-light leading-[0.94] tracking-tight"
               style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
             >
               <span aria-hidden="true">
-                <span className="block text-brand-blue/62">Des cas concrets pour mieux</span>
-                <span className="demaa-hero-title block text-dema-forest">organiser votre entreprise</span>
+                <span className="block text-brand-blue/62">Des cas concrets pour</span>
+                <span className="demaa-hero-title block text-dema-forest">organiser votre activité</span>
               </span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-dema-muted md:text-lg">
