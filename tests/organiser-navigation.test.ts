@@ -51,7 +51,7 @@ describe("Organiser navigation", () => {
   });
 
   it("renders only the process library on Organiser", () => {
-    const organiserPage = source("src/app/(marketing)/academie/page.tsx");
+    const organiserPage = source("src/app/(marketing)/organiser/page.tsx");
     const companyPilotage = source("src/components/CompanyPilotagePanel.tsx");
     const guestPlan = source("src/components/GuestActionPlanExperience.tsx");
 

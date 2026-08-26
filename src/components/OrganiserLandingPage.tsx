@@ -20,6 +20,8 @@ import {
 } from "@/lib/academy-course-content";
 import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
 
+// Conserved as an unpublished draft for a possible future accompanied setup page.
+// The public /organiser route intentionally renders the process directory instead.
 const diagnosticButtonClassName =
   "inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-dema-forest px-7 text-sm font-semibold text-white transition hover:bg-[#284f3a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2";
 
@@ -252,7 +254,7 @@ export default function OrganiserLandingPage() {
                   Découvrez des processus adaptés à des situations réelles.
                 </p>
               </div>
-              <Link href="/organiser/processus" className="hidden text-sm font-medium text-dema-forest underline decoration-dema-forest/30 underline-offset-4 transition hover:decoration-dema-forest sm:inline-flex">
+              <Link href="/organiser" className="hidden text-sm font-medium text-dema-forest underline decoration-dema-forest/30 underline-offset-4 transition hover:decoration-dema-forest sm:inline-flex">
                 Voir tous les processus
               </Link>
             </div>
@@ -262,7 +264,7 @@ export default function OrganiserLandingPage() {
               ))}
             </div>
             <div className="mt-10 text-center sm:hidden">
-              <Link href="/organiser/processus" className="demaa-secondary-button inline-flex items-center justify-center">
+              <Link href="/organiser" className="demaa-secondary-button inline-flex items-center justify-center">
                 Voir tous les processus
               </Link>
             </div>

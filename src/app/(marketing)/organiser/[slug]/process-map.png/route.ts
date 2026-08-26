@@ -1,1 +1,8 @@
-export { GET } from "../../../academie/[slug]/process-map.png/route";
+import renderOrganiserOpenGraphImage from "../opengraph-image";
+
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ slug: string }> },
+) {
+  return renderOrganiserOpenGraphImage({ params });
+}

@@ -158,7 +158,7 @@ export default function AcademyProcessGuideArticle({
 
         <section className="mt-16 border-y border-dema-line py-9" aria-labelledby="checklist-title">
           <h2 id="checklist-title" className="text-2xl font-semibold text-[#25352C] sm:text-3xl">
-            La checklist pour démarrer aujourd’hui
+            Les premières actions à mettre en place
           </h2>
           <ul className="mt-6 space-y-4">
             {guide.checklist.map((item) => (

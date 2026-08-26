@@ -45,11 +45,9 @@ describe("Organiser newsletter public contract", () => {
     );
   });
 
-  it("renders the same component at the three approved surfaces only", () => {
+  it("renders the same component at the approved editorial surfaces only", () => {
     const approved = [
-      "src/components/SystemDetailContent.tsx",
       "src/components/AcademyIndexClient.tsx",
-      "src/components/OrganiserLandingPage.tsx",
       "src/app/(marketing)/sur-mesure/page.tsx",
     ];
 
@@ -59,13 +57,21 @@ describe("Organiser newsletter public contract", () => {
 
     const academyIndex = read("src/components/AcademyIndexClient.tsx");
     expect(academyIndex).toContain("!embedded || showStructureNewsletter");
+    expect(read("src/components/SystemDetailContent.tsx")).not.toContain(
+      "StructureNewsletterBlock",
+    );
+    const archivedOrganiserLanding = read("src/components/OrganiserLandingPage.tsx");
+    expect(archivedOrganiserLanding).toContain("<StructureNewsletterBlock />");
+    expect(read("src/app/(marketing)/organiser/page.tsx")).not.toContain(
+      "OrganiserLandingPage",
+    );
     const sharedPageLoader = read("src/lib/action-plan-pages.server.ts");
     expect(sharedPageLoader).toContain('requestedIntent === "structure"');
     expect(sharedPageLoader).toContain('requestedIntent === "structure-problem"');
     expect(sharedPageLoader).toContain('input.localeCode === "fr"');
 
     const academyCourseFiles = [
-      "src/app/(marketing)/academie/[courseSlug]/page.tsx",
+      "src/app/(marketing)/organiser/[slug]/page.tsx",
       "src/components/AcademyCourseReader.tsx",
     ].filter((path) => {
       try {

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { ClipboardCheck, Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import AppLibrarySearch from "@/components/AppLibrarySearch";
 import OrganiserProcessMap from "@/components/OrganiserProcessMap";
@@ -409,7 +409,7 @@ export default function AcademyIndexClient({
       query={searchQuery}
     />
   ) : (
-    <div className="relative mx-auto mt-9 w-full max-w-4xl md:mt-11">
+    <div className="relative mx-auto mt-6 w-full max-w-4xl md:mt-7">
       <div className="demaa-search-shell p-1.5">
         <div className="relative">
           <Search
@@ -516,6 +516,18 @@ export default function AcademyIndexClient({
             <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-dema-muted md:text-lg">
               Des processus concrets pour simplifier ce qui vous prend du temps et rendre votre entreprise moins dépendante de vous.
             </p>
+            {localeCode === "fr" ? (
+              <div className="mt-8 flex flex-col items-center gap-2.5">
+                <Link
+                  href="/diagnostic-organisation"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-dema-forest px-7 text-sm font-semibold text-white transition hover:bg-[#284f3a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
+                >
+                  <ClipboardCheck className="h-4 w-4" aria-hidden="true" />
+                  Diagnostic organisation
+                </Link>
+                <p className="text-xs text-dema-muted">Gratuit · Sans engagement</p>
+              </div>
+            ) : null}
           </div>
 
           {searchControl}

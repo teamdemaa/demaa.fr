@@ -118,11 +118,11 @@ describe("Organiser process guides", () => {
 
   it("provides one dynamic process-map image for Open Graph and X", async () => {
     const openGraphSource = readFileSync(
-      "src/app/(marketing)/academie/[slug]/opengraph-image.tsx",
+      "src/app/(marketing)/organiser/[slug]/opengraph-image.tsx",
       "utf8",
     );
     const twitterSource = readFileSync(
-      "src/app/(marketing)/academie/[slug]/twitter-image.tsx",
+      "src/app/(marketing)/organiser/[slug]/twitter-image.tsx",
       "utf8",
     );
 
@@ -230,6 +230,9 @@ describe("Organiser process guides", () => {
     expect(articleSource).not.toContain("Rythme de pilotage");
     expect(articleSource).not.toContain("Exceptions à remonter");
     expect(articleSource).toContain("font-serif text-[2.65rem] font-normal");
+    expect(articleSource).toContain("Les premières actions à mettre en place");
+    expect(articleSource).not.toContain("démarrer aujourd’hui");
+    expect(JSON.stringify(ORGANISER_PROCESS_GUIDES)).not.toContain("reçue aujourd’hui");
 
     const rulesPosition = articleSource.indexOf('aria-labelledby="rules-title"');
     const examplePosition = articleSource.indexOf('aria-label="Exemple concret"');

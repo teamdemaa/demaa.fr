@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import OrganiserLandingPage from "@/components/OrganiserLandingPage";
+import AcademyIndexClient from "@/components/AcademyIndexClient";
+import ActionPlanNavbar from "@/components/ActionPlanNavbar";
+import Navbar from "@/components/Navbar";
+import { getAllAcademyContent } from "@/lib/academy-course-content";
 
-const title = "Organiser son entreprise et gagner du temps | Demaa";
+const title = "Des cas concrets pour mieux organiser votre entreprise | Demaa";
 const description =
-  "Un diagnostic gratuit puis une mise en place accompagnée pour simplifier votre organisation et rendre votre entreprise moins dépendante de vous.";
+  "Des processus concrets pour simplifier ce qui prend du temps et rendre votre entreprise moins dépendante de vous.";
 
 export const metadata: Metadata = {
   title,
@@ -20,6 +23,12 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title, description },
 };
 
-export default function OrganiserPage() {
-  return <OrganiserLandingPage />;
+export default function OrganiserIndexPage() {
+  return (
+    <>
+      <Navbar />
+      <ActionPlanNavbar activeView="academy" routeNavigation />
+      <AcademyIndexClient contents={getAllAcademyContent()} />
+    </>
+  );
 }

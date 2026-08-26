@@ -1,6 +1,10 @@
+"use client";
+
 import {
   Building2,
   CarFront,
+  ChevronLeft,
+  ChevronRight,
   CookingPot,
   CreditCard,
   HandHelping,
@@ -8,7 +12,7 @@ import {
   Home,
   Stethoscope,
 } from "lucide-react";
-import HorizontalScrollHint from "@/components/HorizontalScrollHint";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const dailySolutions = [
   { name: "Wecasa", href: "https://www.wecasa.fr/", tag: "Déléguer", description: "Déléguez le ménage, la garde d’enfants et certains services du quotidien.", Icon: Home },
@@ -22,45 +26,107 @@ const dailySolutions = [
 ] as const;
 
 export default function LeaderDailyRail() {
-  return (
-    <section aria-labelledby="leader-daily-heading" className="border-t border-dema-line pt-10">
-      <p className="text-xs font-medium uppercase tracking-[0.16em] text-dema-muted">
-        Le quotidien du dirigeant
-      </p>
-      <h2 id="leader-daily-heading" className="mt-3 text-2xl font-light tracking-[-0.035em] text-brand-blue sm:text-3xl">
-        Simplifier aussi votre quotidien
-      </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-dema-muted sm:text-base">
-        Une sélection de solutions pour déléguer certaines contraintes, faciliter vos déplacements et préserver votre énergie.
-      </p>
+  const railRef = useRef<HTMLDivElement | null>(null);
+  const [railState, setRailState] = useState({
+    canNext: dailySolutions.length > 1,
+    canPrevious: false,
+  });
 
-      <HorizontalScrollHint
-        className="-mx-4 mt-6 overflow-x-auto px-4 pb-3 soft-scroll sm:-mx-6 sm:px-6"
-        controlsClassName="absolute right-0 -top-12 z-10 flex items-center gap-1.5"
-      >
-        <div className="flex gap-3">
-          {dailySolutions.map(({ name, href, tag, description, Icon }) => (
-            <a
-              key={name}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex min-h-56 w-[72vw] max-w-[14rem] shrink-0 flex-col rounded-[1.15rem] border border-dema-line bg-dema-paper p-4 transition hover:border-dema-forest/24 hover:shadow-[0_12px_30px_rgba(23,35,29,0.06)] sm:w-56"
-              aria-label={`Découvrir ${name}, nouvelle fenêtre`}
-            >
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                <Icon className="h-4 w-4" aria-hidden="true" />
-              </span>
-              <span className="mt-5 text-[10px] font-medium uppercase tracking-[0.14em] text-dema-muted">{tag}</span>
-              <strong className="mt-2 text-base font-medium leading-tight text-brand-blue">{name}</strong>
-              <span className="mt-2 text-xs leading-5 text-dema-muted">{description}</span>
-            </a>
-          ))}
+  const updateRailState = useCallback(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    const nextState = {
+      canNext: rail.scrollLeft + rail.clientWidth < rail.scrollWidth - 2,
+      canPrevious: rail.scrollLeft > 2,
+    };
+    setRailState((current) =>
+      current.canNext === nextState.canNext &&
+      current.canPrevious === nextState.canPrevious
+        ? current
+        : nextState,
+    );
+  }, []);
+
+  useEffect(() => {
+    updateRailState();
+    window.addEventListener("resize", updateRailState);
+    return () => window.removeEventListener("resize", updateRailState);
+  }, [updateRailState]);
+
+  function navigateRail(direction: -1 | 1) {
+    const rail = railRef.current;
+    const firstCard = rail?.querySelector<HTMLElement>("[data-leader-daily-card]");
+    if (!rail || !firstCard) return;
+
+    const gap = Number.parseFloat(window.getComputedStyle(rail).columnGap) || 0;
+    rail.scrollBy({
+      behavior: "smooth",
+      left: direction * (firstCard.getBoundingClientRect().width + gap),
+    });
+  }
+
+  return (
+    <section aria-labelledby="leader-daily-heading" className="min-w-0 max-w-full">
+      <div className="flex items-center justify-between gap-4">
+        <h3
+          id="leader-daily-heading"
+          className="text-xl font-semibold tracking-[-0.025em] text-brand-blue sm:text-2xl"
+        >
+          Le quotidien du dirigeant
+        </h3>
+        <div className="flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            aria-label="Voir les solutions du quotidien précédentes"
+            onClick={() => navigateRail(-1)}
+            disabled={!railState.canPrevious}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
+          >
+            <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            aria-label="Voir les solutions du quotidien suivantes"
+            onClick={() => navigateRail(1)}
+            disabled={!railState.canNext}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
+          >
+            <ChevronRight className="h-4 w-4" aria-hidden="true" />
+          </button>
         </div>
-      </HorizontalScrollHint>
-      <p className="mt-3 text-xs leading-5 text-dema-muted">
-        Sélection éditoriale, sans classement ni notation.
-      </p>
+      </div>
+
+      <div
+        ref={railRef}
+        onScroll={updateRailState}
+        className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col items-stretch auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_1rem)_/_2)] lg:auto-cols-[calc((100%_-_2rem)_/_3)] xl:auto-cols-[calc((100%_-_3rem)_/_3.5)] [&::-webkit-scrollbar]:hidden"
+      >
+        {dailySolutions.map(({ name, href, tag, description, Icon }) => (
+          <a
+            key={name}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-leader-daily-card
+            className="group flex h-[19rem] w-full min-w-0 snap-start flex-col overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6"
+            aria-label={`Découvrir ${name}, nouvelle fenêtre`}
+          >
+            <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+              <Icon className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <span className="mt-4 block line-clamp-2 min-h-[2.5em] text-[10px] font-semibold uppercase leading-[1.25] tracking-[0.15em] text-dema-muted">
+              {tag}
+            </span>
+            <strong className="mt-1.5 block line-clamp-2 min-h-[2.5em] text-lg font-semibold leading-tight text-brand-blue sm:text-xl">
+              {name}
+            </strong>
+            <span className="mt-2 line-clamp-2 text-[13px] leading-5 text-dema-muted md:text-sm">
+              {description}
+            </span>
+          </a>
+        ))}
+      </div>
     </section>
   );
 }

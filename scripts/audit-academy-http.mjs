@@ -17,9 +17,9 @@ if (!academySlugBlock) {
 const slugs = [...academySlugBlock[1].matchAll(/"([^"]+)"/g)].map(
   (match) => match[1],
 );
-if (slugs.length !== 14 || new Set(slugs).size !== slugs.length) {
+if (slugs.length === 0 || new Set(slugs).size !== slugs.length) {
   throw new Error(
-    `Expected 14 unique canonical Academy slugs, found ${slugs.length}.`,
+    `Expected a non-empty set of unique Organiser slugs, found ${slugs.length}.`,
   );
 }
 
@@ -39,22 +39,29 @@ const aliases = {
 };
 
 const redirectCases = [
-  ["/cours", "/academie"],
-  ...slugs.map((slug) => [`/cours/${slug}`, `/academie/${slug}`]),
+  ["/cours", "/organiser"],
+  ["/academy", "/organiser"],
+  ["/academie", "/organiser"],
+  ...slugs.flatMap((slug) => [
+    [`/cours/${slug}`, `/organiser/${slug}`],
+    [`/academy/${slug}`, `/organiser/${slug}`],
+    [`/academie/${slug}`, `/organiser/${slug}`],
+  ]),
   ...Object.entries(aliases).flatMap(([legacySlug, canonicalSlug]) => [
-    [`/cours/${legacySlug}`, `/academie/${canonicalSlug}`],
-    [`/academie/${legacySlug}`, `/academie/${canonicalSlug}`],
+    [`/cours/${legacySlug}`, `/organiser/${canonicalSlug}`],
+    [`/academy/${legacySlug}`, `/organiser/${canonicalSlug}`],
+    [`/academie/${legacySlug}`, `/organiser/${canonicalSlug}`],
   ]),
   [
     "/cours/facture-electronique",
     "/contenus/facturation-electronique",
   ],
-  ["/cours/obligations-finances-entreprise", "/systemes"],
+  ["/cours/obligations-finances-entreprise", "/solutions"],
   [
     "/cours/organisation-marketing-vente",
-    "/academie/construire-systeme-marketing-vente",
+    "/organiser/construire-systeme-marketing-vente",
   ],
-  ["/cours?retourSysteme=batiment", "/academie?retourSysteme=batiment"],
+  ["/cours?retourSysteme=batiment", "/organiser?retourSysteme=batiment"],
 ];
 
 const failures = [];
@@ -78,7 +85,7 @@ for (const [source, expectedDestination] of redirectCases) {
 }
 
 for (const slug of slugs) {
-  const response = await fetch(new URL(`/academie/${slug}`, baseUrl), {
+  const response = await fetch(new URL(`/organiser/${slug}`, baseUrl), {
     redirect: "manual",
   });
   const html = await response.text();
@@ -88,7 +95,7 @@ for (const slug of slugs) {
     html.includes("VideoObject")
   ) {
     failures.push({
-      source: `/academie/${slug}`,
+      source: `/organiser/${slug}`,
       expected: { status: 200, jsonLd: true, videoObject: false },
       actual: {
         status: response.status,
@@ -110,7 +117,7 @@ console.log(
       ok: true,
       baseUrl: baseUrl.origin,
       redirects: redirectCases.length,
-      academyPages: slugs.length,
+      organiserPages: slugs.length,
     },
     null,
     2,

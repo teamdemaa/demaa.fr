@@ -98,7 +98,7 @@ function getAssets(trainingSlug: string, sourceSystemSlug: string | null) {
           id: "support-facturation-electronique",
           label: "Support sur la facturation électronique",
           description: "Le calendrier, les obligations et les impacts à retenir.",
-          href: "/cours/facture-electronique",
+          href: "/contenus/facturation-electronique",
         },
       ];
     case "systeme-marketing-vente":

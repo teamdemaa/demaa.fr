@@ -574,6 +574,40 @@ describe("system Solutions UI", () => {
     expect(detailSource).not.toContain("systeme: SystemeDetail | null");
     expect(detailSource).toContain("<SystemSolutionsTab");
     expect(detailSource).toContain("<SystemResourcesTab");
+    expect(detailSource).toContain("<LeaderDailyRail />");
+    expect(detailSource).not.toContain("StructureNewsletterBlock");
+  });
+
+  it("presents the leader daily tools as a standard solution rail", async () => {
+    const source = await readSource("src/components/LeaderDailyRail.tsx");
+
+    expect(source).toContain("Le quotidien du dirigeant");
+    expect(source).not.toContain("Simplifier aussi votre quotidien");
+    expect(source).not.toContain("Sélection éditoriale");
+    expect(source).toContain("data-leader-daily-card");
+    expect(source).toContain("h-[19rem]");
+    expect(source).toContain("xl:auto-cols-[calc((100%_-_3rem)_/_3.5)]");
+    expect(source).not.toContain("DirectoryDetailDialogShell");
+  });
+
+  it("keeps the daily rail inside the solution kit and only two final next steps", async () => {
+    const detailSource = await readSource("src/components/SystemDetailContent.tsx");
+    const nextStepsSource = await readSource("src/components/SystemSolutionNextSteps.tsx");
+
+    expect(detailSource.indexOf("<SystemResourcesTab")).toBeLessThan(
+      detailSource.indexOf("<LeaderDailyRail />"),
+    );
+    expect(detailSource.indexOf("<LeaderDailyRail />")).toBeLessThan(
+      detailSource.indexOf("<SystemContextualCaseStudy"),
+    );
+    expect(detailSource.indexOf("<SystemContextualCaseStudy")).toBeLessThan(
+      detailSource.indexOf("<SystemSolutionNextSteps"),
+    );
+    expect(nextStepsSource.match(/<article/g)).toHaveLength(2);
+    expect(nextStepsSource).toContain("Vous ne savez pas par où commencer ?");
+    expect(nextStepsSource).toContain(
+      "Aucune solution ne correspond à votre fonctionnement ?",
+    );
   });
 
   it("uses the neutral Resources catalog as the public delivery entry point", async () => {

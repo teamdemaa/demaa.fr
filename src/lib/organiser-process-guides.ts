@@ -211,7 +211,7 @@ export const ORGANISER_PROCESS_GUIDES: AcademyContentDefinition[] = [
         "Définir les six informations obligatoires d’une nouvelle fiche.",
         "Attribuer un responsable à chaque étape du processus.",
         "Définir les trois situations qui nécessitent la direction.",
-        "Tester le circuit avec une vraie demande reçue aujourd’hui.",
+        "Tester le circuit avec une demande récente.",
       ],
       faqs: [
         {

@@ -93,9 +93,9 @@ describe("Academy live sessions and contextual cases", () => {
         new URL("../src/components/AcademyIndexClient.tsx", import.meta.url),
         "utf8",
       ),
-      readFile(new URL("../src/app/(marketing)/academie/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(marketing)/organiser/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/AcademyTutorialArticle.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/(marketing)/academie/[slug]/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(marketing)/organiser/[slug]/page.tsx", import.meta.url), "utf8"),
     ]);
     expect(clientSource).not.toContain("Cours fondamentaux");
     expect(clientSource).not.toContain("<AcademyLiveTrainingSection");

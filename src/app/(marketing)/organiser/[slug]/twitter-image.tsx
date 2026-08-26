@@ -3,4 +3,4 @@ export {
   contentType,
   default,
   size,
-} from "../../academie/[slug]/twitter-image";
+} from "./opengraph-image";

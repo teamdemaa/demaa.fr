@@ -67,20 +67,16 @@ describe("Demaa application navbar", () => {
       new URL("../src/app/(marketing)/organiser/page.tsx", import.meta.url),
       "utf8",
     );
-    const academyIndex = await readFile(
-      new URL("../src/app/(marketing)/academie/page.tsx", import.meta.url),
-      "utf8",
-    );
 
     expect(source).toContain('view === "academy"');
     expect(source).toContain('? "/organiser"');
     expect(source).toContain('view === "plan"');
     expect(source).toContain('? "/"');
     expect(source).toContain(': "/application-metier"');
-    expect(organiserIndex).toContain('OrganiserLandingPage');
+    expect(organiserIndex).not.toContain("OrganiserLandingPage");
     expect(organiserIndex).toContain('canonical: "/organiser"');
-    expect(academyIndex).toContain("<Navbar />");
-    expect(academyIndex).toContain('<ActionPlanNavbar activeView="academy" routeNavigation />');
+    expect(organiserIndex).toContain("<Navbar />");
+    expect(organiserIndex).toContain('<ActionPlanNavbar activeView="academy" routeNavigation />');
   });
 
   it("replaces the sign-in action with account access once a session is active", async () => {

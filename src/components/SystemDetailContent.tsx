@@ -4,7 +4,6 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { type ReactNode, useMemo, useState } from "react";
 import LeaderDailyRail from "@/components/LeaderDailyRail";
-import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import SystemContextualCaseStudy from "@/components/SystemContextualCaseStudy";
 import SystemResourcesTab from "@/components/SystemResourcesTab";
 import SystemSolutionNextSteps from "@/components/SystemSolutionNextSteps";
@@ -117,11 +116,10 @@ export default function SystemDetailContent({
           resources={scopedResources}
           systemSlug={system.slug}
         />
+        {!embedded ? <LeaderDailyRail /> : null}
         {contextualCaseStudy ? (
           <SystemContextualCaseStudy content={contextualCaseStudy} />
         ) : null}
-        {!embedded ? <StructureNewsletterBlock /> : null}
-        {!embedded ? <LeaderDailyRail /> : null}
         {!embedded ? (
           <SystemSolutionNextSteps systemId={system.slug} systemName={system.name} />
         ) : null}

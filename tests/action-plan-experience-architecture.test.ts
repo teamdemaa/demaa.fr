@@ -327,8 +327,8 @@ describe("action plan experience architecture", () => {
     expect(coursePlayer).toContain("Quiz de connaissances");
     expect(coursePlayer).not.toContain("Cours fondamental");
     expect(coursePlayer).not.toContain("content.lessons.length} notions");
-    expect(source("src/components/SystemDetailContent.tsx")).toContain(
-      "!embedded ? <StructureNewsletterBlock /> : null",
+    expect(source("src/components/SystemDetailContent.tsx")).not.toContain(
+      "StructureNewsletterBlock",
     );
   });
 
