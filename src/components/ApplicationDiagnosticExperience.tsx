@@ -21,6 +21,8 @@ export function ApplicationDiagnosticProvider({ children }: { children: ReactNod
     <ApplicationDiagnosticContext.Provider value={openDiagnostic}>
       <GuestDiagnosticControl
         access={null}
+        dialogDescription="Décrivez le processus qui vous ralentit. L’équipe Demaa vous répond pour vérifier si une application métier est adaptée."
+        dialogTitle="Discuter de votre projet"
         onClose={closeDiagnostic}
         onOpen={openDiagnostic}
         open={open}
@@ -34,8 +36,10 @@ export function ApplicationDiagnosticProvider({ children }: { children: ReactNod
 
 export function ApplicationDiagnosticButton({
   className,
+  label = "Discuter de votre projet",
 }: {
   className: string;
+  label?: string;
 }) {
   const openDiagnostic = useContext(ApplicationDiagnosticContext);
 
@@ -46,7 +50,7 @@ export function ApplicationDiagnosticButton({
   return (
     <button type="button" onClick={openDiagnostic} className={className}>
       <ClipboardCheck className="h-4 w-4 shrink-0" aria-hidden="true" />
-      <span>Diagnostic organisation</span>
+      <span>{label}</span>
     </button>
   );
 }

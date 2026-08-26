@@ -14,18 +14,17 @@ La phrase de référence est :
 
 La navigation publique suit le parcours :
 
-`Plan d’action → Organiser → Application métier`
+`Solutions → Application métier → Organiser`
 
-- `Plan d’action` aide le dirigeant à choisir ses priorités ;
-- `Organiser` regroupe les solutions par métier et montre comment un travail
-  réel doit circuler ;
+- `Solutions` regroupe les outils, ressources et partenaires par métier ;
 - `Application métier` présente l’accompagnement pour construire un outil
-  adapté lorsque les logiciels existants ne suffisent plus.
+  adapté lorsque les logiciels existants ne suffisent plus ;
+- `Organiser` montre, par des cas concrets, comment un travail réel doit
+  circuler.
 
-Dans `Organiser`, la sous-navigation est verrouillée dans l’ordre
-`Solutions → Processus`. `Solutions` est l’entrée par défaut et demande
-l’activité avant d’afficher un contenu contextualisé. `Processus` contient les
-quatorze guides. Aucun onglet Solutions n’est affiché dans le Plan d’action.
+`Solutions` et `Organiser` sont deux destinations distinctes. La page
+`Organiser` ouvre directement les quatorze guides et ne répète pas les onglets
+du répertoire. La route racine ouvre `Solutions` par défaut.
 
 `Organiser` n’est ni une académie classique ni un blog généraliste. C’est une
 bibliothèque de processus opérationnels pour les TPE.
@@ -159,7 +158,7 @@ l’article public. Les blocs « point de départ », « rythme de pilotage » e
 - Le clic ouvre la fiche canonique de l’annuaire et sa modal lors d’une
   navigation interne.
 - Le CTA placé avec les outils renvoie vers les solutions du système métier
-  correspondant via `/organiser?tab=solutions&system=[métier]`.
+  correspondant via `/solutions/[métier]`.
 - Chaque guide possède une image Open Graph et X générée depuis les mêmes six
   étapes, sans titre marketing ni décoration supplémentaire.
 - Le JSON-LD utilise l’URL publique stable

@@ -193,7 +193,7 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).not.toContain('label: "Système"');
     expect(actionPlanNavSource).toContain("const navigationOrder: readonly ActionPlanView[]");
     expect(actionPlanNavSource).toContain(
-      '"solutions",\n  "academy",\n  "services"',
+      '"solutions",\n  "services",\n  "academy"',
     );
     expect(actionPlanNavSource).toContain('  "academy",');
     expect(actionPlanNavSource).not.toContain('  "opportunities",');

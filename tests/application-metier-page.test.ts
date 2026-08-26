@@ -37,30 +37,52 @@ describe("Application métier landing page", () => {
     expect(source).not.toContain("block h-0.5 w-8 rounded-full bg-dema-forest");
     expect(source).toContain("Comment ça se passe concrètement ?");
     expect(source).not.toContain("ArrowRight");
-    expect(source).toContain("Certaines applications réalisées par notre équipe");
+    expect(source).toContain("Des applications construites pour des situations concrètes");
+    expect(source).toContain("Trois projets réalisés autour du fonctionnement réel d’une entreprise.");
     expect(source).toContain('<span className="block">À partir de</span>');
     expect(source).toContain('<span className="mt-1 block whitespace-nowrap">4 500 € HT</span>');
     expect(source).toContain("700 € HT / jour");
     expect(source).toContain("Questions-réponses");
-    expect(diagnosticSource).toContain("Diagnostic organisation");
+    expect(diagnosticSource).toContain('label = "Discuter de votre projet"');
+    expect(diagnosticSource).toContain('dialogTitle="Discuter de votre projet"');
+    expect(diagnosticSource).toContain("si une application métier est adaptée");
     expect(diagnosticSource).toContain("<ClipboardCheck");
     expect(diagnosticSource).toContain("showNavbarTrigger={false}");
-    expect(source).toContain("<Navbar minimal />");
+    expect(source).toContain("<Navbar minimal showDiagnostic={false} />");
   });
 
-  it("uses the real brand colors and links the three verified public projects", async () => {
-    const source = await readSource("src/components/ApplicationMetierLandingPage.tsx");
+  it("presents three real anonymized cases without mixing them with Studio", async () => {
+    const [source, component, cases] = await Promise.all([
+      readSource("src/components/ApplicationMetierLandingPage.tsx"),
+      readSource("src/components/ApplicationMetierCaseStudies.tsx"),
+      readSource("src/lib/application-metier-case-studies.ts"),
+    ]);
 
     expect(source).toContain('className="bg-dema-forest');
     expect(source).toContain('className="bg-dema-sage');
-    expect(source).toContain('href: "https://www.tiimora.com/"');
-    expect(source).toContain('href: "https://pointage-2.vercel.app/"');
-    expect(source).toContain('href: "https://revio-gules.vercel.app/"');
-    expect(source).toContain('logo: "/portfolio/tiimora-logo.svg"');
-    expect(source).toContain('logo: "/portfolio/oryka-logo.svg"');
-    expect(source).toContain('logo: "/portfolio/revyo-logo.svg"');
-    expect(source).toContain('name: "Oryka"');
-    expect(source).toContain('name: "Revyo"');
-    expect(source).not.toContain("Tendera");
+    expect(source).toContain("ApplicationMetierCaseStudies");
+    expect(source).toContain("APPLICATION_METIER_CASE_STUDIES");
+    expect(source).not.toContain("DEMAA_STUDIO_PROJECTS");
+    expect(source).not.toContain("Tiimora");
+    expect(source).not.toContain("Oryka");
+    expect(source).not.toContain("Revyo");
+
+    expect(cases).toContain('sector: "Entreprise du bâtiment"');
+    expect(cases).toContain("chantiers et organiser le planning des collaborateurs");
+    expect(cases).toContain('sector: "Entreprise de nettoyage"');
+    expect(cases).toContain("Arrivée et départ pointés");
+    expect(cases).toContain('sector: "Cabinet d’expertise comptable"');
+    expect(cases).toContain("attribuer un responsable");
+    expect(cases).toContain("partager l’avancement avec le client");
+    expect(cases).not.toContain("Tiimora");
+    expect(cases).not.toContain("Oryka");
+    expect(cases).not.toContain("Revyo");
+    expect(cases).not.toContain("Tendera");
+
+    expect(component).toContain("DirectoryDetailDialogShell");
+    expect(component).toContain("Le problème de départ");
+    expect(component).toContain("L’application construite");
+    expect(component).toContain("Le flux de travail");
+    expect(component).not.toContain("next/image");
   });
 });

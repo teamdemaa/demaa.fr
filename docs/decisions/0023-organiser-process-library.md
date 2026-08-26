@@ -15,11 +15,11 @@ chantiers, documents, stocks, validations et facturation.
 ## Décision
 
 La destination française visible s’appelle `Organiser`. La navigation
-principale est `Plan d’action · Organiser · Services`. Organiser affiche une
-sous-navigation en pilules dans l’ordre `Solutions · Processus`. `Solutions`
-est l’entrée par défaut : le dirigeant choisit son activité, puis voit les
-outils, ressources et partenaires adaptés à ce métier. `Processus` ouvre la
-bibliothèque éditoriale transversale.
+principale est `Solutions · Application métier · Organiser`. `Solutions` est
+une destination autonome : le dirigeant choisit son activité, puis voit les
+outils, ressources et partenaires adaptés à ce métier. `Application métier`
+présente l’accompagnement et des cas réalisés. `Organiser` ouvre directement la
+bibliothèque éditoriale de processus, sans sous-navigation locale.
 
 La route publique canonique devient `/organiser`. Le socle technique conserve
 les identifiants `academy`, les API, caches et progressions. `/academie`,
@@ -41,15 +41,15 @@ JSON-LD via la route stable `/organiser/[slug]/process-map.png`. Le pilote
 canonique est l’organisation d’une entreprise de plomberie, de la demande à la
 facture.
 
-`Solutions` ne fait plus partie des onglets du Plan d’action. Un CTA depuis une
-action, un article ou une fiche système ouvre
-`/organiser?tab=solutions&system=[métier]`, avec le métier présélectionné. Les
-anciennes URL `view=solutions`, `view=system` et
-`view=plan&section=solutions` restent compatibles par redirection.
+La route racine ouvre `Solutions` par défaut. Un CTA depuis une action, un
+article ou une fiche système ouvre `/solutions/[métier]`, avec le métier déjà
+sélectionné. Les anciennes URL `view=solutions`, `view=system`,
+`view=plan&section=solutions` et `/organiser?tab=solutions` restent compatibles
+par redirection.
 
-La première collection contient huit entreprises ou activités : plomberie,
-rénovation, menuiserie, nettoyage, garage, restaurant, organisme de formation
-et agence.
+La collection contient quatorze guides : huit processus organisés par activité
+et six réponses à des problèmes transversaux de centralisation, planning,
+ressaisie, choix de logiciel et rentabilité d’une application métier.
 
 Dans la grille, le bloc texte des cartes est volontairement secondaire : taille
 réduite de 20 %, opacité de 59 % et métadonnée courte
@@ -59,8 +59,9 @@ contraste normal.
 ## Gates
 
 - aucun ancien tutoriel d’acquisition ne revient dans l’index ;
-- `Solutions` précède `Processus` et reste l’entrée par défaut d’Organiser ;
-- aucun onglet `Solutions` n’est affiché dans le Plan d’action ;
+- `Solutions` est la première entrée de navigation et la destination par défaut ;
+- `Application métier` est la deuxième entrée et `Organiser` la troisième ;
+- aucun onglet local ne mélange Solutions et Processus dans `Organiser` ;
 - aucune formation masquée n’est republiée ;
 - les six étapes restent identiques entre carte et article ;
 - le processus reste lisible sur mobile et desktop ;
@@ -74,7 +75,8 @@ contraste normal.
 
 ## Recette du 25 août 2026
 
-Les huit routes ont été générées par la compilation de production. L’index, le
-pilote plomberie, le process map desktop et sa version mobile ont été contrôlés
-visuellement. La navigation affiche `Plan d’action · Organiser · Services`, les
-tests ciblés et le lint des fichiers modifiés sont passés.
+Les quatorze routes ont été générées par la compilation de production. L’index,
+le pilote plomberie, le process map desktop et sa version mobile ont été
+contrôlés visuellement. La navigation affiche
+`Solutions · Application métier · Organiser` ; les tests ciblés, le lint et la
+compilation de production font partie de la recette obligatoire.

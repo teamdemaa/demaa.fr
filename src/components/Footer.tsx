@@ -15,6 +15,7 @@ const directoryLinks = [
 
 const collaborationLinks = [
   { label: "Application métier", href: "/application-metier" },
+  { label: "Demaa Studio", href: "/studio" },
   { label: "Annonces", href: "/opportunites" },
   { label: "Rejoindre Team Demaa", href: "/rejoindre-team-demaa" },
   { label: "Nous contacter", href: "mailto:team@demaa.fr" },

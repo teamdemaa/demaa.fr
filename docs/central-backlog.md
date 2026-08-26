@@ -16,6 +16,33 @@ Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
 à réaliser.
 
+## D-100 — Demaa Studio — candidat local du 26 août 2026
+
+Référence : [ADR 0024](decisions/0024-demaa-studio.md).
+
+- [x] Reprendre la décision du task MASTER DEMAA et du task de refonte
+  `Solutions / Application métier / Organiser`.
+- [x] Retenir le nom public `Demaa Studio`, sans entrée dans la navbar.
+- [x] Créer la route canonique `/studio` dans le design marketing existant.
+- [x] Ajouter `Demaa Studio` sous `Collaborer avec Demaa` dans le footer.
+- [x] Centraliser Tiimora, Oryka et Revyo dans une source propre à Studio.
+- [x] Remplacer les produits nommés de la page Application métier par trois cas
+  réels anonymisés : bâtiment, nettoyage et cabinet d’expertise comptable.
+- [x] Décrire dans une modal le problème, l’application construite et le flux de
+  chaque cas, sans image ni résultat inventé.
+- [x] Fixer la navigation dans l’ordre
+  `Solutions / Application métier / Organiser` et masquer le CTA Diagnostic
+  dans le seul header d’Application métier.
+- [x] Retirer `Tester un projet` de Studio et conserver uniquement
+  `Rejoindre Team Demaa`.
+- [x] Maintenir Tendera masqué.
+- [x] Ajouter les métadonnées, le sitemap et les tests ciblés.
+- [ ] Terminer la validation globale et la recette humaine.
+- [ ] Committer et déployer uniquement après validation explicite de la page.
+
+Ce lot ne crée aucun lien technique avec The Done Studio. Il aligne la
+navigation principale sur la décision D-099 sans ajouter Studio à la navbar.
+
 Plan directeur actif :
 [`Programme stabilisation et Stratégie — 16 août 2026`](governance/program-director-2026-08-16.md).
 Il fixe l'ordre des lots, leurs responsables, les branches/PR et les gates de

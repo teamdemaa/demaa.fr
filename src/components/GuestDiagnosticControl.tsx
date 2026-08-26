@@ -16,6 +16,8 @@ type Status = "idle" | "sending" | "success" | "error";
 
 export default function GuestDiagnosticControl({
   access,
+  dialogDescription = "L’équipe Demaa analyse votre situation et vous propose des pistes concrètes pour améliorer votre organisation.",
+  dialogTitle = "Demander un diagnostic de mon organisation",
   onClose,
   onOpen,
   open,
@@ -23,6 +25,8 @@ export default function GuestDiagnosticControl({
   situation,
 }: {
   access: GuestAccess | null;
+  dialogDescription?: string;
+  dialogTitle?: string;
   onClose: () => void;
   onOpen: () => void;
   open: boolean;
@@ -127,10 +131,10 @@ export default function GuestDiagnosticControl({
                   id="guest-diagnostic-title"
                   className="mt-4 pr-12 text-2xl font-medium tracking-[-0.03em] text-brand-blue"
                 >
-                  Demander un diagnostic de mon organisation
+                  {dialogTitle}
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-dema-muted">
-                  L’équipe Demaa analyse votre situation et vous propose des pistes concrètes pour améliorer votre organisation.
+                  {dialogDescription}
                 </p>
 
                 {status === "success" ? (

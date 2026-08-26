@@ -243,16 +243,16 @@ envoyé ou conservé par Demaa dans ce lot.
 
 ### Avant connexion
 
-La homepage conserve le grand champ comme entrée principale. La navigation
-française visible est `Plan d’action / Organiser / Services`. `Plan d’action`
-affiche directement les Actions, sans sous-navigation Solutions. `Organiser`
-présente `Solutions / Processus`, dans cet ordre, et ouvre Solutions par défaut.
-Le visiteur choisit son activité avant de voir les outils, ressources et autres
-rails publiés pour ce métier. Les anciennes URLs utilisant
+La navigation française visible est
+`Solutions / Application métier / Organiser`. La racine ouvre Solutions par
+défaut. Le visiteur choisit son activité avant de voir les outils, ressources
+et autres rails publiés pour ce métier. `Application métier` présente
+l’accompagnement et des réalisations anonymisées ; `Organiser` ouvre
+directement la bibliothèque de processus. Les anciennes URLs utilisant
 `view=system`, `view=solutions` ou `view=plan&planTab=solutions` restent
 acceptées par redirection. Tout nouveau lien applicatif vers les Solutions
-utilise `/organiser?tab=solutions` et conserve les contextes `system` et
-`resource`. Les routes publiques `/systemes` ne sont pas renommées.
+utilise `/solutions/[métier]` et conserve les contextes utiles. Les routes
+publiques `/systemes` ne sont pas renommées.
 
 Les univers publics `/systemes` et `/academie`, leur navigation et leur SEO
 restent accessibles. L'ADR 0008 ne transforme pas ces routes en espace privé.

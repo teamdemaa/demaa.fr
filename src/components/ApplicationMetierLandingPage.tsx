@@ -1,12 +1,12 @@
-import { ArrowUpRight, ChevronDown } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 import ActionPlanNavbar from "@/components/ActionPlanNavbar";
 import {
   ApplicationDiagnosticButton,
   ApplicationDiagnosticProvider,
 } from "@/components/ApplicationDiagnosticExperience";
+import ApplicationMetierCaseStudies from "@/components/ApplicationMetierCaseStudies";
 import Navbar from "@/components/Navbar";
+import { APPLICATION_METIER_CASE_STUDIES } from "@/lib/application-metier-case-studies";
 import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
 import { surMesurePageContent as content } from "@/lib/sur-mesure-page-content";
 
@@ -22,24 +22,6 @@ const dailyChanges = [
   {
     title: "Chacun sait quoi faire",
     description: "Les prochaines étapes sont claires et visibles par toute votre équipe.",
-  },
-] as const;
-
-const projects = [
-  {
-    name: "Tiimora",
-    href: "https://www.tiimora.com/",
-    logo: "/portfolio/tiimora-logo.svg",
-  },
-  {
-    name: "Oryka",
-    href: "https://pointage-2.vercel.app/",
-    logo: "/portfolio/oryka-logo.svg",
-  },
-  {
-    name: "Revyo",
-    href: "https://revio-gules.vercel.app/",
-    logo: "/portfolio/revyo-logo.svg",
   },
 ] as const;
 
@@ -75,7 +57,7 @@ function SectionIntroduction({
 export default function ApplicationMetierLandingPage() {
   return (
     <ApplicationDiagnosticProvider>
-      <Navbar minimal />
+      <Navbar minimal showDiagnostic={false} />
       <ActionPlanNavbar activeView="services" routeNavigation />
 
       <main className="overflow-x-clip bg-dema-cream pb-24 text-brand-blue xl:pb-0">
@@ -159,39 +141,10 @@ export default function ApplicationMetierLandingPage() {
           <div className="mx-auto max-w-6xl">
             <SectionIntroduction
               id="projects-heading"
-              title="Certaines applications réalisées par notre équipe"
-              description="Des outils conçus autour d’un métier et de sa façon de travailler."
+              title="Des applications construites pour des situations concrètes"
+              description="Trois projets réalisés autour du fonctionnement réel d’une entreprise."
             />
-            <div className="mt-11 grid border-y border-dema-line sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map((project, index) => {
-                const sharedClassName = `flex min-h-28 items-center gap-4 px-5 py-6 ${
-                  index > 0 ? "border-t border-dema-line sm:border-t-0" : ""
-                } ${index % 2 === 1 ? "sm:border-l" : ""} ${index > 1 ? "sm:border-t lg:border-t-0" : ""} ${
-                  index > 0 ? "lg:border-l" : ""
-                }`;
-
-                return (
-                  <Link
-                    key={project.name}
-                    href={project.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`${sharedClassName} transition hover:bg-dema-sage/45`}
-                    aria-label={`Découvrir ${project.name}, nouvelle fenêtre`}
-                  >
-                    <Image
-                      src={project.logo}
-                      alt=""
-                      width={42}
-                      height={42}
-                      unoptimized
-                    />
-                    <span className="text-xl font-medium tracking-[-0.03em]">{project.name}</span>
-                    <ArrowUpRight className="ml-auto h-4 w-4 text-dema-forest" aria-hidden="true" />
-                  </Link>
-                );
-              })}
-            </div>
+            <ApplicationMetierCaseStudies caseStudies={APPLICATION_METIER_CASE_STUDIES} />
           </div>
         </section>
 
