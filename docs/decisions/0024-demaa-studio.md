@@ -1,7 +1,7 @@
 # ADR 0024 — Demaa Studio
 
 - Décision : D-100
-- Statut : validé localement
+- Statut : validé et publié
 - Date : 26 août 2026
 
 ## Contexte
@@ -72,3 +72,12 @@ sans image, nom de produit ni résultat chiffré non vérifié.
 - aucun débordement horizontal sur mobile ;
 - tests, lint, TypeScript et build de production verts ;
 - recette humaine avant mise en production.
+
+## Recette du 26 août 2026
+
+La suite complète passe avec 280 fichiers de tests et 1 581 tests. Le lint,
+TypeScript, les validations Academy et données ainsi que le build de production
+à 487 pages sont verts. Les trois modals Application métier, la navigation, le
+focus clavier, l’absence de débordement mobile et la page Studio ont été
+contrôlés localement puis sur `demaa.co`. Le déploiement de production issu du
+commit `d01a3425` est `READY` et les logs Vercel ne contiennent aucune erreur.

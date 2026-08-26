@@ -16,7 +16,7 @@ Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
 à réaliser.
 
-## D-100 — Demaa Studio — candidat local du 26 août 2026
+## D-100 — Demaa Studio — livré en production le 26 août 2026
 
 Référence : [ADR 0024](decisions/0024-demaa-studio.md).
 
@@ -37,8 +37,8 @@ Référence : [ADR 0024](decisions/0024-demaa-studio.md).
   `Rejoindre Team Demaa`.
 - [x] Maintenir Tendera masqué.
 - [x] Ajouter les métadonnées, le sitemap et les tests ciblés.
-- [ ] Terminer la validation globale et la recette humaine.
-- [ ] Committer et déployer uniquement après validation explicite de la page.
+- [x] Terminer la validation globale et la recette humaine.
+- [x] Committer et déployer après validation explicite du plan complet.
 
 Ce lot ne crée aucun lien technique avec The Done Studio. Il aligne la
 navigation principale sur la décision D-099 sans ajouter Studio à la navbar.
