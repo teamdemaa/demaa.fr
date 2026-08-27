@@ -1,11 +1,13 @@
 import CookiePreferencesPanel from "@/components/CookiePreferencesPanel";
 import LegalPageLayout from "@/components/LegalPageLayout";
 import { LEGAL, LEGAL_COPY } from "@/lib/legal";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "Politique de cookies - Demaa",
-  description: "Politique de cookies et traceurs du site Demaa.fr.",
-};
+  description: "Politique de cookies et traceurs du site demaa.co.",
+  path: "/politique-de-cookies",
+});
 
 function CookieSection({
   title,
@@ -29,7 +31,7 @@ export default function PolitiqueCookiesPage() {
     <LegalPageLayout
       title="Politique de"
       titleAccent="cookies"
-      description="Cette page explique les traceurs, cookies et stockages locaux utilisés sur Demaa.fr, ainsi que vos choix."
+      description={`Cette page explique les traceurs, cookies et stockages locaux utilisés sur ${LEGAL.domain}, ainsi que vos choix.`}
     >
       <CookieSection title="1. Responsable et périmètre">
             <p>
@@ -45,8 +47,8 @@ export default function PolitiqueCookiesPage() {
             </p>
       </CookieSection>
 
-      <CookieSection title="3. Cookies et traceurs utilisés sur Demaa.fr">
-            <p>À la date de publication de cette page, Demaa.fr utilise principalement :</p>
+      <CookieSection title={`3. Cookies et traceurs utilisés sur ${LEGAL.domain}`}>
+            <p>À la date de publication de cette page, {LEGAL.domain} utilise principalement :</p>
             <ul className="list-disc space-y-2 pl-5">
               <li><strong>Vercel Analytics</strong> pour la mesure d&apos;audience du site ;</li>
               <li><strong>Google Analytics</strong> pour l&apos;analyse de fréquentation et des parcours ;</li>
@@ -126,7 +128,7 @@ export default function PolitiqueCookiesPage() {
 
       <CookieSection title="8. Contact">
             <p>
-              Pour toute question liée aux cookies ou aux traceurs utilisés sur Demaa.fr, vous pouvez écrire à <strong>{LEGAL.email}</strong>.
+              Pour toute question liée aux cookies ou aux traceurs utilisés sur {LEGAL.domain}, vous pouvez écrire à <strong>{LEGAL.email}</strong>.
             </p>
       </CookieSection>
     </LegalPageLayout>

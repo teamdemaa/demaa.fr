@@ -20,6 +20,7 @@ import {
   serializeServicesJsonLd,
 } from "@/lib/services-seo";
 import { surMesurePageContent as content } from "@/lib/sur-mesure-page-content";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 const title = "Application métier sur mesure | Demaa";
 const description =
@@ -32,24 +33,11 @@ function requireApplicationService() {
 
 const applicationService = requireApplicationService();
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPublicPageMetadata({
   title,
   description,
-  alternates: { canonical: "/sur-mesure" },
-  openGraph: {
-    title,
-    description,
-    url: "/sur-mesure",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-  },
-};
+  path: "/sur-mesure",
+});
 
 type IconType = ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
 

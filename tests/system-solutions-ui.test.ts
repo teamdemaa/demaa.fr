@@ -561,7 +561,7 @@ describe("system Solutions UI", () => {
     expect(solutionsSource).toContain("SolutionReferralForm");
   });
 
-  it("removes public tab state while preserving the unified Solutions and Resources flow", async () => {
+  it("removes public tab state and keeps Resources out of the métier page", async () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
 
     expect(detailSource).not.toContain('url.searchParams.set("tab", tab)');
@@ -573,7 +573,8 @@ describe("system Solutions UI", () => {
     expect(detailSource).not.toContain("detail: OperationalSystemDetail");
     expect(detailSource).not.toContain("systeme: SystemeDetail | null");
     expect(detailSource).toContain("<SystemSolutionsTab");
-    expect(detailSource).toContain("<SystemResourcesTab");
+    expect(detailSource).not.toContain("<SystemResourcesTab");
+    expect(detailSource).toContain("Voir les processus du métier");
     expect(detailSource).toContain("<LeaderDailyRail />");
     expect(detailSource).not.toContain("StructureNewsletterBlock");
   });
@@ -594,23 +595,19 @@ describe("system Solutions UI", () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const nextStepsSource = await readSource("src/components/SystemSolutionNextSteps.tsx");
 
-    expect(detailSource.indexOf("<SystemResourcesTab")).toBeLessThan(
-      detailSource.indexOf("<LeaderDailyRail />"),
-    );
     expect(detailSource.indexOf("<LeaderDailyRail />")).toBeLessThan(
-      detailSource.indexOf("<SystemContextualCaseStudy"),
-    );
-    expect(detailSource.indexOf("<SystemContextualCaseStudy")).toBeLessThan(
       detailSource.indexOf("<SystemSolutionNextSteps"),
     );
+    expect(detailSource).not.toContain("<SystemContextualCaseStudy");
     expect(nextStepsSource.match(/<article/g)).toHaveLength(2);
-    expect(nextStepsSource).toContain("Vous ne savez pas par où commencer ?");
+    expect(nextStepsSource).toContain("Commencer avec une structure prête à copier");
+    expect(nextStepsSource).toContain("Voir les modèles adaptés");
     expect(nextStepsSource).toContain(
       "Aucune solution ne correspond à votre fonctionnement ?",
     );
   });
 
-  it("uses the neutral Resources catalog as the public delivery entry point", async () => {
+  it("keeps the historical Resources machinery available without exposing it on métier pages", async () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const resourcesSource = await readSource("src/components/SystemResourcesTab.tsx");
     const resourcePreviewSource = await readSource(
@@ -619,9 +616,9 @@ describe("system Solutions UI", () => {
 
     expect(detailSource).not.toContain('setDeliveryModal("system")');
     expect(detailSource).not.toContain("<SystemGuidesRail");
-    expect(detailSource).toContain("<SystemResourcesTab");
-    expect(detailSource).toContain("getAvailableSystemTemplatesForSystem(system.slug)");
-    expect(detailSource).toContain('layout="rail"');
+    expect(detailSource).not.toContain("<SystemResourcesTab");
+    expect(detailSource).not.toContain("getAvailableSystemTemplatesForSystem(system.slug)");
+    expect(detailSource).toContain("Voir les processus du métier");
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).toContain("SystemResourcePreviewModal");
@@ -651,7 +648,7 @@ describe("system Solutions UI", () => {
     expect(hookSource).toContain("previouslyFocused?.focus()");
   });
 
-  it("keeps the D012 rail constrained with three and a half equal-height desktop cards", async () => {
+  it("keeps the D012 rail constrained with four complete equal-height desktop cards", async () => {
     const source = await readSource("src/components/SystemSolutionsTab.tsx");
 
     expect(source).toContain("max-w-full");
@@ -661,7 +658,8 @@ describe("system Solutions UI", () => {
     expect(source).toContain("auto-cols-[82%]");
     expect(source).toContain("md:auto-cols-[calc((100%_-_1rem)_/_2)]");
     expect(source).toContain("lg:auto-cols-[calc((100%_-_2rem)_/_3)]");
-    expect(source).toContain("xl:auto-cols-[calc((100%_-_3rem)_/_3.5)]");
+    expect(source).toContain("xl:auto-cols-[calc((100%_-_3rem)_/_4)]");
+    expect(source).not.toContain("xl:auto-cols-[calc((100%_-_3rem)_/_3.5)]");
     expect(source).toContain("items-stretch");
     expect(source).toContain('className="relative h-[19rem] min-w-0 snap-start"');
     expect(source).toContain("group flex h-[19rem] w-full");

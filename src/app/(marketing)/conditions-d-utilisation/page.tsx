@@ -1,10 +1,12 @@
 import LegalPageLayout from "@/components/LegalPageLayout";
 import { LEGAL, LEGAL_COPY } from "@/lib/legal";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "Conditions d’utilisation - Demaa",
   description: "Conditions d’utilisation du site et des services Demaa.",
-};
+  path: "/conditions-d-utilisation",
+});
 
 function UsageSection({
   title,
@@ -27,7 +29,7 @@ export default function ConditionsUtilisationPage() {
   return (
     <LegalPageLayout
       title="Conditions d’utilisation"
-      description="Ces conditions encadrent l’accès et l’usage du site Demaa.fr, de ses contenus, de ses outils et de l’espace personnel."
+      description={`Ces conditions encadrent l’accès et l’usage du site ${LEGAL.domain}, de ses contenus, de ses outils et de l’espace personnel.`}
     >
       <UsageSection title="1. Périmètre">
             <p>

@@ -2,6 +2,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
 import { isVercelPreviewHost } from "@/lib/site-url";
 import { getExplicitInterfaceLocaleFromPathname } from "@/lib/international-context";
+import { getPublishedCopyableModelBySlug } from "@/lib/copyable-model-catalog";
+import { buildDefaultHomeSolutionsHref } from "@/lib/action-plan-home-routing";
 
 const CANONICAL_HOST = "demaa.co";
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
@@ -11,7 +13,6 @@ const RETIRED_EXACT_PATHS = new Set([
   "/cockpit-preview",
   "/logo-preview",
   "/miniature-preview",
-  "/modeles-de-documents",
   "/offline",
   "/organisation",
   "/organisation-automatisation",
@@ -24,7 +25,6 @@ const RETIRED_EXACT_PATHS = new Set([
 const RETIRED_PATH_PREFIXES = [
   "/academy/",
   "/annuaire-services/",
-  "/modeles-de-documents/",
   "/ressources/",
 ];
 const CONTENT_SECURITY_POLICY = buildContentSecurityPolicy({
@@ -78,6 +78,16 @@ export function proxy(request: NextRequest) {
     }
   }
 
+  if (pathname === "/") {
+    const solutionsHref = buildDefaultHomeSolutionsHref(request.nextUrl.searchParams);
+    if (solutionsHref) {
+      return withContentSecurityPolicy(
+        NextResponse.redirect(new URL(solutionsHref, request.url), 308),
+        localeCode,
+      );
+    }
+  }
+
   if (
     localeCode === "en"
     && process.env.DEMAA_ENGLISH_BETA_ENABLED !== "true"
@@ -103,6 +113,19 @@ export function proxy(request: NextRequest) {
         },
       }),
     );
+  }
+
+  if (pathname.startsWith("/modeles/")) {
+    const modelSlug = pathname.slice("/modeles/".length);
+    if (!/^[a-z0-9-]{2,120}$/.test(modelSlug) || !getPublishedCopyableModelBySlug(modelSlug)) {
+      return withContentSecurityPolicy(
+        new NextResponse(null, {
+          status: 404,
+          headers: { "X-Robots-Tag": "noindex, nofollow" },
+        }),
+        localeCode,
+      );
+    }
   }
 
   if (pathname.startsWith("/__/auth/")) {

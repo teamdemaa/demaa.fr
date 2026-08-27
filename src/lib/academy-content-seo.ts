@@ -2,6 +2,7 @@ import "server-only";
 
 import type { Metadata } from "next";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
+import { PUBLIC_SOCIAL_IMAGE } from "@/lib/public-page-metadata";
 import { getCanonicalOrigin } from "@/lib/site-url";
 
 function getAcademyContentUrl(content: AcademyContentDefinition) {
@@ -46,15 +47,15 @@ export function buildAcademyContentMetadata(
       siteName: "Demaa",
       locale: "fr_FR",
       type: "article",
-      ...(imageUrl
-        ? { images: [{ url: imageUrl, alt: content.identity.card.imageAlt }] }
-        : {}),
+      images: imageUrl
+        ? [{ url: imageUrl, alt: content.identity.card.imageAlt }]
+        : [PUBLIC_SOCIAL_IMAGE],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      ...(imageUrl ? { images: [imageUrl] } : {}),
+      images: [imageUrl ?? "/twitter-image"],
     },
   };
 }

@@ -10,6 +10,7 @@ import {
   resolveToolDirectorySlugInList,
 } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 type ToolDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -48,18 +49,12 @@ export async function generateMetadata({
     };
   }
 
-  return {
+  return buildPublicPageMetadata({
     title: `${tool.name} - Annuaire outils Demaa`,
     description: tool.description,
-    alternates: {
-      canonical: `/annuaire-outils/${canonicalSlug}`,
-    },
-    openGraph: {
-      title: `${tool.name} - Annuaire outils Demaa`,
-      description: tool.description,
-      url: `/annuaire-outils/${canonicalSlug}`,
-    },
-  };
+    path: `/annuaire-outils/${canonicalSlug}`,
+    type: "article",
+  });
 }
 
 export default async function ToolDetailPage({

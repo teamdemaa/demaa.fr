@@ -12,6 +12,7 @@ import {
   buildServicePageJsonLd,
   serializeServicesJsonLd,
 } from "@/lib/services-seo";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 type ServicePageProps = {
   params: Promise<{ slug: string }>;
@@ -30,19 +31,11 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
   const title = `${service.name} | Services Demaa`;
   const canonical = service.detailHref;
 
-  return {
+  return buildPublicPageMetadata({
     title,
     description: service.summary,
-    alternates: { canonical },
-    openGraph: {
-      title,
-      description: service.summary,
-      url: canonical,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "website",
-    },
-  };
+    path: canonical,
+  });
 }
 
 export default async function ServicePage({ params }: ServicePageProps) {

@@ -34,7 +34,7 @@ describe("proxy content security policy", () => {
     expect(english.headers.get("content-language")).toBe("en");
     expect(english.headers.get("x-middleware-request-x-demaa-locale")).toBe("en");
 
-    const french = proxy(new NextRequest("https://demaa.co/", {
+    const french = proxy(new NextRequest("https://demaa.co/solutions", {
       headers: { host: "demaa.co", "x-demaa-locale": "en" },
     }));
     expect(french.headers.get("content-language")).toBe("fr");
@@ -54,7 +54,7 @@ describe("proxy content security policy", () => {
       .find((directive) => directive.startsWith("frame-src "));
 
     expect(frameSource).toBe(
-      "frame-src 'self' https://embed.fillout.com https://*.firebaseapp.com https://accounts.google.com",
+      "frame-src 'self' https://airtable.com https://embed.fillout.com https://*.firebaseapp.com https://accounts.google.com",
     );
     expect(frameSource).toContain("'self'");
     expect(policy).toContain("https://apis.google.com");
@@ -174,7 +174,6 @@ describe("proxy content security policy", () => {
 
   it.each([
     "/academy/contenu-inconnu",
-    "/modeles-de-documents/ancien-modele",
     "/ressources/ancien-modele",
   ])("returns a real 404 for retired route %s", (pathname) => {
     const response = proxy(
@@ -186,5 +185,34 @@ describe("proxy content security policy", () => {
     expect(response.status).toBe(404);
     expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
     expect(response.headers.get("x-middleware-rewrite")).toBeNull();
+  });
+
+  it("serves only published copyable model detail paths", () => {
+    const publishedSlugs = [
+      "suivi-commercial-et-devis",
+      "projets-et-missions-clients",
+      "interventions-et-chantiers",
+      "suivi-previsionnel-financier",
+      "suivi-administratif-et-echeances",
+      "planning-marketing-et-contenus",
+      "recrutement-et-candidatures",
+      "suivi-client-et-support",
+    ];
+    const published = publishedSlugs.map((slug) => proxy(
+      new NextRequest(`https://demaa.co/modeles/${slug}`, {
+        headers: { host: "demaa.co" },
+      }),
+    ));
+    const unknown = proxy(
+      new NextRequest("https://demaa.co/modeles/modele-inconnu", {
+        headers: { host: "demaa.co" },
+      }),
+    );
+
+    expect(published.map((response) => response.status)).toEqual(
+      publishedSlugs.map(() => 200),
+    );
+    expect(unknown.status).toBe(404);
+    expect(unknown.headers.get("x-robots-tag")).toBe("noindex, nofollow");
   });
 });

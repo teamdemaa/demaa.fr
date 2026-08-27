@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 
 export default function JoinTeamDemaaPage() {
-  redirect("/opportunites?intent=team-demaa-profile");
+  permanentRedirect("/opportunites?intent=team-demaa-profile");
 }

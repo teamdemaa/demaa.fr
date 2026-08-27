@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ContentCatalogEntry } from "@/lib/content-catalog";
+import { PUBLIC_SOCIAL_IMAGE } from "@/lib/public-page-metadata";
 import { getCanonicalOrigin } from "@/lib/site-url";
 
 export function buildContentMetadata(entry: ContentCatalogEntry): Metadata {
@@ -19,13 +20,15 @@ export function buildContentMetadata(entry: ContentCatalogEntry): Metadata {
       type: "article",
       publishedTime: entry.publishedAt,
       modifiedTime: entry.updatedAt,
-      ...(image ? { images: [{ url: image, alt: entry.shortTitle }] } : {}),
+      images: image
+        ? [{ url: image, alt: entry.shortTitle }]
+        : [PUBLIC_SOCIAL_IMAGE],
     },
     twitter: {
       card: "summary_large_image",
       title: entry.title,
       description: entry.summary,
-      ...(image ? { images: [image] } : {}),
+      images: [image ?? "/twitter-image"],
     },
   };
 }

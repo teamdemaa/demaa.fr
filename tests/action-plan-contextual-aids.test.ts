@@ -898,8 +898,8 @@ describe("action plan contextual aid integration", () => {
       "utf8",
     );
     const result = readFileSync("src/components/ActionPlanResult.tsx", "utf8");
-    const processPage = readFileSync(
-      "src/app/(marketing)/systemes/[slug]/processus/page.tsx",
+    const processContent = readFileSync(
+      "src/components/SystemProcessesContent.tsx",
       "utf8",
     );
 
@@ -910,8 +910,8 @@ describe("action plan contextual aid integration", () => {
     expect(result).toContain("Ouvrir le modèle");
     expect(result).toContain("Voir le processus");
     expect(result).toContain("encodeURIComponent(contextualAid.organisation.routineId)");
-    expect(processPage).toContain("id={routine.routineId}");
-    expect(processPage).toContain("scroll-mt-28");
+    expect(processContent).toContain("id={routine.routineId}");
+    expect(processContent).toContain("scroll-mt-28");
     expect(result).toContain("Outil mentionné dans cette action");
     expect(result).toContain("Voir dans Solutions");
     expect(result).toContain("Vous souhaitez déléguer cette action ?");

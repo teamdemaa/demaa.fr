@@ -11,6 +11,7 @@ import {
   getDemaaFinanceBySlug,
 } from "@/lib/finance-catalog";
 import { getRelatedSystemsForFinanceSlug } from "@/lib/related-systems";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 type FinanceDetailPageProps = {
   params: Promise<{
@@ -43,26 +44,12 @@ export async function generateMetadata({
     };
   }
 
-  return {
+  return buildPublicPageMetadata({
     title: `${item.name} - Annuaire financement Demaa`,
     description: item.description,
-    alternates: {
-      canonical: `/annuaire-financement/${item.slug}`,
-    },
-    openGraph: {
-      title: `${item.name} - Annuaire financement Demaa`,
-      description: item.description,
-      url: `/annuaire-financement/${item.slug}`,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${item.name} - Annuaire financement Demaa`,
-      description: item.description,
-    },
-  };
+    path: `/annuaire-financement/${item.slug}`,
+    type: "article",
+  });
 }
 
 export default async function FinanceDetailPage({

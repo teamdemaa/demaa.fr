@@ -9,7 +9,6 @@ import {
   UsersRound,
 } from "lucide-react";
 import Link from "next/link";
-import ActionPlanNavbar from "@/components/ActionPlanNavbar";
 import Navbar from "@/components/Navbar";
 import OrganiserProcessMap from "@/components/OrganiserProcessMap";
 import OrganiserProjectDiscussionButton from "@/components/OrganiserProjectDiscussionButton";
@@ -152,8 +151,7 @@ export default function OrganiserLandingPage() {
 
   return (
     <>
-      <Navbar minimal />
-      <ActionPlanNavbar activeView="academy" routeNavigation />
+      <Navbar minimal publicNavigationActiveView="academy" />
 
       <main className="overflow-x-clip bg-dema-cream pb-24 text-brand-blue xl:pb-0">
         <section className="border-b border-dema-line px-5 pb-20 pt-14 text-center sm:pb-24 sm:pt-20 lg:pb-28 lg:pt-24">

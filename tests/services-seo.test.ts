@@ -110,8 +110,8 @@ describe("canonical Services SEO and redirects", () => {
       readSource("src/app/sitemap.ts"),
     ]);
 
-    expect(detailSource).toContain("alternates: { canonical }");
-    expect(detailSource).toContain("url: canonical");
+    expect(detailSource).toContain("path: canonical");
+    expect(detailSource).toContain("buildPublicPageMetadata");
     expect(detailSource).toContain("if (!service || service.detailHref");
     expect(detailSource).not.toContain("dynamicParams = false");
     expect(nextConfig).toContain("source: '/systeme-marketing'");

@@ -91,4 +91,17 @@ describe("Organisation session booking Fillout parameters", () => {
       },
     });
   });
+
+  it("passes the selected model to the adaptation form", () => {
+    const fillout = renderButton({
+      source: "Modèles à copier",
+      sourceIsAuthoritative: true,
+      modelSlug: "suivi-previsionnel-financier",
+    });
+
+    expect(fillout.parameters).toMatchObject({
+      source: "Modèles à copier",
+      modelSlug: "suivi-previsionnel-financier",
+    });
+  });
 });

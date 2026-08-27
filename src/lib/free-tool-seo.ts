@@ -324,3 +324,13 @@ export const freeToolSeo = {
     ],
   },
 } satisfies Record<string, FreeToolSeo>;
+
+export function buildFreeToolMetadata(seo: FreeToolSeo): Metadata {
+  return buildPublicPageMetadata({
+    title: seo.metaTitle,
+    description: seo.metaDescription,
+    path: seo.path,
+  });
+}
+import type { Metadata } from "next";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";

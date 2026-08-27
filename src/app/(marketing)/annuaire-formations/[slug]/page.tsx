@@ -8,6 +8,7 @@ import TrainingDetailContent from "@/components/TrainingDetailContent";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getRelatedSystemsForTrainingSlug } from "@/lib/related-systems";
 import { getDemaaTrainings, getDemaaTrainingBySlug } from "@/lib/training-catalog";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 type TrainingDetailPageProps = {
   params: Promise<{
@@ -40,26 +41,12 @@ export async function generateMetadata({
     };
   }
 
-  return {
+  return buildPublicPageMetadata({
     title: `${training.name} - Annuaire formations Demaa`,
     description: training.description,
-    alternates: {
-      canonical: `/annuaire-formations/${training.slug}`,
-    },
-    openGraph: {
-      title: `${training.name} - Annuaire formations Demaa`,
-      description: training.description,
-      url: `/annuaire-formations/${training.slug}`,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${training.name} - Annuaire formations Demaa`,
-      description: training.description,
-    },
-  };
+    path: `/annuaire-formations/${training.slug}`,
+    type: "article",
+  });
 }
 
 export default async function TrainingDetailPage({

@@ -38,7 +38,7 @@ describe("Opportunities direct-link access", () => {
 
     expect(redirects).toContain('? "/opportunites"');
     expect(joinPage).toContain(
-      'redirect("/opportunites?intent=team-demaa-profile")',
+      'permanentRedirect("/opportunites?intent=team-demaa-profile")',
     );
   });
 });

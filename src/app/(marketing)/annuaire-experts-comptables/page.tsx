@@ -1,34 +1,17 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import AccountingDirectoryClient from "@/components/AccountingDirectoryClient";
 import {
   getAccountingDirectoryFacets,
   getAccountingFirms,
 } from "@/lib/accounting-directory";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "Annuaire experts-comptables - Demaa",
   description:
     "Trouvez un expert-comptable selon votre ville, votre activité, vos besoins en création, paie, fiscalité ou pilotage.",
-  alternates: {
-    canonical: "/annuaire-experts-comptables",
-  },
-  openGraph: {
-    title: "Annuaire experts-comptables - Demaa",
-    description:
-      "Trouvez un expert-comptable selon votre ville, votre activité, vos besoins en création, paie, fiscalité ou pilotage.",
-    url: "/annuaire-experts-comptables",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Annuaire experts-comptables - Demaa",
-    description:
-      "Trouvez un expert-comptable selon votre ville, votre activité, vos besoins en création, paie, fiscalité ou pilotage.",
-  },
-};
+  path: "/annuaire-experts-comptables",
+});
 
 export default async function AccountingDirectoryPage() {
   const [firms, facets] = await Promise.all([

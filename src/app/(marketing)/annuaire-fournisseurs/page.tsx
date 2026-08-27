@@ -1,32 +1,15 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import SupplierDirectoryClient from "@/components/SupplierDirectoryClient";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getDemaaSuppliers, supplierFamilies } from "@/lib/supplier-catalog";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "Annuaire fournisseurs TPE - Demaa",
   description:
     "Explorez les banques, assurances, mutuelles, achats, équipements et fournisseurs utiles aux TPE.",
-  alternates: {
-    canonical: "/annuaire-fournisseurs",
-  },
-  openGraph: {
-    title: "Annuaire fournisseurs TPE - Demaa",
-    description:
-      "Explorez les banques, assurances, mutuelles, achats, équipements et fournisseurs utiles aux TPE.",
-    url: "/annuaire-fournisseurs",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Annuaire fournisseurs TPE - Demaa",
-    description:
-      "Explorez les banques, assurances, mutuelles, achats, équipements et fournisseurs utiles aux TPE.",
-  },
-};
+  path: "/annuaire-fournisseurs",
+});
 
 type AnnuaireFournisseursPageProps = {
   searchParams: Promise<{

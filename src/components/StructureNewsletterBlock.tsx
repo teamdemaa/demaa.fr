@@ -176,7 +176,7 @@ export default function StructureNewsletterBlock() {
     <>
       <section
         aria-labelledby="structure-newsletter-title"
-        className="border-t border-dema-line/80 pt-8 sm:pt-9"
+        className="mx-auto w-full max-w-5xl border-t border-dema-line/80 pt-8 sm:pt-9"
       >
         <div className="grid items-center gap-7 lg:grid-cols-[minmax(15rem,0.92fr)_minmax(22rem,1.08fr)] lg:gap-12">
           <div>

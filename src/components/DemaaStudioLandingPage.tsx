@@ -1,7 +1,6 @@
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import ActionPlanNavbar from "@/components/ActionPlanNavbar";
 import Navbar from "@/components/Navbar";
 import { DEMAA_STUDIO_PROJECTS } from "@/lib/demaa-studio-projects";
 import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
@@ -27,8 +26,7 @@ const advantagePoints = [
 export default function DemaaStudioLandingPage() {
   return (
     <>
-      <Navbar minimal />
-      <ActionPlanNavbar activeView="plan" routeNavigation />
+      <Navbar minimal publicNavigationActiveView="none" />
 
       <main className="overflow-x-clip bg-dema-cream pb-24 text-brand-blue xl:pb-0">
         <section className="border-b border-dema-line px-5 pb-20 pt-14 text-center sm:pb-24 sm:pt-20 lg:pb-28 lg:pt-24">
@@ -162,7 +160,7 @@ export default function DemaaStudioLandingPage() {
             </p>
             <div className="mt-8 flex justify-center">
               <Link
-                href="/rejoindre-team-demaa"
+                href="/opportunites?intent=team-demaa-profile"
                 className="inline-flex min-h-12 items-center justify-center rounded-full bg-dema-forest px-7 text-sm font-semibold text-white transition hover:bg-[#284f3a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
               >
                 Rejoindre Team Demaa

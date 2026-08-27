@@ -7,9 +7,9 @@ import { enterpriseToSystem, type EnterpriseDefinition } from "@/lib/enterprise-
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import type { OperationalSystemDetail } from "@/lib/system-operations";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
-import { getSystemResourcesForSystem } from "@/lib/system-resource-catalog";
 import { buildSystemeDetail } from "@/lib/systeme-catalog";
 import { getCanonicalOrigin } from "@/lib/site-url";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 import type { System } from "@/lib/types";
 
 export type SystemDetailPageData = {
@@ -357,16 +357,9 @@ function buildSystemPageDescription(
     : `${processCount} process opérationnels pour structurer une activité de ${sectorLabel}.`;
   const parts = [processSummary];
   const publishedResources = getPublishedSolutionResources(solutionSections);
-  const availableResourceCount = getSystemResourcesForSystem(data.system.slug).filter(
-    (resource) => resource.availability === "available",
-  ).length;
   if (override) {
     parts.push(`${processCount} process opérationnels structurent ce système.`);
   }
-
-  parts.push(
-    `${availableResourceCount} ressources pratiques sont disponibles en accès direct ou par e-mail.`,
-  );
 
   if (publishedResources.length > 0) {
     const names = publishedResources.slice(0, 3).map((resource) => resource.name);
@@ -386,42 +379,25 @@ export function buildSystemPageMetadata(
   const description = buildSystemPageDescription(data, solutionSections);
   const url = `/solutions/${data.system.slug}`;
   const publishedResources = getPublishedSolutionResources(solutionSections);
-  const scopedResources = getSystemResourcesForSystem(data.system.slug);
 
-  return {
+  return buildPublicPageMetadata({
     title,
     description,
-    keywords:
-      [
-        data.system.name,
-        `système métier ${data.system.name.toLowerCase()}`,
-        `process ${data.system.name.toLowerCase()}`,
-        `solutions entreprise ${data.system.name.toLowerCase()}`,
-        ...scopedResources.map((resource) => resource.title),
-        ...(publishedResources.length > 0
-          ? [
-              `solutions ${data.system.name.toLowerCase()}`,
-              ...publishedResources.map((resource) => resource.name),
-            ]
-          : []),
-      ],
-    alternates: {
-      canonical: url,
-    },
-    openGraph: {
-      title,
-      description,
-      url,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  };
+    path: url,
+    type: "article",
+    keywords: [
+      data.system.name,
+      `système métier ${data.system.name.toLowerCase()}`,
+      `process ${data.system.name.toLowerCase()}`,
+      `solutions entreprise ${data.system.name.toLowerCase()}`,
+      ...(publishedResources.length > 0
+        ? [
+            `solutions ${data.system.name.toLowerCase()}`,
+            ...publishedResources.map((resource) => resource.name),
+          ]
+        : []),
+    ],
+  });
 }
 
 export function buildSystemPageJsonLd(
@@ -439,7 +415,6 @@ export function buildSystemPageJsonLd(
   ).slice(0, 8);
   const listedSolutions = getPublishedNonToolSolutionResources(solutionSections).slice(0, 8);
   const listedTools = getPublishedToolPlacements(solutionSections);
-  const listedResources = getSystemResourcesForSystem(data.system.slug);
 
   return [
     {
@@ -462,8 +437,8 @@ export function buildSystemPageJsonLd(
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: `Organisation, solutions et ressources pour ${data.system.name}`,
-      numberOfItems: listedProcesses.length + listedSolutions.length + listedResources.length,
+      name: `Organisation et solutions pour ${data.system.name}`,
+      numberOfItems: listedProcesses.length + listedSolutions.length,
       itemListElement: [
         ...listedProcesses.map((process, index) => ({
           "@type": "ListItem",
@@ -489,11 +464,6 @@ export function buildSystemPageJsonLd(
               : resource.interaction.href,
           };
         }),
-        ...listedResources.map((resource, index) => ({
-          "@type": "ListItem",
-          position: listedProcesses.length + listedSolutions.length + index + 1,
-          name: resource.title,
-        })),
       ],
     },
     ...(listedTools.length > 0 ? [{

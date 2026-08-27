@@ -14,8 +14,8 @@ describe("Demaa Studio page", () => {
       readSource("src/app/sitemap.ts"),
     ]);
 
-    expect(page).toContain('canonical: "/studio"');
-    expect(page).toContain('url: "/studio"');
+    expect(page).toContain('path: "/studio"');
+    expect(page).toContain("buildPublicPageMetadata");
     expect(footer).toContain('{ label: "Demaa Studio", href: "/studio" }');
     expect(navbar).not.toContain('labels: { fr: "Demaa Studio"');
     expect(sitemap).toContain("`${base}/studio`");

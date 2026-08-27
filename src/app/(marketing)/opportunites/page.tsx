@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { connection } from "next/server";
 import Navbar from "@/components/Navbar";
 import PublicOpportunitiesClient from "@/components/PublicOpportunitiesClient";
@@ -11,24 +10,17 @@ import {
   getPublicOpenOpportunities,
 } from "@/lib/provider-network.server";
 import { preserveOpportunityEnrichment } from "@/lib/public-opportunities-snapshot";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 const title = "Annonces | Demaa";
 const description =
   "Découvrez les annonces actuellement disponibles.";
 
-export const metadata: Metadata = {
+export const metadata = buildPublicPageMetadata({
   title,
   description,
-  alternates: { canonical: "/opportunites" },
-  openGraph: {
-    title,
-    description,
-    url: "/opportunites",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-};
+  path: "/opportunites",
+});
 
 export default async function OpportunitiesPage() {
   await connection();

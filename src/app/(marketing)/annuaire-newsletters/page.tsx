@@ -1,31 +1,14 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import NewsletterDirectoryClient from "@/components/NewsletterDirectoryClient";
 import { getAllNewsletters } from "@/lib/newsletter-content";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "Annuaire newsletters par secteur - Demaa",
   description:
     "Explorez les newsletters recommandees par Demaa par secteur d'activite et accedez aux sources editoriales deja actives sur leur site d'origine.",
-  alternates: {
-    canonical: "/annuaire-newsletters",
-  },
-  openGraph: {
-    title: "Annuaire newsletters par secteur - Demaa",
-    description:
-      "Explorez les newsletters recommandees par Demaa par secteur d'activite et accedez aux sources editoriales deja actives sur leur site d'origine.",
-    url: "/annuaire-newsletters",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Annuaire newsletters par secteur - Demaa",
-    description:
-      "Explorez les newsletters recommandees par Demaa par secteur d'activite et accedez aux sources editoriales deja actives sur leur site d'origine.",
-  },
-};
+  path: "/annuaire-newsletters",
+});
 
 export default function NewsletterDirectoryPage() {
   const entries = getAllNewsletters();

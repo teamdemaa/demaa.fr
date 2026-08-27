@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
-import ActionPlanNavbar from "@/components/ActionPlanNavbar";
 import AcademyCoursePlayer from "@/components/AcademyCoursePlayer";
 import AcademyTutorialArticle from "@/components/AcademyTutorialArticle";
 import {
@@ -46,8 +45,7 @@ export default async function OrganiserContentPage(
 
   return (
     <>
-      <Navbar />
-      <ActionPlanNavbar activeView="academy" routeNavigation />
+      <Navbar publicNavigationActiveView="academy" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

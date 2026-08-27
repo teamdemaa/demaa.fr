@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { permanentRedirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import ToolDirectoryClient from "@/components/ToolDirectoryClient";
@@ -10,30 +9,14 @@ import {
 import { getUnifiedToolDirectoryMeta } from "@/lib/tool-directory-firestore";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getToolDirectorySectorSeoPath } from "@/lib/sector-taxonomy";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "Annuaire outils TPE - Demaa",
   description:
     "Explorez les outils utiles aux TPE pour organiser, automatiser, créer et piloter leur activité au quotidien.",
-  alternates: {
-    canonical: "/annuaire-outils",
-  },
-  openGraph: {
-    title: "Annuaire outils TPE - Demaa",
-    description:
-      "Explorez les outils utiles aux TPE pour organiser, automatiser, créer et piloter leur activité au quotidien.",
-    url: "/annuaire-outils",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Annuaire outils TPE - Demaa",
-    description:
-      "Explorez les outils utiles aux TPE pour organiser, automatiser, créer et piloter leur activité au quotidien.",
-  },
-};
+  path: "/annuaire-outils",
+});
 
 export const dynamic = "force-dynamic";
 

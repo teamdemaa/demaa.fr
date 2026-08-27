@@ -17,9 +17,9 @@ describe("solution proposal UI contract", () => {
       readSource("src/app/sitemap.ts"),
     ]);
 
-    expect(footer).toContain('{ label: "Rejoindre Team Demaa", href: "/rejoindre-team-demaa" }');
+    expect(footer).toContain('{ label: "Rejoindre Team Demaa", href: "/opportunites?intent=team-demaa-profile" }');
     expect(page).toContain(
-      'redirect("/opportunites?intent=team-demaa-profile")',
+      'permanentRedirect("/opportunites?intent=team-demaa-profile")',
     );
     expect(page).not.toMatch(/partenaire Demaa|devenir partenaire|partenariat garanti/i);
     await expect(
@@ -30,8 +30,9 @@ describe("solution proposal UI contract", () => {
     ).rejects.toThrow();
     expect(nextConfig).toContain("source: '/rejoindre-le-reseau'");
     expect(nextConfig).toContain("source: '/partenaires'");
-    expect(nextConfig.match(/destination: '\/rejoindre-team-demaa'/g)).toHaveLength(2);
-    expect(sitemap).toContain("`${base}/rejoindre-team-demaa`");
+    expect(nextConfig).toContain("source: '/rejoindre-team-demaa'");
+    expect(nextConfig.match(/destination: '\/opportunites\?intent=team-demaa-profile'/g)).toHaveLength(3);
+    expect(sitemap).not.toContain("`${base}/rejoindre-team-demaa`");
     expect(sitemap).not.toContain("`${base}/rejoindre-le-reseau`");
   });
 
@@ -86,7 +87,7 @@ describe("solution proposal UI contract", () => {
     ]);
 
     expect(networkPage).toContain(
-      'redirect("/opportunites?intent=team-demaa-profile")',
+      'permanentRedirect("/opportunites?intent=team-demaa-profile")',
     );
     for (const source of [opportunitiesPage, adminPage]) {
       expect(source).toContain('import { connection } from "next/server"');

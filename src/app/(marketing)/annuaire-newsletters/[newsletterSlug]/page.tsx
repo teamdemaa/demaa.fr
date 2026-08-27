@@ -8,6 +8,7 @@ import {
   getNewsletterBySlug,
   getNewsletterSystems,
 } from "@/lib/newsletter-content";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 type NewsletterDetailPageProps = {
   params: Promise<{ newsletterSlug: string }>;
@@ -34,26 +35,12 @@ export async function generateMetadata({
   const title = newsletter.seoTitle ?? `${newsletter.title} | ${newsletter.publisher} | Demaa`;
   const description = newsletter.seoDescription ?? newsletter.description;
 
-  return {
+  return buildPublicPageMetadata({
     title,
     description,
-    alternates: {
-      canonical: `/annuaire-newsletters/${newsletter.slug}`,
-    },
-    openGraph: {
-      title,
-      description,
-      url: `/annuaire-newsletters/${newsletter.slug}`,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  };
+    path: `/annuaire-newsletters/${newsletter.slug}`,
+    type: "article",
+  });
 }
 
 export default async function NewsletterDetailPage({

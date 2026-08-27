@@ -2,6 +2,7 @@ import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
 import type { ActionPlanAccessIntent } from "@/lib/action-plan-access-intent";
 
 type SearchValue = string | string[] | undefined;
+type SearchInput = URLSearchParams | Record<string, SearchValue>;
 
 const EXPLICIT_HOME_ENTRY_KEYS = new Set([
   "academy",
@@ -38,12 +39,15 @@ const HOME_INTENTS = new Set([
 ]);
 
 export function buildDefaultHomeSolutionsHref(
-  searchParams: Record<string, SearchValue>,
+  searchParams: SearchInput,
 ) {
   const trackingParams = new URLSearchParams();
   let hasExplicitEntry = false;
+  const entries = searchParams instanceof URLSearchParams
+    ? [...searchParams.entries()].map(([key, value]) => [key, value] as const)
+    : Object.entries(searchParams);
 
-  for (const [key, rawValue] of Object.entries(searchParams)) {
+  for (const [key, rawValue] of entries) {
     const values = Array.isArray(rawValue) ? rawValue : [rawValue];
     const nonEmptyValues = values.filter(
       (value): value is string => typeof value === "string" && value.length > 0,

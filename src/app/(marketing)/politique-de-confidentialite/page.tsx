@@ -3,7 +3,7 @@ import { LEGAL, LEGAL_COPY } from "@/lib/legal";
 
 export const metadata = {
   title: "Politique de confidentialité - Demaa",
-  description: "Politique de confidentialité du site Demaa.fr.",
+  description: "Politique de confidentialité du site demaa.co.",
 };
 
 function PrivacySection({
@@ -28,7 +28,7 @@ export default function PolitiqueConfidentialitePage() {
     <LegalPageLayout
       title="Politique de"
       titleAccent="confidentialité"
-      description="Cette page explique quelles données sont collectées sur Demaa.fr, pourquoi elles le sont et comment vous pouvez exercer vos droits."
+      description={`Cette page explique quelles données sont collectées sur ${LEGAL.domain}, pourquoi elles le sont et comment vous pouvez exercer vos droits.`}
     >
       <PrivacySection title="1. Responsable du traitement">
             <p>

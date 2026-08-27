@@ -17,6 +17,7 @@ import {
   getRelatedSystemsForAidFamilySlug,
   getRelatedSystemsForAidSlug,
 } from "@/lib/related-systems";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 type AidDetailPageProps = {
   params: Promise<{
@@ -52,48 +53,20 @@ export async function generateMetadata({
   }
 
   if (family) {
-    return {
+    return buildPublicPageMetadata({
       title: `${family.name} - Aides et subventions Demaa`,
       description: family.description,
-      alternates: {
-        canonical: `/aides-et-subventions/${family.slug}`,
-      },
-      openGraph: {
-        title: `${family.name} - Aides et subventions Demaa`,
-        description: family.description,
-        url: `/aides-et-subventions/${family.slug}`,
-        siteName: "Demaa",
-        locale: "fr_FR",
-        type: "article",
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: `${family.name} - Aides et subventions Demaa`,
-        description: family.description,
-      },
-    };
+      path: `/aides-et-subventions/${family.slug}`,
+      type: "article",
+    });
   }
 
-  return {
+  return buildPublicPageMetadata({
     title: `${item!.name} - Aides et subventions Demaa`,
     description: item!.description,
-    alternates: {
-      canonical: `/aides-et-subventions/${item!.slug}`,
-    },
-    openGraph: {
-      title: `${item!.name} - Aides et subventions Demaa`,
-      description: item!.description,
-      url: `/aides-et-subventions/${item!.slug}`,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${item!.name} - Aides et subventions Demaa`,
-      description: item!.description,
-    },
-  };
+    path: `/aides-et-subventions/${item!.slug}`,
+    type: "article",
+  });
 }
 
 export default async function AidDetailPage({

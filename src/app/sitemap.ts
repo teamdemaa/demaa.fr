@@ -13,6 +13,7 @@ import { sectorTaxonomy } from "@/lib/sector-taxonomy";
 import { demaaSuppliers } from "@/lib/supplier-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
+import { getPublishedCopyableModels } from "@/lib/copyable-model-catalog";
 
 export const dynamic = "force-dynamic";
 
@@ -28,8 +29,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: base, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 1 },
     { url: `${base}/solutions`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
+    { url: `${base}/modeles`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.92 },
     { url: `${base}/application-metier`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/studio`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.65 },
     { url: `${base}/annuaire-outils`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
@@ -42,7 +43,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/organiser`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/contenus`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/opportunites`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.65 },
-    { url: `${base}/rejoindre-team-demaa`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/mentions-legales`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/conditions-d-utilisation`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/politique-de-confidentialite`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
@@ -170,6 +170,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.75,
   }));
 
+  const copyableModelEntries: MetadataRoute.Sitemap = getPublishedCopyableModels().map((model) => ({
+    url: `${base}/modeles/${model.slug}`,
+    lastModified: siteUpdatedAt,
+    changeFrequency: "monthly" as const,
+    priority: 0.82,
+  }));
+
   return [
     ...staticRoutes,
     ...contentEntries,
@@ -186,5 +193,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...sectorEntries,
     ...toolSectorEntries,
     ...systemEntries,
+    ...copyableModelEntries,
   ];
 }

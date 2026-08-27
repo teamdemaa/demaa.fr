@@ -12,8 +12,8 @@ describe("Application métier landing page", () => {
       readSource("src/lib/canonical-service-catalog.ts"),
     ]);
 
-    expect(pageSource).toContain('canonical: "/application-metier"');
-    expect(pageSource).toContain('url: "/application-metier"');
+    expect(pageSource).toContain('path: "/application-metier"');
+    expect(pageSource).toContain("buildPublicPageMetadata");
     expect(pageSource).toContain('"@type": "FAQPage"');
     expect(pageSource).toContain("buildServicePageJsonLd(service)");
     expect(catalogSource).toContain('detailHref: "/application-metier"');
@@ -35,6 +35,11 @@ describe("Application métier landing page", () => {
     expect(source).toContain("Moins de tâches chronophages");
     expect(source).toContain("Tout est centralisé");
     expect(source).toContain("Chacun sait quoi faire");
+    expect(source).not.toContain(
+      'className="border-b border-dema-line px-5 pb-20 pt-14 text-center',
+    );
+    expect(source).toContain('className="px-5 pb-12 pt-14 text-center');
+    expect(source).toContain('className="px-5 pb-16 pt-10');
     expect(source).not.toContain("block h-0.5 w-8 rounded-full bg-dema-forest");
     expect(source).toContain("Comment ça se passe concrètement ?");
     expect(source).not.toContain("ArrowRight");
@@ -54,7 +59,7 @@ describe("Application métier landing page", () => {
     expect(diagnosticControlSource).toContain('name="callbackAvailability"');
     expect(diagnosticSource).toContain("requirePhone");
     expect(diagnosticControlSource).not.toContain('Disponibilités pour un rappel <span');
-    expect(source).toContain("<Navbar minimal />");
+    expect(source).toContain('<Navbar minimal publicNavigationActiveView="services" />');
   });
 
   it("presents three real anonymized cases without mixing them with Studio", async () => {

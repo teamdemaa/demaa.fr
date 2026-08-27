@@ -8,6 +8,7 @@ import SupplierDetailContent from "@/components/SupplierDetailContent";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getRelatedSystemsForSupplierSlug } from "@/lib/related-systems";
 import { demaaSuppliers, getDemaaSupplierBySlug } from "@/lib/supplier-catalog";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 type SupplierDetailPageProps = {
   params: Promise<{
@@ -40,26 +41,12 @@ export async function generateMetadata({
     };
   }
 
-  return {
+  return buildPublicPageMetadata({
     title: `${supplier.name} - Annuaire fournisseurs Demaa`,
     description: supplier.description,
-    alternates: {
-      canonical: `/annuaire-fournisseurs/${supplier.slug}`,
-    },
-    openGraph: {
-      title: `${supplier.name} - Annuaire fournisseurs Demaa`,
-      description: supplier.description,
-      url: `/annuaire-fournisseurs/${supplier.slug}`,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${supplier.name} - Annuaire fournisseurs Demaa`,
-      description: supplier.description,
-    },
-  };
+    path: `/annuaire-fournisseurs/${supplier.slug}`,
+    type: "article",
+  });
 }
 
 export default async function SupplierDetailPage({

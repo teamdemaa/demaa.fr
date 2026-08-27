@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import ApplicationMetierLandingPage from "@/components/ApplicationMetierLandingPage";
 import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
 import {
@@ -6,29 +5,17 @@ import {
   serializeServicesJsonLd,
 } from "@/lib/services-seo";
 import { surMesurePageContent as content } from "@/lib/sur-mesure-page-content";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 const title = "Application métier sur mesure | Demaa";
 const description =
   "Gagnez du temps et rendez votre entreprise plus autonome avec une application métier conçue autour de votre façon de travailler.";
 
-export const metadata: Metadata = {
+export const metadata = buildPublicPageMetadata({
   title,
   description,
-  alternates: { canonical: "/application-metier" },
-  openGraph: {
-    title,
-    description,
-    url: "/application-metier",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-  },
-};
+  path: "/application-metier",
+});
 
 function getApplicationService() {
   const service = getCanonicalServiceBySlug("application-metier");

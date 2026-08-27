@@ -37,7 +37,9 @@ describe("system UX contract", () => {
     expect(detailSource).not.toContain("deliveryAvailable");
     expect(detailSource).not.toContain("hasLevierSolution");
     expect(detailSource).not.toContain("<SystemGuidesRail");
-    expect(detailSource).toContain("<SystemResourcesTab");
+    expect(detailSource).not.toContain("<SystemResourcesTab");
+    expect(detailSource).toContain("Voir les processus du métier");
+    expect(detailSource).toContain('className="demaa-primary-button mt-5 min-h-10 px-5"');
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("SystemRecapRequestModal");
@@ -64,7 +66,7 @@ describe("system UX contract", () => {
     expect(pageSource).toContain("hasEditableOperationalSystemAsset");
   });
 
-  it("keeps models out of Academy while they remain available in Systems", async () => {
+  it("keeps models out of Academy because they have their own public catalogue", async () => {
     const academySource = await readSource(
       "src/components/AcademyIndexClient.tsx",
     );
@@ -75,19 +77,34 @@ describe("system UX contract", () => {
   });
 
   it("provides a process-only printable page and a clear native-print fallback", async () => {
-    const [printButtonSource, processesSource, globalStyles] = await Promise.all([
+    const [
+      printButtonSource,
+      processesPageSource,
+      processesContentSource,
+      processesModalSource,
+      processesDialogSource,
+      globalStyles,
+    ] = await Promise.all([
       readSource("src/components/SystemRecapPrintButton.tsx"),
       readSource("src/app/(marketing)/systemes/[slug]/processus/page.tsx"),
+      readSource("src/components/SystemProcessesContent.tsx"),
+      readSource("src/app/@modal/(.)systemes/[slug]/processus/page.tsx"),
+      readSource("src/components/SystemProcessesRouteDialog.tsx"),
       readSource("src/app/globals.css"),
     ]);
 
     expect(printButtonSource).toContain('typeof window.print === "function"');
     expect(printButtonSource).toContain("Copier le lien");
     expect(printButtonSource).toContain("Chrome, Safari ou Firefox");
-    expect(processesSource).toContain("data-system-processes");
-    expect(processesSource).toContain("Liste des processus");
-    expect(processesSource).not.toContain("Solutions");
-    expect(processesSource).not.toContain("Ressources");
+    expect(processesPageSource).toContain("<SystemProcessesContent");
+    expect(processesContentSource).toContain("data-system-processes");
+    expect(processesContentSource).toContain("Liste des processus");
+    expect(processesContentSource).not.toContain("Solutions");
+    expect(processesContentSource).not.toContain("Ressources");
+    expect(processesModalSource).toContain("<SystemProcessesRouteDialog");
+    expect(processesModalSource).toContain('variant="modal"');
+    expect(processesDialogSource).toContain("router.back()");
+    expect(processesDialogSource).toContain("DirectoryDetailDialogShell");
     expect(globalStyles).toContain("@page");
     expect(globalStyles).toContain("size: A4");
   });
@@ -112,7 +129,7 @@ describe("system UX contract", () => {
     );
   });
 
-  it("keeps the public métier page linear and exposes processes once through Resources", async () => {
+  it("keeps the public métier page linear and exposes processes once through a direct bridge", async () => {
     const detailSource = await readSource(
       "src/components/SystemDetailContent.tsx",
     );
@@ -121,7 +138,8 @@ describe("system UX contract", () => {
     expect(detailSource).not.toContain('role="tab"');
     expect(detailSource).not.toContain("SystemeTabContent");
     expect(detailSource).toContain("<SystemSolutionsTab");
-    expect(detailSource).toContain("<SystemResourcesTab");
-    expect(detailSource).toContain('layout="rail"');
+    expect(detailSource).not.toContain("<SystemResourcesTab");
+    expect(detailSource).toContain('href={`/systemes/${system.slug}/processus`}');
+    expect(detailSource).toContain("<SystemSolutionNextSteps");
   });
 });

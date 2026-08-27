@@ -5,6 +5,9 @@ import { CircleUserRound } from "lucide-react";
 import AdminLogoutButton from "@/components/AdminLogoutButton";
 import CustomerLogoutButton from "@/components/CustomerLogoutButton";
 import DemaaWordmark from "@/components/DemaaWordmark";
+import PublicActionPlanNavigation, {
+  type PublicActionPlanView,
+} from "@/components/PublicActionPlanNavigation";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
 
@@ -14,12 +17,14 @@ export default function Navbar({
   isAuthenticated = false,
   minimal = false,
   localeCode = "fr",
+  publicNavigationActiveView,
 }: {
   adminControls?: boolean;
   anonymousLanding?: boolean;
   isAuthenticated?: boolean;
   minimal?: boolean;
   localeCode?: InterfaceLocaleCode;
+  publicNavigationActiveView?: PublicActionPlanView | "none";
 }) {
   const accountAccessClassName =
     "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
@@ -35,7 +40,13 @@ export default function Navbar({
         <div className="mx-auto w-full px-3 sm:px-6 md:px-10 lg:px-24">
           <div className="relative flex items-center justify-between py-3 md:min-h-16 md:py-4">
             <Link
-              href={adminControls ? "/admin" : localeCode === "en" ? "/en" : "/"}
+              href={adminControls
+                ? "/admin"
+                : localeCode === "en"
+                  ? "/en"
+                  : anonymousLanding
+                    ? "/"
+                    : "/solutions"}
               aria-label={
                 adminControls
                   ? "Accueil administration"
@@ -50,7 +61,11 @@ export default function Navbar({
             <div
               id="action-plan-navbar-desktop"
               className="absolute left-1/2 top-1/2 hidden w-[min(40vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden xl:block"
-            />
+            >
+              {publicNavigationActiveView !== undefined ? (
+                <PublicActionPlanNavigation activeView={publicNavigationActiveView} />
+              ) : null}
+            </div>
             {adminControls ? (
               <AdminLogoutButton />
             ) : anonymousLanding ? (
@@ -102,7 +117,11 @@ export default function Navbar({
       <div
         id="action-plan-navbar-mobile"
         className="fixed inset-x-0 bottom-0 z-50 border-t border-dema-line/70 bg-dema-cream/94 px-3 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_28px_rgba(23,35,29,0.06)] backdrop-blur-md empty:hidden xl:hidden"
-      />
+      >
+        {publicNavigationActiveView !== undefined ? (
+          <PublicActionPlanNavigation activeView={publicNavigationActiveView} />
+        ) : null}
+      </div>
     </>
   );
 }

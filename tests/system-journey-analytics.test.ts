@@ -16,6 +16,7 @@ vi.mock("@/lib/cookie-consent", () => ({
 }));
 
 import {
+  trackCopyableModelEvent,
   trackSystemEcosystemEvent,
   trackSystemJourneyEvent,
   trackSystemSolutionEvent,
@@ -179,5 +180,24 @@ describe("system journey analytics", () => {
     });
 
     expect(mocks.track).not.toHaveBeenCalled();
+  });
+
+  it("measures the copyable-model funnel without personal data", () => {
+    mocks.getCookieConsentPreferences.mockReturnValue({
+      analytics: true,
+      marketing: false,
+    });
+
+    trackCopyableModelEvent("copyable_model_copy_clicked", {
+      modelSlug: "interventions-et-chantiers",
+      platform: "airtable",
+      surface: "model_detail",
+    });
+
+    expect(mocks.track).toHaveBeenCalledWith("copyable_model_copy_clicked", {
+      model_slug: "interventions-et-chantiers",
+      platform: "airtable",
+      surface: "model_detail",
+    });
   });
 });

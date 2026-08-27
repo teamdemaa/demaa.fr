@@ -1,32 +1,15 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import TrainingDirectoryClient from "@/components/TrainingDirectoryClient";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getDemaaTrainings, trainingFamilies } from "@/lib/training-catalog";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "Annuaire formations - Demaa",
   description:
     "Explorez des formations utiles selon l'activité de l'entreprise, avec une selection de parcours externes et de formations Demaa.",
-  alternates: {
-    canonical: "/annuaire-formations",
-  },
-  openGraph: {
-    title: "Annuaire formations - Demaa",
-    description:
-      "Explorez des formations utiles selon l'activité de l'entreprise, avec une selection de parcours externes et de formations Demaa.",
-    url: "/annuaire-formations",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Annuaire formations - Demaa",
-    description:
-      "Explorez des formations utiles selon l'activité de l'entreprise, avec une selection de parcours externes et de formations Demaa.",
-  },
-};
+  path: "/annuaire-formations",
+});
 
 type AnnuaireFormationsPageProps = {
   searchParams: Promise<{

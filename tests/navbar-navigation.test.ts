@@ -22,34 +22,39 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/app/(marketing)/systemes/[slug]/loading.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(pageSource).toContain("<Navbar minimal />");
+    expect(pageSource).toContain('<Navbar minimal publicNavigationActiveView="solutions" />');
     expect(loadingSource).toContain("<Navbar minimal />");
-    expect(pageSource.indexOf("<Navbar minimal />")).toBeLessThan(pageSource.indexOf("<main"));
+    expect(pageSource.indexOf("<Navbar minimal publicNavigationActiveView=")).toBeLessThan(pageSource.indexOf("<main"));
     expect(loadingSource.indexOf("<Navbar minimal />")).toBeLessThan(loadingSource.indexOf("<main"));
-    expect(pageSource).toContain('<ActionPlanNavbar activeView="solutions" routeNavigation />');
+    expect(pageSource).not.toContain("<ActionPlanNavbar");
     expect(pageSource).toContain('normalizeSystemDetailTab(getParamValue(resolvedSearchParams.tab)) === "process"');
     expect(pageSource).toContain('redirect(`/systemes/${data.system.slug}/processus`)');
     expect(pageSource).not.toContain("initialActiveTab=");
     expect(pageSource).not.toContain("/?view=system");
   });
 
-  it("keeps a distinct canonical homepage and one URL for each public universe", async () => {
-    const [homeSource, sharedHomeSource, solutionsSource, nextConfigSource] = await Promise.all([
+  it("keeps the application root out of search results and one URL for each public universe", async () => {
+    const [homeSource, sharedHomeSource, solutionsSource, nextConfigSource, proxySource] = await Promise.all([
       readFile(new URL("../src/app/(application)/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanHomeView.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/(marketing)/solutions/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
+      readFile(new URL("../src/proxy.ts", import.meta.url), "utf8"),
     ]);
 
     expect(homeSource).not.toContain(
       'export { default, metadata } from "@/app/(marketing)/systemes/page"',
     );
-    expect(homeSource).toContain('canonical: "/"');
+    expect(homeSource).not.toContain('canonical: "/"');
+    expect(homeSource).toContain("robots: { index: false, follow: false }");
     expect(homeSource).toContain("<ActionPlanHomeView");
     expect(sharedHomeSource).toContain("<GuestActionPlanExperience");
     expect(sharedHomeSource).toContain("if (!guestProductEnabled)");
     expect(sharedHomeSource).toContain("<Navbar");
-    expect(solutionsSource).toContain('canonical: "/solutions"');
+    expect(solutionsSource).toContain('path: "/solutions"');
+    expect(proxySource).toContain('if (pathname === "/")');
+    expect(proxySource).toContain("buildDefaultHomeSolutionsHref(request.nextUrl.searchParams)");
+    expect(proxySource).toContain("NextResponse.redirect(new URL(solutionsHref, request.url), 308)");
     expect(nextConfigSource).toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/solutions',/,
     );
@@ -60,7 +65,7 @@ describe("Demaa application navbar", () => {
 
   it("uses Organiser as the public French destination", async () => {
     const source = await readFile(
-      new URL("../src/components/ActionPlanNavbar.tsx", import.meta.url),
+      new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
       "utf8",
     );
     const organiserIndex = await readFile(
@@ -68,15 +73,14 @@ describe("Demaa application navbar", () => {
       "utf8",
     );
 
-    expect(source).toContain('view === "academy"');
-    expect(source).toContain('? "/organiser"');
-    expect(source).toContain('view === "plan"');
-    expect(source).toContain('? "/"');
-    expect(source).toContain(': "/application-metier"');
+    expect(source).toContain('label: "Organiser", href: "/modeles"');
+    expect(source).toContain('label: "Solutions", href: "/solutions"');
+    expect(source).toContain('label: "Application métier", href: "/application-metier"');
     expect(organiserIndex).not.toContain("OrganiserLandingPage");
-    expect(organiserIndex).toContain('canonical: "/organiser"');
-    expect(organiserIndex).toContain("<Navbar />");
-    expect(organiserIndex).toContain('<ActionPlanNavbar activeView="academy" routeNavigation />');
+    expect(organiserIndex).toContain('path: "/organiser"');
+    expect(organiserIndex).toContain('<Navbar publicNavigationActiveView="academy" />');
+    expect(organiserIndex).not.toContain("<ActionPlanNavbar");
+    expect(organiserIndex).toContain('<OrganiserSectionNavigation activeSection="processes" />');
   });
 
   it("replaces the sign-in action with account access once a session is active", async () => {
@@ -188,7 +192,8 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).not.toContain("Ressources");
     expect(actionPlanNavSource).toContain("Annonces");
     expect(actionPlanNavSource).not.toContain('label: "Système"');
-    expect(actionPlanNavSource).toContain("const navigationOrder: readonly ActionPlanView[]");
+    expect(actionPlanNavSource).toContain("const publicNavigationOrder: readonly ActionPlanView[]");
+    expect(actionPlanNavSource).toContain("const embeddedNavigationOrder: readonly ActionPlanView[]");
     expect(actionPlanNavSource).toContain(
       '"solutions",\n  "academy",\n  "services"',
     );
@@ -210,6 +215,8 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).not.toContain('label: "Accompagnement"');
     expect(actionPlanNavSource).not.toContain('label: "Coaching"');
     expect(actionPlanNavSource).toContain('{ view: "academy"');
+    expect(actionPlanNavSource).not.toContain('view === "models"');
+    expect(actionPlanNavSource).toContain('routeNavigation ? "/modeles" : "/organiser"');
     expect(actionPlanNavSource).toContain("onViewChange(view)");
     expect(actionPlanNavSource).toContain("xl:min-h-11");
     expect(navbarSource).toContain("pb-[calc(1rem+env(safe-area-inset-bottom))]");

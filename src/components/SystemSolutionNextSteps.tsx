@@ -1,6 +1,5 @@
-import { ArrowRight, ClipboardCheck, PanelsTopLeft } from "lucide-react";
+import { ArrowRight, Copy, PanelsTopLeft } from "lucide-react";
 import Link from "next/link";
-import { buildDiagnosticOrganisationHref } from "@/lib/action-plan-app-context";
 
 export default function SystemSolutionNextSteps({ systemId, systemName }: { systemId: string; systemName: string }) {
   return (
@@ -9,11 +8,11 @@ export default function SystemSolutionNextSteps({ systemId, systemName }: { syst
         Choisir la prochaine étape pour {systemName}
       </h2>
       <article className="flex min-h-64 flex-col rounded-[1.35rem] bg-dema-forest p-6 text-dema-paper sm:p-7">
-        <ClipboardCheck className="h-5 w-5 text-dema-sage" aria-hidden="true" />
-        <h3 className="mt-7 text-2xl font-light leading-tight tracking-[-0.035em]">Vous ne savez pas par où commencer ?</h3>
-        <p className="mt-3 text-sm leading-6 text-dema-paper/72">Décrivez votre situation pour obtenir un plan d’action adapté à votre activité.</p>
-        <Link href={buildDiagnosticOrganisationHref({ systemId })} className="mt-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-dema-paper px-5 text-sm font-medium text-dema-forest transition hover:bg-dema-sage">
-          Diagnostic organisation
+        <Copy className="h-5 w-5 text-dema-sage" aria-hidden="true" />
+        <h3 className="mt-7 text-2xl font-light leading-tight tracking-[-0.035em]">Commencer avec une structure prête à copier</h3>
+        <p className="mt-3 text-sm leading-6 text-dema-paper/72">Retrouvez les modèles gratuits qui peuvent servir de base à cette activité.</p>
+        <Link href={`/modeles?metier=${encodeURIComponent(systemId)}`} className="mt-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-dema-paper px-5 text-sm font-medium text-dema-forest transition hover:bg-dema-sage">
+          Voir les modèles adaptés
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </article>

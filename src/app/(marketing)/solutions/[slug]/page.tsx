@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import ActionPlanNavbar from "@/components/ActionPlanNavbar";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
 import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
@@ -76,11 +75,20 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
   if (normalizeSystemDetailTab(getParamValue(resolvedSearchParams.tab)) === "process") {
     redirect(`/systemes/${data.system.slug}/processus`);
   }
+  const legacyResource = getParamValue(resolvedSearchParams.resource);
+  if (legacyResource === "processus-metier") {
+    redirect(`/systemes/${data.system.slug}/processus`);
+  }
+  if (legacyResource === "suivi-previsionnel-financier") {
+    redirect("/modeles/suivi-previsionnel-financier");
+  }
+  if (legacyResource === "crm-suivi-commercial") {
+    redirect("/modeles");
+  }
 
   return (
     <>
-      <Navbar minimal />
-      <ActionPlanNavbar activeView="solutions" routeNavigation />
+      <Navbar minimal publicNavigationActiveView="solutions" />
       <main className="min-h-screen bg-background pb-20">
         <script
           type="application/ld+json"

@@ -121,7 +121,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/rejoindre-le-reseau',
-        destination: '/rejoindre-team-demaa',
+        destination: '/opportunites?intent=team-demaa-profile',
+        permanent: true,
+      },
+      {
+        source: '/rejoindre-team-demaa',
+        destination: '/opportunites?intent=team-demaa-profile',
         permanent: true,
       },
       {
@@ -161,7 +166,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/partenaires',
-        destination: '/rejoindre-team-demaa',
+        destination: '/opportunites?intent=team-demaa-profile',
         permanent: true,
       },
       {
@@ -196,27 +201,27 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/modeles-de-documents',
-        destination: '/organiser',
+        destination: '/modeles',
         permanent: true,
       },
       {
         source: '/modeles-de-documents/tableau-de-pilotage-:slug',
-        destination: '/solutions/:slug',
+        destination: '/modeles?metier=:slug',
         permanent: true,
       },
       {
         source: '/modeles-de-documents/suivi-previsionnel-financier',
-        destination: '/organiser/piloter-sa-tresorerie',
+        destination: '/modeles/suivi-previsionnel-financier',
         permanent: true,
       },
       {
         source: '/modeles-de-documents/pilotage-marketing-vente',
-        destination: '/organiser/construire-systeme-marketing-vente',
+        destination: '/modeles',
         permanent: true,
       },
       {
         source: '/modeles-de-documents/systeme-operationnel',
-        destination: '/organiser/construire-systeme-marketing-vente',
+        destination: '/modeles',
         permanent: true,
       },
       {
@@ -311,22 +316,22 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/ressources/previsionnel-financier',
-        destination: '/organiser/piloter-sa-tresorerie',
+        destination: '/modeles/suivi-previsionnel-financier',
         permanent: true,
       },
       {
         source: '/ressources/suivi-previsionnel-financier-template',
-        destination: '/organiser/piloter-sa-tresorerie',
+        destination: '/modeles/suivi-previsionnel-financier',
         permanent: true,
       },
       {
         source: '/ressources/systeme-operationnel-airtable',
-        destination: '/organiser/construire-systeme-marketing-vente',
+        destination: '/modeles',
         permanent: true,
       },
       {
         source: '/ressources/systeme-operationnel-template',
-        destination: '/organiser/construire-systeme-marketing-vente',
+        destination: '/modeles',
         permanent: true,
       },
       {

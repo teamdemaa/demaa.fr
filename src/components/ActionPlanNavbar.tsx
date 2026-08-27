@@ -19,7 +19,13 @@ const navigationItems = {
   opportunities: { view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness },
 } as const;
 
-const navigationOrder: readonly ActionPlanView[] = [
+const publicNavigationOrder: readonly ActionPlanView[] = [
+  "solutions",
+  "academy",
+  "services",
+];
+
+const embeddedNavigationOrder: readonly ActionPlanView[] = [
   "solutions",
   "academy",
   "services",
@@ -54,6 +60,7 @@ export default function ActionPlanNavbar({
     if (onViewChange) onViewChange(view);
   }
 
+  const navigationOrder = routeNavigation ? publicNavigationOrder : embeddedNavigationOrder;
   const displayedItems = navigationOrder
     .map((view) => navigationItems[view])
     .filter(({ view }) => view === "solutions" || !visibleViews || visibleViews.includes(view));
@@ -94,7 +101,7 @@ export default function ActionPlanNavbar({
               : view === "plan"
               ? "/"
               : view === "academy"
-                ? "/organiser"
+                ? (routeNavigation ? "/modeles" : "/organiser")
                 : "/application-metier";
           const usesPublicRoute = routeNavigation
             || (localeCode === "fr" && (view === "solutions" || view === "academy" || view === "services"));

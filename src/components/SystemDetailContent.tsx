@@ -2,14 +2,10 @@
 
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useState } from "react";
 import LeaderDailyRail from "@/components/LeaderDailyRail";
-import SystemContextualCaseStudy from "@/components/SystemContextualCaseStudy";
-import SystemResourcesTab from "@/components/SystemResourcesTab";
 import SystemSolutionNextSteps from "@/components/SystemSolutionNextSteps";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
-import { getVisibleContextualAcademyCaseStudy } from "@/lib/academy-case-study-placement";
-import { getAvailableSystemTemplatesForSystem } from "@/lib/system-resource-catalog";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { ToolOutboundSurface } from "@/lib/tool-outbound-attribution";
 import type { System } from "@/lib/types";
@@ -47,14 +43,6 @@ export default function SystemDetailContent({
   onResourceSlugChange,
   headerActions,
 }: SystemDetailContentProps) {
-  const scopedResources = useMemo(
-    () => getAvailableSystemTemplatesForSystem(system.slug),
-    [system.slug],
-  );
-  const contextualCaseStudy = useMemo(
-    () => getVisibleContextualAcademyCaseStudy(system.slug),
-    [system.slug],
-  );
   const [localSelectedSolutionIds, setLocalSelectedSolutionIds] = useState<Set<string>>(
     () => new Set(),
   );
@@ -95,9 +83,17 @@ export default function SystemDetailContent({
           {headerActions ? <div className="w-full sm:max-w-xs">{headerActions}</div> : null}
         </div>
         {!embedded ? (
-          <p className="mt-4 max-w-3xl text-base leading-relaxed text-dema-muted">
-            {intro}
-          </p>
+          <>
+            <p className="mt-4 max-w-3xl text-base leading-relaxed text-dema-muted">
+              {intro}
+            </p>
+            <Link
+              href={`/systemes/${system.slug}/processus`}
+              className="demaa-primary-button mt-5 min-h-10 px-5"
+            >
+              Voir les processus du métier
+            </Link>
+          </>
         ) : null}
       </div>
 
@@ -111,15 +107,7 @@ export default function SystemDetailContent({
           onToggleSelection={selectableSolutions ? toggleSolution : undefined}
           toolOutboundSurface={toolOutboundSurface}
         />
-        <SystemResourcesTab
-          layout="rail"
-          resources={scopedResources}
-          systemSlug={system.slug}
-        />
         {!embedded ? <LeaderDailyRail /> : null}
-        {contextualCaseStudy ? (
-          <SystemContextualCaseStudy content={contextualCaseStudy} />
-        ) : null}
         {!embedded ? (
           <SystemSolutionNextSteps systemId={system.slug} systemName={system.name} />
         ) : null}

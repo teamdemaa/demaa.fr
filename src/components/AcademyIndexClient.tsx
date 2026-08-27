@@ -516,18 +516,6 @@ export default function AcademyIndexClient({
             <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-dema-muted md:text-lg">
               Des processus concrets pour simplifier ce qui vous prend du temps et rendre votre entreprise moins dépendante de vous.
             </p>
-            {localeCode === "fr" ? (
-              <div className="mt-8 flex flex-col items-center gap-2.5">
-                <Link
-                  href="/diagnostic-organisation"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-dema-forest px-7 text-sm font-semibold text-white transition hover:bg-[#284f3a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
-                >
-                  <ClipboardCheck className="h-4 w-4" aria-hidden="true" />
-                  Diagnostic organisation
-                </Link>
-                <p className="text-xs text-dema-muted">Gratuit · Sans engagement</p>
-              </div>
-            ) : null}
           </div>
 
           {searchControl}
@@ -554,6 +542,30 @@ export default function AcademyIndexClient({
                 />
               ))}
             </div>
+
+            {!embedded && localeCode === "fr" ? (
+              <aside className="mt-14 flex flex-col gap-6 rounded-[1.5rem] border border-dema-forest/15 bg-dema-sage/45 px-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8 md:mt-16 md:px-10 md:py-9">
+                <div className="max-w-2xl">
+                  <p className="text-xs font-medium uppercase tracking-[0.16em] text-dema-forest">Diagnostic gratuit</p>
+                  <h3 className="mt-3 text-2xl font-light tracking-[-0.03em] text-brand-blue sm:text-3xl">
+                    Par quel processus commencer ?
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-dema-muted sm:text-base">
+                    Décrivez votre fonctionnement pour identifier les priorités d’organisation les plus utiles à votre entreprise.
+                  </p>
+                </div>
+                <div className="shrink-0 text-center">
+                  <Link
+                    href="/diagnostic-organisation"
+                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-dema-forest px-7 text-sm font-semibold text-white transition hover:bg-[#284f3a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
+                  >
+                    <ClipboardCheck className="h-4 w-4" aria-hidden="true" />
+                    Diagnostic organisation
+                  </Link>
+                  <p className="mt-2.5 text-xs text-dema-muted">Gratuit · Sans engagement</p>
+                </div>
+              </aside>
+            ) : null}
           </section>
         ) : null}
 

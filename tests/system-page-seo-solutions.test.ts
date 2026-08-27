@@ -63,7 +63,7 @@ function toolItemList(jsonLd: ReturnType<typeof buildSystemPageJsonLd>) {
 }
 
 describe("system page SEO published Solutions boundary", () => {
-  it("describes Solutions, Organisation and contextual Resources without archived presentations", () => {
+  it("describes Solutions and Organisation without mixing in the Models catalogue", () => {
     const metadata = buildSystemPageMetadata(processOnlyData, []);
     const jsonLd = buildSystemPageJsonLd(processOnlyData, []);
     const exposed = JSON.stringify({ metadata, jsonLd });
@@ -78,19 +78,18 @@ describe("system page SEO published Solutions boundary", () => {
       `système métier ${system.name.toLowerCase()}`,
       `process ${system.name.toLowerCase()}`,
       `solutions entreprise ${system.name.toLowerCase()}`,
-      "Suivi et prévisionnel financier",
-      "CRM - suivi commercial",
     ]));
     expect(itemList(jsonLd)?.name).toBe(
-      `Organisation, solutions et ressources pour ${system.name}`,
+      `Organisation et solutions pour ${system.name}`,
     );
+    expect(exposed).not.toMatch(/Suivi et prévisionnel financier|CRM - suivi commercial/);
     expect(exposed).not.toMatch(/Legacy Outil Fantôme|annuaire-outils|écosystème/i);
     expect(exposed).not.toMatch(
       /La facturation électronique|Maîtriser les obligations et les finances de son entreprise/,
     );
   });
 
-  it("keeps all 115 empty-registry pages free of historical Models while listing Resources", () => {
+  it("keeps all 115 empty-registry pages free of historical Models and Resources", () => {
     expect(enterpriseCatalog).toHaveLength(115);
 
     for (const currentEnterprise of enterpriseCatalog) {
@@ -107,7 +106,8 @@ describe("system page SEO published Solutions boundary", () => {
         /Legacy Outil Fantôme|annuaire-outils|écosystème|Solutions publiées|Levier/i,
       );
       expect(exposed).not.toContain("Tableau de pilotage opérationnel");
-      expect(exposed).toContain("Suivi et prévisionnel financier");
+      expect(exposed).not.toContain("Suivi et prévisionnel financier");
+      expect(exposed).not.toContain("CRM - suivi commercial");
     }
   });
 
@@ -135,7 +135,7 @@ describe("system page SEO published Solutions boundary", () => {
       "Prestataire Facturation",
     ]));
     expect(itemList(jsonLd)?.name).toBe(
-      `Organisation, solutions et ressources pour ${system.name}`,
+      `Organisation et solutions pour ${system.name}`,
     );
     expect(exposed).toContain("https://qonto.com/fr");
     expect(exposed).toContain("https://demaa.co/solutions/prestataire-facturation");
@@ -218,7 +218,7 @@ describe("system page SEO published Solutions boundary", () => {
     expect(detailSource).not.toContain("data.detail.tools");
   });
 
-  it("filters the historical Levier model and describes the neutral Resources", () => {
+  it("filters historical Models and Resources from Solutions SEO", () => {
     const metadata = buildSystemPageMetadata(
       publishedSolutionsData,
       publishedLevierSolutionSectionsFixture,
@@ -229,20 +229,16 @@ describe("system page SEO published Solutions boundary", () => {
     );
     const exposed = JSON.stringify({ metadata, jsonLd });
 
-    expect(metadata.description).toContain("3 ressources pratiques");
+    expect(metadata.description).not.toContain("ressources pratiques");
     expect(exposed).not.toMatch(/Google Drive|docs\.google|private-assets/);
     expect(exposed).not.toContain("Levier");
     const list = itemList(jsonLd);
-    expect(list?.itemListElement).toEqual(
+    expect(list?.itemListElement).not.toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ name: "Processus métier" }),
         expect.objectContaining({ name: "CRM - suivi commercial" }),
       ]),
     );
     if (!list?.itemListElement) throw new Error("ItemList JSON-LD manquant");
-    const resourceItem = list.itemListElement.find(
-      (item) => item.name === "CRM - suivi commercial",
-    );
-    expect(resourceItem).not.toHaveProperty("url");
+    expect(list.itemListElement.find((item) => item.name === "CRM - suivi commercial")).toBeUndefined();
   });
 });

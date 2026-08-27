@@ -4,6 +4,8 @@ import { FilloutPopupEmbed } from "@fillout/react";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { getFilloutAttributionParameters } from "@/lib/lead-attribution-client";
+import { trackCopyableModelEvent } from "@/lib/kit-analytics-client";
+import type { CopyableModelPlatform } from "@/lib/copyable-model-catalog";
 import { recordFilloutLeadSubmission } from "@/lib/fillout-lead-client";
 
 type OrganisationSessionBookingButtonProps = {
@@ -13,6 +15,8 @@ type OrganisationSessionBookingButtonProps = {
   source?: string;
   sourceIsAuthoritative?: boolean;
   systemSlug?: string;
+  modelSlug?: string;
+  modelPlatform?: CopyableModelPlatform;
 };
 
 export default function OrganisationSessionBookingButton({
@@ -22,6 +26,8 @@ export default function OrganisationSessionBookingButton({
   source = "Page session stratégique",
   sourceIsAuthoritative = false,
   systemSlug,
+  modelSlug,
+  modelPlatform,
 }: OrganisationSessionBookingButtonProps) {
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(searchParams.get("booking") === "1");
@@ -37,12 +43,24 @@ export default function OrganisationSessionBookingButton({
       ...filloutAttribution,
       source: inheritedSource,
       systemSlug: inheritedSystemSlug ?? undefined,
+      modelSlug: modelSlug ?? undefined,
     }),
-    [filloutAttribution, inheritedSource, inheritedSystemSlug],
+    [filloutAttribution, inheritedSource, inheritedSystemSlug, modelSlug],
   );
 
   function openBooking() {
     setFilloutAttribution(getFilloutAttributionParameters());
+    if (
+      requestType === "copyable_model_customization" &&
+      modelSlug &&
+      modelPlatform
+    ) {
+      trackCopyableModelEvent("copyable_model_customization_opened", {
+        modelSlug,
+        platform: modelPlatform,
+        surface: "model_detail",
+      });
+    }
     setIsOpen(true);
   }
 

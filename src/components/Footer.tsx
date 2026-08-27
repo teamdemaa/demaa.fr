@@ -17,13 +17,13 @@ const collaborationLinks = [
   { label: "Application métier", href: "/application-metier" },
   { label: "Demaa Studio", href: "/studio" },
   { label: "Annonces", href: "/opportunites" },
-  { label: "Rejoindre Team Demaa", href: "/rejoindre-team-demaa" },
+  { label: "Rejoindre Team Demaa", href: "/opportunites?intent=team-demaa-profile" },
   { label: "Nous contacter", href: "mailto:team@demaa.fr" },
 ];
 
 const resourceLinks = [
-  { label: "Solutions", href: "/solutions" },
-  { label: "Organiser", href: "/organiser" },
+  { label: "Modèles à copier", href: "/modeles" },
+  { label: "Processus & cas concrets", href: "/organiser" },
   { label: "Contenus", href: "/contenus" },
 ];
 
@@ -39,7 +39,7 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="space-y-4">
-            <Link href="/" className="inline-flex">
+            <Link href="/solutions" className="inline-flex">
               <DemaaWordmark
                 className="text-[2.55rem]"
                 colorClassName="text-brand-blue/56"

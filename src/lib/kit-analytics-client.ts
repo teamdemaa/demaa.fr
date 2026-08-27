@@ -52,6 +52,40 @@ type SystemSolutionEvent =
   | "system_solution_resource_cta_clicked"
   | "system_solution_resource_opened";
 
+type CopyableModelEvent =
+  | "copyable_model_copy_clicked"
+  | "copyable_model_customization_opened"
+  | "copyable_model_opened"
+  | "copyable_model_preview_opened";
+
+export function trackCopyableModelEvent(
+  eventName: CopyableModelEvent,
+  input: {
+    modelSlug: string;
+    platform: "airtable" | "google-sheets";
+    surface: "catalogue" | "model_detail" | "model_preview";
+  },
+) {
+  if (typeof window === "undefined") return;
+  if (!SAFE_ANALYTICS_SLUG.test(input.modelSlug)) return;
+
+  const preferences = getCookieConsentPreferences();
+  if (!preferences?.analytics) return;
+
+  const properties = {
+    model_slug: input.modelSlug,
+    platform: input.platform,
+    surface: input.surface,
+  };
+
+  try {
+    track(eventName, properties);
+    window.gtag?.("event", eventName, properties);
+  } catch {
+    // La copie et la demande d'adaptation restent disponibles sans mesure.
+  }
+}
+
 export function trackSystemJourneyEvent(
   eventName: SystemJourneyEvent,
   input: {

@@ -150,7 +150,7 @@ export default function MenuQRCode() {
                </div>
 
                <div className="relative z-10 space-y-4">
-                  <p className="text-[10px] font-bold text-gray-300 tracking-[0.2em] uppercase">Propulsé par Demaa.fr</p>
+                  <p className="text-[10px] font-bold text-gray-300 tracking-[0.2em] uppercase">Propulsé par Demaa</p>
                </div>
             </div>
           </div>

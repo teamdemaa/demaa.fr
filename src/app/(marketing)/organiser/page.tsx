@@ -1,34 +1,44 @@
-import type { Metadata } from "next";
 import AcademyIndexClient from "@/components/AcademyIndexClient";
-import ActionPlanNavbar from "@/components/ActionPlanNavbar";
 import Navbar from "@/components/Navbar";
+import OrganiserSectionNavigation from "@/components/OrganiserSectionNavigation";
 import { getAllAcademyContent } from "@/lib/academy-course-content";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
+import {
+  buildPublicIndexJsonLd,
+  serializePublicJsonLd,
+} from "@/lib/public-index-json-ld";
 
 const title = "Des cas concrets pour mieux organiser votre entreprise | Demaa";
 const description =
   "Des processus concrets pour simplifier ce qui prend du temps et rendre votre entreprise moins dépendante de vous.";
 
-export const metadata: Metadata = {
+export const metadata = buildPublicPageMetadata({
   title,
   description,
-  alternates: { canonical: "/organiser" },
-  openGraph: {
-    title,
-    description,
-    url: "/organiser",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: { card: "summary_large_image", title, description },
-};
+  path: "/organiser",
+});
 
 export default function OrganiserIndexPage() {
+  const contents = getAllAcademyContent();
+  const jsonLd = buildPublicIndexJsonLd({
+    name: "Organiser",
+    description,
+    path: "/organiser",
+    items: contents.map((content) => ({
+      name: content.identity.shortTitle,
+      path: `/organiser/${content.identity.slug}`,
+    })),
+  });
+
   return (
     <>
-      <Navbar />
-      <ActionPlanNavbar activeView="academy" routeNavigation />
-      <AcademyIndexClient contents={getAllAcademyContent()} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializePublicJsonLd(jsonLd) }}
+      />
+      <Navbar publicNavigationActiveView="academy" />
+      <OrganiserSectionNavigation activeSection="processes" />
+      <AcademyIndexClient contents={contents} />
     </>
   );
 }

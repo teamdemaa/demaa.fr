@@ -1,10 +1,12 @@
 import LegalPageLayout from "@/components/LegalPageLayout";
 import { LEGAL, LEGAL_COPY } from "@/lib/legal";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "CGV - Demaa",
   description: "Conditions générales de vente des prestations proposées par Demaa.",
-};
+  path: "/cgv",
+});
 
 function CgvSection({
   title,

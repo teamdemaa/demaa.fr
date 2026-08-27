@@ -62,7 +62,7 @@ export default function QRCodeGenerator() {
         await navigator.share({
           files: [file],
           title: 'Mon QR Code Demaa',
-          text: 'Généré sur Demaa.fr'
+          text: "Généré avec Demaa"
         });
       } else {
         // Fallback: Copy link

@@ -11,6 +11,7 @@ import {
   getDemaaRecruitmentItems,
 } from "@/lib/recruitment-catalog";
 import { getRelatedSystemsForRecruitmentSlug } from "@/lib/related-systems";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 type RecruitmentDetailPageProps = {
   params: Promise<{
@@ -43,26 +44,12 @@ export async function generateMetadata({
     };
   }
 
-  return {
+  return buildPublicPageMetadata({
     title: `${item.name} - Annuaire recrutement Demaa`,
     description: item.description,
-    alternates: {
-      canonical: `/annuaire-recrutement/${item.slug}`,
-    },
-    openGraph: {
-      title: `${item.name} - Annuaire recrutement Demaa`,
-      description: item.description,
-      url: `/annuaire-recrutement/${item.slug}`,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${item.name} - Annuaire recrutement Demaa`,
-      description: item.description,
-    },
-  };
+    path: `/annuaire-recrutement/${item.slug}`,
+    type: "article",
+  });
 }
 
 export default async function RecruitmentDetailPage({

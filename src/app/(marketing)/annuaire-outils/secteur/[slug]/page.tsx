@@ -21,6 +21,7 @@ import {
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 import { withSoftwareDetailUrls } from "@/lib/tool-directory-page";
 import { getCanonicalOrigin } from "@/lib/site-url";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 type ToolSectorPageProps = {
   params: Promise<{ slug: string }>;
@@ -55,26 +56,11 @@ export async function generateMetadata({
       ? `Explorez les outils et logiciels utiles pour les activités de ${sector.publicLabel.toLowerCase()}.`
       : `Découvrez une sélection d'outils utiles pour les activités de ${sector.publicLabel.toLowerCase()}, avec une approche pratique pour démarrer.`;
 
-  return {
+  return buildPublicPageMetadata({
     title,
     description,
-    alternates: {
-      canonical: `/annuaire-outils/secteur/${sector.seoSlug}`,
-    },
-    openGraph: {
-      title,
-      description,
-      url: `/annuaire-outils/secteur/${sector.seoSlug}`,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  };
+    path: `/annuaire-outils/secteur/${sector.seoSlug}`,
+  });
 }
 
 function getParamValue(value?: string | string[]) {

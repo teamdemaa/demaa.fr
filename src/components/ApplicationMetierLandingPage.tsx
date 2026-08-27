@@ -1,5 +1,4 @@
 import { ChevronDown } from "lucide-react";
-import ActionPlanNavbar from "@/components/ActionPlanNavbar";
 import {
   ApplicationDiagnosticButton,
   ApplicationDiagnosticProvider,
@@ -57,11 +56,10 @@ function SectionIntroduction({
 export default function ApplicationMetierLandingPage() {
   return (
     <ApplicationDiagnosticProvider>
-      <Navbar minimal />
-      <ActionPlanNavbar activeView="services" routeNavigation />
+      <Navbar minimal publicNavigationActiveView="services" />
 
       <main className="overflow-x-clip bg-dema-cream pb-24 text-brand-blue xl:pb-0">
-        <section className="border-b border-dema-line px-5 pb-20 pt-14 text-center sm:pb-24 sm:pt-20 lg:pb-28 lg:pt-24">
+        <section className="px-5 pb-12 pt-14 text-center sm:pb-14 sm:pt-20 lg:pt-24">
           <div className="mx-auto max-w-5xl">
             <h1
               aria-label="Gagnez du temps et rendez votre entreprise plus autonome."
@@ -85,7 +83,7 @@ export default function ApplicationMetierLandingPage() {
 
         <section
           aria-labelledby="daily-change-heading"
-          className="px-5 py-16 sm:px-8 sm:py-20 lg:py-24"
+          className="px-5 pb-16 pt-10 sm:px-8 sm:pb-20 sm:pt-12 lg:pb-24"
         >
           <div className="mx-auto max-w-6xl">
             <SectionIntroduction

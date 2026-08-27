@@ -10,6 +10,7 @@ import { getEnterpriseCatalog } from "@/lib/enterprise-annuaire-server";
 import { getSectorPageBySlug, sectorPageDefinitions } from "@/lib/sector-pages";
 import { buildOperationalSystemDetails } from "@/lib/system-operations";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 type SectorHubPageProps = {
   params: Promise<{ slug: string }>;
@@ -37,26 +38,11 @@ export async function generateMetadata({
     };
   }
 
-  return {
+  return buildPublicPageMetadata({
     title: `${sectorPage.title} - Demaa`,
     description: sectorPage.description,
-    alternates: {
-      canonical: `/secteurs/${sectorPage.slug}`,
-    },
-    openGraph: {
-      title: `${sectorPage.title} - Demaa`,
-      description: sectorPage.description,
-      url: `/secteurs/${sectorPage.slug}`,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${sectorPage.title} - Demaa`,
-      description: sectorPage.description,
-    },
-  };
+    path: `/secteurs/${sectorPage.slug}`,
+  });
 }
 
 export default async function SectorHubPage({

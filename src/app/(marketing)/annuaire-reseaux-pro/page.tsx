@@ -1,32 +1,15 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import ProNetworkDirectoryClient from "@/components/ProNetworkDirectoryClient";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getDemaaProNetworks, proNetworkCategories } from "@/lib/pro-network-catalog";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "Annuaire réseaux pro TPE - Demaa",
   description:
     "Explorez les réseaux, organisations, prescripteurs et événements utiles pour développer l’activité d’une TPE.",
-  alternates: {
-    canonical: "/annuaire-reseaux-pro",
-  },
-  openGraph: {
-    title: "Annuaire réseaux pro TPE - Demaa",
-    description:
-      "Explorez les réseaux, organisations, prescripteurs et événements utiles pour développer l’activité d’une TPE.",
-    url: "/annuaire-reseaux-pro",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Annuaire réseaux pro TPE - Demaa",
-    description:
-      "Explorez les réseaux, organisations, prescripteurs et événements utiles pour développer l’activité d’une TPE.",
-  },
-};
+  path: "/annuaire-reseaux-pro",
+});
 
 type AnnuaireReseauxProPageProps = {
   searchParams: Promise<{

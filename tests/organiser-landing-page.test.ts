@@ -13,13 +13,17 @@ describe("Organiser public journey", () => {
     const navbar = read("src/components/Navbar.tsx");
 
     expect(organiserPage).toContain("<AcademyIndexClient");
-    expect(organiserPage).toContain('canonical: "/organiser"');
+    expect(organiserPage).toContain('<OrganiserSectionNavigation activeSection="processes" />');
+    expect(organiserPage).toContain('path: "/organiser"');
     expect(organiserPage).not.toContain("academie/page");
     expect(organiserPage).not.toContain("<OrganiserLandingPage");
     expect(navbar).not.toContain("Diagnostic organisation");
     expect(organiserDirectory).toContain('href="/diagnostic-organisation"');
     expect(organiserDirectory).toContain("Diagnostic organisation");
     expect(organiserDirectory).toContain("Gratuit · Sans engagement");
+    expect(organiserDirectory.indexOf('className="grid grid-cols-1')).toBeLessThan(
+      organiserDirectory.indexOf('href="/diagnostic-organisation"'),
+    );
   });
 
   it("keeps Organiser as the only physical French content route", () => {

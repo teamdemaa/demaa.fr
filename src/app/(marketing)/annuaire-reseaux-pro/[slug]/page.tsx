@@ -8,6 +8,7 @@ import RelatedSystemsLinks from "@/components/RelatedSystemsLinks";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getDemaaProNetworkBySlug, getDemaaProNetworks } from "@/lib/pro-network-catalog";
 import { getRelatedSystemsForProNetworkSlug } from "@/lib/related-systems";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 type ProNetworkDetailPageProps = {
   params: Promise<{
@@ -40,26 +41,12 @@ export async function generateMetadata({
     };
   }
 
-  return {
+  return buildPublicPageMetadata({
     title: `${network.name} - Réseaux Pro Demaa`,
     description: network.description,
-    alternates: {
-      canonical: `/annuaire-reseaux-pro/${network.slug}`,
-    },
-    openGraph: {
-      title: `${network.name} - Réseaux Pro Demaa`,
-      description: network.description,
-      url: `/annuaire-reseaux-pro/${network.slug}`,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${network.name} - Réseaux Pro Demaa`,
-      description: network.description,
-    },
-  };
+    path: `/annuaire-reseaux-pro/${network.slug}`,
+    type: "article",
+  });
 }
 
 export default async function ProNetworkDetailPage({

@@ -1,21 +1,13 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import ContentDirectoryClient from "@/components/ContentDirectoryClient";
 import { getAllPublishedContent } from "@/lib/content-catalog";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "Contenus | Demaa",
   description: "Des contenus pratiques pour comprendre les sujets qui structurent et font avancer une entreprise.",
-  alternates: { canonical: "/contenus" },
-  openGraph: {
-    title: "Contenus | Demaa",
-    description: "Des contenus pratiques pour comprendre les sujets qui structurent et font avancer une entreprise.",
-    url: "/contenus",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-};
+  path: "/contenus",
+});
 
 export default function ContentDirectoryPage() {
   return (

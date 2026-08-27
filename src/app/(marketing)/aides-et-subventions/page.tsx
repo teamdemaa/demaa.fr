@@ -1,34 +1,17 @@
-import type { Metadata } from "next";
 import AidDirectoryClient from "@/components/AidDirectoryClient";
 import Navbar from "@/components/Navbar";
 import {
   getAidFamilyDefinitions,
   getDemaaAidItems,
 } from "@/lib/aid-catalog";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "Aides et subventions TPE - Demaa",
   description:
     "Repérez les aides et subventions les plus utiles pour créer, recruter, innover ou engager une transition plus concrète.",
-  alternates: {
-    canonical: "/aides-et-subventions",
-  },
-  openGraph: {
-    title: "Aides et subventions TPE - Demaa",
-    description:
-      "Repérez les aides et subventions les plus utiles pour créer, recruter, innover ou engager une transition plus concrète.",
-    url: "/aides-et-subventions",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Aides et subventions TPE - Demaa",
-    description:
-      "Repérez les aides et subventions les plus utiles pour créer, recruter, innover ou engager une transition plus concrète.",
-  },
-};
+  path: "/aides-et-subventions",
+});
 
 type AidesEtSubventionsPageProps = {
   searchParams: Promise<{

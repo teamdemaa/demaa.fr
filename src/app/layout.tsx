@@ -4,6 +4,11 @@ import "./globals.css";
 import CookieConsentManager from "@/components/CookieConsentManager";
 import { DEMAA_HOME_DESCRIPTION, DEMAA_HOME_TITLE } from "@/lib/demaa-positioning";
 import { getCanonicalOrigin } from "@/lib/site-url";
+import { PUBLIC_SOCIAL_IMAGE } from "@/lib/public-page-metadata";
+import {
+  buildSiteIdentityJsonLd,
+  serializePublicJsonLd,
+} from "@/lib/public-index-json-ld";
 
 const satoshi = localFont({
   src: [
@@ -62,11 +67,13 @@ export const metadata: Metadata = {
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
+    images: [PUBLIC_SOCIAL_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: DEMAA_HOME_TITLE,
     description: DEMAA_HOME_DESCRIPTION,
+    images: ["/twitter-image"],
   },
   applicationName: "Demaa",
   manifest: "/manifest.webmanifest",
@@ -107,6 +114,12 @@ export default function RootLayout({
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-background text-foreground font-sans"
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: serializePublicJsonLd(buildSiteIdentityJsonLd()),
+          }}
+        />
         {children}
         {modal}
         <CookieConsentManager />

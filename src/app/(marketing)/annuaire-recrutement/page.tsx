@@ -1,32 +1,15 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import RecruitmentDirectoryClient from "@/components/RecruitmentDirectoryClient";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
 import { getDemaaRecruitmentItems, recruitmentFamilies } from "@/lib/recruitment-catalog";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "Annuaire recrutement - Demaa",
   description:
     "Explorez des solutions utiles pour recruter, diffuser une offre, recruter en alternance ou trouver un renfort rapidement.",
-  alternates: {
-    canonical: "/annuaire-recrutement",
-  },
-  openGraph: {
-    title: "Annuaire recrutement - Demaa",
-    description:
-      "Explorez des solutions utiles pour recruter, diffuser une offre, recruter en alternance ou trouver un renfort rapidement.",
-    url: "/annuaire-recrutement",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Annuaire recrutement - Demaa",
-    description:
-      "Explorez des solutions utiles pour recruter, diffuser une offre, recruter en alternance ou trouver un renfort rapidement.",
-  },
-};
+  path: "/annuaire-recrutement",
+});
 
 type AnnuaireRecrutementPageProps = {
   searchParams: Promise<{

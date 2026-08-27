@@ -1,10 +1,12 @@
 import LegalPageLayout from "@/components/LegalPageLayout";
 import { LEGAL, LEGAL_COPY } from "@/lib/legal";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "Mentions légales - Demaa",
-  description: "Mentions légales du site Demaa.fr.",
-};
+  description: "Mentions légales du site demaa.co.",
+  path: "/mentions-legales",
+});
 
 function LegalSection({
   title,
@@ -28,7 +30,7 @@ export default function MentionsLegalesPage() {
     <LegalPageLayout
       title="Mentions"
       titleAccent="légales"
-      description="Informations légales applicables au site Demaa.fr, à son éditeur et à son hébergement."
+      description={`Informations légales applicables au site ${LEGAL.domain}, à son éditeur et à son hébergement.`}
     >
       <LegalSection title="1. Éditeur du site">
             <p>
@@ -70,7 +72,7 @@ export default function MentionsLegalesPage() {
 
       <LegalSection title="3. Activité du site">
             <p>
-              Demaa.fr propose des contenus, outils gratuits, ressources, formulaires de contact, sessions stratégiques et accompagnements autour de l&apos;organisation, des process et de l&apos;automatisation.
+              {LEGAL.domain} propose des contenus, outils gratuits, ressources, formulaires de contact, sessions stratégiques et accompagnements autour de l&apos;organisation, des process et de l&apos;automatisation.
             </p>
             <p>
               Les informations publiées sur le site sont fournies à titre informatif. Elles ne constituent pas un conseil juridique, fiscal, comptable ou financier individualisé.

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 import ActionPlanHomeView from "@/components/ActionPlanHomeView";
 import { buildDefaultHomeSolutionsHref } from "@/lib/action-plan-home-routing";
 import { loadActionPlanHomePage } from "@/lib/action-plan-pages.server";
@@ -9,11 +9,11 @@ import { buildLegacySolutionsRedirect } from "@/lib/organiser-navigation";
 export const metadata: Metadata = {
   title: DEMAA_HOME_TITLE,
   description: DEMAA_HOME_DESCRIPTION,
-  alternates: { canonical: "/" },
+  robots: { index: false, follow: false },
   openGraph: {
     title: DEMAA_HOME_TITLE,
     description: DEMAA_HOME_DESCRIPTION,
-    url: "/",
+    url: "/solutions",
     siteName: "Demaa",
     locale: "fr_FR",
     type: "website",
@@ -47,9 +47,9 @@ export default async function HomePage({
 }) {
   const query = await searchParams;
   const organiserRedirect = buildLegacySolutionsRedirect(query);
-  if (organiserRedirect) redirect(organiserRedirect);
+  if (organiserRedirect) permanentRedirect(organiserRedirect);
   const defaultSolutionsHref = buildDefaultHomeSolutionsHref(query);
-  if (defaultSolutionsHref) redirect(defaultSolutionsHref);
+  if (defaultSolutionsHref) permanentRedirect(defaultSolutionsHref);
 
   return (
     <ActionPlanHomeView

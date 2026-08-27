@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import FinanceDirectoryClient from "@/components/FinanceDirectoryClient";
 import Navbar from "@/components/Navbar";
 import { getEnterpriseBySlug } from "@/lib/enterprise-annuaire-server";
@@ -6,30 +5,14 @@ import {
   financeFamilies,
   getDemaaFinanceItems,
 } from "@/lib/finance-catalog";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPublicPageMetadata({
   title: "Annuaire financement TPE - Demaa",
   description:
     "Explorez les solutions de compte pro avec crédit, d'affacturage, de BFR et de leasing utiles aux TPE.",
-  alternates: {
-    canonical: "/annuaire-financement",
-  },
-  openGraph: {
-    title: "Annuaire financement TPE - Demaa",
-    description:
-      "Explorez les solutions de compte pro avec crédit, d'affacturage, de BFR et de leasing utiles aux TPE.",
-    url: "/annuaire-financement",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Annuaire financement TPE - Demaa",
-    description:
-      "Explorez les solutions de compte pro avec crédit, d'affacturage, de BFR et de leasing utiles aux TPE.",
-  },
-};
+  path: "/annuaire-financement",
+});
 
 type AnnuaireFinancementPageProps = {
   searchParams: Promise<{

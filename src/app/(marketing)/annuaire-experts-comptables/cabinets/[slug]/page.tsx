@@ -7,6 +7,7 @@ import {
   getAccountingFirms,
   getSimilarAccountingFirms,
 } from "@/lib/accounting-directory";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 type AccountingFirmDetailPageProps = {
   params: Promise<{
@@ -38,26 +39,12 @@ export async function generateMetadata({
     };
   }
 
-  return {
+  return buildPublicPageMetadata({
     title: `${firm.name} - Expert-comptable - Demaa`,
     description: firm.description,
-    alternates: {
-      canonical: `/annuaire-experts-comptables/cabinets/${firm.slug}`,
-    },
-    openGraph: {
-      title: `${firm.name} - Expert-comptable - Demaa`,
-      description: firm.description,
-      url: `/annuaire-experts-comptables/cabinets/${firm.slug}`,
-      siteName: "Demaa",
-      locale: "fr_FR",
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${firm.name} - Expert-comptable - Demaa`,
-      description: firm.description,
-    },
-  };
+    path: `/annuaire-experts-comptables/cabinets/${firm.slug}`,
+    type: "article",
+  });
 }
 
 export default async function AccountingFirmDetailPage({
