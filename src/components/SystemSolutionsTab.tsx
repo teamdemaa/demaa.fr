@@ -17,6 +17,11 @@ import {
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
+import SolutionRailCardContent, {
+  SOLUTION_RAIL_CARD_FRAME_CLASS_NAME,
+  SOLUTION_RAIL_CARD_INTERACTIVE_CLASS_NAME,
+  SOLUTION_RAIL_CLASS_NAME,
+} from "@/components/SolutionRailCard";
 import SolutionReferralForm from "@/components/SolutionReferralForm";
 import ServiceCallbackForm from "@/components/ServiceCallbackForm";
 import ToolOutboundLink from "@/components/ToolOutboundLink";
@@ -51,6 +56,7 @@ export const SOLUTION_RAIL_DISPLAY_ORDER: readonly VisibleSolutionSection[] = [
   "services",
   "providers",
   "financing",
+  "aids",
   "networks",
 ];
 
@@ -308,19 +314,11 @@ export default function SystemSolutionsTab({
 }) {
   const ui = getSolutionsUiCopy(localeCode);
   const visibleSections = useMemo(
-    () => SOLUTION_RAIL_DISPLAY_ORDER.flatMap((section) => {
-      if (section === "financing") {
-        const placements = sections
-          .filter((group) => group.section === "financing" || group.section === "aids")
-          .flatMap((group) => group.placements)
-          .toSorted((left, right) => left.rank - right.rank);
-        return placements.length > 0 ? [{ section: "financing" as const, placements }] : [];
-      }
-
-      return sections.filter(
+    () => SOLUTION_RAIL_DISPLAY_ORDER.flatMap((section) =>
+      sections.filter(
         (group) => group.section === section && group.placements.length > 0,
-      );
-    }),
+      )
+    ),
     [sections],
   );
   const railRefs = useRef<Partial<Record<SolutionSection, HTMLDivElement | null>>>({});
@@ -400,24 +398,13 @@ export default function SystemSolutionsTab({
     const { resource } = placement;
     const ResourceIcon = RESOURCE_ICONS[resource.resourceType];
     const isSaved = selectedPlacementIds?.has(placement.placementId) ?? false;
-    const cardClassName = "group flex h-[19rem] w-full min-w-0 flex-col overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper p-5 text-left shadow-[0_10px_28px_rgba(23,35,29,0.035)] transition hover:border-dema-forest/20 hover:shadow-[0_14px_32px_rgba(23,35,29,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:p-6";
     const cardContent = (
-      <span className="flex h-full min-h-0 flex-col">
-        <span className="flex items-center justify-between gap-3">
-          <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-          <ResourceIcon className="h-5 w-5" aria-hidden="true" />
-          </span>
-        </span>
-        <span className="mt-4 line-clamp-2 min-h-[2.5em] block text-[10px] font-semibold uppercase leading-[1.25] tracking-[0.15em] text-dema-muted">
-          {resource.displayCategory ?? ui.resourceLabels[resource.resourceType]}
-        </span>
-        <span className="mt-1.5 line-clamp-2 block min-h-[2.5em] text-lg font-semibold leading-tight text-brand-blue sm:text-xl">
-          {resource.name}
-        </span>
-        <span className="mt-2 line-clamp-2 text-[13px] leading-5 text-dema-muted md:text-sm">
-          {resource.description}
-        </span>
-      </span>
+      <SolutionRailCardContent
+        category={resource.displayCategory ?? ui.resourceLabels[resource.resourceType]}
+        description={resource.description}
+        Icon={ResourceIcon}
+        title={resource.name}
+      />
     );
     const openEvent = () => trackSystemSolutionEvent(
       "system_solution_resource_opened",
@@ -439,13 +426,13 @@ export default function SystemSolutionsTab({
       <div
         key={placement.placementId}
         data-solution-resource-card
-        className="relative h-[19rem] min-w-0 snap-start"
+        className={SOLUTION_RAIL_CARD_FRAME_CLASS_NAME}
       >
         {opensServicePage ? (
           <Link
             href={resource.interaction.href}
             onClick={openEvent}
-            className={cardClassName}
+            className={SOLUTION_RAIL_CARD_INTERACTIVE_CLASS_NAME}
             aria-label={ui.open(resource.name)}
           >
             {cardContent}
@@ -462,7 +449,7 @@ export default function SystemSolutionsTab({
                 setLocalSelected(placement);
               }
             }}
-            className={cardClassName}
+            className={SOLUTION_RAIL_CARD_INTERACTIVE_CLASS_NAME}
             aria-label={ui.open(resource.name)}
           >
             {cardContent}
@@ -515,7 +502,7 @@ export default function SystemSolutionsTab({
             >
               {ui.selection}
             </h3>
-            <div className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_1rem)_/_2)] lg:auto-cols-[calc((100%_-_2rem)_/_3)] xl:auto-cols-[calc((100%_-_3rem)_/_4)] [&::-webkit-scrollbar]:hidden">
+            <div className={SOLUTION_RAIL_CLASS_NAME}>
               {selectedPlacements.map(renderPlacementCard)}
             </div>
           </section>
@@ -570,7 +557,7 @@ export default function SystemSolutionsTab({
                   railRefs.current[group.section] = node;
                 }}
                 onScroll={() => updateRailState(group)}
-                className="mt-4 grid max-w-full snap-x snap-mandatory grid-flow-col items-stretch auto-cols-[82%] gap-4 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] md:auto-cols-[calc((100%_-_1rem)_/_2)] lg:auto-cols-[calc((100%_-_2rem)_/_3)] xl:auto-cols-[calc((100%_-_3rem)_/_4)] [&::-webkit-scrollbar]:hidden"
+                className={SOLUTION_RAIL_CLASS_NAME}
               >
                 {group.placements.map(renderPlacementCard)}
               </div>

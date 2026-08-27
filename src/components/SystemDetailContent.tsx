@@ -59,7 +59,11 @@ export default function SystemDetailContent({
   }
 
   return (
-    <article className={`w-full max-w-[55.2rem] ${embedded ? "mx-auto" : ""}`}>
+    <article
+      className={`w-full ${
+        embedded ? "mx-auto max-w-[55.2rem]" : "max-w-[67.5rem]"
+      }`}
+    >
       {!embedded ? (
         <Link
           href="/solutions"

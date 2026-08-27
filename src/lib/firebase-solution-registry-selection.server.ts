@@ -141,20 +141,14 @@ export async function getActivePublishedRenderableSolutionSectionsForSystem(
   });
 }
 
-const PUBLICATION_GATED_ECOSYSTEM_SECTIONS = [
-  "providers",
-  "networks",
-] as const satisfies readonly SolutionSection[];
-
 export async function getActivePublicRenderableSolutionSectionsForSystem(
   systemSlug: unknown,
   now = new Date(),
 ) {
   const revision = await getActiveFirebaseSolutionRegistryRevision();
-  return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, {
-    now,
-    publishedOnlySections: PUBLICATION_GATED_ECOSYSTEM_SECTIONS,
-  });
+  // The public UI may surface editorially selected placements through the
+  // sanitized DTO. SEO and JSON-LD keep using the published-only selector.
+  return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, { now });
 }
 
 export async function getLocalPublicRenderableSolutionSectionsForSystem(
@@ -162,8 +156,5 @@ export async function getLocalPublicRenderableSolutionSectionsForSystem(
   now = new Date(),
 ) {
   const revision = await loadFirebaseSolutionRegistryRevision({ forceLocal: true });
-  return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, {
-    now,
-    publishedOnlySections: PUBLICATION_GATED_ECOSYSTEM_SECTIONS,
-  });
+  return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, { now });
 }

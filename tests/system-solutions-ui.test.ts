@@ -18,6 +18,11 @@ import {
   normalizeSystemDetailTab,
 } from "@/lib/system-detail-tabs";
 import { filterPublicSystemRecommendationSections } from "@/lib/public-solution-section-visibility";
+import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
+import { loadFirebaseSolutionRegistryRevision } from "@/lib/firebase-solution-registry.server";
+import {
+  selectRenderableSolutionSectionsFromRevision,
+} from "@/lib/firebase-solution-registry-selection.server";
 import {
   filterRenderableSolutionSections,
   getPublishedRenderableSolutionSectionsForSystem,
@@ -165,6 +170,96 @@ describe("system Solutions UI", () => {
       );
     }
   });
+
+  it("builds the complete public rail sequence for all métiers while keeping SEO published-only", async () => {
+    const revision = await loadFirebaseSolutionRegistryRevision({ forceLocal: true });
+    const expectedPublicOrder = [
+      "software",
+      "providers",
+      "financing",
+      "aids",
+      "networks",
+    ] as const;
+
+    for (const system of enterpriseCatalog) {
+      const selectedSections = selectRenderableSolutionSectionsFromRevision(
+        revision,
+        system.slug,
+      );
+      const visibleSections = filterPublicSystemRecommendationSections(
+        composePublicSolutionSectionsForSystem(system.slug, selectedSections),
+      );
+      const renderedSections = visibleSections.filter(({ placements }) => placements.length > 0);
+      const visibleSectionNames = renderedSections.map(({ section }) => section);
+      const orderedVisibleSectionNames = expectedPublicOrder.filter((section) =>
+        visibleSectionNames.includes(section),
+      );
+
+      expect(visibleSectionNames).toEqual(orderedVisibleSectionNames);
+      const placementIds = renderedSections.flatMap(({ placements }) =>
+        placements.map(({ placementId }) => placementId)
+      );
+      expect(placementIds).toHaveLength(new Set(placementIds).size);
+    }
+
+    const systemSlug = "cabinet-comptable";
+    const selectedSections = selectRenderableSolutionSectionsFromRevision(
+      revision,
+      systemSlug,
+    );
+    const visibleSections = filterPublicSystemRecommendationSections(
+      composePublicSolutionSectionsForSystem(systemSlug, selectedSections),
+    );
+    expect(visibleSections.map(({ section }) => section)).toEqual(expectedPublicOrder);
+    expect(
+      visibleSections.find(({ section }) => section === "providers")?.placements
+        .map(({ resource }) => resource.resourceSlug),
+    ).toEqual(["amazon-business"]);
+    expect(
+      visibleSections.find(({ section }) => section === "networks")?.placements
+        .map(({ resource }) => resource.resourceSlug),
+    ).toEqual(["ordre-experts-comptables", "croec-regional"]);
+
+    const markup = renderToStaticMarkup(
+      createElement(SystemSolutionsTab, { sections: visibleSections }),
+    );
+    const expectedHeadings = [
+      "Outils et logiciels",
+      "Fournisseurs",
+      "Financement",
+      "Aides et subventions",
+      "Réseaux professionnels",
+    ];
+    for (const [index, heading] of expectedHeadings.entries()) {
+      expect(markup).toContain(heading);
+      if (index > 0) {
+        expect(markup.indexOf(expectedHeadings[index - 1]!))
+          .toBeLessThan(markup.indexOf(heading));
+      }
+    }
+    expect(markup).not.toContain("Financement et aides");
+
+    const publishedSections = selectRenderableSolutionSectionsFromRevision(
+      revision,
+      systemSlug,
+      { publishedOnly: true },
+    );
+    const publishedSlugs = new Set(
+      publishedSections.flatMap(({ placements }) =>
+        placements.map(({ resource }) => resource.resourceSlug)
+      ),
+    );
+    const draftEcosystemSlugs = revision.placements
+      .filter(({ placement }) =>
+        placement.systemSlug === systemSlug &&
+        placement.editorialStatus === "selected" &&
+        placement.status !== "published" &&
+        (placement.section === "providers" || placement.section === "networks")
+      )
+      .map(({ placement }) => placement.resourceSlug);
+    expect(draftEcosystemSlugs.length).toBeGreaterThan(0);
+    expect(draftEcosystemSlugs.every((slug) => !publishedSlugs.has(slug))).toBe(true);
+  }, 20_000);
 
   it("shows saved cards first in a dedicated selection rail", () => {
     const placement = publishedSolutionSectionsFixture[0]?.placements[0];
@@ -581,13 +676,18 @@ describe("system Solutions UI", () => {
 
   it("presents the leader daily tools as a standard solution rail", async () => {
     const source = await readSource("src/components/LeaderDailyRail.tsx");
+    const cardSource = await readSource("src/components/SolutionRailCard.tsx");
 
     expect(source).toContain("Le quotidien du dirigeant");
     expect(source).not.toContain("Simplifier aussi votre quotidien");
     expect(source).not.toContain("Sélection éditoriale");
     expect(source).toContain("data-leader-daily-card");
-    expect(source).toContain("h-[19rem]");
-    expect(source).toContain("xl:auto-cols-[calc((100%_-_3rem)_/_3.5)]");
+    expect(source).toContain("SOLUTION_RAIL_CLASS_NAME");
+    expect(source).toContain("SOLUTION_RAIL_CARD_FRAME_CLASS_NAME");
+    expect(source).toContain("SOLUTION_RAIL_CARD_INTERACTIVE_CLASS_NAME");
+    expect(source).toContain("SolutionRailCardContent");
+    expect(cardSource).toContain("lg:auto-cols-[calc((100%_-_3rem)_/_3.5)]");
+    expect(cardSource).not.toContain("xl:auto-cols-[calc((100%_-_3rem)_/_4)]");
     expect(source).not.toContain("DirectoryDetailDialogShell");
   });
 
@@ -648,27 +748,36 @@ describe("system Solutions UI", () => {
     expect(hookSource).toContain("previouslyFocused?.focus()");
   });
 
-  it("keeps the D012 rail constrained with four complete equal-height desktop cards", async () => {
+  it("keeps compact uniform cards and exposes the next card across breakpoints", async () => {
     const source = await readSource("src/components/SystemSolutionsTab.tsx");
+    const cardSource = await readSource("src/components/SolutionRailCard.tsx");
+    const detailSource = await readSource("src/components/SystemDetailContent.tsx");
 
-    expect(source).toContain("max-w-full");
-    expect(source).toContain("min-w-0");
-    expect(source).toContain("overflow-x-auto");
-    expect(source).toContain("overscroll-x-contain");
-    expect(source).toContain("auto-cols-[82%]");
-    expect(source).toContain("md:auto-cols-[calc((100%_-_1rem)_/_2)]");
-    expect(source).toContain("lg:auto-cols-[calc((100%_-_2rem)_/_3)]");
-    expect(source).toContain("xl:auto-cols-[calc((100%_-_3rem)_/_4)]");
-    expect(source).not.toContain("xl:auto-cols-[calc((100%_-_3rem)_/_3.5)]");
-    expect(source).toContain("items-stretch");
-    expect(source).toContain('className="relative h-[19rem] min-w-0 snap-start"');
-    expect(source).toContain("group flex h-[19rem] w-full");
-    expect(source).not.toContain("min-h-[15rem]");
-    expect(source).not.toContain("md:min-h-[16rem]");
-    expect(source).not.toContain("aspect-square");
-    expect(source).toContain("line-clamp-2");
-    expect(source).not.toContain("line-clamp-3");
-    expect(source).not.toContain("mt-auto shrink-0");
+    expect(source).toContain("SOLUTION_RAIL_CLASS_NAME");
+    expect(source).toContain("SOLUTION_RAIL_CARD_FRAME_CLASS_NAME");
+    expect(source).toContain("SOLUTION_RAIL_CARD_INTERACTIVE_CLASS_NAME");
+    expect(source).toContain("SolutionRailCardContent");
+    expect(cardSource).toContain("max-w-full");
+    expect(cardSource).toContain("min-w-0");
+    expect(cardSource).toContain("overflow-x-auto");
+    expect(cardSource).toContain("overscroll-x-contain");
+    expect(cardSource).toContain("auto-cols-[82%]");
+    expect(cardSource).toContain("md:auto-cols-[calc((100%_-_2rem)_/_2.5)]");
+    expect(cardSource).toContain("lg:auto-cols-[calc((100%_-_3rem)_/_3.5)]");
+    expect(cardSource).not.toContain("xl:auto-cols-[calc((100%_-_3rem)_/_4)]");
+    expect(cardSource).toContain("items-stretch");
+    expect(cardSource).toContain("h-[15.5rem]");
+    expect(cardSource).toContain("group flex h-full w-full");
+    expect(detailSource).toContain('embedded ? "mx-auto max-w-[55.2rem]" : "max-w-[67.5rem]"');
+    expect(cardSource).not.toContain("sm:p-6");
+    expect(cardSource).not.toContain("xl:p-5");
+    expect(cardSource).not.toContain("xl:mt-3");
+    expect(cardSource).not.toContain("min-h-[15rem]");
+    expect(cardSource).not.toContain("md:min-h-[16rem]");
+    expect(cardSource).not.toContain("aspect-square");
+    expect(cardSource).toContain("line-clamp-2");
+    expect(cardSource).not.toContain("line-clamp-3");
+    expect(cardSource).not.toContain("mt-auto shrink-0");
     expect(source).not.toContain("Tarif abonné");
     expect(source).not.toContain("Avantage abonné");
     expect(source).not.toMatch(/\bposition\b/);
