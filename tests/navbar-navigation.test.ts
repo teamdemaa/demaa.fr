@@ -76,6 +76,8 @@ describe("Demaa application navbar", () => {
     expect(source).toContain('label: "Organiser", href: "/modeles"');
     expect(source).toContain('label: "Solutions", href: "/solutions"');
     expect(source).toContain('label: "Application métier", href: "/application-metier"');
+    expect(source).toContain("leading-tight");
+    expect(source).not.toContain("leading-none");
     expect(organiserIndex).not.toContain("OrganiserLandingPage");
     expect(organiserIndex).toContain('path: "/organiser"');
     expect(organiserIndex).toContain('<Navbar publicNavigationActiveView="academy" />');

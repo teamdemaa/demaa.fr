@@ -39,7 +39,7 @@ describe("public qualification forms", () => {
       "Prénom",
       "Adresse e-mail",
     ]);
-    expectInOrder(source("src/components/StructureNewsletterBlock.tsx"), [
+    expectInOrder(source("src/components/StructureProblemSubmissionForm.tsx"), [
       'htmlFor="structure-problem"',
       'htmlFor="structure-company-activity"',
       'htmlFor="structure-professional-page"',

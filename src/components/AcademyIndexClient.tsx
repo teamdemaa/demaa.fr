@@ -483,7 +483,7 @@ export default function AcademyIndexClient({
                 Des cas concrets pour organiser votre activité
               </p>
               <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-dema-muted sm:text-base">
-                Des processus concrets pour simplifier ce qui vous prend du temps et rendre votre entreprise moins dépendante de vous.
+                Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité.
               </p>
             </div>
           ) : null}
@@ -514,7 +514,7 @@ export default function AcademyIndexClient({
               </span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-dema-muted md:text-lg">
-              Des processus concrets pour simplifier ce qui vous prend du temps et rendre votre entreprise moins dépendante de vous.
+              Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité.
             </p>
           </div>
 

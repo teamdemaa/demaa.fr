@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import OrganiserProcessMap from "@/components/OrganiserProcessMap";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { buildOrganiserHref } from "@/lib/organiser-navigation";
+import { getPublishedCopyableModelForOrganiserSlug } from "@/lib/copyable-model-catalog";
 
 type AcademyProcessGuideArticleProps = {
   content: AcademyContentDefinition;
@@ -19,6 +20,9 @@ export default function AcademyProcessGuideArticle({
 }: AcademyProcessGuideArticleProps) {
   const guide = content.processGuide;
   if (!guide) return null;
+  const relatedModel = getPublishedCopyableModelForOrganiserSlug(
+    content.identity.slug,
+  );
   const ArticleContainer = embedded ? "div" : "main";
   const isPlumbingGoldenMaster =
     content.identity.slug === "organiser-entreprise-plomberie";
@@ -51,7 +55,7 @@ export default function AcademyProcessGuideArticle({
           <p className="text-xs font-semibold uppercase tracking-[0.17em] text-dema-forest">
             {guide.sector} · {content.identity.durationMinutes} min
           </p>
-          <h1 className="mt-5 text-balance font-serif text-[2.65rem] font-normal leading-[1.02] tracking-[-0.045em] text-[#1F2D25] sm:text-[4.25rem]">
+          <h1 className="mt-5 text-balance font-serif text-[2.65rem] font-light leading-[1.02] tracking-[-0.045em] text-[#1F2D25] sm:text-[4.25rem]">
             {content.identity.title}
           </h1>
           <p className="mt-7 max-w-3xl text-lg leading-8 text-dema-muted sm:text-xl">
@@ -82,6 +86,29 @@ export default function AcademyProcessGuideArticle({
             <OrganiserProcessMap steps={guide.steps} />
           </div>
         </section>
+
+        {relatedModel ? (
+          <aside className="mt-8 flex flex-col gap-5 rounded-[1.15rem] border border-dema-forest/15 bg-dema-sage/45 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+            <div className="max-w-2xl">
+              <p className="text-xs font-medium uppercase tracking-[0.16em] text-dema-forest">
+                Modèle prêt à copier
+              </p>
+              <h2 className="mt-2 text-xl font-light tracking-[-0.025em] text-brand-blue sm:text-2xl">
+                {relatedModel.title}
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-dema-muted">
+                {relatedModel.description}
+              </p>
+            </div>
+            <Link
+              href={`/modeles/${relatedModel.slug}`}
+              className="demaa-secondary-button min-h-11 shrink-0 gap-2 px-5"
+            >
+              Voir le modèle
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </aside>
+        ) : null}
 
         <section className="mt-16" aria-labelledby="rules-title">
           <h2 id="rules-title" className="text-2xl font-semibold tracking-[-0.025em] text-[#25352C] sm:text-3xl">

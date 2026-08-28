@@ -1,12 +1,14 @@
 export const STRUCTURE_NEWSLETTER_NAME = "Structurer.";
 
 export const STRUCTURE_NEWSLETTER_PROMISE =
-  "Tous les quinze jours, l’équipe Demaa étudie une problématique réelle d’entreprise et construit une réponse concrète, utile à tous.";
+  "Tous les quinze jours, Demaa part d’une problématique réelle et partage les processus, les outils et les décisions utiles pour mieux structurer votre activité.";
+
+export const STRUCTURE_WORK_SESSION_DURATION_MINUTES = 45;
 
 export const STRUCTURE_PUBLICATION_CONSENT = {
   purpose: "structure_case_publication",
-  text: "J’accepte que mon entreprise, mon site et ma problématique soient présentés dans Organiser si ma proposition est sélectionnée.",
-  version: "structure-case-publication-v2",
+  text: "J’accepte qu’une synthèse anonymisée de mon cas, validée avec moi, soit publiée dans Structurer.",
+  version: "structure-case-publication-v5",
 } as const;
 
 export const STRUCTURE_VOICE_SUBMISSION = {

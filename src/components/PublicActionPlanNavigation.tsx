@@ -10,7 +10,7 @@ const navigationItems = [
 ] as const;
 
 const tabClassName =
-  "group relative inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:min-h-11 xl:flex-row xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
+  "group relative inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:min-h-11 xl:flex-row xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
 
 export default function PublicActionPlanNavigation({
   activeView,
