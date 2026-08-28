@@ -56,8 +56,8 @@ export const SOLUTION_RAIL_DISPLAY_ORDER: readonly VisibleSolutionSection[] = [
   "services",
   "providers",
   "financing",
-  "aids",
   "networks",
+  "aids",
 ];
 
 const RESOURCE_ICONS = {

@@ -4,6 +4,7 @@ import {
   STRUCTURE_NEWSLETTER_NAME,
   STRUCTURE_NEWSLETTER_PROMISE,
   STRUCTURE_PUBLICATION_CONSENT,
+  STRUCTURE_WORK_SESSION_DURATION_MINUTES,
   STRUCTURE_VOICE_SUBMISSION,
 } from "@/lib/structure-newsletter-contract";
 
@@ -11,15 +12,17 @@ const read = (path: string) => readFileSync(path, "utf8");
 
 describe("Organiser newsletter public contract", () => {
   const component = read("src/components/StructureNewsletterBlock.tsx");
+  const problemForm = read("src/components/StructureProblemSubmissionForm.tsx");
 
   it("keeps one exact editorial promise and a direct subscription", () => {
     expect(STRUCTURE_NEWSLETTER_NAME).toBe("Structurer.");
     expect(STRUCTURE_NEWSLETTER_PROMISE).toBe(
-      "Tous les quinze jours, l’équipe Demaa étudie une problématique réelle d’entreprise et construit une réponse concrète, utile à tous.",
+      "Tous les quinze jours, Demaa part d’une problématique réelle et partage les processus, les outils et les décisions utiles pour mieux structurer votre activité.",
     );
     expect(component).toContain('fetch("/api/newsletter-subscribe"');
     expect(component).toContain("S’abonner");
-    expect(component).toContain("Proposer ma problématique");
+    expect(component).toContain("Proposer mon cas");
+    expect(STRUCTURE_WORK_SESSION_DURATION_MINUTES).toBe(45);
     expect(component).not.toContain("La lettre Demaa");
   });
 
@@ -27,22 +30,34 @@ describe("Organiser newsletter public contract", () => {
     expect(component).toContain('intent === "structure-problem"');
     expect(component).toContain("setIsProblemOpen(true)");
     expect(component).toContain('id="structure-newsletter-email"');
-    expect(component).toContain('id="structure-contact-email"');
+    expect(problemForm).toContain('id="structure-contact-email"');
     expect(component).not.toContain("CustomerSpaceAccessForm");
+    expect(problemForm).not.toContain("CustomerSpaceAccessForm");
   });
 
   it("requires the versioned publication consent", () => {
     expect(STRUCTURE_PUBLICATION_CONSENT).toEqual({
       purpose: "structure_case_publication",
-      text: "J’accepte que mon entreprise, mon site et ma problématique soient présentés dans Organiser si ma proposition est sélectionnée.",
-      version: "structure-case-publication-v2",
+      text: "J’accepte qu’une synthèse anonymisée de mon cas, validée avec moi, soit publiée dans Structurer.",
+      version: "structure-case-publication-v5",
     });
-    expect(component.replace(/\s+/g, " ")).toContain(
-      "Toutes les propositions ne pourront pas être traitées",
+    expect(problemForm).toContain("Session de travail offerte");
+    expect(problemForm).toContain("45 minutes pour structurer un problème concret");
+    expect(problemForm).toContain("nous vous envoyons une synthèse claire");
+    expect(problemForm).not.toContain("Toutes les propositions ne pourront pas être retenues");
+    expect(problemForm).toContain("Sur quoi avez-vous besoin d’aide ?");
+    expect(problemForm.replace(/\s+/g, " ")).toContain(
+      "sa version anonymisée destinée à la newsletter",
     );
-    expect(component.replace(/\s+/g, " ")).toContain(
-      "l’équipe vous contactera avant toute publication",
-    );
+  });
+
+  it("reuses the same submission form in the modal and on a shareable page", () => {
+    const directPage = read("src/app/(marketing)/session-structurer/page.tsx");
+
+    expect(component).toContain("<StructureProblemSubmissionForm onClose={closeProblem} />");
+    expect(directPage).toContain("<StructureProblemSubmissionForm />");
+    expect(directPage).toContain('path: "/session-structurer"');
+    expect(read("src/app/sitemap.ts")).toContain("`${base}/session-structurer`");
   });
 
   it("renders the same component at the approved editorial surfaces only", () => {
@@ -58,7 +73,7 @@ describe("Organiser newsletter public contract", () => {
 
     const academyIndex = read("src/components/AcademyIndexClient.tsx");
     expect(academyIndex).toContain("!embedded || showStructureNewsletter");
-    expect(component).toContain("mx-auto w-full max-w-5xl");
+    expect(component).toContain("mx-auto w-full max-w-4xl");
     expect(read("src/components/SystemDetailContent.tsx")).not.toContain(
       "StructureNewsletterBlock",
     );

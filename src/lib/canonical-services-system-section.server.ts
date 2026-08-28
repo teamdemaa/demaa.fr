@@ -20,9 +20,9 @@ const SECTION_ORDER: readonly SolutionSection[] = [
   "services",
   "providers",
   "financing",
+  "networks",
   "aids",
   "models",
-  "networks",
 ];
 
 export function getCanonicalServiceSlugsForSystem(

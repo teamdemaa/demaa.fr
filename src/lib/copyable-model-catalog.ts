@@ -196,6 +196,18 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
   },
 ];
 
+const contextualModelSlugsByOrganiserSlug = {
+  "organiser-entreprise-plomberie": "interventions-et-chantiers",
+  "organiser-demandes-devis-renovation": "suivi-commercial-et-devis",
+  "organiser-chantier-menuiserie": "interventions-et-chantiers",
+  "organiser-interventions-nettoyage": "interventions-et-chantiers",
+  "organiser-parcours-client-garage": "interventions-et-chantiers",
+  "organiser-suivi-administratif-formation": "suivi-administratif-et-echeances",
+  "organiser-mission-agence": "projets-et-missions-clients",
+  "organiser-planning-plusieurs-techniciens": "interventions-et-chantiers",
+  "bon-intervention-facture-sans-ressaisie": "interventions-et-chantiers",
+} as const satisfies Readonly<Record<string, string>>;
+
 function compareModels(left: CopyableModelDefinition, right: CopyableModelDefinition) {
   return left.featuredRank - right.featuredRank;
 }
@@ -215,6 +227,24 @@ export function getCopyableModelBySlug(slug: string): CopyableModelDefinition | 
 export function getPublishedCopyableModelBySlug(slug: string): CopyableModelDefinition | null {
   const model = getCopyableModelBySlug(slug);
   return model?.availability === "available" ? model : null;
+}
+
+export function getPublishedCopyableModelForOrganiserSlug(
+  organiserSlug: string,
+): CopyableModelDefinition | null {
+  const directlyRelatedModel = copyableModelDefinitions.find(
+    (model) => model.relatedOrganiserSlug === organiserSlug,
+  );
+  if (directlyRelatedModel?.availability === "available") {
+    return directlyRelatedModel;
+  }
+
+  const contextualModelSlug = contextualModelSlugsByOrganiserSlug[
+    organiserSlug as keyof typeof contextualModelSlugsByOrganiserSlug
+  ];
+  return contextualModelSlug
+    ? getPublishedCopyableModelBySlug(contextualModelSlug)
+    : null;
 }
 
 export function getPublishedCopyableModelsForSystemSlug(systemSlug: string): CopyableModelDefinition[] {

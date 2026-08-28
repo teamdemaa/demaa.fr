@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, LoaderCircle } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import {
   type FormEvent,
   useCallback,
@@ -8,38 +8,14 @@ import {
   useState,
 } from "react";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
-import {
-  getLeadAttributionPayload,
-  trackLeadConversion,
-} from "@/lib/lead-attribution-client";
-import {
-  clearLeadSubmissionKey,
-  getLeadSubmissionKey,
-} from "@/lib/lead-submission-client";
+import StructureProblemSubmissionForm from "@/components/StructureProblemSubmissionForm";
 import {
   STRUCTURE_NEWSLETTER_NAME,
   STRUCTURE_NEWSLETTER_PROMISE,
-  STRUCTURE_PUBLICATION_CONSENT,
 } from "@/lib/structure-newsletter-contract";
 import { useCustomerIdentity } from "@/lib/use-customer-identity";
 
 type ApiResponse = { error?: string; ok?: boolean } | null;
-
-type ProblemForm = {
-  companyActivity: string;
-  consent: boolean;
-  faxNumber: string;
-  problem: string;
-  professionalPage: string;
-};
-
-const EMPTY_PROBLEM_FORM: ProblemForm = {
-  companyActivity: "",
-  consent: false,
-  faxNumber: "",
-  problem: "",
-  professionalPage: "",
-};
 
 function responseError(response: Response, payload: ApiResponse, fallback: string) {
   if (payload?.error) return payload.error;
@@ -57,11 +33,6 @@ export default function StructureNewsletterBlock() {
   const [newsletterError, setNewsletterError] = useState<string | null>(null);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isProblemOpen, setIsProblemOpen] = useState(false);
-  const [problemForm, setProblemForm] = useState(EMPTY_PROBLEM_FORM);
-  const [problemSubmitting, setProblemSubmitting] = useState(false);
-  const [problemError, setProblemError] = useState<string | null>(null);
-  const [problemEmail, setProblemEmail] = useState("");
-  const [problemSent, setProblemSent] = useState(false);
 
   const subscribe = useCallback(async () => {
     if (newsletterSubmitting) return;
@@ -100,85 +71,29 @@ export default function StructureNewsletterBlock() {
   useEffect(() => {
     if (!email) return;
     setNewsletterEmail((current) => current || email);
-    setProblemEmail((current) => current || email);
   }, [email]);
 
   useEffect(() => {
     const intent = new URLSearchParams(window.location.search).get("intent");
     if (intent === "structure-problem") {
       const timeout = window.setTimeout(() => {
-        setProblemSent(false);
         setIsProblemOpen(true);
       }, 0);
       return () => window.clearTimeout(timeout);
     }
   }, []);
 
-  function updateProblemField<Field extends keyof ProblemForm>(
-    field: Field,
-    value: ProblemForm[Field],
-  ) {
-    setProblemForm((current) => ({ ...current, [field]: value }));
-  }
-
-  async function submitProblem(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (problemSubmitting) return;
-
-    setProblemError(null);
-    setProblemSubmitting(true);
-    const flowKey = "structure-problem";
-
-    try {
-      const response = await fetch("/api/structure-problem", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          attribution: getLeadAttributionPayload(),
-          companyActivity: problemForm.companyActivity,
-          consent: problemForm.consent,
-          email: problemEmail,
-          faxNumber: problemForm.faxNumber,
-          idempotencyKey: getLeadSubmissionKey(flowKey),
-          problem: problemForm.problem,
-          professionalPage: problemForm.professionalPage,
-        }),
-      });
-      const payload = (await response.json().catch(() => null)) as ApiResponse;
-      if (!response.ok || payload?.ok !== true) {
-        setProblemError(responseError(
-          response,
-          payload,
-          "Impossible d’envoyer votre problématique pour le moment. Merci de réessayer.",
-        ));
-        return;
-      }
-
-      clearLeadSubmissionKey(flowKey);
-      setProblemForm(EMPTY_PROBLEM_FORM);
-      setProblemSent(true);
-      trackLeadConversion({ requestType: "structure_problem_submission" });
-    } catch {
-      setProblemError(
-        "Impossible d’envoyer votre problématique pour le moment. Merci de réessayer.",
-      );
-    } finally {
-      setProblemSubmitting(false);
-    }
-  }
-
   function closeProblem() {
     setIsProblemOpen(false);
-    setProblemError(null);
   }
 
   return (
     <>
       <section
         aria-labelledby="structure-newsletter-title"
-        className="mx-auto w-full max-w-5xl border-t border-dema-line/80 pt-8 sm:pt-9"
+        className="mx-auto w-full max-w-4xl border-t border-dema-line/80 pt-8 sm:pt-9"
       >
-        <div className="grid items-center gap-7 lg:grid-cols-[minmax(15rem,0.92fr)_minmax(22rem,1.08fr)] lg:gap-12">
+        <div className="grid items-center gap-7 lg:grid-cols-[minmax(15rem,0.92fr)_minmax(22rem,1.08fr)] lg:gap-10">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.15em] text-dema-muted">
               Newsletter
@@ -258,12 +173,11 @@ export default function StructureNewsletterBlock() {
               <button
                 type="button"
                 onClick={() => {
-                  setProblemSent(false);
                   setIsProblemOpen(true);
                 }}
                 className="font-medium text-dema-forest underline decoration-dema-forest/30 underline-offset-4 transition hover:decoration-dema-forest"
               >
-                Proposer ma problématique
+                Proposer mon cas
               </button>
             </p>
           </div>
@@ -272,154 +186,11 @@ export default function StructureNewsletterBlock() {
 
       {isProblemOpen ? (
         <DirectoryDetailDialogShell
-          ariaLabel="Proposer une problématique à Organiser"
+          ariaLabel="Proposer un cas pour une session Structurer"
           maxWidthClassName="max-w-2xl"
           onClose={closeProblem}
         >
-          {problemSent ? (
-            <div className="py-3 text-center">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
-                <Check className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <h2 className="mt-5 font-serif text-3xl font-light tracking-[-0.03em] text-brand-blue">
-                Merci pour votre confiance.
-              </h2>
-              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-dema-muted">
-                Votre situation a bien été transmise. Si elle est sélectionnée,
-                l’équipe vous contactera avant toute publication.
-              </p>
-              <button
-                type="button"
-                onClick={closeProblem}
-                className="demaa-primary-button mt-6 inline-flex w-full items-center justify-center sm:w-auto"
-              >
-                Fermer
-              </button>
-            </div>
-          ) : (
-            <>
-              <p className="text-[11px] font-medium uppercase tracking-[0.15em] text-dema-forest">
-                {STRUCTURE_NEWSLETTER_NAME}
-              </p>
-              <h2 className="mt-2 font-serif text-[clamp(2rem,6vw,2.6rem)] font-light leading-[1.02] tracking-[-0.035em] text-brand-blue">
-                Quelle problématique freine votre entreprise ?
-              </h2>
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-dema-muted">
-                Demaa étudie les situations reçues et peut en construire un cas
-                utile à tous. Toutes les propositions ne pourront pas être
-                traitées. Si la vôtre est retenue, l’équipe vous contactera avant
-                toute publication.
-              </p>
-
-              <form className="mt-6 space-y-4" onSubmit={submitProblem} aria-busy={problemSubmitting}>
-                <div>
-                  <label className="block text-sm font-medium text-brand-blue" htmlFor="structure-problem">
-                    Votre problématique
-                  </label>
-                  <textarea
-                    id="structure-problem"
-                    className="demaa-textarea mt-2 min-h-28"
-                    value={problemForm.problem}
-                    onChange={(event) => updateProblemField("problem", event.target.value)}
-                    rows={5}
-                    required
-                    minLength={20}
-                    maxLength={4000}
-                    placeholder="Expliquez ce qui bloque aujourd’hui et ce que vous avez déjà essayé."
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-brand-blue" htmlFor="structure-company-activity">
-                    Votre entreprise ou activité
-                  </label>
-                  <input
-                    id="structure-company-activity"
-                    className="demaa-input mt-2"
-                    value={problemForm.companyActivity}
-                    onChange={(event) => updateProblemField("companyActivity", event.target.value)}
-                    autoComplete="organization"
-                    required
-                    maxLength={160}
-                    placeholder="Nom et activité de votre entreprise"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-brand-blue" htmlFor="structure-professional-page">
-                    Votre site ou page professionnelle
-                  </label>
-                  <input
-                    id="structure-professional-page"
-                    className="demaa-input mt-2"
-                    type="url"
-                    value={problemForm.professionalPage}
-                    onChange={(event) => updateProblemField("professionalPage", event.target.value)}
-                    autoComplete="url"
-                    required
-                    maxLength={500}
-                    placeholder="https://votre-site.fr"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-brand-blue" htmlFor="structure-contact-email">
-                    Votre adresse e-mail
-                  </label>
-                  <input
-                    id="structure-contact-email"
-                    className="demaa-input mt-2"
-                    type="email"
-                    value={problemEmail}
-                    onChange={(event) => setProblemEmail(event.target.value)}
-                    autoComplete="email"
-                    required
-                    maxLength={160}
-                  />
-                </div>
-
-                <label className="flex items-start gap-3 text-xs leading-relaxed text-dema-muted" htmlFor="structure-publication-consent">
-                  <input
-                    id="structure-publication-consent"
-                    type="checkbox"
-                    checked={problemForm.consent}
-                    onChange={(event) => updateProblemField("consent", event.target.checked)}
-                    className="mt-0.5 h-4 w-4 shrink-0 accent-dema-forest"
-                    required
-                  />
-                  <span>{STRUCTURE_PUBLICATION_CONSENT.text}</span>
-                </label>
-
-                <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
-                  <label htmlFor="structure-fax-number">Fax</label>
-                  <input
-                    id="structure-fax-number"
-                    type="text"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    value={problemForm.faxNumber}
-                    onChange={(event) => updateProblemField("faxNumber", event.target.value)}
-                  />
-                </div>
-
-                {problemError ? (
-                  <p className="text-sm text-brand-coral" role="alert">
-                    {problemError}
-                  </p>
-                ) : null}
-
-                <button
-                  type="submit"
-                  disabled={problemSubmitting}
-                  className="demaa-primary-button inline-flex w-full items-center justify-center gap-2 disabled:cursor-wait disabled:opacity-60"
-                >
-                  {problemSubmitting ? (
-                    <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
-                  ) : null}
-                  {problemSubmitting ? "Envoi…" : "Envoyer ma problématique"}
-                </button>
-              </form>
-            </>
-          )}
+          <StructureProblemSubmissionForm onClose={closeProblem} />
         </DirectoryDetailDialogShell>
       ) : null}
     </>

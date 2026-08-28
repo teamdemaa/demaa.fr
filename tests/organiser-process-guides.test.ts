@@ -229,18 +229,25 @@ describe("Organiser process guides", () => {
     expect(articleSource).not.toContain("Point de départ");
     expect(articleSource).not.toContain("Rythme de pilotage");
     expect(articleSource).not.toContain("Exceptions à remonter");
-    expect(articleSource).toContain("font-serif text-[2.65rem] font-normal");
+    expect(articleSource).toContain("font-serif text-[2.65rem] font-light");
+    expect(articleSource).not.toContain("font-serif text-[2.65rem] font-normal");
     expect(articleSource).toContain("Les premières actions à mettre en place");
+    expect(articleSource).toContain("getPublishedCopyableModelForOrganiserSlug");
+    expect(articleSource).toContain("Modèle prêt à copier");
+    expect(articleSource).toContain('href={`/modeles/${relatedModel.slug}`}');
+    expect(articleSource).toContain("Voir le modèle");
     expect(articleSource).not.toContain("démarrer aujourd’hui");
     expect(JSON.stringify(ORGANISER_PROCESS_GUIDES)).not.toContain("reçue aujourd’hui");
 
+    const modelPosition = articleSource.indexOf("Modèle prêt à copier");
     const rulesPosition = articleSource.indexOf('aria-labelledby="rules-title"');
     const examplePosition = articleSource.indexOf('aria-label="Exemple concret"');
     const toolsPosition = articleSource.indexOf('aria-labelledby="tools-title"');
     const checklistPosition = articleSource.indexOf('aria-labelledby="checklist-title"');
     const faqPosition = articleSource.indexOf('aria-labelledby="faq-title"');
 
-    expect(rulesPosition).toBeGreaterThan(0);
+    expect(modelPosition).toBeGreaterThan(0);
+    expect(rulesPosition).toBeGreaterThan(modelPosition);
     expect(examplePosition).toBeGreaterThan(rulesPosition);
     expect(toolsPosition).toBeGreaterThan(examplePosition);
     expect(checklistPosition).toBeGreaterThan(toolsPosition);

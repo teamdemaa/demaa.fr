@@ -177,8 +177,8 @@ describe("system Solutions UI", () => {
       "software",
       "providers",
       "financing",
-      "aids",
       "networks",
+      "aids",
     ] as const;
 
     for (const system of enterpriseCatalog) {
@@ -226,9 +226,9 @@ describe("system Solutions UI", () => {
     const expectedHeadings = [
       "Outils et logiciels",
       "Fournisseurs",
-      "Financement",
-      "Aides et subventions",
+      "Banque &amp; Financement",
       "Réseaux professionnels",
+      "Aides &amp; Subventions",
     ];
     for (const [index, heading] of expectedHeadings.entries()) {
       expect(markup).toContain(heading);

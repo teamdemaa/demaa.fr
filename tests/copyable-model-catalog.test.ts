@@ -6,6 +6,7 @@ import {
   getAllCopyableModelDefinitions,
   getCopyableModelBySlug,
   getPublishedCopyableModelBySlug,
+  getPublishedCopyableModelForOrganiserSlug,
   getPublishedCopyableModels,
   getPublishedCopyableModelsForSystemSlug,
 } from "@/lib/copyable-model-catalog";
@@ -138,5 +139,23 @@ describe("copyable model catalogue", () => {
         expect(organiserSlugs.has(model.relatedOrganiserSlug)).toBe(true);
       }
     }
+  });
+
+  it("links concrete Organiser articles only to a matching published model", () => {
+    expect(getPublishedCopyableModelForOrganiserSlug(
+      "organiser-demandes-devis-renovation",
+    )?.slug).toBe("suivi-commercial-et-devis");
+    expect(getPublishedCopyableModelForOrganiserSlug(
+      "organiser-entreprise-plomberie",
+    )?.slug).toBe("interventions-et-chantiers");
+    expect(getPublishedCopyableModelForOrganiserSlug(
+      "organiser-mission-agence",
+    )?.slug).toBe("projets-et-missions-clients");
+    expect(getPublishedCopyableModelForOrganiserSlug(
+      "organiser-suivi-administratif-formation",
+    )?.slug).toBe("suivi-administratif-et-echeances");
+    expect(getPublishedCopyableModelForOrganiserSlug(
+      "organiser-commandes-stocks-restaurant",
+    )).toBeNull();
   });
 });

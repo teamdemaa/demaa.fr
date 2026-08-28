@@ -10,7 +10,7 @@ import {
 
 const title = "Des cas concrets pour mieux organiser votre entreprise | Demaa";
 const description =
-  "Des processus concrets pour simplifier ce qui prend du temps et rendre votre entreprise moins dépendante de vous.";
+  "Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité.";
 
 export const metadata = buildPublicPageMetadata({
   title,

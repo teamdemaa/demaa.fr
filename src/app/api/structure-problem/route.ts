@@ -14,6 +14,7 @@ import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import {
   STRUCTURE_PROBLEM_REQUEST_TYPE,
   STRUCTURE_PUBLICATION_CONSENT,
+  STRUCTURE_WORK_SESSION_DURATION_MINUTES,
 } from "@/lib/structure-newsletter-contract";
 
 type StructureProblemBody = {
@@ -114,7 +115,7 @@ export async function POST(request: Request) {
     }
 
     const context = await resolveLeadContext({
-      source: "Newsletter Organiser - Proposition de problématique",
+      source: `Newsletter Structurer - Candidature session ${STRUCTURE_WORK_SESSION_DURATION_MINUTES} minutes`,
       sourceUrl: request.headers.get("referer"),
     });
     if (!context) {
@@ -140,13 +141,14 @@ export async function POST(request: Request) {
       emoji: "🧭",
       fields: [
         { label: "Site ou page professionnelle", value: professionalPage },
-        { label: "Problématique", value: problem },
-        { label: "Publication autorisée", value: "Oui, après contact préalable" },
-        { label: "Traitement garanti", value: "Non" },
+        { label: "Cas proposé", value: problem },
+        { label: "Session offerte", value: `${STRUCTURE_WORK_SESSION_DURATION_MINUTES} minutes, si le cas est sélectionné` },
+        { label: "Publication autorisée", value: "Oui, après validation de la synthèse" },
+        { label: "Sélection garantie", value: "Non" },
       ],
       idempotencyKey,
       requestType: STRUCTURE_PROBLEM_REQUEST_TYPE,
-      title: "Proposition de problématique - Organiser",
+      title: `Candidature session Structurer - ${STRUCTURE_WORK_SESSION_DURATION_MINUTES} minutes`,
     });
 
     return successResponse();
@@ -155,7 +157,7 @@ export async function POST(request: Request) {
       requestType: STRUCTURE_PROBLEM_REQUEST_TYPE,
     });
     return NextResponse.json(
-      { error: "Impossible d’envoyer votre problématique pour le moment. Merci de réessayer." },
+      { error: "Impossible d’envoyer votre proposition pour le moment. Merci de réessayer." },
       { status: 500 },
     );
   }

@@ -7,12 +7,14 @@ async function readSource(path: string) {
 
 describe("copyable model public routes", () => {
   it("groups models and concrete processes under the Organiser universe", async () => {
-    const [page, organiserPage, navbar, sectionNavigation, footer] = await Promise.all([
+    const [page, organiserPage, navbar, sectionNavigation, footer, modelsIndex, academyIndex] = await Promise.all([
       readSource("src/app/(marketing)/modeles/page.tsx"),
       readSource("src/app/(marketing)/organiser/page.tsx"),
       readSource("src/components/PublicActionPlanNavigation.tsx"),
       readSource("src/components/OrganiserSectionNavigation.tsx"),
       readSource("src/components/Footer.tsx"),
+      readSource("src/components/CopyableModelsIndex.tsx"),
+      readSource("src/components/AcademyIndexClient.tsx"),
     ]);
 
     expect(page).toContain('<Navbar minimal publicNavigationActiveView="academy" />');
@@ -31,6 +33,18 @@ describe("copyable model public routes", () => {
     expect(sectionNavigation).toContain('activeSection === id');
     expect(footer).toContain('{ label: "Modèles à copier", href: "/modeles" }');
     expect(footer).toContain('{ label: "Processus & cas concrets", href: "/organiser" }');
+    expect(modelsIndex).toContain("rounded-[1.5rem] border border-dema-forest/15 bg-dema-sage/45");
+    expect(modelsIndex).toContain("rounded-full bg-dema-forest px-7");
+    expect(modelsIndex).toContain('style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}');
+    expect(modelsIndex).toContain("block text-brand-blue/62");
+    expect(modelsIndex).toContain("demaa-hero-title block text-dema-forest");
+    expect(modelsIndex).toContain("text-base leading-7 text-dema-muted md:text-lg");
+    expect(modelsIndex).toContain("Des structures simples, déjà pensées pour suivre un flux de travail précis.");
+    expect(modelsIndex).not.toContain("Des processus concrets pour se projeter vraiment");
+    expect(organiserPage).toContain("Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité.");
+    expect(academyIndex.match(/Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité\./g)).toHaveLength(2);
+    expect(modelsIndex).toContain("Les processus derrière les modèles");
+    expect(modelsIndex).toContain("Explorer les processus");
   });
 
   it("supports a full detail page and an intercepted modal with the same content", async () => {
@@ -51,6 +65,8 @@ describe("copyable model public routes", () => {
     expect(dialog).toContain("router.back()");
     expect(details).toContain("CopyableModelCopyLink");
     expect(copyLink).toContain("Copier gratuitement");
+    expect(copyLink).toContain("demaa-secondary-button");
+    expect(copyLink).toContain("w-full");
     expect(copyLink).toContain('rel="noopener noreferrer"');
     expect(preview).toContain("getAirtableEmbedUrl");
     expect(preview).toContain("<iframe");
@@ -60,6 +76,9 @@ describe("copyable model public routes", () => {
     expect(details).toContain("Faire adapter ce modèle");
     expect(details).toContain("550 € HT / jour");
     expect(details).toContain("model.relatedOrganiserSlug");
+    expect(details).not.toContain("Le flux couvert");
+    expect(details).not.toContain("Structure incluse");
+    expect(details).not.toContain("Modèle gratuit · Copie dans votre propre espace");
   });
 
   it("keeps the copy route guarded and destination-driven", async () => {

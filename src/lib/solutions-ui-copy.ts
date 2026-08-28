@@ -12,8 +12,8 @@ const copy = defineLocaleDictionary({
       software: "Outils et logiciels",
       services: "Accompagnement",
       providers: "Fournisseurs",
-      financing: "Financement",
-      aids: "Aides et subventions",
+      financing: "Banque & Financement",
+      aids: "Aides & Subventions",
       networks: "Réseaux professionnels",
     } satisfies Record<VisibleSolutionSection, string>,
     resourceLabels: {

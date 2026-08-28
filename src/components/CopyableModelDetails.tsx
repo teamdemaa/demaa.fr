@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, Check, Workflow } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import CopyableModelCopyLink from "@/components/CopyableModelCopyLink";
@@ -62,7 +62,6 @@ export default function CopyableModelDetails({
             ))}
           </ul>
           <CopyableModelCopyLink modelSlug={model.slug} platform={model.platform} />
-          <p className="mt-3 text-center text-xs text-dema-muted">Modèle gratuit · Copie dans votre propre espace</p>
         </div>
       </div>
 
@@ -85,23 +84,6 @@ export default function CopyableModelDetails({
             />
           </Suspense>
           <p className="mt-3 text-center text-xs text-dema-muted">Adaptation sur devis · 550 € HT / jour</p>
-        </div>
-      </section>
-
-      <section className="mt-8 grid gap-4 rounded-[1.25rem] border border-dema-line bg-dema-paper p-6 sm:grid-cols-2 sm:p-8">
-        <div>
-          <Workflow className="h-5 w-5 text-dema-forest" aria-hidden="true" />
-          <SectionHeading className="mt-4 text-xl font-medium text-brand-blue">Le flux couvert</SectionHeading>
-          <p className="mt-3 text-sm leading-6 text-dema-muted"><strong className="font-medium text-brand-blue">Départ :</strong> {model.workflowStart}</p>
-          <p className="mt-2 text-sm leading-6 text-dema-muted"><strong className="font-medium text-brand-blue">Fin :</strong> {model.workflowEnd}</p>
-        </div>
-        <div>
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-dema-forest">Structure incluse</p>
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {model.includedSections.map((section) => (
-              <li key={section} className="rounded-full bg-dema-sage/45 px-3 py-2 text-xs font-medium text-dema-forest">{section}</li>
-            ))}
-          </ul>
         </div>
       </section>
 

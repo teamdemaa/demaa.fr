@@ -21,7 +21,7 @@ export default function CopyableModelCopyLink({
         platform,
         surface: "model_detail",
       })}
-      className="mt-8 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-dema-forest px-5 text-sm font-medium text-white transition hover:bg-brand-blue lg:mt-auto"
+      className="demaa-secondary-button mt-8 min-h-11 w-full gap-2 px-5 lg:mt-auto"
     >
       Copier gratuitement
       <ArrowRight className="h-4 w-4" aria-hidden="true" />

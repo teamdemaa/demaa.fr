@@ -54,10 +54,11 @@ export default function PolitiqueConfidentialitePage() {
               <li>numéro de téléphone / WhatsApp ;</li>
               <li>nom d&apos;entreprise ;</li>
               <li>secteur d&apos;activité ;</li>
+              <li>coordonnées professionnelles publiées par une entreprise, rôle professionnel, URL source et éléments factuels de qualification métier lorsqu&apos;ils sont utilisés pour un premier contact B2B ciblé ;</li>
               <li>préférence de langue du membre, ainsi que marché, pays et devise de l&apos;entreprise lorsqu&apos;ils sont renseignés ;</li>
               <li>système métier et ressource dont vous demandez l&apos;envoi ;</li>
               <li>contenu de votre demande, besoin métier, préférences outils et informations transmises dans les formulaires ;</li>
-              <li>entreprise, site ou page professionnelle et problématique proposés à la newsletter Structure, ainsi que la preuve de votre accord de publication lorsque vous le donnez ;</li>
+              <li>entreprise, site ou page professionnelle et problématique transmis pour candidater à une session Structurer, ainsi que la preuve de votre accord de publication lorsque vous le donnez ;</li>
               <li>enregistrement vocal et transcription associés à une proposition Structure, uniquement lorsque cette option est disponible et que vous choisissez de l&apos;utiliser ;</li>
               <li>contenu transmis à l&apos;assistant IA et plans générés ; dans le parcours public sans compte, le plan est conservé temporairement sous une référence technique protégée ; dans l&apos;espace avec compte lorsqu&apos;il est proposé, chaque plan sauvegardé est rattaché à une entreprise technique par défaut, elle-même reliée à votre identifiant Firebase par une appartenance active ;</li>
               <li>adresse e-mail à laquelle vous demandez l&apos;envoi d&apos;un plan, ainsi que l&apos;état technique de cet envoi ;</li>
@@ -77,7 +78,8 @@ export default function PolitiqueConfidentialitePage() {
               <li><strong>Vous envoyer, à votre demande, une ressource ou le lien permettant de créer une copie personnelle :</strong> exécution du service demandé.</li>
               <li><strong>Gérer les formulaires de contact et vous répondre, notamment sur WhatsApp lorsque vous choisissez ce canal :</strong> intérêt légitime et, selon les cas, mesures précontractuelles.</li>
               <li><strong>Vous adresser des conseils et actualités par e-mail :</strong> uniquement lorsque vous y consentez séparément ; ce choix facultatif n&apos;est jamais nécessaire pour recevoir la ressource demandée.</li>
-              <li><strong>Étudier une problématique proposée à la newsletter Structure :</strong> traitement de votre demande et consentement explicite avant toute présentation de votre entreprise, de votre site ou de votre situation ; l&apos;équipe vous contacte avant toute publication.</li>
+              <li><strong>Réaliser un premier contact B2B ciblé auprès d&apos;un professionnel :</strong> intérêt légitime lorsque le message concerne directement son activité. Demaa conserve la source publique de la coordonnée, explique la finalité du contact et permet une opposition simple dans chaque sollicitation.</li>
+              <li><strong>Étudier une candidature à une session Structurer :</strong> traitement de votre proposition, organisation d&apos;une session de travail de 45 minutes si votre cas est retenu, puis consentement explicite et validation de la synthèse avant toute publication.</li>
               <li><strong>Fournir l&apos;assistant IA :</strong> exécution du service demandé. Dans le parcours public sans compte, le texte saisi, un identifiant technique et le plan généré sont conservés temporairement afin d&apos;afficher le résultat et de reprendre une génération interrompue sans créer de doublon.</li>
               <li><strong>Vous envoyer votre plan par e-mail :</strong> exécution du service demandé. Cet envoi ne vous inscrit pas à une liste marketing.</li>
               <li><strong>Transmettre une demande de diagnostic à l&apos;équipe Demaa :</strong> mesures précontractuelles prises à votre demande et consentement au contact. La copie du plan et les informations facultatives que vous ajoutez permettent à l&apos;équipe de comprendre votre situation et de vous répondre par e-mail.</li>
@@ -113,6 +115,7 @@ export default function PolitiqueConfidentialitePage() {
       <PrivacySection title="5. Durée de conservation">
             <ul className="list-disc space-y-2 pl-5">
               <li><strong>Demandes commerciales et de contact :</strong> jusqu&apos;à 3 ans à compter du dernier échange utile, sauf obligation légale contraire.</li>
+              <li><strong>Prospects B2B sans réponse :</strong> jusqu&apos;à 3 ans à compter de la collecte de la coordonnée professionnelle. Toute opposition bloque immédiatement les sollicitations suivantes ; seule l&apos;empreinte nécessaire au respect de ce refus peut ensuite être conservée.</li>
               <li><strong>Propositions écrites à la newsletter Structure et preuve du consentement associé :</strong> jusqu&apos;à 3 ans à compter du dernier échange utile, sauf retrait de votre consentement ou obligation légale contraire.</li>
               <li><strong>Enregistrements vocaux Structure, lorsque cette option sera activée :</strong> 30 jours maximum ; leur transcription suit ensuite la durée applicable à la proposition écrite.</li>
               <li><strong>Données d&apos;attribution rattachées à une demande :</strong> même durée que la demande concernée, avec suppression ou anonymisation lors de sa suppression.</li>

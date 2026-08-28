@@ -89,7 +89,7 @@ describe("Structure problem submission route", () => {
       response: null,
     });
     mocks.resolveLeadContext.mockResolvedValue({
-      source: "Newsletter Organiser - Proposition de problématique",
+      source: "Newsletter Structurer - Candidature session 45 minutes",
       sourceUrl: "https://demaa.fr/academie",
     });
     mocks.submitLeadRequest.mockResolvedValue({ duplicate: false, leadId: "structure-1" });
@@ -107,17 +107,18 @@ describe("Structure problem submission route", () => {
         email: "maya@example.com",
       },
       requestType: "structure_problem_submission",
-      title: "Proposition de problématique - Organiser",
+      title: "Candidature session Structurer - 45 minutes",
     }));
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       consents: [expect.objectContaining({
         granted: true,
         purpose: "structure_case_publication",
-        version: "structure-case-publication-v2",
+        version: "structure-case-publication-v5",
       })],
       fields: expect.arrayContaining([
         { label: "Site ou page professionnelle", value: "https://atelier-horizon.example/a-propos" },
-        { label: "Traitement garanti", value: "Non" },
+        { label: "Session offerte", value: "45 minutes, si le cas est sélectionné" },
+        { label: "Sélection garantie", value: "Non" },
       ]),
     }));
   });

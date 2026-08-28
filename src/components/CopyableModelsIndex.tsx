@@ -26,13 +26,19 @@ export default function CopyableModelsIndex({
 
   return (
     <>
-      <section className="mx-auto w-full max-w-7xl px-4 pb-20 pt-10 sm:px-6 sm:pt-16 lg:px-8 lg:pt-20">
-        <div className="mx-auto max-w-4xl text-center">
-          <h1 className="text-4xl font-light tracking-[-0.045em] text-brand-blue sm:text-6xl">
-            Des modèles prêts à copier
-            <span className="mt-1 block font-serif text-dema-forest">pour organiser votre activité</span>
+      <section className="mx-auto w-full max-w-7xl px-4 pb-20 pt-12 sm:px-6 md:pt-16 lg:px-8">
+        <div className="text-center">
+          <h1
+            aria-label="Des modèles prêts à copier pour organiser votre activité"
+            className="text-balance font-light leading-[0.94] tracking-tight"
+            style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
+          >
+            <span aria-hidden="true">
+              <span className="block text-brand-blue/62">Des modèles prêts à copier</span>
+              <span className="demaa-hero-title block text-dema-forest">pour organiser votre activité</span>
+            </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-dema-muted">
+          <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-dema-muted md:text-lg">
             Des structures simples, déjà pensées pour suivre un flux de travail précis.
           </p>
           {systemName ? (
@@ -68,14 +74,14 @@ export default function CopyableModelsIndex({
         )}
       </section>
 
-      <section className="border-t border-dema-line bg-white/60">
-        <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-16 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+      <section className="px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 rounded-[1.5rem] border border-dema-forest/15 bg-dema-sage/45 px-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8 md:px-10 md:py-9">
           <div className="max-w-2xl">
             <BookOpen className="h-5 w-5 text-dema-forest" aria-hidden="true" />
-            <h2 className="mt-5 text-3xl font-light tracking-[-0.035em] text-brand-blue">Les processus derrière les modèles</h2>
-            <p className="mt-3 leading-7 text-dema-muted">Retrouvez les étapes, les responsabilités, les points de contrôle et les erreurs fréquentes pour mettre ces modèles en place dans votre entreprise.</p>
+            <h2 className="mt-3 text-2xl font-light tracking-[-0.03em] text-brand-blue sm:text-3xl">Les processus derrière les modèles</h2>
+            <p className="mt-3 text-sm leading-6 text-dema-muted sm:text-base">Retrouvez les étapes, les responsabilités, les points de contrôle et les erreurs fréquentes pour mettre ces modèles en place dans votre entreprise.</p>
           </div>
-          <Link href="/organiser" className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-dema-forest px-5 text-sm font-medium text-dema-forest transition hover:bg-dema-sage/45">
+          <Link href="/organiser" className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-dema-forest px-7 text-sm font-semibold text-white transition hover:bg-[#284f3a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2">
             Explorer les processus
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
