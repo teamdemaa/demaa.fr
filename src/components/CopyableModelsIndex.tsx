@@ -110,7 +110,7 @@ export default function CopyableModelsIndex({
               >
                 <h2
                   id={`model-group-${group.id}`}
-                  className="text-xl font-semibold tracking-[-0.025em] text-brand-blue sm:text-2xl"
+                  className="demaa-catalog-section-title text-brand-blue"
                 >
                   {group.title}
                 </h2>

@@ -498,7 +498,7 @@ export default function SystemSolutionsTab({
           <section aria-labelledby="solution-section-selection" className="min-w-0 max-w-full">
             <h3
               id="solution-section-selection"
-              className="text-xl font-semibold tracking-[-0.025em] text-brand-blue sm:text-2xl"
+              className="demaa-catalog-section-title text-brand-blue"
             >
               {ui.selection}
             </h3>
@@ -524,7 +524,7 @@ export default function SystemSolutionsTab({
               <div className="flex items-center justify-between gap-4">
                 <h3
                   id={`solution-section-${group.section}`}
-                  className="text-xl font-semibold tracking-[-0.025em] text-brand-blue sm:text-2xl"
+                  className="demaa-catalog-section-title text-brand-blue"
                 >
                   {label}
                 </h3>

@@ -57,7 +57,7 @@ export default function DemaaStudioLandingPage() {
             <div className="max-w-3xl">
               <h2
                 id="studio-advantage-heading"
-                className="text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]"
+                className="demaa-marketing-section-title"
               >
                 Notre avantage terrain
               </h2>
@@ -94,7 +94,7 @@ export default function DemaaStudioLandingPage() {
             <div className="max-w-3xl">
               <h2
                 id="studio-projects-heading"
-                className="text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]"
+                className="demaa-marketing-section-title"
               >
                 Les projets
               </h2>
@@ -152,7 +152,7 @@ export default function DemaaStudioLandingPage() {
 
         <section className="px-5 py-16 text-center sm:px-8 sm:py-20 lg:py-24">
           <div className="mx-auto max-w-4xl">
-            <h2 className="text-balance text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]">
+            <h2 className="demaa-marketing-section-title text-balance">
               Rejoindre Demaa Studio
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-dema-muted">

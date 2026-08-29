@@ -355,7 +355,7 @@ export default function SystemSearchHero({
           <div className="mt-10 space-y-9 text-left sm:mt-12 sm:space-y-11">
             {systemSections.map((section) => (
               <section key={section.title}>
-                <h2 className="text-xl font-light tracking-tight text-brand-blue/85 sm:text-2xl">
+                <h2 className="demaa-catalog-section-title text-brand-blue/85">
                   {section.title}
                 </h2>
                 <HorizontalScrollHint
@@ -397,10 +397,10 @@ function SystemDirectoryCard({ system }: { system: System }) {
         {icon}
       </span>
       <div className="relative z-10 mt-4 flex min-w-0 flex-1 flex-col justify-center">
-        <h2 className="line-clamp-2 text-base font-medium leading-tight tracking-tight text-brand-blue sm:text-lg">
+        <h2 className="demaa-catalog-card-title line-clamp-2 text-brand-blue">
           {system.name}
         </h2>
-        <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-dema-muted sm:text-sm">
+        <p className="demaa-catalog-card-description mt-2 line-clamp-2 text-dema-muted">
           {system.shortDescription ?? system.description}
         </p>
       </div>

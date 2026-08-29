@@ -13,7 +13,7 @@ export default function CopyableModelCard({
   model: CopyableModelDefinition;
   titleLevel?: 2 | 3;
 }) {
-  const titleClassName = "mt-3 text-xl font-medium leading-tight tracking-[-0.025em] text-brand-blue";
+  const titleClassName = "demaa-catalog-card-title mt-3 text-brand-blue";
 
   return (
     <Link
@@ -37,7 +37,7 @@ export default function CopyableModelCard({
         ) : (
           <h2 className={titleClassName}>{model.title}</h2>
         )}
-        <p className="mt-3 text-sm leading-6 text-dema-muted">{model.description}</p>
+        <p className="demaa-catalog-card-description mt-3 text-dema-muted">{model.description}</p>
       </div>
       <div className="mt-auto flex items-center justify-between gap-3 pt-7">
         <ModelPlatformBadge platform={model.platform} />

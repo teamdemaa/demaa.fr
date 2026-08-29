@@ -181,7 +181,7 @@ export default function OrganiserLandingPage() {
           <div className="mx-auto max-w-6xl">
             <h2
               id="situations-heading"
-              className="text-center text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]"
+              className="demaa-marketing-section-title text-center"
             >
               Simplifier votre organisation, concrètement
             </h2>
@@ -199,7 +199,7 @@ export default function OrganiserLandingPage() {
 
         <section aria-labelledby="method-heading" className="bg-dema-forest px-5 py-18 text-dema-paper sm:px-8 sm:py-22 lg:py-24">
           <div className="mx-auto max-w-6xl">
-            <h2 id="method-heading" className="text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]">
+            <h2 id="method-heading" className="demaa-marketing-section-title">
               Comment ça se passe concrètement ?
             </h2>
             <ol className="mt-12 grid gap-9 lg:grid-cols-3 lg:gap-12">
@@ -245,7 +245,7 @@ export default function OrganiserLandingPage() {
           <div className="mx-auto max-w-6xl">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <h2 id="examples-heading" className="text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]">
+                <h2 id="examples-heading" className="demaa-marketing-section-title">
                   Des cas concrets pour organiser votre activité
                 </h2>
                 <p className="mt-4 max-w-2xl text-base leading-7 text-dema-muted">
@@ -290,7 +290,7 @@ export default function OrganiserLandingPage() {
 
         <section aria-labelledby="faq-heading" className="px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
           <div className="mx-auto max-w-5xl">
-            <h2 id="faq-heading" className="text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]">
+            <h2 id="faq-heading" className="demaa-marketing-section-title">
               Questions-réponses
             </h2>
             <div className="mt-9 divide-y divide-dema-line border-y border-dema-line">

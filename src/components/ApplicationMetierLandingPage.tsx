@@ -40,7 +40,7 @@ function SectionIntroduction({
     <div className="max-w-3xl">
       <h2
         id={id}
-        className="text-[2rem] font-light leading-[1.08] tracking-[-0.04em] text-brand-blue sm:text-[2.65rem]"
+        className="demaa-marketing-section-title text-brand-blue"
       >
         {title}
       </h2>
@@ -113,7 +113,7 @@ export default function ApplicationMetierLandingPage() {
           <div className="mx-auto max-w-6xl">
             <h2
               id="method-heading"
-              className="text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]"
+              className="demaa-marketing-section-title"
             >
               Comment ça se passe concrètement ?
             </h2>
@@ -197,7 +197,7 @@ export default function ApplicationMetierLandingPage() {
 
         <section className="bg-dema-sage/55 px-5 py-16 text-center sm:px-8 sm:py-20">
           <div className="mx-auto max-w-4xl">
-            <h2 className="text-balance text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]">
+            <h2 className="demaa-marketing-section-title text-balance">
               Quel processus vous fait perdre du temps aujourd’hui ?
             </h2>
             <div className="mt-8 flex flex-col items-center gap-3">

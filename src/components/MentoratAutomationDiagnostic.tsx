@@ -71,10 +71,9 @@ export default function MentoratAutomationDiagnostic() {
     >
       <div className="mx-auto grid max-w-6xl gap-9 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:gap-16">
         <div className="max-w-xl">
-          <p className="text-sm font-medium text-dema-forest">Votre point de départ</p>
           <h2
             id="diagnostic-heading"
-            className="mt-4 text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]"
+            className="demaa-marketing-section-title"
           >
             Qu’est-ce qui vous prend le plus de temps aujourd’hui&nbsp;?
           </h2>

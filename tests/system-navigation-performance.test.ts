@@ -63,7 +63,7 @@ describe("system navigation performance contract", () => {
       "Outils, partenaires et ressources sélectionnés selon votre métier.",
     );
     expect(searchSource).toContain(
-      '<h2 className="text-xl font-light tracking-tight text-brand-blue/85 sm:text-2xl">',
+      '<h2 className="demaa-catalog-section-title text-brand-blue/85">',
     );
     expect(searchSource).not.toContain("système opérationnel");
   });

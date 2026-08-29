@@ -64,8 +64,7 @@ export default function MentoratAutomationLandingPage() {
         <section aria-labelledby="results-heading" className="border-y border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-6xl">
             <div className="max-w-3xl">
-              <p className="text-sm font-medium text-dema-forest">Ce qui change concrètement</p>
-              <h2 id="results-heading" className="mt-4 text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]">
+              <h2 id="results-heading" className="demaa-marketing-section-title">
                 <span className="block">Moins de tâches répétitives.</span>
                 <span className="demaa-section-title mt-2 block text-dema-forest">
                   Une équipe qui garde la main.
@@ -91,10 +90,9 @@ export default function MentoratAutomationLandingPage() {
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-end lg:gap-16">
               <div className="max-w-3xl">
-                <p className="text-sm font-medium text-dema-forest">Le vrai problème</p>
                 <h2
                   id="automation-problem-heading"
-                  className="mt-4 text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]"
+                  className="demaa-marketing-section-title"
                 >
                   <span className="block">Le problème n’est pas le nombre d’outils.</span>
                   <span className="demaa-section-title mt-2 block text-dema-forest">
@@ -142,10 +140,9 @@ export default function MentoratAutomationLandingPage() {
         >
           <div className="mx-auto max-w-6xl">
             <div className="max-w-3xl">
-              <p className="text-sm font-medium text-dema-forest">Cas précis</p>
               <h2
                 id="automation-cases-heading"
-                className="mt-4 text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]"
+                className="demaa-marketing-section-title"
               >
                 Trois exemples dans des entreprises concrètes.
               </h2>
@@ -166,10 +163,9 @@ export default function MentoratAutomationLandingPage() {
         >
           <div className="mx-auto max-w-6xl">
             <div className="max-w-4xl">
-              <p className="text-sm font-medium text-dema-forest">À qui cela s’adresse</p>
               <h2
                 id="automation-audience-heading"
-                className="mt-4 text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]"
+                className="demaa-marketing-section-title"
               >
                 Pour le dirigeant et la personne qui fera fonctionner les automatisations au quotidien.
               </h2>
@@ -207,8 +203,7 @@ export default function MentoratAutomationLandingPage() {
         <section aria-labelledby="offer-heading" className="bg-dema-forest px-5 py-16 text-dema-paper sm:px-8 sm:py-20">
           <div className="mx-auto flex max-w-5xl flex-col items-start gap-8 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
-              <p className="text-sm font-medium text-dema-sage">L’accompagnement</p>
-              <h2 id="offer-heading" className="mt-4 text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]">
+              <h2 id="offer-heading" className="demaa-marketing-section-title">
                 Passez du diagnostic à la mise en œuvre.
               </h2>
               <p className="mt-5 text-base leading-7 text-dema-paper/72">
@@ -222,7 +217,7 @@ export default function MentoratAutomationLandingPage() {
 
         <section aria-labelledby="scope-heading" className="bg-dema-sage px-5 py-16 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-6xl">
-            <h2 id="scope-heading" className="max-w-3xl text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]">
+            <h2 id="scope-heading" className="demaa-marketing-section-title max-w-3xl">
               Un périmètre clair pour obtenir un résultat concret
             </h2>
             <div className="mt-10 grid gap-5 lg:grid-cols-2">
@@ -258,7 +253,7 @@ export default function MentoratAutomationLandingPage() {
               <Workflow className="h-5 w-5" aria-hidden="true" />
               <p className="text-sm font-medium">Questions fréquentes</p>
             </div>
-            <h2 id="faq-heading" className="mt-4 text-[2rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.65rem]">
+            <h2 id="faq-heading" className="demaa-marketing-section-title mt-4">
               Avant de démarrer
             </h2>
             <div className="mt-9 divide-y divide-dema-line border-y border-dema-line">
