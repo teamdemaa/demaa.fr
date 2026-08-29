@@ -25,25 +25,25 @@ afterEach(() => {
 });
 
 describe("canonical domain migration", () => {
-  it("uses demaa.co as the canonical origin and normalizes the retired domain", () => {
+  it("uses demaa.fr as the canonical origin and normalizes the retired domain", () => {
     delete process.env.SITE_URL;
     delete process.env.NEXT_PUBLIC_SITE_URL;
-    expect(getCanonicalSiteUrl()).toBe("https://demaa.co");
-    expect(getCanonicalOrigin()).toBe("https://demaa.co");
+    expect(getCanonicalSiteUrl()).toBe("https://demaa.fr");
+    expect(getCanonicalOrigin()).toBe("https://demaa.fr");
 
-    process.env.SITE_URL = "https://demaa.fr";
-    expect(getCanonicalSiteUrl()).toBe("https://demaa.co");
+    process.env.SITE_URL = "https://demaa.co";
+    expect(getCanonicalSiteUrl()).toBe("https://demaa.fr");
   });
 
   it("keeps the old controlled host available during redirects without trusting third parties", () => {
-    process.env.SITE_URL = "https://demaa.co";
-    const canonicalRequest = new Request("https://demaa.co/api/test");
-    const legacyRequest = new Request("https://demaa.fr/api/test");
+    process.env.SITE_URL = "https://demaa.fr";
+    const canonicalRequest = new Request("https://demaa.fr/api/test");
+    const legacyRequest = new Request("https://demaa.co/api/test");
 
     expect(isAllowedRequestHost(canonicalRequest)).toBe(true);
     expect(isAllowedRequestHost(legacyRequest)).toBe(true);
-    expect(isAllowedRequestOrigin(canonicalRequest, "https://demaa.fr")).toBe(true);
-    expect(isAllowedRequestOrigin(legacyRequest, "https://demaa.co")).toBe(true);
+    expect(isAllowedRequestOrigin(canonicalRequest, "https://demaa.co")).toBe(true);
+    expect(isAllowedRequestOrigin(legacyRequest, "https://demaa.fr")).toBe(true);
     expect(isAllowedRequestOrigin(canonicalRequest, "https://evil.example")).toBe(false);
   });
 });
@@ -76,7 +76,7 @@ describe("Vercel preview hosts", () => {
       getTrustedRequestOrigin(
         new Request("https://demaa-preview-123.vercel.app/api/customer-space/firebase-session"),
       ),
-    ).toBe("https://demaa.co");
+    ).toBe("https://demaa.fr");
   });
 
   it("allows only explicitly configured stable aliases in Preview", () => {

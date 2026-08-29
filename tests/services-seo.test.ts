@@ -7,11 +7,9 @@ import {
   generateMetadata,
   generateStaticParams,
 } from "@/app/(marketing)/services/[slug]/page";
-import { metadata as servicesIndexMetadata } from "@/app/(marketing)/services/page";
 import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
 import {
   buildServicePageJsonLd,
-  buildServicesIndexJsonLd,
   serializeServicesJsonLd,
 } from "@/lib/services-seo";
 
@@ -30,7 +28,6 @@ describe("canonical Services SEO and redirects", () => {
       { slug: "prospection-ciblee" },
       { slug: "recruter-un-alternant" },
     ]);
-    expect(servicesIndexMetadata.alternates).toEqual({ canonical: "/services" });
     await expect(generateMetadata({
       params: Promise.resolve({ slug: "ancienne-offre" }),
     })).rejects.toMatchObject({ digest: "NEXT_HTTP_ERROR_FALLBACK;404" });
@@ -40,17 +37,6 @@ describe("canonical Services SEO and redirects", () => {
     await expect(generateMetadata({
       params: Promise.resolve({ slug: "expert-comptable" }),
     })).rejects.toMatchObject({ digest: "NEXT_HTTP_ERROR_FALLBACK;404" });
-  });
-
-  it("builds the canonical index breadcrumb", () => {
-    expect(buildServicesIndexJsonLd()).toEqual({
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Accueil", item: "https://demaa.co" },
-        { "@type": "ListItem", position: 2, name: "Accompagnement", item: "https://demaa.co/services" },
-      ],
-    });
   });
 
   it("emits direct Demaa offers without attributing third-party accounting fees to Demaa", () => {
@@ -76,10 +62,18 @@ describe("canonical Services SEO and redirects", () => {
         },
       ],
     });
+    expect(buildServicePageJsonLd(automation)[0]).toEqual({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Accueil", item: "https://demaa.fr" },
+        { "@type": "ListItem", position: 2, name: "Accompagnement à l’automatisation", item: "https://demaa.fr/automatisation" },
+      ],
+    });
 
     expect(buildServicePageJsonLd(application)[1]).toMatchObject({
       name: "Application métier",
-      url: "https://demaa.co/application-metier",
+      url: "https://demaa.fr/application-metier",
       offers: [
         { name: "Application métier", price: "4500.00" },
       ],

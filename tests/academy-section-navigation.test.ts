@@ -6,7 +6,7 @@ import {
 import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
 
 describe("Academy content sections", () => {
-  it("publishes only the fourteen process guides in Organiser while preserving historical content", () => {
+  it("publishes only the fifteen process guides in Organiser while preserving historical content", () => {
     const fundamentals = getAcademyFundamentals();
     const caseStudies = getAcademyCaseStudies();
     const processGuides = caseStudies.filter((content) => content.processGuide);
@@ -14,8 +14,8 @@ describe("Academy content sections", () => {
 
     expect(PUBLIC_EDITORIAL_VISIBILITY.academyTutorials).toBe(true);
     expect(PUBLIC_EDITORIAL_VISIBILITY.academyFormations).toBe(false);
-    expect(caseStudies).toHaveLength(20);
-    expect(processGuides).toHaveLength(14);
+    expect(caseStudies).toHaveLength(21);
+    expect(processGuides).toHaveLength(15);
     expect(historicalCases).toHaveLength(6);
     expect(fundamentals).toHaveLength(8);
     expect(caseStudies.every((content) => content.kind === "case-study")).toBe(true);

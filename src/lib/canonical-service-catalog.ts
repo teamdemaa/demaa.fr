@@ -4,6 +4,7 @@ import {
   HIDDEN_CANONICAL_SERVICE_SLUGS,
   isCanonicalServicePublic,
 } from "@/lib/canonical-service-visibility";
+import { AUTOMATION_OFFER } from "@/lib/automation-offer";
 import { deepFreeze } from "@/lib/registry-contract-utils";
 
 export const CANONICAL_SERVICE_SLUGS = [
@@ -140,19 +141,19 @@ const canonicalServiceDefinitions = deepFreeze([
     notIncluded: ["Une garantie de recrutement", "Les coûts liés au contrat d’alternance", "La gestion du contrat réalisée par Demaa"],
   },
   {
-    slug: "automatisation-processus", name: "Accompagnement à l’automatisation", eyebrow: "Transfert de compétences sur 2 mois",
+    slug: "automatisation-processus", name: AUTOMATION_OFFER.name, eyebrow: `Transfert de compétences sur ${AUTOMATION_OFFER.durationLabel}`,
     detailHref: "/automatisation",
     summary: "Aidez votre équipe à automatiser les tâches réellement utiles et à maîtriser ses outils au quotidien, avec l’IA lorsqu’elle apporte une vraie valeur.",
-    description: "Pendant 2 mois, nous partons des ressaisies, relances et mises à jour qui ralentissent votre équipe. Nous définissons les priorités selon leur complexité, puis allons jusqu’à la mise en service avec la personne qui fera vivre les solutions au quotidien.",
+    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, nous partons des ressaisies, relances et mises à jour qui ralentissent votre équipe. Nous définissons les priorités selon leur complexité, puis allons jusqu’à la mise en service avec la personne qui fera vivre les solutions au quotidien.`,
     result: "Moins de tâches répétitives, une information qui circule mieux et une équipe capable de faire vivre les automatisations mises en place.",
     delivery: "demaa",
     pricing: null,
     packages: [
       {
-        slug: "automatisation-essentielle",
-        name: "Accompagnement à l’automatisation",
-        summary: "Deux mois pour mieux organiser votre fonctionnement, réduire les tâches répétitives et rendre votre équipe autonome.",
-        pricing: { mode: "fixed", amountMinor: 350000, currency: "EUR", heading: "Forfait", label: "3 500 € HT", note: "Le programme couvre une entreprise, un référent principal et un binôme. Le paiement peut être réparti en trois fois. Les licences et consommations d’outils restent séparées." },
+        slug: AUTOMATION_OFFER.packageSlug,
+        name: AUTOMATION_OFFER.name,
+        summary: AUTOMATION_OFFER.summary,
+        pricing: { mode: "fixed", amountMinor: AUTOMATION_OFFER.price.amountMinor, currency: AUTOMATION_OFFER.price.currency, heading: "Forfait", label: AUTOMATION_OFFER.price.label, note: "Le programme couvre une entreprise, un référent principal et un binôme. Le paiement peut être réparti en trois fois. Les licences et consommations d’outils restent séparées." },
         included: ["Diagnostic et priorisation des tâches chronophages", "Définition d’un périmètre adapté à votre fonctionnement", "Passage du cadrage à la mise en service dans votre environnement de travail", "Tests, documentation et transfert de compétences"],
       },
     ],

@@ -205,9 +205,9 @@ export default function AcademyCoursePlayer({
             </button>
           ) : (
             <Link
-              href={localeCode === "en" ? "/en?view=academy" : "/organiser"}
+              href={localeCode === "en" ? "/en?view=academy" : "/organiser/processus"}
               className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-              aria-label={localeCode === "en" ? "Back to the Academy" : "Retour à Organiser"}
+              aria-label={localeCode === "en" ? "Back to the Academy" : "Retour aux cas concrets"}
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             </Link>
@@ -377,10 +377,10 @@ export default function AcademyCoursePlayer({
                 </button>
               ) : (
                 <Link
-                  href={localeCode === "en" ? "/en?view=academy" : "/organiser"}
+                  href={localeCode === "en" ? "/en?view=academy" : "/organiser/processus"}
                   className={`${content.action ? "demaa-secondary-button" : "demaa-primary-button"} mt-5 min-h-11`}
                 >
-                  {localeCode === "en" ? "Back to the Academy" : "Retour à Organiser"}
+                  {localeCode === "en" ? "Back to the Academy" : "Retour aux cas concrets"}
                 </Link>
               )}
             </section>

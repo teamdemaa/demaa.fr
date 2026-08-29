@@ -125,7 +125,7 @@ describe("system Resources catalog", () => {
       workbookVersion: "1.0.0",
     });
     expect(resolveSystemResourceDelivery(snapshot!, "cabinet-comptable")).toEqual({
-      destination: "https://demaa.co/systemes/cabinet-comptable/processus",
+      destination: "https://demaa.fr/systemes/cabinet-comptable/processus",
       resourceSlug: "processus-metier",
     });
     expect(resolveSystemResourceDelivery(snapshot!)).toBeNull();
@@ -139,7 +139,7 @@ describe("system Resources catalog", () => {
       workbookVersion: "1.0.0",
     });
     expect(resolveSystemResourceDelivery(snapshot!, "cabinet-comptable")).toEqual({
-      destination: "https://demaa.co/systemes/cabinet-comptable/recapitulatif",
+      destination: "https://demaa.fr/systemes/cabinet-comptable/recapitulatif",
       resourceSlug: "recapitulatif-systeme",
     });
     expect(resolveSystemResourceDelivery(snapshot!)).toBeNull();
@@ -160,7 +160,7 @@ describe("system Resources catalog", () => {
       resourceId: "guide-facturation-electronique",
       workbookVersion: "1.0.0",
     })).toEqual({
-      destination: "https://demaa.co/downloads/guides/guide-facturation-electronique-demaa.pdf",
+      destination: "https://demaa.fr/downloads/guides/guide-facturation-electronique-demaa.pdf",
       resourceSlug: "guide-facturation-electronique",
     });
     expect(resolveSystemResourceDelivery({
@@ -168,7 +168,7 @@ describe("system Resources catalog", () => {
       resourceId: "guide-obligations-fiscales-sociales-comptables",
       workbookVersion: "1.0.0",
     })).toEqual({
-      destination: "https://demaa.co/downloads/guides/guide-obligations-fiscales-sociales-comptables-demaa.pdf",
+      destination: "https://demaa.fr/downloads/guides/guide-obligations-fiscales-sociales-comptables-demaa.pdf",
       resourceSlug: "guide-obligations-fiscales-sociales-comptables",
     });
   });
@@ -181,7 +181,7 @@ describe("system Resources catalog", () => {
       const snapshot = getSystemResourceAssetSnapshot(resourceSlug);
       expect(snapshot?.workbookVersion).toBe("2.0.0");
       expect(resolveSystemResourceDelivery(snapshot!)?.destination).toMatch(
-        /^https:\/\/demaa\.co\/downloads\/presentations\/presentation-.+\.pdf$/,
+        /^https:\/\/demaa\.fr\/downloads\/presentations\/presentation-.+\.pdf$/,
       );
     }
   });

@@ -178,7 +178,7 @@ export default function CustomerReviewQRCode() {
               {/* QR Code */}
               <div className="relative p-5 rounded-[1.5rem] bg-white shadow-sm border border-gray-50 flex items-center justify-center">
                 <QRCodeSVG
-                  value={fullUrl || "https://demaa.co"}
+                  value={fullUrl || "https://demaa.fr"}
                   size={qrSize}
                   fgColor={fgColor}
                   bgColor={bgColor}

@@ -5,7 +5,7 @@ import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 export const metadata = buildPublicPageMetadata({
   title: "Politique de cookies - Demaa",
-  description: "Politique de cookies et traceurs du site demaa.co.",
+  description: "Politique de cookies et traceurs du site demaa.fr.",
   path: "/politique-de-cookies",
 });
 

@@ -22,8 +22,9 @@ const collaborationLinks = [
 ];
 
 const resourceLinks = [
+  { label: "Organiser", href: "/organiser" },
   { label: "Modèles à copier", href: "/modeles" },
-  { label: "Processus & cas concrets", href: "/organiser" },
+  { label: "Cas concrets et processus", href: "/organiser/processus" },
   { label: "Contenus", href: "/contenus" },
 ];
 

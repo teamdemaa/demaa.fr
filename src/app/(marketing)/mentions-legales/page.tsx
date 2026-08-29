@@ -4,7 +4,7 @@ import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 export const metadata = buildPublicPageMetadata({
   title: "Mentions légales - Demaa",
-  description: "Mentions légales du site demaa.co.",
+  description: "Mentions légales du site demaa.fr.",
   path: "/mentions-legales",
 });
 

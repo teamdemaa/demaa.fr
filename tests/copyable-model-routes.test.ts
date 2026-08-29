@@ -7,9 +7,11 @@ async function readSource(path: string) {
 
 describe("copyable model public routes", () => {
   it("makes models primary and keeps concrete processes as supporting content", async () => {
-    const [page, organiserPage, navbar, footer, modelsIndex, processBridge, academyIndex] = await Promise.all([
+    const [page, organiserPage, organiserHub, processPage, navbar, footer, modelsIndex, processBridge, academyIndex] = await Promise.all([
       readSource("src/app/(marketing)/modeles/page.tsx"),
       readSource("src/app/(marketing)/organiser/page.tsx"),
+      readSource("src/components/OrganiserHub.tsx"),
+      readSource("src/app/(marketing)/organiser/processus/page.tsx"),
       readSource("src/components/PublicActionPlanNavigation.tsx"),
       readSource("src/components/Footer.tsx"),
       readSource("src/components/CopyableModelsIndex.tsx"),
@@ -20,13 +22,18 @@ describe("copyable model public routes", () => {
     expect(page).toContain('<Navbar minimal publicNavigationActiveView="academy" />');
     expect(page).not.toContain("OrganiserSectionNavigation");
     expect(page).toContain("<StructureNewsletterBlock />");
+    expect(page).not.toContain("<ModelProcessesBridge />");
     expect(organiserPage).not.toContain("OrganiserSectionNavigation");
-    expect(organiserPage).toContain('backLink={{ href: "/modeles", label: "← Voir les modèles à copier" }}');
+    expect(organiserPage).toContain("<OrganiserHub />");
+    expect(processPage).toContain('backLink={{ href: "/organiser", label: "← Retour à Organiser" }}');
     expect(page).toContain('path: "/modeles"');
-    expect(navbar).toContain('label: "Modèles"');
-    expect(navbar).toContain('href: "/modeles"');
+    expect(navbar).toContain('label: "Organiser"');
+    expect(navbar).toContain('href: "/organiser"');
+    expect(organiserHub).toContain('href="/modeles"');
+    expect(organiserHub).toContain("SOLUTION_RAIL_CLASS_NAME");
     expect(footer).toContain('{ label: "Modèles à copier", href: "/modeles" }');
-    expect(footer).toContain('{ label: "Processus & cas concrets", href: "/organiser" }');
+    expect(footer).toContain('{ label: "Organiser", href: "/organiser" }');
+    expect(footer).toContain('{ label: "Cas concrets et processus", href: "/organiser/processus" }');
     expect(modelsIndex).toContain('style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}');
     expect(modelsIndex).toContain("block text-brand-blue/62");
     expect(modelsIndex).toContain("demaa-hero-title block text-dema-forest");
@@ -38,11 +45,13 @@ describe("copyable model public routes", () => {
     expect(modelsIndex).toContain("SOLUTION_RAIL_CLASS_NAME");
     expect(modelsIndex).toContain("titleLevel={3}");
     expect(modelsIndex).not.toContain("Des processus concrets pour se projeter vraiment");
-    expect(organiserPage).toContain("Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité.");
+    expect(processPage).toContain("Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité.");
     expect(academyIndex.match(/Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité\./g)).toHaveLength(2);
-    expect(processBridge).toContain("Les processus derrière les modèles");
-    expect(processBridge).toContain("Voir tous les processus");
-    expect(processBridge).toContain(".slice(0, 3)");
+    expect(processBridge).toContain("Voyez comment le travail s’organise, étape par étape");
+    expect(processBridge).toContain("Voir tous les cas concrets");
+    expect(processBridge).toContain('href="/organiser/processus"');
+    expect(processBridge).toContain("SOLUTION_RAIL_CLASS_NAME");
+    expect(processBridge).toContain(".slice(0, 5)");
   });
 
   it("supports a full detail page and an intercepted modal with the same content", async () => {

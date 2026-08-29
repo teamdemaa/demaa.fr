@@ -6,6 +6,7 @@ export type ApplicationMetierCaseStudy = {
   problem: string;
   application: string;
   flow: readonly string[];
+  results?: readonly string[];
 };
 
 export const APPLICATION_METIER_CASE_STUDIES: readonly ApplicationMetierCaseStudy[] = [

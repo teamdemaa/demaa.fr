@@ -286,14 +286,14 @@ function AcademyCard({
         <div className="px-0.5 pb-1 pt-3.5">
           <h3 className={`${
             isProcessGuide
-              ? "line-clamp-2 text-[0.84rem] font-normal leading-[1.3] text-brand-blue opacity-[0.59] sm:text-[0.9rem]"
+              ? "line-clamp-2 text-[0.84rem] font-normal leading-[1.3] text-brand-blue opacity-80 sm:text-[0.9rem]"
               : LIBRARY_CARD_TITLE_CLASSNAME
           } transition-colors group-hover:text-dema-forest`}>
             {title}
           </h3>
           <p className={`${
             isProcessGuide
-              ? "line-clamp-1 text-[0.7rem] text-dema-muted opacity-[0.59]"
+              ? "line-clamp-1 text-[0.7rem] text-dema-muted opacity-75"
               : "text-sm text-dema-muted"
           } mt-1.5`}>
             {meta}

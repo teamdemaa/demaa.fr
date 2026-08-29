@@ -53,7 +53,7 @@ describe("Academy SEO, redirects and assets", () => {
   it("uses every short title and exact canonical URL in route metadata", async () => {
     for (const content of getAllAcademyContent()) {
       const expectedTitle = `${content.identity.shortTitle} | Organiser avec Demaa`;
-      const expectedCanonical = `https://demaa.co/organiser/${content.identity.slug}`;
+      const expectedCanonical = `https://demaa.fr/organiser/${content.identity.slug}`;
       const metadata = buildAcademyContentMetadata(content);
       const routeMetadata = await generateMetadata({
         params: Promise.resolve({ slug: content.identity.slug }),
@@ -73,7 +73,7 @@ describe("Academy SEO, redirects and assets", () => {
   it("emits BreadcrumbList plus Course/LearningResource for fundamentals", () => {
     for (const content of getAcademyFundamentals()) {
       const jsonLd = buildAcademyContentJsonLd(content);
-      const canonicalUrl = `https://demaa.co/organiser/${content.identity.slug}`;
+      const canonicalUrl = `https://demaa.fr/organiser/${content.identity.slug}`;
 
       expect(jsonLd).toHaveLength(2);
       expect(jsonLd[0]).toEqual({
@@ -84,13 +84,13 @@ describe("Academy SEO, redirects and assets", () => {
             "@type": "ListItem",
             position: 1,
             name: "Accueil",
-            item: "https://demaa.co",
+            item: "https://demaa.fr",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Organiser",
-            item: "https://demaa.co/organiser",
+            item: "https://demaa.fr/organiser",
           },
           {
             "@type": "ListItem",
@@ -111,7 +111,7 @@ describe("Academy SEO, redirects and assets", () => {
         provider: {
           "@type": "Organization",
           name: "Demaa",
-          url: "https://demaa.co",
+          url: "https://demaa.fr",
         },
       });
       expect(JSON.stringify(jsonLd)).not.toContain("VideoObject");
@@ -121,10 +121,10 @@ describe("Academy SEO, redirects and assets", () => {
   it("emits BreadcrumbList plus Article for case studies", () => {
     for (const content of getAcademyCaseStudies()) {
       const jsonLd = buildAcademyContentJsonLd(content);
-      const canonicalUrl = `https://demaa.co/organiser/${content.identity.slug}`;
+      const canonicalUrl = `https://demaa.fr/organiser/${content.identity.slug}`;
       const expectedImage = content.processGuide
         ? `${canonicalUrl}/process-map.png`
-        : `https://demaa.co${content.identity.card.image}`;
+        : `https://demaa.fr${content.identity.card.image}`;
 
       expect(jsonLd).toHaveLength(2);
       expect(jsonLd[0]).toMatchObject({ "@type": "BreadcrumbList" });

@@ -1,6 +1,6 @@
 const EM2A_FIRM_NAME = "EM2A Expertise";
 const EM2A_PROFILE_URL =
-  "https://demaa.co/annuaire-experts-comptables/cabinets/em2a-expertise";
+  "https://demaa.fr/annuaire-experts-comptables/cabinets/em2a-expertise";
 
 export type PlumbingPilotEcosystemRecommendation = {
   category:
@@ -33,7 +33,7 @@ export const plumbingPilotEcosystemRecommendations: PlumbingPilotEcosystemRecomm
         "Utiliser Obat comme logiciel central pour les devis, factures, acomptes, situations de travaux et suivi de chantier.",
       initialStatus: "À comparer",
       cost: "Voir tarif actuel",
-      url: "https://demaa.co/annuaire-outils/obat",
+      url: "https://demaa.fr/annuaire-outils/obat",
       note: "Ne pas cumuler par défaut avec un autre logiciel de gestion complet.",
     },
     {
@@ -44,7 +44,7 @@ export const plumbingPilotEcosystemRecommendations: PlumbingPilotEcosystemRecomm
         "Ajouter Alobees si la priorité est de coordonner plusieurs équipes, les heures et l’avancement des chantiers.",
       initialStatus: "À comparer",
       cost: "Voir tarif actuel",
-      url: "https://demaa.co/annuaire-outils/alobees",
+      url: "https://demaa.fr/annuaire-outils/alobees",
       note: "Particulièrement pertinent à partir de plusieurs salariés terrain.",
     },
     {
@@ -55,7 +55,7 @@ export const plumbingPilotEcosystemRecommendations: PlumbingPilotEcosystemRecomm
         "Ajouter Kizeo Forms pour remplacer les fiches papier par des formulaires, photos, signatures et rapports terrain.",
       initialStatus: "À comparer",
       cost: "Voir tarif actuel",
-      url: "https://demaa.co/annuaire-outils/kizeo-forms",
+      url: "https://demaa.fr/annuaire-outils/kizeo-forms",
       note: "Utile pour les fiches d’intervention, contrôles, PV et rapports.",
     },
     {
@@ -88,7 +88,7 @@ export const plumbingPilotEcosystemRecommendations: PlumbingPilotEcosystemRecomm
         "Utiliser CEDEO comme fournisseur principal pour les pièces techniques, retraits en agence et livraisons chantier.",
       initialStatus: "À comparer",
       cost: "Selon commandes",
-      url: "https://demaa.co/annuaire-fournisseurs/cedeo-pro",
+      url: "https://demaa.fr/annuaire-fournisseurs/cedeo-pro",
       note: "Fournisseur critique principal recommandé pour la plomberie et le chauffage.",
     },
     {
@@ -99,7 +99,7 @@ export const plumbingPilotEcosystemRecommendations: PlumbingPilotEcosystemRecomm
         "Utiliser Würth pour l’outillage, la visserie, les consommables techniques et les équipements de protection.",
       initialStatus: "À comparer",
       cost: "Selon commandes",
-      url: "https://demaa.co/annuaire-fournisseurs/wurth",
+      url: "https://demaa.fr/annuaire-fournisseurs/wurth",
       note: "Comparer les conditions professionnelles et conserver une liste d’articles récurrents.",
     },
     {
@@ -110,7 +110,7 @@ export const plumbingPilotEcosystemRecommendations: PlumbingPilotEcosystemRecomm
         "Utiliser Kiloutou pour louer le matériel nécessaire ponctuellement plutôt que l’acheter sans usage récurrent.",
       initialStatus: "À comparer",
       cost: "Selon location",
-      url: "https://demaa.co/annuaire-fournisseurs/kiloutou",
+      url: "https://demaa.fr/annuaire-fournisseurs/kiloutou",
       note: "Comparer le coût complet de location, la disponibilité et le retrait chantier.",
     },
     {
@@ -121,7 +121,7 @@ export const plumbingPilotEcosystemRecommendations: PlumbingPilotEcosystemRecomm
         "Demander un devis Orus pour la RC Pro, la multirisque et la décennale correspondant aux activités déclarées.",
       initialStatus: "À comparer",
       cost: "Sur devis",
-      url: "https://demaa.co/annuaire-fournisseurs/orus",
+      url: "https://demaa.fr/annuaire-fournisseurs/orus",
       note: "Faire confirmer les garanties avant toute nouvelle activité.",
     },
   ];

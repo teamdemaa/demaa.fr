@@ -181,7 +181,7 @@ describe("service callback request route", () => {
         { label: "Slug du service", value: "automatisation-processus" },
         { label: "Forfait", value: "Accompagnement à l’automatisation" },
         { label: "Slug du forfait", value: "automatisation-essentielle" },
-        { label: "Prix de référence", value: "3 000 € HT" },
+        { label: "Prix de référence", value: "3 500 € HT" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
         { label: "Locale", value: "fr" },
         { label: "Marché", value: "fr-fr" },

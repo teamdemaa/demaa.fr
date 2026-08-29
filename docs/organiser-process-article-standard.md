@@ -14,7 +14,7 @@ La phrase de référence est :
 
 La navigation publique suit le parcours :
 
-`Solutions → Application métier → Organiser`
+`Solutions → Modèles → Organiser`
 
 - `Solutions` regroupe les outils, ressources et partenaires par métier ;
 - `Application métier` présente l’accompagnement pour construire un outil
@@ -119,10 +119,10 @@ l’article public. Les blocs « point de départ », « rythme de pilotage » e
 ## Présentation dans la bibliothèque
 
 - Le titre sous la miniature utilise une taille réduite de 20 % par rapport aux
-  autres cartes de bibliothèque et une opacité de 59 %.
+  autres cartes de bibliothèque et une opacité de 80 %.
 - La ligne secondaire suit exactement `Process · [métier] · [durée] min`.
 - Cette ligne reste sur une seule ligne et utilise elle aussi une taille réduite
-  de 20 % et une opacité de 59 %.
+  de 20 % et une opacité de 75 %.
 - Le process map lui-même conserve son contraste de lecture normal.
 - La miniature conserve toujours un ratio 16:9, y compris sur mobile.
 - Elle utilise une seule surface vert sauge arrondie, sans cadre blanc ni

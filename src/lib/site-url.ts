@@ -1,6 +1,7 @@
-export const DEFAULT_SITE_URL = "https://demaa.co";
+export const DEFAULT_SITE_URL = "https://demaa.fr";
 export const LEGACY_SITE_ORIGINS = [
-  "https://demaa.fr",
+  "https://demaa.co",
+  "https://www.demaa.co",
   "https://www.demaa.fr",
 ] as const;
 

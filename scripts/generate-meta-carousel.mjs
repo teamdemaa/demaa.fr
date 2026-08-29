@@ -422,7 +422,7 @@ function slideSeven(images) {
       <rect width="936" height="104" rx="52" fill="${palette.paper}" />
       <text x="468" y="65" text-anchor="middle" fill="${palette.forestDark}" font-family="Avenir Next, Avenir, Arial, sans-serif" font-size="31" font-weight="700">Recevoir gratuitement le tableau →</text>
     </g>
-    <text x="540" y="1198" text-anchor="middle" fill="rgba(255,255,255,0.82)" font-family="Avenir Next, Avenir, Arial, sans-serif" font-size="23" font-weight="600">demaa.co/systemes/batiment</text>
+    <text x="540" y="1198" text-anchor="middle" fill="rgba(255,255,255,0.82)" font-family="Avenir Next, Avenir, Arial, sans-serif" font-size="23" font-weight="600">demaa.fr/systemes/batiment</text>
   `;
   return baseSvg({
     index: 7,

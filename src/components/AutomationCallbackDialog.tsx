@@ -2,15 +2,16 @@
 
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
 import ServiceCallbackForm from "@/components/ServiceCallbackForm";
+import { AUTOMATION_OFFER } from "@/lib/automation-offer";
 
 const AUTOMATION_PACKAGE = [{
-  name: "Accompagnement à l’automatisation",
+  name: AUTOMATION_OFFER.name,
   pricing: {
-    label: "3 500 € HT",
+    label: AUTOMATION_OFFER.price.label,
     note: "Le programme est défini après le diagnostic.",
   },
-  slug: "automatisation-essentielle",
-  summary: "Deux mois pour mieux organiser votre fonctionnement, gagner du temps et rendre votre équipe autonome.",
+  slug: AUTOMATION_OFFER.packageSlug,
+  summary: AUTOMATION_OFFER.summary,
 }] as const;
 
 export default function AutomationCallbackDialog({ onClose }: { onClose: () => void }) {

@@ -138,7 +138,7 @@ describe("system page SEO published Solutions boundary", () => {
       `Organisation et solutions pour ${system.name}`,
     );
     expect(exposed).toContain("https://qonto.com/fr");
-    expect(exposed).toContain("https://demaa.co/solutions/prestataire-facturation");
+    expect(exposed).toContain("https://demaa.fr/solutions/prestataire-facturation");
     expect(exposed).not.toMatch(
       /Legacy Outil Fantôme|Partenaire Referral|annuaire-outils|écosystème/i,
     );

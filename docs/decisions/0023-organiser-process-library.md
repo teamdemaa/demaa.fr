@@ -15,11 +15,12 @@ chantiers, documents, stocks, validations et facturation.
 ## Décision
 
 La destination française visible s’appelle `Organiser`. La navigation
-principale est `Solutions · Application métier · Organiser`. `Solutions` est
-une destination autonome : le dirigeant choisit son activité, puis voit les
-outils, ressources et partenaires adaptés à ce métier. `Application métier`
-présente l’accompagnement et des cas réalisés. `Organiser` ouvre directement la
-bibliothèque éditoriale de processus, sans sous-navigation locale.
+principale est `Solutions · Modèles · Automatisation`. `Solutions` est une
+destination autonome : le dirigeant choisit son activité, puis voit les outils,
+ressources et partenaires adaptés à ce métier. `Modèles` réunit les structures
+à copier et donne accès à `Organiser`, qui ouvre directement la bibliothèque
+éditoriale de processus. `Automatisation` présente l’accompagnement payant et le
+transfert de compétences.
 
 La route publique canonique devient `/organiser`. Le socle technique conserve
 les identifiants `academy`, les API, caches et progressions. `/academie`,
@@ -52,7 +53,7 @@ et six réponses à des problèmes transversaux de centralisation, planning,
 ressaisie, choix de logiciel et rentabilité d’une application métier.
 
 Dans la grille, le bloc texte des cartes est volontairement secondaire : taille
-réduite de 20 %, opacité de 59 % et métadonnée courte
+réduite de 20 %, opacité de 80 % pour le titre et 75 % pour la métadonnée courte
 `Process · [métier] · [durée] min`. Les libellés du process map conservent leur
 contraste normal.
 
@@ -60,7 +61,8 @@ contraste normal.
 
 - aucun ancien tutoriel d’acquisition ne revient dans l’index ;
 - `Solutions` est la première entrée de navigation et la destination par défaut ;
-- `Application métier` est la deuxième entrée et `Organiser` la troisième ;
+- `Modèles` est la deuxième entrée et `Automatisation` la troisième ;
+- `Organiser` reste accessible depuis `Modèles` sans devenir un quatrième onglet ;
 - aucun onglet local ne mélange Solutions et Processus dans `Organiser` ;
 - aucune formation masquée n’est republiée ;
 - les six étapes restent identiques entre carte et article ;
@@ -78,5 +80,5 @@ contraste normal.
 Les quatorze routes ont été générées par la compilation de production. L’index,
 le pilote plomberie, le process map desktop et sa version mobile ont été
 contrôlés visuellement. La navigation affiche
-`Solutions · Application métier · Organiser` ; les tests ciblés, le lint et la
+`Solutions · Modèles · Automatisation` ; les tests ciblés, le lint et la
 compilation de production font partie de la recette obligatoire.

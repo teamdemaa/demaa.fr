@@ -50,7 +50,7 @@ Si les secrets Firebase ne sont pas configures dans GitHub Actions, le workflow 
 
 Variables serveur principales:
 
-- `SITE_URL` (recommande, ex. `https://demaa.co`)
+- `SITE_URL` (recommande, ex. `https://demaa.fr`)
 - `FIREBASE_PROJECT_ID`
 - `FIREBASE_CLIENT_EMAIL`
 - `FIREBASE_PRIVATE_KEY` ou `FIREBASE_SERVICE_ACCOUNT_KEY`

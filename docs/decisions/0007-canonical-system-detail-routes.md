@@ -51,5 +51,5 @@ maillage interne, les canonicals et une future internationalisation.
 3. les paramètres `tab` et les paramètres d'attribution sont conservés ;
 4. le sitemap contient 115 fiches `/systemes/[slug]` et aucune fiche
    `/kit-operationnel/[slug]` ;
-5. canonical, Open Graph et JSON-LD utilisent `https://demaa.co/systemes/...` ;
+5. canonical, Open Graph et JSON-LD utilisent `https://demaa.fr/systemes/...` ;
 6. les tests, lint, TypeScript, build et E2E desktop/mobile restent verts.

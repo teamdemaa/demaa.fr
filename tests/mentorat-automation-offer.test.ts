@@ -18,6 +18,7 @@ describe("Accompagnement à l’automatisation", () => {
     expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/automatisation");
     expect(mentoratAutomationContent.offer.duration).toBe("2 mois");
     expect(mentoratAutomationContent.offer.price).toBe("3 500 € HT");
+    expect(mentoratAutomationContent.hero.description).toContain("nous partons de votre travail réel");
     expect("sessions" in mentoratAutomationContent).toBe(false);
 
     const markup = renderToStaticMarkup(
@@ -123,7 +124,15 @@ describe("Accompagnement à l’automatisation", () => {
     expect(automationCases).toContain('sector: "Cabinet d’expertise comptable"');
     expect(automationCases).toContain('sector: "Entreprise du bâtiment"');
     expect(automationCases).toContain('sector: "Maintenance d’ascenseurs"');
+    expect(automationCases).toContain("25 % de temps gagné pour le collaborateur comptable");
+    expect(automationCases).toContain("30 % de temps gagné pour le gestionnaire de paie");
+    expect(automationCases).toContain("30 % de temps gagné pour le conducteur de travaux");
+    expect(automationCases).toContain("25 % de temps gagné pour le gestionnaire technique");
     expect(caseStudiesComponent).toContain("L’automatisation mise en place");
+    expect(caseStudiesComponent).toContain("Résultats observés sur les tâches concernées");
+    expect(landingPage).toContain("Trois situations accompagnées sur le terrain.");
+    expect(landingPage).toContain("Ces entreprises sont anonymisées.");
+    expect(landingPage).toContain("les tâches retenues sont simplifiées ou automatisées");
     expect(landingPage).not.toContain("Le contenu est défini après le diagnostic");
     expect(landingPage.indexOf('aria-labelledby="results-heading"')).toBeLessThan(
       landingPage.indexOf('aria-labelledby="automation-problem-heading"'),

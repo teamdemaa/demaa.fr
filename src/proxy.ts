@@ -5,9 +5,9 @@ import { getExplicitInterfaceLocaleFromPathname } from "@/lib/international-cont
 import { getPublishedCopyableModelBySlug } from "@/lib/copyable-model-catalog";
 import { buildDefaultHomeSolutionsHref } from "@/lib/action-plan-home-routing";
 
-const CANONICAL_HOST = "demaa.co";
+const CANONICAL_HOST = "demaa.fr";
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
-const LEGACY_HOSTS = new Set(["demaa.fr", "www.demaa.fr"]);
+const LEGACY_HOSTS = new Set(["demaa.co", "www.demaa.co", "www.demaa.fr"]);
 const RETIRED_EXACT_PATHS = new Set([
   "/annuaire-services",
   "/cockpit-preview",
@@ -55,7 +55,6 @@ export function proxy(request: NextRequest) {
       && host.endsWith(".vercel.app")
       && pathname.startsWith("/api/cron/");
     const shouldRedirect =
-      host === "www.demaa.co" ||
       LEGACY_HOSTS.has(host) ||
       (
         host.endsWith(".vercel.app")

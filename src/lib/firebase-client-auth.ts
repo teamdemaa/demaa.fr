@@ -33,7 +33,7 @@ function clientConfig() {
     : window.location.hostname.toLowerCase();
   return {
     ...configuredClientConfig,
-    authDomain: currentHost === "demaa.co"
+    authDomain: currentHost === "demaa.fr"
       ? currentHost
       : configuredClientConfig.authDomain,
   };
@@ -50,7 +50,7 @@ export function isFirebaseGoogleAuthAllowedOnCurrentHost() {
     .split(",")
     .map((value) => value.trim().toLowerCase())
     .filter(Boolean);
-  return hostname === "demaa.co"
+  return hostname === "demaa.fr"
     || hostname === "localhost"
     || hostname === "127.0.0.1"
     || configuredHosts.includes(hostname);
@@ -62,7 +62,7 @@ export function shouldUseGoogleRedirect() {
   // does not reliably complete the popup message channel in every browser.
   // Redirect authentication uses the same verified handler without leaving a
   // pending popup promise, so prefer it immediately in production.
-  if (window.location.hostname.toLowerCase() === "demaa.co") return true;
+  if (window.location.hostname.toLowerCase() === "demaa.fr") return true;
   const standalone = window.matchMedia("(display-mode: standalone)").matches
     || Boolean((window.navigator as Navigator & { standalone?: boolean }).standalone);
   return standalone || window.matchMedia("(max-width: 767px)").matches;

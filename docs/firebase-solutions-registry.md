@@ -238,7 +238,7 @@ La preuve E2E a couvert la création de session, la création transactionnelle d
 l'entreprise et de l'appartenance propriétaire, la création d'un plan vierge,
 son autosauvegarde, son rechargement et sa restauration via `/plans`. Cette
 configuration reste isolée de Production et ne vaut pas promotion de
-`demaa.co`.
+`demaa.fr`.
 
 ## Recette Firebase Preview du 5 août 2026
 

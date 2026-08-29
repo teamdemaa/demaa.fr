@@ -4,21 +4,32 @@ import { describe, expect, it } from "vitest";
 const read = (path: string) => readFileSync(path, "utf8");
 
 describe("Organiser public journey", () => {
-  const archivedLanding = read("src/components/OrganiserLandingPage.tsx");
   const organiserPage = read("src/app/(marketing)/organiser/page.tsx");
+  const organiserHub = read("src/components/OrganiserHub.tsx");
   const organiserDirectory = read("src/components/AcademyIndexClient.tsx");
   const processPage = read("src/app/(marketing)/organiser/processus/page.tsx");
 
-  it("restores the process directory at Organiser without a commercial landing", () => {
+  it("publishes one Organiser hub for models, cases and automation", () => {
     const navbar = read("src/components/Navbar.tsx");
 
-    expect(organiserPage).toContain("<AcademyIndexClient");
+    expect(organiserPage).toContain("<OrganiserHub />");
     expect(organiserPage).not.toContain("OrganiserSectionNavigation");
-    expect(organiserPage).toContain('backLink={{ href: "/modeles", label: "← Voir les modèles à copier" }}');
     expect(organiserPage).toContain('path: "/organiser"');
-    expect(organiserPage).not.toContain("academie/page");
-    expect(organiserPage).not.toContain("<OrganiserLandingPage");
+    expect(organiserHub).toContain("Des modèles et des cas concrets");
+    expect(organiserHub).toContain('href="/modeles"');
+    expect(organiserHub).toContain("Voir tous les modèles");
+    expect(organiserHub).toContain("<ModelProcessesBridge />");
+    expect(organiserHub).toContain("<MentoratAutomationCta");
+    expect(organiserHub).toContain("<StructureNewsletterBlock />");
     expect(navbar).not.toContain("Diagnostic organisation");
+  });
+
+  it("publishes the complete case directory below the Organiser hub", () => {
+    expect(processPage).toContain("<AcademyIndexClient");
+    expect(processPage).toContain('path: "/organiser/processus"');
+    expect(processPage).toContain(
+      'backLink={{ href: "/organiser", label: "← Retour à Organiser" }}',
+    );
     expect(organiserDirectory).toContain('href="/diagnostic-organisation"');
     expect(organiserDirectory).toContain("Diagnostic organisation");
     expect(organiserDirectory).toContain("Gratuit · Sans engagement");
@@ -27,46 +38,11 @@ describe("Organiser public journey", () => {
     );
   });
 
-  it("keeps Organiser as the only physical French content route", () => {
+  it("keeps the French Organiser routes explicit and free of retired workspaces", () => {
     expect(existsSync("src/app/(marketing)/academie/page.tsx")).toBe(false);
     expect(existsSync("src/app/(marketing)/academie/[slug]/page.tsx")).toBe(false);
-    expect(organiserPage).not.toContain("../academie");
-  });
-
-  it("keeps the guided setup draft warm but outside every public route", () => {
-    expect(archivedLanding).toContain(
-      "Conserved as an unpublished draft for a possible future accompanied setup page.",
-    );
-    expect(archivedLanding).toContain('href="/diagnostic-organisation"');
-    expect(archivedLanding).toContain("Diagnostic organisation");
-    expect(processPage).toContain('permanentRedirect("/organiser")');
-    expect(processPage).not.toContain("<AcademyIndexClient");
-  });
-
-  it("preserves the unpublished scope and price bases without offering them", () => {
-    expect(archivedLanding).toContain("À partir de 1 500 € HT");
-    expect(archivedLanding).toContain("Base de calcul : 550 € HT / jour");
-    expect(archivedLanding).toContain("4 500 € HT");
-    expect(archivedLanding).toContain("700 € HT par jour");
-    expect(archivedLanding).not.toContain("3 sessions");
-  });
-
-  it("keeps tools subordinate to the operating need", () => {
-    expect(archivedLanding).toContain(
-      "Nous choisissons les processus, les règles et les outils en fonction de votre fonctionnement.",
-    );
-    expect(archivedLanding).toContain("notamment Airtable, Fillout et Make");
-  });
-
-  it("keeps the draft complete if it is intentionally revived later", () => {
-    const discussion = read("src/components/OrganiserProjectDiscussionButton.tsx");
-
-    expect(archivedLanding).toContain("Faites gagner du temps à votre équipe");
-    expect(archivedLanding).toContain("automatiser les tâches réellement utiles");
-    expect(archivedLanding).toContain('href="/automatisation"');
-    expect(archivedLanding).toContain("<OrganiserProjectDiscussionButton");
-    expect(discussion).toContain("Discuter de votre projet");
-    expect(discussion).toContain("showCallbackAvailability");
-    expect(discussion).toContain("requirePhone");
+    expect(existsSync("src/components/OrganiserLandingPage.tsx")).toBe(false);
+    expect(existsSync("src/components/OrganiserWorkspace.tsx")).toBe(false);
+    expect(processPage).not.toContain("permanentRedirect");
   });
 });

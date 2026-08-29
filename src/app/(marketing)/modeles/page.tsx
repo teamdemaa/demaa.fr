@@ -1,6 +1,5 @@
 import CopyableModelsIndex from "@/components/CopyableModelsIndex";
 import MentoratAutomationCta from "@/components/MentoratAutomationCta";
-import ModelProcessesBridge from "@/components/ModelProcessesBridge";
 import Navbar from "@/components/Navbar";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import {
@@ -51,7 +50,6 @@ export default async function ModelsPage({ searchParams }: ModelsPageProps) {
       <Navbar minimal publicNavigationActiveView="academy" />
       <main className="min-h-screen bg-background">
         <CopyableModelsIndex models={models} systemName={enterprise?.name} />
-        <ModelProcessesBridge />
         <div className="mx-auto w-full max-w-7xl px-4 pt-16 sm:px-6 lg:px-8">
           <MentoratAutomationCta variant="modele" />
         </div>

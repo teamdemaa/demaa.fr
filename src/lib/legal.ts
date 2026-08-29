@@ -1,6 +1,6 @@
 export const LEGAL = {
   brandName: "Demaa",
-  domain: "demaa.co",
+  domain: "demaa.fr",
   legalEntityName: "Gory Oumou",
   legalStatus: "Entrepreneur individuel",
   legalRepresentative: "Gory Oumou",

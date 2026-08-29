@@ -35,6 +35,11 @@ export default function ApplicationMetierCaseStudies({
             <span className="mt-4 text-sm leading-6 text-dema-muted">
               {caseStudy.cardDescription}
             </span>
+            {isAutomation && caseStudy.results ? (
+              <span className="mt-5 border-t border-dema-line pt-4 text-sm font-medium leading-6 text-dema-forest">
+                {caseStudy.results.join(" · ")}
+              </span>
+            ) : null}
             <span className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-medium text-dema-forest">
               {actionLabel}
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
@@ -75,6 +80,25 @@ export default function ApplicationMetierCaseStudies({
               </p>
             </section>
           </div>
+
+          {isAutomation && selectedCaseStudy.results ? (
+            <section
+              className="mt-9 rounded-[1rem] bg-dema-sage/55 px-5 py-5 sm:px-6"
+              aria-labelledby={`${selectedCaseStudy.id}-results-heading`}
+            >
+              <h3
+                id={`${selectedCaseStudy.id}-results-heading`}
+                className="text-base font-medium text-brand-blue"
+              >
+                Résultats observés sur les tâches concernées
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm leading-6 text-dema-forest">
+                {selectedCaseStudy.results.map((result) => (
+                  <li key={result}>{result}</li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
 
           <section className="mt-9 border-t border-dema-line pt-8" aria-labelledby={`${selectedCaseStudy.id}-flow-heading`}>
             <h3 id={`${selectedCaseStudy.id}-flow-heading`} className="text-base font-medium text-brand-blue">

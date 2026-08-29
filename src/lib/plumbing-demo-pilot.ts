@@ -1,6 +1,6 @@
 const EM2A_FIRM_NAME = "EM2A Expertise";
 const EM2A_PROFILE_URL =
-  "https://demaa.co/annuaire-experts-comptables/cabinets/em2a-expertise";
+  "https://demaa.fr/annuaire-experts-comptables/cabinets/em2a-expertise";
 
 export const plumbingDemoCompany = {
   name: "Plomberie Horizon",
@@ -285,7 +285,7 @@ export const plumbingDemoEcosystem = [
     "Déjà utilisé",
     "Voir tarif actuel",
     "2026-08-31",
-    "https://demaa.co/annuaire-outils/obat",
+    "https://demaa.fr/annuaire-outils/obat",
     "Logiciel central retenu pour les devis, factures, acomptes et situations de travaux.",
   ],
   [
@@ -296,7 +296,7 @@ export const plumbingDemoEcosystem = [
     "À comparer",
     "Voir tarif actuel",
     "2026-09-15",
-    "https://demaa.co/annuaire-outils/alobees",
+    "https://demaa.fr/annuaire-outils/alobees",
     "À comparer uniquement si la coordination de plusieurs équipes devient prioritaire.",
   ],
   [
@@ -307,7 +307,7 @@ export const plumbingDemoEcosystem = [
     "À comparer",
     "Voir tarif actuel",
     "2026-09-30",
-    "https://demaa.co/annuaire-outils/kizeo-forms",
+    "https://demaa.fr/annuaire-outils/kizeo-forms",
     "À évaluer pour remplacer les fiches papier et centraliser les preuves terrain.",
   ],
   [
@@ -340,7 +340,7 @@ export const plumbingDemoEcosystem = [
     "À comparer",
     "Selon commandes",
     "2026-09-30",
-    "https://demaa.co/annuaire-fournisseurs/cedeo-pro",
+    "https://demaa.fr/annuaire-fournisseurs/cedeo-pro",
     "Comparer prix, délai et erreurs de livraison.",
   ],
   [
@@ -351,7 +351,7 @@ export const plumbingDemoEcosystem = [
     "À comparer",
     "Selon commandes",
     "2026-09-30",
-    "https://demaa.co/annuaire-fournisseurs/wurth",
+    "https://demaa.fr/annuaire-fournisseurs/wurth",
     "Liste d’articles récurrents à négocier avec les conditions professionnelles.",
   ],
   [
@@ -362,7 +362,7 @@ export const plumbingDemoEcosystem = [
     "À étudier",
     "Selon location",
     "2026-10-15",
-    "https://demaa.co/annuaire-fournisseurs/kiloutou",
+    "https://demaa.fr/annuaire-fournisseurs/kiloutou",
     "Louer lorsque le matériel n’a pas d’usage suffisamment récurrent pour être acheté.",
   ],
   [
@@ -373,7 +373,7 @@ export const plumbingDemoEcosystem = [
     "À comparer",
     "Sur devis",
     "2026-11-15",
-    "https://demaa.co/annuaire-fournisseurs/orus",
+    "https://demaa.fr/annuaire-fournisseurs/orus",
     "Attestation à renouveler avant échéance.",
   ],
 ] as const;

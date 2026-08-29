@@ -63,7 +63,7 @@ describe("Demaa application navbar", () => {
     );
   });
 
-  it("uses Modèles as the concrete public French destination", async () => {
+  it("uses Organiser as the public hub for models and concrete cases", async () => {
     const source = await readFile(
       new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
       "utf8",
@@ -73,17 +73,18 @@ describe("Demaa application navbar", () => {
       "utf8",
     );
 
-    expect(source).toContain('label: "Modèles", href: "/modeles"');
+    expect(source).toContain('label: "Organiser", href: "/organiser"');
     expect(source).toContain('label: "Solutions", href: "/solutions"');
     expect(source).toContain('label: "Automatisation", href: "/automatisation"');
     expect(source).toContain("leading-tight");
     expect(source).not.toContain("leading-none");
-    expect(organiserIndex).not.toContain("OrganiserLandingPage");
+    expect(organiserIndex).toContain("OrganiserHub");
     expect(organiserIndex).toContain('path: "/organiser"');
-    expect(organiserIndex).toContain('<Navbar publicNavigationActiveView="academy" />');
+    expect(organiserIndex).not.toContain("<Navbar");
     expect(organiserIndex).not.toContain("<ActionPlanNavbar");
     expect(organiserIndex).not.toContain("OrganiserSectionNavigation");
-    expect(organiserIndex).toContain('label: "← Voir les modèles à copier"');
+    expect(organiserIndex).toContain('{ name: "Modèles prêts à copier", path: "/modeles" }');
+    expect(organiserIndex).toContain('{ name: "Cas concrets et processus", path: "/organiser/processus" }');
   });
 
   it("replaces the sign-in action with account access once a session is active", async () => {

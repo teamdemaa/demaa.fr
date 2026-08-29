@@ -14,7 +14,7 @@ describe("marketing hero typography", () => {
     for (const path of [
       "src/components/ActionPlanHeroTitle.tsx",
       "src/components/ApplicationMetierLandingPage.tsx",
-      "src/components/OrganiserWorkspace.tsx",
+      "src/components/MentoratAutomationLandingPage.tsx",
     ]) {
       expect(source(path)).toContain("satoshiHeroTitleClassName");
     }

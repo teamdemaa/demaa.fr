@@ -14,6 +14,7 @@ export const ACADEMY_CONTENT_SLUGS = [
   "formation-b2b-acquisition",
   "bureau-etudes-acquisition",
   "organiser-entreprise-plomberie",
+  "demandes-clients-cabinet-comptable",
   "organiser-demandes-devis-renovation",
   "organiser-chantier-menuiserie",
   "organiser-interventions-nettoyage",

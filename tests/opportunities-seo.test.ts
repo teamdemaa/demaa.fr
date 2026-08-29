@@ -47,7 +47,7 @@ describe("Annonces SEO structured data", () => {
         "@type": "CollectionPage",
         name: "Annonces | Demaa",
         description: "Découvrez les annonces actuellement disponibles.",
-        url: "https://demaa.co/opportunites",
+        url: "https://demaa.fr/opportunites",
       },
       {
         "@context": "https://schema.org",
@@ -58,7 +58,7 @@ describe("Annonces SEO structured data", () => {
             "@type": "ListItem",
             position: 1,
             name: "Salon de beauté à reprendre au Teich",
-            url: "https://demaa.co/opportunites?opportunity=salon-de-beaute-a-reprendre-au-teich-20dfcd",
+            url: "https://demaa.fr/opportunites?opportunity=salon-de-beaute-a-reprendre-au-teich-20dfcd",
           },
         ],
       },
@@ -66,8 +66,8 @@ describe("Annonces SEO structured data", () => {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Accueil", item: "https://demaa.co" },
-          { "@type": "ListItem", position: 2, name: "Annonces", item: "https://demaa.co/opportunites" },
+          { "@type": "ListItem", position: 1, name: "Accueil", item: "https://demaa.fr" },
+          { "@type": "ListItem", position: 2, name: "Annonces", item: "https://demaa.fr/opportunites" },
         ],
       },
     ]);

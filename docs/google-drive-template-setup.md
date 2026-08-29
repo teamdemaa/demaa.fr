@@ -17,17 +17,17 @@ Le modèle `structure-google-drive-entreprise` fonctionne sans configuration en 
 5. Dans `Clients`, créer un client OAuth de type `Web application`.
 6. Ajouter l’URI de redirection de production, à l’identique :
 
-   `https://demaa.co/api/modeles/structure-google-drive-entreprise/drive/callback`
+   `https://demaa.fr/api/modeles/structure-google-drive-entreprise/drive/callback`
 
-Pour le développement local actuel sur le port 4173, ajouter également :
+Pour le développement local actuel sur le port 3000, ajouter également :
 
-   `http://127.0.0.1:4173/api/modeles/structure-google-drive-entreprise/drive/callback`
+   `http://127.0.0.1:3000/api/modeles/structure-google-drive-entreprise/drive/callback`
 
 Le protocole, l’hôte, le port, le chemin et l’éventuel slash final doivent
 correspondre exactement. Si le site est ouvert avec `localhost` plutôt que
 `127.0.0.1`, ajouter et utiliser cette variante :
 
-   `http://localhost:4173/api/modeles/structure-google-drive-entreprise/drive/callback`
+   `http://localhost:3000/api/modeles/structure-google-drive-entreprise/drive/callback`
 
 ## Variables d’environnement
 

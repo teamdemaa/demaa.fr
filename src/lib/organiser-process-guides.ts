@@ -245,6 +245,194 @@ export const ORGANISER_PROCESS_GUIDES: AcademyContentDefinition[] = [
     },
   }),
   defineProcessGuide({
+    slug: "demandes-clients-cabinet-comptable",
+    title: "Comment organiser les demandes clients d’un cabinet comptable, de la réception à la résolution",
+    cardTitle: "Comment organiser les demandes clients d’un cabinet comptable ?",
+    shortTitle: "Demandes clients en cabinet comptable",
+    category: "Relation client",
+    promise:
+      "Un processus pour centraliser chaque demande client, désigner le bon responsable, tenir le client informé et clôturer le sujet sans dépendre des boîtes e-mail individuelles.",
+    guide: {
+      sector: "Gestion des demandes clients d’un cabinet comptable",
+      company: {
+        profile:
+          "Ce cabinet d’expertise comptable réunit quinze personnes entre comptabilité, paie et accueil. Les clients sollicitent l’équipe par e-mail, téléphone, portail et messages directs.",
+        friction:
+          "Une demande peut être lue par plusieurs personnes sans que le responsable soit clair. Le client relance, le collaborateur recherche les échanges et la direction intervient pour retrouver le sujet.",
+      },
+      processTitle: "Le processus de demande client à mettre en place",
+      processIntroduction:
+        "Le client conserve ses canaux habituels. Dans le cabinet, chaque sollicitation avance avec un responsable, une échéance et une réponse conservée.",
+      steps: [
+        {
+          label: "Demande reçue",
+          title: "Créer une trace sans imposer un nouveau réflexe au client",
+          input:
+            "Un e-mail, un appel, un message depuis le portail ou une sollicitation adressée directement à un membre de l’équipe.",
+          description:
+            "La personne qui reçoit la sollicitation crée une trace commune. Le canal reste un moyen d’entrée, pas l’endroit où le cabinet pilote le travail.",
+          owner: "La personne qui reçoit ou consulte la demande",
+          output:
+            "Une demande horodatée avec le message initial, le nom du client, le canal utilisé et une première date de prise en charge.",
+          control:
+            "Avant la fin de la demi-journée, toute sollicitation nécessitant une action apparaît dans la file commune.",
+        },
+        {
+          label: "Client identifié",
+          title: "Rattacher la demande au bon dossier",
+          input:
+            "La sollicitation tracée, les coordonnées de l’interlocuteur et les informations permettant de reconnaître l’entreprise concernée.",
+          description:
+            "La demande est reliée au bon client et, si nécessaire, à la période ou au salarié concerné. Le contexte reste accessible sans rechercher plusieurs boîtes e-mail.",
+          owner: "L’accueil, l’assistant ou le collaborateur qui connaît le dossier",
+          output:
+            "Une demande rattachée à la fiche client, avec le responsable habituel et le contexte disponible.",
+          control:
+            "Aucune demande n’avance avec un client ambigu, un interlocuteur non vérifié ou un dossier impossible à retrouver dans les outils du cabinet.",
+        },
+        {
+          label: "Besoin qualifié",
+          title: "Comprendre ce qui est réellement attendu",
+          input:
+            "La demande rattachée au client, son message d’origine et les informations déjà présentes dans le dossier ou les échanges précédents.",
+          description:
+            "Le sujet est classé puis reformulé en résultat attendu. Échéance, urgence et informations manquantes deviennent explicites avant l’affectation.",
+          owner: "Le collaborateur référent ou la personne habilitée dans le domaine concerné",
+          output:
+            "Une demande avec une catégorie, une priorité, une échéance et la prochaine action nécessaire.",
+          control:
+            "Une urgence doit correspondre à un critère partagé ; si une information manque, la demande précise exactement ce qui doit être obtenu et auprès de qui.",
+        },
+        {
+          label: "Responsable attribué",
+          title: "Rendre la prochaine action incontestable",
+          input:
+            "Une demande qualifiée, son domaine, son échéance et les compétences ou autorisations nécessaires pour apporter la réponse attendue.",
+          description:
+            "Une seule personne porte la prochaine action, même si plusieurs métiers contribuent. Elle coordonne le sujet et tient le client informé.",
+          owner: "Le responsable de dossier ou le manager du pôle concerné",
+          output:
+            "Un responsable nommé, une prochaine action datée et les contributeurs nécessaires à la résolution.",
+          control:
+            "La file commune signale chaque demande sans responsable, sans échéance ou attribuée à une personne absente sans relais défini.",
+        },
+        {
+          label: "Réponse apportée",
+          title: "Traiter puis conserver une réponse exploitable",
+          input:
+            "La demande qualifiée, les éléments du dossier, les contributions internes et les validations nécessaires avant l’envoi au client.",
+          description:
+            "Le responsable agit ou répond dans le canal adapté. Le message final, le document transmis et les décisions utiles restent rattachés à la demande.",
+          owner: "Le collaborateur responsable de la demande",
+          output:
+            "Une réponse envoyée ou une action réalisée, avec les documents et validations utiles au dossier.",
+          control:
+            "Avant l’envoi, les réponses engageantes, sensibles ou hors du périmètre habituel suivent le niveau de validation défini par le cabinet.",
+        },
+        {
+          label: "Demande clôturée",
+          title: "Confirmer la résolution et fermer la boucle",
+          input:
+            "La réponse envoyée, l’action réalisée et les éventuelles confirmations ou informations complémentaires reçues du client.",
+          description:
+            "La demande se clôture lorsque le résultat attendu est obtenu. Toute suite nécessaire conserve un responsable et une nouvelle échéance.",
+          owner: "Le responsable de la demande",
+          output:
+            "Une demande clôturée avec son résultat, sa date de résolution et une trace dans le dossier client.",
+          control:
+            "La clôture est refusée si une promesse faite au client, une pièce attendue ou une action interne reste ouverte sans nouvelle demande clairement créée.",
+        },
+      ],
+      rulesTitle: "Les règles qui évitent les demandes oubliées",
+      rules: [
+        {
+          title: "Une demande qui exige une action laisse une trace",
+          description:
+            "Un e-mail lu ou un appel pris ne suffit pas lorsque le cabinet doit répondre, produire un document, contrôler une information ou rappeler le client.",
+        },
+        {
+          title: "Un seul responsable porte la prochaine action",
+          description:
+            "Plusieurs personnes peuvent contribuer, mais une personne reste responsable du délai, de la coordination et du retour fait au client.",
+        },
+        {
+          title: "L’urgence suit des critères partagés",
+          description:
+            "Une échéance légale proche, un blocage de paie ou un risque financier ne se traite pas comme une simple demande d’information ; les critères sont connus de l’accueil et des équipes.",
+        },
+        {
+          title: "Le client reçoit un signe de prise en charge",
+          description:
+            "Lorsque la réponse ne peut pas être immédiate, le cabinet confirme qui traite la demande et à quel moment un retour peut être attendu.",
+        },
+      ],
+      implementation: {
+        startingPoint:
+          "Observez une semaine de demandes dans une petite équipe pilote. Listez les canaux, les sujets fréquents et les informations nécessaires, puis créez une file commune avec le client, le sujet, le responsable, l’échéance et le statut.",
+        cadence:
+          "Chaque collaborateur contrôle ses demandes deux fois par jour. Le pôle examine les sujets sans responsable, proches de l’échéance ou bloqués. Les demandes répétitives deviennent progressivement des réponses types ou des automatisations simples.",
+        escalation:
+          "La direction intervient si la demande engage le cabinet, sort de la lettre de mission, révèle un litige ou dépasse un seuil de risque convenu. Les sujets courants restent dans l’équipe.",
+      },
+      example: {
+        title: "un salarié à ajouter avant la prochaine paie",
+        body:
+          "Un dirigeant signale une embauche par e-mail. La demande est rattachée au client, qualifiée en paie et attribuée au gestionnaire concerné. Celui-ci demande les informations manquantes et confirme la date limite. Il réalise ensuite l’ajout, informe le client et clôture la demande.",
+      },
+      tools: [
+        {
+          slug: "tiimora",
+          name: "Tiimora",
+          description:
+            "Pour centraliser les demandes, les rattacher aux dossiers clients, suivre les responsables, les relances et les réponses du cabinet.",
+        },
+        {
+          slug: "pennylane",
+          name: "Pennylane",
+          description:
+            "Pour conserver la continuité avec la production comptable et les échanges documentaires lorsque le cabinet utilise déjà cet environnement.",
+        },
+      ],
+      system: { slug: "cabinet-comptable", label: "Cabinet comptable" },
+      checklist: [
+        "Définir ce qui doit devenir une demande suivie.",
+        "Créer les six statuts du parcours dans l’outil commun.",
+        "Nommer un responsable et une échéance pour chaque demande.",
+        "Écrire les critères d’urgence et les niveaux de validation.",
+        "Tester le circuit avec les demandes réelles d’une semaine.",
+      ],
+      faqs: [
+        {
+          question: "Faut-il obliger les clients à utiliser un portail ?",
+          answer:
+            "Non. Les clients conservent leurs canaux. Toute sollicitation qui exige une action doit simplement rejoindre la file commune et recevoir un responsable.",
+        },
+        {
+          question: "Comment éviter de créer une demande pour chaque petit message ?",
+          answer:
+            "Créez une demande lorsqu’un retour, une production ou une action différée est nécessaire. Une information immédiatement classée n’exige pas de suivi séparé.",
+        },
+        {
+          question: "Qui doit piloter la file des demandes clients ?",
+          answer:
+            "Chaque collaborateur pilote ses demandes. L’accueil surveille les sujets non attribués et les managers traitent les blocages ou échéances à risque.",
+        },
+      ],
+      conclusion:
+        "Une demande client entre une seule fois dans l’organisation, reste visible jusqu’à sa résolution et ne dépend plus de la mémoire d’une personne ou d’une boîte e-mail.",
+      editorialReview: {
+        clarity: 4,
+        realism: 4,
+        immediateUsefulness: 4,
+        exampleQuality: 2,
+        toolRelevance: 2,
+        consistency: 2,
+        readability: 1,
+        reviewedAt: "2026-08-29",
+      },
+    },
+  }),
+  defineProcessGuide({
     slug: "organiser-demandes-devis-renovation",
     title: "Comment organiser les demandes de devis d’une entreprise de rénovation, du premier contact à la signature",
     cardTitle: "Comment organiser les demandes de devis d’une entreprise de rénovation ?",
@@ -1038,4 +1226,9 @@ export const ORGANISER_PROCESS_GUIDES: AcademyContentDefinition[] = [
       editorialReview: { clarity: 4, realism: 4, immediateUsefulness: 4, exampleQuality: 2, toolRelevance: 2, consistency: 2, readability: 1, reviewedAt: "2026-08-25" },
     },
   }),
-];
+].sort((left, right) => {
+  const firstSlug = "demandes-clients-cabinet-comptable";
+  if (left.identity.slug === firstSlug) return -1;
+  if (right.identity.slug === firstSlug) return 1;
+  return 0;
+});

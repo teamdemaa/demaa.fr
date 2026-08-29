@@ -14,7 +14,7 @@ describe("accounting recommendation", () => {
       profilePath:
         "/annuaire-experts-comptables/cabinets/em2a-expertise",
       profileUrl:
-        "https://demaa.co/annuaire-experts-comptables/cabinets/em2a-expertise",
+        "https://demaa.fr/annuaire-experts-comptables/cabinets/em2a-expertise",
     });
   });
 

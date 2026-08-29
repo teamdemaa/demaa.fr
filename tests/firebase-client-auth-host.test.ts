@@ -11,7 +11,7 @@ function useHostname(hostname: string) {
 
 describe("Firebase Google auth hosts", () => {
   it.each([
-    "demaa.co",
+    "demaa.fr",
     "localhost",
     "127.0.0.1",
   ])("allows %s", (hostname) => {
@@ -20,7 +20,7 @@ describe("Firebase Google auth hosts", () => {
   });
 
   it.each([
-    "demaa.fr",
+    "demaa.co",
     "demaa-fr-git-unknown-preview.vercel.app",
     "vercel.app.example.com",
     "example.com",

@@ -422,7 +422,7 @@ function buildToolRows(enterprise: Enterprise) {
         status: "À comparer",
         cost: tool.pricingHint || "Voir tarif actuel",
         targetDate: "",
-        url: `https://demaa.co/annuaire-outils/${canonicalSlug}`,
+        url: `https://demaa.fr/annuaire-outils/${canonicalSlug}`,
         notes: tool.bestFor,
       };
     })
@@ -506,7 +506,7 @@ function buildEcosystemRows(
       status: "À comparer",
       cost: supplier.offerHint,
       targetDate: "",
-      url: `https://demaa.co/annuaire-fournisseurs/${supplier.slug}`,
+      url: `https://demaa.fr/annuaire-fournisseurs/${supplier.slug}`,
       notes: supplier.bestFor,
     }));
   const financialSupplier = suppliers.find((supplier) =>
@@ -543,7 +543,7 @@ function buildEcosystemRows(
       status: "À comparer",
       cost: financialSupplier.offerHint,
       targetDate: "",
-      url: `https://demaa.co/annuaire-fournisseurs/${financialSupplier.slug}`,
+      url: `https://demaa.fr/annuaire-fournisseurs/${financialSupplier.slug}`,
       notes: financialSupplier.bestFor,
     });
   }

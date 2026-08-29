@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { AUTOMATION_OFFER } from "@/lib/automation-offer";
 import { AUTOMATION_ACCOMPANIMENT_PATH } from "@/lib/mentorat-automation-content";
 
 type MentoratAutomationCtaProps = Readonly<{
@@ -49,8 +50,7 @@ function getCopy({ modelSlug, systemName, variant }: MentoratAutomationCtaProps)
 
   return {
     title: "Faites gagner du temps à votre équipe grâce à l’automatisation",
-    description:
-      "Pendant 2 mois, nous aidons votre équipe à réduire les ressaisies, les relances et les mises à jour inutiles, puis à garder la maîtrise des automatisations mises en place.",
+    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, nous aidons votre équipe à réduire les ressaisies, les relances et les mises à jour inutiles, puis à garder la maîtrise des automatisations mises en place.`,
   };
 }
 
@@ -64,10 +64,7 @@ export default function MentoratAutomationCta(props: MentoratAutomationCtaProps)
     >
       <div className="grid gap-7 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12">
         <div className="max-w-3xl">
-          <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-sage">
-            Accompagnement à l’automatisation
-          </p>
-          <h2 className="mt-5 text-2xl font-light leading-tight tracking-[-0.035em] sm:text-3xl">
+          <h2 className="text-2xl font-light leading-tight tracking-[-0.035em] sm:text-3xl">
             {copy.title}
           </h2>
           <p className="mt-4 max-w-2xl text-sm leading-6 text-dema-paper/72 sm:text-base sm:leading-7">

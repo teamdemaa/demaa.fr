@@ -33,7 +33,7 @@ async function fetchPage(path, redirect = "follow") {
   return fetch(`${baseUrl}${path}`, {
     redirect,
     signal: AbortSignal.timeout(timeoutMs),
-    headers: { "user-agent": "Demaa system audit (+https://demaa.co)" },
+    headers: { "user-agent": "Demaa system audit (+https://demaa.fr)" },
   });
 }
 
@@ -50,7 +50,7 @@ async function inspectEnterprise(enterprise) {
       .replace(/<!--[\s\S]*?-->/g, "");
 
     if (overviewResponse.status !== 200) errors.push(`canonical HTTP ${overviewResponse.status}`);
-    if (!overviewHtml.includes(`<link rel="canonical" href="https://demaa.co${canonicalPath}"/>`)) {
+    if (!overviewHtml.includes(`<link rel="canonical" href="https://demaa.fr${canonicalPath}"/>`)) {
       errors.push("canonical link missing or incorrect");
     }
     if (!overviewHtml.includes("Système métier")) {

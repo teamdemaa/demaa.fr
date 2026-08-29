@@ -17,8 +17,8 @@ afterEach(() => {
 describe("proxy content security policy", () => {
   it("keeps the English beta disabled by default and marks its response", () => {
     delete process.env.DEMAA_ENGLISH_BETA_ENABLED;
-    const response = proxy(new NextRequest("https://demaa.co/en", {
-      headers: { host: "demaa.co" },
+    const response = proxy(new NextRequest("https://demaa.fr/en", {
+      headers: { host: "demaa.fr" },
     }));
     expect(response.status).toBe(404);
     expect(response.headers.get("content-language")).toBe("en");
@@ -27,15 +27,15 @@ describe("proxy content security policy", () => {
 
   it("forwards the centrally resolved locale only when the beta flag is enabled", () => {
     process.env.DEMAA_ENGLISH_BETA_ENABLED = "true";
-    const english = proxy(new NextRequest("https://demaa.co/en", {
-      headers: { host: "demaa.co" },
+    const english = proxy(new NextRequest("https://demaa.fr/en", {
+      headers: { host: "demaa.fr" },
     }));
     expect(english.status).toBe(200);
     expect(english.headers.get("content-language")).toBe("en");
     expect(english.headers.get("x-middleware-request-x-demaa-locale")).toBe("en");
 
-    const french = proxy(new NextRequest("https://demaa.co/solutions", {
-      headers: { host: "demaa.co", "x-demaa-locale": "en" },
+    const french = proxy(new NextRequest("https://demaa.fr/solutions", {
+      headers: { host: "demaa.fr", "x-demaa-locale": "en" },
     }));
     expect(french.headers.get("content-language")).toBe("fr");
     expect(french.headers.get("x-middleware-request-x-demaa-locale")).toBe("fr");
@@ -43,8 +43,8 @@ describe("proxy content security policy", () => {
 
   it("allows the active embeds and Firebase Google Auth while preserving the policy", () => {
     const response = proxy(
-      new NextRequest("https://demaa.co/cours/exemple", {
-        headers: { host: "demaa.co" },
+      new NextRequest("https://demaa.fr/cours/exemple", {
+        headers: { host: "demaa.fr" },
       }),
     );
     const policy = response.headers.get("content-security-policy");
@@ -73,8 +73,8 @@ describe("proxy content security policy", () => {
     expect(helperPolicy).not.toContain("frame-ancestors 'none'");
 
     const response = proxy(
-      new NextRequest("https://demaa.co/__/auth/iframe", {
-        headers: { host: "demaa.co" },
+      new NextRequest("https://demaa.fr/__/auth/iframe", {
+        headers: { host: "demaa.fr" },
       }),
     );
     expect(response.headers.get("content-security-policy")).toContain(
@@ -82,7 +82,7 @@ describe("proxy content security policy", () => {
     );
   });
 
-  it.each(["demaa.fr", "www.demaa.fr", "www.demaa.co"])(
+  it.each(["demaa.co", "www.demaa.co", "www.demaa.fr"])(
     "redirects %s to the canonical domain while preserving path and query",
     (host) => {
       const response = proxy(
@@ -93,22 +93,22 @@ describe("proxy content security policy", () => {
 
       expect(response.status).toBe(308);
       expect(response.headers.get("location")).toBe(
-        "https://demaa.co/systemes/restaurant?tab=solutions",
+        "https://demaa.fr/systemes/restaurant?tab=solutions",
       );
     },
   );
 
   it("redirects a legacy API request without dropping its query", () => {
     const response = proxy(
-      new NextRequest("https://demaa.fr/api/systeme-kit/request?source=legacy", {
-        headers: { host: "demaa.fr" },
+      new NextRequest("https://demaa.co/api/systeme-kit/request?source=legacy", {
+        headers: { host: "demaa.co" },
         method: "POST",
       }),
     );
 
     expect(response.status).toBe(308);
     expect(response.headers.get("location")).toBe(
-      "https://demaa.co/api/systeme-kit/request?source=legacy",
+      "https://demaa.fr/api/systeme-kit/request?source=legacy",
     );
   });
 
@@ -156,20 +156,20 @@ describe("proxy content security policy", () => {
 
     expect(response.status).toBe(308);
     expect(response.headers.get("location")).toBe(
-      "https://demaa.co/admin/demandes",
+      "https://demaa.fr/admin/demandes",
     );
   });
 
   it("redirects a retired legacy path before applying the canonical 404 policy", () => {
     const response = proxy(
-      new NextRequest("https://demaa.fr/structuration?source=legacy", {
-        headers: { host: "demaa.fr" },
+      new NextRequest("https://demaa.co/structuration?source=legacy", {
+        headers: { host: "demaa.co" },
       }),
     );
 
     expect(response.status).toBe(308);
     expect(response.headers.get("location")).toBe(
-      "https://demaa.co/structuration?source=legacy",
+      "https://demaa.fr/structuration?source=legacy",
     );
   });
 
@@ -178,8 +178,8 @@ describe("proxy content security policy", () => {
     "/ressources/ancien-modele",
   ])("returns a real 404 for retired route %s", (pathname) => {
     const response = proxy(
-      new NextRequest(`https://demaa.co${pathname}`, {
-        headers: { host: "demaa.co" },
+      new NextRequest(`https://demaa.fr${pathname}`, {
+        headers: { host: "demaa.fr" },
       }),
     );
 
@@ -200,13 +200,13 @@ describe("proxy content security policy", () => {
       "suivi-client-et-support",
     ];
     const published = publishedSlugs.map((slug) => proxy(
-      new NextRequest(`https://demaa.co/modeles/${slug}`, {
-        headers: { host: "demaa.co" },
+      new NextRequest(`https://demaa.fr/modeles/${slug}`, {
+        headers: { host: "demaa.fr" },
       }),
     ));
     const unknown = proxy(
-      new NextRequest("https://demaa.co/modeles/modele-inconnu", {
-        headers: { host: "demaa.co" },
+      new NextRequest("https://demaa.fr/modeles/modele-inconnu", {
+        headers: { host: "demaa.fr" },
       }),
     );
 

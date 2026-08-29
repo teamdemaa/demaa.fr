@@ -1,11 +1,11 @@
-import { Copy, LayoutGrid, Workflow } from "lucide-react";
+import { LayoutGrid, ListTree, Workflow } from "lucide-react";
 import Link from "next/link";
 
 export type PublicActionPlanView = "solutions" | "academy" | "services";
 
 const navigationItems = [
   { view: "solutions", label: "Solutions", href: "/solutions", Icon: LayoutGrid },
-  { view: "academy", label: "Modèles", href: "/modeles", Icon: Copy },
+  { view: "academy", label: "Organiser", href: "/organiser", Icon: ListTree },
   { view: "services", label: "Automatisation", href: "/automatisation", Icon: Workflow },
 ] as const;
 

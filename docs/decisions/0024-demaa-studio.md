@@ -20,8 +20,7 @@ observation du terrain.
 La page publique s'appelle `Demaa Studio` et utilise la route canonique
 `/studio`. Elle est reliée uniquement depuis le footer, sous `Collaborer avec
 Demaa`. Elle n'apparaît pas dans la navigation principale, qui reste
-`Solutions / Application métier / Organiser` avec le CTA transversal
-`Diagnostic organisation`.
+`Solutions / Modèles / Automatisation`.
 
 Le positionnement public est :
 
@@ -79,5 +78,5 @@ La suite complète passe avec 280 fichiers de tests et 1 581 tests. Le lint,
 TypeScript, les validations Academy et données ainsi que le build de production
 à 487 pages sont verts. Les trois modals Application métier, la navigation, le
 focus clavier, l’absence de débordement mobile et la page Studio ont été
-contrôlés localement puis sur `demaa.co`. Le déploiement de production issu du
+contrôlés localement puis sur `demaa.fr`. Le déploiement de production issu du
 commit `d01a3425` est `READY` et les logs Vercel ne contiennent aucune erreur.

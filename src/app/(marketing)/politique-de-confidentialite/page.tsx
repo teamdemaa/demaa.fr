@@ -3,7 +3,7 @@ import { LEGAL, LEGAL_COPY } from "@/lib/legal";
 
 export const metadata = {
   title: "Politique de confidentialité - Demaa",
-  description: "Politique de confidentialité du site demaa.co.",
+  description: "Politique de confidentialité du site demaa.fr.",
 };
 
 function PrivacySection({

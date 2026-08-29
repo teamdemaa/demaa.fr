@@ -24,7 +24,7 @@ vérifiés protègent les trois espaces admin.
 1. Ouvrir `/admin/connexion` et se connecter avec un compte dont l'UID figure dans
    `DEMAA_ADMIN_UIDS`, ou avec une adresse Firebase vérifiée figurant dans
    `DEMAA_ADMIN_EMAILS`.
-2. Ouvrir `https://demaa.co/admin/coaching`, `/admin/opportunites` ou
+2. Ouvrir `https://demaa.fr/admin/coaching`, `/admin/opportunites` ou
    `/admin/demandes`.
 3. La page vérifie la session Team côté serveur et redirige vers
    `/admin/connexion` si

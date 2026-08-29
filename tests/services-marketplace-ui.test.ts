@@ -307,12 +307,10 @@ describe("canonical Accompagnement catalog", () => {
 
   it("keeps legacy catalogs out of every canonical public Services module", async () => {
     const publicModules = await Promise.all([
-      "src/app/(marketing)/services/page.tsx",
       "src/app/(marketing)/services/[slug]/page.tsx",
       "src/app/@modal/(.)services/[slug]/page.tsx",
       "src/components/CanonicalServiceDetails.tsx",
       "src/components/ServicesCatalog.tsx",
-      "src/components/ServicesLandingPage.tsx",
       "src/lib/services-seo.ts",
     ].map(readSource));
 

@@ -40,7 +40,7 @@ la query string.
 | `/api/systeme-kit/request` | Livraison idempotente et résolution serveur des révisions historiques. |
 | `/api/systeme-kit/open/:resourceSlug` | Ouverture des ressources autorisées sans exposer leur destination privée dans le navigateur. |
 | `modeles` et `modeles-de-documents` en paramètre d'onglet | Alias de compatibilité vers `resources` sur une fiche Système. |
-| anciens domaines Demaa | Première redirection vers la même URL sur `https://demaa.co`, chemin et query conservés. |
+| anciens domaines Demaa | Première redirection vers la même URL sur `https://demaa.fr`, chemin et query conservés. |
 
 ## Routes explicitement hors lot
 

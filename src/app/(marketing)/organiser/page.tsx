@@ -1,15 +1,13 @@
-import AcademyIndexClient from "@/components/AcademyIndexClient";
-import Navbar from "@/components/Navbar";
-import { getAllAcademyContent } from "@/lib/academy-course-content";
+import OrganiserHub from "@/components/OrganiserHub";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 import {
   buildPublicIndexJsonLd,
   serializePublicJsonLd,
 } from "@/lib/public-index-json-ld";
 
-const title = "Des cas concrets pour mieux organiser votre entreprise | Demaa";
+const title = "Modèles et cas concrets pour organiser son activité | Demaa";
 const description =
-  "Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité.";
+  "Des modèles prêts à copier et des cas concrets pour mieux organiser le travail dans votre entreprise.";
 
 export const metadata = buildPublicPageMetadata({
   title,
@@ -18,15 +16,14 @@ export const metadata = buildPublicPageMetadata({
 });
 
 export default function OrganiserIndexPage() {
-  const contents = getAllAcademyContent();
   const jsonLd = buildPublicIndexJsonLd({
     name: "Organiser",
     description,
     path: "/organiser",
-    items: contents.map((content) => ({
-      name: content.identity.shortTitle,
-      path: `/organiser/${content.identity.slug}`,
-    })),
+    items: [
+      { name: "Modèles prêts à copier", path: "/modeles" },
+      { name: "Cas concrets et processus", path: "/organiser/processus" },
+    ],
   });
 
   return (
@@ -35,11 +32,7 @@ export default function OrganiserIndexPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializePublicJsonLd(jsonLd) }}
       />
-      <Navbar publicNavigationActiveView="academy" />
-      <AcademyIndexClient
-        contents={contents}
-        backLink={{ href: "/modeles", label: "← Voir les modèles à copier" }}
-      />
+      <OrganiserHub />
     </>
   );
 }

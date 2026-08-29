@@ -13,7 +13,7 @@
 
 ## État de livraison
 
-Le parcours public sans compte est actif sur `demaa.co`. La recette contrôlée
+Le parcours public sans compte est actif sur `demaa.fr`. La recette contrôlée
 du 23 août 2026 a vérifié une génération réelle, la conservation du plan entre
 les destinations publiques, l'envoi du plan par e-mail, la création d'un
 Diagnostic, sa notification et son affichage détaillé dans l'administration

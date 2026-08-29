@@ -14,6 +14,8 @@ const retiredPaths = [
   "src/components/EthicalMarketingLandingPage.tsx",
   "src/components/ServicesMarketplace.tsx",
   "src/components/SystemSolutionNextSteps.tsx",
+  "src/components/ServicesLandingPage.tsx",
+  "src/app/(marketing)/services/page.tsx",
   "src/lib/course-content.ts",
   "src/lib/service-catalog-v2.ts",
   "src/lib/service-catalog.ts",
@@ -57,8 +59,6 @@ describe("legacy Services and Courses retirement", () => {
       source("src/lib/canonical-service-catalog.ts"),
       source("src/components/CanonicalServiceDetails.tsx"),
       source("src/components/ServicesCatalog.tsx"),
-      source("src/components/ServicesLandingPage.tsx"),
-      source("src/app/(marketing)/services/page.tsx"),
       source("src/lib/sur-mesure-page-content.ts"),
     ].join("\n");
 

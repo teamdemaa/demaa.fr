@@ -44,8 +44,8 @@ function countGuideWords(content: (typeof ORGANISER_PROCESS_GUIDES)[number]) {
 }
 
 describe("Organiser process guides", () => {
-  it("publishes the fourteen validated subjects from one six-step source", () => {
-    expect(ORGANISER_PROCESS_GUIDES).toHaveLength(14);
+  it("publishes the fifteen validated subjects from one six-step source", () => {
+    expect(ORGANISER_PROCESS_GUIDES).toHaveLength(15);
 
     for (const content of ORGANISER_PROCESS_GUIDES) {
       expect(content.kind).toBe("case-study");
@@ -164,7 +164,8 @@ describe("Organiser process guides", () => {
     expect(indexSource).toContain("text-[0.84rem]");
     expect(indexSource).toContain("sm:text-[0.9rem]");
     expect(indexSource).toContain("text-[0.7rem]");
-    expect(indexSource.match(/opacity-\[0\.59\]/g)).toHaveLength(2);
+    expect(indexSource).toContain("opacity-80");
+    expect(indexSource).toContain("opacity-75");
     expect(indexSource).toContain("`/organiser/${identity.slug}`");
     expect(indexSource).toContain("relative aspect-video");
     expect(indexSource).toContain('? "bg-[#F0F4F1]"');
@@ -200,6 +201,31 @@ describe("Organiser process guides", () => {
     expect(plumbing?.processGuide?.conclusion).toBe(
       "Une demande entre une seule fois dans l’organisation et avance jusqu’à la facture, avec la bonne information au bon moment.",
     );
+  });
+
+  it("keeps the accounting-firm client-request process locked", () => {
+    const accountingFirm = ORGANISER_PROCESS_GUIDES.find(
+      (content) => content.identity.slug === "demandes-clients-cabinet-comptable",
+    );
+
+    expect(ORGANISER_PROCESS_GUIDES[0]?.identity.slug).toBe(
+      "demandes-clients-cabinet-comptable",
+    );
+    expect(accountingFirm?.identity.card.title).toBe(
+      "Comment organiser les demandes clients d’un cabinet comptable ?",
+    );
+    expect(accountingFirm?.processGuide?.system).toEqual({
+      slug: "cabinet-comptable",
+      label: "Cabinet comptable",
+    });
+    expect(accountingFirm?.processGuide?.steps.map((step) => step.label)).toEqual([
+      "Demande reçue",
+      "Client identifié",
+      "Besoin qualifié",
+      "Responsable attribué",
+      "Réponse apportée",
+      "Demande clôturée",
+    ]);
   });
 
   it("keeps the long renovation H1 while using a mobile-safe card title", () => {

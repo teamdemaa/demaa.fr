@@ -120,7 +120,7 @@ Responsable : MASTER ou workstream explicitement désigné.
 - documenter accès, rotation et révocation ;
 - tester secret absent, invalide, trop court, limitation et non-cache.
 
-La page reste `https://demaa.co/admin/coaching`, absente de la navigation et
+La page reste `https://demaa.fr/admin/coaching`, absente de la navigation et
 `noindex`. Le secret est transmis uniquement dans un header, jamais dans une
 URL. Les réponses privées restent `no-store`. La solution par secret est
 transitoire ; un rôle Firebase `team_demaa` appartient à un futur lot distinct.

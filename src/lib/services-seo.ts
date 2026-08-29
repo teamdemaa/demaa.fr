@@ -3,29 +3,6 @@ import "server-only";
 import type { CanonicalService } from "@/lib/canonical-service-catalog";
 import { getCanonicalOrigin } from "@/lib/site-url";
 
-export function buildServicesIndexJsonLd() {
-  const origin = getCanonicalOrigin();
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Accueil",
-        item: origin,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Accompagnement",
-        item: `${origin}/services`,
-      },
-    ],
-  };
-}
-
 export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
   const origin = getCanonicalOrigin();
   const pageUrl = `${origin}${serviceEntry.detailHref}`;
@@ -89,31 +66,35 @@ export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
       ? { offers: packageOffers }
       : directOffer ? { offers: directOffer } : {}),
   };
+  const hasServicesParent = serviceEntry.detailHref.startsWith("/services/");
+  const breadcrumbItems = [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Accueil",
+      item: origin,
+    },
+    ...(hasServicesParent
+      ? [{
+          "@type": "ListItem",
+          position: 2,
+          name: "Accompagnement",
+          item: `${origin}/services`,
+        }]
+      : []),
+    {
+      "@type": "ListItem",
+      position: hasServicesParent ? 3 : 2,
+      name: serviceEntry.name,
+      item: pageUrl,
+    },
+  ];
 
   return [
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Accueil",
-          item: origin,
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Accompagnement",
-          item: `${origin}/services`,
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: serviceEntry.name,
-          item: pageUrl,
-        },
-      ],
+      itemListElement: breadcrumbItems,
     },
     service,
   ];

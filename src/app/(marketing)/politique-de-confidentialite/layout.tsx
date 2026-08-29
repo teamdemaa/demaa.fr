@@ -3,7 +3,7 @@ import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 export const metadata: Metadata = buildPublicPageMetadata({
   title: "Politique de confidentialité - Demaa",
-  description: "Politique de confidentialité du site demaa.co.",
+  description: "Politique de confidentialité du site demaa.fr.",
   path: "/politique-de-confidentialite",
 });
 

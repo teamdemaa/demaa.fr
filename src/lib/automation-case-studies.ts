@@ -11,6 +11,10 @@ export const AUTOMATION_CASE_STUDIES: readonly ApplicationMetierCaseStudy[] = [
       "Les demandes arrivaient par plusieurs canaux. Il fallait attribuer chaque sujet, vérifier les pièces reçues, relancer les clients puis reporter l’avancement dans le suivi du cabinet.",
     application:
       "Les outils déjà utilisés sont reliés pour enregistrer la demande, prévenir le bon collaborateur, déclencher les relances utiles et tenir le suivi à jour.",
+    results: [
+      "25 % de temps gagné pour le collaborateur comptable",
+      "30 % de temps gagné pour le gestionnaire de paie",
+    ],
     flow: [
       "Demande reçue",
       "Dossier identifié",
@@ -30,6 +34,9 @@ export const AUTOMATION_CASE_STUDIES: readonly ApplicationMetierCaseStudy[] = [
       "Les informations étaient reprises entre les messages, les devis, les dossiers et le planning. Chaque nouveau chantier demandait plusieurs créations, vérifications et notifications manuelles.",
     application:
       "La validation d’un chantier déclenche la création de son dossier, la mise à jour du suivi et l’envoi des informations nécessaires aux personnes concernées.",
+    results: [
+      "30 % de temps gagné pour le conducteur de travaux",
+    ],
     flow: [
       "Demande qualifiée",
       "Devis accepté",
@@ -49,6 +56,9 @@ export const AUTOMATION_CASE_STUDIES: readonly ApplicationMetierCaseStudy[] = [
       "Entre la demande du client, l’affectation d’un technicien, le compte rendu et la prochaine action, l’information devait être ressaisie ou transmise plusieurs fois.",
     application:
       "Les étapes sont reliées pour créer l’intervention, prévenir les personnes concernées, classer le compte rendu et déclencher la suite sans ressaisie inutile.",
+    results: [
+      "25 % de temps gagné pour le gestionnaire technique",
+    ],
     flow: [
       "Demande reçue",
       "Intervention créée",

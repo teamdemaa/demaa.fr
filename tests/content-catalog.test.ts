@@ -51,12 +51,12 @@ describe("canonical content catalog", () => {
     const metadata = buildContentMetadata(entry);
     const jsonLd = buildContentJsonLd(entry);
 
-    expect(metadata.alternates?.canonical).toBe("https://demaa.co/contenus/facturation-electronique");
+    expect(metadata.alternates?.canonical).toBe("https://demaa.fr/contenus/facturation-electronique");
     expect(jsonLd).toHaveLength(2);
     expect(jsonLd[0]).toMatchObject({ "@type": "BreadcrumbList" });
     expect(jsonLd[1]).toMatchObject({
       "@type": "Article",
-      url: "https://demaa.co/contenus/facturation-electronique",
+      url: "https://demaa.fr/contenus/facturation-electronique",
       dateModified: "2026-08-09",
     });
     expect(JSON.stringify(jsonLd)).not.toContain("VideoObject");

@@ -49,7 +49,7 @@ describe("Fillout webhook", () => {
       phone: "+33 6 00 00 00 00",
     });
     expect(submission?.systemSlug).toBe("freelance");
-    expect(submission?.sourceUrl).toBe("https://demaa.co/annuaire-services/organisation");
+    expect(submission?.sourceUrl).toBe("https://demaa.fr/annuaire-services/organisation");
     expect(submission?.attribution.first_touch?.landingPath).toBe(
       "/kit-operationnel/freelance",
     );

@@ -78,8 +78,6 @@ describe("Organiser newsletter public contract", () => {
     expect(read("src/components/SystemDetailContent.tsx")).not.toContain(
       "StructureNewsletterBlock",
     );
-    const archivedOrganiserLanding = read("src/components/OrganiserLandingPage.tsx");
-    expect(archivedOrganiserLanding).toContain("<StructureNewsletterBlock />");
     expect(read("src/app/(marketing)/organiser/page.tsx")).not.toContain(
       "OrganiserLandingPage",
     );

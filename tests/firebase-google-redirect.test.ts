@@ -53,7 +53,7 @@ function browser(options: {
   standalone?: boolean;
 } = {}) {
   const storage = new Map<string, string>();
-  const hostname = options.hostname ?? "demaa.co";
+  const hostname = options.hostname ?? "demaa.fr";
   vi.stubGlobal("window", {
     location: { hostname, origin: `https://${hostname}` },
     matchMedia: (query: string) => ({

@@ -144,10 +144,10 @@ export default function MentoratAutomationLandingPage() {
                 id="automation-cases-heading"
                 className="demaa-marketing-section-title"
               >
-                Trois exemples dans des entreprises concrètes.
+                Trois situations accompagnées sur le terrain.
               </h2>
               <p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">
-                Cabinet comptable, bâtiment ou maintenance&nbsp;: nous partons du travail réel et des outils déjà présents dans l’entreprise.
+                Ces entreprises sont anonymisées. Les situations et les gains présentés ont été observés sur les tâches concernées, à partir du travail réel et des outils déjà présents.
               </p>
             </div>
             <ApplicationMetierCaseStudies
@@ -207,7 +207,7 @@ export default function MentoratAutomationLandingPage() {
                 Passez du diagnostic à la mise en œuvre.
               </h2>
               <p className="mt-5 text-base leading-7 text-dema-paper/72">
-                Au terme des 2 mois, votre fonctionnement est mieux organisé&nbsp;: les tâches qui vous font perdre du temps sont simplifiées ou automatisées, et votre équipe sait faire vivre ce qui a été mis en place.
+                Au terme des {content.offer.duration}, les tâches retenues sont simplifiées ou automatisées, leur fonctionnement est documenté et votre équipe sait les faire vivre au quotidien.
               </p>
               <p className="mt-6 text-2xl font-medium">{content.offer.price}</p>
             </div>

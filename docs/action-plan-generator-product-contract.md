@@ -244,11 +244,11 @@ envoyé ou conservé par Demaa dans ce lot.
 ### Avant connexion
 
 La navigation française visible est
-`Solutions / Application métier / Organiser`. La racine ouvre Solutions par
+`Solutions / Modèles / Automatisation`. La racine ouvre Solutions par
 défaut. Le visiteur choisit son activité avant de voir les outils, ressources
-et autres rails publiés pour ce métier. `Application métier` présente
-l’accompagnement et des réalisations anonymisées ; `Organiser` ouvre
-directement la bibliothèque de processus. Les anciennes URLs utilisant
+et autres rails publiés pour ce métier. `Modèles` réunit les structures à copier
+et renvoie vers `Organiser`, qui ouvre directement la bibliothèque de processus.
+`Automatisation` présente l’accompagnement et le transfert de compétences. Les anciennes URLs utilisant
 `view=system`, `view=solutions` ou `view=plan&planTab=solutions` restent
 acceptées par redirection. Tout nouveau lien applicatif vers les Solutions
 utilise `/solutions/[métier]` et conserve les contextes utiles. Les routes
