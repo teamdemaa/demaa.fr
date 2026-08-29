@@ -7,10 +7,14 @@ import type { ApplicationMetierCaseStudy } from "@/lib/application-metier-case-s
 
 export default function ApplicationMetierCaseStudies({
   caseStudies,
+  variant = "application",
 }: {
   caseStudies: readonly ApplicationMetierCaseStudy[];
+  variant?: "application" | "automation";
 }) {
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<ApplicationMetierCaseStudy | null>(null);
+  const isAutomation = variant === "automation";
+  const actionLabel = isAutomation ? "Voir l’automatisation" : "Voir le fonctionnement";
 
   return (
     <>
@@ -23,7 +27,7 @@ export default function ApplicationMetierCaseStudies({
             className={`group flex min-h-64 flex-col px-5 py-7 text-left transition hover:bg-dema-sage/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dema-forest/30 ${
               index > 0 ? "border-t border-dema-line md:border-l md:border-t-0" : ""
             }`}
-            aria-label={`Voir le fonctionnement pour ${caseStudy.sector}`}
+            aria-label={`${actionLabel} pour ${caseStudy.sector}`}
           >
             <strong className="text-2xl font-light leading-tight tracking-[-0.035em] text-brand-blue">
               {caseStudy.sector}
@@ -32,7 +36,7 @@ export default function ApplicationMetierCaseStudies({
               {caseStudy.cardDescription}
             </span>
             <span className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-medium text-dema-forest">
-              Voir le fonctionnement
+              {actionLabel}
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
             </span>
           </button>
@@ -64,7 +68,7 @@ export default function ApplicationMetierCaseStudies({
             </section>
             <section aria-labelledby={`${selectedCaseStudy.id}-application-heading`}>
               <h3 id={`${selectedCaseStudy.id}-application-heading`} className="text-base font-medium text-brand-blue">
-                L’application construite
+                {isAutomation ? "L’automatisation mise en place" : "L’application construite"}
               </h3>
               <p className="mt-3 text-sm leading-6 text-dema-muted">
                 {selectedCaseStudy.application}

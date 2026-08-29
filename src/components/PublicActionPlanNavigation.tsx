@@ -1,12 +1,12 @@
-import { BookOpen, LayoutGrid, PanelsTopLeft } from "lucide-react";
+import { Copy, LayoutGrid, Workflow } from "lucide-react";
 import Link from "next/link";
 
 export type PublicActionPlanView = "solutions" | "academy" | "services";
 
 const navigationItems = [
   { view: "solutions", label: "Solutions", href: "/solutions", Icon: LayoutGrid },
-  { view: "academy", label: "Organiser", href: "/modeles", Icon: BookOpen },
-  { view: "services", label: "Application métier", href: "/application-metier", Icon: PanelsTopLeft },
+  { view: "academy", label: "Modèles", href: "/modeles", Icon: Copy },
+  { view: "services", label: "Automatisation", href: "/automatisation", Icon: Workflow },
 ] as const;
 
 const tabClassName =

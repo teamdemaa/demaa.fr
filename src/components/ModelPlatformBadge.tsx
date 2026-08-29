@@ -7,7 +7,11 @@ export default function ModelPlatformBadge({
   platform: CopyableModelPlatform;
   compact?: boolean;
 }) {
-  const label = platform === "airtable" ? "Airtable" : "Google Sheets";
+  const label = platform === "airtable"
+    ? "Airtable"
+    : platform === "google-drive"
+      ? "Google Drive"
+      : "Google Sheets";
 
   return (
     <span className="inline-flex items-center gap-2 rounded-lg border border-dema-line bg-white/75 px-2.5 py-1.5 text-xs font-medium text-brand-blue/68">
@@ -16,6 +20,12 @@ export default function ModelPlatformBadge({
           <path fill="#fcb400" d="M10.9.7 2.2 4.3c-.5.2-.5.9 0 1.1l8.7 3.5c.7.3 1.4.3 2.1 0l8.7-3.5c.5-.2.5-.9 0-1.1L13 .7a2.8 2.8 0 0 0-2.1 0Z" />
           <path fill="#18bfff" d="m13.5 10.3 8.2-3.2c.4-.2.9.1.9.6v7.7c0 .3-.2.5-.4.6l-8.2 3.2c-.4.2-.9-.1-.9-.6v-7.7c0-.3.2-.5.4-.6Z" />
           <path fill="#f82b60" d="M10.4 10.7 2 7.4a.6.6 0 0 0-.8.6v7.1c0 .3.2.5.4.6l8.4 3.3c.4.2.8-.1.8-.6v-7.1c0-.3-.2-.5-.4-.6Z" />
+        </svg>
+      ) : platform === "google-drive" ? (
+        <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+          <path fill="#0F9D58" d="M8.2 3h5.1l7.2 12.5h-5.1z" />
+          <path fill="#F4B400" d="M8.2 3 1 15.5h5.1L13.3 3z" />
+          <path fill="#4285F4" d="M6.1 15.5h14.4L18 20H3.5z" />
         </svg>
       ) : (
         <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">

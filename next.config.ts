@@ -86,17 +86,27 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/accompagnement',
-        destination: '/application-metier',
+        destination: '/automatisation',
         permanent: true,
       },
       {
         source: '/services',
-        destination: '/application-metier',
+        destination: '/automatisation',
+        permanent: true,
+      },
+      {
+        source: '/services/automatisation-processus',
+        destination: '/automatisation',
         permanent: true,
       },
       {
         source: '/sur-mesure',
-        destination: '/application-metier',
+        destination: '/automatisation',
+        permanent: true,
+      },
+      {
+        source: '/solutions/mentorat-automatisation-ia',
+        destination: '/automatisation',
         permanent: true,
       },
       {

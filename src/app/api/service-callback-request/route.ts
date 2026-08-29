@@ -26,6 +26,7 @@ type ServiceCallbackRequestBody = Readonly<{
   idempotencyKey?: unknown;
   localeCode?: unknown;
   marketCode?: unknown;
+  modelSlug?: unknown;
   packageSlug?: unknown;
   phone?: unknown;
   serviceSlug?: unknown;
@@ -86,6 +87,7 @@ export async function POST(request: Request) {
         "idempotencyKey",
         "localeCode",
         "marketCode",
+        "modelSlug",
         "packageSlug",
         "phone",
         "serviceSlug",
@@ -107,6 +109,7 @@ export async function POST(request: Request) {
     const company = normalizeText(body?.company, 160);
     const localeCode = normalizeText(body?.localeCode, 20) || "fr";
     const marketCode = normalizeText(body?.marketCode, 40) || "fr-fr";
+    const modelSlug = normalizeText(body?.modelSlug, 120);
     const packageSlug = normalizeText(body?.packageSlug, 120);
     const phone = normalizeText(body?.phone, 60);
     const countryCode = normalizeText(body?.countryCode, 2).toUpperCase();
@@ -181,7 +184,7 @@ export async function POST(request: Request) {
     const context = await resolveLeadContext({
       systemSlug: systemSlug || null,
       source:
-        requestedSource === "solutions-systeme" && systemSlug
+        (requestedSource === "solutions-systeme" || requestedSource === "solution-metier") && systemSlug
           ? `Solutions - ${service.name}`
           : `Services - ${service.name}`,
       sourceUrl: request.headers.get("referer"),
@@ -213,6 +216,8 @@ export async function POST(request: Request) {
         { label: localeCode === "en" ? "Langue" : "Locale", value: localeCode },
         { label: "Marché", value: marketCode },
         ...(countryCode ? [{ label: "Pays", value: countryCode }] : []),
+        ...(requestedSource ? [{ label: "Origine interne", value: requestedSource }] : []),
+        ...(modelSlug ? [{ label: "Modèle", value: modelSlug }] : []),
         { label: "Page source", value: sourcePage },
         ...(context.systemName
           ? [{ label: "Système métier", value: context.systemName }]

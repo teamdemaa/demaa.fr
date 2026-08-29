@@ -269,19 +269,19 @@ export default function OrganiserLandingPage() {
           </div>
         </section>
 
-        <section aria-labelledby="application-bridge-heading" className="border-t border-dema-line px-5 pt-16 sm:px-8 sm:pt-20 lg:pt-24">
+        <section aria-labelledby="automation-bridge-heading" className="border-t border-dema-line px-5 pt-16 sm:px-8 sm:pt-20 lg:pt-24">
           <div className="mx-auto flex max-w-6xl flex-col gap-7 rounded-[1.5rem] bg-dema-sage/55 px-6 py-8 sm:px-8 sm:py-10 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
             <div className="max-w-3xl">
-              <h2 id="application-bridge-heading" className="text-[1.75rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.25rem]">
-                Quand les outils existants ne suffisent plus
+              <h2 id="automation-bridge-heading" className="text-[1.75rem] font-light leading-[1.08] tracking-[-0.04em] sm:text-[2.25rem]">
+                Faites gagner du temps à votre équipe
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-7 text-dema-muted">
-                Nous pouvons aussi concevoir une application métier adaptée à votre fonctionnement, sans reconstruire tout votre système.
+                Nous vous accompagnons pour automatiser les tâches réellement utiles et rendre votre équipe autonome.
               </p>
             </div>
             <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-              <Link href="/application-metier" className="demaa-secondary-button inline-flex min-h-12 items-center justify-center">
-                Découvrir l’application métier
+              <Link href="/automatisation" className="demaa-secondary-button inline-flex min-h-12 items-center justify-center">
+                Découvrir l’accompagnement
               </Link>
               <OrganiserProjectDiscussionButton className={diagnosticButtonClassName} />
             </div>

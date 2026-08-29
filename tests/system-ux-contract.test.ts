@@ -140,6 +140,6 @@ describe("system UX contract", () => {
     expect(detailSource).toContain("<SystemSolutionsTab");
     expect(detailSource).not.toContain("<SystemResourcesTab");
     expect(detailSource).toContain('href={`/systemes/${system.slug}/processus`}');
-    expect(detailSource).toContain("<SystemSolutionNextSteps");
+    expect(detailSource).not.toContain("<SystemSolutionNextSteps");
   });
 });

@@ -20,9 +20,8 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services SEO and redirects", () => {
-  it("publishes eight generic detail routes and keeps hidden offers out", async () => {
+  it("publishes seven generic detail routes and keeps dedicated offers out", async () => {
     expect(generateStaticParams()).toEqual([
-      { slug: "automatisation-processus" },
       { slug: "coach-business" },
       { slug: "assistance-administrative" },
       { slug: "formalites-entreprise" },
@@ -66,11 +65,11 @@ describe("canonical Services SEO and redirects", () => {
     expect(buildServicePageJsonLd(automation)[1]).toMatchObject({
       offers: [
         {
-          name: "Automatisation des processus et IA",
-          price: "1500.00",
+          name: "Accompagnement à l’automatisation",
+          price: "3000.00",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
-            price: "1500.00",
+            price: "3000.00",
             priceCurrency: "EUR",
             valueAddedTaxIncluded: false,
           },

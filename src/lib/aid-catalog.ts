@@ -748,7 +748,7 @@ export const demaaAidItems: readonly DemaaAidItem[] = [
     bestFor:
       "Les PME innovantes qui ont déjà de vraies dépenses de R&D, des profils techniques ou scientifiques à recruter et besoin d'un cadre fiscal plus favorable pour accélérer.",
     tags: ["JEI", "R&D", "Exonérations"],
-    icon: "Sparkles",
+    icon: "Lightbulb",
     usefulFor: ["Innovation", "R&D", "Croissance"],
     cta: "Voir la source officielle",
     sourceLabel: "Service Public Entreprendre",

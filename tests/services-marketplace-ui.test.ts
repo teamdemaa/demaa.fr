@@ -36,7 +36,7 @@ describe("canonical Accompagnement catalog", () => {
       CANONICAL_SERVICE_SLUGS.includes(slug)
     )).toBe(true);
     expect(services.map((service) => service.name)).toEqual([
-      "Automatisation des processus et IA",
+      "Accompagnement à l’automatisation",
       "Application métier",
       "Coach business",
       "Assistante administrative",
@@ -48,7 +48,7 @@ describe("canonical Accompagnement catalog", () => {
     ]);
     expect(generateStaticParams()).toEqual(
       CANONICAL_SERVICE_SLUGS
-        .filter((slug) => !["application-metier", "expert-comptable"].includes(slug))
+        .filter((slug) => !["application-metier", "automatisation-processus", "expert-comptable"].includes(slug))
         .map((slug) => ({ slug })),
     );
     expect(getCanonicalServiceBySlug("expert-comptable")).toBeNull();
@@ -139,26 +139,26 @@ describe("canonical Accompagnement catalog", () => {
     expect(callbackForm).not.toContain("CustomerSpaceAccessForm");
   });
 
-  it("keeps one quoted starting point for automation and the business application", () => {
+  it("keeps the fixed mentorship price and the quoted business application starting point", () => {
     const automation = getCanonicalServiceBySlug("automatisation-processus");
     const application = getCanonicalServiceBySlug("application-metier");
 
     expect(automation).toMatchObject({
-      name: "Automatisation des processus et IA",
+      name: "Accompagnement à l’automatisation",
       pricing: null,
       cta: { kind: "callback", label: "Envoyer ma demande" },
     });
     expect(automation?.packages.map(({ slug, pricing }) => [slug, pricing.amountMinor])).toEqual([
-      ["automatisation-essentielle", 150000],
+      ["automatisation-essentielle", 300000],
     ]);
     expect(automation?.packages[0]).toMatchObject({
-      name: "Automatisation des processus et IA",
+      name: "Accompagnement à l’automatisation",
       pricing: {
-        label: "À partir de 1 500 € HT",
+        label: "3 000 € HT",
       },
     });
-    expect(automation?.packages[0]?.pricing.note).toContain("500 € HT par jour");
-    expect(automation?.packages[0]?.pricing.note).toContain("Aucun dépassement sans validation");
+    expect(automation?.packages[0]?.pricing.note).toContain("trois fois");
+    expect(automation?.packages[0]?.pricing.note).toContain("licences");
     expect(application).toMatchObject({
       detailHref: "/application-metier",
       name: "Application métier",
@@ -214,7 +214,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).not.toContain("Assistante administrative");
     expect(markup).not.toContain("Recruter un alternant");
     expect(markup).not.toContain("Expert-comptable");
-    expect(markup).toContain("À partir de 1 500 € HT");
+    expect(markup).toContain("3 000 € HT");
     expect(markup).toContain("À partir de 4 500 € HT");
     expect(markup).not.toContain("750 € HT / mois");
     expect(markup).not.toContain("Sur devis");
@@ -285,7 +285,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(formSource).not.toContain('name="firstName"');
     expect(formSource).toContain('name="packageSlug"');
     expect(formSource).toContain('disabled={status === "submitting"}');
-    expect(formSource).toContain('sourcePage: pathname');
+    expect(formSource).toContain('sourcePage: `${pathname}${currentSearchParams');
   });
 
   it("requires a strict 202 JSON acknowledgement", async () => {
@@ -310,7 +310,6 @@ describe("canonical Accompagnement catalog", () => {
       "src/app/(marketing)/services/page.tsx",
       "src/app/(marketing)/services/[slug]/page.tsx",
       "src/app/@modal/(.)services/[slug]/page.tsx",
-      "src/app/@modal/(.)sur-mesure/page.tsx",
       "src/components/CanonicalServiceDetails.tsx",
       "src/components/ServicesCatalog.tsx",
       "src/components/ServicesLandingPage.tsx",
@@ -325,11 +324,10 @@ describe("canonical Accompagnement catalog", () => {
   });
 
   it("implements the documented intercepted modal contract", async () => {
-    const [layout, modalDefault, modalPage, applicationModalPage, routeDialog, systemSolutions, serviceDetails, actionPlanServices] = await Promise.all([
+    const [layout, modalDefault, modalPage, routeDialog, systemSolutions, serviceDetails, actionPlanServices] = await Promise.all([
       readSource("src/app/layout.tsx"),
       readSource("src/app/@modal/default.tsx"),
       readSource("src/app/@modal/(.)services/[slug]/page.tsx"),
-      readSource("src/app/@modal/(.)sur-mesure/page.tsx"),
       readSource("src/components/ServiceRouteDialog.tsx"),
       readSource("src/components/SystemSolutionsTab.tsx"),
       readSource("src/components/CanonicalServiceDetails.tsx"),
@@ -343,8 +341,6 @@ describe("canonical Accompagnement catalog", () => {
     expect(modalPage).toContain('variant="modal"');
     expect(modalPage).toContain("if (!service || service.detailHref");
     expect(modalPage).not.toContain("dynamicParams = false");
-    expect(applicationModalPage).toContain('getCanonicalServiceBySlug("application-metier")');
-    expect(applicationModalPage).toContain("ServiceRouteDialog");
     expect(routeDialog).toContain("router.back()");
     expect(routeDialog).toContain('maxWidthClassName="max-w-3xl"');
     expect(systemSolutions).toContain('placement.section === "services"');

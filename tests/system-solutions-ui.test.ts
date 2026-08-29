@@ -501,7 +501,14 @@ describe("system Solutions UI", () => {
         ["capeb"],
       ],
       "cabinet-comptable": [
-        ["pennylane", "tiimora", "silae"],
+        [
+          "pennylane",
+          "tiimora",
+          "sage-generation-experts",
+          "cegid-loop",
+          "inqom-expert",
+          "silae",
+        ],
         ["juridi-consulting"],
         ["levier"],
         ["ordre-experts-comptables", "croec-regional"],
@@ -691,20 +698,12 @@ describe("system Solutions UI", () => {
     expect(source).not.toContain("DirectoryDetailDialogShell");
   });
 
-  it("keeps the daily rail inside the solution kit and only two final next steps", async () => {
+  it("keeps the daily rail inside the solution kit without final promotional cards", async () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
-    const nextStepsSource = await readSource("src/components/SystemSolutionNextSteps.tsx");
 
-    expect(detailSource.indexOf("<LeaderDailyRail />")).toBeLessThan(
-      detailSource.indexOf("<SystemSolutionNextSteps"),
-    );
+    expect(detailSource).toContain("<LeaderDailyRail />");
+    expect(detailSource).not.toContain("<SystemSolutionNextSteps");
     expect(detailSource).not.toContain("<SystemContextualCaseStudy");
-    expect(nextStepsSource.match(/<article/g)).toHaveLength(2);
-    expect(nextStepsSource).toContain("Commencer avec une structure prête à copier");
-    expect(nextStepsSource).toContain("Voir les modèles adaptés");
-    expect(nextStepsSource).toContain(
-      "Aucune solution ne correspond à votre fonctionnement ?",
-    );
   });
 
   it("keeps the historical Resources machinery available without exposing it on métier pages", async () => {

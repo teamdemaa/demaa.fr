@@ -60,6 +60,7 @@ describe("proxy content security policy", () => {
     expect(policy).toContain("https://apis.google.com");
     expect(policy).toContain("https://identitytoolkit.googleapis.com");
     expect(policy).toContain("https://securetoken.googleapis.com");
+    expect(policy).toContain("form-action 'self' https://accounts.google.com");
     expect(policy).not.toContain("youtube");
     expect(policy).toContain("default-src 'self'");
     expect(policy).toContain("frame-ancestors 'none'");

@@ -1,10 +1,40 @@
 "use client";
 
-import { ArrowRight, BookOpen, Search } from "lucide-react";
-import Link from "next/link";
+import { Search } from "lucide-react";
 import { useState } from "react";
 import CopyableModelCard from "@/components/CopyableModelCard";
+import { SOLUTION_RAIL_CLASS_NAME } from "@/components/SolutionRailCard";
 import type { CopyableModelDefinition } from "@/lib/copyable-model-catalog";
+
+const MODEL_GROUPS = [
+  {
+    id: "fundamentaux",
+    title: "Les fondamentaux",
+    slugs: [
+      "structure-google-drive-entreprise",
+      "suivi-commercial-et-devis",
+      "suivi-previsionnel-financier",
+    ],
+  },
+  {
+    id: "realisation",
+    title: "La réalisation du travail",
+    slugs: [
+      "projets-et-missions-clients",
+      "interventions-et-chantiers",
+      "suivi-administratif-et-echeances",
+    ],
+  },
+  {
+    id: "developpement",
+    title: "Le développement de l’entreprise",
+    slugs: [
+      "suivi-client-et-support",
+      "planning-marketing-et-contenus",
+      "recrutement-et-candidatures",
+    ],
+  },
+] as const;
 
 export default function CopyableModelsIndex({
   models,
@@ -23,6 +53,16 @@ export default function CopyableModelsIndex({
       ...model.searchTerms,
     ].join(" ").toLocaleLowerCase("fr").includes(normalizedQuery))
     : models;
+  const filteredModelsBySlug = new Map(
+    filteredModels.map((model) => [model.slug, model] as const),
+  );
+  const visibleGroups = MODEL_GROUPS.map((group) => ({
+    ...group,
+    models: group.slugs.flatMap((slug) => {
+      const model = filteredModelsBySlug.get(slug);
+      return model ? [model] : [];
+    }),
+  })).filter((group) => group.models.length > 0);
 
   return (
     <>
@@ -60,9 +100,29 @@ export default function CopyableModelsIndex({
           />
         </label>
 
-        {filteredModels.length > 0 ? (
-          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {filteredModels.map((model) => <CopyableModelCard key={model.slug} model={model} />)}
+        {visibleGroups.length > 0 ? (
+          <div className="mt-12 max-w-full space-y-12 overflow-hidden">
+            {visibleGroups.map((group) => (
+              <section
+                key={group.id}
+                aria-labelledby={`model-group-${group.id}`}
+                className="min-w-0 max-w-full"
+              >
+                <h2
+                  id={`model-group-${group.id}`}
+                  className="text-xl font-semibold tracking-[-0.025em] text-brand-blue sm:text-2xl"
+                >
+                  {group.title}
+                </h2>
+                <div className={SOLUTION_RAIL_CLASS_NAME}>
+                  {group.models.map((model) => (
+                    <div key={model.slug} className="min-w-0 snap-start">
+                      <CopyableModelCard model={model} titleLevel={3} />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
           </div>
         ) : (
           <div className="mx-auto mt-10 max-w-2xl rounded-[1.25rem] border border-dema-line bg-white p-8 text-center">
@@ -72,20 +132,6 @@ export default function CopyableModelsIndex({
             </button>
           </div>
         )}
-      </section>
-
-      <section className="px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 rounded-[1.5rem] border border-dema-forest/15 bg-dema-sage/45 px-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8 md:px-10 md:py-9">
-          <div className="max-w-2xl">
-            <BookOpen className="h-5 w-5 text-dema-forest" aria-hidden="true" />
-            <h2 className="mt-3 text-2xl font-light tracking-[-0.03em] text-brand-blue sm:text-3xl">Les processus derrière les modèles</h2>
-            <p className="mt-3 text-sm leading-6 text-dema-muted sm:text-base">Retrouvez les étapes, les responsabilités, les points de contrôle et les erreurs fréquentes pour mettre ces modèles en place dans votre entreprise.</p>
-          </div>
-          <Link href="/organiser" className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-dema-forest px-7 text-sm font-semibold text-white transition hover:bg-[#284f3a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2">
-            Explorer les processus
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
-        </div>
       </section>
     </>
   );

@@ -1,6 +1,5 @@
 import AcademyIndexClient from "@/components/AcademyIndexClient";
 import Navbar from "@/components/Navbar";
-import OrganiserSectionNavigation from "@/components/OrganiserSectionNavigation";
 import { getAllAcademyContent } from "@/lib/academy-course-content";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 import {
@@ -37,8 +36,10 @@ export default function OrganiserIndexPage() {
         dangerouslySetInnerHTML={{ __html: serializePublicJsonLd(jsonLd) }}
       />
       <Navbar publicNavigationActiveView="academy" />
-      <OrganiserSectionNavigation activeSection="processes" />
-      <AcademyIndexClient contents={contents} />
+      <AcademyIndexClient
+        contents={contents}
+        backLink={{ href: "/modeles", label: "← Voir les modèles à copier" }}
+      />
     </>
   );
 }

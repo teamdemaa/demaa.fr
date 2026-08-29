@@ -14,6 +14,7 @@ import type {
   RenderableSolutionPlacementDto,
   RenderableSolutionSectionDto,
 } from "@/lib/system-solutions-ui-dto";
+import { getRenderableSolutionSectionsForSystem } from "@/lib/system-solutions-ui.server";
 
 const SECTION_ORDER: readonly SolutionSection[] = [
   "software",
@@ -25,11 +26,16 @@ const SECTION_ORDER: readonly SolutionSection[] = [
   "models",
 ];
 
+const LOCAL_PILOT_SOFTWARE_SYSTEMS = new Set(["cabinet-comptable"]);
+
 export function getCanonicalServiceSlugsForSystem(
   systemSlug: string,
 ): readonly CanonicalServiceSlug[] {
   return getCanonicalServices()
-    .filter((service) => isCanonicalServiceEligibleForSystem(service.slug, systemSlug))
+    .filter((service) =>
+      service.slug !== "application-metier" &&
+      isCanonicalServiceEligibleForSystem(service.slug, systemSlug),
+    )
     .map((service) => service.slug);
 }
 
@@ -90,7 +96,7 @@ function buildCanonicalServicePlacements(
 ): readonly RenderableSolutionPlacementDto[] {
   const eligibleSlugs = new Set(getCanonicalServiceSlugsForSystem(systemSlug));
   const services = getCanonicalServices().filter((service) =>
-    eligibleSlugs.has(service.slug),
+    service.slug !== "application-metier" && eligibleSlugs.has(service.slug),
   );
 
   return services.map((service, index) => ({
@@ -138,6 +144,13 @@ export function composeCanonicalServicesForSystem(
     const placements = placementsBySection.get(group.section) ?? [];
     placements.push(...publicPlacements);
     placementsBySection.set(group.section, placements);
+  }
+  if (LOCAL_PILOT_SOFTWARE_SYSTEMS.has(systemSlug)) {
+    const localSoftware = getRenderableSolutionSectionsForSystem(systemSlug)
+      .find(({ section }) => section === "software")?.placements;
+    if (localSoftware && localSoftware.length > 0) {
+      placementsBySection.set("software", [...localSoftware]);
+    }
   }
   placementsBySection.set(
     "services",

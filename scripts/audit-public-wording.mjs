@@ -39,6 +39,11 @@ function isValidatedPilotageEmDash(relativePath, line) {
   ) === true;
 }
 
+function isValidatedDriveFolderName(relativePath, line) {
+  return relativePath === "src/lib/drive-folder-templates.ts" &&
+    /["']\d{2} — /.test(line);
+}
+
 async function collectFiles(directory, extensions) {
   const entries = await readdir(path.join(repoRoot, directory), {
     withFileTypes: true,
@@ -70,7 +75,11 @@ for (const relativePath of files) {
   const content = await readFile(path.join(repoRoot, relativePath), "utf8");
 
   content.split(/\r?\n/).forEach((line, index) => {
-    if (line.includes(emDash) && !isValidatedPilotageEmDash(relativePath, line)) {
+    if (
+      line.includes(emDash) &&
+      !isValidatedPilotageEmDash(relativePath, line) &&
+      !isValidatedDriveFolderName(relativePath, line)
+    ) {
       failures.push(`${relativePath}:${index + 1}: ${line.trim()}`);
     }
   });

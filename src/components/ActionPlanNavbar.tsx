@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, BriefcaseBusiness, LayoutGrid, ListChecks, PanelsTopLeft } from "lucide-react";
+import { BookOpen, BriefcaseBusiness, LayoutGrid, ListChecks, Workflow } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -14,8 +14,8 @@ const tabClassName =
 const navigationItems = {
   plan: { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
   solutions: { view: "solutions", labels: { fr: "Solutions", en: "Solutions" }, Icon: LayoutGrid },
-  services: { view: "services", labels: { fr: "Application métier", en: "Business app" }, Icon: PanelsTopLeft },
-  academy: { view: "academy", labels: { fr: "Organiser", en: "Academy" }, Icon: BookOpen },
+  services: { view: "services", labels: { fr: "Automatisation", en: "Automation" }, Icon: Workflow },
+  academy: { view: "academy", labels: { fr: "Modèles", en: "Templates" }, Icon: BookOpen },
   opportunities: { view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness },
 } as const;
 
@@ -101,8 +101,8 @@ export default function ActionPlanNavbar({
               : view === "plan"
               ? "/"
               : view === "academy"
-                ? (routeNavigation ? "/modeles" : "/organiser")
-                : "/application-metier";
+                ? "/modeles"
+                : "/automatisation";
           const usesPublicRoute = routeNavigation
             || (localeCode === "fr" && (view === "solutions" || view === "academy" || view === "services"));
 

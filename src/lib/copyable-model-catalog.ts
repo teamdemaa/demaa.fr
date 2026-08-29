@@ -1,4 +1,4 @@
-export type CopyableModelPlatform = "airtable" | "google-sheets";
+export type CopyableModelPlatform = "airtable" | "google-drive" | "google-sheets";
 export type CopyableModelAvailability = "available" | "planned";
 
 export type CopyableModelDefinition = Readonly<{
@@ -17,6 +17,7 @@ export type CopyableModelDefinition = Readonly<{
   includedSections: readonly string[];
   searchTerms: readonly string[];
   compatibleSystemSlugs: "all" | readonly string[];
+  driveFolderTemplateSlug?: "structure-google-drive-entreprise";
   documentModelSlug?: string;
   relatedOrganiserSlug?: string;
   relatedOrganiserLabel?: string;
@@ -43,6 +44,24 @@ const INTERVENTION_AND_WORKSITE_SYSTEM_SLUGS = [
 
 const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
   {
+    slug: "structure-google-drive-entreprise",
+    title: "Structure Google Drive pour organiser son entreprise",
+    description: "Créez une arborescence claire pour la direction, la finance, l’administration, les clients, l’équipe et les processus.",
+    seoTitle: "Structure Google Drive pour organiser son entreprise | Demaa",
+    seoDescription: "Créez gratuitement dans Google Drive une structure de dossiers pragmatique pour organiser les documents de votre entreprise.",
+    category: "Organisation",
+    platform: "google-drive",
+    availability: "available",
+    featuredRank: 1,
+    workflowStart: "Les documents sont dispersés ou rangés différemment par chaque personne",
+    workflowEnd: "Chaque document a un emplacement clair, partagé et durable",
+    benefits: ["Retrouver les documents plus vite", "Séparer les espaces sensibles", "Archiver sans encombrer le travail courant"],
+    includedSections: ["Direction", "Finance", "Administration", "Commercial", "Clients", "Équipe & RH", "Marketing", "Processus", "Informatique", "Archives"],
+    searchTerms: ["drive", "google drive", "dossiers", "arborescence", "classement", "documents", "organisation"],
+    compatibleSystemSlugs: "all",
+    driveFolderTemplateSlug: "structure-google-drive-entreprise",
+  },
+  {
     slug: "suivi-commercial-et-devis",
     title: "Suivi commercial et devis",
     description: "Centralisez les demandes, les opportunités, les devis et les relances jusqu’à la décision du client.",
@@ -51,7 +70,7 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
     category: "Commercial",
     platform: "airtable",
     availability: "available",
-    featuredRank: 1,
+    featuredRank: 2,
     workflowStart: "Une demande ou une opportunité entre",
     workflowEnd: "Le devis est accepté, refusé ou à relancer",
     benefits: ["Ne perdre aucune demande", "Savoir quels devis relancer", "Lire le pipeline en un coup d’œil"],
@@ -71,7 +90,7 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
     category: "Production",
     platform: "airtable",
     availability: "available",
-    featuredRank: 2,
+    featuredRank: 4,
     workflowStart: "Une mission est validée",
     workflowEnd: "Les livrables sont remis et la mission clôturée",
     benefits: ["Voir l’avancement réel", "Clarifier qui fait quoi", "Anticiper les retards"],
@@ -91,7 +110,7 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
     category: "Terrain",
     platform: "airtable",
     availability: "available",
-    featuredRank: 3,
+    featuredRank: 5,
     workflowStart: "Une demande terrain est reçue et qualifiée",
     workflowEnd: "Le travail est terminé, contrôlé et son compte rendu archivé",
     benefits: ["Centraliser les demandes et les sites", "Voir la prochaine action de chaque intervention", "Conserver l’historique terrain"],
@@ -111,7 +130,7 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
     category: "Finance",
     platform: "google-sheets",
     availability: "available",
-    featuredRank: 4,
+    featuredRank: 3,
     workflowStart: "Les encaissements et décaissements prévus sont renseignés",
     workflowEnd: "La trésorerie future est visible et les écarts sont arbitrés",
     benefits: ["Sortir du pilotage à vue", "Anticiper les tensions de trésorerie", "Comparer le prévu au réalisé"],
@@ -131,7 +150,7 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
     category: "Administration",
     platform: "airtable",
     availability: "available",
-    featuredRank: 5,
+    featuredRank: 6,
     workflowStart: "Une obligation ou un document est identifié",
     workflowEnd: "L’action est réalisée, vérifiée et archivée",
     benefits: ["Réduire les oublis", "Attribuer chaque échéance", "Retrouver les justificatifs"],
@@ -149,7 +168,7 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
     category: "Marketing",
     platform: "airtable",
     availability: "available",
-    featuredRank: 6,
+    featuredRank: 8,
     workflowStart: "Une idée ou une campagne est planifiée",
     workflowEnd: "Le contenu est publié et ses résultats sont suivis",
     benefits: ["Voir le calendrier éditorial", "Fluidifier les validations", "Réutiliser les idées"],
@@ -167,7 +186,7 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
     category: "Équipe",
     platform: "airtable",
     availability: "available",
-    featuredRank: 7,
+    featuredRank: 9,
     workflowStart: "Un besoin de recrutement est ouvert",
     workflowEnd: "La décision est prise et le dossier est clôturé",
     benefits: ["Centraliser les candidatures", "Partager les évaluations", "Ne manquer aucune relance"],
@@ -185,7 +204,7 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
     category: "Relation client",
     platform: "airtable",
     availability: "available",
-    featuredRank: 8,
+    featuredRank: 7,
     workflowStart: "Une demande client est reçue",
     workflowEnd: "La demande est résolue et la réponse tracée",
     benefits: ["Réunir toutes les demandes", "Prioriser les urgences", "Conserver l’historique client"],

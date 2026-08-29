@@ -1,6 +1,7 @@
 import CopyableModelsIndex from "@/components/CopyableModelsIndex";
+import MentoratAutomationCta from "@/components/MentoratAutomationCta";
+import ModelProcessesBridge from "@/components/ModelProcessesBridge";
 import Navbar from "@/components/Navbar";
-import OrganiserSectionNavigation from "@/components/OrganiserSectionNavigation";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import {
   getPublishedCopyableModels,
@@ -48,10 +49,13 @@ export default async function ModelsPage({ searchParams }: ModelsPageProps) {
         dangerouslySetInnerHTML={{ __html: serializePublicJsonLd(jsonLd) }}
       />
       <Navbar minimal publicNavigationActiveView="academy" />
-      <OrganiserSectionNavigation activeSection="models" />
       <main className="min-h-screen bg-background">
         <CopyableModelsIndex models={models} systemName={enterprise?.name} />
-        <div className="px-4 py-16 sm:px-6 lg:px-8">
+        <ModelProcessesBridge />
+        <div className="mx-auto w-full max-w-7xl px-4 pt-16 sm:px-6 lg:px-8">
+          <MentoratAutomationCta variant="modele" />
+        </div>
+        <div className="px-4 pb-16 pt-16 sm:px-6 lg:px-8">
           <StructureNewsletterBlock />
         </div>
       </main>

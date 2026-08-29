@@ -63,8 +63,9 @@ describe("Organiser newsletter public contract", () => {
   it("renders the same component at the approved editorial surfaces only", () => {
     const approved = [
       "src/components/AcademyIndexClient.tsx",
+      "src/components/SystemsHubPage.tsx",
+      "src/components/MentoratAutomationLandingPage.tsx",
       "src/app/(marketing)/modeles/page.tsx",
-      "src/app/(marketing)/sur-mesure/page.tsx",
     ];
 
     for (const path of approved) {

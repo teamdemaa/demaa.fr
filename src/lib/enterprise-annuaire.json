@@ -425,10 +425,6 @@
           "usage": "Suivre facturation, obligations et activité indépendante."
         },
         {
-          "slug": "propilot",
-          "usage": "Structurer offres, missions et suivi client."
-        },
-        {
           "slug": "tiime",
           "usage": "Gérer facturation, justificatifs et suivi administratif freelance.",
           "scope": "business"
@@ -3107,7 +3103,7 @@
         "Service",
         "Système métier"
       ],
-      "icon": "Sparkles",
+      "icon": "Flower2",
       "price": "",
       "sectorLabel": "BTP & services techniques",
       "imageTitle": "Paysagiste",
@@ -4776,10 +4772,6 @@
         {
           "slug": "chatgpt",
           "usage": "Accélérer synthèses, plans, emails et livrables."
-        },
-        {
-          "slug": "propilot",
-          "usage": "Structurer offres, missions, suivi client et facturation."
         },
         {
           "slug": "freebe",

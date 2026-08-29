@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { CircleUserRound } from "lucide-react";
+import type { ReactNode } from "react";
 import AdminLogoutButton from "@/components/AdminLogoutButton";
 import CustomerLogoutButton from "@/components/CustomerLogoutButton";
 import DemaaWordmark from "@/components/DemaaWordmark";
@@ -17,6 +18,9 @@ export default function Navbar({
   isAuthenticated = false,
   minimal = false,
   localeCode = "fr",
+  publicCta,
+  publicCtaHref,
+  publicCtaLabel,
   publicNavigationActiveView,
 }: {
   adminControls?: boolean;
@@ -24,6 +28,9 @@ export default function Navbar({
   isAuthenticated?: boolean;
   minimal?: boolean;
   localeCode?: InterfaceLocaleCode;
+  publicCta?: ReactNode;
+  publicCtaHref?: string;
+  publicCtaLabel?: string;
   publicNavigationActiveView?: PublicActionPlanView | "none";
 }) {
   const accountAccessClassName =
@@ -109,7 +116,16 @@ export default function Navbar({
               <div
                 id="action-plan-navbar-specialist"
                 className="shrink-0 empty:hidden"
-              />
+              >
+                {publicCta ?? (publicCtaHref && publicCtaLabel ? (
+                  <Link
+                    href={publicCtaHref}
+                    className="inline-flex min-h-10 shrink-0 items-center whitespace-nowrap rounded-full border border-dema-forest/18 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:min-h-11 sm:px-5 sm:text-sm"
+                  >
+                    {publicCtaLabel}
+                  </Link>
+                ) : null)}
+              </div>
             )}
           </div>
         </div>

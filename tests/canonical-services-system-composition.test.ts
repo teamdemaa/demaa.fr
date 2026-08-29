@@ -7,6 +7,7 @@ import {
   composePublicSolutionSectionsForSystem,
   getCanonicalServiceSlugsForSystem,
 } from "@/lib/canonical-services-system-section.server";
+import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
@@ -106,9 +107,11 @@ describe("canonical Services composition in every system", () => {
         placementId.startsWith(`render:${system.slug}:service:`)
       )).toBe(true);
       expect(services?.placements.every(({ resource }) =>
-        resource.interaction.interactionMode === "detail" &&
-        resource.interaction.href ===
-          `${resource.resourceSlug === "application-metier" ? "/application-metier" : `/services/${resource.resourceSlug}`}?systemSlug=${system.slug}&source=solutions-systeme`
+        resource.interaction.interactionMode === "detail" && (() => {
+          const service = getCanonicalServiceBySlug(resource.resourceSlug);
+          return service !== null && resource.interaction.href ===
+            `${service.detailHref}?systemSlug=${system.slug}&source=solutions-systeme`;
+        })()
       )).toBe(true);
       expect(services?.placements.every(({ resource }) =>
         resource.indicativePricing === undefined
@@ -122,7 +125,6 @@ describe("canonical Services composition in every system", () => {
   it("applies the explicit eligibility matrix to regulated professions", () => {
     expect(getCanonicalServiceSlugsForSystem("restaurant")).toEqual([
       "automatisation-processus",
-      "application-metier",
       "coach-business",
       "assistance-administrative",
       "formalites-entreprise",
@@ -133,7 +135,6 @@ describe("canonical Services composition in every system", () => {
     ]);
     expect(getCanonicalServiceSlugsForSystem("cabinet-comptable")).toEqual([
       "automatisation-processus",
-      "application-metier",
       "coach-business",
       "assistance-administrative",
       "gestion-reseaux-sociaux",
@@ -143,7 +144,6 @@ describe("canonical Services composition in every system", () => {
     ]);
     expect(getCanonicalServiceSlugsForSystem("cabinet-davocat")).toEqual([
       "automatisation-processus",
-      "application-metier",
       "coach-business",
       "assistance-administrative",
       "gestion-reseaux-sociaux",
@@ -153,7 +153,6 @@ describe("canonical Services composition in every system", () => {
     ]);
     expect(getCanonicalServiceSlugsForSystem("notaire")).toEqual([
       "automatisation-processus",
-      "application-metier",
       "coach-business",
       "assistance-administrative",
       "gestion-reseaux-sociaux",
@@ -178,6 +177,17 @@ describe("canonical Services composition in every system", () => {
       "providers",
       "financing",
       "aids",
+    ]);
+    expect(
+      sections.find(({ section }) => section === "software")?.placements
+        .map(({ resource }) => resource.resourceSlug),
+    ).toEqual([
+      "pennylane",
+      "tiimora",
+      "sage-generation-experts",
+      "cegid-loop",
+      "inqom-expert",
+      "silae",
     ]);
     expect(sections.find(({ section }) => section === "financing")?.placements)
       .toHaveLength(getRecommendedFinanceForSystem("cabinet-comptable").length);
@@ -245,7 +255,6 @@ describe("canonical Services composition in every system", () => {
     expect(services?.placements.map(({ resource }) => resource.resourceSlug))
       .toEqual([
         "automatisation-processus",
-        "application-metier",
         "coach-business",
         "assistance-administrative",
         "gestion-reseaux-sociaux",

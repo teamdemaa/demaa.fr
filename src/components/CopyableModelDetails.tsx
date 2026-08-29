@@ -3,10 +3,14 @@ import Link from "next/link";
 import { Suspense } from "react";
 import CopyableModelCopyLink from "@/components/CopyableModelCopyLink";
 import DocumentModelPreview from "@/components/DocumentModelPreview";
+import DriveFolderTemplateCreator from "@/components/DriveFolderTemplateCreator";
+import DriveFolderTreePreview from "@/components/DriveFolderTreePreview";
+import MentoratAutomationCta from "@/components/MentoratAutomationCta";
 import ModelPlatformBadge from "@/components/ModelPlatformBadge";
-import OrganisationSessionBookingButton from "@/components/OrganisationSessionBookingButton";
 import type { CopyableModelDefinition } from "@/lib/copyable-model-catalog";
 import { getDocumentModelBySlug } from "@/lib/document-models";
+import { buildCompanyDriveFolderTemplate } from "@/lib/drive-folder-templates";
+import { isGoogleDriveTemplateConfigured } from "@/lib/google-drive-template.server";
 
 export default function CopyableModelDetails({
   model,
@@ -18,8 +22,11 @@ export default function CopyableModelDetails({
   const documentModel = model.documentModelSlug
     ? getDocumentModelBySlug(model.documentModelSlug)
     : null;
+  const currentYear = new Date().getFullYear();
+  const driveTemplate = model.driveFolderTemplateSlug
+    ? buildCompanyDriveFolderTemplate(currentYear)
+    : null;
   const Heading = variant === "modal" ? "h2" : "h1";
-  const SectionHeading = variant === "modal" ? "h3" : "h2";
 
   return (
     <article className={variant === "page" ? "mx-auto w-full max-w-6xl" : "w-full"}>
@@ -43,7 +50,9 @@ export default function CopyableModelDetails({
 
       <div className="mt-8 grid overflow-hidden rounded-[1.35rem] border border-dema-line bg-white lg:grid-cols-[minmax(0,1.65fr)_minmax(19rem,0.8fr)]">
         <div className="min-h-[18rem] border-b border-dema-line bg-[#f7f7f3] sm:min-h-[25rem] lg:min-h-[32rem] lg:border-b-0 lg:border-r">
-          {documentModel ? (
+          {driveTemplate ? (
+            <DriveFolderTreePreview template={driveTemplate} />
+          ) : documentModel ? (
             <DocumentModelPreview model={documentModel} />
           ) : (
             <div className="flex h-full min-h-[18rem] items-center justify-center p-8 text-center text-dema-muted sm:min-h-[25rem]">Aperçu du modèle indisponible.</div>
@@ -61,31 +70,19 @@ export default function CopyableModelDetails({
               </li>
             ))}
           </ul>
-          <CopyableModelCopyLink modelSlug={model.slug} platform={model.platform} />
+          {driveTemplate ? (
+            <Suspense fallback={<div className="mt-7 h-40 animate-pulse rounded-xl bg-dema-sage/35" />}>
+              <DriveFolderTemplateCreator
+                configured={isGoogleDriveTemplateConfigured()}
+                modelSlug={model.slug}
+                year={currentYear}
+              />
+            </Suspense>
+          ) : (
+            <CopyableModelCopyLink modelSlug={model.slug} platform={model.platform} />
+          )}
         </div>
       </div>
-
-      <section className="mt-8 grid gap-6 rounded-[1.35rem] border border-dema-forest/20 bg-[linear-gradient(135deg,rgba(231,238,229,.72),rgba(255,255,255,.94))] p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-dema-forest">Adaptation sur mesure</p>
-          <SectionHeading className="mt-3 text-2xl font-light tracking-[-0.035em] text-brand-blue sm:text-3xl">Besoin de l’adapter à votre entreprise ?</SectionHeading>
-          <p className="mt-3 max-w-2xl leading-7 text-dema-muted">Nous pouvons adapter cette structure à vos champs, vos étapes et vos responsabilités, puis ajouter Fillout, Make ou une génération de documents si cela apporte une vraie valeur.</p>
-        </div>
-        <div className="lg:min-w-60">
-          <Suspense fallback={<div className="h-11 w-56 animate-pulse rounded-full bg-dema-sage/50" />}>
-            <OrganisationSessionBookingButton
-              className="demaa-primary-button w-full"
-              label="Faire adapter ce modèle"
-              requestType="copyable_model_customization"
-              source="Modèles à copier"
-              sourceIsAuthoritative
-              modelSlug={model.slug}
-              modelPlatform={model.platform}
-            />
-          </Suspense>
-          <p className="mt-3 text-center text-xs text-dema-muted">Adaptation sur devis · 550 € HT / jour</p>
-        </div>
-      </section>
 
       {model.relatedOrganiserSlug && model.relatedOrganiserLabel ? (
         <Link href={`/organiser/${model.relatedOrganiserSlug}`} className="mt-8 flex min-h-16 items-center justify-between gap-4 border-y border-dema-line px-2 py-4 text-brand-blue transition hover:text-dema-forest">
@@ -93,6 +90,10 @@ export default function CopyableModelDetails({
           <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
         </Link>
       ) : null}
+
+      <div className="mt-8">
+        <MentoratAutomationCta modelSlug={model.slug} variant="modele" />
+      </div>
     </article>
   );
 }

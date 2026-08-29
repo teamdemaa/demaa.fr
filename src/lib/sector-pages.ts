@@ -110,7 +110,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     highlights: [
       { label: "Voir le modele organisation", href: "/api/systeme-kit/open/crm-suivi-commercial" },
-      { label: "Découvrir l’application métier", href: "/application-metier" },
+      { label: "Découvrir l’automatisation", href: "/automatisation" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Tech & Digital") },
     ],
   }),
@@ -173,7 +173,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     highlights: [
       { label: "Voir le modele organisation", href: "/api/systeme-kit/open/crm-suivi-commercial" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Immobilier") },
-      { label: "Découvrir l’application métier", href: "/application-metier" },
+      { label: "Découvrir l’automatisation", href: "/automatisation" },
     ],
   }),
   createSectorPageDefinition("Hébergement & tourisme", {
@@ -195,7 +195,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     highlights: [
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Hébergement & tourisme") },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
-      { label: "Découvrir l’application métier", href: "/application-metier" },
+      { label: "Découvrir l’automatisation", href: "/automatisation" },
     ],
   }),
   createSectorPageDefinition("Patrimoine", {
@@ -217,7 +217,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     highlights: [
       { label: "Voir le previsionnel financier", href: "/api/systeme-kit/open/suivi-previsionnel-financier" },
-      { label: "Découvrir l’application métier", href: "/application-metier" },
+      { label: "Découvrir l’automatisation", href: "/automatisation" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Patrimoine") },
     ],
   }),
@@ -242,7 +242,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     highlights: [
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Mobilité & logistique") },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
-      { label: "Découvrir l’application métier", href: "/application-metier" },
+      { label: "Découvrir l’automatisation", href: "/automatisation" },
     ],
   }),
   createSectorPageDefinition("Restauration", {
@@ -323,7 +323,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     highlights: [
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Santé, bien-être & esthétique") },
-      { label: "Découvrir l’application métier", href: "/application-metier" },
+      { label: "Découvrir l’automatisation", href: "/automatisation" },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
     ],
   }),
@@ -346,7 +346,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     highlights: [
       { label: "Voir le modele organisation", href: "/api/systeme-kit/open/crm-suivi-commercial" },
-      { label: "Découvrir l’application métier", href: "/application-metier" },
+      { label: "Découvrir l’automatisation", href: "/automatisation" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Services aux particuliers") },
     ],
   }),
@@ -371,7 +371,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     highlights: [
       { label: "Voir les solutions adaptées", href: "/solutions" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Éducation & formation") },
-      { label: "Découvrir l’application métier", href: "/application-metier" },
+      { label: "Découvrir l’automatisation", href: "/automatisation" },
     ],
   }),
   createSectorPageDefinition("Industrie & production", {
@@ -431,7 +431,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
     ],
     highlights: [
       { label: "Voir le modele organisation", href: "/api/systeme-kit/open/crm-suivi-commercial" },
-      { label: "Découvrir l’application métier", href: "/application-metier" },
+      { label: "Découvrir l’automatisation", href: "/automatisation" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Associations & événements") },
     ],
   }),

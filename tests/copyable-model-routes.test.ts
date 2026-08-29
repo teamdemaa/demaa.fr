@@ -6,54 +6,53 @@ async function readSource(path: string) {
 }
 
 describe("copyable model public routes", () => {
-  it("groups models and concrete processes under the Organiser universe", async () => {
-    const [page, organiserPage, navbar, sectionNavigation, footer, modelsIndex, academyIndex] = await Promise.all([
+  it("makes models primary and keeps concrete processes as supporting content", async () => {
+    const [page, organiserPage, navbar, footer, modelsIndex, processBridge, academyIndex] = await Promise.all([
       readSource("src/app/(marketing)/modeles/page.tsx"),
       readSource("src/app/(marketing)/organiser/page.tsx"),
       readSource("src/components/PublicActionPlanNavigation.tsx"),
-      readSource("src/components/OrganiserSectionNavigation.tsx"),
       readSource("src/components/Footer.tsx"),
       readSource("src/components/CopyableModelsIndex.tsx"),
+      readSource("src/components/ModelProcessesBridge.tsx"),
       readSource("src/components/AcademyIndexClient.tsx"),
     ]);
 
     expect(page).toContain('<Navbar minimal publicNavigationActiveView="academy" />');
-    expect(page).toContain('<OrganiserSectionNavigation activeSection="models" />');
+    expect(page).not.toContain("OrganiserSectionNavigation");
     expect(page).toContain("<StructureNewsletterBlock />");
-    expect(organiserPage).toContain('<OrganiserSectionNavigation activeSection="processes" />');
+    expect(organiserPage).not.toContain("OrganiserSectionNavigation");
+    expect(organiserPage).toContain('backLink={{ href: "/modeles", label: "← Voir les modèles à copier" }}');
     expect(page).toContain('path: "/modeles"');
-    expect(navbar).toContain('label: "Organiser"');
+    expect(navbar).toContain('label: "Modèles"');
     expect(navbar).toContain('href: "/modeles"');
-    expect(sectionNavigation).toContain('label: "Modèles à copier"');
-    expect(sectionNavigation).toContain('label: "Processus & cas concrets"');
-    expect(sectionNavigation).toContain('aria-label="Rubriques Organiser"');
-    expect(sectionNavigation).toContain("demaa-search-shell");
-    expect(sectionNavigation).toContain("grid-cols-2 gap-1 p-1.5");
-    expect(sectionNavigation).toContain("min-h-12");
-    expect(sectionNavigation).toContain('activeSection === id');
     expect(footer).toContain('{ label: "Modèles à copier", href: "/modeles" }');
     expect(footer).toContain('{ label: "Processus & cas concrets", href: "/organiser" }');
-    expect(modelsIndex).toContain("rounded-[1.5rem] border border-dema-forest/15 bg-dema-sage/45");
-    expect(modelsIndex).toContain("rounded-full bg-dema-forest px-7");
     expect(modelsIndex).toContain('style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}');
     expect(modelsIndex).toContain("block text-brand-blue/62");
     expect(modelsIndex).toContain("demaa-hero-title block text-dema-forest");
     expect(modelsIndex).toContain("text-base leading-7 text-dema-muted md:text-lg");
     expect(modelsIndex).toContain("Des structures simples, déjà pensées pour suivre un flux de travail précis.");
+    expect(modelsIndex).toContain('title: "Les fondamentaux"');
+    expect(modelsIndex).toContain('title: "La réalisation du travail"');
+    expect(modelsIndex).toContain('title: "Le développement de l’entreprise"');
+    expect(modelsIndex).toContain("SOLUTION_RAIL_CLASS_NAME");
+    expect(modelsIndex).toContain("titleLevel={3}");
     expect(modelsIndex).not.toContain("Des processus concrets pour se projeter vraiment");
     expect(organiserPage).toContain("Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité.");
     expect(academyIndex.match(/Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité\./g)).toHaveLength(2);
-    expect(modelsIndex).toContain("Les processus derrière les modèles");
-    expect(modelsIndex).toContain("Explorer les processus");
+    expect(processBridge).toContain("Les processus derrière les modèles");
+    expect(processBridge).toContain("Voir tous les processus");
+    expect(processBridge).toContain(".slice(0, 3)");
   });
 
   it("supports a full detail page and an intercepted modal with the same content", async () => {
-    const [page, modal, details, copyLink, preview, dialog] = await Promise.all([
+    const [page, modal, details, copyLink, preview, driveCreator, dialog] = await Promise.all([
       readSource("src/app/(marketing)/modeles/[slug]/page.tsx"),
       readSource("src/app/@modal/(.)modeles/[slug]/page.tsx"),
       readSource("src/components/CopyableModelDetails.tsx"),
       readSource("src/components/CopyableModelCopyLink.tsx"),
       readSource("src/components/DocumentModelPreview.tsx"),
+      readSource("src/components/DriveFolderTemplateCreator.tsx"),
       readSource("src/components/CopyableModelRouteDialog.tsx"),
     ]);
 
@@ -64,6 +63,12 @@ describe("copyable model public routes", () => {
     expect(modal).toContain("export const dynamicParams = false");
     expect(dialog).toContain("router.back()");
     expect(details).toContain("CopyableModelCopyLink");
+    expect(details).toContain("DriveFolderTreePreview");
+    expect(details).toContain("DriveFolderTemplateCreator");
+    expect(driveCreator).toContain("Créer dans mon Drive");
+    expect(driveCreator).toContain("Copier l’arborescence");
+    expect(driveCreator).toContain('type="hidden" name="sectionIds"');
+    expect(driveCreator).not.toContain("Domaines à créer");
     expect(copyLink).toContain("Copier gratuitement");
     expect(copyLink).toContain("demaa-secondary-button");
     expect(copyLink).toContain("w-full");
@@ -73,8 +78,10 @@ describe("copyable model public routes", () => {
     expect(preview).toContain("Ouvrir dans Airtable");
     expect(preview).toContain("Explorer la base");
     expect(details).toContain('const Heading = variant === "modal" ? "h2" : "h1"');
-    expect(details).toContain("Faire adapter ce modèle");
-    expect(details).toContain("550 € HT / jour");
+    expect(details).toContain("MentoratAutomationCta");
+    expect(details).toContain('variant="modele"');
+    expect(details).not.toContain("Faire adapter ce modèle");
+    expect(details).not.toContain("550 € HT / jour");
     expect(details).toContain("model.relatedOrganiserSlug");
     expect(details).not.toContain("Le flux couvert");
     expect(details).not.toContain("Structure incluse");
@@ -89,5 +96,21 @@ describe("copyable model public routes", () => {
     expect(route).toContain("getCopyableModelDestination(slug)");
     expect(route).toContain("NextResponse.redirect(destination");
     expect(route).not.toContain("airtable.com/");
+  });
+
+  it("keeps the generated Drive flow scoped, signed and free of stored Google tokens", async () => {
+    const [authorizeRoute, callbackRoute, driveServer] = await Promise.all([
+      readSource("src/app/api/modeles/structure-google-drive-entreprise/drive/authorize/route.ts"),
+      readSource("src/app/api/modeles/structure-google-drive-entreprise/drive/callback/route.ts"),
+      readSource("src/lib/google-drive-template.server.ts"),
+    ]);
+
+    expect(authorizeRoute).toContain("enforceSameOrigin(request)");
+    expect(authorizeRoute).toContain("enforceRateLimit(request");
+    expect(callbackRoute).toContain("matchesGoogleDriveTemplateNonce");
+    expect(callbackRoute).toContain("createGoogleDriveFolderStructure");
+    expect(driveServer).toContain("https://www.googleapis.com/auth/drive.file");
+    expect(driveServer).toContain('access_type: "online"');
+    expect(driveServer).not.toContain("refresh_token");
   });
 });

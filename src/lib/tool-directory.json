@@ -669,6 +669,105 @@
       "scope": "business"
     },
     {
+      "slug": "sage-generation-experts",
+      "name": "Sage Génération Experts",
+      "url": "https://www.sage.com/fr-fr/experts-comptables/produits/sage-generation-experts-connect/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Production comptable, révision, déclarations fiscales et gestion du cabinet.",
+      "tags": [
+        "Cabinet comptable",
+        "Production",
+        "Révision"
+      ],
+      "bestFor": "Structurer la production comptable et fiscale d’un cabinet.",
+      "pricingHint": "Payant",
+      "keyFeatures": [
+        "Production comptable",
+        "Révision des dossiers",
+        "Déclarations fiscales",
+        "Gestion du cabinet"
+      ],
+      "idealFor": [
+        "Cabinets d’expertise comptable",
+        "Équipes qui veulent réunir production, révision et fiscalité"
+      ],
+      "sources": [
+        "https://www.sage.com/fr-fr/experts-comptables/produits/sage-generation-experts-connect/"
+      ],
+      "lastReviewedAt": "2026-08-28",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "cegid-loop",
+      "name": "Cegid Loop",
+      "url": "https://www.cegid.com/fr/produits/cegid-loop",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Production comptable et fiscale en ligne pour les cabinets d’expertise comptable.",
+      "tags": [
+        "Cabinet comptable",
+        "Production",
+        "Révision"
+      ],
+      "bestFor": "Organiser la production comptable et fiscale du cabinet dans un environnement en ligne.",
+      "pricingHint": "Payant",
+      "keyFeatures": [
+        "Production comptable",
+        "Révision des dossiers",
+        "Fiscalité",
+        "Travail en ligne"
+      ],
+      "idealFor": [
+        "Cabinets d’expertise comptable",
+        "Équipes qui veulent centraliser leur production comptable"
+      ],
+      "sources": [
+        "https://www.cegid.com/fr/produits/cegid-loop"
+      ],
+      "lastReviewedAt": "2026-08-28",
+      "status": "active",
+      "scope": "business"
+    },
+    {
+      "slug": "inqom-expert",
+      "name": "Inqom Expert",
+      "url": "https://www.inqom.com/expert/",
+      "category": "Outils métier",
+      "sectors": [
+        "Services & conseil"
+      ],
+      "description": "Production comptable et fiscale en ligne avec automatisation des opérations courantes.",
+      "tags": [
+        "Cabinet comptable",
+        "Production",
+        "Automatisation"
+      ],
+      "bestFor": "Automatiser les opérations courantes et piloter la production comptable et fiscale.",
+      "pricingHint": "Payant",
+      "keyFeatures": [
+        "Production comptable",
+        "Production fiscale",
+        "Automatisation des opérations courantes",
+        "Travail collaboratif"
+      ],
+      "idealFor": [
+        "Cabinets d’expertise comptable",
+        "Équipes qui veulent automatiser une partie de la production"
+      ],
+      "sources": [
+        "https://www.inqom.com/expert/"
+      ],
+      "lastReviewedAt": "2026-08-28",
+      "status": "active",
+      "scope": "business"
+    },
+    {
       "slug": "myunisoft",
       "name": "MyUnisoft",
       "url": "https://myunisoft.fr/",
@@ -4724,7 +4823,7 @@
       ],
       "bestFor": "Structurer une activité de consultant indépendant.",
       "pricingHint": "Payant",
-      "status": "active",
+      "status": "deprecated",
       "scope": "business"
     },
     {

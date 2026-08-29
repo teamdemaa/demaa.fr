@@ -14,7 +14,7 @@ const directoryLinks = [
 ];
 
 const collaborationLinks = [
-  { label: "Application métier", href: "/application-metier" },
+  { label: "Accompagnement à l’automatisation", href: "/automatisation" },
   { label: "Demaa Studio", href: "/studio" },
   { label: "Annonces", href: "/opportunites" },
   { label: "Rejoindre Team Demaa", href: "/opportunites?intent=team-demaa-profile" },

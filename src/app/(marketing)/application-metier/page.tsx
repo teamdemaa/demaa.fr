@@ -15,6 +15,7 @@ export const metadata = buildPublicPageMetadata({
   title,
   description,
   path: "/application-metier",
+  robots: { index: false, follow: false },
 });
 
 function getApplicationService() {

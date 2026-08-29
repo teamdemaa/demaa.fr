@@ -19,7 +19,7 @@ export function buildContentSecurityPolicy(options?: {
     "font-src 'self' data:",
     "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://api-adresse.data.gouv.fr https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com",
     "frame-src 'self' https://airtable.com https://embed.fillout.com https://*.firebaseapp.com https://accounts.google.com",
-    "form-action 'self'",
+    "form-action 'self' https://accounts.google.com",
     "upgrade-insecure-requests",
   ].join("; ");
 }

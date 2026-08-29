@@ -20,12 +20,16 @@ type DraftResourceInput = Readonly<{
   officialSource: string;
   capturedAt: string;
   claim: string;
+  reviewedAt?: string;
+  expiresAt?: string;
   publicationBlockers?: readonly string[];
 }>;
 
 function draftResource(input: DraftResourceInput): SolutionResource {
   return {
     ...PILOT_REVIEW,
+    ...(input.reviewedAt ? { reviewedAt: input.reviewedAt } : {}),
+    ...(input.expiresAt ? { expiresAt: input.expiresAt } : {}),
     evidence: [{
       evidenceId: `pilot-${input.resourceSlug}-official-2026`,
       sourceRef: input.officialSource,
@@ -54,18 +58,23 @@ type DraftPlacementInput = Readonly<{
   usage: string;
   fitRationale: string;
   fitConstraints: readonly string[];
+  capturedAt?: string;
+  reviewedAt?: string;
+  expiresAt?: string;
   publicationBlockers?: readonly string[];
 }>;
 
 function draftPlacement(input: DraftPlacementInput): SolutionPlacement {
   return {
     ...PILOT_REVIEW,
+    ...(input.reviewedAt ? { reviewedAt: input.reviewedAt } : {}),
+    ...(input.expiresAt ? { expiresAt: input.expiresAt } : {}),
     evidence: [{
       evidenceId: `pilot-${input.systemSlug}-${input.resourceSlug}-fit-2026`,
       sourceRef: `audit://solutions-pilots/${input.systemSlug}/${input.resourceSlug}`,
       claim: input.fitRationale,
       evidenceType: "internal_test",
-      capturedAt: "2026-08-03T19:00:00.000Z",
+      capturedAt: input.capturedAt ?? "2026-08-03T19:00:00.000Z",
     }],
     placementId: `${input.systemSlug}:${input.resourceSlug}:${input.section}:${input.rank}`,
     systemSlug: input.systemSlug,
@@ -200,6 +209,39 @@ export const PILOT_SOLUTION_DRAFT_RESOURCES: readonly SolutionResource[] = [
     officialSource: "https://www.pennylane.com/",
     capturedAt: "2026-07-02T00:00:00.000Z",
     claim: "La page officielle présente les fonctions comptables et financières proposées par Pennylane.",
+  }),
+  draftResource({
+    resourceSlug: "sage-generation-experts",
+    resourceType: "software",
+    name: "Sage Génération Experts",
+    description: "Production comptable, révision, déclarations fiscales et gestion du cabinet.",
+    officialSource: "https://www.sage.com/fr-fr/experts-comptables/produits/sage-generation-experts-connect/",
+    capturedAt: "2026-08-28T00:00:00.000Z",
+    claim: "La page officielle présente Sage Génération Experts comme une solution de production comptable, de révision, de fiscalité et de gestion du cabinet.",
+    reviewedAt: "2026-08-28T12:00:00.000Z",
+    expiresAt: "2027-02-28T12:00:00.000Z",
+  }),
+  draftResource({
+    resourceSlug: "cegid-loop",
+    resourceType: "software",
+    name: "Cegid Loop",
+    description: "Production comptable et fiscale en ligne pour les cabinets d’expertise comptable.",
+    officialSource: "https://www.cegid.com/fr/produits/cegid-loop",
+    capturedAt: "2026-08-28T00:00:00.000Z",
+    claim: "La page officielle présente Cegid Loop comme une solution de production comptable destinée aux cabinets d’expertise comptable.",
+    reviewedAt: "2026-08-28T12:00:00.000Z",
+    expiresAt: "2027-02-28T12:00:00.000Z",
+  }),
+  draftResource({
+    resourceSlug: "inqom-expert",
+    resourceType: "software",
+    name: "Inqom Expert",
+    description: "Production comptable et fiscale en ligne avec automatisation des opérations courantes.",
+    officialSource: "https://www.inqom.com/expert/",
+    capturedAt: "2026-08-28T00:00:00.000Z",
+    claim: "La page officielle présente Inqom Expert comme une solution de production comptable et fiscale pour les experts-comptables.",
+    reviewedAt: "2026-08-28T12:00:00.000Z",
+    expiresAt: "2027-02-28T12:00:00.000Z",
   }),
   draftResource({
     resourceSlug: "silae",
@@ -377,8 +419,44 @@ export const PILOT_SOLUTION_DRAFT_PLACEMENTS: readonly SolutionPlacement[] = [
   }),
   draftPlacement({
     systemSlug: "cabinet-comptable",
-    resourceSlug: "silae",
+    resourceSlug: "sage-generation-experts",
     rank: 3,
+    section: "software",
+    usage: "Produire, réviser et déclarer les dossiers comptables et fiscaux du cabinet.",
+    fitRationale: "Sage Génération Experts réunit les fonctions centrales de production comptable et fiscale d’un cabinet.",
+    fitConstraints: ["Valider les modules, la migration des dossiers, les intégrations et l’accompagnement nécessaires."],
+    capturedAt: "2026-08-28T00:00:00.000Z",
+    reviewedAt: "2026-08-28T12:00:00.000Z",
+    expiresAt: "2027-02-28T12:00:00.000Z",
+  }),
+  draftPlacement({
+    systemSlug: "cabinet-comptable",
+    resourceSlug: "cegid-loop",
+    rank: 4,
+    section: "software",
+    usage: "Organiser la production comptable et fiscale du cabinet dans un environnement en ligne.",
+    fitRationale: "Cegid Loop couvre le traitement et la révision des dossiers pour les cabinets d’expertise comptable.",
+    fitConstraints: ["Vérifier le périmètre fonctionnel, les connecteurs, la reprise des données et les conditions commerciales."],
+    capturedAt: "2026-08-28T00:00:00.000Z",
+    reviewedAt: "2026-08-28T12:00:00.000Z",
+    expiresAt: "2027-02-28T12:00:00.000Z",
+  }),
+  draftPlacement({
+    systemSlug: "cabinet-comptable",
+    resourceSlug: "inqom-expert",
+    rank: 5,
+    section: "software",
+    usage: "Automatiser les opérations courantes et piloter la production comptable et fiscale du cabinet.",
+    fitRationale: "Inqom Expert propose un environnement de production comptable et fiscale conçu pour les experts-comptables.",
+    fitConstraints: ["Évaluer la couverture des dossiers, les intégrations, la migration et l’accompagnement au changement."],
+    capturedAt: "2026-08-28T00:00:00.000Z",
+    reviewedAt: "2026-08-28T12:00:00.000Z",
+    expiresAt: "2027-02-28T12:00:00.000Z",
+  }),
+  draftPlacement({
+    systemSlug: "cabinet-comptable",
+    resourceSlug: "silae",
+    rank: 6,
     section: "software",
     usage: "Produire la paie et structurer les opérations sociales du cabinet.",
     fitRationale: "Silae répond au besoin spécialisé de paie et de gestion sociale.",

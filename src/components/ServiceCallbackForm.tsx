@@ -90,14 +90,20 @@ export default function ServiceCallbackForm({
   serviceSlug,
   localeCode = "fr",
   marketCode = "fr-fr",
+  modelSlug,
   source,
+  submitLabel,
+  successMessage,
   systemSlug,
 }: {
   packages?: readonly CallbackPackage[];
   serviceSlug: string;
   localeCode?: "fr" | "en";
   marketCode?: string;
+  modelSlug?: string;
   source?: string;
+  submitLabel?: string;
+  successMessage?: string;
   systemSlug?: string;
 }) {
   const pathname = usePathname();
@@ -141,24 +147,30 @@ export default function ServiceCallbackForm({
     const flowKey = `service-callback:${serviceSlug}:${selectedPackageSlug || "default"}`;
     try {
       const idempotencyKey = getLeadSubmissionKey(flowKey);
+      const currentSearchParams = searchParams.toString();
+      const resolvedSystemSlug = systemSlug ?? searchParams.get("systemSlug") ?? undefined;
       await submitCallbackRequest({
         attribution: getLeadAttributionPayload(),
         company: fields.company.trim(),
         localeCode,
         marketCode,
         idempotencyKey,
+        modelSlug: modelSlug ?? searchParams.get("modelSlug") ?? undefined,
         packageSlug: selectedPackageSlug || undefined,
         phone: fields.phone.trim(),
         serviceSlug,
         source: source ?? searchParams.get("source") ?? undefined,
-        sourcePage: pathname,
-        systemSlug: systemSlug ?? searchParams.get("systemSlug") ?? undefined,
+        sourcePage: `${pathname}${currentSearchParams ? `?${currentSearchParams}` : ""}`,
+        systemSlug: resolvedSystemSlug,
         website: fields.website,
       });
       clearLeadSubmissionKey(flowKey);
       setFields(EMPTY_FIELDS);
       setStatus("success");
-      trackLeadConversion({ requestType: "service_callback_request" });
+      trackLeadConversion({
+        requestType: "service_callback_request",
+        systemSlug: resolvedSystemSlug,
+      });
     } catch {
       setStatus("error");
     } finally {
@@ -167,7 +179,7 @@ export default function ServiceCallbackForm({
   }
 
   const fieldClassName =
-    "mt-2 min-h-11 w-full rounded-[0.9rem] border border-dema-line bg-dema-paper px-4 py-3 text-sm text-brand-blue outline-none transition placeholder:text-dema-muted/70 focus:border-dema-forest/40 focus:ring-2 focus:ring-dema-forest/20";
+    "mt-2 min-h-11 w-full rounded-[0.9rem] border border-dema-line bg-dema-paper px-4 py-3 text-sm font-normal text-brand-blue outline-none transition placeholder:text-dema-muted/50 focus:border-dema-forest/40 focus:ring-2 focus:ring-dema-forest/20";
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
@@ -281,7 +293,9 @@ export default function ServiceCallbackForm({
         aria-busy={status === "submitting"}
         className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-dema-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-60"
       >
-        {status === "submitting" ? (localeCode === "en" ? "Sending…" : "Envoi…") : (localeCode === "en" ? "Send my request" : "Envoyer ma demande")}
+        {status === "submitting"
+          ? (localeCode === "en" ? "Sending…" : "Envoi…")
+          : submitLabel ?? (localeCode === "en" ? "Send my request" : "Envoyer ma demande")}
       </button>
 
       <p className="text-xs leading-relaxed text-dema-muted">
@@ -295,7 +309,7 @@ export default function ServiceCallbackForm({
 
       {status === "success" ? (
         <p role="status" className="text-sm font-medium text-dema-forest">
-          {localeCode === "en" ? "Request received. We will contact you within 24 to 48 hours." : "Demande reçue. Nous vous contacterons prochainement sur WhatsApp."}
+          {successMessage ?? (localeCode === "en" ? "Request received. We will contact you within 24 to 48 hours." : "Demande reçue. Nous vous contacterons prochainement sur WhatsApp.")}
         </p>
       ) : null}
       {status === "error" ? (

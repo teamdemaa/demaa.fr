@@ -6,13 +6,14 @@ async function readSource(path: string) {
 }
 
 describe("Application métier landing page", () => {
-  it("owns the new canonical route and structured data", async () => {
+  it("keeps the retained direct route out of search results", async () => {
     const [pageSource, catalogSource] = await Promise.all([
       readSource("src/app/(marketing)/application-metier/page.tsx"),
       readSource("src/lib/canonical-service-catalog.ts"),
     ]);
 
     expect(pageSource).toContain('path: "/application-metier"');
+    expect(pageSource).toContain("robots: { index: false, follow: false }");
     expect(pageSource).toContain("buildPublicPageMetadata");
     expect(pageSource).toContain('"@type": "FAQPage"');
     expect(pageSource).toContain("buildServicePageJsonLd(service)");

@@ -363,7 +363,7 @@ const demaaTrainings = [
     bestFor:
       "Les dirigeants et équipes qui veulent intégrer l'IA sans projet technique complexe.",
     tags: ["IA", "Productivité", "Numérique"],
-    icon: "Sparkles",
+    icon: "Lightbulb",
     usefulFor: ["IA", "Productivité", "Organisation"],
     sectors: [
       "Conseil & services aux entreprises",
@@ -414,7 +414,7 @@ const demaaTrainings = [
     bestFor:
       "Les agences web, SaaS et entreprises digitales qui veulent structurer une culture IA avec des usages concrets et des formations faciles à activer.",
     tags: ["IA", "Bpifrance", "Digital"],
-    icon: "Sparkles",
+    icon: "Laptop",
     usefulFor: ["IA", "Veille", "Montée en compétence"],
     sectors: ["Tech & Digital", "Conseil & services aux entreprises"],
     href: "https://www.bpifrance-universite.fr/thematique/intelligence-artificielle/",
@@ -930,7 +930,7 @@ const demaaTrainings = [
     bestFor:
       "Les instituts et professionnels de la beauté qui veulent consolider leurs protocoles de base.",
     tags: ["Beauté", "Soins", "Protocoles"],
-    icon: "Sparkles",
+    icon: "GraduationCap",
     usefulFor: ["Soins", "Pratique", "Institut"],
     sectors: ["Santé, bien-être & esthétique"],
     href: "https://c3paris.com/pack-formation-beaute/",
@@ -949,7 +949,7 @@ const demaaTrainings = [
     bestFor:
       "Les instituts de beauté, spas et activités esthétiques qui veulent développer une prestation Head Spa.",
     tags: ["Head Spa", "Esthétique", "Soin"],
-    icon: "Sparkles",
+    icon: "GraduationCap",
     usefulFor: ["Carte de soins", "Différenciation", "Beauté"],
     sectors: ["Santé, bien-être & esthétique"],
     href: "https://www.cnaibspaformationpro.fr/formations-presentielles.php#row_SECTION_3EC17UYBS4",
@@ -969,7 +969,7 @@ const demaaTrainings = [
     bestFor:
       "Les instituts de beauté et activités esthétiques qui veulent structurer ou élargir leur offre regard.",
     tags: ["Beauté du regard", "Esthétique", "Prestation"],
-    icon: "Sparkles",
+    icon: "GraduationCap",
     usefulFor: ["Prestation", "Beauté", "Montée en gamme"],
     sectors: ["Santé, bien-être & esthétique"],
     href: "https://www.cnaibspaformationpro.fr/formations-presentielles.php#row_SECTION_XTTI8BP7EG",
@@ -1387,7 +1387,7 @@ const demaaTrainings = [
     bestFor:
       "Les structures de ménage, d'aide à domicile et de services aux particuliers qui veulent cadrer les gestes métier et les protocoles d'entretien.",
     tags: ["Ménage", "Entretien", "Domicile"],
-    icon: "Sparkles",
+    icon: "GraduationCap",
     usefulFor: ["Ménage", "Qualité de service", "Terrain"],
     sectors: ["Services aux particuliers"],
     href: "https://iperia.eu/fr/formations/entretien-cadre-vie-pratiques-ecoresponsables",

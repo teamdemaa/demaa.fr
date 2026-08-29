@@ -167,22 +167,27 @@ describe("service callback request route", () => {
 
   it("accepts the simple callback journey for process automation", async () => {
     const response = await POST(request(validBody({
+      modelSlug: "structure-google-drive-entreprise",
       packageSlug: "automatisation-essentielle",
       serviceSlug: "automatisation-processus",
+      source: "modele-detail",
+      sourcePage: "/automatisation?source=modele-detail&modelSlug=structure-google-drive-entreprise",
     })));
 
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: [
-        { label: "Service", value: "Automatisation des processus et IA" },
+        { label: "Service", value: "Accompagnement à l’automatisation" },
         { label: "Slug du service", value: "automatisation-processus" },
-        { label: "Forfait", value: "Automatisation des processus et IA" },
+        { label: "Forfait", value: "Accompagnement à l’automatisation" },
         { label: "Slug du forfait", value: "automatisation-essentielle" },
-        { label: "Prix de référence", value: "À partir de 1 500 € HT" },
+        { label: "Prix de référence", value: "3 000 € HT" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
         { label: "Locale", value: "fr" },
         { label: "Marché", value: "fr-fr" },
-        { label: "Page source", value: "/services/assistance-administrative" },
+        { label: "Origine interne", value: "modele-detail" },
+        { label: "Modèle", value: "structure-google-drive-entreprise" },
+        { label: "Page source", value: "/automatisation?source=modele-detail&modelSlug=structure-google-drive-entreprise" },
       ],
       requestType: "service_callback_request",
     }));
@@ -192,7 +197,7 @@ describe("service callback request route", () => {
     const response = await POST(request(validBody({
       packageSlug: "application-metier-essentielle",
       serviceSlug: "application-metier",
-      sourcePage: "/sur-mesure?source=solutions-systeme",
+      sourcePage: "/application-metier?source=solutions-systeme",
     })));
 
     expect(response.status).toBe(202);
@@ -202,7 +207,7 @@ describe("service callback request route", () => {
         { label: "Forfait", value: "Application métier" },
         { label: "Slug du forfait", value: "application-metier-essentielle" },
         { label: "Prix de référence", value: "À partir de 4 500 € HT" },
-        { label: "Page source", value: "/sur-mesure?source=solutions-systeme" },
+        { label: "Page source", value: "/application-metier?source=solutions-systeme" },
       ]),
       title: "Demande de contact WhatsApp - Application métier - Application métier",
     }));

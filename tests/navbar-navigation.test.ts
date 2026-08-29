@@ -63,7 +63,7 @@ describe("Demaa application navbar", () => {
     );
   });
 
-  it("uses Organiser as the public French destination", async () => {
+  it("uses Modèles as the concrete public French destination", async () => {
     const source = await readFile(
       new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
       "utf8",
@@ -73,16 +73,17 @@ describe("Demaa application navbar", () => {
       "utf8",
     );
 
-    expect(source).toContain('label: "Organiser", href: "/modeles"');
+    expect(source).toContain('label: "Modèles", href: "/modeles"');
     expect(source).toContain('label: "Solutions", href: "/solutions"');
-    expect(source).toContain('label: "Application métier", href: "/application-metier"');
+    expect(source).toContain('label: "Automatisation", href: "/automatisation"');
     expect(source).toContain("leading-tight");
     expect(source).not.toContain("leading-none");
     expect(organiserIndex).not.toContain("OrganiserLandingPage");
     expect(organiserIndex).toContain('path: "/organiser"');
     expect(organiserIndex).toContain('<Navbar publicNavigationActiveView="academy" />');
     expect(organiserIndex).not.toContain("<ActionPlanNavbar");
-    expect(organiserIndex).toContain('<OrganiserSectionNavigation activeSection="processes" />');
+    expect(organiserIndex).not.toContain("OrganiserSectionNavigation");
+    expect(organiserIndex).toContain('label: "← Voir les modèles à copier"');
   });
 
   it("replaces the sign-in action with account access once a session is active", async () => {
@@ -188,9 +189,12 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain("empty:hidden xl:block");
     expect(navbarSource).toContain("empty:hidden xl:hidden");
     expect(actionPlanNavSource).toContain("Plan d’action");
-    expect(actionPlanNavSource).toContain("Application métier");
+    expect(actionPlanNavSource).toContain("Automatisation");
+    expect(actionPlanNavSource).toContain('"/automatisation"');
+    expect(actionPlanNavSource).not.toContain('"/application-metier"');
     expect(actionPlanNavSource).not.toContain('label: "Services"');
-    expect(actionPlanNavSource).toContain("Organiser");
+    expect(actionPlanNavSource).toContain("Modèles");
+    expect(actionPlanNavSource).toContain('"/modeles"');
     expect(actionPlanNavSource).not.toContain("Ressources");
     expect(actionPlanNavSource).toContain("Annonces");
     expect(actionPlanNavSource).not.toContain('label: "Système"');
@@ -218,7 +222,7 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).not.toContain('label: "Coaching"');
     expect(actionPlanNavSource).toContain('{ view: "academy"');
     expect(actionPlanNavSource).not.toContain('view === "models"');
-    expect(actionPlanNavSource).toContain('routeNavigation ? "/modeles" : "/organiser"');
+    expect(actionPlanNavSource).not.toContain('"/organiser"');
     expect(actionPlanNavSource).toContain("onViewChange(view)");
     expect(actionPlanNavSource).toContain("xl:min-h-11");
     expect(navbarSource).toContain("pb-[calc(1rem+env(safe-area-inset-bottom))]");

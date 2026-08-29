@@ -4,7 +4,6 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { type ReactNode, useState } from "react";
 import LeaderDailyRail from "@/components/LeaderDailyRail";
-import SystemSolutionNextSteps from "@/components/SystemSolutionNextSteps";
 import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { ToolOutboundSurface } from "@/lib/tool-outbound-attribution";
@@ -112,9 +111,6 @@ export default function SystemDetailContent({
           toolOutboundSurface={toolOutboundSurface}
         />
         {!embedded ? <LeaderDailyRail /> : null}
-        {!embedded ? (
-          <SystemSolutionNextSteps systemId={system.slug} systemName={system.name} />
-        ) : null}
       </div>
     </article>
   );

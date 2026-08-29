@@ -13,7 +13,8 @@ describe("Organiser public journey", () => {
     const navbar = read("src/components/Navbar.tsx");
 
     expect(organiserPage).toContain("<AcademyIndexClient");
-    expect(organiserPage).toContain('<OrganiserSectionNavigation activeSection="processes" />');
+    expect(organiserPage).not.toContain("OrganiserSectionNavigation");
+    expect(organiserPage).toContain('backLink={{ href: "/modeles", label: "← Voir les modèles à copier" }}');
     expect(organiserPage).toContain('path: "/organiser"');
     expect(organiserPage).not.toContain("academie/page");
     expect(organiserPage).not.toContain("<OrganiserLandingPage");
@@ -60,9 +61,9 @@ describe("Organiser public journey", () => {
   it("keeps the draft complete if it is intentionally revived later", () => {
     const discussion = read("src/components/OrganiserProjectDiscussionButton.tsx");
 
-    expect(archivedLanding).toContain("Quand les outils existants ne suffisent plus");
-    expect(archivedLanding).toContain("Nous pouvons aussi concevoir une application métier adaptée à votre fonctionnement");
-    expect(archivedLanding).toContain('href="/application-metier"');
+    expect(archivedLanding).toContain("Faites gagner du temps à votre équipe");
+    expect(archivedLanding).toContain("automatiser les tâches réellement utiles");
+    expect(archivedLanding).toContain('href="/automatisation"');
     expect(archivedLanding).toContain("<OrganiserProjectDiscussionButton");
     expect(discussion).toContain("Discuter de votre projet");
     expect(discussion).toContain("showCallbackAvailability");
