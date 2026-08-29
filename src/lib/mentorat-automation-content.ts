@@ -8,7 +8,7 @@ export const mentoratAutomationContent = {
   },
   offer: {
     duration: "2 mois",
-    price: "3 000 € HT",
+    price: "3 500 € HT",
   },
   outcomes: [
     {
@@ -29,8 +29,8 @@ export const mentoratAutomationContent = {
   ],
   included: [
     "Un diagnostic des tâches chronophages",
-    "Le cadrage de jusqu’à 3 processus concrets (relances, dossiers, suivi…)",
-    "La mise en œuvre des automatisations adaptées à leur complexité",
+    "La définition des priorités selon votre fonctionnement et leur complexité",
+    "Le passage du cadrage à la mise en service dans votre environnement de travail",
     "Des tests et ajustements avec l’équipe",
     "La documentation des solutions retenues",
     "Le transfert de compétences pour continuer sans nous",

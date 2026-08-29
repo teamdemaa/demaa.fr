@@ -14,10 +14,10 @@ async function readSource(path: string) {
 }
 
 describe("Accompagnement à l’automatisation", () => {
-  it("locks the two-month offer at 3 000 € HT without prescribing session content", () => {
+  it("locks the two-month offer at 3 500 € HT without prescribing session content", () => {
     expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/automatisation");
     expect(mentoratAutomationContent.offer.duration).toBe("2 mois");
-    expect(mentoratAutomationContent.offer.price).toBe("3 000 € HT");
+    expect(mentoratAutomationContent.offer.price).toBe("3 500 € HT");
     expect("sessions" in mentoratAutomationContent).toBe(false);
 
     const markup = renderToStaticMarkup(
@@ -25,8 +25,7 @@ describe("Accompagnement à l’automatisation", () => {
     );
     expect(markup).toContain("2 mois");
     expect(markup).toContain("réduire les ressaisies");
-    expect(markup).not.toContain("jusqu’à 3 processus prioritaires");
-    expect(markup).not.toContain("3 000 € HT");
+    expect(markup).not.toContain("3 500 € HT");
     expect(markup).not.toContain("8 séances");
     expect(markup).not.toContain("Accompagnement personnalisé sur 2 mois");
     expect(markup).not.toContain("première automatisation");
@@ -44,7 +43,7 @@ describe("Accompagnement à l’automatisation", () => {
     expect(diagnosticMarkup).toContain("Qu’est-ce qui vous prend le plus de temps aujourd’hui");
     expect(diagnosticMarkup).toContain("Identifier mon point de départ");
     expect(diagnosticMarkup).not.toContain("Diagnostic IA");
-    expect(diagnosticMarkup).not.toContain("3 000 € HT");
+    expect(diagnosticMarkup).not.toContain("3 500 € HT");
     expect(diagnosticMarkup).not.toContain("8 séances");
   });
 
@@ -69,7 +68,6 @@ describe("Accompagnement à l’automatisation", () => {
     expect(métierMarkup).toContain("systemSlug=cabinet-comptable");
     expect(modelMarkup).toContain("Passez du modèle à l’automatisation");
     expect(modelMarkup).toContain("première façon de travailler");
-    expect(modelMarkup).not.toContain("jusqu’à 3 processus prioritaires");
     expect(modelMarkup).toContain("source=modele-detail");
     expect(modelMarkup).toContain("modelSlug=structure-google-drive-entreprise");
   });
@@ -114,11 +112,11 @@ describe("Accompagnement à l’automatisation", () => {
     expect(landingPage).toContain("Une demande arrive");
     expect(landingPage).toContain("La bonne personne est prévenue");
     expect(landingPage).toContain("Pour le dirigeant et la personne qui fera fonctionner les automatisations");
-    expect(landingPage).toContain("Ce qui change concrètement");
+    expect(landingPage).not.toContain("Ce qui change concrètement");
     expect(landingPage).not.toContain("SOLUTION_RAIL_CLASS_NAME");
     expect(mentoratAutomationContent.outcomes[0].title).toBe("Moins de ressaisies et de relances");
     expect(mentoratAutomationContent.included).toContain(
-      "Le cadrage de jusqu’à 3 processus concrets (relances, dossiers, suivi…)",
+      "Le passage du cadrage à la mise en service dans votre environnement de travail",
     );
     expect(landingPage).toContain("Aucun profil technique n’est nécessaire");
     expect(landingPage).toContain('variant="automation"');

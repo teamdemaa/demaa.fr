@@ -207,7 +207,7 @@ export default function MentoratAutomationLandingPage() {
                 Passez du diagnostic à la mise en œuvre.
               </h2>
               <p className="mt-5 text-base leading-7 text-dema-paper/72">
-                Un accompagnement personnalisé sur 2 mois pour automatiser ce qui compte vraiment et rendre votre équipe autonome.
+                Au terme des 2 mois, votre fonctionnement est mieux organisé&nbsp;: les tâches qui vous font perdre du temps sont simplifiées ou automatisées, et votre équipe sait faire vivre ce qui a été mis en place.
               </p>
               <p className="mt-6 text-2xl font-medium">{content.offer.price}</p>
             </div>

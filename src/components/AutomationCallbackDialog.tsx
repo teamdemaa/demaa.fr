@@ -6,11 +6,11 @@ import ServiceCallbackForm from "@/components/ServiceCallbackForm";
 const AUTOMATION_PACKAGE = [{
   name: "Accompagnement à l’automatisation",
   pricing: {
-    label: "3 000 € HT",
+    label: "3 500 € HT",
     note: "Le programme est défini après le diagnostic.",
   },
   slug: "automatisation-essentielle",
-  summary: "Deux mois pour cadrer jusqu’à 3 processus prioritaires et rendre votre équipe autonome.",
+  summary: "Deux mois pour mieux organiser votre fonctionnement, gagner du temps et rendre votre équipe autonome.",
 }] as const;
 
 export default function AutomationCallbackDialog({ onClose }: { onClose: () => void }) {

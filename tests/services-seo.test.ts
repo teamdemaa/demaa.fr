@@ -66,10 +66,10 @@ describe("canonical Services SEO and redirects", () => {
       offers: [
         {
           name: "Accompagnement à l’automatisation",
-          price: "3000.00",
+          price: "3500.00",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
-            price: "3000.00",
+            price: "3500.00",
             priceCurrency: "EUR",
             valueAddedTaxIncluded: false,
           },
