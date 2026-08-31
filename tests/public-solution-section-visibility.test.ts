@@ -8,7 +8,7 @@ import {
 import type { SolutionSection } from "@/lib/solution-registry-dto";
 
 describe("public Solution section visibility", () => {
-  it("shows the validated ecosystem while keeping legacy models hidden", () => {
+  it("keeps aids, networks and legacy models hidden from public solution pages", () => {
     const sections = [
       { section: "software", value: "Outils" },
       { section: "services", value: "Prestations" },
@@ -29,17 +29,15 @@ describe("public Solution section visibility", () => {
       "services",
       "providers",
       "financing",
-      "aids",
-      "networks",
     ]);
     expect(PUBLIC_SOLUTION_SECTION_VISIBILITY).toEqual({
       software: true,
       services: true,
       providers: true,
       financing: true,
-      aids: true,
+      aids: false,
       models: false,
-      networks: true,
+      networks: false,
     });
     expect(sections.map(({ section }) => section)).toContain("services");
   });

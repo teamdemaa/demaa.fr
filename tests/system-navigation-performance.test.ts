@@ -60,7 +60,7 @@ describe("system navigation performance contract", () => {
     );
     expect(searchSource).toContain("Trouvez les solutions adaptées");
     expect(searchSource).toContain(
-      "Outils, partenaires et ressources sélectionnés selon votre métier.",
+      "Des outils et partenaires utiles, sélectionnés selon votre métier.",
     );
     expect(searchSource).toContain(
       '<h2 className="demaa-catalog-section-title text-brand-blue/85">',

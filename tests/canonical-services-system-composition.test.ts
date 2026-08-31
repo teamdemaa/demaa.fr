@@ -235,11 +235,10 @@ describe("canonical Services composition in every system", () => {
       "services",
       "providers",
       "financing",
-      "aids",
     ]);
     expect(JSON.stringify(sections)).toContain("Fournisseur Test");
     expect(JSON.stringify(sections)).toContain("financing-");
-    expect(JSON.stringify(sections)).toContain("aid-");
+    expect(JSON.stringify(sections)).not.toContain("aid-");
     expect(JSON.stringify(sections)).not.toMatch(/Réseaux professionnels|Anciens modèles/);
     expect(sectionsWithLegacyReferral).toEqual(inputSnapshot);
   });

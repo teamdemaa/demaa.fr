@@ -171,14 +171,12 @@ describe("system Solutions UI", () => {
     }
   });
 
-  it("builds the complete public rail sequence for all métiers while keeping SEO published-only", async () => {
+  it("builds the focused public rail sequence while keeping hidden registry data and SEO published-only", async () => {
     const revision = await loadFirebaseSolutionRegistryRevision({ forceLocal: true });
     const expectedPublicOrder = [
       "software",
       "providers",
       "financing",
-      "networks",
-      "aids",
     ] as const;
 
     for (const system of enterpriseCatalog) {
@@ -215,10 +213,10 @@ describe("system Solutions UI", () => {
       visibleSections.find(({ section }) => section === "providers")?.placements
         .map(({ resource }) => resource.resourceSlug),
     ).toEqual(["amazon-business"]);
-    expect(
-      visibleSections.find(({ section }) => section === "networks")?.placements
-        .map(({ resource }) => resource.resourceSlug),
-    ).toEqual(["ordre-experts-comptables", "croec-regional"]);
+    expect(selectedSections.map(({ section }) => section)).toContain("networks");
+    expect(visibleSections.map(({ section }) => section)).not.toEqual(
+      expect.arrayContaining(["networks", "aids"]),
+    );
 
     const markup = renderToStaticMarkup(
       createElement(SystemSolutionsTab, { sections: visibleSections }),
@@ -227,8 +225,6 @@ describe("system Solutions UI", () => {
       "Outils et logiciels",
       "Fournisseurs",
       "Banque &amp; Financement",
-      "Réseaux professionnels",
-      "Aides &amp; Subventions",
     ];
     for (const [index, heading] of expectedHeadings.entries()) {
       expect(markup).toContain(heading);
@@ -237,6 +233,8 @@ describe("system Solutions UI", () => {
           .toBeLessThan(markup.indexOf(heading));
       }
     }
+    expect(markup).not.toContain("Réseaux professionnels");
+    expect(markup).not.toContain("Aides &amp; Subventions");
     expect(markup).not.toContain("Financement et aides");
 
     const publishedSections = selectRenderableSolutionSectionsFromRevision(
@@ -693,6 +691,7 @@ describe("system Solutions UI", () => {
     expect(source).toContain("SOLUTION_RAIL_CARD_FRAME_CLASS_NAME");
     expect(source).toContain("SOLUTION_RAIL_CARD_INTERACTIVE_CLASS_NAME");
     expect(source).toContain("SolutionRailCardContent");
+    expect(source).toContain('className="demaa-catalog-section-title text-brand-blue"');
     expect(cardSource).toContain("lg:auto-cols-[calc((100%_-_3rem)_/_3.5)]");
     expect(cardSource).not.toContain("xl:auto-cols-[calc((100%_-_3rem)_/_4)]");
     expect(source).not.toContain("DirectoryDetailDialogShell");

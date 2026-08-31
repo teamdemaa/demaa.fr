@@ -83,6 +83,8 @@ describe("system UX contract", () => {
       processesContentSource,
       processesModalSource,
       processesDialogSource,
+      processesEmailDialogSource,
+      processesEmailRouteSource,
       globalStyles,
     ] = await Promise.all([
       readSource("src/components/SystemRecapPrintButton.tsx"),
@@ -90,21 +92,35 @@ describe("system UX contract", () => {
       readSource("src/components/SystemProcessesContent.tsx"),
       readSource("src/app/@modal/(.)systemes/[slug]/processus/page.tsx"),
       readSource("src/components/SystemProcessesRouteDialog.tsx"),
+      readSource("src/components/SystemProcessesEmailDialog.tsx"),
+      readSource("src/app/api/system-processes/email/route.ts"),
       readSource("src/app/globals.css"),
     ]);
 
     expect(printButtonSource).toContain('typeof window.print === "function"');
     expect(printButtonSource).toContain("Copier le lien");
     expect(printButtonSource).toContain("Chrome, Safari ou Firefox");
+    expect(printButtonSource).toContain("flex-nowrap");
+    expect(printButtonSource).toContain("Imprimer / PDF");
+    expect(printButtonSource).toContain("Recevoir par e-mail");
     expect(processesPageSource).toContain("<SystemProcessesContent");
     expect(processesContentSource).toContain("data-system-processes");
     expect(processesContentSource).toContain("Liste des processus");
+    expect(processesContentSource).toContain("border-dema-forest/45");
+    expect(processesContentSource).not.toContain('<span aria-hidden="true">•</span>');
     expect(processesContentSource).not.toContain("Solutions");
     expect(processesContentSource).not.toContain("Ressources");
     expect(processesModalSource).toContain("<SystemProcessesRouteDialog");
     expect(processesModalSource).toContain('variant="modal"');
     expect(processesDialogSource).toContain("router.back()");
     expect(processesDialogSource).toContain("DirectoryDetailDialogShell");
+    expect(processesEmailDialogSource).toContain("Recevoir cette checklist");
+    expect(processesEmailDialogSource).toContain('className="whitespace-nowrap">par e-mail</span>');
+    expect(processesEmailDialogSource).toContain("Cet envoi ne vous inscrit à aucune communication marketing.");
+    expect(processesEmailRouteSource).toContain("buildSystemProcessesPdf");
+    expect(processesEmailRouteSource).toContain("sendSystemProcessesPdfEmail");
+    expect(processesEmailRouteSource).toContain("enforceSameOrigin");
+    expect(processesEmailRouteSource).toContain("enforceRateLimit");
     expect(globalStyles).toContain("@page");
     expect(globalStyles).toContain("size: A4");
   });

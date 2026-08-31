@@ -16,8 +16,9 @@ describe("Organiser public journey", () => {
     expect(organiserPage).not.toContain("OrganiserSectionNavigation");
     expect(organiserPage).toContain('path: "/organiser"');
     expect(organiserHub).toContain("Des modèles et des cas concrets");
-    expect(organiserHub).toContain('href="/modeles"');
-    expect(organiserHub).toContain("Voir tous les modèles");
+    expect(organiserHub).toContain("Tous les modèles prêts à copier");
+    expect(organiserHub).toContain("const models = getPublishedCopyableModels()");
+    expect(organiserHub).not.toContain("SOLUTION_RAIL_CLASS_NAME");
     expect(organiserHub).toContain("<ModelProcessesBridge />");
     expect(organiserHub).toContain("<MentoratAutomationCta");
     expect(organiserHub).toContain("<StructureNewsletterBlock />");

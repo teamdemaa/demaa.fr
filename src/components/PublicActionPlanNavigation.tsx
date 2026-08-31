@@ -6,11 +6,11 @@ export type PublicActionPlanView = "solutions" | "academy" | "services";
 const navigationItems = [
   { view: "solutions", label: "Solutions", href: "/solutions", Icon: LayoutGrid },
   { view: "academy", label: "Organiser", href: "/organiser", Icon: ListTree },
-  { view: "services", label: "Automatisation", href: "/automatisation", Icon: Workflow },
+  { view: "services", label: "Automatiser", href: "/automatisation", Icon: Workflow },
 ] as const;
 
 const tabClassName =
-  "group relative inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:min-h-11 xl:flex-row xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
+  "group relative inline-flex min-h-11 min-w-0 items-center justify-center gap-1 rounded-full px-1 text-xs font-medium leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
 
 export default function PublicActionPlanNavigation({
   activeView,
@@ -19,7 +19,7 @@ export default function PublicActionPlanNavigation({
 }) {
   return (
     <div
-      className="grid w-full grid-cols-3 gap-1"
+      className="grid w-full grid-cols-3 gap-1 rounded-full border border-dema-line/70 bg-dema-paper p-1 shadow-[0_3px_12px_rgba(23,35,29,0.035)] xl:rounded-none xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none"
       aria-label="Navigation principale"
     >
       {navigationItems.map(({ view, label, href, Icon }) => {

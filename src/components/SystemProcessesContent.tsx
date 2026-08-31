@@ -6,11 +6,13 @@ import type { SystemeRoutine } from "@/lib/systeme-catalog";
 export default function SystemProcessesContent({
   routines,
   systemName,
+  systemSlug,
   variant = "page",
   closeHref,
 }: {
   routines: readonly SystemeRoutine[];
   systemName: string;
+  systemSlug: string;
   variant?: "modal" | "page";
   closeHref?: string;
 }) {
@@ -52,7 +54,9 @@ export default function SystemProcessesContent({
               Les processus essentiels à structurer pour piloter cette activité au quotidien.
             </p>
           </div>
-          <SystemRecapPrintButton />
+          <SystemRecapPrintButton
+            emailDelivery={{ systemName, systemSlug }}
+          />
         </div>
       </header>
 
@@ -74,10 +78,13 @@ export default function SystemProcessesContent({
                 <div>
                   <RoutineHeading className="text-base font-medium">{routine.title}</RoutineHeading>
                   <p className="mt-1 text-xs text-dema-muted">{routine.cadence}</p>
-                  <ul className="mt-3 space-y-1.5 text-sm leading-relaxed text-dema-muted">
+                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-dema-muted">
                     {routine.bullets.map((bullet) => (
-                      <li key={bullet} className="flex gap-2">
-                        <span aria-hidden="true">•</span>
+                      <li key={bullet} className="flex items-start gap-3">
+                        <span
+                          aria-hidden="true"
+                          className="mt-1 inline-flex h-4 w-4 shrink-0 rounded-[0.22rem] border border-dema-forest/45 bg-dema-paper print:border-dema-forest"
+                        />
                         <span>{bullet}</span>
                       </li>
                     ))}

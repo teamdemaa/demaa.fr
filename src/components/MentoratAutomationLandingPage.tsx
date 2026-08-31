@@ -38,10 +38,9 @@ export default function MentoratAutomationLandingPage() {
     <>
       <Navbar
         minimal
-        publicCta={<AutomationCallbackControl />}
         publicNavigationActiveView="services"
       />
-      <main className="overflow-x-clip bg-dema-cream pb-24 text-brand-blue xl:pb-0">
+      <main className="overflow-x-clip bg-dema-cream text-brand-blue">
         <section className="px-5 pb-12 pt-14 text-center sm:px-8 sm:pb-14 sm:pt-20 lg:pt-24">
           <div className="mx-auto max-w-5xl">
             <h1
@@ -58,6 +57,9 @@ export default function MentoratAutomationLandingPage() {
             <p className="mx-auto mt-7 max-w-2xl text-base leading-7 text-dema-muted sm:text-lg sm:leading-8">
               {content.hero.description}
             </p>
+            <div className="mt-8 flex justify-center">
+              <AutomationCallbackControl />
+            </div>
           </div>
         </section>
 
@@ -94,9 +96,9 @@ export default function MentoratAutomationLandingPage() {
                   id="automation-problem-heading"
                   className="demaa-marketing-section-title"
                 >
-                  <span className="block">Le problème n’est pas le nombre d’outils.</span>
+                  <span className="block">Le problème n’est pas le manque d’outils.</span>
                   <span className="demaa-section-title mt-2 block text-dema-forest">
-                    C’est tout ce qui se passe entre eux.
+                    Ce sont les tâches manuelles entre eux.
                   </span>
                 </h2>
               </div>
@@ -144,7 +146,7 @@ export default function MentoratAutomationLandingPage() {
                 id="automation-cases-heading"
                 className="demaa-marketing-section-title"
               >
-                Trois situations accompagnées sur le terrain.
+                Trois exemples concrets d’automatisation.
               </h2>
               <p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">
                 Ces entreprises sont anonymisées. Les situations et les gains présentés ont été observés sur les tâches concernées, à partir du travail réel et des outils déjà présents.
@@ -167,7 +169,7 @@ export default function MentoratAutomationLandingPage() {
                 id="automation-audience-heading"
                 className="demaa-marketing-section-title"
               >
-                Pour le dirigeant et la personne qui fera fonctionner les automatisations au quotidien.
+                Pour le dirigeant et la personne qui fera vivre les automatisations.
               </h2>
             </div>
 
@@ -204,7 +206,7 @@ export default function MentoratAutomationLandingPage() {
           <div className="mx-auto flex max-w-5xl flex-col items-start gap-8 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
               <h2 id="offer-heading" className="demaa-marketing-section-title">
-                Passez du diagnostic à la mise en œuvre.
+                Passez d’une tâche répétitive à une automatisation qui fonctionne.
               </h2>
               <p className="mt-5 text-base leading-7 text-dema-paper/72">
                 Au terme des {content.offer.duration}, les tâches retenues sont simplifiées ou automatisées, leur fonctionnement est documenté et votre équipe sait les faire vivre au quotidien.
@@ -218,7 +220,7 @@ export default function MentoratAutomationLandingPage() {
         <section aria-labelledby="scope-heading" className="bg-dema-sage px-5 py-16 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-6xl">
             <h2 id="scope-heading" className="demaa-marketing-section-title max-w-3xl">
-              Un périmètre clair pour obtenir un résultat concret
+              Ce qui est inclus dans l’accompagnement.
             </h2>
             <div className="mt-10 grid gap-5 lg:grid-cols-2">
               <article className="rounded-[1.25rem] bg-dema-paper p-6 sm:p-8">

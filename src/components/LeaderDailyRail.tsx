@@ -76,7 +76,7 @@ export default function LeaderDailyRail() {
       <div className="flex items-center justify-between gap-4">
         <h3
           id="leader-daily-heading"
-          className="text-xl font-semibold tracking-[-0.025em] text-brand-blue sm:text-2xl"
+          className="demaa-catalog-section-title text-brand-blue"
         >
           Le quotidien du dirigeant
         </h3>

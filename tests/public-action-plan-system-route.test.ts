@@ -57,11 +57,10 @@ describe("public action-plan system route", () => {
       "services",
       "providers",
       "financing",
-      "aids",
     ]);
     expect(JSON.stringify(payload.solutionSections)).toContain("Prestataire Facturation");
     expect(JSON.stringify(payload.solutionSections)).toContain("financing-");
-    expect(JSON.stringify(payload.solutionSections)).toContain("aid-");
+    expect(JSON.stringify(payload.solutionSections)).not.toContain("aid-");
     expect(JSON.stringify(payload.solutionSections)).not.toContain('"section":"models"');
     expect(mocks.getActivePublicRenderableSolutionSectionsForSystem)
       .toHaveBeenCalledWith("cabinet-comptable");

@@ -9,13 +9,13 @@ import type { InterfaceLocaleCode } from "@/lib/international-context";
 export type ActionPlanView = "plan" | "solutions" | "services" | "academy" | "opportunities";
 
 const tabClassName =
-  "group relative inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem] px-1 text-[10px] font-medium leading-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:min-h-11 xl:flex-row xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
+  "group relative inline-flex min-h-11 min-w-0 items-center justify-center gap-1 rounded-full px-1 text-xs font-medium leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
 
 const navigationItems = {
   plan: { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
   solutions: { view: "solutions", labels: { fr: "Solutions", en: "Solutions" }, Icon: LayoutGrid },
-  services: { view: "services", labels: { fr: "Automatisation", en: "Automation" }, Icon: Workflow },
-  academy: { view: "academy", labels: { fr: "Modèles", en: "Templates" }, Icon: BookOpen },
+  services: { view: "services", labels: { fr: "Automatiser", en: "Automate" }, Icon: Workflow },
+  academy: { view: "academy", labels: { fr: "Organiser", en: "Organise" }, Icon: BookOpen },
   opportunities: { view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness },
 } as const;
 
@@ -68,7 +68,7 @@ export default function ActionPlanNavbar({
   function navigation() {
     return (
       <div
-        className="grid w-full gap-1"
+        className="grid w-full gap-1 rounded-full border border-dema-line/70 bg-dema-paper p-1 shadow-[0_3px_12px_rgba(23,35,29,0.035)] xl:rounded-none xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none"
         style={{
           gridTemplateColumns: `repeat(${displayedItems.length}, minmax(0, 1fr))`,
         }}
@@ -101,7 +101,7 @@ export default function ActionPlanNavbar({
               : view === "plan"
               ? "/"
               : view === "academy"
-                ? "/modeles"
+                ? "/organiser"
                 : "/automatisation";
           const usesPublicRoute = routeNavigation
             || (localeCode === "fr" && (view === "solutions" || view === "academy" || view === "services"));

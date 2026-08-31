@@ -3,7 +3,7 @@
   "services": true,
   "providers": true,
   "financing": true,
-  "aids": true,
+  "aids": false,
   "models": false,
-  "networks": true
+  "networks": false
 }
