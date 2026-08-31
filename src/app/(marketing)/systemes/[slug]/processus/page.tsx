@@ -43,6 +43,7 @@ export default async function SystemProcessesPage({
         <SystemProcessesContent
           routines={routines}
           systemName={data.system.name}
+          systemSlug={data.system.slug}
           closeHref={`/solutions/${data.system.slug}`}
         />
       </main>

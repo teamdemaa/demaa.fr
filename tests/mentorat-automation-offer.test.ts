@@ -98,7 +98,12 @@ describe("Accompagnement à l’automatisation", () => {
     expect(landingPage).not.toContain("Huit séances");
     expect(landingPage).not.toContain("Lancer mon diagnostic");
     expect(landingPage).not.toContain("Mentorat Automatisation & IA");
-    expect(landingPage).toContain("publicCta={<AutomationCallbackControl />}");
+    expect(landingPage).not.toContain("publicCta={<AutomationCallbackControl />}");
+    expect(landingPage).toContain('<div className="mt-8 flex justify-center">');
+    expect(landingPage.indexOf("{content.hero.description}")).toBeLessThan(
+      landingPage.indexOf("<AutomationCallbackControl />"),
+    );
+    expect(landingPage).not.toContain("<AutomationProfessionalsPanel />");
     expect(landingPage).toContain('publicNavigationActiveView="services"');
     expect(landingPage).toContain("<StructureNewsletterBlock />");
     expect(callbackControl).toContain("Discuter de mon besoin");
@@ -108,11 +113,11 @@ describe("Accompagnement à l’automatisation", () => {
     expect(await readSource("src/components/ServiceCallbackForm.tsx")).toContain(
       "font-normal text-brand-blue outline-none transition placeholder:text-dema-muted/50",
     );
-    expect(landingPage).toContain("Le problème n’est pas le nombre d’outils.");
-    expect(landingPage).toContain("C’est tout ce qui se passe entre eux.");
+    expect(landingPage).toContain("Le problème n’est pas le manque d’outils.");
+    expect(landingPage).toContain("Ce sont les tâches manuelles entre eux.");
     expect(landingPage).toContain("Une demande arrive");
     expect(landingPage).toContain("La bonne personne est prévenue");
-    expect(landingPage).toContain("Pour le dirigeant et la personne qui fera fonctionner les automatisations");
+    expect(landingPage).toContain("Pour le dirigeant et la personne qui fera vivre les automatisations.");
     expect(landingPage).not.toContain("Ce qui change concrètement");
     expect(landingPage).not.toContain("SOLUTION_RAIL_CLASS_NAME");
     expect(mentoratAutomationContent.outcomes[0].title).toBe("Moins de ressaisies et de relances");
@@ -130,7 +135,7 @@ describe("Accompagnement à l’automatisation", () => {
     expect(automationCases).toContain("25 % de temps gagné pour le gestionnaire technique");
     expect(caseStudiesComponent).toContain("L’automatisation mise en place");
     expect(caseStudiesComponent).toContain("Résultats observés sur les tâches concernées");
-    expect(landingPage).toContain("Trois situations accompagnées sur le terrain.");
+    expect(landingPage).toContain("Trois exemples concrets d’automatisation.");
     expect(landingPage).toContain("Ces entreprises sont anonymisées.");
     expect(landingPage).toContain("les tâches retenues sont simplifiées ou automatisées");
     expect(landingPage).not.toContain("Le contenu est défini après le diagnostic");

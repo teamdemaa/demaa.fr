@@ -222,7 +222,7 @@ export default function SystemSearchHero({
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-balance text-base font-light leading-7 text-dema-muted md:text-lg">
-            Outils, partenaires et ressources sélectionnés selon votre métier.
+            Des outils et partenaires utiles, sélectionnés selon votre métier.
           </p>
         </div>
 

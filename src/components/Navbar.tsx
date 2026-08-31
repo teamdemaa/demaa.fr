@@ -128,16 +128,16 @@ export default function Navbar({
               </div>
             )}
           </div>
+          <div
+            id="action-plan-navbar-mobile"
+            className="pb-3 empty:hidden xl:hidden"
+          >
+            {publicNavigationActiveView !== undefined ? (
+              <PublicActionPlanNavigation activeView={publicNavigationActiveView} />
+            ) : null}
+          </div>
         </div>
       </nav>
-      <div
-        id="action-plan-navbar-mobile"
-        className="fixed inset-x-0 bottom-0 z-50 border-t border-dema-line/70 bg-dema-cream/94 px-3 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_28px_rgba(23,35,29,0.06)] backdrop-blur-md empty:hidden xl:hidden"
-      >
-        {publicNavigationActiveView !== undefined ? (
-          <PublicActionPlanNavigation activeView={publicNavigationActiveView} />
-        ) : null}
-      </div>
     </>
   );
 }

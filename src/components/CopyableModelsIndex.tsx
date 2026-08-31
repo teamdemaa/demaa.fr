@@ -3,7 +3,6 @@
 import { Search } from "lucide-react";
 import { useState } from "react";
 import CopyableModelCard from "@/components/CopyableModelCard";
-import { SOLUTION_RAIL_CLASS_NAME } from "@/components/SolutionRailCard";
 import type { CopyableModelDefinition } from "@/lib/copyable-model-catalog";
 
 const MODEL_GROUPS = [
@@ -101,7 +100,7 @@ export default function CopyableModelsIndex({
         </label>
 
         {visibleGroups.length > 0 ? (
-          <div className="mt-12 max-w-full space-y-12 overflow-hidden">
+          <div className="mt-12 max-w-full space-y-12">
             {visibleGroups.map((group) => (
               <section
                 key={group.id}
@@ -114,9 +113,9 @@ export default function CopyableModelsIndex({
                 >
                   {group.title}
                 </h2>
-                <div className={SOLUTION_RAIL_CLASS_NAME}>
+                <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {group.models.map((model) => (
-                    <div key={model.slug} className="min-w-0 snap-start">
+                    <div key={model.slug} className="min-w-0">
                       <CopyableModelCard model={model} titleLevel={3} />
                     </div>
                   ))}

@@ -52,7 +52,7 @@ export default function ActionPlanGenerationBar({
   }
 
   return (
-    <div className="fixed inset-x-4 bottom-[calc(6.25rem+env(safe-area-inset-bottom))] z-40 mx-auto w-auto max-w-3xl xl:inset-x-auto xl:bottom-4 xl:left-1/2 xl:w-full xl:-translate-x-1/2">
+    <div className="fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-40 mx-auto w-auto max-w-3xl xl:inset-x-auto xl:bottom-4 xl:left-1/2 xl:w-full xl:-translate-x-1/2">
       <form
         onSubmit={submitSituation}
         className="demaa-popover-shadow flex min-h-14 items-center gap-2 rounded-full border border-dema-line bg-white/95 p-1.5 pl-5 backdrop-blur"

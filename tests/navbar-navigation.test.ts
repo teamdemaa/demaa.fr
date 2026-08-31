@@ -75,7 +75,7 @@ describe("Demaa application navbar", () => {
 
     expect(source).toContain('label: "Organiser", href: "/organiser"');
     expect(source).toContain('label: "Solutions", href: "/solutions"');
-    expect(source).toContain('label: "Automatisation", href: "/automatisation"');
+    expect(source).toContain('label: "Automatiser", href: "/automatisation"');
     expect(source).toContain("leading-tight");
     expect(source).not.toContain("leading-none");
     expect(organiserIndex).toContain("OrganiserHub");
@@ -167,7 +167,7 @@ describe("Demaa application navbar", () => {
     expect(loginDialogSource).toContain("returnTo={returnTo}");
   });
 
-  it("shows application navigation before generation and fixes it at the bottom on mobile", async () => {
+  it("shows a compact rounded application navigation below the logo on mobile", async () => {
     const [navbarSource, actionPlanNavSource, experienceSource, layoutSource, marketingLayoutSource] = await Promise.all([
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanNavbar.tsx", import.meta.url), "utf8"),
@@ -185,17 +185,18 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).not.toContain("DiagnosticOrganisationLink");
     expect(navbarSource).toContain('className="sticky top-0 z-40 bg-dema-cream/92');
     expect(navbarSource).not.toContain('className="sticky top-0 z-40 border-b');
-    expect(navbarSource).toContain("fixed inset-x-0 bottom-0");
+    expect(navbarSource).not.toContain("fixed inset-x-0 bottom-0");
+    expect(navbarSource).toContain('className="pb-3 empty:hidden xl:hidden"');
     expect(navbarSource).toContain("w-[min(40vw,36rem)]");
     expect(navbarSource).toContain("empty:hidden xl:block");
     expect(navbarSource).toContain("empty:hidden xl:hidden");
     expect(actionPlanNavSource).toContain("Plan d’action");
-    expect(actionPlanNavSource).toContain("Automatisation");
+    expect(actionPlanNavSource).toContain("Automatiser");
     expect(actionPlanNavSource).toContain('"/automatisation"');
     expect(actionPlanNavSource).not.toContain('"/application-metier"');
     expect(actionPlanNavSource).not.toContain('label: "Services"');
-    expect(actionPlanNavSource).toContain("Modèles");
-    expect(actionPlanNavSource).toContain('"/modeles"');
+    expect(actionPlanNavSource).toContain("Organiser");
+    expect(actionPlanNavSource).toContain('"/organiser"');
     expect(actionPlanNavSource).not.toContain("Ressources");
     expect(actionPlanNavSource).toContain("Annonces");
     expect(actionPlanNavSource).not.toContain('label: "Système"');
@@ -210,7 +211,9 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain("displayedItems.length");
     expect(actionPlanNavSource).toContain("visibleViews.includes(view)");
     expect(actionPlanNavSource).toContain("h-4 w-4 shrink-0 transition");
-    expect(actionPlanNavSource).toContain("rounded-[1.1rem]");
+    expect(actionPlanNavSource).toContain("rounded-full");
+    expect(actionPlanNavSource).toContain("border border-dema-line/70 bg-dema-paper p-1");
+    expect(actionPlanNavSource).toContain("shadow-[0_3px_12px_rgba(23,35,29,0.035)]");
     expect(actionPlanNavSource).toContain("bg-dema-sage text-dema-forest xl:bg-transparent");
     expect(actionPlanNavSource).toContain("hidden h-0.5");
     expect(actionPlanNavSource).toContain("xl:block");
@@ -223,10 +226,10 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).not.toContain('label: "Coaching"');
     expect(actionPlanNavSource).toContain('{ view: "academy"');
     expect(actionPlanNavSource).not.toContain('view === "models"');
-    expect(actionPlanNavSource).not.toContain('"/organiser"');
+    expect(actionPlanNavSource).not.toContain('"/modeles"');
     expect(actionPlanNavSource).toContain("onViewChange(view)");
-    expect(actionPlanNavSource).toContain("xl:min-h-11");
-    expect(navbarSource).toContain("pb-[calc(1rem+env(safe-area-inset-bottom))]");
+    expect(actionPlanNavSource).toContain("min-h-11");
+    expect(navbarSource).not.toContain("safe-area-inset-bottom");
     expect(layoutSource).toContain('viewportFit: "cover"');
     expect(layoutSource).not.toContain("<Footer");
     expect(layoutSource).not.toContain("GoogleRedirectSessionConsumer");

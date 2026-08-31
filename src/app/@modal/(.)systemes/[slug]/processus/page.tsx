@@ -19,6 +19,7 @@ export default async function SystemProcessesModalPage({
       <SystemProcessesContent
         routines={data.detail.systeme?.routines ?? []}
         systemName={data.system.name}
+        systemSlug={data.system.slug}
         variant="modal"
       />
     </SystemProcessesRouteDialog>

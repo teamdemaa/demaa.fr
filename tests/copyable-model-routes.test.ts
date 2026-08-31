@@ -29,8 +29,10 @@ describe("copyable model public routes", () => {
     expect(page).toContain('path: "/modeles"');
     expect(navbar).toContain('label: "Organiser"');
     expect(navbar).toContain('href: "/organiser"');
-    expect(organiserHub).toContain('href="/modeles"');
-    expect(organiserHub).toContain("SOLUTION_RAIL_CLASS_NAME");
+    expect(organiserHub).toContain("const models = getPublishedCopyableModels()");
+    expect(organiserHub).not.toContain(".slice(0, 6)");
+    expect(organiserHub).toContain("grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3");
+    expect(organiserHub).not.toContain("SOLUTION_RAIL_CLASS_NAME");
     expect(footer).toContain('{ label: "Modèles à copier", href: "/modeles" }');
     expect(footer).toContain('{ label: "Organiser", href: "/organiser" }');
     expect(footer).toContain('{ label: "Cas concrets et processus", href: "/organiser/processus" }');
@@ -42,7 +44,8 @@ describe("copyable model public routes", () => {
     expect(modelsIndex).toContain('title: "Les fondamentaux"');
     expect(modelsIndex).toContain('title: "La réalisation du travail"');
     expect(modelsIndex).toContain('title: "Le développement de l’entreprise"');
-    expect(modelsIndex).toContain("SOLUTION_RAIL_CLASS_NAME");
+    expect(modelsIndex).toContain("grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3");
+    expect(modelsIndex).not.toContain("SOLUTION_RAIL_CLASS_NAME");
     expect(modelsIndex).toContain("titleLevel={3}");
     expect(modelsIndex).not.toContain("Des processus concrets pour se projeter vraiment");
     expect(processPage).toContain("Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité.");
