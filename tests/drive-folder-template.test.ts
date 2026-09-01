@@ -12,6 +12,7 @@ import {
 import {
   createGoogleDriveFolderStructure,
   createGoogleDriveTemplateState,
+  getGoogleDriveOAuthConfig,
   matchesGoogleDriveTemplateNonce,
   readGoogleDriveTemplateState,
   sanitizeDriveFolderName,
@@ -27,6 +28,22 @@ function flattenNames(nodes: readonly DriveFolderNode[]): string[] {
 describe("Google Drive folder template", () => {
   beforeEach(() => {
     vi.unstubAllGlobals();
+    vi.unstubAllEnvs();
+  });
+
+  it("derives the local callback from the current request when no redirect is forced", () => {
+    vi.stubEnv("GOOGLE_DRIVE_CLIENT_ID", "client-id");
+    vi.stubEnv("GOOGLE_DRIVE_CLIENT_SECRET", "client-secret");
+    vi.stubEnv("GOOGLE_DRIVE_OAUTH_STATE_SECRET", "a-secure-state-secret-with-at-least-32-characters");
+    vi.stubEnv("GOOGLE_DRIVE_REDIRECT_URI", "");
+
+    const config = getGoogleDriveOAuthConfig(new Request(
+      "http://127.0.0.1:3001/api/modeles/structure-google-drive-entreprise/drive/authorize",
+    ));
+
+    expect(config?.redirectUri).toBe(
+      "http://127.0.0.1:3001/api/modeles/structure-google-drive-entreprise/drive/callback",
+    );
   });
 
   it("limits the wording exception to numbered Drive folder names", () => {
@@ -39,29 +56,30 @@ describe("Google Drive folder template", () => {
     expect(audit).toContain('/["\']\\d{2} — /.test(line)');
   });
 
-  it("keeps stable domains and uses years only where documents are recurrent", () => {
+  it("keeps a lightweight document-only structure for small businesses", () => {
     const template = buildCompanyDriveFolderTemplate(2026);
     const names = flattenNames(template.sections);
 
     expect(template.sections.map((section) => section.id)).toEqual([
       "inbox",
-      "direction",
+      "company",
       "finance",
-      "administration",
-      "commercial",
       "clients",
       "team",
-      "marketing",
-      "processes",
-      "it",
+      "brand",
+      "templates",
       "archives",
     ]);
-    expect(names).toContain("02 — Finance & comptabilité");
-    expect(names).toContain("06 — Équipe & RH");
+    expect(names).toContain("01 — Entreprise");
+    expect(names).toContain("02 — Finance");
+    expect(names).toContain("04 — Équipe");
     expect(names).toContain("2025");
     expect(names).toContain("2026");
-    expect(names).toContain("01 — Janvier");
     expect(names).toContain("00 — Modèle de dossier client");
+    expect(names).toContain("06 — Modèles de documents");
+    expect(names).not.toContain("01 — Stratégie et objectifs");
+    expect(names).not.toContain("06 — Suivi commercial");
+    expect(names).not.toContain("01 — Liste des outils");
     expect(names).not.toContain("Mots de passe");
   });
 
@@ -72,8 +90,8 @@ describe("Google Drive folder template", () => {
 
     expect(selected.map((section) => section.id)).toEqual(["finance", "team"]);
     expect(tree).toContain("Atelier Martin");
-    expect(tree).toContain("├── 02 — Finance & comptabilité");
-    expect(tree).toContain("└── 06 — Équipe & RH");
+    expect(tree).toContain("├── 02 — Finance");
+    expect(tree).toContain("└── 04 — Équipe");
     expect(tree).not.toContain("Marketing & communication");
   });
 

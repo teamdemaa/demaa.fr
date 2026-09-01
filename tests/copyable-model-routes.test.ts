@@ -77,8 +77,9 @@ describe("copyable model public routes", () => {
     expect(details).toContain("CopyableModelCopyLink");
     expect(details).toContain("DriveFolderTreePreview");
     expect(details).toContain("DriveFolderTemplateCreator");
-    expect(driveCreator).toContain("Créer dans mon Drive");
-    expect(driveCreator).toContain("Copier l’arborescence");
+    expect(driveCreator).toContain("Créer automatiquement dans mon Drive");
+    expect(driveCreator).toContain("Copier la liste des dossiers");
+    expect(driveCreator).toContain("aucun dossier n’est créé");
     expect(driveCreator).toContain('type="hidden" name="sectionIds"');
     expect(driveCreator).not.toContain("Domaines à créer");
     expect(copyLink).toContain("Copier gratuitement");

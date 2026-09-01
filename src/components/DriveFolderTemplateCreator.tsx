@@ -38,7 +38,7 @@ export default function DriveFolderTemplateCreator({
     const tree = formatDriveFolderTree(rootName.trim() || template.defaultRootName, template.sections);
     try {
       await navigator.clipboard.writeText(tree);
-      setFeedback("Arborescence copiée. Vous pouvez la conserver ou la partager.");
+      setFeedback("Arborescence copiée. Aucun accès à votre Drive n’a été nécessaire.");
       trackCopyableModelEvent("copyable_model_copy_clicked", {
         modelSlug,
         platform: "google-drive",
@@ -89,25 +89,39 @@ export default function DriveFolderTemplateCreator({
         Toute l’arborescence affichée à gauche sera créée.
       </p>
 
-      <button
-        type="submit"
-        disabled={pending || !rootName.trim()}
-        className="demaa-secondary-button mt-6 min-h-12 w-full gap-2 px-5 disabled:cursor-not-allowed disabled:opacity-55"
-      >
-        {pending ? (
-          <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
-        ) : configured ? (
-          <FolderPlus className="h-4 w-4" aria-hidden="true" />
-        ) : (
-          <Clipboard className="h-4 w-4" aria-hidden="true" />
-        )}
-        {pending ? "Connexion à Google…" : configured ? "Créer dans mon Drive" : "Copier l’arborescence"}
-      </button>
+      <div className="mt-6 space-y-3">
+        <button
+          type="submit"
+          disabled={pending || !rootName.trim()}
+          className="demaa-secondary-button min-h-12 w-full gap-2 px-5 disabled:cursor-not-allowed disabled:opacity-55"
+        >
+          {pending ? (
+            <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+          ) : configured ? (
+            <FolderPlus className="h-4 w-4" aria-hidden="true" />
+          ) : (
+            <Clipboard className="h-4 w-4" aria-hidden="true" />
+          )}
+          {pending ? "Connexion à Google…" : configured ? "Créer automatiquement dans mon Drive" : "Copier la liste des dossiers"}
+        </button>
+
+        {configured ? (
+          <button
+            type="button"
+            disabled={pending || !rootName.trim()}
+            onClick={() => void copyStructure()}
+            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-dema-line bg-dema-paper px-5 text-sm font-semibold text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage/35 disabled:cursor-not-allowed disabled:opacity-55"
+          >
+            <Clipboard className="h-4 w-4" aria-hidden="true" />
+            Copier la liste des dossiers
+          </button>
+        ) : null}
+      </div>
 
       <p className="mt-3 text-center text-xs leading-5 text-dema-muted">
         {configured
-          ? "Demaa accède uniquement aux dossiers qu’il crée. Aucun accès général à votre Drive."
-          : "La création automatique sera disponible lorsque la connexion Google Drive sera configurée."}
+          ? "La première option crée tous les dossiers après votre autorisation Google. La seconde copie seulement leur liste : aucun dossier n’est créé et aucun accès à votre Drive n’est nécessaire."
+          : "La liste des dossiers est copiée sans connexion à Google. Aucun dossier n’est créé automatiquement."}
       </p>
       {visibleFeedback ? (
         <p className="mt-3 flex items-start gap-2 rounded-xl bg-dema-sage/45 px-3 py-2.5 text-xs leading-5 text-dema-forest" role="status">
