@@ -90,6 +90,22 @@ function parseActivePointer(input: unknown) {
 export async function fetchActiveFirebaseSolutionRegistryRevisionFromFirestore(
   database: Firestore = getAdminFirestore(),
 ) {
+  const pointer = await fetchActiveFirebaseSolutionRegistryPointerFromFirestore(
+    database,
+  );
+  const parsed = await fetchFirebaseSolutionRegistryRevisionByIdFromFirestore(
+    pointer.revisionId,
+    database,
+  );
+  if (parsed.sourceFingerprint !== pointer.sourceFingerprint) {
+    throw new Error("Firebase Solutions pointer fingerprint mismatch");
+  }
+  return parsed;
+}
+
+export async function fetchActiveFirebaseSolutionRegistryPointerFromFirestore(
+  database: Firestore = getAdminFirestore(),
+) {
   const [pointerCollection, pointerDocument] =
     FIREBASE_SOLUTION_REGISTRY_ACTIVE_POINTER.split("/");
   const pointerSnapshot = await database
@@ -99,15 +115,7 @@ export async function fetchActiveFirebaseSolutionRegistryRevisionFromFirestore(
   if (!pointerSnapshot.exists) {
     throw new Error("Firebase Solutions active pointer is missing");
   }
-  const pointer = parseActivePointer(pointerSnapshot.data());
-  const parsed = await fetchFirebaseSolutionRegistryRevisionByIdFromFirestore(
-    pointer.revisionId,
-    database,
-  );
-  if (parsed.sourceFingerprint !== pointer.sourceFingerprint) {
-    throw new Error("Firebase Solutions pointer fingerprint mismatch");
-  }
-  return parsed;
+  return parseActivePointer(pointerSnapshot.data());
 }
 
 export async function fetchFirebaseSolutionRegistryRevisionByIdFromFirestore(
@@ -169,9 +177,19 @@ export async function loadFirebaseSolutionRegistryRevision(
   }
 }
 
-const getCachedFirebaseSolutionRegistryRevision = unstable_cache(
-  async () => loadFirebaseSolutionRegistryRevision(),
-  ["solutions-registry-active-revision-v3"],
+const getCachedFirebaseSolutionRegistryRevisionByPointer = unstable_cache(
+  async (revisionId: string, sourceFingerprint: string) =>
+    loadFirebaseSolutionRegistryRevision({
+      fetchRemote: async () => {
+        const revision =
+          await fetchFirebaseSolutionRegistryRevisionByIdFromFirestore(revisionId);
+        if (revision.sourceFingerprint !== sourceFingerprint) {
+          throw new Error("Firebase Solutions pointer fingerprint mismatch");
+        }
+        return revision;
+      },
+    }),
+  ["solutions-registry-immutable-revision-v1"],
   {
     tags: ["solutions-registry"],
     revalidate: 300,
@@ -179,5 +197,27 @@ const getCachedFirebaseSolutionRegistryRevision = unstable_cache(
 );
 
 export async function getActiveFirebaseSolutionRegistryRevision() {
-  return getCachedFirebaseSolutionRegistryRevision();
+  if (!hasFirebaseConfiguration()) {
+    return loadFirebaseSolutionRegistryRevision();
+  }
+  try {
+    const pointer =
+      await fetchActiveFirebaseSolutionRegistryPointerFromFirestore();
+    return getCachedFirebaseSolutionRegistryRevisionByPointer(
+      pointer.revisionId,
+      pointer.sourceFingerprint,
+    );
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      error.message.startsWith("[solutions-registry]")
+    ) {
+      throw error;
+    }
+    const detail = error instanceof Error ? error.message : "unknown error";
+    throw new Error(
+      `[solutions-registry] Firebase active revision is unavailable or invalid. ${detail}`,
+      { cause: error },
+    );
+  }
 }
