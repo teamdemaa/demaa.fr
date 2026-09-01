@@ -8,7 +8,7 @@ const AUTOMATION_PACKAGE = [{
   name: AUTOMATION_OFFER.name,
   pricing: {
     label: AUTOMATION_OFFER.price.label,
-    note: "Les sujets avancent selon vos priorités pendant les huit semaines.",
+    note: "Un mois d’accompagnement, avec des priorités définies selon votre entreprise.",
   },
   slug: AUTOMATION_OFFER.packageSlug,
   summary: AUTOMATION_OFFER.summary,
@@ -23,13 +23,13 @@ export default function AutomationCallbackDialog({ onClose }: { onClose: () => v
     >
       <div className="mx-auto max-w-md">
         <p className="text-sm font-medium text-dema-forest">
-          Accompagnement à l’automatisation
+          Accompagnement automatisation et IA
         </p>
         <h2 className="mt-3 text-3xl font-light leading-tight tracking-[-0.04em] text-brand-blue">
-          Parlons de votre besoin.
+          Demandez à être rappelé.
         </h2>
         <p className="mt-4 text-sm leading-6 text-dema-muted">
-          Laissez-nous votre numéro. Nous vous rappellerons pour comprendre vos priorités et vérifier si cet accompagnement est adapté à votre équipe.
+          Laissez-nous votre numéro. Nous vous rappelons pour un échange de 30 minutes afin de comprendre vos priorités et de vérifier si cet accompagnement est adapté à votre entreprise.
         </p>
         <ServiceCallbackForm
           packages={AUTOMATION_PACKAGE}

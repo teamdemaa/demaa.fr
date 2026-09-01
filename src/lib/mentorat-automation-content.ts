@@ -4,9 +4,9 @@ export const AUTOMATION_ACCOMPANIMENT_PATH = "/automatisation";
 
 export const mentoratAutomationContent = {
   hero: {
-    title: "Faites gagner du temps à vos équipes avec l’automatisation et l’IA.",
+    title: "Gagnez du temps avec l’automatisation et l’IA.",
     description:
-      "Pendant 8 semaines, vos équipes apprennent avec un mentor à automatiser ce qui leur fait perdre du temps, directement dans leurs outils du quotidien.",
+      "Pendant un mois, nous travaillons avec vous pour mieux organiser votre entreprise, automatiser ce qui vous ralentit et utiliser l’IA là où elle est vraiment utile.",
   },
   offer: {
     duration: AUTOMATION_OFFER.durationLabel,
@@ -29,93 +29,79 @@ export const mentoratAutomationContent = {
       attribution: "Product Builder",
     },
   ],
-  workingRhythm: [
+  approachPillars: [
     {
-      title: "Chaque semaine",
+      title: "Les tutoriels",
       points: [
-        "Un rendez-vous de 45 minutes",
-        "Les prochaines actions à choisir",
-        "Les questions et blocages à résoudre",
+        "Des contenus organisés par outil",
+        "Des démonstrations réalisées directement à l’écran",
+        "Des cas d’usage directement applicables",
+        "Un accès pendant 12 mois",
       ],
     },
     {
-      title: "Entre les rendez-vous",
+      title: "Le mentor",
       points: [
-        "Des tutoriels ciblés",
-        "Une mise en pratique dans l’entreprise",
-        "Des résultats à analyser avec le mentor",
-      ],
-    },
-    {
-      title: "Selon vos besoins",
-      points: [
-        "Améliorer les outils existants",
-        "Automatiser une ou plusieurs étapes",
-        "Créer un outil interne lorsque c’est utile",
+        "Un rendez-vous d’une heure chaque semaine",
+        "Une équipe projet de 1 à 3 personnes aux rendez-vous",
+        "Un point sur ce qui a réellement été réalisé",
+        "Les questions et les blocages résolus ensemble",
+        "La prochaine étape choisie selon l’avancement",
       ],
     },
   ],
   examples: [
-    "Centraliser des informations aujourd’hui dispersées",
-    "Automatiser les saisies, les relances et les notifications",
-    "Faire circuler les informations entre plusieurs logiciels",
-    "Créer des formulaires et des tableaux de suivi",
-    "Analyser ou produire plus rapidement des documents avec l’IA",
-    "Construire un outil interne lorsqu’aucun logiciel existant ne convient",
+    {
+      title: "Organisation et suivi de l’activité",
+      description: "Centraliser les informations aujourd’hui dispersées et donner à chacun une vue claire de l’avancement.",
+    },
+    {
+      title: "Parcours clients et traitement des demandes",
+      description: "Relier les formulaires, les confirmations, le suivi et les relances sans ressaisie inutile.",
+    },
+    {
+      title: "Documents, synthèses et reportings",
+      description: "Produire plus rapidement des synthèses et des livrables avec ChatGPT.",
+    },
+    {
+      title: "Outils internes adaptés à votre entreprise",
+      description: "Construire avec Codex un outil adapté lorsque les logiciels existants ne suffisent pas.",
+    },
   ],
-  academyTopics: [
+  tutorialTracks: [
     {
-      title: "Trouver quoi automatiser",
-      points: [
-        "Repérer les tâches qui prennent du temps",
-        "Estimer les gains possibles",
-        "Choisir par où commencer",
-      ],
+      title: "ChatGPT",
+      outcome: "Produire, analyser et structurer plus rapidement.",
     },
     {
-      title: "ChatGPT et Codex",
-      points: [
-        "Analyser et synthétiser des informations",
-        "Accélérer certaines tâches quotidiennes",
-        "Prototyper un outil interne",
-      ],
+      title: "Codex",
+      outcome: "Créer et adapter des outils internes.",
     },
     {
-      title: "Airtable et Fillout",
-      points: [
-        "Structurer les informations",
-        "Créer des vues et des interfaces",
-        "Collecter les données avec des formulaires",
-      ],
+      title: "Airtable",
+      outcome: "Centraliser et organiser les informations.",
+    },
+    {
+      title: "Fillout",
+      outcome: "Collecter les bonnes données avec des formulaires reliés à vos outils.",
     },
     {
       title: "Make",
-      points: [
-        "Connecter plusieurs logiciels",
-        "Automatiser plusieurs étapes",
-        "Tester les scénarios et gérer les erreurs",
-      ],
-    },
-    {
-      title: "Faire évoluer ses systèmes",
-      points: [
-        "Tester sur des situations réelles",
-        "Documenter le fonctionnement",
-        "Adapter les automatisations dans le temps",
-      ],
+      outcome: "Relier vos outils et automatiser plusieurs étapes.",
     },
   ],
   offerIncludes: [
-    "8 rendez-vous de 45 minutes avec un mentor",
-    "Un accompagnement adapté aux priorités de vos équipes",
-    "Des tutoriels accessibles à toute l’entreprise pendant 12 mois",
-    "Les nouveaux contenus inclus pendant la période d’accès",
+    "4 rendez-vous d’une heure avec un mentor pour une équipe projet de 1 à 3 personnes",
+    "Des priorités définies au fil de l’accompagnement",
+    "Une mise en pratique entre chaque rendez-vous",
+    "Des tutoriels pratiques accessibles pendant 12 mois",
+    "Des outils et des cas d’usage choisis selon votre entreprise",
   ],
   faq: [
     {
       question: "Faut-il savoir coder ?",
       answer:
-        "Non. L’accompagnement part du travail quotidien de vos équipes. Les outils et les ressources sont choisis selon leur niveau et les sujets qu’elles souhaitent faire avancer.",
+        "Non. L’accompagnement part de votre travail quotidien. Les outils et les tutoriels sont choisis selon votre niveau et les améliorations que vous souhaitez faire avancer.",
     },
     {
       question: "Faut-il déjà savoir quoi automatiser ?",
@@ -125,17 +111,22 @@ export const mentoratAutomationContent = {
     {
       question: "Qui participe aux rendez-vous ?",
       answer:
-        "Le dirigeant peut participer directement ou faire intervenir les membres de l’équipe concernés par les sujets abordés. Un temps de mise en pratique est à prévoir entre les rendez-vous.",
+        "Les rendez-vous réunissent une équipe projet de 1 à 3 personnes : le dirigeant peut participer directement ou désigner les collaborateurs concernés. Les tutoriels restent accessibles à l’entreprise pendant 12 mois.",
     },
     {
-      question: "Quels sujets peut-on aborder pendant les huit semaines ?",
+      question: "Que peut-on améliorer en un mois ?",
       answer:
-        "L’accompagnement peut porter sur l’organisation des informations, plusieurs automatisations, des formulaires connectés, des tableaux de bord ou des outils internes simples. Les applications critiques et les intégrations très complexes nécessitent un accompagnement technique distinct.",
+        "L’accompagnement peut faire avancer plusieurs améliorations : mieux organiser un suivi, automatiser des étapes répétitives, accélérer la production de documents ou construire un outil interne simple. Le périmètre évolue selon vos priorités et votre avancement entre les rendez-vous.",
     },
     {
-      question: "Les tutoriels sont-ils mis à jour ?",
+      question: "Combien de temps les tutoriels restent-ils accessibles ?",
       answer:
-        "Oui. De nouvelles vidéos et démonstrations sont ajoutées lorsque les outils ou les usages évoluent, puis partagées avec les membres.",
+        "Les tutoriels inclus restent accessibles à votre entreprise pendant 12 mois à compter du démarrage de l’accompagnement.",
+    },
+    {
+      question: "Comment se déroule la demande de rappel ?",
+      answer:
+        "Vous laissez votre numéro et nous vous rappelons pour un échange de 30 minutes, sans engagement. Nous faisons le point sur vos priorités et vérifions ensemble si l’accompagnement est adapté à votre entreprise.",
     },
     {
       question: "Les abonnements aux outils sont-ils inclus ?",

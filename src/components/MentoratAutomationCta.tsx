@@ -49,8 +49,8 @@ function getCopy({ modelSlug, systemName, variant }: MentoratAutomationCtaProps)
   }
 
   return {
-    title: "Faites gagner du temps à vos équipes avec l’automatisation et l’IA",
-    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, vos équipes apprennent avec un mentor à automatiser ce qui les ralentit, directement dans leurs outils du quotidien.`,
+    title: "Gagnez du temps avec l’automatisation et l’IA",
+    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, nous travaillons avec vous pour mieux organiser votre entreprise, automatiser ce qui vous ralentit et utiliser l’IA là où elle est vraiment utile.`,
   };
 }
 

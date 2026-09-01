@@ -149,15 +149,17 @@ describe("canonical Accompagnement catalog", () => {
       cta: { kind: "callback", label: "Envoyer ma demande" },
     });
     expect(automation?.packages.map(({ slug, pricing }) => [slug, pricing.amountMinor])).toEqual([
-      ["automatisation-essentielle", 350000],
+      ["automatisation-essentielle", 150000],
     ]);
     expect(automation?.packages[0]).toMatchObject({
       name: "Accompagnement à l’automatisation",
       pricing: {
-        label: "3 500 € HT",
+        label: "1 500 € HT",
       },
     });
-    expect(automation?.packages[0]?.pricing.note).toContain("trois fois");
+    expect(automation?.packages[0]?.pricing.note).toContain("quatre rendez-vous");
+    expect(automation?.packages[0]?.pricing.note).toContain("tutoriels");
+    expect(automation?.packages[0]?.pricing.note).not.toContain("Academy");
     expect(automation?.packages[0]?.pricing.note).toContain("licences");
     expect(application).toMatchObject({
       detailHref: "/application-metier",
@@ -214,7 +216,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).not.toContain("Assistante administrative");
     expect(markup).not.toContain("Recruter un alternant");
     expect(markup).not.toContain("Expert-comptable");
-    expect(markup).toContain("3 500 € HT");
+    expect(markup).toContain("1 500 € HT");
     expect(markup).toContain("À partir de 4 500 € HT");
     expect(markup).not.toContain("750 € HT / mois");
     expect(markup).not.toContain("Sur devis");
