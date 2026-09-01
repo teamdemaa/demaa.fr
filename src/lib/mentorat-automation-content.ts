@@ -4,64 +4,143 @@ export const AUTOMATION_ACCOMPANIMENT_PATH = "/automatisation";
 
 export const mentoratAutomationContent = {
   hero: {
-    title: "Faites gagner du temps à votre équipe grâce à l’automatisation.",
-    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, nous partons de votre travail réel pour simplifier les ressaisies, les relances et les mises à jour inutiles, puis transmettre la méthode à la personne qui la fera vivre dans votre équipe.`,
+    title: "Faites gagner du temps à vos équipes avec l’automatisation et l’IA.",
+    description:
+      "Pendant 8 semaines, vos équipes apprennent avec un mentor à automatiser ce qui leur fait perdre du temps, directement dans leurs outils du quotidien.",
   },
   offer: {
     duration: AUTOMATION_OFFER.durationLabel,
     price: AUTOMATION_OFFER.price.label,
   },
-  outcomes: [
+  testimonials: [
     {
-      title: "Moins de ressaisies et de relances",
-      description:
-        "Les tâches répétitives sont simplifiées pour éviter les copier-coller, les rappels manuels et les mises à jour en double.",
+      quote:
+        "En mettant en place ces systèmes, nous avons gagné environ 30 % de temps. Maîtriser les outils et savoir les relier a vraiment changé notre manière de travailler.",
+      attribution: "Chef de mission comptable",
     },
     {
-      title: "Une information qui circule",
-      description:
-        "Les bons outils communiquent entre eux : le dossier se crée, la bonne personne est prévenue et le suivi reste à jour.",
+      quote:
+        "Les outils évoluent vite. C’est le type de formation qu’il faut reprendre régulièrement pour rester à jour et continuer à améliorer nos façons de travailler.",
+      attribution: "Assistante de direction · Entreprise du bâtiment",
     },
     {
-      title: "Une équipe qui garde la main",
-      description:
-        "Votre équipe comprend ce qui a été mis en place et sait contrôler, maintenir et faire évoluer les automatisations.",
+      quote:
+        "Cette formation m’a ouvert le champ des possibles. Je ne pensais pas qu’on pouvait aller aussi loin avec ces outils. Il y a clairement eu un avant et un après dans ma manière de travailler.",
+      attribution: "Product Builder",
     },
   ],
-  included: [
-    "Un diagnostic des tâches chronophages",
-    "La définition des priorités selon votre fonctionnement et leur complexité",
-    "Le passage du cadrage à la mise en service dans votre environnement de travail",
-    "Des tests et ajustements avec l’équipe",
-    "La documentation des solutions retenues",
-    "Le transfert de compétences pour continuer sans nous",
+  workingRhythm: [
+    {
+      title: "Chaque semaine",
+      points: [
+        "Un rendez-vous de 45 minutes",
+        "Les prochaines actions à choisir",
+        "Les questions et blocages à résoudre",
+      ],
+    },
+    {
+      title: "Entre les rendez-vous",
+      points: [
+        "Des tutoriels ciblés",
+        "Une mise en pratique dans l’entreprise",
+        "Des résultats à analyser avec le mentor",
+      ],
+    },
+    {
+      title: "Selon vos besoins",
+      points: [
+        "Améliorer les outils existants",
+        "Automatiser une ou plusieurs étapes",
+        "Créer un outil interne lorsque c’est utile",
+      ],
+    },
   ],
-  notIncluded: [
-    "Les abonnements et consommations des outils utilisés",
-    "Un développement logiciel ou une intégration complexe hors périmètre",
-    "La réalisation illimitée d’automatisations à la place de l’équipe",
-    "Une promesse uniforme de temps gagné sans mesure préalable",
+  examples: [
+    "Centraliser des informations aujourd’hui dispersées",
+    "Automatiser les saisies, les relances et les notifications",
+    "Faire circuler les informations entre plusieurs logiciels",
+    "Créer des formulaires et des tableaux de suivi",
+    "Analyser ou produire plus rapidement des documents avec l’IA",
+    "Construire un outil interne lorsqu’aucun logiciel existant ne convient",
+  ],
+  academyTopics: [
+    {
+      title: "Trouver quoi automatiser",
+      points: [
+        "Repérer les tâches qui prennent du temps",
+        "Estimer les gains possibles",
+        "Choisir par où commencer",
+      ],
+    },
+    {
+      title: "ChatGPT et Codex",
+      points: [
+        "Analyser et synthétiser des informations",
+        "Accélérer certaines tâches quotidiennes",
+        "Prototyper un outil interne",
+      ],
+    },
+    {
+      title: "Airtable et Fillout",
+      points: [
+        "Structurer les informations",
+        "Créer des vues et des interfaces",
+        "Collecter les données avec des formulaires",
+      ],
+    },
+    {
+      title: "Make",
+      points: [
+        "Connecter plusieurs logiciels",
+        "Automatiser plusieurs étapes",
+        "Tester les scénarios et gérer les erreurs",
+      ],
+    },
+    {
+      title: "Faire évoluer ses systèmes",
+      points: [
+        "Tester sur des situations réelles",
+        "Documenter le fonctionnement",
+        "Adapter les automatisations dans le temps",
+      ],
+    },
+  ],
+  offerIncludes: [
+    "8 rendez-vous de 45 minutes avec un mentor",
+    "Un accompagnement adapté aux priorités de vos équipes",
+    "Des tutoriels accessibles à toute l’entreprise pendant 12 mois",
+    "Les nouveaux contenus inclus pendant la période d’accès",
   ],
   faq: [
     {
-      question: "Qui doit suivre l’accompagnement ?",
+      question: "Faut-il savoir coder ?",
       answer:
-        "Le dirigeant peut le suivre lui-même ou désigner un référent interne proche des opérations. Un binôme de la même entreprise peut participer pour sécuriser le transfert.",
+        "Non. L’accompagnement part du travail quotidien de vos équipes. Les outils et les ressources sont choisis selon leur niveau et les sujets qu’elles souhaitent faire avancer.",
     },
     {
-      question: "Faut-il déjà connaître les outils no-code ?",
+      question: "Faut-il déjà savoir quoi automatiser ?",
       answer:
-        "Non. Le niveau de départ est évalué lors du diagnostic et les outils sont choisis en fonction du besoin, pas l’inverse.",
+        "Non. Les premiers échanges permettent de repérer les meilleurs points de départ. Les priorités peuvent ensuite évoluer au fil des rendez-vous et des résultats obtenus.",
     },
     {
-      question: `Pourquoi répartir le programme sur ${AUTOMATION_OFFER.durationLabel} ?`,
+      question: "Qui participe aux rendez-vous ?",
       answer:
-        "Le temps entre les séances permet de tester les solutions dans le travail réel, de les ajuster et de consolider progressivement l’autonomie.",
+        "Le dirigeant peut participer directement ou faire intervenir les membres de l’équipe concernés par les sujets abordés. Un temps de mise en pratique est à prévoir entre les rendez-vous.",
     },
     {
-      question: "Une prise en charge est-elle possible ?",
+      question: "Quels sujets peut-on aborder pendant les huit semaines ?",
       answer:
-        "Elle peut être étudiée selon le statut du participant, l’OPCO ou le fonds d’assurance formation concerné. Elle n’est jamais garantie avant l’accord écrit du financeur.",
+        "L’accompagnement peut porter sur l’organisation des informations, plusieurs automatisations, des formulaires connectés, des tableaux de bord ou des outils internes simples. Les applications critiques et les intégrations très complexes nécessitent un accompagnement technique distinct.",
+    },
+    {
+      question: "Les tutoriels sont-ils mis à jour ?",
+      answer:
+        "Oui. De nouvelles vidéos et démonstrations sont ajoutées lorsque les outils ou les usages évoluent, puis partagées avec les membres.",
+    },
+    {
+      question: "Les abonnements aux outils sont-ils inclus ?",
+      answer:
+        "Non. Les abonnements aux outils retenus et aux éventuels logiciels connectés restent à la charge de votre entreprise.",
     },
   ],
 } as const;

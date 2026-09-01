@@ -30,27 +30,27 @@ function buildCtaHref({ modelSlug, systemSlug, variant }: MentoratAutomationCtaP
 function getCopy({ modelSlug, systemName, variant }: MentoratAutomationCtaProps) {
   if (variant === "metier") {
     return {
-      title: "Automatisez les tâches chronophages de votre activité",
+      title: "Faites gagner du temps à votre équipe",
       description: systemName
-        ? `Pour l’activité « ${systemName} », nous partons des tâches répétitives qui ralentissent votre équipe et mettons en place les automatisations adaptées à son fonctionnement.`
-        : "Nous partons des tâches répétitives qui ralentissent votre équipe et mettons en place les automatisations adaptées à son fonctionnement.",
+        ? `Pour l’activité « ${systemName} », nous aidons votre équipe à améliorer ses outils, automatiser les étapes inutiles et construire une solution interne lorsqu’elle en a besoin.`
+        : "Nous aidons votre équipe à améliorer ses outils, automatiser les étapes inutiles et construire une solution interne lorsqu’elle en a besoin.",
     };
   }
 
   if (variant === "modele") {
     return {
       title: modelSlug
-        ? "Passez du modèle à l’automatisation"
-        : "Passez des modèles à l’automatisation",
+        ? "Faites évoluer ce modèle avec votre équipe"
+        : "Faites évoluer ces modèles avec votre équipe",
       description: modelSlug
-        ? "Ce modèle organise une première façon de travailler. Nous aidons ensuite votre équipe à automatiser les tâches répétitives qui l’entourent et à garder la maîtrise de ce qui est mis en place."
-        : "Ces modèles organisent vos premières façons de travailler. Nous aidons ensuite votre équipe à automatiser les tâches répétitives qui les entourent et à garder la maîtrise de ce qui est mis en place.",
+        ? "Ce modèle organise une première façon de travailler. Votre équipe apprend ensuite à l’adapter, à automatiser les étapes utiles ou à le transformer en outil interne lorsque cela fait sens."
+        : "Ces modèles organisent vos premières façons de travailler. Votre équipe apprend ensuite à les adapter, à automatiser les étapes utiles ou à les transformer en outils internes lorsque cela fait sens.",
     };
   }
 
   return {
-    title: "Faites gagner du temps à votre équipe grâce à l’automatisation",
-    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, nous aidons votre équipe à réduire les ressaisies, les relances et les mises à jour inutiles, puis à garder la maîtrise des automatisations mises en place.`,
+    title: "Faites gagner du temps à vos équipes avec l’automatisation et l’IA",
+    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, vos équipes apprennent avec un mentor à automatiser ce qui les ralentit, directement dans leurs outils du quotidien.`,
   };
 }
 
@@ -59,7 +59,7 @@ export default function MentoratAutomationCta(props: MentoratAutomationCtaProps)
 
   return (
     <section
-      aria-label="Accompagnement à l’automatisation"
+      aria-label="Formation et mentorat en automatisation"
       className="rounded-[1.5rem] bg-dema-forest px-6 py-8 text-dema-paper sm:px-8 sm:py-10 lg:px-10"
     >
       <div className="grid gap-7 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12">

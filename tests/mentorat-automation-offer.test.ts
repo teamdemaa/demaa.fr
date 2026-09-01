@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import MentoratAutomationDiagnostic from "@/components/MentoratAutomationDiagnostic";
 import MentoratAutomationCta from "@/components/MentoratAutomationCta";
+import { AUTOMATION_OFFER } from "@/lib/automation-offer";
 import {
   AUTOMATION_ACCOMPANIMENT_PATH,
   mentoratAutomationContent,
@@ -13,19 +14,25 @@ async function readSource(path: string) {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-describe("Accompagnement à l’automatisation", () => {
-  it("locks the two-month offer at 3 500 € HT without prescribing session content", () => {
+describe("Formation automatisation et IA", () => {
+  it("locks the eight-week offer at 3 500 € HT for company teams", () => {
     expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/automatisation");
     expect(mentoratAutomationContent.offer.duration).toBe("2 mois");
     expect(mentoratAutomationContent.offer.price).toBe("3 500 € HT");
-    expect(mentoratAutomationContent.hero.description).toContain("nous partons de votre travail réel");
+    expect(AUTOMATION_OFFER.name).toBe("Accompagnement à l’automatisation");
+    expect(AUTOMATION_OFFER.summary).toContain("automatiser ce qui leur fait perdre du temps");
+    expect(mentoratAutomationContent.hero.description).toContain("vos équipes apprennent");
+    expect(mentoratAutomationContent.hero.title).toBe(
+      "Faites gagner du temps à vos équipes avec l’automatisation et l’IA.",
+    );
     expect("sessions" in mentoratAutomationContent).toBe(false);
 
     const markup = renderToStaticMarkup(
       createElement(MentoratAutomationCta, { variant: "general" }),
     );
     expect(markup).toContain("2 mois");
-    expect(markup).toContain("réduire les ressaisies");
+    expect(markup).toContain("vos équipes apprennent avec un mentor");
+    expect(markup).toContain("Faites gagner du temps à vos équipes");
     expect(markup).not.toContain("3 500 € HT");
     expect(markup).not.toContain("8 séances");
     expect(markup).not.toContain("Accompagnement personnalisé sur 2 mois");
@@ -64,10 +71,10 @@ describe("Accompagnement à l’automatisation", () => {
     );
 
     expect(métierMarkup).toContain("Cabinet comptable");
-    expect(métierMarkup).toContain("tâches répétitives");
+    expect(métierMarkup).toContain("automatiser les étapes inutiles");
     expect(métierMarkup).toContain("source=solution-metier");
     expect(métierMarkup).toContain("systemSlug=cabinet-comptable");
-    expect(modelMarkup).toContain("Passez du modèle à l’automatisation");
+    expect(modelMarkup).toContain("Faites évoluer ce modèle avec votre équipe");
     expect(modelMarkup).toContain("première façon de travailler");
     expect(modelMarkup).toContain("source=modele-detail");
     expect(modelMarkup).toContain("modelSlug=structure-google-drive-entreprise");
@@ -101,7 +108,7 @@ describe("Accompagnement à l’automatisation", () => {
     expect(landingPage).not.toContain("publicCta={<AutomationCallbackControl />}");
     expect(landingPage).toContain('<div className="mt-8 flex justify-center">');
     expect(landingPage.indexOf("{content.hero.description}")).toBeLessThan(
-      landingPage.indexOf("<AutomationCallbackControl />"),
+      landingPage.indexOf('variant="hero"'),
     );
     expect(landingPage).not.toContain("<AutomationProfessionalsPanel />");
     expect(landingPage).toContain('publicNavigationActiveView="services"');
@@ -109,23 +116,51 @@ describe("Accompagnement à l’automatisation", () => {
     expect(callbackControl).toContain("Discuter de mon besoin");
     expect(callbackControl).toContain("AutomationCallbackDialog");
     expect(callbackDialog).toContain("Demander à être rappelé");
+    expect(callbackDialog).toContain("Accompagnement à l’automatisation");
+    expect(callbackDialog).toContain("comprendre vos priorités");
+    expect(callbackDialog).not.toContain("projet d’outil interne");
     expect(callbackDialog).toContain("<ServiceCallbackForm");
     expect(await readSource("src/components/ServiceCallbackForm.tsx")).toContain(
       "font-normal text-brand-blue outline-none transition placeholder:text-dema-muted/50",
     );
-    expect(landingPage).toContain("Le problème n’est pas le manque d’outils.");
-    expect(landingPage).toContain("Ce sont les tâches manuelles entre eux.");
-    expect(landingPage).toContain("Une demande arrive");
-    expect(landingPage).toContain("La bonne personne est prévenue");
-    expect(landingPage).toContain("Pour le dirigeant et la personne qui fera vivre les automatisations.");
-    expect(landingPage).not.toContain("Ce qui change concrètement");
-    expect(landingPage).not.toContain("SOLUTION_RAIL_CLASS_NAME");
-    expect(mentoratAutomationContent.outcomes[0].title).toBe("Moins de ressaisies et de relances");
-    expect(mentoratAutomationContent.included).toContain(
-      "Le passage du cadrage à la mise en service dans votre environnement de travail",
+    expect(landingPage).toContain("Faites gagner du temps à vos équipes");
+    expect(landingPage).toContain("avec l’automatisation et l’IA.");
+    expect(landingPage).not.toContain("Un besoin concret.");
+    expect(landingPage).toContain("Ce qu’ils en retiennent.");
+    expect(landingPage).toContain(
+      "Un accompagnement qui suit les priorités de vos équipes.",
     );
-    expect(landingPage).toContain("Aucun profil technique n’est nécessaire");
-    expect(landingPage).toContain('variant="automation"');
+    expect(landingPage).toContain("Ce que vos équipes peuvent mettre en place.");
+    expect(landingPage).toContain(
+      "Des tutoriels précis pour apprendre en faisant.",
+    );
+    expect(landingPage).toContain("De nouveaux contenus sont ajoutés et partagés");
+    expect(landingPage).not.toContain("Codex au centre");
+    expect(landingPage).not.toContain("notre stack");
+    expect(landingPage).not.toContain("Les outils avec lesquels nous travaillons");
+    expect(mentoratAutomationContent.workingRhythm.map((step) => step.title)).toEqual([
+      "Chaque semaine",
+      "Entre les rendez-vous",
+      "Selon vos besoins",
+    ]);
+    expect(mentoratAutomationContent.academyTopics.map((topic) => topic.title)).toEqual([
+      "Trouver quoi automatiser",
+      "ChatGPT et Codex",
+      "Airtable et Fillout",
+      "Make",
+      "Faire évoluer ses systèmes",
+    ]);
+    expect(mentoratAutomationContent.examples).toHaveLength(6);
+    expect(mentoratAutomationContent.examples).toContain(
+      "Automatiser les saisies, les relances et les notifications",
+    );
+    expect(mentoratAutomationContent.testimonials).toHaveLength(3);
+    expect(mentoratAutomationContent.testimonials.map((item) => item.attribution)).toEqual([
+      "Chef de mission comptable",
+      "Assistante de direction · Entreprise du bâtiment",
+      "Product Builder",
+    ]);
+    expect(mentoratAutomationContent.testimonials[0].quote).toContain("30 % de temps");
     expect(automationCases).toContain('sector: "Cabinet d’expertise comptable"');
     expect(automationCases).toContain('sector: "Entreprise du bâtiment"');
     expect(automationCases).toContain('sector: "Maintenance d’ascenseurs"');
@@ -135,27 +170,21 @@ describe("Accompagnement à l’automatisation", () => {
     expect(automationCases).toContain("25 % de temps gagné pour le gestionnaire technique");
     expect(caseStudiesComponent).toContain("L’automatisation mise en place");
     expect(caseStudiesComponent).toContain("Résultats observés sur les tâches concernées");
-    expect(landingPage).toContain("Trois exemples concrets d’automatisation.");
-    expect(landingPage).toContain("Ces entreprises sont anonymisées.");
-    expect(landingPage).toContain("les tâches retenues sont simplifiées ou automatisées");
+    expect(landingPage).toContain("L’accompagnement");
+    expect(landingPage).toContain("en bref.");
+    expect(mentoratAutomationContent.offerIncludes).toHaveLength(4);
     expect(landingPage).not.toContain("Le contenu est défini après le diagnostic");
-    expect(landingPage.indexOf('aria-labelledby="results-heading"')).toBeLessThan(
-      landingPage.indexOf('aria-labelledby="automation-problem-heading"'),
+    expect(landingPage.indexOf('aria-labelledby="proof-heading"')).toBeLessThan(
+      landingPage.indexOf('aria-labelledby="journey-heading"'),
     );
-    expect(landingPage.indexOf('aria-labelledby="automation-problem-heading"')).toBeLessThan(
-      landingPage.indexOf('aria-labelledby="automation-cases-heading"'),
+    expect(landingPage.indexOf('aria-labelledby="journey-heading"')).toBeLessThan(
+      landingPage.indexOf('aria-labelledby="examples-heading"'),
     );
-    expect(landingPage.indexOf('aria-labelledby="automation-cases-heading"')).toBeLessThan(
-      landingPage.indexOf('aria-labelledby="automation-audience-heading"'),
+    expect(landingPage.indexOf('aria-labelledby="examples-heading"')).toBeLessThan(
+      landingPage.indexOf('aria-labelledby="academy-heading"'),
     );
-    expect(landingPage.indexOf('aria-labelledby="automation-audience-heading"')).toBeLessThan(
-      landingPage.indexOf("<MentoratAutomationDiagnostic />"),
-    );
-    expect(landingPage.indexOf("<MentoratAutomationDiagnostic />")).toBeLessThan(
+    expect(landingPage.indexOf('aria-labelledby="academy-heading"')).toBeLessThan(
       landingPage.indexOf('aria-labelledby="offer-heading"'),
-    );
-    expect(landingPage.indexOf('aria-labelledby="offer-heading"')).toBeLessThan(
-      landingPage.indexOf('aria-labelledby="scope-heading"'),
     );
     expect(systemPage).toContain('variant="metier"');
     expect(modelsPage).toContain('<MentoratAutomationCta variant="modele" />');

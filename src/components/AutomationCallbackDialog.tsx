@@ -8,7 +8,7 @@ const AUTOMATION_PACKAGE = [{
   name: AUTOMATION_OFFER.name,
   pricing: {
     label: AUTOMATION_OFFER.price.label,
-    note: "Le programme est défini après le diagnostic.",
+    note: "Les sujets avancent selon vos priorités pendant les huit semaines.",
   },
   slug: AUTOMATION_OFFER.packageSlug,
   summary: AUTOMATION_OFFER.summary,
@@ -17,7 +17,7 @@ const AUTOMATION_PACKAGE = [{
 export default function AutomationCallbackDialog({ onClose }: { onClose: () => void }) {
   return (
     <DirectoryDetailDialogShell
-      ariaLabel="Demande de rappel pour un besoin d’automatisation"
+      ariaLabel="Demande de rappel pour un accompagnement à l’automatisation"
       maxWidthClassName="max-w-lg"
       onClose={onClose}
     >
@@ -29,7 +29,7 @@ export default function AutomationCallbackDialog({ onClose }: { onClose: () => v
           Parlons de votre besoin.
         </h2>
         <p className="mt-4 text-sm leading-6 text-dema-muted">
-          Laissez-nous votre numéro. Nous vous rappellerons pour comprendre votre situation et vérifier si cet accompagnement est adapté.
+          Laissez-nous votre numéro. Nous vous rappellerons pour comprendre vos priorités et vérifier si cet accompagnement est adapté à votre équipe.
         </p>
         <ServiceCallbackForm
           packages={AUTOMATION_PACKAGE}
