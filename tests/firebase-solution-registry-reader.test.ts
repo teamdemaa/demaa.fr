@@ -1,4 +1,5 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
+import { readFile } from "node:fs/promises";
 
 vi.mock("server-only", () => ({}));
 vi.mock("next/cache", () => ({
@@ -50,6 +51,22 @@ function publishLevierOnly(
 }
 
 describe("Firebase Solutions reader", () => {
+  it("reads the mutable pointer outside the persistent revision cache", async () => {
+    const source = await readFile(
+      new URL("../src/lib/firebase-solution-registry.server.ts", import.meta.url),
+      "utf8",
+    );
+
+    expect(source).toContain(
+      "await fetchActiveFirebaseSolutionRegistryPointerFromFirestore()",
+    );
+    expect(source).toContain(
+      "getCachedFirebaseSolutionRegistryRevisionByPointer(\n      pointer.revisionId,\n      pointer.sourceFingerprint",
+    );
+    expect(source).toContain("solutions-registry-immutable-revision-v1");
+    expect(source).not.toContain("solutions-registry-active-revision-v3");
+  });
+
   it("keeps the generated snapshot usable as an explicit test fixture only", async () => {
     const fetchRemote = vi.fn();
     const revision = modules.parse(snapshot);
