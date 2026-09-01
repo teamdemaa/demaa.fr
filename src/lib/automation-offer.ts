@@ -1,12 +1,12 @@
 export const AUTOMATION_OFFER = {
-  durationLabel: "2 mois",
+  durationLabel: "1 mois",
   name: "Accompagnement à l’automatisation",
   packageSlug: "automatisation-essentielle",
   price: {
-    amountMinor: 350000,
+    amountMinor: 150000,
     currency: "EUR",
-    label: "3 500 € HT",
+    label: "1 500 € HT",
   },
   summary:
-    "Deux mois pour aider vos équipes à automatiser ce qui leur fait perdre du temps et à maîtriser les systèmes mis en place.",
+    "Un mois pour mieux organiser et automatiser votre entreprise, avec un mentor et des outils adaptés à vos priorités.",
 } as const;
