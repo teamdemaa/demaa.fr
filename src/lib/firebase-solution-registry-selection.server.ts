@@ -2,7 +2,6 @@ import "server-only";
 
 import {
   getActiveFirebaseSolutionRegistryRevision,
-  loadFirebaseSolutionRegistryRevision,
 } from "@/lib/firebase-solution-registry.server";
 import { SOLUTION_SECTIONS } from "@/lib/solution-registry-contract";
 import type { FirebaseSolutionRegistryRevision } from "@/lib/firebase-solution-registry-contract";
@@ -122,14 +121,6 @@ export async function getActiveRenderableSolutionSectionsForSystem(
   return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, { now });
 }
 
-export async function getLocalRenderableSolutionSectionsForSystem(
-  systemSlug: unknown,
-  now = new Date(),
-) {
-  const revision = await loadFirebaseSolutionRegistryRevision({ forceLocal: true });
-  return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, { now });
-}
-
 export async function getActivePublishedRenderableSolutionSectionsForSystem(
   systemSlug: unknown,
   now = new Date(),
@@ -148,13 +139,5 @@ export async function getActivePublicRenderableSolutionSectionsForSystem(
   const revision = await getActiveFirebaseSolutionRegistryRevision();
   // The public UI may surface editorially selected placements through the
   // sanitized DTO. SEO and JSON-LD keep using the published-only selector.
-  return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, { now });
-}
-
-export async function getLocalPublicRenderableSolutionSectionsForSystem(
-  systemSlug: unknown,
-  now = new Date(),
-) {
-  const revision = await loadFirebaseSolutionRegistryRevision({ forceLocal: true });
   return selectRenderableSolutionSectionsFromRevision(revision, systemSlug, { now });
 }

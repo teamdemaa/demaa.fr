@@ -11,8 +11,28 @@ const FOCUSABLE_SELECTOR = [
   "[tabindex]:not([tabindex='-1'])",
 ].join(",");
 
+function getElementsOutsideDialog(dialog: HTMLElement) {
+  const elements = new Set<HTMLElement>();
+  let current: HTMLElement | null = dialog;
+
+  while (current && current !== document.body) {
+    const parentElement: HTMLElement | null = current.parentElement;
+    if (!parentElement) break;
+
+    for (const sibling of parentElement.children) {
+      if (sibling instanceof HTMLElement && sibling !== current) {
+        elements.add(sibling);
+      }
+    }
+    current = parentElement;
+  }
+
+  return [...elements];
+}
+
 export function useAccessibleDialog(input: {
   isOpen?: boolean;
+  inertBodySiblings?: boolean;
   onClose: () => void;
 }) {
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -27,6 +47,7 @@ export function useAccessibleDialog(input: {
     if (!isOpen) return;
 
     const dialog = dialogRef.current;
+    if (!dialog) return;
     const previouslyFocused =
       document.activeElement instanceof HTMLElement
         ? document.activeElement
@@ -36,6 +57,14 @@ export function useAccessibleDialog(input: {
     const previousHtmlOverflow = document.documentElement.style.overflow;
     const previousHtmlOverscroll =
       document.documentElement.style.overscrollBehavior;
+    const inertBodySiblings = input.inertBodySiblings
+      ? getElementsOutsideDialog(dialog)
+          .map((element) => ({
+            element,
+            inert: element.inert,
+            ariaHidden: element.getAttribute("aria-hidden"),
+          }))
+      : [];
 
     function isTopmostDialog() {
       const dialogs = Array.from(
@@ -92,14 +121,18 @@ export function useAccessibleDialog(input: {
     document.body.style.overscrollBehavior = "none";
     document.documentElement.style.overflow = "hidden";
     document.documentElement.style.overscrollBehavior = "none";
+    for (const sibling of inertBodySiblings) {
+      sibling.element.inert = true;
+      sibling.element.setAttribute("aria-hidden", "true");
+    }
     document.addEventListener("keydown", handleKeyDown);
 
     const focusFrame = window.requestAnimationFrame(() => {
       const initialFocus =
-        dialog?.querySelector<HTMLElement>("[data-dialog-initial-focus]") ??
+        dialog.querySelector<HTMLElement>("[data-dialog-initial-focus]") ??
         getFocusableElements()[0] ??
         dialog;
-      initialFocus?.focus();
+      initialFocus.focus();
     });
 
     return () => {
@@ -108,10 +141,18 @@ export function useAccessibleDialog(input: {
       document.body.style.overscrollBehavior = previousBodyOverscroll;
       document.documentElement.style.overflow = previousHtmlOverflow;
       document.documentElement.style.overscrollBehavior = previousHtmlOverscroll;
+      for (const sibling of inertBodySiblings) {
+        sibling.element.inert = sibling.inert;
+        if (sibling.ariaHidden === null) {
+          sibling.element.removeAttribute("aria-hidden");
+        } else {
+          sibling.element.setAttribute("aria-hidden", sibling.ariaHidden);
+        }
+      }
       document.removeEventListener("keydown", handleKeyDown);
       previouslyFocused?.focus();
     };
-  }, [isOpen]);
+  }, [input.inertBodySiblings, isOpen]);
 
   return dialogRef;
 }

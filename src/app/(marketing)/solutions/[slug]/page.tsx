@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { notFound, redirect } from "next/navigation";
 import MentoratAutomationCta from "@/components/MentoratAutomationCta";
 import Navbar from "@/components/Navbar";
 import SystemDetailContent from "@/components/SystemDetailContent";
 import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
-import {
-  getActivePublishedRenderableSolutionSectionsForSystem,
-  getActivePublicRenderableSolutionSectionsForSystem,
-} from "@/lib/firebase-solution-registry-selection.server";
+import { getActiveFirebaseSolutionRegistryRevision } from "@/lib/firebase-solution-registry.server";
+import { selectRenderableSolutionSectionsFromRevision } from "@/lib/firebase-solution-registry-selection.server";
+import { getFirebaseToolComparisonViewForRevision } from "@/lib/firebase-tool-comparison.server";
 import { filterPublicSystemRecommendationSections } from "@/lib/public-solution-section-visibility";
 import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
@@ -33,10 +33,11 @@ function getParamValue(value?: string | string[]) {
 }
 
 export async function generateMetadata({ params }: SolutionPageProps): Promise<Metadata> {
+  await connection();
   const { slug } = await params;
-  const [data, solutionSections] = await Promise.all([
+  const [data, revision] = await Promise.all([
     getSystemDetailPageData(slug),
-    getActivePublishedRenderableSolutionSectionsForSystem(slug),
+    getActiveFirebaseSolutionRegistryRevision(),
   ]);
 
   if (!data) {
@@ -48,20 +49,33 @@ export async function generateMetadata({ params }: SolutionPageProps): Promise<M
 
   return buildSystemPageMetadata(
     data,
-    filterPublicSystemRecommendationSections(solutionSections),
+    filterPublicSystemRecommendationSections(
+      selectRenderableSolutionSectionsFromRevision(revision, slug, {
+        publishedOnly: true,
+      }),
+    ),
   );
 }
 
 export default async function SolutionPage({ params, searchParams }: SolutionPageProps) {
+  await connection();
   const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
-  const [data, solutionSections, publishedSolutionSections] = await Promise.all([
+  const [data, revision] = await Promise.all([
     getSystemDetailPageData(slug),
-    getActivePublicRenderableSolutionSectionsForSystem(slug),
-    getActivePublishedRenderableSolutionSectionsForSystem(slug),
+    getActiveFirebaseSolutionRegistryRevision(),
   ]);
 
   if (!data) notFound();
 
+  const solutionSections = selectRenderableSolutionSectionsFromRevision(
+    revision,
+    slug,
+  );
+  const publishedSolutionSections = selectRenderableSolutionSectionsFromRevision(
+    revision,
+    slug,
+    { publishedOnly: true },
+  );
   const visibleSolutionSections = filterPublicSystemRecommendationSections(
     composePublicSolutionSectionsForSystem(
       slug,
@@ -71,6 +85,11 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
   const visiblePublishedSolutionSections =
     filterPublicSystemRecommendationSections(publishedSolutionSections);
   const jsonLd = buildSystemPageJsonLd(data, visiblePublishedSolutionSections);
+  const comparison = await getFirebaseToolComparisonViewForRevision({
+    revision,
+    systemSlug: slug,
+    sections: visibleSolutionSections,
+  });
 
   if (!hasEditableOperationalSystemAsset(data.system.slug)) notFound();
   if (normalizeSystemDetailTab(getParamValue(resolvedSearchParams.tab)) === "process") {
@@ -104,6 +123,11 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
             initialResourceSlug={getParamValue(resolvedSearchParams.resource)}
             headingAs="h1"
             solutionSections={visibleSolutionSections}
+            comparisonHref={
+              comparison
+                ? `/solutions/${data.system.slug}/comparatif-outils`
+                : undefined
+            }
             toolOutboundSurface={
               getParamValue(resolvedSearchParams.toolSource) === "action_recommendation"
                 ? "action_recommendation"

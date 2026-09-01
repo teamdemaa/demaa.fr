@@ -14,7 +14,6 @@ import type {
   RenderableSolutionPlacementDto,
   RenderableSolutionSectionDto,
 } from "@/lib/system-solutions-ui-dto";
-import { getRenderableSolutionSectionsForSystem } from "@/lib/system-solutions-ui.server";
 
 const SECTION_ORDER: readonly SolutionSection[] = [
   "software",
@@ -25,8 +24,6 @@ const SECTION_ORDER: readonly SolutionSection[] = [
   "aids",
   "models",
 ];
-
-const LOCAL_PILOT_SOFTWARE_SYSTEMS = new Set(["cabinet-comptable"]);
 
 export function getCanonicalServiceSlugsForSystem(
   systemSlug: string,
@@ -144,13 +141,6 @@ export function composeCanonicalServicesForSystem(
     const placements = placementsBySection.get(group.section) ?? [];
     placements.push(...publicPlacements);
     placementsBySection.set(group.section, placements);
-  }
-  if (LOCAL_PILOT_SOFTWARE_SYSTEMS.has(systemSlug)) {
-    const localSoftware = getRenderableSolutionSectionsForSystem(systemSlug)
-      .find(({ section }) => section === "software")?.placements;
-    if (localSoftware && localSoftware.length > 0) {
-      placementsBySection.set("software", [...localSoftware]);
-    }
   }
   placementsBySection.set(
     "services",

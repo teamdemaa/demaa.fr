@@ -2,18 +2,10 @@ import { NextResponse } from "next/server";
 import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
 import {
   getActivePublicRenderableSolutionSectionsForSystem,
-  getLocalPublicRenderableSolutionSectionsForSystem,
 } from "@/lib/firebase-solution-registry-selection.server";
 import {
-  enrichEnterpriseBusinessModel,
-  enterpriseCatalogBySlug,
-  enterpriseToSystem,
-} from "@/lib/enterprise-annuaire";
-import {
-  buildOperationalSystemPageDetail,
   buildSystemPageIntro,
   getSystemDetailPageData,
-  type SystemDetailPageData,
 } from "@/lib/system-detail-page";
 import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
 import { getAvailableSystemTemplatesForSystem } from "@/lib/system-resource-catalog";
@@ -28,19 +20,6 @@ type RouteContext = {
   params: Promise<{ slug: string }>;
 };
 
-function getLocalSystemDetailPageData(slug: string): SystemDetailPageData | null {
-  const fallback = enterpriseCatalogBySlug[slug];
-  if (!fallback) return null;
-
-  const enterprise = enrichEnterpriseBusinessModel(fallback);
-  const system = enterpriseToSystem(enterprise);
-  return {
-    enterprise,
-    system,
-    detail: buildOperationalSystemPageDetail(system, enterprise),
-  };
-}
-
 export async function GET(request: Request, { params }: RouteContext) {
   const { slug } = await params;
   const searchParams = new URL(request.url).searchParams;
@@ -49,16 +28,9 @@ export async function GET(request: Request, { params }: RouteContext) {
   if (isEnglish && !isEnglishBetaEnabled()) {
     return NextResponse.json({ error: "Not found." }, { status: 404 });
   }
-  const useLocalDemoData =
-    process.env.NODE_ENV !== "production" &&
-    new URL(request.url).searchParams.get("demo") === "1";
   const [data, solutionSections] = await Promise.all([
-    useLocalDemoData
-      ? Promise.resolve(getLocalSystemDetailPageData(slug))
-      : getSystemDetailPageData(slug),
-    useLocalDemoData
-      ? getLocalPublicRenderableSolutionSectionsForSystem(slug)
-      : getActivePublicRenderableSolutionSectionsForSystem(slug),
+    getSystemDetailPageData(slug),
+    getActivePublicRenderableSolutionSectionsForSystem(slug),
   ]);
 
   if (!data) {

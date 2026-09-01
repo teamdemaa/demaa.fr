@@ -181,14 +181,7 @@ describe("canonical Services composition in every system", () => {
     expect(
       sections.find(({ section }) => section === "software")?.placements
         .map(({ resource }) => resource.resourceSlug),
-    ).toEqual([
-      "pennylane",
-      "tiimora",
-      "sage-generation-experts",
-      "cegid-loop",
-      "inqom-expert",
-      "silae",
-    ]);
+    ).toEqual(["pennylane"]);
     expect(sections.find(({ section }) => section === "financing")?.placements)
       .toHaveLength(getRecommendedFinanceForSystem("cabinet-comptable").length);
     expect(sections.find(({ section }) => section === "aids")?.placements.length)

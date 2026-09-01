@@ -19,7 +19,8 @@ import {
 } from "@/lib/system-detail-tabs";
 import { filterPublicSystemRecommendationSections } from "@/lib/public-solution-section-visibility";
 import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
-import { loadFirebaseSolutionRegistryRevision } from "@/lib/firebase-solution-registry.server";
+import snapshot from "@/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json";
+import { parseFirebaseSolutionRegistryRevision } from "@/lib/firebase-solution-registry-contract";
 import {
   selectRenderableSolutionSectionsFromRevision,
 } from "@/lib/firebase-solution-registry-selection.server";
@@ -66,6 +67,20 @@ describe("system Solutions UI", () => {
     expect(markup).toContain("Qonto");
     expect(markup).toContain("Fournisseurs");
     expect(markup).not.toMatch(/bientôt|placeholder/i);
+  });
+
+  it("places the tool comparison action before the software rail arrows", () => {
+    const markup = renderToStaticMarkup(
+      createElement(SystemSolutionsTab, {
+        sections: publishedSolutionSectionsFixture,
+        comparisonHref: "/solutions/batiment/comparatif-outils",
+      }),
+    );
+
+    expect(markup).toContain("Comparer les outils");
+    expect(markup.indexOf("Comparer les outils")).toBeLessThan(
+      markup.indexOf("Voir les solutions précédentes - Outils"),
+    );
   });
 
   it("inserts Resources after Tools and hides only the Services rail in the Plan", async () => {
@@ -172,7 +187,7 @@ describe("system Solutions UI", () => {
   });
 
   it("builds the focused public rail sequence while keeping hidden registry data and SEO published-only", async () => {
-    const revision = await loadFirebaseSolutionRegistryRevision({ forceLocal: true });
+    const revision = parseFirebaseSolutionRegistryRevision(snapshot);
     const expectedPublicOrder = [
       "software",
       "providers",
@@ -643,10 +658,12 @@ describe("system Solutions UI", () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const solutionsSource = await readSource("src/components/SystemSolutionsTab.tsx");
 
-    expect(pageSource).toContain("getActivePublicRenderableSolutionSectionsForSystem,");
+    expect(pageSource).toContain("getActiveFirebaseSolutionRegistryRevision");
+    expect(pageSource).toContain("getFirebaseToolComparisonViewForRevision");
     expect(pageSource).toContain(
       'from "@/lib/firebase-solution-registry-selection.server"',
     );
+    expect(pageSource).toContain("await connection()");
     expect(pageSource).toContain("solutionSections={visibleSolutionSections}");
     expect(pageSource).toContain("filterPublicSystemRecommendationSections");
     expect(pageSource).toContain("composePublicSolutionSectionsForSystem");

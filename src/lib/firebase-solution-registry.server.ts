@@ -7,7 +7,6 @@ import { type Firestore } from "firebase-admin/firestore";
 
 import { getAdminFirestore } from "@/lib/firebase-admin";
 import { hasFirebaseVercelWorkloadIdentityConfiguration } from "@/lib/firebase-vercel-oidc-credential.server";
-import snapshot from "@/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json";
 import {
   SOLUTION_SECTIONS,
 } from "@/lib/solution-registry-contract";
@@ -20,16 +19,13 @@ import {
 } from "@/lib/firebase-solution-registry-contract";
 
 const EXPECTED_SYSTEM_SLUGS = enterpriseCatalog.map(({ slug }) => slug);
-const PARSED_GENERATED_SNAPSHOT = parseFirebaseSolutionRegistryRevision(snapshot);
 const SOLUTION_SECTION_ORDER = new Map(
   SOLUTION_SECTIONS.map((section, index) => [section, index]),
 );
 
 type RegistryLoadDependencies = Readonly<{
-  forceLocal?: boolean;
   now?: Date;
   fetchRemote?: () => Promise<unknown>;
-  warn?: (message: string) => void;
 }>;
 
 function hasFirebaseConfiguration() {
@@ -43,17 +39,6 @@ function hasFirebaseConfiguration() {
     ) ||
     process.env.FIREBASE_USE_APPLICATION_DEFAULT === "true"
   );
-}
-
-function validatedSnapshot(now: Date) {
-  const errors = validateFirebaseSolutionRegistryRevision(PARSED_GENERATED_SNAPSHOT, {
-    expectedSystemSlugs: EXPECTED_SYSTEM_SLUGS,
-    now,
-  });
-  if (errors.length > 0) {
-    throw new Error(`Invalid generated Solutions fallback:\n${errors.join("\n")}`);
-  }
-  return PARSED_GENERATED_SNAPSHOT;
 }
 
 function normalizeRevisionEntryOrder(input: unknown) {
@@ -156,11 +141,10 @@ export async function loadFirebaseSolutionRegistryRevision(
   dependencies: RegistryLoadDependencies = {},
 ): Promise<FirebaseSolutionRegistryRevision> {
   const now = dependencies.now ?? new Date();
-  if (
-    dependencies.forceLocal ??
-    (process.env.DEMAA_FORCE_LOCAL_DATA === "true" || !hasFirebaseConfiguration())
-  ) {
-    return validatedSnapshot(now);
+  if (!dependencies.fetchRemote && !hasFirebaseConfiguration()) {
+    throw new Error(
+      "Firebase Solutions is not configured; no local registry fallback is allowed.",
+    );
   }
   try {
     const remote = await (
@@ -178,19 +162,16 @@ export async function loadFirebaseSolutionRegistryRevision(
     return parsed;
   } catch (error) {
     const detail = error instanceof Error ? error.message : "unknown error";
-    (dependencies.warn ?? console.warn)(
-      `[solutions-registry] Firebase unavailable or invalid; generated fallback used. ${detail}`,
+    throw new Error(
+      `[solutions-registry] Firebase active revision is unavailable or invalid. ${detail}`,
+      { cause: error },
     );
-    return validatedSnapshot(now);
   }
 }
 
 const getCachedFirebaseSolutionRegistryRevision = unstable_cache(
-  async (source: "local" | "remote", sourceFingerprint: string) => {
-    if (!sourceFingerprint) throw new Error("Solutions registry cache source is missing");
-    return loadFirebaseSolutionRegistryRevision({ forceLocal: source === "local" });
-  },
-  ["solutions-registry-active-revision-v2"],
+  async () => loadFirebaseSolutionRegistryRevision(),
+  ["solutions-registry-active-revision-v3"],
   {
     tags: ["solutions-registry"],
     revalidate: 300,
@@ -198,10 +179,5 @@ const getCachedFirebaseSolutionRegistryRevision = unstable_cache(
 );
 
 export async function getActiveFirebaseSolutionRegistryRevision() {
-  const useLocal =
-    process.env.DEMAA_FORCE_LOCAL_DATA === "true" || !hasFirebaseConfiguration();
-  return getCachedFirebaseSolutionRegistryRevision(
-    useLocal ? "local" : "remote",
-    useLocal ? PARSED_GENERATED_SNAPSHOT.sourceFingerprint : "firebase-active-pointer",
-  );
+  return getCachedFirebaseSolutionRegistryRevision();
 }

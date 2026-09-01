@@ -23,6 +23,7 @@ type SystemDetailContentProps = {
   onSelectedSolutionPlacementIdsChange?: (placementIds: readonly string[]) => void;
   onResourceSlugChange?: (resourceSlug: string | undefined) => void;
   headerActions?: ReactNode;
+  comparisonHref?: string;
 };
 
 const EMPTY_SOLUTION_SECTIONS: readonly RenderableSolutionSectionDto[] = [];
@@ -41,6 +42,7 @@ export default function SystemDetailContent({
   onSelectedSolutionPlacementIdsChange,
   onResourceSlugChange,
   headerActions,
+  comparisonHref,
 }: SystemDetailContentProps) {
   const [localSelectedSolutionIds, setLocalSelectedSolutionIds] = useState<Set<string>>(
     () => new Set(),
@@ -109,6 +111,7 @@ export default function SystemDetailContent({
           selectedPlacementIds={selectableSolutions ? selectedSolutionIds : undefined}
           onToggleSelection={selectableSolutions ? toggleSolution : undefined}
           toolOutboundSurface={toolOutboundSurface}
+          comparisonHref={comparisonHref}
         />
         {!embedded ? <LeaderDailyRail /> : null}
       </div>

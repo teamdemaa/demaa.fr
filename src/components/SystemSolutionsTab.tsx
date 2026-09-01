@@ -7,6 +7,7 @@ import {
   Building2,
   ChevronLeft,
   ChevronRight,
+  Columns3,
   ExternalLink,
   Gauge,
   Landmark,
@@ -300,6 +301,7 @@ export default function SystemSolutionsTab({
   toolOutboundSurface = "solutions",
   interstitialAfterSection,
   interstitialContent,
+  comparisonHref,
 }: {
   sections: readonly RenderableSolutionSectionDto[];
   initialResourceSlug?: string;
@@ -311,6 +313,7 @@ export default function SystemSolutionsTab({
   toolOutboundSurface?: ToolOutboundSurface;
   interstitialAfterSection?: VisibleSolutionSection;
   interstitialContent?: ReactNode;
+  comparisonHref?: string;
 }) {
   const ui = getSolutionsUiCopy(localeCode);
   const visibleSections = useMemo(
@@ -528,26 +531,41 @@ export default function SystemSolutionsTab({
                 >
                   {label}
                 </h3>
-                {railState?.canPrevious || railState?.canNext ? (
+                {(group.section === "software" && comparisonHref) ||
+                railState?.canPrevious ||
+                railState?.canNext ? (
                   <div className="flex shrink-0 items-center gap-2">
-                    <button
-                      type="button"
-                      aria-label={`${ui.previous} - ${label}`}
-                      onClick={() => navigateRail(group, -1)}
-                      disabled={!railState?.canPrevious}
-                      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
-                    >
-                      <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-                    </button>
-                    <button
-                      type="button"
-                      aria-label={`${ui.next} - ${label}`}
-                      onClick={() => navigateRail(group, 1)}
-                      disabled={!railState?.canNext}
-                      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
-                    >
-                      <ChevronRight className="h-4 w-4" aria-hidden="true" />
-                    </button>
+                    {group.section === "software" && comparisonHref ? (
+                      <Link
+                        href={comparisonHref}
+                        className="mr-1 inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-dema-forest/20 bg-dema-paper px-4 text-xs font-semibold text-dema-forest transition hover:border-dema-forest/40 hover:bg-[#f2f7f4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:text-sm"
+                      >
+                        <Columns3 className="h-4 w-4" aria-hidden="true" />
+                        Comparer les outils
+                      </Link>
+                    ) : null}
+                    {railState?.canPrevious || railState?.canNext ? (
+                      <>
+                        <button
+                          type="button"
+                          aria-label={`${ui.previous} - ${label}`}
+                          onClick={() => navigateRail(group, -1)}
+                          disabled={!railState?.canPrevious}
+                          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
+                        >
+                          <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+                        </button>
+                        <button
+                          type="button"
+                          aria-label={`${ui.next} - ${label}`}
+                          onClick={() => navigateRail(group, 1)}
+                          disabled={!railState?.canNext}
+                          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dema-line bg-dema-paper text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest disabled:cursor-not-allowed disabled:opacity-30"
+                        >
+                          <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                        </button>
+                      </>
+                    ) : null}
                   </div>
                 ) : null}
               </div>
