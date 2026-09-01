@@ -4,15 +4,12 @@ vi.mock("server-only", () => ({}));
 
 const mocks = vi.hoisted(() => ({
   getActivePublicRenderableSolutionSectionsForSystem: vi.fn(),
-  getLocalPublicRenderableSolutionSectionsForSystem: vi.fn(),
   getSystemDetailPageData: vi.fn(),
 }));
 
 vi.mock("@/lib/firebase-solution-registry-selection.server", () => ({
   getActivePublicRenderableSolutionSectionsForSystem:
     mocks.getActivePublicRenderableSolutionSectionsForSystem,
-  getLocalPublicRenderableSolutionSectionsForSystem:
-    mocks.getLocalPublicRenderableSolutionSectionsForSystem,
 }));
 
 vi.mock("@/lib/system-detail-page", () => ({

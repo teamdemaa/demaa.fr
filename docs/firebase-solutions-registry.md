@@ -2,14 +2,15 @@
 
 ## Décision
 
-Firebase est l’unique source éditable des recommandations affichées dans les
-pages Systèmes. Les anciens fichiers ne sont plus lus directement par le
-runtime et restent des archives de migration. Le fallback runtime courant est
-`firebase-solution-registry.catalog-enrichment.snapshot.generated.json`. Il
-est généré et scellé depuis le catalogue consolidé ; il ne doit jamais être
-édité manuellement. Le fichier historique
-`firebase-solution-registry.snapshot.generated.json` reste figé afin que les
-anciennes migrations et leurs tests puissent être rejoués à l'identique.
+Firebase est l’unique source runtime des recommandations de logiciels tiers et
+des comparatifs affichés dans les pages Systèmes. Les services Demaa, aides et
+financements restent composés par leurs catalogues applicatifs dédiés. Les
+fichiers `*.snapshot.generated.json` ne sont plus
+importés par le lecteur applicatif et ne peuvent plus être activés par une
+variable d’environnement ou par le build. Ils restent uniquement des archives
+de migration et des fixtures de tests explicites. Une absence de configuration,
+une indisponibilité ou une révision Firebase invalide provoque une erreur claire :
+aucun repli silencieux n’est autorisé.
 
 ## Structure Firestore
 
@@ -33,11 +34,89 @@ solution_registry_revisions/{revisionId}/resources/{resourceSlug}
 solution_registry_revisions/{revisionId}/placements/{placementId}
   placement
   presentation
+
+solution_tool_comparison_revisions/{sourceFingerprint}
+  registryRevisionId
+  registryFingerprint
+  knownSystemSlugs
+  publishedSystemSlugs
+  draftSystemSlugs
+  blockedSystemSlugs
+
+solution_tool_comparison_revisions/{sourceFingerprint}/systems/{systemSlug}
+  schemaVersion: 2
+  publicationStatus
+  registryRevisionId
+  registryFingerprint
+  expiresAt
+  sourceUrls
+  evidence[]
+    evidenceId
+    resourceSlug
+    sourceRef
+    claim
+    capturedAt
+  comparison
+    tools[]
+    features[]
+      cells[]
+        status
+        evidenceIds[]
 ```
 
 Le document actif ne contient qu’un pointeur et l’empreinte attendue. Les
 ressources et placements sont séparés parce que la révision complète dépasse
 la limite d’un document Firestore.
+
+Chaque comparatif est lié à l’empreinte exacte du registre qui fournit ses
+outils. Un document périmé, en brouillon, invalide ou faisant référence à un
+outil absent de la révision active est masqué. Les 115 métiers sont classés
+explicitement en `published`, `draft` ou `blocked` dans le document racine.
+
+Le schéma 2 impose une provenance au niveau de la cellule : toute cellule
+positive (`covered` ou `configurable`) d’un comparatif publié référence au
+moins une preuve HTTPS appartenant à l’outil de sa colonne. Une cellule
+`not_documented` ne peut pas porter de preuve. Une matrice incomplète ou
+incohérente est rejetée avant écriture et à la lecture runtime.
+
+## Candidat avec preuves atomiques — 1er septembre 2026
+
+La révision immuable
+`solutions-2026-09-01-firebase-only-comparisons-evidence-v2` est préparée mais
+n’est pas activée tant que les recettes Preview ne sont pas terminées.
+
+- empreinte candidate :
+  `630b68f26c3a2e8c704351b5f3434b274afcdc07e1c2e19bf8783c84f9966418` ;
+- empreinte du plan registre :
+  `84b5decbf7dc456e8ca3efd4ce32b2cd211aa23ee68e5c8f297cc89f17a9d8cb` ;
+- empreinte du plan comparatifs :
+  `62bb20b1f616ea73fd14645569aae746defb52580b739c9eca251e74318f3e39` ;
+- 262 ressources et 634 placements, sans ajout ni retrait par rapport à la
+  révision source ;
+- 113 matrices générées, dont 4 publiables, 109 brouillons et 2 métiers
+  bloqués ;
+- les 159 cellules positives des quatre matrices publiables référencent toutes
+  une preuve atomique ; aucune cellule positive sans preuve n’est autorisée.
+
+## Convergence Firebase-only — 1er septembre 2026
+
+La révision immuable
+`solutions-2026-09-01-firebase-only-comparisons-published-v1` est active dans
+Firebase Production. Elle part octet pour octet de l’ancienne révision active
+`solutions-2026-08-28-accounting-tools-published-v1` et ajoute
+uniquement quatre placements revus : L’Addition, Revya, Uber Eats et PayFit.
+
+- empreinte candidate :
+  `3190f45e4ac1698c36de0853b3ddad4e479c20cbc3105bade17f7f5fd17690b3` ;
+- empreinte du plan registre :
+  `0d24823a93a0ea281d4fcf38c9ee8e4f47fd2af24223523ed8b224954a89a5a1` ;
+- 4 comparatifs publiables, 109 brouillons non exposés et 2 métiers bloqués ;
+- 1 125 documents immuables créés et relus ;
+- pointeur inchangé pendant le staging, puis activation transactionnelle et
+  relecture complète réussies.
+
+Le rollback transactionnel scellé cible l’ancienne paire révision/empreinte et
+refuse de s’exécuter si le pointeur courant a changé entre-temps.
 
 ## Règles de publication
 
@@ -56,7 +135,7 @@ la limite d’un document Firestore.
 - Toute tarification visible porte une source, une date de capture et une date
   d’expiration. Une tarification expirée est masquée.
 
-## État courant — 12 août 2026
+## État historique — 12 août 2026
 
 La révision enrichie
 `solutions-2026-08-12-catalog-enrichment-published-v1` couvre :

@@ -202,12 +202,13 @@ describe("system page SEO published Solutions boundary", () => {
       "utf8",
     );
 
-    expect(pageSource.match(/getActivePublicRenderableSolutionSectionsForSystem\(slug\)/g)).toHaveLength(1);
-    expect(pageSource.match(/getActivePublishedRenderableSolutionSectionsForSystem\(slug\)/g))
-      .toHaveLength(2);
+    expect(pageSource.match(/getActiveFirebaseSolutionRegistryRevision\(\)/g)).toHaveLength(2);
+    expect(pageSource.match(/selectRenderableSolutionSectionsFromRevision\(/g))
+      .toHaveLength(3);
+    expect(pageSource.match(/publishedOnly: true/g)).toHaveLength(2);
     expect(pageSource).toContain("buildSystemPageMetadata(");
     expect(pageSource).toContain(
-      "filterPublicSystemRecommendationSections(solutionSections)",
+      "filterPublicSystemRecommendationSections(",
     );
     expect(pageSource).toContain(
       "buildSystemPageJsonLd(data, visiblePublishedSolutionSections)",

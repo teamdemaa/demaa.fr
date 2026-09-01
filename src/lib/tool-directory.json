@@ -1074,11 +1074,18 @@
       "bestFor": "Structurer la paie et les obligations sociales.",
       "pricingHint": "Payant",
       "keyFeatures": [
-        "Gestion de la paie",
-        "Gestion RH",
-        "Conformite et automatisations",
-        "DSN",
-        "Modules comme absences, conges, entretiens, notes de frais et onboarding"
+        "Production des bulletins de paie",
+        "Variables de paie et validation des cycles de paie",
+        "DSN, déclarations sociales et contrôle des DSN",
+        "Mises à jour légales et conventions collectives intégrées",
+        "Gestion multi-dossiers et production sociale cabinet",
+        "Écritures comptables de paie et OD de paie",
+        "Congés et absences",
+        "Espace salarié et application mobile salarié",
+        "Distribution des bulletins et coffre-fort numérique",
+        "Documents RH, contrats et avenants",
+        "Notes de frais et onboarding salarié",
+        "Tableaux de bord et API"
       ],
       "idealFor": [
         "Entreprises qui veulent fiabiliser la paie",
@@ -1086,9 +1093,11 @@
         "Equipes RH qui veulent centraliser plusieurs processus autour de la paie"
       ],
       "sources": [
-        "https://www.silae.fr/"
+        "https://www.silae.fr/solution-rh-paie/logiciel-paie/",
+        "https://www.silae.fr/solution-rh-paie/logiciel-paie/dsn/",
+        "https://www.silae.fr/api-silae/"
       ],
-      "lastReviewedAt": "2026-07-02",
+      "lastReviewedAt": "2026-09-01",
       "status": "active",
       "scope": "business"
     },
@@ -1312,7 +1321,8 @@
       "bestFor": "Structurer les ventes et le suivi opérationnel.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Caisse", "Inventaire", "Gestion des commandes", "Pilotage de l’activité"]
     },
     {
       "slug": "zenchef",
@@ -1342,9 +1352,10 @@
       "name": "Deliverect",
       "url": "https://www.deliverect.com/fr-fr/customer-type/restaurant",
       "sources": [
-        "https://www.deliverect.com/fr-fr/customer-type/restaurant"
+        "https://www.deliverect.com/fr",
+        "https://www.deliverect.com/fr-fr/questions-frequemment-posees"
       ],
-      "lastReviewedAt": "2026-07-14",
+      "lastReviewedAt": "2026-09-01",
       "category": "Caisse & réservation",
       "sectors": [
         "Restauration",
@@ -1358,6 +1369,13 @@
       ],
       "bestFor": "Fluidifier la vente à emporter et la livraison.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Gestion des commandes clients et commandes en ligne",
+        "Gestion de menu multicanale",
+        "Livraison et connexion aux plateformes",
+        "Tableaux de bord et reporting des ventes",
+        "API et intégrations caisse"
+      ],
       "status": "active",
       "scope": "business"
     },
@@ -2081,7 +2099,7 @@
       "sources": [
         "https://www.digiforma.com/"
       ],
-      "lastReviewedAt": "2026-08-05",
+      "lastReviewedAt": "2026-09-01",
       "category": "Formation",
       "sectors": [
         "Éducation & formation"
@@ -2095,7 +2113,8 @@
       "bestFor": "Structurer les formations et obligations associées.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Gestion administrative des formations", "CRM et catalogue de formations", "Planification des sessions", "Émargement et signature électronique", "LMS et suivi des apprenants", "Qualiopi et évaluations", "Facturation et paiements"]
     },
     {
       "slug": "kajabi",
@@ -2451,7 +2470,10 @@
       "bestFor": "Gérer comptoir, stock, documents santé et suivi de l’officine.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Gestion d’officine", "Gestion des stocks", "Suivi du parcours patient"],
+      "sources": ["https://www.visiopharm.fr/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "genapi",
@@ -2988,7 +3010,10 @@
       "bestFor": "Créer devis et factures BTP rapidement avec un outil pensé artisans.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Devis et factures BTP", "Suivi et planning de chantier", "Gestion des interventions", "Suivi des achats et de la rentabilité", "Signature électronique"],
+      "sources": ["https://costructor.co/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "esabora",
@@ -3596,7 +3621,10 @@
       "bestFor": "Gérer les biens, mandats, contacts et annonces d’une agence immobilière.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Gestion des biens et mandats", "CRM immobilier", "Multidiffusion des annonces", "Rapprochements acquéreurs", "Documents et signature électronique"],
+      "sources": ["https://www.la-boite-immo.com/logiciel-immobilier"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "netty",
@@ -5125,7 +5153,10 @@
       "bestFor": "Vendre des formations en ligne avec un espace apprenant simple.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Création de cours en ligne", "Vente de formations", "Coaching", "Abonnements"],
+      "sources": ["https://www.teachable.com/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "podia",
@@ -5145,7 +5176,10 @@
       "bestFor": "Commercialiser formations et contenus numériques simplement.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Cours en ligne", "Produits numériques", "Webinaires", "Communautés et abonnements"],
+      "sources": ["https://www.podia.com/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "thinkific",
@@ -5165,7 +5199,10 @@
       "bestFor": "Construire un catalogue de cours en ligne plus structuré.",
       "pricingHint": "Freemium",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Création de parcours pédagogiques", "Vente de cours en ligne", "Suivi des apprenants", "Communautés"],
+      "sources": ["https://www.thinkific.com/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "systeme-io",
@@ -5194,7 +5231,7 @@
       "sources": [
         "https://360learning.com/fr/"
       ],
-      "lastReviewedAt": "2026-07-14",
+      "lastReviewedAt": "2026-09-01",
       "category": "Formation",
       "sectors": [
         "Éducation & formation"
@@ -5208,7 +5245,8 @@
       "bestFor": "Déployer des parcours de formation structurés et suivis.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["LMS collaboratif", "Création de parcours pédagogiques", "Diffusion des formations", "Suivi des apprenants", "Évaluations et contenus pédagogiques"]
     },
     {
       "slug": "moodle",
@@ -5592,7 +5630,10 @@
       "bestFor": "Piloter une auto-école avec planning, suivi élèves et paiements.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Planning des leçons", "Suivi pédagogique des élèves", "Gestion des paiements", "Application élève", "Gestion des moniteurs"],
+      "sources": ["https://www.glitz.fr/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "gestauto-ecole",
@@ -5611,7 +5652,10 @@
       "bestFor": "Centraliser planning, élèves, forfaits et convocations.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Planning auto-école", "Portail élève", "Gestion des forfaits", "Suivi des examens", "Rapports d’activité"],
+      "sources": ["https://www.gestauto-ecole.com/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "smart-rx",
@@ -5701,7 +5745,10 @@
       "bestFor": "Gérer dossiers, actes et organisation vétérinaire.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Dossiers et actes vétérinaires", "Agenda et rendez-vous en ligne", "Facturation et encaissement", "Gestion des stocks et achats", "E-mails et relances automatisées"],
+      "sources": ["https://www.vetopartner.fr/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "hiboutik",
@@ -5725,7 +5772,8 @@
       "bestFor": "Gérer caisse, ventes et stock d’un commerce de proximité.",
       "pricingHint": "Freemium",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Caisse en ligne", "Ventes", "Gestion des stocks", "Gestion des clients", "Gestion de commerce"]
     },
     {
       "slug": "cashpad",
@@ -6137,7 +6185,10 @@
       "bestFor": "Structurer les parcours, actions et résultats des clients coachés.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Suivi des clients coachés", "Objectifs et plans d’action", "Programmes de coaching", "Suivi de la progression"],
+      "sources": ["https://www.coachaccountable.com/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "azeoo",
@@ -6156,7 +6207,10 @@
       "bestFor": "Digitaliser une activité de coaching sportif ou bien-être.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Programmes de coaching sportif", "Suivi des clients", "Coaching en ligne", "Paiements et revenus"],
+      "sources": ["https://azeoo.com/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "hexfit",
@@ -6175,7 +6229,10 @@
       "bestFor": "Suivre objectifs, bilans, programmes et progression des clients sportifs.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Bilans et objectifs", "Programmes d’entraînement", "Suivi de la progression", "Suivi des clients sportifs"],
+      "sources": ["https://www.myhexfit.com/fr-fr/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "elgeaweb",
@@ -6243,9 +6300,11 @@
       "name": "L’Addition",
       "url": "https://www.laddition.com/fr",
       "sources": [
-        "https://www.laddition.com/fr"
+        "https://www.laddition.com/fr/laddition-suite",
+        "https://www.laddition.com/fr/logiciel-caisse-prise-de-commande",
+        "https://www.laddition.com/fr/laddition-reporting"
       ],
-      "lastReviewedAt": "2026-07-14",
+      "lastReviewedAt": "2026-09-01",
       "category": "Caisse & réservation",
       "sectors": [
         "Restauration"
@@ -6258,6 +6317,14 @@
       ],
       "bestFor": "Gérer caisse, prise de commande, salle, paiement et pilotage restaurant.",
       "pricingHint": "Payant",
+      "keyFeatures": [
+        "Logiciel de caisse et point de vente",
+        "Gestion des commandes clients et envoi en cuisine",
+        "Menu digital et réservation en ligne",
+        "Terminal de paiement et encaissement à table",
+        "Gestion des stocks",
+        "Tableaux de bord et reporting"
+      ],
       "status": "active",
       "scope": "business"
     },
@@ -7008,7 +7075,10 @@
       "bestFor": "Gérer membres, abonnements, accès et pilotage d’une salle de sport.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Gestion des membres", "Abonnements", "Contrôle d’accès", "Planning des activités", "CRM et encaissement"],
+      "sources": ["https://www.resamania.fr/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "deciplus",
@@ -7027,7 +7097,10 @@
       "bestFor": "Centraliser réservations, membres, abonnements et cours collectifs.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Réservations et planning", "Gestion des membres", "Abonnements", "Cours collectifs"],
+      "sources": ["https://www.deciplus.fr/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "bsport",
@@ -7094,7 +7167,10 @@
       "bestFor": "Piloter activité optique, clients, ventes et magasins multi-sites.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Gestion de magasin d’optique", "Suivi des clients et ventes", "Pilotage multi-sites", "Tableaux de bord", "Prise de rendez-vous en ligne"],
+      "sources": ["https://www.optimumcit.com/fr/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "kiute-pro",
@@ -7903,7 +7979,10 @@
       "bestFor": "Structurer inscriptions, présences, familles et facturation petite enfance.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Inscriptions des familles", "Réservations et pointages", "Suivi des présences", "Facturation petite enfance"],
+      "sources": ["https://www.berger-levrault.com/fr/produit/bl-enfance/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "eventmaker",
@@ -7975,7 +8054,10 @@
       "bestFor": "Centraliser dossiers, rapports réglementaires, devis et facturation diagnostic.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Diagnostics réglementaires sur le terrain", "Génération des rapports", "Devis et factures", "Planning", "Portail client"],
+      "sources": ["https://www.diag-pilote.com/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "gestiondiag",
@@ -7994,7 +8076,10 @@
       "bestFor": "Piloter devis, facturation, dossiers et conformité d’un diagnostiqueur.",
       "pricingHint": "Payant",
       "status": "active",
-      "scope": "business"
+      "scope": "business",
+      "keyFeatures": ["Gestion des dossiers de diagnostic", "Devis et factures", "Gestion commerciale", "Suivi de la conformité"],
+      "sources": ["https://gestiondiag.fr/"],
+      "lastReviewedAt": "2026-09-01"
     },
     {
       "slug": "o2s",
@@ -8903,11 +8988,15 @@
       "bestFor": "Gérer paie et RH d’une équipe sans complexité excessive.",
       "pricingHint": "Payant",
       "keyFeatures": [
-        "Paie",
-        "Gestion des conges et absences",
-        "Notes de frais",
-        "Entretiens et suivi RH",
-        "Declarations sociales et pilotage RH"
+        "Génération des bulletins de paie",
+        "Variables de paie",
+        "DSN et déclarations sociales",
+        "Congés et absences",
+        "Espace employé et bulletins dématérialisés",
+        "Documents administratifs et signature électronique des contrats",
+        "Gestion des notes de frais",
+        "Accueil de nouveaux collaborateurs",
+        "Tableaux de bord et intégrations"
       ],
       "idealFor": [
         "PME qui veulent gerer paie et RH dans un meme outil",
@@ -8915,9 +9004,10 @@
         "Structures qui cherchent un outil transverse pour l'equipe"
       ],
       "sources": [
-        "https://payfit.com/fr/"
+        "https://payfit.com/fr/paie-declarations-sociales/",
+        "https://payfit.com/fr/toutes-les-fonctionnalites/"
       ],
-      "lastReviewedAt": "2026-07-02",
+      "lastReviewedAt": "2026-09-01",
       "status": "active",
       "scope": "transverse"
     },

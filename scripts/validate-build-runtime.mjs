@@ -29,10 +29,10 @@ const warnings = [];
 const buildScript = packageJson.scripts?.build ?? "";
 const buildStableScript = packageJson.scripts?.["build:stable"] ?? "";
 const startScript = packageJson.scripts?.start ?? "";
-const startLocalDataScript = packageJson.scripts?.["start:local-data"] ?? "";
+const startLocalDataScript = packageJson.scripts?.["start:local-data"];
 
-if (!buildScript.includes("DEMAA_FORCE_LOCAL_DATA=true")) {
-  addUnique(errors, 'The "build" script must force local data with DEMAA_FORCE_LOCAL_DATA=true.');
+if (buildScript.includes("DEMAA_FORCE_LOCAL_DATA")) {
+  addUnique(errors, 'The "build" script must not bypass the Firebase Solutions source.');
 }
 
 if (!buildScript.includes("DEMAA_BUILD_DIST_DIR=.next-build")) {
@@ -43,11 +43,8 @@ if (!buildScript.includes("next build --webpack")) {
   addUnique(errors, 'The "build" script must use Webpack to avoid the Turbopack build deadlock.');
 }
 
-if (!buildStableScript.includes("DEMAA_FORCE_LOCAL_DATA=true")) {
-  addUnique(
-    errors,
-    'The "build:stable" script must force local data with DEMAA_FORCE_LOCAL_DATA=true.',
-  );
+if (buildStableScript.includes("DEMAA_FORCE_LOCAL_DATA")) {
+  addUnique(errors, 'The "build:stable" script must not bypass the Firebase Solutions source.');
 }
 
 if (!buildStableScript.includes("DEMAA_BUILD_DIST_DIR=.next-build")) {
@@ -69,15 +66,8 @@ if (!startScript.includes("DEMAA_BUILD_DIST_DIR=.next-build")) {
   addUnique(errors, 'The "start" script must target ".next-build".');
 }
 
-if (!startLocalDataScript.includes("DEMAA_FORCE_LOCAL_DATA=true")) {
-  addUnique(
-    errors,
-    'The "start:local-data" script must force the generated local data snapshot.',
-  );
-}
-
-if (!startLocalDataScript.includes("DEMAA_BUILD_DIST_DIR=.next-build")) {
-  addUnique(errors, 'The "start:local-data" script must target ".next-build".');
+if (startLocalDataScript) {
+  addUnique(errors, 'The obsolete "start:local-data" script must stay removed.');
 }
 
 if (!nextConfigSource.includes("distDir: process.env.DEMAA_BUILD_DIST_DIR || '.next'")) {
@@ -115,7 +105,7 @@ const result = {
   build: buildScript,
   buildStable: buildStableScript,
   start: startScript,
-  startLocalData: startLocalDataScript,
+  startLocalData: startLocalDataScript ?? null,
   errors,
   warnings,
 };

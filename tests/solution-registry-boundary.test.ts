@@ -154,7 +154,9 @@ describe("Solutions server and DTO boundaries", () => {
       "utf8",
     );
 
-    expect(pageSource).toContain("getActivePublicRenderableSolutionSectionsForSystem");
+    expect(pageSource).toContain("getActiveFirebaseSolutionRegistryRevision");
+    expect(pageSource).toContain("selectRenderableSolutionSectionsFromRevision");
+    expect(pageSource).toContain("getFirebaseToolComparisonViewForRevision");
     expect(pageSource).not.toContain("getMigrationSafe");
     expect(firebaseSelector).not.toContain("system-solutions-ui.server");
     expect(firebaseSelector).not.toContain("getRenderableSolutionSectionsForSystem");
