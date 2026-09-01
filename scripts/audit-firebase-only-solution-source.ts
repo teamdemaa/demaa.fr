@@ -30,6 +30,9 @@ const registryIssues = validateFirebaseSolutionRegistryRevision(candidate, {
   requirePublishedRevision: true,
 });
 const errors = [...registryIssues];
+if (new Date(artifact.generatedAt).getTime() > Date.now()) {
+  errors.push("Candidate generation timestamp must not be in the future.");
+}
 
 const candidatePlan = artifact.candidateComparisonPlan;
 const documents: FirebaseToolComparisonDocument[] = candidatePlan.writes

@@ -26,8 +26,8 @@ import { buildToolProcessComparisonView } from "@/lib/tool-process-comparison.se
 import { getToolDirectoryItemBySlug } from "@/lib/tool-directory";
 
 const CANDIDATE_REVISION_ID =
-  "solutions-2026-09-01-firebase-only-comparisons-evidence-v2";
-const CREATED_AT = "2026-09-01T16:45:00.000Z";
+  "solutions-2026-09-01-firebase-only-comparisons-evidence-v2-1";
+const CREATED_AT = "2026-09-01T15:00:00.000Z";
 const EXPIRES_AT = "2027-02-28";
 const REVIEWED_SYSTEMS = new Set([
   "cabinet-comptable",
@@ -35,6 +35,10 @@ const REVIEWED_SYSTEMS = new Set([
   "restaurant",
   "gestionnaire-paie-independant",
 ]);
+
+if (new Date(CREATED_AT).getTime() > Date.now()) {
+  throw new Error("Candidate creation timestamp must not be in the future.");
+}
 
 function argument(prefix: string) {
   return process.argv.find((entry) => entry.startsWith(prefix))?.slice(prefix.length);

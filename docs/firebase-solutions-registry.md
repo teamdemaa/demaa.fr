@@ -82,15 +82,15 @@ incohérente est rejetée avant écriture et à la lecture runtime.
 ## Candidat avec preuves atomiques — 1er septembre 2026
 
 La révision immuable
-`solutions-2026-09-01-firebase-only-comparisons-evidence-v2` est préparée mais
+`solutions-2026-09-01-firebase-only-comparisons-evidence-v2-1` est préparée mais
 n’est pas activée tant que les recettes Preview ne sont pas terminées.
 
 - empreinte candidate :
-  `630b68f26c3a2e8c704351b5f3434b274afcdc07e1c2e19bf8783c84f9966418` ;
+  `d217e0b95b03502b50c3fc7d33ca8be76aa5c11c34dfdc7114b3f9275f84097a` ;
 - empreinte du plan registre :
-  `84b5decbf7dc456e8ca3efd4ce32b2cd211aa23ee68e5c8f297cc89f17a9d8cb` ;
+  `56b5fdf4f923f4d18e9a06a2cc7eef93e14176fffabe575827cca4b5f75c1fc0` ;
 - empreinte du plan comparatifs :
-  `62bb20b1f616ea73fd14645569aae746defb52580b739c9eca251e74318f3e39` ;
+  `ca463f9bf18acf8a9b4c304b74865924b204df27dc6f63e7b8bbf0115fe71ec1` ;
 - 262 ressources et 634 placements, sans ajout ni retrait par rapport à la
   révision source ;
 - 113 matrices générées, dont 4 publiables, 109 brouillons et 2 métiers
