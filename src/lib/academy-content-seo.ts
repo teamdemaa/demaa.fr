@@ -26,7 +26,7 @@ function getAcademyContentStructuredDataImageUrl(
 export function buildAcademyContentMetadata(
   content: AcademyContentDefinition,
 ): Metadata {
-  const title = `${content.identity.shortTitle} | Organiser avec Demaa`;
+  const title = `${content.identity.shortTitle} | Organisation Demaa`;
   const description = content.identity.promise;
   const canonicalUrl = getAcademyContentUrl(content);
   const imageUrl = getAcademyContentImageUrl(content);
@@ -79,7 +79,7 @@ export function buildAcademyContentJsonLd(
       {
         "@type": "ListItem",
         position: 2,
-        name: "Organiser",
+        name: "Organisation",
         item: `${origin}/organiser`,
       },
       {

@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 import type { ContentCatalogEntry } from "@/lib/content-catalog";
 import { PUBLIC_SOCIAL_IMAGE } from "@/lib/public-page-metadata";
 import { getCanonicalOrigin } from "@/lib/site-url";
+import { getOrganiserThumbnailPath } from "@/lib/organiser-thumbnail-catalog";
 
 export function buildContentMetadata(entry: ContentCatalogEntry): Metadata {
   const canonicalUrl = `${getCanonicalOrigin()}/contenus/${entry.slug}`;
-  const image = entry.media.youtubeThumbnail ?? entry.media.slides?.[0];
+  const image = getOrganiserThumbnailPath(entry.slug)
+    ?? entry.media.youtubeThumbnail
+    ?? entry.media.slides?.[0];
 
   return {
     title: `${entry.shortTitle} | Demaa`,
@@ -36,7 +39,9 @@ export function buildContentMetadata(entry: ContentCatalogEntry): Metadata {
 export function buildContentJsonLd(entry: ContentCatalogEntry) {
   const origin = getCanonicalOrigin();
   const canonicalUrl = `${origin}/contenus/${entry.slug}`;
-  const image = entry.media.youtubeThumbnail ?? entry.media.slides?.[0];
+  const image = getOrganiserThumbnailPath(entry.slug)
+    ?? entry.media.youtubeThumbnail
+    ?? entry.media.slides?.[0];
   const imageUrl = image
     ? (image.startsWith("http://") || image.startsWith("https://") ? image : `${origin}${image}`)
     : undefined;

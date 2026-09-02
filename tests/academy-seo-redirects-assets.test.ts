@@ -52,7 +52,7 @@ function readPngDimensions(buffer: Buffer) {
 describe("Academy SEO, redirects and assets", () => {
   it("uses every short title and exact canonical URL in route metadata", async () => {
     for (const content of getAllAcademyContent()) {
-      const expectedTitle = `${content.identity.shortTitle} | Organiser avec Demaa`;
+      const expectedTitle = `${content.identity.shortTitle} | Organisation Demaa`;
       const expectedCanonical = `https://demaa.fr/organiser/${content.identity.slug}`;
       const metadata = buildAcademyContentMetadata(content);
       const routeMetadata = await generateMetadata({
@@ -89,7 +89,7 @@ describe("Academy SEO, redirects and assets", () => {
           {
             "@type": "ListItem",
             position: 2,
-            name: "Organiser",
+            name: "Organisation",
             item: "https://demaa.fr/organiser",
           },
           {
@@ -122,9 +122,9 @@ describe("Academy SEO, redirects and assets", () => {
     for (const content of getAcademyCaseStudies()) {
       const jsonLd = buildAcademyContentJsonLd(content);
       const canonicalUrl = `https://demaa.fr/organiser/${content.identity.slug}`;
-      const expectedImage = content.processGuide
-        ? `${canonicalUrl}/process-map.png`
-        : `https://demaa.fr${content.identity.card.image}`;
+      const expectedImage = content.identity.card.image
+        ? `https://demaa.fr${content.identity.card.image}`
+        : `${canonicalUrl}/process-map.png`;
 
       expect(jsonLd).toHaveLength(2);
       expect(jsonLd[0]).toMatchObject({ "@type": "BreadcrumbList" });

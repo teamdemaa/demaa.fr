@@ -5,9 +5,9 @@ import {
   serializePublicJsonLd,
 } from "@/lib/public-index-json-ld";
 
-const title = "Modèles et cas concrets pour organiser son activité | Demaa";
+const title = "Cas concrets pour organiser son activité | Demaa";
 const description =
-  "Des modèles prêts à copier et des cas concrets pour mieux organiser le travail dans votre entreprise.";
+  "Des processus expliqués étape par étape, avec les outils et les modèles utiles pour mieux organiser le travail dans votre entreprise.";
 
 export const metadata = buildPublicPageMetadata({
   title,
@@ -17,12 +17,12 @@ export const metadata = buildPublicPageMetadata({
 
 export default function OrganiserIndexPage() {
   const jsonLd = buildPublicIndexJsonLd({
-    name: "Organiser",
+    name: "Organisation",
     description,
     path: "/organiser",
     items: [
+      { name: "Cas concrets et processus", path: "/organiser#cas-concrets" },
       { name: "Modèles prêts à copier", path: "/modeles" },
-      { name: "Cas concrets et processus", path: "/organiser/processus" },
     ],
   });
 

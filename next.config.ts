@@ -85,28 +85,28 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/accompagnement',
-        destination: '/automatisation',
+        source: '/automatisation',
+        destination: '/accompagnement',
         permanent: true,
       },
       {
         source: '/services',
-        destination: '/automatisation',
+        destination: '/accompagnement',
         permanent: true,
       },
       {
         source: '/services/automatisation-processus',
-        destination: '/automatisation',
+        destination: '/accompagnement',
         permanent: true,
       },
       {
         source: '/sur-mesure',
-        destination: '/automatisation',
+        destination: '/accompagnement',
         permanent: true,
       },
       {
         source: '/solutions/mentorat-automatisation-ia',
-        destination: '/automatisation',
+        destination: '/accompagnement',
         permanent: true,
       },
       {

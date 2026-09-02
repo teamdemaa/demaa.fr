@@ -10,6 +10,7 @@ import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 type ModelPageProps = {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ from?: string | string[] }>;
 };
 
 export const dynamicParams = false;
@@ -30,8 +31,10 @@ export async function generateMetadata({ params }: ModelPageProps): Promise<Meta
   });
 }
 
-export default async function ModelPage({ params }: ModelPageProps) {
+export default async function ModelPage({ params, searchParams }: ModelPageProps) {
   const { slug } = await params;
+  const { from } = await searchParams;
+  const source = Array.isArray(from) ? from[0] : from;
   const model = getPublishedCopyableModelBySlug(slug);
   if (!model) notFound();
 
@@ -39,7 +42,12 @@ export default async function ModelPage({ params }: ModelPageProps) {
     <>
       <Navbar minimal publicNavigationActiveView="academy" />
       <main className="min-h-screen bg-background px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-        <CopyableModelDetails model={model} />
+        <CopyableModelDetails
+          backLink={source === "organisation"
+            ? { href: "/modeles?from=organisation", label: "Retour aux modèles" }
+            : undefined}
+          model={model}
+        />
       </main>
     </>
   );

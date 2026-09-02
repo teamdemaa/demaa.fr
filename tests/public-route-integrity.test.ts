@@ -18,12 +18,12 @@ describe("public route integrity", () => {
     expect(sectorPages).not.toContain('href: "/organisation"');
     expect(sectorPages).not.toContain('href: "/structuration"');
     expect(sectorPages).toContain('href: "/solutions"');
-    expect(sectorPages).toContain('href: "/automatisation"');
+    expect(sectorPages).toContain('href: "/accompagnement"');
     expect(sectorPages).not.toContain('href: "/application-metier"');
     expect(sectorPages).not.toContain('href: "/systemes"');
     expect(sectorPages).not.toContain('href: "/services"');
     expect(validator).toContain('"/solutions"');
-    expect(validator).toContain('"/automatisation"');
+    expect(validator).toContain('"/accompagnement"');
     expect(validator).not.toContain('"/application-metier"');
     expect(validator).not.toContain('"/systemes"');
     expect(validator).not.toContain('"/services"');
@@ -35,10 +35,11 @@ describe("public route integrity", () => {
     );
   });
 
-  it("publishes Automatisation and keeps Application métier out of the sitemap", async () => {
+  it("publishes Accompagnement and keeps legacy aliases out of the sitemap", async () => {
     const sitemap = await readSource("src/app/sitemap.ts");
 
-    expect(sitemap).toContain('`${base}/automatisation`');
+    expect(sitemap).toContain('`${base}/accompagnement`');
+    expect(sitemap).not.toContain('`${base}/automatisation`');
     expect(sitemap).not.toContain('`${base}/application-metier`');
     expect(sitemap).toContain('`${base}/solutions`');
     expect(sitemap).toContain('`${base}/organiser`');
@@ -50,14 +51,14 @@ describe("public route integrity", () => {
     expect(sitemap).not.toContain('`${base}/systemes`');
   });
 
-  it("returns retained service details to the public automation offer", async () => {
+  it("returns retained service details to the public accompaniment offer", async () => {
     const servicePage = await readSource(
       "src/app/(marketing)/services/[slug]/page.tsx",
     );
 
-    expect(servicePage).toContain('href="/automatisation"');
+    expect(servicePage).toContain('href="/accompagnement"');
     expect(servicePage).not.toContain('href="/services"');
-    expect(servicePage).toContain("Retour à l’automatisation");
+    expect(servicePage).toContain("Retour à l’accompagnement");
   });
 
   it("delivers live-session métier resources through the canonical Solutions routes", async () => {

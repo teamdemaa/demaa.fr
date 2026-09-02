@@ -4,7 +4,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, CalendarCheck, Check } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import CaseVideoOverview from "@/components/CaseVideoOverview";
 import ContentSlidesLauncher from "@/components/ContentSlidesLauncher";
+import NumberedSectionHeading from "@/components/NumberedSectionHeading";
 import {
   getAllPublishedContent,
   getContentFormat,
@@ -15,6 +17,7 @@ import {
   buildContentMetadata,
   serializeContentJsonLd,
 } from "@/lib/content-seo";
+import { getOrganiserThumbnailPath } from "@/lib/organiser-thumbnail-catalog";
 
 type ContentPageProps = Readonly<{
   params: Promise<{ slug: string }>;
@@ -41,7 +44,7 @@ export default async function ContentPage({ params }: ContentPageProps) {
 
   return (
     <>
-      <Navbar />
+      <Navbar minimal publicNavigationActiveView="academy" />
       <main className="flex-1 bg-background">
         <script
           type="application/ld+json"
@@ -50,11 +53,11 @@ export default async function ContentPage({ params }: ContentPageProps) {
 
         <article className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
           <Link
-            href="/contenus"
+            href="/organiser#cas-concrets"
             className="inline-flex items-center gap-2 text-sm text-dema-muted transition hover:text-dema-forest"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Retour aux contenus
+            Retour à Organisation
           </Link>
 
           <header className="mx-auto mt-8 max-w-4xl text-center">
@@ -71,6 +74,14 @@ export default async function ContentPage({ params }: ContentPageProps) {
               {entry.summary}
             </p>
           </header>
+
+          <div className="mx-auto max-w-5xl">
+            <CaseVideoOverview
+              title={entry.title}
+              thumbnail={getOrganiserThumbnailPath(entry.slug)}
+              items={entry.article.map((section) => section.heading)}
+            />
+          </div>
 
           {heroImage ? (
             <section className="mx-auto mt-10 max-w-5xl">
@@ -96,11 +107,13 @@ export default async function ContentPage({ params }: ContentPageProps) {
 
           <div className="mx-auto mt-14 grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
             <div className="space-y-10">
-              {entry.article.map((section) => (
-                <section key={section.heading}>
-                  <h2 className="text-2xl font-normal leading-tight text-brand-blue sm:text-3xl">
-                    {section.heading}
-                  </h2>
+              {entry.article.map((section, index) => (
+                <section key={section.heading} aria-labelledby={`content-section-${index + 1}`}>
+                  <NumberedSectionHeading
+                    id={`content-section-${index + 1}`}
+                    number={index + 1}
+                    title={section.heading}
+                  />
                   <div className="mt-4 space-y-4 text-base leading-8 text-dema-muted">
                     {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                     {section.items ? (

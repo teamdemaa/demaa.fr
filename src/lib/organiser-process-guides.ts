@@ -2,6 +2,7 @@ import type {
   AcademyContentDefinition,
   AcademyProcessGuide,
 } from "@/lib/academy-course-content";
+import { getOrganiserThumbnailPath } from "@/lib/organiser-thumbnail-catalog";
 
 type ProcessGuideInput = {
   slug: string;
@@ -31,8 +32,8 @@ function defineProcessGuide(input: ProcessGuideInput): AcademyContentDefinition 
         section: "Organiser",
         title: input.cardTitle ?? input.title,
         meta: `${input.durationMinutes ?? 7} min de lecture`,
-        image: null,
-        imageAlt: `Processus présenté dans l’article : ${input.guide.steps.map((step) => step.label).join(", ")}.`,
+        image: getOrganiserThumbnailPath(input.slug),
+        imageAlt: `Miniature : ${input.cardTitle ?? input.title}.`,
       },
     },
     lessons: [],

@@ -199,15 +199,15 @@ export default function AcademyCoursePlayer({
               type="button"
               onClick={onBack}
               className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-              aria-label={localeCode === "en" ? "Back to the Academy" : "Retour à Organiser"}
+              aria-label={localeCode === "en" ? "Back to the Academy" : "Retour à l’organisation"}
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             </button>
           ) : (
             <Link
-              href={localeCode === "en" ? "/en?view=academy" : "/organiser/processus"}
+              href={localeCode === "en" ? "/en?view=academy" : "/organiser#cas-concrets"}
               className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dema-line text-brand-blue transition hover:border-dema-forest/25 hover:text-dema-forest"
-              aria-label={localeCode === "en" ? "Back to the Academy" : "Retour aux cas concrets"}
+              aria-label={localeCode === "en" ? "Back to the Academy" : "Retour à Organisation"}
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             </Link>
@@ -348,7 +348,7 @@ export default function AcademyCoursePlayer({
               <p className="mx-auto mt-3 max-w-xl leading-relaxed text-dema-muted">
                 {localeCode === "en"
                   ? "You can return to the Academy or put the course into practice."
-                  : "Vous pouvez revenir à Organiser ou passer directement à l’action."}
+                  : "Vous pouvez revenir à l’espace Organisation ou passer directement à l’action."}
               </p>
 
               {content.action ? (
@@ -373,14 +373,14 @@ export default function AcademyCoursePlayer({
                   onClick={onBack}
                   className={`${content.action ? "demaa-secondary-button" : "demaa-primary-button"} mt-5 min-h-11`}
                 >
-                  {localeCode === "en" ? "Back to the Academy" : "Retour à Organiser"}
+                  {localeCode === "en" ? "Back to the Academy" : "Retour à l’organisation"}
                 </button>
               ) : (
                 <Link
-                  href={localeCode === "en" ? "/en?view=academy" : "/organiser/processus"}
+                  href={localeCode === "en" ? "/en?view=academy" : "/organiser#cas-concrets"}
                   className={`${content.action ? "demaa-secondary-button" : "demaa-primary-button"} mt-5 min-h-11`}
                 >
-                  {localeCode === "en" ? "Back to the Academy" : "Retour aux cas concrets"}
+                  {localeCode === "en" ? "Back to the Academy" : "Retour à Organisation"}
                 </Link>
               )}
             </section>

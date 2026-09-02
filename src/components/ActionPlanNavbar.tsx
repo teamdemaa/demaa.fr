@@ -14,8 +14,8 @@ const tabClassName =
 const navigationItems = {
   plan: { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
   solutions: { view: "solutions", labels: { fr: "Solutions", en: "Solutions" }, Icon: LayoutGrid },
-  services: { view: "services", labels: { fr: "Automatiser", en: "Automate" }, Icon: Workflow },
-  academy: { view: "academy", labels: { fr: "Organiser", en: "Organise" }, Icon: BookOpen },
+  services: { view: "services", labels: { fr: "Accompagnement", en: "Support" }, Icon: Workflow },
+  academy: { view: "academy", labels: { fr: "Organisation", en: "Organization" }, Icon: BookOpen },
   opportunities: { view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness },
 } as const;
 
@@ -102,7 +102,7 @@ export default function ActionPlanNavbar({
               ? "/"
               : view === "academy"
                 ? "/organiser"
-                : "/automatisation";
+                : "/accompagnement";
           const usesPublicRoute = routeNavigation
             || (localeCode === "fr" && (view === "solutions" || view === "academy" || view === "services"));
 

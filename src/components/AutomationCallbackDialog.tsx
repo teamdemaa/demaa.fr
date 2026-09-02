@@ -26,15 +26,15 @@ export default function AutomationCallbackDialog({ onClose }: { onClose: () => v
           Accompagnement automatisation et IA
         </p>
         <h2 className="mt-3 text-3xl font-light leading-tight tracking-[-0.04em] text-brand-blue">
-          Demandez à être rappelé.
+          Parlons de votre organisation.
         </h2>
         <p className="mt-4 text-sm leading-6 text-dema-muted">
-          Laissez-nous votre numéro. Nous vous rappelons pour un échange de 30 minutes afin de comprendre vos priorités et de vérifier si cet accompagnement est adapté à votre entreprise.
+          Laissez-nous vos coordonnées. Nous vous rappelons pour comprendre ce qui vous prend du temps et vérifier si l’accompagnement peut vous convenir.
         </p>
         <ServiceCallbackForm
           packages={AUTOMATION_PACKAGE}
           serviceSlug="automatisation-processus"
-          submitLabel="Demander à être rappelé"
+          submitLabel="Envoyer ma demande"
           successMessage="Votre demande est bien envoyée. Nous vous recontactons rapidement."
         />
       </div>

@@ -21,11 +21,15 @@ export const metadata = buildPublicPageMetadata({
 });
 
 type ModelsPageProps = {
-  searchParams: Promise<{ metier?: string | string[] }>;
+  searchParams: Promise<{
+    from?: string | string[];
+    metier?: string | string[];
+  }>;
 };
 
 export default async function ModelsPage({ searchParams }: ModelsPageProps) {
-  const { metier } = await searchParams;
+  const { from, metier } = await searchParams;
+  const source = Array.isArray(from) ? from[0] : from;
   const systemSlug = Array.isArray(metier) ? metier[0] : metier;
   const enterprise = systemSlug ? enterpriseCatalogBySlug[systemSlug] : undefined;
   const models = enterprise
@@ -49,7 +53,11 @@ export default async function ModelsPage({ searchParams }: ModelsPageProps) {
       />
       <Navbar minimal publicNavigationActiveView="academy" />
       <main className="min-h-screen bg-background">
-        <CopyableModelsIndex models={models} systemName={enterprise?.name} />
+        <CopyableModelsIndex
+          fromOrganisation={source === "organisation"}
+          models={models}
+          systemName={enterprise?.name}
+        />
         <div className="mx-auto w-full max-w-7xl px-4 pt-16 sm:px-6 lg:px-8">
           <MentoratAutomationCta variant="modele" />
         </div>

@@ -171,15 +171,15 @@ describe("service callback request route", () => {
       packageSlug: "automatisation-essentielle",
       serviceSlug: "automatisation-processus",
       source: "modele-detail",
-      sourcePage: "/automatisation?source=modele-detail&modelSlug=structure-google-drive-entreprise",
+      sourcePage: "/accompagnement?source=modele-detail&modelSlug=structure-google-drive-entreprise",
     })));
 
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: [
-        { label: "Service", value: "Accompagnement à l’automatisation" },
+        { label: "Service", value: "Accompagnement automatisation et IA" },
         { label: "Slug du service", value: "automatisation-processus" },
-        { label: "Forfait", value: "Accompagnement à l’automatisation" },
+        { label: "Forfait", value: "Maestro" },
         { label: "Slug du forfait", value: "automatisation-essentielle" },
         { label: "Prix de référence", value: "1 500 € HT" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
@@ -187,7 +187,7 @@ describe("service callback request route", () => {
         { label: "Marché", value: "fr-fr" },
         { label: "Origine interne", value: "modele-detail" },
         { label: "Modèle", value: "structure-google-drive-entreprise" },
-        { label: "Page source", value: "/automatisation?source=modele-detail&modelSlug=structure-google-drive-entreprise" },
+        { label: "Page source", value: "/accompagnement?source=modele-detail&modelSlug=structure-google-drive-entreprise" },
       ],
       requestType: "service_callback_request",
     }));

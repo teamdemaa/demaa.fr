@@ -14,6 +14,7 @@
     "check": "npm run lint -- --max-warnings=0 && npx tsc --noEmit && npm test && npm run validate:academy && npm run validate:data",
     "validate:academy": "node studio/academy-course-pack-v1/scripts/validate-course-pack.mjs",
     "generate:process-cadences": "vite-node --config vitest.config.ts scripts/generate-system-process-cadences.ts --write",
+    "generate:organiser-thumbnails": "NODE_OPTIONS=--experimental-transform-types node scripts/generate-organiser-thumbnails.mjs",
     "check:process-cadences": "vite-node --config vitest.config.ts scripts/generate-system-process-cadences.ts --check",
     "audit:d091": "vite-node --config vitest.config.ts scripts/audit-d091-curated-tools.ts",
     "audit:d091:pilot": "vite-node --config vitest.config.ts scripts/audit-d091-curated-tools.ts --pilot",
