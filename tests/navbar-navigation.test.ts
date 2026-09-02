@@ -73,9 +73,10 @@ describe("Demaa application navbar", () => {
       "utf8",
     );
 
-    expect(source).toContain('label: "Organiser", href: "/organiser"');
+    expect(source).toContain('label: "Organisation", href: "/organiser"');
+    expect(source).not.toContain('label: "Organiser"');
     expect(source).toContain('label: "Solutions", href: "/solutions"');
-    expect(source).toContain('label: "Automatiser", href: "/automatisation"');
+    expect(source).toContain('label: "Accompagnement", href: "/accompagnement"');
     expect(source).toContain("leading-tight");
     expect(source).not.toContain("leading-none");
     expect(organiserIndex).toContain("OrganiserHub");
@@ -83,8 +84,8 @@ describe("Demaa application navbar", () => {
     expect(organiserIndex).not.toContain("<Navbar");
     expect(organiserIndex).not.toContain("<ActionPlanNavbar");
     expect(organiserIndex).not.toContain("OrganiserSectionNavigation");
+    expect(organiserIndex).toContain('{ name: "Cas concrets et processus", path: "/organiser#cas-concrets" }');
     expect(organiserIndex).toContain('{ name: "Modèles prêts à copier", path: "/modeles" }');
-    expect(organiserIndex).toContain('{ name: "Cas concrets et processus", path: "/organiser/processus" }');
   });
 
   it("replaces the sign-in action with account access once a session is active", async () => {
@@ -191,11 +192,11 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain("empty:hidden xl:block");
     expect(navbarSource).toContain("empty:hidden xl:hidden");
     expect(actionPlanNavSource).toContain("Plan d’action");
-    expect(actionPlanNavSource).toContain("Automatiser");
-    expect(actionPlanNavSource).toContain('"/automatisation"');
+    expect(actionPlanNavSource).toContain("Accompagnement");
+    expect(actionPlanNavSource).toContain('"/accompagnement"');
     expect(actionPlanNavSource).not.toContain('"/application-metier"');
     expect(actionPlanNavSource).not.toContain('label: "Services"');
-    expect(actionPlanNavSource).toContain("Organiser");
+    expect(actionPlanNavSource).toContain("Organisation");
     expect(actionPlanNavSource).toContain('"/organiser"');
     expect(actionPlanNavSource).not.toContain("Ressources");
     expect(actionPlanNavSource).toContain("Annonces");

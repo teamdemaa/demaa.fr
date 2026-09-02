@@ -46,6 +46,16 @@ export type SystemeDetail = {
   routines: SystemeRoutine[];
 };
 
+export type SystemeRoutineComparisonOutline = {
+  routineId: string;
+  title: string;
+  cadence: string;
+  steps: Array<{
+    stepId: string;
+    label: string;
+  }>;
+};
+
 type ProcessRegistryMétier = {
   métierId: string;
   slug: string;
@@ -266,4 +276,64 @@ export function buildSystemeDetail(
     cards: [...cards.entries()].map(([pillar, items]) => ({ pillar, items })),
     routines,
   };
+}
+
+/**
+ * Stable process projection for tool comparisons.
+ *
+ * This deliberately lives beside, rather than inside, `SystemeDetail`: the
+ * public process DTO is fingerprinted and must not change when the comparison
+ * feature needs stable step identifiers.
+ */
+export function buildSystemeRoutineComparisonOutline(
+  enterprise: EnterpriseDefinition,
+): SystemeRoutineComparisonOutline[] | null {
+  const detail = buildSystemeDetail(enterprise);
+
+  if (!detail) {
+    return null;
+  }
+
+  const curatedRoutines = findCuratedSystemProcessRoutines(enterprise.slug);
+
+  if (curatedRoutines) {
+    const stepsById = new Map(
+      detail.cards.flatMap((card) =>
+        card.items.flatMap((item) =>
+          item.steps.map((step) => [step.stepId, step] as const),
+        ),
+      ),
+    );
+
+    return curatedRoutines.map((routine) => ({
+      routineId: routine.routineId,
+      title: routine.title,
+      cadence: normalizePublicProcessCadence(routine.frequency),
+      steps: routine.sourceStepIds.map((stepId) => {
+        const step = stepsById.get(stepId);
+
+        if (!step) {
+          throw new Error(
+            `[systeme] Étape de comparaison introuvable pour ${enterprise.slug}: ${stepId}`,
+          );
+        }
+
+        return { stepId, label: step.step };
+      }),
+    }));
+  }
+
+  const cards = new Map(
+    detail.cards.map((card) => [card.pillar, card.items] as const),
+  );
+
+  return selectRoutineItems(cards).map((item) => ({
+    routineId: `routine.${enterprise.slug}.${item.processId}`,
+    title: item.process,
+    cadence: getSystemProcessCadence(enterprise.slug, item.processId) ?? "",
+    steps: item.steps.slice(0, MAX_ROUTINE_BULLETS).map((step) => ({
+      stepId: step.stepId,
+      label: step.step,
+    })),
+  }));
 }

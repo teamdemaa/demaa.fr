@@ -13,9 +13,11 @@ import { buildCompanyDriveFolderTemplate } from "@/lib/drive-folder-templates";
 import { isGoogleDriveTemplateConfigured } from "@/lib/google-drive-template.server";
 
 export default function CopyableModelDetails({
+  backLink,
   model,
   variant = "page",
 }: {
+  backLink?: Readonly<{ href: string; label: string }>;
   model: CopyableModelDefinition;
   variant?: "page" | "modal";
 }) {
@@ -30,10 +32,10 @@ export default function CopyableModelDetails({
 
   return (
     <article className={variant === "page" ? "mx-auto w-full max-w-6xl" : "w-full"}>
-      {variant === "page" ? (
-        <Link href="/modeles" className="mb-7 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest">
+      {variant === "page" && backLink ? (
+        <Link href={backLink.href} className="mb-7 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest">
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          Retour aux modèles
+          {backLink.label}
         </Link>
       ) : null}
 

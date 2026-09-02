@@ -64,7 +64,7 @@ describe("Organiser newsletter public contract", () => {
     const approved = [
       "src/components/AcademyIndexClient.tsx",
       "src/components/SystemsHubPage.tsx",
-      "src/components/MentoratAutomationLandingPage.tsx",
+      "src/components/OrganiserHub.tsx",
       "src/app/(marketing)/modeles/page.tsx",
     ];
 

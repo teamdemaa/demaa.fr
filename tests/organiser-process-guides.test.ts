@@ -55,8 +55,10 @@ describe("Organiser process guides", () => {
       expect(content.processGuide?.checklist.length).toBeGreaterThanOrEqual(4);
       expect(content.processGuide?.faqs).toHaveLength(3);
       expect(content.identity.title).toMatch(/^(Comment|Quel|À partir|Faut-il)/);
-      expect(content.identity.card.image).toBeNull();
-      expect(`${content.identity.shortTitle} | Organiser avec Demaa`.length)
+      expect(content.identity.card.image).toBe(
+        `/images/organiser/thumbnails/${content.identity.slug}.png`,
+      );
+      expect(`${content.identity.shortTitle} | Organisation Demaa`.length)
         .toBeLessThanOrEqual(60);
       expect(content.identity.promise.length).toBeGreaterThanOrEqual(120);
       expect(content.identity.promise.length).toBeLessThanOrEqual(180);
@@ -116,7 +118,7 @@ describe("Organiser process guides", () => {
     }
   });
 
-  it("provides one dynamic process-map image for Open Graph and X", async () => {
+  it("reuses the YouTube thumbnail for Open Graph and X", async () => {
     const openGraphSource = readFileSync(
       "src/app/(marketing)/organiser/[slug]/opengraph-image.tsx",
       "utf8",
@@ -126,8 +128,10 @@ describe("Organiser process guides", () => {
       "utf8",
     );
 
-    expect(openGraphSource).toContain("width: 1200, height: 630");
-    expect(openGraphSource).toContain("content?.processGuide?.steps.map");
+    expect(openGraphSource).toContain("width: 1280, height: 720");
+    expect(openGraphSource).toContain("getOrganiserThumbnail(slug)");
+    expect(openGraphSource).toContain("images/organiser/thumbnails");
+    expect(openGraphSource).toContain('join(process.cwd(), "public", imagePath)');
     expect(openGraphSource).not.toMatch(/logo|portrait|photo/i);
     expect(twitterSource).toContain('from "./opengraph-image"');
 
@@ -140,8 +144,8 @@ describe("Organiser process guides", () => {
     expect(image.headers.get("content-type")).toBe("image/png");
     const imageBuffer = Buffer.from(await image.arrayBuffer());
     expect(imageBuffer.byteLength).toBeGreaterThan(10_000);
-    expect(imageBuffer.readUInt32BE(16)).toBe(1_200);
-    expect(imageBuffer.readUInt32BE(20)).toBe(630);
+    expect(imageBuffer.readUInt32BE(16)).toBe(1_280);
+    expect(imageBuffer.readUInt32BE(20)).toBe(720);
 
     const { GET: renderStableProcessMap } = await import(
       "@/app/(marketing)/organiser/[slug]/process-map.png/route"
@@ -246,6 +250,10 @@ describe("Organiser process guides", () => {
       "src/components/AcademyProcessGuideArticle.tsx",
       "utf8",
     );
+    const videoOverviewSource = readFileSync(
+      "src/components/CaseVideoOverview.tsx",
+      "utf8",
+    );
 
     expect(articleSource).not.toContain("Les six étapes, une par une");
     expect(articleSource).not.toContain(">Entrée :");
@@ -257,15 +265,19 @@ describe("Organiser process guides", () => {
     expect(articleSource).not.toContain("Exceptions à remonter");
     expect(articleSource).toContain("font-serif text-[2.65rem] font-light");
     expect(articleSource).not.toContain("font-serif text-[2.65rem] font-normal");
-    expect(articleSource).toContain("Les premières actions à mettre en place");
+    expect(articleSource).toContain('title="La checklist"');
+    expect(articleSource).toContain("<CaseVideoOverview");
+    expect(articleSource).toContain('href="/organiser#cas-concrets"');
+    expect(videoOverviewSource).toContain("Au programme");
+    expect(videoOverviewSource).toContain("bg-dema-forest");
     expect(articleSource).toContain("getPublishedCopyableModelForOrganiserSlug");
-    expect(articleSource).toContain("Modèle prêt à copier");
+    expect(articleSource).toContain("Le modèle prêt à copier");
     expect(articleSource).toContain('href={`/modeles/${relatedModel.slug}`}');
     expect(articleSource).toContain("Voir le modèle");
     expect(articleSource).not.toContain("démarrer aujourd’hui");
     expect(JSON.stringify(ORGANISER_PROCESS_GUIDES)).not.toContain("reçue aujourd’hui");
 
-    const modelPosition = articleSource.indexOf("Modèle prêt à copier");
+    const modelPosition = articleSource.indexOf('title="Le modèle prêt à copier"');
     const rulesPosition = articleSource.indexOf('aria-labelledby="rules-title"');
     const examplePosition = articleSource.indexOf('aria-label="Exemple concret"');
     const toolsPosition = articleSource.indexOf('aria-labelledby="tools-title"');
@@ -273,10 +285,11 @@ describe("Organiser process guides", () => {
     const faqPosition = articleSource.indexOf('aria-labelledby="faq-title"');
 
     expect(modelPosition).toBeGreaterThan(0);
-    expect(rulesPosition).toBeGreaterThan(modelPosition);
+    expect(rulesPosition).toBeGreaterThan(0);
     expect(examplePosition).toBeGreaterThan(rulesPosition);
     expect(toolsPosition).toBeGreaterThan(examplePosition);
-    expect(checklistPosition).toBeGreaterThan(toolsPosition);
+    expect(modelPosition).toBeGreaterThan(toolsPosition);
+    expect(checklistPosition).toBeGreaterThan(modelPosition);
     expect(faqPosition).toBeGreaterThan(checklistPosition);
   });
 

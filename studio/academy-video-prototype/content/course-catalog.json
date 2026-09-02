@@ -81,6 +81,16 @@
       "sourceAudio": "public/courses/pennylane-pour-cabinet/audio/narration-source.mp3",
       "audio": "public/courses/pennylane-pour-cabinet/audio/narration.mp3",
       "finalOutput": "output/cours-pennylane-pour-cabinet-final.mp4"
+    },
+    "organiser-entreprise-plomberie": {
+      "content": "content/courses/organiser-entreprise-plomberie/course.json",
+      "production": "content/courses/organiser-entreprise-plomberie/production.json",
+      "sourceTiming": "content/courses/organiser-entreprise-plomberie/timing-source.generated.json",
+      "timing": "content/courses/organiser-entreprise-plomberie/timing.generated.json",
+      "alignment": "public/courses/organiser-entreprise-plomberie/audio/alignment.json",
+      "sourceAudio": "public/courses/organiser-entreprise-plomberie/audio/narration-source.mp3",
+      "audio": "public/courses/organiser-entreprise-plomberie/audio/narration.mp3",
+      "finalOutput": "output/cours-organiser-entreprise-plomberie-final.mp4"
     }
   }
 }

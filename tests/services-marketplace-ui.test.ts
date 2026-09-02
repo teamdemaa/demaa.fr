@@ -36,7 +36,7 @@ describe("canonical Accompagnement catalog", () => {
       CANONICAL_SERVICE_SLUGS.includes(slug)
     )).toBe(true);
     expect(services.map((service) => service.name)).toEqual([
-      "Accompagnement à l’automatisation",
+      "Accompagnement automatisation et IA",
       "Application métier",
       "Coach business",
       "Assistante administrative",
@@ -144,7 +144,7 @@ describe("canonical Accompagnement catalog", () => {
     const application = getCanonicalServiceBySlug("application-metier");
 
     expect(automation).toMatchObject({
-      name: "Accompagnement à l’automatisation",
+      name: "Accompagnement automatisation et IA",
       pricing: null,
       cta: { kind: "callback", label: "Envoyer ma demande" },
     });
@@ -152,14 +152,14 @@ describe("canonical Accompagnement catalog", () => {
       ["automatisation-essentielle", 150000],
     ]);
     expect(automation?.packages[0]).toMatchObject({
-      name: "Accompagnement à l’automatisation",
+      name: "Maestro",
       pricing: {
         label: "1 500 € HT",
       },
     });
     expect(automation?.packages[0]?.pricing.note).toContain("quatre rendez-vous");
-    expect(automation?.packages[0]?.pricing.note).toContain("tutoriels");
-    expect(automation?.packages[0]?.pricing.note).not.toContain("Academy");
+    expect(automation?.packages[0]?.pricing.note).toContain("une à trois personnes");
+    expect(automation?.packages[0]?.pricing.note).not.toContain("tutoriels");
     expect(automation?.packages[0]?.pricing.note).toContain("licences");
     expect(application).toMatchObject({
       detailHref: "/application-metier",

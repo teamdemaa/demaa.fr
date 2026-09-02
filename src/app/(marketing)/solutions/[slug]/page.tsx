@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import { notFound, redirect } from "next/navigation";
-import MentoratAutomationCta from "@/components/MentoratAutomationCta";
 import Navbar from "@/components/Navbar";
+import OrganiserDiscoveryCta from "@/components/OrganiserDiscoveryCta";
 import SystemDetailContent from "@/components/SystemDetailContent";
 import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
@@ -135,11 +135,7 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
             }
           />
           <div className="mt-12 max-w-[67.5rem]">
-            <MentoratAutomationCta
-              systemName={data.system.name}
-              systemSlug={data.system.slug}
-              variant="metier"
-            />
+            <OrganiserDiscoveryCta />
           </div>
         </div>
       </main>

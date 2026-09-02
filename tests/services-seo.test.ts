@@ -51,7 +51,7 @@ describe("canonical Services SEO and redirects", () => {
     expect(buildServicePageJsonLd(automation)[1]).toMatchObject({
       offers: [
         {
-          name: "Accompagnement à l’automatisation",
+          name: "Maestro",
           price: "1500.00",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
@@ -67,7 +67,7 @@ describe("canonical Services SEO and redirects", () => {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Accueil", item: "https://demaa.fr" },
-        { "@type": "ListItem", position: 2, name: "Accompagnement à l’automatisation", item: "https://demaa.fr/automatisation" },
+        { "@type": "ListItem", position: 2, name: "Accompagnement automatisation et IA", item: "https://demaa.fr/accompagnement" },
       ],
     });
 

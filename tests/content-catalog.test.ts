@@ -36,6 +36,19 @@ describe("canonical content catalog", () => {
     }
   });
 
+  it("presents the electronic invoicing guide as a concrete Organisation case", () => {
+    const contentPage = readFileSync(
+      resolve(process.cwd(), "src/app/(marketing)/contenus/[slug]/page.tsx"),
+      "utf8",
+    );
+
+    expect(contentPage).toContain('<Navbar minimal publicNavigationActiveView="academy" />');
+    expect(contentPage).toContain('href="/organiser#cas-concrets"');
+    expect(contentPage).toContain("<CaseVideoOverview");
+    expect(contentPage).toContain("items={entry.article.map((section) => section.heading)}");
+    expect(contentPage).toContain("<NumberedSectionHeading");
+  });
+
   it("uses only the four official sources selected for the legal review", () => {
     const entry = getPublishedContentBySlug("facturation-electronique");
     expect(entry?.sources.map(({ href }) => href)).toEqual([

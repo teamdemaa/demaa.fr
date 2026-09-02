@@ -5,8 +5,8 @@ export type PublicActionPlanView = "solutions" | "academy" | "services";
 
 const navigationItems = [
   { view: "solutions", label: "Solutions", href: "/solutions", Icon: LayoutGrid },
-  { view: "academy", label: "Organiser", href: "/organiser", Icon: ListTree },
-  { view: "services", label: "Automatiser", href: "/automatisation", Icon: Workflow },
+  { view: "academy", label: "Organisation", href: "/organiser", Icon: ListTree },
+  { view: "services", label: "Accompagnement", href: "/accompagnement", Icon: Workflow },
 ] as const;
 
 const tabClassName =

@@ -38,7 +38,7 @@ export default function OrganiserProcessusPage() {
       <Navbar minimal publicNavigationActiveView="academy" />
       <AcademyIndexClient
         contents={contents}
-        backLink={{ href: "/organiser", label: "← Retour à Organiser" }}
+        backLink={{ href: "/organiser#cas-concrets", label: "← Retour à Organisation" }}
       />
     </>
   );

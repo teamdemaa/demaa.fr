@@ -1,6 +1,7 @@
 export const AUTOMATION_OFFER = {
   durationLabel: "1 mois",
-  name: "Accompagnement à l’automatisation",
+  name: "Maestro",
+  serviceName: "Accompagnement automatisation et IA",
   packageSlug: "automatisation-essentielle",
   price: {
     amountMinor: 150000,
@@ -8,5 +9,5 @@ export const AUTOMATION_OFFER = {
     label: "1 500 € HT",
   },
   summary:
-    "Un mois pour mieux organiser et automatiser votre entreprise, avec un mentor et des outils adaptés à vos priorités.",
+    "Un mois pour faire avancer les priorités qui font perdre du temps à votre équipe, avec quatre rendez-vous d’une heure.",
 } as const;

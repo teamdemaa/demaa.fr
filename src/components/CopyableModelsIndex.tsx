@@ -1,6 +1,7 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { ArrowLeft, Search } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import CopyableModelCard from "@/components/CopyableModelCard";
 import type { CopyableModelDefinition } from "@/lib/copyable-model-catalog";
@@ -36,9 +37,11 @@ const MODEL_GROUPS = [
 ] as const;
 
 export default function CopyableModelsIndex({
+  fromOrganisation = false,
   models,
   systemName,
 }: {
+  fromOrganisation?: boolean;
   models: readonly CopyableModelDefinition[];
   systemName?: string;
 }) {
@@ -66,6 +69,16 @@ export default function CopyableModelsIndex({
   return (
     <>
       <section className="mx-auto w-full max-w-7xl px-4 pb-20 pt-12 sm:px-6 md:pt-16 lg:px-8">
+        {fromOrganisation ? (
+          <Link
+            href="/organiser#cas-concrets"
+            className="mb-10 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            Retour à Organisation
+          </Link>
+        ) : null}
+
         <div className="text-center">
           <h1
             aria-label="Des modèles prêts à copier pour organiser votre activité"
@@ -116,7 +129,13 @@ export default function CopyableModelsIndex({
                 <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {group.models.map((model) => (
                     <div key={model.slug} className="min-w-0">
-                      <CopyableModelCard model={model} titleLevel={3} />
+                      <CopyableModelCard
+                        href={fromOrganisation
+                          ? `/modeles/${model.slug}?from=organisation`
+                          : undefined}
+                        model={model}
+                        titleLevel={3}
+                      />
                     </div>
                   ))}
                 </div>

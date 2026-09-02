@@ -26,7 +26,7 @@ export async function generateMetadata(
   if (canonicalSlug) permanentRedirect(`/organiser/${canonicalSlug}`);
   const content = getAcademyContentBySlug(slug);
 
-  if (!content) return { title: "Contenu introuvable | Organiser avec Demaa" };
+  if (!content) return { title: "Contenu introuvable | Organisation Demaa" };
 
   return buildAcademyContentMetadata(content);
 }

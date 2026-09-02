@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import CaseVideoOverview from "@/components/CaseVideoOverview";
+import NumberedSectionHeading from "@/components/NumberedSectionHeading";
 import OrganiserProcessMap from "@/components/OrganiserProcessMap";
 import type { AcademyContentDefinition } from "@/lib/academy-course-content";
 import { buildOrganiserHref } from "@/lib/organiser-navigation";
 import { getPublishedCopyableModelForOrganiserSlug } from "@/lib/copyable-model-catalog";
+import { getOrganiserThumbnailPath } from "@/lib/organiser-thumbnail-catalog";
 
 type AcademyProcessGuideArticleProps = {
   content: AcademyContentDefinition;
@@ -26,6 +29,12 @@ export default function AcademyProcessGuideArticle({
   const ArticleContainer = embedded ? "div" : "main";
   const isPlumbingGoldenMaster =
     content.identity.slug === "organiser-entreprise-plomberie";
+  let nextSectionNumber = 1;
+  const situationSectionNumber = nextSectionNumber++;
+  const processSectionNumber = nextSectionNumber++;
+  const toolsSectionNumber = guide.tools.length ? nextSectionNumber++ : null;
+  const modelSectionNumber = relatedModel ? nextSectionNumber++ : null;
+  const checklistSectionNumber = nextSectionNumber;
 
   return (
     <ArticleContainer className={embedded ? "min-h-[60vh] bg-[#FAFAFA]" : "min-h-[calc(100vh-72px)] bg-[#FAFAFA]"}>
@@ -42,11 +51,11 @@ export default function AcademyProcessGuideArticle({
             </button>
           ) : (
             <Link
-              href={buildOrganiserHref({ tab: "processus" })}
+              href="/organiser#cas-concrets"
               className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              Retour aux cas concrets
+              Retour à Organisation
             </Link>
           )}
         </div>
@@ -63,91 +72,97 @@ export default function AcademyProcessGuideArticle({
           </p>
         </header>
 
+        <CaseVideoOverview
+          title={content.identity.title}
+          thumbnail={getOrganiserThumbnailPath(content.identity.slug)}
+          items={[
+            "La situation de l’entreprise",
+            "Le processus, étape par étape",
+            ...(guide.tools.length ? ["Les outils recommandés"] : []),
+            ...(relatedModel ? ["Le modèle prêt à copier"] : []),
+            "La checklist",
+          ]}
+        />
+
         <section
-          className="mt-12 border-l-2 border-dema-forest/40 pl-5 sm:mt-14 sm:pl-6"
-          aria-label="Situation de l’entreprise"
+          className="mt-14 sm:mt-16"
+          aria-labelledby="situation-title"
         >
-          <p className="font-medium leading-8 text-brand-blue">
-            {guide.company.profile}
-          </p>
-          <p className="mt-3 leading-8 text-dema-muted">
-            {guide.company.friction}
-          </p>
+          <NumberedSectionHeading
+            id="situation-title"
+            number={situationSectionNumber}
+            title="La situation de l’entreprise"
+          />
+          <div className="mt-6 border-l-2 border-dema-forest/40 pl-5 sm:pl-6">
+            <p className="font-medium leading-8 text-brand-blue">
+              {guide.company.profile}
+            </p>
+            <p className="mt-3 leading-8 text-dema-muted">
+              {guide.company.friction}
+            </p>
+          </div>
         </section>
 
         <section className="mt-14 sm:mt-16" aria-labelledby="process-title">
-          <h2 id="process-title" className="text-2xl font-semibold tracking-[-0.025em] text-[#25352C] sm:text-3xl">
+          <NumberedSectionHeading
+            id="process-title"
+            number={processSectionNumber}
+            title="Le processus, étape par étape"
+          />
+          <h3 className="mt-6 text-lg font-semibold leading-7 text-[#25352C]">
             {guide.processTitle}
-          </h2>
+          </h3>
           <p className="mt-5 leading-8 text-dema-muted">
             {guide.processIntroduction}
           </p>
           <div className="mt-2">
             <OrganiserProcessMap steps={guide.steps} />
           </div>
-        </section>
 
-        {relatedModel ? (
-          <aside className="mt-8 flex flex-col gap-5 rounded-[1.15rem] border border-dema-forest/15 bg-dema-sage/45 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
-            <div className="max-w-2xl">
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-dema-forest">
-                Modèle prêt à copier
-              </p>
-              <h2 className="mt-2 text-xl font-light tracking-[-0.025em] text-brand-blue sm:text-2xl">
-                {relatedModel.title}
-              </h2>
-              <p className="mt-2 text-sm leading-6 text-dema-muted">
-                {relatedModel.description}
-              </p>
-            </div>
-            <Link
-              href={`/modeles/${relatedModel.slug}`}
-              className="demaa-secondary-button min-h-11 shrink-0 gap-2 px-5"
-            >
-              Voir le modèle
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </aside>
-        ) : null}
+          <div className="mt-14" aria-labelledby="rules-title">
+            <h3 id="rules-title" className="text-xl font-semibold tracking-[-0.02em] text-[#25352C] sm:text-2xl">
+              {guide.rulesTitle}
+            </h3>
+            <ol className="mt-6 divide-y divide-dema-line border-y border-dema-line">
+              {guide.rules.map((rule, index) => (
+                <li key={rule.title} className="grid grid-cols-[2rem_1fr] gap-4 py-5">
+                  <span className="font-serif text-xl text-dema-forest" aria-hidden="true">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <h3 className="font-semibold text-[#25352C]">{rule.title}</h3>
+                    <p className="mt-1.5 leading-7 text-dema-muted">{rule.description}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
 
-        <section className="mt-16" aria-labelledby="rules-title">
-          <h2 id="rules-title" className="text-2xl font-semibold tracking-[-0.025em] text-[#25352C] sm:text-3xl">
-            {guide.rulesTitle}
-          </h2>
-          <ol className="mt-6 divide-y divide-dema-line border-y border-dema-line">
-            {guide.rules.map((rule, index) => (
-              <li key={rule.title} className="grid grid-cols-[2rem_1fr] gap-4 py-5">
-                <span className="font-serif text-xl text-dema-forest" aria-hidden="true">
-                  {index + 1}
-                </span>
-                <div>
-                  <h3 className="font-semibold text-[#25352C]">{rule.title}</h3>
-                  <p className="mt-1.5 leading-7 text-dema-muted">{rule.description}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        <section
-          className="mt-10 rounded-[1.15rem] bg-[#F0F4F1] p-6 sm:p-7"
-          aria-label="Exemple concret"
-        >
-          <p className="leading-8 text-dema-muted">
-            <strong className="font-semibold text-[#25352C]">
-              Exemple : {guide.example.title}.
-            </strong>{" "}
-            {guide.example.body}
-          </p>
+          <div
+            className="mt-10 rounded-[1.15rem] bg-[#F0F4F1] p-6 sm:p-7"
+            aria-label="Exemple concret"
+          >
+            <p className="leading-8 text-dema-muted">
+              <strong className="font-semibold text-[#25352C]">
+                Exemple : {guide.example.title}.
+              </strong>{" "}
+              {guide.example.body}
+            </p>
+          </div>
         </section>
 
         {guide.tools.length ? (
           <section className="mt-16" aria-labelledby="tools-title">
-            <h2 id="tools-title" className="text-2xl font-semibold tracking-[-0.025em] text-[#25352C] sm:text-3xl">
+            <NumberedSectionHeading
+              id="tools-title"
+              number={toolsSectionNumber!}
+              title="Les outils recommandés"
+            />
+            <h3 className="mt-6 text-lg font-semibold leading-7 text-[#25352C]">
               {isPlumbingGoldenMaster
                 ? "Quel logiciel choisir pour gérer les interventions ?"
                 : guide.toolsTitle ?? "Quels logiciels choisir pour soutenir ce processus ?"}
-            </h2>
+            </h3>
             <p className="mt-4 leading-7 text-dema-muted">
               {guide.toolsIntroduction
                 ?? "Choisissez d’abord une solution métier unique. Les automatisations viennent ensuite, lorsque le circuit fonctionne déjà sans ambiguïté."}
@@ -183,10 +198,39 @@ export default function AcademyProcessGuideArticle({
           </section>
         ) : null}
 
+        {relatedModel ? (
+          <section className="mt-16" aria-labelledby="model-title">
+            <NumberedSectionHeading
+              id="model-title"
+              number={modelSectionNumber!}
+              title="Le modèle prêt à copier"
+            />
+            <div className="mt-6 flex flex-col gap-5 rounded-[1.15rem] border border-dema-forest/15 bg-dema-sage/45 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+              <div className="max-w-2xl">
+                <h3 className="text-xl font-light tracking-[-0.025em] text-brand-blue sm:text-2xl">
+                  {relatedModel.title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-dema-muted">
+                  {relatedModel.description}
+                </p>
+              </div>
+              <Link
+                href={`/modeles/${relatedModel.slug}`}
+                className="demaa-secondary-button min-h-11 shrink-0 gap-2 px-5"
+              >
+                Voir le modèle
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+          </section>
+        ) : null}
+
         <section className="mt-16 border-y border-dema-line py-9" aria-labelledby="checklist-title">
-          <h2 id="checklist-title" className="text-2xl font-semibold text-[#25352C] sm:text-3xl">
-            Les premières actions à mettre en place
-          </h2>
+          <NumberedSectionHeading
+            id="checklist-title"
+            number={checklistSectionNumber}
+            title="La checklist"
+          />
           <ul className="mt-6 space-y-4">
             {guide.checklist.map((item) => (
               <li key={item} className="grid grid-cols-[1.25rem_1fr] gap-3 leading-7 text-brand-blue">

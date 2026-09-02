@@ -103,7 +103,7 @@ export async function POST(request: Request) {
     }
     if (!consentGranted) {
       return NextResponse.json(
-        { error: "Votre accord est nécessaire pour proposer ce cas à Organiser." },
+        { error: "Votre accord est nécessaire pour proposer ce cas dans la bibliothèque Organisation." },
         { status: 400 },
       );
     }

@@ -14,7 +14,7 @@ const directoryLinks = [
 ];
 
 const collaborationLinks = [
-  { label: "Automatisation et IA", href: "/automatisation" },
+  { label: "Accompagnement automatisation et IA", href: "/accompagnement" },
   { label: "Demaa Studio", href: "/studio" },
   { label: "Annonces", href: "/opportunites" },
   { label: "Rejoindre Team Demaa", href: "/opportunites?intent=team-demaa-profile" },
@@ -22,9 +22,9 @@ const collaborationLinks = [
 ];
 
 const resourceLinks = [
-  { label: "Organiser", href: "/organiser" },
+  { label: "Organisation", href: "/organiser" },
   { label: "Modèles à copier", href: "/modeles" },
-  { label: "Cas concrets et processus", href: "/organiser/processus" },
+  { label: "Cas concrets et processus", href: "/organiser#cas-concrets" },
   { label: "Contenus", href: "/contenus" },
 ];
 

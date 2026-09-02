@@ -7,9 +7,11 @@ import type { CopyableModelDefinition } from "@/lib/copyable-model-catalog";
 import { trackCopyableModelEvent } from "@/lib/kit-analytics-client";
 
 export default function CopyableModelCard({
+  href,
   model,
   titleLevel = 2,
 }: {
+  href?: string;
   model: CopyableModelDefinition;
   titleLevel?: 2 | 3;
 }) {
@@ -17,7 +19,7 @@ export default function CopyableModelCard({
 
   return (
     <Link
-      href={`/modeles/${model.slug}`}
+      href={href ?? `/modeles/${model.slug}`}
       onClick={() => trackCopyableModelEvent("copyable_model_opened", {
         modelSlug: model.slug,
         platform: model.platform,
