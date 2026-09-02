@@ -35,6 +35,36 @@ describe("legacy public route retirement", () => {
           destination: "/opportunites",
           permanent: true,
         }),
+        expect.objectContaining({
+          source: "/organisation",
+          destination: "/organiser",
+          permanent: true,
+        }),
+        expect.objectContaining({
+          source: "/structuration",
+          destination: "/organiser",
+          permanent: true,
+        }),
+        expect.objectContaining({
+          source: "/structurer",
+          destination: "/organiser",
+          permanent: true,
+        }),
+        expect.objectContaining({
+          source: "/annuaire-logiciels",
+          destination: "/annuaire-outils",
+          permanent: true,
+        }),
+        expect.objectContaining({
+          source: "/annuaire-logiciel/:slug",
+          destination: "/annuaire-outils/:slug",
+          permanent: true,
+        }),
+        expect.objectContaining({
+          source: "/services/fermeture-societe",
+          destination: "/services/formalites-entreprise",
+          permanent: true,
+        }),
       ]),
     );
 
