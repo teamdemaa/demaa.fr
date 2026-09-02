@@ -38,6 +38,19 @@ function retiredCustomerSessionResponse() {
   );
 }
 
+function anonymousCustomerSessionResponse() {
+  return NextResponse.json(
+    {
+      authenticated: false,
+      companyReady: false,
+      email: null,
+      provider: null,
+      uid: null,
+    },
+    { headers: PRIVATE_NO_STORE_HEADERS },
+  );
+}
+
 function readCookie(request: Request, name: string) {
   const cookies = request.headers.get("cookie")?.split(";") ?? [];
   for (const cookie of cookies) {
@@ -146,13 +159,10 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
-  if (isGuestProductEnabled()) return retiredCustomerSessionResponse();
+  if (isGuestProductEnabled()) return anonymousCustomerSessionResponse();
   const identity = await getCurrentCustomerIdentityFromSession();
   if (!identity) {
-    return NextResponse.json(
-      { authenticated: false, companyReady: false, email: null, provider: null, uid: null },
-      { headers: PRIVATE_NO_STORE_HEADERS },
-    );
+    return anonymousCustomerSessionResponse();
   }
 
   try {

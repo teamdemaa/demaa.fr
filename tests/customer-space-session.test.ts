@@ -43,8 +43,15 @@ describe("customer-space session helper", () => {
 
     const response = await getCustomerSession();
 
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(200);
     expect(response.headers.get("cache-control")).toContain("no-store");
+    await expect(response.json()).resolves.toEqual({
+      authenticated: false,
+      companyReady: false,
+      email: null,
+      provider: null,
+      uid: null,
+    });
     expect(mocks.getIdentityFromCustomerSessionToken).not.toHaveBeenCalled();
     expect(mocks.ensureDefaultCompanyForIdentity).not.toHaveBeenCalled();
   });

@@ -85,6 +85,36 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/organisation',
+        destination: '/organiser',
+        permanent: true,
+      },
+      {
+        source: '/structuration',
+        destination: '/organiser',
+        permanent: true,
+      },
+      {
+        source: '/structurer',
+        destination: '/organiser',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-logiciels',
+        destination: '/annuaire-outils',
+        permanent: true,
+      },
+      {
+        source: '/annuaire-logiciel/:slug',
+        destination: '/annuaire-outils/:slug',
+        permanent: true,
+      },
+      {
+        source: '/services/fermeture-societe',
+        destination: '/services/formalites-entreprise',
+        permanent: true,
+      },
+      {
         source: '/automatisation',
         destination: '/accompagnement',
         permanent: true,
