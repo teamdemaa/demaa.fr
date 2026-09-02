@@ -6,16 +6,23 @@ import sharp from "sharp";
 import {
   AppWindow,
   ArrowRight,
+  BellRing,
   Boxes,
+  Building2,
   CalendarDays,
+  CalendarClock,
   CalendarSync,
   CarFront,
+  ChartNoAxesCombined,
   CheckCircle2,
   CircleDollarSign,
   ClipboardCheck,
+  CopyCheck,
+  Database,
   Droplets,
   FileCheck2,
   FileSpreadsheet,
+  FolderClock,
   FolderKanban,
   GraduationCap,
   Hammer,
@@ -23,11 +30,14 @@ import {
   Inbox,
   Mail,
   MessageSquareText,
+  MessagesSquare,
   PanelsTopLeft,
   Phone,
   ReceiptText,
   Ruler,
+  UserRoundCheck,
   Users,
+  Workflow,
   Wrench,
 } from "lucide-react";
 import {
@@ -139,6 +149,26 @@ function illustration(kind) {
       return iconPair(FolderKanban, FileCheck2);
     case "recurring-reporting":
       return iconPair(FileSpreadsheet, CalendarSync, { leftColor: muted, rightColor: forest });
+    case "team-followup":
+      return iconPair(MessageSquareText, BellRing, { leftColor: muted, rightColor: forest });
+    case "dossier-progress":
+      return iconPair(FolderClock, CheckCircle2);
+    case "client-request":
+      return iconPair(MessagesSquare, Inbox, { leftColor: muted, rightColor: forest });
+    case "shared-method":
+      return iconPair(Users, Workflow);
+    case "business-continuity":
+      return iconPair(Building2, UserRoundCheck, { leftColor: forest, rightColor: muted });
+    case "resilient-planning":
+      return iconPair(CalendarClock, CalendarSync, { leftColor: forest, rightColor: muted });
+    case "duplicate-entry":
+      return iconPair(CopyCheck, Database);
+    case "knowledge-transfer":
+      return iconPair(Users, GraduationCap, { leftColor: muted, rightColor: forest });
+    case "useful-dashboard":
+      return iconPair(ChartNoAxesCombined, BellRing, { leftColor: muted, rightColor: forest });
+    case "employee-onboarding":
+      return iconPair(GraduationCap, UserRoundCheck);
     default:
       throw new Error(`Illustration inconnue : ${kind}`);
   }

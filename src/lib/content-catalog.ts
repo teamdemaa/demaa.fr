@@ -49,14 +49,14 @@ export type ContentCatalogEntry = Readonly<{
 type OrganisationContentInput = Readonly<{
   category: ContentCategory;
   checklist: readonly string[];
-  friction: string;
-  result: string;
+  friction: readonly string[];
+  result: readonly string[];
   slug: string;
   steps: readonly string[];
   summary: string;
   tags: readonly string[];
   title: string;
-  withChatGpt: string;
+  withChatGpt: readonly string[];
 }>;
 
 function defineOrganisationContent(
@@ -81,11 +81,11 @@ function defineOrganisationContent(
     article: [
       {
         heading: "Ce qui bloque aujourd’hui",
-        paragraphs: [input.friction],
+        paragraphs: input.friction,
       },
       {
         heading: "Le résultat à obtenir",
-        paragraphs: [input.result],
+        paragraphs: input.result,
       },
       {
         heading: "La méthode, étape par étape",
@@ -93,7 +93,7 @@ function defineOrganisationContent(
       },
       {
         heading: "Construire le système avec ChatGPT",
-        paragraphs: [input.withChatGpt],
+        paragraphs: input.withChatGpt,
       },
       {
         heading: "La checklist de mise en place",
@@ -112,176 +112,562 @@ const FACTURATION_ELECTRONIQUE_SLIDES = Array.from(
 const contentCatalog = [
   defineOrganisationContent({
     slug: "gerer-les-urgences-sans-subir",
-    title: "Je passe mes journées à gérer les urgences",
+    title: "Comment ne plus passer ses journées à gérer les urgences",
     summary:
-      "Une méthode concrète pour centraliser les demandes, fixer les priorités et rendre la prochaine action visible.",
+      "Construisez une file de travail commune pour trier les demandes, attribuer la prochaine action et ne plus arbitrer chaque urgence.",
     category: "Planning & opérations",
     tags: ["urgences", "priorités", "demandes", "équipe", "organisation"],
-    friction:
-      "Les demandes arrivent par téléphone, message ou e-mail. Personne ne sait toujours qui doit répondre, ce qui est réellement urgent ni quand relancer. Le dirigeant finit par arbitrer chaque situation.",
-    result:
-      "Toutes les demandes utiles rejoignent une même file de travail. Chacune possède une priorité, un responsable, une prochaine action et une échéance compréhensible par l’équipe.",
-    steps: [
-      "Observer une semaine de demandes réelles et leurs canaux d’arrivée.",
-      "Définir ce qui doit être enregistré et ce qui peut rester une simple information.",
-      "Créer trois niveaux de priorité avec des critères concrets.",
-      "Attribuer un responsable, une prochaine action et une date à chaque demande.",
-      "Tester le circuit sur un petit périmètre avant de l’étendre.",
-      "Faire une revue courte des demandes bloquées et ajuster les règles.",
+    friction: [
+      "Prenons un cas courant : une équipe reçoit ses demandes par téléphone, e-mail et messagerie. Une même demande peut être transmise deux fois, rester sans réponse ou devenir « urgente » simplement parce que personne ne sait où elle en est.",
+      "Le tutoriel traite précisément ce circuit d’entrée et de suivi. Il ne cherche pas à réorganiser toute l’entreprise en une fois.",
     ],
-    withChatGpt:
-      "À partir de demandes réelles, ChatGPT peut aider à proposer des catégories, rédiger les règles de priorité et préparer un résumé des points à traiter. Une connexion aux outils existants ne vient qu’après validation du circuit par l’équipe.",
+    result: [
+      "Une file de travail unique contient chaque demande à traiter avec dix informations : date, demandeur, sujet, canal, impact, priorité, responsable, prochaine action, échéance et statut.",
+      "Trois règles suffisent pour commencer : P1 bloque un client, la sécurité ou un paiement et se traite le jour même ; P2 menace un engagement de la semaine et se traite sous 48 heures ; P3 attend la prochaine revue.",
+    ],
+    steps: [
+      "Rassemblez 20 demandes réelles reçues la semaine précédente, sans données sensibles, et notez leur canal d’arrivée.",
+      "Créez les dix champs de la file commune : date, demandeur, sujet, canal, impact, priorité, responsable, prochaine action, échéance et statut.",
+      "Classez les 20 exemples en P1, P2 ou P3 avec les trois règles ci-dessus. Si deux personnes ne classent pas une demande de la même manière, précisez la règle.",
+      "Définissez un responsable unique et une prochaine action formulée avec un verbe pour chaque demande ouverte.",
+      "Testez le circuit pendant cinq jours avec un seul type de demandes avant de l’étendre aux autres canaux.",
+      "À la fin de la semaine, gardez les règles utiles, corrigez les ambiguïtés et automatisez seulement les transferts devenus prévisibles.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec vos exemples anonymisés : « Voici 20 demandes reçues par notre équipe. Regroupe-les en cinq catégories maximum. Pour chacune, propose une priorité P1, P2 ou P3 selon ces règles : P1 bloque un client, la sécurité ou un paiement ; P2 menace un engagement de la semaine ; P3 peut attendre la revue. Signale les cas ambigus sans inventer de responsable ni d’échéance. Présente le résultat en tableau avec : demande, catégorie, priorité, justification et prochaine action à valider. »",
+      "Relisez chaque proposition avec la personne qui traite les demandes. ChatGPT prépare le tri ; l’équipe valide l’impact, le responsable et la date avant toute connexion aux outils.",
+    ],
     checklist: [
-      "Un point d’entrée ou une file commune existe pour les demandes à traiter.",
-      "Les critères d’urgence sont écrits et partagés.",
-      "Chaque demande possède un responsable et une prochaine action.",
-      "Les échéances sont visibles sans demander au dirigeant.",
-      "Une revue régulière traite uniquement les blocages et les exceptions.",
+      "Cinq demandes peuvent être ajoutées sans demander où les enregistrer.",
+      "Deux personnes classent les mêmes demandes avec la même priorité.",
+      "Chaque demande ouverte possède un responsable, une prochaine action et une échéance.",
+      "Un membre de l’équipe identifie les deux priorités du jour sans interroger le dirigeant.",
+      "Une demande est clôturée de bout en bout et reste traçable dans la file commune.",
     ],
   }),
   defineOrganisationContent({
     slug: "rassembler-les-taches-dispersees",
-    title: "Mes tâches sont dispersées entre plusieurs outils",
+    title: "Comment centraliser ses tâches sans changer tous ses outils",
     summary:
-      "Une méthode pour relier les tâches au bon dossier et retrouver une vision commune sans remplacer tous vos outils.",
+      "Créez une vue de pilotage commune pour retrouver les tâches, leur responsable et leur prochaine échéance sans remplacer tous vos outils.",
     category: "Outils & automatisation",
     tags: ["tâches", "outils", "centralisation", "automatisation", "organisation"],
-    friction:
-      "Une partie du travail se trouve dans les e-mails, une autre dans un tableur, les messages ou le logiciel métier. L’équipe recopie les informations et le suivi dépend de la mémoire de chacun.",
-    result:
-      "Chaque tâche est rattachée au bon client, dossier ou intervention. L’équipe sait où regarder pour connaître le responsable, le statut et la prochaine étape, même si plusieurs outils restent utilisés.",
-    steps: [
-      "Lister les outils réellement utilisés et le rôle de chacun.",
-      "Suivre quelques dossiers de l’entrée jusqu’à leur clôture.",
-      "Choisir la source de référence pour les tâches et les statuts.",
-      "Supprimer les doubles saisies qui n’apportent aucun contrôle utile.",
-      "Relier ou automatiser seulement les passages devenus stables.",
-      "Vérifier avec l’équipe que l’information reste facile à retrouver.",
+    friction: [
+      "Les tâches se trouvent dans les e-mails, les messages, un tableur et le logiciel métier. Chacun conserve sa propre liste et le dirigeant doit ouvrir plusieurs outils pour comprendre ce qui reste à faire.",
+      "L’objectif n’est pas de tout migrer. Il est de créer une vue commune qui renvoie vers les informations déjà présentes au bon endroit.",
     ],
-    withChatGpt:
-      "ChatGPT peut transformer l’inventaire des outils et des manipulations en carte de fonctionnement, faire ressortir les doublons et préparer les règles de passage entre systèmes. Les connexions sont ensuite limitées aux transferts répétitifs et vérifiables.",
+    result: [
+      "Une vue de pilotage réunit chaque tâche avec sept champs : action, client ou dossier, lien vers la source, responsable, échéance, statut et date de dernière mise à jour.",
+      "Chaque outil garde un rôle précis : la vue commune pilote le travail, tandis que les documents, échanges et données métier restent dans leurs outils de référence.",
+    ],
+    steps: [
+      "Choisissez dix tâches réelles réparties dans au moins trois outils et notez où chacune est aujourd’hui suivie.",
+      "Pour chaque outil, écrivez une seule fonction : communiquer, stocker un document, gérer une donnée métier ou piloter une action.",
+      "Créez la vue commune avec les sept champs : action, dossier, lien source, responsable, échéance, statut et dernière mise à jour.",
+      "Ajoutez les dix tâches en conservant un lien vers leur source au lieu de recopier toutes les informations.",
+      "Définissez un seul endroit où modifier le statut et une règle simple pour les nouvelles tâches entrantes.",
+      "Testez la vue pendant une semaine, puis automatisez uniquement une recopie fréquente dont la source et la destination sont stables.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt : « Voici dix tâches et les outils dans lesquels elles sont suivies. Construis une carte simple de notre fonctionnement. Pour chaque tâche, indique l’outil source, l’information à conserver dans la vue commune, le lien à garder et les doublons probables. Ne propose aucune migration. Termine par une liste des décisions que l’équipe doit valider. »",
+      "Utilisez la réponse pour préparer la vue, puis contrôlez chaque lien et chaque statut avec l’équipe. Une automatisation n’est ajoutée qu’après une semaine de fonctionnement manuel sans ambiguïté.",
+    ],
     checklist: [
-      "Chaque outil possède un rôle clairement défini.",
-      "Une seule source fait référence pour les tâches et leur statut.",
-      "Les doublons manuels les plus fréquents sont identifiés.",
-      "Les automatisations conservent une trace en cas d’erreur.",
-      "Un nouveau salarié peut comprendre où trouver l’information.",
+      "Chaque outil possède un rôle écrit en une phrase.",
+      "Les dix tâches tests apparaissent dans la vue avec un lien source valide.",
+      "Une seule personne est responsable de chaque tâche ouverte.",
+      "Un collègue retrouve le prochain travail à faire sans ouvrir tous les outils.",
+      "Le statut d’une tâche test reste cohérent après sa clôture dans le circuit réel.",
     ],
   }),
   defineOrganisationContent({
     slug: "transformer-reunions-en-actions",
-    title: "Après mes réunions, les décisions se perdent",
+    title: "Comment transformer ses réunions en décisions et en actions",
     summary:
-      "Une méthode simple pour transformer chaque décision en action attribuée, datée et suivie.",
+      "Transformez chaque réunion en un relevé court de décisions et d’actions attribuées, datées et réellement suivies.",
     category: "Planning & opérations",
     tags: ["réunions", "décisions", "actions", "compte rendu", "suivi"],
-    friction:
-      "Les réunions produisent des notes, mais les décisions restent parfois ambiguës. Les mêmes sujets reviennent, certaines actions n’ont pas de responsable et personne ne sait clairement ce qui a été terminé.",
-    result:
-      "Chaque réunion se termine avec peu d’actions, mais elles sont précises : une décision, un responsable, une échéance et un endroit unique où suivre leur avancement.",
-    steps: [
-      "Préparer l’objectif de la réunion et les décisions attendues.",
-      "Distinguer pendant l’échange les faits, les décisions et les actions.",
-      "Formuler chaque action avec un responsable et une échéance.",
-      "Faire valider le relevé avant de terminer la réunion.",
-      "Rattacher les actions aux dossiers concernés.",
-      "Revoir uniquement les actions ouvertes au point suivant.",
+    friction: [
+      "La réunion se termine avec plusieurs pages de notes, mais personne ne sait distinguer ce qui a été décidé de ce qui a seulement été discuté. Les mêmes sujets reviennent et les actions sans responsable restent ouvertes.",
+      "Le tutoriel construit un relevé opérationnel, pas un compte rendu exhaustif de chaque prise de parole.",
     ],
-    withChatGpt:
-      "À partir des notes ou d’une transcription autorisée, ChatGPT peut préparer un compte rendu structuré, séparer décisions et actions puis signaler les éléments sans responsable ou sans date. L’équipe conserve la validation finale.",
+    result: [
+      "Un registre unique contient quatre types d’éléments : décision prise, action à réaliser, question encore ouverte et information à conserver.",
+      "Chaque action comporte un verbe, un responsable unique, une échéance, un statut et un lien vers la réunion ou le dossier concerné.",
+    ],
+    steps: [
+      "Avant la réunion, écrivez l’objectif et les deux ou trois décisions qui doivent être prises.",
+      "Pendant l’échange, marquez chaque note avec D pour décision, A pour action, Q pour question ou I pour information.",
+      "Reformulez chaque action avec un verbe, un responsable unique, une date et le dossier concerné.",
+      "Réservez les cinq dernières minutes pour relire uniquement les décisions, les actions et les questions ouvertes.",
+      "Transférez les actions validées dans le registre commun et envoyez son lien, pas une nouvelle copie du compte rendu.",
+      "Au point suivant, affichez les actions ouvertes et clôturez-les avant d’ajouter de nouveaux sujets.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec vos notes : « Transforme ces notes en quatre listes : décisions prises, actions, questions ouvertes et informations. Pour chaque action, reprends uniquement le responsable et l’échéance explicitement mentionnés. Écris “à confirmer” si l’un manque. N’invente aucune décision. Termine par les trois points à valider avant diffusion. »",
+      "Relisez la synthèse avec les participants avant de quitter la réunion. ChatGPT structure les notes ; les personnes présentes confirment ce qui engage réellement l’équipe.",
+    ],
     checklist: [
-      "Chaque réunion possède un objectif et les décisions attendues.",
-      "Les décisions sont séparées des simples sujets discutés.",
-      "Chaque action a un responsable unique et une date.",
-      "Le compte rendu est validé dans un délai court.",
-      "Le point suivant repart des actions ouvertes, pas des souvenirs.",
+      "L’objectif et les décisions attendues sont visibles avant la réunion.",
+      "Aucune discussion n’est présentée comme une décision sans validation explicite.",
+      "Chaque action possède un verbe, un responsable unique et une date.",
+      "Le relevé validé est accessible depuis un seul lien dans les 24 heures.",
+      "Quarante-huit heures plus tard, un participant sait retrouver ce qu’il doit faire sans relire toutes les notes.",
     ],
   }),
   defineOrganisationContent({
     slug: "rendre-equipe-autonome-decisions",
-    title: "Mon équipe me sollicite pour chaque décision",
+    title: "Comment rendre son équipe plus autonome sans perdre le contrôle",
     summary:
-      "Une méthode pour clarifier ce que l’équipe peut décider seule et ce qui doit réellement remonter au dirigeant.",
+      "Créez des règles de décision simples pour que l’équipe agisse seule dans un cadre clair et ne remonte que les vraies exceptions.",
     category: "Planning & opérations",
     tags: ["équipe", "délégation", "décision", "autonomie", "dirigeant"],
-    friction:
-      "Les responsabilités existent dans les intitulés de poste, mais les limites de décision restent floues. Par sécurité, l’équipe demande une validation pour les dépenses, les délais, les clients ou les imprévus courants.",
-    result:
-      "Les décisions fréquentes suivent des règles simples. L’équipe agit dans un cadre connu et ne sollicite le dirigeant que lorsqu’un seuil, un risque ou une exception le justifie.",
-    steps: [
-      "Recenser les décisions qui remontent le plus souvent au dirigeant.",
-      "Identifier celles qui sont répétitives et réversibles.",
-      "Définir pour chacune un responsable, une limite et un seuil d’escalade.",
-      "Documenter quelques exemples de décisions acceptables.",
-      "Tester la règle avec l’équipe sur des situations réelles.",
-      "Réviser les seuils à partir des erreurs et des blocages observés.",
+    friction: [
+      "Les responsabilités existent sur le papier, mais leurs limites restent floues. Par sécurité, l’équipe demande une validation pour un geste commercial, un achat, un délai ou un imprévu déjà rencontré plusieurs fois.",
+      "Le dirigeant devient le passage obligé de décisions fréquentes et réversibles qui pourraient être prises sans lui.",
     ],
-    withChatGpt:
-      "ChatGPT peut regrouper les demandes de validation récurrentes, proposer une première matrice de décision et transformer les arbitrages du dirigeant en règles compréhensibles. Ces règles restent validées avec les personnes qui les appliqueront.",
+    result: [
+      "Une matrice décrit chaque décision récurrente avec sept champs : situation, personne autorisée, informations nécessaires, limite, délai de réponse, règle d’escalade et trace à conserver.",
+      "Chaque situation suit l’un de ces trois niveaux : décider seul, décider puis informer, ou faire valider avant d’agir.",
+    ],
+    steps: [
+      "Notez pendant une semaine les 20 demandes de validation reçues par le dirigeant et leur réponse finale.",
+      "Regroupez-les par situation et commencez par trois décisions fréquentes, peu risquées et réversibles.",
+      "Pour chacune, choisissez un niveau : décider seul, décider puis informer, ou faire valider avant d’agir.",
+      "Complétez les sept champs de la matrice et ajoutez deux exemples : un cas autorisé et un cas à escalader.",
+      "Présentez les règles aux personnes concernées, puis testez-les pendant deux semaines sur des situations réelles.",
+      "Analysez les exceptions avec l’équipe et modifiez la règle plutôt que de reprendre toutes les décisions au dirigeant.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec vos demandes anonymisées : « Regroupe ces demandes de validation par type de décision. Pour chaque groupe, indique la fréquence, le risque si la décision est mauvaise, son caractère réversible et les informations utilisées par le dirigeant pour répondre. Propose ensuite un premier classement : décider seul, décider puis informer, ou faire valider. Signale chaque hypothèse. »",
+      "Le dirigeant valide ensuite les limites, les montants et les risques avec les personnes concernées. La proposition de ChatGPT sert à repérer les répétitions, jamais à déléguer une responsabilité automatiquement.",
+    ],
     checklist: [
-      "Les décisions récurrentes qui remontent au dirigeant sont connues.",
-      "Chaque décision possède un responsable et une limite explicite.",
-      "Les seuils d’escalade portent sur des faits observables.",
-      "L’équipe dispose d’exemples pour appliquer les règles.",
-      "Les règles sont ajustées après une période de test.",
+      "Trois décisions récurrentes possèdent une règle écrite et un niveau d’autonomie.",
+      "Chaque limite et chaque motif d’escalade reposent sur un fait observable.",
+      "L’équipe dispose d’un exemple autorisé et d’un contre-exemple pour chaque règle.",
+      "Cinq décisions tests sont prises correctement sans solliciter le dirigeant.",
+      "Les exceptions observées servent à corriger la matrice après deux semaines.",
     ],
   }),
   defineOrganisationContent({
     slug: "retrouver-informations-documents",
-    title: "Je recherche constamment les mêmes informations",
+    title: "Comment organiser ses informations pour que l’équipe les retrouve seule",
     summary:
-      "Une méthode pour rendre les documents et informations utiles faciles à retrouver par toute l’équipe.",
+      "Construisez un point d’accès clair pour que l’équipe retrouve la bonne information et la bonne version sans solliciter son créateur.",
     category: "Outils & automatisation",
     tags: ["documents", "informations", "recherche", "drive", "classement"],
-    friction:
-      "Les documents sont répartis entre les dossiers personnels, la messagerie, le Drive et les outils métier. Les noms varient, plusieurs versions circulent et certaines informations restent connues d’une seule personne.",
-    result:
-      "Les documents utiles possèdent une place, un nom et un propriétaire clairs. L’équipe retrouve la bonne version depuis le client, le dossier ou le processus concerné.",
-    steps: [
-      "Relever les documents et informations recherchés le plus souvent.",
-      "Séparer les documents à conserver des données à suivre dans un outil.",
-      "Construire une arborescence courte autour des usages réels.",
-      "Définir les règles de nommage, de version et d’accès.",
-      "Relier chaque dossier opérationnel à ses documents de référence.",
-      "Tester la recherche avec une personne qui n’a pas créé le classement.",
+    friction: [
+      "Les documents sont répartis entre les dossiers personnels, la messagerie, le Drive et les outils métier. Les noms varient, plusieurs versions circulent et une partie de l’équipe demande toujours à la même personne où chercher.",
+      "Tout ne doit pas être rangé dans Drive : les documents y restent, tandis que les statuts, échéances et autres données structurées restent dans l’outil qui les pilote.",
     ],
-    withChatGpt:
-      "ChatGPT peut analyser une liste de documents, proposer une arborescence courte, préparer les conventions de nommage et produire un guide de classement. Connecté à un espace autorisé, il peut aussi aider à retrouver un document sans déplacer les fichiers au hasard.",
+    result: [
+      "Un index indique pour chaque information : son nom, son type, son emplacement de référence, son propriétaire, les personnes autorisées, sa date de révision et les mots-clés utiles pour la retrouver.",
+      "Une règle de nommage commune et une arborescence courte permettent d’identifier la bonne version sans connaître la logique personnelle de son créateur.",
+    ],
+    steps: [
+      "Demandez à l’équipe de noter pendant une semaine les dix informations ou documents qu’elle cherche le plus souvent.",
+      "Pour chacun, décidez s’il s’agit d’un document à conserver, d’une donnée à suivre ou d’un échange à retrouver.",
+      "Créez l’index avec les sept champs : nom, type, emplacement, propriétaire, accès, date de révision et mots-clés.",
+      "Construisez une arborescence de trois niveaux maximum autour des clients, des opérations et des fonctions support réellement utilisées.",
+      "Appliquez une convention de nommage à dix documents tests et archivez les doublons uniquement après validation de leur propriétaire.",
+      "Demandez à une personne qui n’a pas créé le classement de retrouver cinq éléments ; corrigez chaque étape qui dépasse deux minutes.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec une liste anonymisée : « Classe ces éléments en trois types : document à conserver, donnée à suivre, ou échange à retrouver. Propose ensuite une arborescence de trois niveaux maximum et une convention de nommage contenant uniquement les informations utiles. Identifie les doublons probables, mais ne recommande aucune suppression automatique. »",
+      "Validez la proposition avec les personnes qui produisent et utilisent les documents. ChatGPT peut préparer le classement et la recherche ; aucun déplacement, changement d’accès ou archivage ne doit être fait sans contrôle humain.",
+    ],
     checklist: [
-      "Les documents recherchés régulièrement sont identifiés.",
-      "Le Drive ne contient que des documents qui doivent réellement y rester.",
-      "L’arborescence tient sur peu de niveaux.",
-      "Les noms et versions suivent une règle commune.",
-      "Les accès sensibles sont limités et contrôlés.",
+      "Les dix informations les plus recherchées apparaissent dans l’index.",
+      "Chaque élément possède un emplacement de référence et un propriétaire.",
+      "L’arborescence ne dépasse pas trois niveaux avant d’atteindre un document utile.",
+      "Les dix documents tests suivent la même règle de nommage et d’accès.",
+      "Une personne extérieure au classement retrouve cinq éléments en moins de deux minutes chacun.",
     ],
   }),
   defineOrganisationContent({
     slug: "automatiser-reporting-recurrent",
-    title: "Je refais chaque semaine les mêmes tâches administratives",
+    title: "Comment automatiser ses tâches administratives sans multiplier les erreurs",
     summary:
-      "Une méthode pour fiabiliser un reporting récurrent avant d’automatiser sa préparation.",
+      "Stabilisez une tâche administrative récurrente, testez son résultat puis automatisez uniquement les étapes fiables.",
     category: "Administration & facturation",
     tags: ["reporting", "administration", "automatisation", "données", "tableau de bord"],
-    friction:
-      "Chaque semaine, les mêmes chiffres sont copiés depuis plusieurs fichiers, remis en forme puis envoyés. Le travail prend du temps, les définitions peuvent varier et la vérification recommence depuis le début.",
-    result:
-      "Le reporting part de sources identifiées, applique les mêmes règles et met en évidence les quelques écarts qui demandent une décision humaine.",
-    steps: [
-      "Définir la décision que le reporting doit permettre de prendre.",
-      "Conserver uniquement les indicateurs réellement utilisés.",
-      "Identifier la source, le propriétaire et la fréquence de chaque donnée.",
-      "Stabiliser le calcul et le format avant toute automatisation.",
-      "Automatiser la collecte et la préparation avec des contrôles visibles.",
-      "Comparer régulièrement le résultat produit aux données sources.",
+    friction: [
+      "Prenons comme exemple un reporting hebdomadaire : les mêmes chiffres sont extraits, copiés, remis en forme, contrôlés puis envoyés. La procédure reste dans la tête de la personne qui la réalise et la vérification recommence chaque semaine.",
+      "La méthode s’applique ensuite à une relance, une préparation de documents ou toute autre tâche répétitive dont l’entrée et le résultat attendu sont observables.",
     ],
-    withChatGpt:
-      "ChatGPT peut aider à expliquer les écarts, produire un commentaire à partir de données structurées et préparer une synthèse adaptée au destinataire. Les calculs et les sources restent déterministes ; le texte généré ne remplace pas leur contrôle.",
+    result: [
+      "Une fiche d’exécution décrit la source, le responsable, l’heure de déclenchement, les transformations, les contrôles, le résultat attendu, le destinataire et la trace à conserver.",
+      "Les calculs restent déterministes. L’automatisation prépare le travail et signale les écarts ; une personne valide les exceptions avant diffusion.",
+    ],
+    steps: [
+      "Chronométrez une exécution réelle et notez chaque entrée, manipulation, contrôle, sortie et destinataire.",
+      "Supprimez les étapes qui ne changent ni le résultat ni le niveau de contrôle attendu.",
+      "Créez la fiche d’exécution avec les huit champs : source, responsable, déclenchement, transformations, contrôles, résultat, destinataire et trace.",
+      "Réalisez deux cycles manuels avec la même fiche et comparez les valeurs obtenues aux sources.",
+      "Automatisez une première étape stable, puis provoquez volontairement une donnée manquante pour vérifier que l’erreur reste visible.",
+      "Mesurez le temps du nouveau cycle et gardez une validation humaine sur les écarts, les montants ou les destinataires sensibles.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec un exemple anonymisé : « Transforme cette description de tâche récurrente en procédure. Présente : déclencheur, données d’entrée, étapes, contrôles, résultat attendu, destinataire et erreurs possibles. Distingue ce qui peut être automatisé de ce qui exige une validation humaine. N’invente aucune règle de calcul. »",
+      "Utilisez ensuite ChatGPT pour produire un brouillon de synthèse à partir de données structurées. Comparez les chiffres aux sources et vérifiez le destinataire avant chaque envoi automatisé.",
+    ],
     checklist: [
-      "Chaque indicateur répond à une décision identifiable.",
-      "La source et la définition de chaque chiffre sont documentées.",
-      "Le format a été validé avant son automatisation.",
-      "Les erreurs de collecte déclenchent une alerte visible.",
-      "Une personne contrôle les écarts avant diffusion.",
+      "La fiche d’exécution permet à une autre personne de réaliser la tâche.",
+      "Deux cycles manuels produisent le même résultat à partir des mêmes données.",
+      "Chaque calcul et chaque source peuvent être contrôlés séparément.",
+      "Une donnée manquante déclenche une erreur visible au lieu d’un résultat silencieusement faux.",
+      "Le temps avant et après est mesuré et les exceptions restent validées par une personne.",
+    ],
+  }),
+  defineOrganisationContent({
+    slug: "organiser-relances-equipe",
+    title: "Comment organiser les relances sans courir après son équipe",
+    summary:
+      "Mettez en place un suivi des engagements qui rappelle la bonne personne au bon moment et réserve les interventions du dirigeant aux vrais blocages.",
+    category: "Planning & opérations",
+    tags: ["relances", "équipe", "échéances", "suivi", "organisation"],
+    friction: [
+      "Une décision est prise, une tâche est confiée, puis le dirigeant doit demander plusieurs fois où elle en est. Les rappels partent par message, oralement ou pendant une réunion et personne ne conserve une vision complète.",
+      "Le problème n’est pas un manque de bonne volonté. L’engagement, sa date et la règle de relance ne sont simplement pas visibles au même endroit.",
+    ],
+    result: [
+      "Un registre de relance contient sept champs : engagement, dossier, responsable, échéance, statut, dernière relance et prochaine relance.",
+      "La règle est connue : rappel avant l’échéance pour préparer, le jour prévu pour confirmer, puis escalade uniquement lorsque le retard bloque un client, une équipe ou un paiement.",
+    ],
+    steps: [
+      "Rassemblez 15 engagements qui ont nécessité une relance au cours des deux dernières semaines.",
+      "Créez le registre avec les sept champs : engagement, dossier, responsable, échéance, statut, dernière relance et prochaine relance.",
+      "Définissez trois statuts simples : à faire, en attente et bloqué, puis précisez qui peut les modifier.",
+      "Écrivez une règle de rappel avant l’échéance, une règle en cas de retard et un seul motif d’escalade vers le dirigeant.",
+      "Testez le système pendant sept jours sur une équipe ou un type d’engagement sans changer les autres habitudes.",
+      "Supprimez les rappels devenus inutiles et automatisez uniquement ceux dont le responsable et l’échéance sont fiables.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec vos engagements anonymisés : « Transforme cette liste en registre de relance. Pour chaque élément, reprends uniquement l’action, le responsable et la date explicitement indiqués. Écris “à confirmer” lorsqu’une donnée manque. Propose un rappel avant l’échéance et signale les retards qui bloquent un client, une équipe ou un paiement. N’invente aucun engagement. »",
+      "Validez les responsables et les dates avant d’activer un rappel. ChatGPT structure la liste et prépare les messages ; l’équipe confirme toujours la réalité de l’engagement.",
+    ],
+    checklist: [
+      "Les 15 engagements tests apparaissent dans un registre unique.",
+      "Chaque engagement ouvert possède un responsable et une échéance confirmés.",
+      "Les rappels ordinaires partent sans intervention du dirigeant.",
+      "Seuls les retards qui bloquent réellement le travail sont escaladés.",
+      "Après sept jours, aucun engagement test n’est suivi uniquement dans un message privé.",
+    ],
+  }),
+  defineOrganisationContent({
+    slug: "suivre-avancement-dossiers",
+    title: "Comment suivre l’avancement de ses dossiers en un coup d’œil",
+    summary:
+      "Créez une vue commune qui montre la phase, la prochaine action et les blocages de chaque dossier sans demander un compte rendu à toute l’équipe.",
+    category: "Planning & opérations",
+    tags: ["dossiers", "avancement", "statuts", "pilotage", "équipe"],
+    friction: [
+      "Les informations existent, mais elles sont réparties entre les échanges, les documents et le logiciel métier. Pour savoir où en est un dossier, le dirigeant doit ouvrir plusieurs outils ou interrompre la personne qui le suit.",
+      "Un dossier peut sembler actif alors qu’il attend un document, une réponse client ou une validation depuis plusieurs jours.",
+    ],
+    result: [
+      "Une vue d’avancement contient huit champs : dossier, phase, responsable, prochaine action, échéance, blocage, dernière mise à jour et lien vers la source.",
+      "Quatre phases suffisent pour démarrer : à lancer, en cours, en attente et terminé. La vue montre les exceptions ; le détail reste dans l’outil métier.",
+    ],
+    steps: [
+      "Sélectionnez 15 dossiers représentatifs, dont au moins trois en retard ou en attente.",
+      "Listez les quatre à six phases communes qui décrivent réellement leur progression.",
+      "Créez la vue avec les huit champs : dossier, phase, responsable, prochaine action, échéance, blocage, dernière mise à jour et lien source.",
+      "Complétez les 15 dossiers avec leur responsable plutôt que d’essayer de reconstruire seul leur historique.",
+      "Ajoutez une vue des dossiers bloqués et une autre des échéances des sept prochains jours.",
+      "Testez la mise à jour pendant une semaine et retirez tout champ qui ne déclenche aucune action.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec vos points d’avancement anonymisés : « Regroupe ces dossiers par phase : à lancer, en cours, en attente ou terminé. Pour chacun, extrais le responsable, la prochaine action, l’échéance et le blocage explicitement mentionnés. Écris “à confirmer” si une information manque. Termine par la liste des dossiers qui nécessitent une décision cette semaine. »",
+      "Faites confirmer la phase et la prochaine action par chaque responsable. ChatGPT prépare la synthèse ; la vue commune ne devient fiable que lorsque l’équipe la met à jour au même endroit.",
+    ],
+    checklist: [
+      "Les 15 dossiers tests possèdent une phase et un responsable confirmés.",
+      "Chaque dossier actif affiche une prochaine action et une échéance.",
+      "Les dossiers en attente indiquent précisément ce qui les bloque.",
+      "Le dirigeant repère les décisions de la semaine sans solliciter toute l’équipe.",
+      "Une modification faite dans la source apparaît correctement dans la vue de pilotage.",
+    ],
+  }),
+  defineOrganisationContent({
+    slug: "suivre-demandes-clients",
+    title: "Comment suivre chaque demande client de la réception à la réponse",
+    summary:
+      "Construisez un circuit partagé pour qu’aucune demande client ne reste sans responsable, sans délai ou sans réponse traçable.",
+    category: "Clients & ventes",
+    tags: ["clients", "demandes", "réponse", "suivi", "service client"],
+    friction: [
+      "Les demandes arrivent par téléphone, e-mail, formulaire ou messagerie. Une personne pense qu’une autre a répondu, le client relance et l’équipe reconstitue l’historique dans l’urgence.",
+      "Le tutoriel suit une demande depuis sa réception jusqu’à sa clôture, sans imposer un nouveau canal aux clients.",
+    ],
+    result: [
+      "Un registre contient neuf champs : date, client, demande, canal, priorité, responsable, statut, délai de réponse et lien vers la réponse.",
+      "Chaque demande passe par cinq statuts visibles : reçue, qualifiée, en traitement, en attente et clôturée.",
+    ],
+    steps: [
+      "Rassemblez 20 demandes récentes issues de vos différents canaux, en retirant les données sensibles inutiles.",
+      "Créez le registre avec les neuf champs : date, client, demande, canal, priorité, responsable, statut, délai et lien réponse.",
+      "Définissez qui qualifie la demande, qui la traite et dans quels cas elle change de responsable.",
+      "Écrivez un délai de première réponse pour chaque niveau de priorité, même lorsque la solution demande plus de temps.",
+      "Testez le circuit pendant cinq jours sur un seul canal et suivez chaque demande jusqu’à sa clôture.",
+      "Reliez ensuite les autres canaux et automatisez la création des demandes seulement si les informations minimales sont présentes.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec vos demandes anonymisées : « Classe ces demandes clients en cinq catégories maximum. Pour chacune, extrais le sujet, le canal, le niveau d’impact et la réponse déjà apportée. Propose une première action et un brouillon d’accusé de réception. N’invente aucune promesse, aucun délai ni aucune information client. Signale les demandes ambiguës. »",
+      "L’équipe valide la priorité, le responsable et le message avant l’envoi. ChatGPT aide à qualifier et préparer ; il ne clôture jamais une demande sans preuve de la réponse apportée.",
+    ],
+    checklist: [
+      "Les 20 demandes tests sont présentes une seule fois dans le registre.",
+      "Chaque demande ouverte possède un responsable et un délai de première réponse.",
+      "Le client reçoit une confirmation même lorsque le traitement continue.",
+      "Une demande clôturée conserve un lien vers la réponse apportée.",
+      "Une demande reçue sur un second canal rejoint correctement le même circuit.",
+    ],
+  }),
+  defineOrganisationContent({
+    slug: "creer-methode-travail-commune",
+    title: "Comment mettre en place une méthode de travail commune",
+    summary:
+      "Transformez les différentes habitudes de l’équipe en une façon de travailler simple, testable et suffisamment souple pour les exceptions.",
+    category: "Planning & opérations",
+    tags: ["méthode", "processus", "équipe", "standardisation", "qualité"],
+    friction: [
+      "Pour un même travail, chacun utilise ses propres étapes, fichiers et contrôles. Le résultat dépend de la personne disponible et les écarts apparaissent surtout lorsqu’un client se plaint ou qu’un salarié est absent.",
+      "Une méthode commune ne doit pas décrire chaque geste. Elle doit sécuriser les passages où une information, une décision ou un contrôle peut se perdre.",
+    ],
+    result: [
+      "Une fiche d’une page précise sept éléments : déclencheur, données nécessaires, étapes clés, responsable, contrôle, résultat attendu et traitement des exceptions.",
+      "L’équipe partage un socle commun tout en conservant la liberté d’adapter les gestes qui ne modifient ni le résultat ni le niveau de qualité attendu.",
+    ],
+    steps: [
+      "Choisissez un travail fréquent réalisé par au moins deux personnes et observez une exécution par chacune.",
+      "Comparez les deux façons de faire et conservez uniquement les étapes qui changent le délai, la qualité ou la traçabilité.",
+      "Créez la fiche avec les sept éléments : déclencheur, données, étapes, responsable, contrôle, résultat et exceptions.",
+      "Ajoutez un exemple réussi, un contre-exemple et le point exact où demander de l’aide.",
+      "Faites exécuter la méthode par une troisième personne sans lui donner d’explication supplémentaire.",
+      "Corrigez les ambiguïtés observées et attribuez à une personne la révision de la fiche lorsque le travail évolue.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec les deux descriptions anonymisées : « Compare ces deux façons de réaliser le même travail. Distingue les étapes communes, les différences qui influencent le résultat et les préférences personnelles. Propose une procédure d’une page avec : déclencheur, données nécessaires, étapes clés, responsable, contrôle, résultat attendu et exceptions. Signale chaque hypothèse. »",
+      "Demandez ensuite aux personnes qui réalisent le travail de corriger la procédure. ChatGPT rapproche les versions ; l’équipe décide de la méthode qui protège réellement la qualité.",
+    ],
+    checklist: [
+      "La fiche tient sur une page et décrit un résultat observable.",
+      "Les étapes communes ont été validées par au moins deux personnes qui réalisent le travail.",
+      "Le contrôle et les motifs d’exception sont explicitement indiqués.",
+      "Une troisième personne réussit l’exécution sans explication orale supplémentaire.",
+      "Un responsable et une date de révision sont associés à la méthode.",
+    ],
+  }),
+  defineOrganisationContent({
+    slug: "organiser-entreprise-sans-dirigeant",
+    title: "Comment organiser son entreprise pour qu’elle fonctionne aussi en son absence",
+    summary:
+      "Identifiez les activités qui dépendent encore du dirigeant et construisez les relais nécessaires pour maintenir le travail pendant son absence.",
+    category: "Planning & opérations",
+    tags: ["dirigeant", "absence", "continuité", "délégation", "organisation"],
+    friction: [
+      "Les clients, les validations et les imprévus remontent vers le dirigeant. Dès qu’il s’absente, certaines décisions attendent, les réponses ralentissent et l’équipe contourne les règles pour continuer à travailler.",
+      "L’objectif n’est pas de rendre le dirigeant inutile. Il est d’éviter que les opérations courantes reposent sur sa disponibilité permanente.",
+    ],
+    result: [
+      "Une carte de continuité contient huit champs : activité critique, fréquence, responsable, remplaçant, déclencheur, source d’information, contrôle et motif d’escalade.",
+      "Les activités courantes possèdent un relais ; le dirigeant reste sollicité uniquement pour les décisions qui dépassent une limite écrite.",
+    ],
+    steps: [
+      "Notez pendant une semaine chaque interruption du dirigeant et ce qui se serait passé sans sa réponse.",
+      "Classez les situations entre information, exécution courante, décision réversible et décision réellement critique.",
+      "Choisissez cinq activités fréquentes qui ralentissent immédiatement lorsque le dirigeant est absent.",
+      "Complétez pour chacune les huit champs de la carte de continuité et désignez un responsable ainsi qu’un remplaçant.",
+      "Testez une demi-journée sans intervention du dirigeant, puis une journée complète lorsque les premiers blocages sont corrigés.",
+      "Transformez chaque sollicitation imprévue en règle, en ressource ou en seuil d’escalade avant le test suivant.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec votre journal anonymisé : « Classe ces sollicitations du dirigeant en quatre groupes : information, exécution courante, décision réversible ou décision critique. Pour chaque situation, indique les informations utilisées pour répondre, le risque d’une mauvaise décision et la règle qui manque. Ne propose aucune délégation pour les décisions juridiques, humaines ou financières sensibles sans validation. »",
+      "Utilisez la synthèse pour préparer la carte avec l’équipe. ChatGPT repère les dépendances répétitives ; le dirigeant valide les responsabilités, les limites et les situations qui doivent toujours lui remonter.",
+    ],
+    checklist: [
+      "Cinq activités critiques possèdent un responsable et un remplaçant identifiés.",
+      "Les informations nécessaires sont accessibles sans utiliser le compte personnel du dirigeant.",
+      "Chaque règle d’escalade repose sur un seuil ou un risque observable.",
+      "Une journée test se déroule sans blocage sur les opérations courantes.",
+      "Les nouvelles sollicitations servent à améliorer la carte plutôt qu’à reprendre tout le contrôle.",
+    ],
+  }),
+  defineOrganisationContent({
+    slug: "organiser-planning-equipe-imprevus",
+    title: "Comment organiser le planning d’une équipe malgré les imprévus",
+    summary:
+      "Construisez un planning partagé qui rend visibles les contraintes, les priorités et les marges disponibles avant qu’un imprévu ne désorganise toute l’équipe.",
+    category: "Planning & opérations",
+    tags: ["planning", "équipe", "imprévus", "interventions", "priorités"],
+    friction: [
+      "Une absence, un retard de chantier ou une demande urgente oblige à refaire le planning. Les contraintes sont connues de plusieurs personnes, mais aucune vue ne permet d’anticiper les conflits avant d’affecter le travail.",
+      "Le planning devient une succession de corrections alors qu’il devrait montrer ce qui est fixe, ce qui est déplaçable et la marge disponible.",
+    ],
+    result: [
+      "Chaque intervention ou tâche contient neuf informations : durée, priorité, compétence requise, lieu, personne affectée, créneau, contrainte, statut et marge de déplacement.",
+      "Une règle de replanification indique quoi déplacer en premier et qui décide lorsqu’aucune solution ne respecte les engagements.",
+    ],
+    steps: [
+      "Prenez une semaine réelle de planning et notez chaque modification ainsi que sa cause.",
+      "Ajoutez aux éléments planifiés les neuf informations : durée, priorité, compétence, lieu, personne, créneau, contrainte, statut et marge.",
+      "Distinguez les engagements fixes, les tâches déplaçables et les créneaux volontairement laissés disponibles.",
+      "Écrivez l’ordre de replanification en cas d’absence, de retard ou de nouvelle urgence.",
+      "Simulez trois imprévus passés et vérifiez que deux personnes arrivent à la même nouvelle répartition.",
+      "Testez la règle pendant deux semaines et ajustez les marges à partir des changements réellement observés.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec un planning anonymisé : « Analyse ce planning et ces contraintes. Signale les conflits de personne, de compétence, de lieu ou de durée. En cas d’imprévu, propose trois scénarios qui respectent d’abord les engagements fixes, puis les priorités et enfin les temps de déplacement. Explique chaque compromis et n’ajoute aucun créneau indisponible. »",
+      "La personne responsable du planning vérifie les durées, les déplacements et les engagements clients avant toute modification. ChatGPT propose des scénarios ; l’équipe choisit celui qui reste réalisable sur le terrain.",
+    ],
+    checklist: [
+      "Chaque élément planifié possède une durée, un responsable et une contrainte visibles.",
+      "Les engagements fixes et les tâches déplaçables sont distingués.",
+      "Trois imprévus historiques peuvent être replanifiés avec la même règle.",
+      "L’équipe sait qui tranche lorsque deux contraintes sont incompatibles.",
+      "Après deux semaines, les marges prévues correspondent aux changements réellement rencontrés.",
+    ],
+  }),
+  defineOrganisationContent({
+    slug: "supprimer-doubles-saisies",
+    title: "Comment supprimer les doubles saisies entre ses outils",
+    summary:
+      "Cartographiez une information de sa création à son utilisation, puis automatisez une seule transmission fiable sans masquer les erreurs.",
+    category: "Outils & automatisation",
+    tags: ["double saisie", "outils", "automatisation", "données", "erreurs"],
+    friction: [
+      "Une information client ou opérationnelle est saisie dans un formulaire, recopiée dans un tableur, puis ressaisie dans le logiciel métier. Chaque copie prend du temps et peut créer une différence difficile à détecter.",
+      "Connecter tous les outils immédiatement aggrave souvent le problème. Il faut d’abord choisir où l’information naît et quel système en devient la référence.",
+    ],
+    result: [
+      "Une carte de données décrit sept éléments : information, source de référence, destination, raison du transfert, responsable, fréquence et contrôle d’erreur.",
+      "Un premier flux transporte uniquement les champs nécessaires, conserve une trace et s’arrête visiblement lorsqu’une donnée obligatoire manque.",
+    ],
+    steps: [
+      "Choisissez une information ressaisie au moins dix fois par semaine et suivez son parcours complet.",
+      "Listez chaque champ copié, son outil d’origine, sa destination et la raison réelle de cette recopie.",
+      "Désignez une source de référence pour chaque champ et supprimez les copies qui ne servent ni au travail ni au contrôle.",
+      "Créez la carte avec les sept éléments : information, source, destination, raison, responsable, fréquence et contrôle.",
+      "Automatisez un seul transfert sur cinq exemples tests et provoquez une valeur manquante ou incorrecte.",
+      "Comparez les cinq résultats à la source, documentez le retour arrière et étendez le flux uniquement après validation.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec votre liste de champs anonymisée : « Construis une carte des données à partir de ces saisies. Pour chaque champ, indique la source probable, les destinations, les doublons et les différences de format. Pose une question lorsque la source de référence n’est pas explicite. Propose ensuite le plus petit transfert à tester et les contrôles nécessaires. »",
+      "Confirmez les sources de référence avec les personnes qui utilisent les données. ChatGPT aide à repérer les doublons ; l’automatisation doit rester bloquée tant que les règles de format et d’erreur ne sont pas validées.",
+    ],
+    checklist: [
+      "Une information fréquente a été suivie de sa création à sa dernière utilisation.",
+      "Chaque champ possède une source de référence explicitement validée.",
+      "Cinq exemples tests arrivent dans la bonne destination sans perte de données.",
+      "Une valeur manquante déclenche une erreur visible et traçable.",
+      "L’équipe sait désactiver le flux et reprendre manuellement en cas de problème.",
+    ],
+  }),
+  defineOrganisationContent({
+    slug: "documenter-savoir-faire-equipe",
+    title: "Comment documenter les façons de travailler sans créer une usine à gaz",
+    summary:
+      "Capturez l’essentiel d’un savoir-faire au moment où le travail est réalisé et transformez-le en une ressource courte que l’équipe peut vraiment utiliser.",
+    category: "Planning & opérations",
+    tags: ["documentation", "savoir-faire", "équipe", "transmission", "processus"],
+    friction: [
+      "Les méthodes utiles restent dans la tête des personnes expérimentées. Lorsqu’elles sont absentes, les collègues cherchent, improvisent ou attendent leur retour, tandis que les documents existants deviennent rapidement trop longs ou obsolètes.",
+      "Documenter ne signifie pas tout écrire. Il faut capturer les décisions, contrôles et exceptions qui permettent de reproduire un résultat fiable.",
+    ],
+    result: [
+      "Une fiche courte contient huit éléments : objectif, déclencheur, données nécessaires, étapes clés, décisions, contrôle, résultat attendu et propriétaire.",
+      "Elle est complétée par une démonstration ou un exemple lorsque le geste est plus facile à montrer qu’à décrire.",
+    ],
+    steps: [
+      "Choisissez une tâche fréquente qu’une seule personne maîtrise correctement et enregistrez une exécution réelle avec son accord.",
+      "Repérez dans la démonstration les décisions, les contrôles et les erreurs à éviter plutôt que de retranscrire chaque geste.",
+      "Créez la fiche avec les huit éléments : objectif, déclencheur, données, étapes, décisions, contrôle, résultat et propriétaire.",
+      "Ajoutez les liens vers l’exemple, le modèle ou la courte démonstration depuis la fiche de référence.",
+      "Faites réaliser la tâche par une autre personne en observant uniquement les moments où la ressource ne suffit pas.",
+      "Corrigez ces points et prévoyez une révision lorsque l’outil, la règle ou le résultat attendu change.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec la transcription anonymisée : « Transforme cette démonstration en fiche opérationnelle courte. Conserve uniquement : objectif, déclencheur, données nécessaires, étapes clés, décisions, contrôles, résultat attendu et erreurs à éviter. Signale les informations manquantes et n’invente aucune règle métier. »",
+      "Faites corriger la fiche par la personne qui maîtrise le travail, puis testez-la avec quelqu’un d’autre. ChatGPT produit un premier brouillon ; l’exécution réelle révèle ce qui mérite d’être conservé.",
+    ],
+    checklist: [
+      "La fiche décrit un résultat précis et reste assez courte pour être consultée pendant le travail.",
+      "Les décisions, contrôles et erreurs importantes sont visibles.",
+      "Les exemples et démonstrations sont accessibles depuis un seul lien de référence.",
+      "Une autre personne réalise la tâche sans dépendre d’une explication orale complète.",
+      "Un propriétaire et un événement de révision sont indiqués.",
+    ],
+  }),
+  defineOrganisationContent({
+    slug: "construire-tableau-de-bord-utile",
+    title: "Comment construire un tableau de bord réellement utile",
+    summary:
+      "Partez des décisions à prendre pour suivre quelques indicateurs fiables et repérer les écarts avant qu’ils ne deviennent des problèmes.",
+    category: "Gestion & conformité",
+    tags: ["tableau de bord", "indicateurs", "pilotage", "alertes", "décisions"],
+    friction: [
+      "Les chiffres existent dans plusieurs fichiers, mais ils arrivent trop tard ou ne déclenchent aucune décision. Le dirigeant découvre un retard, une baisse de marge ou une surcharge lorsque le problème est déjà installé.",
+      "Un tableau de bord utile ne montre pas tout. Il répond chaque semaine à quelques questions précises et indique qui agit lorsqu’un seuil est dépassé.",
+    ],
+    result: [
+      "Une fiche définit pour cinq indicateurs maximum : question de pilotage, calcul, source, fréquence, objectif, seuil d’alerte, responsable et action attendue.",
+      "Le tableau montre la tendance et les exceptions ; chaque alerte renvoie vers une action, pas seulement vers une couleur.",
+    ],
+    steps: [
+      "Listez les cinq décisions que vous prenez le plus souvent trop tard ou avec une information incomplète.",
+      "Pour chaque décision, formulez une question à laquelle un chiffre ou un statut peut réellement répondre.",
+      "Définissez le calcul, la source, la fréquence, l’objectif, le seuil, le responsable et l’action attendue.",
+      "Construisez une première vue avec cinq indicateurs maximum et des données déjà contrôlables.",
+      "Rejouez trois situations passées pour vérifier si le tableau aurait révélé le problème assez tôt.",
+      "Utilisez la vue pendant quatre semaines et retirez tout indicateur qui ne provoque ni question ni action.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec vos décisions et vos données anonymisées : « Pour chacune de ces décisions, propose la question de pilotage correspondante et l’indicateur minimal pour y répondre. Indique le calcul, la source, la fréquence, le seuil d’alerte et l’action possible. Refuse les indicateurs dont la source ou la décision ne sont pas explicites. »",
+      "Validez chaque définition avec la personne qui produit la donnée. ChatGPT peut expliquer une tendance ou préparer une synthèse ; les chiffres, les calculs et les seuils restent contrôlés séparément.",
+    ],
+    checklist: [
+      "Chaque indicateur répond à une décision nommée.",
+      "Le calcul, la source et la fréquence sont documentés et vérifiables.",
+      "Chaque seuil d’alerte possède un responsable et une action attendue.",
+      "Trois situations passées sont détectées suffisamment tôt par la nouvelle vue.",
+      "Après quatre semaines, les indicateurs sans usage réel sont supprimés.",
+    ],
+  }),
+  defineOrganisationContent({
+    slug: "structurer-integration-salarie",
+    title: "Comment structurer l’arrivée d’un salarié pour le rendre autonome plus vite",
+    summary:
+      "Construisez un parcours d’intégration qui transmet les bons repères, fait pratiquer le travail réel et rend les progrès observables.",
+    category: "Planning & opérations",
+    tags: ["intégration", "salarié", "formation", "autonomie", "équipe"],
+    friction: [
+      "Le nouveau salarié reçoit beaucoup d’informations les premiers jours, mais ne sait pas toujours ce qu’il doit maîtriser en premier. Les explications se répètent et sa progression dépend de la disponibilité d’un collègue expérimenté.",
+      "L’intégration doit conduire à des situations de travail réussies, pas seulement à une liste de documents consultés.",
+    ],
+    result: [
+      "Un parcours répartit les apprentissages entre le premier jour, la première semaine et le premier mois. Chaque étape contient un objectif, une tâche réelle, une ressource, un référent, une preuve de réussite et un point de contrôle.",
+      "Le salarié et son responsable voient ce qui est acquis, ce qui doit être pratiqué et les questions encore ouvertes.",
+    ],
+    steps: [
+      "Listez les cinq situations que le salarié doit savoir gérer seul à la fin de son premier mois.",
+      "Décomposez chacune en connaissances nécessaires, démonstration, exercice réel et critère de réussite.",
+      "Répartissez les étapes entre le premier jour, la première semaine et le premier mois sans tout transmettre immédiatement.",
+      "Associez à chaque étape une ressource de référence et une personne disponible pour répondre aux questions.",
+      "Faites produire une preuve observable : tâche terminée, simulation réussie, contrôle validé ou explication reformulée.",
+      "Organisez des points courts aux moments prévus et améliorez le parcours à partir des questions réellement posées.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec la fiche de poste et les tâches anonymisées : « Construis un parcours d’intégration sur un mois. Pars de cinq situations que la personne devra gérer seule. Pour chacune, propose une démonstration, un exercice réel, une ressource, un critère de réussite et le moment adapté : premier jour, première semaine ou premier mois. Signale les compétences qui nécessitent un accompagnement humain. »",
+      "Le responsable vérifie que les exercices reflètent le vrai poste et que les accès respectent les droits nécessaires. ChatGPT structure le parcours ; l’équipe évalue l’autonomie dans le travail réel.",
+    ],
+    checklist: [
+      "Cinq situations de travail à maîtriser sont clairement définies.",
+      "Chaque étape associe une ressource, un exercice et un critère de réussite.",
+      "Les apprentissages sont répartis entre le premier jour, la première semaine et le premier mois.",
+      "Le salarié sait qui solliciter sans dépendre d’une seule personne.",
+      "Le responsable peut constater les acquis à partir de preuves observables.",
     ],
   }),
   {

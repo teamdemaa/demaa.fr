@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, CalendarCheck, Check } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import CaseVideoOverview from "@/components/CaseVideoOverview";
 import ContentSlidesLauncher from "@/components/ContentSlidesLauncher";
@@ -61,8 +61,8 @@ export default async function ContentPage({ params }: ContentPageProps) {
             {isOrganisationContent ? "Retour à Organisation" : "Retour aux contenus"}
           </Link>
 
-          <header className="mx-auto mt-8 max-w-4xl text-center">
-            <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-dema-muted">
+          <header className="mx-auto mt-8 max-w-5xl text-left">
+            <div className="flex flex-wrap items-center gap-2 text-xs text-dema-muted">
               <span className="rounded-full bg-dema-sage px-3 py-1 font-medium text-dema-forest">
                 {getContentFormat(entry)}
               </span>
@@ -71,7 +71,7 @@ export default async function ContentPage({ params }: ContentPageProps) {
             <h1 className="demaa-section-title mt-5 text-4xl leading-tight tracking-tight text-brand-blue sm:text-5xl lg:text-6xl">
               {entry.title}
             </h1>
-            <p className="mx-auto mt-5 max-w-3xl text-base font-normal leading-relaxed text-dema-muted sm:text-lg">
+            <p className="mt-5 max-w-3xl text-base font-normal leading-relaxed text-dema-muted sm:text-lg">
               {entry.summary}
             </p>
           </header>
@@ -155,11 +155,7 @@ export default async function ContentPage({ params }: ContentPageProps) {
             </div>
 
             <aside className="h-fit rounded-[1.5rem] border border-dema-line bg-dema-paper p-6 lg:sticky lg:top-8">
-              <div className="flex items-center gap-2 text-sm text-dema-forest">
-                <CalendarCheck className="h-4 w-4" aria-hidden="true" />
-                Informations vérifiées le {new Intl.DateTimeFormat("fr-FR").format(new Date(entry.verifiedAt))}
-              </div>
-              <h2 className="mt-6 text-lg font-medium text-brand-blue">À retenir</h2>
+              <h2 className="text-lg font-medium text-brand-blue">À retenir</h2>
               <ul className="mt-4 space-y-4 text-sm leading-relaxed text-dema-muted">
                 {entry.keyPoints.map((point) => (
                   <li key={point} className="flex gap-2.5">
