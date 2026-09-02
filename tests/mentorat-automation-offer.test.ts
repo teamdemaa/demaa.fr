@@ -42,8 +42,14 @@ describe("Accompagnement automatisation et IA", () => {
       (item) => item.question === "Devons-nous changer nos outils ?",
     )?.answer).toContain("outils déjà utilisés");
     expect(mentoratAutomationContent.faq.find(
-      (item) => item.question === "Que peut-on améliorer en un mois ?",
-    )?.answer).toContain("Le plan est défini et validé");
+      (item) => item.question === "Que peut-on réellement mettre en place en un mois ?",
+    )?.answer).toContain("La feuille de route est définie et validée");
+    expect(mentoratAutomationContent.faq.find(
+      (item) => item.question === "Combien de temps cela demande-t-il à mon équipe ?",
+    )?.answer).toContain("Nous prenons en charge la conception et la mise en place");
+    expect(mentoratAutomationContent.faq.map((item) => item.question)).not.toContain(
+      "Faut-il savoir coder ?",
+    );
     expect("tutorialTracks" in mentoratAutomationContent).toBe(false);
     expect("approachPillars" in mentoratAutomationContent).toBe(false);
   });
