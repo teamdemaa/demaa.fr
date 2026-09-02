@@ -57,19 +57,19 @@ export async function sendSystemProcessesPdfEmail(input: {
         <html lang="fr">
           <body style="margin:0;padding:32px 16px;background:#f9faf8;font-family:Arial,sans-serif;color:#17231d;">
             <div style="max-width:560px;margin:0 auto;border:1px solid #e7ece6;border-radius:24px;background:#ffffff;padding:32px;">
-              <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#315f46;">Checklist processus métier</p>
-              <h1 style="margin:14px 0;font-size:28px;line-height:1.2;">Votre checklist est prête</h1>
-              <p style="margin:0;font-size:16px;line-height:1.7;color:#52606d;">Vous trouverez en pièce jointe la checklist des processus métier pour <strong>${safeSystemName}</strong>.</p>
+              <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#315f46;">Processus métier</p>
+              <h1 style="margin:14px 0;font-size:28px;line-height:1.2;">Votre document est prêt</h1>
+              <p style="margin:0;font-size:16px;line-height:1.7;color:#52606d;">Vous trouverez en pièce jointe le document complet des processus métier pour <strong>${safeSystemName}</strong>.</p>
               <p style="margin:18px 0 0;font-size:13px;line-height:1.6;color:#52606d;">Vous pouvez la conserver, l’imprimer et cocher les étapes au fil de votre organisation.</p>
             </div>
           </body>
         </html>
       `,
-      subject: `Votre checklist des processus - ${input.systemName}`,
+      subject: `Vos processus métier - ${input.systemName}`,
       text: [
         "Bonjour,",
         "",
-        `Vous trouverez en pièce jointe la checklist des processus métier pour ${input.systemName}.`,
+        `Vous trouverez en pièce jointe le document complet des processus métier pour ${input.systemName}.`,
         "",
         "Vous pouvez la conserver, l’imprimer et cocher les étapes au fil de votre organisation.",
       ].join("\n"),

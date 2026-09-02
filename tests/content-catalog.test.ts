@@ -22,7 +22,7 @@ import {
 describe("canonical content catalog", () => {
   it("publishes the electronic invoicing article with a progressive slide medium", () => {
     const entries = getAllPublishedContent();
-    expect(entries).toHaveLength(1);
+    expect(entries).toHaveLength(7);
 
     const entry = getPublishedContentBySlug("facturation-electronique");
     expect(entry).not.toBeNull();
@@ -46,7 +46,31 @@ describe("canonical content catalog", () => {
     );
 
     expect(contentPage).toContain('<Navbar minimal publicNavigationActiveView="academy" />');
-    expect(getPublishedOrganisationContent()).toEqual([]);
+    const organisationContent = getPublishedOrganisationContent();
+    expect(organisationContent).toHaveLength(6);
+    expect(organisationContent.map(({ title }) => title)).toEqual([
+      "Je passe mes journées à gérer les urgences",
+      "Mes tâches sont dispersées entre plusieurs outils",
+      "Après mes réunions, les décisions se perdent",
+      "Mon équipe me sollicite pour chaque décision",
+      "Je recherche constamment les mêmes informations",
+      "Je refais chaque semaine les mêmes tâches administratives",
+    ]);
+    expect(organisationContent.every((entry) => getContentFormat(entry) === "Article")).toBe(true);
+    const expectedStructure = [
+      "Ce qui bloque aujourd’hui",
+      "Le résultat à obtenir",
+      "La méthode, étape par étape",
+      "Construire le système avec ChatGPT",
+      "La checklist de mise en place",
+    ];
+    for (const entry of organisationContent) {
+      expect(entry.article.map(({ heading }) => heading), entry.slug).toEqual(
+        expectedStructure,
+      );
+      expect(entry.media.youtubeId, entry.slug).toBeUndefined();
+      expect(entry.sources, entry.slug).toEqual([]);
+    }
     expect(contentPage).toContain('entry.surfaces.includes("organisation")');
     expect(contentPage).toContain('isOrganisationContent ? "/organiser#cas-concrets" : "/contenus"');
     expect(contentPage).toContain("www.youtube-nocookie.com/embed/");
@@ -59,6 +83,7 @@ describe("canonical content catalog", () => {
     expect(ORGANISATION_TRANSVERSE_LAUNCH_MINIMUM).toBe(6);
     expect(isOrganisationTransverseLibraryReady(5)).toBe(false);
     expect(isOrganisationTransverseLibraryReady(6)).toBe(true);
+    expect(isOrganisationTransverseLibraryReady()).toBe(true);
   });
 
   it("uses only the four official sources selected for the legal review", () => {

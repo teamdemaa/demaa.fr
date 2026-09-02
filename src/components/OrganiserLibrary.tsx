@@ -262,13 +262,13 @@ export default function OrganiserLibrary({ guides, processes }: OrganiserLibrary
           >
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest/65">
-                Bibliothèque complémentaire
+                Modèles prêts à utiliser
               </p>
               <h2 className="mt-2 text-2xl font-light tracking-[-0.03em] text-brand-blue sm:text-3xl">
-                Voir les modèles à copier
+                Passez directement à l’action
               </h2>
               <p className="mt-2 max-w-2xl text-sm leading-6 text-dema-muted sm:text-base">
-                Retrouvez tous les modèles Demaa dans un espace dédié.
+                Retrouvez les modèles Demaa à copier et à adapter à votre activité.
               </p>
             </div>
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-dema-forest text-white transition group-hover:translate-x-0.5">

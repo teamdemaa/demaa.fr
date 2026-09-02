@@ -1,4 +1,5 @@
 import type { SystemeBasePillar } from "@/lib/system-canon";
+import type { SystemePillarCard, SystemeRoutine } from "@/lib/systeme-catalog";
 
 export type SystemProcessCategory =
   | "direction_vision"
@@ -149,6 +150,30 @@ const CATEGORY_ORDER_INDEX = new Map<SystemProcessCategory, number>([
   ["finance_conformite", 3],
 ]);
 
+const DISPLAY_CATEGORY_ORDER_INDEX = new Map<SystemProcessCategory, number>([
+  ["direction_vision", 0],
+  ["direction_pilotage", 1],
+  ["marketing_acquisition", 10],
+  ["marketing_vente", 20],
+  ["operations_ouverture", 30],
+  ["operations_execution", 40],
+  ["operations_controle", 50],
+  ["operations_aleas", 55],
+  ["operations_cloture", 60],
+  ["marketing_fidelisation", 65],
+  ["marketing_reclamation", 66],
+  ["finance_encaissement", 70],
+  ["finance_paiement", 72],
+  ["finance_pilotage", 80],
+  ["equipe_organisation", 90],
+  ["equipe_integration", 91],
+  ["equipe_continuite", 92],
+  ["equipe_transmission", 93],
+  ["direction_decision", 100],
+  ["direction_access", 101],
+  ["finance_conformite", 110],
+]);
+
 function normalizeText(value: string) {
   return value
     .normalize("NFD")
@@ -189,4 +214,93 @@ export function getSystemProcessOrder(
     category,
     order: category ? (CATEGORY_ORDER_INDEX.get(category) ?? Number.POSITIVE_INFINITY) : Number.POSITIVE_INFINITY,
   };
+}
+
+export function getSystemProcessDisplayOrder(
+  pillar: string,
+  process: string,
+  document: string,
+) {
+  const category = getSystemProcessCategory(pillar, process, document);
+
+  if (category) {
+    return DISPLAY_CATEGORY_ORDER_INDEX.get(category) ?? Number.POSITIVE_INFINITY;
+  }
+
+  const normalizedPillar = normalizeText(pillar);
+
+  if (normalizedPillar.includes("materiel") || normalizedPillar.includes("approvisionnement")) {
+    return 45;
+  }
+
+  if (
+    normalizedPillar.includes("conformite")
+    || normalizedPillar.includes("securite")
+    || normalizedPillar.includes("hygiene")
+    || normalizedPillar.includes("obligation")
+    || normalizedPillar.includes("protection")
+  ) {
+    return 110;
+  }
+
+  return Number.POSITIVE_INFINITY;
+}
+
+const CURATED_DISPLAY_ORDER: Readonly<Record<string, readonly string[]>> = {
+  restaurant: [
+    "restaurant-piloter-activite",
+    "restaurant-acquisition",
+    "restaurant-ouvrir-fermer",
+    "restaurant-standardiser-production",
+    "restaurant-stocks",
+    "restaurant-qualite-hygiene",
+    "restaurant-planifier-equipe",
+    "restaurant-piloter-tresorerie",
+  ],
+};
+
+export function orderSystemeRoutinesForDisplay(
+  routines: readonly SystemeRoutine[],
+  cards: readonly SystemePillarCard[],
+  systemSlug: string,
+) {
+  const curatedOrder = CURATED_DISPLAY_ORDER[systemSlug];
+  if (curatedOrder) {
+    const orderByRoutineId = new Map(
+      curatedOrder.map((routineId, index) => [routineId, index]),
+    );
+    return [...routines].sort(
+      (left, right) =>
+        (orderByRoutineId.get(left.routineId) ?? Number.POSITIVE_INFINITY)
+        - (orderByRoutineId.get(right.routineId) ?? Number.POSITIVE_INFINITY),
+    );
+  }
+
+  const contextByProcessId = new Map(
+    cards.flatMap((card) =>
+      card.items.map((item) => [item.processId, { item, pillar: card.pillar }] as const),
+    ),
+  );
+  const routinePrefix = `routine.${systemSlug}.`;
+
+  return routines
+    .map((routine, index) => {
+      const processId = routine.routineId.startsWith(routinePrefix)
+        ? routine.routineId.slice(routinePrefix.length)
+        : null;
+      const context = processId ? contextByProcessId.get(processId) : null;
+      const displayOrder = context
+        ? getSystemProcessDisplayOrder(
+            context.pillar,
+            context.item.process,
+            context.item.document,
+          )
+        : Number.POSITIVE_INFINITY;
+      return { displayOrder, index, routine };
+    })
+    .sort(
+      (left, right) =>
+        left.displayOrder - right.displayOrder || left.index - right.index,
+    )
+    .map(({ routine }) => routine);
 }

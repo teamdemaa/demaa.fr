@@ -26,7 +26,13 @@ export type OrganiserThumbnailIllustration =
   | "software-choice"
   | "technician-planning"
   | "training-administration"
-  | "work-order-to-invoice";
+  | "work-order-to-invoice"
+  | "urgent-workflow"
+  | "task-consolidation"
+  | "meeting-decisions"
+  | "team-autonomy"
+  | "document-search"
+  | "recurring-reporting";
 
 export type OrganiserThumbnailDefinition = Readonly<{
   fontSize: number;
@@ -37,6 +43,42 @@ export type OrganiserThumbnailDefinition = Readonly<{
 }>;
 
 const ORGANISER_THUMBNAILS: readonly OrganiserThumbnailDefinition[] = [
+  {
+    slug: "gerer-les-urgences-sans-subir",
+    lines: ["Toujours dans", "l’urgence ?"],
+    illustration: "urgent-workflow",
+    fontSize: 94,
+  },
+  {
+    slug: "rassembler-les-taches-dispersees",
+    lines: ["Mes tâches sont", "partout"],
+    illustration: "task-consolidation",
+    fontSize: 88,
+  },
+  {
+    slug: "transformer-reunions-en-actions",
+    lines: ["Et maintenant,", "qui fait quoi ?"],
+    illustration: "meeting-decisions",
+    fontSize: 82,
+  },
+  {
+    slug: "rendre-equipe-autonome-decisions",
+    lines: ["Tout remonte", "jusqu’à moi"],
+    illustration: "team-autonomy",
+    fontSize: 88,
+  },
+  {
+    slug: "retrouver-informations-documents",
+    lines: ["Où est encore", "ce document ?"],
+    illustration: "document-search",
+    fontSize: 84,
+  },
+  {
+    slug: "automatiser-reporting-recurrent",
+    lines: ["Encore le même", "reporting"],
+    illustration: "recurring-reporting",
+    fontSize: 88,
+  },
   {
     slug: "facturation-electronique",
     lines: ["Facturation électronique :", "l’essentiel"],

@@ -8,6 +8,7 @@ import {
   rgb,
 } from "pdf-lib";
 import type { SystemeRoutine } from "@/lib/systeme-catalog";
+import type { SystemProcessGuideDetail } from "@/lib/system-process-guide-details";
 
 const PAGE_WIDTH = 595.28;
 const PAGE_HEIGHT = 841.89;
@@ -98,6 +99,7 @@ function estimateRoutineHeight(
 }
 
 export async function buildSystemProcessesPdf(input: {
+  processGuideDetails?: readonly SystemProcessGuideDetail[];
   routines: readonly SystemeRoutine[];
   systemName: string;
 }) {
@@ -120,7 +122,7 @@ export async function buildSystemProcessesPdf(input: {
       x: PAGE_MARGIN,
       y: PAGE_HEIGHT - PAGE_MARGIN,
     });
-    page.drawText("Checklist des processus métier", {
+    page.drawText("Document des processus métier", {
       color: COLORS.muted,
       font: regularFont,
       size: 9,
@@ -151,7 +153,7 @@ export async function buildSystemProcessesPdf(input: {
     y,
   });
   y -= 38;
-  page.drawText("CHECKLIST - PROCESSUS MÉTIER", {
+  page.drawText("PROCESSUS MÉTIER", {
     color: COLORS.green,
     font: boldFont,
     size: 9,
@@ -299,6 +301,119 @@ export async function buildSystemProcessesPdf(input: {
     y -= 22;
   }
 
+  for (const detail of input.processGuideDetails ?? []) {
+    if (y < PAGE_MARGIN + FOOTER_HEIGHT + 180) {
+      addPage();
+    }
+
+    page.drawText("EXEMPLE DE PROCESSUS DÉTAILLÉ", {
+      color: COLORS.green,
+      font: boldFont,
+      size: 9,
+      x: PAGE_MARGIN,
+      y,
+    });
+    y -= 26;
+
+    const detailTitleLines = wrapText(detail.title, boldFont, 18, CONTENT_WIDTH);
+    y = drawLines({
+      color: COLORS.blue,
+      font: boldFont,
+      fontSize: 18,
+      lineHeight: 22,
+      lines: detailTitleLines,
+      page,
+      x: PAGE_MARGIN,
+      y,
+    });
+    y -= 6;
+
+    const resultLines = wrapText(detail.result, regularFont, 10.5, CONTENT_WIDTH);
+    y = drawLines({
+      color: COLORS.muted,
+      font: regularFont,
+      fontSize: 10.5,
+      lineHeight: 14,
+      lines: resultLines,
+      page,
+      x: PAGE_MARGIN,
+      y,
+    });
+    y -= 18;
+
+    for (const [stepIndex, step] of detail.steps.entries()) {
+      const stepParts = [
+        step.description,
+        `Point de départ : ${step.input}`,
+        `Responsable : ${step.owner}`,
+        `Résultat : ${step.output}`,
+        `Contrôle : ${step.control}`,
+      ];
+      const stepLines = stepParts.flatMap((part) =>
+        wrapText(part, regularFont, 9.5, CONTENT_WIDTH - 34),
+      );
+      const estimatedHeight = 28 + (stepLines.length * 12);
+
+      if (y - estimatedHeight < PAGE_MARGIN + FOOTER_HEIGHT) {
+        addPage();
+      }
+
+      page.drawText(String(stepIndex + 1).padStart(2, "0"), {
+        color: COLORS.green,
+        font: boldFont,
+        size: 9.5,
+        x: PAGE_MARGIN,
+        y,
+      });
+      const stepTitleLines = wrapText(step.title, boldFont, 11.5, CONTENT_WIDTH - 34);
+      y = drawLines({
+        color: COLORS.blue,
+        font: boldFont,
+        fontSize: 11.5,
+        lineHeight: 14,
+        lines: stepTitleLines,
+        page,
+        x: PAGE_MARGIN + 34,
+        y,
+      });
+      y -= 5;
+      y = drawLines({
+        color: COLORS.muted,
+        font: regularFont,
+        fontSize: 9.5,
+        lineHeight: 12,
+        lines: stepLines,
+        page,
+        x: PAGE_MARGIN + 34,
+        y,
+      });
+      y -= 14;
+    }
+
+    if (detail.model) {
+      const modelLines = wrapText(
+        `Modèle associé : ${detail.model.title}`,
+        boldFont,
+        10,
+        CONTENT_WIDTH,
+      );
+      if (y - (modelLines.length * 14) < PAGE_MARGIN + FOOTER_HEIGHT) {
+        addPage();
+      }
+      y = drawLines({
+        color: COLORS.green,
+        font: boldFont,
+        fontSize: 10,
+        lineHeight: 14,
+        lines: modelLines,
+        page,
+        x: PAGE_MARGIN,
+        y,
+      });
+      y -= 18;
+    }
+  }
+
   for (const [pageIndex, pdfPage] of pages.entries()) {
     pdfPage.drawLine({
       color: COLORS.line,
@@ -306,7 +421,7 @@ export async function buildSystemProcessesPdf(input: {
       start: { x: PAGE_MARGIN, y: PAGE_MARGIN - 2 },
       thickness: 0.6,
     });
-    pdfPage.drawText("Checklist générée par Demaa", {
+    pdfPage.drawText("Document généré par Demaa", {
       color: COLORS.muted,
       font: regularFont,
       size: 8,
@@ -325,13 +440,13 @@ export async function buildSystemProcessesPdf(input: {
 
   document.setAuthor("Demaa");
   document.setCreator("Demaa");
-  document.setSubject(`Checklist des processus métier - ${input.systemName}`);
-  document.setTitle(`Checklist des processus métier - ${input.systemName}`);
+  document.setSubject(`Processus métier - ${input.systemName}`);
+  document.setTitle(`Processus métier - ${input.systemName}`);
 
   return document.save();
 }
 
 export function buildSystemProcessesPdfFilename(systemSlug: string) {
   const safeSlug = systemSlug.toLowerCase().replace(/[^a-z0-9-]+/g, "-");
-  return `checklist-processus-${safeSlug}.pdf`;
+  return `processus-metier-${safeSlug}.pdf`;
 }

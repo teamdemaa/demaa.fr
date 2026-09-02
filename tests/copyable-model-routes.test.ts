@@ -30,7 +30,7 @@ describe("copyable model public routes", () => {
     expect(organiserHub).toContain("<OrganiserLibrary");
     expect(organiserHub).not.toContain("SOLUTION_RAIL_CLASS_NAME");
     expect(organiserLibrary).not.toContain("<CopyableModelCard");
-    expect(organiserLibrary).toContain("Voir les modèles à copier");
+    expect(organiserLibrary).toContain("Passez directement à l’action");
     expect(organiserLibrary).toContain('href="/modeles?from=organisation"');
     expect(page).toContain('fromOrganisation={source === "organisation"}');
     expect(modelsIndex).toContain('href="/organiser#cas-concrets"');

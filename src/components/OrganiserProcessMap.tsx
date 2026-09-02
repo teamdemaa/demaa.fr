@@ -1,7 +1,5 @@
-import type { AcademyProcessStep } from "@/lib/academy-course-content";
-
 type OrganiserProcessMapProps = {
-  steps: readonly AcademyProcessStep[];
+  steps: readonly Readonly<{ label: string }>[];
   compact?: boolean;
 };
 

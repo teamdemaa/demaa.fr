@@ -100,12 +100,13 @@ describe("system UX contract", () => {
     expect(printButtonSource).toContain('typeof window.print === "function"');
     expect(printButtonSource).toContain("Copier le lien");
     expect(printButtonSource).toContain("Chrome, Safari ou Firefox");
-    expect(printButtonSource).toContain("flex-nowrap");
-    expect(printButtonSource).toContain("Imprimer / PDF");
-    expect(printButtonSource).toContain("Recevoir par e-mail");
+    expect(printButtonSource).toContain("flex-col gap-3 min-[440px]:flex-row sm:gap-4");
+    expect(printButtonSource).toContain("Imprimer le document");
+    expect(printButtonSource).toContain("Recevoir le document");
     expect(processesPageSource).toContain("<SystemProcessesContent");
     expect(processesContentSource).toContain("data-system-processes");
-    expect(processesContentSource).toContain("Liste des processus");
+    expect(processesContentSource).toContain("Vue d’ensemble");
+    expect(processesContentSource).toContain("Processus complets");
     expect(processesContentSource).toContain("border-dema-forest/45");
     expect(processesContentSource).not.toContain('<span aria-hidden="true">•</span>');
     expect(processesContentSource).not.toContain("Solutions");
@@ -114,7 +115,7 @@ describe("system UX contract", () => {
     expect(processesModalSource).toContain('variant="modal"');
     expect(processesDialogSource).toContain("router.back()");
     expect(processesDialogSource).toContain("DirectoryDetailDialogShell");
-    expect(processesEmailDialogSource).toContain("Recevoir cette checklist");
+    expect(processesEmailDialogSource).toContain("Recevoir le document complet");
     expect(processesEmailDialogSource).toContain('className="whitespace-nowrap">par e-mail</span>');
     expect(processesEmailDialogSource).toContain("Cet envoi ne vous inscrit à aucune communication marketing.");
     expect(processesEmailRouteSource).toContain("buildSystemProcessesPdf");

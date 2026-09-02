@@ -29,7 +29,7 @@ describe("Organiser public journey", () => {
     expect(organiserLibrary).toContain('aria-label="Rechercher dans Organisation"');
     expect(organiserLibrary).not.toContain('aria-label="Rechercher dans Organiser"');
     expect(organiserLibrary).not.toContain("Modèles prêts à copier");
-    expect(organiserLibrary).toContain("Voir les modèles à copier");
+    expect(organiserLibrary).toContain("Passez directement à l’action");
     expect(organiserLibrary).toContain('href="/modeles?from=organisation"');
     expect(organiserLibrary).toContain('id="cas-concrets"');
     expect(organiserLibrary).not.toContain('aria-labelledby="organiser-models-heading"');

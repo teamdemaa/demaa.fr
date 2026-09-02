@@ -12,6 +12,8 @@ import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { getSystemDetailPageData } from "@/lib/system-detail-page";
 import { sendSystemProcessesPdfEmail } from "@/lib/system-processes-email.server";
 import { buildSystemProcessesPdf } from "@/lib/system-processes-pdf.server";
+import { getSystemProcessGuideDetails } from "@/lib/system-process-guide-details";
+import { orderSystemeRoutinesForDisplay } from "@/lib/system-process-order";
 
 export const runtime = "nodejs";
 
@@ -96,7 +98,10 @@ async function handlePost(request: Request) {
     );
   }
 
-  const routines = data.detail.systeme?.routines ?? [];
+  const systeme = data.detail.systeme;
+  const routines = systeme
+    ? orderSystemeRoutinesForDisplay(systeme.routines, systeme.cards, data.system.slug)
+    : [];
   if (routines.length === 0) {
     return NextResponse.json(
       { error: "La checklist de ce métier n’est pas encore disponible." },
@@ -105,6 +110,7 @@ async function handlePost(request: Request) {
   }
 
   const pdfBytes = await buildSystemProcessesPdf({
+    processGuideDetails: getSystemProcessGuideDetails(systemSlug, routines),
     routines,
     systemName: data.system.name,
   });
