@@ -5,13 +5,6 @@ import Navbar from "@/components/Navbar";
 import { mentoratAutomationContent as content } from "@/lib/mentorat-automation-content";
 import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
 
-const offerFacts = [
-  { value: "1 mois", label: "d’accompagnement" },
-  { value: "4 × 1 heure", label: "pour avancer ensemble" },
-  { value: "1 à 3", label: "participants" },
-  { value: content.offer.price, label: "par entreprise" },
-] as const;
-
 export default function MentoratAutomationLandingPage() {
   return (
     <>
@@ -25,9 +18,9 @@ export default function MentoratAutomationLandingPage() {
               className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}
             >
               <span aria-hidden="true">
-                <span className="block">Gagnez du temps au quotidien</span>
+                <span className="block">Organisez votre entreprise</span>
                 <span className="demaa-hero-title mt-2 block text-dema-forest">
-                  avec l’automatisation et l’IA.
+                  pour qu’elle dépende moins de vous.
                 </span>
               </span>
             </h1>
@@ -41,22 +34,6 @@ export default function MentoratAutomationLandingPage() {
               </p>
             </div>
           </div>
-
-          <ul className="mx-auto mt-12 grid max-w-5xl grid-cols-2 border-y border-dema-line lg:grid-cols-4">
-            {offerFacts.map((fact) => (
-              <li
-                key={fact.value}
-                className="border-b border-dema-line px-3 py-5 odd:border-r [&:nth-child(3)]:border-b-0 [&:nth-child(4)]:border-b-0 sm:px-4 lg:border-b-0 lg:border-r lg:last:border-r-0"
-              >
-                <span className="block text-lg font-medium tracking-[-0.025em] text-brand-blue">
-                  {fact.value}
-                </span>
-                <span className="mt-1 block text-xs leading-5 text-dema-muted">
-                  {fact.label}
-                </span>
-              </li>
-            ))}
-          </ul>
         </section>
 
         <section
@@ -66,11 +43,8 @@ export default function MentoratAutomationLandingPage() {
           <div className="mx-auto max-w-6xl">
             <div className="max-w-4xl">
               <h2 id="examples-heading" className="demaa-marketing-section-title">
-                Ce que nous pouvons améliorer avec vous.
+                Ce que nous pouvons remettre en ordre.
               </h2>
-              <p className="mt-5 max-w-3xl text-base leading-7 text-dema-muted">
-                Nous choisissons les priorités selon votre activité, votre fonctionnement actuel et le temps que votre équipe peut réellement récupérer.
-              </p>
             </div>
 
             <ul className="mt-11 grid gap-x-10 gap-y-8 md:grid-cols-2">
@@ -90,7 +64,7 @@ export default function MentoratAutomationLandingPage() {
 
         <section className="px-5 py-16 text-center sm:px-8 sm:py-20">
           <p className="demaa-marketing-section-title mx-auto max-w-4xl">
-            <span className="block">Moins de temps à préparer.</span>
+            <span className="block">Moins de temps consacré aux tâches chronophages.</span>
             <span className="demaa-section-title mt-2 block text-dema-forest">
               Plus de temps pour vos clients.
             </span>
@@ -98,15 +72,31 @@ export default function MentoratAutomationLandingPage() {
         </section>
 
         <section
-          aria-labelledby="autonomy-heading"
+          id="methode"
+          aria-labelledby="method-heading"
           className="border-y border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20"
         >
-          <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.58fr_0.42fr] lg:items-end lg:gap-16">
-            <h2 id="autonomy-heading" className="demaa-marketing-section-title">
-              {content.autonomy.title}
+          <div className="mx-auto max-w-6xl">
+            <h2 id="method-heading" className="demaa-marketing-section-title">
+              Comment ça se passe ?
             </h2>
-            <p className="text-base leading-7 text-dema-muted">
-              {content.autonomy.description}
+            <ol className="mt-11 grid gap-x-10 gap-y-8 md:grid-cols-3">
+              {content.method.map((step, index) => (
+                <li key={step.title} className="border-t border-dema-line pt-5">
+                  <span className="demaa-section-title text-2xl text-dema-forest/48">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-4 text-xl font-medium leading-snug tracking-[-0.025em] sm:text-2xl">
+                    {step.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-dema-muted">
+                    {step.description}
+                  </p>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-10 border-t border-dema-line pt-6 text-base leading-7 text-dema-muted">
+              Vous nous apportez la réalité du terrain. Nous concevons et mettons en place. Vous validez et gardez la main.
             </p>
           </div>
         </section>
@@ -132,8 +122,8 @@ export default function MentoratAutomationLandingPage() {
                 Vos outils actuels
               </span>
               <span className="hidden text-dema-forest/45 sm:block">→</span>
-              <span className="rounded-full border border-dema-line bg-dema-sage/45 px-5 py-4 text-sm text-brand-blue">
-                Une méthode plus claire
+              <span className="rounded-full border border-dema-forest bg-dema-forest px-5 py-4 text-sm font-medium text-dema-paper">
+                Une organisation plus claire
               </span>
               <span className="hidden text-dema-forest/45 sm:block">→</span>
               <span className="rounded-full border border-dema-line bg-dema-paper px-5 py-4 text-sm text-brand-blue">
@@ -143,39 +133,12 @@ export default function MentoratAutomationLandingPage() {
           </div>
         </section>
 
-        <section
-          id="methode"
-          aria-labelledby="method-heading"
-          className="border-y border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20"
-        >
-          <div className="mx-auto max-w-6xl">
-            <h2 id="method-heading" className="demaa-marketing-section-title">
-              Nous le mettons en place avec vous.
-            </h2>
-            <ol className="mt-11 grid gap-x-10 gap-y-8 md:grid-cols-3">
-              {content.method.map((step, index) => (
-                <li key={step.title} className="border-t border-dema-line pt-5">
-                  <span className="demaa-section-title text-2xl text-dema-forest/48">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="mt-4 text-base font-medium tracking-[-0.02em]">
-                    {step.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-dema-muted">
-                    {step.description}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
         <section aria-labelledby="proof-heading" className="px-5 py-16 sm:px-8 sm:py-20">
-          <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-5xl">
             <h2 id="proof-heading" className="demaa-marketing-section-title">
               Ce qu’ils en retiennent.
             </h2>
-            <div className="mt-11 grid gap-x-10 gap-y-8 md:grid-cols-3">
+            <div className="mt-11 grid gap-x-12 gap-y-8 md:grid-cols-2">
               {content.testimonials.map((testimonial) => (
                 <blockquote
                   key={testimonial.attribution}
@@ -204,7 +167,7 @@ export default function MentoratAutomationLandingPage() {
                 Maestro · Accompagnement · 1 mois
               </p>
               <h2 id="offer-heading" className="demaa-marketing-section-title mt-4">
-                Un mois pour faire avancer vos priorités.
+                Votre nouvelle organisation, mise en place en un mois.
               </h2>
               <ul className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-x-8">
                 {content.offerIncludes.map((item) => (

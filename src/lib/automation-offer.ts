@@ -4,10 +4,10 @@ export const AUTOMATION_OFFER = {
   serviceName: "Accompagnement automatisation et IA",
   packageSlug: "automatisation-essentielle",
   price: {
-    amountMinor: 150000,
+    amountMinor: 250000,
     currency: "EUR",
-    label: "1 500 € HT",
+    label: "2 500 € HT",
   },
   summary:
-    "Un mois pour faire avancer les priorités qui font perdre du temps à votre équipe, avec quatre rendez-vous d’une heure.",
+    "Un mois pour organiser votre fonctionnement et mettre en place les outils et automatisations utiles.",
 } as const;

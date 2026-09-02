@@ -8,7 +8,7 @@ const AUTOMATION_PACKAGE = [{
   name: AUTOMATION_OFFER.name,
   pricing: {
     label: AUTOMATION_OFFER.price.label,
-    note: "Un mois d’accompagnement, avec des priorités définies selon votre entreprise.",
+    note: "Un mois pour organiser votre fonctionnement et mettre en place les éléments validés avec vous.",
   },
   slug: AUTOMATION_OFFER.packageSlug,
   summary: AUTOMATION_OFFER.summary,

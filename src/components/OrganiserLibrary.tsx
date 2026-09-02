@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import OrganiserProcessMap from "@/components/OrganiserProcessMap";
 import type { AcademyProcessStep } from "@/lib/academy-course-content";
@@ -38,30 +38,77 @@ type OrganiserLibraryProps = Readonly<{
   processes: readonly OrganiserProcessCardData[];
 }>;
 
+const ALL_FILTERS = "Tous";
+const ORGANISER_FILTERS = [
+  ALL_FILTERS,
+  "Clients & ventes",
+  "Planning & opérations",
+  "Administration & facturation",
+  "Outils & automatisation",
+] as const;
+
+type OrganiserFilter = (typeof ORGANISER_FILTERS)[number];
+
+function getOrganiserFilter(category: string): OrganiserFilter {
+  const normalizedCategory = category.toLocaleLowerCase("fr");
+
+  if (normalizedCategory.includes("outil")) {
+    return "Outils & automatisation";
+  }
+
+  if (
+    normalizedCategory.includes("planning")
+    || normalizedCategory.includes("intervention")
+    || normalizedCategory.includes("réalisation")
+    || normalizedCategory.includes("stock")
+  ) {
+    return "Planning & opérations";
+  }
+
+  if (
+    normalizedCategory.includes("document")
+    || normalizedCategory.includes("administration")
+    || normalizedCategory.includes("facturation")
+    || normalizedCategory.includes("conformité")
+  ) {
+    return "Administration & facturation";
+  }
+
+  return "Clients & ventes";
+}
+
 export default function OrganiserLibrary({ guides, processes }: OrganiserLibraryProps) {
   const [query, setQuery] = useState("");
+  const [activeFilter, setActiveFilter] = useState<OrganiserFilter>(ALL_FILTERS);
+  const [areFiltersVisible, setAreFiltersVisible] = useState(false);
 
   const filteredProcesses = useMemo(
-    () => processes.filter((content) => matchesSearchQuery(query, [
-      content.title,
-      content.category,
-      content.promise,
-      content.sector,
-      content.systemLabel,
-      ...content.recapPoints,
-    ])),
-    [processes, query],
+    () => processes.filter((content) => (
+      (activeFilter === ALL_FILTERS || getOrganiserFilter(content.category) === activeFilter)
+      && matchesSearchQuery(query, [
+        content.title,
+        content.category,
+        content.promise,
+        content.sector,
+        content.systemLabel,
+        ...content.recapPoints,
+      ])
+    )),
+    [activeFilter, processes, query],
   );
 
   const filteredGuides = useMemo(
-    () => guides.filter((guide) => matchesSearchQuery(query, [
-      guide.title,
-      guide.summary,
-      guide.category,
-      ...guide.tags,
-      ...guide.keyPoints,
-    ])),
-    [guides, query],
+    () => guides.filter((guide) => (
+      (activeFilter === ALL_FILTERS || getOrganiserFilter(guide.category) === activeFilter)
+      && matchesSearchQuery(query, [
+        guide.title,
+        guide.summary,
+        guide.category,
+        ...guide.tags,
+        ...guide.keyPoints,
+      ])
+    )),
+    [activeFilter, guides, query],
   );
 
   const hasResults = filteredProcesses.length + filteredGuides.length > 0;
@@ -81,10 +128,46 @@ export default function OrganiserLibrary({ guides, processes }: OrganiserLibrary
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Rechercher un processus ou un sujet…"
-              className="w-full rounded-full bg-dema-paper py-4 pl-12 pr-5 text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 focus:ring-2 focus:ring-dema-forest/20 md:py-5 md:pl-16 md:text-lg"
+              className="w-full rounded-full bg-dema-paper py-4 pl-12 pr-16 text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 focus:ring-2 focus:ring-dema-forest/20 md:py-5 md:pl-16 md:pr-20 md:text-lg"
             />
+            <button
+              type="button"
+              onClick={() => setAreFiltersVisible((visible) => !visible)}
+              aria-expanded={areFiltersVisible}
+              aria-label={areFiltersVisible ? "Masquer les catégories" : "Afficher les catégories"}
+              className={`absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full transition md:right-2.5 md:h-10 md:w-10 ${
+                areFiltersVisible || activeFilter !== ALL_FILTERS
+                  ? "bg-dema-sage text-dema-forest"
+                  : "bg-dema-canvas text-dema-muted"
+              }`}
+            >
+              <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+            </button>
           </div>
         </div>
+
+        {areFiltersVisible ? (
+          <div className="mt-4 overflow-x-auto pb-1 soft-scroll" aria-label="Filtrer les contenus par thème">
+            <div className="flex min-w-max gap-2 px-1">
+              {ORGANISER_FILTERS.map((filter) => (
+                <button
+                  key={filter}
+                  type="button"
+                  aria-pressed={activeFilter === filter}
+                  onClick={() => {
+                    setActiveFilter(filter);
+                    setQuery("");
+                  }}
+                  className={`demaa-chip shrink-0 whitespace-nowrap ${
+                    activeFilter === filter ? "demaa-chip-active" : ""
+                  }`}
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </div>
 
       {!hasResults ? (
@@ -171,7 +254,7 @@ export default function OrganiserLibrary({ guides, processes }: OrganiserLibrary
         </section>
       ) : null}
 
-      {!query ? (
+      {!query && activeFilter === ALL_FILTERS ? (
         <section className="px-4 pb-4 pt-2 sm:px-6 lg:px-8" aria-label="Bibliothèque de modèles">
           <Link
             href="/modeles?from=organisation"

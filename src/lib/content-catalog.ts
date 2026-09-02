@@ -45,8 +45,8 @@ const FACTURATION_ELECTRONIQUE_SLIDES = Array.from(
 const contentCatalog = [
   {
     slug: "facturation-electronique",
-    title: "Facturation électronique : comprendre la réforme et préparer son entreprise",
-    shortTitle: "La facturation électronique",
+    title: "Facturation électronique : l’essentiel pour être prêt en 2026–2027",
+    shortTitle: "Facturation électronique : l’essentiel",
     summary:
       "Le calendrier 2026-2027, la différence entre e-invoicing et e-reporting, et les vérifications à mener sur vos outils, votre plateforme et vos données.",
     category: "Gestion & conformité",

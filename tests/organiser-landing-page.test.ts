@@ -35,6 +35,12 @@ describe("Organiser public journey", () => {
     expect(organiserLibrary).toContain('id="cas-concrets"');
     expect(organiserLibrary).not.toContain('aria-labelledby="organiser-models-heading"');
     expect(organiserLibrary).toContain("matchesSearchQuery");
+    expect(organiserLibrary).toContain("SlidersHorizontal");
+    expect(organiserLibrary).toContain('aria-label="Filtrer les contenus par thème"');
+    expect(organiserLibrary).toContain("Clients & ventes");
+    expect(organiserLibrary).toContain("Planning & opérations");
+    expect(organiserLibrary).toContain("Administration & facturation");
+    expect(organiserLibrary).toContain("Outils & automatisation");
     expect(organiserLibrary).not.toContain("Vidéos pratiques");
     expect(navbar).not.toContain("Diagnostic organisation");
   });

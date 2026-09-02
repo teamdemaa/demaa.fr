@@ -31,8 +31,6 @@ export type OrganiserThumbnailIllustration =
 export type OrganiserThumbnailDefinition = Readonly<{
   fontSize: number;
   illustration: OrganiserThumbnailIllustration;
-  illustrationScale?: number;
-  illustrationShiftX?: number;
   lines: readonly [string, string?, string?];
   secondary?: string;
   slug: string;
@@ -41,10 +39,10 @@ export type OrganiserThumbnailDefinition = Readonly<{
 const ORGANISER_THUMBNAILS: readonly OrganiserThumbnailDefinition[] = [
   {
     slug: "facturation-electronique",
-    lines: ["La facturation", "électronique"],
+    lines: ["Facturation électronique :", "l’essentiel"],
     secondary: "2026 → 2027",
     illustration: "electronic-invoice",
-    fontSize: 94,
+    fontSize: 82,
   },
   {
     slug: "organiser-entreprise-plomberie",
@@ -78,10 +76,8 @@ const ORGANISER_THUMBNAILS: readonly OrganiserThumbnailDefinition[] = [
   },
   {
     slug: "organiser-parcours-client-garage",
-    lines: ["Comment organiser le", "parcours client d’un garage"],
+    lines: ["Comment organiser", "le parcours client", "d’un garage"],
     illustration: "garage-customer-journey",
-    illustrationScale: 0.68,
-    illustrationShiftX: 18,
     fontSize: 70,
   },
   {
@@ -98,9 +94,9 @@ const ORGANISER_THUMBNAILS: readonly OrganiserThumbnailDefinition[] = [
   },
   {
     slug: "organiser-mission-agence",
-    lines: ["Comment organiser une", "mission d’agence"],
+    lines: ["Comment organiser", "une mission", "d’agence"],
     illustration: "agency-mission",
-    fontSize: 82,
+    fontSize: 76,
   },
   {
     slug: "centraliser-demandes-telephone-sms-whatsapp",
@@ -128,7 +124,7 @@ const ORGANISER_THUMBNAILS: readonly OrganiserThumbnailDefinition[] = [
   },
   {
     slug: "rentabilite-application-metier",
-    lines: ["À partir de quand une", "application métier devient-elle", "rentable ?"],
+    lines: ["À partir de quand", "une application métier", "devient-elle rentable ?"],
     illustration: "business-app-profitability",
     fontSize: 65,
   },
