@@ -11,6 +11,7 @@ import {
 
 describe("Organisation thumbnails", () => {
   const thumbnails = getAllOrganiserThumbnails();
+  const generator = readFileSync("scripts/generate-organiser-thumbnails.mjs", "utf8");
 
   it("uses only the validated Demaa palette and YouTube dimensions", () => {
     expect(ORGANISER_THUMBNAIL_COLORS).toEqual({
@@ -50,6 +51,14 @@ describe("Organisation thumbnails", () => {
     expect(new Set(thumbnails.map((thumbnail) => thumbnail.slug)).size).toBe(
       thumbnails.length,
     );
+  });
+
+  it("uses the light Gambetta face and the shared Lucide icon base", () => {
+    expect(generator).toContain("gambetta-light-italic.woff2");
+    expect(generator).toContain('from "lucide-react"');
+    expect(generator).toContain("font-weight: 300");
+    expect(generator).toContain("font-synthesis: none");
+    expect(generator).not.toContain("function documentShape");
   });
 
   it("reuses the same catalog path in cards, articles and social previews", () => {

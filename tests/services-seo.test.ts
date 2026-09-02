@@ -52,10 +52,10 @@ describe("canonical Services SEO and redirects", () => {
       offers: [
         {
           name: "Maestro",
-          price: "1500.00",
+          price: "2500.00",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
-            price: "1500.00",
+            price: "2500.00",
             priceCurrency: "EUR",
             valueAddedTaxIncluded: false,
           },

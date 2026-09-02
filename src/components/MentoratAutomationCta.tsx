@@ -49,8 +49,8 @@ function getCopy({ modelSlug, systemName, variant }: MentoratAutomationCtaProps)
   }
 
   return {
-    title: "Gagnez du temps au quotidien avec l’automatisation et l’IA",
-    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, nous avançons avec vous sur les priorités qui font perdre du temps à votre équipe, à partir de vos outils actuels.`,
+    title: "Organisez votre entreprise pour qu’elle dépende moins de vous",
+    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, nous clarifions votre fonctionnement et mettons en place les outils et automatisations utiles, à partir de vos outils actuels.`,
   };
 }
 

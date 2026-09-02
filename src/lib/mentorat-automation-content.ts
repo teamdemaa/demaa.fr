@@ -4,25 +4,22 @@ export const AUTOMATION_ACCOMPANIMENT_PATH = "/accompagnement";
 
 export const mentoratAutomationContent = {
   hero: {
-    title: "Gagnez du temps au quotidien avec l’automatisation et l’IA.",
+    title: "Organisez votre entreprise pour qu’elle dépende moins de vous.",
     description:
-      "Pendant un mois, nous avançons avec vous sur les priorités qui font perdre du temps à votre équipe. Nous améliorons l’organisation et automatisons les étapes réellement utiles.",
+      "Nous clarifions votre fonctionnement et mettons en place les outils, automatisations et usages de l’IA qui vous font gagner du temps.",
   },
   offer: {
     duration: AUTOMATION_OFFER.durationLabel,
     price: AUTOMATION_OFFER.price.label,
   },
   examples: [
-    "Un message client devient un devis prêt à vérifier.",
-    "Une réunion devient un compte rendu et un plan d’action.",
-    "Vos e-mails importants sont repérés et vos réponses préparées.",
-    "Votre journée devient un plan clair.",
+    "Centraliser les demandes et le suivi de vos clients",
+    "Clarifier qui fait quoi dans votre équipe",
+    "Organiser le planning, les interventions et les échéances",
+    "Préparer les devis, documents et comptes rendus",
+    "Automatiser les relances, les saisies et les tâches répétitives",
+    "Rassembler les informations, rapports et indicateurs utiles",
   ],
-  autonomy: {
-    title: "Votre entreprise avance, même lorsque vous n’êtes pas derrière chaque tâche.",
-    description:
-      "Les bonnes façons de travailler ne restent plus seulement dans votre tête. Nous les transformons avec vous en méthodes simples que votre équipe peut réutiliser.",
-  },
   tools: {
     title: "Nous partons de vos outils.",
     description:
@@ -30,16 +27,19 @@ export const mentoratAutomationContent = {
   },
   method: [
     {
-      title: "Choisir les priorités",
-      description: "Nous repérons avec vous les tâches et les étapes qui mobilisent inutilement votre équipe.",
+      title: "Comprendre votre fonctionnement",
+      description:
+        "Avant l’atelier, nous vous aidons à réunir les informations utiles. Puis, pendant un atelier de travail de deux heures, nous examinons vos outils, vos méthodes et ce qui ralentit votre équipe.",
     },
     {
-      title: "Construire une meilleure méthode",
-      description: "Nous améliorons le fonctionnement existant et mettons en place les automatisations utiles.",
+      title: "Valider ce que nous allons mettre en place",
+      description:
+        "Nous transformons ces informations en un plan clair : ce que nous allons organiser, connecter ou automatiser. Vous validez le résultat attendu avant l’exécution.",
     },
     {
-      title: "Tester et transmettre",
-      description: "Votre équipe teste la méthode, l’ajuste et apprend à la faire évoluer sans dépendre de nous.",
+      title: "Mettre en place et transmettre",
+      description:
+        "Nous réalisons les éléments validés, votre équipe les teste et nous effectuons les derniers ajustements. Vous repartez avec un fonctionnement utilisable et modifiable.",
     },
   ],
   testimonials: [
@@ -50,20 +50,16 @@ export const mentoratAutomationContent = {
     },
     {
       quote:
-        "Les outils évoluent vite. C’est le type de formation qu’il faut reprendre régulièrement pour rester à jour et continuer à améliorer nos façons de travailler.",
+        "Les outils évoluent vite. C’est le type d’accompagnement qu’il faut reprendre régulièrement pour rester à jour et continuer à améliorer nos façons de travailler.",
       attribution: "Assistante de direction · Entreprise du bâtiment",
-    },
-    {
-      quote:
-        "Cette formation m’a ouvert le champ des possibles. Je ne pensais pas qu’on pouvait aller aussi loin avec ces outils. Il y a clairement eu un avant et un après dans ma manière de travailler.",
-      attribution: "Product Builder",
     },
   ],
   offerIncludes: [
-    "4 rendez-vous d’une heure",
-    "Des situations réelles traitées ensemble",
-    "Des méthodes réutilisables par votre équipe",
-    "1 à 3 participants",
+    "Analyse de votre fonctionnement actuel",
+    "Plan de mise en place validé avec vous",
+    "Organisation des informations et des responsabilités",
+    "Mise en place des outils et automatisations retenus",
+    "Tests, ajustements et transmission à l’équipe",
   ],
   faq: [
     {
@@ -72,9 +68,9 @@ export const mentoratAutomationContent = {
         "Non. Nous partons du travail quotidien de votre entreprise et adaptons la méthode au niveau des personnes qui participent.",
     },
     {
-      question: "Faut-il déjà savoir quoi automatiser ?",
+      question: "Faut-il déjà savoir quoi améliorer ?",
       answer:
-        "Non. Les premiers échanges servent à repérer les tâches et les étapes qui prennent le plus de temps. Les priorités sont ensuite choisies avec vous.",
+        "Non. La préparation et l’atelier de travail servent précisément à comprendre votre fonctionnement et à définir ce qui doit être organisé, connecté ou automatisé.",
     },
     {
       question: "Devons-nous changer nos outils ?",
@@ -82,14 +78,14 @@ export const mentoratAutomationContent = {
         "Non. Nous partons de votre fonctionnement et des outils déjà utilisés par votre équipe. Nous recommandons un changement uniquement lorsque l’existant ne permet pas d’atteindre le résultat recherché.",
     },
     {
-      question: "Qui participe aux rendez-vous ?",
+      question: "Est-ce une formation ?",
       answer:
-        "Le dirigeant peut participer directement ou réunir une équipe projet de 1 à 3 personnes concernées par les priorités choisies.",
+        "Non. Nous ne vous laissons pas avec une méthode à appliquer seul. Nous définissons le plan avec vous, puis nous mettons en place les éléments validés et les transmettons à votre équipe.",
     },
     {
       question: "Que peut-on améliorer en un mois ?",
       answer:
-        "Nous faisons avancer une ou plusieurs priorités selon leur complexité : organisation d’un suivi, automatisation d’étapes répétitives, production de documents ou amélioration d’un outil interne. Le périmètre est défini avec vous avant de démarrer.",
+        "Le périmètre dépend de votre fonctionnement : organisation d’un suivi, circulation des informations, production de documents, automatisation d’étapes répétitives ou amélioration d’un outil interne. Le plan est défini et validé avec vous avant l’exécution.",
     },
     {
       question: "Comment se déroule la demande de rappel ?",

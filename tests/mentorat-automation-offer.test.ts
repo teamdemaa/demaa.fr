@@ -20,23 +20,30 @@ describe("Accompagnement automatisation et IA", () => {
     expect(AUTOMATION_OFFER.serviceName).toBe("Accompagnement automatisation et IA");
     expect(mentoratAutomationContent.offer).toEqual({
       duration: "1 mois",
-      price: "1 500 € HT",
+      price: "2 500 € HT",
     });
     expect(mentoratAutomationContent.hero.title).toBe(
-      "Gagnez du temps au quotidien avec l’automatisation et l’IA.",
+      "Organisez votre entreprise pour qu’elle dépende moins de vous.",
+    );
+    expect(mentoratAutomationContent.examples).toContain(
+      "Clarifier qui fait quoi dans votre équipe",
+    );
+    expect(mentoratAutomationContent.examples).toContain(
+      "Automatiser les relances, les saisies et les tâches répétitives",
     );
     expect(mentoratAutomationContent.offerIncludes).toEqual([
-      "4 rendez-vous d’une heure",
-      "Des situations réelles traitées ensemble",
-      "Des méthodes réutilisables par votre équipe",
-      "1 à 3 participants",
+      "Analyse de votre fonctionnement actuel",
+      "Plan de mise en place validé avec vous",
+      "Organisation des informations et des responsabilités",
+      "Mise en place des outils et automatisations retenus",
+      "Tests, ajustements et transmission à l’équipe",
     ]);
     expect(mentoratAutomationContent.faq.find(
       (item) => item.question === "Devons-nous changer nos outils ?",
     )?.answer).toContain("outils déjà utilisés");
     expect(mentoratAutomationContent.faq.find(
       (item) => item.question === "Que peut-on améliorer en un mois ?",
-    )?.answer).toContain("selon leur complexité");
+    )?.answer).toContain("Le plan est défini et validé");
     expect("tutorialTracks" in mentoratAutomationContent).toBe(false);
     expect("approachPillars" in mentoratAutomationContent).toBe(false);
   });
@@ -52,10 +59,16 @@ describe("Accompagnement automatisation et IA", () => {
     expect(page).toContain("MentoratAutomationLandingPage");
     expect(page).toContain("Accompagnement automatisation et IA pour entreprise");
     expect(legacyPage).toContain('permanentRedirect("/accompagnement")');
-    expect(landing).toContain("Gagnez du temps au quotidien");
+    expect(landing).toContain("Organisez votre entreprise");
+    expect(landing).toContain("Comment ça se passe ?");
+    expect(landing).toContain("Moins de temps consacré aux tâches chronophages.");
+    expect(JSON.stringify(mentoratAutomationContent.method)).toContain("atelier de travail de deux heures");
+    expect(landing).not.toContain("4 × 1 heure");
+    expect(landing).not.toContain("1 à 3");
     expect(mentoratAutomationContent.tools.title).toBe("Nous partons de vos outils.");
     expect(landing).toContain("Vos outils actuels");
     expect(landing).toContain("Maestro · Accompagnement · 1 mois");
+    expect(landing).toContain("Votre nouvelle organisation, mise en place en un mois.");
     expect(landing.indexOf("Maestro · Accompagnement · 1 mois")).toBeGreaterThan(
       landing.indexOf('id="tarif"'),
     );
@@ -71,6 +84,7 @@ describe("Accompagnement automatisation et IA", () => {
     );
     expect(landing).not.toContain("Tutoriels Demaa");
     expect(JSON.stringify(mentoratAutomationContent)).not.toContain("12 mois");
+    expect(JSON.stringify(mentoratAutomationContent)).not.toContain("Product Builder");
     expect(landing).not.toContain("StructureNewsletterBlock");
     for (const brand of ["ChatGPT", "Codex", "Airtable", "Fillout", "Make"]) {
       expect(JSON.stringify(mentoratAutomationContent)).not.toContain(brand);
