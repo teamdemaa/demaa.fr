@@ -46,7 +46,7 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
   {
     slug: "structure-google-drive-entreprise",
     title: "Structure Google Drive pour organiser son entreprise",
-    description: "Créez une arborescence claire pour la direction, la finance, l’administration, les clients, l’équipe et les processus.",
+    description: "Créez une structure de dossiers claire pour la direction, la finance, l’administration, les clients, l’équipe et les processus.",
     seoTitle: "Structure Google Drive pour organiser son entreprise | Demaa",
     seoDescription: "Créez gratuitement dans Google Drive une structure de dossiers pragmatique pour organiser les documents de votre entreprise.",
     category: "Organisation",
@@ -216,6 +216,10 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
 ];
 
 const contextualModelSlugsByOrganiserSlug = {
+  "retrouver-informations-documents": "structure-google-drive-entreprise",
+  "suivre-demandes-clients": "suivi-client-et-support",
+  "suivre-avancement-dossiers": "projets-et-missions-clients",
+  "organiser-planning-equipe-imprevus": "interventions-et-chantiers",
   "organiser-entreprise-plomberie": "interventions-et-chantiers",
   "organiser-demandes-devis-renovation": "suivi-commercial-et-devis",
   "organiser-chantier-menuiserie": "interventions-et-chantiers",

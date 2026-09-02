@@ -1,8 +1,9 @@
+import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import CaseVideoOverview from "@/components/CaseVideoOverview";
 import ContentSlidesLauncher from "@/components/ContentSlidesLauncher";
@@ -17,6 +18,7 @@ import {
   buildContentMetadata,
   serializeContentJsonLd,
 } from "@/lib/content-seo";
+import { getPublishedCopyableModelForOrganiserSlug } from "@/lib/copyable-model-catalog";
 import { getOrganiserThumbnailPath } from "@/lib/organiser-thumbnail-catalog";
 
 type ContentPageProps = Readonly<{
@@ -41,6 +43,9 @@ export default async function ContentPage({ params }: ContentPageProps) {
   const slides = entry.media.slides ?? [];
   const heroImage = entry.media.youtubeThumbnail ?? slides[0];
   const isOrganisationContent = entry.surfaces.includes("organisation");
+  const relatedModel = isOrganisationContent
+    ? getPublishedCopyableModelForOrganiserSlug(entry.slug)
+    : null;
   const jsonLd = buildContentJsonLd(entry);
 
   return (
@@ -62,13 +67,17 @@ export default async function ContentPage({ params }: ContentPageProps) {
           </Link>
 
           <header className="mx-auto mt-8 max-w-5xl text-left">
-            <div className="flex flex-wrap items-center gap-2 text-xs text-dema-muted">
-              <span className="rounded-full bg-dema-sage px-3 py-1 font-medium text-dema-forest">
-                {getContentFormat(entry)}
-              </span>
-              <span>{entry.category}</span>
-            </div>
-            <h1 className="demaa-section-title mt-5 text-4xl leading-tight tracking-tight text-brand-blue sm:text-5xl lg:text-6xl">
+            {!isOrganisationContent ? (
+              <div className="flex flex-wrap items-center gap-2 text-xs text-dema-muted">
+                <span className="rounded-full bg-dema-sage px-3 py-1 font-medium text-dema-forest">
+                  {getContentFormat(entry)}
+                </span>
+                <span>{entry.category}</span>
+              </div>
+            ) : null}
+            <h1 className={`demaa-section-title text-4xl leading-tight tracking-tight text-brand-blue sm:text-5xl lg:text-6xl ${
+              isOrganisationContent ? "" : "mt-5"
+            }`}>
               {entry.title}
             </h1>
             <p className="mt-5 max-w-3xl text-base font-normal leading-relaxed text-dema-muted sm:text-lg">
@@ -131,26 +140,52 @@ export default async function ContentPage({ params }: ContentPageProps) {
           <div className="mx-auto mt-14 grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
             <div className="space-y-10">
               {entry.article.map((section, index) => (
-                <section key={section.heading} aria-labelledby={`content-section-${index + 1}`}>
-                  <NumberedSectionHeading
-                    id={`content-section-${index + 1}`}
-                    number={index + 1}
-                    title={section.heading}
-                  />
-                  <div className="mt-4 space-y-4 text-base leading-8 text-dema-muted">
-                    {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                    {section.items ? (
-                      <ul className="space-y-3">
-                        {section.items.map((item) => (
-                          <li key={item} className="flex gap-3">
-                            <Check className="mt-1.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
-                  </div>
-                </section>
+                <Fragment key={section.heading}>
+                  <section aria-labelledby={`content-section-${index + 1}`}>
+                    <NumberedSectionHeading
+                      id={`content-section-${index + 1}`}
+                      number={index + 1}
+                      title={section.heading}
+                    />
+                    <div className="mt-4 space-y-4 text-base leading-8 text-dema-muted">
+                      {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                      {section.items ? (
+                        <ul className="space-y-3">
+                          {section.items.map((item) => (
+                            <li key={item} className="flex gap-3">
+                              <Check className="mt-1.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </div>
+                  </section>
+
+                  {section.heading === "La méthode, étape par étape" && relatedModel ? (
+                    <aside
+                      className="rounded-[1.15rem] border border-dema-forest/15 bg-dema-sage/45 p-6 sm:p-7"
+                      aria-labelledby="related-model-title"
+                    >
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
+                        Un modèle pour passer à l’action
+                      </p>
+                      <h2 id="related-model-title" className="mt-3 text-xl font-light tracking-[-0.025em] text-brand-blue sm:text-2xl">
+                        {relatedModel.title}
+                      </h2>
+                      <p className="mt-2 text-sm leading-6 text-dema-muted">
+                        {relatedModel.description}
+                      </p>
+                      <Link
+                        href={`/modeles/${relatedModel.slug}?from=organisation`}
+                        className="demaa-secondary-button mt-5 min-h-11 gap-2 px-5"
+                      >
+                        Utiliser ce modèle
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </Link>
+                    </aside>
+                  ) : null}
+                </Fragment>
               ))}
             </div>
 

@@ -149,6 +149,18 @@ describe("copyable model catalogue", () => {
 
   it("links concrete Organiser articles only to a matching published model", () => {
     expect(getPublishedCopyableModelForOrganiserSlug(
+      "retrouver-informations-documents",
+    )?.slug).toBe("structure-google-drive-entreprise");
+    expect(getPublishedCopyableModelForOrganiserSlug(
+      "suivre-demandes-clients",
+    )?.slug).toBe("suivi-client-et-support");
+    expect(getPublishedCopyableModelForOrganiserSlug(
+      "suivre-avancement-dossiers",
+    )?.slug).toBe("projets-et-missions-clients");
+    expect(getPublishedCopyableModelForOrganiserSlug(
+      "organiser-planning-equipe-imprevus",
+    )?.slug).toBe("interventions-et-chantiers");
+    expect(getPublishedCopyableModelForOrganiserSlug(
       "organiser-demandes-devis-renovation",
     )?.slug).toBe("suivi-commercial-et-devis");
     expect(getPublishedCopyableModelForOrganiserSlug(
