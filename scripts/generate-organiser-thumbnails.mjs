@@ -127,6 +127,18 @@ function illustration(kind) {
         <text class="sans muted-text" x="1045" y="396" font-size="28">ou</text>
         ${icon(PanelsTopLeft, 1102, 304, 148, forest)}
       `;
+    case "urgent-workflow":
+      return iconPair(CalendarSync, ClipboardCheck, { leftColor: forest, rightColor: muted });
+    case "task-consolidation":
+      return iconPair(PanelsTopLeft, Inbox);
+    case "meeting-decisions":
+      return iconPair(MessageSquareText, ClipboardCheck);
+    case "team-autonomy":
+      return iconPair(Users, CheckCircle2, { leftColor: muted, rightColor: forest });
+    case "document-search":
+      return iconPair(FolderKanban, FileCheck2);
+    case "recurring-reporting":
+      return iconPair(FileSpreadsheet, CalendarSync, { leftColor: muted, rightColor: forest });
     default:
       throw new Error(`Illustration inconnue : ${kind}`);
   }

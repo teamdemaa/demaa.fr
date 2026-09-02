@@ -37,7 +37,7 @@ export default function SystemRecapPrintButton({
   return (
     <>
       <div className="w-full print:hidden sm:w-auto sm:max-w-md">
-        <div className="flex w-full flex-nowrap gap-2">
+        <div className="flex w-full flex-col gap-3 min-[440px]:flex-row sm:gap-4">
           <button
             type="button"
             onClick={handlePrint}
@@ -45,7 +45,7 @@ export default function SystemRecapPrintButton({
             className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-dema-forest/20 bg-white px-2.5 py-3 text-[0.625rem] font-semibold text-dema-forest transition hover:border-dema-forest/35 hover:bg-dema-sage/30 min-[360px]:text-xs sm:flex-none sm:px-4 sm:text-sm"
           >
             <Printer className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" aria-hidden="true" />
-            Imprimer / PDF
+            Imprimer le document
           </button>
           {emailDelivery ? (
             <button
@@ -54,7 +54,7 @@ export default function SystemRecapPrintButton({
               className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-dema-forest px-2.5 py-3 text-[0.625rem] font-semibold text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 min-[360px]:text-xs sm:flex-none sm:px-4 sm:text-sm"
             >
               <Mail className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" aria-hidden="true" />
-              Recevoir par e-mail
+              Recevoir le document
             </button>
           ) : null}
         </div>

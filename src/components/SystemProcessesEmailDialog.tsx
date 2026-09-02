@@ -73,7 +73,7 @@ export default function SystemProcessesEmailDialog({
 
   return (
     <DirectoryDetailDialogShell
-      ariaLabel={`Recevoir la checklist des processus métier : ${systemName}`}
+      ariaLabel={`Recevoir le document complet des processus métier : ${systemName}`}
       maxWidthClassName="max-w-md"
       onClose={onClose}
     >
@@ -86,7 +86,7 @@ export default function SystemProcessesEmailDialog({
             Le PDF vient de vous être envoyé.
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-            Vérifiez votre boîte de réception. La checklist de {systemName} est jointe à l’e-mail.
+            Vérifiez votre boîte de réception. Le document complet de {systemName} est joint à l’e-mail.
           </p>
           <button
             type="button"
@@ -102,10 +102,10 @@ export default function SystemProcessesEmailDialog({
             <Mail className="h-5 w-5" aria-hidden="true" />
           </span>
           <h2 className="mt-5 pr-10 text-2xl font-semibold tracking-[-0.025em] text-brand-blue">
-            Recevoir cette checklist <span className="whitespace-nowrap">par e-mail</span>
+            Recevoir le document complet <span className="whitespace-nowrap">par e-mail</span>
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-            Nous vous envoyons le PDF des processus métier pour {systemName}. Cet envoi ne vous inscrit à aucune communication marketing.
+            Nous vous envoyons le PDF complet des processus métier pour {systemName}. Cet envoi ne vous inscrit à aucune communication marketing.
           </p>
 
           <form
@@ -150,7 +150,7 @@ export default function SystemProcessesEmailDialog({
               ) : (
                 <Mail className="h-4 w-4" aria-hidden="true" />
               )}
-              {status === "sending" ? "Envoi en cours…" : "Recevoir le PDF"}
+              {status === "sending" ? "Envoi en cours…" : "Recevoir le document"}
             </button>
             {error ? (
               <p className="text-sm leading-relaxed text-red-700" role="alert">

@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import SystemProcessesContent from "@/components/SystemProcessesContent";
 import { getSystemDetailPageData } from "@/lib/system-detail-page";
 import { getSystemProcessGuideDetails } from "@/lib/system-process-guide-details";
+import { orderSystemeRoutinesForDisplay } from "@/lib/system-process-order";
 
 type SystemProcessesPageProps = {
   params: Promise<{ slug: string }>;
@@ -33,7 +34,10 @@ export default async function SystemProcessesPage({
   const data = await getSystemDetailPageData(slug);
   if (!data) notFound();
 
-  const routines = data.detail.systeme?.routines ?? [];
+  const systeme = data.detail.systeme;
+  const routines = systeme
+    ? orderSystemeRoutinesForDisplay(systeme.routines, systeme.cards, data.system.slug)
+    : [];
   if (!routines.length) notFound();
 
   return (

@@ -42,7 +42,11 @@ export type SystemProcessGuideDetail = Readonly<{
   routineId: string;
   slug: OperationalOrganiserGuideSlug;
   steps: readonly Readonly<{
+    control: string;
+    description: string;
+    input: string;
     label: string;
+    owner: string;
     title: string;
     output: string;
   }>[];
@@ -110,7 +114,11 @@ export function getSystemProcessGuideDetails(
       routineId: routine.routineId,
       slug: content.identity.slug,
       steps: guide.steps.map((step) => ({
+        control: step.control,
+        description: step.description,
+        input: step.input,
         label: step.label,
+        owner: step.owner,
         title: step.title,
         output: step.output,
       })),

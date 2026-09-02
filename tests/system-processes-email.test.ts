@@ -32,7 +32,7 @@ describe("system processes PDF email", () => {
     expect(body.attachments).toEqual([
       {
         content: Buffer.from([37, 80, 68, 70]).toString("base64"),
-        filename: "checklist-processus-cabinet-comptable.pdf",
+        filename: "processus-metier-cabinet-comptable.pdf",
       },
     ]);
     expect(body.to).toBe("client@example.test");
