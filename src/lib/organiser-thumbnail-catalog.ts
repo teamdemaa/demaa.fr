@@ -32,7 +32,17 @@ export type OrganiserThumbnailIllustration =
   | "meeting-decisions"
   | "team-autonomy"
   | "document-search"
-  | "recurring-reporting";
+  | "recurring-reporting"
+  | "team-followup"
+  | "dossier-progress"
+  | "client-request"
+  | "shared-method"
+  | "business-continuity"
+  | "resilient-planning"
+  | "duplicate-entry"
+  | "knowledge-transfer"
+  | "useful-dashboard"
+  | "employee-onboarding";
 
 export type OrganiserThumbnailDefinition = Readonly<{
   fontSize: number;
@@ -78,6 +88,66 @@ const ORGANISER_THUMBNAILS: readonly OrganiserThumbnailDefinition[] = [
     lines: ["Encore le même", "reporting"],
     illustration: "recurring-reporting",
     fontSize: 88,
+  },
+  {
+    slug: "organiser-relances-equipe",
+    lines: ["Je dois relancer", "tout le monde"],
+    illustration: "team-followup",
+    fontSize: 84,
+  },
+  {
+    slug: "suivre-avancement-dossiers",
+    lines: ["Où en sont", "les dossiers ?"],
+    illustration: "dossier-progress",
+    fontSize: 90,
+  },
+  {
+    slug: "suivre-demandes-clients",
+    lines: ["Les demandes clients", "se perdent"],
+    illustration: "client-request",
+    fontSize: 78,
+  },
+  {
+    slug: "creer-methode-travail-commune",
+    lines: ["Chacun travaille", "à sa façon"],
+    illustration: "shared-method",
+    fontSize: 82,
+  },
+  {
+    slug: "organiser-entreprise-sans-dirigeant",
+    lines: ["Sans moi,", "tout s’arrête"],
+    illustration: "business-continuity",
+    fontSize: 92,
+  },
+  {
+    slug: "organiser-planning-equipe-imprevus",
+    lines: ["Le planning change", "tout le temps"],
+    illustration: "resilient-planning",
+    fontSize: 78,
+  },
+  {
+    slug: "supprimer-doubles-saisies",
+    lines: ["On saisit trois fois", "la même chose"],
+    illustration: "duplicate-entry",
+    fontSize: 76,
+  },
+  {
+    slug: "documenter-savoir-faire-equipe",
+    lines: ["Le savoir reste", "dans les têtes"],
+    illustration: "knowledge-transfer",
+    fontSize: 82,
+  },
+  {
+    slug: "construire-tableau-de-bord-utile",
+    lines: ["Je découvre les", "problèmes trop tard"],
+    illustration: "useful-dashboard",
+    fontSize: 76,
+  },
+  {
+    slug: "structurer-integration-salarie",
+    lines: ["Les nouveaux mettent", "trop longtemps", "à comprendre"],
+    illustration: "employee-onboarding",
+    fontSize: 70,
   },
   {
     slug: "facturation-electronique",

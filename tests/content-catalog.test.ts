@@ -22,7 +22,7 @@ import {
 describe("canonical content catalog", () => {
   it("publishes the electronic invoicing article with a progressive slide medium", () => {
     const entries = getAllPublishedContent();
-    expect(entries).toHaveLength(7);
+    expect(entries).toHaveLength(17);
 
     const entry = getPublishedContentBySlug("facturation-electronique");
     expect(entry).not.toBeNull();
@@ -47,14 +47,24 @@ describe("canonical content catalog", () => {
 
     expect(contentPage).toContain('<Navbar minimal publicNavigationActiveView="academy" />');
     const organisationContent = getPublishedOrganisationContent();
-    expect(organisationContent).toHaveLength(6);
+    expect(organisationContent).toHaveLength(16);
     expect(organisationContent.map(({ title }) => title)).toEqual([
-      "Je passe mes journées à gérer les urgences",
-      "Mes tâches sont dispersées entre plusieurs outils",
-      "Après mes réunions, les décisions se perdent",
-      "Mon équipe me sollicite pour chaque décision",
-      "Je recherche constamment les mêmes informations",
-      "Je refais chaque semaine les mêmes tâches administratives",
+      "Comment ne plus passer ses journées à gérer les urgences",
+      "Comment centraliser ses tâches sans changer tous ses outils",
+      "Comment transformer ses réunions en décisions et en actions",
+      "Comment rendre son équipe plus autonome sans perdre le contrôle",
+      "Comment organiser ses informations pour que l’équipe les retrouve seule",
+      "Comment automatiser ses tâches administratives sans multiplier les erreurs",
+      "Comment organiser les relances sans courir après son équipe",
+      "Comment suivre l’avancement de ses dossiers en un coup d’œil",
+      "Comment suivre chaque demande client de la réception à la réponse",
+      "Comment mettre en place une méthode de travail commune",
+      "Comment organiser son entreprise pour qu’elle fonctionne aussi en son absence",
+      "Comment organiser le planning d’une équipe malgré les imprévus",
+      "Comment supprimer les doubles saisies entre ses outils",
+      "Comment documenter les façons de travailler sans créer une usine à gaz",
+      "Comment construire un tableau de bord réellement utile",
+      "Comment structurer l’arrivée d’un salarié pour le rendre autonome plus vite",
     ]);
     expect(organisationContent.every((entry) => getContentFormat(entry) === "Article")).toBe(true);
     const expectedStructure = [
@@ -68,6 +78,14 @@ describe("canonical content catalog", () => {
       expect(entry.article.map(({ heading }) => heading), entry.slug).toEqual(
         expectedStructure,
       );
+      expect(entry.article[0]?.paragraphs, entry.slug).toHaveLength(2);
+      expect(entry.article[1]?.paragraphs, entry.slug).toHaveLength(2);
+      expect(entry.article[2]?.items, entry.slug).toHaveLength(6);
+      expect(entry.article[3]?.paragraphs, entry.slug).toHaveLength(2);
+      expect(entry.article[3]?.paragraphs?.[0], entry.slug).toContain(
+        "Copiez ce prompt",
+      );
+      expect(entry.article[4]?.items, entry.slug).toHaveLength(5);
       expect(entry.media.youtubeId, entry.slug).toBeUndefined();
       expect(entry.sources, entry.slug).toEqual([]);
     }
