@@ -18,7 +18,7 @@ export function buildContentSecurityPolicy(options?: {
     "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://drive.google.com https://lh3.googleusercontent.com https://*.googleusercontent.com",
     "font-src 'self' data:",
     "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://api-adresse.data.gouv.fr https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.googleapis.com",
-    "frame-src 'self' https://airtable.com https://embed.fillout.com https://*.firebaseapp.com https://accounts.google.com",
+    "frame-src 'self' https://airtable.com https://embed.fillout.com https://www.youtube-nocookie.com https://*.firebaseapp.com https://accounts.google.com",
     "form-action 'self' https://accounts.google.com",
     "upgrade-insecure-requests",
   ].join("; ");

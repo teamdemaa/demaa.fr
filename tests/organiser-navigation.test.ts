@@ -20,7 +20,7 @@ describe("Organiser navigation", () => {
     expect(parseOrganiserTab("processus")).toBe("processus");
     expect(buildOrganiserHref()).toBe("/organiser");
     expect(buildOrganiserHref({ tab: "processus", systemId: "restaurant" }))
-      .toBe("/organiser/processus");
+      .toBe("/organiser");
     expect(buildSolutionsHref({
       systemId: "restaurant",
       solutionResourceSlug: "lightspeed",
@@ -50,14 +50,13 @@ describe("Organiser navigation", () => {
       .toBeNull();
   });
 
-  it("renders the hub on Organiser and keeps the process library separate", () => {
+  it("renders one Organisation hub without a separate process library", () => {
     const organiserPage = source("src/app/(marketing)/organiser/page.tsx");
-    const processPage = source("src/app/(marketing)/organiser/processus/page.tsx");
     const companyPilotage = source("src/components/CompanyPilotagePanel.tsx");
     const guestPlan = source("src/components/GuestActionPlanExperience.tsx");
 
     expect(organiserPage).toContain("<OrganiserHub");
-    expect(processPage).toContain("<AcademyIndexClient");
+    expect(source("next.config.ts")).toContain("source: '/organiser/processus'");
     expect(organiserPage).not.toContain("<OrganiserWorkspace");
     expect(organiserPage).not.toContain("<ActionPlanSystemPanel");
     expect(companyPilotage).not.toContain('{ key: "solutions"');

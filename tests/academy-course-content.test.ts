@@ -26,11 +26,11 @@ function hasForbiddenVideoField(value: unknown): boolean {
 }
 
 describe("academy course content", () => {
-  it("preserves the fourteen historical items and publishes fifteen process guides", () => {
+  it("preserves all content while keeping decision guides out of Organisation", () => {
     expect(getAcademyFundamentals()).toHaveLength(8);
     expect(getAcademyCaseStudies()).toHaveLength(21);
     expect(getAcademyCaseStudies().filter((content) => content.processGuide)).toHaveLength(15);
-    expect(getPublicOrganiserContent()).toHaveLength(15);
+    expect(getPublicOrganiserContent()).toHaveLength(12);
     expect(getAllAcademyContent()).toHaveLength(29);
     expect(getAcademyContentBySlug("juste-systeme-marketing")).toBeNull();
   });

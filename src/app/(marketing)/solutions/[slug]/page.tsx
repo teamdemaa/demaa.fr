@@ -120,6 +120,7 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
           <SystemDetailContent
             system={data.system}
             intro={buildSystemPageIntro(data)}
+            hasProcesses={(data.detail.systeme?.routines.length ?? 0) > 0}
             initialResourceSlug={getParamValue(resolvedSearchParams.resource)}
             headingAs="h1"
             solutionSections={visibleSolutionSections}

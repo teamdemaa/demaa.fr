@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import SystemProcessesContent from "@/components/SystemProcessesContent";
 import { getSystemDetailPageData } from "@/lib/system-detail-page";
+import { getSystemProcessGuideDetails } from "@/lib/system-process-guide-details";
 
 type SystemProcessesPageProps = {
   params: Promise<{ slug: string }>;
@@ -33,6 +34,7 @@ export default async function SystemProcessesPage({
   if (!data) notFound();
 
   const routines = data.detail.systeme?.routines ?? [];
+  if (!routines.length) notFound();
 
   return (
     <>
@@ -44,6 +46,7 @@ export default async function SystemProcessesPage({
           routines={routines}
           systemName={data.system.name}
           systemSlug={data.system.slug}
+          processGuideDetails={getSystemProcessGuideDetails(data.system.slug, routines)}
           closeHref={`/solutions/${data.system.slug}`}
         />
       </main>

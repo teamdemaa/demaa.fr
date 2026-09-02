@@ -24,6 +24,7 @@ type SystemDetailContentProps = {
   onResourceSlugChange?: (resourceSlug: string | undefined) => void;
   headerActions?: ReactNode;
   comparisonHref?: string;
+  hasProcesses?: boolean;
 };
 
 const EMPTY_SOLUTION_SECTIONS: readonly RenderableSolutionSectionDto[] = [];
@@ -43,6 +44,7 @@ export default function SystemDetailContent({
   onResourceSlugChange,
   headerActions,
   comparisonHref,
+  hasProcesses = true,
 }: SystemDetailContentProps) {
   const [localSelectedSolutionIds, setLocalSelectedSolutionIds] = useState<Set<string>>(
     () => new Set(),
@@ -92,12 +94,14 @@ export default function SystemDetailContent({
             <p className="mt-4 max-w-3xl text-base leading-relaxed text-dema-muted">
               {intro}
             </p>
-            <Link
-              href={`/systemes/${system.slug}/processus`}
-              className="demaa-primary-button mt-5 min-h-10 px-5"
-            >
-              Voir les processus du métier
-            </Link>
+            {hasProcesses ? (
+              <Link
+                href={`/systemes/${system.slug}/processus`}
+                className="demaa-primary-button mt-5 min-h-10 px-5"
+              >
+                Voir les processus du métier
+              </Link>
+            ) : null}
           </>
         ) : null}
       </div>

@@ -7,16 +7,14 @@ async function readSource(path: string) {
 
 describe("copyable model public routes", () => {
   it("makes concrete cases primary while keeping the model library available", async () => {
-    const [page, organiserPage, organiserHub, organiserLibrary, processPage, navbar, footer, modelsIndex, academyIndex] = await Promise.all([
+    const [page, organiserPage, organiserHub, organiserLibrary, navbar, footer, modelsIndex] = await Promise.all([
       readSource("src/app/(marketing)/modeles/page.tsx"),
       readSource("src/app/(marketing)/organiser/page.tsx"),
       readSource("src/components/OrganiserHub.tsx"),
       readSource("src/components/OrganiserLibrary.tsx"),
-      readSource("src/app/(marketing)/organiser/processus/page.tsx"),
       readSource("src/components/PublicActionPlanNavigation.tsx"),
       readSource("src/components/Footer.tsx"),
       readSource("src/components/CopyableModelsIndex.tsx"),
-      readSource("src/components/AcademyIndexClient.tsx"),
     ]);
 
     expect(page).toContain('<Navbar minimal publicNavigationActiveView="academy" />');
@@ -25,7 +23,6 @@ describe("copyable model public routes", () => {
     expect(page).not.toContain("<ModelProcessesBridge />");
     expect(organiserPage).not.toContain("OrganiserSectionNavigation");
     expect(organiserPage).toContain("<OrganiserHub />");
-    expect(processPage).toContain('backLink={{ href: "/organiser#cas-concrets", label: "← Retour à Organisation" }}');
     expect(page).toContain('path: "/modeles"');
     expect(navbar).toContain('label: "Organisation"');
     expect(navbar).toContain('href: "/organiser"');
@@ -54,8 +51,6 @@ describe("copyable model public routes", () => {
     expect(modelsIndex).not.toContain("SOLUTION_RAIL_CLASS_NAME");
     expect(modelsIndex).toContain("titleLevel={3}");
     expect(modelsIndex).not.toContain("Des processus concrets pour se projeter vraiment");
-    expect(processPage).toContain("Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité.");
-    expect(academyIndex.match(/Des processus concrets pour voir clairement ce qu’il faut mettre en place dans votre activité\./g)).toHaveLength(2);
     expect(organiserLibrary).toContain('id="cas-concrets"');
     expect(organiserLibrary).not.toContain('aria-labelledby="organiser-models-heading"');
     expect(organiserLibrary).toContain("OrganiserProcessMap");

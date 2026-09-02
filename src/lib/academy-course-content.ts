@@ -16,7 +16,10 @@ import {
   ACADEMY_CONTENT_SLUGS,
   LEGACY_ACADEMY_SLUG_ALIASES,
 } from "@/lib/academy-course-routes";
-import { ORGANISER_PROCESS_GUIDES } from "@/lib/organiser-process-guides";
+import {
+  isOrganiserDecisionGuideSlug,
+  ORGANISER_PROCESS_GUIDES,
+} from "@/lib/organiser-process-guides";
 
 export type AcademyContentKind = "course" | "case-study";
 
@@ -260,7 +263,9 @@ export function getAcademyCaseStudies() {
 
 export function getPublicOrganiserContent() {
   return ORGANISER_PROCESS_GUIDES.filter(
-    (content) => content.status === "ready",
+    (content) =>
+      content.status === "ready"
+      && !isOrganiserDecisionGuideSlug(content.identity.slug),
   );
 }
 

@@ -37,7 +37,7 @@ export function buildOrganiserHref(input: {
     });
   }
 
-  return input.tab === "processus" ? "/organiser/processus" : "/organiser";
+  return "/organiser";
 }
 
 export function buildSolutionsHref(input: {

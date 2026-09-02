@@ -5,11 +5,22 @@ import OrganiserLibrary, {
 } from "@/components/OrganiserLibrary";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import { getPublicOrganiserContent } from "@/lib/academy-course-content";
-import { getAllPublishedContent, getContentFormat } from "@/lib/content-catalog";
+import {
+  getContentFormat,
+  getPublishedOrganisationContent,
+  isOrganisationTransverseLibraryReady,
+} from "@/lib/content-catalog";
 import { getOrganiserThumbnailPath } from "@/lib/organiser-thumbnail-catalog";
 
 export default function OrganiserHub() {
-  const processes: OrganiserProcessCardData[] = getPublicOrganiserContent().flatMap((content) => {
+  const publishedOrganisationContent = getPublishedOrganisationContent();
+  const showLegacyProcesses = !isOrganisationTransverseLibraryReady(
+    publishedOrganisationContent.length,
+  );
+  const processes: OrganiserProcessCardData[] = (showLegacyProcesses
+    ? getPublicOrganiserContent()
+    : []
+  ).flatMap((content) => {
     const guide = content.processGuide;
     return guide ? [{
       category: content.identity.category,
@@ -24,7 +35,7 @@ export default function OrganiserHub() {
       title: content.identity.card.title,
     }] : [];
   });
-  const guides: OrganiserGuideCardData[] = getAllPublishedContent().map((guide) => ({
+  const guides: OrganiserGuideCardData[] = publishedOrganisationContent.map((guide) => ({
     category: guide.category,
     format: getContentFormat(guide),
     image: guide.media.youtubeThumbnail ?? guide.media.slides?.[0],

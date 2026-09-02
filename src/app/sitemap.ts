@@ -1,6 +1,10 @@
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
-import { getAllPublishedContent } from "@/lib/content-catalog";
+import {
+  getAllPublishedContent,
+  getPublishedOrganisationContent,
+  isOrganisationTransverseLibraryReady,
+} from "@/lib/content-catalog";
 import { getPublicOrganiserContent } from "@/lib/academy-course-content";
 import { getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
@@ -42,7 +46,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-newsletters`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/organiser`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.93 },
-    { url: `${base}/organiser/processus`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.88 },
     { url: `${base}/contenus`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/opportunites`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.65 },
     { url: `${base}/mentions-legales`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
@@ -52,7 +55,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/cgv`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  const academyEntries: MetadataRoute.Sitemap = getPublicOrganiserContent().map(
+  const legacyOrganiserEntries = isOrganisationTransverseLibraryReady(
+    getPublishedOrganisationContent().length,
+  )
+    ? []
+    : getPublicOrganiserContent();
+  const academyEntries: MetadataRoute.Sitemap = legacyOrganiserEntries.map(
     (content) => ({
       url: `${base}/organiser/${content.identity.slug}`,
       lastModified: siteUpdatedAt,

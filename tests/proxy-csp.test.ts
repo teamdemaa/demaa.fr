@@ -54,14 +54,14 @@ describe("proxy content security policy", () => {
       .find((directive) => directive.startsWith("frame-src "));
 
     expect(frameSource).toBe(
-      "frame-src 'self' https://airtable.com https://embed.fillout.com https://*.firebaseapp.com https://accounts.google.com",
+      "frame-src 'self' https://airtable.com https://embed.fillout.com https://www.youtube-nocookie.com https://*.firebaseapp.com https://accounts.google.com",
     );
     expect(frameSource).toContain("'self'");
     expect(policy).toContain("https://apis.google.com");
     expect(policy).toContain("https://identitytoolkit.googleapis.com");
     expect(policy).toContain("https://securetoken.googleapis.com");
     expect(policy).toContain("form-action 'self' https://accounts.google.com");
-    expect(policy).not.toContain("youtube");
+    expect(policy).toContain("https://www.youtube-nocookie.com");
     expect(policy).toContain("default-src 'self'");
     expect(policy).toContain("frame-ancestors 'none'");
     expect(policy).toContain("object-src 'none'");

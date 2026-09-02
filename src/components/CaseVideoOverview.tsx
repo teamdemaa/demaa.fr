@@ -2,15 +2,21 @@ import Image from "next/image";
 import { ListChecks, Play } from "lucide-react";
 
 type CaseVideoOverviewProps = Readonly<{
+  hideMedia?: boolean;
   items: readonly string[];
   thumbnail?: string | null;
   title: string;
 }>;
 
-export default function CaseVideoOverview({ items, thumbnail, title }: CaseVideoOverviewProps) {
+export default function CaseVideoOverview({
+  hideMedia = false,
+  items,
+  thumbnail,
+  title,
+}: CaseVideoOverviewProps) {
   return (
     <section className="mt-12 sm:mt-14" aria-labelledby="case-video-outline-title">
-      {thumbnail ? (
+      {hideMedia ? null : thumbnail ? (
         <div className="relative aspect-video overflow-hidden rounded-[1.4rem] border border-dema-line bg-dema-sage shadow-[0_18px_44px_rgba(31,72,52,0.08)]">
           <Image
             src={thumbnail}

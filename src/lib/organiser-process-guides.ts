@@ -1233,3 +1233,15 @@ export const ORGANISER_PROCESS_GUIDES: AcademyContentDefinition[] = [
   if (right.identity.slug === firstSlug) return 1;
   return 0;
 });
+
+export const ORGANISER_DECISION_GUIDE_SLUGS = [
+  "quel-logiciel-quand-excel-ne-suffit-plus",
+  "rentabilite-application-metier",
+  "logiciel-existant-ou-application-metier",
+] as const;
+
+export function isOrganiserDecisionGuideSlug(slug: string) {
+  return ORGANISER_DECISION_GUIDE_SLUGS.includes(
+    slug as (typeof ORGANISER_DECISION_GUIDE_SLUGS)[number],
+  );
+}

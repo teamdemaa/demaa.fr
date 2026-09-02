@@ -1,6 +1,14 @@
-export const CONTENT_CATEGORIES = ["Gestion & conformité"] as const;
+export const CONTENT_CATEGORIES = [
+  "Clients & ventes",
+  "Planning & opérations",
+  "Administration & facturation",
+  "Outils & automatisation",
+  "Gestion & conformité",
+] as const;
 
 export type ContentCategory = (typeof CONTENT_CATEGORIES)[number];
+
+export type ContentSurface = "contenus" | "organisation";
 
 export type ContentSource = Readonly<{
   label: string;
@@ -19,6 +27,7 @@ export type ContentCatalogEntry = Readonly<{
   shortTitle: string;
   summary: string;
   category: ContentCategory;
+  surfaces: readonly ContentSurface[];
   tags: readonly string[];
   status: "draft" | "published";
   publishedAt: string;
@@ -50,6 +59,7 @@ const contentCatalog = [
     summary:
       "Le calendrier 2026-2027, la différence entre e-invoicing et e-reporting, et les vérifications à mener sur vos outils, votre plateforme et vos données.",
     category: "Gestion & conformité",
+    surfaces: ["contenus"],
     tags: [
       "facturation électronique",
       "e-invoicing",
@@ -168,6 +178,20 @@ export function getAllPublishedContent(): ContentCatalogEntry[] {
     .filter((entry) => entry.status === "published")
     .map((entry) => ({ ...entry }))
     .sort((left, right) => right.publishedAt.localeCompare(left.publishedAt));
+}
+
+export function getPublishedOrganisationContent(): ContentCatalogEntry[] {
+  return getAllPublishedContent().filter((entry) =>
+    entry.surfaces.includes("organisation"),
+  );
+}
+
+export const ORGANISATION_TRANSVERSE_LAUNCH_MINIMUM = 6;
+
+export function isOrganisationTransverseLibraryReady(
+  publishedContentCount = getPublishedOrganisationContent().length,
+) {
+  return publishedContentCount >= ORGANISATION_TRANSVERSE_LAUNCH_MINIMUM;
 }
 
 export function getPublishedContentBySlug(slug: string) {

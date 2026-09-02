@@ -40,6 +40,7 @@ export default async function ContentPage({ params }: ContentPageProps) {
 
   const slides = entry.media.slides ?? [];
   const heroImage = entry.media.youtubeThumbnail ?? slides[0];
+  const isOrganisationContent = entry.surfaces.includes("organisation");
   const jsonLd = buildContentJsonLd(entry);
 
   return (
@@ -53,11 +54,11 @@ export default async function ContentPage({ params }: ContentPageProps) {
 
         <article className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
           <Link
-            href="/organiser#cas-concrets"
+            href={isOrganisationContent ? "/organiser#cas-concrets" : "/contenus"}
             className="inline-flex items-center gap-2 text-sm text-dema-muted transition hover:text-dema-forest"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Retour à Organisation
+            {isOrganisationContent ? "Retour à Organisation" : "Retour aux contenus"}
           </Link>
 
           <header className="mx-auto mt-8 max-w-4xl text-center">
@@ -75,15 +76,37 @@ export default async function ContentPage({ params }: ContentPageProps) {
             </p>
           </header>
 
-          <div className="mx-auto max-w-5xl">
-            <CaseVideoOverview
-              title={entry.title}
-              thumbnail={getOrganiserThumbnailPath(entry.slug)}
-              items={entry.article.map((section) => section.heading)}
-            />
-          </div>
+          {entry.media.youtubeId ? (
+            <section className="mx-auto mt-12 max-w-5xl sm:mt-14">
+              <div className="relative aspect-video overflow-hidden rounded-[1.5rem] border border-dema-line bg-black shadow-[0_14px_36px_rgba(23,35,29,0.045)]">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${entry.media.youtubeId}`}
+                  title={entry.title}
+                  className="absolute inset-0 h-full w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            </section>
+          ) : (
+            <div className="mx-auto max-w-5xl">
+              <CaseVideoOverview
+                title={entry.title}
+                thumbnail={getOrganiserThumbnailPath(entry.slug)}
+                items={entry.article.map((section) => section.heading)}
+              />
+            </div>
+          )}
 
-          {heroImage ? (
+          {entry.media.youtubeId ? (
+            <div className="mx-auto max-w-5xl">
+              <CaseVideoOverview
+                hideMedia
+                title={entry.title}
+                items={entry.article.map((section) => section.heading)}
+              />
+            </div>
+          ) : heroImage ? (
             <section className="mx-auto mt-10 max-w-5xl">
               <div className="overflow-hidden rounded-[1.5rem] border border-dema-line bg-white shadow-[0_14px_36px_rgba(23,35,29,0.045)]">
                 <div className="relative aspect-video">
@@ -148,27 +171,29 @@ export default async function ContentPage({ params }: ContentPageProps) {
             </aside>
           </div>
 
-          <section className="mx-auto mt-14 max-w-5xl border-t border-dema-line pt-8">
-            <h2 className="text-xl font-normal text-brand-blue">Sources officielles</h2>
-            <p className="mt-2 text-sm text-dema-muted">
-              La réglementation peut évoluer. Vérifiez ces sources avant toute décision de conformité.
-            </p>
-            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-              {entry.sources.map((source) => (
-                <li key={source.href}>
-                  <a
-                    href={source.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex h-full items-start justify-between gap-3 rounded-[1rem] border border-dema-line bg-dema-paper p-4 text-sm leading-relaxed text-brand-blue transition hover:border-dema-forest/20"
-                  >
-                    <span>{source.label}</span>
-                    <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
+          {entry.sources.length ? (
+            <section className="mx-auto mt-14 max-w-5xl border-t border-dema-line pt-8">
+              <h2 className="text-xl font-normal text-brand-blue">Sources officielles</h2>
+              <p className="mt-2 text-sm text-dema-muted">
+                La réglementation peut évoluer. Vérifiez ces sources avant toute décision de conformité.
+              </p>
+              <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                {entry.sources.map((source) => (
+                  <li key={source.href}>
+                    <a
+                      href={source.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex h-full items-start justify-between gap-3 rounded-[1rem] border border-dema-line bg-dema-paper p-4 text-sm leading-relaxed text-brand-blue transition hover:border-dema-forest/20"
+                    >
+                      <span>{source.label}</span>
+                      <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
         </article>
       </main>
     </>

@@ -8,7 +8,10 @@ import nextConfig from "../next.config";
 import {
   getAllPublishedContent,
   getContentFormat,
+  getPublishedOrganisationContent,
   getPublishedContentBySlug,
+  isOrganisationTransverseLibraryReady,
+  ORGANISATION_TRANSVERSE_LAUNCH_MINIMUM,
 } from "@/lib/content-catalog";
 import {
   buildContentJsonLd,
@@ -36,17 +39,26 @@ describe("canonical content catalog", () => {
     }
   });
 
-  it("presents the electronic invoicing guide as a concrete Organisation case", () => {
+  it("keeps electronic invoicing in Contenus and prepares real Organisation videos", () => {
     const contentPage = readFileSync(
       resolve(process.cwd(), "src/app/(marketing)/contenus/[slug]/page.tsx"),
       "utf8",
     );
 
     expect(contentPage).toContain('<Navbar minimal publicNavigationActiveView="academy" />');
-    expect(contentPage).toContain('href="/organiser#cas-concrets"');
+    expect(getPublishedOrganisationContent()).toEqual([]);
+    expect(contentPage).toContain('entry.surfaces.includes("organisation")');
+    expect(contentPage).toContain('isOrganisationContent ? "/organiser#cas-concrets" : "/contenus"');
+    expect(contentPage).toContain("www.youtube-nocookie.com/embed/");
     expect(contentPage).toContain("<CaseVideoOverview");
     expect(contentPage).toContain("items={entry.article.map((section) => section.heading)}");
     expect(contentPage).toContain("<NumberedSectionHeading");
+  });
+
+  it("keeps the legacy library until a complete first transverse series is published", () => {
+    expect(ORGANISATION_TRANSVERSE_LAUNCH_MINIMUM).toBe(6);
+    expect(isOrganisationTransverseLibraryReady(5)).toBe(false);
+    expect(isOrganisationTransverseLibraryReady(6)).toBe(true);
   });
 
   it("uses only the four official sources selected for the legal review", () => {

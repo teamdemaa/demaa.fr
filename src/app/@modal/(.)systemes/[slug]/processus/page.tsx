@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import SystemProcessesContent from "@/components/SystemProcessesContent";
 import SystemProcessesRouteDialog from "@/components/SystemProcessesRouteDialog";
 import { getSystemDetailPageData } from "@/lib/system-detail-page";
+import { getSystemProcessGuideDetails } from "@/lib/system-process-guide-details";
 
 type SystemProcessesModalPageProps = {
   params: Promise<{ slug: string }>;
@@ -13,13 +14,16 @@ export default async function SystemProcessesModalPage({
   const { slug } = await params;
   const data = await getSystemDetailPageData(slug);
   if (!data) notFound();
+  const routines = data.detail.systeme?.routines ?? [];
+  if (!routines.length) notFound();
 
   return (
     <SystemProcessesRouteDialog ariaLabel={`Processus métier : ${data.system.name}`}>
       <SystemProcessesContent
-        routines={data.detail.systeme?.routines ?? []}
+        routines={routines}
         systemName={data.system.name}
         systemSlug={data.system.slug}
+        processGuideDetails={getSystemProcessGuideDetails(data.system.slug, routines)}
         variant="modal"
       />
     </SystemProcessesRouteDialog>

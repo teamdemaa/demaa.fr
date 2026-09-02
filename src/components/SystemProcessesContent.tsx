@@ -1,7 +1,9 @@
 import { X } from "lucide-react";
 import Link from "next/link";
 import SystemRecapPrintButton from "@/components/SystemRecapPrintButton";
+import SystemProcessGuideDetails from "@/components/SystemProcessGuideDetails";
 import type { SystemeRoutine } from "@/lib/systeme-catalog";
+import type { SystemProcessGuideDetail } from "@/lib/system-process-guide-details";
 
 export default function SystemProcessesContent({
   routines,
@@ -9,12 +11,14 @@ export default function SystemProcessesContent({
   systemSlug,
   variant = "page",
   closeHref,
+  processGuideDetails = [],
 }: {
   routines: readonly SystemeRoutine[];
   systemName: string;
   systemSlug: string;
   variant?: "modal" | "page";
   closeHref?: string;
+  processGuideDetails?: readonly SystemProcessGuideDetail[];
 }) {
   const Heading = variant === "modal" ? "h2" : "h1";
   const SectionHeading = variant === "modal" ? "h3" : "h2";
@@ -89,6 +93,11 @@ export default function SystemProcessesContent({
                       </li>
                     ))}
                   </ul>
+                  <SystemProcessGuideDetails
+                    details={processGuideDetails.filter(
+                      (detail) => detail.routineId === routine.routineId,
+                    )}
+                  />
                 </div>
               </div>
             </article>
