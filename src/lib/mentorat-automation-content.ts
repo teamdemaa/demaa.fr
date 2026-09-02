@@ -63,14 +63,19 @@ export const mentoratAutomationContent = {
   ],
   faq: [
     {
-      question: "Faut-il savoir coder ?",
+      question: "Je ne sais pas par où commencer. Est-ce un problème ?",
       answer:
-        "Non. Nous partons du travail quotidien de votre entreprise et adaptons la méthode au niveau des personnes qui participent.",
+        "Non. La préparation et l’atelier de travail servent justement à comprendre votre fonctionnement, repérer ce qui vous fait perdre du temps et définir les priorités avec vous.",
     },
     {
-      question: "Faut-il déjà savoir quoi améliorer ?",
+      question: "Est-ce adapté à notre activité ?",
       answer:
-        "Non. La préparation et l’atelier de travail servent précisément à comprendre votre fonctionnement et à définir ce qui doit être organisé, connecté ou automatisé.",
+        "Nous ne partons pas d’une méthode toute faite. Nous examinons la manière dont votre entreprise travaille réellement, puis nous adaptons l’organisation et les solutions à votre activité.",
+    },
+    {
+      question: "Combien de temps cela demande-t-il à mon équipe ?",
+      answer:
+        "Nous prenons en charge la conception et la mise en place. Votre équipe intervient aux moments utiles pour nous expliquer la réalité du terrain, valider les choix et tester le nouveau fonctionnement.",
     },
     {
       question: "Devons-nous changer nos outils ?",
@@ -78,19 +83,14 @@ export const mentoratAutomationContent = {
         "Non. Nous partons de votre fonctionnement et des outils déjà utilisés par votre équipe. Nous recommandons un changement uniquement lorsque l’existant ne permet pas d’atteindre le résultat recherché.",
     },
     {
-      question: "Est-ce une formation ?",
+      question: "Que peut-on réellement mettre en place en un mois ?",
       answer:
-        "Non. Nous ne vous laissons pas avec une méthode à appliquer seul. Nous définissons le plan avec vous, puis nous mettons en place les éléments validés et les transmettons à votre équipe.",
+        "Le périmètre dépend de votre fonctionnement : organisation d’un suivi, circulation des informations, production de documents, automatisation d’étapes répétitives ou amélioration d’un outil interne. La feuille de route est définie et validée avec vous avant l’exécution.",
     },
     {
-      question: "Que peut-on améliorer en un mois ?",
+      question: "Mon équipe pourra-t-elle continuer sans vous ?",
       answer:
-        "Le périmètre dépend de votre fonctionnement : organisation d’un suivi, circulation des informations, production de documents, automatisation d’étapes répétitives ou amélioration d’un outil interne. Le plan est défini et validé avec vous avant l’exécution.",
-    },
-    {
-      question: "Comment se déroule la demande de rappel ?",
-      answer:
-        "Vous laissez vos coordonnées et nous vous rappelons pour un échange de 30 minutes, sans engagement. Nous faisons le point sur vos priorités et vérifions si l’accompagnement est adapté.",
+        "Oui. Nous transmettons un fonctionnement utilisable et modifiable, puis nous montrons aux personnes concernées comment s’en servir et le faire évoluer au quotidien.",
     },
   ],
 } as const;
