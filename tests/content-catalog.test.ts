@@ -49,24 +49,28 @@ describe("canonical content catalog", () => {
     const organisationContent = getPublishedOrganisationContent();
     expect(organisationContent).toHaveLength(16);
     expect(organisationContent.map(({ title }) => title)).toEqual([
-      "Comment ne plus passer ses journées à gérer les urgences",
-      "Comment centraliser ses tâches sans changer tous ses outils",
-      "Comment transformer ses réunions en décisions et en actions",
-      "Comment rendre son équipe plus autonome sans perdre le contrôle",
-      "Comment organiser ses informations pour que l’équipe les retrouve seule",
-      "Comment automatiser ses tâches administratives sans multiplier les erreurs",
-      "Comment organiser les relances sans courir après son équipe",
-      "Comment suivre l’avancement de ses dossiers en un coup d’œil",
-      "Comment suivre chaque demande client de la réception à la réponse",
-      "Comment mettre en place une méthode de travail commune",
-      "Comment organiser son entreprise pour qu’elle fonctionne aussi en son absence",
-      "Comment organiser le planning d’une équipe malgré les imprévus",
-      "Comment supprimer les doubles saisies entre ses outils",
-      "Comment documenter les façons de travailler sans créer une usine à gaz",
-      "Comment construire un tableau de bord réellement utile",
-      "Comment structurer l’arrivée d’un salarié pour le rendre autonome plus vite",
+      "Comment ne plus passer ses journées à gérer les urgences ?",
+      "Comment centraliser ses tâches sans changer tous ses outils ?",
+      "Comment transformer ses réunions en décisions et en actions ?",
+      "Comment rendre son équipe plus autonome sans perdre le contrôle ?",
+      "Comment organiser ses informations pour que l’équipe les retrouve seule ?",
+      "Comment automatiser ses tâches administratives sans multiplier les erreurs ?",
+      "Comment organiser les relances sans courir après son équipe ?",
+      "Comment suivre l’avancement de ses dossiers en un coup d’œil ?",
+      "Comment suivre chaque demande client de la réception à la réponse ?",
+      "Comment mettre en place une méthode de travail commune ?",
+      "Comment organiser son entreprise pour qu’elle fonctionne aussi en son absence ?",
+      "Comment organiser le planning d’une équipe malgré les imprévus ?",
+      "Comment supprimer les doubles saisies entre ses outils ?",
+      "Comment documenter les façons de travailler sans créer une usine à gaz ?",
+      "Comment construire un tableau de bord réellement utile ?",
+      "Comment structurer l’arrivée d’un salarié pour le rendre autonome plus vite ?",
     ]);
     expect(organisationContent.every((entry) => getContentFormat(entry) === "Article")).toBe(true);
+    expect(organisationContent.every((entry) => entry.title.endsWith("?"))).toBe(true);
+    expect(JSON.stringify(organisationContent)).not.toMatch(
+      /\b(index|registre|matrice|escalade|déterministe|déclencheur|flux|référent)\b|vue de pilotage|source de référence|carte de continuité|carte de données|preuve observable|arborescence|convention de nommage/i,
+    );
     const expectedStructure = [
       "Ce qui bloque aujourd’hui",
       "Le résultat à obtenir",
@@ -91,10 +95,14 @@ describe("canonical content catalog", () => {
     }
     expect(contentPage).toContain('entry.surfaces.includes("organisation")');
     expect(contentPage).toContain('isOrganisationContent ? "/organiser#cas-concrets" : "/contenus"');
+    expect(contentPage).toContain("{!isOrganisationContent ? (");
     expect(contentPage).toContain("www.youtube-nocookie.com/embed/");
     expect(contentPage).toContain("<CaseVideoOverview");
     expect(contentPage).toContain("items={entry.article.map((section) => section.heading)}");
     expect(contentPage).toContain("<NumberedSectionHeading");
+    expect(contentPage).toContain("Un modèle pour passer à l’action");
+    expect(contentPage).toContain("Utiliser ce modèle");
+    expect(contentPage).toContain("?from=organisation");
   });
 
   it("keeps the legacy library until a complete first transverse series is published", () => {
