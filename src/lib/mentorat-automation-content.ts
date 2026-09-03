@@ -69,15 +69,6 @@ export const mentoratAutomationContent = {
     title: "Nous travaillons dans vos outils actuels.",
     description:
       "Nous intervenons directement dans les outils que votre équipe utilise déjà. Un nouvel outil n’est proposé que si l’existant ne permet pas d’obtenir le résultat attendu.",
-    examples: [
-      "Gmail ou Outlook",
-      "Google Drive ou OneDrive",
-      "Notion",
-      "Votre CRM",
-      "Votre outil de devis ou de facturation",
-    ],
-    access:
-      "Vous nous accordez uniquement les accès nécessaires à la mission et vous pouvez les retirer à tout moment.",
   },
   method: [
     {

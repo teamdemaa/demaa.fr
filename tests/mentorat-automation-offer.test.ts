@@ -82,11 +82,10 @@ describe("Mise en place de systèmes opérationnels", () => {
     expect(landing).not.toContain("4 × 1 heure");
     expect(landing).not.toContain("1 à 3");
     expect(mentoratAutomationContent.tools.title).toBe("Nous travaillons dans vos outils actuels.");
-    expect(mentoratAutomationContent.tools.examples).toContain("Gmail ou Outlook");
-    expect(mentoratAutomationContent.tools.access).toContain("uniquement les accès nécessaires");
-    expect(mentoratAutomationContent.tools.access).not.toContain("codes");
     expect(landing).toContain("/images/accompagnement/outils-organises.png");
-    expect(landing).toContain("Nous mettons en place le classement");
+    expect(landing).not.toContain("Nous mettons en place le classement");
+    expect(landing).not.toContain("Gmail ou Outlook");
+    expect(landing).not.toContain("uniquement les accès nécessaires");
     expect(landing).not.toContain("Votre fonctionnement réel");
     expect(landing).not.toContain("Un système clair");
     expect(landing).not.toContain("Vos outils configurés");

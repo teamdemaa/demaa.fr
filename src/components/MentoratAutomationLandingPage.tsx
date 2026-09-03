@@ -214,24 +214,6 @@ export default function MentoratAutomationLandingPage() {
               sizes="(min-width: 1024px) 900px, 92vw"
               className="mx-auto mt-8 h-auto w-full max-w-5xl mix-blend-darken"
             />
-            <p className="mt-5 max-w-4xl text-base font-medium leading-7 text-brand-blue">
-              Nous mettons en place le classement, les modèles, les étapes, les responsables et
-              les relances — directement dans vos outils.
-            </p>
-            <ul className="mt-6 flex flex-wrap gap-2">
-              {content.tools.examples.map((tool) => (
-                <li
-                  key={tool}
-                  className="rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-xs text-dema-muted"
-                >
-                  {tool}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 flex max-w-3xl items-start gap-3 rounded-2xl bg-dema-sage/35 px-5 py-4 text-sm leading-6 text-dema-forest">
-              <Check className="mt-1 h-4 w-4 shrink-0" aria-hidden="true" />
-              <span>{content.tools.access}</span>
-            </p>
           </div>
         </section>
 
