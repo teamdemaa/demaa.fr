@@ -26,11 +26,12 @@ describe("copyable model public routes", () => {
     expect(page).toContain('path: "/modeles"');
     expect(navbar).toContain('label: "Organisation"');
     expect(navbar).toContain('href: "/organiser"');
-    expect(organiserHub).not.toContain("getPublishedCopyableModels");
+    expect(organiserHub).toContain("getPublishedCopyableModels");
     expect(organiserHub).toContain("<OrganiserLibrary");
     expect(organiserHub).not.toContain("SOLUTION_RAIL_CLASS_NAME");
-    expect(organiserLibrary).not.toContain("<CopyableModelCard");
-    expect(organiserLibrary).toContain("Passez directement à l’action");
+    expect(organiserLibrary).toContain("<CopyableModelCard");
+    expect(organiserLibrary).toContain("Modèles prêts à copier");
+    expect(organiserLibrary).toContain("Voir tous les modèles");
     expect(organiserLibrary).toContain('href="/modeles?from=organisation"');
     expect(page).toContain('fromOrganisation={source === "organisation"}');
     expect(modelsIndex).toContain('href="/organiser#cas-concrets"');
@@ -52,7 +53,7 @@ describe("copyable model public routes", () => {
     expect(modelsIndex).toContain("titleLevel={3}");
     expect(modelsIndex).not.toContain("Des processus concrets pour se projeter vraiment");
     expect(organiserLibrary).toContain('id="cas-concrets"');
-    expect(organiserLibrary).not.toContain('aria-labelledby="organiser-models-heading"');
+    expect(organiserLibrary).toContain('aria-labelledby="organiser-models-heading"');
     expect(organiserLibrary).toContain("OrganiserProcessMap");
     expect(organiserLibrary).not.toContain(".slice(0, 5)");
   });

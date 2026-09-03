@@ -1,12 +1,14 @@
 "use client";
 
-import { Check, Copy, Mail, Printer } from "lucide-react";
+import { Check, Copy, Download, Mail, Printer } from "lucide-react";
 import { useState } from "react";
 import SystemProcessesEmailDialog from "@/components/SystemProcessesEmailDialog";
 
 export default function SystemRecapPrintButton({
+  downloadHref,
   emailDelivery,
 }: {
+  downloadHref?: string;
   emailDelivery?: {
     systemName: string;
     systemSlug: string;
@@ -38,15 +40,27 @@ export default function SystemRecapPrintButton({
     <>
       <div className="w-full print:hidden sm:w-auto sm:max-w-md">
         <div className="flex w-full flex-col gap-3 min-[440px]:flex-row sm:gap-4">
-          <button
-            type="button"
-            onClick={handlePrint}
-            aria-label="Imprimer ou enregistrer en PDF"
-            className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-dema-forest/20 bg-white px-2.5 py-3 text-[0.625rem] font-semibold text-dema-forest transition hover:border-dema-forest/35 hover:bg-dema-sage/30 min-[360px]:text-xs sm:flex-none sm:px-4 sm:text-sm"
-          >
-            <Printer className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" aria-hidden="true" />
-            Imprimer le document
-          </button>
+          {downloadHref ? (
+            <a
+              href={downloadHref}
+              download
+              aria-label="Télécharger le document au format PDF"
+              className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-dema-forest/20 bg-white px-2.5 py-3 text-[0.625rem] font-semibold text-dema-forest transition hover:border-dema-forest/35 hover:bg-dema-sage/30 min-[360px]:text-xs sm:flex-none sm:px-4 sm:text-sm"
+            >
+              <Download className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" aria-hidden="true" />
+              Télécharger le document
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={handlePrint}
+              aria-label="Imprimer ou enregistrer en PDF"
+              className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-dema-forest/20 bg-white px-2.5 py-3 text-[0.625rem] font-semibold text-dema-forest transition hover:border-dema-forest/35 hover:bg-dema-sage/30 min-[360px]:text-xs sm:flex-none sm:px-4 sm:text-sm"
+            >
+              <Printer className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" aria-hidden="true" />
+              Imprimer le document
+            </button>
+          )}
           {emailDelivery ? (
             <button
               type="button"

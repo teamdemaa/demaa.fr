@@ -168,7 +168,7 @@ export default async function ContentPage({ params }: ContentPageProps) {
                       aria-labelledby="related-model-title"
                     >
                       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">
-                        Un modèle pour passer à l’action
+                        Le modèle prêt à copier
                       </p>
                       <h2 id="related-model-title" className="mt-3 text-xl font-light tracking-[-0.025em] text-brand-blue sm:text-2xl">
                         {relatedModel.title}

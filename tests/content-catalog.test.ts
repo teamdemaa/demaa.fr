@@ -100,7 +100,7 @@ describe("canonical content catalog", () => {
     expect(contentPage).toContain("<CaseVideoOverview");
     expect(contentPage).toContain("items={entry.article.map((section) => section.heading)}");
     expect(contentPage).toContain("<NumberedSectionHeading");
-    expect(contentPage).toContain("Un modèle pour passer à l’action");
+    expect(contentPage).toContain("Le modèle prêt à copier");
     expect(contentPage).toContain("Utiliser ce modèle");
     expect(contentPage).toContain("?from=organisation");
   });

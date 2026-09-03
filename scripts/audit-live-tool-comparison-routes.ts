@@ -205,6 +205,9 @@ console.log(
   ),
 );
 
-if (errors.length || unavailable.length || registryDrift.length) {
+// The local snapshot is a frozen migration fixture, not a production fallback.
+// Its drift from Firebase remains visible in the report but must not invalidate
+// an otherwise healthy audit of the active production revision.
+if (errors.length || unavailable.length) {
   process.exitCode = 1;
 }

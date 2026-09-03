@@ -13,13 +13,21 @@ import { buildFirestoreToolComparisonImportPlan } from "@/lib/firebase-tool-comp
 
 const root = new URL("../", import.meta.url);
 const read = (path: string) => readFile(new URL(path, root), "utf8");
-const [artifactSource, readerSource, packageSource, canonicalSource, pageSource] =
+const [
+  artifactSource,
+  readerSource,
+  packageSource,
+  canonicalSource,
+  pageSource,
+  comparisonRouteSource,
+] =
   await Promise.all([
     read("docs/research/d091-tools/firebase-only-comparison-candidate.generated.json"),
     read("src/lib/firebase-solution-registry.server.ts"),
     read("package.json"),
     read("src/lib/canonical-services-system-section.server.ts"),
     read("src/app/(marketing)/solutions/[slug]/page.tsx"),
+    read("src/components/ToolComparisonRoute.tsx"),
   ]);
 const artifact = JSON.parse(artifactSource);
 const packageJson = JSON.parse(packageSource);
@@ -90,8 +98,11 @@ if (packageJson.scripts?.["start:local-data"]) {
 if (/LOCAL_PILOT_SOFTWARE_SYSTEMS|getRenderableSolutionSectionsForSystem/.test(canonicalSource)) {
   errors.push("Canonical public sections still replace Firebase software locally.");
 }
-if (!pageSource.includes("getFirebaseToolComparisonViewForRevision")) {
-  errors.push("The public solution page does not read its comparison from Firebase.");
+if (pageSource.includes("getFirebaseToolComparisonViewForRevision")) {
+  errors.push("The public solution page eagerly reads a comparison it does not render.");
+}
+if (!comparisonRouteSource.includes("getFirebaseToolComparisonViewForRevision")) {
+  errors.push("The public comparison route does not read its comparison from Firebase.");
 }
 
 if (errors.length > 0) {

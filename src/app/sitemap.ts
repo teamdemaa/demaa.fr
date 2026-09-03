@@ -25,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = getCanonicalBaseUrl();
   // Keep sitemap modification dates stable. Using the request time would tell
   // crawlers that every one of the 800+ URLs changed on every request.
-  const siteUpdatedAt = new Date("2026-08-29T00:00:00.000Z");
+  const siteUpdatedAt = new Date("2026-09-03T00:00:00.000Z");
   const [tools, enterprises, accountingFirms] = await Promise.all([
     getUnifiedToolDirectory(),
     getEnterpriseCatalog(),

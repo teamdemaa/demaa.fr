@@ -36,14 +36,18 @@ export default async function ToolComparisonRoute({
     systemSlug: slug,
     sections: visibleSections,
   });
+  const software = visibleSections.find(({ section }) => section === "software");
 
-  if (!comparison) notFound();
+  if (!software || software.placements.length < 2) notFound();
 
   return (
     <ToolComparisonContextShell
       comparison={comparison}
       closeHref={`/solutions/${slug}`}
       closeWithBack={closeWithBack}
+      softwarePlacements={software.placements}
+      systemName={data.system.name}
+      systemSlug={slug}
     />
   );
 }

@@ -1,13 +1,13 @@
 export const AUTOMATION_OFFER = {
   durationLabel: "1 mois",
   name: "Maestro",
-  serviceName: "Accompagnement automatisation et IA",
+  serviceName: "Mise en place de systèmes opérationnels",
   packageSlug: "automatisation-essentielle",
   price: {
-    amountMinor: 250000,
+    amountMinor: 350000,
     currency: "EUR",
-    label: "2 500 € HT",
+    label: "3 500 € HT",
   },
   summary:
-    "Un mois pour organiser votre fonctionnement et mettre en place les outils et automatisations utiles.",
+    "Un mois pour clarifier votre fonctionnement et mettre en place les systèmes opérationnels prioritaires définis avec vous.",
 } as const;

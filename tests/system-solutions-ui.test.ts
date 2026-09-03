@@ -77,8 +77,8 @@ describe("system Solutions UI", () => {
       }),
     );
 
-    expect(markup).toContain("Comparer les outils");
-    expect(markup.indexOf("Comparer les outils")).toBeLessThan(
+    expect(markup).toContain("Choisir ses outils");
+    expect(markup.indexOf("Choisir ses outils")).toBeLessThan(
       markup.indexOf("Voir les solutions précédentes - Outils"),
     );
   });
@@ -655,11 +655,16 @@ describe("system Solutions UI", () => {
 
   it("keeps the registry server-side and crosses RSC with public DTOs only", async () => {
     const pageSource = await readSource("src/app/(marketing)/solutions/[slug]/page.tsx");
+    const comparisonRouteSource = await readSource(
+      "src/components/ToolComparisonRoute.tsx",
+    );
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const solutionsSource = await readSource("src/components/SystemSolutionsTab.tsx");
 
     expect(pageSource).toContain("getActiveFirebaseSolutionRegistryRevision");
-    expect(pageSource).toContain("getFirebaseToolComparisonViewForRevision");
+    expect(comparisonRouteSource).toContain(
+      "getFirebaseToolComparisonViewForRevision",
+    );
     expect(pageSource).toContain(
       'from "@/lib/firebase-solution-registry-selection.server"',
     );

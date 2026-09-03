@@ -348,13 +348,13 @@ export default function AcademyCoursePlayer({
               <p className="mx-auto mt-3 max-w-xl leading-relaxed text-dema-muted">
                 {localeCode === "en"
                   ? "You can return to the Academy or put the course into practice."
-                  : "Vous pouvez revenir à l’espace Organisation ou passer directement à l’action."}
+                  : "Vous pouvez revenir à l’espace Organisation ou appliquer ce que vous venez d’apprendre."}
               </p>
 
               {content.action ? (
                 <div className="mx-auto mt-8 max-w-xl border-y border-dema-line py-6 text-left">
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-dema-forest">
-                    {localeCode === "en" ? "Put it into practice" : "Pour passer à l’action"}
+                    {localeCode === "en" ? "Put it into practice" : "À appliquer maintenant"}
                   </p>
                   <h2 className="mt-2 text-2xl font-semibold text-brand-blue">{content.action.title}</h2>
                   <p className="mt-2 text-sm leading-relaxed text-dema-muted">{content.action.description}</p>

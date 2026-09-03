@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Search, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
+import CopyableModelCard from "@/components/CopyableModelCard";
 import OrganiserProcessMap from "@/components/OrganiserProcessMap";
 import type { AcademyProcessStep } from "@/lib/academy-course-content";
+import type { CopyableModelDefinition } from "@/lib/copyable-model-catalog";
 import { matchesSearchQuery } from "@/lib/search";
 
 export type OrganiserGuideCardData = Readonly<{
@@ -35,6 +37,7 @@ export type OrganiserProcessCardData = Readonly<{
 
 type OrganiserLibraryProps = Readonly<{
   guides: readonly OrganiserGuideCardData[];
+  models: readonly CopyableModelDefinition[];
   processes: readonly OrganiserProcessCardData[];
 }>;
 
@@ -77,7 +80,7 @@ function getOrganiserFilter(category: string): OrganiserFilter {
   return "Clients & ventes";
 }
 
-export default function OrganiserLibrary({ guides, processes }: OrganiserLibraryProps) {
+export default function OrganiserLibrary({ guides, models, processes }: OrganiserLibraryProps) {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<OrganiserFilter>(ALL_FILTERS);
   const [areFiltersVisible, setAreFiltersVisible] = useState(false);
@@ -255,26 +258,41 @@ export default function OrganiserLibrary({ guides, processes }: OrganiserLibrary
       ) : null}
 
       {!query && activeFilter === ALL_FILTERS ? (
-        <section className="px-4 pb-4 pt-2 sm:px-6 lg:px-8" aria-label="Bibliothèque de modèles">
-          <Link
-            href="/modeles?from=organisation"
-            className="group mx-auto flex w-full max-w-7xl flex-col gap-6 rounded-[1.5rem] border border-dema-forest/12 bg-dema-sage/30 px-6 py-7 transition hover:border-dema-forest/24 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-8"
-          >
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest/65">
-                Modèles prêts à utiliser
-              </p>
-              <h2 className="mt-2 text-2xl font-light tracking-[-0.03em] text-brand-blue sm:text-3xl">
-                Passez directement à l’action
+        <section
+          className="px-4 pb-4 pt-2 sm:px-6 lg:px-8"
+          aria-labelledby="organiser-models-heading"
+        >
+          <div className="mx-auto w-full max-w-7xl">
+            <div className="flex items-end justify-between gap-6">
+              <h2
+                id="organiser-models-heading"
+                className="text-2xl font-light tracking-[-0.03em] text-brand-blue sm:text-3xl"
+              >
+                Modèles prêts à copier
               </h2>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-dema-muted sm:text-base">
-                Retrouvez les modèles Demaa à copier et à adapter à votre activité.
-              </p>
+              <Link
+                href="/modeles?from=organisation"
+                className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
+              >
+                Voir tous les modèles
+                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
+              </Link>
             </div>
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-dema-forest text-white transition group-hover:translate-x-0.5">
-              <ArrowRight className="h-5 w-5" aria-hidden="true" />
-            </span>
-          </Link>
+
+            <div className="-mx-4 mt-6 overflow-x-auto px-4 pb-4 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+              <div className="grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[84%] items-stretch gap-4 overscroll-x-contain sm:auto-cols-[48%] lg:auto-cols-[calc((100%_-_2rem)_/_3)] xl:auto-cols-[calc((100%_-_3rem)_/_4)]">
+                {models.map((model) => (
+                  <div key={model.slug} className="min-w-0 snap-start">
+                    <CopyableModelCard
+                      href={`/modeles/${model.slug}?from=organisation`}
+                      model={model}
+                      titleLevel={3}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </section>
       ) : null}
     </div>

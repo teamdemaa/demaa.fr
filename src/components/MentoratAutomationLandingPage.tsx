@@ -1,9 +1,34 @@
 import Link from "next/link";
-import { ArrowRight, Check, ChevronDown, ClipboardCheck } from "lucide-react";
+import Image from "next/image";
+import {
+  ArrowRight,
+  Calendar,
+  Check,
+  ChevronDown,
+  ClipboardCheck,
+  ClipboardList,
+  FileText,
+  Folder,
+  Mail,
+  MessageSquare,
+  Receipt,
+  Send,
+} from "lucide-react";
 import AutomationCallbackControl from "@/components/AutomationCallbackControl";
 import Navbar from "@/components/Navbar";
 import { mentoratAutomationContent as content } from "@/lib/mentorat-automation-content";
 import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
+
+const systemIcons = [
+  Mail,
+  MessageSquare,
+  FileText,
+  Receipt,
+  ClipboardList,
+  Folder,
+  Calendar,
+  Send,
+] as const;
 
 export default function MentoratAutomationLandingPage() {
   return (
@@ -18,9 +43,9 @@ export default function MentoratAutomationLandingPage() {
               className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}
             >
               <span aria-hidden="true">
-                <span className="block">Organisez votre entreprise</span>
+                <span className="block">Mettez de l’ordre dans votre entreprise.</span>
                 <span className="demaa-hero-title mt-2 block text-dema-forest">
-                  pour qu’elle dépende moins de vous.
+                  Et des systèmes pour que ça dure.
                 </span>
               </span>
             </h1>
@@ -28,12 +53,30 @@ export default function MentoratAutomationLandingPage() {
               {content.hero.description}
             </p>
             <div className="mt-8 flex flex-col items-center">
-              <AutomationCallbackControl variant="hero" label="Être accompagné" />
+              <AutomationCallbackControl variant="hero" label="Faire le point sur mon organisation" />
               <p className="mt-3 text-xs text-dema-muted">
                 Échange de 30 minutes · Sans engagement
               </p>
             </div>
+            <Image
+              src="/images/accompagnement/dirigeante-debordee.png"
+              alt="Une dirigeante sollicitée par les messages, les appels, les documents et le planning de son entreprise"
+              width={1536}
+              height={1024}
+              priority
+              sizes="(min-width: 1024px) 800px, 92vw"
+              className="mx-auto mt-8 h-auto w-full max-w-4xl mix-blend-darken"
+            />
           </div>
+        </section>
+
+        <section className="bg-dema-forest px-5 py-16 text-center text-dema-paper sm:px-8 sm:py-20">
+          <p className="demaa-marketing-section-title mx-auto max-w-4xl">
+            <span className="block">Aujourd’hui, trop de choses reposent sur vous.</span>
+            <span className="demaa-section-title mt-2 block text-dema-sage">
+              Demain, chaque tâche importante suit un fonctionnement clair.
+            </span>
+          </p>
         </section>
 
         <section
@@ -41,34 +84,73 @@ export default function MentoratAutomationLandingPage() {
           className="border-y border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20"
         >
           <div className="mx-auto max-w-6xl">
-            <div className="max-w-4xl">
-              <h2 id="examples-heading" className="demaa-marketing-section-title">
-                Ce que nous pouvons remettre en ordre.
-              </h2>
+            <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.78fr)] lg:gap-12">
+              <div className="max-w-4xl">
+                <h2 id="examples-heading" className="demaa-marketing-section-title">
+                  Les systèmes que nous pouvons mettre en place.
+                </h2>
+              </div>
+              <Image
+                src="/images/accompagnement/organisation-claire.png"
+                alt="Des informations dispersées réunies dans une organisation claire"
+                width={1536}
+                height={1024}
+                sizes="(min-width: 1024px) 440px, 92vw"
+                className="mx-auto h-auto w-full max-w-xl mix-blend-darken lg:max-w-none"
+              />
             </div>
 
-            <ul className="mt-11 grid gap-x-10 gap-y-8 md:grid-cols-2">
-              {content.examples.map((example) => (
-                <li key={example} className="border-t border-dema-line pt-5">
-                  <div className="flex items-start gap-3">
-                    <Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
-                    <p className="text-base font-medium leading-7 tracking-[-0.02em]">
-                      {example}
+            <ul className="mt-11 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {content.examples.map((example, index) => {
+                const Icon = systemIcons[index];
+                return (
+                  <li
+                    key={example.title}
+                    className="flex min-h-52 flex-col rounded-[1.5rem] border border-dema-line bg-dema-cream/45 p-6"
+                  >
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-dema-sage/45 text-dema-forest">
+                      <Icon className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <h3 className="mt-7 text-lg font-medium leading-snug tracking-[-0.025em]">
+                      {example.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-6 text-dema-muted">
+                      {example.description}
                     </p>
-                  </div>
-                </li>
-              ))}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </section>
 
-        <section className="px-5 py-16 text-center sm:px-8 sm:py-20">
-          <p className="demaa-marketing-section-title mx-auto max-w-4xl">
-            <span className="block">Moins de temps consacré aux tâches chronophages.</span>
-            <span className="demaa-section-title mt-2 block text-dema-forest">
-              Plus de temps pour vos clients.
-            </span>
-          </p>
+        <section
+          aria-labelledby="system-definition-heading"
+          className="bg-dema-cream px-5 py-16 sm:px-8 sm:py-20"
+        >
+          <div className="mx-auto max-w-6xl">
+            <div className="max-w-4xl">
+              <h2 id="system-definition-heading" className="demaa-marketing-section-title">
+                {content.systemDefinition.title}
+              </h2>
+              <p className="mt-5 max-w-3xl text-base leading-7 text-dema-muted">
+                {content.systemDefinition.description}
+              </p>
+            </div>
+            <ol className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {content.systemDefinition.parts.map((part, index) => (
+                <li
+                  key={part}
+                  className="flex items-center gap-4 rounded-2xl border border-dema-line bg-dema-paper px-5 py-4"
+                >
+                  <span className="demaa-section-title text-xl text-dema-forest/48">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-sm font-medium text-brand-blue">{part}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
         </section>
 
         <section
@@ -95,6 +177,14 @@ export default function MentoratAutomationLandingPage() {
                 </li>
               ))}
             </ol>
+            <Image
+              src="/images/accompagnement/atelier-organisation.png"
+              alt="Une dirigeante et son équipe travaillent avec Demaa sur leur organisation"
+              width={1536}
+              height={1024}
+              sizes="(min-width: 1024px) 800px, 92vw"
+              className="mx-auto mt-10 h-auto w-full max-w-4xl mix-blend-darken"
+            />
             <p className="mt-10 border-t border-dema-line pt-6 text-base leading-7 text-dema-muted">
               Vous nous apportez la réalité du terrain. Nous concevons et mettons en place. Vous validez et gardez la main.
             </p>
@@ -119,15 +209,15 @@ export default function MentoratAutomationLandingPage() {
               className="mt-10 grid items-center gap-3 text-center sm:grid-cols-[1fr_auto_1fr_auto_1fr]"
             >
               <span className="rounded-full border border-dema-line bg-dema-paper px-5 py-4 text-sm text-brand-blue">
-                Vos outils actuels
+                Votre fonctionnement réel
               </span>
               <span className="hidden text-dema-forest/45 sm:block">→</span>
               <span className="rounded-full border border-dema-forest bg-dema-forest px-5 py-4 text-sm font-medium text-dema-paper">
-                Une organisation plus claire
+                Un système clair
               </span>
               <span className="hidden text-dema-forest/45 sm:block">→</span>
               <span className="rounded-full border border-dema-line bg-dema-paper px-5 py-4 text-sm text-brand-blue">
-                Moins de travail manuel
+                Vos outils configurés
               </span>
             </div>
           </div>
@@ -136,7 +226,7 @@ export default function MentoratAutomationLandingPage() {
         <section aria-labelledby="proof-heading" className="px-5 py-16 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-5xl">
             <h2 id="proof-heading" className="demaa-marketing-section-title">
-              Ce qu’ils en retiennent.
+              Ce que ces systèmes changent au quotidien.
             </h2>
             <div className="mt-11 grid gap-x-12 gap-y-8 md:grid-cols-2">
               {content.testimonials.map((testimonial) => (
@@ -164,10 +254,10 @@ export default function MentoratAutomationLandingPage() {
           <div className="mx-auto flex max-w-6xl flex-col items-start gap-9 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-3xl">
               <p className="text-xs font-medium uppercase tracking-[0.16em] text-dema-sage">
-                Maestro · Accompagnement · 1 mois
+                Maestro · Mise en place de systèmes · 1 mois
               </p>
               <h2 id="offer-heading" className="demaa-marketing-section-title mt-4">
-                Votre nouvelle organisation, mise en place en un mois.
+                Vos premiers systèmes opérationnels, mis en place en un mois.
               </h2>
               <ul className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-x-8">
                 {content.offerIncludes.map((item) => (
@@ -178,13 +268,54 @@ export default function MentoratAutomationLandingPage() {
                 ))}
               </ul>
               <p className="mt-6 text-2xl font-medium">{content.offer.price}</p>
-              <p className="mt-2 text-xs text-dema-paper/62">Par entreprise</p>
+              <p className="mt-2 text-xs text-dema-paper/62">Pour la mission d’un mois</p>
             </div>
             <div className="flex flex-col items-start sm:items-end">
-              <AutomationCallbackControl variant="offer" label="Être accompagné" />
+              <AutomationCallbackControl variant="offer" label="Faire le point" />
               <p className="mt-3 text-xs text-dema-paper/68">
                 Échange de 30 minutes · Sans engagement
               </p>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="suivi"
+          aria-labelledby="ongoing-heading"
+          className="border-b border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20"
+        >
+          <div className="mx-auto max-w-6xl">
+            <div className="max-w-4xl">
+              <p className="text-sm font-medium text-dema-forest">Une fois les systèmes installés</p>
+              <h2 id="ongoing-heading" className="demaa-marketing-section-title mt-4">
+                {content.ongoing.title}
+              </h2>
+              <p className="mt-5 max-w-3xl text-base leading-7 text-dema-muted">
+                {content.ongoing.description}
+              </p>
+            </div>
+
+            <div className="mt-10 grid gap-5 md:grid-cols-2">
+              {content.ongoing.options.map((option, index) => (
+                <article
+                  key={option.title}
+                  className="rounded-[1.5rem] border border-dema-line bg-dema-cream/40 p-6 sm:p-8"
+                >
+                  <p className="demaa-section-title text-2xl text-dema-forest/48">
+                    {String(index + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="mt-5 text-xl font-medium leading-snug tracking-[-0.025em] sm:text-2xl">
+                    {option.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-dema-muted">
+                    {option.description}
+                  </p>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-7 rounded-2xl bg-dema-sage/35 px-6 py-5">
+              <p className="text-sm leading-6 text-dema-forest">{content.ongoing.note}</p>
             </div>
           </div>
         </section>
@@ -203,7 +334,7 @@ export default function MentoratAutomationLandingPage() {
                 Vous ne savez pas encore par où commencer ?
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-7 text-dema-muted">
-                Décrivez ce qui ralentit votre entreprise et obtenez un premier plan d’action.
+                Décrivez ce qui ralentit votre entreprise et identifiez le premier système à mettre en place.
               </p>
             </div>
             <Link
@@ -248,10 +379,10 @@ export default function MentoratAutomationLandingPage() {
         <section className="border-t border-dema-line bg-dema-paper px-5 py-16 text-center sm:px-8 sm:py-20">
           <div className="mx-auto max-w-3xl">
             <h2 className="demaa-marketing-section-title">
-              Commençons par ce qui vous fait perdre le plus de temps.
+              Commençons par ce qui repose encore trop sur vous.
             </h2>
             <div className="mt-7 flex flex-col items-center">
-              <AutomationCallbackControl variant="hero" label="Être accompagné" />
+              <AutomationCallbackControl variant="hero" label="Faire le point sur mon organisation" />
               <p className="mt-3 text-xs text-dema-muted">
                 Échange de 30 minutes · Sans engagement
               </p>

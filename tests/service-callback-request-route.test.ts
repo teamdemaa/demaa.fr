@@ -177,11 +177,11 @@ describe("service callback request route", () => {
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: [
-        { label: "Service", value: "Accompagnement automatisation et IA" },
+        { label: "Service", value: "Mise en place de systèmes opérationnels" },
         { label: "Slug du service", value: "automatisation-processus" },
         { label: "Forfait", value: "Maestro" },
         { label: "Slug du forfait", value: "automatisation-essentielle" },
-        { label: "Prix de référence", value: "2 500 € HT" },
+        { label: "Prix de référence", value: "3 500 € HT" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
         { label: "Locale", value: "fr" },
         { label: "Marché", value: "fr-fr" },

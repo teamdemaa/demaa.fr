@@ -14,7 +14,7 @@ const directoryLinks = [
 ];
 
 const collaborationLinks = [
-  { label: "Accompagnement automatisation et IA", href: "/accompagnement" },
+  { label: "Systèmes opérationnels", href: "/accompagnement" },
   { label: "Demaa Studio", href: "/studio" },
   { label: "Annonces", href: "/opportunites" },
   { label: "Rejoindre Team Demaa", href: "/opportunites?intent=team-demaa-profile" },
@@ -47,7 +47,7 @@ export default function Footer() {
               />
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
-              Organisez votre entreprise pour qu’elle dépende moins de vous.
+              Mettez de l’ordre dans votre entreprise. Et des systèmes pour que ça dure.
             </p>
           </div>
 

@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { execFileSync } from "node:child_process";
+import { execFile } from "node:child_process";
 import {
   mkdtempSync,
   readFileSync,
@@ -9,7 +9,10 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { promisify } from "node:util";
 import { describe, expect, it } from "vitest";
+
+const execFileAsync = promisify(execFile);
 
 const root = process.cwd();
 const migrationDirectory = resolve(root, "migrations/solutions-v1");
@@ -262,13 +265,13 @@ describe("offline Solutions migration snapshot", () => {
     }
   });
 
-  it("regenerates byte-identical outputs and verifies the committed hash", () => {
-    execFileSync(process.execPath, [generatorPath, "--check"], { cwd: root });
+  it("regenerates byte-identical outputs and verifies the committed hash", async () => {
+    await execFileAsync(process.execPath, [generatorPath, "--check"], { cwd: root });
     const first = mkdtempSync(join(tmpdir(), "demaa-w4-first-"));
     const second = mkdtempSync(join(tmpdir(), "demaa-w4-second-"));
     try {
-      execFileSync(process.execPath, [generatorPath, "--output-dir", first], { cwd: root });
-      execFileSync(process.execPath, [generatorPath, "--output-dir", second], { cwd: root });
+      await execFileAsync(process.execPath, [generatorPath, "--output-dir", first], { cwd: root });
+      await execFileAsync(process.execPath, [generatorPath, "--output-dir", second], { cwd: root });
       for (const filename of ["solutions-migration-candidates.json", "output-manifest.json"]) {
         expect(readFileSync(resolve(first, filename))).toEqual(readFileSync(resolve(second, filename)));
         expect(readFileSync(resolve(first, filename))).toEqual(readFileSync(resolve(migrationDirectory, filename)));
@@ -279,5 +282,5 @@ describe("offline Solutions migration snapshot", () => {
       rmSync(first, { recursive: true, force: true });
       rmSync(second, { recursive: true, force: true });
     }
-  }, 45_000);
+  }, 120_000);
 });

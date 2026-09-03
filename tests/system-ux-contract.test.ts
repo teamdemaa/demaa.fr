@@ -85,6 +85,7 @@ describe("system UX contract", () => {
       processesDialogSource,
       processesEmailDialogSource,
       processesEmailRouteSource,
+      processesPdfRouteSource,
       globalStyles,
     ] = await Promise.all([
       readSource("src/components/SystemRecapPrintButton.tsx"),
@@ -94,6 +95,7 @@ describe("system UX contract", () => {
       readSource("src/components/SystemProcessesRouteDialog.tsx"),
       readSource("src/components/SystemProcessesEmailDialog.tsx"),
       readSource("src/app/api/system-processes/email/route.ts"),
+      readSource("src/app/api/system-processes/pdf/[slug]/route.ts"),
       readSource("src/app/globals.css"),
     ]);
 
@@ -102,11 +104,14 @@ describe("system UX contract", () => {
     expect(printButtonSource).toContain("Chrome, Safari ou Firefox");
     expect(printButtonSource).toContain("flex-col gap-3 min-[440px]:flex-row sm:gap-4");
     expect(printButtonSource).toContain("Imprimer le document");
+    expect(printButtonSource).toContain("Télécharger le document");
+    expect(printButtonSource).toContain("downloadHref");
     expect(printButtonSource).toContain("Recevoir le document");
     expect(processesPageSource).toContain("<SystemProcessesContent");
     expect(processesContentSource).toContain("data-system-processes");
     expect(processesContentSource).toContain("Vue d’ensemble");
     expect(processesContentSource).toContain("Processus complets");
+    expect(processesContentSource).toContain("/api/system-processes/pdf/");
     expect(processesContentSource).toContain("border-dema-forest/45");
     expect(processesContentSource).not.toContain('<span aria-hidden="true">•</span>');
     expect(processesContentSource).not.toContain("Solutions");
@@ -122,6 +127,9 @@ describe("system UX contract", () => {
     expect(processesEmailRouteSource).toContain("sendSystemProcessesPdfEmail");
     expect(processesEmailRouteSource).toContain("enforceSameOrigin");
     expect(processesEmailRouteSource).toContain("enforceRateLimit");
+    expect(processesPdfRouteSource).toContain("buildSystemProcessesPdf");
+    expect(processesPdfRouteSource).toContain("Content-Disposition");
+    expect(processesPdfRouteSource).toContain("application/pdf");
     expect(globalStyles).toContain("@page");
     expect(globalStyles).toContain("size: A4");
   });

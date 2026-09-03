@@ -8,7 +8,6 @@ import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import { getActiveFirebaseSolutionRegistryRevision } from "@/lib/firebase-solution-registry.server";
 import { selectRenderableSolutionSectionsFromRevision } from "@/lib/firebase-solution-registry-selection.server";
-import { getFirebaseToolComparisonViewForRevision } from "@/lib/firebase-tool-comparison.server";
 import { filterPublicSystemRecommendationSections } from "@/lib/public-solution-section-visibility";
 import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
@@ -85,11 +84,9 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
   const visiblePublishedSolutionSections =
     filterPublicSystemRecommendationSections(publishedSolutionSections);
   const jsonLd = buildSystemPageJsonLd(data, visiblePublishedSolutionSections);
-  const comparison = await getFirebaseToolComparisonViewForRevision({
-    revision,
-    systemSlug: slug,
-    sections: visibleSolutionSections,
-  });
+  const softwarePlacementCount =
+    visibleSolutionSections.find(({ section }) => section === "software")
+      ?.placements.length ?? 0;
 
   if (!hasEditableOperationalSystemAsset(data.system.slug)) notFound();
   if (normalizeSystemDetailTab(getParamValue(resolvedSearchParams.tab)) === "process") {
@@ -125,7 +122,7 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
             headingAs="h1"
             solutionSections={visibleSolutionSections}
             comparisonHref={
-              comparison
+              softwarePlacementCount >= 2
                 ? `/solutions/${data.system.slug}/comparatif-outils`
                 : undefined
             }

@@ -156,6 +156,21 @@ describe("Firebase tool comparisons", () => {
     })).resolves.toBeNull();
   });
 
+  it("keeps a draft comparison private without logging an operational warning", async () => {
+    const warn = vi.fn();
+    await expect(getView({
+      revision,
+      systemSlug: "test-system",
+      sections,
+      fetchDocument: async () => ({
+        ...comparisonDocument,
+        publicationStatus: "draft",
+      }),
+      warn,
+    })).resolves.toBeNull();
+    expect(warn).not.toHaveBeenCalled();
+  });
+
   it("rejects a published positive cell without atomic evidence", () => {
     const firstFeature = comparisonDocument.comparison.features[0];
     expect(validateDocument({

@@ -13,37 +13,43 @@ async function readSource(path: string) {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-describe("Accompagnement automatisation et IA", () => {
+describe("Mise en place de systèmes opérationnels", () => {
   it("locks the Maestro offer and its deliberately bounded scope", () => {
     expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/accompagnement");
     expect(AUTOMATION_OFFER.name).toBe("Maestro");
-    expect(AUTOMATION_OFFER.serviceName).toBe("Accompagnement automatisation et IA");
+    expect(AUTOMATION_OFFER.serviceName).toBe("Mise en place de systèmes opérationnels");
     expect(mentoratAutomationContent.offer).toEqual({
       duration: "1 mois",
-      price: "2 500 € HT",
+      price: "3 500 € HT",
     });
     expect(mentoratAutomationContent.hero.title).toBe(
-      "Organisez votre entreprise pour qu’elle dépende moins de vous.",
+      "Mettez de l’ordre dans votre entreprise. Et des systèmes pour que ça dure.",
     );
-    expect(mentoratAutomationContent.examples).toContain(
-      "Clarifier qui fait quoi dans votre équipe",
-    );
-    expect(mentoratAutomationContent.examples).toContain(
-      "Automatiser les relances, les saisies et les tâches répétitives",
-    );
+    expect(mentoratAutomationContent.examples.map(({ title }) => title)).toEqual([
+      "Emails",
+      "Demandes clients",
+      "Devis et tarifs",
+      "Facturation",
+      "Réunions",
+      "Documents et Drive",
+      "Planning et interventions",
+      "Prospection",
+    ]);
+    expect(mentoratAutomationContent.systemDefinition.parts).toHaveLength(6);
     expect(mentoratAutomationContent.offerIncludes).toEqual([
       "Analyse de votre fonctionnement actuel",
-      "Plan de mise en place validé avec vous",
-      "Organisation des informations et des responsabilités",
-      "Mise en place des outils et automatisations retenus",
-      "Tests, ajustements et transmission à l’équipe",
+      "Identification des blocages et dépendances au dirigeant",
+      "Définition d’un périmètre prioritaire validé avec vous",
+      "Conception et mise en place de ces systèmes",
+      "Configuration des outils et automatisations nécessaires",
+      "Tests, documentation et formation de l’équipe",
     ]);
     expect(mentoratAutomationContent.faq.find(
       (item) => item.question === "Devons-nous changer nos outils ?",
     )?.answer).toContain("outils déjà utilisés");
     expect(mentoratAutomationContent.faq.find(
       (item) => item.question === "Que peut-on réellement mettre en place en un mois ?",
-    )?.answer).toContain("La feuille de route est définie et validée");
+    )?.answer).toContain("Le périmètre, les livrables et le résultat attendu sont écrits et validés");
     expect(mentoratAutomationContent.faq.find(
       (item) => item.question === "Combien de temps cela demande-t-il à mon équipe ?",
     )?.answer).toContain("Nous prenons en charge la conception et la mise en place");
@@ -63,22 +69,26 @@ describe("Accompagnement automatisation et IA", () => {
     ]);
 
     expect(page).toContain("MentoratAutomationLandingPage");
-    expect(page).toContain("Accompagnement automatisation et IA pour entreprise");
+    expect(page).toContain("Mise en place de systèmes opérationnels pour TPE");
     expect(legacyPage).toContain('permanentRedirect("/accompagnement")');
-    expect(landing).toContain("Organisez votre entreprise");
+    expect(landing).toContain("Mettez de l’ordre dans votre entreprise");
     expect(landing).toContain("Comment ça se passe ?");
-    expect(landing).toContain("Moins de temps consacré aux tâches chronophages.");
+    expect(landing).toContain("Aujourd’hui, trop de choses reposent sur vous.");
     expect(JSON.stringify(mentoratAutomationContent.method)).toContain("atelier de travail de deux heures");
     expect(landing).not.toContain("4 × 1 heure");
     expect(landing).not.toContain("1 à 3");
     expect(mentoratAutomationContent.tools.title).toBe("Nous partons de vos outils.");
-    expect(landing).toContain("Vos outils actuels");
-    expect(landing).toContain("Maestro · Accompagnement · 1 mois");
-    expect(landing).toContain("Votre nouvelle organisation, mise en place en un mois.");
-    expect(landing.indexOf("Maestro · Accompagnement · 1 mois")).toBeGreaterThan(
+    expect(landing).toContain("Votre fonctionnement réel");
+    expect(landing).toContain("Maestro · Mise en place de systèmes · 1 mois");
+    expect(landing).toContain("Vos premiers systèmes opérationnels, mis en place en un mois.");
+    expect(landing.indexOf("Maestro · Mise en place de systèmes · 1 mois")).toBeGreaterThan(
       landing.indexOf('id="tarif"'),
     );
-    expect(landing).toContain('label="Être accompagné"');
+    expect(landing).toContain('label="Faire le point sur mon organisation"');
+    expect(landing).toContain('id="suivi"');
+    expect(mentoratAutomationContent.ongoing.title).toBe("Après le premier mois, vous choisissez.");
+    expect("price" in mentoratAutomationContent.ongoing).toBe(false);
+    expect(JSON.stringify(mentoratAutomationContent.ongoing)).not.toContain("1 500 €");
     expect(landing).toContain("Vous ne savez pas encore par où commencer ?");
     expect(landing).toContain("Commencer le diagnostic");
     expect(landing).toContain('href="/diagnostic-organisation"');
@@ -90,6 +100,7 @@ describe("Accompagnement automatisation et IA", () => {
     );
     expect(landing).not.toContain("Tutoriels Demaa");
     expect(JSON.stringify(mentoratAutomationContent)).not.toContain("12 mois");
+    expect(JSON.stringify(mentoratAutomationContent)).not.toContain("trois à quatre");
     expect(JSON.stringify(mentoratAutomationContent)).not.toContain("Product Builder");
     expect(landing).not.toContain("StructureNewsletterBlock");
     for (const brand of ["ChatGPT", "Codex", "Airtable", "Fillout", "Make"]) {
@@ -108,8 +119,8 @@ describe("Accompagnement automatisation et IA", () => {
     );
 
     expect(markup).toContain("/accompagnement?source=modele-detail");
-    expect(markup).toContain("Découvrir l’accompagnement");
-    expect(markup).toContain("automatiser uniquement les étapes qui apportent un gain concret");
+    expect(markup).toContain("Découvrir la mise en place");
+    expect(markup).toContain("l’intégrons dans un système que votre équipe peut réellement utiliser");
   });
 
   it("replaces promotional automation CTAs on Solutions with one Organiser bridge", async () => {

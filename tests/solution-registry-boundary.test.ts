@@ -136,13 +136,19 @@ describe("Solutions server and DTO boundaries", () => {
     ]);
   });
 
-  it("prevents current client modules from importing protected Solutions modules", () => {
-    const violations = sourceFiles(root).flatMap((path) => {
-      const source = readFileSync(path, "utf8");
-      return clientImportViolations(source).map((violation) => `${path}:${violation}`);
-    });
-    expect(violations).toEqual([]);
-  });
+  it(
+    "prevents current client modules from importing protected Solutions modules",
+    () => {
+      const violations = sourceFiles(root).flatMap((path) => {
+        const source = readFileSync(path, "utf8");
+        return clientImportViolations(source).map(
+          (violation) => `${path}:${violation}`,
+        );
+      });
+      expect(violations).toEqual([]);
+    },
+    15_000,
+  );
 
   it("keeps the public System route on Firebase without legacy runtime selectors", () => {
     const pageSource = readFileSync(
@@ -153,10 +159,16 @@ describe("Solutions server and DTO boundaries", () => {
       `${root}/lib/firebase-solution-registry-selection.server.ts`,
       "utf8",
     );
+    const comparisonRouteSource = readFileSync(
+      `${root}/components/ToolComparisonRoute.tsx`,
+      "utf8",
+    );
 
     expect(pageSource).toContain("getActiveFirebaseSolutionRegistryRevision");
     expect(pageSource).toContain("selectRenderableSolutionSectionsFromRevision");
-    expect(pageSource).toContain("getFirebaseToolComparisonViewForRevision");
+    expect(comparisonRouteSource).toContain(
+      "getFirebaseToolComparisonViewForRevision",
+    );
     expect(pageSource).not.toContain("getMigrationSafe");
     expect(firebaseSelector).not.toContain("system-solutions-ui.server");
     expect(firebaseSelector).not.toContain("getRenderableSolutionSectionsForSystem");

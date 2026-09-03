@@ -17,7 +17,7 @@ describe("Organiser public journey", () => {
     expect(organiserPage).not.toContain("OrganiserSectionNavigation");
     expect(organiserPage).toContain('path: "/organiser"');
     expect(organiserHub).toContain("Des cas concrets");
-    expect(organiserHub).not.toContain("getPublishedCopyableModels");
+    expect(organiserHub).toContain("getPublishedCopyableModels");
     expect(organiserHub).toContain("getPublicOrganiserContent()");
     expect(organiserHub).toContain("getPublishedOrganisationContent()");
     expect(organiserHub).toContain("isOrganisationTransverseLibraryReady");
@@ -28,11 +28,13 @@ describe("Organiser public journey", () => {
     expect(organiserLibrary).toContain("Rechercher un processus ou un sujet");
     expect(organiserLibrary).toContain('aria-label="Rechercher dans Organisation"');
     expect(organiserLibrary).not.toContain('aria-label="Rechercher dans Organiser"');
-    expect(organiserLibrary).not.toContain("Modèles prêts à copier");
-    expect(organiserLibrary).toContain("Passez directement à l’action");
+    expect(organiserLibrary).toContain("Modèles prêts à copier");
+    expect(organiserLibrary).toContain("Voir tous les modèles");
     expect(organiserLibrary).toContain('href="/modeles?from=organisation"');
+    expect(organiserLibrary).toContain("<CopyableModelCard");
+    expect(organiserLibrary).toContain("snap-x snap-mandatory");
     expect(organiserLibrary).toContain('id="cas-concrets"');
-    expect(organiserLibrary).not.toContain('aria-labelledby="organiser-models-heading"');
+    expect(organiserLibrary).toContain('aria-labelledby="organiser-models-heading"');
     expect(organiserLibrary).toContain("matchesSearchQuery");
     expect(organiserLibrary).toContain("SlidersHorizontal");
     expect(organiserLibrary).toContain('aria-label="Filtrer les contenus par thème"');

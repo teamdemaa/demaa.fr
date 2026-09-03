@@ -61,6 +61,7 @@ export default function SystemProcessesContent({
             </p>
           </div>
           <SystemRecapPrintButton
+            downloadHref={`/api/system-processes/pdf/${systemSlug}`}
             emailDelivery={{ systemName, systemSlug }}
           />
         </div>

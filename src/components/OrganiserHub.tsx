@@ -10,10 +10,12 @@ import {
   getPublishedOrganisationContent,
   isOrganisationTransverseLibraryReady,
 } from "@/lib/content-catalog";
+import { getPublishedCopyableModels } from "@/lib/copyable-model-catalog";
 import { getOrganiserThumbnailPath } from "@/lib/organiser-thumbnail-catalog";
 
 export default function OrganiserHub() {
   const publishedOrganisationContent = getPublishedOrganisationContent();
+  const models = getPublishedCopyableModels();
   const showLegacyProcesses = !isOrganisationTransverseLibraryReady(
     publishedOrganisationContent.length,
   );
@@ -63,11 +65,11 @@ export default function OrganiserHub() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-dema-muted md:text-lg">
-            Des explications concrètes pour mieux organiser votre activité, avec les méthodes, les outils et les modèles utiles pour passer à l’action.
+            Des explications concrètes pour mieux organiser votre activité, avec les méthodes, les outils et les modèles utiles pour mettre chaque solution en place.
           </p>
         </header>
 
-        <OrganiserLibrary guides={guides} processes={processes} />
+        <OrganiserLibrary guides={guides} models={models} processes={processes} />
 
         <div className="px-4 pb-16 pt-16 sm:px-6 lg:px-8">
           <StructureNewsletterBlock />

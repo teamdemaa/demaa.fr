@@ -7,7 +7,7 @@ import {
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 import { buildServicePageJsonLd, serializeServicesJsonLd } from "@/lib/services-seo";
 
-const title = "Accompagnement automatisation et IA pour entreprise | Demaa";
+const title = "Mise en place de systèmes opérationnels pour TPE | Demaa";
 const description = content.hero.description;
 
 export const metadata = buildPublicPageMetadata({

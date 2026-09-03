@@ -59,7 +59,8 @@ const nextConfig: NextConfig = {
   // CommonJS require at runtime.
   transpilePackages: ['firebase-admin', 'jwks-rsa', 'jose'],
   experimental: {
-    optimizePackageImports: ['lucide-react']
+    globalNotFound: true,
+    optimizePackageImports: ['lucide-react'],
   },
   async rewrites() {
     return firebaseAuthHelperOrigin

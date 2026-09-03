@@ -54,6 +54,9 @@ export async function getFirebaseToolComparisonViewForRevision(input: {
       input.systemSlug,
     );
     if (!document) return null;
+    // A draft is a normal editorial state, not an operational error. Keep it
+    // private without polluting public-page logs with validation warnings.
+    if (document.publicationStatus !== "published") return null;
     const issues = validateFirebaseToolComparisonDocument(document, {
       registryRevisionId: input.revision.revisionId,
       registryFingerprint: input.revision.sourceFingerprint,

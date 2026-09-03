@@ -541,7 +541,7 @@ export default function SystemSolutionsTab({
                         className="mr-1 inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-dema-forest/20 bg-dema-paper px-4 text-xs font-semibold text-dema-forest transition hover:border-dema-forest/40 hover:bg-[#f2f7f4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 sm:text-sm"
                       >
                         <Columns3 className="h-4 w-4" aria-hidden="true" />
-                        Comparer les outils
+                        Choisir ses outils
                       </Link>
                     ) : null}
                     {railState?.canPrevious || railState?.canNext ? (
