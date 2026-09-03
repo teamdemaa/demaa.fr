@@ -14,48 +14,70 @@ export const mentoratAutomationContent = {
   },
   examples: [
     {
-      title: "Emails",
-      description: "Trier, attribuer, préparer les réponses et relancer.",
+      title: "Gestion structurée des emails",
+      description: "Tri, classement, attribution, brouillons de réponse et relances.",
     },
     {
-      title: "Demandes clients",
-      description: "Centraliser, suivre et clôturer chaque demande.",
+      title: "Suivi des demandes clients",
+      description: "Chaque demande est centralisée, priorisée, attribuée et suivie jusqu’à sa clôture.",
     },
     {
-      title: "Devis et tarifs",
-      description: "Préparer, faire valider, envoyer et relancer.",
+      title: "Devis et grille tarifaire",
+      description: "Les tarifs sont clarifiés et les devis préparés, validés, envoyés puis relancés.",
     },
     {
-      title: "Facturation",
-      description: "Émettre, classer et suivre les règlements.",
+      title: "Facturation et règlements",
+      description: "Les factures sont préparées, les pièces classées et les paiements suivis.",
     },
     {
-      title: "Réunions",
-      description: "Préparer, rédiger le compte rendu et distribuer les tâches.",
+      title: "Réunions et comptes rendus",
+      description: "Ordre du jour, compte rendu, décisions, responsables et tâches à suivre.",
     },
     {
-      title: "Documents et Drive",
-      description: "Organiser le classement, les accès et l’archivage.",
+      title: "Drive et documents structurés",
+      description: "Arborescence, nommage, droits d’accès, modèles et archivage.",
     },
     {
-      title: "Planning et interventions",
-      description: "Planifier, attribuer et suivre les échéances.",
+      title: "Planning opérationnel partagé",
+      description: "Interventions, responsables, échéances et alertes réunis au même endroit.",
     },
     {
-      title: "Prospection",
-      description: "Préparer les listes et messages, envoyer et relancer.",
+      title: "Prospection commerciale organisée",
+      description: "Fichiers, messages, validations, envois et relances sont suivis.",
     },
   ],
-  systemDefinition: {
-    title: "Un système, ce n’est pas seulement un outil.",
+  operationalBrain: {
+    title: "Nous construisons le cerveau opérationnel de votre entreprise.",
     description:
-      "C’est un fonctionnement complet qui permet à chacun de savoir quoi faire, quand et avec quelles informations.",
-    parts: ["Un déclencheur", "Des étapes claires", "Un responsable", "Les bons outils", "Une validation", "Un suivi"],
+      "Nous rassemblons les informations, les règles, les modèles et les responsabilités dont votre équipe a besoin. Puis nous les transformons en systèmes clairs pour que chacun sache quoi faire et que rien ne se perde.",
+    levels: [
+      {
+        title: "Ce que votre entreprise sait",
+        description: "Documents, tarifs, modèles et informations clients.",
+      },
+      {
+        title: "Comment le travail avance",
+        description: "Étapes, responsables, validations et relances.",
+      },
+      {
+        title: "Les outils qui le font fonctionner",
+        description: "Messagerie, Drive, agenda, Notion, CRM et facturation.",
+      },
+    ],
   },
   tools: {
-    title: "Nous partons de vos outils.",
+    title: "Nous travaillons dans vos outils actuels.",
     description:
-      "Nous commençons par définir le bon fonctionnement. Nous configurons ensuite vos outils actuels pour le faire vivre. Un nouvel outil n’est proposé que si l’existant ne permet pas d’obtenir le résultat attendu.",
+      "Nous intervenons directement dans les outils que votre équipe utilise déjà. Un nouvel outil n’est proposé que si l’existant ne permet pas d’obtenir le résultat attendu.",
+    examples: [
+      "Gmail ou Outlook",
+      "Google Drive ou OneDrive",
+      "Notion",
+      "Votre CRM",
+      "Votre outil de devis ou de facturation",
+    ],
+    access:
+      "Vous nous accordez uniquement les accès nécessaires à la mission et vous pouvez les retirer à tout moment.",
   },
   method: [
     {

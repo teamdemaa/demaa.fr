@@ -125,28 +125,33 @@ export default function MentoratAutomationLandingPage() {
         </section>
 
         <section
-          aria-labelledby="system-definition-heading"
+          aria-labelledby="operational-brain-heading"
           className="bg-dema-cream px-5 py-16 sm:px-8 sm:py-20"
         >
           <div className="mx-auto max-w-6xl">
             <div className="max-w-4xl">
-              <h2 id="system-definition-heading" className="demaa-marketing-section-title">
-                {content.systemDefinition.title}
+              <h2 id="operational-brain-heading" className="demaa-marketing-section-title">
+                {content.operationalBrain.title}
               </h2>
               <p className="mt-5 max-w-3xl text-base leading-7 text-dema-muted">
-                {content.systemDefinition.description}
+                {content.operationalBrain.description}
               </p>
             </div>
-            <ol className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {content.systemDefinition.parts.map((part, index) => (
+            <ol className="mt-10 grid gap-5 md:grid-cols-3">
+              {content.operationalBrain.levels.map((level, index) => (
                 <li
-                  key={part}
-                  className="flex items-center gap-4 rounded-2xl border border-dema-line bg-dema-paper px-5 py-4"
+                  key={level.title}
+                  className="rounded-[1.5rem] border border-dema-line bg-dema-paper p-6 sm:p-7"
                 >
                   <span className="demaa-section-title text-xl text-dema-forest/48">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-sm font-medium text-brand-blue">{part}</span>
+                  <h3 className="mt-5 text-xl font-medium leading-snug tracking-[-0.025em]">
+                    {level.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-dema-muted">
+                    {level.description}
+                  </p>
                 </li>
               ))}
             </ol>
@@ -185,9 +190,6 @@ export default function MentoratAutomationLandingPage() {
               sizes="(min-width: 1024px) 800px, 92vw"
               className="mx-auto mt-10 h-auto w-full max-w-4xl mix-blend-darken"
             />
-            <p className="mt-10 border-t border-dema-line pt-6 text-base leading-7 text-dema-muted">
-              Vous nous apportez la réalité du terrain. Nous concevons et mettons en place. Vous validez et gardez la main.
-            </p>
           </div>
         </section>
 
@@ -204,22 +206,32 @@ export default function MentoratAutomationLandingPage() {
                 {content.tools.description}
               </p>
             </div>
-            <div
-              aria-hidden="true"
-              className="mt-10 grid items-center gap-3 text-center sm:grid-cols-[1fr_auto_1fr_auto_1fr]"
-            >
-              <span className="rounded-full border border-dema-line bg-dema-paper px-5 py-4 text-sm text-brand-blue">
-                Votre fonctionnement réel
-              </span>
-              <span className="hidden text-dema-forest/45 sm:block">→</span>
-              <span className="rounded-full border border-dema-forest bg-dema-forest px-5 py-4 text-sm font-medium text-dema-paper">
-                Un système clair
-              </span>
-              <span className="hidden text-dema-forest/45 sm:block">→</span>
-              <span className="rounded-full border border-dema-line bg-dema-paper px-5 py-4 text-sm text-brand-blue">
-                Vos outils configurés
-              </span>
-            </div>
+            <Image
+              src="/images/accompagnement/outils-organises.png"
+              alt="Un dirigeant retrouve ses emails, son agenda, ses demandes clients, ses devis et ses documents organisés dans ses outils habituels"
+              width={1536}
+              height={1024}
+              sizes="(min-width: 1024px) 900px, 92vw"
+              className="mx-auto mt-8 h-auto w-full max-w-5xl mix-blend-darken"
+            />
+            <p className="mt-5 max-w-4xl text-base font-medium leading-7 text-brand-blue">
+              Nous mettons en place le classement, les modèles, les étapes, les responsables et
+              les relances — directement dans vos outils.
+            </p>
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {content.tools.examples.map((tool) => (
+                <li
+                  key={tool}
+                  className="rounded-full border border-dema-line bg-dema-paper px-4 py-2 text-xs text-dema-muted"
+                >
+                  {tool}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 flex max-w-3xl items-start gap-3 rounded-2xl bg-dema-sage/35 px-5 py-4 text-sm leading-6 text-dema-forest">
+              <Check className="mt-1 h-4 w-4 shrink-0" aria-hidden="true" />
+              <span>{content.tools.access}</span>
+            </p>
           </div>
         </section>
 

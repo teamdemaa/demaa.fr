@@ -26,16 +26,20 @@ describe("Mise en place de systèmes opérationnels", () => {
       "Mettez de l’ordre dans votre entreprise. Et des systèmes pour que ça dure.",
     );
     expect(mentoratAutomationContent.examples.map(({ title }) => title)).toEqual([
-      "Emails",
-      "Demandes clients",
-      "Devis et tarifs",
-      "Facturation",
-      "Réunions",
-      "Documents et Drive",
-      "Planning et interventions",
-      "Prospection",
+      "Gestion structurée des emails",
+      "Suivi des demandes clients",
+      "Devis et grille tarifaire",
+      "Facturation et règlements",
+      "Réunions et comptes rendus",
+      "Drive et documents structurés",
+      "Planning opérationnel partagé",
+      "Prospection commerciale organisée",
     ]);
-    expect(mentoratAutomationContent.systemDefinition.parts).toHaveLength(6);
+    expect(mentoratAutomationContent.operationalBrain.levels.map(({ title }) => title)).toEqual([
+      "Ce que votre entreprise sait",
+      "Comment le travail avance",
+      "Les outils qui le font fonctionner",
+    ]);
     expect(mentoratAutomationContent.offerIncludes).toEqual([
       "Analyse de votre fonctionnement actuel",
       "Identification des blocages et dépendances au dirigeant",
@@ -77,8 +81,15 @@ describe("Mise en place de systèmes opérationnels", () => {
     expect(JSON.stringify(mentoratAutomationContent.method)).toContain("atelier de travail de deux heures");
     expect(landing).not.toContain("4 × 1 heure");
     expect(landing).not.toContain("1 à 3");
-    expect(mentoratAutomationContent.tools.title).toBe("Nous partons de vos outils.");
-    expect(landing).toContain("Votre fonctionnement réel");
+    expect(mentoratAutomationContent.tools.title).toBe("Nous travaillons dans vos outils actuels.");
+    expect(mentoratAutomationContent.tools.examples).toContain("Gmail ou Outlook");
+    expect(mentoratAutomationContent.tools.access).toContain("uniquement les accès nécessaires");
+    expect(mentoratAutomationContent.tools.access).not.toContain("codes");
+    expect(landing).toContain("/images/accompagnement/outils-organises.png");
+    expect(landing).toContain("Nous mettons en place le classement");
+    expect(landing).not.toContain("Votre fonctionnement réel");
+    expect(landing).not.toContain("Un système clair");
+    expect(landing).not.toContain("Vos outils configurés");
     expect(landing).toContain("Maestro · Mise en place de systèmes · 1 mois");
     expect(landing).toContain("Vos premiers systèmes opérationnels, mis en place en un mois.");
     expect(landing.indexOf("Maestro · Mise en place de systèmes · 1 mois")).toBeGreaterThan(
