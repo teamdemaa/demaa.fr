@@ -186,7 +186,7 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
         <section id="cas-concrets" aria-label="Cas concrets" className="scroll-mt-24 px-4 py-14 sm:px-6 md:py-16 lg:px-8">
           <div className="mx-auto w-full max-w-7xl">
             <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-              {filteredGuides.map((guide) => {
+              {filteredGuides.map((guide, index) => {
                 const image = guide.thumbnail ?? guide.image;
                 return (
                   <Link
@@ -201,6 +201,7 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
                             src={image}
                             alt={`Aperçu : ${guide.title}`}
                             fill
+                            loading={index === 0 ? "eager" : "lazy"}
                             sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                             className="object-cover transition duration-300 group-hover:scale-[1.01]"
                           />

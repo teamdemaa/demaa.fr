@@ -111,6 +111,146 @@ const FACTURATION_ELECTRONIQUE_SLIDES = Array.from(
 
 const contentCatalog = [
   defineOrganisationContent({
+    slug: "preparer-devis-propositions-commerciales",
+    title: "Comment préparer ses devis et propositions commerciales plus rapidement ?",
+    summary:
+      "Préparez des devis plus homogènes avec les bonnes informations, les bons modèles et une validation claire avant l’envoi.",
+    category: "Clients & ventes",
+    tags: ["devis", "proposition commerciale", "vente", "validation", "modèles"],
+    friction: [
+      "Chaque nouveau devis oblige à rechercher les coordonnées du client, le bon tarif, une ancienne présentation et les conditions déjà utilisées. La préparation prend du temps et le résultat varie selon la personne qui s’en occupe.",
+      "Le problème ne vient pas seulement du document. Il vient surtout des informations manquantes et des validations qui arrivent trop tard.",
+    ],
+    result: [
+      "Une demande complète rassemble les informations nécessaires avant la rédaction : client, besoin, prestation, quantité, prix, délai, conditions et personne chargée de valider.",
+      "Un modèle commun permet ensuite de préparer le devis ou la proposition, de vérifier les points sensibles et de conserver la version réellement envoyée.",
+    ],
+    steps: [
+      "Prenez cinq devis récents et relevez les informations recherchées à chaque préparation.",
+      "Créez une fiche de demande avec les informations indispensables avant de commencer le document.",
+      "Préparez un modèle court pour le devis et un second pour les propositions qui demandent davantage d’explications.",
+      "Écrivez les points qui nécessitent une validation : prix, remise, délai, conditions particulières et contenu de la prestation.",
+      "Testez la préparation sur une demande réelle, puis corrigez les informations qui manquent encore.",
+      "Conservez la version envoyée avec sa date, son montant et la prochaine action prévue.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec des informations anonymisées : « À partir de cette demande client et de notre modèle, prépare un brouillon de proposition commerciale. Reprends uniquement les prestations et les tarifs fournis. Signale clairement toute information manquante. N’invente aucun prix, délai ou engagement. Termine par les points à valider avant envoi. »",
+      "Utilisez le résultat comme brouillon. Une personne vérifie toujours l’identité du client, le contenu, les montants, les conditions et les délais avant de créer ou d’envoyer le document final.",
+    ],
+    checklist: [
+      "La demande contient toutes les informations nécessaires avant la rédaction.",
+      "Le bon modèle est identifiable sans rechercher un ancien devis.",
+      "Les prix, remises, délais et conditions sont validés par la bonne personne.",
+      "La version envoyée est conservée avec sa date et son montant.",
+      "La prochaine action est prévue dès l’envoi du devis.",
+    ],
+  }),
+  defineOrganisationContent({
+    slug: "construire-grille-tarifaire-claire",
+    title: "Comment construire une grille tarifaire claire pour son équipe ?",
+    summary:
+      "Rassemblez vos prix, vos options et vos règles de remise pour que l’équipe prépare des offres cohérentes sans vous solliciter à chaque fois.",
+    category: "Clients & ventes",
+    tags: ["tarifs", "prix", "remises", "vente", "équipe"],
+    friction: [
+      "Les prix sont répartis entre d’anciens devis, des tableurs et la mémoire du dirigeant. Lorsqu’un client demande une option ou une remise, l’équipe doit attendre une réponse avant d’avancer.",
+      "Une simple liste de prix ne suffit pas lorsque les unités, les options, les limites et les cas particuliers ne sont pas expliqués.",
+    ],
+    result: [
+      "Une grille commune présente chaque prestation avec son unité, son prix, ce qui est inclus, les options possibles et la date de dernière vérification.",
+      "Des règles courtes précisent qui peut appliquer une remise, dans quelle limite et quels cas doivent être soumis au dirigeant.",
+    ],
+    steps: [
+      "Rassemblez les prestations et options vendues au cours des trois derniers mois.",
+      "Pour chacune, notez le nom utilisé par l’équipe, l’unité, le prix et ce qui est inclus.",
+      "Ajoutez les options, les frais éventuels et les cas qui demandent un calcul particulier.",
+      "Écrivez les limites de remise et la personne qui doit valider les exceptions.",
+      "Faites préparer trois devis tests par une personne qui n’a pas construit la grille.",
+      "Corrigez les ambiguïtés et fixez une date régulière pour vérifier les prix.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt après avoir retiré toute information sensible : « Voici notre liste de prestations, de prix et d’options. Organise-la en tableau avec : prestation, unité, prix, inclus, options, remise autorisée, validation nécessaire et date de vérification. Ne modifie aucun montant et place les éléments ambigus dans une liste à confirmer. »",
+      "ChatGPT peut aider à présenter et comparer les informations, mais l’entreprise reste seule responsable de ses prix, de ses marges et de ses conditions commerciales. Chaque montant doit être contrôlé avant utilisation.",
+    ],
+    checklist: [
+      "Chaque prestation possède un nom, une unité et un prix vérifiés.",
+      "L’équipe sait ce qui est inclus et ce qui constitue une option.",
+      "Les limites de remise et les validations nécessaires sont écrites.",
+      "Une personne prépare trois devis tests sans demander le prix au dirigeant.",
+      "Une date est prévue pour vérifier et mettre à jour les tarifs.",
+    ],
+  }),
+  defineOrganisationContent({
+    slug: "relancer-devis-propositions",
+    title: "Comment relancer ses devis et propositions sans rien oublier ?",
+    summary:
+      "Suivez les offres envoyées, préparez les relances au bon moment et gardez une prochaine action visible pour chaque opportunité.",
+    category: "Clients & ventes",
+    tags: ["devis", "relances", "propositions", "clients", "vente"],
+    friction: [
+      "Les devis sont envoyés puis disparaissent dans la boîte mail. Certains clients sont relancés plusieurs fois, d’autres jamais, et le dirigeant ne sait pas quel montant reste en attente de réponse.",
+      "Une relance dépend souvent de la mémoire de la personne qui a préparé l’offre, sans date ni prochaine action partagée.",
+    ],
+    result: [
+      "Une liste commune suit chaque offre avec le client, la date d’envoi, le montant, le statut, la dernière réponse et la prochaine relance.",
+      "Quelques modèles de messages permettent de préparer une relance adaptée, tout en laissant une personne vérifier le contexte avant l’envoi.",
+    ],
+    steps: [
+      "Rassemblez les devis envoyés qui n’ont pas encore reçu de réponse définitive.",
+      "Ajoutez pour chacun le client, le montant, la date d’envoi, le statut et la dernière réponse connue.",
+      "Fixez une prochaine date et une personne chargée de l’action pour chaque offre ouverte.",
+      "Préparez trois messages courts : première relance, demande de décision et clôture sans réponse.",
+      "Relisez le contexte et adaptez le message avant chaque envoi.",
+      "Chaque semaine, clôturez les offres gagnées, perdues ou abandonnées et planifiez les suivantes.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt sans données confidentielles : « Voici le contexte d’un devis envoyé et le dernier échange avec le client. Prépare trois brouillons de relance : cordial, direct et très court. Ne promets aucune remise ni nouveau délai. Mentionne les informations qui doivent être vérifiées avant l’envoi. »",
+      "Choisissez le message adapté à la relation commerciale puis contrôlez le destinataire, le devis concerné et les engagements mentionnés. Aucun message ne part sans validation humaine.",
+    ],
+    checklist: [
+      "Chaque offre envoyée apparaît dans la liste commune.",
+      "Le montant, la date d’envoi et le dernier échange sont visibles.",
+      "Chaque offre ouverte possède une prochaine date et une personne chargée de l’action.",
+      "Les messages sont adaptés au contexte avant leur envoi.",
+      "Les offres gagnées, perdues ou abandonnées sont clôturées chaque semaine.",
+    ],
+  }),
+  defineOrganisationContent({
+    slug: "facturer-suivre-reglements",
+    title: "Comment facturer plus vite et suivre les règlements en attente ?",
+    summary:
+      "Préparez les factures dès que le travail est terminé, suivez les échéances et relancez les retards sans dépendre de votre mémoire.",
+    category: "Administration & facturation",
+    tags: ["facturation", "règlements", "relances", "trésorerie", "administration"],
+    friction: [
+      "Le travail est terminé, mais les informations nécessaires à la facture arrivent en retard ou restent dans plusieurs outils. La facture attend, puis son paiement n’est suivi qu’au moment où la trésorerie se tend.",
+      "Le dirigeant doit souvent demander si la prestation est terminée, retrouver le bon de commande et vérifier lui-même si le règlement est arrivé.",
+    ],
+    result: [
+      "Une liste de facturation indique ce qui peut être facturé, les pièces disponibles, la personne chargée de préparer la facture et la date prévue d’envoi.",
+      "Après l’envoi, la même liste suit l’échéance, le règlement reçu et la prochaine relance lorsque le paiement tarde.",
+    ],
+    steps: [
+      "Listez les éléments qui prouvent que la prestation peut être facturée : livraison, validation, bon signé ou période terminée.",
+      "Précisez les informations et les pièces indispensables avant de préparer une facture.",
+      "Créez une liste avec le client, le montant, l’état de la prestation, les pièces, la date d’envoi et l’échéance.",
+      "Attribuez la préparation, la validation et le suivi du règlement à des personnes clairement identifiées.",
+      "Définissez les moments de vérification et les messages de relance adaptés à votre relation client.",
+      "Testez le fonctionnement sur cinq factures et corrigez les informations qui bloquent encore l’envoi ou le suivi.",
+    ],
+    withChatGpt: [
+      "Copiez ce prompt avec des données anonymisées : « Voici l’état de cinq prestations et les pièces disponibles. Prépare un tableau indiquant : prêt à facturer, information manquante, personne à solliciter et prochaine action. Ne crée aucun montant, aucune date et aucun document comptable. Signale tout point à vérifier. »",
+      "ChatGPT peut aider à trier les situations et à préparer des messages. Les montants, les mentions de facture, les échéances et l’état réel des paiements doivent toujours être vérifiés dans les outils comptables et bancaires par une personne autorisée.",
+    ],
+    checklist: [
+      "L’équipe sait exactement quand une prestation devient facturable.",
+      "Les pièces nécessaires sont accessibles avant la préparation de la facture.",
+      "Chaque facture à préparer possède une personne chargée de l’action et une date.",
+      "Les échéances et les règlements reçus sont vérifiés régulièrement.",
+      "Chaque retard possède une prochaine relance adaptée au contexte client.",
+    ],
+  }),
+  defineOrganisationContent({
     slug: "gerer-les-urgences-sans-subir",
     title: "Comment ne plus passer ses journées à gérer les urgences ?",
     summary:

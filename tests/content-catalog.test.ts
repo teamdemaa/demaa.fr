@@ -22,7 +22,7 @@ import {
 describe("canonical content catalog", () => {
   it("publishes the electronic invoicing article with a progressive slide medium", () => {
     const entries = getAllPublishedContent();
-    expect(entries).toHaveLength(17);
+    expect(entries).toHaveLength(21);
 
     const entry = getPublishedContentBySlug("facturation-electronique");
     expect(entry).not.toBeNull();
@@ -47,8 +47,12 @@ describe("canonical content catalog", () => {
 
     expect(contentPage).toContain('<Navbar minimal publicNavigationActiveView="academy" />');
     const organisationContent = getPublishedOrganisationContent();
-    expect(organisationContent).toHaveLength(16);
+    expect(organisationContent).toHaveLength(20);
     expect(organisationContent.map(({ title }) => title)).toEqual([
+      "Comment préparer ses devis et propositions commerciales plus rapidement ?",
+      "Comment construire une grille tarifaire claire pour son équipe ?",
+      "Comment relancer ses devis et propositions sans rien oublier ?",
+      "Comment facturer plus vite et suivre les règlements en attente ?",
       "Comment ne plus passer ses journées à gérer les urgences ?",
       "Comment centraliser ses tâches sans changer tous ses outils ?",
       "Comment transformer ses réunions en décisions et en actions ?",
@@ -103,6 +107,7 @@ describe("canonical content catalog", () => {
     expect(contentPage).toContain("Le modèle prêt à copier");
     expect(contentPage).toContain("Utiliser ce modèle");
     expect(contentPage).toContain("?from=organisation");
+    expect(contentPage).toContain('<MentoratAutomationCta contentSlug={entry.slug} variant="organisation" />');
   });
 
   it("keeps the legacy library until a complete first transverse series is published", () => {

@@ -4,13 +4,14 @@ import { AUTOMATION_OFFER } from "@/lib/automation-offer";
 import { AUTOMATION_ACCOMPANIMENT_PATH } from "@/lib/mentorat-automation-content";
 
 type MentoratAutomationCtaProps = Readonly<{
+  contentSlug?: string;
   modelSlug?: string;
   systemName?: string;
   systemSlug?: string;
-  variant: "general" | "metier" | "modele";
+  variant: "general" | "metier" | "modele" | "organisation";
 }>;
 
-function buildCtaHref({ modelSlug, systemSlug, variant }: MentoratAutomationCtaProps) {
+function buildCtaHref({ contentSlug, modelSlug, systemSlug, variant }: MentoratAutomationCtaProps) {
   const params = new URLSearchParams();
   params.set(
     "source",
@@ -18,16 +19,27 @@ function buildCtaHref({ modelSlug, systemSlug, variant }: MentoratAutomationCtaP
       ? "solutions-hub"
       : variant === "metier"
         ? "solution-metier"
+        : variant === "organisation"
+          ? "organisation-content"
         : modelSlug
           ? "modele-detail"
           : "modeles-index",
   );
+  if (contentSlug) params.set("contentSlug", contentSlug);
   if (systemSlug) params.set("systemSlug", systemSlug);
   if (modelSlug) params.set("modelSlug", modelSlug);
   return `${AUTOMATION_ACCOMPANIMENT_PATH}?${params.toString()}`;
 }
 
 function getCopy({ modelSlug, systemName, variant }: MentoratAutomationCtaProps) {
+  if (variant === "organisation") {
+    return {
+      title: "Vous préférez que nous le mettions en place pour vous ?",
+      description:
+        "Nous adaptons ce fonctionnement à votre entreprise et le mettons en place dans vos outils actuels.",
+    };
+  }
+
   if (variant === "metier") {
     return {
       title: "Mettez en place le système adapté à votre activité",

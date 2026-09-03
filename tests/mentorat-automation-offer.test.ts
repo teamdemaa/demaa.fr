@@ -23,30 +23,35 @@ describe("Mise en place de systèmes opérationnels", () => {
       price: "3 500 € HT",
     });
     expect(mentoratAutomationContent.hero.title).toBe(
-      "Mettez de l’ordre dans votre entreprise. Et des systèmes pour que ça dure.",
+      "Nous mettons de l’ordre dans votre entreprise. Pour que tout ne repose plus sur vous.",
+    );
+    expect(mentoratAutomationContent.hero.description).toBe(
+      "En un mois, nous clarifions vos priorités et mettons en place les systèmes utiles dans vos outils actuels.",
+    );
+    expect(mentoratAutomationContent.examplesIntro.title).toBe(
+      "Les systèmes que nous pouvons mettre en place.",
     );
     expect(mentoratAutomationContent.examples.map(({ title }) => title)).toEqual([
-      "Gestion structurée des emails",
-      "Suivi des demandes clients",
-      "Devis et grille tarifaire",
-      "Facturation et règlements",
-      "Réunions et comptes rendus",
-      "Drive et documents structurés",
-      "Planning opérationnel partagé",
-      "Prospection commerciale organisée",
+      "Centraliser et suivre les demandes clients",
+      "Trier les emails et valider les réponses",
+      "Préparer et relancer les devis et propositions commerciales",
+      "Facturer plus vite et suivre les règlements",
+      "Rassembler les tâches et les priorités",
+      "Organiser l’agenda et le planning",
+      "Classer les documents dans le Drive",
     ]);
-    expect(mentoratAutomationContent.operationalBrain.levels.map(({ title }) => title)).toEqual([
-      "Ce que votre entreprise sait",
-      "Comment le travail avance",
-      "Les outils qui le font fonctionner",
+    expect(mentoratAutomationContent.cockpit.items.map(({ title }) => title)).toEqual([
+      "À traiter",
+      "À valider",
+      "À relancer",
     ]);
     expect(mentoratAutomationContent.offerIncludes).toEqual([
-      "Analyse de votre fonctionnement actuel",
-      "Identification des blocages et dépendances au dirigeant",
-      "Définition d’un périmètre prioritaire validé avec vous",
-      "Conception et mise en place de ces systèmes",
-      "Configuration des outils et automatisations nécessaires",
-      "Tests, documentation et formation de l’équipe",
+      "Un fonctionnement prioritaire clarifié et documenté",
+      "Les étapes, responsabilités et validations définies",
+      "Les outils et automatisations nécessaires configurés",
+      "Les modèles et supports prêts à être utilisés",
+      "Le système testé dans votre activité réelle",
+      "Les personnes concernées formées",
     ]);
     expect(mentoratAutomationContent.faq.find(
       (item) => item.question === "Devons-nous changer nos outils ?",
@@ -75,13 +80,19 @@ describe("Mise en place de systèmes opérationnels", () => {
     expect(page).toContain("MentoratAutomationLandingPage");
     expect(page).toContain("Mise en place de systèmes opérationnels pour TPE");
     expect(legacyPage).toContain('permanentRedirect("/accompagnement")');
-    expect(landing).toContain("Mettez de l’ordre dans votre entreprise");
+    expect(landing).toContain("Nous mettons de l’ordre dans votre entreprise");
+    expect(landing).toContain("Pour que tout ne repose plus sur vous");
+    expect(landing).not.toContain("Mettez de l’ordre dans votre entreprise");
+    expect(mentoratAutomationContent.examplesIntro.title).toBe(
+      "Les systèmes que nous pouvons mettre en place.",
+    );
     expect(landing).toContain("Comment ça se passe ?");
-    expect(landing).toContain("Aujourd’hui, trop de choses reposent sur vous.");
-    expect(JSON.stringify(mentoratAutomationContent.method)).toContain("atelier de travail de deux heures");
+    expect(landing).toContain("Moins de choses à retenir.");
+    expect(landing).toContain("Nous ne nous arrêtons pas au diagnostic");
     expect(landing).not.toContain("4 × 1 heure");
     expect(landing).not.toContain("1 à 3");
-    expect(mentoratAutomationContent.tools.title).toBe("Nous travaillons dans vos outils actuels.");
+    expect(mentoratAutomationContent.cockpit.title).toBe("Un cockpit pour suivre l’essentiel.");
+    expect("note" in mentoratAutomationContent.cockpit).toBe(false);
     expect(landing).toContain("/images/accompagnement/outils-organises.png");
     expect(landing).not.toContain("Nous mettons en place le classement");
     expect(landing).not.toContain("Gmail ou Outlook");
@@ -113,7 +124,7 @@ describe("Mise en place de systèmes opérationnels", () => {
     expect(JSON.stringify(mentoratAutomationContent)).not.toContain("trois à quatre");
     expect(JSON.stringify(mentoratAutomationContent)).not.toContain("Product Builder");
     expect(landing).not.toContain("StructureNewsletterBlock");
-    for (const brand of ["ChatGPT", "Codex", "Airtable", "Fillout", "Make"]) {
+    for (const brand of ["Codex", "Airtable", "Fillout", "Make"]) {
       expect(JSON.stringify(mentoratAutomationContent)).not.toContain(brand);
     }
     expect(callbackDialog).toContain("Parlons de votre organisation.");
@@ -131,6 +142,20 @@ describe("Mise en place de systèmes opérationnels", () => {
     expect(markup).toContain("/accompagnement?source=modele-detail");
     expect(markup).toContain("Découvrir la mise en place");
     expect(markup).toContain("l’intégrons dans un système que votre équipe peut réellement utiliser");
+  });
+
+  it("links Organisation articles to the implementation offer", () => {
+    const markup = renderToStaticMarkup(
+      createElement(MentoratAutomationCta, {
+        contentSlug: "preparer-devis-propositions-commerciales",
+        variant: "organisation",
+      }),
+    );
+
+    expect(markup).toContain(
+      "/accompagnement?source=organisation-content&amp;contentSlug=preparer-devis-propositions-commerciales",
+    );
+    expect(markup).toContain("Vous préférez que nous le mettions en place pour vous ?");
   });
 
   it("replaces promotional automation CTAs on Solutions with one Organiser bridge", async () => {

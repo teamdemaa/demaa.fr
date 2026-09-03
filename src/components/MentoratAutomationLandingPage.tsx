@@ -12,7 +12,6 @@ import {
   Mail,
   MessageSquare,
   Receipt,
-  Send,
 } from "lucide-react";
 import AutomationCallbackControl from "@/components/AutomationCallbackControl";
 import Navbar from "@/components/Navbar";
@@ -20,14 +19,13 @@ import { mentoratAutomationContent as content } from "@/lib/mentorat-automation-
 import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
 
 const systemIcons = [
-  Mail,
   MessageSquare,
+  Mail,
   FileText,
   Receipt,
   ClipboardList,
-  Folder,
   Calendar,
-  Send,
+  Folder,
 ] as const;
 
 export default function MentoratAutomationLandingPage() {
@@ -43,9 +41,9 @@ export default function MentoratAutomationLandingPage() {
               className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}
             >
               <span aria-hidden="true">
-                <span className="block">Mettez de l’ordre dans votre entreprise.</span>
+                <span className="block">Nous mettons de l’ordre dans votre entreprise.</span>
                 <span className="demaa-hero-title mt-2 block text-dema-forest">
-                  Et des systèmes pour que ça dure.
+                  Pour que tout ne repose plus sur vous.
                 </span>
               </span>
             </h1>
@@ -72,9 +70,9 @@ export default function MentoratAutomationLandingPage() {
 
         <section className="bg-dema-forest px-5 py-16 text-center text-dema-paper sm:px-8 sm:py-20">
           <p className="demaa-marketing-section-title mx-auto max-w-4xl">
-            <span className="block">Aujourd’hui, trop de choses reposent sur vous.</span>
+            <span className="block">Moins de choses à retenir. Moins de relances à faire.</span>
             <span className="demaa-section-title mt-2 block text-dema-sage">
-              Demain, chaque tâche importante suit un fonctionnement clair.
+              Une organisation plus facile à suivre.
             </span>
           </p>
         </section>
@@ -87,8 +85,11 @@ export default function MentoratAutomationLandingPage() {
             <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.78fr)] lg:gap-12">
               <div className="max-w-4xl">
                 <h2 id="examples-heading" className="demaa-marketing-section-title">
-                  Les systèmes que nous pouvons mettre en place.
+                  {content.examplesIntro.title}
                 </h2>
+                <p className="mt-5 max-w-3xl text-base leading-7 text-dema-muted">
+                  {content.examplesIntro.description}
+                </p>
               </div>
               <Image
                 src="/images/accompagnement/organisation-claire.png"
@@ -106,7 +107,7 @@ export default function MentoratAutomationLandingPage() {
                 return (
                   <li
                     key={example.title}
-                    className="flex min-h-52 flex-col rounded-[1.5rem] border border-dema-line bg-dema-cream/45 p-6"
+                    className="flex min-h-48 flex-col rounded-[1.5rem] border border-dema-line bg-dema-cream/45 p-6"
                   >
                     <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-dema-sage/45 text-dema-forest">
                       <Icon className="h-5 w-5" aria-hidden="true" />
@@ -125,36 +126,40 @@ export default function MentoratAutomationLandingPage() {
         </section>
 
         <section
-          aria-labelledby="operational-brain-heading"
+          aria-labelledby="cockpit-heading"
           className="bg-dema-cream px-5 py-16 sm:px-8 sm:py-20"
         >
-          <div className="mx-auto max-w-6xl">
-            <div className="max-w-4xl">
-              <h2 id="operational-brain-heading" className="demaa-marketing-section-title">
-                {content.operationalBrain.title}
+          <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[minmax(0,0.88fr)_minmax(24rem,1.12fr)] lg:gap-14">
+            <div>
+              <h2 id="cockpit-heading" className="demaa-marketing-section-title">
+                {content.cockpit.title}
               </h2>
               <p className="mt-5 max-w-3xl text-base leading-7 text-dema-muted">
-                {content.operationalBrain.description}
+                {content.cockpit.description}
               </p>
+              <ol className="mt-8 space-y-3">
+                {content.cockpit.items.map((item) => (
+                  <li
+                    key={item.title}
+                    className="flex gap-4 rounded-2xl border border-dema-line bg-dema-paper px-5 py-4"
+                  >
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
+                    <div>
+                      <h3 className="font-medium tracking-[-0.015em]">{item.title}</h3>
+                      <p className="mt-1 text-sm leading-6 text-dema-muted">{item.description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
             </div>
-            <ol className="mt-10 grid gap-5 md:grid-cols-3">
-              {content.operationalBrain.levels.map((level, index) => (
-                <li
-                  key={level.title}
-                  className="rounded-[1.5rem] border border-dema-line bg-dema-paper p-6 sm:p-7"
-                >
-                  <span className="demaa-section-title text-xl text-dema-forest/48">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="mt-5 text-xl font-medium leading-snug tracking-[-0.025em]">
-                    {level.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-dema-muted">
-                    {level.description}
-                  </p>
-                </li>
-              ))}
-            </ol>
+            <Image
+              src="/images/accompagnement/outils-organises.png"
+              alt="Un dirigeant retrouve ses emails, son agenda, ses demandes clients, ses devis et ses documents organisés dans un même cockpit"
+              width={1536}
+              height={1024}
+              sizes="(min-width: 1024px) 560px, 92vw"
+              className="mx-auto h-auto w-full max-w-2xl mix-blend-darken"
+            />
           </div>
         </section>
 
@@ -167,6 +172,9 @@ export default function MentoratAutomationLandingPage() {
             <h2 id="method-heading" className="demaa-marketing-section-title">
               Comment ça se passe ?
             </h2>
+            <p className="mt-4 text-base font-medium text-dema-forest">
+              Nous ne nous arrêtons pas au diagnostic : nous réalisons la mise en place.
+            </p>
             <ol className="mt-11 grid gap-x-10 gap-y-8 md:grid-cols-3">
               {content.method.map((step, index) => (
                 <li key={step.title} className="border-t border-dema-line pt-5">
@@ -189,30 +197,6 @@ export default function MentoratAutomationLandingPage() {
               height={1024}
               sizes="(min-width: 1024px) 800px, 92vw"
               className="mx-auto mt-10 h-auto w-full max-w-4xl mix-blend-darken"
-            />
-          </div>
-        </section>
-
-        <section
-          aria-labelledby="tools-heading"
-          className="px-5 py-16 sm:px-8 sm:py-20"
-        >
-          <div className="mx-auto max-w-6xl">
-            <div className="max-w-4xl">
-              <h2 id="tools-heading" className="demaa-marketing-section-title">
-                {content.tools.title}
-              </h2>
-              <p className="mt-5 max-w-3xl text-base leading-7 text-dema-muted">
-                {content.tools.description}
-              </p>
-            </div>
-            <Image
-              src="/images/accompagnement/outils-organises.png"
-              alt="Un dirigeant retrouve ses emails, son agenda, ses demandes clients, ses devis et ses documents organisés dans ses outils habituels"
-              width={1536}
-              height={1024}
-              sizes="(min-width: 1024px) 900px, 92vw"
-              className="mx-auto mt-8 h-auto w-full max-w-5xl mix-blend-darken"
             />
           </div>
         </section>

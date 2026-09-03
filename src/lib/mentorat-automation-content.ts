@@ -4,87 +4,80 @@ export const AUTOMATION_ACCOMPANIMENT_PATH = "/accompagnement";
 
 export const mentoratAutomationContent = {
   hero: {
-    title: "Mettez de l’ordre dans votre entreprise. Et des systèmes pour que ça dure.",
+    title: "Nous mettons de l’ordre dans votre entreprise. Pour que tout ne repose plus sur vous.",
     description:
-      "En un mois, nous clarifions votre fonctionnement puis mettons en place les systèmes opérationnels prioritaires définis avec vous, pour que les demandes, les documents et les tâches avancent sans que vous ayez à tout suivre vous-même.",
+      "En un mois, nous clarifions vos priorités et mettons en place les systèmes utiles dans vos outils actuels.",
   },
   offer: {
     duration: AUTOMATION_OFFER.durationLabel,
     price: AUTOMATION_OFFER.price.label,
   },
+  examplesIntro: {
+    title: "Les systèmes que nous pouvons mettre en place.",
+    description: "Nous commençons par les sujets qui vous font perdre le plus de temps.",
+  },
   examples: [
     {
-      title: "Gestion structurée des emails",
-      description: "Tri, classement, attribution, brouillons de réponse et relances.",
+      title: "Centraliser et suivre les demandes clients",
+      description: "Centralisation, attribution et suivi jusqu’à la réponse.",
     },
     {
-      title: "Suivi des demandes clients",
-      description: "Chaque demande est centralisée, priorisée, attribuée et suivie jusqu’à sa clôture.",
+      title: "Trier les emails et valider les réponses",
+      description: "Tri, classement, brouillons de réponse et validation avant envoi.",
     },
     {
-      title: "Devis et grille tarifaire",
-      description: "Les tarifs sont clarifiés et les devis préparés, validés, envoyés puis relancés.",
+      title: "Préparer et relancer les devis et propositions commerciales",
+      description: "Grille tarifaire, modèles, préparation, envoi et relances.",
     },
     {
-      title: "Facturation et règlements",
-      description: "Les factures sont préparées, les pièces classées et les paiements suivis.",
+      title: "Facturer plus vite et suivre les règlements",
+      description: "Factures à préparer, échéances, paiements reçus et retards.",
     },
     {
-      title: "Réunions et comptes rendus",
-      description: "Ordre du jour, compte rendu, décisions, responsables et tâches à suivre.",
+      title: "Rassembler les tâches et les priorités",
+      description: "Ce qui doit être fait, par qui et pour quand.",
     },
     {
-      title: "Drive et documents structurés",
-      description: "Arborescence, nommage, droits d’accès, modèles et archivage.",
+      title: "Organiser l’agenda et le planning",
+      description: "Rendez-vous, interventions, changements et disponibilités.",
     },
     {
-      title: "Planning opérationnel partagé",
-      description: "Interventions, responsables, échéances et alertes réunis au même endroit.",
-    },
-    {
-      title: "Prospection commerciale organisée",
-      description: "Fichiers, messages, validations, envois et relances sont suivis.",
+      title: "Classer les documents dans le Drive",
+      description: "Classement, modèles, droits d’accès et bonnes versions.",
     },
   ],
-  operationalBrain: {
-    title: "Nous construisons le cerveau opérationnel de votre entreprise.",
+  cockpit: {
+    title: "Un cockpit pour suivre l’essentiel.",
     description:
-      "Nous rassemblons les informations, les règles, les modèles et les responsabilités dont votre équipe a besoin. Puis nous les transformons en systèmes clairs pour que chacun sache quoi faire et que rien ne se perde.",
-    levels: [
+      "Les informations restent dans vos outils. Le cockpit rassemble ce qui demande votre attention et prépare les prochaines actions.",
+    items: [
       {
-        title: "Ce que votre entreprise sait",
-        description: "Documents, tarifs, modèles et informations clients.",
+        title: "À traiter",
+        description: "Les demandes et les tâches du jour.",
       },
       {
-        title: "Comment le travail avance",
-        description: "Étapes, responsables, validations et relances.",
+        title: "À valider",
+        description: "Les réponses, les devis et les décisions en attente.",
       },
       {
-        title: "Les outils qui le font fonctionner",
-        description: "Messagerie, Drive, agenda, Notion, CRM et facturation.",
+        title: "À relancer",
+        description: "Les clients, les règlements et les actions à reprendre.",
       },
     ],
   },
-  tools: {
-    title: "Nous travaillons dans vos outils actuels.",
-    description:
-      "Nous intervenons directement dans les outils que votre équipe utilise déjà. Un nouvel outil n’est proposé que si l’existant ne permet pas d’obtenir le résultat attendu.",
-  },
   method: [
     {
-      title: "Identifier ce qui repose sur vous",
-      description:
-        "Avant l’atelier, nous vous aidons à réunir les informations utiles. Puis, pendant un atelier de travail de deux heures, nous examinons vos outils, vos méthodes et ce qui ralentit votre équipe.",
+      title: "Nous observons",
+      description: "Vos outils, vos tâches et ce qui revient encore jusqu’à vous.",
     },
     {
-      title: "Choisir les systèmes prioritaires",
-      description:
-        "Nous définissons avec vous les systèmes à mettre en place en priorité, leur résultat attendu, leur périmètre et les personnes concernées.",
+      title: "Nous mettons en place",
+      description: "Le classement, les modèles, les étapes et les automatisations utiles.",
     },
     {
-      title: "Mettre en place et transmettre",
+      title: "Nous testons et transmettons",
       description:
-        "Nous construisons les systèmes, configurons les outils, testons leur fonctionnement et formons les personnes qui devront les utiliser.",
+        "Nous vérifions le fonctionnement avec l’équipe et montrons aux personnes concernées comment l’utiliser.",
     },
   ],
   testimonials: [
@@ -100,12 +93,12 @@ export const mentoratAutomationContent = {
     },
   ],
   offerIncludes: [
-    "Analyse de votre fonctionnement actuel",
-    "Identification des blocages et dépendances au dirigeant",
-    "Définition d’un périmètre prioritaire validé avec vous",
-    "Conception et mise en place de ces systèmes",
-    "Configuration des outils et automatisations nécessaires",
-    "Tests, documentation et formation de l’équipe",
+    "Un fonctionnement prioritaire clarifié et documenté",
+    "Les étapes, responsabilités et validations définies",
+    "Les outils et automatisations nécessaires configurés",
+    "Les modèles et supports prêts à être utilisés",
+    "Le système testé dans votre activité réelle",
+    "Les personnes concernées formées",
   ],
   ongoing: {
     title: "Après le premier mois, vous choisissez.",

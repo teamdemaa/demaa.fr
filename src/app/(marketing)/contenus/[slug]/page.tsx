@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import CaseVideoOverview from "@/components/CaseVideoOverview";
 import ContentSlidesLauncher from "@/components/ContentSlidesLauncher";
+import MentoratAutomationCta from "@/components/MentoratAutomationCta";
 import NumberedSectionHeading from "@/components/NumberedSectionHeading";
 import {
   getAllPublishedContent,
@@ -201,6 +202,12 @@ export default async function ContentPage({ params }: ContentPageProps) {
               </ul>
             </aside>
           </div>
+
+          {isOrganisationContent ? (
+            <div className="mx-auto mt-14 max-w-5xl">
+              <MentoratAutomationCta contentSlug={entry.slug} variant="organisation" />
+            </div>
+          ) : null}
 
           {entry.sources.length ? (
             <section className="mx-auto mt-14 max-w-5xl border-t border-dema-line pt-8">

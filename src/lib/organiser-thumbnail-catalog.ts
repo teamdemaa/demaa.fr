@@ -54,6 +54,30 @@ export type OrganiserThumbnailDefinition = Readonly<{
 
 const ORGANISER_THUMBNAILS: readonly OrganiserThumbnailDefinition[] = [
   {
+    slug: "preparer-devis-propositions-commerciales",
+    lines: ["Mes devis prennent", "trop de temps"],
+    illustration: "renovation-quotes",
+    fontSize: 82,
+  },
+  {
+    slug: "construire-grille-tarifaire-claire",
+    lines: ["Quel tarif", "appliquer ?"],
+    illustration: "useful-dashboard",
+    fontSize: 92,
+  },
+  {
+    slug: "relancer-devis-propositions",
+    lines: ["Mes devis restent", "sans réponse"],
+    illustration: "team-followup",
+    fontSize: 84,
+  },
+  {
+    slug: "facturer-suivre-reglements",
+    lines: ["Je facture", "trop tard"],
+    illustration: "work-order-to-invoice",
+    fontSize: 94,
+  },
+  {
     slug: "gerer-les-urgences-sans-subir",
     lines: ["Toujours dans", "l’urgence ?"],
     illustration: "urgent-workflow",
