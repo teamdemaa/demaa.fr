@@ -12,6 +12,7 @@ import {
   Mail,
   MessageSquare,
   Receipt,
+  ScrollText,
 } from "lucide-react";
 import AutomationCallbackControl from "@/components/AutomationCallbackControl";
 import Navbar from "@/components/Navbar";
@@ -26,6 +27,7 @@ const systemIcons = [
   ClipboardList,
   Calendar,
   Folder,
+  ScrollText,
 ] as const;
 
 export default function MentoratAutomationLandingPage() {

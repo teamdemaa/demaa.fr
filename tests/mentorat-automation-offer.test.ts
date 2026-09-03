@@ -39,6 +39,7 @@ describe("Mise en place de systèmes opérationnels", () => {
       "Rassembler les tâches et les priorités",
       "Organiser l’agenda et le planning",
       "Classer les documents dans le Drive",
+      "Préparer les réunions et suivre les décisions",
     ]);
     expect(mentoratAutomationContent.cockpit.items.map(({ title }) => title)).toEqual([
       "À traiter",

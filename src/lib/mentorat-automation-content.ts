@@ -45,6 +45,10 @@ export const mentoratAutomationContent = {
       title: "Classer les documents dans le Drive",
       description: "Classement, modèles, droits d’accès et bonnes versions.",
     },
+    {
+      title: "Préparer les réunions et suivre les décisions",
+      description: "Ordre du jour, compte rendu, décisions, responsables et actions à suivre.",
+    },
   ],
   cockpit: {
     title: "Un cockpit pour suivre l’essentiel.",
