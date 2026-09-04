@@ -55,17 +55,17 @@ export default function OrganiserHub() {
       <main className="min-h-screen bg-background">
         <header className="mx-auto w-full max-w-7xl px-4 pb-10 pt-12 text-center sm:px-6 md:pb-12 md:pt-16 lg:px-8">
           <h1
-            aria-label="Des cas concrets pour organiser votre activité"
+            aria-label="Mieux organiser l’entreprise, un sujet à la fois"
             className="text-balance font-light leading-[0.94] tracking-tight"
             style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
           >
             <span aria-hidden="true">
-              <span className="block text-brand-blue/62">Des cas concrets</span>
-              <span className="demaa-hero-title block text-dema-forest">pour organiser votre activité</span>
+              <span className="block text-brand-blue/62">Mieux organiser l’entreprise</span>
+              <span className="demaa-hero-title block text-dema-forest">un sujet à la fois</span>
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-dema-muted md:text-lg">
-            Des explications concrètes pour mieux organiser votre activité, avec les méthodes, les outils et les modèles utiles pour mettre chaque solution en place.
+            Des explications concrètes pour structurer le travail sans tout changer d’un coup.
           </p>
         </header>
 
