@@ -123,7 +123,10 @@ describe("Mise en place de systèmes opérationnels", () => {
     expect(landing).not.toContain("Tutoriels Demaa");
     expect(JSON.stringify(mentoratAutomationContent)).not.toContain("12 mois");
     expect(JSON.stringify(mentoratAutomationContent)).not.toContain("trois à quatre");
-    expect(JSON.stringify(mentoratAutomationContent)).not.toContain("Product Builder");
+    expect(mentoratAutomationContent.testimonials).toHaveLength(3);
+    expect(mentoratAutomationContent.testimonials[2]).toMatchObject({
+      attribution: "Product Builder",
+    });
     expect(landing).not.toContain("StructureNewsletterBlock");
     for (const brand of ["Codex", "Airtable", "Fillout", "Make"]) {
       expect(JSON.stringify(mentoratAutomationContent)).not.toContain(brand);

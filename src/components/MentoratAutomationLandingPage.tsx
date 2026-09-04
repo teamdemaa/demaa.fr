@@ -208,7 +208,7 @@ export default function MentoratAutomationLandingPage() {
             <h2 id="proof-heading" className="demaa-marketing-section-title">
               Ce que ces systèmes changent au quotidien.
             </h2>
-            <div className="mt-11 grid gap-x-12 gap-y-8 md:grid-cols-2">
+            <div className="mt-11 grid gap-x-10 gap-y-8 md:grid-cols-3">
               {content.testimonials.map((testimonial) => (
                 <blockquote
                   key={testimonial.attribution}

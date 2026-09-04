@@ -95,6 +95,11 @@ export const mentoratAutomationContent = {
         "Les outils évoluent vite. C’est le type d’accompagnement qu’il faut reprendre régulièrement pour rester à jour et continuer à améliorer nos façons de travailler.",
       attribution: "Assistante de direction · Entreprise du bâtiment",
     },
+    {
+      quote:
+        "Cet accompagnement m’a ouvert le champ des possibles. Je ne pensais pas qu’on pouvait aller aussi loin avec ces outils. Il y a clairement eu un avant et un après dans ma manière de travailler.",
+      attribution: "Product Builder",
+    },
   ],
   offerIncludes: [
     "Un fonctionnement prioritaire clarifié et documenté",
