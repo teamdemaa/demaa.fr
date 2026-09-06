@@ -20,14 +20,14 @@ const navigationItems = {
 } as const;
 
 const publicNavigationOrder: readonly ActionPlanView[] = [
-  "solutions",
   "academy",
+  "solutions",
   "services",
 ];
 
 const embeddedNavigationOrder: readonly ActionPlanView[] = [
-  "solutions",
   "academy",
+  "solutions",
   "services",
 ];
 
