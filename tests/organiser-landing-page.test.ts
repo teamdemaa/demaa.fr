@@ -16,7 +16,10 @@ describe("Organiser public journey", () => {
     expect(organiserPage).toContain("<OrganiserHub />");
     expect(organiserPage).not.toContain("OrganiserSectionNavigation");
     expect(organiserPage).toContain('path: "/organiser"');
-    expect(organiserHub).toContain("Des cas concrets");
+    expect(organiserHub).toContain("Mieux organiser l’entreprise");
+    expect(organiserHub).toContain(
+      "Des explications concrètes pour structurer le travail sans tout changer d’un coup.",
+    );
     expect(organiserHub).toContain("getPublishedCopyableModels");
     expect(organiserHub).toContain("getPublicOrganiserContent()");
     expect(organiserHub).toContain("getPublishedOrganisationContent()");
