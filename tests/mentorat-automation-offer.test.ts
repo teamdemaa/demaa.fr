@@ -99,6 +99,9 @@ describe("Mise en place d’un système commercial et client", () => {
     expect(landing).toContain("/images/accompagnement/atelier-organisation.png");
     expect(landing).toContain('label="Faire le point ensemble"');
     expect(landing).toContain('id="suivi"');
+    expect(landing).toContain("Un problème de votre métier mérite peut-être son propre logiciel");
+    expect(landing).toContain('href="/studio"');
+    expect(landing).toContain("Découvrir Demaa Studio");
     expect(mentoratAutomationContent.ongoing.title).toBe("Vous et votre équipe êtes autonomes.");
     expect("priceNote" in mentoratAutomationContent.ongoing).toBe(false);
     expect("options" in mentoratAutomationContent.ongoing).toBe(false);

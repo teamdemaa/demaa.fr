@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { Check, ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Check, ChevronDown } from "lucide-react";
 import AutomationCallbackControl from "@/components/AutomationCallbackControl";
 import Navbar from "@/components/Navbar";
 import { mentoratAutomationContent as content } from "@/lib/mentorat-automation-content";
@@ -308,6 +309,30 @@ export default function MentoratAutomationLandingPage() {
                 {content.ongoing.description}
               </p>
             </div>
+          </div>
+        </section>
+
+        <section
+          aria-labelledby="studio-bridge-heading"
+          className="border-b border-dema-line px-5 py-16 sm:px-8 sm:py-20"
+        >
+          <div className="mx-auto max-w-6xl rounded-[2rem] bg-dema-sage/45 p-7 sm:p-10 lg:flex lg:items-end lg:justify-between lg:gap-16">
+            <div className="max-w-3xl">
+              <p className="text-sm font-medium text-dema-forest">Demaa Studio</p>
+              <h2 id="studio-bridge-heading" className="demaa-marketing-section-title mt-4">
+                Un problème de votre métier mérite peut-être son propre logiciel.
+              </h2>
+              <p className="mt-5 max-w-3xl text-base leading-7 text-dema-muted">
+                Certains besoins ne se règlent pas seulement en organisant mieux l’existant. Demaa Studio les structure avec des dirigeants, construit les logiciels avec des entreprises pilotes, puis les commercialise auprès du secteur.
+              </p>
+            </div>
+            <Link
+              href="/studio"
+              className="mt-7 inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full border border-dema-forest/25 bg-dema-paper px-6 text-sm font-semibold text-dema-forest transition hover:bg-dema-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 lg:mt-0"
+            >
+              Découvrir Demaa Studio
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
           </div>
         </section>
 
