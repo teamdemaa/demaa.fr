@@ -36,7 +36,7 @@ describe("canonical Accompagnement catalog", () => {
       CANONICAL_SERVICE_SLUGS.includes(slug)
     )).toBe(true);
     expect(services.map((service) => service.name)).toEqual([
-      "Mise en place de systèmes opérationnels",
+      "Mise en place d’un système commercial et client",
       "Application métier",
       "Coach business",
       "Assistante administrative",
@@ -144,17 +144,17 @@ describe("canonical Accompagnement catalog", () => {
     const application = getCanonicalServiceBySlug("application-metier");
 
     expect(automation).toMatchObject({
-      name: "Mise en place de systèmes opérationnels",
+      name: "Mise en place d’un système commercial et client",
       pricing: null,
       cta: { kind: "callback", label: "Envoyer ma demande" },
     });
     expect(automation?.packages.map(({ slug, pricing }) => [slug, pricing.amountMinor])).toEqual([
-      ["automatisation-essentielle", 350000],
+      ["automatisation-essentielle", 500000],
     ]);
     expect(automation?.packages[0]).toMatchObject({
       name: "Maestro",
       pricing: {
-        label: "3 500 € HT",
+        label: "5 000 € HT",
       },
     });
     expect(automation?.packages[0]?.pricing.note).toContain("atelier de travail");
@@ -216,7 +216,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).not.toContain("Assistante administrative");
     expect(markup).not.toContain("Recruter un alternant");
     expect(markup).not.toContain("Expert-comptable");
-    expect(markup).toContain("3 500 € HT");
+    expect(markup).toContain("5 000 € HT");
     expect(markup).toContain("À partir de 4 500 € HT");
     expect(markup).not.toContain("750 € HT / mois");
     expect(markup).not.toContain("Sur devis");

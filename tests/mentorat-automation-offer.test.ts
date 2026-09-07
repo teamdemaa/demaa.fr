@@ -13,61 +13,69 @@ async function readSource(path: string) {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-describe("Mise en place de systèmes opérationnels", () => {
+describe("Mise en place d’un système commercial et client", () => {
   it("locks the Maestro offer and its deliberately bounded scope", () => {
     expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/accompagnement");
     expect(AUTOMATION_OFFER.name).toBe("Maestro");
-    expect(AUTOMATION_OFFER.serviceName).toBe("Mise en place de systèmes opérationnels");
-    expect(mentoratAutomationContent.offer).toEqual({
+    expect(AUTOMATION_OFFER.serviceName).toBe("Mise en place d’un système commercial et client");
+    expect(AUTOMATION_OFFER.price).toEqual({
+      amountMinor: 500000,
+      currency: "EUR",
+      label: "5 000 € HT",
+    });
+    expect(mentoratAutomationContent.offer).toMatchObject({
       duration: "1 mois",
-      price: "3 500 € HT",
+      price: "5 000 € HT",
+      title: "Votre système commercial et client, prêt à être utilisé en un mois.",
     });
     expect(mentoratAutomationContent.hero.title).toBe(
-      "Nous mettons de l’ordre dans votre entreprise. Pour que tout ne repose plus sur vous.",
+      "On met en place votre système commercial et client. Pour que tout ne repose plus sur vous.",
     );
-    expect(mentoratAutomationContent.hero.description).toBe(
-      "En un mois, nous clarifions vos priorités et mettons en place les systèmes utiles dans vos outils actuels.",
-    );
-    expect(mentoratAutomationContent.examplesIntro.title).toBe(
-      "Les systèmes que nous pouvons mettre en place.",
-    );
-    expect(mentoratAutomationContent.examples.map(({ title }) => title)).toEqual([
-      "Centraliser et suivre les demandes clients",
-      "Trier les emails et valider les réponses",
-      "Préparer et relancer les devis et propositions commerciales",
-      "Facturer plus vite et suivre les règlements",
-      "Rassembler les tâches et les priorités",
-      "Organiser l’agenda et le planning",
-      "Classer les documents dans le Drive",
-      "Préparer les réunions et suivre les décisions",
+    expect(mentoratAutomationContent.hero.description).toContain("au suivi après la livraison");
+    expect(mentoratAutomationContent.journey.map(({ title }) => title)).toEqual([
+      "Prospecter et vendre",
+      "Accueillir et cadrer",
+      "Réaliser et livrer",
+      "Suivre et fidéliser",
+    ]);
+    expect(mentoratAutomationContent.foundations.items.map(({ title }) => title)).toEqual([
+      "Les étapes",
+      "Les responsabilités",
+      "Les outils",
+      "Les modèles",
+      "Les routines",
     ]);
     expect(mentoratAutomationContent.cockpit.items.map(({ title }) => title)).toEqual([
-      "À traiter",
+      "À contacter",
+      "À préparer",
       "À valider",
       "À relancer",
     ]);
+    expect(mentoratAutomationContent.impacts.items.map(({ title }) => title)).toEqual([
+      "Pour le dirigeant",
+      "Pour l’équipe",
+      "Pour les clients",
+      "Pour l’entreprise",
+    ]);
     expect(mentoratAutomationContent.offerIncludes).toEqual([
-      "Un fonctionnement prioritaire clarifié et documenté",
-      "Les étapes, responsabilités et validations définies",
-      "Les outils et automatisations nécessaires configurés",
-      "Les modèles et supports prêts à être utilisés",
-      "Le système testé dans votre activité réelle",
-      "Les personnes concernées formées",
+      "Votre parcours commercial et client structuré",
+      "Votre outil de suivi configuré",
+      "Vos étapes et responsabilités définies",
+      "Vos emails et séquences de relance prioritaires",
+      "Vos documents et modèles prioritaires",
+      "Vos trames de rapports et de livrables",
+      "Vos routines de suivi",
+      "Votre équipe accompagnée dans la prise en main",
     ]);
     expect(mentoratAutomationContent.faq.find(
-      (item) => item.question === "Devons-nous changer nos outils ?",
-    )?.answer).toContain("outils déjà utilisés");
+      (item) => item.question === "Devons-nous utiliser un CRM ?",
+    )?.answer).toContain("Pas nécessairement");
     expect(mentoratAutomationContent.faq.find(
-      (item) => item.question === "Que peut-on réellement mettre en place en un mois ?",
-    )?.answer).toContain("Le périmètre, les livrables et le résultat attendu sont écrits et validés");
+      (item) => item.question === "Que peut-on mettre en place en un mois ?",
+    )?.answer).toContain("Ce périmètre, les livrables et le résultat attendu sont validés");
     expect(mentoratAutomationContent.faq.find(
-      (item) => item.question === "Combien de temps cela demande-t-il à mon équipe ?",
+      (item) => item.question === "Combien de temps cela demande-t-il à notre équipe ?",
     )?.answer).toContain("Nous prenons en charge la conception et la mise en place");
-    expect(mentoratAutomationContent.faq.map((item) => item.question)).not.toContain(
-      "Faut-il savoir coder ?",
-    );
-    expect("tutorialTracks" in mentoratAutomationContent).toBe(false);
-    expect("approachPillars" in mentoratAutomationContent).toBe(false);
   });
 
   it("keeps the public landing focused on outcomes and current tools", async () => {
@@ -79,59 +87,29 @@ describe("Mise en place de systèmes opérationnels", () => {
     ]);
 
     expect(page).toContain("MentoratAutomationLandingPage");
-    expect(page).toContain("Mise en place de systèmes opérationnels pour TPE");
+    expect(page).toContain("Mise en place d’un système commercial et client pour TPE");
     expect(legacyPage).toContain('permanentRedirect("/accompagnement")');
-    expect(landing).toContain("Nous mettons de l’ordre dans votre entreprise");
-    expect(landing).toContain("Pour que tout ne repose plus sur vous");
-    expect(landing).not.toContain("Mettez de l’ordre dans votre entreprise");
-    expect(mentoratAutomationContent.examplesIntro.title).toBe(
-      "Les systèmes que nous pouvons mettre en place.",
-    );
-    expect(landing).toContain("Comment ça se passe ?");
-    expect(landing).toContain("Moins de choses à retenir.");
-    expect(landing).toContain("Nous ne nous arrêtons pas au diagnostic");
-    expect(landing).not.toContain("4 × 1 heure");
-    expect(landing).not.toContain("1 à 3");
-    expect(mentoratAutomationContent.cockpit.title).toBe("Un cockpit pour suivre l’essentiel.");
-    expect("note" in mentoratAutomationContent.cockpit).toBe(false);
+    expect(landing).toContain("content.hero.lead");
+    expect(landing).toContain("content.hero.emphasis");
+    expect(landing).toContain("content.journey.map");
+    expect(landing).toContain("content.foundations.items.map");
+    expect(landing).toContain("content.impacts.items.map");
     expect(landing).toContain("/images/accompagnement/outils-organises.png");
-    expect(landing).not.toContain("Nous mettons en place le classement");
-    expect(landing).not.toContain("Gmail ou Outlook");
-    expect(landing).not.toContain("uniquement les accès nécessaires");
-    expect(landing).not.toContain("Votre fonctionnement réel");
-    expect(landing).not.toContain("Un système clair");
-    expect(landing).not.toContain("Vos outils configurés");
-    expect(landing).toContain("Maestro · Mise en place de systèmes · 1 mois");
-    expect(landing).toContain("Vos premiers systèmes opérationnels, mis en place en un mois.");
-    expect(landing.indexOf("Maestro · Mise en place de systèmes · 1 mois")).toBeGreaterThan(
-      landing.indexOf('id="tarif"'),
-    );
-    expect(landing).toContain('label="Faire le point sur mon organisation"');
+    expect(landing).toContain("/images/accompagnement/organisation-claire.png");
+    expect(landing).toContain("/images/accompagnement/atelier-organisation.png");
+    expect(landing).toContain('label="Faire le point ensemble"');
     expect(landing).toContain('id="suivi"');
-    expect(mentoratAutomationContent.ongoing.title).toBe("Après le premier mois, vous choisissez.");
+    expect(mentoratAutomationContent.ongoing.title).toBe("Une organisation faite pour durer.");
     expect("price" in mentoratAutomationContent.ongoing).toBe(false);
-    expect(JSON.stringify(mentoratAutomationContent.ongoing)).not.toContain("1 500 €");
-    expect(landing).toContain("Vous ne savez pas encore par où commencer ?");
-    expect(landing).toContain("Commencer le diagnostic");
-    expect(landing).toContain('href="/diagnostic-organisation"');
-    expect(landing.indexOf('href="/diagnostic-organisation"')).toBeGreaterThan(
-      landing.indexOf('id="tarif"'),
-    );
-    expect(landing.indexOf('href="/diagnostic-organisation"')).toBeLessThan(
-      landing.indexOf('id="faq"'),
-    );
-    expect(landing).not.toContain("Tutoriels Demaa");
-    expect(JSON.stringify(mentoratAutomationContent)).not.toContain("12 mois");
-    expect(JSON.stringify(mentoratAutomationContent)).not.toContain("trois à quatre");
-    expect(mentoratAutomationContent.testimonials).toHaveLength(3);
-    expect(mentoratAutomationContent.testimonials[2]).toMatchObject({
-      attribution: "Product Builder",
-    });
+    expect(landing).not.toContain('href="/diagnostic-organisation"');
+    expect(mentoratAutomationContent.testimonials).toHaveLength(2);
+    expect(JSON.stringify(mentoratAutomationContent.testimonials)).not.toContain("Product Builder");
     expect(landing).not.toContain("StructureNewsletterBlock");
     for (const brand of ["Codex", "Airtable", "Fillout", "Make"]) {
       expect(JSON.stringify(mentoratAutomationContent)).not.toContain(brand);
     }
-    expect(callbackDialog).toContain("Parlons de votre organisation.");
+    expect(callbackDialog).toContain("Faisons le point ensemble.");
+    expect(callbackDialog).toContain("Système commercial et client");
     expect(callbackDialog).toContain('submitLabel="Envoyer ma demande"');
   });
 

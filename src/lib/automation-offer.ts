@@ -1,13 +1,13 @@
 export const AUTOMATION_OFFER = {
   durationLabel: "1 mois",
   name: "Maestro",
-  serviceName: "Mise en place de systèmes opérationnels",
+  serviceName: "Mise en place d’un système commercial et client",
   packageSlug: "automatisation-essentielle",
   price: {
-    amountMinor: 350000,
+    amountMinor: 500000,
     currency: "EUR",
-    label: "3 500 € HT",
+    label: "5 000 € HT",
   },
   summary:
-    "Un mois pour clarifier votre fonctionnement et mettre en place les systèmes opérationnels prioritaires définis avec vous.",
+    "Un mois pour structurer votre parcours commercial et client, configurer le suivi et transmettre une méthode claire à l’équipe.",
 } as const;

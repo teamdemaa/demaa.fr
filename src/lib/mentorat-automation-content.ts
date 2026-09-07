@@ -4,86 +4,128 @@ export const AUTOMATION_ACCOMPANIMENT_PATH = "/accompagnement";
 
 export const mentoratAutomationContent = {
   hero: {
-    title: "Nous mettons de l’ordre dans votre entreprise. Pour que tout ne repose plus sur vous.",
+    title: "On met en place votre système commercial et client. Pour que tout ne repose plus sur vous.",
+    lead: "On met en place votre système commercial et client.",
+    emphasis: "Pour que tout ne repose plus sur vous.",
     description:
-      "En un mois, nous clarifions vos priorités et mettons en place les systèmes utiles dans vos outils actuels.",
+      "De la première prise de contact au suivi après la livraison, nous organisons les étapes, les outils et les modèles qui permettent à chacun de savoir quoi faire et à chaque client de savoir où en est son dossier.",
   },
-  offer: {
-    duration: AUTOMATION_OFFER.durationLabel,
-    price: AUTOMATION_OFFER.price.label,
+  why: {
+    title: "Une entreprise devient plus solide lorsque son fonctionnement peut être partagé.",
+    paragraphs: [
+      "Quand les étapes sont claires, l’équipe gagne en autonomie, les clients sont mieux accompagnés et les informations ne restent plus dans la tête d’une seule personne.",
+      "C’est ainsi que l’entreprise peut transmettre son savoir-faire, grandir et continuer à bien fonctionner dans le temps.",
+    ],
   },
-  examplesIntro: {
-    title: "Les systèmes que nous pouvons mettre en place.",
-    description: "Nous commençons par les sujets qui vous font perdre le plus de temps.",
+  journeyIntro: {
+    title: "Un parcours clair, de la prospection au suivi client.",
+    description:
+      "Nous relions les moments clés de la relation client pour que les informations circulent et que chaque prochaine action soit visible.",
   },
-  examples: [
+  journey: [
     {
-      title: "Centraliser et suivre les demandes clients",
-      description: "Centralisation, attribution et suivi jusqu’à la réponse.",
+      title: "Prospecter et vendre",
+      promise: "Pour que chaque opportunité avance avec une prochaine action claire.",
+      items: [
+        "Process commercial",
+        "Suivi des prospects",
+        "Emails de prospection",
+        "Séquences de relance",
+        "Grille tarifaire",
+        "Proposition commerciale",
+      ],
     },
     {
-      title: "Trier les emails et valider les réponses",
-      description: "Tri, classement, brouillons de réponse et validation avant envoi.",
+      title: "Accueillir et cadrer",
+      promise: "Pour que chaque collaboration commence sur de bonnes bases.",
+      items: [
+        "Email d’accueil",
+        "Trame de brief",
+        "Informations et documents à recueillir",
+        "Checklist de démarrage",
+        "Planning et prochaines étapes",
+      ],
     },
     {
-      title: "Préparer et relancer les devis et propositions commerciales",
-      description: "Grille tarifaire, modèles, préparation, envoi et relances.",
+      title: "Réaliser et livrer",
+      promise: "Pour garder le client informé et présenter le travail de manière claire.",
+      items: [
+        "Suivi de l’avancement",
+        "Points et comptes rendus",
+        "Structure des rapports",
+        "Présentation des résultats",
+        "Modèles de livrables",
+        "Validation et livraison",
+      ],
     },
     {
-      title: "Facturer plus vite et suivre les règlements",
-      description: "Factures à préparer, échéances, paiements reçus et retards.",
-    },
-    {
-      title: "Rassembler les tâches et les priorités",
-      description: "Ce qui doit être fait, par qui et pour quand.",
-    },
-    {
-      title: "Organiser l’agenda et le planning",
-      description: "Rendez-vous, interventions, changements et disponibilités.",
-    },
-    {
-      title: "Classer les documents dans le Drive",
-      description: "Classement, modèles, droits d’accès et bonnes versions.",
-    },
-    {
-      title: "Préparer les réunions et suivre les décisions",
-      description: "Ordre du jour, compte rendu, décisions, responsables et actions à suivre.",
+      title: "Suivre et fidéliser",
+      promise: "Pour poursuivre la relation après la livraison.",
+      items: [
+        "Bilan de mission",
+        "Routine de suivi client",
+        "Récolte des avis",
+        "Nouvelles opportunités",
+        "Réactivation des anciens clients",
+      ],
     },
   ],
-  cockpit: {
-    title: "Un cockpit pour suivre l’essentiel.",
+  foundations: {
+    title: "Un fonctionnement que toute l’équipe peut comprendre et utiliser.",
     description:
-      "Les informations restent dans vos outils. Le cockpit rassemble ce qui demande votre attention et prépare les prochaines actions.",
+      "Le système relie cinq éléments simples qui permettent à l’équipe d’avancer de la même manière.",
     items: [
-      {
-        title: "À traiter",
-        description: "Les demandes et les tâches du jour.",
-      },
-      {
-        title: "À valider",
-        description: "Les réponses, les devis et les décisions en attente.",
-      },
-      {
-        title: "À relancer",
-        description: "Les clients, les règlements et les actions à reprendre.",
-      },
+      { title: "Les étapes", description: "Ce qui doit se passer à chaque moment." },
+      { title: "Les responsabilités", description: "Qui s’occupe de quoi." },
+      { title: "Les outils", description: "Où retrouver et suivre l’information." },
+      { title: "Les modèles", description: "Quoi envoyer ou produire." },
+      { title: "Les routines", description: "Quand vérifier, relancer et mettre à jour." },
     ],
+  },
+  cockpit: {
+    title: "Tout ce qui mérite votre attention, au même endroit.",
+    description:
+      "Les informations peuvent rester dans vos outils actuels. Le cockpit rassemble les prochaines actions utiles pour que les prospects avancent, que les clients soient bien suivis et que l’équipe puisse travailler sans attendre systématiquement le dirigeant.",
+    items: [
+      { title: "À contacter", description: "Les prospects et clients qui attendent un premier échange." },
+      { title: "À préparer", description: "Les briefs, propositions, documents et livrables à produire." },
+      { title: "À valider", description: "Les décisions et éléments qui demandent un accord." },
+      { title: "À relancer", description: "Les échanges et opportunités dont la prochaine action est due." },
+    ],
+  },
+  impacts: {
+    title: "Ce que cela change.",
+    items: [
+      { title: "Pour le dirigeant", description: "Moins de choses à retenir et une vision plus claire de l’activité." },
+      { title: "Pour l’équipe", description: "Une méthode commune et davantage d’autonomie au quotidien." },
+      { title: "Pour les clients", description: "Des échanges plus fluides, des livraisons mieux préparées et un suivi plus régulier." },
+      { title: "Pour l’entreprise", description: "Un fonctionnement plus facile à transmettre, à améliorer et à faire grandir." },
+    ],
+  },
+  methodIntro: {
+    title: "On construit le système avec votre réalité.",
+    description: "Nous réalisons la mise en place avec vos outils, vos habitudes et les personnes concernées.",
   },
   method: [
     {
-      title: "Nous observons",
-      description: "Vos outils, vos tâches et ce qui revient encore jusqu’à vous.",
-    },
-    {
-      title: "Nous mettons en place",
-      description: "Le classement, les modèles, les étapes et les automatisations utiles.",
-    },
-    {
-      title: "Nous testons et transmettons",
+      title: "Nous découvrons votre façon de travailler",
       description:
-        "Nous vérifions le fonctionnement avec l’équipe et montrons aux personnes concernées comment l’utiliser.",
+        "Vos clients, vos outils, vos habitudes et les moments où le suivi devient plus difficile.",
+    },
+    {
+      title: "Nous mettons le système en place",
+      description:
+        "Les étapes, les responsabilités, l’outil de suivi, les documents et les routines.",
+    },
+    {
+      title: "Nous le testons et le transmettons",
+      description:
+        "Nous l’utilisons sur des situations réelles et accompagnons l’équipe dans sa prise en main.",
     },
   ],
+  testimonialsIntro: {
+    title: "Une organisation qui change vraiment le quotidien.",
+  },
   testimonials: [
     {
       quote:
@@ -95,73 +137,88 @@ export const mentoratAutomationContent = {
         "Les outils évoluent vite. C’est le type d’accompagnement qu’il faut reprendre régulièrement pour rester à jour et continuer à améliorer nos façons de travailler.",
       attribution: "Assistante de direction · Entreprise du bâtiment",
     },
-    {
-      quote:
-        "Cet accompagnement m’a ouvert le champ des possibles. Je ne pensais pas qu’on pouvait aller aussi loin avec ces outils. Il y a clairement eu un avant et un après dans ma manière de travailler.",
-      attribution: "Product Builder",
-    },
   ],
+  offer: {
+    duration: AUTOMATION_OFFER.durationLabel,
+    price: AUTOMATION_OFFER.price.label,
+    eyebrow: `Maestro · Mise en place · ${AUTOMATION_OFFER.durationLabel}`,
+    title: "Votre système commercial et client, prêt à être utilisé en un mois.",
+    scope:
+      "Nous définissons avec vous le parcours prioritaire et le niveau de mise en place réalisable pendant la mission.",
+  },
   offerIncludes: [
-    "Un fonctionnement prioritaire clarifié et documenté",
-    "Les étapes, responsabilités et validations définies",
-    "Les outils et automatisations nécessaires configurés",
-    "Les modèles et supports prêts à être utilisés",
-    "Le système testé dans votre activité réelle",
-    "Les personnes concernées formées",
+    "Votre parcours commercial et client structuré",
+    "Votre outil de suivi configuré",
+    "Vos étapes et responsabilités définies",
+    "Vos emails et séquences de relance prioritaires",
+    "Vos documents et modèles prioritaires",
+    "Vos trames de rapports et de livrables",
+    "Vos routines de suivi",
+    "Votre équipe accompagnée dans la prise en main",
   ],
   ongoing: {
-    title: "Après le premier mois, vous choisissez.",
+    title: "Une organisation faite pour durer.",
     description:
-      "Votre équipe peut reprendre les systèmes en main ou nous pouvons continuer à les faire vivre avec vous.",
+      "À la fin du premier mois, le système est transmis. Votre équipe peut le faire vivre ou Demaa peut continuer à l’améliorer avec vous.",
     options: [
       {
         title: "Votre équipe prend la suite",
         description:
-          "Les systèmes sont documentés et les personnes responsables sont formées pour les utiliser et les faire évoluer.",
+          "Elle sait utiliser le système, le mettre à jour et le faire évoluer au quotidien.",
       },
       {
-        title: "Demaa reste à vos côtés",
+        title: "Demaa continue à vos côtés",
         description:
-          "Nous prenons en charge les actions confiées, surveillons le fonctionnement et améliorons les systèmes dans un périmètre mensuel défini.",
+          "Nous faisons vivre le système avec vous et l’améliorons au fil des besoins dans un périmètre mensuel défini.",
       },
     ],
     note: "Le suivi est optionnel. Son périmètre et ses modalités sont définis avec vous après la mission initiale.",
   },
   faq: [
     {
-      question: "Je ne sais pas par où commencer. Est-ce un problème ?",
-      answer:
-        "Non. La préparation et l’atelier de travail servent justement à comprendre votre fonctionnement, repérer ce qui vous fait perdre du temps et définir les priorités avec vous.",
-    },
-    {
       question: "Est-ce adapté à notre activité ?",
       answer:
-        "Nous ne partons pas d’une méthode toute faite. Nous examinons la manière dont votre entreprise travaille réellement, puis nous adaptons l’organisation et les solutions à votre activité.",
+        "Nous partons de votre manière de prospecter, vendre et accompagner vos clients. Les étapes, les modèles et l’outil sont adaptés à votre activité, à votre équipe et à la réalité de vos missions.",
     },
     {
-      question: "Combien de temps cela demande-t-il à mon équipe ?",
+      question: "Devons-nous utiliser un CRM ?",
       answer:
-        "Nous prenons en charge la conception et la mise en place. Votre équipe intervient aux moments utiles pour nous expliquer la réalité du terrain, valider les choix et tester le nouveau fonctionnement.",
+        "Pas nécessairement. Le bon outil est celui que votre équipe peut réellement utiliser. Nous pouvons structurer le suivi dans un CRM, dans un outil déjà en place ou dans un espace plus simple lorsque cela suffit.",
     },
     {
-      question: "Devons-nous changer nos outils ?",
+      question: "Pouvez-vous partir de nos outils actuels ?",
       answer:
-        "Non. Nous partons de votre fonctionnement et des outils déjà utilisés par votre équipe. Nous recommandons un changement uniquement lorsque l’existant ne permet pas d’atteindre le résultat recherché.",
+        "Oui. Nous conservons ce qui fonctionne déjà et faisons évoluer uniquement ce qui empêche le parcours d’être clair, partagé et facile à suivre.",
     },
     {
-      question: "Que peut-on réellement mettre en place en un mois ?",
+      question: "Les rapports et les modèles de livrables sont-ils inclus ?",
       answer:
-        "Après l’atelier, nous définissons précisément les systèmes à mettre en place et leur niveau de complexité. Le périmètre, les livrables et le résultat attendu sont écrits et validés avec vous avant le début de l’exécution.",
+        "Oui, lorsque ces documents font partie du parcours prioritaire défini ensemble. Nous préparons les trames utiles pour cadrer, informer, présenter les résultats et livrer plus clairement.",
     },
     {
-      question: "Mon équipe pourra-t-elle continuer sans vous ?",
+      question: "Combien de temps cela demande-t-il à notre équipe ?",
       answer:
-        "Oui. Nous transmettons un fonctionnement utilisable et modifiable, puis nous montrons aux personnes concernées comment s’en servir et le faire évoluer au quotidien.",
+        "Nous prenons en charge la conception et la mise en place. L’équipe intervient pour nous montrer la réalité du terrain, valider les choix et tester le fonctionnement sur des situations concrètes.",
     },
     {
-      question: "Pouvez-vous également faire fonctionner les systèmes pour nous ?",
+      question: "Que peut-on mettre en place en un mois ?",
       answer:
-        "Oui. À la fin de la mission initiale, votre équipe peut prendre la suite ou Demaa peut continuer à exploiter et améliorer les systèmes dans le cadre d’un suivi mensuel au périmètre défini.",
+        "Nous sélectionnons avec vous le parcours prioritaire, les étapes à clarifier et les modèles les plus utiles. Ce périmètre, les livrables et le résultat attendu sont validés avant le début de la mise en place.",
+    },
+    {
+      question: "Notre équipe pourra-t-elle continuer seule ?",
+      answer:
+        "Oui. Le système est documenté, testé avec les personnes concernées et transmis pour que l’équipe puisse l’utiliser et le faire évoluer.",
+    },
+    {
+      question: "Demaa peut-elle rester à nos côtés ensuite ?",
+      answer:
+        "Oui. Après la mission initiale, nous pouvons continuer à suivre le fonctionnement et à améliorer le système avec vous dans un cadre mensuel défini.",
     },
   ],
+  finalCta: {
+    title: "Construisons une organisation qui ne repose plus uniquement sur vous.",
+    description:
+      "Commençons par votre parcours commercial et client : l’un des premiers systèmes dont une entreprise a besoin pour travailler, transmettre et grandir sereinement.",
+  },
 } as const;
