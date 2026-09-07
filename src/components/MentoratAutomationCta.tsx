@@ -61,8 +61,8 @@ function getCopy({ modelSlug, systemName, variant }: MentoratAutomationCtaProps)
   }
 
   return {
-    title: "Mettez de l’ordre dans votre entreprise. Et des systèmes pour que ça dure.",
-    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, nous clarifions votre fonctionnement et mettons en place les systèmes opérationnels prioritaires définis avec vous.`,
+    title: "On met en place votre système commercial et client.",
+    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, nous structurons le parcours prioritaire pour que les prospects, les clients et l’équipe sachent quelle est la prochaine action.`,
   };
 }
 
@@ -71,7 +71,7 @@ export default function MentoratAutomationCta(props: MentoratAutomationCtaProps)
 
   return (
     <section
-      aria-label="Mise en place de systèmes opérationnels"
+      aria-label={AUTOMATION_OFFER.serviceName}
       className="rounded-[1.5rem] bg-dema-forest px-6 py-8 text-dema-paper sm:px-8 sm:py-10 lg:px-10"
     >
       <div className="grid gap-7 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12">
