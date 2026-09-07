@@ -22,7 +22,7 @@ const subscribeToHydration = () => () => {};
 const getClientHydrationSnapshot = () => true;
 const getServerHydrationSnapshot = () => false;
 const consentChoiceButtonClassName =
-  "inline-flex min-h-11 items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/40 hover:bg-dema-sage/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:text-sm";
+  "inline-flex min-h-9 items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-2.5 text-xs font-medium leading-none text-dema-forest transition hover:border-dema-forest/40 hover:bg-dema-sage/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30";
 
 function ensureGtagQueue() {
   window.dataLayer = window.dataLayer || [];

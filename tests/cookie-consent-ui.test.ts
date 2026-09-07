@@ -13,6 +13,9 @@ describe("cookie consent first level", () => {
     expect(source).toContain("sm:w-[min(32rem,calc(100vw-2.5rem))]");
     expect(source).toContain("Mesure d’audience et des campagnes publicitaires, avec votre accord.");
     expect(source).toContain("consentChoiceButtonClassName");
+    expect(source).toContain("min-h-9");
+    expect(source).toContain("px-2.5");
+    expect(source).not.toContain("min-h-11");
     expect(source).toContain("grid grid-cols-2 gap-2");
     expect(source).toContain('href="/politique-de-cookies"');
     expect(source).not.toContain("Vous pouvez tout accepter, tout refuser");
