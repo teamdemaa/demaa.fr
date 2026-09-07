@@ -64,9 +64,6 @@ export default function OrganiserHub() {
               <span className="demaa-hero-title block text-dema-forest">un sujet à la fois</span>
             </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-dema-muted md:text-lg">
-            Des explications concrètes pour structurer le travail sans tout changer d’un coup.
-          </p>
         </header>
 
         <OrganiserLibrary guides={guides} models={models} processes={processes} />
