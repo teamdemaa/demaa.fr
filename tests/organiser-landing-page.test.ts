@@ -32,12 +32,12 @@ describe("Organiser public journey", () => {
     expect(organiserLibrary).toContain('aria-label="Rechercher dans Organisation"');
     expect(organiserLibrary).not.toContain('aria-label="Rechercher dans Organiser"');
     expect(organiserLibrary).toContain("Modèles prêts à copier");
-    expect(organiserLibrary).toContain("Voir tous les modèles");
-    expect(organiserLibrary).toContain('href="/modeles?from=organisation"');
+    expect(organiserLibrary).not.toContain("Voir tous les modèles");
+    expect(organiserLibrary).not.toContain('href="/modeles?from=organisation"');
     expect(organiserLibrary).toContain("<CopyableModelCard");
     expect(organiserLibrary).toContain('role="tablist"');
     expect(organiserLibrary).toContain('role="tabpanel"');
-    expect(organiserLibrary).toContain("Guides");
+    expect(organiserLibrary).toContain("Tutoriel");
     expect(organiserLibrary).toContain("Modèles");
     expect(organiserLibrary).not.toContain("snap-x snap-mandatory");
     expect(organiserLibrary).toContain('id="cas-concrets"');
