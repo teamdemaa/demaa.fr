@@ -221,12 +221,9 @@ export default function SystemSearchHero({
               à votre activité
             </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-balance text-base font-light leading-7 text-dema-muted md:text-lg">
-            Des outils et partenaires utiles, sélectionnés selon votre métier.
-          </p>
         </div>
 
-        <div ref={containerRef} className="relative mx-auto mt-9 max-w-4xl text-left md:mt-11">
+        <div ref={containerRef} className="relative mx-auto mt-7 max-w-4xl text-left md:mt-9">
           <div className="demaa-search-shell p-1.5">
             <div className="relative">
               <Search

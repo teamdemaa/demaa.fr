@@ -17,7 +17,7 @@ describe("Organiser public journey", () => {
     expect(organiserPage).not.toContain("OrganiserSectionNavigation");
     expect(organiserPage).toContain('path: "/organiser"');
     expect(organiserHub).toContain("Mieux organiser l’entreprise");
-    expect(organiserHub).toContain(
+    expect(organiserHub).not.toContain(
       "Des explications concrètes pour structurer le travail sans tout changer d’un coup.",
     );
     expect(organiserHub).toContain("getPublishedCopyableModels");
@@ -31,7 +31,8 @@ describe("Organiser public journey", () => {
     expect(organiserLibrary).toContain("Rechercher un processus ou un sujet");
     expect(organiserLibrary).toContain('aria-label="Rechercher dans Organisation"');
     expect(organiserLibrary).not.toContain('aria-label="Rechercher dans Organiser"');
-    expect(organiserLibrary).toContain("Modèles prêts à copier");
+    expect(organiserLibrary).not.toContain("Modèles prêts à copier");
+    expect(organiserLibrary).not.toContain("Des structures directement utilisables");
     expect(organiserLibrary).not.toContain("Voir tous les modèles");
     expect(organiserLibrary).not.toContain('href="/modeles?from=organisation"');
     expect(organiserLibrary).toContain("<CopyableModelCard");
