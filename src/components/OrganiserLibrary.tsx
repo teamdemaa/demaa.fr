@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Search, SlidersHorizontal } from "lucide-react";
+import { Search, SlidersHorizontal } from "lucide-react";
 import { type KeyboardEvent, useMemo, useRef, useState } from "react";
 import CopyableModelCard from "@/components/CopyableModelCard";
 import OrganiserProcessMap from "@/components/OrganiserProcessMap";
@@ -135,7 +135,7 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
         <div
           role="tablist"
           aria-label="Choisir le type de contenu"
-          className="grid grid-cols-2 rounded-full border border-dema-line bg-dema-paper p-1.5 shadow-[0_10px_30px_rgba(31,52,43,0.05)]"
+          className="grid grid-cols-2"
         >
           <button
             ref={guidesTabRef}
@@ -147,13 +147,13 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
             tabIndex={activeTab === "guides" ? 0 : -1}
             onClick={() => setActiveTab("guides")}
             onKeyDown={handleTabKeyDown}
-            className={`min-h-11 rounded-full px-5 text-sm font-medium transition ${
+            className={`min-h-12 border-b-[3px] px-5 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 ${
               activeTab === "guides"
-                ? "bg-dema-forest text-white shadow-sm"
-                : "text-brand-blue/65 hover:text-dema-forest"
+                ? "border-dema-forest text-dema-forest"
+                : "border-transparent text-brand-blue/55 hover:text-dema-forest"
             }`}
           >
-            Guides
+            Tutoriel
           </button>
           <button
             ref={modelsTabRef}
@@ -165,10 +165,10 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
             tabIndex={activeTab === "models" ? 0 : -1}
             onClick={() => setActiveTab("models")}
             onKeyDown={handleTabKeyDown}
-            className={`min-h-11 rounded-full px-5 text-sm font-medium transition ${
+            className={`min-h-12 border-b-[3px] px-5 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2 ${
               activeTab === "models"
-                ? "bg-dema-forest text-white shadow-sm"
-                : "text-brand-blue/65 hover:text-dema-forest"
+                ? "border-dema-forest text-dema-forest"
+                : "border-transparent text-brand-blue/55 hover:text-dema-forest"
             }`}
           >
             Modèles
@@ -330,21 +330,12 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
           className="px-4 pb-4 pt-2 sm:px-6 lg:px-8"
         >
           <div className="mx-auto w-full max-w-7xl">
-            <div className="flex items-end justify-between gap-6">
-              <h2
-                id="organiser-models-heading"
-                className="text-2xl font-light tracking-[-0.03em] text-brand-blue sm:text-3xl"
-              >
-                Modèles prêts à copier
-              </h2>
-              <Link
-                href="/modeles?from=organisation"
-                className="group inline-flex shrink-0 items-center gap-2 text-sm font-medium text-dema-forest transition hover:text-brand-blue"
-              >
-                Voir tous les modèles
-                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
-              </Link>
-            </div>
+            <h2
+              id="organiser-models-heading"
+              className="text-2xl font-light tracking-[-0.03em] text-brand-blue sm:text-3xl"
+            >
+              Modèles prêts à copier
+            </h2>
 
             <p className="mt-3 max-w-2xl text-sm leading-6 text-dema-muted">
               Des structures directement utilisables dans Notion, Google Drive, Google Sheets ou Airtable.
