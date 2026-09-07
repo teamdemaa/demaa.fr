@@ -3,7 +3,7 @@ import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
 import { isVercelPreviewHost } from "@/lib/site-url";
 import { getExplicitInterfaceLocaleFromPathname } from "@/lib/international-context";
 import { getPublishedCopyableModelBySlug } from "@/lib/copyable-model-catalog";
-import { buildDefaultHomeSolutionsHref } from "@/lib/action-plan-home-routing";
+import { buildDefaultHomeOrganisationHref } from "@/lib/action-plan-home-routing";
 
 const CANONICAL_HOST = "demaa.fr";
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
@@ -78,10 +78,10 @@ export function proxy(request: NextRequest) {
   }
 
   if (pathname === "/") {
-    const solutionsHref = buildDefaultHomeSolutionsHref(request.nextUrl.searchParams);
-    if (solutionsHref) {
+    const organisationHref = buildDefaultHomeOrganisationHref(request.nextUrl.searchParams);
+    if (organisationHref) {
       return withContentSecurityPolicy(
-        NextResponse.redirect(new URL(solutionsHref, request.url), 308),
+        NextResponse.redirect(new URL(organisationHref, request.url), 308),
         localeCode,
       );
     }

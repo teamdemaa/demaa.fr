@@ -34,12 +34,13 @@ describe("Demaa application navbar", () => {
   });
 
   it("keeps the application root out of search results and one URL for each public universe", async () => {
-    const [homeSource, sharedHomeSource, solutionsSource, nextConfigSource, proxySource] = await Promise.all([
+    const [homeSource, sharedHomeSource, solutionsSource, nextConfigSource, proxySource, navbarSource] = await Promise.all([
       readFile(new URL("../src/app/(application)/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanHomeView.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/(marketing)/solutions/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/proxy.ts", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(homeSource).not.toContain(
@@ -53,8 +54,9 @@ describe("Demaa application navbar", () => {
     expect(sharedHomeSource).toContain("<Navbar");
     expect(solutionsSource).toContain('path: "/solutions"');
     expect(proxySource).toContain('if (pathname === "/")');
-    expect(proxySource).toContain("buildDefaultHomeSolutionsHref(request.nextUrl.searchParams)");
-    expect(proxySource).toContain("NextResponse.redirect(new URL(solutionsHref, request.url), 308)");
+    expect(proxySource).toContain("buildDefaultHomeOrganisationHref(request.nextUrl.searchParams)");
+    expect(proxySource).toContain("NextResponse.redirect(new URL(organisationHref, request.url), 308)");
+    expect(navbarSource).toContain(': "/organiser"}');
     expect(nextConfigSource).toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/solutions',/,
     );
