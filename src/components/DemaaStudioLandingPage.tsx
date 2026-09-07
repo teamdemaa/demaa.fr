@@ -1,4 +1,4 @@
-import { ArrowUpRight, Check, Search, Shapes, Sparkles } from "lucide-react";
+import { ArrowUpRight, Check, Search, Shapes } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -97,9 +97,6 @@ export default function DemaaStudioLandingPage() {
               >
                 Échanger sur un besoin métier
               </Link>
-              <p className="mt-3 text-xs text-dema-muted">
-                Un premier échange pour comprendre votre métier · Sans engagement
-              </p>
             </div>
           </div>
         </section>
@@ -122,8 +119,7 @@ export default function DemaaStudioLandingPage() {
               </p>
             </div>
             <div className="rounded-[2rem] border border-dema-line bg-dema-paper p-7 sm:p-8">
-              <Sparkles className="h-5 w-5 text-dema-forest" strokeWidth={1.6} aria-hidden="true" />
-              <p className="mt-5 text-base font-medium">Un besoin peut devenir un produit quand :</p>
+              <p className="text-base font-medium">Un besoin peut devenir un produit quand :</p>
               <ul className="mt-5 space-y-4">
                 {needSignals.map((signal) => (
                   <li key={signal} className="flex gap-3 text-sm leading-6 text-dema-muted">

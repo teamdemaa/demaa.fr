@@ -41,6 +41,8 @@ describe("Demaa Studio page", () => {
     expect(form).toContain("Quel besoin reste mal couvert dans votre métier ?");
     expect(form).toContain("D’autres entreprises sont-elles concernées ?");
     expect(landing).not.toContain("Rejoindre Team Demaa");
+    expect(landing).not.toContain("Un premier échange pour comprendre votre métier");
+    expect(landing).not.toContain("Sparkles");
     expect(landing).not.toContain("30 %");
     expect(landing).not.toContain("25 %");
     expect(landing).not.toContain("Tester un projet");
