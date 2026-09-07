@@ -7,7 +7,7 @@ async function readSource(path: string) {
 
 describe("copyable model public routes", () => {
   it("makes concrete cases primary while keeping the model library available", async () => {
-    const [page, organiserPage, organiserHub, organiserLibrary, navbar, footer, modelsIndex] = await Promise.all([
+    const [page, organiserPage, organiserHub, organiserLibrary, navbar, footer, modelsIndex, modelCard] = await Promise.all([
       readSource("src/app/(marketing)/modeles/page.tsx"),
       readSource("src/app/(marketing)/organiser/page.tsx"),
       readSource("src/components/OrganiserHub.tsx"),
@@ -15,6 +15,7 @@ describe("copyable model public routes", () => {
       readSource("src/components/PublicActionPlanNavigation.tsx"),
       readSource("src/components/Footer.tsx"),
       readSource("src/components/CopyableModelsIndex.tsx"),
+      readSource("src/components/CopyableModelCard.tsx"),
     ]);
 
     expect(page).toContain('<Navbar minimal publicNavigationActiveView="academy" />');
@@ -55,6 +56,10 @@ describe("copyable model public routes", () => {
     expect(modelsIndex).not.toContain("SOLUTION_RAIL_CLASS_NAME");
     expect(modelsIndex).toContain("titleLevel={3}");
     expect(modelsIndex).not.toContain("Des processus concrets pour se projeter vraiment");
+    expect(modelCard).toContain("line-clamp-3");
+    expect(modelCard).toContain("transition-colors duration-150");
+    expect(modelCard).not.toContain("hover:-translate-y");
+    expect(modelCard).not.toContain("hover:shadow-");
     expect(organiserLibrary).toContain('id="cas-concrets"');
     expect(organiserLibrary).toContain('aria-labelledby="organiser-models-tab"');
     expect(organiserLibrary).toContain("OrganiserProcessMap");

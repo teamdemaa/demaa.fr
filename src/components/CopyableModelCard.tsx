@@ -25,7 +25,7 @@ export default function CopyableModelCard({
         platform: model.platform,
         surface: "catalogue",
       })}
-      className="group flex h-full min-h-72 flex-col rounded-[1.35rem] border border-dema-line bg-dema-paper p-5 transition hover:-translate-y-0.5 hover:border-dema-forest/30 hover:shadow-[0_16px_45px_rgba(31,52,43,0.08)] sm:p-6"
+      className="group flex h-full min-h-72 flex-col rounded-[1.35rem] border border-dema-line bg-dema-paper p-5 transition-colors duration-150 hover:border-dema-forest/20 hover:bg-dema-sage/10 sm:p-6"
     >
       <div>
         <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage/65 text-dema-forest">
@@ -39,7 +39,7 @@ export default function CopyableModelCard({
         ) : (
           <h2 className={titleClassName}>{model.title}</h2>
         )}
-        <p className="demaa-catalog-card-description mt-3 text-dema-muted">{model.description}</p>
+        <p className="demaa-catalog-card-description mt-3 line-clamp-3 text-dema-muted">{model.description}</p>
       </div>
       <div className="mt-auto flex items-center justify-between gap-3 pt-7">
         <ModelPlatformBadge platform={model.platform} />
