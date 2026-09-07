@@ -157,22 +157,10 @@ export const mentoratAutomationContent = {
     "Votre équipe accompagnée dans la prise en main",
   ],
   ongoing: {
-    title: "Une organisation faite pour durer.",
+    title: "Vous et votre équipe êtes autonomes.",
     description:
-      "À la fin du premier mois, le système est transmis. Votre équipe peut le faire vivre ou Demaa peut continuer à l’améliorer avec vous.",
-    options: [
-      {
-        title: "Votre équipe prend la suite",
-        description:
-          "Elle sait utiliser le système, le mettre à jour et le faire évoluer au quotidien.",
-      },
-      {
-        title: "Demaa continue à vos côtés",
-        description:
-          "Nous faisons vivre le système avec vous et l’améliorons au fil des besoins dans un périmètre mensuel défini.",
-      },
-    ],
-    note: "Le suivi est optionnel. Son périmètre et ses modalités sont définis avec vous après la mission initiale.",
+      "Le système est documenté, testé avec vous et transmis pour que chacun sache l’utiliser, le mettre à jour et le faire évoluer au quotidien.",
+    priceNote: `Le tarif de ${AUTOMATION_OFFER.price.label} est réglé une seule fois.`,
   },
   faq: [
     {

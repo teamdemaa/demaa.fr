@@ -99,8 +99,12 @@ describe("Mise en place d’un système commercial et client", () => {
     expect(landing).toContain("/images/accompagnement/atelier-organisation.png");
     expect(landing).toContain('label="Faire le point ensemble"');
     expect(landing).toContain('id="suivi"');
-    expect(mentoratAutomationContent.ongoing.title).toBe("Une organisation faite pour durer.");
-    expect("price" in mentoratAutomationContent.ongoing).toBe(false);
+    expect(mentoratAutomationContent.ongoing.title).toBe("Vous et votre équipe êtes autonomes.");
+    expect(mentoratAutomationContent.ongoing.priceNote).toBe(
+      "Le tarif de 5 000 € HT est réglé une seule fois.",
+    );
+    expect("options" in mentoratAutomationContent.ongoing).toBe(false);
+    expect(landing).not.toContain("content.ongoing.options.map");
     expect(landing).not.toContain('href="/diagnostic-organisation"');
     expect(mentoratAutomationContent.testimonials).toHaveLength(2);
     expect(JSON.stringify(mentoratAutomationContent.testimonials)).not.toContain("Product Builder");

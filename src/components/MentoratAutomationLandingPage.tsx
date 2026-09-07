@@ -296,36 +296,20 @@ export default function MentoratAutomationLandingPage() {
           aria-labelledby="ongoing-heading"
           className="border-b border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20"
         >
-          <div className="mx-auto max-w-6xl">
-            <div className="max-w-4xl">
-              <p className="text-sm font-medium text-dema-forest">Après le premier mois</p>
+          <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.78fr)] lg:gap-16">
+            <div>
+              <p className="text-sm font-medium text-dema-forest">À la fin de la mission</p>
               <h2 id="ongoing-heading" className="demaa-marketing-section-title mt-4">
                 {content.ongoing.title}
               </h2>
-              <p className="mt-5 max-w-3xl text-base leading-7 text-dema-muted">
+            </div>
+            <div className="lg:pt-8">
+              <p className="max-w-3xl text-base leading-7 text-dema-muted">
                 {content.ongoing.description}
               </p>
-            </div>
-
-            <div className="mt-10 grid gap-5 md:grid-cols-2">
-              {content.ongoing.options.map((option, index) => (
-                <article
-                  key={option.title}
-                  className="rounded-[1.5rem] border border-dema-line bg-dema-cream/40 p-6 sm:p-8"
-                >
-                  <p className="demaa-section-title text-2xl text-dema-forest/48">
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-5 text-xl font-medium leading-snug tracking-[-0.025em] sm:text-2xl">
-                    {option.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-dema-muted">{option.description}</p>
-                </article>
-              ))}
-            </div>
-
-            <div className="mt-7 rounded-2xl bg-dema-sage/35 px-6 py-5">
-              <p className="text-sm leading-6 text-dema-forest">{content.ongoing.note}</p>
+              <p className="mt-6 border-t border-dema-line pt-5 text-sm font-medium text-dema-forest">
+                {content.ongoing.priceNote}
+              </p>
             </div>
           </div>
         </section>
