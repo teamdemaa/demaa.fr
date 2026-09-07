@@ -39,7 +39,7 @@ export default function CopyableModelCard({
         ) : (
           <h2 className={titleClassName}>{model.title}</h2>
         )}
-        <p className="demaa-catalog-card-description mt-3 text-dema-muted">{model.description}</p>
+        <p className="demaa-catalog-card-description mt-3 line-clamp-3 text-dema-muted">{model.description}</p>
       </div>
       <div className="mt-auto flex items-center justify-between gap-3 pt-7">
         <ModelPlatformBadge platform={model.platform} />
