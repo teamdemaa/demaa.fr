@@ -16,7 +16,10 @@ describe("Organiser public journey", () => {
     expect(organiserPage).toContain("<OrganiserHub />");
     expect(organiserPage).not.toContain("OrganiserSectionNavigation");
     expect(organiserPage).toContain('path: "/organiser"');
-    expect(organiserHub).toContain("Des cas concrets");
+    expect(organiserHub).toContain("Mieux organiser l’entreprise");
+    expect(organiserHub).toContain(
+      "Des explications concrètes pour structurer le travail sans tout changer d’un coup.",
+    );
     expect(organiserHub).toContain("getPublishedCopyableModels");
     expect(organiserHub).toContain("getPublicOrganiserContent()");
     expect(organiserHub).toContain("getPublishedOrganisationContent()");
@@ -32,9 +35,13 @@ describe("Organiser public journey", () => {
     expect(organiserLibrary).toContain("Voir tous les modèles");
     expect(organiserLibrary).toContain('href="/modeles?from=organisation"');
     expect(organiserLibrary).toContain("<CopyableModelCard");
-    expect(organiserLibrary).toContain("snap-x snap-mandatory");
+    expect(organiserLibrary).toContain('role="tablist"');
+    expect(organiserLibrary).toContain('role="tabpanel"');
+    expect(organiserLibrary).toContain("Guides");
+    expect(organiserLibrary).toContain("Modèles");
+    expect(organiserLibrary).not.toContain("snap-x snap-mandatory");
     expect(organiserLibrary).toContain('id="cas-concrets"');
-    expect(organiserLibrary).toContain('aria-labelledby="organiser-models-heading"');
+    expect(organiserLibrary).toContain('aria-labelledby="organiser-models-tab"');
     expect(organiserLibrary).toContain("matchesSearchQuery");
     expect(organiserLibrary).toContain("SlidersHorizontal");
     expect(organiserLibrary).toContain('aria-label="Filtrer les contenus par thème"');

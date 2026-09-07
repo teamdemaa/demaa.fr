@@ -16,6 +16,7 @@ import { getAirtableEmbedUrl } from "@/lib/document-models";
 
 const EXPECTED_TITLES = [
   "Structure Google Drive pour organiser son entreprise",
+  "Pilotage simple de son entreprise dans Notion",
   "Suivi commercial et devis",
   "Suivi et prévisionnel financier",
   "Projets et missions clients",
@@ -27,11 +28,11 @@ const EXPECTED_TITLES = [
 ];
 
 describe("copyable model catalogue", () => {
-  it("keeps the nine validated model families as the canonical construction list", () => {
+  it("keeps the ten validated model families as the canonical construction list", () => {
     const models = getAllCopyableModelDefinitions();
 
     expect(models.map((model) => model.title)).toEqual(EXPECTED_TITLES);
-    expect(new Set(models.map((model) => model.slug))).toHaveProperty("size", 9);
+    expect(new Set(models.map((model) => model.slug))).toHaveProperty("size", 10);
     for (const model of models) {
       expect(model.workflowStart.length).toBeGreaterThan(10);
       expect(model.workflowEnd.length).toBeGreaterThan(10);
@@ -44,6 +45,7 @@ describe("copyable model catalogue", () => {
 
     expect(published.map((model) => model.slug)).toEqual([
       "structure-google-drive-entreprise",
+      "pilotage-entreprise-notion",
       "suivi-commercial-et-devis",
       "suivi-previsionnel-financier",
       "projets-et-missions-clients",
@@ -56,6 +58,9 @@ describe("copyable model catalogue", () => {
     expect(getPublishedCopyableModelBySlug("structure-google-drive-entreprise")?.driveFolderTemplateSlug)
       .toBe("structure-google-drive-entreprise");
     expect(getCopyableModelDestination("structure-google-drive-entreprise")).toBeNull();
+    expect(getCopyableModelDestination("pilotage-entreprise-notion")).toBe(
+      "https://lead-yew-beb.notion.site/Mon-entreprise-mod-le-Notion-3d307d787523816a992ae53bae65f80d",
+    );
     expect(getPublishedCopyableModelBySlug("suivi-commercial-et-devis")).not.toBeNull();
     expect(getCopyableModelDestination("suivi-commercial-et-devis")).toMatch(
       /^https:\/\/airtable\.com\/app[A-Za-z0-9]{14}\/shr[A-Za-z0-9]{14}\/?$/,
@@ -87,6 +92,7 @@ describe("copyable model catalogue", () => {
     );
     expect(getPublishedCopyableModelsForSystemSlug("cabinet-de-conseil").map((model) => model.slug)).toEqual([
       "structure-google-drive-entreprise",
+      "pilotage-entreprise-notion",
       "suivi-commercial-et-devis",
       "suivi-previsionnel-financier",
       "projets-et-missions-clients",

@@ -23,8 +23,6 @@ const folder = (
 ): DriveFolderNode => ({ name, children });
 
 export function buildCompanyDriveFolderTemplate(year: number): DriveFolderTemplate {
-  const previousYear = year - 1;
-
   return {
     slug: "structure-google-drive-entreprise",
     title: "Structure Google Drive pour organiser son entreprise",
@@ -33,88 +31,124 @@ export function buildCompanyDriveFolderTemplate(year: number): DriveFolderTempla
       {
         id: "inbox",
         name: "00 — À classer",
-        children: [folder("Documents reçus"), folder("Documents à traiter")],
-      },
-      {
-        id: "company",
-        name: "01 — Entreprise",
-        restricted: true,
-        children: [
-          folder("01 — Juridique"),
-          folder("02 — Contrats"),
-          folder("03 — Assurances"),
-          folder("04 — Locaux et matériel"),
-        ],
       },
       {
         id: "finance",
-        name: "02 — Finance",
+        name: "01 — Administration & finance",
         restricted: true,
         children: [
-          folder(String(year), [
-            folder("01 — Factures clients"),
-            folder("02 — Factures fournisseurs"),
-            folder("03 — Banque"),
-            folder("04 — Notes de frais"),
-            folder("05 — Déclarations"),
-            folder("06 — Clôture"),
+          folder("01 — Société & juridique", [
+            folder("Immatriculation & statuts"),
+            folder("Assemblées & actes de société"),
+            folder("Marques & propriété intellectuelle"),
           ]),
+          folder("02 — Assurances", [folder("Contrats & attestations"), folder("Sinistres")]),
+          folder("03 — Banque & financements", [
+            folder("Comptes bancaires & RIB"),
+            folder("Emprunts & financements"),
+            folder("Aides & subventions"),
+          ]),
+          folder("04 — Comptabilité", [
+            folder(String(year), [
+              folder("01 — Factures de vente"),
+              folder("02 — Factures d’achat"),
+              folder("03 — Relevés bancaires"),
+              folder("04 — Notes de frais & justificatifs"),
+              folder("05 — Déclarations fiscales"),
+              folder("06 — Bilan & clôture"),
+            ]),
+          ]),
+          folder("05 — Budget & trésorerie"),
+          folder("06 — Fournisseurs & abonnements"),
+          folder("07 — Locaux & matériel", [
+            folder("Baux & documents des locaux"),
+            folder("Équipements & véhicules"),
+            folder("Entretien, garanties & contrôles"),
+          ]),
+          folder("99 — Archives"),
         ],
       },
       {
         id: "clients",
-        name: "03 — Clients",
-        children: [
-          folder("00 — Modèle de dossier client", [
-            folder("01 — Contrat"),
-            folder("02 — Documents reçus"),
-            folder("03 — Livrables"),
-          ]),
-          folder("01 — Clients actifs"),
-          folder("99 — Clients archivés"),
-        ],
+        name: "02 — Dossiers clients",
+        children: [folder("99 — Dossiers archivés")],
       },
       {
         id: "team",
-        name: "04 — Équipe",
+        name: "03 — Équipe",
         restricted: true,
         children: [
-          folder("00 — Modèle de dossier collaborateur", [
-            folder("01 — Contrat"),
-            folder("02 — Documents administratifs"),
-            folder("03 — Entretiens"),
-            folder("04 — Formations"),
+          folder("01 — Recrutement"),
+          folder("02 — Dossiers collaborateurs"),
+          folder("03 — Documents employeur", [
+            folder("Registres & documents collectifs"),
+            folder("Déclarations sociales"),
+            folder("Santé & sécurité au travail"),
           ]),
-          folder("01 — Dossiers collaborateurs"),
+          folder("99 — Archives", [
+            folder("Recrutements clôturés"),
+            folder("Anciens collaborateurs"),
+          ]),
         ],
       },
       {
         id: "brand",
-        name: "05 — Marque et communication",
+        name: "04 — Communication",
         children: [
-          folder("01 — Logos et charte"),
-          folder("02 — Photos"),
-          folder("03 — Contenus finalisés"),
+          folder("01 — Identité visuelle", [folder("Logos"), folder("Charte graphique")]),
+          folder("02 — Photos & vidéos", [folder("Photos"), folder("Vidéos")]),
+          folder("03 — Présentations & supports", [
+            folder("Présentations"),
+            folder("Brochures, affiches & autres supports"),
+          ]),
+          folder("04 — Site & publications"),
+          folder("99 — Archives"),
         ],
-      },
-      {
-        id: "templates",
-        name: "06 — Modèles de documents",
-        children: [
-          folder("01 — Devis et propositions"),
-          folder("02 — Comptes rendus"),
-          folder("03 — Présentations"),
-          folder("04 — Documents internes"),
-        ],
-      },
-      {
-        id: "archives",
-        name: "99 — Archives",
-        children: [folder(String(previousYear)), folder("Documents historiques")],
       },
     ],
   };
 }
+
+// These guides are deliberately separate from the generated tree: no fictitious
+// client, employee or supplier folders are created in a user's Drive.
+export const COMPANY_DRIVE_DOSSIER_GUIDES = [
+  {
+    title: "Un dossier client ou prospect",
+    location: "02 — Dossiers clients",
+    rootName: "[Nom du client]",
+    children: [
+      folder("01 — Devis & contrats"),
+      folder("02 — Documents reçus"),
+      folder("03 — Travail en cours"),
+      folder("04 — Livrables & validations"),
+    ],
+  },
+  {
+    title: "Un fournisseur ou abonnement",
+    location: "01 — Administration & finance / 06 — Fournisseurs & abonnements",
+    rootName: "[Nom du fournisseur]",
+    children: [folder("Contrats & conditions"), folder("Commandes & documents associés")],
+  },
+  {
+    title: "Un recrutement",
+    location: "03 — Équipe / 01 — Recrutement",
+    rootName: "[Poste à pourvoir]",
+    children: [folder("Fiche de poste & annonce"), folder("Candidatures")],
+  },
+  {
+    title: "Un collaborateur",
+    location: "03 — Équipe / 02 — Dossiers collaborateurs",
+    rootName: "[Prénom Nom]",
+    children: [
+      folder("01 — Contrat & avenants"),
+      folder("02 — Documents administratifs"),
+      folder("03 — Paie"),
+      folder("04 — Absences & justificatifs"),
+      folder("05 — Entretiens & formation"),
+      folder("06 — Documents de départ"),
+    ],
+  },
+] as const;
 
 export function selectDriveFolderSections(
   template: DriveFolderTemplate,
@@ -126,7 +160,7 @@ export function selectDriveFolderSections(
 
 export function formatDriveFolderTree(
   rootName: string,
-  sections: readonly DriveFolderSection[],
+  sections: readonly DriveFolderNode[],
 ) {
   const lines = [rootName];
 

@@ -5,6 +5,7 @@ vi.mock("server-only", () => ({}));
 
 import {
   buildCompanyDriveFolderTemplate,
+  COMPANY_DRIVE_DOSSIER_GUIDES,
   formatDriveFolderTree,
   selectDriveFolderSections,
   type DriveFolderNode,
@@ -12,7 +13,9 @@ import {
 import {
   createGoogleDriveFolderStructure,
   createGoogleDriveTemplateState,
+  buildGoogleDriveAuthorizationUrl,
   getGoogleDriveOAuthConfig,
+  GoogleDriveFolderCreationError,
   matchesGoogleDriveTemplateNonce,
   readGoogleDriveTemplateState,
   sanitizeDriveFolderName,
@@ -46,6 +49,21 @@ describe("Google Drive folder template", () => {
     );
   });
 
+  it("requests only the Drive file scope without incremental authorization", () => {
+    const authorizationUrl = new URL(buildGoogleDriveAuthorizationUrl({
+      clientId: "client-id",
+      clientSecret: "client-secret",
+      redirectUri: "https://demaa.fr/api/modeles/structure-google-drive-entreprise/drive/callback",
+      stateSecret: "a-secure-state-secret-with-at-least-32-characters",
+    }, "nonce-for-test-only"));
+
+    expect(authorizationUrl.searchParams.get("scope")).toBe(
+      "https://www.googleapis.com/auth/drive.file",
+    );
+    expect(authorizationUrl.searchParams.get("access_type")).toBe("online");
+    expect(authorizationUrl.searchParams.has("include_granted_scopes")).toBe(false);
+  });
+
   it("limits the wording exception to numbered Drive folder names", () => {
     const audit = readFileSync(
       new URL("../scripts/audit-public-wording.mjs", import.meta.url),
@@ -62,21 +80,22 @@ describe("Google Drive folder template", () => {
 
     expect(template.sections.map((section) => section.id)).toEqual([
       "inbox",
-      "company",
       "finance",
       "clients",
       "team",
       "brand",
-      "templates",
-      "archives",
     ]);
-    expect(names).toContain("01 — Entreprise");
-    expect(names).toContain("02 — Finance");
-    expect(names).toContain("04 — Équipe");
-    expect(names).toContain("2025");
+    expect(names).toContain("01 — Administration & finance");
+    expect(names).toContain("02 — Dossiers clients");
+    expect(names).toContain("03 — Équipe");
+    expect(names).not.toContain("2025");
     expect(names).toContain("2026");
-    expect(names).toContain("00 — Modèle de dossier client");
-    expect(names).toContain("06 — Modèles de documents");
+    expect(names.some((name) => /Modèle|\[/.test(name))).toBe(false);
+    expect(template.sections[0].children).toBeUndefined();
+    expect(names).toContain("01 — Factures de vente");
+    expect(names).toContain("02 — Factures d’achat");
+    expect(names).toContain("03 — Relevés bancaires");
+    expect(names).toContain("06 — Bilan & clôture");
     expect(names).not.toContain("01 — Stratégie et objectifs");
     expect(names).not.toContain("06 — Suivi commercial");
     expect(names).not.toContain("01 — Liste des outils");
@@ -90,9 +109,43 @@ describe("Google Drive folder template", () => {
 
     expect(selected.map((section) => section.id)).toEqual(["finance", "team"]);
     expect(tree).toContain("Atelier Martin");
-    expect(tree).toContain("├── 02 — Finance");
-    expect(tree).toContain("└── 04 — Équipe");
-    expect(tree).not.toContain("Marketing & communication");
+    expect(tree).toContain("├── 01 — Administration & finance");
+    expect(tree).toContain("└── 03 — Équipe");
+    expect(tree).not.toContain("04 — Communication");
+  });
+
+  it("documents on-demand dossiers without adding fictitious records to the tree", () => {
+    expect(COMPANY_DRIVE_DOSSIER_GUIDES).toHaveLength(4);
+    const client = COMPANY_DRIVE_DOSSIER_GUIDES[0];
+    expect(formatDriveFolderTree(client.rootName, client.children)).toContain("04 — Livrables & validations");
+    const collaborator = COMPANY_DRIVE_DOSSIER_GUIDES[3];
+    expect(flattenNames(collaborator.children)).toContain("03 — Paie");
+    expect(flattenNames(collaborator.children)).toContain("06 — Documents de départ");
+    const template = buildCompanyDriveFolderTemplate(2027);
+    const names = flattenNames(template.sections);
+    expect(names).toContain("2027");
+    expect(names).not.toContain("2026");
+    for (const guide of COMPANY_DRIVE_DOSSIER_GUIDES) {
+      expect(names).not.toContain(guide.rootName);
+    }
+  });
+
+  it("keeps accounting years and archives within their domain", () => {
+    const template = buildCompanyDriveFolderTemplate(2026);
+    expect(template.sections.some((section) => section.name === "99 — Archives")).toBe(false);
+    const finance = template.sections.find((section) => section.id === "finance")!;
+    const accounting = finance.children!.find((node) => node.name === "04 — Comptabilité")!;
+    expect(accounting.children!.map((node) => node.name)).toEqual(["2026"]);
+    const supplier = finance.children!.find((node) => node.name === "06 — Fournisseurs & abonnements")!;
+    expect(supplier.children).toBeUndefined();
+  });
+
+  it("supports a solo selection and ignores duplicate or unknown domains", () => {
+    const template = buildCompanyDriveFolderTemplate(2026);
+    const solo = selectDriveFolderSections(template, ["brand", "finance", "inbox", "clients", "finance", "unknown"]);
+    expect(solo.map((section) => section.id)).toEqual(["inbox", "finance", "clients", "brand"]);
+    expect(formatDriveFolderTree("Mon entreprise", solo)).not.toContain("03 — Équipe");
+    expect(selectDriveFolderSections(template, [])).toEqual([]);
   });
 
   it("signs short-lived OAuth state and rejects tampering or expiry", () => {
@@ -162,6 +215,59 @@ describe("Google Drive folder template", () => {
     expect(fetchMock).toHaveBeenCalledTimes(3);
     expect(fetchMock.mock.calls[2]?.[1]?.method).toBe("DELETE");
     expect(String(fetchMock.mock.calls[2]?.[0])).toContain("/created-root");
+  });
+
+  it("waits for in-flight folder requests before removing a failed tree", async () => {
+    let postCount = 0;
+    let siblingRequestFinished = false;
+    let cleanupStartedAfterSibling = false;
+    const fetchMock = vi.fn(async (_input: string | URL | Request, init?: RequestInit) => {
+      if (init?.method === "DELETE") {
+        cleanupStartedAfterSibling = siblingRequestFinished;
+        return new Response(null, { status: 204 });
+      }
+      postCount += 1;
+      if (postCount === 1) return Response.json({ id: "created-root", name: "Entreprise" });
+      if (postCount === 2) return Response.json({ error: "failed" }, { status: 500 });
+      await new Promise((resolve) => setTimeout(resolve, 5));
+      siblingRequestFinished = true;
+      return Response.json({ id: "created-sibling", name: "Clients" });
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(createGoogleDriveFolderStructure({
+      accessToken: "short-lived-access-token",
+      rootName: "Entreprise",
+      sections: [{ name: "Finance" }, { name: "Clients" }],
+    })).rejects.toMatchObject({
+      cleanupSucceeded: true,
+      name: "GoogleDriveFolderCreationError",
+    });
+
+    expect(cleanupStartedAfterSibling).toBe(true);
+  });
+
+  it("reports when cleanup of a failed tree cannot be confirmed", async () => {
+    let postCount = 0;
+    const fetchMock = vi.fn(async (_input: string | URL | Request, init?: RequestInit) => {
+      if (init?.method === "DELETE") return Response.json({ error: "failed" }, { status: 500 });
+      postCount += 1;
+      if (postCount === 2) return Response.json({ error: "failed" }, { status: 500 });
+      return Response.json({ id: "created-root", name: "Entreprise" });
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    try {
+      await createGoogleDriveFolderStructure({
+        accessToken: "short-lived-access-token",
+        rootName: "Entreprise",
+        sections: [{ name: "Finance" }],
+      });
+      throw new Error("Expected Drive creation to fail");
+    } catch (error) {
+      expect(error).toBeInstanceOf(GoogleDriveFolderCreationError);
+      expect((error as GoogleDriveFolderCreationError).cleanupSucceeded).toBe(false);
+    }
   });
 
   it("sanitizes user-provided root folder names", () => {

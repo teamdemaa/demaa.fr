@@ -31,8 +31,25 @@ function toAirtableBaseShareUrl(destination: string): string | null {
   return new URL(parsed.pathname, parsed.origin).toString();
 }
 
+function toNotionTemplateUrl(destination: string): string | null {
+  const parsed = new URL(destination);
+  const isNotionHost = parsed.hostname === "notion.so"
+    || parsed.hostname === "www.notion.so"
+    || parsed.hostname.endsWith(".notion.site");
+  const hasPageId = /[a-f0-9]{32}$/i.test(parsed.pathname.replaceAll("-", ""));
+
+  if (parsed.protocol !== "https:" || !isNotionHost || !hasPageId) {
+    return null;
+  }
+
+  return parsed.toString();
+}
+
 export function getCopyableModelDestination(slug: string): string | null {
   const model = getPublishedCopyableModelBySlug(slug);
+  if (model?.platform === "notion" && model.notionTemplateUrl) {
+    return toNotionTemplateUrl(model.notionTemplateUrl);
+  }
   if (!model?.documentModelSlug) return null;
 
   const documentModel = getDocumentModelBySlug(model.documentModelSlug);

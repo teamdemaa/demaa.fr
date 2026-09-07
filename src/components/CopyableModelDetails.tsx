@@ -7,6 +7,7 @@ import DriveFolderTemplateCreator from "@/components/DriveFolderTemplateCreator"
 import DriveFolderTreePreview from "@/components/DriveFolderTreePreview";
 import MentoratAutomationCta from "@/components/MentoratAutomationCta";
 import ModelPlatformBadge from "@/components/ModelPlatformBadge";
+import NotionWorkspacePreview from "@/components/NotionWorkspacePreview";
 import type { CopyableModelDefinition } from "@/lib/copyable-model-catalog";
 import { getDocumentModelBySlug } from "@/lib/document-models";
 import { buildCompanyDriveFolderTemplate } from "@/lib/drive-folder-templates";
@@ -54,6 +55,8 @@ export default function CopyableModelDetails({
         <div className="min-h-[18rem] border-b border-dema-line bg-[#f7f7f3] sm:min-h-[25rem] lg:min-h-[32rem] lg:border-b-0 lg:border-r">
           {driveTemplate ? (
             <DriveFolderTreePreview template={driveTemplate} />
+          ) : model.platform === "notion" ? (
+            <NotionWorkspacePreview />
           ) : documentModel ? (
             <DocumentModelPreview model={documentModel} />
           ) : (

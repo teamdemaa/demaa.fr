@@ -37,6 +37,21 @@ type CreatedDriveFolder = Readonly<{
   name: string;
 }>;
 
+export class GoogleDriveFolderCreationError extends Error {
+  readonly cleanupSucceeded: boolean;
+
+  constructor(cause: unknown, cleanupSucceeded: boolean) {
+    super(
+      cause instanceof Error
+        ? cause.message
+        : "Google Drive folder creation failed",
+      { cause },
+    );
+    this.name = "GoogleDriveFolderCreationError";
+    this.cleanupSucceeded = cleanupSucceeded;
+  }
+}
+
 function readConfiguredValue(name: string) {
   return process.env[name]?.trim() || null;
 }
@@ -146,7 +161,6 @@ export function buildGoogleDriveAuthorizationUrl(
 ) {
   return createOAuthClient(config).generateAuthUrl({
     access_type: "online",
-    include_granted_scopes: true,
     prompt: "consent",
     scope: [GOOGLE_DRIVE_TEMPLATE_SCOPE],
     state,
@@ -211,29 +225,40 @@ async function mapWithConcurrency<T, R>(
 ) {
   const results = new Array<R>(values.length);
   let cursor = 0;
+  let firstError: unknown;
 
   async function runWorker() {
-    while (cursor < values.length) {
+    while (cursor < values.length && firstError === undefined) {
       const index = cursor;
       cursor += 1;
-      results[index] = await worker(values[index]);
+      try {
+        results[index] = await worker(values[index]);
+      } catch (error) {
+        firstError ??= error;
+      }
     }
   }
 
   await Promise.all(
     Array.from({ length: Math.min(concurrency, values.length) }, () => runWorker()),
   );
+  if (firstError !== undefined) throw firstError;
   return results;
 }
 
 async function deleteCreatedRoot(accessToken: string, rootId: string) {
   const url = new URL(`${DRIVE_API_URL}/${encodeURIComponent(rootId)}`);
   url.searchParams.set("supportsAllDrives", "true");
-  await fetch(url, {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${accessToken}` },
-    cache: "no-store",
-  }).catch(() => null);
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${accessToken}` },
+      cache: "no-store",
+    });
+    return response.ok || response.status === 404;
+  } catch {
+    return false;
+  }
 }
 
 export async function createGoogleDriveFolderStructure(input: {
@@ -266,8 +291,8 @@ export async function createGoogleDriveFolderStructure(input: {
       ));
     }
   } catch (error) {
-    await deleteCreatedRoot(input.accessToken, root.id);
-    throw error;
+    const cleanupSucceeded = await deleteCreatedRoot(input.accessToken, root.id);
+    throw new GoogleDriveFolderCreationError(error, cleanupSucceeded);
   }
 
   return {

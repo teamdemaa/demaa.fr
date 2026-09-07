@@ -12,6 +12,7 @@ const MODEL_GROUPS = [
     title: "Les fondamentaux",
     slugs: [
       "structure-google-drive-entreprise",
+      "pilotage-entreprise-notion",
       "suivi-commercial-et-devis",
       "suivi-previsionnel-financier",
     ],

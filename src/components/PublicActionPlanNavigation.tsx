@@ -4,8 +4,8 @@ import Link from "next/link";
 export type PublicActionPlanView = "solutions" | "academy" | "services";
 
 const navigationItems = [
-  { view: "solutions", label: "Solutions", href: "/solutions", Icon: LayoutGrid },
   { view: "academy", label: "Organisation", href: "/organiser", Icon: ListTree },
+  { view: "solutions", label: "Solutions", href: "/solutions", Icon: LayoutGrid },
   { view: "services", label: "Accompagnement", href: "/accompagnement", Icon: Workflow },
 ] as const;
 

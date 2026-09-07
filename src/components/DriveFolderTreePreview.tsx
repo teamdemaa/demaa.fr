@@ -3,6 +3,7 @@ import type {
   DriveFolderNode,
   DriveFolderTemplate,
 } from "@/lib/drive-folder-templates";
+import { COMPANY_DRIVE_DOSSIER_GUIDES } from "@/lib/drive-folder-templates";
 
 function FolderNodes({ nodes, depth = 0 }: { nodes: readonly DriveFolderNode[]; depth?: number }) {
   return (
@@ -53,6 +54,23 @@ export default function DriveFolderTreePreview({ template }: { template: DriveFo
         {template.defaultRootName}
       </div>
       <FolderNodes nodes={template.sections} />
+      <div className="mt-6 border-t border-dema-line pt-5 text-xs leading-5 text-dema-muted">
+        <h3 className="text-sm font-medium text-brand-blue">À ajouter au fil des besoins</h3>
+        <p className="mt-2">Ces exemples ne sont pas créés automatiquement. Créez un dossier uniquement lorsqu’un client, fournisseur, recrutement ou collaborateur existe.</p>
+        <div className="mt-3 space-y-3">
+          {COMPANY_DRIVE_DOSSIER_GUIDES.map((guide) => (
+            <details key={guide.title}>
+              <summary className="min-h-9 cursor-pointer font-medium text-brand-blue">{guide.title}</summary>
+              <p className="mb-2">Dans {guide.location}</p>
+              <FolderNodes nodes={[{ name: guide.rootName, children: guide.children }]} />
+            </details>
+          ))}
+        </div>
+        <p className="mt-4">Plusieurs missions pour un client ? Ajoutez un niveau par mission seulement si nécessaire.</p>
+        <p className="mt-3">Drive conserve les fichiers. Notion porte le pilotage, les tâches, les réunions et les procédures. La facturation reste dans votre outil de facturation : conservez ici les exports utiles, sans double saisie.</p>
+        <p className="mt-3">Gardez les exercices comptables dans Comptabilité. Les factures fournisseurs et relevés bancaires vont dans l’exercice concerné ; les contrats fournisseurs et documents de financement restent dans leurs dossiers dédiés.</p>
+        <p className="mt-3">Pas de dossier « Modèles » général : les modèles restent dans l’outil où ils servent. Une présentation réutilisable peut rester dans Présentations ; un contrat type client utilisé dans Drive, directement dans Dossiers clients.</p>
+      </div>
     </div>
   );
 }

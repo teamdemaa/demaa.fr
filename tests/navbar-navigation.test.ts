@@ -77,6 +77,12 @@ describe("Demaa application navbar", () => {
     expect(source).not.toContain('label: "Organiser"');
     expect(source).toContain('label: "Solutions", href: "/solutions"');
     expect(source).toContain('label: "Accompagnement", href: "/accompagnement"');
+    expect(source.indexOf('label: "Organisation"')).toBeLessThan(
+      source.indexOf('label: "Solutions"'),
+    );
+    expect(source.indexOf('label: "Solutions"')).toBeLessThan(
+      source.indexOf('label: "Accompagnement"'),
+    );
     expect(source).toContain("leading-tight");
     expect(source).not.toContain("leading-none");
     expect(organiserIndex).toContain("OrganiserHub");
@@ -204,7 +210,7 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain("const publicNavigationOrder: readonly ActionPlanView[]");
     expect(actionPlanNavSource).toContain("const embeddedNavigationOrder: readonly ActionPlanView[]");
     expect(actionPlanNavSource).toContain(
-      '"solutions",\n  "academy",\n  "services"',
+      '"academy",\n  "solutions",\n  "services"',
     );
     expect(actionPlanNavSource).toContain('  "academy",');
     expect(actionPlanNavSource).not.toContain('  "opportunities",');

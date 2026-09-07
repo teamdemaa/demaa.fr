@@ -8,6 +8,7 @@ import {
 import {
   createGoogleDriveFolderStructure,
   exchangeGoogleDriveAuthorizationCode,
+  GoogleDriveFolderCreationError,
   getGoogleDriveOAuthConfig,
   getGoogleDriveTemplateCookieOptions,
   GOOGLE_DRIVE_TEMPLATE_COOKIE,
@@ -90,8 +91,17 @@ export async function GET(request: Request) {
     return response;
   } catch (error) {
     logOperationalError("google_drive_template.creation_failed", error, {
+      cleanupSucceeded: error instanceof GoogleDriveFolderCreationError
+        ? error.cleanupSucceeded
+        : null,
       template: "structure-google-drive-entreprise",
     });
+    if (error instanceof GoogleDriveFolderCreationError) {
+      return modelRedirect(
+        request,
+        error.cleanupSucceeded ? "creation_cleaned" : "creation_cleanup",
+      );
+    }
     return modelRedirect(request, "creation");
   }
 }

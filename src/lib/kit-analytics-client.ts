@@ -62,7 +62,7 @@ export function trackCopyableModelEvent(
   eventName: CopyableModelEvent,
   input: {
     modelSlug: string;
-    platform: "airtable" | "google-drive" | "google-sheets";
+    platform: "airtable" | "google-drive" | "google-sheets" | "notion";
     surface: "catalogue" | "model_detail" | "model_preview";
   },
 ) {
