@@ -75,7 +75,7 @@ export default function DemaaStudioLandingPage() {
       <main className="overflow-x-clip bg-dema-cream pb-24 text-brand-blue xl:pb-0">
         <section className="border-b border-dema-line px-5 pb-20 pt-14 text-center sm:px-8 sm:pb-24 sm:pt-20 lg:pb-28 lg:pt-24">
           <div className="mx-auto max-w-6xl">
-            <p className="text-sm font-medium text-dema-forest">Demaa Studio</p>
+            <p className="text-sm font-medium text-dema-forest">Le Studio</p>
             <h1
               aria-label="Construisons le logiciel dont votre métier a besoin."
               className={`${satoshiHeroTitleClassName} mx-auto mt-5 max-w-6xl`}
