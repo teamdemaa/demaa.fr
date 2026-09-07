@@ -57,6 +57,9 @@ describe("copyable model public routes", () => {
     expect(modelsIndex).toContain("titleLevel={3}");
     expect(modelsIndex).not.toContain("Des processus concrets pour se projeter vraiment");
     expect(modelCard).toContain("line-clamp-3");
+    expect(modelCard).toContain("transition-colors duration-150");
+    expect(modelCard).not.toContain("hover:-translate-y");
+    expect(modelCard).not.toContain("hover:shadow-");
     expect(organiserLibrary).toContain('id="cas-concrets"');
     expect(organiserLibrary).toContain('aria-labelledby="organiser-models-tab"');
     expect(organiserLibrary).toContain("OrganiserProcessMap");
