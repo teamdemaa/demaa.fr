@@ -1,6 +1,7 @@
 "use client";
 
 import { Analytics } from "@vercel/analytics/next";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import {
@@ -16,9 +17,12 @@ import {
 
 const GOOGLE_ANALYTICS_ID = "G-V1V4EX55K6";
 const META_PIXEL_ID = "2790127321387849";
+const BANNER_REVEAL_DELAY_MS = 500;
 const subscribeToHydration = () => () => {};
 const getClientHydrationSnapshot = () => true;
 const getServerHydrationSnapshot = () => false;
+const consentChoiceButtonClassName =
+  "inline-flex min-h-11 items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/40 hover:bg-dema-sage/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:text-sm";
 
 function ensureGtagQueue() {
   window.dataLayer = window.dataLayer || [];
@@ -93,8 +97,8 @@ export default function CookieConsentManager() {
   const isEnglish = pathname === "/en" || pathname.startsWith("/en/");
   const copy = isEnglish ? {
     region: "Privacy preferences",
-    eyebrow: "Cookies & audience measurement",
-    description: "Demaa uses trackers to measure journeys and the origin of requests. You can accept all, reject all or choose by purpose.",
+    eyebrow: "Cookies",
+    description: "Audience and advertising campaign measurement, with your consent.",
     analytics: "Audience measurement",
     analyticsDescription: "Vercel Analytics, Google Analytics and persistent source attribution.",
     marketing: "Advertising",
@@ -104,10 +108,11 @@ export default function CookieConsentManager() {
     hide: "Hide choices",
     save: "Save my choices",
     accept: "Accept all",
+    learnMore: "Learn more",
   } : {
     region: "Préférences de confidentialité",
-    eyebrow: "Cookies & mesure d’audience",
-    description: "Demaa utilise des traceurs pour mesurer les parcours et l’origine des demandes. Vous pouvez tout accepter, tout refuser ou choisir par finalité.",
+    eyebrow: "Cookies",
+    description: "Mesure d’audience et des campagnes publicitaires, avec votre accord.",
     analytics: "Mesure d’audience",
     analyticsDescription: "Vercel Analytics, Google Analytics et attribution persistante des sources.",
     marketing: "Publicité",
@@ -117,6 +122,7 @@ export default function CookieConsentManager() {
     hide: "Masquer les choix",
     save: "Enregistrer mes choix",
     accept: "Tout accepter",
+    learnMore: "En savoir plus",
   };
   const consentSnapshot = useSyncExternalStore(
     subscribeToCookieConsent,
@@ -125,8 +131,9 @@ export default function CookieConsentManager() {
   );
   const preferences = parseCookieConsentSnapshot(consentSnapshot);
   const [showSettings, setShowSettings] = useState(false);
-  const [analyticsChoice, setAnalyticsChoice] = useState(true);
+  const [analyticsChoice, setAnalyticsChoice] = useState(false);
   const [marketingChoice, setMarketingChoice] = useState(false);
+  const [bannerReady, setBannerReady] = useState(false);
   const hasHydrated = useSyncExternalStore(
     subscribeToHydration,
     getClientHydrationSnapshot,
@@ -134,12 +141,17 @@ export default function CookieConsentManager() {
   );
 
   const hasAnalyticsConsent = preferences?.analytics === true;
-  const shouldShowBanner = hasHydrated && preferences === null;
+  const shouldShowBanner = hasHydrated && bannerReady && preferences === null;
 
   function saveConsent(input: { analytics: boolean; marketing: boolean }) {
     writeCookieConsentPreferences(input);
     setShowSettings(false);
   }
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setBannerReady(true), BANNER_REVEAL_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     ensureGtagQueue();
@@ -188,17 +200,17 @@ export default function CookieConsentManager() {
       {hasAnalyticsConsent ? <Analytics /> : null}
 
       {shouldShowBanner ? (
-        <div className="fixed inset-x-0 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-[90] px-4">
+        <div className="fixed inset-x-0 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-[90] px-3 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-300 sm:left-5 sm:right-auto sm:w-[min(32rem,calc(100vw-2.5rem))] sm:px-0">
           <section
-            className="mx-auto max-w-3xl rounded-[1.4rem] border border-dema-line bg-dema-paper p-4 shadow-[0_18px_50px_rgba(23,35,29,0.08)] md:p-5"
+            className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-4 shadow-[0_14px_40px_rgba(23,35,29,0.09)]"
             aria-label={copy.region}
           >
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-dema-forest">
+                <p className="text-sm font-semibold text-dema-forest">
                   {copy.eyebrow}
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-dema-muted">
+                <p className="mt-1 text-[13px] leading-5 text-dema-muted">
                   {copy.description}
                 </p>
               </div>
@@ -236,39 +248,68 @@ export default function CookieConsentManager() {
                 </div>
               ) : null}
 
-              <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
-                <button
-                  type="button"
-                  onClick={() => saveConsent({ analytics: false, marketing: false })}
-                  className="demaa-secondary-button"
-                >
-                  {copy.reject}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowSettings((current) => !current)}
-                  className="demaa-secondary-button"
-                >
-                  {showSettings ? copy.hide : copy.customize}
-                </button>
-                {showSettings ? (
+              {showSettings ? (
+                <>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => saveConsent({ analytics: false, marketing: false })}
+                      className={consentChoiceButtonClassName}
+                    >
+                      {copy.reject}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => saveConsent({ analytics: analyticsChoice, marketing: marketingChoice })}
+                      className={consentChoiceButtonClassName}
+                    >
+                      {copy.save}
+                    </button>
+                  </div>
                   <button
                     type="button"
-                    onClick={() => saveConsent({ analytics: analyticsChoice, marketing: marketingChoice })}
-                    className="demaa-primary-button"
+                    onClick={() => setShowSettings(false)}
+                    className="self-start text-xs font-medium text-dema-muted underline-offset-4 hover:text-dema-forest hover:underline focus-visible:outline-none focus-visible:underline"
                   >
-                    {copy.save}
+                    {copy.hide}
                   </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => saveConsent({ analytics: true, marketing: true })}
-                    className="demaa-primary-button"
-                  >
-                    {copy.accept}
-                  </button>
-                )}
-              </div>
+                </>
+              ) : (
+                <>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => saveConsent({ analytics: false, marketing: false })}
+                      className={consentChoiceButtonClassName}
+                    >
+                      {copy.reject}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => saveConsent({ analytics: true, marketing: true })}
+                      className={consentChoiceButtonClassName}
+                    >
+                      {copy.accept}
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-dema-muted">
+                    <button
+                      type="button"
+                      onClick={() => setShowSettings(true)}
+                      className="font-medium underline-offset-4 hover:text-dema-forest hover:underline focus-visible:outline-none focus-visible:underline"
+                    >
+                      {copy.customize}
+                    </button>
+                    <span aria-hidden="true">·</span>
+                    <Link
+                      href="/politique-de-cookies"
+                      className="underline-offset-4 hover:text-dema-forest hover:underline focus-visible:outline-none focus-visible:underline"
+                    >
+                      {copy.learnMore}
+                    </Link>
+                  </div>
+                </>
+              )}
             </div>
           </section>
         </div>
