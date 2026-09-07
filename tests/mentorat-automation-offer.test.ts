@@ -26,7 +26,7 @@ describe("Mise en place d’un système commercial et client", () => {
     expect(mentoratAutomationContent.offer).toMatchObject({
       duration: "1 mois",
       price: "5 000 € HT",
-      title: "Votre système commercial et client, prêt à être utilisé en un mois.",
+      title: "Votre système commercial et client, prêt à être utilisé.",
     });
     expect(mentoratAutomationContent.hero.title).toBe(
       "On met en place votre système commercial et client. Pour que tout ne repose plus sur vous.",
@@ -100,9 +100,7 @@ describe("Mise en place d’un système commercial et client", () => {
     expect(landing).toContain('label="Faire le point ensemble"');
     expect(landing).toContain('id="suivi"');
     expect(mentoratAutomationContent.ongoing.title).toBe("Vous et votre équipe êtes autonomes.");
-    expect(mentoratAutomationContent.ongoing.priceNote).toBe(
-      "Le tarif de 5 000 € HT est réglé une seule fois.",
-    );
+    expect("priceNote" in mentoratAutomationContent.ongoing).toBe(false);
     expect("options" in mentoratAutomationContent.ongoing).toBe(false);
     expect(landing).not.toContain("content.ongoing.options.map");
     expect(landing).not.toContain('href="/diagnostic-organisation"');

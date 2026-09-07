@@ -307,9 +307,6 @@ export default function MentoratAutomationLandingPage() {
               <p className="max-w-3xl text-base leading-7 text-dema-muted">
                 {content.ongoing.description}
               </p>
-              <p className="mt-6 border-t border-dema-line pt-5 text-sm font-medium text-dema-forest">
-                {content.ongoing.priceNote}
-              </p>
             </div>
           </div>
         </section>

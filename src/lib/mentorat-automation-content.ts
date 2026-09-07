@@ -142,7 +142,7 @@ export const mentoratAutomationContent = {
     duration: AUTOMATION_OFFER.durationLabel,
     price: AUTOMATION_OFFER.price.label,
     eyebrow: `Maestro · Mise en place · ${AUTOMATION_OFFER.durationLabel}`,
-    title: "Votre système commercial et client, prêt à être utilisé en un mois.",
+    title: "Votre système commercial et client, prêt à être utilisé.",
     scope:
       "Nous définissons avec vous le parcours prioritaire et le niveau de mise en place réalisable pendant la mission.",
   },
@@ -160,7 +160,6 @@ export const mentoratAutomationContent = {
     title: "Vous et votre équipe êtes autonomes.",
     description:
       "Le système est documenté, testé avec vous et transmis pour que chacun sache l’utiliser, le mettre à jour et le faire évoluer au quotidien.",
-    priceNote: `Le tarif de ${AUTOMATION_OFFER.price.label} est réglé une seule fois.`,
   },
   faq: [
     {
