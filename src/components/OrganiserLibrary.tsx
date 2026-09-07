@@ -330,24 +330,13 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
           className="px-4 pb-4 pt-2 sm:px-6 lg:px-8"
         >
           <div className="mx-auto w-full max-w-7xl">
-            <h2
-              id="organiser-models-heading"
-              className="text-2xl font-light tracking-[-0.03em] text-brand-blue sm:text-3xl"
-            >
-              Modèles prêts à copier
-            </h2>
-
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-dema-muted">
-              Des structures directement utilisables dans Notion, Google Drive, Google Sheets ou Airtable.
-            </p>
-
-            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {models.map((model) => (
                   <div key={model.slug} className="min-w-0">
                     <CopyableModelCard
                       href={`/modeles/${model.slug}?from=organisation`}
                       model={model}
-                      titleLevel={3}
+                      titleLevel={2}
                     />
                   </div>
                 ))}
