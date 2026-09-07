@@ -167,12 +167,12 @@ export default function MentoratAutomationLandingPage() {
               </ol>
             </div>
             <Image
-              src="/images/accompagnement/outils-organises.png"
+              src="/images/accompagnement/outils-organises-transparent.png"
               alt="Les actions commerciales et client à contacter, préparer, valider et relancer réunies dans un cockpit"
               width={1536}
               height={1024}
               sizes="(min-width: 1024px) 560px, 92vw"
-              className="mx-auto h-auto w-full max-w-2xl mix-blend-darken"
+              className="mx-auto h-auto w-full max-w-2xl"
             />
           </div>
         </section>

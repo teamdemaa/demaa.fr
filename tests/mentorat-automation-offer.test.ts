@@ -94,7 +94,7 @@ describe("Mise en place d’un système commercial et client", () => {
     expect(landing).toContain("content.journey.map");
     expect(landing).toContain("content.foundations.items.map");
     expect(landing).toContain("content.impacts.items.map");
-    expect(landing).toContain("/images/accompagnement/outils-organises.png");
+    expect(landing).toContain("/images/accompagnement/outils-organises-transparent.png");
     expect(landing).toContain("/images/accompagnement/organisation-claire.png");
     expect(landing).toContain("/images/accompagnement/atelier-organisation.png");
     expect(landing).toContain('label="Faire le point ensemble"');
