@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Search, SlidersHorizontal } from "lucide-react";
-import { useMemo, useState } from "react";
+import { type KeyboardEvent, useMemo, useRef, useState } from "react";
 import CopyableModelCard from "@/components/CopyableModelCard";
 import OrganiserProcessMap from "@/components/OrganiserProcessMap";
 import type { AcademyProcessStep } from "@/lib/academy-course-content";
@@ -51,6 +51,7 @@ const ORGANISER_FILTERS = [
 ] as const;
 
 type OrganiserFilter = (typeof ORGANISER_FILTERS)[number];
+type OrganiserTab = "guides" | "models";
 
 function getOrganiserFilter(category: string): OrganiserFilter {
   const normalizedCategory = category.toLocaleLowerCase("fr");
@@ -81,9 +82,21 @@ function getOrganiserFilter(category: string): OrganiserFilter {
 }
 
 export default function OrganiserLibrary({ guides, models, processes }: OrganiserLibraryProps) {
+  const [activeTab, setActiveTab] = useState<OrganiserTab>("guides");
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<OrganiserFilter>(ALL_FILTERS);
   const [areFiltersVisible, setAreFiltersVisible] = useState(false);
+  const guidesTabRef = useRef<HTMLButtonElement>(null);
+  const modelsTabRef = useRef<HTMLButtonElement>(null);
+
+  function handleTabKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+
+    event.preventDefault();
+    const nextTab = event.key === "ArrowLeft" || event.key === "Home" ? "guides" : "models";
+    setActiveTab(nextTab);
+    (nextTab === "guides" ? guidesTabRef : modelsTabRef).current?.focus();
+  }
 
   const filteredProcesses = useMemo(
     () => processes.filter((content) => (
@@ -118,7 +131,58 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
 
   return (
     <div>
-      <div className="mx-auto w-full max-w-4xl px-4 sm:px-6">
+      <div className="mx-auto mb-10 w-full max-w-md px-4 sm:px-6">
+        <div
+          role="tablist"
+          aria-label="Choisir le type de contenu"
+          className="grid grid-cols-2 rounded-full border border-dema-line bg-dema-paper p-1.5 shadow-[0_10px_30px_rgba(31,52,43,0.05)]"
+        >
+          <button
+            ref={guidesTabRef}
+            id="organiser-guides-tab"
+            type="button"
+            role="tab"
+            aria-controls="organiser-guides-panel"
+            aria-selected={activeTab === "guides"}
+            tabIndex={activeTab === "guides" ? 0 : -1}
+            onClick={() => setActiveTab("guides")}
+            onKeyDown={handleTabKeyDown}
+            className={`min-h-11 rounded-full px-5 text-sm font-medium transition ${
+              activeTab === "guides"
+                ? "bg-dema-forest text-white shadow-sm"
+                : "text-brand-blue/65 hover:text-dema-forest"
+            }`}
+          >
+            Guides
+          </button>
+          <button
+            ref={modelsTabRef}
+            id="organiser-models-tab"
+            type="button"
+            role="tab"
+            aria-controls="organiser-models-panel"
+            aria-selected={activeTab === "models"}
+            tabIndex={activeTab === "models" ? 0 : -1}
+            onClick={() => setActiveTab("models")}
+            onKeyDown={handleTabKeyDown}
+            className={`min-h-11 rounded-full px-5 text-sm font-medium transition ${
+              activeTab === "models"
+                ? "bg-dema-forest text-white shadow-sm"
+                : "text-brand-blue/65 hover:text-dema-forest"
+            }`}
+          >
+            Modèles
+          </button>
+        </div>
+      </div>
+
+      {activeTab === "guides" ? (
+        <div
+          id="organiser-guides-panel"
+          role="tabpanel"
+          aria-labelledby="organiser-guides-tab"
+        >
+          <div className="mx-auto w-full max-w-4xl px-4 sm:px-6">
         <div className="demaa-search-shell p-1.5">
           <div className="relative">
             <Search
@@ -171,18 +235,18 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
             </div>
           </div>
         ) : null}
-      </div>
+          </div>
 
-      {!hasResults ? (
+          {!hasResults ? (
         <section className="mx-auto mt-12 w-full max-w-7xl px-4 sm:px-6 lg:px-8" aria-live="polite">
           <div className="rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper px-6 py-14 text-center">
             <h2 className="text-xl font-medium text-brand-blue">Aucun contenu trouvé</h2>
             <p className="mt-2 text-sm text-dema-muted">Essayez un mot plus simple ou un autre sujet.</p>
           </div>
         </section>
-      ) : null}
+          ) : null}
 
-      {filteredProcesses.length || filteredGuides.length ? (
+          {filteredProcesses.length || filteredGuides.length ? (
         <section id="cas-concrets" aria-label="Cas concrets" className="scroll-mt-24 px-4 py-14 sm:px-6 md:py-16 lg:px-8">
           <div className="mx-auto w-full max-w-7xl">
             <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
@@ -256,12 +320,14 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
             </div>
           </div>
         </section>
-      ) : null}
-
-      {!query && activeFilter === ALL_FILTERS ? (
+          ) : null}
+        </div>
+      ) : (
         <section
+          id="organiser-models-panel"
+          role="tabpanel"
+          aria-labelledby="organiser-models-tab"
           className="px-4 pb-4 pt-2 sm:px-6 lg:px-8"
-          aria-labelledby="organiser-models-heading"
         >
           <div className="mx-auto w-full max-w-7xl">
             <div className="flex items-end justify-between gap-6">
@@ -280,10 +346,13 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
               </Link>
             </div>
 
-            <div className="-mx-4 mt-6 overflow-x-auto px-4 pb-4 soft-scroll sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-              <div className="grid max-w-full snap-x snap-mandatory grid-flow-col auto-cols-[84%] items-stretch gap-4 overscroll-x-contain sm:auto-cols-[48%] lg:auto-cols-[calc((100%_-_2rem)_/_3)] xl:auto-cols-[calc((100%_-_3rem)_/_4)]">
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-dema-muted">
+              Des structures directement utilisables dans Notion, Google Drive, Google Sheets ou Airtable.
+            </p>
+
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {models.map((model) => (
-                  <div key={model.slug} className="min-w-0 snap-start">
+                  <div key={model.slug} className="min-w-0">
                     <CopyableModelCard
                       href={`/modeles/${model.slug}?from=organisation`}
                       model={model}
@@ -291,11 +360,10 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
                     />
                   </div>
                 ))}
-              </div>
             </div>
           </div>
         </section>
-      ) : null}
+      )}
     </div>
   );
 }

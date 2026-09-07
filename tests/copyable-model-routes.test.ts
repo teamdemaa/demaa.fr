@@ -31,6 +31,9 @@ describe("copyable model public routes", () => {
     expect(organiserHub).not.toContain("SOLUTION_RAIL_CLASS_NAME");
     expect(organiserLibrary).toContain("<CopyableModelCard");
     expect(organiserLibrary).toContain("Modèles prêts à copier");
+    expect(organiserLibrary).toContain('role="tablist"');
+    expect(organiserLibrary).toContain("Guides");
+    expect(organiserLibrary).toContain("Modèles");
     expect(organiserLibrary).toContain("Voir tous les modèles");
     expect(organiserLibrary).toContain('href="/modeles?from=organisation"');
     expect(page).toContain('fromOrganisation={source === "organisation"}');
@@ -53,19 +56,20 @@ describe("copyable model public routes", () => {
     expect(modelsIndex).toContain("titleLevel={3}");
     expect(modelsIndex).not.toContain("Des processus concrets pour se projeter vraiment");
     expect(organiserLibrary).toContain('id="cas-concrets"');
-    expect(organiserLibrary).toContain('aria-labelledby="organiser-models-heading"');
+    expect(organiserLibrary).toContain('aria-labelledby="organiser-models-tab"');
     expect(organiserLibrary).toContain("OrganiserProcessMap");
     expect(organiserLibrary).not.toContain(".slice(0, 5)");
   });
 
   it("supports a full detail page and an intercepted modal with the same content", async () => {
-    const [page, modal, details, copyLink, preview, driveCreator, dialog] = await Promise.all([
+    const [page, modal, details, copyLink, preview, driveCreator, notionPreview, dialog] = await Promise.all([
       readSource("src/app/(marketing)/modeles/[slug]/page.tsx"),
       readSource("src/app/@modal/(.)modeles/[slug]/page.tsx"),
       readSource("src/components/CopyableModelDetails.tsx"),
       readSource("src/components/CopyableModelCopyLink.tsx"),
       readSource("src/components/DocumentModelPreview.tsx"),
       readSource("src/components/DriveFolderTemplateCreator.tsx"),
+      readSource("src/components/NotionWorkspacePreview.tsx"),
       readSource("src/components/CopyableModelRouteDialog.tsx"),
     ]);
 
@@ -79,8 +83,12 @@ describe("copyable model public routes", () => {
     expect(details).toContain("CopyableModelCopyLink");
     expect(details).toContain("DriveFolderTreePreview");
     expect(details).toContain("DriveFolderTemplateCreator");
+    expect(details).toContain("NotionWorkspacePreview");
+    expect(notionPreview).toContain("Six bases canoniques");
     expect(driveCreator).toContain("Créer automatiquement dans mon Drive");
     expect(driveCreator).toContain("Copier la liste des dossiers");
+    expect(driveCreator).toContain("Premier exercice comptable");
+    expect(driveCreator).toContain("creation_cleanup");
     expect(driveCreator).toContain("aucun dossier n’est créé");
     expect(driveCreator).toContain('type="hidden" name="sectionIds"');
     expect(driveCreator).not.toContain("Domaines à créer");
@@ -129,6 +137,7 @@ describe("copyable model public routes", () => {
     expect(callbackRoute).toContain("createGoogleDriveFolderStructure");
     expect(driveServer).toContain("https://www.googleapis.com/auth/drive.file");
     expect(driveServer).toContain('access_type: "online"');
+    expect(driveServer).not.toContain("include_granted_scopes");
     expect(driveServer).not.toContain("refresh_token");
   });
 });

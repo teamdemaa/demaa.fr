@@ -1,4 +1,4 @@
-export type CopyableModelPlatform = "airtable" | "google-drive" | "google-sheets";
+export type CopyableModelPlatform = "airtable" | "google-drive" | "google-sheets" | "notion";
 export type CopyableModelAvailability = "available" | "planned";
 
 export type CopyableModelDefinition = Readonly<{
@@ -19,6 +19,7 @@ export type CopyableModelDefinition = Readonly<{
   compatibleSystemSlugs: "all" | readonly string[];
   driveFolderTemplateSlug?: "structure-google-drive-entreprise";
   documentModelSlug?: string;
+  notionTemplateUrl?: string;
   relatedOrganiserSlug?: string;
   relatedOrganiserLabel?: string;
 }>;
@@ -46,7 +47,7 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
   {
     slug: "structure-google-drive-entreprise",
     title: "Structure Google Drive pour organiser son entreprise",
-    description: "Créez une structure de dossiers claire pour la direction, la finance, l’administration, les clients, l’équipe et les processus.",
+    description: "Rangez vos fichiers dans cinq domaines simples : à classer, administration et finance, dossiers clients, équipe et communication. Gardez uniquement les domaines utiles ; le pilotage et les tâches restent dans Notion ou votre outil métier.",
     seoTitle: "Structure Google Drive pour organiser son entreprise | Demaa",
     seoDescription: "Créez gratuitement dans Google Drive une structure de dossiers pragmatique pour organiser les documents de votre entreprise.",
     category: "Organisation",
@@ -55,11 +56,29 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
     featuredRank: 1,
     workflowStart: "Les documents sont dispersés ou rangés différemment par chaque personne",
     workflowEnd: "Chaque document a un emplacement clair, partagé et durable",
-    benefits: ["Retrouver les documents plus vite", "Séparer les espaces sensibles", "Archiver sans encombrer le travail courant"],
-    includedSections: ["Direction", "Finance", "Administration", "Commercial", "Clients", "Équipe & RH", "Marketing", "Processus", "Informatique", "Archives"],
+    benefits: ["Retrouver les documents plus vite", "Choisir uniquement les domaines utiles", "Archiver dans chaque domaine sans multiplier les copies"],
+    includedSections: ["À classer", "Administration & finance", "Dossiers clients", "Équipe (facultatif)", "Communication"],
     searchTerms: ["drive", "google drive", "dossiers", "arborescence", "classement", "documents", "organisation"],
     compatibleSystemSlugs: "all",
     driveFolderTemplateSlug: "structure-google-drive-entreprise",
+  },
+  {
+    slug: "pilotage-entreprise-notion",
+    title: "Pilotage simple de son entreprise dans Notion",
+    description: "Regroupez le cap, les objectifs, les indicateurs, les décisions, les tâches, les réunions et les procédures dans un cockpit léger pour TPE.",
+    seoTitle: "Modèle Notion de pilotage d’entreprise à copier | Demaa",
+    seoDescription: "Copiez gratuitement un modèle Notion simple pour piloter les objectifs, indicateurs, décisions, tâches, réunions et procédures d’une TPE.",
+    category: "Pilotage",
+    platform: "notion",
+    availability: "available",
+    featuredRank: 2,
+    workflowStart: "Les objectifs, décisions et prochaines actions sont dispersés",
+    workflowEnd: "Le dirigeant retrouve son cap et le travail en cours dans un seul cockpit",
+    benefits: ["Voir les priorités en un coup d’œil", "Relier décisions, réunions et actions", "Documenter sans recopier les fichiers du Drive"],
+    includedSections: ["Pilotage", "Tâches en cours", "Réunions", "Comment on travaille", "Six bases reliées"],
+    searchTerms: ["notion", "pilotage", "objectif", "kpi", "tâche", "réunion", "procédure", "tpe"],
+    compatibleSystemSlugs: "all",
+    notionTemplateUrl: "https://lead-yew-beb.notion.site/Mon-entreprise-mod-le-Notion-3d307d787523816a992ae53bae65f80d",
   },
   {
     slug: "suivi-commercial-et-devis",
