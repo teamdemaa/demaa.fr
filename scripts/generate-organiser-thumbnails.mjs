@@ -176,10 +176,18 @@ function illustration(kind) {
 
 function buildSvg(thumbnail) {
   const activeLines = thumbnail.lines.filter(Boolean);
+  const displayLines = thumbnail.quote
+    ? activeLines.map((line, index) => {
+        if (activeLines.length === 1) return `« ${line} »`;
+        if (index === 0) return `« ${line}`;
+        if (index === activeLines.length - 1) return `${line} »`;
+        return line;
+      })
+    : activeLines;
   const lineHeight = Math.round(thumbnail.fontSize * 1.05);
-  const blockHeight = lineHeight * activeLines.length;
+  const blockHeight = lineHeight * displayLines.length;
   const startY = Math.round((height - blockHeight) / 2 + thumbnail.fontSize * 0.72);
-  const text = activeLines
+  const text = displayLines
     .map((line, index) => (
       `<text class="title" x="82" y="${startY + index * lineHeight}" font-size="${thumbnail.fontSize}">${escapeXml(line)}</text>`
     ))

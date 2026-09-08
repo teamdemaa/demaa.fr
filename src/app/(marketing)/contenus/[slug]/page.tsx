@@ -9,6 +9,7 @@ import CaseVideoOverview from "@/components/CaseVideoOverview";
 import ContentSlidesLauncher from "@/components/ContentSlidesLauncher";
 import MentoratAutomationCta from "@/components/MentoratAutomationCta";
 import NumberedSectionHeading from "@/components/NumberedSectionHeading";
+import OrganiserProcessMap from "@/components/OrganiserProcessMap";
 import {
   getAllPublishedContent,
   getContentFormat,
@@ -101,6 +102,7 @@ export default async function ContentPage({ params }: ContentPageProps) {
           ) : (
             <div className="mx-auto max-w-5xl">
               <CaseVideoOverview
+                hideMedia={isOrganisationContent}
                 title={entry.title}
                 thumbnail={getOrganiserThumbnailPath(entry.slug)}
                 items={entry.article.map((section) => section.heading)}
@@ -150,7 +152,36 @@ export default async function ContentPage({ params }: ContentPageProps) {
                     />
                     <div className="mt-4 space-y-4 text-base leading-8 text-dema-muted">
                       {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                      {section.items ? (
+                      {section.process ? (
+                        <div>
+                          <p className="mb-3 text-sm font-medium text-brand-blue">
+                            Le processus une fois en place
+                          </p>
+                          <OrganiserProcessMap
+                            steps={section.process.map((label) => ({ label }))}
+                          />
+                        </div>
+                      ) : null}
+                      {section.items && section.process ? (
+                        <div className="pt-2">
+                          <h3 className="text-lg font-medium text-brand-blue">
+                            Pour le mettre en place
+                          </h3>
+                          <ol className="mt-4 space-y-4">
+                            {section.items.map((item, itemIndex) => (
+                              <li key={item} className="flex gap-3.5">
+                                <span
+                                  aria-hidden="true"
+                                  className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-dema-forest/20 text-xs font-medium text-dema-forest"
+                                >
+                                  {itemIndex + 1}
+                                </span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ol>
+                        </div>
+                      ) : section.items ? (
                         <ul className="space-y-3">
                           {section.items.map((item) => (
                             <li key={item} className="flex gap-3">

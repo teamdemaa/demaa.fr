@@ -15,7 +15,10 @@ export default function CaseVideoOverview({
   title,
 }: CaseVideoOverviewProps) {
   return (
-    <section className="mt-12 sm:mt-14" aria-labelledby="case-video-outline-title">
+    <section
+      className={hideMedia ? "mt-10 sm:mt-12" : "mt-12 sm:mt-14"}
+      aria-labelledby="case-video-outline-title"
+    >
       {hideMedia ? null : thumbnail ? (
         <div className="relative aspect-video overflow-hidden rounded-[1.4rem] border border-dema-line bg-dema-sage shadow-[0_18px_44px_rgba(31,72,52,0.08)]">
           <Image
@@ -46,7 +49,7 @@ export default function CaseVideoOverview({
         </div>
       )}
 
-      <div className="mt-5 rounded-[1.2rem] border border-dema-line bg-white px-6 py-6 sm:px-7">
+      <div className={`${hideMedia ? "" : "mt-5"} rounded-[1.2rem] border border-dema-line bg-white px-6 py-6 sm:px-7`}>
         <div className="flex items-center gap-3">
           <ListChecks className="h-5 w-5 text-dema-forest" aria-hidden="true" />
           <h2 id="case-video-outline-title" className="text-xl font-semibold tracking-[-0.02em] text-[#25352C]">

@@ -40,8 +40,9 @@ describe("Organisation thumbnails", () => {
     for (const slug of publicSlugs) {
       const path = getOrganiserThumbnailPath(slug);
       expect(path, slug).not.toBeNull();
-      expect(existsSync(`public${path}`), slug).toBe(true);
-      const image = readFileSync(`public${path}`);
+      const filePath = path!.split("?")[0];
+      expect(existsSync(`public${filePath}`), slug).toBe(true);
+      const image = readFileSync(`public${filePath}`);
       expect(image.readUInt32BE(16), `${slug} width`).toBe(1_280);
       expect(image.readUInt32BE(20), `${slug} height`).toBe(720);
     }
@@ -51,6 +52,23 @@ describe("Organisation thumbnails", () => {
     expect(new Set(thumbnails.map((thumbnail) => thumbnail.slug)).size).toBe(
       thumbnails.length,
     );
+  });
+
+  it("frames the twenty Organisation problem statements as customer quotes", () => {
+    const organisationSlugs = new Set(
+      getAllPublishedContent()
+        .filter((content) => content.surfaces.includes("organisation"))
+        .map((content) => content.slug),
+    );
+
+    for (const thumbnail of thumbnails) {
+      if (organisationSlugs.has(thumbnail.slug)) {
+        expect(thumbnail.quote, thumbnail.slug).toBe(true);
+      }
+    }
+
+    expect(generator).toContain("« ${line}");
+    expect(generator).toContain("${line} »");
   });
 
   it("uses the light Gambetta face and the shared Lucide icon base", () => {

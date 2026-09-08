@@ -54,6 +54,18 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ['127.0.0.1'],
   devIndicators: false,
   distDir: process.env.DEMAA_BUILD_DIST_DIR || '.next',
+  images: {
+    localPatterns: [
+      {
+        pathname: '/**',
+        search: '',
+      },
+      {
+        pathname: '/images/organiser/thumbnails/**',
+        search: '?v=20260908-quotes',
+      },
+    ],
+  },
   // Firebase Admin 14 depends on jwks-rsa 4 (CommonJS) which loads jose 6
   // (ESM). Bundle the chain so Vercel does not execute that edge as a native
   // CommonJS require at runtime.

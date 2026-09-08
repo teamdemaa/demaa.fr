@@ -7,100 +7,106 @@ function Arrow({ direction }: { direction: "right" | "down" | "left" }) {
   return (
     <span
       aria-hidden="true"
-      className="flex items-center justify-center text-dema-forest/55"
+      className="flex shrink-0 items-center justify-center text-dema-forest/45"
     >
       {direction === "right" ? "→" : direction === "left" ? "←" : "↓"}
     </span>
   );
 }
 
+function splitIntoRows(
+  steps: readonly Readonly<{ label: string }>[],
+): readonly (readonly Readonly<{ label: string }>[])[] {
+  const rows: Readonly<{ label: string }>[][] = [];
+
+  for (let index = 0; index < steps.length; index += 3) {
+    rows.push(steps.slice(index, index + 3));
+  }
+
+  return rows;
+}
+
 export default function OrganiserProcessMap({
   steps,
   compact = false,
 }: OrganiserProcessMapProps) {
-  if (steps.length !== 6) return null;
+  if (steps.length < 2 || steps.length > 6) return null;
 
-  const ariaLabel = `Processus en six étapes : ${steps.map((step) => step.label).join(", ")}.`;
-
-  if (compact) {
-    const compactCardClassName =
-      "flex h-full min-h-0 items-center justify-center rounded-[0.45rem] border border-[#C7D4CB] bg-white px-1.5 text-center text-[0.58rem] font-medium leading-[1.15] text-[#2D3B33] sm:px-2 sm:text-[0.67rem]";
-
-    return (
-      <div
-        className="flex h-full items-center rounded-[1.25rem] bg-[#F0F4F1] p-3 sm:p-4"
-        role="img"
-        aria-label={ariaLabel}
-      >
-        <div
-          className="grid aspect-[3.3/1] w-full grid-cols-[minmax(0,1fr)_0.75rem_minmax(0,1fr)_0.75rem_minmax(0,1fr)] grid-rows-[minmax(0,1fr)_0.75rem_minmax(0,1fr)] items-stretch gap-x-0 gap-y-1 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)]"
-          aria-hidden="true"
-        >
-          <div className={compactCardClassName}>{steps[0].label}</div>
-          <Arrow direction="right" />
-          <div className={compactCardClassName}>{steps[1].label}</div>
-          <Arrow direction="right" />
-          <div className={compactCardClassName}>{steps[2].label}</div>
-
-          <div />
-          <div />
-          <div />
-          <div />
-          <Arrow direction="down" />
-
-          <div className={compactCardClassName}>{steps[5].label}</div>
-          <Arrow direction="left" />
-          <div className={compactCardClassName}>{steps[4].label}</div>
-          <Arrow direction="left" />
-          <div className={compactCardClassName}>{steps[3].label}</div>
-        </div>
-      </div>
-    );
-  }
-
-  const cardClassName =
-    "flex min-h-[6.1rem] items-center justify-center rounded-[1rem] border border-[#C7D4CB] bg-white px-4 text-center text-sm font-medium leading-snug text-[#2D3B33] sm:min-h-[7rem] sm:text-base";
+  const rows = splitIntoRows(steps);
+  const ariaLabel = `Processus en ${steps.length} étapes : ${steps.map((step) => step.label).join(", ")}.`;
+  const cardClassName = compact
+    ? "flex min-h-10 flex-1 items-center justify-center rounded-[0.55rem] border border-[#C7D4CB] bg-white px-2 text-center text-[0.62rem] font-medium leading-[1.2] text-[#2D3B33] sm:min-h-12 sm:text-[0.7rem]"
+    : "flex min-h-[5.5rem] flex-1 items-center justify-center rounded-[0.9rem] border border-[#C7D4CB] bg-white px-3 text-center text-sm font-medium leading-snug text-[#2D3B33] sm:min-h-[6.25rem] sm:px-4 sm:text-[0.95rem]";
 
   return (
     <div
-      className="rounded-[1.5rem] bg-[#F0F4F1] p-4 sm:p-6"
+      className={compact
+        ? "flex h-full items-center rounded-[1.25rem] bg-[#F0F4F1] p-3 sm:p-4"
+        : "rounded-[1.35rem] bg-[#F0F4F1] p-4 sm:p-5"
+      }
       role="img"
       aria-label={ariaLabel}
     >
-      <div className="space-y-2 sm:hidden" aria-hidden="true">
+      <div className="w-full space-y-1.5 sm:hidden" aria-hidden="true">
         {steps.map((step, index) => (
-          <div key={step.label}>
+          <div key={`${index}-${step.label}`}>
             <div className={cardClassName}>{step.label}</div>
             {index < steps.length - 1 ? (
-              <div className="h-6 text-lg"><Arrow direction="down" /></div>
+              <div className={compact ? "h-4 text-sm" : "h-5 text-base"}>
+                <Arrow direction="down" />
+              </div>
             ) : null}
           </div>
         ))}
       </div>
 
       <div
-        className="hidden grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-x-3 gap-y-3 sm:grid"
+        className={compact ? "hidden w-full space-y-1 sm:block" : "hidden w-full space-y-2 sm:block"}
         aria-hidden="true"
       >
-        <div className={cardClassName}>{steps[0].label}</div>
-        <Arrow direction="right" />
-        <div className={cardClassName}>{steps[1].label}</div>
-        <Arrow direction="right" />
-        <div className={cardClassName}>{steps[2].label}</div>
+        {rows.map((row, rowIndex) => {
+          const movesLeft = rowIndex % 2 === 1;
+          const visibleSteps = movesLeft ? [...row].reverse() : row;
 
-        <div />
-        <div />
-        <div />
-        <div />
-        <div className="h-8 text-xl">
-          <Arrow direction="down" />
-        </div>
+          return (
+            <div key={rowIndex}>
+              <div className={compact ? "flex items-stretch gap-1" : "flex items-stretch gap-2.5"}>
+                {movesLeft && visibleSteps.length < 3 ? (
+                  <>
+                    <div className="flex-1" />
+                    <div className={compact ? "w-3" : "w-5"} />
+                  </>
+                ) : null}
+                {visibleSteps.map((step, stepIndex) => (
+                  <div key={`${stepIndex}-${step.label}`} className="contents">
+                    <div className={cardClassName}>{step.label}</div>
+                    {stepIndex < visibleSteps.length - 1 ? (
+                      <div className={compact ? "w-3 text-xs" : "w-5 text-lg"}>
+                        <Arrow direction={movesLeft ? "left" : "right"} />
+                      </div>
+                    ) : null}
+                  </div>
+                ))}
+                {!movesLeft && visibleSteps.length < 3 ? (
+                  <>
+                    <div className={compact ? "w-3" : "w-5"} />
+                    <div className="flex-1" />
+                  </>
+                ) : null}
+              </div>
 
-        <div className={cardClassName}>{steps[5].label}</div>
-        <Arrow direction="left" />
-        <div className={cardClassName}>{steps[4].label}</div>
-        <Arrow direction="left" />
-        <div className={cardClassName}>{steps[3].label}</div>
+              {rowIndex < rows.length - 1 ? (
+                <div
+                  className={`${compact ? "h-4 text-sm" : "h-6 text-lg"} flex ${movesLeft ? "justify-start" : "justify-end"}`}
+                >
+                  <div className={visibleSteps.length === 3 ? "w-[31%]" : "w-[48%]"}>
+                    <Arrow direction="down" />
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

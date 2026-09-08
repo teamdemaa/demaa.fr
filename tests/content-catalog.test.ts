@@ -89,6 +89,9 @@ describe("canonical content catalog", () => {
       expect(entry.article[0]?.paragraphs, entry.slug).toHaveLength(2);
       expect(entry.article[1]?.paragraphs, entry.slug).toHaveLength(2);
       expect(entry.article[2]?.items, entry.slug).toHaveLength(6);
+      expect(entry.article[2]?.process?.length, entry.slug).toBeGreaterThanOrEqual(5);
+      expect(entry.article[2]?.process?.length, entry.slug).toBeLessThanOrEqual(6);
+      expect(entry.article[2]?.process?.every((step) => step.length <= 42), entry.slug).toBe(true);
       expect(entry.article[3]?.paragraphs, entry.slug).toHaveLength(2);
       expect(entry.article[3]?.paragraphs?.[0], entry.slug).toContain(
         "Copiez ce prompt",
@@ -104,10 +107,28 @@ describe("canonical content catalog", () => {
     expect(contentPage).toContain("<CaseVideoOverview");
     expect(contentPage).toContain("items={entry.article.map((section) => section.heading)}");
     expect(contentPage).toContain("<NumberedSectionHeading");
+    expect(contentPage).toContain("<OrganiserProcessMap");
+    expect(contentPage).toContain("Le processus une fois en place");
+    expect(contentPage).toContain("Pour le mettre en place");
     expect(contentPage).toContain("Le modèle prêt à copier");
     expect(contentPage).toContain("Utiliser ce modèle");
     expect(contentPage).toContain("?from=organisation");
     expect(contentPage).toContain('<MentoratAutomationCta contentSlug={entry.slug} variant="organisation" />');
+  });
+
+  it("uses concrete, subject-specific milestones for employee onboarding", () => {
+    const entry = getPublishedContentBySlug("structurer-integration-salarie");
+
+    expect(entry?.article[2]?.process).toEqual([
+      "Avant l’arrivée : tout est prêt",
+      "Jour 1 : les repères",
+      "Semaine 1 : tâches accompagnées",
+      "Semaines 2–4 : pratique réelle",
+      "Fin du mois : autonomie vérifiée",
+    ]);
+    expect(entry?.article[2]?.process?.join(" ")).not.toMatch(
+      /résultat attendu|compétences décomposées|parcours planifié/i,
+    );
   });
 
   it("keeps the legacy library until a complete first transverse series is published", () => {

@@ -19,6 +19,7 @@ export type ContentArticleSection = Readonly<{
   heading: string;
   paragraphs?: readonly string[];
   items?: readonly string[];
+  process?: readonly string[];
 }>;
 
 export type ContentCatalogEntry = Readonly<{
@@ -59,9 +60,161 @@ type OrganisationContentInput = Readonly<{
   withChatGpt: readonly string[];
 }>;
 
+const ORGANISATION_TARGET_PROCESSES: Readonly<Record<string, readonly string[]>> = {
+  "preparer-devis-propositions-commerciales": [
+    "Demande complète",
+    "Tarif choisi",
+    "Devis préparé",
+    "Points sensibles validés",
+    "Devis envoyé",
+    "Suivi planifié",
+  ],
+  "construire-grille-tarifaire-claire": [
+    "Besoin client défini",
+    "Prestation sélectionnée",
+    "Options ajoutées",
+    "Remise vérifiée",
+    "Tarif validé",
+  ],
+  "relancer-devis-propositions": [
+    "Devis envoyé",
+    "Relance datée",
+    "Message personnalisé",
+    "Réponse enregistrée",
+    "Nouvelle relance ou clôture",
+  ],
+  "facturer-suivre-reglements": [
+    "Travail validé",
+    "Pièces réunies",
+    "Facture contrôlée",
+    "Facture envoyée",
+    "Règlement suivi",
+  ],
+  "gerer-les-urgences-sans-subir": [
+    "Demande enregistrée",
+    "Urgence qualifiée",
+    "Responsable désigné",
+    "Action engagée",
+    "Demande clôturée",
+  ],
+  "rassembler-les-taches-dispersees": [
+    "Tâches rassemblées",
+    "Priorités posées",
+    "Responsables nommés",
+    "Avancement visible",
+    "Tâches terminées",
+  ],
+  "transformer-reunions-en-actions": [
+    "Sujet préparé",
+    "Décision prise",
+    "Action attribuée",
+    "Échéance fixée",
+    "Suivi effectué",
+  ],
+  "rendre-equipe-autonome-decisions": [
+    "Demande identifiée",
+    "Règle vérifiée",
+    "Décision prise",
+    "Exception remontée",
+    "Règle améliorée",
+  ],
+  "retrouver-informations-documents": [
+    "Document créé",
+    "Nom clair",
+    "Bon emplacement",
+    "Accès partagé",
+    "Version mise à jour",
+  ],
+  "automatiser-reporting-recurrent": [
+    "Sources mises à jour",
+    "Données réunies",
+    "Anomalies signalées",
+    "Synthèse préparée",
+    "Validation humaine",
+    "Reporting envoyé",
+  ],
+  "organiser-relances-equipe": [
+    "Engagement enregistré",
+    "Échéance visible",
+    "Rappel envoyé",
+    "Blocage signalé",
+    "Action terminée",
+  ],
+  "suivre-avancement-dossiers": [
+    "Dossier créé",
+    "Étape en cours",
+    "Responsable visible",
+    "Blocage traité",
+    "Dossier clôturé",
+  ],
+  "suivre-demandes-clients": [
+    "Demande reçue",
+    "Besoin qualifié",
+    "Responsable attribué",
+    "Réponse préparée",
+    "Client informé",
+    "Demande clôturée",
+  ],
+  "creer-methode-travail-commune": [
+    "Tâche lancée",
+    "Informations réunies",
+    "Étapes communes suivies",
+    "Contrôle effectué",
+    "Résultat obtenu",
+  ],
+  "organiser-entreprise-sans-dirigeant": [
+    "Demande courante reçue",
+    "Règle consultée",
+    "Responsable décide",
+    "Travail poursuivi",
+    "Exception remontée",
+  ],
+  "organiser-planning-equipe-imprevus": [
+    "Travail à planifier",
+    "Contraintes vérifiées",
+    "Équipe affectée",
+    "Planning confirmé",
+    "Imprévu replanifié",
+  ],
+  "supprimer-doubles-saisies": [
+    "Information saisie",
+    "Source vérifiée",
+    "Transfert automatique",
+    "Erreur signalée",
+    "Donnée disponible",
+  ],
+  "documenter-savoir-faire-equipe": [
+    "Tâche réalisée",
+    "Décisions capturées",
+    "Fiche courte publiée",
+    "Fiche testée",
+    "Fiche mise à jour",
+  ],
+  "construire-tableau-de-bord-utile": [
+    "Données mises à jour",
+    "Indicateurs calculés",
+    "Écart détecté",
+    "Responsable alerté",
+    "Action suivie",
+  ],
+  "structurer-integration-salarie": [
+    "Avant l’arrivée : tout est prêt",
+    "Jour 1 : les repères",
+    "Semaine 1 : tâches accompagnées",
+    "Semaines 2–4 : pratique réelle",
+    "Fin du mois : autonomie vérifiée",
+  ],
+};
+
 function defineOrganisationContent(
   input: OrganisationContentInput,
 ): ContentCatalogEntry {
+  const targetProcess = ORGANISATION_TARGET_PROCESSES[input.slug];
+
+  if (!targetProcess) {
+    throw new Error(`Processus cible manquant pour le contenu Organisation : ${input.slug}`);
+  }
+
   return {
     slug: input.slug,
     title: input.title,
@@ -72,8 +225,8 @@ function defineOrganisationContent(
     tags: input.tags,
     status: "published",
     publishedAt: "2026-09-02",
-    updatedAt: "2026-09-02",
-    verifiedAt: "2026-09-02",
+    updatedAt: "2026-09-08",
+    verifiedAt: "2026-09-08",
     relatedSystemSlugs: [],
     academyFundamentalSlugs: [],
     media: {},
@@ -90,6 +243,7 @@ function defineOrganisationContent(
       {
         heading: "La méthode, étape par étape",
         items: input.steps,
+        process: targetProcess,
       },
       {
         heading: "Construire le système avec ChatGPT",

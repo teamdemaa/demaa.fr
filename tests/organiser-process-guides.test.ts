@@ -56,7 +56,7 @@ describe("Organiser process guides", () => {
       expect(content.processGuide?.faqs).toHaveLength(3);
       expect(content.identity.title).toMatch(/^(Comment|Quel|À partir|Faut-il)/);
       expect(content.identity.card.image).toBe(
-        `/images/organiser/thumbnails/${content.identity.slug}.png`,
+        `/images/organiser/thumbnails/${content.identity.slug}.png?v=20260908-quotes`,
       );
       expect(`${content.identity.shortTitle} | Organisation Demaa`.length)
         .toBeLessThanOrEqual(60);
@@ -176,11 +176,10 @@ describe("Organiser process guides", () => {
     expect(indexSource).not.toContain(
       '? "border border-[#E1E8E3] bg-[#FBFCFA] p-2"',
     );
-    expect(processMapSource).toContain("if (compact)");
-    expect(processMapSource).toContain(
-      "grid aspect-[3.3/1] w-full grid-cols-[minmax(0,1fr)_0.75rem_minmax(0,1fr)_0.75rem_minmax(0,1fr)]",
-    );
-    expect(processMapSource).toContain('className="space-y-2 sm:hidden"');
+    expect(processMapSource).toContain("compact = false");
+    expect(processMapSource).toContain("splitIntoRows");
+    expect(processMapSource).toContain("steps.length < 2 || steps.length > 6");
+    expect(processMapSource).toContain('className="w-full space-y-1.5 sm:hidden"');
   });
 
   it("keeps the plumbing pilot wording and process locked", () => {

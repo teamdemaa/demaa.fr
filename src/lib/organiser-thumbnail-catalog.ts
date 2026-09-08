@@ -10,6 +10,8 @@ export const ORGANISER_THUMBNAIL_SIZE = {
   width: 1280,
 } as const;
 
+export const ORGANISER_THUMBNAIL_VERSION = "20260908-quotes";
+
 export type OrganiserThumbnailIllustration =
   | "accounting-requests"
   | "agency-mission"
@@ -48,6 +50,7 @@ export type OrganiserThumbnailDefinition = Readonly<{
   fontSize: number;
   illustration: OrganiserThumbnailIllustration;
   lines: readonly [string, string?, string?];
+  quote?: boolean;
   secondary?: string;
   slug: string;
 }>;
@@ -57,120 +60,140 @@ const ORGANISER_THUMBNAILS: readonly OrganiserThumbnailDefinition[] = [
     slug: "preparer-devis-propositions-commerciales",
     lines: ["Mes devis prennent", "trop de temps"],
     illustration: "renovation-quotes",
+    quote: true,
     fontSize: 82,
   },
   {
     slug: "construire-grille-tarifaire-claire",
     lines: ["Quel tarif", "appliquer ?"],
     illustration: "useful-dashboard",
+    quote: true,
     fontSize: 92,
   },
   {
     slug: "relancer-devis-propositions",
     lines: ["Mes devis restent", "sans réponse"],
     illustration: "team-followup",
+    quote: true,
     fontSize: 84,
   },
   {
     slug: "facturer-suivre-reglements",
     lines: ["Je facture", "trop tard"],
     illustration: "work-order-to-invoice",
+    quote: true,
     fontSize: 94,
   },
   {
     slug: "gerer-les-urgences-sans-subir",
     lines: ["Toujours dans", "l’urgence ?"],
     illustration: "urgent-workflow",
+    quote: true,
     fontSize: 94,
   },
   {
     slug: "rassembler-les-taches-dispersees",
     lines: ["Mes tâches sont", "partout"],
     illustration: "task-consolidation",
+    quote: true,
     fontSize: 88,
   },
   {
     slug: "transformer-reunions-en-actions",
     lines: ["Et maintenant,", "qui fait quoi ?"],
     illustration: "meeting-decisions",
+    quote: true,
     fontSize: 82,
   },
   {
     slug: "rendre-equipe-autonome-decisions",
     lines: ["Tout remonte", "jusqu’à moi"],
     illustration: "team-autonomy",
+    quote: true,
     fontSize: 88,
   },
   {
     slug: "retrouver-informations-documents",
     lines: ["Où est encore", "ce document ?"],
     illustration: "document-search",
+    quote: true,
     fontSize: 84,
   },
   {
     slug: "automatiser-reporting-recurrent",
     lines: ["Encore le même", "reporting"],
     illustration: "recurring-reporting",
+    quote: true,
     fontSize: 88,
   },
   {
     slug: "organiser-relances-equipe",
     lines: ["Je dois relancer", "tout le monde"],
     illustration: "team-followup",
+    quote: true,
     fontSize: 84,
   },
   {
     slug: "suivre-avancement-dossiers",
     lines: ["Où en sont", "les dossiers ?"],
     illustration: "dossier-progress",
+    quote: true,
     fontSize: 90,
   },
   {
     slug: "suivre-demandes-clients",
     lines: ["Les demandes clients", "se perdent"],
     illustration: "client-request",
+    quote: true,
     fontSize: 78,
   },
   {
     slug: "creer-methode-travail-commune",
     lines: ["Chacun travaille", "à sa façon"],
     illustration: "shared-method",
+    quote: true,
     fontSize: 82,
   },
   {
     slug: "organiser-entreprise-sans-dirigeant",
     lines: ["Sans moi,", "tout s’arrête"],
     illustration: "business-continuity",
+    quote: true,
     fontSize: 92,
   },
   {
     slug: "organiser-planning-equipe-imprevus",
     lines: ["Le planning change", "tout le temps"],
     illustration: "resilient-planning",
+    quote: true,
     fontSize: 78,
   },
   {
     slug: "supprimer-doubles-saisies",
     lines: ["On saisit trois fois", "la même chose"],
     illustration: "duplicate-entry",
+    quote: true,
     fontSize: 76,
   },
   {
     slug: "documenter-savoir-faire-equipe",
     lines: ["Le savoir reste", "dans les têtes"],
     illustration: "knowledge-transfer",
+    quote: true,
     fontSize: 82,
   },
   {
     slug: "construire-tableau-de-bord-utile",
     lines: ["Je découvre les", "problèmes trop tard"],
     illustration: "useful-dashboard",
+    quote: true,
     fontSize: 76,
   },
   {
     slug: "structurer-integration-salarie",
     lines: ["Les nouveaux mettent", "trop longtemps", "à comprendre"],
     illustration: "employee-onboarding",
+    quote: true,
     fontSize: 70,
   },
   {
@@ -286,6 +309,6 @@ export function getOrganiserThumbnail(slug: string) {
 
 export function getOrganiserThumbnailPath(slug: string) {
   return getOrganiserThumbnail(slug)
-    ? `/images/organiser/thumbnails/${slug}.png`
+    ? `/images/organiser/thumbnails/${slug}.png?v=${ORGANISER_THUMBNAIL_VERSION}`
     : null;
 }
