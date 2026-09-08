@@ -164,7 +164,7 @@ const canonicalServiceDefinitions = deepFreeze([
   },
   {
     slug: "application-metier", name: "Application métier", eyebrow: "Outil de travail sur mesure",
-    detailHref: "/application-metier",
+    detailHref: "/sur-mesure",
     summary: "Centralisez un processus métier dans une application claire lorsque vos outils actuels ne suffisent plus.",
     description: "Nous clarifions le processus, concevons les écrans utiles et construisons une application métier bornée autour du cas d’usage validé.",
     result: "Un espace de travail partagé qui centralise les données, les étapes et les responsabilités utiles.",

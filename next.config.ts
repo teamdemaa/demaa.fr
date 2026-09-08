@@ -136,8 +136,8 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/sur-mesure',
-        destination: '/accompagnement',
+        source: '/application-metier',
+        destination: '/sur-mesure',
         permanent: true,
       },
       {

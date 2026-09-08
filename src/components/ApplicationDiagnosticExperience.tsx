@@ -22,7 +22,7 @@ export function ApplicationDiagnosticProvider({ children }: { children: ReactNod
       <GuestDiagnosticControl
         access={null}
         dialogDescription="Décrivez le processus qui vous ralentit. L’équipe Demaa vous répond pour vérifier si une application métier est adaptée."
-        dialogTitle="Discuter de votre projet"
+        dialogTitle="Discuter de mon projet"
         onClose={closeDiagnostic}
         onOpen={openDiagnostic}
         open={open}
@@ -38,7 +38,7 @@ export function ApplicationDiagnosticProvider({ children }: { children: ReactNod
 
 export function ApplicationDiagnosticButton({
   className,
-  label = "Discuter de votre projet",
+  label = "Discuter de mon projet",
 }: {
   className: string;
   label?: string;

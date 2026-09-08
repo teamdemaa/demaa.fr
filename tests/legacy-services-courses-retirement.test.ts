@@ -9,7 +9,6 @@ const retiredPaths = [
   "src/app/marketing-ethique/page.tsx",
   "src/app/systeme-marketing/page.tsx",
   "src/app/(marketing)/solutions/mentorat-automatisation-ia/page.tsx",
-  "src/app/(marketing)/sur-mesure/page.tsx",
   "src/app/@modal/(.)sur-mesure/page.tsx",
   "src/components/EthicalMarketingLandingPage.tsx",
   "src/components/ServicesMarketplace.tsx",
