@@ -162,7 +162,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(automation?.packages[0]?.pricing.note).not.toContain("tutoriels");
     expect(automation?.packages[0]?.pricing.note).toContain("licences");
     expect(application).toMatchObject({
-      detailHref: "/application-metier",
+      detailHref: "/sur-mesure",
       name: "Application métier",
       pricing: null,
     });
@@ -211,7 +211,7 @@ describe("canonical Accompagnement catalog", () => {
     for (const service of getCanonicalServices().filter(({ delivery }) => delivery === "demaa")) {
       expect(markup).toContain(service.detailHref);
     }
-    expect(markup).toContain("/application-metier");
+    expect(markup).toContain("/sur-mesure");
     expect(markup).not.toContain("Coach business");
     expect(markup).not.toContain("Assistante administrative");
     expect(markup).not.toContain("Recruter un alternant");

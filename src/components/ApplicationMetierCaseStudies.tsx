@@ -14,7 +14,7 @@ export default function ApplicationMetierCaseStudies({
 }) {
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<ApplicationMetierCaseStudy | null>(null);
   const isAutomation = variant === "automation";
-  const actionLabel = isAutomation ? "Voir l’automatisation" : "Voir le fonctionnement";
+  const actionLabel = isAutomation ? "Voir l’automatisation" : "Découvrir le cas concret";
 
   return (
     <>
@@ -24,7 +24,7 @@ export default function ApplicationMetierCaseStudies({
             key={caseStudy.id}
             type="button"
             onClick={() => setSelectedCaseStudy(caseStudy)}
-            className={`group flex min-h-64 flex-col px-5 py-7 text-left transition hover:bg-dema-sage/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dema-forest/30 ${
+            className={`group flex flex-col px-5 py-6 text-left transition hover:bg-dema-sage/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dema-forest/30 ${
               index > 0 ? "border-t border-dema-line md:border-l md:border-t-0" : ""
             }`}
             aria-label={`${actionLabel} pour ${caseStudy.sector}`}
@@ -40,7 +40,7 @@ export default function ApplicationMetierCaseStudies({
                 {caseStudy.results.join(" · ")}
               </span>
             ) : null}
-            <span className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-medium text-dema-forest">
+            <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-dema-forest">
               {actionLabel}
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden="true" />
             </span>

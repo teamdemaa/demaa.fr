@@ -6,52 +6,45 @@ async function readSource(path: string) {
 }
 
 describe("Application métier landing page", () => {
-  it("keeps the retained direct route out of search results", async () => {
-    const [pageSource, catalogSource] = await Promise.all([
+  it("publishes Sur mesure as the canonical route and redirects the retained alias", async () => {
+    const [pageSource, legacyPageSource, catalogSource] = await Promise.all([
+      readSource("src/app/(marketing)/sur-mesure/page.tsx"),
       readSource("src/app/(marketing)/application-metier/page.tsx"),
       readSource("src/lib/canonical-service-catalog.ts"),
     ]);
 
-    expect(pageSource).toContain('path: "/application-metier"');
-    expect(pageSource).toContain("robots: { index: false, follow: false }");
+    expect(pageSource).toContain('path: "/sur-mesure"');
+    expect(pageSource).not.toContain("robots: { index: false, follow: false }");
     expect(pageSource).toContain("buildPublicPageMetadata");
     expect(pageSource).toContain('"@type": "FAQPage"');
     expect(pageSource).toContain("buildServicePageJsonLd(service)");
-    expect(catalogSource).toContain('detailHref: "/application-metier"');
+    expect(pageSource).toContain("<ApplicationMetierLandingPage offer={offer} />");
+    expect(legacyPageSource).toContain('permanentRedirect("/sur-mesure")');
+    expect(catalogSource).toContain('detailHref: "/sur-mesure"');
   });
 
-  it("keeps the approved short promise and section hierarchy", async () => {
-    const [source, diagnosticSource, diagnosticControlSource] = await Promise.all([
+  it("uses the explicit promise, detailed illustrations, and complete section hierarchy", async () => {
+    const [source, content, diagnosticSource, diagnosticControlSource] = await Promise.all([
       readSource("src/components/ApplicationMetierLandingPage.tsx"),
+      readSource("src/lib/sur-mesure-page-content.ts"),
       readSource("src/components/ApplicationDiagnosticExperience.tsx"),
       readSource("src/components/GuestDiagnosticControl.tsx"),
     ]);
 
-    expect(source).toContain("Gagnez du temps");
-    expect(source).toContain("et rendez votre entreprise plus autonome.");
-    expect(source).toContain(
-      'aria-label="Gagnez du temps et rendez votre entreprise plus autonome."',
-    );
-    expect(source).toContain("Qu’est-ce qu’une application métier change dans votre quotidien ?");
-    expect(source).toContain("Moins de tâches chronophages");
-    expect(source).toContain("Tout est centralisé");
-    expect(source).toContain("Chacun sait quoi faire");
-    expect(source).not.toContain(
-      'className="border-b border-dema-line px-5 pb-20 pt-14 text-center',
-    );
-    expect(source).toContain('className="px-5 pb-12 pt-14 text-center');
-    expect(source).toContain('className="px-5 pb-16 pt-10');
-    expect(source).not.toContain("block h-0.5 w-8 rounded-full bg-dema-forest");
-    expect(source).toContain("Comment ça se passe concrètement ?");
-    expect(source).not.toContain("ArrowRight");
-    expect(source).toContain("Des applications construites pour des situations concrètes");
-    expect(source).toContain("Trois projets réalisés autour du fonctionnement réel d’une entreprise.");
-    expect(source).toContain('<span className="block">À partir de</span>');
-    expect(source).toContain('<span className="mt-1 block whitespace-nowrap">4 500 € HT</span>');
+    expect(content).toContain("Nous créons votre logiciel métier sur mesure.");
+    expect(source).toContain("Nous créons votre logiciel métier");
+    expect(source).toContain("sur mesure.");
+    expect(source).not.toContain("eyebrow");
+    expect(source).toContain("logiciel-metier-sur-mesure-v8.png");
+    expect(source).toContain("/images/accompagnement/atelier-organisation-afro.png");
+    expect(source).toContain("Des logiciels construits pour des situations concrètes");
+    expect(source).toContain("step.description");
+    expect(source).not.toContain("content.fit");
+    expect(source).toContain("Ce qui est inclus");
     expect(source).toContain("700 € HT / jour");
-    expect(source).toContain("Questions-réponses");
-    expect(diagnosticSource).toContain('label = "Discuter de votre projet"');
-    expect(diagnosticSource).toContain('dialogTitle="Discuter de votre projet"');
+    expect(source).toContain("Questions fréquentes");
+    expect(diagnosticSource).toContain('label = "Discuter de mon projet"');
+    expect(diagnosticSource).toContain('dialogTitle="Discuter de mon projet"');
     expect(diagnosticSource).toContain("si une application métier est adaptée");
     expect(diagnosticSource).toContain("<ClipboardCheck");
     expect(diagnosticSource).toContain("showCallbackAvailability");
@@ -70,7 +63,7 @@ describe("Application métier landing page", () => {
       readSource("src/lib/application-metier-case-studies.ts"),
     ]);
 
-    expect(source).toContain('className="bg-dema-forest');
+    expect(source).toContain('className="border-y border-dema-line bg-dema-paper');
     expect(source).toContain('className="bg-dema-sage');
     expect(source).toContain("ApplicationMetierCaseStudies");
     expect(source).toContain("APPLICATION_METIER_CASE_STUDIES");
@@ -95,6 +88,9 @@ describe("Application métier landing page", () => {
     expect(component).toContain("Le problème de départ");
     expect(component).toContain("L’application construite");
     expect(component).toContain("Le flux de travail");
+    expect(component).toContain("Découvrir le cas concret");
+    expect(component).not.toContain("CaseStudyPreview");
+    expect(cases).not.toContain("preview:");
     expect(component).not.toContain("Projet réalisé");
     expect(component).not.toContain("next/image");
   });
