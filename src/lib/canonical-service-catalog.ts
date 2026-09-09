@@ -175,7 +175,7 @@ const canonicalServiceDefinitions = deepFreeze([
         slug: "application-metier-essentielle",
         name: "Application métier",
         summary: "Un premier périmètre clairement cadré autour du processus réellement utilisé par votre équipe.",
-        pricing: { mode: "starting", amountMinor: 450000, currency: "EUR", heading: "Forfait", label: "À partir de 4 500 € HT", note: "Budget établi sur une base de 700 € HT par jour. Le périmètre, le nombre de jours et le prix total sont confirmés dans un devis avant le démarrage. Aucun dépassement sans validation." },
+        pricing: { mode: "starting", amountMinor: 450000, currency: "EUR", heading: "Forfait", label: "À partir de 4 500 € HT", note: "" },
         included: ["Cadrage du processus et des critères d’acceptation", "Conception des écrans et de la base de données utiles", "Développement et tests du périmètre validé", "Mise en ligne, formation et documentation"],
       },
     ],

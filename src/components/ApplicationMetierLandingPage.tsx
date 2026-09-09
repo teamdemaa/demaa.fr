@@ -204,7 +204,9 @@ export default function ApplicationMetierLandingPage({
                   </li>
                 ))}
               </ul>
-              <p className="mt-5 text-xs leading-5 text-dema-muted">{offer.pricing.note}</p>
+              {offer.pricing.note ? (
+                <p className="mt-5 text-xs leading-5 text-dema-muted">{offer.pricing.note}</p>
+              ) : null}
             </div>
           </div>
         </section>

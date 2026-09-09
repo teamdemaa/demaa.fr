@@ -175,7 +175,7 @@ describe("canonical Accompagnement catalog", () => {
         label: "À partir de 4 500 € HT",
       },
     });
-    expect(application?.packages[0]?.pricing.note).toContain("700 € HT par jour");
+    expect(application?.packages[0]?.pricing.note).toBe("");
   });
 
   it("retains the hidden accounting price only in the historical record", () => {

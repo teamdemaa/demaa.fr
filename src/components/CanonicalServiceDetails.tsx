@@ -78,9 +78,11 @@ function ServicePricingAndCta({
           <p className="mt-3 text-base font-normal text-dema-muted">
             {singlePackage.pricing.label}
           </p>
-          <p className="mt-3 text-sm leading-relaxed text-dema-muted">
-            {singlePackage.pricing.note}
-          </p>
+          {singlePackage.pricing.note ? (
+            <p className="mt-3 text-sm leading-relaxed text-dema-muted">
+              {singlePackage.pricing.note}
+            </p>
+          ) : null}
         </>
       ) : (
         <>
