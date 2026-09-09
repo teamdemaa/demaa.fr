@@ -20,15 +20,15 @@ const navigationItems = {
 } as const;
 
 const publicNavigationOrder: readonly ActionPlanView[] = [
-  "academy",
-  "solutions",
   "services",
+  "solutions",
+  "academy",
 ];
 
 const embeddedNavigationOrder: readonly ActionPlanView[] = [
-  "academy",
-  "solutions",
   "services",
+  "solutions",
+  "academy",
 ];
 
 export default function ActionPlanNavbar({
