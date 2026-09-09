@@ -66,7 +66,11 @@ describe("academy course content", () => {
       if (item.identity.card.image) {
         expect(
           existsSync(
-            resolve(process.cwd(), "public", item.identity.card.image.replace(/^\//, "")),
+            resolve(
+              process.cwd(),
+              "public",
+              new URL(item.identity.card.image, "https://demaa.fr").pathname.replace(/^\//, ""),
+            ),
           ),
         ).toBe(true);
       } else {
