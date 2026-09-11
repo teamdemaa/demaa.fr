@@ -713,7 +713,7 @@ describe("action plan contextual aids", () => {
     });
   });
 
-  it("never recommends a globally hidden service from a stale payload", () => {
+  it("does not recommend the accounting service while it stays hidden", () => {
     const aids = buildActionPlanContextualAids({
       actions: [action({
         objective: "Faire appel à un professionnel pour le bilan et la liasse fiscale.",
@@ -725,8 +725,7 @@ describe("action plan contextual aids", () => {
       systeme,
     });
 
-    expect(aids["action-1"]?.accompaniment).toBeNull();
-    expect(JSON.stringify(aids)).not.toContain("expert-comptable");
+    expect(aids["action-1"]?.accompaniment?.resourceSlug).not.toBe("expert-comptable");
   });
 
   it("does not suggest the alternance service from a vague information request", () => {

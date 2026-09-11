@@ -4,9 +4,7 @@ export const AUTOMATION_ACCOMPANIMENT_PATH = "/accompagnement";
 
 export const mentoratAutomationContent = {
   hero: {
-    title: "On met en place votre système commercial et client. Pour que tout ne repose plus sur vous.",
     lead: "On met en place votre système commercial et client.",
-    emphasis: "Pour que tout ne repose plus sur vous.",
     description:
       "De la première prise de contact au suivi après la livraison, nous organisons les étapes, les outils et les modèles qui permettent à chacun de savoir quoi faire et à chaque client de savoir où en est son dossier.",
   },

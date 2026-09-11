@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, BriefcaseBusiness, LayoutGrid, ListChecks, Workflow } from "lucide-react";
+import { BookOpen, BriefcaseBusiness, LayoutGrid, ListChecks, UsersRound } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -14,21 +14,21 @@ const tabClassName =
 const navigationItems = {
   plan: { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
   solutions: { view: "solutions", labels: { fr: "Solutions", en: "Solutions" }, Icon: LayoutGrid },
-  services: { view: "services", labels: { fr: "Sur mesure", en: "Custom" }, Icon: Workflow },
+  services: { view: "services", labels: { fr: "Spécialistes", en: "Specialists" }, Icon: UsersRound },
   academy: { view: "academy", labels: { fr: "Organisation", en: "Organization" }, Icon: BookOpen },
   opportunities: { view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness },
 } as const;
 
 const publicNavigationOrder: readonly ActionPlanView[] = [
-  "services",
-  "solutions",
   "academy",
+  "solutions",
+  "services",
 ];
 
 const embeddedNavigationOrder: readonly ActionPlanView[] = [
-  "services",
-  "solutions",
   "academy",
+  "solutions",
+  "services",
 ];
 
 export default function ActionPlanNavbar({
@@ -102,7 +102,7 @@ export default function ActionPlanNavbar({
               ? "/"
               : view === "academy"
                 ? "/organiser"
-                : "/sur-mesure";
+                : "/specialistes";
           const usesPublicRoute = routeNavigation
             || (localeCode === "fr" && (view === "solutions" || view === "academy" || view === "services"));
 

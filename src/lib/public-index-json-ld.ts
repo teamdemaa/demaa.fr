@@ -58,7 +58,7 @@ export function buildPublicIndexJsonLd(input: {
           "@type": "ListItem",
           position: 1,
           name: "Accueil",
-          item: `${origin}/solutions`,
+          item: origin,
         },
         {
           "@type": "ListItem",

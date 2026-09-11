@@ -139,7 +139,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/services',
-        destination: '/accompagnement',
+        destination: '/specialistes',
         permanent: true,
       },
       {
@@ -198,12 +198,12 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/annuaire-services/expert-comptable',
+        source: '/services/expert-comptable',
         destination: '/annuaire-experts-comptables',
         permanent: true,
       },
       {
-        source: '/services/expert-comptable',
+        source: '/annuaire-services/expert-comptable',
         destination: '/annuaire-experts-comptables',
         permanent: true,
       },

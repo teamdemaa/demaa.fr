@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { Check, ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft, Check, ChevronDown } from "lucide-react";
 import {
   ApplicationDiagnosticButton,
   ApplicationDiagnosticProvider,
@@ -52,6 +53,13 @@ export default function ApplicationMetierLandingPage({
         <section className="border-b border-dema-line px-5 py-12 text-center sm:px-8 sm:py-16 lg:py-20">
           <div className="mx-auto max-w-5xl">
             <div>
+              <Link
+                href="/specialistes"
+                className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
+              >
+                <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                Retour aux spécialistes
+              </Link>
               <h1
                 aria-label={content.hero.title}
                 className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}

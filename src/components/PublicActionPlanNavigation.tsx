@@ -1,12 +1,12 @@
-import { LayoutGrid, ListTree, Workflow } from "lucide-react";
+import { LayoutGrid, ListTree, UsersRound } from "lucide-react";
 import Link from "next/link";
 
 export type PublicActionPlanView = "solutions" | "academy" | "services";
 
 const navigationItems = [
-  { view: "services", label: "Sur mesure", href: "/sur-mesure", Icon: Workflow },
-  { view: "solutions", label: "Solutions", href: "/solutions", Icon: LayoutGrid },
   { view: "academy", label: "Organisation", href: "/organiser", Icon: ListTree },
+  { view: "solutions", label: "Solutions", href: "/solutions", Icon: LayoutGrid },
+  { view: "services", label: "Spécialistes", href: "/specialistes", Icon: UsersRound },
 ] as const;
 
 const tabClassName =

@@ -37,8 +37,10 @@ export async function POST(request: Request) {
   if (parsed.data.website?.trim()) {
     return NextResponse.json({ ok: true }, { status: 202, headers: noStoreHeaders() });
   }
-  if (!parsed.data.message?.trim()) {
-    return NextResponse.json({ error: "Décrivez brièvement comment nous pouvons vous aider." }, {
+  const firstName = parsed.data.firstName?.trim() || null;
+  const lastName = parsed.data.lastName?.trim() || null;
+  if (!parsed.data.message?.trim() && !(firstName && lastName)) {
+    return NextResponse.json({ error: "Indiquez votre nom ou décrivez brièvement comment nous pouvons vous aider." }, {
       status: 400,
       headers: noStoreHeaders(),
     });
@@ -70,8 +72,10 @@ export async function POST(request: Request) {
       attribution: parsed.data.attribution,
       callbackAvailability: parsed.data.callbackAvailability?.trim() || null,
       email,
+      firstName,
       idempotencyKey: parsed.data.idempotencyKey,
-      message: parsed.data.message.trim(),
+      lastName,
+      message: parsed.data.message?.trim() || null,
       phone,
       plan: null,
       request,

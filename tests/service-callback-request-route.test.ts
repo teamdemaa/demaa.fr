@@ -64,7 +64,7 @@ describe("service callback request route", () => {
     mocks.resolveLeadContext.mockResolvedValue({
       sectorLabel: null,
       sectorSlug: null,
-      source: "Services - Assistante administrative",
+      source: "Services - Assistant digital",
       sourceUrl: "https://demaa.co/services/assistance-administrative",
       systemName: null,
       systemSlug: null,
@@ -177,11 +177,11 @@ describe("service callback request route", () => {
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: [
-        { label: "Service", value: "Mise en place d’un système commercial et client" },
+        { label: "Service", value: "Système commercial et client" },
         { label: "Slug du service", value: "automatisation-processus" },
         { label: "Forfait", value: "Maestro" },
         { label: "Slug du forfait", value: "automatisation-essentielle" },
-        { label: "Prix de référence", value: "5 000 € HT" },
+        { label: "Prix de référence", value: "3 500 € HT" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
         { label: "Locale", value: "fr" },
         { label: "Marché", value: "fr-fr" },
@@ -203,13 +203,13 @@ describe("service callback request route", () => {
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: expect.arrayContaining([
-        { label: "Service", value: "Application métier" },
+        { label: "Service", value: "Logiciel métier sur mesure" },
         { label: "Forfait", value: "Application métier" },
         { label: "Slug du forfait", value: "application-metier-essentielle" },
         { label: "Prix de référence", value: "À partir de 4 500 € HT" },
         { label: "Page source", value: "/application-metier?source=solutions-systeme" },
       ]),
-      title: "Demande de contact WhatsApp - Application métier - Application métier",
+      title: "Demande de contact WhatsApp - Logiciel métier sur mesure - Application métier",
     }));
   });
 
@@ -236,7 +236,7 @@ describe("service callback request route", () => {
         phone: "+33 6 12 34 56 78",
       },
       fields: expect.arrayContaining([
-        { label: "Service", value: "Assistante administrative" },
+        { label: "Service", value: "Assistant digital" },
         { label: "Slug du service", value: "assistance-administrative" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
         { label: "Locale", value: "fr" },
@@ -251,7 +251,6 @@ describe("service callback request route", () => {
   it.each([
     "formalites-juridiques",
     "sous-traitance-formalites-juridiques",
-    "expert-comptable",
   ])("rejects a direct public callback for private recommendation %s", async (serviceSlug) => {
     const response = await POST(request(validBody({ serviceSlug })));
 
@@ -259,13 +258,13 @@ describe("service callback request route", () => {
     expect(mocks.submitLeadRequest).not.toHaveBeenCalled();
   });
 
-  it("accepts a callback request for the public administrative assistant", async () => {
+  it("accepts a callback request for the public digital assistant", async () => {
     const response = await POST(request(validBody({ serviceSlug: "assistance-administrative" })));
 
     expect(response.status).toBe(202);
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       fields: expect.arrayContaining([
-        { label: "Service", value: "Assistante administrative" },
+        { label: "Service", value: "Assistant digital" },
         { label: "Slug du service", value: "assistance-administrative" },
       ]),
     }));
@@ -301,7 +300,7 @@ describe("service callback request route", () => {
 
     expect(response.status).toBe(202);
     expect(mocks.resolveLeadContext).toHaveBeenCalledWith({
-      source: "Solutions - Assistante administrative",
+      source: "Solutions - Assistant digital",
       sourceUrl: "https://demaa.co/services/assistance-administrative",
       systemSlug: "cabinet-comptable",
     });

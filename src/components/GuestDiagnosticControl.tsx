@@ -16,22 +16,26 @@ type Status = "idle" | "sending" | "success" | "error";
 
 export default function GuestDiagnosticControl({
   access,
+  collectName = false,
   dialogDescription = "L’équipe Demaa analyse votre situation et vous propose des pistes concrètes pour améliorer votre organisation.",
   dialogTitle = "Demander un diagnostic de mon organisation",
   onClose,
   onOpen,
   open,
+  questionLabel = "Qu’est-ce qui vous prend trop de temps aujourd’hui ?",
   requirePhone = false,
   showCallbackAvailability = false,
   showNavbarTrigger = true,
   situation,
 }: {
   access: GuestAccess | null;
+  collectName?: boolean;
   dialogDescription?: string;
   dialogTitle?: string;
   onClose: () => void;
   onOpen: () => void;
   open: boolean;
+  questionLabel?: string;
   requirePhone?: boolean;
   showCallbackAvailability?: boolean;
   showNavbarTrigger?: boolean;
@@ -71,8 +75,10 @@ export default function GuestDiagnosticControl({
         contactConsent: form.get("contactConsent") === "on",
         email: form.get("email"),
         idempotencyKey,
-        message: form.get("message"),
         phone: form.get("phone"),
+        ...(collectName
+          ? { firstName: form.get("firstName"), lastName: form.get("lastName") }
+          : { message: form.get("message") }),
         ...(typeof callbackAvailability === "string"
           ? { callbackAvailability }
           : {}),
@@ -157,17 +163,43 @@ export default function GuestDiagnosticControl({
                   </p>
                 ) : (
                   <form onSubmit={requestDiagnostic} className="mt-6 space-y-3">
-                    <label className="block text-sm text-brand-blue">
-                      Qu’est-ce qui vous prend trop de temps aujourd’hui ?
-                      <textarea
-                        data-dialog-initial-focus
-                        name="message"
-                        rows={3}
-                        maxLength={2_000}
-                        required={!access}
-                        className="demaa-textarea mt-2"
-                      />
-                    </label>
+                    {collectName ? (
+                      <div className="grid grid-cols-2 gap-3">
+                        <label className="block text-sm text-brand-blue">
+                          Prénom
+                          <input
+                            data-dialog-initial-focus
+                            name="firstName"
+                            type="text"
+                            required
+                            autoComplete="given-name"
+                            className="demaa-input mt-2"
+                          />
+                        </label>
+                        <label className="block text-sm text-brand-blue">
+                          Nom
+                          <input
+                            name="lastName"
+                            type="text"
+                            required
+                            autoComplete="family-name"
+                            className="demaa-input mt-2"
+                          />
+                        </label>
+                      </div>
+                    ) : (
+                      <label className="block text-sm text-brand-blue">
+                        {questionLabel}
+                        <textarea
+                          data-dialog-initial-focus
+                          name="message"
+                          rows={3}
+                          maxLength={2_000}
+                          required={!access}
+                          className="demaa-textarea mt-2"
+                        />
+                      </label>
+                    )}
                     <label className="block text-sm text-brand-blue">
                       Adresse e-mail
                       <input

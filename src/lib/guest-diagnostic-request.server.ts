@@ -41,8 +41,10 @@ function planFields(plan: StoredGuestActionPlan) {
 async function reserveIdempotency(input: {
   callbackAvailability: string | null;
   email: string;
+  firstName: string | null;
   generationId: string | null;
   idempotencyKey: string;
+  lastName: string | null;
   message: string | null;
   phone: string | null;
   situation: string | null;
@@ -55,7 +57,9 @@ async function reserveIdempotency(input: {
   const requestFingerprint = hash(JSON.stringify({
     callbackAvailability: input.callbackAvailability,
     email: input.email.toLowerCase(),
+    firstName: input.firstName,
     generationId: input.generationId,
+    lastName: input.lastName,
     message: input.message,
     phone: input.phone,
     situation: input.situation,
@@ -87,7 +91,9 @@ export async function submitGuestDiagnosticRequest(input: {
   attribution: unknown;
   callbackAvailability?: string | null;
   email: string;
+  firstName?: string | null;
   idempotencyKey: string;
+  lastName?: string | null;
   message: string | null;
   phone: string | null;
   plan?: StoredGuestActionPlan | null;
@@ -96,11 +102,15 @@ export async function submitGuestDiagnosticRequest(input: {
 }) {
   const situation = input.situation?.trim() || null;
   const callbackAvailability = input.callbackAvailability?.trim() || null;
+  const firstName = input.firstName?.trim() || null;
+  const lastName = input.lastName?.trim() || null;
   const reservation = await reserveIdempotency({
     callbackAvailability,
     email: input.email,
+    firstName,
     generationId: input.plan?.id ?? null,
     idempotencyKey: input.idempotencyKey,
+    lastName,
     message: input.message,
     phone: input.phone,
     situation,
@@ -117,7 +127,7 @@ export async function submitGuestDiagnosticRequest(input: {
   const lead = await submitLeadRequest({
     attribution: resolveLeadAttribution(input.request, input.attribution),
     channels: { email: true, resend: false, slack: false },
-    contact: { email: input.email, phone: input.phone },
+    contact: { email: input.email, firstName, lastName, phone: input.phone },
     consents: [{
       capturedAt: submittedAt,
       granted: true,

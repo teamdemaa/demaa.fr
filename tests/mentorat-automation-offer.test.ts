@@ -17,19 +17,19 @@ describe("Mise en place d’un système commercial et client", () => {
   it("locks the Maestro offer and its deliberately bounded scope", () => {
     expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/accompagnement");
     expect(AUTOMATION_OFFER.name).toBe("Maestro");
-    expect(AUTOMATION_OFFER.serviceName).toBe("Mise en place d’un système commercial et client");
+    expect(AUTOMATION_OFFER.serviceName).toBe("Système commercial et client");
     expect(AUTOMATION_OFFER.price).toEqual({
-      amountMinor: 500000,
+      amountMinor: 350000,
       currency: "EUR",
-      label: "5 000 € HT",
+      label: "3 500 € HT",
     });
     expect(mentoratAutomationContent.offer).toMatchObject({
       duration: "1 mois",
-      price: "5 000 € HT",
+      price: "3 500 € HT",
       title: "Votre système commercial et client, prêt à être utilisé.",
     });
-    expect(mentoratAutomationContent.hero.title).toBe(
-      "On met en place votre système commercial et client. Pour que tout ne repose plus sur vous.",
+    expect(mentoratAutomationContent.hero.lead).toBe(
+      "On met en place votre système commercial et client.",
     );
     expect(mentoratAutomationContent.hero.description).toContain("au suivi après la livraison");
     expect(mentoratAutomationContent.journey.map(({ title }) => title)).toEqual([
@@ -90,7 +90,7 @@ describe("Mise en place d’un système commercial et client", () => {
     expect(page).toContain("Mise en place d’un système commercial et client pour TPE");
     expect(legacyPage).toContain('permanentRedirect("/accompagnement")');
     expect(landing).toContain("content.hero.lead");
-    expect(landing).toContain("content.hero.emphasis");
+    expect(landing).not.toContain("content.hero.emphasis");
     expect(landing).toContain("content.journey.map");
     expect(landing).toContain("content.foundations.items.map");
     expect(landing).toContain("content.impacts.items.map");

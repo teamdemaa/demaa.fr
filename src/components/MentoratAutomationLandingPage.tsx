@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, ChevronDown } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronDown } from "lucide-react";
 import AutomationCallbackControl from "@/components/AutomationCallbackControl";
 import Navbar from "@/components/Navbar";
 import { mentoratAutomationContent as content } from "@/lib/mentorat-automation-content";
@@ -14,16 +14,18 @@ export default function MentoratAutomationLandingPage() {
       <main className="overflow-x-clip bg-dema-cream text-brand-blue">
         <section className="px-5 pb-12 pt-14 text-center sm:px-8 sm:pb-16 sm:pt-20 lg:pt-24">
           <div className="mx-auto max-w-5xl">
+            <Link
+              href="/specialistes"
+              className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              Retour aux spécialistes
+            </Link>
             <h1
-              aria-label={content.hero.title}
+              aria-label={content.hero.lead}
               className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}
             >
-              <span aria-hidden="true">
-                <span className="block">{content.hero.lead}</span>
-                <span className="demaa-hero-title mt-2 block text-dema-forest">
-                  {content.hero.emphasis}
-                </span>
-              </span>
+              <span aria-hidden="true" className="block">{content.hero.lead}</span>
             </h1>
             <p className="mx-auto mt-7 max-w-3xl text-base leading-7 text-dema-muted sm:text-lg sm:leading-8">
               {content.hero.description}

@@ -15,7 +15,7 @@ afterEach(() => {
 });
 
 describe("proxy content security policy", () => {
-  it("opens Sur mesure from the canonical root and preserves campaign parameters", () => {
+  it("opens Organisation from the canonical root and preserves campaign parameters", () => {
     const response = proxy(new NextRequest(
       "https://demaa.fr/?utm_campaign=lancement&utm_source=newsletter",
       { headers: { host: "demaa.fr" } },
@@ -23,7 +23,7 @@ describe("proxy content security policy", () => {
 
     expect(response.status).toBe(308);
     expect(response.headers.get("location")).toBe(
-      "https://demaa.fr/sur-mesure?utm_campaign=lancement&utm_source=newsletter",
+      "https://demaa.fr/organiser?utm_campaign=lancement&utm_source=newsletter",
     );
   });
 

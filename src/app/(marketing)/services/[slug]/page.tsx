@@ -52,15 +52,15 @@ export default async function ServicePage({ params }: ServicePageProps) {
           __html: serializeServicesJsonLd(buildServicePageJsonLd(service)),
         }}
       />
-      <Navbar />
+      <Navbar publicNavigationActiveView="services" />
       <main className="min-h-screen min-w-0 max-w-full bg-dema-cream px-4 pb-20 pt-8 sm:px-6 lg:px-8">
         <div className="mx-auto min-w-0 max-w-5xl">
           <Link
-            href="/accompagnement"
+            href="/specialistes"
             className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Retour à l’accompagnement
+            Retour aux spécialistes
           </Link>
           <CanonicalServiceDetails service={service} />
         </div>

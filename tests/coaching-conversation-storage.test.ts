@@ -238,7 +238,7 @@ describe("coaching conversation storage", () => {
     expect(state.recommendations).toHaveLength(1);
     expect(state.recommendations[0]).toMatchObject({
       messageId: reply?.message.id,
-      name: "Assistante administrative",
+      name: "Assistant digital",
       needLabel: null,
       status: "recommended",
     });

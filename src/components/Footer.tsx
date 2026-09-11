@@ -14,7 +14,7 @@ const directoryLinks = [
 ];
 
 const collaborationLinks = [
-  { label: "Systèmes opérationnels", href: "/accompagnement" },
+  { label: "Spécialistes", href: "/specialistes" },
   { label: "Demaa Studio", href: "/studio" },
   { label: "Annonces", href: "/opportunites" },
   { label: "Rejoindre Team Demaa", href: "/opportunites?intent=team-demaa-profile" },
@@ -40,7 +40,7 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="space-y-4">
-            <Link href="/solutions" className="inline-flex">
+            <Link href="/organiser" className="inline-flex">
               <DemaaWordmark
                 className="text-[2.55rem]"
                 colorClassName="text-brand-blue/56"

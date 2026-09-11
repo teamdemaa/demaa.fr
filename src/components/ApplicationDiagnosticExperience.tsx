@@ -26,6 +26,7 @@ export function ApplicationDiagnosticProvider({ children }: { children: ReactNod
         onClose={closeDiagnostic}
         onOpen={openDiagnostic}
         open={open}
+        questionLabel="Qu’est-ce que vous aimeriez pouvoir faire avec votre outil ?"
         requirePhone
         showCallbackAvailability
         showNavbarTrigger={false}

@@ -78,8 +78,8 @@ export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
       ? [{
           "@type": "ListItem",
           position: 2,
-          name: "Accompagnement",
-          item: `${origin}/services`,
+          name: "Spécialistes",
+          item: `${origin}/specialistes`,
         }]
       : []),
     {

@@ -51,14 +51,14 @@ describe("public route integrity", () => {
     expect(sitemap).not.toContain('`${base}/systemes`');
   });
 
-  it("returns retained service details to the public accompaniment offer", async () => {
+  it("returns retained service details to the Specialists index", async () => {
     const servicePage = await readSource(
       "src/app/(marketing)/services/[slug]/page.tsx",
     );
 
-    expect(servicePage).toContain('href="/accompagnement"');
+    expect(servicePage).toContain('href="/specialistes"');
     expect(servicePage).not.toContain('href="/services"');
-    expect(servicePage).toContain("Retour à l’accompagnement");
+    expect(servicePage).toContain("Retour aux spécialistes");
   });
 
   it("delivers live-session métier resources through the canonical Solutions routes", async () => {

@@ -123,7 +123,7 @@ describe("guest diagnostic request", () => {
     expect(result).toEqual({ duplicate: false, leadId: "lead-123" });
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       channels: { email: true, resend: false, slack: false },
-      contact: { email: "owner@example.com", phone: null },
+      contact: { email: "owner@example.com", firstName: null, lastName: null, phone: null },
       consents: [expect.objectContaining({ granted: true, purpose: "diagnostic_contact" })],
       fields: expect.arrayContaining([
         { label: "Message complémentaire", value: "Je souhaite un regard extérieur." },

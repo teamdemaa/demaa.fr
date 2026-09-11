@@ -38,7 +38,7 @@ const HOME_INTENTS = new Set([
   "team-demaa-profile",
 ]);
 
-export function buildDefaultHomeSurMesureHref(
+export function buildDefaultHomeOrganiserHref(
   searchParams: SearchInput,
 ) {
   const trackingParams = new URLSearchParams();
@@ -63,7 +63,7 @@ export function buildDefaultHomeSurMesureHref(
 
   if (hasExplicitEntry) return null;
   const query = trackingParams.toString();
-  return `/sur-mesure${query ? `?${query}` : ""}`;
+  return `/organiser${query ? `?${query}` : ""}`;
 }
 
 export function shouldRedirectAuthenticatedHomeToPlans(input: {

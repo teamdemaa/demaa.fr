@@ -8,6 +8,7 @@ import {
   PanelsTopLeft,
   Megaphone,
   MessagesSquare,
+  Sparkles,
   SearchCheck,
   Workflow,
   type LucideIcon,
@@ -16,6 +17,7 @@ import type { CanonicalService } from "@/lib/canonical-service-catalog";
 import { LIBRARY_CARD_TITLE_CLASSNAME } from "@/lib/library-card-ui";
 
 const ICONS: Record<CanonicalService["slug"], LucideIcon> = {
+  "automatisation-ia": Sparkles,
   "coach-business": Compass,
   "automatisation-processus": Workflow,
   "application-metier": PanelsTopLeft,

@@ -27,7 +27,7 @@ async function readSource(path: string) {
 }
 
 describe("canonical Accompagnement catalog", () => {
-  it("keeps ten canonical records and publishes only the nine visible offers", () => {
+  it("keeps eleven canonical records and publishes the non-hidden offers", () => {
     const services = getCanonicalServices();
 
     expect(getCanonicalServiceRecords().map((service) => service.slug))
@@ -36,10 +36,11 @@ describe("canonical Accompagnement catalog", () => {
       CANONICAL_SERVICE_SLUGS.includes(slug)
     )).toBe(true);
     expect(services.map((service) => service.name)).toEqual([
-      "Mise en place d’un système commercial et client",
-      "Application métier",
+      "Automatisation & IA",
+      "Système commercial et client",
+      "Logiciel métier sur mesure",
       "Coach business",
-      "Assistante administrative",
+      "Assistant digital",
       "Formalités d’entreprise",
       "Gestion des réseaux sociaux",
       "Publicité en ligne",
@@ -60,20 +61,24 @@ describe("canonical Accompagnement catalog", () => {
   });
 
   it("locks the approved pricing and Coach business eligibility", () => {
-    expect(getCanonicalServiceBySlug("publicite-en-ligne")?.pricing?.label).toBe("750 € HT / mois");
+    expect(getCanonicalServiceBySlug("publicite-en-ligne")?.pricing).toMatchObject({
+      amountMinor: 65000,
+      label: "À partir de 650 € HT / mois",
+      mode: "starting",
+    });
     expect(getCanonicalServiceBySlug("gestion-reseaux-sociaux")?.pricing).toMatchObject({
-      amountMinor: 80000,
-      label: "800 € HT / mois",
+      amountMinor: 90000,
+      label: "900 € HT / mois",
       mode: "fixed",
     });
     expect(getCanonicalServiceBySlug("prospection-ciblee")?.pricing).toMatchObject({
-      amountMinor: 150000,
-      label: "1 500 € HT / mois",
+      amountMinor: 120000,
+      label: "1 200 € HT / mois",
       mode: "fixed",
     });
     expect(getCanonicalServiceBySlug("assistance-administrative")?.pricing).toMatchObject({
-      amountMinor: 50000,
-      label: "À partir de 500 € HT / mois",
+      amountMinor: 100000,
+      label: "À partir de 1 000 € HT / mois",
       mode: "starting",
     });
     expect(getCanonicalServiceBySlug("assistance-administrative")?.pricing?.note).toContain("20 heures");
@@ -105,15 +110,13 @@ describe("canonical Accompagnement catalog", () => {
       expect(getCanonicalServiceBySlug(slug)?.description).toContain(
         "organise la mise en relation",
       );
-      expect(getCanonicalServiceBySlug(slug)?.pricing?.note).toContain(
-        "facture directement son intervention",
-      );
+      expect(getCanonicalServiceBySlug(slug)?.pricing?.note).toContain("confirme");
     }
   });
 
   it("places Automation first and keeps Coach business undiscounted", () => {
     const coach = getCanonicalServiceBySlug("coach-business");
-    expect(getCanonicalServices()[0]?.slug).toBe("automatisation-processus");
+    expect(getCanonicalServices()[0]?.slug).toBe("automatisation-ia");
     expect(coach).toMatchObject({
       cta: { kind: "callback", label: "Envoyer ma demande" },
       pricing: {
@@ -144,17 +147,17 @@ describe("canonical Accompagnement catalog", () => {
     const application = getCanonicalServiceBySlug("application-metier");
 
     expect(automation).toMatchObject({
-      name: "Mise en place d’un système commercial et client",
+      name: "Système commercial et client",
       pricing: null,
       cta: { kind: "callback", label: "Envoyer ma demande" },
     });
     expect(automation?.packages.map(({ slug, pricing }) => [slug, pricing.amountMinor])).toEqual([
-      ["automatisation-essentielle", 500000],
+      ["automatisation-essentielle", 350000],
     ]);
     expect(automation?.packages[0]).toMatchObject({
       name: "Maestro",
       pricing: {
-        label: "5 000 € HT",
+        label: "3 500 € HT",
       },
     });
     expect(automation?.packages[0]?.pricing.note).toContain("atelier de travail");
@@ -163,7 +166,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(automation?.packages[0]?.pricing.note).toContain("licences");
     expect(application).toMatchObject({
       detailHref: "/sur-mesure",
-      name: "Application métier",
+      name: "Logiciel métier sur mesure",
       pricing: null,
     });
     expect(application?.packages.map(({ slug, pricing }) => [slug, pricing.amountMinor])).toEqual([
@@ -178,7 +181,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(application?.packages[0]?.pricing.note).toBe("");
   });
 
-  it("retains the hidden accounting price only in the historical record", () => {
+  it("publishes the accounting starting price", () => {
     expect(getCanonicalServiceRecordBySlug("expert-comptable")?.pricing).toMatchObject({
       amountMinor: 25000,
       heading: "Honoraires du cabinet",
@@ -187,7 +190,7 @@ describe("canonical Accompagnement catalog", () => {
     });
   });
 
-  it("renders two direct Demaa services followed by seven trusted-partner services", async () => {
+  it("renders the three direct services in the retained internal catalog", async () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
@@ -205,21 +208,21 @@ describe("canonical Accompagnement catalog", () => {
       readSource("src/components/SystemSolutionsTab.tsx"),
     ]);
 
-    expect(markup.match(/<article/g)).toHaveLength(2);
-    expect(getCanonicalServices().filter(({ delivery }) => delivery === "demaa")).toHaveLength(2);
+    expect(markup.match(/<article/g)).toHaveLength(3);
+    expect(getCanonicalServices().filter(({ delivery }) => delivery === "demaa")).toHaveLength(3);
     expect(getCanonicalServices().filter(({ delivery }) => delivery === "third-party")).toHaveLength(7);
     for (const service of getCanonicalServices().filter(({ delivery }) => delivery === "demaa")) {
       expect(markup).toContain(service.detailHref);
     }
     expect(markup).toContain("/sur-mesure");
     expect(markup).not.toContain("Coach business");
-    expect(markup).not.toContain("Assistante administrative");
+    expect(markup).not.toContain("Assistant digital");
     expect(markup).not.toContain("Recruter un alternant");
     expect(markup).not.toContain("Expert-comptable");
-    expect(markup).toContain("5 000 € HT");
+    expect(markup).toContain("3 500 € HT");
     expect(markup).toContain("À partir de 4 500 € HT");
     expect(markup).not.toContain("750 € HT / mois");
-    expect(markup).not.toContain("Sur devis");
+    expect(markup).toContain("550 € HT / jour");
     expect(markup).not.toContain("Gratuit");
     expect(markup).toContain("Nos accompagnements");
     expect(markup).toContain("Pour faire en sorte que votre entreprise dépende moins de vous.");

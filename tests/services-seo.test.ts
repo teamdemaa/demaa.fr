@@ -18,8 +18,9 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services SEO and redirects", () => {
-  it("publishes seven generic detail routes and keeps dedicated offers out", async () => {
+  it("publishes eight generic detail routes and keeps dedicated or hidden offers out", async () => {
     expect(generateStaticParams()).toEqual([
+      { slug: "automatisation-ia" },
       { slug: "coach-business" },
       { slug: "assistance-administrative" },
       { slug: "formalites-entreprise" },
@@ -52,10 +53,10 @@ describe("canonical Services SEO and redirects", () => {
       offers: [
         {
           name: "Maestro",
-          price: "5000.00",
+          price: "3500.00",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
-            price: "5000.00",
+            price: "3500.00",
             priceCurrency: "EUR",
             valueAddedTaxIncluded: false,
           },
@@ -67,12 +68,12 @@ describe("canonical Services SEO and redirects", () => {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Accueil", item: "https://demaa.fr" },
-        { "@type": "ListItem", position: 2, name: "Mise en place d’un système commercial et client", item: "https://demaa.fr/accompagnement" },
+        { "@type": "ListItem", position: 2, name: "Système commercial et client", item: "https://demaa.fr/accompagnement" },
       ],
     });
 
     expect(buildServicePageJsonLd(application)[1]).toMatchObject({
-      name: "Application métier",
+      name: "Logiciel métier sur mesure",
       url: "https://demaa.fr/sur-mesure",
       offers: [
         { name: "Application métier", price: "4500.00" },
@@ -111,6 +112,7 @@ describe("canonical Services SEO and redirects", () => {
     expect(nextConfig).toContain("source: '/marketing-ethique'");
     expect(nextConfig).toContain("destination: '/services/coach-business'");
     expect(nextConfig).toContain("source: '/services/expert-comptable'");
+    expect(nextConfig).toContain("source: '/annuaire-services/expert-comptable'");
     expect(nextConfig).toContain("destination: '/annuaire-experts-comptables'");
     expect(getCanonicalServiceBySlug("assistance-administrative")?.detailHref).toBe("/services/assistance-administrative");
     expect(proxy).not.toContain('"/services/"');

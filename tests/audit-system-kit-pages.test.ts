@@ -14,6 +14,7 @@ describe("system kit page audit contract", () => {
   it("audits Process and the unified Solutions view with all 115 expected orders", () => {
     expect(getTabs()).toEqual(["process", "solutions"]);
     expect(loadCanonicalServiceSlugs()).toEqual([
+      "automatisation-ia",
       "automatisation-processus",
       "application-metier",
       "coach-business",
@@ -36,6 +37,7 @@ describe("system kit page audit contract", () => {
       "costructor",
       "progbat",
       "vertuoza",
+      "automatisation-ia",
       "automatisation-processus",
       "application-metier",
       "coach-business",
@@ -50,6 +52,7 @@ describe("system kit page audit contract", () => {
       "apimo",
       "modelo",
       "pipedrive",
+      "automatisation-ia",
       "automatisation-processus",
       "application-metier",
       "coach-business",
@@ -64,6 +67,7 @@ describe("system kit page audit contract", () => {
       "apimo",
       "modelo",
       "pipedrive",
+      "automatisation-ia",
       "automatisation-processus",
       "application-metier",
       "coach-business",
