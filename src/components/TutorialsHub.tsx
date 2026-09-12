@@ -15,7 +15,7 @@ export default function TutorialsHub() {
             Tutoriels pratiques
           </p>
           <h1
-            aria-label="Apprendre à mieux utiliser ses outils, étape par étape"
+            aria-label="Mieux utiliser ses outils, étape par étape"
             className="text-balance font-light leading-[0.94] tracking-tight"
             style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
           >

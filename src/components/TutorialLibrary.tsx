@@ -69,7 +69,7 @@ export default function TutorialLibrary({
         </div>
 
         {areFiltersVisible ? (
-          <div className="mt-4 overflow-x-auto pb-1 soft-scroll" aria-label="Filtrer les tutoriels par thème">
+          <div className="mt-4 overflow-x-auto pb-1 soft-scroll" role="group" aria-label="Filtrer les tutoriels par thème">
             <div className="flex min-w-max gap-2 px-1">
               {[ALL_CATEGORIES, ...TUTORIAL_CATEGORIES].map((category) => (
                 <button
@@ -87,6 +87,9 @@ export default function TutorialLibrary({
             </div>
           </div>
         ) : null}
+        <p className="sr-only" aria-live="polite">
+          {filteredTutorials.length} {filteredTutorials.length > 1 ? "tutoriels trouvés" : "tutoriel trouvé"}
+        </p>
       </div>
 
       {filteredTutorials.length > 0 ? (

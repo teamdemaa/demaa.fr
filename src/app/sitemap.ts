@@ -26,6 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Keep sitemap modification dates stable. Using the request time would tell
   // crawlers that every one of the 800+ URLs changed on every request.
   const siteUpdatedAt = new Date("2026-09-03T00:00:00.000Z");
+  const toolsAndTutorialsUpdatedAt = new Date("2026-09-12T00:00:00.000Z");
   const [tools, enterprises, accountingFirms] = await Promise.all([
     getUnifiedToolDirectory(),
     getEnterpriseCatalog(),
@@ -33,13 +34,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${base}/outils`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
+    { url: `${base}/outils`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
     ...(PUBLIC_SPECIALISTS_ENABLED
       ? [{ url: `${base}/specialistes`, lastModified: siteUpdatedAt, changeFrequency: "weekly" as const, priority: 0.94 }]
       : []),
     { url: `${base}/sur-mesure`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/accompagnement`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.85 },
-    { url: `${base}/modeles`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/modeles`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/session-structurer`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/studio`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.65 },
     { url: `${base}/annuaire-outils`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
@@ -49,7 +50,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-reseaux-pro`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-newsletters`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/tutoriels`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.93 },
+    { url: `${base}/tutoriels`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.93 },
     { url: `${base}/contenus`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/opportunites`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.65 },
     { url: `${base}/mentions-legales`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
@@ -184,7 +185,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const systemEntries: MetadataRoute.Sitemap = enterprises.map((enterprise) => ({
     url: `${base}/solutions/${enterprise.slug}`,
-    lastModified: siteUpdatedAt,
+    lastModified: toolsAndTutorialsUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.75,
   }));

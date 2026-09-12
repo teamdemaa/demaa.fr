@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { getCanonicalOrigin } from "@/lib/site-url";
 import "./globals.css";
 
 const satoshi = localFont({
@@ -54,6 +55,7 @@ const gambetta = localFont({
 export const metadata: Metadata = {
   title: "Page introuvable | Demaa",
   description: "La page demandée n’existe pas ou a été déplacée.",
+  metadataBase: new URL(getCanonicalOrigin()),
 };
 
 export default function GlobalNotFound() {

@@ -18,9 +18,8 @@ import {
   getAllAcademyContent,
 } from "@/lib/academy-course-content";
 import {
-  ACADEMY_CONTENT_SLUGS,
   ACADEMY_PERMANENT_REDIRECTS,
-  LEGACY_ACADEMY_SLUG_ALIASES,
+  ARCHIVED_ACADEMY_DESTINATION,
 } from "@/lib/academy-course-routes";
 
 type AssetManifest = {
@@ -149,7 +148,7 @@ describe("Academy SEO, redirects and assets", () => {
     );
   });
 
-  it("registers only the explicit permanent Academy redirects", async () => {
+  it("archives every former Academy namespace behind Tutoriels", async () => {
     const redirects = await nextConfig.redirects?.();
     expect(redirects).toBeDefined();
 
@@ -157,42 +156,20 @@ describe("Academy SEO, redirects and assets", () => {
       expect(redirects).toContainEqual(redirect);
     }
 
-    expect(ACADEMY_PERMANENT_REDIRECTS).toHaveLength(
-      6 + 3 * ACADEMY_CONTENT_SLUGS.length + 4 * Object.keys(LEGACY_ACADEMY_SLUG_ALIASES).length,
-    );
-    expect(redirects).not.toContainEqual(
-      expect.objectContaining({ source: "/cours/:slug" }),
-    );
-    expect(redirects).not.toContainEqual(
-      expect.objectContaining({ source: "/cours/:path*" }),
-    );
-    expect(redirects).not.toContainEqual(
-      expect.objectContaining({ source: "/academy/:path*" }),
-    );
-    expect(redirects).toContainEqual({
-      source: "/academy",
-      destination: "/organiser",
-      permanent: true,
-    });
-    expect(redirects).toContainEqual({
-      source: "/academie",
-      destination: "/organiser",
-      permanent: true,
-    });
-    expect(redirects).toContainEqual({
-      source: "/cours",
-      destination: "/organiser",
-      permanent: true,
-    });
-    for (const slug of ACADEMY_CONTENT_SLUGS) {
+    expect(ACADEMY_PERMANENT_REDIRECTS).toHaveLength(10);
+    for (const source of [
+      "/cours",
+      "/cours/:path*",
+      "/academy",
+      "/academy/:path*",
+      "/academie",
+      "/academie/:path*",
+      "/organiser",
+      "/organiser/:path*",
+    ]) {
       expect(redirects).toContainEqual({
-        source: `/academy/${slug}`,
-        destination: `/organiser/${slug}`,
-        permanent: true,
-      });
-      expect(redirects).toContainEqual({
-        source: `/academie/${slug}`,
-        destination: `/organiser/${slug}`,
+        source,
+        destination: ARCHIVED_ACADEMY_DESTINATION,
         permanent: true,
       });
     }
@@ -203,6 +180,11 @@ describe("Academy SEO, redirects and assets", () => {
         permanent: true,
       }),
     );
+    expect(redirects).toContainEqual({
+      source: "/cours/obligations-finances-entreprise",
+      destination: "/outils",
+      permanent: true,
+    });
   });
 
   it("keeps an exact manifest for the eleven referenced PNG assets", () => {

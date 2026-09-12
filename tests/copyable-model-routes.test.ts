@@ -22,7 +22,7 @@ describe("copyable model public routes", () => {
     expect(page).not.toContain("OrganiserSectionNavigation");
     expect(page).toContain("<StructureNewsletterBlock />");
     expect(page).not.toContain("<ModelProcessesBridge />");
-    expect(toolsPage).toContain("<SystemsHubPage />");
+    expect(toolsPage).toContain("<SystemsHubPage enterprises={enterprises} />");
     expect(page).toContain('path: "/modeles"');
     expect(navbar).toContain('label: "Outils"');
     expect(navbar).toContain('href: "/outils"');
@@ -33,9 +33,9 @@ describe("copyable model public routes", () => {
     expect(toolsModels).toContain("Voir tous les modèles");
     expect(toolsModels).toContain(".slice(0, 6)");
     expect(page).toContain('fromOrganisation={source === "organisation"}');
-    expect(modelsIndex).toContain('href="/organiser#cas-concrets"');
-    expect(modelsIndex).toContain("Retour à Organisation");
-    expect(modelsIndex).toContain("`/modeles/${model.slug}?from=organisation`");
+    expect(modelsIndex).toContain('href="/tutoriels"');
+    expect(modelsIndex).toContain("Retour aux tutoriels");
+    expect(modelsIndex).toContain("`/modeles/${model.slug}?from=tutoriels`");
     expect(footer).toContain('{ label: "Modèles à copier", href: "/modeles" }');
     expect(footer).toContain('{ label: "Outils", href: "/outils" }');
     expect(footer).toContain('{ label: "Tutoriels", href: "/tutoriels" }');
