@@ -144,7 +144,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "serrurier",
     ],
     highlights: [
-      { label: "Voir les solutions adaptées", href: "/solutions" },
+      { label: "Voir les outils adaptés", href: "/outils" },
       { label: "Voir le previsionnel financier", href: "/api/systeme-kit/open/suivi-previsionnel-financier" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("BTP & services techniques") },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
@@ -265,7 +265,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "food-truck",
     ],
     highlights: [
-      { label: "Voir les solutions adaptées", href: "/solutions" },
+      { label: "Voir les outils adaptés", href: "/outils" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Restauration") },
     ],
   }),
@@ -290,7 +290,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "tabac-presse-point-relais",
     ],
     highlights: [
-      { label: "Voir les solutions adaptées", href: "/solutions" },
+      { label: "Voir les outils adaptés", href: "/outils" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Commerce & retail") },
     ],
   }),
@@ -369,7 +369,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "creche",
     ],
     highlights: [
-      { label: "Voir les solutions adaptées", href: "/solutions" },
+      { label: "Voir les outils adaptés", href: "/outils" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Éducation & formation") },
       { label: "Découvrir l’accompagnement", href: "/accompagnement" },
     ],
@@ -410,7 +410,7 @@ const SECTOR_PAGE_DEFINITIONS: SectorPageDefinition[] = [
       "carrosserie",
     ],
     highlights: [
-      { label: "Voir les solutions adaptées", href: "/solutions" },
+      { label: "Voir les outils adaptés", href: "/outils" },
       { label: "Voir les outils utiles", href: getSectorToolDirectoryHref("Automobile & réparation") },
       { label: "Voir les partenaires utiles", href: "/annuaire-fournisseurs" },
     ],

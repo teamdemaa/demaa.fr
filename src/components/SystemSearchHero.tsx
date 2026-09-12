@@ -212,7 +212,7 @@ export default function SystemSearchHero({
           <h1
             className="text-balance font-light leading-[0.94] tracking-tight"
             style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
-            aria-label="Trouvez les outils et logiciels adaptés à votre activité"
+            aria-label="Outils et logiciels adaptés à votre activité"
           >
             <span className="block font-sans font-light not-italic text-brand-blue/62 md:whitespace-nowrap">
               Outils et logiciels

@@ -17,21 +17,21 @@ describe("public route integrity", () => {
     expect(sectorPages).not.toContain('href: "/annuaire-services"');
     expect(sectorPages).not.toContain('href: "/organisation"');
     expect(sectorPages).not.toContain('href: "/structuration"');
-    expect(sectorPages).toContain('href: "/solutions"');
+    expect(sectorPages).toContain('href: "/outils"');
     expect(sectorPages).toContain('href: "/accompagnement"');
     expect(sectorPages).not.toContain('href: "/application-metier"');
     expect(sectorPages).not.toContain('href: "/systemes"');
     expect(sectorPages).not.toContain('href: "/services"');
-    expect(validator).toContain('"/solutions"');
+    expect(validator).toContain('"/outils"');
     expect(validator).toContain('"/accompagnement"');
     expect(validator).not.toContain('"/application-metier"');
     expect(validator).not.toContain('"/systemes"');
     expect(validator).not.toContain('"/services"');
     expect(validator).not.toContain('"/organisation"');
-    expect(sectorPage).toContain('href="/solutions"');
+    expect(sectorPage).toContain('href="/outils"');
     expect(sectorPage).not.toContain('href="/systemes"');
     expect(academyRoutes).toContain(
-      'source: "/cours/obligations-finances-entreprise",\n    destination: "/solutions"',
+      'source: "/cours/obligations-finances-entreprise",\n    destination: "/outils"',
     );
   });
 

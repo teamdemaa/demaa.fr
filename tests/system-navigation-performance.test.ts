@@ -56,7 +56,7 @@ describe("system navigation performance contract", () => {
       "Outils et modèles adaptés à votre activité | Demaa",
     );
     expect(searchSource).toContain(
-      'aria-label="Trouvez les outils et logiciels adaptés à votre activité"',
+      'aria-label="Outils et logiciels adaptés à votre activité"',
     );
     expect(searchSource).toContain("Outils et logiciels");
     expect(searchSource).not.toContain(

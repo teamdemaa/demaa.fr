@@ -54,7 +54,7 @@ export function buildSolutionsHref(input: {
     params.set("toolSource", input.solutionEntrySource);
   }
 
-  const pathname = systemId ? `/solutions/${systemId}` : "/solutions";
+  const pathname = systemId ? `/solutions/${systemId}` : "/outils";
   const query = params.toString();
   return `${pathname}${query ? `?${query}` : ""}`;
 }

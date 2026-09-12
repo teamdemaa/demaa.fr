@@ -14,6 +14,12 @@ export type PublicPageMetadataInput = {
   type?: "article" | "website";
   keywords?: Metadata["keywords"];
   robots?: Metadata["robots"];
+  socialImage?: Readonly<{
+    alt: string;
+    height?: number;
+    url: string;
+    width?: number;
+  }>;
 };
 
 export function buildPublicPageMetadata({
@@ -23,7 +29,10 @@ export function buildPublicPageMetadata({
   type = "website",
   keywords,
   robots,
+  socialImage,
 }: PublicPageMetadataInput): Metadata {
+  const resolvedSocialImage = socialImage ?? PUBLIC_SOCIAL_IMAGE;
+
   return {
     title,
     description,
@@ -37,13 +46,13 @@ export function buildPublicPageMetadata({
       siteName: "Demaa",
       locale: "fr_FR",
       type,
-      images: [PUBLIC_SOCIAL_IMAGE],
+      images: [resolvedSocialImage],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ["/twitter-image"],
+      images: [socialImage?.url ?? "/twitter-image"],
     },
   };
 }

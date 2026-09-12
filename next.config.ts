@@ -103,16 +103,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/organiser',
-        destination: '/tutoriels',
-        permanent: true,
-      },
-      {
-        source: '/organiser/processus',
-        destination: '/tutoriels',
-        permanent: true,
-      },
-      {
         source: '/structuration',
         destination: '/tutoriels',
         permanent: true,

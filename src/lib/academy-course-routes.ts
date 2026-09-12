@@ -37,61 +37,9 @@ export const LEGACY_ACADEMY_SLUG_ALIASES = {
   "transformer-une-demande-en-client": "transformer-demande-en-client",
 } as const;
 
+export const ARCHIVED_ACADEMY_DESTINATION = "/tutoriels";
+
 export const ACADEMY_PERMANENT_REDIRECTS = [
-  {
-    source: "/cours",
-    destination: "/organiser",
-    permanent: true,
-  },
-  {
-    source: "/academy",
-    destination: "/organiser",
-    permanent: true,
-  },
-  {
-    source: "/academie",
-    destination: "/organiser",
-    permanent: true,
-  },
-  ...ACADEMY_CONTENT_SLUGS.map((slug) => ({
-    source: `/cours/${slug}`,
-    destination: `/organiser/${slug}`,
-    permanent: true,
-  })),
-  ...ACADEMY_CONTENT_SLUGS.map((slug) => ({
-    source: `/academy/${slug}`,
-    destination: `/organiser/${slug}`,
-    permanent: true,
-  })),
-  ...ACADEMY_CONTENT_SLUGS.map((slug) => ({
-    source: `/academie/${slug}`,
-    destination: `/organiser/${slug}`,
-    permanent: true,
-  })),
-  ...Object.entries(LEGACY_ACADEMY_SLUG_ALIASES).flatMap(
-    ([legacySlug, canonicalSlug]) => [
-      {
-        source: `/cours/${legacySlug}`,
-        destination: `/organiser/${canonicalSlug}`,
-        permanent: true,
-      },
-      {
-        source: `/academie/${legacySlug}`,
-        destination: `/organiser/${canonicalSlug}`,
-        permanent: true,
-      },
-      {
-        source: `/academy/${legacySlug}`,
-        destination: `/organiser/${canonicalSlug}`,
-        permanent: true,
-      },
-      {
-        source: `/organiser/${legacySlug}`,
-        destination: `/organiser/${canonicalSlug}`,
-        permanent: true,
-      },
-    ],
-  ),
   {
     source: "/cours/facture-electronique",
     destination: "/contenus/facturation-electronique",
@@ -99,12 +47,47 @@ export const ACADEMY_PERMANENT_REDIRECTS = [
   },
   {
     source: "/cours/obligations-finances-entreprise",
-    destination: "/solutions",
+    destination: "/outils",
     permanent: true,
   },
   {
-    source: "/cours/organisation-marketing-vente",
-    destination: "/organiser/construire-systeme-marketing-vente",
+    source: "/cours",
+    destination: ARCHIVED_ACADEMY_DESTINATION,
+    permanent: true,
+  },
+  {
+    source: "/cours/:path*",
+    destination: ARCHIVED_ACADEMY_DESTINATION,
+    permanent: true,
+  },
+  {
+    source: "/academy",
+    destination: ARCHIVED_ACADEMY_DESTINATION,
+    permanent: true,
+  },
+  {
+    source: "/academy/:path*",
+    destination: ARCHIVED_ACADEMY_DESTINATION,
+    permanent: true,
+  },
+  {
+    source: "/academie",
+    destination: ARCHIVED_ACADEMY_DESTINATION,
+    permanent: true,
+  },
+  {
+    source: "/academie/:path*",
+    destination: ARCHIVED_ACADEMY_DESTINATION,
+    permanent: true,
+  },
+  {
+    source: "/organiser",
+    destination: ARCHIVED_ACADEMY_DESTINATION,
+    permanent: true,
+  },
+  {
+    source: "/organiser/:path*",
+    destination: ARCHIVED_ACADEMY_DESTINATION,
     permanent: true,
   },
 ] as const;

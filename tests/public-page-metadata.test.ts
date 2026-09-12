@@ -31,4 +31,23 @@ describe("public page metadata", () => {
       images: ["/twitter-image"],
     });
   });
+
+  it("uses the page-specific image for Open Graph and Twitter cards", () => {
+    const socialImage = {
+      alt: "Aperçu du tutoriel",
+      height: 900,
+      url: "/images/tutoriel.png?v=1",
+      width: 1600,
+    } as const;
+    const metadata = buildPublicPageMetadata({
+      title: "Tutoriel | Demaa",
+      description: "Description du tutoriel.",
+      path: "/tutoriels/exemple",
+      type: "article",
+      socialImage,
+    });
+
+    expect(metadata.openGraph?.images).toEqual([socialImage]);
+    expect(metadata.twitter?.images).toEqual([socialImage.url]);
+  });
 });

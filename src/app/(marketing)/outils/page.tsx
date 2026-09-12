@@ -34,7 +34,7 @@ export default async function ToolsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializePublicJsonLd(jsonLd) }}
       />
-      <SystemsHubPage />
+      <SystemsHubPage enterprises={enterprises} />
     </>
   );
 }

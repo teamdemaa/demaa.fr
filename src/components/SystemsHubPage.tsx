@@ -4,11 +4,16 @@ import OrganiserDiscoveryCta from "@/components/OrganiserDiscoveryCta";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import ToolsModelsSection from "@/components/ToolsModelsSection";
 import { getPublishedCopyableModels } from "@/lib/copyable-model-catalog";
-import { enterpriseToSystem } from "@/lib/enterprise-annuaire";
-import { getEnterpriseCatalog } from "@/lib/enterprise-annuaire-server";
+import {
+  enterpriseToSystem,
+  type EnterpriseDefinition,
+} from "@/lib/enterprise-annuaire";
 
-export default async function SystemsHubPage() {
-  const enterprises = await getEnterpriseCatalog();
+export default function SystemsHubPage({
+  enterprises,
+}: {
+  enterprises: readonly EnterpriseDefinition[];
+}) {
   const models = getPublishedCopyableModels();
   const systems = enterprises.map(enterpriseToSystem);
   const sectorLabelsBySlug = Object.fromEntries(
