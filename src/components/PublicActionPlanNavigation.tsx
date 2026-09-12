@@ -1,10 +1,13 @@
-import { LayoutGrid, ListTree, UsersRound } from "lucide-react";
+import { LayoutGrid, ListTree, UsersRound, Workflow } from "lucide-react";
 import Link from "next/link";
+import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
 
 export type PublicActionPlanView = "solutions" | "academy" | "services";
 
 const navigationItems = [
-  { view: "services", label: "Spécialistes", href: "/specialistes", Icon: UsersRound },
+  PUBLIC_SPECIALISTS_ENABLED
+    ? { view: "services", label: "Spécialistes", href: "/specialistes", Icon: UsersRound }
+    : { view: "services", label: "Sur mesure", href: "/sur-mesure", Icon: Workflow },
   { view: "solutions", label: "Solutions", href: "/solutions", Icon: LayoutGrid },
   { view: "academy", label: "Organisation", href: "/organiser", Icon: ListTree },
 ] as const;

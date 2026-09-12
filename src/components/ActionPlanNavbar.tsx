@@ -1,10 +1,11 @@
 "use client";
 
-import { BookOpen, BriefcaseBusiness, LayoutGrid, ListChecks, UsersRound } from "lucide-react";
+import { BookOpen, BriefcaseBusiness, LayoutGrid, ListChecks, UsersRound, Workflow } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
+import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
 
 export type ActionPlanView = "plan" | "solutions" | "services" | "academy" | "opportunities";
 
@@ -14,21 +15,23 @@ const tabClassName =
 const navigationItems = {
   plan: { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
   solutions: { view: "solutions", labels: { fr: "Solutions", en: "Solutions" }, Icon: LayoutGrid },
-  services: { view: "services", labels: { fr: "Spécialistes", en: "Specialists" }, Icon: UsersRound },
+  services: PUBLIC_SPECIALISTS_ENABLED
+    ? { view: "services" as const, labels: { fr: "Spécialistes", en: "Specialists" }, Icon: UsersRound }
+    : { view: "services" as const, labels: { fr: "Sur mesure", en: "Custom" }, Icon: Workflow },
   academy: { view: "academy", labels: { fr: "Organisation", en: "Organization" }, Icon: BookOpen },
   opportunities: { view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness },
 } as const;
 
 const publicNavigationOrder: readonly ActionPlanView[] = [
-  "academy",
-  "solutions",
   "services",
+  "solutions",
+  "academy",
 ];
 
 const embeddedNavigationOrder: readonly ActionPlanView[] = [
-  "academy",
-  "solutions",
   "services",
+  "solutions",
+  "academy",
 ];
 
 export default function ActionPlanNavbar({
@@ -102,7 +105,9 @@ export default function ActionPlanNavbar({
               ? "/"
               : view === "academy"
                 ? "/organiser"
-                : "/specialistes";
+                : PUBLIC_SPECIALISTS_ENABLED
+                  ? "/specialistes"
+                  : "/sur-mesure";
           const usesPublicRoute = routeNavigation
             || (localeCode === "fr" && (view === "solutions" || view === "academy" || view === "services"));
 

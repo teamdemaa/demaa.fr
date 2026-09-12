@@ -139,7 +139,9 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/services',
-        destination: '/specialistes',
+        destination: process.env.NEXT_PUBLIC_DEMAA_SPECIALISTS_ENABLED === 'true'
+          ? '/specialistes'
+          : '/accompagnement',
         permanent: true,
       },
       {

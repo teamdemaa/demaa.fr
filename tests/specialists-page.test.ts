@@ -48,7 +48,7 @@ describe("Specialists public index", () => {
     expect(markup).not.toContain("Partenaire");
   });
 
-  it("uses the Specialists navigation and metadata route", async () => {
+  it("keeps the Specialists implementation parked behind its publication flag", async () => {
     const pageSource = await readFile(
       new URL("../src/app/(marketing)/specialistes/page.tsx", import.meta.url),
       "utf8",
@@ -59,6 +59,7 @@ describe("Specialists public index", () => {
     );
 
     expect(pageSource).toContain('path: "/specialistes"');
+    expect(pageSource).toContain("if (!PUBLIC_SPECIALISTS_ENABLED) notFound()");
     expect(pageSource).toContain('publicNavigationActiveView="services"');
     expect(pageSource).toContain("Faites avancer votre entreprise");
     expect(pageSource).toContain("avec le bon spécialiste");

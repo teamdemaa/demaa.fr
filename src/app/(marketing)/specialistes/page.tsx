@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import { notFound } from "next/navigation";
 import SpecialistsCatalog from "@/components/SpecialistsCatalog";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import { getSpecialistSections } from "@/lib/specialist-catalog";
@@ -7,6 +8,7 @@ import {
   serializePublicJsonLd,
 } from "@/lib/public-index-json-ld";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
+import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
 
 const title = "Spécialistes pour structurer et développer votre entreprise | Demaa";
 const description =
@@ -19,6 +21,8 @@ export const metadata = buildPublicPageMetadata({
 });
 
 export default function SpecialistsPage() {
+  if (!PUBLIC_SPECIALISTS_ENABLED) notFound();
+
   const sections = getSpecialistSections();
   const services = sections.flatMap((section) => section.services);
   const jsonLd = buildPublicIndexJsonLd({

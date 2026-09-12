@@ -15,7 +15,7 @@ afterEach(() => {
 });
 
 describe("proxy content security policy", () => {
-  it("opens Organisation from the canonical root and preserves campaign parameters", () => {
+  it("opens Sur mesure from the canonical root and preserves campaign parameters", () => {
     const response = proxy(new NextRequest(
       "https://demaa.fr/?utm_campaign=lancement&utm_source=newsletter",
       { headers: { host: "demaa.fr" } },
@@ -23,8 +23,17 @@ describe("proxy content security policy", () => {
 
     expect(response.status).toBe(308);
     expect(response.headers.get("location")).toBe(
-      "https://demaa.fr/organiser?utm_campaign=lancement&utm_source=newsletter",
+      "https://demaa.fr/sur-mesure?utm_campaign=lancement&utm_source=newsletter",
     );
+  });
+
+  it("keeps the parked Specialists universe private and out of search results", () => {
+    const response = proxy(new NextRequest("https://demaa.fr/specialistes", {
+      headers: { host: "demaa.fr" },
+    }));
+
+    expect(response.status).toBe(404);
+    expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
   });
 
   it("keeps the English beta disabled by default and marks its response", () => {

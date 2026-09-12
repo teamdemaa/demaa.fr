@@ -51,14 +51,14 @@ describe("public route integrity", () => {
     expect(sitemap).not.toContain('`${base}/systemes`');
   });
 
-  it("returns retained service details to the Specialists index", async () => {
+  it("returns retained service details to Accompagnement while Specialists is parked", async () => {
     const servicePage = await readSource(
       "src/app/(marketing)/services/[slug]/page.tsx",
     );
 
-    expect(servicePage).toContain('href="/specialistes"');
+    expect(servicePage).toContain('PUBLIC_SPECIALISTS_ENABLED ? "/specialistes" : "/accompagnement"');
     expect(servicePage).not.toContain('href="/services"');
-    expect(servicePage).toContain("Retour aux spécialistes");
+    expect(servicePage).toContain('PUBLIC_SPECIALISTS_ENABLED ? "Retour aux spécialistes" : "Retour à l’accompagnement"');
   });
 
   it("delivers live-session métier resources through the canonical Solutions routes", async () => {

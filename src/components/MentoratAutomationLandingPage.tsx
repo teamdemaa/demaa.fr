@@ -5,6 +5,7 @@ import AutomationCallbackControl from "@/components/AutomationCallbackControl";
 import Navbar from "@/components/Navbar";
 import { mentoratAutomationContent as content } from "@/lib/mentorat-automation-content";
 import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
+import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
 
 export default function MentoratAutomationLandingPage() {
   return (
@@ -14,13 +15,15 @@ export default function MentoratAutomationLandingPage() {
       <main className="overflow-x-clip bg-dema-cream text-brand-blue">
         <section className="px-5 pb-12 pt-14 text-center sm:px-8 sm:pb-16 sm:pt-20 lg:pt-24">
           <div className="mx-auto max-w-5xl">
-            <Link
-              href="/specialistes"
-              className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
-            >
-              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              Retour aux spécialistes
-            </Link>
+            {PUBLIC_SPECIALISTS_ENABLED ? (
+              <Link
+                href="/specialistes"
+                className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
+              >
+                <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                Retour aux spécialistes
+              </Link>
+            ) : null}
             <h1
               aria-label={content.hero.lead}
               className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}

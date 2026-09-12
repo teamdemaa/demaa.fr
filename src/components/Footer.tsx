@@ -2,6 +2,7 @@ import Link from "next/link";
 import { UserRound } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 import { isGuestProductEnabled } from "@/lib/guest-action-plan-security.server";
+import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
 
 const directoryLinks = [
   { label: "Annuaire outils", href: "/annuaire-outils" },
@@ -14,7 +15,9 @@ const directoryLinks = [
 ];
 
 const collaborationLinks = [
-  { label: "Spécialistes", href: "/specialistes" },
+  PUBLIC_SPECIALISTS_ENABLED
+    ? { label: "Spécialistes", href: "/specialistes" }
+    : { label: "Systèmes opérationnels", href: "/accompagnement" },
   { label: "Demaa Studio", href: "/studio" },
   { label: "Annonces", href: "/opportunites" },
   { label: "Rejoindre Team Demaa", href: "/opportunites?intent=team-demaa-profile" },

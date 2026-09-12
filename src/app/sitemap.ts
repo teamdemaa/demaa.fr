@@ -19,6 +19,7 @@ import { demaaSuppliers } from "@/lib/supplier-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 import { getPublishedCopyableModels } from "@/lib/copyable-model-catalog";
+import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
 
 export const dynamic = "force-dynamic";
 
@@ -35,7 +36,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${base}/solutions`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
-    { url: `${base}/specialistes`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.94 },
+    ...(PUBLIC_SPECIALISTS_ENABLED
+      ? [{ url: `${base}/specialistes`, lastModified: siteUpdatedAt, changeFrequency: "weekly" as const, priority: 0.94 }]
+      : []),
     { url: `${base}/sur-mesure`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/accompagnement`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.85 },
     { url: `${base}/modeles`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },

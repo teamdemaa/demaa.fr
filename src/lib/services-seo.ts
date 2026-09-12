@@ -1,6 +1,7 @@
 import "server-only";
 
 import type { CanonicalService } from "@/lib/canonical-service-catalog";
+import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
 import { getCanonicalOrigin } from "@/lib/site-url";
 
 export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
@@ -78,8 +79,8 @@ export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
       ? [{
           "@type": "ListItem",
           position: 2,
-          name: "Spécialistes",
-          item: `${origin}/specialistes`,
+          name: PUBLIC_SPECIALISTS_ENABLED ? "Spécialistes" : "Accompagnement",
+          item: `${origin}${PUBLIC_SPECIALISTS_ENABLED ? "/specialistes" : "/accompagnement"}`,
         }]
       : []),
     {
