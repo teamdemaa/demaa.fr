@@ -304,7 +304,7 @@ function getPublishedSolutionResources(sections: SystemPageSolutionSections) {
   const resources = new Map<string, RenderableSolutionSectionDto["placements"][number]["resource"]>();
 
   for (const section of sections) {
-    if (section.section === "models") continue;
+    if (section.section !== "software") continue;
     for (const placement of section.placements) {
       resources.set(placement.resource.resourceSlug, placement.resource);
     }
@@ -331,7 +331,7 @@ function getPublishedToolPlacements(sections: SystemPageSolutionSections) {
 function buildSystemPageTitle(
   data: SystemDetailPageData,
 ): string {
-  return `Solutions pour ${data.system.name} : outils, aides et réseaux | Demaa`;
+  return `Outils pour ${data.system.name} : logiciels adaptés | Demaa`;
 }
 
 export function buildSystemPageIntro(data: SystemDetailPageData): string {
@@ -364,7 +364,7 @@ function buildSystemPageDescription(
   if (publishedResources.length > 0) {
     const names = publishedResources.slice(0, 3).map((resource) => resource.name);
     parts.push(
-      `${publishedResources.length} ${publishedResources.length > 1 ? "Solutions publiées" : "Solution publiée"} pour ce système : ${names.join(", ")}.`,
+      `${publishedResources.length} ${publishedResources.length > 1 ? "outils publiés" : "outil publié"} pour cette activité : ${names.join(", ")}.`,
     );
   }
 
@@ -389,10 +389,10 @@ export function buildSystemPageMetadata(
       data.system.name,
       `système métier ${data.system.name.toLowerCase()}`,
       `process ${data.system.name.toLowerCase()}`,
-      `solutions entreprise ${data.system.name.toLowerCase()}`,
+      `outils entreprise ${data.system.name.toLowerCase()}`,
       ...(publishedResources.length > 0
         ? [
-            `solutions ${data.system.name.toLowerCase()}`,
+            `logiciels ${data.system.name.toLowerCase()}`,
             ...publishedResources.map((resource) => resource.name),
           ]
         : []),
@@ -437,7 +437,7 @@ export function buildSystemPageJsonLd(
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: `Organisation et solutions pour ${data.system.name}`,
+      name: `Processus et outils pour ${data.system.name}`,
       numberOfItems: listedProcesses.length + listedSolutions.length,
       itemListElement: [
         ...listedProcesses.map((process, index) => ({
@@ -503,8 +503,8 @@ export function buildSystemPageJsonLd(
         {
           "@type": "ListItem",
           position: 2,
-          name: "Solutions",
-          item: `${origin}/solutions`,
+          name: "Outils",
+          item: `${origin}/outils`,
         },
         {
           "@type": "ListItem",

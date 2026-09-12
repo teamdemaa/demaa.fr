@@ -25,9 +25,9 @@ const collaborationLinks = [
 ];
 
 const resourceLinks = [
-  { label: "Organisation", href: "/organiser" },
+  { label: "Outils", href: "/outils" },
+  { label: "Tutoriels", href: "/tutoriels" },
   { label: "Modèles à copier", href: "/modeles" },
-  { label: "Cas concrets et processus", href: "/organiser#cas-concrets" },
   { label: "Contenus", href: "/contenus" },
 ];
 
@@ -43,7 +43,7 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="space-y-4">
-            <Link href="/organiser" className="inline-flex">
+            <Link href="/sur-mesure" className="inline-flex">
               <DemaaWordmark
                 className="text-[2.55rem]"
                 colorClassName="text-brand-blue/56"

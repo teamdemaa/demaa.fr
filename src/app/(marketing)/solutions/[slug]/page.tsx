@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: SolutionPageProps): Promise<M
 
   if (!data) {
     return {
-      title: "Solutions métier introuvables - Demaa",
+      title: "Outils métier introuvables - Demaa",
       robots: { index: false, follow: false },
     };
   }

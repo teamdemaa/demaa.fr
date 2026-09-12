@@ -212,13 +212,13 @@ export default function SystemSearchHero({
           <h1
             className="text-balance font-light leading-[0.94] tracking-tight"
             style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
-            aria-label="Trouvez les solutions adaptées à votre activité"
+            aria-label="Trouvez les outils et logiciels adaptés à votre activité"
           >
             <span className="block font-sans font-light not-italic text-brand-blue/62 md:whitespace-nowrap">
-              Trouvez les solutions adaptées
+              Outils et logiciels
             </span>
             <span className="demaa-hero-title block text-dema-forest" aria-hidden="true">
-              à votre activité
+              adaptés à votre activité
             </span>
           </h1>
         </div>
@@ -330,7 +330,7 @@ export default function SystemSearchHero({
                       </p>
                     </div>
                     <span className="inline-flex shrink-0 items-center gap-2 text-xs text-dema-muted md:text-sm">
-                      Voir les solutions
+                      Voir les outils
                       {activeIndex === index ? (
                         <CornerDownLeft className="h-3.5 w-3.5" aria-hidden="true" />
                       ) : null}

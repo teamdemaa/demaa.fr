@@ -145,7 +145,7 @@ describe("Mise en place d’un système commercial et client", () => {
     expect(markup).toContain("Vous préférez que nous le mettions en place pour vous ?");
   });
 
-  it("replaces promotional automation CTAs on Solutions with one Organiser bridge", async () => {
+  it("replaces promotional automation CTAs on Outils with one Tutoriels bridge", async () => {
     const [hub, systemPage, bridge, sitemap, nextConfig] = await Promise.all([
       readSource("src/components/SystemsHubPage.tsx"),
       readSource("src/app/(marketing)/solutions/[slug]/page.tsx"),
@@ -159,9 +159,9 @@ describe("Mise en place d’un système commercial et client", () => {
     expect(hub).toContain("<StructureNewsletterBlock />");
     expect(systemPage).toContain("<OrganiserDiscoveryCta />");
     expect(systemPage).not.toContain("MentoratAutomationCta");
-    expect(bridge).toContain("Des cas concrets pour organiser votre activité");
-    expect(bridge).toContain("Voir les cas concrets");
-    expect(bridge).toContain('href="/organiser#cas-concrets"');
+    expect(bridge).toContain("Des tutoriels pour passer à l’action");
+    expect(bridge).toContain("Voir les tutoriels");
+    expect(bridge).toContain('href="/tutoriels"');
     expect(sitemap).toContain("/accompagnement");
     expect(sitemap).not.toContain("`${base}/automatisation`");
     expect(nextConfig).toMatch(/source: '\/automatisation',[\s\S]*?destination: '\/accompagnement'/);

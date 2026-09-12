@@ -30,7 +30,7 @@ export type ContentCatalogEntry = Readonly<{
   category: ContentCategory;
   surfaces: readonly ContentSurface[];
   tags: readonly string[];
-  status: "draft" | "published";
+  status: "archived" | "draft" | "published";
   publishedAt: string;
   updatedAt: string;
   verifiedAt: string;
@@ -223,7 +223,7 @@ function defineOrganisationContent(
     category: input.category,
     surfaces: ["organisation"],
     tags: input.tags,
-    status: "published",
+    status: "archived",
     publishedAt: "2026-09-02",
     updatedAt: "2026-09-08",
     verifiedAt: "2026-09-08",
@@ -1096,6 +1096,14 @@ export function getPublishedOrganisationContent(): ContentCatalogEntry[] {
   return getAllPublishedContent().filter((entry) =>
     entry.surfaces.includes("organisation"),
   );
+}
+
+export function getArchivedOrganisationContent(): ContentCatalogEntry[] {
+  return contentCatalog
+    .filter((entry) => (
+      entry.status === "archived" && entry.surfaces.includes("organisation")
+    ))
+    .map((entry) => ({ ...entry }));
 }
 
 export const ORGANISATION_TRANSVERSE_LAUNCH_MINIMUM = 6;

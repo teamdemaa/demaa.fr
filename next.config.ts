@@ -62,7 +62,7 @@ const nextConfig: NextConfig = {
       },
       {
         pathname: '/images/organiser/thumbnails/**',
-        search: '?v=20260908-quotes',
+        search: '?v=20260912-tutorials',
       },
     ],
   },
@@ -99,22 +99,32 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/organisation',
-        destination: '/organiser',
+        destination: '/tutoriels',
+        permanent: true,
+      },
+      {
+        source: '/organiser',
+        destination: '/tutoriels',
         permanent: true,
       },
       {
         source: '/organiser/processus',
-        destination: '/organiser',
+        destination: '/tutoriels',
         permanent: true,
       },
       {
         source: '/structuration',
-        destination: '/organiser',
+        destination: '/tutoriels',
         permanent: true,
       },
       {
         source: '/structurer',
-        destination: '/organiser',
+        destination: '/tutoriels',
+        permanent: true,
+      },
+      {
+        source: '/solutions',
+        destination: '/outils',
         permanent: true,
       },
       {
@@ -161,7 +171,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/systemes',
-        destination: '/solutions',
+        destination: '/outils',
         permanent: true,
       },
       {
@@ -171,12 +181,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/systemes-operationnels',
-        destination: '/solutions',
+        destination: '/outils',
         permanent: true,
       },
       {
         source: '/kits-operationnels',
-        destination: '/solutions',
+        destination: '/outils',
         permanent: true,
       },
       {
@@ -361,7 +371,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/ressources',
-        destination: '/organiser',
+        destination: '/tutoriels',
         permanent: true,
       },
       {

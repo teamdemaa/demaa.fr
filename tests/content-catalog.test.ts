@@ -7,6 +7,7 @@ vi.mock("server-only", () => ({}));
 import nextConfig from "../next.config";
 import {
   getAllPublishedContent,
+  getArchivedOrganisationContent,
   getContentFormat,
   getPublishedOrganisationContent,
   getPublishedContentBySlug,
@@ -22,7 +23,7 @@ import {
 describe("canonical content catalog", () => {
   it("publishes the electronic invoicing article with a progressive slide medium", () => {
     const entries = getAllPublishedContent();
-    expect(entries).toHaveLength(21);
+    expect(entries).toHaveLength(1);
 
     const entry = getPublishedContentBySlug("facturation-electronique");
     expect(entry).not.toBeNull();
@@ -39,16 +40,12 @@ describe("canonical content catalog", () => {
     }
   });
 
-  it("keeps electronic invoicing in Contenus and prepares real Organisation videos", () => {
-    const contentPage = readFileSync(
-      resolve(process.cwd(), "src/app/(marketing)/contenus/[slug]/page.tsx"),
-      "utf8",
-    );
-
-    expect(contentPage).toContain('<Navbar minimal publicNavigationActiveView="academy" />');
+  it("keeps the former Organisation articles archived without deleting their source", () => {
     const organisationContent = getPublishedOrganisationContent();
-    expect(organisationContent).toHaveLength(20);
-    expect(organisationContent.map(({ title }) => title)).toEqual([
+    const archivedOrganisationContent = getArchivedOrganisationContent();
+    expect(organisationContent).toEqual([]);
+    expect(archivedOrganisationContent).toHaveLength(20);
+    expect(archivedOrganisationContent.map(({ title }) => title)).toEqual([
       "Comment préparer ses devis et propositions commerciales plus rapidement ?",
       "Comment construire une grille tarifaire claire pour son équipe ?",
       "Comment relancer ses devis et propositions sans rien oublier ?",
@@ -70,9 +67,10 @@ describe("canonical content catalog", () => {
       "Comment construire un tableau de bord réellement utile ?",
       "Comment structurer l’arrivée d’un salarié pour le rendre autonome plus vite ?",
     ]);
-    expect(organisationContent.every((entry) => getContentFormat(entry) === "Article")).toBe(true);
-    expect(organisationContent.every((entry) => entry.title.endsWith("?"))).toBe(true);
-    expect(JSON.stringify(organisationContent)).not.toMatch(
+    expect(archivedOrganisationContent.every((entry) => entry.status === "archived")).toBe(true);
+    expect(archivedOrganisationContent.every((entry) => getContentFormat(entry) === "Article")).toBe(true);
+    expect(archivedOrganisationContent.every((entry) => entry.title.endsWith("?"))).toBe(true);
+    expect(JSON.stringify(archivedOrganisationContent)).not.toMatch(
       /\b(index|registre|matrice|escalade|déterministe|déclencheur|flux|référent)\b|vue de pilotage|source de référence|carte de continuité|carte de données|preuve observable|arborescence|convention de nommage/i,
     );
     const expectedStructure = [
@@ -82,7 +80,7 @@ describe("canonical content catalog", () => {
       "Construire le système avec ChatGPT",
       "La checklist de mise en place",
     ];
-    for (const entry of organisationContent) {
+    for (const entry of archivedOrganisationContent) {
       expect(entry.article.map(({ heading }) => heading), entry.slug).toEqual(
         expectedStructure,
       );
@@ -100,24 +98,15 @@ describe("canonical content catalog", () => {
       expect(entry.media.youtubeId, entry.slug).toBeUndefined();
       expect(entry.sources, entry.slug).toEqual([]);
     }
-    expect(contentPage).toContain('entry.surfaces.includes("organisation")');
-    expect(contentPage).toContain('isOrganisationContent ? "/organiser#cas-concrets" : "/contenus"');
-    expect(contentPage).toContain("{!isOrganisationContent ? (");
-    expect(contentPage).toContain("www.youtube-nocookie.com/embed/");
-    expect(contentPage).toContain("<CaseVideoOverview");
-    expect(contentPage).toContain("items={entry.article.map((section) => section.heading)}");
-    expect(contentPage).toContain("<NumberedSectionHeading");
-    expect(contentPage).toContain("<OrganiserProcessMap");
-    expect(contentPage).toContain("Le processus une fois en place");
-    expect(contentPage).toContain("Pour le mettre en place");
-    expect(contentPage).toContain("Le modèle prêt à copier");
-    expect(contentPage).toContain("Utiliser ce modèle");
-    expect(contentPage).toContain("?from=organisation");
-    expect(contentPage).toContain('<MentoratAutomationCta contentSlug={entry.slug} variant="organisation" />');
+    const sitemap = readFileSync(resolve(process.cwd(), "src/app/sitemap.ts"), "utf8");
+    expect(sitemap).not.toContain("getPublishedOrganisationContent");
+    expect(sitemap).not.toContain("getPublicOrganiserContent");
   });
 
   it("uses concrete, subject-specific milestones for employee onboarding", () => {
-    const entry = getPublishedContentBySlug("structurer-integration-salarie");
+    const entry = getArchivedOrganisationContent().find(
+      ({ slug }) => slug === "structurer-integration-salarie",
+    );
 
     expect(entry?.article[2]?.process).toEqual([
       "Avant l’arrivée : tout est prêt",
@@ -135,7 +124,7 @@ describe("canonical content catalog", () => {
     expect(ORGANISATION_TRANSVERSE_LAUNCH_MINIMUM).toBe(6);
     expect(isOrganisationTransverseLibraryReady(5)).toBe(false);
     expect(isOrganisationTransverseLibraryReady(6)).toBe(true);
-    expect(isOrganisationTransverseLibraryReady()).toBe(true);
+    expect(isOrganisationTransverseLibraryReady()).toBe(false);
   });
 
   it("uses only the four official sources selected for the legal review", () => {
@@ -179,6 +168,7 @@ describe("canonical content catalog", () => {
     const footer = readFileSync(resolve(process.cwd(), "src/components/Footer.tsx"), "utf8");
     const sitemap = readFileSync(resolve(process.cwd(), "src/app/sitemap.ts"), "utf8");
     expect(footer).toContain('{ label: "Contenus", href: "/contenus" }');
+    expect(footer).toContain('{ label: "Tutoriels", href: "/tutoriels" }');
     expect(sitemap).toContain("`${base}/contenus`");
     expect(sitemap).toContain("`${base}/contenus/${entry.slug}`");
     expect(sitemap).not.toContain("courseContentEntries");

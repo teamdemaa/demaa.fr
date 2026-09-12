@@ -6,44 +6,39 @@ async function readSource(path: string) {
 }
 
 describe("copyable model public routes", () => {
-  it("makes concrete cases primary while keeping the model library available", async () => {
-    const [page, organiserPage, organiserHub, organiserLibrary, navbar, footer, modelsIndex, modelCard] = await Promise.all([
+  it("makes models part of Outils while keeping the full model library available", async () => {
+    const [page, toolsPage, toolsHub, toolsModels, navbar, footer, modelsIndex, modelCard] = await Promise.all([
       readSource("src/app/(marketing)/modeles/page.tsx"),
-      readSource("src/app/(marketing)/organiser/page.tsx"),
-      readSource("src/components/OrganiserHub.tsx"),
-      readSource("src/components/OrganiserLibrary.tsx"),
+      readSource("src/app/(marketing)/outils/page.tsx"),
+      readSource("src/components/SystemsHubPage.tsx"),
+      readSource("src/components/ToolsModelsSection.tsx"),
       readSource("src/components/PublicActionPlanNavigation.tsx"),
       readSource("src/components/Footer.tsx"),
       readSource("src/components/CopyableModelsIndex.tsx"),
       readSource("src/components/CopyableModelCard.tsx"),
     ]);
 
-    expect(page).toContain('<Navbar minimal publicNavigationActiveView="academy" />');
+    expect(page).toContain('<Navbar minimal publicNavigationActiveView="solutions" />');
     expect(page).not.toContain("OrganiserSectionNavigation");
     expect(page).toContain("<StructureNewsletterBlock />");
     expect(page).not.toContain("<ModelProcessesBridge />");
-    expect(organiserPage).not.toContain("OrganiserSectionNavigation");
-    expect(organiserPage).toContain("<OrganiserHub />");
+    expect(toolsPage).toContain("<SystemsHubPage />");
     expect(page).toContain('path: "/modeles"');
-    expect(navbar).toContain('label: "Organisation"');
-    expect(navbar).toContain('href: "/organiser"');
-    expect(organiserHub).toContain("getPublishedCopyableModels");
-    expect(organiserHub).toContain("<OrganiserLibrary");
-    expect(organiserHub).not.toContain("SOLUTION_RAIL_CLASS_NAME");
-    expect(organiserLibrary).toContain("<CopyableModelCard");
-    expect(organiserLibrary).not.toContain("Modèles prêts à copier");
-    expect(organiserLibrary).toContain('role="tablist"');
-    expect(organiserLibrary).toContain("Tutoriel");
-    expect(organiserLibrary).toContain("Modèles");
-    expect(organiserLibrary).not.toContain("Voir tous les modèles");
-    expect(organiserLibrary).not.toContain('href="/modeles?from=organisation"');
+    expect(navbar).toContain('label: "Outils"');
+    expect(navbar).toContain('href: "/outils"');
+    expect(toolsHub).toContain("getPublishedCopyableModels");
+    expect(toolsHub).toContain("<ToolsModelsSection");
+    expect(toolsModels).toContain("<CopyableModelCard");
+    expect(toolsModels).toContain("Modèles à copier");
+    expect(toolsModels).toContain("Voir tous les modèles");
+    expect(toolsModels).toContain(".slice(0, 6)");
     expect(page).toContain('fromOrganisation={source === "organisation"}');
     expect(modelsIndex).toContain('href="/organiser#cas-concrets"');
     expect(modelsIndex).toContain("Retour à Organisation");
     expect(modelsIndex).toContain("`/modeles/${model.slug}?from=organisation`");
     expect(footer).toContain('{ label: "Modèles à copier", href: "/modeles" }');
-    expect(footer).toContain('{ label: "Organisation", href: "/organiser" }');
-    expect(footer).toContain('{ label: "Cas concrets et processus", href: "/organiser#cas-concrets" }');
+    expect(footer).toContain('{ label: "Outils", href: "/outils" }');
+    expect(footer).toContain('{ label: "Tutoriels", href: "/tutoriels" }');
     expect(modelsIndex).toContain('style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}');
     expect(modelsIndex).toContain("block text-brand-blue/62");
     expect(modelsIndex).toContain("demaa-hero-title block text-dema-forest");
@@ -60,10 +55,7 @@ describe("copyable model public routes", () => {
     expect(modelCard).toContain("transition-colors duration-150");
     expect(modelCard).not.toContain("hover:-translate-y");
     expect(modelCard).not.toContain("hover:shadow-");
-    expect(organiserLibrary).toContain('id="cas-concrets"');
-    expect(organiserLibrary).toContain('aria-labelledby="organiser-models-tab"');
-    expect(organiserLibrary).toContain("OrganiserProcessMap");
-    expect(organiserLibrary).not.toContain(".slice(0, 5)");
+    expect(toolsModels).toContain('id="modeles"');
   });
 
   it("supports a full detail page and an intercepted modal with the same content", async () => {
@@ -79,8 +71,10 @@ describe("copyable model public routes", () => {
     ]);
 
     expect(page).toContain('source === "organisation"');
-    expect(page).toContain('{ href: "/modeles?from=organisation", label: "Retour aux modèles" }');
-    expect(page).toContain('<Navbar minimal publicNavigationActiveView="academy" />');
+    expect(page).toContain('source === "tutoriels"');
+    expect(page).toContain('{ href: "/tutoriels", label: "Retour aux tutoriels" }');
+    expect(page).toContain('{ href: "/outils#modeles", label: "Retour aux outils" }');
+    expect(page).toContain('<Navbar minimal publicNavigationActiveView="solutions" />');
     expect(modal).toContain('<CopyableModelDetails model={model} variant="modal" />');
     expect(page).toContain("export const dynamicParams = false");
     expect(modal).toContain("export const dynamicParams = false");
@@ -113,7 +107,7 @@ describe("copyable model public routes", () => {
     expect(details).toContain('variant="modele"');
     expect(details).not.toContain("Faire adapter ce modèle");
     expect(details).not.toContain("550 € HT / jour");
-    expect(details).toContain("model.relatedOrganiserSlug");
+    expect(details).not.toContain("model.relatedOrganiserSlug");
     expect(details).not.toContain("Le flux couvert");
     expect(details).not.toContain("Structure incluse");
     expect(details).not.toContain("Modèle gratuit · Copie dans votre propre espace");

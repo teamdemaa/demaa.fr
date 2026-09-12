@@ -56,7 +56,7 @@ describe("Organiser process guides", () => {
       expect(content.processGuide?.faqs).toHaveLength(3);
       expect(content.identity.title).toMatch(/^(Comment|Quel|À partir|Faut-il)/);
       expect(content.identity.card.image).toBe(
-        `/images/organiser/thumbnails/${content.identity.slug}.png?v=20260908-quotes`,
+        `/images/organiser/thumbnails/${content.identity.slug}.png?v=20260912-tutorials`,
       );
       expect(`${content.identity.shortTitle} | Organisation Demaa`.length)
         .toBeLessThanOrEqual(60);

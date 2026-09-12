@@ -2,10 +2,7 @@ import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 import {
   getAllPublishedContent,
-  getPublishedOrganisationContent,
-  isOrganisationTransverseLibraryReady,
 } from "@/lib/content-catalog";
-import { getPublicOrganiserContent } from "@/lib/academy-course-content";
 import { getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
 import { getAccountingFirms } from "@/lib/accounting-directory";
@@ -20,6 +17,7 @@ import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-director
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 import { getPublishedCopyableModels } from "@/lib/copyable-model-catalog";
 import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
+import { getPublishedTutorials } from "@/lib/tutorial-catalog";
 
 export const dynamic = "force-dynamic";
 
@@ -35,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${base}/solutions`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
+    { url: `${base}/outils`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
     ...(PUBLIC_SPECIALISTS_ENABLED
       ? [{ url: `${base}/specialistes`, lastModified: siteUpdatedAt, changeFrequency: "weekly" as const, priority: 0.94 }]
       : []),
@@ -51,7 +49,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/annuaire-reseaux-pro`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-newsletters`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/organiser`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.93 },
+    { url: `${base}/tutoriels`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.93 },
     { url: `${base}/contenus`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/opportunites`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.65 },
     { url: `${base}/mentions-legales`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
@@ -60,20 +58,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/politique-de-cookies`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/cgv`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
   ];
-
-  const legacyOrganiserEntries = isOrganisationTransverseLibraryReady(
-    getPublishedOrganisationContent().length,
-  )
-    ? []
-    : getPublicOrganiserContent();
-  const academyEntries: MetadataRoute.Sitemap = legacyOrganiserEntries.map(
-    (content) => ({
-      url: `${base}/organiser/${content.identity.slug}`,
-      lastModified: siteUpdatedAt,
-      changeFrequency: "monthly" as const,
-      priority: content.kind === "case-study" ? 0.72 : 0.78,
-    }),
-  );
 
   const contentEntries: MetadataRoute.Sitemap = getAllPublishedContent().map(
     (entry) => ({
@@ -84,6 +68,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...(entry.media.slides?.[0]
         ? { images: [`${base}${entry.media.slides[0]}`] }
         : {}),
+    }),
+  );
+
+  const tutorialEntries: MetadataRoute.Sitemap = getPublishedTutorials().map(
+    (tutorial) => ({
+      url: `${base}/tutoriels/${tutorial.slug}`,
+      lastModified: new Date(tutorial.updatedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.82,
+      images: [`${base}${tutorial.thumbnail.split("?")[0]}`],
     }),
   );
 
@@ -205,7 +199,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...staticRoutes,
     ...contentEntries,
-    ...academyEntries,
+    ...tutorialEntries,
     ...newsletterSitemapEntries,
     ...toolEntries,
     ...freeToolEntries,

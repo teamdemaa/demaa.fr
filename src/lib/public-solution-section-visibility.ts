@@ -17,9 +17,9 @@ export function filterPublicSolutionSections<
 }
 
 /**
- * Public system pages present third-party recommendations only. Canonical
- * Demaa Services keep travelling in the system payload for strict contextual
- * Action aids, but their public destination remains `/services`.
+ * Public métier pages now focus on tools and software. The other sections stay
+ * in the registry and in private action-plan payloads so they can be repackaged
+ * later without losing the curated data.
  */
 const HIDDEN_RECOMMENDATION_CATEGORY = /\b(?:formation|recrutement)\b/i;
 
@@ -27,7 +27,7 @@ export function filterPublicSystemRecommendationSections(
   sections: readonly RenderableSolutionSectionDto[],
 ): RenderableSolutionSectionDto[] {
   return filterPublicSolutionSections(sections)
-    .filter(({ section }) => section !== "services")
+    .filter(({ section }) => section === "software")
     .map((group) => ({
       ...group,
       placements: group.placements.filter(
