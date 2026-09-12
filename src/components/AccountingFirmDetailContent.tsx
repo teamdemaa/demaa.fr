@@ -2,6 +2,7 @@ import type React from "react";
 import Link from "next/link";
 import { ArrowLeft, Building2, CheckCircle2, Globe2, Languages, MapPin } from "lucide-react";
 import AccountingAppointmentDialog from "@/components/AccountingAppointmentDialog";
+import AccountingClaimFirmButton from "@/components/AccountingClaimFirmButton";
 import AccountingFirmCard from "@/components/AccountingFirmCard";
 import type { AccountingFirm } from "@/lib/accounting-directory";
 
@@ -68,6 +69,7 @@ export default function AccountingFirmDetailContent({
             </p>
             <div className="mt-5 flex flex-col gap-2">
               <AccountingAppointmentDialog firm={firm} />
+              <AccountingClaimFirmButton firm={firm} />
               {externalUrl ? (
                 <a
                   href={externalUrl}

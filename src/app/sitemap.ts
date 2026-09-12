@@ -9,6 +9,7 @@ import { getPublicOrganiserContent } from "@/lib/academy-course-content";
 import { getAllNewsletters } from "@/lib/newsletter-content";
 import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
 import { getAccountingFirms } from "@/lib/accounting-directory";
+import { accountingDirectorySeoPages } from "@/lib/accounting-directory-seo-pages";
 import { getEnterpriseCatalog } from "@/lib/enterprise-annuaire-server";
 import { demaaFinanceItems } from "@/lib/finance-catalog";
 import { demaaProNetworks } from "@/lib/pro-network-catalog";
@@ -161,6 +162,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.75,
   }));
 
+  const accountingDirectorySeoEntries: MetadataRoute.Sitemap = accountingDirectorySeoPages.map(
+    (seoPage) => ({
+      url: `${base}/annuaire-experts-comptables/${seoPage.slug}`,
+      lastModified: siteUpdatedAt,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    }),
+  );
+
   const sectorEntries: MetadataRoute.Sitemap = sectorPageDefinitions.map((sector) => ({
     url: `${base}/secteurs/${sector.slug}`,
     lastModified: siteUpdatedAt,
@@ -202,6 +212,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...aidEntries,
     ...proNetworkEntries,
     ...accountingFirmEntries,
+    ...accountingDirectorySeoEntries,
     ...sectorEntries,
     ...toolSectorEntries,
     ...systemEntries,

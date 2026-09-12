@@ -2,6 +2,7 @@
 
 import type React from "react";
 import { useCallback, useEffect, useId, useState } from "react";
+import { createPortal } from "react-dom";
 import { ArrowUpRight, LoaderCircle, Search, X } from "lucide-react";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import type { AccountingFirm } from "@/lib/accounting-directory";
@@ -204,11 +205,12 @@ export default function AccountingAppointmentDialog({
         <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
       </button>
 
-      {isOpen ? (
-        <div
-          className="fixed inset-0 z-[100] flex items-end justify-center bg-brand-blue/45 sm:items-center sm:px-4 sm:py-8"
-          onClick={closeDialog}
-        >
+      {isOpen
+        ? createPortal(
+            <div
+              className="fixed inset-0 z-[100] flex items-end justify-center bg-brand-blue/45 sm:items-center sm:px-4 sm:py-8"
+              onClick={closeDialog}
+            >
           <div
             ref={dialogRef}
             className="demaa-dialog-shadow max-h-[88dvh] w-full max-w-2xl overflow-y-auto rounded-t-[1.25rem] border border-dema-line bg-dema-paper p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] outline-none sm:max-h-[92vh] sm:rounded-[1.25rem]"
@@ -385,8 +387,10 @@ export default function AccountingAppointmentDialog({
               </form>
             )}
           </div>
-        </div>
-      ) : null}
+            </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }
