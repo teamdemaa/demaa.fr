@@ -79,11 +79,11 @@ describe("Demaa application navbar", () => {
     expect(source).not.toContain('label: "Organiser"');
     expect(source).toContain('label: "Solutions", href: "/solutions"');
     expect(source).toContain('label: "Spécialistes", href: "/specialistes"');
-    expect(source.indexOf('label: "Organisation"')).toBeLessThan(
+    expect(source.indexOf('label: "Spécialistes"')).toBeLessThan(
       source.indexOf('label: "Solutions"'),
     );
     expect(source.indexOf('label: "Solutions"')).toBeLessThan(
-      source.indexOf('label: "Spécialistes"'),
+      source.indexOf('label: "Organisation"'),
     );
     expect(source).toContain("leading-tight");
     expect(source).not.toContain("leading-none");
