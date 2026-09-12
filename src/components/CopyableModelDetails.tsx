@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { ArrowLeft, Check } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import CopyableModelCopyLink from "@/components/CopyableModelCopyLink";
@@ -88,13 +88,6 @@ export default function CopyableModelDetails({
           )}
         </div>
       </div>
-
-      {model.relatedOrganiserSlug && model.relatedOrganiserLabel ? (
-        <Link href={`/organiser/${model.relatedOrganiserSlug}`} className="mt-8 flex min-h-16 items-center justify-between gap-4 border-y border-dema-line px-2 py-4 text-brand-blue transition hover:text-dema-forest">
-          <span>{model.relatedOrganiserLabel}</span>
-          <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
-        </Link>
-      ) : null}
 
       <div className="mt-8">
         <MentoratAutomationCta modelSlug={model.slug} variant="modele" />

@@ -41,24 +41,24 @@ describe("system navigation performance contract", () => {
     expect(searchSource).not.toContain("prefetch={false}");
     expect(searchSource).not.toContain("useLinkStatus");
     expect(searchSource).not.toContain("SystemDirectoryCardPendingOverlay");
-    expect(detailSource).toMatch(/<Link\s+href="\/solutions"/);
-    expect(detailSource).toContain("Retour aux solutions");
+    expect(detailSource).toMatch(/<Link\s+href="\/outils"/);
+    expect(detailSource).toContain("Retour aux outils");
     expect(detailSource).not.toContain("router.back()");
   });
 
-  it("uses the validated Solutions wording on the directory", async () => {
+  it("uses the focused Outils wording on the directory", async () => {
     const [pageSource, searchSource] = await Promise.all([
-      readSource("src/app/(marketing)/solutions/page.tsx"),
+      readSource("src/app/(marketing)/outils/page.tsx"),
       readSource("src/components/SystemSearchHero.tsx"),
     ]);
 
     expect(pageSource).toContain(
-      "Solutions adaptées à votre activité | Demaa",
+      "Outils et modèles adaptés à votre activité | Demaa",
     );
     expect(searchSource).toContain(
-      'aria-label="Trouvez les solutions adaptées à votre activité"',
+      'aria-label="Trouvez les outils et logiciels adaptés à votre activité"',
     );
-    expect(searchSource).toContain("Trouvez les solutions adaptées");
+    expect(searchSource).toContain("Outils et logiciels");
     expect(searchSource).not.toContain(
       "Des outils et partenaires utiles, sélectionnés selon votre métier.",
     );

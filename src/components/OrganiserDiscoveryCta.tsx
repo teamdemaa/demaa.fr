@@ -13,17 +13,17 @@ export default function OrganiserDiscoveryCta() {
             id="organiser-discovery-heading"
             className="text-2xl font-light leading-tight tracking-[-0.035em] text-brand-blue sm:text-3xl"
           >
-            Des cas concrets pour organiser votre activité
+            Des tutoriels pour passer à l’action
           </h2>
           <p className="mt-3 text-sm leading-6 text-dema-muted sm:text-base sm:leading-7">
-            Découvrez des processus expliqués étape par étape, avec les modèles et les outils utiles pour les mettre en place.
+            Suivez des pas-à-pas construits autour des modèles Demaa que vous pouvez copier et adapter.
           </p>
         </div>
         <Link
-          href="/organiser#cas-concrets"
+          href="/tutoriels"
           className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-dema-forest px-6 text-sm font-semibold text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
         >
-          Voir les cas concrets
+          Voir les tutoriels
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </div>

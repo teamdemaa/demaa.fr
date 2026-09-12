@@ -10,7 +10,7 @@ export const ORGANISER_THUMBNAIL_SIZE = {
   width: 1280,
 } as const;
 
-export const ORGANISER_THUMBNAIL_VERSION = "20260908-quotes";
+export const ORGANISER_THUMBNAIL_VERSION = "20260912-tutorials";
 
 export type OrganiserThumbnailIllustration =
   | "accounting-requests"
@@ -56,6 +56,34 @@ export type OrganiserThumbnailDefinition = Readonly<{
 }>;
 
 const ORGANISER_THUMBNAILS: readonly OrganiserThumbnailDefinition[] = [
+  {
+    slug: "creer-pipeline-commercial-airtable",
+    lines: ["Où en sont", "mes prospects ?"],
+    illustration: "dossier-progress",
+    quote: true,
+    fontSize: 88,
+  },
+  {
+    slug: "suivre-devis-relances-airtable",
+    lines: ["Quels devis relancer", "aujourd’hui ?"],
+    illustration: "team-followup",
+    quote: true,
+    fontSize: 78,
+  },
+  {
+    slug: "organiser-projets-missions-clients-airtable",
+    lines: ["Où en sont", "mes missions clients ?"],
+    illustration: "agency-mission",
+    quote: true,
+    fontSize: 78,
+  },
+  {
+    slug: "planifier-interventions-chantiers-airtable",
+    lines: ["Qui intervient,", "où et quand ?"],
+    illustration: "technician-planning",
+    quote: true,
+    fontSize: 84,
+  },
   {
     slug: "preparer-devis-propositions-commerciales",
     lines: ["Mes devis prennent", "trop de temps"],

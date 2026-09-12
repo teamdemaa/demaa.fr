@@ -188,11 +188,7 @@ describe("system Solutions UI", () => {
 
   it("builds the focused public rail sequence while keeping hidden registry data and SEO published-only", async () => {
     const revision = parseFirebaseSolutionRegistryRevision(snapshot);
-    const expectedPublicOrder = [
-      "software",
-      "providers",
-      "financing",
-    ] as const;
+    const expectedPublicOrder = ["software"] as const;
 
     for (const system of enterpriseCatalog) {
       const selectedSections = selectRenderableSolutionSectionsFromRevision(
@@ -224,10 +220,7 @@ describe("system Solutions UI", () => {
       composePublicSolutionSectionsForSystem(systemSlug, selectedSections),
     );
     expect(visibleSections.map(({ section }) => section)).toEqual(expectedPublicOrder);
-    expect(
-      visibleSections.find(({ section }) => section === "providers")?.placements
-        .map(({ resource }) => resource.resourceSlug),
-    ).toEqual(["amazon-business"]);
+    expect(visibleSections.find(({ section }) => section === "providers")).toBeUndefined();
     expect(selectedSections.map(({ section }) => section)).toContain("networks");
     expect(visibleSections.map(({ section }) => section)).not.toEqual(
       expect.arrayContaining(["networks", "aids"]),
@@ -236,11 +229,7 @@ describe("system Solutions UI", () => {
     const markup = renderToStaticMarkup(
       createElement(SystemSolutionsTab, { sections: visibleSections }),
     );
-    const expectedHeadings = [
-      "Outils et logiciels",
-      "Fournisseurs",
-      "Banque &amp; Financement",
-    ];
+    const expectedHeadings = ["Outils et logiciels"];
     for (const [index, heading] of expectedHeadings.entries()) {
       expect(markup).toContain(heading);
       if (index > 0) {
@@ -250,6 +239,8 @@ describe("system Solutions UI", () => {
     }
     expect(markup).not.toContain("Réseaux professionnels");
     expect(markup).not.toContain("Aides &amp; Subventions");
+    expect(markup).not.toContain("Fournisseurs");
+    expect(markup).not.toContain("Banque &amp; Financement");
     expect(markup).not.toContain("Financement et aides");
 
     const publishedSections = selectRenderableSolutionSectionsFromRevision(

@@ -69,11 +69,11 @@ export default function SystemDetailContent({
     >
       {!embedded ? (
         <Link
-          href="/solutions"
+          href="/outils"
           className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          Retour aux solutions
+          Retour aux outils
         </Link>
       ) : null}
 
@@ -107,7 +107,7 @@ export default function SystemDetailContent({
       </div>
 
       <div className={`space-y-10 ${embedded ? "mt-1" : "mt-8 sm:mt-9"}`}>
-        <h2 className="sr-only">Solutions pour {system.name}</h2>
+        <h2 className="sr-only">Outils pour {system.name}</h2>
         <SystemSolutionsTab
           sections={solutionSections}
           initialResourceSlug={initialResourceSlug}

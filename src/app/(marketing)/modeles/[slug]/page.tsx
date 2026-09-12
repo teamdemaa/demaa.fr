@@ -40,12 +40,16 @@ export default async function ModelPage({ params, searchParams }: ModelPageProps
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="academy" />
+      <Navbar minimal publicNavigationActiveView="solutions" />
       <main className="min-h-screen bg-background px-4 pb-20 pt-8 sm:px-6 lg:px-8">
         <CopyableModelDetails
-          backLink={source === "organisation"
-            ? { href: "/modeles?from=organisation", label: "Retour aux modèles" }
-            : undefined}
+          backLink={source === "tutoriels"
+            ? { href: "/tutoriels", label: "Retour aux tutoriels" }
+            : source === "outils"
+              ? { href: "/outils#modeles", label: "Retour aux outils" }
+              : source === "organisation"
+                ? { href: "/tutoriels", label: "Retour aux tutoriels" }
+                : undefined}
           model={model}
         />
       </main>

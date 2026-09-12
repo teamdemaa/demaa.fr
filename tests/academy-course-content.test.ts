@@ -121,11 +121,11 @@ describe("academy course content", () => {
     }
   });
 
-  it("keeps historical content reachable but out of the public sitemap", () => {
+  it("keeps historical content source available but out of the public sitemap", () => {
     const sitemap = readFileSync(resolve(process.cwd(), "src/app/sitemap.ts"), "utf8");
     const seo = readFileSync(resolve(process.cwd(), "src/lib/academy-content-seo.ts"), "utf8");
 
-    expect(sitemap).toContain("getPublicOrganiserContent");
+    expect(sitemap).not.toContain("getPublicOrganiserContent");
     expect(sitemap).not.toContain("getAllAcademyContent");
     expect(seo).toContain("{ index: false, follow: true }");
   });

@@ -56,45 +56,41 @@ describe("Demaa application navbar", () => {
     expect(proxySource).toContain('if (pathname === "/")');
     expect(proxySource).toContain("buildDefaultHomeSurMesureHref(request.nextUrl.searchParams)");
     expect(proxySource).toContain("NextResponse.redirect(new URL(surMesureHref, request.url), 308)");
-    expect(navbarSource).toContain(': "/organiser"}');
+    expect(navbarSource).toContain(': "/sur-mesure"}');
     expect(nextConfigSource).toMatch(
-      /source: '\/systemes',[\s\S]*?destination: '\/solutions',/,
+      /source: '\/systemes',[\s\S]*?destination: '\/outils',/,
     );
     expect(nextConfigSource).toMatch(
-      /source: '\/kits-operationnels',[\s\S]*?destination: '\/solutions',/,
+      /source: '\/kits-operationnels',[\s\S]*?destination: '\/outils',/,
     );
   });
 
-  it("uses Sur mesure as the primary public entry and keeps Organiser as the content hub", async () => {
+  it("uses Sur mesure first, followed by Outils and Tutoriels", async () => {
     const source = await readFile(
       new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
       "utf8",
     );
-    const organiserIndex = await readFile(
-      new URL("../src/app/(marketing)/organiser/page.tsx", import.meta.url),
+    const tutorialsIndex = await readFile(
+      new URL("../src/app/(marketing)/tutoriels/page.tsx", import.meta.url),
       "utf8",
     );
 
-    expect(source).toContain('label: "Organisation", href: "/organiser"');
-    expect(source).not.toContain('label: "Organiser"');
-    expect(source).toContain('label: "Solutions", href: "/solutions"');
+    expect(source).toContain('label: "Tutoriels", href: "/tutoriels"');
+    expect(source).toContain('label: "Outils", href: "/outils"');
     expect(source).toContain('label: "Sur mesure", href: "/sur-mesure"');
     expect(source).toContain("PUBLIC_SPECIALISTS_ENABLED");
     expect(source.indexOf('label: "Sur mesure"')).toBeLessThan(
-      source.indexOf('label: "Solutions"'),
+      source.indexOf('label: "Outils"'),
     );
-    expect(source.indexOf('label: "Solutions"')).toBeLessThan(
-      source.indexOf('label: "Organisation"'),
+    expect(source.indexOf('label: "Outils"')).toBeLessThan(
+      source.indexOf('label: "Tutoriels"'),
     );
     expect(source).toContain("leading-tight");
     expect(source).not.toContain("leading-none");
-    expect(organiserIndex).toContain("OrganiserHub");
-    expect(organiserIndex).toContain('path: "/organiser"');
-    expect(organiserIndex).not.toContain("<Navbar");
-    expect(organiserIndex).not.toContain("<ActionPlanNavbar");
-    expect(organiserIndex).not.toContain("OrganiserSectionNavigation");
-    expect(organiserIndex).toContain('{ name: "Cas concrets et processus", path: "/organiser#cas-concrets" }');
-    expect(organiserIndex).toContain('{ name: "Modèles prêts à copier", path: "/modeles" }');
+    expect(tutorialsIndex).toContain("TutorialsHub");
+    expect(tutorialsIndex).toContain('path: "/tutoriels"');
+    expect(tutorialsIndex).not.toContain("<Navbar");
+    expect(tutorialsIndex).not.toContain("<ActionPlanNavbar");
   });
 
   it("replaces the sign-in action with account access once a session is active", async () => {
@@ -206,8 +202,10 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain("PUBLIC_SPECIALISTS_ENABLED");
     expect(actionPlanNavSource).not.toContain('"/application-metier"');
     expect(actionPlanNavSource).not.toContain('label: "Services"');
-    expect(actionPlanNavSource).toContain("Organisation");
-    expect(actionPlanNavSource).toContain('"/organiser"');
+    expect(actionPlanNavSource).toContain("Tutoriels");
+    expect(actionPlanNavSource).toContain('"/tutoriels"');
+    expect(actionPlanNavSource).toContain("Outils");
+    expect(actionPlanNavSource).toContain('"/outils"');
     expect(actionPlanNavSource).not.toContain("Ressources");
     expect(actionPlanNavSource).toContain("Annonces");
     expect(actionPlanNavSource).not.toContain('label: "Système"');

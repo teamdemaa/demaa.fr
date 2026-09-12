@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, BriefcaseBusiness, LayoutGrid, ListChecks, UsersRound, Workflow } from "lucide-react";
+import { BookOpen, BriefcaseBusiness, ListChecks, UsersRound, Workflow, Wrench } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -14,11 +14,11 @@ const tabClassName =
 
 const navigationItems = {
   plan: { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
-  solutions: { view: "solutions", labels: { fr: "Solutions", en: "Solutions" }, Icon: LayoutGrid },
+  solutions: { view: "solutions", labels: { fr: "Outils", en: "Tools" }, Icon: Wrench },
   services: PUBLIC_SPECIALISTS_ENABLED
     ? { view: "services" as const, labels: { fr: "Spécialistes", en: "Specialists" }, Icon: UsersRound }
     : { view: "services" as const, labels: { fr: "Sur mesure", en: "Custom" }, Icon: Workflow },
-  academy: { view: "academy", labels: { fr: "Organisation", en: "Organization" }, Icon: BookOpen },
+  academy: { view: "academy", labels: { fr: "Tutoriels", en: "Tutorials" }, Icon: BookOpen },
   opportunities: { view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness },
 } as const;
 
@@ -100,11 +100,11 @@ export default function ActionPlanNavbar({
           const routeHref = localeCode === "en"
             ? `/en?view=${view}`
             : view === "solutions"
-              ? "/solutions"
+              ? "/outils"
               : view === "plan"
               ? "/"
               : view === "academy"
-                ? "/organiser"
+                ? "/tutoriels"
                 : PUBLIC_SPECIALISTS_ENABLED
                   ? "/specialistes"
                   : "/sur-mesure";

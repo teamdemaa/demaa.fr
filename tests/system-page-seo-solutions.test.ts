@@ -62,25 +62,25 @@ function toolItemList(jsonLd: ReturnType<typeof buildSystemPageJsonLd>) {
   );
 }
 
-describe("system page SEO published Solutions boundary", () => {
-  it("describes Solutions and Organisation without mixing in the Models catalogue", () => {
+describe("system page SEO published Outils boundary", () => {
+  it("describes tools and processes without mixing in the Models catalogue", () => {
     const metadata = buildSystemPageMetadata(processOnlyData, []);
     const jsonLd = buildSystemPageJsonLd(processOnlyData, []);
     const exposed = JSON.stringify({ metadata, jsonLd });
     const { system } = processOnlyData;
 
     expect(metadata.title).toBe(
-      `Solutions pour ${system.name} : outils, aides et réseaux | Demaa`,
+      `Outils pour ${system.name} : logiciels adaptés | Demaa`,
     );
     expect(metadata.description).toContain("process");
     expect(metadata.keywords).toEqual(expect.arrayContaining([
       system.name,
       `système métier ${system.name.toLowerCase()}`,
       `process ${system.name.toLowerCase()}`,
-      `solutions entreprise ${system.name.toLowerCase()}`,
+      `outils entreprise ${system.name.toLowerCase()}`,
     ]));
     expect(itemList(jsonLd)?.name).toBe(
-      `Organisation et solutions pour ${system.name}`,
+      `Processus et outils pour ${system.name}`,
     );
     expect(exposed).not.toMatch(/Suivi et prévisionnel financier|CRM - suivi commercial/);
     expect(exposed).not.toMatch(/Legacy Outil Fantôme|annuaire-outils|écosystème/i);
@@ -99,7 +99,7 @@ describe("system page SEO published Solutions boundary", () => {
       const exposed = JSON.stringify({ metadata, jsonLd });
 
       expect(metadata.title).toBe(
-        `Solutions pour ${currentData.system.name} : outils, aides et réseaux | Demaa`,
+        `Outils pour ${currentData.system.name} : logiciels adaptés | Demaa`,
       );
       expect(metadata.description).toMatch(/process/i);
       expect(exposed).not.toMatch(
@@ -111,7 +111,7 @@ describe("system page SEO published Solutions boundary", () => {
     }
   });
 
-  it("uses the Solutions title and only renderable published resources", () => {
+  it("uses the Outils title and only renderable published resources", () => {
     const metadata = buildSystemPageMetadata(
       publishedSolutionsData,
       publishedSolutionSectionsFixture,
@@ -124,26 +124,25 @@ describe("system page SEO published Solutions boundary", () => {
     const { system } = publishedSolutionsData;
 
     expect(metadata.title).toBe(
-      `Solutions pour ${system.name} : outils, aides et réseaux | Demaa`,
+      `Outils pour ${system.name} : logiciels adaptés | Demaa`,
     );
-    expect(metadata.description).toContain("3 Solutions publiées");
-    expect(metadata.description).toContain("Qonto, Demaa Pilotage, Prestataire Facturation");
+    expect(metadata.description).toContain("2 outils publiés");
+    expect(metadata.description).toContain("Qonto, Demaa Pilotage");
     expect(metadata.keywords).toEqual(expect.arrayContaining([
-      `solutions ${system.name.toLowerCase()}`,
+      `logiciels ${system.name.toLowerCase()}`,
       "Qonto",
       "Demaa Pilotage",
-      "Prestataire Facturation",
     ]));
     expect(itemList(jsonLd)?.name).toBe(
-      `Organisation et solutions pour ${system.name}`,
+      `Processus et outils pour ${system.name}`,
     );
     expect(exposed).toContain("https://qonto.com/fr");
-    expect(exposed).toContain("https://demaa.fr/solutions/prestataire-facturation");
+    expect(exposed).not.toContain("https://demaa.fr/solutions/prestataire-facturation");
     expect(exposed).not.toMatch(
       /Legacy Outil Fantôme|Partenaire Referral|annuaire-outils|écosystème/i,
     );
     const generalList = itemList(jsonLd);
-    expect(generalList?.itemListElement).toEqual(
+    expect(generalList?.itemListElement).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({ name: "Prestataire Facturation" }),
       ]),
