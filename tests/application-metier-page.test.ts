@@ -36,7 +36,8 @@ describe("Application métier landing page", () => {
     expect(source).toContain("sur mesure.");
     expect(source).not.toContain("eyebrow");
     expect(source).toContain("logiciel-metier-sur-mesure-v8.png");
-    expect(source).toContain("/images/accompagnement/atelier-organisation-afro.png");
+    expect(source).toContain("/images/accompagnement/atelier-organisation-equipe.png");
+    expect(source).not.toContain("femme voilée");
     expect(source).toContain("Des logiciels construits pour des situations concrètes");
     expect(source).toContain("step.description");
     expect(source).not.toContain("content.fit");
