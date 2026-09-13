@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "Découvrez des entreprises de services en activité, avec des clients, une équipe et un savoir-faire déjà en place.",
   alternates: { canonical: "/a-reprendre" },
   openGraph: {
-    title: "Achetez une entreprise qui fonctionne déjà | Demaa",
+    title: "Reprenez une entreprise qui fonctionne déjà | Demaa",
     description: "La marketplace des PME de services à reprendre.",
     url: "/a-reprendre",
     siteName: "Demaa",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Achetez une entreprise qui fonctionne déjà | Demaa",
+    title: "Reprenez une entreprise qui fonctionne déjà | Demaa",
     description: "La marketplace des PME de services à reprendre.",
   },
 };

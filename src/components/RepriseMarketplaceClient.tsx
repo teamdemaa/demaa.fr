@@ -287,11 +287,11 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
         <section className="px-5 pb-14 pt-14 text-center sm:px-8 sm:pb-20 sm:pt-20 lg:pt-24">
           <div className="mx-auto max-w-6xl">
             <h1
-              aria-label="Achetez une entreprise qui fonctionne déjà. La marketplace des PME de services à reprendre."
+              aria-label="Reprenez une entreprise qui fonctionne déjà. La marketplace des PME de services à reprendre."
               className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}
             >
               <span aria-hidden="true">
-                <span className="block">Achetez une entreprise qui fonctionne déjà.</span>
+                <span className="block">Reprenez une entreprise qui fonctionne déjà.</span>
                 <span className="demaa-hero-title mt-2 block text-dema-forest">
                   La marketplace des PME de services à reprendre.
                 </span>
