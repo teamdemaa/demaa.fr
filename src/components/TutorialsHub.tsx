@@ -20,7 +20,7 @@ export default function TutorialsHub() {
           >
             <span aria-hidden="true">
               <span className="block text-brand-blue/62">Des tutoriels concrets pour choisir, configurer et</span>
-              <span className="demaa-hero-title block font-normal text-dema-forest">mieux utiliser vos outils</span>
+              <span className="demaa-hero-title block text-dema-forest">mieux utiliser vos outils</span>
             </span>
           </h1>
         </header>

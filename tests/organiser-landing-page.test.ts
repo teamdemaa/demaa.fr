@@ -21,7 +21,8 @@ describe("Outils, Modèles and Tutoriels public journey", () => {
     expect(hub).toContain('<ResourcesNavigation activeView="tutorials" />');
     expect(hub).toContain("Des tutoriels concrets pour choisir, configurer et");
     expect(hub).toContain("mieux utiliser vos outils");
-    expect(hub).toContain("demaa-hero-title block font-normal text-dema-forest");
+    expect(hub).toContain("demaa-hero-title block text-dema-forest");
+    expect(hub).not.toContain("demaa-hero-title block font-normal");
     expect(hub).not.toContain("étape par étape");
     expect(hub).not.toContain("gagner du temps et faire avancer votre entreprise");
     expect(hub).not.toContain("Tutoriels pratiques");
