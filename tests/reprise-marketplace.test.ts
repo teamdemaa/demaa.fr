@@ -27,6 +27,8 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain("Demaa vérifie d’abord que l’opportunité est toujours disponible");
     expect(marketplace).toContain("Demander une mise en relation");
     expect(marketplace).toContain("Obtenez une première estimation de votre entreprise");
+    expect(marketplace).toContain('value={opportunity.revenue ?? "Non disponible"}');
+    expect(marketplace).toContain('value={opportunity.askingPrice ?? "Non disponible"}');
     expect(estimateControl).toContain("Vous n’avez pas besoin d’avoir tous les chiffres");
     expect(estimateControl).toContain('name="name"');
     expect(estimateControl).toContain('name="email"');

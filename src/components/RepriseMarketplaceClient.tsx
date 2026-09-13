@@ -139,10 +139,10 @@ function OpportunityDialog({ opportunity, onClose }: { opportunity: RepriseOppor
         <MapPin className="h-4 w-4" aria-hidden="true" />{opportunity.location}
       </p>
       <dl className="mt-7 grid gap-3 sm:grid-cols-2">
-        {opportunity.revenue ? <Metric label="Chiffre d’affaires publié" value={opportunity.revenue} /> : null}
-        {opportunity.ebe ? <Metric label="EBE ou rentabilité publiée" value={opportunity.ebe} /> : null}
-        {opportunity.employees ? <Metric label="Équipe publiée" value={opportunity.employees} /> : null}
-        {opportunity.askingPrice ? <Metric label="Prix demandé publié" value={opportunity.askingPrice} /> : null}
+        <Metric label="Chiffre d’affaires publié" value={opportunity.revenue ?? "Non disponible"} />
+        <Metric label="EBE ou rentabilité publiée" value={opportunity.ebe ?? "Non disponible"} />
+        <Metric label="Équipe publiée" value={opportunity.employees ?? "Non disponible"} />
+        <Metric label="Prix demandé publié" value={opportunity.askingPrice ?? "Non disponible"} />
       </dl>
       <div className="mt-7 border-t border-dema-line pt-6">
         <h3 className="text-sm font-semibold">Ce qui est communiqué</h3>
