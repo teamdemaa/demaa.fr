@@ -342,10 +342,9 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
           </div>
         </section>
 
-        <section className="border-t border-dema-line px-5 py-14 sm:px-8 sm:py-20">
+        <section aria-label="Entreprises à reprendre" className="border-t border-dema-line px-5 py-14 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-6xl">
-            <div className="flex items-end justify-between gap-6"><div><h2 className="text-3xl font-medium tracking-[-0.04em] sm:text-5xl">Entreprises à reprendre</h2><p className="mt-3 text-sm text-dema-muted">{filtered.length} opportunité{filtered.length > 1 ? "s" : ""}</p></div></div>
-            {filtered.length ? <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{filtered.map((opportunity) => <OpportunityCard key={opportunity.id} opportunity={opportunity} onSelect={() => setSelectedOpportunity(opportunity)} />)}</div> : <div className="mt-10 rounded-[1.75rem] border border-dema-line bg-dema-paper p-10 text-center"><p className="text-lg font-medium">Aucune opportunité ne correspond à cette recherche.</p><button className="mt-4 text-sm font-semibold text-dema-forest underline underline-offset-4" type="button" onClick={() => { setQuery(""); setCategory("Toutes"); }}>Réinitialiser les filtres</button></div>}
+            {filtered.length ? <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">{filtered.map((opportunity) => <OpportunityCard key={opportunity.id} opportunity={opportunity} onSelect={() => setSelectedOpportunity(opportunity)} />)}</div> : <div className="rounded-[1.75rem] border border-dema-line bg-dema-paper p-10 text-center"><p className="text-lg font-medium">Aucune opportunité ne correspond à cette recherche.</p><button className="mt-4 text-sm font-semibold text-dema-forest underline underline-offset-4" type="button" onClick={() => { setQuery(""); setCategory("Toutes"); }}>Réinitialiser les filtres</button></div>}
           </div>
         </section>
 
