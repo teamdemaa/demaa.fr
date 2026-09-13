@@ -17,7 +17,7 @@ export default function ResourcesNavigation({
   return (
     <div className="mx-auto w-full max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
       <nav
-        className="mx-auto grid w-full max-w-lg grid-cols-3 gap-1 rounded-full border border-dema-line/70 bg-dema-paper p-1 shadow-[0_3px_12px_rgba(23,35,29,0.035)]"
+        className="mx-auto grid w-full max-w-lg grid-cols-3 border-b border-dema-line/70"
         aria-label="Ressources"
       >
         {resourceItems.map(({ view, label, href, Icon }) => {
@@ -28,10 +28,10 @@ export default function ResourcesNavigation({
               key={view}
               href={href}
               aria-current={isActive ? "page" : undefined}
-              className={`inline-flex min-h-11 min-w-0 items-center justify-center gap-1.5 rounded-full px-2 text-xs font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 sm:text-sm ${
+              className={`-mb-px inline-flex min-h-12 min-w-0 items-center justify-center gap-1.5 border-b-2 px-2 text-xs font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dema-forest/25 sm:text-sm ${
                 isActive
-                  ? "bg-dema-sage text-dema-forest"
-                  : "text-dema-muted hover:text-brand-blue"
+                  ? "border-dema-forest text-dema-forest"
+                  : "border-transparent text-dema-muted hover:border-dema-line hover:text-brand-blue"
               }`}
             >
               <Icon

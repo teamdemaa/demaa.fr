@@ -99,6 +99,9 @@ describe("Demaa application navbar", () => {
       resources.indexOf('label: "Tutoriels"'),
     );
     expect(resources).toContain('aria-label="Ressources"');
+    expect(resources).toContain("border-b-2");
+    expect(resources).toContain("border-dema-forest text-dema-forest");
+    expect(resources).not.toContain("rounded-full border border-dema-line");
     expect(source).toContain("leading-tight");
     expect(source).not.toContain("leading-none");
     expect(tutorialsIndex).toContain("TutorialsHub");
