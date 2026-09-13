@@ -30,6 +30,8 @@ describe("Outils, Modèles and Tutoriels public journey", () => {
     expect(page).not.toContain("modèles Demaa");
     expect(library).toContain("Rechercher un tutoriel");
     expect(library).toContain("SlidersHorizontal");
+    expect(library).toContain('className="demaa-search-control"');
+    expect(library).not.toContain("focus:ring-2 focus:ring-dema-forest/20");
     expect(library).toContain('aria-label="Filtrer les tutoriels par thème"');
     expect(library).toContain('aria-live="polite"');
     expect(library).not.toContain("<span>Tutoriel</span>");

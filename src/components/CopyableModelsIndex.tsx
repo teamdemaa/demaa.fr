@@ -98,17 +98,19 @@ export default function CopyableModelsIndex({
           ) : null}
         </div>
 
-        <label className="mx-auto mt-10 flex min-h-13 max-w-xl items-center gap-3 rounded-full border border-dema-line bg-white px-5 shadow-[0_10px_35px_rgba(31,52,43,0.06)] focus-within:border-dema-forest/35">
-          <Search className="h-4 w-4 shrink-0 text-brand-blue/40" aria-hidden="true" />
-          <span className="sr-only">Rechercher un modèle</span>
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Rechercher un modèle (devis, suivi, CRM…)"
-            className="min-w-0 flex-1 bg-transparent py-3 text-sm text-brand-blue outline-none placeholder:text-brand-blue/35"
-          />
-        </label>
+        <div className="demaa-search-shell mx-auto mt-10 max-w-xl">
+          <label className="relative block">
+            <Search className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-dema-forest/42" aria-hidden="true" />
+            <span className="sr-only">Rechercher un modèle</span>
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Rechercher un modèle (devis, suivi, CRM…)"
+              className="demaa-search-control demaa-search-control-plain"
+            />
+          </label>
+        </div>
 
         {visibleGroups.length > 0 ? (
           <div className="mt-12 max-w-full space-y-12">

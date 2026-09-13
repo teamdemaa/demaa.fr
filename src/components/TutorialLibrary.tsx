@@ -38,7 +38,7 @@ export default function TutorialLibrary({
   return (
     <div>
       <div className="mx-auto w-full max-w-4xl px-4 sm:px-6">
-        <div className="demaa-search-shell p-1.5">
+        <div className="demaa-search-shell">
           <div className="relative">
             <Search
               className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-dema-forest/42"
@@ -50,14 +50,14 @@ export default function TutorialLibrary({
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Rechercher un tutoriel…"
-              className="w-full rounded-full bg-dema-paper py-4 pl-12 pr-16 text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 focus:ring-2 focus:ring-dema-forest/20 md:py-5 md:pl-16 md:pr-20 md:text-lg"
+              className="demaa-search-control"
             />
             <button
               type="button"
               onClick={() => setAreFiltersVisible((visible) => !visible)}
               aria-expanded={areFiltersVisible}
               aria-label={areFiltersVisible ? "Masquer les thèmes" : "Afficher les thèmes"}
-              className={`absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full transition md:right-2.5 md:h-10 md:w-10 ${
+              className={`absolute right-2 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full transition ${
                 areFiltersVisible || activeCategory !== ALL_CATEGORIES
                   ? "bg-dema-sage text-dema-forest"
                   : "bg-dema-canvas text-dema-muted"

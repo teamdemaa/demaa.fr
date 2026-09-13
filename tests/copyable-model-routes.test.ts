@@ -43,6 +43,8 @@ describe("copyable model public routes", () => {
     expect(modelsIndex).toContain('style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}');
     expect(modelsIndex).toContain("block text-brand-blue/62");
     expect(modelsIndex).toContain("demaa-hero-title block text-dema-forest");
+    expect(modelsIndex).toContain('className="demaa-search-control demaa-search-control-plain"');
+    expect(modelsIndex).toContain('className="demaa-search-shell mx-auto mt-10 max-w-xl"');
     expect(modelsIndex).not.toContain("Des structures simples, déjà pensées pour suivre un flux de travail précis.");
     expect(modelsIndex).toContain('title: "Les fondamentaux"');
     expect(modelsIndex).toContain('title: "La réalisation du travail"');

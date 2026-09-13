@@ -78,8 +78,12 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain('<MapIcon className="h-4 w-4" strokeWidth={1.7} aria-hidden="true" />');
     expect(marketplace).toContain("Ajouter au comparatif");
     expect(marketplace).toContain("Recevoir les nouvelles opportunités");
+    expect(marketplace).toContain('id="reprise-search-mobile"');
+    expect(marketplace).toContain("transition-[grid-template-columns]");
+    expect(marketplace).toContain('setIsMobileSearchOpen(true)');
+    expect(marketplace).toContain('setQuery(""); setIsMobileSearchOpen(false);');
     expect(marketplace).toContain('id="reprise-search" type="search"');
-    expect(marketplace).toContain('text-base text-brand-blue outline-none transition placeholder:text-brand-blue/30 md:py-5');
+    expect(marketplace).toContain('className="demaa-search-control"');
     expect(marketplace).not.toContain('id="reprise-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} className="w-full rounded-full bg-dema-paper py-4 pl-12 pr-16 text-sm');
     expect(marketplace).not.toContain("placeholder:text-brand-blue/30 focus:ring-2");
     expect(marketplace).not.toContain("publicCtaLabel");

@@ -130,6 +130,14 @@
     @apply rounded-full border border-dema-line/75 bg-dema-paper p-1 shadow-[0_8px_22px_rgba(23,35,29,0.03)];
   }
 
+  .demaa-search-control {
+    @apply w-full rounded-full bg-dema-paper py-3.5 pl-12 pr-16 text-base font-normal leading-6 text-brand-blue outline-none transition placeholder:text-brand-blue/30 md:py-4 md:pl-14 md:pr-16;
+  }
+
+  .demaa-search-control-plain {
+    @apply pr-5 md:pr-6;
+  }
+
   .demaa-floating-shadow {
     @apply shadow-[0_4px_12px_rgba(23,35,29,0.055)];
   }
