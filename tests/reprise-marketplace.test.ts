@@ -38,7 +38,7 @@ describe("marketplace À reprendre", () => {
       readFile(new URL("../src/app/(marketing)/a-reprendre/page.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(marketplace).toContain("Informations déclaratives · disponibilité à confirmer");
+    expect(marketplace).not.toContain("Informations déclaratives · disponibilité à confirmer");
     expect(marketplace).toContain("Reprenez une entreprise qui fonctionne déjà.");
     expect(marketplace).toContain("mx-auto max-w-5xl text-left sm:text-center");
     expect(marketplace).not.toContain("ChevronRight");

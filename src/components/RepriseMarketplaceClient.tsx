@@ -163,7 +163,7 @@ function Metric({ label, value }: { label: string; value: string }) {
 
 function OpportunityCard({ opportunity, onSelect }: { opportunity: RepriseOpportunity; onSelect: () => void }) {
   return (
-    <button type="button" onClick={onSelect} className="group flex h-full min-h-[23rem] w-full flex-col rounded-[1.75rem] border border-dema-line bg-dema-paper p-6 text-left transition hover:-translate-y-0.5 hover:border-dema-forest/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:p-7">
+    <button type="button" onClick={onSelect} className="group flex h-full min-h-[20rem] w-full flex-col rounded-[1.75rem] border border-dema-line bg-dema-paper p-6 text-left transition hover:-translate-y-0.5 hover:border-dema-forest/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:p-7">
       <span className="flex h-12 w-12 items-center justify-center rounded-full bg-dema-sage text-dema-forest"><Building2 className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" /></span>
       <span className="mt-6 text-[11px] font-medium uppercase tracking-[0.14em] text-dema-forest">{opportunity.category}</span>
       <h2 className="mt-3 text-2xl font-normal leading-tight tracking-[-0.035em]">{opportunity.activity}</h2>
@@ -172,7 +172,6 @@ function OpportunityCard({ opportunity, onSelect }: { opportunity: RepriseOpport
         {opportunity.revenue ? <div><dt className="text-xs text-dema-muted">CA publié</dt><dd className="mt-1 text-sm font-medium">{opportunity.revenue}</dd></div> : null}
         {opportunity.employees ? <div><dt className="text-xs text-dema-muted">Équipe</dt><dd className="mt-1 line-clamp-2 text-sm font-medium">{opportunity.employees}</dd></div> : null}
       </dl>
-      <span className="mt-auto pt-7 text-xs text-dema-muted">Informations déclaratives · disponibilité à confirmer</span>
     </button>
   );
 }
