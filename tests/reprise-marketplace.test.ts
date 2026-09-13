@@ -15,8 +15,9 @@ describe("marketplace À reprendre", () => {
   });
 
   it("keeps the MVP transparent and separates buyer and seller requests", async () => {
-    const [marketplace, buyerRoute, sellerRoute, page] = await Promise.all([
+    const [marketplace, estimateControl, buyerRoute, sellerRoute, page] = await Promise.all([
       readFile(new URL("../src/components/RepriseMarketplaceClient.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/BusinessEstimateControl.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/api/reprise-interest/route.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/app/api/business-estimate/route.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/app/(marketing)/a-reprendre/page.tsx", import.meta.url), "utf8"),
@@ -26,9 +27,18 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain("Demaa vérifie d’abord que l’opportunité est toujours disponible");
     expect(marketplace).toContain("Demander une mise en relation");
     expect(marketplace).toContain("Obtenez une première estimation de votre entreprise");
-    expect(marketplace).toContain("La fourchette fournie est indicative");
+    expect(estimateControl).toContain("Vous n’avez pas besoin d’avoir tous les chiffres");
+    expect(estimateControl).toContain('name="name"');
+    expect(estimateControl).toContain('name="email"');
+    expect(estimateControl).toContain('name="phone"');
+    expect(estimateControl).toContain('name="company"');
+    expect(estimateControl).toContain('name="message"');
+    expect(estimateControl).not.toContain('name="revenue"');
+    expect(estimateControl).not.toContain('name="profitability"');
+    expect(estimateControl).not.toContain('name="employees"');
     expect(buyerRoute).toContain('requestType: "reprise_interest"');
     expect(sellerRoute).toContain('requestType: "business_estimate_request"');
+    expect(sellerRoute).toContain("Merci de renseigner votre nom et une adresse email valide.");
     expect(page).toContain('canonical: "/a-reprendre"');
   });
 });

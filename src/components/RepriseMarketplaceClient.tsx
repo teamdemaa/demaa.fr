@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import {
-  ArrowRight,
   Building2,
   Check,
   ChevronRight,
@@ -14,6 +13,7 @@ import {
   UsersRound,
 } from "lucide-react";
 import { type FormEvent, useMemo, useState } from "react";
+import BusinessEstimateControl from "@/components/BusinessEstimateControl";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
 import Navbar from "@/components/Navbar";
 import {
@@ -162,92 +162,6 @@ function Metric({ label, value }: { label: string; value: string }) {
   return <div className="rounded-2xl border border-dema-line bg-dema-cream/40 p-4"><dt className="text-xs text-dema-muted">{label}</dt><dd className="mt-2 text-sm font-semibold leading-6 text-brand-blue">{value}</dd></div>;
 }
 
-function EstimateDialog({ onClose }: { onClose: () => void }) {
-  const [state, setState] = useState<SubmissionState>("idle");
-  const [error, setError] = useState("");
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (state === "submitting") return;
-    const form = event.currentTarget;
-    const data = new FormData(form);
-    const flowKey = "business-estimate:initial";
-    setState("submitting");
-    setError("");
-    try {
-      await submitForm("/api/business-estimate", {
-        activity: data.get("activity"), company: data.get("company"), email: data.get("email"),
-        employees: data.get("employees"), faxNumber: data.get("faxNumber"), idempotencyKey: getLeadSubmissionKey(flowKey),
-        name: data.get("name"), phone: data.get("phone"), profitability: data.get("profitability"),
-        recurringRevenue: data.get("recurringRevenue"), region: data.get("region"), revenue: data.get("revenue"),
-        saleHorizon: data.get("saleHorizon"), saleReason: data.get("saleReason"), websiteOrSiren: data.get("websiteOrSiren"),
-      });
-      clearLeadSubmissionKey(flowKey);
-      form.reset();
-      setState("success");
-      trackLeadConversion({ requestType: "business_estimate_request" });
-    } catch (submissionError) {
-      setError(submissionError instanceof Error ? submissionError.message : "Impossible d’envoyer la demande.");
-      setState("error");
-    }
-  }
-
-  return (
-    <DirectoryDetailDialogShell ariaLabel="Demander une première estimation" maxWidthClassName="max-w-3xl" onClose={onClose}>
-      {state === "success" ? (
-        <div className="py-8 text-center">
-          <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-dema-forest text-dema-paper"><Check className="h-5 w-5" aria-hidden="true" /></span>
-          <h2 className="mt-5 text-3xl font-medium tracking-[-0.04em]">Demande envoyée.</h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-dema-muted">Nous vous recontactons pour fixer l’entretien de 30 minutes et préparer les informations utiles.</p>
-        </div>
-      ) : (
-        <>
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">Entretien offert · 30 minutes</p>
-          <h2 className="mt-3 text-3xl font-medium tracking-[-0.04em] sm:text-4xl">Obtenez une première estimation de votre entreprise.</h2>
-          <p className="mt-4 max-w-2xl text-sm leading-6 text-dema-muted">Nous faisons le point sur votre activité, vos chiffres et votre projet de transmission. Après l’entretien, vous recevez une synthèse écrite avec une fourchette indicative et les éléments à préparer.</p>
-          <form onSubmit={handleSubmit} className="mt-7 grid gap-4 sm:grid-cols-2" noValidate>
-            <label className="block text-sm font-medium">Nom et prénom<input className={inputClassName} name="name" autoComplete="name" maxLength={160} required /></label>
-            <label className="block text-sm font-medium">Email<input className={inputClassName} name="email" type="email" autoComplete="email" maxLength={160} required /></label>
-            <label className="block text-sm font-medium">Téléphone<input className={inputClassName} name="phone" type="tel" autoComplete="tel" maxLength={40} /></label>
-            <label className="block text-sm font-medium">Entreprise<input className={inputClassName} name="company" autoComplete="organization" maxLength={160} required /></label>
-            <label className="block text-sm font-medium">Activité<input className={inputClassName} name="activity" maxLength={200} required /></label>
-            <label className="block text-sm font-medium">Région<input className={inputClassName} name="region" maxLength={120} /></label>
-            <label className="block text-sm font-medium">Site ou SIREN<input className={inputClassName} name="websiteOrSiren" maxLength={200} /></label>
-            <label className="block text-sm font-medium">Chiffre d’affaires<input className={inputClassName} name="revenue" maxLength={160} placeholder="Idéalement les 3 derniers exercices" required /></label>
-            <label className="block text-sm font-medium">EBE ou résultat<input className={inputClassName} name="profitability" maxLength={160} /></label>
-            <label className="block text-sm font-medium">Effectif<input className={inputClassName} name="employees" maxLength={120} /></label>
-            <label className="block text-sm font-medium">Revenus récurrents<input className={inputClassName} name="recurringRevenue" maxLength={160} placeholder="Si vous les connaissez" /></label>
-            <label className="block text-sm font-medium">Horizon de vente<select className={inputClassName} name="saleHorizon" defaultValue=""><option value="">À préciser</option><option>Moins de 6 mois</option><option>6 à 12 mois</option><option>1 à 2 ans</option><option>Plus de 2 ans</option><option>Je réfléchis</option></select></label>
-            <label className="block text-sm font-medium sm:col-span-2">Pourquoi envisagez-vous une vente ? <span className="font-normal text-dema-muted">(facultatif)</span><textarea className={`${inputClassName} min-h-24 resize-y`} name="saleReason" maxLength={1000} /></label>
-            <label className="hidden" aria-hidden="true">Fax<input name="faxNumber" tabIndex={-1} autoComplete="off" /></label>
-            {error ? <p className="text-sm font-medium text-red-700 sm:col-span-2" role="alert">{error}</p> : null}
-            <div className="sm:col-span-2"><button className={`${primaryButtonClassName} w-full sm:w-auto`} disabled={state === "submitting"} type="submit">{state === "submitting" ? "Envoi…" : "Prendre rendez-vous"}</button></div>
-            <p className="text-xs leading-5 text-dema-muted sm:col-span-2">La fourchette fournie est indicative : elle ne remplace pas une évaluation complète. Vos informations servent uniquement à préparer cet échange. Consultez notre <Link href="/politique-de-confidentialite" className="underline underline-offset-2">politique de confidentialité</Link>.</p>
-          </form>
-        </>
-      )}
-    </DirectoryDetailDialogShell>
-  );
-}
-
-export function BusinessEstimateControl({
-  className = primaryButtonClassName,
-  label = "Prendre rendez-vous",
-}: {
-  className?: string;
-  label?: string;
-}) {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <button type="button" onClick={() => setOpen(true)} className={className}>
-        {label}
-      </button>
-      {open ? <EstimateDialog onClose={() => setOpen(false)} /> : null}
-    </>
-  );
-}
-
 function OpportunityCard({ opportunity, onSelect }: { opportunity: RepriseOpportunity; onSelect: () => void }) {
   return (
     <button type="button" onClick={onSelect} className="group flex h-full min-h-[23rem] w-full flex-col rounded-[1.75rem] border border-dema-line bg-dema-paper p-6 text-left transition hover:-translate-y-0.5 hover:border-dema-forest/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:p-7">
@@ -269,7 +183,6 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
   const [category, setCategory] = useState<CategoryFilter>("Toutes");
   const [areFiltersVisible, setAreFiltersVisible] = useState(false);
   const [selectedOpportunity, setSelectedOpportunity] = useState<RepriseOpportunity | null>(null);
-  const [estimateOpen, setEstimateOpen] = useState(false);
 
   const filtered = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase("fr");
@@ -282,7 +195,7 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="marketplace" publicCta={<button type="button" onClick={() => setEstimateOpen(true)} className="inline-flex min-h-10 items-center rounded-full border border-dema-forest/18 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage/45 sm:min-h-11 sm:px-5 sm:text-sm">Estimer mon entreprise</button>} />
+      <Navbar minimal publicNavigationActiveView="marketplace" />
       <main className="bg-dema-cream text-brand-blue">
         <section className="px-5 pb-14 pt-14 text-center sm:px-8 sm:pb-20 sm:pt-20 lg:pt-24">
           <div className="mx-auto max-w-6xl">
@@ -350,7 +263,7 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
 
         <section className="border-y border-dema-line bg-dema-sage/55 px-5 py-16 sm:px-8 sm:py-20">
           <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-center">
-            <div><p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">Vous envisagez de vendre ?</p><h2 className="mt-4 text-4xl font-medium leading-tight tracking-[-0.045em] sm:text-6xl">Obtenez une première estimation de votre entreprise.</h2><p className="mt-6 max-w-2xl text-base leading-7 text-dema-muted">Un entretien de 30 minutes pour regarder votre activité et vos chiffres. Vous recevez ensuite une synthèse écrite avec une fourchette indicative et les éléments à préparer.</p><button type="button" onClick={() => setEstimateOpen(true)} className={`${primaryButtonClassName} mt-8`}>Prendre rendez-vous <ArrowRight className="h-4 w-4" aria-hidden="true" /></button></div>
+            <div><p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">Vous envisagez de vendre ?</p><h2 className="mt-4 text-4xl font-medium leading-tight tracking-[-0.045em] sm:text-6xl">Obtenez une première estimation de votre entreprise.</h2><p className="mt-6 max-w-2xl text-base leading-7 text-dema-muted">Un entretien de 30 minutes pour regarder votre activité et vos chiffres. Vous recevez ensuite une synthèse écrite avec une fourchette indicative et les éléments à préparer.</p><BusinessEstimateControl className={`${primaryButtonClassName} mt-8`} label="Prendre rendez-vous" /></div>
             <ul className="divide-y divide-dema-line rounded-[1.75rem] border border-dema-line bg-dema-paper px-6 sm:px-8">
               {[{ Icon: Clock3, label: "30 minutes", detail: "Un échange simple et préparé" }, { Icon: Euro, label: "Fourchette indicative", detail: "Avec les chiffres et références utilisés" }, { Icon: UsersRound, label: "Synthèse écrite", detail: "Forces, points à préparer et prochaines actions" }].map(({ Icon, label, detail }) => <li key={label} className="flex gap-4 py-6"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest"><Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" /></span><span><strong className="block text-sm font-semibold">{label}</strong><span className="mt-1 block text-sm text-dema-muted">{detail}</span></span></li>)}
             </ul>
@@ -358,7 +271,6 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
         </section>
       </main>
       {selectedOpportunity ? <OpportunityDialog opportunity={selectedOpportunity} onClose={() => setSelectedOpportunity(null)} /> : null}
-      {estimateOpen ? <EstimateDialog onClose={() => setEstimateOpen(false)} /> : null}
     </>
   );
 }
