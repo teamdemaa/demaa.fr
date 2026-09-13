@@ -18,9 +18,8 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services SEO and redirects", () => {
-  it("publishes eight generic detail routes and keeps dedicated or hidden offers out", async () => {
+  it("publishes seven generic detail routes and keeps dedicated or hidden offers out", async () => {
     expect(generateStaticParams()).toEqual([
-      { slug: "automatisation-ia" },
       { slug: "coach-business" },
       { slug: "assistance-administrative" },
       { slug: "formalites-entreprise" },
@@ -52,11 +51,11 @@ describe("canonical Services SEO and redirects", () => {
     expect(buildServicePageJsonLd(automation)[1]).toMatchObject({
       offers: [
         {
-          name: "Automatisation terrain",
-          price: "2500.00",
+          name: "Système prioritaire",
+          price: "3000.00",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
-            price: "2500.00",
+            price: "3000.00",
             priceCurrency: "EUR",
             valueAddedTaxIncluded: false,
           },
@@ -68,7 +67,7 @@ describe("canonical Services SEO and redirects", () => {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Accueil", item: "https://demaa.fr" },
-        { "@type": "ListItem", position: 2, name: "Automatisation des opérations terrain", item: "https://demaa.fr/automatisation" },
+        { "@type": "ListItem", position: 2, name: "Structuration, automatisation & IA", item: "https://demaa.fr/accompagnement" },
       ],
     });
 

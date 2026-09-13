@@ -124,7 +124,6 @@ describe("canonical Services composition in every system", () => {
 
   it("applies the explicit eligibility matrix to regulated professions", () => {
     expect(getCanonicalServiceSlugsForSystem("restaurant")).toEqual([
-      "automatisation-ia",
       "automatisation-processus",
       "coach-business",
       "assistance-administrative",
@@ -135,7 +134,6 @@ describe("canonical Services composition in every system", () => {
       "recruter-un-alternant",
     ]);
     expect(getCanonicalServiceSlugsForSystem("cabinet-comptable")).toEqual([
-      "automatisation-ia",
       "automatisation-processus",
       "coach-business",
       "assistance-administrative",
@@ -145,7 +143,6 @@ describe("canonical Services composition in every system", () => {
       "recruter-un-alternant",
     ]);
     expect(getCanonicalServiceSlugsForSystem("cabinet-davocat")).toEqual([
-      "automatisation-ia",
       "automatisation-processus",
       "coach-business",
       "assistance-administrative",
@@ -155,7 +152,6 @@ describe("canonical Services composition in every system", () => {
       "recruter-un-alternant",
     ]);
     expect(getCanonicalServiceSlugsForSystem("notaire")).toEqual([
-      "automatisation-ia",
       "automatisation-processus",
       "coach-business",
       "assistance-administrative",
@@ -250,7 +246,6 @@ describe("canonical Services composition in every system", () => {
 
     expect(services?.placements.map(({ resource }) => resource.resourceSlug))
       .toEqual([
-        "automatisation-ia",
         "automatisation-processus",
         "coach-business",
         "assistance-administrative",

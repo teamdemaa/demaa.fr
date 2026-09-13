@@ -1,29 +1,39 @@
 # Feuille de route GTM Demaa
 
-**Diagnosis:** Demaa possède déjà un actif de distribution direct avec 200 dirigeants abonnés, son principal blocage est désormais de mesurer leur engagement et de prouver qu'une recommandation pertinente déclenche une demande qualifiée puis un revenu partenaire ou Demaa.
+**Diagnostic :** Demaa a maintenant une proposition lisible autour de la reprise et de la structuration des PME de services. Le prochain enjeu est de prouver que les fiches génèrent des demandes qualifiées et que les mises en relation manuelles aboutissent à de vrais échanges.
 
-## Now
+## Maintenant
 
-- **Aligner le produit puis tester une première boucle commerciale auprès des 200 dirigeants** (`positioning-and-story`, `pricing`, `know-if-its-working`). Faire de `/organiser` l'entrée publique, afficher la navigation `Organisation / Solutions / Spécialistes`, déplacer l'accès principal aux modèles vers Solutions et publier une page Spécialistes organisée en quatre familles : Digitaliser et automatiser, Structurer et piloter, Finances et administratif, Développer l'activité. Supprimer toute distinction visuelle entre opérateurs. Remplacer Office management et Assistance administrative par Assistant digital. Conserver « Système commercial et client » comme une prestation unique de 3 500 euros HT sur un mois, dont les emails, modèles et routines sont des livrables personnalisés. Seules les expertises disposant d'un opérateur réel, disponible et validé sont affichées.
-- **Terminé quand :** le sur-mesure reste disponible comme offre réalisée par Demaa sans porter tout le positionnement, le formulaire existant attribue chaque demande à sa source, une édition de Structurer a envoyé les dirigeants vers un seul parcours mesurable et les ouvertures, clics, réponses et demandes qualifiées ont été relevés.
+- Publier les 30 opportunités confirmées avec une recherche, une carte approximative et un comparatif limité à trois entreprises.
+- Recevoir chaque demande par email et traiter les mises en relation manuellement.
+- Garder un seul appel à l’action global dans la navigation : **Estimer mon entreprise**.
+- Présenter un seul accompagnement : structurer et automatiser un système prioritaire pendant un mois, à partir de 3 000 euros HT.
+- Conserver trois portes publiques : **À reprendre · Accompagnement · Ressources**.
+- Garder Ressources organisé en **Outils · Modèles · Tutoriels** et recentrer Outils sur les entreprises de services.
 
-## Next
+## Terminé quand
 
-- **Valider la promesse** (`talk-to-users`, `value-prop-that-converts`). Vérifier dans les réponses et échanges si les dirigeants décrivent bien le problème comme « tout repose sur moi » et relever leurs mots exacts.
-- **Vendre un seul pilote partenaire** (`founder-led-sales`, `pricing`). Choisir la catégorie qui reçoit les premières demandes. Tester soit un partenaire fondateur entre 250 et 500 euros HT par mois, soit 100 à 300 euros HT par demande qualifiée acceptée, sans cumuler les deux.
-- **Relier les contenus au choix suivant** (`the-homepage`, `time-to-first-value`). Chaque tutoriel peut recommander un modèle, une solution et, seulement quand la délégation est pertinente, un spécialiste. Chaque ressource conserve une seule URL canonique.
-- **Sécuriser l'offre Expert-comptable avant monétisation** (`pricing`). La carte peut être publiée, mais le mode de rémunération de Demaa doit être validé avec les règles applicables à la profession avant de facturer le cabinet ou une commission.
+- La carte fonctionne sur ordinateur et mobile sans révéler d’adresse précise.
+- Le comparatif affiche les informations disponibles et “Non disponible” lorsqu’elles manquent.
+- Les formulaires demandent d’abord le besoin, puis les coordonnées dans l’ordre stable : prénom et nom, email, téléphone, entreprise lorsque celle-ci est nécessaire.
+- Une demande test reçue en production confirme la chaîne email complète.
+- `/automatisation` redirige vers la section correspondante de `/accompagnement` et l’application sur mesure n’est plus mise en avant dans les parcours principaux.
 
-## Later
+## Ensuite
 
-- Commission sur les ventes conclues hors plateforme, reportée tant que l'attribution et l'encaissement ne sont pas vérifiables.
-- Classements sponsorisés, publicité et abonnements de visibilité, reportés jusqu'à l'existence d'une audience d'intention mesurée.
-- Monétisation d'Expert-comptable, reportée jusqu'à validation juridique et déontologique du mode de rémunération ; la carte et la mise en relation peuvent être publiées auparavant.
-- Extension de Spécialistes à la publicité en ligne, au SEO et à d'autres expertises de croissance, reportée jusqu'à preuve que la promesse Demaa doit dépasser l'organisation opérationnelle.
-- Catalogue généraliste de spécialistes, compte prestataire, paiement intégré et matching automatisé, reportés jusqu'au résultat du pilote. Les premières demandes restent traitées manuellement avec les briques existantes.
+- Mesurer chaque semaine : vues de fiches, sélections au comparatif, ouvertures de formulaires, demandes envoyées, mises en relation, réponses et rendez-vous.
+- Contacter rapidement chaque demande qualifiée et documenter le motif lorsqu’une mise en relation n’aboutit pas.
+- Ajouter des informations aux fiches uniquement lorsqu’elles sont fiables et utiles à la décision.
+- Tester la demande vendeurs avec l’entretien d’estimation de 30 minutes et sa synthèse écrite.
 
-## Log
+## Plus tard
 
-- 2026-09-11 : direction « média + Organisation + Solutions + Spécialistes » formulée. Le modèle hybride est retenu comme hypothèse prioritaire, pas encore comme décision validée par le marché.
-- 2026-09-11 : l'existence de 200 dirigeants dans Structurer permet de tester directement la boucle éditoriale et commerciale sans attendre une audience plus large.
-- 2026-09-11 : l'architecture Spécialistes est clarifiée en quatre familles. Expert-comptable précède Assistant digital dans « Finances et administratif ». L'offre à 3 500 euros de mise en place du système commercial et client reste une prestation unique ; ses modèles sont des livrables, pas un kit séparé dans Solutions.
+- Comptes vendeurs ou repreneurs, messagerie intégrée, paiement, matching automatisé et publication autonome.
+- Estimation automatisée présentée comme certaine ou score automatique des entreprises.
+- Remise en avant d’une offre d’application métier, uniquement si la demande observée le justifie.
+
+## Journal
+
+- 2026-09-13 : la marketplace devient la priorité publique ; 30 opportunités confirmées sont autorisées à la publication.
+- 2026-09-13 : les offres transmission et automatisation sont réunies dans un accompagnement unique, à partir de 3 000 euros HT.
+- 2026-09-13 : la carte, le comparatif, les notifications email et le recentrage du hub Outils sont retenus pour le MVP.

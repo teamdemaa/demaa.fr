@@ -10,7 +10,7 @@ const navigationItems = [
 ] as const;
 
 const tabClassName =
-  "group relative inline-flex min-h-11 min-w-0 items-center justify-center gap-1 rounded-full px-1 text-xs font-medium leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
+  "group relative inline-flex min-h-11 min-w-0 items-center justify-center gap-1 px-1 text-xs font-medium leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:gap-2 xl:px-3 xl:text-sm";
 
 export default function PublicActionPlanNavigation({
   activeView,
@@ -19,7 +19,7 @@ export default function PublicActionPlanNavigation({
 }) {
   return (
     <div
-      className="grid w-full grid-cols-3 gap-1 rounded-full border border-dema-line/70 bg-dema-paper p-1 shadow-[0_3px_12px_rgba(23,35,29,0.035)] xl:rounded-none xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none"
+      className="grid w-full grid-cols-3 gap-1 border-b border-dema-line/70"
       aria-label="Navigation principale"
     >
       {navigationItems.map(({ view, label, href, Icon }) => {
@@ -32,7 +32,7 @@ export default function PublicActionPlanNavigation({
             aria-current={isActive ? "location" : undefined}
             className={`${tabClassName} ${
               isActive
-                ? "bg-dema-sage text-dema-forest xl:bg-transparent xl:font-semibold"
+                ? "font-semibold text-dema-forest"
                 : "text-dema-muted hover:text-brand-blue"
             }`}
           >
@@ -47,7 +47,7 @@ export default function PublicActionPlanNavigation({
             <span className="max-w-full truncate">{label}</span>
             <span
               aria-hidden="true"
-              className={`pointer-events-none absolute inset-x-3 bottom-0 hidden h-0.5 origin-center rounded-full bg-dema-forest transition-[transform,opacity] duration-200 xl:block ${
+              className={`pointer-events-none absolute inset-x-3 bottom-0 block h-0.5 origin-center rounded-full bg-dema-forest transition-[transform,opacity] duration-200 ${
                 isActive ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
               }`}
             />

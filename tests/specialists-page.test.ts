@@ -9,7 +9,7 @@ import SpecialistsCatalog from "@/components/SpecialistsCatalog";
 import { getSpecialistSections } from "@/lib/specialist-catalog";
 
 describe("Specialists public index", () => {
-  it("renders the eight published offers in the approved three sections", () => {
+  it("renders the seven published offers in the approved three sections", () => {
     const sections = getSpecialistSections();
     const markup = renderToStaticMarkup(
       createElement(SpecialistsCatalog, { sections }),
@@ -20,21 +20,20 @@ describe("Specialists public index", () => {
       "Structurer et piloter",
       "Développer l’activité",
     ]);
-    expect(sections.flatMap((section) => section.services)).toHaveLength(8);
+    expect(sections.flatMap((section) => section.services)).toHaveLength(7);
     expect(sections[0]?.services.map((service) => service.name)).toEqual([
-      "Automatisation & IA",
+      "Structuration, automatisation & IA",
       "Logiciel métier sur mesure",
       "Assistant digital",
     ]);
-    expect(markup.match(/<article/g)).toHaveLength(8);
-    expect(markup).toContain("Automatisation &amp; IA");
+    expect(markup.match(/<article/g)).toHaveLength(7);
+    expect(markup).toContain("Structuration, automatisation &amp; IA");
     expect(markup).toContain("Logiciel métier sur mesure");
-    expect(markup).toContain("Automatisation des opérations terrain");
     expect(markup).toContain("Assistant digital");
     expect(markup).not.toContain("Expert-comptable");
-    expect(markup).toContain("2 500 € HT");
+    expect(markup).toContain("À partir de 3 000 € HT");
     expect(markup).not.toContain("Sur devis");
-    expect(markup).toContain("550 € HT / jour");
+    expect(markup).not.toContain("550 € HT / jour");
     expect(markup).toContain("À partir de 650 € HT / mois");
     expect(markup).toContain("900 € HT / mois");
     expect(markup).toContain("1 200 € HT / mois");

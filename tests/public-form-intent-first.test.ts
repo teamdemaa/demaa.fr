@@ -92,6 +92,7 @@ describe("public qualification forms", () => {
       source("src/components/AccountingRecommendationDialog.tsx"),
       source("src/components/AcademyLiveRegistrationModal.tsx"),
       source("src/components/BusinessEstimateControl.tsx"),
+      source("src/components/AccompanimentContactControl.tsx"),
       source("src/components/GuestDiagnosticControl.tsx"),
       source("src/components/ProviderProfileModal.tsx"),
       source("src/components/RepriseMarketplaceClient.tsx"),
@@ -117,6 +118,13 @@ describe("public qualification forms", () => {
       ">Téléphone<",
       ">Entreprise<",
     ]);
+    expectInOrder(source("src/components/AccompanimentContactControl.tsx"), [
+      "Qu’aimeriez-vous améliorer, automatiser ou préparer ?",
+      ">Prénom et nom<",
+      ">Email<",
+      ">Téléphone<",
+      ">Entreprise<",
+    ]);
     const estimate = source("src/components/BusinessEstimateControl.tsx");
     expect(estimate).not.toContain("(facultatif)");
     expect(estimate.match(/required/g)?.length).toBeGreaterThanOrEqual(5);
@@ -125,6 +133,7 @@ describe("public qualification forms", () => {
       "Prénom et nom",
       "Email",
       "Téléphone",
+      "Entreprise",
     ]);
     expectInOrder(source("src/components/GuestDiagnosticControl.tsx"), [
       "Qu’est-ce qui vous prend trop de temps aujourd’hui ?",

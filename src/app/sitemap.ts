@@ -37,9 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...(PUBLIC_SPECIALISTS_ENABLED
       ? [{ url: `${base}/specialistes`, lastModified: siteUpdatedAt, changeFrequency: "weekly" as const, priority: 0.94 }]
       : []),
-    { url: `${base}/sur-mesure`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/accompagnement`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.85 },
-    { url: `${base}/automatisation`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.82 },
     { url: `${base}/modeles`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/session-structurer`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/studio`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.65 },

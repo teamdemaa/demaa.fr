@@ -7,15 +7,20 @@ import {
   enterpriseToSystem,
   type EnterpriseDefinition,
 } from "@/lib/enterprise-annuaire";
+import { TOOLS_HUB_SECTOR_ORDER, toolsHubSectorLabels } from "@/lib/public-sectors";
 
 export default function SystemsHubPage({
   enterprises,
 }: {
   enterprises: readonly EnterpriseDefinition[];
 }) {
-  const systems = enterprises.map(enterpriseToSystem);
+  const sectorRank = new Map<string, number>(TOOLS_HUB_SECTOR_ORDER.map((label, index) => [label, index]));
+  const visibleEnterprises = enterprises
+    .filter((enterprise) => toolsHubSectorLabels.has(enterprise.sectorLabel))
+    .toSorted((left, right) => (sectorRank.get(left.sectorLabel) ?? 99) - (sectorRank.get(right.sectorLabel) ?? 99));
+  const systems = visibleEnterprises.map(enterpriseToSystem);
   const sectorLabelsBySlug = Object.fromEntries(
-    enterprises.map((enterprise) => [enterprise.slug, enterprise.sectorLabel]),
+    visibleEnterprises.map((enterprise) => [enterprise.slug, enterprise.sectorLabel]),
   );
 
   return (

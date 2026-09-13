@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import CanonicalServiceDetails from "@/components/CanonicalServiceDetails";
 import Navbar from "@/components/Navbar";
 import {
@@ -25,6 +25,13 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: ServicePageProps): Promise<Metadata> {
   const { slug } = await params;
+  if (slug === "automatisation-ia" || slug === "automatisation-processus") {
+    return buildPublicPageMetadata({
+      title: "Structuration, automatisation & IA | Demaa",
+      description: "Demaa structure et automatise un fonctionnement prioritaire de votre entreprise.",
+      path: "/accompagnement",
+    });
+  }
   const service = getCanonicalServiceBySlug(slug);
 
   if (!service || service.detailHref !== `/services/${service.slug}`) notFound();
@@ -41,6 +48,9 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
 
 export default async function ServicePage({ params }: ServicePageProps) {
   const { slug } = await params;
+  if (slug === "automatisation-ia" || slug === "automatisation-processus") {
+    permanentRedirect("/accompagnement#automatisation");
+  }
   const service = getCanonicalServiceBySlug(slug);
 
   if (!service || service.detailHref !== `/services/${service.slug}`) notFound();

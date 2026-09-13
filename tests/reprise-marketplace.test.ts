@@ -16,6 +16,8 @@ describe("marketplace À reprendre", () => {
     expect(publicPayload).not.toContain('"ND"');
     expect(publicPayload).not.toMatch(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/);
     expect(publicPayload).not.toMatch(/(?:\+33|0)[1-9](?:[ .-]?\d{2}){4}/);
+    expect(publicPayload).not.toMatch(/à confirmer|mandat à confirmer|piste hors marché/i);
+    expect(repriseOpportunities.filter((opportunity) => opportunity.mapPosition)).toHaveLength(24);
   });
 
   it("shows the opportunities with the most published information first", () => {
@@ -49,13 +51,18 @@ describe("marketplace À reprendre", () => {
       marketplace.indexOf("Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place"),
     );
     expect(marketplace).not.toContain("La marketplace des PME de services à reprendre.");
-    expect(marketplace).toContain("Demaa vérifie d’abord que l’opportunité est toujours disponible");
+    expect(marketplace).toContain("Demaa vous recontacte avant de transmettre votre demande");
     expect(marketplace).toContain("Demander une mise en relation");
     expect(marketplace.indexOf("Votre projet en quelques mots")).toBeLessThan(marketplace.indexOf("Prénom et nom"));
+    expect(marketplace.indexOf('name="phone"')).toBeLessThan(marketplace.indexOf('name="company"'));
+    expect(marketplace).not.toContain("(facultatif)");
     expect(marketplace).toContain("Obtenez une première estimation de votre entreprise");
     expect(marketplace).toContain('className="border-t border-dema-line px-5 pb-14 pt-6 sm:px-8 sm:pb-20 sm:pt-10"');
     expect(marketplace).toContain('value={opportunity.revenue ?? "Non disponible"}');
     expect(marketplace).toContain('value={opportunity.askingPrice ?? "Non disponible"}');
+    expect(marketplace).toContain("Carte des opportunités");
+    expect(marketplace).toContain("Ajouter au comparatif");
+    expect(marketplace).toContain("Comparer les entreprises");
     expect(estimateControl).toContain("Vous n’avez pas besoin d’avoir tous les chiffres");
     expect(estimateControl).toContain("Votre entreprise en quelques mots");
     expect(estimateControl.indexOf('name="message"')).toBeLessThan(estimateControl.indexOf('name="name"'));
@@ -72,8 +79,11 @@ describe("marketplace À reprendre", () => {
     expect(estimateControl).not.toContain('name="profitability"');
     expect(estimateControl).not.toContain('name="employees"');
     expect(buyerRoute).toContain('requestType: "reprise_interest"');
+    expect(buyerRoute).toContain('channels: { email: true, resend: false, slack: false }');
     expect(buyerRoute).toContain("Merci de présenter brièvement votre projet");
+    expect(buyerRoute).toContain("contact: { company, email, name, phone }");
     expect(sellerRoute).toContain('requestType: "business_estimate_request"');
+    expect(sellerRoute).toContain('channels: { email: true, resend: false, slack: false }');
     expect(sellerRoute).toContain("Merci de présenter brièvement votre entreprise");
     expect(page).toContain('canonical: "/a-reprendre"');
   });

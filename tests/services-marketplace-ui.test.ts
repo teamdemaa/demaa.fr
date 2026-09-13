@@ -36,8 +36,7 @@ describe("canonical Accompagnement catalog", () => {
       CANONICAL_SERVICE_SLUGS.includes(slug)
     )).toBe(true);
     expect(services.map((service) => service.name)).toEqual([
-      "Automatisation & IA",
-      "Automatisation des opérations terrain",
+      "Structuration, automatisation & IA",
       "Logiciel métier sur mesure",
       "Coach business",
       "Assistant digital",
@@ -49,7 +48,7 @@ describe("canonical Accompagnement catalog", () => {
     ]);
     expect(generateStaticParams()).toEqual(
       CANONICAL_SERVICE_SLUGS
-        .filter((slug) => !["application-metier", "automatisation-processus", "expert-comptable"].includes(slug))
+        .filter((slug) => !["application-metier", "automatisation-ia", "automatisation-processus", "expert-comptable"].includes(slug))
         .map((slug) => ({ slug })),
     );
     expect(getCanonicalServiceBySlug("expert-comptable")).toBeNull();
@@ -116,7 +115,7 @@ describe("canonical Accompagnement catalog", () => {
 
   it("places Automation first and keeps Coach business undiscounted", () => {
     const coach = getCanonicalServiceBySlug("coach-business");
-    expect(getCanonicalServices()[0]?.slug).toBe("automatisation-ia");
+    expect(getCanonicalServices()[0]?.slug).toBe("automatisation-processus");
     expect(coach).toMatchObject({
       cta: { kind: "callback", label: "Envoyer ma demande" },
       pricing: {
@@ -142,22 +141,23 @@ describe("canonical Accompagnement catalog", () => {
     expect(callbackForm).not.toContain("CustomerSpaceAccessForm");
   });
 
-  it("keeps the fixed mentorship price and the quoted business application starting point", () => {
+  it("keeps the starting systems price and the quoted business application starting point", () => {
     const automation = getCanonicalServiceBySlug("automatisation-processus");
     const application = getCanonicalServiceBySlug("application-metier");
 
     expect(automation).toMatchObject({
-      name: "Automatisation des opérations terrain",
+      name: "Structuration, automatisation & IA",
       pricing: null,
       cta: { kind: "callback", label: "Envoyer ma demande" },
     });
     expect(automation?.packages.map(({ slug, pricing }) => [slug, pricing.amountMinor])).toEqual([
-      ["automatisation-essentielle", 250000],
+      ["automatisation-essentielle", 300000],
     ]);
     expect(automation?.packages[0]).toMatchObject({
-      name: "Automatisation terrain",
+      name: "Système prioritaire",
       pricing: {
-        label: "2 500 € HT",
+        label: "À partir de 3 000 € HT",
+        mode: "starting",
       },
     });
     expect(automation?.packages[0]?.pricing.note).toContain("analyse");
@@ -190,7 +190,7 @@ describe("canonical Accompagnement catalog", () => {
     });
   });
 
-  it("renders the three direct services in the retained internal catalog", async () => {
+  it("renders the two current direct services in the retained internal catalog", async () => {
     const markup = renderToStaticMarkup(
       createElement(ServicesCatalog, { services: getCanonicalServices() }),
     );
@@ -208,8 +208,8 @@ describe("canonical Accompagnement catalog", () => {
       readSource("src/components/SystemSolutionsTab.tsx"),
     ]);
 
-    expect(markup.match(/<article/g)).toHaveLength(3);
-    expect(getCanonicalServices().filter(({ delivery }) => delivery === "demaa")).toHaveLength(3);
+    expect(markup.match(/<article/g)).toHaveLength(2);
+    expect(getCanonicalServices().filter(({ delivery }) => delivery === "demaa")).toHaveLength(2);
     expect(getCanonicalServices().filter(({ delivery }) => delivery === "third-party")).toHaveLength(7);
     for (const service of getCanonicalServices().filter(({ delivery }) => delivery === "demaa")) {
       expect(markup).toContain(service.detailHref);
@@ -219,10 +219,10 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).not.toContain("Assistant digital");
     expect(markup).not.toContain("Recruter un alternant");
     expect(markup).not.toContain("Expert-comptable");
-    expect(markup).toContain("2 500 € HT");
+    expect(markup).toContain("À partir de 3 000 € HT");
     expect(markup).toContain("À partir de 4 500 € HT");
     expect(markup).not.toContain("750 € HT / mois");
-    expect(markup).toContain("550 € HT / jour");
+    expect(markup).not.toContain("550 € HT / jour");
     expect(markup).not.toContain("Gratuit");
     expect(markup).toContain("Nos accompagnements");
     expect(markup).toContain("Pour faire en sorte que votre entreprise dépende moins de vous.");

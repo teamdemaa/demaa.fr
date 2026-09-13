@@ -156,10 +156,10 @@ const canonicalServiceDefinitions = deepFreeze([
   },
   {
     slug: "automatisation-processus", name: AUTOMATION_OFFER.serviceName, eyebrow: `Mise en place · ${AUTOMATION_OFFER.durationLabel}`,
-    detailHref: "/automatisation",
-    summary: "Reliez les demandes, les interventions ou chantiers, les comptes rendus et la facturation sans ressaisir les mêmes informations.",
-    description: "Nous analysons la circulation des informations entre le client, le bureau et le terrain, puis mettons en place l’automatisation prioritaire avec vos outils.",
-    result: "Une automatisation terrain testée, documentée et prête à être utilisée par l’équipe.",
+    detailHref: "/accompagnement",
+    summary: "Structurez et automatisez un fonctionnement prioritaire pour gagner du temps et rendre l’entreprise plus simple à piloter ou à transmettre.",
+    description: "Nous analysons la circulation des informations, clarifions le système prioritaire, puis mettons en place les processus, outils, automatisations et usages utiles de l’IA avec votre équipe.",
+    result: "Un système testé, documenté et moins dépendant des ressaisies ou d’une seule personne.",
     delivery: "demaa",
     pricing: null,
     packages: [
@@ -167,7 +167,7 @@ const canonicalServiceDefinitions = deepFreeze([
         slug: AUTOMATION_OFFER.packageSlug,
         name: AUTOMATION_OFFER.name,
         summary: AUTOMATION_OFFER.summary,
-        pricing: { mode: "fixed", amountMinor: AUTOMATION_OFFER.price.amountMinor, currency: AUTOMATION_OFFER.price.currency, heading: "Forfait", label: AUTOMATION_OFFER.price.label, note: "Le forfait couvre l’analyse, le choix du périmètre prioritaire, sa mise en place et sa transmission. Les licences et consommations d’outils restent séparées." },
+        pricing: { mode: "starting", amountMinor: AUTOMATION_OFFER.price.amountMinor, currency: AUTOMATION_OFFER.price.currency, heading: "Tarif", label: AUTOMATION_OFFER.price.label, note: "Le tarif couvre l’analyse, le choix du périmètre prioritaire, sa mise en place et sa transmission. Les licences et consommations d’outils restent séparées." },
         included: ["Analyse du fonctionnement", "Choix de l’automatisation prioritaire", "Construction et connexion avec les outils", "Tests, ajustements, documentation et prise en main"],
       },
     ],

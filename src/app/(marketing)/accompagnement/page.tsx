@@ -1,8 +1,8 @@
 import TransmissionLandingPage from "@/components/TransmissionLandingPage";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-const title = "Préparer son entreprise à la vente | Demaa";
-const description = "Demaa structure les processus, les outils et les informations de votre entreprise pour la rendre plus simple à présenter et à transmettre.";
+const title = "Structuration, automatisation & IA | Demaa";
+const description = "Demaa structure et automatise un fonctionnement prioritaire pour faire gagner du temps à l’équipe et rendre l’entreprise plus simple à piloter ou à transmettre.";
 
 export const metadata = buildPublicPageMetadata({
   title,

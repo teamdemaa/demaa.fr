@@ -35,18 +35,18 @@ describe("public route integrity", () => {
     );
   });
 
-  it("publishes Sur mesure and keeps legacy aliases out of the sitemap", async () => {
+  it("publishes the three strategic hubs and keeps secondary offers out of the sitemap", async () => {
     const sitemap = await readSource("src/app/sitemap.ts");
 
     expect(sitemap).toContain('`${base}/accompagnement`');
-    expect(sitemap).toContain('`${base}/automatisation`');
+    expect(sitemap).not.toContain('`${base}/automatisation`');
     expect(sitemap).not.toContain('`${base}/application-metier`');
     expect(sitemap).toContain('`${base}/outils`');
     expect(sitemap).toContain('`${base}/tutoriels`');
     expect(sitemap).not.toContain('`${base}/organiser`');
     expect(sitemap).not.toContain('`${base}/organiser/processus`');
     expect(sitemap).not.toContain('`${base}/services`');
-    expect(sitemap).toContain('`${base}/sur-mesure`');
+    expect(sitemap).not.toContain('`${base}/sur-mesure`');
     expect(sitemap).not.toContain("annuaire-recrutement");
     expect(sitemap).not.toContain("annuaire-formations");
     expect(sitemap).not.toContain('`${base}/systemes`');
