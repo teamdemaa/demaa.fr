@@ -91,7 +91,7 @@ describe("public qualification forms", () => {
     const publicForms = [
       source("src/components/AccountingRecommendationDialog.tsx"),
       source("src/components/AcademyLiveRegistrationModal.tsx"),
-      source("src/components/BusinessEstimateControl.tsx"),
+      source("src/components/BusinessSaleDialog.tsx"),
       source("src/components/AccompanimentContactControl.tsx"),
       source("src/components/GuestDiagnosticControl.tsx"),
       source("src/components/ProviderProfileModal.tsx"),
@@ -111,8 +111,8 @@ describe("public qualification forms", () => {
       'label="Email"',
       'label="Numéro de téléphone"',
     ]);
-    expectInOrder(source("src/components/BusinessEstimateControl.tsx"), [
-      "Votre entreprise en quelques mots",
+    expectInOrder(source("src/components/BusinessSaleDialog.tsx"), [
+      "Votre entreprise et votre projet en quelques mots",
       ">Prénom et nom<",
       ">Email<",
       ">Téléphone<",
@@ -125,9 +125,9 @@ describe("public qualification forms", () => {
       ">Téléphone<",
       ">Entreprise<",
     ]);
-    const estimate = source("src/components/BusinessEstimateControl.tsx");
-    expect(estimate).not.toContain("(facultatif)");
-    expect(estimate.match(/required/g)?.length).toBeGreaterThanOrEqual(5);
+    const sale = source("src/components/BusinessSaleDialog.tsx");
+    expect(sale).not.toContain("(facultatif)");
+    expect(sale.match(/required/g)?.length).toBeGreaterThanOrEqual(5);
     expectInOrder(source("src/components/RepriseMarketplaceClient.tsx"), [
       "Votre projet en quelques mots",
       "Prénom et nom",

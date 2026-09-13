@@ -67,7 +67,7 @@ describe("Demaa application navbar", () => {
   });
 
   it("uses À reprendre, Accompagnement and Ressources, then exposes three resource catalogues", async () => {
-    const [source, resources, tutorialsIndex, footer, navbarSource, estimateControl] = await Promise.all([
+    const [source, resources, tutorialsIndex, footer, navbarSource] = await Promise.all([
       readFile(
         new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
         "utf8",
@@ -82,7 +82,6 @@ describe("Demaa application navbar", () => {
       ),
       readFile(new URL("../src/components/Footer.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/components/BusinessEstimateControl.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(source).toContain('label: "À reprendre", href: "/a-reprendre"');
@@ -92,10 +91,9 @@ describe("Demaa application navbar", () => {
     expect(source).not.toContain('label: "Outils"');
     expect(source).not.toContain('label: "Sur mesure"');
     expect(source).not.toContain("PUBLIC_SPECIALISTS_ENABLED");
-    expect(navbarSource).toContain("<BusinessEstimateControl className={publicCtaClassName} label={publicCtaLabel} />");
+    expect(navbarSource).not.toContain("BusinessEstimateControl");
     expect(navbarSource).toContain("focus-visible:underline focus-visible:underline-offset-4");
     expect(navbarSource).not.toContain("border-dema-forest/18 bg-dema-paper");
-    expect(estimateControl).toContain('label = "Estimer mon entreprise"');
     expect(source.indexOf('label: "À reprendre"')).toBeLessThan(
       source.indexOf('label: "Accompagnement"'),
     );

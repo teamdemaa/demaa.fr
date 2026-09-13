@@ -4,7 +4,6 @@ import Link from "next/link";
 import { CircleUserRound } from "lucide-react";
 import type { ReactNode } from "react";
 import AdminLogoutButton from "@/components/AdminLogoutButton";
-import BusinessEstimateControl from "@/components/BusinessEstimateControl";
 import CustomerLogoutButton from "@/components/CustomerLogoutButton";
 import DemaaWordmark from "@/components/DemaaWordmark";
 import PublicActionPlanNavigation, {
@@ -127,8 +126,6 @@ export default function Navbar({
                   >
                     {publicCtaLabel}
                   </Link>
-                ) : publicNavigationActiveView && publicNavigationActiveView !== "none" ? (
-                  <BusinessEstimateControl className={publicCtaClassName} label={publicCtaLabel} />
                 ) : null)}
               </div>
             )}

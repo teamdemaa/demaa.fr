@@ -1,18 +1,15 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Building2, LocateFixed, MapPin, X } from "lucide-react";
+import { type CSSProperties, useMemo, useState } from "react";
+import { Building2, LocateFixed, MapPin } from "lucide-react";
 import franceDepartments from "../../public/maps/france-departments.json";
 import type { RepriseOpportunity } from "@/lib/reprise-opportunities";
 
 type MapProps = {
   opportunities: readonly RepriseOpportunity[];
-  activeLocation?: string;
   highlightedOpportunityId?: string;
-  onLocationSelect: (location?: string) => void;
   onOpportunityPreview: (id?: string) => void;
   onOpenOpportunity: (opportunity: RepriseOpportunity) => void;
-  onAfterLocationSelect?: () => void;
 };
 
 type Position = { x: number; y: number };
@@ -41,22 +38,18 @@ const departmentPaths = metropolitanFeatures
 
 export default function RepriseOpportunityMap({
   opportunities,
-  activeLocation,
   highlightedOpportunityId,
-  onLocationSelect,
   onOpportunityPreview,
   onOpenOpportunity,
-  onAfterLocationSelect,
 }: MapProps) {
-  const [previewLocation, setPreviewLocation] = useState<string | undefined>(activeLocation);
+  const [previewLocation, setPreviewLocation] = useState<string>();
   const clusters = useMemo(() => buildClusters(opportunities), [opportunities]);
   const highlightedLocation = useMemo(() => {
     if (!highlightedOpportunityId) return undefined;
     return opportunities.find((opportunity) => opportunity.id === highlightedOpportunityId)?.mapPosition?.label;
   }, [highlightedOpportunityId, opportunities]);
   const previewCluster = clusters.find((cluster) => cluster.label === previewLocation)
-    ?? clusters.find((cluster) => cluster.label === highlightedLocation)
-    ?? clusters.find((cluster) => cluster.label === activeLocation);
+    ?? clusters.find((cluster) => cluster.label === highlightedLocation);
 
   return (
     <aside className="lg:sticky lg:top-28">
@@ -66,22 +59,16 @@ export default function RepriseOpportunityMap({
             <p className="text-sm font-medium text-brand-blue">Carte des opportunités</p>
             <p className="mt-0.5 text-xs text-dema-muted">{opportunities.filter((item) => item.mapPosition).length} entreprise{opportunities.length > 1 ? "s" : ""} localisée{opportunities.length > 1 ? "s" : ""}</p>
           </div>
-          {activeLocation ? (
-            <button type="button" className="inline-flex h-8 items-center gap-1.5 rounded-full border border-dema-line px-3 text-xs font-medium transition hover:border-dema-forest/30" onClick={() => onLocationSelect(undefined)}>
-              <X className="h-3.5 w-3.5" aria-hidden="true" />Zone
-            </button>
-          ) : (
-            <span className="inline-flex h-8 items-center gap-1.5 rounded-full bg-dema-cream px-3 text-xs text-dema-muted"><LocateFixed className="h-3.5 w-3.5" aria-hidden="true" />France</span>
-          )}
+          <span className="inline-flex h-8 items-center gap-1.5 rounded-full bg-dema-cream px-3 text-xs text-dema-muted"><LocateFixed className="h-3.5 w-3.5" aria-hidden="true" />France</span>
         </div>
-        <div className="relative min-h-[430px] overflow-hidden bg-dema-cream/75 lg:min-h-[520px]" onMouseLeave={() => { setPreviewLocation(activeLocation); onOpportunityPreview(undefined); }}>
+        <div className="relative min-h-[430px] overflow-hidden bg-dema-cream/75 lg:min-h-[520px]" onMouseLeave={() => { setPreviewLocation(undefined); onOpportunityPreview(undefined); }}>
           <svg className="absolute inset-0 h-full w-full" viewBox={`0 0 ${MAP_VIEWBOX.width} ${MAP_VIEWBOX.height}`} role="img" aria-label="Carte de France métropolitaine avec les opportunités localisées" preserveAspectRatio="xMidYMid meet">
             <rect width={MAP_VIEWBOX.width} height={MAP_VIEWBOX.height} fill="transparent" />
             <g>{departmentPaths.map((department) => <path key={department.code} d={department.path} fill="rgba(255,255,255,0.9)" stroke="rgba(35,58,48,0.16)" strokeWidth="0.7" vectorEffect="non-scaling-stroke"><title>{department.name}</title></path>)}</g>
             <path d={departmentPaths.map((department) => department.path).join(" ")} fill="none" stroke="rgba(35,58,48,0.24)" strokeWidth="1.3" vectorEffect="non-scaling-stroke" />
           </svg>
           {clusters.map((cluster) => {
-            const isActive = cluster.label === activeLocation || cluster.label === highlightedLocation;
+            const isActive = cluster.label === previewLocation || cluster.label === highlightedLocation;
             const firstOpportunity = cluster.opportunities[0];
             return (
               <button
@@ -89,8 +76,8 @@ export default function RepriseOpportunityMap({
                 type="button"
                 className={`absolute z-10 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium transition hover:z-20 hover:scale-105 ${isActive ? "border-dema-forest bg-dema-forest text-dema-paper" : "border-dema-line bg-dema-paper/95 text-brand-blue hover:border-dema-forest/30"}`}
                 style={{ left: `${cluster.position.x}%`, top: `${cluster.position.y}%` }}
-                aria-label={`Filtrer sur ${cluster.label}, ${cluster.opportunities.length} opportunité${cluster.opportunities.length > 1 ? "s" : ""}`}
-                onClick={() => { onLocationSelect(cluster.label); onAfterLocationSelect?.(); }}
+                aria-label={`Voir ${cluster.opportunities.length} opportunité${cluster.opportunities.length > 1 ? "s" : ""} à ${cluster.label}`}
+                onClick={() => { setPreviewLocation(cluster.label); onOpportunityPreview(firstOpportunity?.id); }}
                 onMouseEnter={() => { setPreviewLocation(cluster.label); onOpportunityPreview(firstOpportunity?.id); }}
                 onFocus={() => { setPreviewLocation(cluster.label); onOpportunityPreview(firstOpportunity?.id); }}
               >
@@ -99,9 +86,15 @@ export default function RepriseOpportunityMap({
             );
           })}
           {previewCluster ? (
-            <button type="button" className="absolute z-30 w-[min(260px,calc(100%-2rem))] rounded-2xl border border-dema-line bg-dema-paper p-3 text-left transition hover:border-dema-forest/25" style={getPreviewStyle(previewCluster.position)} onClick={() => onOpenOpportunity(previewCluster.opportunities[0])}>
-              <div className="flex items-start gap-3"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-dema-sage text-dema-forest"><Building2 className="h-4 w-4" aria-hidden="true" /></span><span className="min-w-0"><span className="block text-sm font-medium leading-5">{previewCluster.opportunities[0].activity}</span><span className="mt-1 block text-xs text-dema-muted">{previewCluster.label} · {previewCluster.opportunities.length} opportunité{previewCluster.opportunities.length > 1 ? "s" : ""}</span></span></div>
-            </button>
+            <div className="absolute bottom-4 left-4 right-4 z-30 max-h-52 w-auto overflow-y-auto rounded-2xl border border-dema-line bg-dema-paper p-2 sm:bottom-auto sm:right-auto sm:left-[var(--preview-left)] sm:top-[var(--preview-top)] sm:w-[min(280px,calc(100%-2rem))]" style={getPreviewVariables(previewCluster.position)}>
+              <p className="px-2 pb-1 pt-1 text-[11px] font-medium uppercase tracking-[0.12em] text-dema-forest">{previewCluster.label}</p>
+              {previewCluster.opportunities.map((opportunity) => (
+                <button key={opportunity.id} type="button" className="flex w-full items-start gap-3 rounded-xl p-2 text-left transition hover:bg-dema-sage/35 focus-visible:bg-dema-sage/45 focus-visible:outline-none" onClick={() => onOpenOpportunity(opportunity)}>
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-dema-sage text-dema-forest"><Building2 className="h-4 w-4" aria-hidden="true" /></span>
+                  <span className="min-w-0"><span className="block text-sm font-medium leading-5">{opportunity.activity}</span><span className="mt-1 block text-xs text-dema-muted">Voir la fiche</span></span>
+                </button>
+              ))}
+            </div>
           ) : null}
         </div>
       </div>
@@ -169,5 +162,10 @@ function latToMercatorY(lat: number) { const radians = (lat * Math.PI) / 180; re
 function lngToMercatorX(lng: number) { return (lng * Math.PI) / 180; }
 function formatPathNumber(value: number) { return Number(value.toFixed(2)); }
 function formatPositionPercent(value: number) { return Number(value.toFixed(4)); }
-function getPreviewStyle(position: Position) { return { left: `${clamp(position.x + 5, 6, 54)}%`, top: `${clamp(position.y - 8, 6, 72)}%` }; }
+function getPreviewVariables(position: Position) {
+  return {
+    "--preview-left": `${clamp(position.x + 5, 6, 54)}%`,
+    "--preview-top": `${clamp(position.y - 8, 6, 72)}%`,
+  } as CSSProperties;
+}
 function clamp(value: number, min: number, max: number) { return Math.min(max, Math.max(min, value)); }
