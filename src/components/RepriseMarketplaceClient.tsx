@@ -24,6 +24,7 @@ import {
   clearLeadSubmissionKey,
   getLeadSubmissionKey,
 } from "@/lib/lead-submission-client";
+import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
 import type { RepriseOpportunity } from "@/lib/reprise-opportunities";
 
 const categories = ["Toutes", "Services terrain", "Services professionnels", "Logiciels"] as const;
@@ -282,10 +283,19 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
     <>
       <Navbar minimal publicNavigationActiveView="marketplace" publicCta={<button type="button" onClick={() => setEstimateOpen(true)} className="inline-flex min-h-10 items-center rounded-full border border-dema-forest/18 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/30 hover:bg-dema-sage/45 sm:min-h-11 sm:px-5 sm:text-sm">Estimer mon entreprise</button>} />
       <main className="bg-dema-cream text-brand-blue">
-        <section className="px-5 pb-14 pt-16 text-center sm:px-8 sm:pb-20 sm:pt-24">
+        <section className="px-5 pb-14 pt-14 text-center sm:px-8 sm:pb-20 sm:pt-20 lg:pt-24">
           <div className="mx-auto max-w-6xl">
-            <h1 className="mx-auto max-w-5xl text-5xl font-medium leading-[0.96] tracking-[-0.055em] sm:text-7xl lg:text-[5.5rem]">Achetez une entreprise qui fonctionne déjà.</h1>
-            <p className="demaa-section-title mx-auto mt-6 max-w-4xl text-3xl leading-tight text-dema-forest sm:text-5xl">La marketplace des PME de services à reprendre.</p>
+            <h1
+              aria-label="Achetez une entreprise qui fonctionne déjà. La marketplace des PME de services à reprendre."
+              className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}
+            >
+              <span aria-hidden="true">
+                <span className="block">Achetez une entreprise qui fonctionne déjà.</span>
+                <span className="demaa-hero-title mt-2 block text-dema-forest">
+                  La marketplace des PME de services à reprendre.
+                </span>
+              </span>
+            </h1>
             <p className="mx-auto mt-7 max-w-3xl text-base leading-7 text-dema-muted sm:text-lg">Des entreprises dont la valeur repose sur leurs clients, leurs contrats, leur équipe et leur savoir-faire, plutôt que sur un emplacement commercial.</p>
             <p className="mt-6 text-sm font-medium text-dema-forest">Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place</p>
             <div className="mx-auto mt-10 flex max-w-3xl items-center gap-3 rounded-full border border-dema-line bg-dema-paper px-5 py-2 shadow-[0_12px_35px_rgba(23,35,29,0.045)]">
