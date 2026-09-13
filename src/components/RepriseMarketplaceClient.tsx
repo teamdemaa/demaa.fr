@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
   Building2,
   Check,
-  ChevronRight,
   Clock3,
   Euro,
   MapPin,
@@ -162,7 +161,7 @@ function Metric({ label, value }: { label: string; value: string }) {
 function OpportunityCard({ opportunity, onSelect }: { opportunity: RepriseOpportunity; onSelect: () => void }) {
   return (
     <button type="button" onClick={onSelect} className="group flex h-full min-h-[23rem] w-full flex-col rounded-[1.75rem] border border-dema-line bg-dema-paper p-6 text-left transition hover:-translate-y-0.5 hover:border-dema-forest/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:p-7">
-      <span className="flex items-start justify-between gap-4"><span className="flex h-12 w-12 items-center justify-center rounded-full bg-dema-sage text-dema-forest"><Building2 className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" /></span><ChevronRight className="mt-3 h-5 w-5 text-dema-muted transition group-hover:translate-x-1 group-hover:text-dema-forest" aria-hidden="true" /></span>
+      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-dema-sage text-dema-forest"><Building2 className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" /></span>
       <span className="mt-6 text-[11px] font-medium uppercase tracking-[0.14em] text-dema-forest">{opportunity.category}</span>
       <h2 className="mt-3 text-2xl font-normal leading-tight tracking-[-0.035em]">{opportunity.activity}</h2>
       <span className="mt-4 inline-flex items-center gap-2 text-sm text-dema-muted"><MapPin className="h-4 w-4" aria-hidden="true" />{opportunity.location}</span>
@@ -198,7 +197,7 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
           <div className="mx-auto max-w-6xl">
             <h1
               aria-label="Reprenez une entreprise qui fonctionne déjà. Entreprises de services à reprendre."
-              className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl text-right sm:text-center`}
+              className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl text-left sm:text-center`}
             >
               <span aria-hidden="true">
                 <span className="block">Reprenez une entreprise qui fonctionne déjà.</span>
