@@ -3,7 +3,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeftRight, Bell, Building2, Check, Map as MapIcon, MapPin, Search, SlidersHorizontal, X } from "lucide-react";
-import { type CSSProperties, type FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, type FormEvent, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import BusinessSellerActions from "@/components/BusinessSellerActions";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
@@ -17,6 +17,9 @@ import { sortRepriseOpportunitiesByInformation, type RepriseOpportunity } from "
 const categories = ["Toutes", "Services terrain", "Services professionnels", "Logiciels"] as const;
 const RepriseAlertDialog = dynamic(() => import("@/components/RepriseAlertDialog"), { ssr: false });
 const MAX_COMPARISON_SIZE = 3;
+const subscribeToBrowserEnvironment = () => () => undefined;
+const getBrowserSnapshot = () => true;
+const getServerSnapshot = () => false;
 type CategoryFilter = (typeof categories)[number];
 type SubmissionState = "idle" | "submitting" | "success" | "error";
 
@@ -184,6 +187,8 @@ export default function RepriseMarketplaceClient({ initialOpportunityId, opportu
   const [alertOpen, setAlertOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const mobileSearchInputRef = useRef<HTMLInputElement>(null);
+  const isBrowser = useSyncExternalStore(subscribeToBrowserEnvironment, getBrowserSnapshot, getServerSnapshot);
+  const portalRoot = isBrowser ? document.body : null;
 
   useEffect(() => {
     if (isMobileSearchOpen) mobileSearchInputRef.current?.focus();
@@ -222,10 +227,10 @@ export default function RepriseMarketplaceClient({ initialOpportunityId, opportu
         <section aria-label="Entreprises à reprendre" className="border-t border-dema-line px-5 pb-14 pt-6 sm:px-8 sm:pb-20 sm:pt-10"><div className="mx-auto max-w-6xl"><div className="mb-5 flex items-center justify-between gap-4"><p className="text-sm text-dema-muted">{filtered.length} opportunité{filtered.length > 1 ? "s" : ""}</p><div className="flex gap-4"><button type="button" className="inline-flex items-center gap-1.5 text-sm font-medium text-dema-forest lg:hidden" onClick={() => setShowMobileMap(true)}><MapIcon className="h-4 w-4" aria-hidden="true" />Carte</button><button type="button" className="hidden items-center gap-1.5 text-sm font-medium text-dema-forest lg:inline-flex" onClick={() => setShowDesktopMap((visible) => !visible)}><MapIcon className="h-4 w-4" strokeWidth={1.7} aria-hidden="true" />{showDesktopMap ? "Masquer la carte" : "Afficher la carte"}</button></div></div>{filtered.length ? <div className={showDesktopMap ? "grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)]" : ""}><div className={`grid gap-5 ${showDesktopMap ? "md:grid-cols-2" : "md:grid-cols-2 xl:grid-cols-3"}`}>{filtered.map((opportunity) => <OpportunityCard key={opportunity.id} opportunity={opportunity} isCompared={comparisonIds.includes(opportunity.id)} onCompare={() => toggleComparison(opportunity.id)} onPreview={setPreviewOpportunityId} onSelect={() => setSelectedOpportunity(opportunity)} />)}</div>{showDesktopMap ? <div className="hidden lg:block">{desktopMap}</div> : null}</div> : <div className="rounded-[1.75rem] border border-dema-line bg-dema-paper p-10 text-center"><p className="text-lg font-medium">Aucune opportunité ne correspond à cette recherche.</p><button className="mt-4 text-sm font-medium text-dema-forest underline underline-offset-4" type="button" onClick={resetFilters}>Réinitialiser les filtres</button></div>}</div></section>
         <section className="border-y border-dema-line bg-dema-sage/55 px-5 py-16 sm:px-8 sm:py-20"><div className="mx-auto max-w-4xl text-center"><p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">Vous envisagez de vendre ?</p><h2 className="mt-4 text-4xl font-normal leading-[1.02] tracking-[-0.045em] sm:text-6xl">Obtenez une première estimation de votre entreprise.</h2><p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-dema-muted">Renseignez votre activité et quelques chiffres pour obtenir une première fourchette indicative.</p><BusinessSellerActions variant="estimate" /></div></section>
       </main>
-      {selectedOpportunity ? createPortal(<OpportunityDialog opportunity={selectedOpportunity} onClose={() => setSelectedOpportunity(null)} />, document.body) : null}
-      {showMobileMap ? createPortal(<DirectoryDetailDialogShell ariaLabel="Carte des opportunités" maxWidthClassName="max-w-xl" onClose={() => setShowMobileMap(false)}>{mobileMap}</DirectoryDetailDialogShell>, document.body) : null}
-      {comparisonOpen ? createPortal(<ComparisonDialog opportunities={comparison} onClose={() => setComparisonOpen(false)} onOpenOpportunity={(opportunity) => { setComparisonOpen(false); setSelectedOpportunity(opportunity); }} />, document.body) : null}
-      {alertOpen ? createPortal(<RepriseAlertDialog initialCriteria={initialAlertCriteria} onClose={() => setAlertOpen(false)} onOpenOpportunity={(opportunity) => { setAlertOpen(false); setSelectedOpportunity(opportunity); }} opportunities={opportunities} />, document.body) : null}
+      {portalRoot && selectedOpportunity ? createPortal(<OpportunityDialog opportunity={selectedOpportunity} onClose={() => setSelectedOpportunity(null)} />, portalRoot) : null}
+      {portalRoot && showMobileMap ? createPortal(<DirectoryDetailDialogShell ariaLabel="Carte des opportunités" maxWidthClassName="max-w-xl" onClose={() => setShowMobileMap(false)}>{mobileMap}</DirectoryDetailDialogShell>, portalRoot) : null}
+      {portalRoot && comparisonOpen ? createPortal(<ComparisonDialog opportunities={comparison} onClose={() => setComparisonOpen(false)} onOpenOpportunity={(opportunity) => { setComparisonOpen(false); setSelectedOpportunity(opportunity); }} />, portalRoot) : null}
+      {portalRoot && alertOpen ? createPortal(<RepriseAlertDialog initialCriteria={initialAlertCriteria} onClose={() => setAlertOpen(false)} onOpenOpportunity={(opportunity) => { setAlertOpen(false); setSelectedOpportunity(opportunity); }} opportunities={opportunities} />, portalRoot) : null}
       {comparison.length ? <div className="fixed inset-x-0 bottom-0 z-40 border-t border-dema-line bg-dema-paper/95 px-4 py-3 backdrop-blur"><div className="mx-auto flex max-w-6xl items-center justify-between gap-4"><div className="min-w-0"><p className="text-sm font-medium">{comparison.length} sur {MAX_COMPARISON_SIZE} sélectionnée{comparison.length > 1 ? "s" : ""}</p><p className="truncate text-xs text-dema-muted">{comparison.map((item) => item.activity).join(" · ")}</p></div><div className="flex shrink-0 items-center gap-3"><button type="button" onClick={() => setComparisonIds([])} className="hidden text-xs text-dema-muted underline underline-offset-4 sm:inline">Vider</button><button type="button" disabled={comparison.length < 2} onClick={() => setComparisonOpen(true)} className={`${primaryButtonClassName} min-h-10 px-4 py-2`}>Comparer ({comparison.length})</button><button type="button" aria-label="Vider le comparatif" onClick={() => setComparisonIds([])} className="sm:hidden"><X className="h-5 w-5" aria-hidden="true" /></button></div></div></div> : null}
     </>
   );

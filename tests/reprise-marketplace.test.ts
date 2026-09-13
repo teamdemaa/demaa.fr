@@ -106,6 +106,9 @@ describe("marketplace À reprendre", () => {
       marketplace.indexOf('id="reprise-search"'),
     );
     expect(marketplace).toContain("<RepriseAlertDialog");
+    expect(marketplace).toContain("useSyncExternalStore(subscribeToBrowserEnvironment, getBrowserSnapshot, getServerSnapshot)");
+    expect(marketplace).toContain("const portalRoot = isBrowser ? document.body : null");
+    expect(marketplace).toContain("portalRoot && selectedOpportunity ? createPortal");
     expect(marketplace).toContain("Comparer les entreprises");
     expect(marketplace).not.toContain("Les entreprises sont présentées en colonnes et les critères en lignes");
     expect(marketplace).not.toContain("Comparez les informations publiées pour chaque entreprise");
