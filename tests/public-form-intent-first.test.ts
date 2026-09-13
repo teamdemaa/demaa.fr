@@ -35,9 +35,9 @@ describe("public qualification forms", () => {
   it("keeps needs and business context before identity and contact fields", () => {
     expectInOrder(source("src/components/SolutionReferralForm.tsx"), [
       "Votre besoin",
-      "Cabinet ou entreprise",
       "Prénom et nom",
       "Adresse e-mail",
+      "Cabinet ou entreprise",
     ]);
     expectInOrder(source("src/components/StructureProblemSubmissionForm.tsx"), [
       'htmlFor="structure-problem"',
@@ -60,10 +60,10 @@ describe("public qualification forms", () => {
 
   it("keeps an event choice before the attendee contact details", () => {
     expectInOrder(source("src/components/AcademyLiveRegistrationModal.tsx"), [
-      "Créneau",
-      "Entreprise",
-      "Prénom et nom",
-      "E-mail professionnel",
+      'htmlFor="academy-live-slot"',
+      'htmlFor="academy-live-name"',
+      'htmlFor="academy-live-email"',
+      'htmlFor="academy-live-company"',
     ]);
   });
 
@@ -76,8 +76,10 @@ describe("public qualification forms", () => {
     expectInOrder(source("src/components/ProviderProfileModal.tsx"), [
       "Expertise principale",
       "Présentez brièvement votre expérience",
+      "Site ou profil professionnel",
       "Prénom et nom",
       "Adresse e-mail",
+      "Entreprise ou activité",
     ]);
     expectInOrder(source("src/components/ServiceCallbackForm.tsx"), [
       '"Entreprise"',
@@ -85,7 +87,7 @@ describe("public qualification forms", () => {
     ]);
   });
 
-  it("uses one combined name field and never asks for identity first", () => {
+  it("asks for intent first, then keeps contact details in one stable order", () => {
     const publicForms = [
       source("src/components/AccountingRecommendationDialog.tsx"),
       source("src/components/AcademyLiveRegistrationModal.tsx"),
@@ -103,20 +105,32 @@ describe("public qualification forms", () => {
     }
 
     expectInOrder(source("src/components/AccountingRecommendationDialog.tsx"), [
+      "Votre besoin",
+      'label="Prénom et nom"',
       'label="Email"',
       'label="Numéro de téléphone"',
-      'label="Prénom et nom"',
     ]);
     expectInOrder(source("src/components/BusinessEstimateControl.tsx"), [
-      ">Email<",
-      ">Téléphone ",
-      ">Entreprise ",
+      "Votre entreprise en quelques mots",
       ">Prénom et nom<",
+      ">Email<",
+      ">Téléphone<",
+      ">Entreprise<",
     ]);
+    const estimate = source("src/components/BusinessEstimateControl.tsx");
+    expect(estimate).not.toContain("(facultatif)");
+    expect(estimate.match(/required/g)?.length).toBeGreaterThanOrEqual(5);
     expectInOrder(source("src/components/RepriseMarketplaceClient.tsx"), [
+      "Votre projet en quelques mots",
+      "Prénom et nom",
       "Email",
       "Téléphone",
+    ]);
+    expectInOrder(source("src/components/GuestDiagnosticControl.tsx"), [
+      "Qu’est-ce qui vous prend trop de temps aujourd’hui ?",
       "Prénom et nom",
+      "Adresse e-mail",
+      "Téléphone",
     ]);
   });
 });

@@ -49,8 +49,8 @@ export async function POST(request: Request) {
     const phone = normalizeText(body?.phone, 40);
     const opportunity = getRepriseOpportunity(opportunityId);
 
-    if (!name || !isValidEmail(email) || !idempotencyKey || !opportunity) {
-      return NextResponse.json({ error: "Merci de renseigner vos prénom et nom ainsi qu’une adresse email valide." }, { status: 400 });
+    if (!message || !name || !isValidEmail(email) || !idempotencyKey || !opportunity) {
+      return NextResponse.json({ error: "Merci de présenter brièvement votre projet, puis de renseigner vos prénom et nom ainsi qu’une adresse email valide." }, { status: 400 });
     }
 
     const context = await resolveLeadContext({
@@ -69,7 +69,7 @@ export async function POST(request: Request) {
         { label: "Référence publique", value: opportunity.id },
         { label: "Activité", value: opportunity.activity },
         { label: "Localisation", value: opportunity.location },
-        { label: "Projet du repreneur", value: message || "Non précisé" },
+        { label: "Projet du repreneur", value: message },
         { label: "Traitement attendu", value: "Vérifier la disponibilité, puis transmettre la demande au contact source" },
       ],
       idempotencyKey,

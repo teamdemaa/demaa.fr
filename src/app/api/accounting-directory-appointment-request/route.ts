@@ -100,10 +100,10 @@ export async function POST(request: Request) {
     const requestedSlugs = [...new Set([firmSlug, ...firmSlugs].filter(Boolean))];
 
     if (recommendationRequest) {
-      if ((!name && (!firstName || !lastName)) || !email || !phone || !systemSlug) {
+      if (!message || (!name && (!firstName || !lastName)) || !email || !phone || !systemSlug) {
         return NextResponse.json(
           {
-            error: "Merci de remplir vos prénom et nom, téléphone et email.",
+            error: "Merci de décrire votre besoin, puis de remplir vos prénom et nom, téléphone et email.",
           },
           { status: 400 },
         );
@@ -143,6 +143,7 @@ export async function POST(request: Request) {
             label: "Demande",
             value: "Jusqu’à 3 recommandations de cabinets adaptés",
           },
+          { label: "Besoin exprimé", value: message },
         ],
         idempotencyKey,
         requestType: "accounting_recommendation",

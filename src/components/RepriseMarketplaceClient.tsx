@@ -99,20 +99,20 @@ function BuyerRequestForm({ opportunity }: { opportunity: RepriseOpportunity }) 
   return (
     <form onSubmit={handleSubmit} className="mt-7 space-y-4" noValidate>
       <label className="block text-sm font-medium">
-        Email
-        <input className={inputClassName} name="email" type="email" autoComplete="email" maxLength={160} required />
-      </label>
-      <label className="block text-sm font-medium">
-        Téléphone <span className="font-normal text-dema-muted">(facultatif)</span>
-        <input className={inputClassName} name="phone" type="tel" autoComplete="tel" maxLength={40} />
+        Votre projet en quelques mots
+        <textarea className={`${inputClassName} min-h-28 resize-y`} name="message" maxLength={2000} placeholder="Votre expérience, votre recherche ou vos questions." required />
       </label>
       <label className="block text-sm font-medium">
         Prénom et nom
         <input className={inputClassName} name="name" autoComplete="name" maxLength={160} required />
       </label>
       <label className="block text-sm font-medium">
-        Votre projet <span className="font-normal text-dema-muted">(facultatif)</span>
-        <textarea className={`${inputClassName} min-h-28 resize-y`} name="message" maxLength={2000} placeholder="Votre expérience, votre recherche ou vos questions." />
+        Email
+        <input className={inputClassName} name="email" type="email" autoComplete="email" maxLength={160} required />
+      </label>
+      <label className="block text-sm font-medium">
+        Téléphone <span className="font-normal text-dema-muted">(facultatif)</span>
+        <input className={inputClassName} name="phone" type="tel" autoComplete="tel" maxLength={40} />
       </label>
       <label className="hidden" aria-hidden="true">
         Fax

@@ -75,10 +75,9 @@ export default function GuestDiagnosticControl({
         contactConsent: form.get("contactConsent") === "on",
         email: form.get("email"),
         idempotencyKey,
+        message: form.get("message"),
         phone: form.get("phone"),
-        ...(collectName
-          ? { name: form.get("name") }
-          : { message: form.get("message") }),
+        ...(collectName ? { name: form.get("name") } : {}),
         ...(typeof callbackAvailability === "string"
           ? { callbackAvailability }
           : {}),
@@ -163,28 +162,15 @@ export default function GuestDiagnosticControl({
                   </p>
                 ) : (
                   <form onSubmit={requestDiagnostic} className="mt-6 space-y-3">
-                    {!collectName ? (
-                      <label className="block text-sm text-brand-blue">
-                        {questionLabel}
-                        <textarea
-                          data-dialog-initial-focus
-                          name="message"
-                          rows={3}
-                          maxLength={2_000}
-                          required={!access}
-                          className="demaa-textarea mt-2"
-                        />
-                      </label>
-                    ) : null}
                     <label className="block text-sm text-brand-blue">
-                      Adresse e-mail
-                      <input
-                        {...(collectName ? { "data-dialog-initial-focus": true } : {})}
-                        name="email"
-                        type="email"
-                        required
-                        autoComplete="email"
-                        className="demaa-input mt-2"
+                      {questionLabel}
+                      <textarea
+                        data-dialog-initial-focus
+                        name="message"
+                        rows={3}
+                        maxLength={2_000}
+                        required={!access}
+                        className="demaa-textarea mt-2"
                       />
                     </label>
                     {collectName ? (
@@ -199,6 +185,16 @@ export default function GuestDiagnosticControl({
                         />
                       </label>
                     ) : null}
+                    <label className="block text-sm text-brand-blue">
+                      Adresse e-mail
+                      <input
+                        name="email"
+                        type="email"
+                        required
+                        autoComplete="email"
+                        className="demaa-input mt-2"
+                      />
+                    </label>
                     <label className="block text-sm text-brand-blue">
                       Téléphone
                       {!requirePhone ? <span className="text-dema-muted"> (facultatif)</span> : null}

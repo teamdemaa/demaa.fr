@@ -206,22 +206,6 @@ export default function SolutionReferralForm({
         ) : null}
       </label>
 
-      <label className="block text-sm font-medium text-brand-blue">
-        Cabinet ou entreprise
-        <input
-          name="company"
-          autoComplete="organization"
-          maxLength={160}
-          value={fields.company}
-          onChange={(event) => updateField("company", event.target.value)}
-          aria-invalid={Boolean(errors.company)}
-          className={fieldClassName}
-        />
-        {errors.company ? (
-          <span className="mt-1.5 block text-xs text-red-700">{errors.company}</span>
-        ) : null}
-      </label>
-
       <div>
         <label className="block text-sm font-medium text-brand-blue">
           Prénom et nom
@@ -254,6 +238,22 @@ export default function SolutionReferralForm({
         />
         {errors.email ? (
           <span className="mt-1.5 block text-xs text-red-700">{errors.email}</span>
+        ) : null}
+      </label>
+
+      <label className="block text-sm font-medium text-brand-blue">
+        Cabinet ou entreprise
+        <input
+          name="company"
+          autoComplete="organization"
+          maxLength={160}
+          value={fields.company}
+          onChange={(event) => updateField("company", event.target.value)}
+          aria-invalid={Boolean(errors.company)}
+          className={fieldClassName}
+        />
+        {errors.company ? (
+          <span className="mt-1.5 block text-xs text-red-700">{errors.company}</span>
         ) : null}
       </label>
 

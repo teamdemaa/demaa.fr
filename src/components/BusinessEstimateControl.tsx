@@ -56,15 +56,15 @@ function EstimateDialog({ onClose }: { onClose: () => void }) {
         <div className="py-8 text-center"><span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-dema-forest text-dema-paper"><Check className="h-5 w-5" aria-hidden="true" /></span><h2 className="mt-5 text-3xl font-medium tracking-[-0.04em]">Demande envoyée.</h2><p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-dema-muted">Nous vous recontactons pour fixer l’entretien de 30 minutes et préparer les informations utiles.</p></div>
       ) : (
         <>
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">Entretien offert · 30 minutes</p>
-          <h2 className="mt-3 text-3xl font-medium tracking-[-0.04em] sm:text-4xl">Parlons de votre entreprise.</h2>
-          <p className="mt-4 max-w-xl text-sm leading-6 text-dema-muted">Vous n’avez pas besoin d’avoir tous les chiffres. Laissez-nous vos coordonnées et nous préparerons le reste ensemble pendant l’entretien.</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">Estimation d’entreprise · 30 minutes</p>
+          <h2 className="mt-3 text-3xl font-medium tracking-[-0.04em] sm:text-4xl">Estimer votre entreprise.</h2>
+          <p className="mt-4 max-w-xl text-sm leading-6 text-dema-muted">Vous n’avez pas besoin d’avoir tous les chiffres. Décrivez simplement votre entreprise et nous préparerons le reste avec vous pendant l’entretien.</p>
           <form onSubmit={handleSubmit} className="mt-7 grid gap-4 sm:grid-cols-2" noValidate>
-            <label className="block text-sm font-medium">Email<input className={inputClassName} name="email" type="email" autoComplete="email" maxLength={160} required /></label>
-            <label className="block text-sm font-medium">Téléphone <span className="font-normal text-dema-muted">(facultatif)</span><input className={inputClassName} name="phone" type="tel" autoComplete="tel" maxLength={40} /></label>
-            <label className="block text-sm font-medium">Entreprise <span className="font-normal text-dema-muted">(facultatif)</span><input className={inputClassName} name="company" autoComplete="organization" maxLength={160} /></label>
+            <label className="block text-sm font-medium sm:col-span-2">Votre entreprise en quelques mots<textarea className={`${inputClassName} min-h-24 resize-y`} name="message" maxLength={1000} placeholder="Par exemple : activité, taille de l’équipe, chiffre d’affaires approximatif et projet de vente." required /></label>
             <label className="block text-sm font-medium">Prénom et nom<input className={inputClassName} name="name" autoComplete="name" maxLength={160} required /></label>
-            <label className="block text-sm font-medium sm:col-span-2">En quelques mots <span className="font-normal text-dema-muted">(facultatif)</span><textarea className={`${inputClassName} min-h-24 resize-y`} name="message" maxLength={1000} placeholder="Ce que vous souhaitez préparer ou comprendre." /></label>
+            <label className="block text-sm font-medium">Email<input className={inputClassName} name="email" type="email" autoComplete="email" maxLength={160} required /></label>
+            <label className="block text-sm font-medium">Téléphone<input className={inputClassName} name="phone" type="tel" autoComplete="tel" maxLength={40} required /></label>
+            <label className="block text-sm font-medium">Entreprise<input className={inputClassName} name="company" autoComplete="organization" maxLength={160} required /></label>
             <label className="hidden" aria-hidden="true">Fax<input name="faxNumber" tabIndex={-1} autoComplete="off" /></label>
             {error ? <p className="text-sm font-medium text-red-700 sm:col-span-2" role="alert">{error}</p> : null}
             <div className="sm:col-span-2"><button className={`${defaultButtonClassName} w-full sm:w-auto`} disabled={state === "submitting"} type="submit">{state === "submitting" ? "Envoi…" : "Prendre rendez-vous"}</button></div>

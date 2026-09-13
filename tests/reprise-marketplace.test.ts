@@ -26,11 +26,17 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain("Informations déclaratives · disponibilité à confirmer");
     expect(marketplace).toContain("Demaa vérifie d’abord que l’opportunité est toujours disponible");
     expect(marketplace).toContain("Demander une mise en relation");
+    expect(marketplace.indexOf("Votre projet en quelques mots")).toBeLessThan(marketplace.indexOf("Prénom et nom"));
     expect(marketplace).toContain("Obtenez une première estimation de votre entreprise");
     expect(marketplace).toContain('className="border-t border-dema-line px-5 pb-14 pt-6 sm:px-8 sm:pb-20 sm:pt-10"');
     expect(marketplace).toContain('value={opportunity.revenue ?? "Non disponible"}');
     expect(marketplace).toContain('value={opportunity.askingPrice ?? "Non disponible"}');
     expect(estimateControl).toContain("Vous n’avez pas besoin d’avoir tous les chiffres");
+    expect(estimateControl).toContain("Votre entreprise en quelques mots");
+    expect(estimateControl.indexOf('name="message"')).toBeLessThan(estimateControl.indexOf('name="name"'));
+    expect(estimateControl.indexOf('name="name"')).toBeLessThan(estimateControl.indexOf('name="email"'));
+    expect(estimateControl.indexOf('name="email"')).toBeLessThan(estimateControl.indexOf('name="phone"'));
+    expect(estimateControl.indexOf('name="phone"')).toBeLessThan(estimateControl.indexOf('name="company"'));
     expect(estimateControl).toContain("createPortal(<EstimateDialog");
     expect(estimateControl).toContain('name="name"');
     expect(estimateControl).toContain('name="email"');
@@ -41,8 +47,9 @@ describe("marketplace À reprendre", () => {
     expect(estimateControl).not.toContain('name="profitability"');
     expect(estimateControl).not.toContain('name="employees"');
     expect(buyerRoute).toContain('requestType: "reprise_interest"');
+    expect(buyerRoute).toContain("Merci de présenter brièvement votre projet");
     expect(sellerRoute).toContain('requestType: "business_estimate_request"');
-    expect(sellerRoute).toContain("Merci de renseigner vos prénom et nom ainsi qu’une adresse email valide.");
+    expect(sellerRoute).toContain("Merci de présenter brièvement votre entreprise");
     expect(page).toContain('canonical: "/a-reprendre"');
   });
 });

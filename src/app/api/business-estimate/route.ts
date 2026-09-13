@@ -39,8 +39,9 @@ export async function POST(request: Request) {
     const idempotencyKey = normalizeIdempotencyKey(body?.idempotencyKey);
     const message = normalizeText(body?.message, 1000, { multiline: true });
     const name = normalizeText(body?.name, 160);
-    if (!name || !isValidEmail(email) || !idempotencyKey) {
-      return NextResponse.json({ error: "Merci de renseigner vos prénom et nom ainsi qu’une adresse email valide." }, { status: 400 });
+    const phone = normalizeText(body?.phone, 40);
+    if (!message || !name || !isValidEmail(email) || !phone || !company || !idempotencyKey) {
+      return NextResponse.json({ error: "Merci de présenter brièvement votre entreprise, puis de renseigner vos prénom et nom, votre email, votre téléphone et le nom de votre entreprise." }, { status: 400 });
     }
 
     const context = await resolveLeadContext({ source: "Demaa - Première estimation", sourceUrl: request.headers.get("referer") });
@@ -49,17 +50,17 @@ export async function POST(request: Request) {
     await submitLeadRequest({
       attribution: resolveLeadAttribution(request, body?.attribution),
       channels: { email: true, resend: false, slack: true },
-      contact: { company: company || null, email, name, phone: normalizeText(body?.phone, 40) || null },
+      contact: { company, email, name, phone },
       context,
       emoji: "📊",
       fields: [
-        { label: "Entreprise", value: company || "Non précisée" },
-        { label: "Sujet à aborder", value: message || "À préciser pendant l’entretien" },
+        { label: "Entreprise", value: company },
+        { label: "Entreprise présentée", value: message },
         { label: "Livrable promis", value: "Synthèse de première estimation avec fourchette indicative et éléments à préparer" },
       ],
       idempotencyKey,
       requestType: "business_estimate_request",
-      title: `Première estimation - ${company || name}`,
+      title: `Première estimation - ${company}`,
     });
     return successResponse();
   } catch (error) {

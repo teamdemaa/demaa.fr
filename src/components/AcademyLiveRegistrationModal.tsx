@@ -187,11 +187,6 @@ export default function AcademyLiveRegistrationModal({
                   ))}
                 </select>
 
-                <label className="block text-sm font-medium text-brand-blue" htmlFor="academy-live-company">
-                  Entreprise
-                </label>
-                <input id="academy-live-company" className="demaa-input" autoComplete="organization" value={company} onChange={(event) => setCompany(event.target.value)} required />
-
                 <label className="block text-sm font-medium text-brand-blue" htmlFor="academy-live-name">
                   Prénom et nom
                 </label>
@@ -201,6 +196,11 @@ export default function AcademyLiveRegistrationModal({
                   E-mail professionnel
                 </label>
                 <input id="academy-live-email" className="demaa-input" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
+
+                <label className="block text-sm font-medium text-brand-blue" htmlFor="academy-live-company">
+                  Entreprise
+                </label>
+                <input id="academy-live-company" className="demaa-input" autoComplete="organization" value={company} onChange={(event) => setCompany(event.target.value)} required />
 
                 <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
                   <label htmlFor="academy-live-website">Site internet</label>

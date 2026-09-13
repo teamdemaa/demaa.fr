@@ -62,7 +62,7 @@ describe("solution proposal UI contract", () => {
       form.indexOf("Adresse e-mail"),
     );
     expect(form.indexOf("Site ou profil professionnel")).toBeLessThan(
-      form.indexOf("Adresse e-mail"),
+      form.indexOf("Prénom et nom"),
     );
     expect(form).not.toContain("selectedSystemSlugs");
     expect(form).not.toContain(
