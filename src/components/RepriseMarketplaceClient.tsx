@@ -150,9 +150,6 @@ function OpportunityDialog({ opportunity, onClose }: { opportunity: RepriseOppor
           {opportunity.highlights.map((highlight) => <li key={highlight} className="flex gap-2"><Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" /><span>{highlight}</span></li>)}
         </ul>
       </div>
-      <p className="mt-7 rounded-2xl bg-dema-cream px-4 py-3 text-xs leading-5 text-dema-muted">
-        Informations déclaratives · disponibilité à confirmer. Demaa ne publie pas les coordonnées du contact.
-      </p>
       <BuyerRequestForm opportunity={opportunity} />
     </DirectoryDetailDialogShell>
   );
