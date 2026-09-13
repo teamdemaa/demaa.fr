@@ -13,66 +13,65 @@ async function readSource(path: string) {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-describe("Mise en place d’un système commercial et client", () => {
-  it("locks the Maestro offer and its deliberately bounded scope", () => {
+describe("Mise en place d’une automatisation terrain", () => {
+  it("locks the one-month offer and its deliberately bounded scope", () => {
     expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/accompagnement");
-    expect(AUTOMATION_OFFER.name).toBe("Maestro");
-    expect(AUTOMATION_OFFER.serviceName).toBe("Système commercial et client");
+    expect(AUTOMATION_OFFER.name).toBe("Automatisation terrain");
+    expect(AUTOMATION_OFFER.serviceName).toBe("Automatisation des opérations terrain");
     expect(AUTOMATION_OFFER.price).toEqual({
-      amountMinor: 350000,
+      amountMinor: 250000,
       currency: "EUR",
-      label: "3 500 € HT",
+      label: "2 500 € HT",
     });
     expect(mentoratAutomationContent.offer).toMatchObject({
       duration: "1 mois",
-      price: "3 500 € HT",
-      title: "Votre système commercial et client, prêt à être utilisé.",
+      price: "2 500 € HT",
+      title: "Un mois pour automatiser ce qui vous fait perdre du temps.",
     });
     expect(mentoratAutomationContent.hero.lead).toBe(
-      "On met en place votre système commercial et client.",
+      "De la demande client à la facture,",
     );
-    expect(mentoratAutomationContent.hero.description).toContain("au suivi après la livraison");
+    expect(mentoratAutomationContent.hero.emphasis).toBe(
+      "sans ressaisir les mêmes informations.",
+    );
+    expect(mentoratAutomationContent.hero.description).toContain("interventions ou chantiers");
+    expect(mentoratAutomationContent.hero.description).toContain("Nous intégrons l’IA");
+    expect(mentoratAutomationContent.hero.ctaLabel).toBe(
+      "Faire mon diagnostic Automatisation & IA",
+    );
+    expect(mentoratAutomationContent.sectors.items).toEqual([
+      "Maintenance",
+      "Installation",
+      "Dépannage",
+      "BTP",
+      "Entretien",
+      "Propreté",
+    ]);
     expect(mentoratAutomationContent.journey.map(({ title }) => title)).toEqual([
-      "Prospecter et vendre",
-      "Accueillir et cadrer",
-      "Réaliser et livrer",
-      "Suivre et fidéliser",
+      "La demande devient une intervention ou un chantier",
+      "Le terrain alimente le suivi",
+      "La fin du travail déclenche la suite",
     ]);
-    expect(mentoratAutomationContent.foundations.items.map(({ title }) => title)).toEqual([
-      "Les étapes",
-      "Les responsabilités",
-      "Les outils",
-      "Les modèles",
-      "Les routines",
-    ]);
-    expect(mentoratAutomationContent.cockpit.items.map(({ title }) => title)).toEqual([
-      "À contacter",
-      "À préparer",
-      "À valider",
-      "À relancer",
-    ]);
-    expect(mentoratAutomationContent.impacts.items.map(({ title }) => title)).toEqual([
+    expect(mentoratAutomationContent.impacts.map(({ title }) => title)).toEqual([
+      "Sur le terrain",
+      "Au bureau",
       "Pour le dirigeant",
-      "Pour l’équipe",
       "Pour les clients",
-      "Pour l’entreprise",
     ]);
     expect(mentoratAutomationContent.offerIncludes).toEqual([
-      "Votre parcours commercial et client structuré",
-      "Votre outil de suivi configuré",
-      "Vos étapes et responsabilités définies",
-      "Vos emails et séquences de relance prioritaires",
-      "Vos documents et modèles prioritaires",
-      "Vos trames de rapports et de livrables",
-      "Vos routines de suivi",
-      "Votre équipe accompagnée dans la prise en main",
+      "Analyse de votre fonctionnement",
+      "Liste des automatisations possibles",
+      "Choix de ce qui sera réalisé",
+      "Construction et connexion avec vos outils",
+      "Tests et ajustements",
+      "Documentation et prise en main",
     ]);
     expect(mentoratAutomationContent.faq.find(
-      (item) => item.question === "Devons-nous utiliser un CRM ?",
+      (item) => item.question === "Faut-il changer nos outils ?",
     )?.answer).toContain("Pas nécessairement");
     expect(mentoratAutomationContent.faq.find(
-      (item) => item.question === "Que peut-on mettre en place en un mois ?",
-    )?.answer).toContain("Ce périmètre, les livrables et le résultat attendu sont validés");
+      (item) => item.question === "Que peut-on automatiser en un mois ?",
+    )?.answer).toContain("choisissons avec vous");
     expect(mentoratAutomationContent.faq.find(
       (item) => item.question === "Combien de temps cela demande-t-il à notre équipe ?",
     )?.answer).toContain("Nous prenons en charge la conception et la mise en place");
@@ -87,34 +86,32 @@ describe("Mise en place d’un système commercial et client", () => {
     ]);
 
     expect(page).toContain("MentoratAutomationLandingPage");
-    expect(page).toContain("Mise en place d’un système commercial et client pour TPE");
+    expect(page).toContain("Automatisation & IA pour entreprises de services terrain");
     expect(legacyPage).toContain('permanentRedirect("/accompagnement")');
     expect(landing).toContain("content.hero.lead");
-    expect(landing).not.toContain("content.hero.emphasis");
+    expect(landing).toContain("content.hero.emphasis");
+    expect(landing).toContain("content.sectors.items.map");
     expect(landing).toContain("content.journey.map");
-    expect(landing).toContain("content.foundations.items.map");
-    expect(landing).toContain("content.impacts.items.map");
-    expect(landing).toContain("/images/accompagnement/outils-organises-transparent.png");
-    expect(landing).toContain("/images/accompagnement/organisation-claire.png");
-    expect(landing).toContain("/images/accompagnement/atelier-organisation.png");
-    expect(landing).toContain('label="Faire le point ensemble"');
-    expect(landing).toContain('id="suivi"');
-    expect(landing).toContain("Un problème de votre métier mérite peut-être son propre logiciel");
-    expect(landing).toContain('href="/studio"');
-    expect(landing).toContain("Découvrir Demaa Studio");
-    expect(mentoratAutomationContent.ongoing.title).toBe("Vous et votre équipe êtes autonomes.");
-    expect("priceNote" in mentoratAutomationContent.ongoing).toBe(false);
-    expect("options" in mentoratAutomationContent.ongoing).toBe(false);
-    expect(landing).not.toContain("content.ongoing.options.map");
+    expect(landing).toContain("content.impacts.map");
+    expect(landing).toContain("content.fieldExamples.items.map");
+    expect(landing).not.toContain("next/image");
+    expect(landing).not.toContain("/images/accompagnement/");
+    expect(landing).toContain("<FlowIllustration />");
+    expect(landing).toContain("<AppIllustration />");
+    expect(landing).toContain("content.applicationBridge.href");
+    expect(landing.indexOf("content.finalCta.title")).toBeLessThan(
+      landing.indexOf("content.applicationBridge.title"),
+    );
+    expect(mentoratAutomationContent.applicationBridge.href).toBe("/sur-mesure");
     expect(landing).not.toContain('href="/diagnostic-organisation"');
-    expect(mentoratAutomationContent.testimonials).toHaveLength(2);
-    expect(JSON.stringify(mentoratAutomationContent.testimonials)).not.toContain("Product Builder");
+    expect(mentoratAutomationContent.fieldExamples.items).toHaveLength(3);
+    expect(JSON.stringify(mentoratAutomationContent)).not.toContain("témoignage proposé");
     expect(landing).not.toContain("StructureNewsletterBlock");
     for (const brand of ["Codex", "Airtable", "Fillout", "Make"]) {
       expect(JSON.stringify(mentoratAutomationContent)).not.toContain(brand);
     }
     expect(callbackDialog).toContain("Faisons le point ensemble.");
-    expect(callbackDialog).toContain("Système commercial et client");
+    expect(callbackDialog).toContain("Diagnostic Automatisation &amp; IA");
     expect(callbackDialog).toContain('submitLabel="Envoyer ma demande"');
   });
 
@@ -157,14 +154,19 @@ describe("Mise en place d’un système commercial et client", () => {
     expect(hub).toContain("<OrganiserDiscoveryCta />");
     expect(hub).not.toContain("MentoratAutomationCta");
     expect(hub).toContain("<StructureNewsletterBlock />");
-    expect(systemPage).toContain("<OrganiserDiscoveryCta />");
+    expect(systemPage).toContain("<OrganiserDiscoveryCta");
+    expect(systemPage).toContain('eyebrow="Bonus"');
+    expect(systemPage).toContain('title="Les processus de votre métier"');
+    expect(systemPage).toContain('ctaLabel="Voir les processus du métier"');
+    expect(systemPage).toContain('href={`/systemes/${data.system.slug}/processus`}');
     expect(systemPage).not.toContain("MentoratAutomationCta");
     expect(bridge).toContain("Des tutoriels pour mieux utiliser vos outils");
     expect(bridge).toContain(
       "Des pas-à-pas concrets pour prendre en main, configurer et utiliser vos outils au quotidien.",
     );
     expect(bridge).toContain("Voir les tutoriels");
-    expect(bridge).toContain('href="/tutoriels"');
+    expect(bridge).toContain('href = "/tutoriels"');
+    expect(bridge).toContain("href={href}");
     expect(sitemap).toContain("/accompagnement");
     expect(sitemap).not.toContain("`${base}/automatisation`");
     expect(nextConfig).toMatch(/source: '\/automatisation',[\s\S]*?destination: '\/accompagnement'/);

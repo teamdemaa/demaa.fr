@@ -37,7 +37,7 @@ describe("canonical Accompagnement catalog", () => {
     )).toBe(true);
     expect(services.map((service) => service.name)).toEqual([
       "Automatisation & IA",
-      "Système commercial et client",
+      "Automatisation des opérations terrain",
       "Logiciel métier sur mesure",
       "Coach business",
       "Assistant digital",
@@ -147,20 +147,20 @@ describe("canonical Accompagnement catalog", () => {
     const application = getCanonicalServiceBySlug("application-metier");
 
     expect(automation).toMatchObject({
-      name: "Système commercial et client",
+      name: "Automatisation des opérations terrain",
       pricing: null,
       cta: { kind: "callback", label: "Envoyer ma demande" },
     });
     expect(automation?.packages.map(({ slug, pricing }) => [slug, pricing.amountMinor])).toEqual([
-      ["automatisation-essentielle", 350000],
+      ["automatisation-essentielle", 250000],
     ]);
     expect(automation?.packages[0]).toMatchObject({
-      name: "Maestro",
+      name: "Automatisation terrain",
       pricing: {
-        label: "3 500 € HT",
+        label: "2 500 € HT",
       },
     });
-    expect(automation?.packages[0]?.pricing.note).toContain("atelier de travail");
+    expect(automation?.packages[0]?.pricing.note).toContain("analyse");
     expect(automation?.packages[0]?.pricing.note).toContain("mise en place");
     expect(automation?.packages[0]?.pricing.note).not.toContain("tutoriels");
     expect(automation?.packages[0]?.pricing.note).toContain("licences");
@@ -219,7 +219,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).not.toContain("Assistant digital");
     expect(markup).not.toContain("Recruter un alternant");
     expect(markup).not.toContain("Expert-comptable");
-    expect(markup).toContain("3 500 € HT");
+    expect(markup).toContain("2 500 € HT");
     expect(markup).toContain("À partir de 4 500 € HT");
     expect(markup).not.toContain("750 € HT / mois");
     expect(markup).toContain("550 € HT / jour");

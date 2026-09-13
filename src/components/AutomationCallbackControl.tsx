@@ -29,8 +29,8 @@ export default function AutomationCallbackControl({
         className={isOffer
           ? "inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-dema-paper px-7 text-sm font-semibold text-dema-forest transition hover:bg-dema-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-paper/70"
           : variant === "hero"
-            ? "inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-dema-forest px-6 text-sm font-semibold text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 focus-visible:ring-offset-2"
-            : "inline-flex min-h-10 shrink-0 items-center whitespace-nowrap rounded-full bg-dema-forest px-3 text-xs font-medium text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:min-h-11 sm:px-5 sm:text-sm"}
+            ? "inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-dema-forest px-6 text-sm font-semibold text-white transition hover:bg-dema-forest/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 focus-visible:ring-offset-2"
+            : "inline-flex min-h-10 shrink-0 items-center whitespace-nowrap rounded-full bg-dema-forest px-3 text-xs font-medium text-white transition hover:bg-dema-forest/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:min-h-11 sm:px-5 sm:text-sm"}
       >
         {label ?? "Discuter de mon besoin"}
         {isOffer ? <ArrowRight className="h-4 w-4" aria-hidden="true" /> : null}

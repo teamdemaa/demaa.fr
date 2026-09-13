@@ -106,6 +106,7 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
       ?.placements.length ?? 0;
   const comparisonAvailable = softwarePlacementCount >= 2 &&
     isPublishedToolComparisonSystem(data.system.slug);
+  const hasProcesses = (data.detail.systeme?.routines.length ?? 0) > 0;
 
   return (
     <>
@@ -121,7 +122,6 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
           <SystemDetailContent
             system={data.system}
             intro={buildSystemPageIntro(data)}
-            hasProcesses={(data.detail.systeme?.routines.length ?? 0) > 0}
             initialResourceSlug={getParamValue(resolvedSearchParams.resource)}
             headingAs="h1"
             solutionSections={visibleSolutionSections}
@@ -137,7 +137,17 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
             }
           />
           <div className="mt-12 max-w-[67.5rem]">
-            <OrganiserDiscoveryCta />
+            {hasProcesses ? (
+              <OrganiserDiscoveryCta
+                eyebrow="Bonus"
+                title="Les processus de votre métier"
+                description="Consultez les étapes essentielles, les responsabilités et les points de contrôle pour mieux organiser votre activité."
+                ctaLabel="Voir les processus du métier"
+                href={`/systemes/${data.system.slug}/processus`}
+              />
+            ) : (
+              <OrganiserDiscoveryCta />
+            )}
           </div>
         </div>
       </main>

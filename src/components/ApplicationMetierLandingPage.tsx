@@ -48,7 +48,7 @@ export default function ApplicationMetierLandingPage({
 }) {
   return (
     <ApplicationDiagnosticProvider>
-      <Navbar minimal publicNavigationActiveView="services" />
+      <Navbar minimal publicNavigationActiveView="none" />
 
       <main className="overflow-x-clip bg-dema-cream pb-24 text-brand-blue xl:pb-0">
         <section className="border-b border-dema-line px-5 py-12 text-center sm:px-8 sm:py-16 lg:py-20">

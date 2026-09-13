@@ -61,8 +61,8 @@ function getCopy({ modelSlug, systemName, variant }: MentoratAutomationCtaProps)
   }
 
   return {
-    title: "On met en place votre système commercial et client.",
-    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, nous structurons le parcours prioritaire pour que les prospects, les clients et l’équipe sachent quelle est la prochaine action.`,
+    title: "Nous mettons en place votre automatisation terrain.",
+    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, nous choisissons avec vous ce qu’il faut automatiser en premier, puis nous le construisons et le testons avec vos outils.`,
   };
 }
 

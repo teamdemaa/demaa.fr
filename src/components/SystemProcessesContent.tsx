@@ -4,6 +4,7 @@ import SystemRecapPrintButton from "@/components/SystemRecapPrintButton";
 import SystemProcessGuideDetails, {
   SystemProcessGuidePrintDetails,
 } from "@/components/SystemProcessGuideDetails";
+import { PUBLIC_SYSTEM_PROCESS_OVERVIEW_ENABLED } from "@/lib/public-feature-flags";
 import type { SystemeRoutine } from "@/lib/systeme-catalog";
 import type { SystemProcessGuideDetail } from "@/lib/system-process-guide-details";
 
@@ -69,37 +70,39 @@ export default function SystemProcessesContent({
       <section className="space-y-4 py-8 print:hidden" aria-label="Processus du métier">
         <SystemProcessGuideDetails details={processGuideDetails} />
 
-        <details
-          open={processGuideDetails.length === 0}
-          className="group overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper"
-        >
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 marker:content-none sm:px-6">
-            <span className="text-lg font-medium tracking-[-0.02em] text-brand-blue sm:text-xl">
-              Vue d’ensemble
-            </span>
-            <span className="flex items-center gap-3">
-              <span className="rounded-full bg-dema-sage px-2.5 py-1 text-xs font-medium text-dema-forest">
-                {routines.length}
+        {PUBLIC_SYSTEM_PROCESS_OVERVIEW_ENABLED ? (
+          <details
+            open={processGuideDetails.length === 0}
+            className="group overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper"
+          >
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 marker:content-none sm:px-6">
+              <span className="text-lg font-medium tracking-[-0.02em] text-brand-blue sm:text-xl">
+                Vue d’ensemble
               </span>
-              <span className="text-sm text-dema-forest transition group-open:rotate-180" aria-hidden="true">⌄</span>
-            </span>
-          </summary>
-          <div className="divide-y divide-dema-line border-t border-dema-line px-5 sm:px-6">
-            {routines.map((routine, index) => (
-              <article key={routine.routineId} className="flex gap-4 py-4">
-                <span className="pt-0.5 font-mono text-[0.68rem] font-semibold text-dema-forest/60">
-                  {String(index + 1).padStart(2, "0")}
+              <span className="flex items-center gap-3">
+                <span className="rounded-full bg-dema-sage px-2.5 py-1 text-xs font-medium text-dema-forest">
+                  {routines.length}
                 </span>
-                <div>
-                  <RoutineHeading className="text-sm font-medium text-brand-blue sm:text-base">
-                    {routine.title}
-                  </RoutineHeading>
-                  <p className="mt-1 text-xs text-dema-muted">{routine.cadence}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </details>
+                <span className="text-sm text-dema-forest transition group-open:rotate-180" aria-hidden="true">⌄</span>
+              </span>
+            </summary>
+            <div className="divide-y divide-dema-line border-t border-dema-line px-5 sm:px-6">
+              {routines.map((routine, index) => (
+                <article key={routine.routineId} className="flex gap-4 py-4">
+                  <span className="pt-0.5 font-mono text-[0.68rem] font-semibold text-dema-forest/60">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <RoutineHeading className="text-sm font-medium text-brand-blue sm:text-base">
+                      {routine.title}
+                    </RoutineHeading>
+                    <p className="mt-1 text-xs text-dema-muted">{routine.cadence}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </details>
+        ) : null}
       </section>
 
       <section className="hidden py-8 print:block" aria-labelledby="processes-title">

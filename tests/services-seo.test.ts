@@ -52,11 +52,11 @@ describe("canonical Services SEO and redirects", () => {
     expect(buildServicePageJsonLd(automation)[1]).toMatchObject({
       offers: [
         {
-          name: "Maestro",
-          price: "3500.00",
+          name: "Automatisation terrain",
+          price: "2500.00",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
-            price: "3500.00",
+            price: "2500.00",
             priceCurrency: "EUR",
             valueAddedTaxIncluded: false,
           },
@@ -68,7 +68,7 @@ describe("canonical Services SEO and redirects", () => {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Accueil", item: "https://demaa.fr" },
-        { "@type": "ListItem", position: 2, name: "Système commercial et client", item: "https://demaa.fr/accompagnement" },
+        { "@type": "ListItem", position: 2, name: "Automatisation des opérations terrain", item: "https://demaa.fr/accompagnement" },
       ],
     });
 

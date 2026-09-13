@@ -712,7 +712,7 @@ describe("system Solutions UI", () => {
     expect(detailSource).not.toContain("systeme: SystemeDetail | null");
     expect(detailSource).toContain("<SystemSolutionsTab");
     expect(detailSource).not.toContain("<SystemResourcesTab");
-    expect(detailSource).toContain("Voir les processus du métier");
+    expect(detailSource).not.toContain("Voir les processus du métier");
     expect(detailSource).toContain("PUBLIC_LEADER_DAILY_TOOLS_ENABLED");
     expect(detailSource).toContain("<LeaderDailyRail />");
     expect(detailSource).not.toContain("StructureNewsletterBlock");
@@ -758,7 +758,7 @@ describe("system Solutions UI", () => {
     expect(detailSource).not.toContain("<SystemGuidesRail");
     expect(detailSource).not.toContain("<SystemResourcesTab");
     expect(detailSource).not.toContain("getAvailableSystemTemplatesForSystem(system.slug)");
-    expect(detailSource).toContain("Voir les processus du métier");
+    expect(detailSource).not.toContain("Voir les processus du métier");
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).toContain("SystemResourcePreviewModal");

@@ -4,206 +4,152 @@ export const AUTOMATION_ACCOMPANIMENT_PATH = "/accompagnement";
 
 export const mentoratAutomationContent = {
   hero: {
-    lead: "On met en place votre système commercial et client.",
+    lead: "De la demande client à la facture,",
+    emphasis: "sans ressaisir les mêmes informations.",
     description:
-      "De la première prise de contact au suivi après la livraison, nous organisons les étapes, les outils et les modèles qui permettent à chacun de savoir quoi faire et à chaque client de savoir où en est son dossier.",
+      "Nous mettons en place les automatisations qui relient vos demandes, vos devis, votre planning, vos interventions ou chantiers, vos comptes rendus et votre facturation. Nous intégrons l’IA lorsqu’elle permet de préparer, classer ou résumer les informations.",
+    ctaLabel: "Faire mon diagnostic Automatisation & IA",
   },
-  why: {
-    title: "Une entreprise devient plus solide lorsque son fonctionnement peut être partagé.",
-    paragraphs: [
-      "Quand les étapes sont claires, l’équipe gagne en autonomie, les clients sont mieux accompagnés et les informations ne restent plus dans la tête d’une seule personne.",
-      "C’est ainsi que l’entreprise peut transmettre son savoir-faire, grandir et continuer à bien fonctionner dans le temps.",
+  sectors: {
+    title: "Pour les entreprises de services qui travaillent sur le terrain.",
+    items: [
+      "Maintenance",
+      "Installation",
+      "Dépannage",
+      "BTP",
+      "Entretien",
+      "Propreté",
     ],
   },
-  journeyIntro: {
-    title: "Un parcours clair, de la prospection au suivi client.",
+  implementation: {
+    title: "Vous ne configurez rien. Nous le mettons en place pour vous.",
     description:
-      "Nous relions les moments clés de la relation client pour que les informations circulent et que chaque prochaine action soit visible.",
+      "Nous regardons comment votre entreprise fonctionne, choisissons avec vous ce qu’il faut automatiser en premier, puis nous construisons et testons la solution avec vos outils.",
+    steps: [
+      { title: "Nous observons", description: "Vos demandes, vos outils et les pertes de temps." },
+      { title: "Nous choisissons", description: "Ce qui sera le plus utile à automatiser en premier." },
+      { title: "Nous construisons", description: "L’automatisation et les connexions avec vos outils." },
+      { title: "Nous testons", description: "Sur des situations réelles avec votre équipe." },
+    ],
   },
   journey: [
     {
-      title: "Prospecter et vendre",
-      promise: "Pour que chaque opportunité avance avec une prochaine action claire.",
-      items: [
-        "Process commercial",
-        "Suivi des prospects",
-        "Emails de prospection",
-        "Séquences de relance",
-        "Grille tarifaire",
-        "Proposition commerciale",
-      ],
+      title: "La demande devient une intervention ou un chantier",
+      description:
+        "Les informations sont regroupées, attribuées et prêtes à être utilisées pour le devis ou le planning.",
     },
     {
-      title: "Accueillir et cadrer",
-      promise: "Pour que chaque collaboration commence sur de bonnes bases.",
-      items: [
-        "Email d’accueil",
-        "Trame de brief",
-        "Informations et documents à recueillir",
-        "Checklist de démarrage",
-        "Planning et prochaines étapes",
-      ],
+      title: "Le terrain alimente le suivi",
+      description:
+        "Les notes et les photos prises pendant le travail sont regroupées au même endroit.",
     },
     {
-      title: "Réaliser et livrer",
-      promise: "Pour garder le client informé et présenter le travail de manière claire.",
-      items: [
-        "Suivi de l’avancement",
-        "Points et comptes rendus",
-        "Structure des rapports",
-        "Présentation des résultats",
-        "Modèles de livrables",
-        "Validation et livraison",
-      ],
-    },
-    {
-      title: "Suivre et fidéliser",
-      promise: "Pour poursuivre la relation après la livraison.",
-      items: [
-        "Bilan de mission",
-        "Routine de suivi client",
-        "Récolte des avis",
-        "Nouvelles opportunités",
-        "Réactivation des anciens clients",
-      ],
+      title: "La fin du travail déclenche la suite",
+      description:
+        "Le compte rendu est préparé, le client est informé et les éléments de facturation sont transmis.",
     },
   ],
-  foundations: {
-    title: "Un fonctionnement que toute l’équipe peut comprendre et utiliser.",
+  human: {
+    title: "L’humain reste indispensable. L’automatisation et l’IA prennent en charge le répétitif.",
     description:
-      "Le système relie cinq éléments simples qui permettent à l’équipe d’avancer de la même manière.",
+      "Vos équipes gardent la relation client, leur savoir-faire et les décisions importantes. L’automatisation et l’IA préparent, classent et transmettent les informations qui leur prennent du temps.",
     items: [
-      { title: "Les étapes", description: "Ce qui doit se passer à chaque moment." },
-      { title: "Les responsabilités", description: "Qui s’occupe de quoi." },
-      { title: "Les outils", description: "Où retrouver et suivre l’information." },
-      { title: "Les modèles", description: "Quoi envoyer ou produire." },
-      { title: "Les routines", description: "Quand vérifier, relancer et mettre à jour." },
+      { title: "Informations regroupées", description: "Demandes, notes, photos et documents", status: "Automatique" },
+      { title: "Document préparé", description: "Devis, compte rendu ou message client", status: "Automatique" },
+      { title: "Décision importante", description: "Contrôle et validation par votre équipe", status: "Humain" },
     ],
   },
-  cockpit: {
-    title: "Tout ce qui mérite votre attention, au même endroit.",
+  impacts: [
+    { title: "Sur le terrain", description: "Moins de documents à remplir et moins d’informations à transmettre plusieurs fois." },
+    { title: "Au bureau", description: "Des informations complètes, faciles à retrouver et prêtes à utiliser." },
+    { title: "Pour le dirigeant", description: "Moins de choses à vérifier, à relancer ou à garder en tête." },
+    { title: "Pour les clients", description: "Des réponses plus rapides et un meilleur suivi du travail." },
+  ],
+  advantage: {
+    title: "Prenez de l’avance maintenant.",
     description:
-      "Les informations peuvent rester dans vos outils actuels. Le cockpit rassemble les prochaines actions utiles pour que les prospects avancent, que les clients soient bien suivis et que l’équipe puisse travailler sans attendre systématiquement le dirigeant.",
+      "L’avantage ne vient pas du nombre d’outils utilisés. Il vient d’un fonctionnement plus rapide, dans lequel les informations circulent mieux et les équipes consacrent plus de temps aux clients et au terrain.",
+  },
+  fieldExamples: {
+    title: "La même logique, adaptée à votre métier.",
     items: [
-      { title: "À contacter", description: "Les prospects et clients qui attendent un premier échange." },
-      { title: "À préparer", description: "Les briefs, propositions, documents et livrables à produire." },
-      { title: "À valider", description: "Les décisions et éléments qui demandent un accord." },
-      { title: "À relancer", description: "Les échanges et opportunités dont la prochaine action est due." },
+      {
+        sector: "Entreprise de nettoyage",
+        description:
+          "Une demande, une photo ou une anomalie signalée sur le terrain arrive au bureau avec le bon client et le bon site.",
+      },
+      {
+        sector: "Sécurité incendie",
+        description:
+          "Les informations du technicien préparent le compte rendu et les prochaines actions à suivre.",
+      },
+      {
+        sector: "Maintenance d’ascenseurs",
+        description:
+          "La fin de l’intervention transmet les éléments utiles au client, au suivi et à la facturation.",
+      },
     ],
   },
-  impacts: {
-    title: "Ce que cela change.",
-    items: [
-      { title: "Pour le dirigeant", description: "Moins de choses à retenir et une vision plus claire de l’activité." },
-      { title: "Pour l’équipe", description: "Une méthode commune et davantage d’autonomie au quotidien." },
-      { title: "Pour les clients", description: "Des échanges plus fluides, des livraisons mieux préparées et un suivi plus régulier." },
-      { title: "Pour l’entreprise", description: "Un fonctionnement plus facile à transmettre, à améliorer et à faire grandir." },
-    ],
+  proof: {
+    value: "30 %",
+    quote:
+      "En mettant en place ces systèmes, nous avons gagné environ 30 % de temps. Maîtriser les outils et savoir les relier a vraiment changé notre manière de travailler.",
+    attribution: "Chef de mission comptable",
+    note:
+      "Résultat constaté chez ce client sur le travail automatisé. Le gain dépend du fonctionnement, du volume et des tâches concernées.",
   },
-  methodIntro: {
-    title: "On construit le système avec votre réalité.",
-    description: "Nous réalisons la mise en place avec vos outils, vos habitudes et les personnes concernées.",
-  },
-  method: [
-    {
-      title: "Nous découvrons votre façon de travailler",
-      description:
-        "Vos clients, vos outils, vos habitudes et les moments où le suivi devient plus difficile.",
-    },
-    {
-      title: "Nous mettons le système en place",
-      description:
-        "Les étapes, les responsabilités, l’outil de suivi, les documents et les routines.",
-    },
-    {
-      title: "Nous le testons et le transmettons",
-      description:
-        "Nous l’utilisons sur des situations réelles et accompagnons l’équipe dans sa prise en main.",
-    },
-  ],
-  testimonialsIntro: {
-    title: "Une organisation qui change vraiment le quotidien.",
-  },
-  testimonials: [
-    {
-      quote:
-        "En mettant en place ces systèmes, nous avons gagné environ 30 % de temps. Maîtriser les outils et savoir les relier a vraiment changé notre manière de travailler.",
-      attribution: "Chef de mission comptable",
-    },
-    {
-      quote:
-        "Les outils évoluent vite. C’est le type d’accompagnement qu’il faut reprendre régulièrement pour rester à jour et continuer à améliorer nos façons de travailler.",
-      attribution: "Assistante de direction · Entreprise du bâtiment",
-    },
-  ],
   offer: {
     duration: AUTOMATION_OFFER.durationLabel,
     price: AUTOMATION_OFFER.price.label,
-    eyebrow: `Maestro · Mise en place · ${AUTOMATION_OFFER.durationLabel}`,
-    title: "Votre système commercial et client, prêt à être utilisé.",
+    title: "Un mois pour automatiser ce qui vous fait perdre du temps.",
     scope:
-      "Nous définissons avec vous le parcours prioritaire et le niveau de mise en place réalisable pendant la mission.",
+      "Nous examinons l’ensemble de votre fonctionnement, puis nous choisissons avec vous ce qu’il faut mettre en place en premier. Nous réalisons cette automatisation en entier.",
   },
   offerIncludes: [
-    "Votre parcours commercial et client structuré",
-    "Votre outil de suivi configuré",
-    "Vos étapes et responsabilités définies",
-    "Vos emails et séquences de relance prioritaires",
-    "Vos documents et modèles prioritaires",
-    "Vos trames de rapports et de livrables",
-    "Vos routines de suivi",
-    "Votre équipe accompagnée dans la prise en main",
+    "Analyse de votre fonctionnement",
+    "Liste des automatisations possibles",
+    "Choix de ce qui sera réalisé",
+    "Construction et connexion avec vos outils",
+    "Tests et ajustements",
+    "Documentation et prise en main",
   ],
-  ongoing: {
-    title: "Vous et votre équipe êtes autonomes.",
+  applicationBridge: {
+    title: "Vous souhaitez une application métier sur mesure ?",
     description:
-      "Le système est documenté, testé avec vous et transmis pour que chacun sache l’utiliser, le mettre à jour et le faire évoluer au quotidien.",
+      "Lorsque vos outils actuels ne peuvent pas suivre votre façon de travailler, Demaa conçoit une application adaptée à votre métier, à vos équipes et à vos clients.",
+    ctaLabel: "Découvrir le sur mesure",
+    href: "/sur-mesure",
   },
   faq: [
     {
-      question: "Est-ce adapté à notre activité ?",
+      question: "Est-ce adapté à notre entreprise ?",
       answer:
-        "Nous partons de votre manière de prospecter, vendre et accompagner vos clients. Les étapes, les modèles et l’outil sont adaptés à votre activité, à votre équipe et à la réalité de vos missions.",
+        "Oui si vous gérez régulièrement des demandes, des devis, des interventions ou chantiers, des comptes rendus et de la facturation.",
     },
     {
-      question: "Devons-nous utiliser un CRM ?",
+      question: "Faut-il changer nos outils ?",
       answer:
-        "Pas nécessairement. Le bon outil est celui que votre équipe peut réellement utiliser. Nous pouvons structurer le suivi dans un CRM, dans un outil déjà en place ou dans un espace plus simple lorsque cela suffit.",
+        "Pas nécessairement. Nous conservons ce qui fonctionne et proposons un changement uniquement si un outil bloque réellement le travail.",
     },
     {
-      question: "Pouvez-vous partir de nos outils actuels ?",
+      question: "Utilisez-vous toujours de l’IA ?",
       answer:
-        "Oui. Nous conservons ce qui fonctionne déjà et faisons évoluer uniquement ce qui empêche le parcours d’être clair, partagé et facile à suivre.",
+        "Non. Nous l’utilisons seulement lorsqu’elle apporte un gain concret, par exemple pour classer une demande, résumer des notes ou préparer un compte rendu. Une automatisation simple suffit souvent pour le reste.",
     },
     {
-      question: "Les rapports et les modèles de livrables sont-ils inclus ?",
+      question: "Que peut-on automatiser en un mois ?",
       answer:
-        "Oui, lorsque ces documents font partie du parcours prioritaire défini ensemble. Nous préparons les trames utiles pour cadrer, informer, présenter les résultats et livrer plus clairement.",
+        "Nous regardons toutes les possibilités, puis choisissons avec vous ce qui peut être mis en place correctement pendant le mois.",
     },
     {
       question: "Combien de temps cela demande-t-il à notre équipe ?",
       answer:
-        "Nous prenons en charge la conception et la mise en place. L’équipe intervient pour nous montrer la réalité du terrain, valider les choix et tester le fonctionnement sur des situations concrètes.",
-    },
-    {
-      question: "Que peut-on mettre en place en un mois ?",
-      answer:
-        "Nous sélectionnons avec vous le parcours prioritaire, les étapes à clarifier et les modèles les plus utiles. Ce périmètre, les livrables et le résultat attendu sont validés avant le début de la mise en place.",
-    },
-    {
-      question: "Notre équipe pourra-t-elle continuer seule ?",
-      answer:
-        "Oui. Le système est documenté, testé avec les personnes concernées et transmis pour que l’équipe puisse l’utiliser et le faire évoluer.",
-    },
-    {
-      question: "Demaa peut-elle rester à nos côtés ensuite ?",
-      answer:
-        "Oui. Après la mission initiale, nous pouvons continuer à suivre le fonctionnement et à améliorer le système avec vous dans un cadre mensuel défini.",
+        "Nous prenons en charge la conception et la mise en place. Votre équipe nous montre la réalité du terrain, valide les choix et teste le fonctionnement.",
     },
   ],
   finalCta: {
-    title: "Construisons une organisation qui ne repose plus uniquement sur vous.",
+    title: "Qu’est-ce qui vous fait perdre du temps aujourd’hui ?",
     description:
-      "Commençons par votre parcours commercial et client : l’un des premiers systèmes dont une entreprise a besoin pour travailler, transmettre et grandir sereinement.",
+      "Demandes dispersées, devis, planning, comptes rendus ou facturation : regardons ce que Demaa peut automatiser et mettre en place pour votre entreprise.",
   },
 } as const;

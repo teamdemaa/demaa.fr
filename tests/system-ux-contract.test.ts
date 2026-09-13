@@ -38,8 +38,8 @@ describe("system UX contract", () => {
     expect(detailSource).not.toContain("hasLevierSolution");
     expect(detailSource).not.toContain("<SystemGuidesRail");
     expect(detailSource).not.toContain("<SystemResourcesTab");
-    expect(detailSource).toContain("Voir les processus du métier");
-    expect(detailSource).toContain('className="demaa-primary-button mt-5 min-h-10 px-5"');
+    expect(detailSource).not.toContain("Voir les processus du métier");
+    expect(detailSource).not.toContain('className="demaa-primary-button mt-5 min-h-10 px-5"');
     expect(detailSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("OperationalSystemCopyRequestModal");
     expect(resourcesSource).not.toContain("SystemRecapRequestModal");
@@ -86,6 +86,7 @@ describe("system UX contract", () => {
       processesEmailDialogSource,
       processesEmailRouteSource,
       processesPdfRouteSource,
+      featureFlagsSource,
       globalStyles,
     ] = await Promise.all([
       readSource("src/components/SystemRecapPrintButton.tsx"),
@@ -96,6 +97,7 @@ describe("system UX contract", () => {
       readSource("src/components/SystemProcessesEmailDialog.tsx"),
       readSource("src/app/api/system-processes/email/route.ts"),
       readSource("src/app/api/system-processes/pdf/[slug]/route.ts"),
+      readSource("src/lib/public-feature-flags.ts"),
       readSource("src/app/globals.css"),
     ]);
 
@@ -111,6 +113,8 @@ describe("system UX contract", () => {
     expect(processesPageSource).toContain("<SystemProcessesContent");
     expect(processesContentSource).toContain("data-system-processes");
     expect(processesContentSource).toContain("Vue d’ensemble");
+    expect(processesContentSource).toContain("PUBLIC_SYSTEM_PROCESS_OVERVIEW_ENABLED ? (");
+    expect(featureFlagsSource).toContain("NEXT_PUBLIC_DEMAA_SYSTEM_PROCESS_OVERVIEW_ENABLED");
     expect(processesContentSource).toContain("Processus complets");
     expect(processesContentSource).not.toContain("downloadHref=");
     expect(processesContentSource).toContain("emailDelivery={{ systemName, systemSlug }}");
@@ -156,17 +160,22 @@ describe("system UX contract", () => {
     );
   });
 
-  it("keeps the public métier page linear and exposes processes once through a direct bridge", async () => {
-    const detailSource = await readSource(
-      "src/components/SystemDetailContent.tsx",
-    );
+  it("keeps the public métier page linear and exposes processes once through the discovery card", async () => {
+    const [detailSource, pageSource] = await Promise.all([
+      readSource("src/components/SystemDetailContent.tsx"),
+      readSource("src/app/(marketing)/solutions/[slug]/page.tsx"),
+    ]);
 
     expect(detailSource).not.toContain('role="tablist"');
     expect(detailSource).not.toContain('role="tab"');
     expect(detailSource).not.toContain("SystemeTabContent");
     expect(detailSource).toContain("<SystemSolutionsTab");
     expect(detailSource).not.toContain("<SystemResourcesTab");
-    expect(detailSource).toContain('href={`/systemes/${system.slug}/processus`}');
+    expect(detailSource).not.toContain('href={`/systemes/${system.slug}/processus`}');
+    expect(pageSource).toContain('eyebrow="Bonus"');
+    expect(pageSource).toContain('title="Les processus de votre métier"');
+    expect(pageSource).toContain('ctaLabel="Voir les processus du métier"');
+    expect(pageSource).toContain('href={`/systemes/${data.system.slug}/processus`}');
     expect(detailSource).not.toContain("<SystemSolutionNextSteps");
   });
 });
