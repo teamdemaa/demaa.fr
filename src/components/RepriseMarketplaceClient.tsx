@@ -194,7 +194,7 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
     <>
       <Navbar minimal publicNavigationActiveView="marketplace" />
       <main className="bg-dema-cream text-brand-blue">
-        <section className="px-5 pb-14 pt-14 text-center sm:px-8 sm:pb-20 sm:pt-20 lg:pt-24">
+        <section className="px-5 pb-6 pt-14 text-center sm:px-8 sm:pb-10 sm:pt-20 lg:pt-24">
           <div className="mx-auto max-w-6xl">
             <h1
               aria-label="La marketplace des PME de services à reprendre. Reprenez une entreprise qui fonctionne déjà."
@@ -251,7 +251,7 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
           </div>
         </section>
 
-        <section aria-label="Entreprises à reprendre" className="border-t border-dema-line px-5 py-14 sm:px-8 sm:py-20">
+        <section aria-label="Entreprises à reprendre" className="border-t border-dema-line px-5 pb-14 pt-6 sm:px-8 sm:pb-20 sm:pt-10">
           <div className="mx-auto max-w-6xl">
             {filtered.length ? <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">{filtered.map((opportunity) => <OpportunityCard key={opportunity.id} opportunity={opportunity} onSelect={() => setSelectedOpportunity(opportunity)} />)}</div> : <div className="rounded-[1.75rem] border border-dema-line bg-dema-paper p-10 text-center"><p className="text-lg font-medium">Aucune opportunité ne correspond à cette recherche.</p><button className="mt-4 text-sm font-semibold text-dema-forest underline underline-offset-4" type="button" onClick={() => { setQuery(""); setCategory("Toutes"); }}>Réinitialiser les filtres</button></div>}
           </div>
