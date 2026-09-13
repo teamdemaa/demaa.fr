@@ -142,7 +142,7 @@ export default function BusinessValuationDialog({ onClose, onContinue }: { onClo
               <ResultValue label="Fourchette haute" value={result.high} />
             </div>
             <div className="mt-7 rounded-2xl border border-dema-line p-5">
-              <p className="text-sm font-medium">Méthode utilisée</p>
+              <p className="text-sm font-medium">Calcul de l’estimation</p>
               <p className="mt-2 text-sm leading-6 text-dema-muted">{result.methodLabel}</p>
               <ul className="mt-4 space-y-2">{result.factors.map((factor) => <li key={factor} className="flex gap-2 text-sm leading-6 text-dema-muted"><Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />{factor}</li>)}</ul>
             </div>

@@ -94,9 +94,9 @@ function calculateFinancialBase(model: BusinessValuationModel, input: BusinessVa
     const revenue = requirePositive(input.revenue, "Le chiffre d’affaires est requis.");
     return {
       central: ebe * 2.8 * 0.6 + revenue * 0.87 * 0.4,
-      methodLabel: "EBE retraité, contrôlé par le chiffre d’affaires",
+      methodLabel: "À partir de la rentabilité d’exploitation (EBE retraité), puis vérifiée par rapport au chiffre d’affaires.",
       financialAdjustment: 0,
-      financialFactors: ["Référence centrale de 2,8 fois l’EBE retraité", "Contrôle complémentaire à partir du chiffre d’affaires"],
+      financialFactors: ["Point de départ : environ 2,8 fois l’EBE retraité", "Vérification : comparaison avec le chiffre d’affaires"],
     };
   }
 
