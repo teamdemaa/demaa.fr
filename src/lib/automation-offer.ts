@@ -1,13 +1,13 @@
 export const AUTOMATION_OFFER = {
   durationLabel: "1 mois",
-  name: "Automatisation terrain",
-  serviceName: "Automatisation des opérations terrain",
+  name: "Système prioritaire",
+  serviceName: "Structuration, automatisation & IA",
   packageSlug: "automatisation-essentielle",
   price: {
-    amountMinor: 250000,
+    amountMinor: 300000,
     currency: "EUR",
-    label: "2 500 € HT",
+    label: "À partir de 3 000 € HT",
   },
   summary:
-    "Un mois pour choisir, construire et tester l’automatisation terrain la plus utile à votre entreprise.",
+    "Un mois pour structurer et automatiser un fonctionnement prioritaire de votre entreprise.",
 } as const;

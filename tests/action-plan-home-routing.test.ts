@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { parseActionPlanAppContext } from "@/lib/action-plan-app-context";
 import { parseActionPlanAccessIntent } from "@/lib/action-plan-access-intent";
 import {
-  buildDefaultHomeAccompagnementHref,
+  buildDefaultHomeMarketplaceHref,
   shouldRedirectAuthenticatedHomeToPlans,
 } from "@/lib/action-plan-home-routing";
 
@@ -24,12 +24,12 @@ function shouldRedirect(input: {
 }
 
 describe("authenticated homepage routing", () => {
-  it("opens Accompagnement by default while preserving campaign parameters", () => {
-    expect(buildDefaultHomeAccompagnementHref({})).toBe("/accompagnement");
-    expect(buildDefaultHomeAccompagnementHref({
+  it("opens À reprendre by default while preserving campaign parameters", () => {
+    expect(buildDefaultHomeMarketplaceHref({})).toBe("/a-reprendre");
+    expect(buildDefaultHomeMarketplaceHref({
       utm_campaign: "lancement",
       utm_source: "newsletter",
-    })).toBe("/accompagnement?utm_campaign=lancement&utm_source=newsletter");
+    })).toBe("/a-reprendre?utm_campaign=lancement&utm_source=newsletter");
   });
 
   it("keeps every explicit Diagnostic or contextual entry on the application homepage", () => {
@@ -39,7 +39,7 @@ describe("authenticated homepage routing", () => {
       { section: "solutions", system: "restaurant" },
       { new: "1" },
     ]) {
-      expect(buildDefaultHomeAccompagnementHref(query)).toBeNull();
+      expect(buildDefaultHomeMarketplaceHref(query)).toBeNull();
     }
   });
 

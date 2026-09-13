@@ -22,13 +22,13 @@ const specialistSectionDefinitions = [
     id: "digitaliser-et-automatiser",
     title: "Digitaliser et automatiser",
     description: "Supprimez les tâches répétitives et construisez les outils réellement utiles à votre équipe.",
-    slugs: ["automatisation-ia", "application-metier", "assistance-administrative"],
+    slugs: ["automatisation-processus", "application-metier", "assistance-administrative"],
   },
   {
     id: "structurer-et-piloter",
     title: "Structurer et piloter",
     description: "Installez une méthode claire pour suivre l’activité, décider et faire avancer l’entreprise.",
-    slugs: ["automatisation-processus", "coach-business"],
+    slugs: ["coach-business"],
   },
   {
     id: "developper-l-activite",

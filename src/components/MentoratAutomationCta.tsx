@@ -28,7 +28,7 @@ function buildCtaHref({ contentSlug, modelSlug, systemSlug, variant }: MentoratA
   if (contentSlug) params.set("contentSlug", contentSlug);
   if (systemSlug) params.set("systemSlug", systemSlug);
   if (modelSlug) params.set("modelSlug", modelSlug);
-  return `${AUTOMATION_ACCOMPANIMENT_PATH}?${params.toString()}`;
+  return `${AUTOMATION_ACCOMPANIMENT_PATH}?${params.toString()}#automatisation`;
 }
 
 function getCopy({ modelSlug, systemName, variant }: MentoratAutomationCtaProps) {
@@ -61,8 +61,8 @@ function getCopy({ modelSlug, systemName, variant }: MentoratAutomationCtaProps)
   }
 
   return {
-    title: "Nous mettons en place votre automatisation terrain.",
-    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, nous choisissons avec vous ce qu’il faut automatiser en premier, puis nous le construisons et le testons avec vos outils.`,
+    title: "Nous mettons en place votre système prioritaire.",
+    description: `Pendant ${AUTOMATION_OFFER.durationLabel}, nous choisissons avec vous ce qu’il faut structurer ou automatiser en premier, puis nous le construisons et le testons avec vos outils.`,
   };
 }
 

@@ -212,14 +212,6 @@ export default function ProviderProfileModal({
               </label>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                <label className="space-y-2 text-sm text-brand-blue">
-                  <span>Nom et prénom</span>
-                  <input required value={fullName} onChange={(event) => setFullName(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
-                </label>
-                <label className="space-y-2 text-sm text-brand-blue">
-                  <span>{opportunity ? "Entreprise ou activité" : "Entreprise"}</span>
-                  <input required value={company} onChange={(event) => setCompany(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
-                </label>
                 {!opportunity ? (
                   <label className="space-y-2 text-sm text-brand-blue">
                     <span>Pays ou zones couverts</span>
@@ -230,9 +222,20 @@ export default function ProviderProfileModal({
                   <span>Site ou profil professionnel <span className="text-dema-muted">(facultatif)</span></span>
                   <input value={profileUrl} onChange={(event) => setProfileUrl(event.target.value)} placeholder="https://" className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
                 </label>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="space-y-2 text-sm text-brand-blue">
+                  <span>Prénom et nom</span>
+                  <input required autoComplete="name" value={fullName} onChange={(event) => setFullName(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                </label>
                 <label className="space-y-2 text-sm text-brand-blue">
                   <span>Adresse e-mail</span>
                   <input required type="email" autoComplete="email" maxLength={160} value={email} onChange={(event) => setEmail(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
+                </label>
+                <label className="space-y-2 text-sm text-brand-blue sm:col-span-2">
+                  <span>{opportunity ? "Entreprise ou activité" : "Entreprise"}</span>
+                  <input required autoComplete="organization" value={company} onChange={(event) => setCompany(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
                 </label>
               </div>
 

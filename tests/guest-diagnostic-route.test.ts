@@ -90,6 +90,22 @@ describe("guest diagnostic without a generated plan", () => {
     expect(mocks.submitDiagnostic).not.toHaveBeenCalled();
   });
 
+  it("accepts one combined name field instead of separate identity fields", async () => {
+    const response = await POST(request({
+      contactConsent: true,
+      email: "owner@example.com",
+      idempotencyKey: "diagnostic-request-123456",
+      name: "Maya Martin",
+    }));
+
+    expect(response.status).toBe(201);
+    expect(mocks.submitDiagnostic).toHaveBeenCalledWith(expect.objectContaining({
+      firstName: null,
+      lastName: null,
+      name: "Maya Martin",
+    }));
+  });
+
   it("silently accepts the honeypot without storing a request", async () => {
     const response = await POST(request({
       contactConsent: true,

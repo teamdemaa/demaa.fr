@@ -1,51 +1,40 @@
 # Founder brief Demaa
 
-## Actif le plus fort
+## Positionnement actuel
 
-- [validé dans cet échange] Demaa dispose déjà d'une newsletter réunissant 200 dirigeants. Leur engagement, leur correspondance avec le cœur de cible et leur volonté d'acheter ou de répondre restent à mesurer.
-- [validé par les artefacts] Demaa possède aussi un produit public substantiel : 115 activités métier structurées, une bibliothèque de solutions et d'annuaires, 14 guides de processus, des modèles à copier, une offre de logiciel métier et trois projets logiciels issus du terrain. Cet actif prouve une capacité d'exécution et de curation, mais pas encore une demande récurrente ni une volonté de payer.
+- [validé] La priorité publique est **À reprendre** : une marketplace de PME de services déjà en activité.
+- [validé] La promesse repreneur est simple : reprendre une entreprise qui fonctionne déjà, avec des clients existants et une équipe ou un savoir-faire en place.
+- [validé] La cible couvre les services terrain et les services professionnels. Le point commun est une valeur portée par les clients, les contrats, l’équipe et le savoir-faire, plutôt que par un emplacement commercial.
 
-## Ce que fait Demaa
+## Les trois portes publiques
 
-- [hypothèse stratégique à valider] Demaa aide les dirigeants de TPE à mieux organiser le travail, choisir les ressources adaptées et trouver un spécialiste lorsque la mise en œuvre doit être déléguée.
-- [validé dans cet échange] La direction souhaitée est celle d'un média utile et largement distribué, avec trois portes : Organisation, Solutions et Spécialistes.
+- **À reprendre** : découvrir les entreprises et demander une mise en relation.
+- **Accompagnement** : faire structurer et automatiser un fonctionnement prioritaire par Demaa, pour gagner du temps et rendre l’entreprise plus simple à piloter ou à transmettre.
+- **Ressources** : avancer seul avec les outils, modèles et tutoriels.
 
-## Pour qui
+## Accompagnement
 
-- [hypothèse] Le cœur de cible est un dirigeant français de TPE avec une petite équipe, dont une partie excessive des informations, décisions, relances et validations repose encore sur lui.
-- [hypothèse] Le meilleur premier segment se situe probablement parmi les entreprises de services ou de terrain qui ont déjà une équipe et des processus répétitifs. La taille exacte et les métiers prioritaires restent à déterminer par les données d'usage et des entretiens.
-- [validé par une source de marché, pas par des utilisateurs Demaa] Dans l'étude Bpifrance Le Lab 2025 sur la transmission, 41 % des dirigeants concernés déclarent que l'activité repose trop sur leur personne. France Num recommande par ailleurs de partir des besoins concrets des TPE PME, plutôt que du numérique pour le numérique.
+- [validé] Il n’existe plus deux offres séparées “transmission” et “automatisation”.
+- [validé] Demaa observe le fonctionnement, choisit un système prioritaire avec l’entreprise, puis met en place les processus, outils, automatisations et usages utiles de l’IA.
+- [validé] Offre bornée à un mois et un système prioritaire, à partir de 3 000 euros HT.
+- [validé] La transmission est un résultat possible du même travail : une entreprise plus documentée et moins dépendante du dirigeant.
+- [validé] L’application métier sur mesure reste accessible directement, mais ne constitue plus une porte principale ni le message central.
 
-## Problème et résultat recherché
+## Marketplace MVP
 
-- [hypothèse] Problème principal : le fonctionnement de l'entreprise reste dans la tête du dirigeant, dispersé entre des fichiers, des messages et des habitudes implicites.
-- [hypothèse] Résultat recherché : le travail avance avec des étapes, responsabilités, informations et outils clairs, sans que chaque sujet repasse par le dirigeant.
-- [hypothèse] Tendance qui aggrave le problème : à mesure que l'entreprise ajoute des clients, des collaborateurs, des obligations et des outils, le dirigeant devient le point de passage de tout.
+- [validé] 30 entreprises confirmées sont publiées avec les informations disponibles.
+- [validé] Demaa ne publie pas les coordonnées sources. Le repreneur décrit son projet, puis laisse ses coordonnées ; Demaa traite manuellement la mise en relation.
+- [validé] Les demandes doivent toujours produire une notification email à Demaa. Slack n’est pas nécessaire pour ce parcours.
+- [validé] La localisation affichée reste approximative, à l’échelle de la région ou du département. Les opportunités nationales sans zone précise restent dans la liste, sans faux point sur la carte.
+- [validé] Le comparatif est limité à trois entreprises et n’attribue aucun score automatique.
 
-## Alternatives actuelles
+## Ressources et Outils
 
-- [hypothèse] Recherche Google fragmentée, recommandations du réseau, annuaires généralistes, contenus de France Num, comparateurs logiciels, plateformes de prestataires et agences contactées directement.
-- [hypothèse] La différence potentielle de Demaa est de partir d'un problème de fonctionnement réel, puis de relier dans un même parcours un guide, un modèle, un outil et un spécialiste.
+- [validé] Ressources contient Outils, Modèles et Tutoriels.
+- [validé] Le hub Outils reste centré sur les systèmes des entreprises de services. Conseil et services aux entreprises arrive en premier, BTP et services techniques en deuxième.
+- [validé] Restauration, commerce de détail, santé et autres secteurs éloignés du positionnement ne sont plus montrés dans le hub, mais leurs pages historiques restent conservées.
 
-## Stade et traction
+## Risque principal
 
-- [validé par les artefacts] Le site, les catalogues, les formulaires de demande et l'offre de logiciel métier sont en production. L'offre sur mesure démarre à 4 500 euros HT.
-- [validé dans cet échange] La newsletter compte 200 dirigeants.
-- [inconnu] Taux de délivrabilité, d'ouverture, de clic, de réponse et de désabonnement de cette newsletter, ainsi que le nombre de visiteurs qualifiés, demandes, clients payants, revenus, catégories les plus consultées et taux de conversion.
-- [hypothèse] L'absence actuelle d'une boucle mesurée contenu vers recommandation vers revenu est le principal risque stratégique.
-
-## Acheteurs et modèle économique envisagé
-
-- [validé dans cet échange] Le contenu doit rester gratuit pour maximiser sa distribution.
-- [hypothèse] Trois acheteurs peuvent financer le modèle : le client final d'une prestation réalisée par Demaa, le spécialiste qui reçoit une opportunité qualifiée, et l'éditeur ou fournisseur qui achète une visibilité ou une performance attribuable.
-- [hypothèse] La commission sur une vente conclue hors Demaa sera difficile à vérifier. Un prix par opportunité qualifiée ou une prestation d'acquisition mesurable est plus simple à tester avant une commission transactionnelle.
-
-## Direction à protéger
-
-- [validé dans cet échange] Construire Demaa comme média et moteur de distribution, et non comme une simple agence de développement.
-- [validé dans cet échange] La navigation publique doit rester limitée à trois portes : Organisation, Solutions et Spécialistes. La page Spécialistes ne distingue pas visuellement les prestations selon leur opérateur.
-- [validé dans cet échange] Remplacer les offres « Assistance administrative » et « Office management » par une seule offre « Assistant digital », centrée sur la délégation de tâches administratives et numériques récurrentes, avec maîtrise des outils et de l'IA.
-- [validé dans cet échange] Afficher Expert-comptable en premier dans la famille Finances et administratif, devant Assistant digital.
-- [validé par les artefacts et clarifié dans cet échange] L'offre « Système commercial et client » est une prestation unique de 3 500 euros HT sur un mois. Les emails, séquences de relance, documents, modèles, trames et routines sont des livrables personnalisés de cette prestation ; ils ne constituent pas un kit commercial autonome dans Solutions.
-- [hypothèse] Garder le logiciel sur mesure comme moteur de trésorerie immédiat, sans en faire le positionnement principal de la marque.
-- [hypothèse] Limiter d'abord Spécialistes aux expertises directement liées à l'organisation et à la mise en œuvre, avant d'ouvrir des catégories plus éloignées comme la publicité en ligne.
+- [hypothèse à mesurer] Le principal blocage n’est plus la quantité de contenu, mais la capacité à générer des demandes qualifiées puis des mises en relation réelles.
+- [à suivre] Visites des fiches, demandes repreneurs, demandes d’estimation, rendez-vous d’accompagnement, mises en relation effectuées et suites obtenues.

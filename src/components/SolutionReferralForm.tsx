@@ -10,7 +10,7 @@ import {
 } from "@/lib/lead-submission-client";
 
 export type SolutionReferralFields = Readonly<{
-  firstName: string;
+  name: string;
   email: string;
   company: string;
   need: string;
@@ -31,7 +31,7 @@ export type SolutionReferralPayload = Readonly<{
 type FieldErrors = Partial<Record<keyof SolutionReferralFields, string>>;
 
 const EMPTY_FIELDS: SolutionReferralFields = {
-  firstName: "",
+  name: "",
   email: "",
   company: "",
   need: "",
@@ -41,7 +41,7 @@ export function validateSolutionReferralFields(
   fields: SolutionReferralFields,
 ): FieldErrors {
   const errors: FieldErrors = {};
-  if (!fields.firstName.trim()) errors.firstName = "Indiquez votre prénom.";
+  if (!fields.name.trim()) errors.name = "Indiquez vos prénom et nom.";
   if (!fields.company.trim()) errors.company = "Indiquez le nom de votre cabinet.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email.trim())) {
     errors.email = "Indiquez une adresse e-mail valide.";
@@ -63,7 +63,7 @@ export function buildSolutionReferralPayload(
     ...(input.attribution ? { attribution: input.attribution } : {}),
     company: fields.company.trim(),
     email: fields.email.trim().toLowerCase(),
-    firstName: fields.firstName.trim(),
+    firstName: fields.name.trim(),
     idempotencyKey: input.idempotencyKey,
     marketingConsent: false,
     need: fields.need.trim(),
@@ -206,36 +206,20 @@ export default function SolutionReferralForm({
         ) : null}
       </label>
 
-      <label className="block text-sm font-medium text-brand-blue">
-        Cabinet ou entreprise
-        <input
-          name="company"
-          autoComplete="organization"
-          maxLength={160}
-          value={fields.company}
-          onChange={(event) => updateField("company", event.target.value)}
-          aria-invalid={Boolean(errors.company)}
-          className={fieldClassName}
-        />
-        {errors.company ? (
-          <span className="mt-1.5 block text-xs text-red-700">{errors.company}</span>
-        ) : null}
-      </label>
-
       <div>
         <label className="block text-sm font-medium text-brand-blue">
-          Prénom
+          Prénom et nom
           <input
-            name="firstName"
-            autoComplete="given-name"
-            maxLength={80}
-            value={fields.firstName}
-            onChange={(event) => updateField("firstName", event.target.value)}
-            aria-invalid={Boolean(errors.firstName)}
+            name="name"
+            autoComplete="name"
+            maxLength={160}
+            value={fields.name}
+            onChange={(event) => updateField("name", event.target.value)}
+            aria-invalid={Boolean(errors.name)}
             className={fieldClassName}
           />
-          {errors.firstName ? (
-            <span className="mt-1.5 block text-xs text-red-700">{errors.firstName}</span>
+          {errors.name ? (
+            <span className="mt-1.5 block text-xs text-red-700">{errors.name}</span>
           ) : null}
         </label>
       </div>
@@ -254,6 +238,22 @@ export default function SolutionReferralForm({
         />
         {errors.email ? (
           <span className="mt-1.5 block text-xs text-red-700">{errors.email}</span>
+        ) : null}
+      </label>
+
+      <label className="block text-sm font-medium text-brand-blue">
+        Cabinet ou entreprise
+        <input
+          name="company"
+          autoComplete="organization"
+          maxLength={160}
+          value={fields.company}
+          onChange={(event) => updateField("company", event.target.value)}
+          aria-invalid={Boolean(errors.company)}
+          className={fieldClassName}
+        />
+        {errors.company ? (
+          <span className="mt-1.5 block text-xs text-red-700">{errors.company}</span>
         ) : null}
       </label>
 

@@ -9,6 +9,7 @@ export const guestDiagnosticRequestSchema = z.object({
   idempotencyKey: z.string().trim().regex(/^[A-Za-z0-9:_-]{16,160}$/),
   lastName: z.string().trim().max(120).optional(),
   message: z.string().trim().max(2_000).optional(),
+  name: z.string().trim().max(160).optional(),
   phone: z.string().trim().max(60).optional(),
   situation: z.string().trim().max(4_000).optional(),
   website: z.string().max(200).optional(),

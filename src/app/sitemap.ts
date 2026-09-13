@@ -8,11 +8,9 @@ import { aidFamilies, demaaAidItems } from "@/lib/aid-catalog";
 import { getAccountingFirms } from "@/lib/accounting-directory";
 import { accountingDirectorySeoPages } from "@/lib/accounting-directory-seo-pages";
 import { getEnterpriseCatalog } from "@/lib/enterprise-annuaire-server";
-import { demaaFinanceItems } from "@/lib/finance-catalog";
 import { demaaProNetworks } from "@/lib/pro-network-catalog";
 import { sectorPageDefinitions } from "@/lib/sector-pages";
 import { sectorTaxonomy } from "@/lib/sector-taxonomy";
-import { demaaSuppliers } from "@/lib/supplier-catalog";
 import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-directory";
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 import { getPublishedCopyableModels } from "@/lib/copyable-model-catalog";
@@ -34,18 +32,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
+    { url: `${base}/a-reprendre`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 1 },
     { url: `${base}/outils`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
     ...(PUBLIC_SPECIALISTS_ENABLED
       ? [{ url: `${base}/specialistes`, lastModified: siteUpdatedAt, changeFrequency: "weekly" as const, priority: 0.94 }]
       : []),
-    { url: `${base}/sur-mesure`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/accompagnement`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.85 },
     { url: `${base}/modeles`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/session-structurer`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/studio`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.65 },
     { url: `${base}/annuaire-outils`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/annuaire-fournisseurs`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/annuaire-financement`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/aides-et-subventions`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-reseaux-pro`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-newsletters`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
@@ -113,20 +109,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const freeToolEntries: MetadataRoute.Sitemap = freeToolRoutes.map((slug) => ({
     url: `${base}/outils/${slug}`,
-    lastModified: siteUpdatedAt,
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
-  const supplierEntries: MetadataRoute.Sitemap = demaaSuppliers.map((supplier) => ({
-    url: `${base}/annuaire-fournisseurs/${supplier.slug}`,
-    lastModified: siteUpdatedAt,
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
-  const financeEntries: MetadataRoute.Sitemap = demaaFinanceItems.map((item) => ({
-    url: `${base}/annuaire-financement/${item.slug}`,
     lastModified: siteUpdatedAt,
     changeFrequency: "monthly" as const,
     priority: 0.7,
@@ -204,8 +186,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...newsletterSitemapEntries,
     ...toolEntries,
     ...freeToolEntries,
-    ...supplierEntries,
-    ...financeEntries,
     ...aidFamilyEntries,
     ...aidEntries,
     ...proNetworkEntries,

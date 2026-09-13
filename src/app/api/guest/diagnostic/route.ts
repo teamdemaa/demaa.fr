@@ -39,8 +39,9 @@ export async function POST(request: Request) {
   }
   const firstName = parsed.data.firstName?.trim() || null;
   const lastName = parsed.data.lastName?.trim() || null;
-  if (!parsed.data.message?.trim() && !(firstName && lastName)) {
-    return NextResponse.json({ error: "Indiquez votre nom ou décrivez brièvement comment nous pouvons vous aider." }, {
+  const name = parsed.data.name?.trim() || null;
+  if (!parsed.data.message?.trim() && !name && !(firstName && lastName)) {
+    return NextResponse.json({ error: "Indiquez vos prénom et nom ou décrivez brièvement comment nous pouvons vous aider." }, {
       status: 400,
       headers: noStoreHeaders(),
     });
@@ -76,6 +77,7 @@ export async function POST(request: Request) {
       idempotencyKey: parsed.data.idempotencyKey,
       lastName,
       message: parsed.data.message?.trim() || null,
+      name,
       phone,
       plan: null,
       request,
