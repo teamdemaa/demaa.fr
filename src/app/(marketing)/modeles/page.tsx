@@ -16,8 +16,7 @@ import {
 
 export const metadata = buildPublicPageMetadata({
   title: "Modèles à copier pour organiser son activité | Demaa",
-  description:
-    "Des structures simples, déjà pensées pour suivre un flux de travail précis.",
+  description: "Des modèles prêts à copier pour organiser votre activité.",
   path: "/modeles",
 });
 
@@ -38,7 +37,7 @@ export default async function ModelsPage({ searchParams }: ModelsPageProps) {
     : getPublishedCopyableModels();
   const jsonLd = buildPublicIndexJsonLd({
     name: "Modèles à copier",
-    description: "Des structures simples, déjà pensées pour suivre un flux de travail précis.",
+    description: "Des modèles prêts à copier pour organiser votre activité.",
     path: "/modeles",
     items: models.map((model) => ({
       name: model.title,

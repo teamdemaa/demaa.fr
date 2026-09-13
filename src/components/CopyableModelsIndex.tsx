@@ -91,9 +91,6 @@ export default function CopyableModelsIndex({
               <span className="demaa-hero-title block text-dema-forest">pour organiser votre activité</span>
             </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-dema-muted md:text-lg">
-            Des structures simples, déjà pensées pour suivre un flux de travail précis.
-          </p>
           {systemName ? (
             <p className="mx-auto mt-4 w-fit rounded-full bg-dema-sage/45 px-4 py-2 text-sm text-dema-forest">
               Modèles compatibles avec l’activité « {systemName} »
