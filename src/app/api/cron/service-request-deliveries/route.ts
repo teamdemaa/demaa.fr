@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { deliverNewRepriseAlertMatches } from "@/lib/reprise-alert-delivery-worker.server";
 import { retryDueServiceSolutionDeliveries } from "@/lib/service-request-delivery-worker.server";
 
 export const runtime = "nodejs";
@@ -13,11 +14,18 @@ export async function GET(request: Request) {
   if (!authorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const deliveries = await retryDueServiceSolutionDeliveries(30);
+  const [deliveries, repriseAlerts] = await Promise.all([
+    retryDueServiceSolutionDeliveries(30),
+    deliverNewRepriseAlertMatches(500),
+  ]);
   return NextResponse.json({
-    attempted: deliveries.length,
-    failed: deliveries.filter((delivery) => delivery.status === "failed").length,
+    attempted: deliveries.length + repriseAlerts.length,
+    failed: [...deliveries, ...repriseAlerts].filter((delivery) => delivery.status === "failed").length,
     ok: true,
-    sent: deliveries.filter((delivery) => delivery.status === "sent").length,
+    repriseAlerts: {
+      attempted: repriseAlerts.length,
+      sent: repriseAlerts.filter((delivery) => delivery.status === "sent").length,
+    },
+    sent: [...deliveries, ...repriseAlerts].filter((delivery) => delivery.status === "sent").length,
   });
 }

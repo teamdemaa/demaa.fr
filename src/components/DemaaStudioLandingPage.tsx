@@ -1,182 +1,196 @@
-import { ArrowUpRight, Check, Search, Shapes } from "lucide-react";
-import Image from "next/image";
+import {
+  BarChart3,
+  Check,
+  Cog,
+  Handshake,
+  Repeat2,
+  UsersRound,
+  Workflow,
+} from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import StudioInterestForm from "@/components/StudioInterestForm";
-import { DEMAA_STUDIO_PROJECTS } from "@/lib/demaa-studio-projects";
 import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
 
-const needSignals = [
-  "Le problème revient souvent",
-  "Les outils actuels répondent mal",
-  "D’autres entreprises sont concernées",
-] as const;
-
-const studioRoles = [
+const partnershipAreas = [
   {
-    icon: Search,
-    title: "Vous apportez le métier et le terrain",
-    description:
-      "Votre connaissance du secteur, des usages et des contraintes permet de partir d’un problème réel.",
-    items: [
-      "L’expertise métier",
-      "L’accès aux usages et aux utilisateurs pilotes",
-      "Les retours qui orientent le produit",
-    ],
+    icon: Repeat2,
+    title: "Commercial et clients",
+    description: "Rendre les demandes, les offres, les relances et le suivi client plus réguliers et moins dépendants d’une seule personne.",
   },
   {
-    icon: Shapes,
-    title: "Demaa porte la construction du produit",
-    description:
-      "Nous transformons le besoin en un logiciel utilisable, puis nous le testons avec d’autres entreprises du secteur.",
-    items: [
-      "La validation du besoin",
-      "Le produit, le design et le développement",
-      "Les tests, le lancement et la recherche de financements publics",
-    ],
+    icon: Workflow,
+    title: "Opérations et qualité",
+    description: "Définir comment le travail avance, qui décide et quels contrôles garantissent la qualité et les délais.",
+  },
+  {
+    icon: UsersRound,
+    title: "Équipe et responsabilités",
+    description: "Donner à chacun un rôle clair et les informations nécessaires pour agir sans tout faire remonter au dirigeant.",
+  },
+  {
+    icon: BarChart3,
+    title: "Marge et pilotage",
+    description: "Connaître la rentabilité par client, mission ou chantier et décider à partir de chiffres fiables.",
+  },
+  {
+    icon: Cog,
+    title: "Processus et outils",
+    description: "Documenter les façons de faire, relier les outils et automatiser ce qui ralentit encore l’équipe.",
   },
 ] as const;
 
-const studioSteps = [
+const partnershipSteps = [
   {
-    title: "Comprendre",
-    description: "Observer le problème, son contexte et ses conséquences concrètes.",
+    title: "Mesurer",
+    description: "Repérer où se perdent le temps, la marge et la qualité, puis ce qui dépend encore du dirigeant.",
   },
   {
-    title: "Vérifier",
-    description: "Confirmer que d’autres entreprises du secteur rencontrent le même besoin.",
+    title: "Structurer",
+    description: "Définir les processus, les responsabilités, les contrôles et les indicateurs qui doivent tenir ensemble.",
   },
   {
-    title: "Concevoir",
-    description: "Définir une première solution simple avec les futurs utilisateurs.",
+    title: "Installer",
+    description: "Mettre en place les outils et les habitudes de travail avec l’équipe, puis vérifier leur usage réel.",
   },
   {
-    title: "Construire et tester",
-    description: "Développer le produit avec une entreprise pilote et l’améliorer sur le terrain.",
-  },
-  {
-    title: "Commercialiser",
-    description: "Proposer le logiciel aux autres entreprises du secteur lorsque sa valeur est démontrée.",
+    title: "Faire progresser",
+    description: "Améliorer la marge, la qualité, la capacité et l’autonomie à partir de résultats suivis dans le temps.",
   },
 ] as const;
 
-const leaderBenefits = [
-  "Une solution ancrée dans votre réalité métier",
-  "Une équipe qui prend en charge la technologie",
-  "Le temps, le budget et les responsabilités cadrés avant de construire",
-  "Un rôle défini dans un produit destiné à votre secteur",
+const companySignals = [
+  "Une entreprise de services avec des clients et un chiffre d’affaires réels",
+  "Un savoir-faire reconnu, mais encore peu formalisé ou difficile à déléguer",
+  "Des opérations, des décisions ou des relations clients encore concentrées autour du dirigeant",
+  "Des gains identifiables sur la marge, la qualité, la capacité ou la récurrence",
+  "Un dirigeant prêt à faire évoluer durablement son organisation avec son équipe",
 ] as const;
 
-export default function DemaaStudioLandingPage() {
+const assetQualities = [
+  "Une rentabilité plus lisible et plus prévisible",
+  "Une équipe capable d’avancer sans tout faire remonter au dirigeant",
+  "Des processus documentés, pilotables et transmissibles",
+] as const;
+
+export default function DemaaPartnersLandingPage() {
   return (
     <>
       <Navbar minimal publicNavigationActiveView="none" />
 
       <main className="overflow-x-clip bg-dema-cream pb-24 text-brand-blue xl:pb-0">
-        <section className="border-b border-dema-line px-5 pb-20 pt-14 text-center sm:px-8 sm:pb-24 sm:pt-20 lg:pb-28 lg:pt-24">
+        <section className="border-b border-dema-line px-5 pb-20 pt-14 text-left sm:px-8 sm:pb-24 sm:pt-20 sm:text-center lg:pb-28 lg:pt-24">
           <div className="mx-auto max-w-6xl">
-            <p className="text-sm font-medium text-dema-forest">Le Studio</p>
+            <p className="text-sm font-medium text-dema-forest">Demaa Partners · Partenaire de structuration</p>
             <h1
-              aria-label="Construisons le logiciel dont votre métier a besoin."
+              aria-label="Faites grandir la valeur de votre entreprise. Pas votre charge de travail."
               className={`${satoshiHeroTitleClassName} mx-auto mt-5 max-w-6xl`}
             >
               <span aria-hidden="true">
-                <span className="block">Construisons le logiciel dont</span>
+                <span className="block">Faites grandir la valeur de votre entreprise.</span>
                 <span className="demaa-hero-title mt-2 block text-dema-forest">
-                  votre métier a besoin.
+                  Pas votre charge de travail.
                 </span>
               </span>
             </h1>
             <p className="mx-auto mt-8 max-w-3xl text-base leading-7 text-dema-muted sm:text-lg sm:leading-8">
-              Demaa Studio s’associe à des dirigeants de TPE et PME pour identifier un besoin métier mal couvert, construire la solution avec le terrain, puis la commercialiser auprès des entreprises du secteur.
+              Construisez une entreprise plus rentable, plus prévisible et moins dépendante de vous, avec des processus clairs, une équipe responsabilisée et un pilotage fiable.
             </p>
-            <div className="mt-8 flex flex-col items-center">
+            <div className="mt-8 flex justify-start sm:justify-center">
               <Link
-                href="#studio-contact"
+                href="#partners-contact"
                 className="inline-flex min-h-12 items-center justify-center rounded-full bg-dema-forest px-7 text-sm font-semibold text-white transition hover:bg-[#284f3a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
               >
-                Échanger sur un besoin métier
+                Faire le point sur votre entreprise
               </Link>
             </div>
           </div>
         </section>
 
-        <section
-          aria-labelledby="studio-starting-point-heading"
-          className="px-5 py-16 sm:px-8 sm:py-20 lg:py-24"
-        >
+        <section aria-labelledby="partners-problem-heading" className="px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
           <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.8fr)] lg:items-start lg:gap-20">
             <div>
-              <p className="text-sm font-medium text-dema-forest">Le point de départ</p>
-              <h2 id="studio-starting-point-heading" className="demaa-marketing-section-title mt-4 max-w-3xl">
-                Le point de départ n’est pas nécessairement une idée de logiciel.
+              <p className="text-sm font-medium text-dema-forest">Le vrai sujet</p>
+              <h2 id="partners-problem-heading" className="demaa-marketing-section-title mt-4 max-w-3xl">
+                Une activité rentable n’est pas encore un actif autonome.
               </h2>
               <p className="mt-5 max-w-3xl text-base leading-7 text-dema-muted">
-                Cela peut être une tâche répétitive, une information difficile à suivre, un processus encore manuel ou un problème que plusieurs entreprises de votre secteur rencontrent.
+                Tant que les décisions, la relation client, les méthodes et les chiffres restent concentrés autour du dirigeant, la valeur de l’entreprise dépend encore de sa présence.
               </p>
               <p className="mt-4 max-w-3xl text-base leading-7 text-dema-muted">
-                Le besoin peut venir de vous, d’une observation de Demaa ou du travail mené ensemble. Nous le structurons avant de décider s’il mérite de devenir un produit.
+                Ce fonctionnement peut tenir pendant des années. Il limite pourtant la marge, la capacité à grandir, la délégation et la valeur que l’entreprise peut conserver ou transmettre.
               </p>
             </div>
-            <div className="rounded-[2rem] border border-dema-line bg-dema-paper p-7 sm:p-8">
-              <p className="text-base font-medium">Un besoin peut devenir un produit quand :</p>
+            <aside className="rounded-[2rem] border border-dema-line bg-dema-paper p-7 sm:p-8">
+              <p className="text-base font-medium">Une entreprise prend davantage de valeur lorsqu’elle devient :</p>
               <ul className="mt-5 space-y-4">
-                {needSignals.map((signal) => (
-                  <li key={signal} className="flex gap-3 text-sm leading-6 text-dema-muted">
+                {assetQualities.map((item) => (
+                  <li key={item} className="flex gap-3 text-sm leading-6 text-dema-muted">
                     <Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
-                    <span>{signal}</span>
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
+            </aside>
+          </div>
+        </section>
+
+        <section aria-labelledby="partners-role-heading" className="bg-dema-forest px-5 py-16 text-dema-paper sm:px-8 sm:py-20 lg:py-24">
+          <div className="mx-auto max-w-6xl">
+            <p className="text-sm font-medium text-dema-sage">Le partenaire de l’ombre</p>
+            <h2 id="partners-role-heading" className="demaa-marketing-section-title mt-4 max-w-4xl text-dema-paper">
+              Vous dirigez l’entreprise. Demaa fait tenir la structure derrière vous.
+            </h2>
+            <p className="mt-5 max-w-3xl text-base leading-7 text-dema-paper/72">
+              Vous gardez le métier, les clients et les décisions qui engagent l’avenir. Demaa structure en coulisses les processus, les responsabilités, les outils et le pilotage qui permettent à l’organisation d’avancer sans tout faire remonter jusqu’à vous.
+            </p>
+            <div className="mt-10 grid gap-5 lg:grid-cols-2">
+              <article className="rounded-[2rem] border border-dema-paper/16 bg-dema-paper/[0.06] p-7 sm:p-8">
+                <UsersRound className="h-5 w-5 text-dema-sage" strokeWidth={1.6} aria-hidden="true" />
+                <h3 className="mt-5 text-xl font-medium tracking-[-0.03em]">Vous gardez la direction</h3>
+                <p className="mt-4 text-sm leading-6 text-dema-paper/72">
+                  Vous portez la vision, les clients, l’équipe et les choix qui définissent ce que l’entreprise doit devenir.
+                </p>
+              </article>
+              <article className="rounded-[2rem] border border-dema-paper/16 bg-dema-paper/[0.06] p-7 sm:p-8">
+                <Handshake className="h-5 w-5 text-dema-sage" strokeWidth={1.6} aria-hidden="true" />
+                <h3 className="mt-5 text-xl font-medium tracking-[-0.03em]">Demaa structure en coulisses</h3>
+                <p className="mt-4 text-sm leading-6 text-dema-paper/72">
+                  Nous installons les processus, le rythme de suivi, les outils et les indicateurs qui rendent l’entreprise plus efficace et moins fragile.
+                </p>
+              </article>
             </div>
           </div>
         </section>
 
-        <section
-          aria-labelledby="studio-partnership-heading"
-          className="bg-dema-forest px-5 py-16 text-dema-paper sm:px-8 sm:py-20 lg:py-24"
-        >
+        <section aria-labelledby="partners-systems-heading" className="border-b border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
           <div className="mx-auto max-w-6xl">
-            <div className="max-w-4xl">
-              <p className="text-sm font-medium text-dema-sage">Le partenariat</p>
-              <h2 id="studio-partnership-heading" className="demaa-marketing-section-title mt-4 text-dema-paper">
-                Vous apportez le métier. Nous construisons le produit avec vous.
-              </h2>
-            </div>
-            <div className="mt-10 grid gap-5 lg:grid-cols-2">
-              {studioRoles.map(({ icon: Icon, title, description, items }) => (
-                <article key={title} className="rounded-[2rem] border border-dema-paper/16 bg-dema-paper/[0.06] p-7 sm:p-8">
-                  <Icon className="h-5 w-5 text-dema-sage" strokeWidth={1.6} aria-hidden="true" />
-                  <h3 className="mt-5 text-xl font-medium tracking-[-0.03em]">{title}</h3>
-                  <p className="mt-4 text-sm leading-6 text-dema-paper/72">{description}</p>
-                  <ul className="mt-6 space-y-3">
-                    {items.map((item) => (
-                      <li key={item} className="flex gap-3 text-sm leading-6 text-dema-paper/78">
-                        <Check className="mt-1 h-4 w-4 shrink-0 text-dema-sage" aria-hidden="true" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+            <p className="text-sm font-medium text-dema-forest">L’efficacité opérationnelle</p>
+            <h2 id="partners-systems-heading" className="demaa-marketing-section-title mt-4 max-w-4xl">
+              Ce qui transforme un savoir-faire en organisation qui prend de la valeur.
+            </h2>
+            <div className="mt-11 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              {partnershipAreas.map(({ icon: Icon, title, description }) => (
+                <article key={title} className="rounded-[1.5rem] border border-dema-line bg-dema-cream p-6">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                    <Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-5 text-lg font-medium leading-snug tracking-[-0.02em]">{title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-dema-muted">{description}</p>
                 </article>
               ))}
             </div>
-            <p className="mt-8 max-w-4xl text-sm leading-6 text-dema-paper/72">
-              Les décisions se prennent ensemble. Le dirigeant reste la référence métier ; Demaa prend en charge la construction technologique du produit.
-            </p>
           </div>
         </section>
 
-        <section
-          aria-labelledby="studio-method-heading"
-          className="border-b border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20 lg:py-24"
-        >
+        <section aria-labelledby="partners-method-heading" className="border-b border-dema-line px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
           <div className="mx-auto max-w-6xl">
-            <p className="text-sm font-medium text-dema-forest">La méthode</p>
-            <h2 id="studio-method-heading" className="demaa-marketing-section-title mt-4">
-              Nous validons avant de construire.
+            <p className="text-sm font-medium text-dema-forest">Du fonctionnement réel à l’actif</p>
+            <h2 id="partners-method-heading" className="demaa-marketing-section-title mt-4 max-w-4xl">
+              Structurer d’abord. Déléguer ensuite. Accélérer quand le socle tient.
             </h2>
-            <div className="mt-11 grid gap-px overflow-hidden rounded-[2rem] border border-dema-line bg-dema-line md:grid-cols-5">
-              {studioSteps.map((step, index) => (
+            <div className="mt-11 grid gap-px overflow-hidden rounded-[2rem] border border-dema-line bg-dema-line md:grid-cols-4">
+              {partnershipSteps.map((step, index) => (
                 <article key={step.title} className="bg-dema-paper p-6 sm:p-7">
                   <p className="font-serif text-3xl italic text-dema-forest/55">{String(index + 1).padStart(2, "0")}</p>
                   <h3 className="mt-5 text-base font-medium tracking-[-0.02em]">{step.title}</h3>
@@ -184,99 +198,71 @@ export default function DemaaStudioLandingPage() {
                 </article>
               ))}
             </div>
-            <p className="mt-7 max-w-3xl text-sm leading-6 text-dema-muted">
-              Chaque étape doit confirmer la suivante. Si le besoin n’est pas assez partagé ou la solution pas assez utile, nous ne lançons pas un développement lourd.
+          </div>
+        </section>
+
+        <section aria-labelledby="partners-technology-heading" className="border-b border-dema-line bg-dema-sage/35 px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
+          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(20rem,1.15fr)] lg:items-start lg:gap-20">
+            <div>
+              <p className="text-sm font-medium text-dema-forest">Outils, automatisation et IA</p>
+              <h2 id="partners-technology-heading" className="demaa-marketing-section-title mt-4">
+                Automatiser un bon processus, pas un désordre.
+              </h2>
+            </div>
+            <div className="space-y-4 text-base leading-7 text-dema-muted">
+              <p>
+                Nous commençons par clarifier les étapes, les responsabilités, les décisions et les contrôles. Ensuite seulement, nous utilisons les logiciels, l’automatisation et l’IA pour mieux servir les clients, fiabiliser les opérations et réduire le travail répétitif.
+              </p>
+              <p>
+                L’objectif n’est pas d’ajouter de la technologie. Il est de rendre le fonctionnement plus rapide, plus fiable et plus facile à piloter avec les outils les plus utiles.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="partners-profile-heading" className="px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
+          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(20rem,1.15fr)] lg:gap-20">
+            <div>
+              <p className="text-sm font-medium text-dema-forest">Pour qui</p>
+              <h2 id="partners-profile-heading" className="demaa-marketing-section-title mt-4">
+                Une entreprise réelle, avec un potentiel encore bloqué par son fonctionnement.
+              </h2>
+              <p className="mt-5 max-w-xl text-base leading-7 text-dema-muted">
+                Services terrain ou services professionnels : Demaa intervient lorsque l’activité a déjà une base solide et que l’organisation devient le principal levier de valeur.
+              </p>
+            </div>
+            <ul className="divide-y divide-dema-line border-y border-dema-line">
+              {companySignals.map((signal) => (
+                <li key={signal} className="flex gap-3 py-4 text-sm leading-6">
+                  <Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
+                  <span>{signal}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section aria-labelledby="partners-outcome-heading" className="bg-dema-forest px-5 py-16 text-dema-paper sm:px-8 sm:py-20 lg:py-24">
+          <div className="mx-auto max-w-6xl">
+            <p className="text-sm font-medium text-dema-sage">Ce que nous cherchons à construire</p>
+            <h2 id="partners-outcome-heading" className="demaa-marketing-section-title mt-4 max-w-4xl text-dema-paper">
+              Une entreprise rentable, prévisible et capable d’avancer sans tout dépendre de vous.
+            </h2>
+            <p className="mt-5 max-w-3xl text-base leading-7 text-dema-paper/72">
+              Une entreprise prend de la valeur lorsque ses clients restent, que sa marge est maîtrisée, que l’équipe sait décider, que ses processus sont documentés et que ses résultats sont lisibles. C’est ce socle que Demaa construit avec vous. Il vous donne davantage de choix pour poursuivre la croissance, ouvrir le capital ou transmettre au bon moment.
             </p>
           </div>
         </section>
 
-        <section
-          aria-labelledby="studio-benefits-heading"
-          className="border-b border-dema-line bg-dema-sage/35 px-5 py-16 sm:px-8 sm:py-20 lg:py-24"
-        >
-          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(20rem,1.1fr)] lg:gap-20">
-            <div>
-              <p className="text-sm font-medium text-dema-forest">Pour le dirigeant</p>
-              <h2 id="studio-benefits-heading" className="demaa-marketing-section-title mt-4">
-                Vous n’avez pas à devenir une entreprise technologique.
-              </h2>
-            </div>
-            <div>
-              <ul className="grid gap-4 sm:grid-cols-2">
-                {leaderBenefits.map((benefit) => (
-                  <li key={benefit} className="flex gap-3 rounded-2xl bg-dema-paper p-5 text-sm leading-6">
-                    <Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />
-                    <span>{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-5 rounded-2xl border border-dema-forest/15 bg-dema-paper p-6">
-                <h3 className="text-base font-medium">Rechercher les financements mobilisables</h3>
-                <p className="mt-3 text-sm leading-6 text-dema-muted">
-                  Demaa recherche les aides et financements publics susceptibles de soutenir le développement du logiciel et accompagne la préparation des dossiers. L’éligibilité et l’obtention dépendent du projet et des organismes concernés.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          aria-labelledby="studio-projects-heading"
-          className="px-5 py-16 sm:px-8 sm:py-20 lg:py-24"
-        >
-          <div className="mx-auto max-w-6xl">
-            <div className="max-w-3xl">
-              <p className="text-sm font-medium text-dema-forest">Les projets du Studio</p>
-              <h2 id="studio-projects-heading" className="demaa-marketing-section-title mt-4">
-                Des problèmes métier déjà transformés en produits.
-              </h2>
-            </div>
-            <div className="mt-11 divide-y divide-dema-line border-y border-dema-line">
-              {DEMAA_STUDIO_PROJECTS.map((project) => (
-                <article
-                  key={project.name}
-                  className="grid gap-6 py-8 sm:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)_auto] sm:items-center sm:gap-8"
-                >
-                  <div className="flex items-center gap-4">
-                    <Image src={project.logo} alt="" width={44} height={44} unoptimized />
-                    <div>
-                      <h3 className="text-xl font-medium tracking-[-0.03em]">{project.name}</h3>
-                      <p className="mt-1 text-xs text-dema-muted">{project.sector}</p>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-sm leading-6 text-brand-blue/82">{project.problem}</p>
-                    <p className="mt-2 text-xs font-medium text-dema-forest">{project.status}</p>
-                  </div>
-                  <Link
-                    href={project.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-dema-forest/24 px-5 text-sm font-medium text-dema-forest transition hover:bg-dema-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30"
-                    aria-label={`Découvrir ${project.name}, nouvelle fenêtre`}
-                  >
-                    Découvrir
-                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="studio-contact"
-          aria-labelledby="studio-contact-heading"
-          className="scroll-mt-24 border-t border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20 lg:py-24"
-        >
+        <section id="partners-contact" aria-labelledby="partners-contact-heading" className="scroll-mt-24 border-t border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
           <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(22rem,1.2fr)] lg:gap-20">
             <div>
-              <p className="text-sm font-medium text-dema-forest">Premier échange</p>
-              <h2 id="studio-contact-heading" className="demaa-marketing-section-title mt-4">
-                Échangeons sur un besoin métier.
+              <p className="text-sm font-medium text-dema-forest">Parlons de l’entreprise</p>
+              <h2 id="partners-contact-heading" className="demaa-marketing-section-title mt-4">
+                Où la valeur se perd-elle encore aujourd’hui ?
               </h2>
               <p className="mt-5 max-w-xl text-base leading-7 text-dema-muted">
-                Décrivez simplement ce qui fonctionne mal aujourd’hui. Ce premier échange sert à comprendre le besoin, pas à vous engager dans un développement.
+                Présentez-nous l’activité, l’équipe, ce qui dépend encore de vous et les points qui limitent aujourd’hui la marge, la qualité ou la capacité à grandir.
               </p>
             </div>
             <StudioInterestForm />

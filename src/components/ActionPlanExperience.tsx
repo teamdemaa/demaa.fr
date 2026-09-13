@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, LoaderCircle, Mic, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
 import ActionPlanCoachingControl from "@/components/ActionPlanCoachingControl";
@@ -189,6 +190,7 @@ export default function ActionPlanExperience({
   showCoaching?: boolean;
   services: readonly CanonicalService[];
 }) {
+  const router = useRouter();
   const activeInitialAccessIntent = initialAccessIntent?.kind === "open-company-strategy"
     ? null
     : initialAccessIntent;
@@ -328,7 +330,7 @@ export default function ActionPlanExperience({
 
   function handleAccessAuthenticated() {
     if (generationDraft) {
-      window.location.assign(`${newPlanPath}?resume=generation`);
+      router.replace(`${newPlanPath}?resume=generation`);
       return;
     }
     if (pendingSolutionSelection) {

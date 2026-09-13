@@ -57,16 +57,16 @@ function request(overrides: Record<string, unknown> = {}) {
     headers: {
       "Content-Type": "application/json",
       Origin: "https://demaa.fr",
-      Referer: "https://demaa.fr/studio",
+      Referer: "https://demaa.fr/partners",
     },
     body: JSON.stringify({
       attribution: { version: 1 },
       companyActivity: "Atelier Horizon — architecture intérieure",
       consent: true,
-      currentSolution: "Des feuilles de calcul et des messages.",
       email: "maya@example.com",
-      idempotencyKey: "studio:12345678",
-      marketEvidence: "Trois confrères rencontrent le même problème.",
+      idempotencyKey: "partners:12345678",
+      name: "Maya Martin",
+      phone: "+33 6 12 34 56 78",
       problem: "Nous perdons du temps à coordonner les validations entre les clients et les artisans.",
       website: "",
       ...overrides,
@@ -74,7 +74,7 @@ function request(overrides: Record<string, unknown> = {}) {
   });
 }
 
-describe("Studio interest route", () => {
+describe("Partners interest route", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.enforceAllowedHost.mockReturnValue(null);
@@ -82,36 +82,36 @@ describe("Studio interest route", () => {
     mocks.enforceRateLimit.mockResolvedValue(null);
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
     mocks.resolveLeadContext.mockResolvedValue({
-      source: "Demaa Studio - Besoin métier",
-      sourceUrl: "https://demaa.fr/studio",
+      source: "Demaa Partners - Demande de partenariat",
+      sourceUrl: "https://demaa.fr/partners",
     });
     mocks.submitLeadRequest.mockResolvedValue({ duplicate: false, leadId: "studio-1" });
   });
 
-  it("sends a consented business need through the internal Slack channel", async () => {
+  it("sends a consented partnership request through the internal email channel", async () => {
     const response = await POST(request());
 
     expect(response.status).toBe(202);
     await expect(response.json()).resolves.toEqual({ ok: true });
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
-      channels: { email: false, resend: false, slack: true },
+      channels: { email: true, resend: false, slack: false },
       contact: {
         company: "Atelier Horizon — architecture intérieure",
         email: "maya@example.com",
+        name: "Maya Martin",
+        phone: "+33 6 12 34 56 78",
       },
-      requestType: "studio_interest_request",
-      title: "Demaa Studio - Nouveau besoin métier",
+      requestType: "partners_interest_request",
+      title: "Demaa Partners - Demande de partenariat - Atelier Horizon — architecture intérieure",
     }));
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
       consents: [expect.objectContaining({
         granted: true,
-        purpose: "studio_interest_contact",
-        version: "studio-interest-contact-v1",
+        purpose: "partners_interest_contact",
+        version: "partners-interest-contact-v1",
       })],
       fields: expect.arrayContaining([
-        { label: "Besoin métier", value: "Nous perdons du temps à coordonner les validations entre les clients et les artisans." },
-        { label: "Gestion actuelle", value: "Des feuilles de calcul et des messages." },
-        { label: "Besoin partagé dans le secteur", value: "Trois confrères rencontrent le même problème." },
+        { label: "Entreprise et projet", value: "Nous perdons du temps à coordonner les validations entre les clients et les artisans." },
       ]),
     }));
   });
@@ -120,6 +120,8 @@ describe("Studio interest route", () => {
     for (const invalidCase of [
       { companyActivity: "" },
       { email: "invalid" },
+      { name: "" },
+      { phone: "" },
       { problem: "Trop court" },
       { consent: false },
       { idempotencyKey: "short" },

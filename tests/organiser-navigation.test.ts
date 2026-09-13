@@ -60,7 +60,7 @@ describe("Organiser navigation", () => {
     expect(source("src/lib/academy-course-routes.ts")).toContain(
       'source: "/organiser/:path*"',
     );
-    expect(guestPlan).toContain('window.location.assign("/outils")');
+    expect(guestPlan).toContain('router.push("/outils")');
     expect(organiserPage).not.toContain("<OrganiserWorkspace");
     expect(organiserPage).not.toContain("<ActionPlanSystemPanel");
     expect(companyPilotage).not.toContain('{ key: "solutions"');

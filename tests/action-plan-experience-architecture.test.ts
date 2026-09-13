@@ -29,7 +29,7 @@ describe("action plan experience architecture", () => {
     expect(experience).toContain('fetch("/api/action-plans"');
     expect(experience).toContain("createActionPlanGenerationDraft");
     expect(experience).toContain("writeActionPlanGenerationDraft(draft)");
-    expect(experience).toContain('window.location.assign(`${newPlanPath}?resume=generation`)');
+    expect(experience).toContain('router.replace(`${newPlanPath}?resume=generation`)');
     expect(experience).toContain("runAuthenticatedActionPlanGeneration");
     expect(experience).toContain("setQueuedGenerationDraft(draft)");
     expect(experience).toContain("getLocalizedActionPlanPath(");

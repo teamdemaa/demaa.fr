@@ -1,4 +1,22 @@
-export type RepriseOpportunityCategory = "Services terrain" | "Services professionnels" | "Logiciels";
+export const repriseOpportunityCategories = ["Services terrain", "Services professionnels", "Logiciels"] as const;
+
+export type RepriseOpportunityCategory = (typeof repriseOpportunityCategories)[number];
+
+export const repriseOpportunityRegions = [
+  "Auvergne-Rhône-Alpes",
+  "Bourgogne-Franche-Comté",
+  "Bretagne",
+  "France entière",
+  "Grand Est",
+  "Grand Ouest",
+  "Île-de-France",
+  "Normandie",
+  "Nouvelle-Aquitaine",
+  "Occitanie",
+  "Provence-Alpes-Côte d’Azur",
+] as const;
+
+export type RepriseOpportunityRegion = (typeof repriseOpportunityRegions)[number];
 
 export type RepriseOpportunity = Readonly<{
   id: string;
@@ -9,7 +27,13 @@ export type RepriseOpportunity = Readonly<{
   ebe?: string;
   employees?: string;
   askingPrice?: string;
+  askingPriceMax?: number;
+  askingPriceMin?: number;
   highlights: readonly string[];
+  publishedAt: string;
+  region: RepriseOpportunityRegion;
+  revenueMax?: number;
+  revenueMin?: number;
   mapPosition?: Readonly<{
     label: string;
     latitude: number;
@@ -17,7 +41,12 @@ export type RepriseOpportunity = Readonly<{
   }>;
 }>;
 
-export const repriseOpportunities: readonly RepriseOpportunity[] = [
+type RepriseOpportunityListing = Omit<
+  RepriseOpportunity,
+  "askingPriceMax" | "askingPriceMin" | "publishedAt" | "region" | "revenueMax" | "revenueMin"
+>;
+
+const repriseOpportunityListings: readonly RepriseOpportunityListing[] = [
   { id: "sols-murs-alpes-maritimes", activity: "Rénovation de sols et murs", category: "Services terrain", location: "Alpes-Maritimes", revenue: "1,6 M€ projeté en 2026", ebe: "180 k€", employees: "Équipe structurée, conducteur de travaux autonome", askingPrice: "190 k€", highlights: ["Cession de 100 % des parts", "Départ à la retraite"], mapPosition: { label: "Alpes-Maritimes", latitude: 43.7102, longitude: 7.262 } },
   { id: "courant-fibre-securite-alpes-maritimes", activity: "Courant fort et faible, fibre, réseau et sécurité", category: "Services terrain", location: "Alpes-Maritimes", revenue: "2 M€", askingPrice: "1,19 M€", highlights: ["Apport minimum annoncé : 400 k€", "Départ à la retraite"], mapPosition: { label: "Alpes-Maritimes", latitude: 43.7102, longitude: 7.262 } },
   { id: "nettoyage-services-cote-azur", activity: "Nettoyage et services aux entreprises", category: "Services terrain", location: "Côte d’Azur", revenue: "1 M€", ebe: "380 k€ pour un repreneur", askingPrice: "290 k€", highlights: ["Environ 70 clients sous contrat"], mapPosition: { label: "Côte d’Azur", latitude: 43.6, longitude: 6.9 } },
@@ -49,6 +78,55 @@ export const repriseOpportunities: readonly RepriseOpportunity[] = [
   { id: "forage-fondations-occitanie", activity: "Forage et fondations spéciales", category: "Services terrain", location: "Occitanie", revenue: "Plus de 3 M€", employees: "3 à 5 salariés", highlights: ["Activité technique spécialisée"], mapPosition: { label: "Occitanie", latitude: 43.6047, longitude: 1.4442 } },
   { id: "piscines-spas-bretagne", activity: "Construction de piscines et spas", category: "Services terrain", location: "Bretagne", revenue: "1,5 à 3 M€", employees: "6 à 9 salariés", highlights: ["50 ans d’activité", "Piscines, SAV et spas"], mapPosition: { label: "Bretagne", latitude: 48.1173, longitude: -1.6778 } },
 ] as const;
+
+type RepriseOpportunitySearchData = Pick<
+  RepriseOpportunity,
+  "askingPriceMax" | "askingPriceMin" | "publishedAt" | "region" | "revenueMax" | "revenueMin"
+>;
+
+const currentPublicationDate = "2026-09-12";
+const searchData = (
+  region: RepriseOpportunityRegion,
+  values: Omit<RepriseOpportunitySearchData, "publishedAt" | "region"> = {},
+): RepriseOpportunitySearchData => ({ publishedAt: currentPublicationDate, region, ...values });
+
+const repriseOpportunitySearchData: Record<string, RepriseOpportunitySearchData> = {
+  "sols-murs-alpes-maritimes": searchData("Provence-Alpes-Côte d’Azur", { revenueMin: 1_600_000, revenueMax: 1_600_000, askingPriceMin: 190_000, askingPriceMax: 190_000 }),
+  "courant-fibre-securite-alpes-maritimes": searchData("Provence-Alpes-Côte d’Azur", { revenueMin: 2_000_000, revenueMax: 2_000_000, askingPriceMin: 1_190_000, askingPriceMax: 1_190_000 }),
+  "nettoyage-services-cote-azur": searchData("Provence-Alpes-Côte d’Azur", { revenueMin: 1_000_000, revenueMax: 1_000_000, askingPriceMin: 290_000, askingPriceMax: 290_000 }),
+  "informatique-securite-voip-bourgogne": searchData("Bourgogne-Franche-Comté", { revenueMin: 395_000, revenueMax: 395_000, askingPriceMin: 242_000, askingPriceMax: 242_000 }),
+  "nettoyage-industriel-rhone-alpes": searchData("Auvergne-Rhône-Alpes", { revenueMin: 2_000_000, revenueMax: 3_000_000 }),
+  "maintenance-piscines-auvergne-rhone-alpes": searchData("Auvergne-Rhône-Alpes", { revenueMin: 210_000, revenueMax: 210_000, askingPriceMin: 150_000, askingPriceMax: 150_000 }),
+  "centrales-solaires-france": searchData("France entière", { revenueMin: 1_500_000, revenueMax: 3_000_000, askingPriceMin: 600_000, askingPriceMax: 600_000 }),
+  "radiocommunication-france": searchData("France entière", { revenueMin: 750_000, revenueMax: 1_000_000, askingPriceMin: 700_000, askingPriceMax: 700_000 }),
+  "proprete-var": searchData("Provence-Alpes-Côte d’Azur", { revenueMin: 380_000, revenueMax: 410_000 }),
+  "securite-privee-idf": searchData("Île-de-France", { revenueMin: 670_000, revenueMax: 670_000 }),
+  "relation-client-lyon": searchData("Auvergne-Rhône-Alpes", { revenueMin: 1_000_000 }),
+  "second-oeuvre-sud-ouest": searchData("Nouvelle-Aquitaine", { revenueMin: 4_020_000, revenueMax: 4_020_000 }),
+  "facades-rennes": searchData("Bretagne", { revenueMin: 787_000, revenueMax: 787_000, askingPriceMin: 306_880, askingPriceMax: 306_880 }),
+  "agencement-rennes": searchData("Bretagne", { revenueMin: 600_000 }),
+  "maintenance-informatique-seine-et-marne": searchData("Île-de-France", { revenueMin: 385_000, revenueMax: 385_000, askingPriceMin: 245_000, askingPriceMax: 245_000 }),
+  "regie-publicitaire-grand-ouest": searchData("Grand Ouest"),
+  "logiciels-crm-sage-ebp": searchData("France entière"),
+  "equipements-sante-france-europe": searchData("France entière", { revenueMin: 500_000, revenueMax: 750_000, askingPriceMin: 500_000, askingPriceMax: 500_000 }),
+  "formation-seine-et-marne": searchData("Île-de-France", { revenueMin: 320_000, revenueMax: 320_000, askingPriceMin: 385_000, askingPriceMax: 385_000 }),
+  "courtage-assurances-hauts-de-seine": searchData("Île-de-France", { revenueMin: 200_000, revenueMax: 250_000 }),
+  "yachts-bouches-du-rhone": searchData("Provence-Alpes-Côte d’Azur", { revenueMin: 2_490_000, revenueMax: 2_490_000, askingPriceMin: 275_000, askingPriceMax: 275_000 }),
+  "couverture-solaire-sud-est": searchData("Provence-Alpes-Côte d’Azur", { revenueMin: 1_370_000, revenueMax: 1_370_000 }),
+  "terrains-sport-alsace": searchData("Grand Est", { revenueMin: 3_600_000, revenueMax: 3_600_000, askingPriceMin: 4_015_000, askingPriceMax: 4_015_000 }),
+  "agence-3d-idf": searchData("Île-de-France", { revenueMin: 1_200_000, revenueMax: 1_200_000 }),
+  "esn-france": searchData("France entière", { revenueMin: 4_500_000, revenueMax: 4_500_000 }),
+  "saas-edtech-ia": searchData("France entière", { revenueMin: 800_000, revenueMax: 800_000 }),
+  "cvc-plomberie-gironde": searchData("Nouvelle-Aquitaine", { revenueMin: 1_900_000, revenueMax: 1_900_000 }),
+  "communication-media-calvados": searchData("Normandie", { revenueMin: 3_000_000, revenueMax: 3_000_000 }),
+  "forage-fondations-occitanie": searchData("Occitanie", { revenueMin: 3_000_000 }),
+  "piscines-spas-bretagne": searchData("Bretagne", { revenueMin: 1_500_000, revenueMax: 3_000_000 }),
+};
+
+export const repriseOpportunities: readonly RepriseOpportunity[] = repriseOpportunityListings.map((opportunity) => ({
+  ...opportunity,
+  ...repriseOpportunitySearchData[opportunity.id],
+}));
 
 export function getRepriseOpportunity(id: string) {
   return repriseOpportunities.find((opportunity) => opportunity.id === id) ?? null;

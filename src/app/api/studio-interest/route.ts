@@ -12,21 +12,21 @@ import { submitLeadRequest } from "@/lib/lead-notifications";
 import { logOperationalError } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 
-const STUDIO_INTEREST_REQUEST_TYPE = "studio_interest_request";
-const STUDIO_INTEREST_CONSENT = {
-  purpose: "studio_interest_contact",
-  text: "J’accepte que Demaa utilise ces informations pour me recontacter au sujet de ce besoin métier.",
-  version: "studio-interest-contact-v1",
+const PARTNERS_INTEREST_REQUEST_TYPE = "partners_interest_request";
+const PARTNERS_INTEREST_CONSENT = {
+  purpose: "partners_interest_contact",
+  text: "J’accepte que Demaa utilise ces informations pour me recontacter au sujet de ce partenariat.",
+  version: "partners-interest-contact-v1",
 } as const;
 
 type StudioInterestBody = {
   attribution?: unknown;
   companyActivity?: unknown;
   consent?: unknown;
-  currentSolution?: unknown;
   email?: unknown;
   idempotencyKey?: unknown;
-  marketEvidence?: unknown;
+  name?: unknown;
+  phone?: unknown;
   problem?: unknown;
   website?: unknown;
 };
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     if (blockedOrigin) return blockedOrigin;
 
     const limited = await enforceRateLimit(request, {
-      keyPrefix: "studio-interest",
+      keyPrefix: "partners-interest",
       limit: 5,
       windowMs: 15 * 60 * 1000,
     });
@@ -65,21 +65,21 @@ export async function POST(request: Request) {
     if (honeypot) return successResponse();
 
     const companyActivity = normalizeText(body?.companyActivity, 160);
-    const currentSolution = normalizeText(body?.currentSolution, 1500, { multiline: true });
     const email = normalizeEmail(normalizeText(body?.email, 160));
     const idempotencyKey = normalizeIdempotencyKey(body?.idempotencyKey);
-    const marketEvidence = normalizeText(body?.marketEvidence, 1500, { multiline: true });
+    const name = normalizeText(body?.name, 160);
+    const phone = normalizeText(body?.phone, 40);
     const problem = normalizeText(body?.problem, 4000, { multiline: true });
 
-    if (!companyActivity || !isValidEmail(email) || !idempotencyKey || !problem) {
+    if (!companyActivity || !isValidEmail(email) || !idempotencyKey || !name || !phone || !problem) {
       return NextResponse.json(
-        { error: "Merci de renseigner votre entreprise, votre adresse e-mail et le besoin métier." },
+        { error: "Merci de présenter votre entreprise, puis de renseigner vos prénom et nom, votre email, votre téléphone et votre entreprise." },
         { status: 400 },
       );
     }
     if (problem.length < 20) {
       return NextResponse.json(
-        { error: "Merci de décrire le besoin métier en quelques phrases." },
+        { error: "Merci de présenter votre entreprise et votre projet en quelques phrases." },
         { status: 400 },
       );
     }
@@ -91,7 +91,7 @@ export async function POST(request: Request) {
     }
 
     const context = await resolveLeadContext({
-      source: "Demaa Studio - Besoin métier",
+      source: "Demaa Partners - Demande de partenariat",
       sourceUrl: request.headers.get("referer"),
     });
     if (!context) {
@@ -104,31 +104,29 @@ export async function POST(request: Request) {
     const capturedAt = new Date().toISOString();
     await submitLeadRequest({
       attribution: resolveLeadAttribution(request, body?.attribution),
-      channels: { email: false, resend: false, slack: true },
-      contact: { company: companyActivity, email },
+      channels: { email: true, resend: false, slack: false },
+      contact: { company: companyActivity, email, name, phone },
       consents: [{
         capturedAt,
         granted: true,
-        purpose: STUDIO_INTEREST_CONSENT.purpose,
-        text: STUDIO_INTEREST_CONSENT.text,
-        version: STUDIO_INTEREST_CONSENT.version,
+        purpose: PARTNERS_INTEREST_CONSENT.purpose,
+        text: PARTNERS_INTEREST_CONSENT.text,
+        version: PARTNERS_INTEREST_CONSENT.version,
       }],
       context,
-      emoji: "💡",
+      emoji: "🤝",
       fields: [
-        { label: "Besoin métier", value: problem },
-        { label: "Gestion actuelle", value: currentSolution || "Non précisée" },
-        { label: "Besoin partagé dans le secteur", value: marketEvidence || "Non précisé" },
+        { label: "Entreprise et projet", value: problem },
       ],
       idempotencyKey,
-      requestType: STUDIO_INTEREST_REQUEST_TYPE,
-      title: "Demaa Studio - Nouveau besoin métier",
+      requestType: PARTNERS_INTEREST_REQUEST_TYPE,
+      title: `Demaa Partners - Demande de partenariat - ${companyActivity}`,
     });
 
     return successResponse();
   } catch (error) {
     logOperationalError("studio_interest.route.failed", error, {
-      requestType: STUDIO_INTEREST_REQUEST_TYPE,
+      requestType: PARTNERS_INTEREST_REQUEST_TYPE,
     });
     return NextResponse.json(
       { error: "Impossible d’envoyer votre demande pour le moment. Merci de réessayer." },

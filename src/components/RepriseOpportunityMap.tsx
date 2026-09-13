@@ -122,7 +122,10 @@ function buildClusters(opportunities: readonly RepriseOpportunity[]): Cluster[] 
     return {
       label,
       opportunities: clusterOpportunities,
-      position: { x: clamp((projected.x / MAP_VIEWBOX.width) * 100, 5, 95), y: clamp((projected.y / MAP_VIEWBOX.height) * 100, 5, 95) },
+      position: {
+        x: formatPositionPercent(clamp((projected.x / MAP_VIEWBOX.width) * 100, 5, 95)),
+        y: formatPositionPercent(clamp((projected.y / MAP_VIEWBOX.height) * 100, 5, 95)),
+      },
     };
   }).toSorted((a, b) => b.opportunities.length - a.opportunities.length || a.label.localeCompare(b.label, "fr"));
 }
@@ -165,5 +168,6 @@ function eachGeometryPosition(geometry: GeoJsonGeometry | null, callback: (posit
 function latToMercatorY(lat: number) { const radians = (lat * Math.PI) / 180; return Math.log(Math.tan(Math.PI / 4 + radians / 2)); }
 function lngToMercatorX(lng: number) { return (lng * Math.PI) / 180; }
 function formatPathNumber(value: number) { return Number(value.toFixed(2)); }
+function formatPositionPercent(value: number) { return Number(value.toFixed(4)); }
 function getPreviewStyle(position: Position) { return { left: `${clamp(position.x + 5, 6, 54)}%`, top: `${clamp(position.y - 8, 6, 72)}%` }; }
 function clamp(value: number, min: number, max: number) { return Math.min(max, Math.max(min, value)); }

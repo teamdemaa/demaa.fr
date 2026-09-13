@@ -1,6 +1,7 @@
 "use client";
 
 import { LoaderCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { exchangeFirebaseIdTokenForAdminSession } from "@/lib/admin-auth-session.client";
 import { exchangeFirebaseIdTokenForSession } from "@/lib/customer-auth-session.client";
@@ -103,6 +104,7 @@ export default function GoogleCustomerSignInButton({
   returnTo?: string;
   localeCode?: InterfaceLocaleCode;
 }) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [preferRedirect, setPreferRedirect] = useState(false);
 
@@ -120,9 +122,9 @@ export default function GoogleCustomerSignInButton({
       if (shouldUseGoogleRedirect() || preferRedirect) {
         const params = new URLSearchParams({ locale: localeCode, returnTo });
         if (accessKind === "admin") {
-          window.location.assign(`/admin/auth/google?${params.toString()}`);
+          router.push(`/admin/auth/google?${params.toString()}`);
         } else {
-          window.location.assign(`/auth/google?${params.toString()}`);
+          router.push(`/auth/google?${params.toString()}`);
         }
         return;
       }
@@ -136,7 +138,8 @@ export default function GoogleCustomerSignInButton({
       if (onAuthenticated) {
         await onAuthenticated(result);
       } else {
-        window.location.assign(result.redirectTo);
+        router.replace(result.redirectTo);
+        router.refresh();
       }
     } catch (error) {
       if (shouldOfferRedirectFallback(error)) setPreferRedirect(true);

@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, LoaderCircle, Mic, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { type FormEvent, useEffect, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
 import ActionPlanGenerationScreen from "@/components/ActionPlanGenerationScreen";
@@ -106,6 +107,7 @@ export default function GuestActionPlanExperience({
   systemOptions: readonly ActionPlanSystemOption[];
   visibleViews: readonly ActionPlanView[];
 }) {
+  const router = useRouter();
   const uiCopy = getActionPlanUiCopy(contentLocaleCode);
   const { context: rawAppContext, navigate: navigateAppContext } =
     useActionPlanAppContext(normalizeGuestContext(initialAppContext));
@@ -355,7 +357,7 @@ export default function GuestActionPlanExperience({
     } catch {
       // Ignore a malformed referrer and use the stable public fallback.
     }
-    window.location.assign("/outils");
+    router.push("/outils");
   }
 
   if (isGenerating) return <ActionPlanGenerationScreen localeCode={contentLocaleCode} />;

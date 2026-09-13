@@ -15,20 +15,20 @@ import { useCustomerIdentity } from "@/lib/use-customer-identity";
 
 type ApiResponse = { error?: string; ok?: boolean } | null;
 
-type StudioInterestFields = {
+type PartnersInterestFields = {
   companyActivity: string;
   consent: boolean;
-  currentSolution: string;
-  marketEvidence: string;
+  name: string;
+  phone: string;
   problem: string;
   website: string;
 };
 
-const EMPTY_FIELDS: StudioInterestFields = {
+const EMPTY_FIELDS: PartnersInterestFields = {
   companyActivity: "",
   consent: false,
-  currentSolution: "",
-  marketEvidence: "",
+  name: "",
+  phone: "",
   problem: "",
   website: "",
 };
@@ -54,9 +54,9 @@ export default function StudioInterestForm() {
     setEmail((current) => current || knownEmail);
   }, [knownEmail]);
 
-  function updateField<Field extends keyof StudioInterestFields>(
+  function updateField<Field extends keyof PartnersInterestFields>(
     field: Field,
-    value: StudioInterestFields[Field],
+    value: PartnersInterestFields[Field],
   ) {
     setFields((current) => ({ ...current, [field]: value }));
   }
@@ -67,7 +67,7 @@ export default function StudioInterestForm() {
 
     setError(null);
     setIsSubmitting(true);
-    const flowKey = "studio-interest";
+    const flowKey = "partners-interest";
 
     try {
       const response = await fetch("/api/studio-interest", {
@@ -89,7 +89,7 @@ export default function StudioInterestForm() {
       clearLeadSubmissionKey(flowKey);
       setFields(EMPTY_FIELDS);
       setIsSent(true);
-      trackLeadConversion({ requestType: "studio_interest_request" });
+      trackLeadConversion({ requestType: "partners_interest_request" });
     } catch {
       setError("Impossible d’envoyer votre demande pour le moment. Merci de réessayer.");
     } finally {
@@ -104,10 +104,10 @@ export default function StudioInterestForm() {
           <Check className="h-5 w-5" aria-hidden="true" />
         </span>
         <h3 className="mt-5 font-serif text-3xl font-light tracking-[-0.03em]">
-          Merci, le besoin est transmis.
+          Merci, votre demande est transmise.
         </h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-dema-muted">
-          Nous allons le lire et vous recontacter pour comprendre votre métier et le contexte du problème.
+          Nous allons la lire et vous recontacter pour comprendre le fonctionnement de votre entreprise et les leviers opérationnels à renforcer.
         </p>
       </div>
     );
@@ -120,11 +120,11 @@ export default function StudioInterestForm() {
       aria-busy={isSubmitting}
     >
       <div>
-        <label className="block text-sm font-medium" htmlFor="studio-problem">
-          Quel besoin reste mal couvert dans votre métier ?
+        <label className="block text-sm font-medium" htmlFor="partners-project">
+          Votre entreprise et ses priorités opérationnelles
         </label>
         <textarea
-          id="studio-problem"
+          id="partners-project"
           className="demaa-textarea mt-2 min-h-32"
           value={fields.problem}
           onChange={(event) => updateField("problem", event.target.value)}
@@ -132,31 +132,31 @@ export default function StudioInterestForm() {
           minLength={20}
           maxLength={4000}
           rows={5}
-          placeholder="Décrivez le problème, les personnes concernées et ce qu’il complique aujourd’hui."
+          placeholder="Présentez l’activité, l’équipe, ce qui dépend encore de vous et ce qui limite aujourd’hui la marge, la qualité ou la capacité à grandir."
         />
       </div>
 
       <div className="mt-5 grid gap-5 sm:grid-cols-2">
         <div>
-          <label className="block text-sm font-medium" htmlFor="studio-company">
-            Votre entreprise et son activité
+          <label className="block text-sm font-medium" htmlFor="partners-name">
+            Prénom et nom
           </label>
           <input
-            id="studio-company"
+            id="partners-name"
             className="demaa-input mt-2"
-            value={fields.companyActivity}
-            onChange={(event) => updateField("companyActivity", event.target.value)}
-            autoComplete="organization"
+            value={fields.name}
+            onChange={(event) => updateField("name", event.target.value)}
+            autoComplete="name"
             required
             maxLength={160}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium" htmlFor="studio-email">
-            Votre adresse e-mail
+          <label className="block text-sm font-medium" htmlFor="partners-email">
+            Email
           </label>
           <input
-            id="studio-email"
+            id="partners-email"
             className="demaa-input mt-2"
             type="email"
             value={email}
@@ -166,39 +166,40 @@ export default function StudioInterestForm() {
             maxLength={160}
           />
         </div>
+        <div>
+          <label className="block text-sm font-medium" htmlFor="partners-phone">
+            Téléphone
+          </label>
+          <input
+            id="partners-phone"
+            className="demaa-input mt-2"
+            type="tel"
+            value={fields.phone}
+            onChange={(event) => updateField("phone", event.target.value)}
+            autoComplete="tel"
+            required
+            maxLength={40}
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium" htmlFor="partners-company">
+            Entreprise
+          </label>
+          <input
+            id="partners-company"
+            className="demaa-input mt-2"
+            value={fields.companyActivity}
+            onChange={(event) => updateField("companyActivity", event.target.value)}
+            autoComplete="organization"
+            required
+            maxLength={160}
+          />
+        </div>
       </div>
 
-      <div className="mt-5">
-        <label className="block text-sm font-medium" htmlFor="studio-current-solution">
-          Comment gérez-vous ce besoin aujourd’hui ? <span className="font-normal text-dema-muted">(facultatif)</span>
-        </label>
-        <textarea
-          id="studio-current-solution"
-          className="demaa-textarea mt-2 min-h-24"
-          value={fields.currentSolution}
-          onChange={(event) => updateField("currentSolution", event.target.value)}
-          maxLength={1500}
-          rows={3}
-        />
-      </div>
-
-      <div className="mt-5">
-        <label className="block text-sm font-medium" htmlFor="studio-market-evidence">
-          D’autres entreprises sont-elles concernées ? <span className="font-normal text-dema-muted">(facultatif)</span>
-        </label>
-        <textarea
-          id="studio-market-evidence"
-          className="demaa-textarea mt-2 min-h-24"
-          value={fields.marketEvidence}
-          onChange={(event) => updateField("marketEvidence", event.target.value)}
-          maxLength={1500}
-          rows={3}
-        />
-      </div>
-
-      <label className="mt-5 flex items-start gap-3 text-xs leading-relaxed text-dema-muted" htmlFor="studio-consent">
+      <label className="mt-5 flex items-start gap-3 text-xs leading-relaxed text-dema-muted" htmlFor="partners-consent">
         <input
-          id="studio-consent"
+          id="partners-consent"
           type="checkbox"
           checked={fields.consent}
           onChange={(event) => updateField("consent", event.target.checked)}
@@ -206,7 +207,7 @@ export default function StudioInterestForm() {
           required
         />
         <span>
-          J’accepte que Demaa utilise ces informations pour me recontacter au sujet de ce besoin métier. Voir la{" "}
+          J’accepte que Demaa utilise ces informations pour me recontacter au sujet de ce partenariat. Voir la{" "}
           <Link href="/politique-de-confidentialite" className="underline underline-offset-2 hover:text-dema-forest">
             politique de confidentialité
           </Link>.
@@ -214,9 +215,9 @@ export default function StudioInterestForm() {
       </label>
 
       <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
-        <label htmlFor="studio-website">Site</label>
+        <label htmlFor="partners-website">Site</label>
         <input
-          id="studio-website"
+          id="partners-website"
           type="text"
           tabIndex={-1}
           autoComplete="off"
@@ -233,7 +234,7 @@ export default function StudioInterestForm() {
         className="demaa-primary-button mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {isSubmitting ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-        Échanger sur ce besoin
+        Faire le point sur votre entreprise
       </button>
     </form>
   );

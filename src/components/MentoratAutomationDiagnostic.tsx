@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, LoaderCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState } from "react";
 import { createActionPlanGenerationDraft } from "@/lib/action-plan-generation-draft.client";
 import {
@@ -11,6 +12,7 @@ import {
 } from "@/lib/guest-action-plan.client";
 
 export default function MentoratAutomationDiagnostic() {
+  const router = useRouter();
   const [situation, setSituation] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isStarting, setIsStarting] = useState(false);
@@ -49,7 +51,7 @@ export default function MentoratAutomationDiagnostic() {
           : state.expiresAt,
         generationId: state.generationId,
       });
-      window.location.assign("/diagnostic-organisation?source=automatisation");
+      router.push("/diagnostic-organisation?source=automatisation");
     } catch (startError) {
       if (startError instanceof DOMException && startError.name === "AbortError") return;
       setError(

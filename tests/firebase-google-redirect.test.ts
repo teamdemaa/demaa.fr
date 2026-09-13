@@ -154,7 +154,7 @@ describe("Firebase Google redirect", () => {
     expect(button).toContain("GOOGLE_POPUP_TIMEOUT_MS = 30_000");
     expect(button).toContain("setPreferRedirect(true)");
     expect(button).toContain("shouldUseGoogleRedirect() || preferRedirect");
-    expect(button).toContain("window.location.assign(`/auth/google?");
+    expect(button).toContain("router.push(`/auth/google?");
     expect(button).toContain("locale: localeCode");
   });
 });

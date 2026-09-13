@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RepriseMarketplacePage() {
-  return <RepriseMarketplaceClient opportunities={repriseOpportunities} />;
+export default async function RepriseMarketplacePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ opportunite?: string | string[] }>;
+}) {
+  const opportunity = (await searchParams).opportunite;
+  return <RepriseMarketplaceClient initialOpportunityId={typeof opportunity === "string" ? opportunity : undefined} opportunities={repriseOpportunities} />;
 }

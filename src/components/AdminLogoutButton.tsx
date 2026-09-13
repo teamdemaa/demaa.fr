@@ -1,16 +1,19 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { deleteAdminSession } from "@/lib/admin-auth-session.client";
 
 export default function AdminLogoutButton() {
+  const router = useRouter();
   const [isSigningOut, setIsSigningOut] = useState(false);
 
   async function signOut() {
     setIsSigningOut(true);
     try {
       await deleteAdminSession();
-      window.location.assign("/admin/connexion");
+      router.replace("/admin/connexion");
+      router.refresh();
     } catch {
       setIsSigningOut(false);
     }

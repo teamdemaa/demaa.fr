@@ -23,6 +23,7 @@ const LEVIER_COPY_URL = "https://example.invalid/levier-copy-test";
 
 describe("operational system delivery email", () => {
   beforeEach(() => {
+    vi.clearAllMocks();
     vi.stubEnv("RESEND_API_KEY", "re_test");
     vi.stubEnv("RESEND_FROM_EMAIL", "Demaa <systemes@demaa.fr>");
     mocks.getCopyUrl.mockReturnValue(

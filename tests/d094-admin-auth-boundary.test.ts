@@ -30,8 +30,8 @@ describe("D-094 Team authentication boundary", () => {
     expect(page).toContain('accessKind="admin"');
     expect(form).toContain('accessKind === "admin"');
     expect(form).toContain("signInWithPasswordAndGetIdToken");
-    expect(googleButton).toContain("window.location.assign(`/admin/auth/google?");
-    expect(googleButton).toContain("window.location.assign(`/auth/google?");
+    expect(googleButton).toContain("router.push(`/admin/auth/google?");
+    expect(googleButton).toContain("router.push(`/auth/google?");
   });
 
   it("protects existing admin GET and POST handlers with the Team DAL", () => {

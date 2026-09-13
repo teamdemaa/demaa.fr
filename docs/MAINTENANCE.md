@@ -57,6 +57,7 @@ Variables serveur principales:
 - `SLACK_WEBHOOK_URL`
 - `RESEND_API_KEY`
 - `CRON_SECRET`
+- `REPRISE_ALERT_TOKEN_SECRET` (secret stable dédié aux liens de gestion des alertes de reprise)
 - `STRIPE_SECRET_KEY` et `STRIPE_WEBHOOK_SECRET` en Production
 - `STRIPE_COACH_BUSINESS_PRICE_IDS` en Production (prix mensuel 750 EUR ; plusieurs identifiants restent acceptés pendant une éventuelle rotation)
 - variantes suffixées `_TEST` hors Production

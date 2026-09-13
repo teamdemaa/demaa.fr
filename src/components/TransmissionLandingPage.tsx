@@ -26,17 +26,17 @@ const serviceProfiles = [
   {
     title: "Services terrain",
     text: "Maintenance, installation, dépannage, BTP, entretien ou propreté.",
-    image: "/illustrations/accompagnement/services-terrain-v4.png",
+    image: "/illustrations/accompagnement/services-terrain-v5.png",
   },
   {
     title: "Services professionnels",
     text: "Cabinets, agences, conseil, informatique, recrutement ou formation.",
-    image: "/illustrations/accompagnement/services-professionnels-v4.png",
+    image: "/illustrations/accompagnement/services-professionnels-v5.png",
   },
   {
     title: "Entreprise à transmettre",
     text: "Un fonctionnement plus clair, documenté et moins dépendant du dirigeant.",
-    image: "/illustrations/accompagnement/entreprise-transmission-v6.png",
+    image: "/illustrations/accompagnement/entreprise-transmission-v7.png",
   },
 ] as const;
 
@@ -62,7 +62,7 @@ export default function TransmissionLandingPage() {
               <p className="mt-7 max-w-3xl text-base leading-7 text-dema-muted sm:text-lg sm:leading-8">Nous structurons et automatisons un fonctionnement prioritaire pour faire gagner du temps à votre équipe et rendre l’entreprise plus simple à piloter ou à transmettre.</p>
               <div className="mt-8"><AccompanimentContactControl className={primaryButtonClassName} /></div>
             </div>
-            <Image src="/illustrations/accompagnement/hero-entreprise-terrain-v3.png" alt="" aria-hidden="true" width={1536} height={1024} sizes="(max-width: 1023px) 92vw, 42vw" preload className="h-auto w-full object-contain" />
+            <Image src="/illustrations/accompagnement/hero-entreprise-terrain-v5.png" alt="" aria-hidden="true" width={1536} height={1024} sizes="(max-width: 1023px) 92vw, 42vw" preload className="h-auto w-full object-contain" />
           </div>
         </section>
 
@@ -72,7 +72,7 @@ export default function TransmissionLandingPage() {
 
         <section id="automatisation" className="scroll-mt-24 bg-dema-forest px-5 py-16 text-dema-paper sm:px-8 sm:py-20"><div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20"><div><h2 className="demaa-marketing-section-title">Nous ne vous laissons pas avec un rapport.</h2><p className="mt-6 max-w-xl text-base leading-7 text-dema-paper/72">Nous observons, simplifions, documentons et mettons en place avec votre équipe. L’automatisation et l’IA prennent le répétitif lorsque cela apporte un vrai gain.</p></div><ol className="divide-y divide-dema-paper/18 border-y border-dema-paper/18">{[["01", "Comprendre", "Votre activité, vos outils et les pertes de temps."], ["02", "Choisir", "Le système prioritaire et le résultat attendu."], ["03", "Mettre en place", "Les étapes, outils, automatisations et contrôles utiles."], ["04", "Tester et transmettre", "Un fonctionnement utilisé par l’équipe et documenté simplement."]].map(([number, title, text]) => <li key={number} className="grid grid-cols-[3rem_1fr] gap-4 py-5"><span className="demaa-section-title text-2xl text-dema-sage">{number}</span><span><strong className="block font-medium text-dema-paper">{title}</strong><span className="mt-1 block text-sm leading-6 text-dema-paper/65">{text}</span></span></li>)}</ol></div></section>
 
-        <section className="px-5 py-16 sm:px-8 sm:py-20"><div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-center"><div><h2 className="demaa-marketing-section-title">Du client à l’équipe. De la mission au suivi client.</h2><p className="mt-6 max-w-2xl text-base leading-7 text-dema-muted">Vos équipes gardent la relation client, leur savoir-faire et les décisions importantes. Les informations utiles avancent jusqu’à la facturation, puis au suivi client.</p></div><div className="grid sm:hidden" aria-hidden="true">{["left-0", "right-0"].map((position) => <div key={position} className="relative aspect-[4/3] overflow-hidden"><div className={`absolute inset-y-0 ${position} w-[200%]`}><Image src="/illustrations/accompagnement/flux-client-equipe-suivi-v4.png" alt="" fill sizes="184vw" className="object-contain" /></div></div>)}</div><Image src="/illustrations/accompagnement/flux-client-equipe-suivi-v4.png" alt="" aria-hidden="true" width={2048} height={768} sizes="(max-width: 1023px) 92vw, 52vw" className="hidden h-auto w-full object-contain sm:block" /></div></section>
+        <section className="px-5 py-16 sm:px-8 sm:py-20"><div className="mx-auto grid max-w-6xl gap-8 sm:gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-center"><div><h2 className="demaa-marketing-section-title">Du client à l’équipe. De la mission au suivi client.</h2><p className="mt-6 max-w-2xl text-base leading-7 text-dema-muted">Vos équipes gardent la relation client, leur savoir-faire et les décisions importantes. Les informations utiles avancent jusqu’à la facturation, puis au suivi client.</p></div><div className="grid gap-2 sm:hidden" aria-hidden="true"><div className="relative aspect-[4/3] overflow-hidden"><Image src="/illustrations/accompagnement/flux-client-equipe-suivi-v6.png" alt="" fill sizes="calc(200vw - 5rem)" loading="eager" className="object-cover object-left" /></div><div className="relative aspect-[4/3] overflow-hidden"><Image src="/illustrations/accompagnement/flux-client-equipe-suivi-v6.png" alt="" fill sizes="calc(200vw - 5rem)" loading="eager" className="object-cover object-right" /></div></div><Image src="/illustrations/accompagnement/flux-client-equipe-suivi-v6.png" alt="" aria-hidden="true" width={2046} height={768} sizes="(max-width: 1023px) 92vw, 52vw" className="hidden h-auto w-full object-contain sm:block" /></div></section>
 
         <section className="border-y border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20"><div className="mx-auto max-w-6xl"><h2 className="demaa-marketing-section-title">La même logique, adaptée à votre métier.</h2><div className="mt-10 grid gap-5 md:grid-cols-3">{serviceProfiles.map((item) => <article key={item.title} className="border-t border-dema-line pt-5"><div className="relative aspect-square overflow-hidden" aria-hidden="true"><Image src={item.image} alt="" fill sizes="(max-width: 767px) 92vw, 30vw" className="object-contain" /></div><h3 className="mt-5 text-lg font-medium">{item.title}</h3><p className="mt-3 text-sm leading-6 text-dema-muted">{item.text}</p></article>)}</div></div></section>
 
