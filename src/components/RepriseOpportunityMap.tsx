@@ -3,6 +3,7 @@
 import { type CSSProperties, useMemo, useState } from "react";
 import { Building2, LocateFixed, MapPin } from "lucide-react";
 import franceDepartments from "../../public/maps/france-departments.json";
+import { separateRepriseMapMarkers } from "@/lib/reprise-map-layout";
 import type { RepriseOpportunity } from "@/lib/reprise-opportunities";
 
 type MapProps = {
@@ -109,7 +110,7 @@ function buildClusters(opportunities: readonly RepriseOpportunity[]): Cluster[] 
     if (!label) continue;
     grouped.set(label, [...(grouped.get(label) ?? []), opportunity]);
   }
-  return [...grouped.entries()].map(([label, clusterOpportunities]) => {
+  const clusters = [...grouped.entries()].map(([label, clusterOpportunities]) => {
     const mapPosition = clusterOpportunities[0].mapPosition!;
     const projected = mapProjection.project({ lat: mapPosition.latitude, lng: mapPosition.longitude });
     return {
@@ -121,6 +122,8 @@ function buildClusters(opportunities: readonly RepriseOpportunity[]): Cluster[] 
       },
     };
   }).toSorted((a, b) => b.opportunities.length - a.opportunities.length || a.label.localeCompare(b.label, "fr"));
+
+  return separateRepriseMapMarkers(clusters);
 }
 
 function isMetropolitanFeature(feature: GeoJsonFeature) {

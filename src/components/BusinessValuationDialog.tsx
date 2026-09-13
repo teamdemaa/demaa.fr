@@ -102,7 +102,7 @@ export default function BusinessValuationDialog({ onClose, onContinue }: { onClo
             <p className="mt-4 text-sm leading-6 text-dema-muted">Utilisez les montants annuels les plus récents, hors taxes.</p>
             <div className="mt-8 grid gap-5 sm:grid-cols-2">
               {model === "cabinet" ? <MoneyField label="Chiffre d’affaires annuel" name="revenue" value={financials.revenue} onChange={updateFinancial} /> : null}
-              {model === "ebe" || model === "hybrid" || model === "cabinet" ? <MoneyField label="Résultat annuel (EBE)" name="ebe" value={financials.ebe} onChange={updateFinancial} /> : null}
+              {model === "ebe" || model === "hybrid" || model === "cabinet" ? <MoneyField label="Excédent brut d’exploitation annuel (EBE)" name="ebe" value={financials.ebe} onChange={updateFinancial} /> : null}
               {model === "arr" || model === "software" ? (
                 <>
                   <MoneyField label="Revenu annuel récurrent (ARR)" name="arr" value={financials.arr} onChange={updateFinancial} />

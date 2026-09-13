@@ -5,6 +5,7 @@ import {
   repriseOpportunities,
   sortRepriseOpportunitiesByInformation,
 } from "@/lib/reprise-opportunities";
+import { separateRepriseMapMarkers } from "@/lib/reprise-map-layout";
 
 describe("marketplace À reprendre", () => {
   it("publishes the 38 sanitized opportunities without private contact data", () => {
@@ -39,6 +40,19 @@ describe("marketplace À reprendre", () => {
     expect(sorted.filter((opportunity) => getRepriseOpportunityInformationScore(opportunity) === 4)).toEqual(
       repriseOpportunities.filter((opportunity) => getRepriseOpportunityInformationScore(opportunity) === 4),
     );
+  });
+
+  it("separates nearby map markers so each one remains touchable", () => {
+    const markers = separateRepriseMapMarkers([
+      { id: "ile-de-france", position: { x: 50, y: 30 } },
+      { id: "seine-et-marne", position: { x: 52, y: 31 } },
+    ]);
+
+    expect(markers[0].position).toEqual({ x: 50, y: 30 });
+    expect(
+      Math.abs(markers[0].position.x - markers[1].position.x) >= 11
+      || Math.abs(markers[0].position.y - markers[1].position.y) >= 7,
+    ).toBe(true);
   });
 
   it("keeps the MVP transparent and separates buyer and seller requests", async () => {
@@ -119,8 +133,8 @@ describe("marketplace À reprendre", () => {
     expect(valuationDialog).toContain("Fourchette basse");
     expect(valuationDialog).toContain("Estimation centrale");
     expect(valuationDialog).toContain("Fourchette haute");
-    expect(valuationDialog).toContain('label="Résultat annuel (EBE)"');
-    expect(valuationDialog).not.toContain('label="EBE retraité annuel"');
+    expect(valuationDialog).toContain('label="Excédent brut d’exploitation annuel (EBE)"');
+    expect(valuationDialog).not.toContain('label="Résultat annuel (EBE)"');
     expect(valuationDialog).toContain("Transmettre mon entreprise");
     expect(map).not.toContain("onLocationSelect");
     expect(map).not.toContain("Filtrer sur");

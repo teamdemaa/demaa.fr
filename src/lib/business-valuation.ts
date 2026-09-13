@@ -90,13 +90,13 @@ export function calculateBusinessValuation(input: BusinessValuationInput): Busin
 
 function calculateFinancialBase(model: BusinessValuationModel, input: BusinessValuationInput) {
   if (model === "cabinet") {
-    const ebe = requirePositive(input.ebe, "Le résultat annuel (EBE) est requis.");
+    const ebe = requirePositive(input.ebe, "L’excédent brut d’exploitation (EBE) est requis.");
     const revenue = requirePositive(input.revenue, "Le chiffre d’affaires est requis.");
     return {
       central: ebe * 2.8 * 0.6 + revenue * 0.87 * 0.4,
-      methodLabel: "Estimation fondée sur le résultat annuel de l’activité (EBE retraité), puis recoupée avec le chiffre d’affaires. L’EBE mesure ce que l’activité génère avant intérêts, impôts et amortissements.",
+      methodLabel: "Estimation fondée sur l’excédent brut d’exploitation (EBE) saisi, puis recoupée avec le chiffre d’affaires. L’EBE mesure le surplus généré par l’activité courante, avant charges financières, amortissements et opérations exceptionnelles. Une valorisation approfondie vérifie ensuite les retraitements nécessaires.",
       financialAdjustment: 0,
-      financialFactors: ["Point de départ : environ 2,8 fois l’EBE retraité", "Vérification : comparaison avec le chiffre d’affaires"],
+      financialFactors: ["Point de départ : environ 2,8 fois l’EBE saisi", "Vérification : comparaison avec le chiffre d’affaires"],
     };
   }
 
@@ -115,14 +115,14 @@ function calculateFinancialBase(model: BusinessValuationModel, input: BusinessVa
     };
   }
 
-  const ebe = requirePositive(input.ebe, "Le résultat annuel (EBE) est requis.");
+  const ebe = requirePositive(input.ebe, "L’excédent brut d’exploitation (EBE) est requis.");
   return {
     central: ebe * (model === "hybrid" ? 3.2 : 3),
     methodLabel: model === "hybrid"
-      ? "Estimation fondée sur le résultat annuel de l’activité (EBE retraité) et la récurrence des contrats. L’EBE mesure ce que l’activité génère avant intérêts, impôts et amortissements."
-      : "Estimation fondée sur le résultat annuel de l’activité (EBE retraité). L’EBE mesure ce que l’activité génère avant intérêts, impôts et amortissements.",
+      ? "Estimation fondée sur l’excédent brut d’exploitation (EBE) saisi et la récurrence des contrats. L’EBE mesure le surplus généré par l’activité courante, avant charges financières, amortissements et opérations exceptionnelles. Une valorisation approfondie vérifie ensuite les retraitements nécessaires."
+      : "Estimation fondée sur l’excédent brut d’exploitation (EBE) saisi. L’EBE mesure le surplus généré par l’activité courante, avant charges financières, amortissements et opérations exceptionnelles. Une valorisation approfondie vérifie ensuite les retraitements nécessaires.",
     financialAdjustment: 0,
-    financialFactors: [model === "hybrid" ? "Référence centrale de 3,2 fois l’EBE retraité" : "Référence centrale de 3 fois l’EBE retraité"],
+    financialFactors: [model === "hybrid" ? "Référence centrale de 3,2 fois l’EBE saisi" : "Référence centrale de 3 fois l’EBE saisi"],
   };
 }
 

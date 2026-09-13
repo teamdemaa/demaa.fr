@@ -21,7 +21,7 @@ describe("business valuation", () => {
     expect(result.low).toBe(725_000);
     expect(result.high).toBe(975_000);
     expect(result.methodLabel).toContain("chiffre d’affaires");
-    expect(result.methodLabel).toContain("avant intérêts, impôts et amortissements");
+    expect(result.methodLabel).toContain("avant charges financières, amortissements et opérations exceptionnelles");
   });
 
   it("raises the range for a recurring autonomous service business", () => {
