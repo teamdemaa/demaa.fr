@@ -3,7 +3,7 @@
 import { type CSSProperties, useMemo, useState } from "react";
 import { Building2, LocateFixed, MapPin } from "lucide-react";
 import franceDepartments from "../../public/maps/france-departments.json";
-import { separateRepriseMapMarkers } from "@/lib/reprise-map-layout";
+import { clusterRepriseMapLocations } from "@/lib/reprise-map-layout";
 import type { RepriseOpportunity } from "@/lib/reprise-opportunities";
 
 type MapProps = {
@@ -16,9 +16,17 @@ type MapProps = {
 type Position = { x: number; y: number };
 type Coordinates = { lat: number; lng: number };
 type Cluster = {
+  id: string;
   label: string;
+  labels: string[];
   opportunities: RepriseOpportunity[];
   position: Position;
+};
+type LocationGroup = {
+  label: string;
+  latitude: number;
+  longitude: number;
+  opportunities: RepriseOpportunity[];
 };
 type GeoJsonPosition = [number, number];
 type GeoJsonGeometry = { type: "Polygon" | "MultiPolygon"; coordinates: GeoJsonPosition[][] | GeoJsonPosition[][][] };
@@ -43,14 +51,14 @@ export default function RepriseOpportunityMap({
   onOpportunityPreview,
   onOpenOpportunity,
 }: MapProps) {
-  const [previewLocation, setPreviewLocation] = useState<string>();
+  const [previewClusterId, setPreviewClusterId] = useState<string>();
   const clusters = useMemo(() => buildClusters(opportunities), [opportunities]);
   const highlightedLocation = useMemo(() => {
     if (!highlightedOpportunityId) return undefined;
     return opportunities.find((opportunity) => opportunity.id === highlightedOpportunityId)?.mapPosition?.label;
   }, [highlightedOpportunityId, opportunities]);
-  const previewCluster = clusters.find((cluster) => cluster.label === previewLocation)
-    ?? clusters.find((cluster) => cluster.label === highlightedLocation);
+  const previewCluster = clusters.find((cluster) => cluster.id === previewClusterId)
+    ?? clusters.find((cluster) => highlightedLocation && cluster.labels.includes(highlightedLocation));
 
   return (
     <aside className="lg:sticky lg:top-28">
@@ -62,30 +70,36 @@ export default function RepriseOpportunityMap({
           </div>
           <span className="inline-flex h-8 items-center gap-1.5 rounded-full bg-dema-cream px-3 text-xs text-dema-muted"><LocateFixed className="h-3.5 w-3.5" aria-hidden="true" />France</span>
         </div>
-        <div className="relative min-h-[430px] overflow-hidden bg-dema-cream/75 lg:min-h-[520px]" onMouseLeave={() => { setPreviewLocation(undefined); onOpportunityPreview(undefined); }}>
+        <div className="relative min-h-[430px] overflow-hidden bg-dema-cream/75 lg:min-h-[520px]" onMouseLeave={() => { setPreviewClusterId(undefined); onOpportunityPreview(undefined); }}>
           <svg className="absolute inset-0 h-full w-full" viewBox={`0 0 ${MAP_VIEWBOX.width} ${MAP_VIEWBOX.height}`} role="img" aria-label="Carte de France métropolitaine avec les opportunités localisées" preserveAspectRatio="xMidYMid meet">
             <rect width={MAP_VIEWBOX.width} height={MAP_VIEWBOX.height} fill="transparent" />
             <g>{departmentPaths.map((department) => <path key={department.code} d={department.path} fill="rgba(255,255,255,0.9)" stroke="rgba(35,58,48,0.16)" strokeWidth="0.7" vectorEffect="non-scaling-stroke"><title>{department.name}</title></path>)}</g>
             <path d={departmentPaths.map((department) => department.path).join(" ")} fill="none" stroke="rgba(35,58,48,0.24)" strokeWidth="1.3" vectorEffect="non-scaling-stroke" />
+            {clusters.map((cluster) => {
+              const isActive = cluster.id === previewClusterId
+                || Boolean(highlightedLocation && cluster.labels.includes(highlightedLocation));
+              const firstOpportunity = cluster.opportunities[0];
+              const projected = {
+                x: (cluster.position.x / 100) * MAP_VIEWBOX.width,
+                y: (cluster.position.y / 100) * MAP_VIEWBOX.height,
+              };
+
+              return (
+                <foreignObject key={cluster.id} x={projected.x - 24} y={projected.y - 18} width="48" height="36" overflow="visible">
+                  <button
+                    type="button"
+                    className={`flex h-9 w-12 items-center justify-center gap-1 rounded-full border text-xs font-medium transition hover:scale-105 ${isActive ? "border-dema-forest bg-dema-forest text-dema-paper" : "border-dema-line bg-dema-paper/95 text-brand-blue hover:border-dema-forest/30"}`}
+                    aria-label={`Voir ${cluster.opportunities.length} opportunité${cluster.opportunities.length > 1 ? "s" : ""} à ${cluster.label}`}
+                    onClick={() => { setPreviewClusterId(cluster.id); onOpportunityPreview(firstOpportunity?.id); }}
+                    onMouseEnter={() => { setPreviewClusterId(cluster.id); onOpportunityPreview(firstOpportunity?.id); }}
+                    onFocus={() => { setPreviewClusterId(cluster.id); onOpportunityPreview(firstOpportunity?.id); }}
+                  >
+                    <MapPin className="h-3.5 w-3.5" aria-hidden="true" /><span>{cluster.opportunities.length}</span>
+                  </button>
+                </foreignObject>
+              );
+            })}
           </svg>
-          {clusters.map((cluster) => {
-            const isActive = cluster.label === previewLocation || cluster.label === highlightedLocation;
-            const firstOpportunity = cluster.opportunities[0];
-            return (
-              <button
-                key={cluster.label}
-                type="button"
-                className={`absolute z-10 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium transition hover:z-20 hover:scale-105 ${isActive ? "border-dema-forest bg-dema-forest text-dema-paper" : "border-dema-line bg-dema-paper/95 text-brand-blue hover:border-dema-forest/30"}`}
-                style={{ left: `${cluster.position.x}%`, top: `${cluster.position.y}%` }}
-                aria-label={`Voir ${cluster.opportunities.length} opportunité${cluster.opportunities.length > 1 ? "s" : ""} à ${cluster.label}`}
-                onClick={() => { setPreviewLocation(cluster.label); onOpportunityPreview(firstOpportunity?.id); }}
-                onMouseEnter={() => { setPreviewLocation(cluster.label); onOpportunityPreview(firstOpportunity?.id); }}
-                onFocus={() => { setPreviewLocation(cluster.label); onOpportunityPreview(firstOpportunity?.id); }}
-              >
-                <MapPin className="h-3.5 w-3.5" aria-hidden="true" /><span>{cluster.opportunities.length}</span>
-              </button>
-            );
-          })}
           {previewCluster ? (
             <div className="absolute bottom-4 left-4 right-4 z-30 max-h-52 w-auto overflow-y-auto rounded-2xl border border-dema-line bg-dema-paper p-2 sm:bottom-auto sm:right-auto sm:left-[var(--preview-left)] sm:top-[var(--preview-top)] sm:w-[min(280px,calc(100%-2rem))]" style={getPreviewVariables(previewCluster.position)}>
               <p className="px-2 pb-1 pt-1 text-[11px] font-medium uppercase tracking-[0.12em] text-dema-forest">{previewCluster.label}</p>
@@ -110,20 +124,39 @@ function buildClusters(opportunities: readonly RepriseOpportunity[]): Cluster[] 
     if (!label) continue;
     grouped.set(label, [...(grouped.get(label) ?? []), opportunity]);
   }
-  const clusters = [...grouped.entries()].map(([label, clusterOpportunities]) => {
+  const locationGroups: LocationGroup[] = [...grouped.entries()].map(([label, clusterOpportunities]) => {
     const mapPosition = clusterOpportunities[0].mapPosition!;
-    const projected = mapProjection.project({ lat: mapPosition.latitude, lng: mapPosition.longitude });
     return {
       label,
       opportunities: clusterOpportunities,
+      latitude: mapPosition.latitude,
+      longitude: mapPosition.longitude,
+    };
+  });
+
+  return clusterRepriseMapLocations(locationGroups).map((cluster) => {
+    const labels = cluster.locations
+      .map((location) => location.label)
+      .toSorted((left, right) => left.localeCompare(right, "fr"));
+    const projected = mapProjection.project({
+      lat: cluster.position.latitude,
+      lng: cluster.position.longitude,
+    });
+
+    return {
+      id: labels.join("|"),
+      label: labels.join(" · "),
+      labels,
+      opportunities: cluster.locations.flatMap((location) => location.opportunities),
       position: {
         x: formatPositionPercent(clamp((projected.x / MAP_VIEWBOX.width) * 100, 5, 95)),
         y: formatPositionPercent(clamp((projected.y / MAP_VIEWBOX.height) * 100, 5, 95)),
       },
     };
-  }).toSorted((a, b) => b.opportunities.length - a.opportunities.length || a.label.localeCompare(b.label, "fr"));
-
-  return separateRepriseMapMarkers(clusters);
+  }).toSorted((left, right) => (
+    right.opportunities.length - left.opportunities.length
+    || left.label.localeCompare(right.label, "fr")
+  ));
 }
 
 function isMetropolitanFeature(feature: GeoJsonFeature) {

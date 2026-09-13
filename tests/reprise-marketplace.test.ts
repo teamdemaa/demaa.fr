@@ -5,7 +5,7 @@ import {
   repriseOpportunities,
   sortRepriseOpportunitiesByInformation,
 } from "@/lib/reprise-opportunities";
-import { separateRepriseMapMarkers } from "@/lib/reprise-map-layout";
+import { clusterRepriseMapLocations } from "@/lib/reprise-map-layout";
 
 describe("marketplace À reprendre", () => {
   it("publishes the 38 sanitized opportunities without private contact data", () => {
@@ -42,17 +42,40 @@ describe("marketplace À reprendre", () => {
     );
   });
 
-  it("separates nearby map markers so each one remains touchable", () => {
-    const markers = separateRepriseMapMarkers([
-      { id: "ile-de-france", position: { x: 50, y: 30 } },
-      { id: "seine-et-marne", position: { x: 52, y: 31 } },
+  it("clusters nearby map locations without inventing a distant display position", () => {
+    const clusters = clusterRepriseMapLocations([
+      { id: "paris", latitude: 48.8566, longitude: 2.3522 },
+      { id: "seine-et-marne", latitude: 48.6, longitude: 2.9 },
+      { id: "lyon", latitude: 45.764, longitude: 4.8357 },
     ]);
 
-    expect(markers[0].position).toEqual({ x: 50, y: 30 });
-    expect(
-      Math.abs(markers[0].position.x - markers[1].position.x) >= 11
-      || Math.abs(markers[0].position.y - markers[1].position.y) >= 7,
-    ).toBe(true);
+    expect(clusters).toHaveLength(2);
+    expect(clusters[0].locations.map(({ id }) => id)).toEqual(["paris", "seine-et-marne"]);
+    expect(clusters[0].position.latitude).toBeCloseTo(48.7283);
+    expect(clusters[0].position.longitude).toBeCloseTo(2.6261);
+    expect(clusters[1]).toEqual({
+      locations: [{ id: "lyon", latitude: 45.764, longitude: 4.8357 }],
+      position: { latitude: 45.764, longitude: 4.8357 },
+    });
+  });
+
+  it("keeps the Lyon cluster on Lyon", () => {
+    const locations = repriseOpportunities.flatMap((opportunity) => opportunity.mapPosition ? [{
+      id: opportunity.id,
+      latitude: opportunity.mapPosition.latitude,
+      longitude: opportunity.mapPosition.longitude,
+    }] : []);
+    const lyonCluster = clusterRepriseMapLocations(locations).find((cluster) => (
+      cluster.locations.some(({ id }) => id === "relation-client-lyon")
+    ));
+
+    expect(lyonCluster?.locations.map(({ id }) => id)).toEqual(expect.arrayContaining([
+      "relation-client-lyon",
+      "nettoyage-industriel-rhone-alpes",
+      "maintenance-piscines-auvergne-rhone-alpes",
+    ]));
+    expect(lyonCluster?.position.latitude).toBeCloseTo(45.676);
+    expect(lyonCluster?.position.longitude).toBeCloseTo(4.5238);
   });
 
   it("keeps the MVP transparent and separates buyer and seller requests", async () => {
@@ -146,6 +169,8 @@ describe("marketplace À reprendre", () => {
     expect(map).not.toContain("onLocationSelect");
     expect(map).not.toContain("Filtrer sur");
     expect(map).toContain("Voir la fiche");
+    expect(map).toContain("clusterRepriseMapLocations");
+    expect(map).toContain("<foreignObject");
     expect(marketplace).toContain("setShowMobileMap(false); setSelectedOpportunity(opportunity)");
     expect(buyerRoute).toContain('requestType: "reprise_interest"');
     expect(buyerRoute).toContain('channels: { email: true, resend: false, slack: false }');
