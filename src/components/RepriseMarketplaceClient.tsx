@@ -210,8 +210,7 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
                 </span>
               </span>
             </h1>
-            <p className="mx-auto mt-7 max-w-3xl text-base leading-7 text-dema-muted sm:text-lg">Des entreprises dont la valeur repose sur leurs clients, leurs contrats, leur équipe et leur savoir-faire, plutôt que sur un emplacement commercial.</p>
-            <p className="mt-6 text-sm font-medium text-dema-forest">Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place</p>
+            <p className="mt-7 text-sm font-medium text-dema-forest">Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place</p>
             <div className="demaa-search-shell mx-auto mt-10 max-w-3xl p-1.5">
               <div className="relative">
                 <Search className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-dema-forest/42" aria-hidden="true" />
