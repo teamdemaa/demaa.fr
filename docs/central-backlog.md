@@ -1,6 +1,8 @@
 # Backlog central Demaa
 
-Dernière consolidation : 24 août 2026.
+Dernière consolidation : 13 septembre 2026 pour le lot SEO de la marketplace
+`À reprendre`. Le reste de l'historique conserve sa date de consolidation
+initiale du 24 août 2026.
 
 Backlog de pilotage :
 [Demaa — Backlog maître](https://docs.google.com/spreadsheets/d/19uwK54Pd2XiPzPM8OBvNkFSaSHYsJO_IHk8ZxzvvmQY/edit).
@@ -15,6 +17,91 @@ contrôlée. La tête `origin/main` vérifiée lors de cette consolidation est
 Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
 à réaliser.
+
+## SEO Marketplace `À reprendre` — socle livré, croissance au backlog
+
+État vérifié le 13 septembre 2026 : la marketplace conserve son interface et
+ses modales actuelles. Les 38 annonces disposent en parallèle d'une page
+publique autonome. Aucun texte visible supplémentaire ne doit être ajouté pour
+le seul bénéfice du référencement ; tout enrichissement doit provenir
+d'informations réelles, utiles et vérifiées.
+
+### Socle livré
+
+- [x] Donner à chaque annonce une URL stable sous `/a-reprendre/[slug]` tout en
+  conservant l'ouverture en modal lors d'un clic normal dans la marketplace.
+- [x] Rendre les 38 cartes explorables avec de vrais liens HTML.
+- [x] Ajouter pour chaque fiche un titre, une meta-description, un canonical,
+  un H1 unique et des métadonnées sociales.
+- [x] Publier les données structurées de la collection, des fiches et du fil
+  d'Ariane.
+- [x] Ajouter les 38 fiches au sitemap et conserver sa déclaration dans
+  `robots.txt`.
+- [x] Faire pointer les e-mails d'alerte vers la page autonome de l'annonce.
+- [x] Vérifier le rendu et le comportement en Production sur mobile et desktop,
+  sans débordement horizontal ni erreur navigateur.
+
+### P1 — Fermer l'indexation et la mesure
+
+- [ ] Corriger `scripts/audit-public-indexability.mjs` : la redirection
+  canonique de `/` aboutit désormais à `/a-reprendre`, et non plus à
+  `/solutions`.
+- [ ] Resoumettre `https://demaa.fr/sitemap.xml` dans la propriété Search
+  Console `demaa.fr`, puis vérifier sa dernière lecture et l'absence d'erreur.
+- [ ] Demander l'indexation de `/a-reprendre` et d'un échantillon représentatif
+  de fiches avec l'outil d'inspection des URL ; ne pas répéter les demandes
+  inutilement.
+- [ ] Contrôler après quelques jours puis quelques semaines : pages découvertes,
+  pages indexées, exclusions, requêtes, impressions, clics et position moyenne.
+- [ ] Vérifier dans les deux propriétés Search Console la migration durable de
+  `demaa.co` vers `demaa.fr` conformément à l'ADR 0025.
+- [ ] Mesurer séparément les Core Web Vitals de `/a-reprendre` et d'une fiche
+  sur mobile et desktop ; corriger uniquement les régressions réellement
+  observées.
+
+### P1 — Renforcer les fiches à partir de données réelles
+
+- [ ] Prioriser les annonces les plus incomplètes et obtenir, lorsque les
+  cédants ou intermédiaires peuvent les communiquer : description de
+  l'activité, clientèle, récurrence, équipe, zone couverte, raison de la
+  transmission et éléments distinctifs.
+- [ ] Conserver explicitement `Non disponible` lorsqu'une information manque ;
+  ne jamais inventer une donnée ni produire du texte générique pour augmenter
+  artificiellement la longueur d'une page.
+- [ ] Définir une revue éditoriale et factuelle avant publication de tout
+  enrichissement visible.
+- [ ] Ajouter une date de dernière vérification lorsque le contenu d'une annonce
+  évolue, distincte de sa date de publication initiale.
+
+### P2 — Étendre seulement lorsque le catalogue le justifie
+
+- [ ] Définir un seuil minimal d'annonces et de contenu utile avant de créer des
+  pages indexables par catégorie ou région. Ne publier aucune page vide, quasi
+  vide ou créée uniquement pour viser un mot-clé.
+- [ ] Préparer en priorité, si le volume devient suffisant, les intentions
+  `entreprises de services à reprendre`, `entreprises BTP à reprendre`,
+  `logiciels B2B à reprendre` et les principales régions réellement couvertes.
+- [ ] Ajouter une pagination avec de vraies URL et de vrais liens lorsque le
+  volume ou les performances le nécessitent. Avec 38 annonces toutes présentes
+  dans le HTML et le sitemap, elle reste différée.
+- [ ] Prévoir le cycle de vie des annonces : `mise à jour`, `sous offre`,
+  `transmise` et `retirée`, avec une décision explicite entre conservation de
+  la page, redirection pertinente ou réponse définitive adaptée.
+- [ ] Générer une image Open Graph propre à chaque fiche seulement si elle
+  améliore réellement les partages ; l'image Demaa générique reste le repli.
+- [ ] Construire progressivement des liens éditoriaux internes et des mentions
+  externes légitimes vers la marketplace, sans achat de liens ni pages satellites.
+
+### Critères de clôture
+
+1. l'audit public automatique passe avec la redirection actuelle de la home ;
+2. Search Console confirme la lecture du sitemap et permet de suivre les 38
+   fiches sans erreur technique commune ;
+3. les fiches enrichies reposent uniquement sur des informations vérifiées ;
+4. aucune page de catégorie, région ou pagination n'est créée avant d'être utile
+   à la fois aux visiteurs et aux moteurs ;
+5. toute modification visible de la marketplace fait l'objet d'une validation
+   séparée.
 
 ## D-100 — Demaa Studio — livré en production le 26 août 2026
 
