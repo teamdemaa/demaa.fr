@@ -1,8 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowLeft,
   ArrowRight,
-  ArrowUpDown,
   Building2,
   Cable,
   CalendarCheck2,
@@ -17,7 +17,6 @@ import {
   Inbox,
   ReceiptText,
   Route,
-  ShieldCheck,
   Siren,
   Sparkles,
   UserCheck,
@@ -41,7 +40,7 @@ const sectorIcons: readonly LucideIcon[] = [
 
 const journeyIcons: readonly LucideIcon[] = [Route, Camera, FileCheck2];
 const humanIcons: readonly LucideIcon[] = [Inbox, FilePenLine, UserCheck];
-const fieldExampleIcons: readonly LucideIcon[] = [Building2, ShieldCheck, ArrowUpDown];
+const fieldExampleImagePositions = ["left center", "center", "right center"] as const;
 
 function FlowIllustration() {
   const steps = [
@@ -146,23 +145,37 @@ export default function MentoratAutomationLandingPage() {
                 Retour aux spécialistes
               </Link>
             ) : null}
-            <h1
-              aria-label={`${content.hero.lead} ${content.hero.emphasis}`}
-              className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}
-            >
-              <span aria-hidden="true" className="block">{content.hero.lead}</span>
-              <span aria-hidden="true" className="demaa-section-title block text-dema-forest">
-                {content.hero.emphasis}
-              </span>
-            </h1>
-            <p className="mx-auto mt-7 max-w-3xl text-base leading-7 text-dema-muted sm:text-lg sm:leading-8">
-              {content.hero.description}
-            </p>
-            <div className="mt-8 flex flex-col items-center">
-              <AutomationCallbackControl variant="hero" label={content.hero.ctaLabel} />
-              <p className="mt-3 text-xs text-dema-muted">
-                Sans engagement
-              </p>
+            <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(24rem,0.92fr)] lg:gap-12 lg:text-left">
+              <div>
+                <h1
+                  aria-label={`${content.hero.lead} ${content.hero.emphasis}`}
+                  className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl lg:mx-0`}
+                >
+                  <span aria-hidden="true" className="block">{content.hero.lead}</span>
+                  <span aria-hidden="true" className="demaa-section-title block text-dema-forest">
+                    {content.hero.emphasis}
+                  </span>
+                </h1>
+                <p className="mx-auto mt-7 max-w-3xl text-base leading-7 text-dema-muted sm:text-lg sm:leading-8 lg:mx-0">
+                  {content.hero.description}
+                </p>
+                <div className="mt-8 flex flex-col items-center lg:items-start">
+                  <AutomationCallbackControl variant="hero" label={content.hero.ctaLabel} />
+                  <p className="mt-3 text-xs text-dema-muted">
+                    Sans engagement
+                  </p>
+                </div>
+              </div>
+              <Image
+                src="/illustrations/accompagnement/hero-entreprise-terrain-v3.png"
+                alt=""
+                aria-hidden="true"
+                width={1536}
+                height={1024}
+                sizes="(max-width: 1023px) 92vw, 42vw"
+                preload
+                className="mx-auto h-auto w-full max-w-2xl object-contain"
+              />
             </div>
             <FlowIllustration />
           </div>
@@ -235,7 +248,16 @@ export default function MentoratAutomationLandingPage() {
                 Les mêmes informations avancent d’une étape à l’autre, sans être recopiées dans plusieurs outils.
               </p>
             </div>
-            <ol className="mt-10 grid gap-5 md:grid-cols-3">
+            <Image
+              src="/illustrations/accompagnement/flux-client-bureau-terrain-v3.png"
+              alt=""
+              aria-hidden="true"
+              width={2048}
+              height={768}
+              sizes="(max-width: 767px) 92vw, 80vw"
+              className="mt-10 h-auto w-full object-contain"
+            />
+            <ol className="mt-8 grid gap-5 md:grid-cols-3">
               {content.journey.map((step, index) => {
                 const Icon = journeyIcons[index];
                 return (
@@ -323,10 +345,18 @@ export default function MentoratAutomationLandingPage() {
             </h2>
             <div className="mt-10 grid gap-5 md:grid-cols-3">
               {content.fieldExamples.items.map((example, index) => {
-                const Icon = fieldExampleIcons[index];
                 return (
                   <article key={example.sector} className="border-t border-dema-line pt-5">
-                    <Icon className="h-5 w-5 text-dema-forest" strokeWidth={1.7} aria-hidden="true" />
+                    <div className="relative aspect-square w-full overflow-hidden" aria-hidden="true">
+                      <Image
+                        src="/illustrations/accompagnement/metiers-terrain-v3.png"
+                        alt=""
+                        fill
+                        sizes="(max-width: 767px) 92vw, 30vw"
+                        className="object-cover"
+                        style={{ objectPosition: fieldExampleImagePositions[index] }}
+                      />
+                    </div>
                     <h3 className="mt-5 text-lg font-medium tracking-[-0.02em]">{example.sector}</h3>
                     <p className="mt-3 text-sm leading-6 text-dema-muted">{example.description}</p>
                   </article>

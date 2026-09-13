@@ -7,7 +7,7 @@ export const mentoratAutomationContent = {
     lead: "De la demande client à la facture,",
     emphasis: "sans ressaisir les mêmes informations.",
     description:
-      "Nous mettons en place les automatisations qui relient vos demandes, vos devis, votre planning, vos interventions ou chantiers, vos comptes rendus et votre facturation. Nous intégrons l’IA lorsqu’elle permet de préparer, classer ou résumer les informations.",
+      "Nous mettons en place les automatisations & l’IA qui relient vos demandes, vos devis, votre planning, vos interventions ou chantiers, vos comptes rendus et votre facturation.",
     ctaLabel: "Faire mon diagnostic Automatisation & IA",
   },
   sectors: {

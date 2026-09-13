@@ -54,8 +54,8 @@ describe("Demaa application navbar", () => {
     expect(sharedHomeSource).toContain("<Navbar");
     expect(solutionsSource).toContain('path: "/solutions"');
     expect(proxySource).toContain('if (pathname === "/")');
-    expect(proxySource).toContain("buildDefaultHomeSurMesureHref(request.nextUrl.searchParams)");
-    expect(proxySource).toContain("NextResponse.redirect(new URL(surMesureHref, request.url), 308)");
+    expect(proxySource).toContain("buildDefaultHomeAccompagnementHref(request.nextUrl.searchParams)");
+    expect(proxySource).toContain("NextResponse.redirect(new URL(accompagnementHref, request.url), 308)");
     expect(navbarSource).toContain(': "/accompagnement"}');
     expect(nextConfigSource).toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/outils',/,
@@ -66,14 +66,17 @@ describe("Demaa application navbar", () => {
   });
 
   it("uses Accompagnement first, followed by Outils and Tutoriels", async () => {
-    const source = await readFile(
-      new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
-      "utf8",
-    );
-    const tutorialsIndex = await readFile(
-      new URL("../src/app/(marketing)/tutoriels/page.tsx", import.meta.url),
-      "utf8",
-    );
+    const [source, tutorialsIndex, footer] = await Promise.all([
+      readFile(
+        new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
+        "utf8",
+      ),
+      readFile(
+        new URL("../src/app/(marketing)/tutoriels/page.tsx", import.meta.url),
+        "utf8",
+      ),
+      readFile(new URL("../src/components/Footer.tsx", import.meta.url), "utf8"),
+    ]);
 
     expect(source).toContain('label: "Tutoriels", href: "/tutoriels"');
     expect(source).toContain('label: "Outils", href: "/outils"');
@@ -92,6 +95,11 @@ describe("Demaa application navbar", () => {
     expect(tutorialsIndex).toContain('path: "/tutoriels"');
     expect(tutorialsIndex).not.toContain("<Navbar");
     expect(tutorialsIndex).not.toContain("<ActionPlanNavbar");
+    expect(footer).toContain('<Link href="/accompagnement" className="inline-flex">');
+    expect(footer).toContain('{ label: "Accompagnement", href: "/accompagnement" }');
+    expect(footer).not.toContain("Systèmes opérationnels");
+    expect(footer).not.toContain("Annuaire financement");
+    expect(footer).not.toContain("Annuaire fournisseurs");
   });
 
   it("replaces the sign-in action with account access once a session is active", async () => {

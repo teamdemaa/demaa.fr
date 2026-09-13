@@ -6,9 +6,7 @@ import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
 
 const directoryLinks = [
   { label: "Annuaire outils", href: "/annuaire-outils" },
-  { label: "Annuaire financement", href: "/annuaire-financement" },
   { label: "Aides et subventions", href: "/aides-et-subventions" },
-  { label: "Annuaire fournisseurs", href: "/annuaire-fournisseurs" },
   { label: "Annuaire réseaux professionnels", href: "/annuaire-reseaux-pro" },
   { label: "Annuaire newsletters", href: "/annuaire-newsletters" },
   { label: "Annuaire experts-comptables", href: "/annuaire-experts-comptables" },
@@ -17,7 +15,7 @@ const directoryLinks = [
 const collaborationLinks = [
   PUBLIC_SPECIALISTS_ENABLED
     ? { label: "Spécialistes", href: "/specialistes" }
-    : { label: "Systèmes opérationnels", href: "/accompagnement" },
+    : { label: "Accompagnement", href: "/accompagnement" },
   { label: "Demaa Studio", href: "/studio" },
   { label: "Annonces", href: "/opportunites" },
   { label: "Rejoindre Team Demaa", href: "/opportunites?intent=team-demaa-profile" },
@@ -43,7 +41,7 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="space-y-4">
-            <Link href="/sur-mesure" className="inline-flex">
+            <Link href="/accompagnement" className="inline-flex">
               <DemaaWordmark
                 className="text-[2.55rem]"
                 colorClassName="text-brand-blue/56"

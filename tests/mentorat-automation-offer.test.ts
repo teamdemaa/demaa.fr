@@ -35,7 +35,9 @@ describe("Mise en place d’une automatisation terrain", () => {
       "sans ressaisir les mêmes informations.",
     );
     expect(mentoratAutomationContent.hero.description).toContain("interventions ou chantiers");
-    expect(mentoratAutomationContent.hero.description).toContain("Nous intégrons l’IA");
+    expect(mentoratAutomationContent.hero.description).toContain(
+      "Nous mettons en place les automatisations & l’IA",
+    );
     expect(mentoratAutomationContent.hero.ctaLabel).toBe(
       "Faire mon diagnostic Automatisation & IA",
     );
@@ -94,8 +96,12 @@ describe("Mise en place d’une automatisation terrain", () => {
     expect(landing).toContain("content.journey.map");
     expect(landing).toContain("content.impacts.map");
     expect(landing).toContain("content.fieldExamples.items.map");
-    expect(landing).not.toContain("next/image");
-    expect(landing).not.toContain("/images/accompagnement/");
+    expect(landing).toContain('from "next/image"');
+    expect(landing).toContain("/illustrations/accompagnement/hero-entreprise-terrain-v3.png");
+    expect(landing).toContain("/illustrations/accompagnement/flux-client-bureau-terrain-v3.png");
+    expect(landing).toContain("/illustrations/accompagnement/metiers-terrain-v3.png");
+    expect(landing.match(/alt=""/g)).toHaveLength(3);
+    expect(landing).toContain("fieldExampleImagePositions[index]");
     expect(landing).toContain("<FlowIllustration />");
     expect(landing).toContain("<AppIllustration />");
     expect(landing).toContain("content.applicationBridge.href");
