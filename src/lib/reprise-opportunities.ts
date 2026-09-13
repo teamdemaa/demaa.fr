@@ -48,3 +48,20 @@ export const repriseOpportunities: readonly RepriseOpportunity[] = [
 export function getRepriseOpportunity(id: string) {
   return repriseOpportunities.find((opportunity) => opportunity.id === id) ?? null;
 }
+
+export function getRepriseOpportunityInformationScore(opportunity: RepriseOpportunity) {
+  return [opportunity.revenue, opportunity.ebe, opportunity.employees, opportunity.askingPrice]
+    .filter(Boolean)
+    .length;
+}
+
+export function sortRepriseOpportunitiesByInformation(opportunities: readonly RepriseOpportunity[]) {
+  return opportunities
+    .map((opportunity, originalIndex) => ({ opportunity, originalIndex }))
+    .toSorted((left, right) => (
+      getRepriseOpportunityInformationScore(right.opportunity)
+      - getRepriseOpportunityInformationScore(left.opportunity)
+      || left.originalIndex - right.originalIndex
+    ))
+    .map(({ opportunity }) => opportunity);
+}

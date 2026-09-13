@@ -24,7 +24,10 @@ import {
   getLeadSubmissionKey,
 } from "@/lib/lead-submission-client";
 import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
-import type { RepriseOpportunity } from "@/lib/reprise-opportunities";
+import {
+  sortRepriseOpportunitiesByInformation,
+  type RepriseOpportunity,
+} from "@/lib/reprise-opportunities";
 
 const categories = ["Toutes", "Services terrain", "Services professionnels", "Logiciels"] as const;
 type CategoryFilter = (typeof categories)[number];
@@ -182,11 +185,12 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
 
   const filtered = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase("fr");
-    return opportunities.filter((opportunity) => {
+    const matches = opportunities.filter((opportunity) => {
       const matchesCategory = category === "Toutes" || opportunity.category === category;
       const haystack = `${opportunity.activity} ${opportunity.location} ${opportunity.category}`.toLocaleLowerCase("fr");
       return matchesCategory && (!normalizedQuery || haystack.includes(normalizedQuery));
     });
+    return sortRepriseOpportunitiesByInformation(matches);
   }, [category, opportunities, query]);
 
   return (

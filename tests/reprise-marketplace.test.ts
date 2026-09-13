@@ -1,6 +1,10 @@
 import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
-import { repriseOpportunities } from "@/lib/reprise-opportunities";
+import {
+  getRepriseOpportunityInformationScore,
+  repriseOpportunities,
+  sortRepriseOpportunitiesByInformation,
+} from "@/lib/reprise-opportunities";
 
 describe("marketplace À reprendre", () => {
   it("publishes the 30 sanitized opportunities without private contact data", () => {
@@ -12,6 +16,17 @@ describe("marketplace À reprendre", () => {
     expect(publicPayload).not.toContain('"ND"');
     expect(publicPayload).not.toMatch(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/);
     expect(publicPayload).not.toMatch(/(?:\+33|0)[1-9](?:[ .-]?\d{2}){4}/);
+  });
+
+  it("shows the opportunities with the most published information first", () => {
+    const sorted = sortRepriseOpportunitiesByInformation(repriseOpportunities);
+    const scores = sorted.map(getRepriseOpportunityInformationScore);
+
+    expect(scores).toEqual(scores.toSorted((left, right) => right - left));
+    expect(scores[0]).toBe(4);
+    expect(sorted.filter((opportunity) => getRepriseOpportunityInformationScore(opportunity) === 4)).toEqual(
+      repriseOpportunities.filter((opportunity) => getRepriseOpportunityInformationScore(opportunity) === 4),
+    );
   });
 
   it("keeps the MVP transparent and separates buyer and seller requests", async () => {
