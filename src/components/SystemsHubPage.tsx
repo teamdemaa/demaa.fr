@@ -1,9 +1,8 @@
 import Navbar from "@/components/Navbar";
 import HomeTabsClient from "@/components/HomeTabsClient";
 import OrganiserDiscoveryCta from "@/components/OrganiserDiscoveryCta";
+import ResourcesNavigation from "@/components/ResourcesNavigation";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
-import ToolsModelsSection from "@/components/ToolsModelsSection";
-import { getPublishedCopyableModels } from "@/lib/copyable-model-catalog";
 import {
   enterpriseToSystem,
   type EnterpriseDefinition,
@@ -14,7 +13,6 @@ export default function SystemsHubPage({
 }: {
   enterprises: readonly EnterpriseDefinition[];
 }) {
-  const models = getPublishedCopyableModels();
   const systems = enterprises.map(enterpriseToSystem);
   const sectorLabelsBySlug = Object.fromEntries(
     enterprises.map((enterprise) => [enterprise.slug, enterprise.sectorLabel]),
@@ -22,11 +20,11 @@ export default function SystemsHubPage({
 
   return (
     <>
-      <Navbar publicNavigationActiveView="solutions" />
+      <Navbar publicNavigationActiveView="resources" />
       <main className="flex-1 min-h-screen w-full bg-dema-cream">
+        <ResourcesNavigation activeView="tools" />
         <HomeTabsClient systems={systems} sectorLabelsBySlug={sectorLabelsBySlug} />
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <ToolsModelsSection models={models} />
           <div className="pt-4">
             <OrganiserDiscoveryCta />
           </div>

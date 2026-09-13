@@ -10,14 +10,15 @@ import { getPublishedTutorials } from "@/lib/tutorial-catalog";
 
 const read = (path: string) => readFileSync(path, "utf8");
 
-describe("Outils and Tutoriels public journey", () => {
-  it("publishes one focused tutorial library without internal tabs", () => {
+describe("Outils, Modèles and Tutoriels public journey", () => {
+  it("publishes one focused tutorial library with the shared resource navigation", () => {
     const page = read("src/app/(marketing)/tutoriels/page.tsx");
     const hub = read("src/components/TutorialsHub.tsx");
     const library = read("src/components/TutorialLibrary.tsx");
 
     expect(page).toContain("<TutorialsHub />");
     expect(page).toContain('path: "/tutoriels"');
+    expect(hub).toContain('<ResourcesNavigation activeView="tutorials" />');
     expect(hub).toContain("Mieux utiliser ses outils");
     expect(hub).toContain("étape par étape");
     expect(hub).toContain("gagner du temps et faire avancer votre entreprise");
@@ -100,7 +101,7 @@ describe("Outils and Tutoriels public journey", () => {
     expect(route).toContain('replace(/</g, "\\\\u003c")');
   });
 
-  it("keeps Outils limited to software and copyable models", () => {
+  it("keeps Outils limited to software while Models has its own catalogue", () => {
     const toolsPage = read("src/app/(marketing)/outils/page.tsx");
     const toolsHub = read("src/components/SystemsHubPage.tsx");
     const visibility = read("src/lib/public-solution-section-visibility.ts");
@@ -108,7 +109,9 @@ describe("Outils and Tutoriels public journey", () => {
     expect(toolsPage).toContain('path: "/outils"');
     expect(toolsPage).toContain("<SystemsHubPage enterprises={enterprises} />");
     expect(toolsHub).toContain("<HomeTabsClient");
-    expect(toolsHub).toContain("<ToolsModelsSection");
+    expect(toolsHub).toContain('<ResourcesNavigation activeView="tools" />');
+    expect(toolsHub).not.toContain("ToolsModelsSection");
+    expect(toolsHub).not.toContain("getPublishedCopyableModels");
     expect(toolsHub).not.toContain("getEnterpriseCatalog");
     expect(visibility).toContain('section === "software"');
   });

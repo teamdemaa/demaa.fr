@@ -24,8 +24,8 @@ const collaborationLinks = [
 
 const resourceLinks = [
   { label: "Outils", href: "/outils" },
-  { label: "Tutoriels", href: "/tutoriels" },
   { label: "Modèles à copier", href: "/modeles" },
+  { label: "Tutoriels", href: "/tutoriels" },
   { label: "Contenus", href: "/contenus" },
 ];
 

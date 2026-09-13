@@ -6,9 +6,9 @@ import {
 } from "@/lib/public-index-json-ld";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-const title = "Outils et modèles adaptés à votre activité | Demaa";
+const title = "Outils et logiciels adaptés à votre activité | Demaa";
 const description =
-  "Choisissez votre activité pour découvrir les logiciels utiles et des modèles prêts à copier pour mieux travailler.";
+  "Choisissez votre activité pour découvrir et comparer les logiciels utiles à votre entreprise.";
 
 export const metadata = buildPublicPageMetadata({
   title,

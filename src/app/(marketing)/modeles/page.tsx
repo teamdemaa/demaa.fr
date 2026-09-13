@@ -1,6 +1,7 @@
 import CopyableModelsIndex from "@/components/CopyableModelsIndex";
 import MentoratAutomationCta from "@/components/MentoratAutomationCta";
 import Navbar from "@/components/Navbar";
+import ResourcesNavigation from "@/components/ResourcesNavigation";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import {
   getPublishedCopyableModels,
@@ -51,8 +52,9 @@ export default async function ModelsPage({ searchParams }: ModelsPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializePublicJsonLd(jsonLd) }}
       />
-      <Navbar minimal publicNavigationActiveView="solutions" />
+      <Navbar minimal publicNavigationActiveView="resources" />
       <main className="min-h-screen bg-background">
+        <ResourcesNavigation activeView="models" />
         <CopyableModelsIndex
           fromOrganisation={source === "organisation"}
           models={models}

@@ -22,7 +22,8 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/app/(marketing)/systemes/[slug]/loading.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(pageSource).toContain('<Navbar minimal publicNavigationActiveView="solutions" />');
+    expect(pageSource).toContain('<Navbar minimal publicNavigationActiveView="resources" />');
+    expect(pageSource).toContain('<ResourcesNavigation activeView="tools" />');
     expect(loadingSource).toContain("<Navbar minimal />");
     expect(pageSource.indexOf("<Navbar minimal publicNavigationActiveView=")).toBeLessThan(pageSource.indexOf("<main"));
     expect(loadingSource.indexOf("<Navbar minimal />")).toBeLessThan(loadingSource.indexOf("<main"));
@@ -65,10 +66,14 @@ describe("Demaa application navbar", () => {
     );
   });
 
-  it("uses Accompagnement first, followed by Outils and Tutoriels", async () => {
-    const [source, tutorialsIndex, footer] = await Promise.all([
+  it("uses Accompagnement and Ressources, then exposes three resource catalogues", async () => {
+    const [source, resources, tutorialsIndex, footer] = await Promise.all([
       readFile(
         new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
+        "utf8",
+      ),
+      readFile(
+        new URL("../src/components/ResourcesNavigation.tsx", import.meta.url),
         "utf8",
       ),
       readFile(
@@ -78,17 +83,22 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/components/Footer.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(source).toContain('label: "Tutoriels", href: "/tutoriels"');
-    expect(source).toContain('label: "Outils", href: "/outils"');
     expect(source).toContain('label: "Accompagnement", href: "/accompagnement"');
+    expect(source).toContain('label: "Ressources", href: "/outils"');
+    expect(source).not.toContain('label: "Tutoriels"');
+    expect(source).not.toContain('label: "Outils"');
     expect(source).not.toContain('label: "Sur mesure"');
     expect(source).not.toContain("PUBLIC_SPECIALISTS_ENABLED");
     expect(source.indexOf('label: "Accompagnement"')).toBeLessThan(
-      source.indexOf('label: "Outils"'),
+      source.indexOf('label: "Ressources"'),
     );
-    expect(source.indexOf('label: "Outils"')).toBeLessThan(
-      source.indexOf('label: "Tutoriels"'),
+    expect(resources.indexOf('label: "Outils"')).toBeLessThan(
+      resources.indexOf('label: "Modèles"'),
     );
+    expect(resources.indexOf('label: "Modèles"')).toBeLessThan(
+      resources.indexOf('label: "Tutoriels"'),
+    );
+    expect(resources).toContain('aria-label="Ressources"');
     expect(source).toContain("leading-tight");
     expect(source).not.toContain("leading-none");
     expect(tutorialsIndex).toContain("TutorialsHub");
@@ -216,13 +226,16 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain('"/tutoriels"');
     expect(actionPlanNavSource).toContain("Outils");
     expect(actionPlanNavSource).toContain('"/outils"');
-    expect(actionPlanNavSource).not.toContain("Ressources");
+    expect(actionPlanNavSource).toContain("Ressources");
     expect(actionPlanNavSource).toContain("Annonces");
     expect(actionPlanNavSource).not.toContain('label: "Système"');
     expect(actionPlanNavSource).toContain("const publicNavigationOrder: readonly ActionPlanView[]");
     expect(actionPlanNavSource).toContain("const embeddedNavigationOrder: readonly ActionPlanView[]");
     expect(actionPlanNavSource).toContain(
-      '"services",\n  "solutions",\n  "academy"',
+      'const publicNavigationOrder: readonly ActionPlanView[] = [\n  "services",\n  "solutions",\n];',
+    );
+    expect(actionPlanNavSource).toContain(
+      'const embeddedNavigationOrder: readonly ActionPlanView[] = [\n  "services",\n  "solutions",\n  "academy",\n];',
     );
     expect(actionPlanNavSource).toContain('  "academy",');
     expect(actionPlanNavSource).not.toContain('  "opportunities",');

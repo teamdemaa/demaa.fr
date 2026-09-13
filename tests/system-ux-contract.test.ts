@@ -106,7 +106,7 @@ describe("system UX contract", () => {
     expect(printButtonSource).toContain("Chrome, Safari ou Firefox");
     expect(printButtonSource).toContain("flex-col gap-3 min-[440px]:flex-row sm:gap-4");
     expect(printButtonSource).toContain("Imprimer le document");
-    expect(printButtonSource).toContain("Télécharger le document");
+    expect(printButtonSource).toContain("Télécharger les processus");
     expect(printButtonSource).toContain("downloadHref");
     expect(printButtonSource).toContain(") : !emailDelivery ? (");
     expect(printButtonSource).toContain("Recevoir le document");
@@ -116,8 +116,10 @@ describe("system UX contract", () => {
     expect(processesContentSource).toContain("PUBLIC_SYSTEM_PROCESS_OVERVIEW_ENABLED ? (");
     expect(featureFlagsSource).toContain("NEXT_PUBLIC_DEMAA_SYSTEM_PROCESS_OVERVIEW_ENABLED");
     expect(processesContentSource).toContain("Processus complets");
-    expect(processesContentSource).not.toContain("downloadHref=");
-    expect(processesContentSource).toContain("emailDelivery={{ systemName, systemSlug }}");
+    expect(processesContentSource).toContain(
+      "downloadHref={`/api/system-processes/pdf/${systemSlug}`}",
+    );
+    expect(processesContentSource).not.toContain("emailDelivery=");
     expect(processesContentSource).toContain("border-dema-forest/45");
     expect(processesContentSource).not.toContain('<span aria-hidden="true">•</span>');
     expect(processesContentSource).not.toContain("Solutions");

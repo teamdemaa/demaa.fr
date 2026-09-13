@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, BriefcaseBusiness, ListChecks, Workflow, Wrench } from "lucide-react";
+import { BookOpen, BriefcaseBusiness, LibraryBig, ListChecks, Workflow, Wrench } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -22,7 +22,6 @@ const navigationItems = {
 const publicNavigationOrder: readonly ActionPlanView[] = [
   "services",
   "solutions",
-  "academy",
 ];
 
 const embeddedNavigationOrder: readonly ActionPlanView[] = [
@@ -75,12 +74,16 @@ export default function ActionPlanNavbar({
         aria-label={localeCode === "en" ? "Main navigation" : "Navigation principale"}
       >
         {displayedItems.map(({ view, labels, Icon }) => {
-          const label = labels[localeCode];
+          const usesResourcesParent = routeNavigation && view === "solutions";
+          const label = usesResourcesParent
+            ? localeCode === "en" ? "Resources" : "Ressources"
+            : labels[localeCode];
+          const DisplayIcon = usesResourcesParent ? LibraryBig : Icon;
           const isActive = activeView === view;
           const className = `${tabClassName} ${isActive ? "bg-dema-sage text-dema-forest xl:bg-transparent xl:font-semibold" : "text-dema-muted hover:text-brand-blue"}`;
           const content = (
             <>
-              <Icon
+              <DisplayIcon
                 className={`h-4 w-4 shrink-0 transition ${isActive ? "stroke-[2.3]" : "stroke-[1.8] group-hover:stroke-2"}`}
                 aria-hidden="true"
               />

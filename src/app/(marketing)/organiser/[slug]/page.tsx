@@ -45,7 +45,7 @@ export default async function OrganiserContentPage(
 
   return (
     <>
-      <Navbar publicNavigationActiveView="academy" />
+      <Navbar publicNavigationActiveView="resources" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

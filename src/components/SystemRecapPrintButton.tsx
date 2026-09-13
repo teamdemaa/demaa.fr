@@ -44,11 +44,11 @@ export default function SystemRecapPrintButton({
             <a
               href={downloadHref}
               download
-              aria-label="Télécharger le document au format PDF"
+              aria-label="Télécharger les processus au format PDF"
               className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-dema-forest/20 bg-white px-2.5 py-3 text-[0.625rem] font-semibold text-dema-forest transition hover:border-dema-forest/35 hover:bg-dema-sage/30 min-[360px]:text-xs sm:flex-none sm:px-4 sm:text-sm"
             >
               <Download className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" aria-hidden="true" />
-              Télécharger le document
+              Télécharger les processus
             </a>
           ) : !emailDelivery ? (
             <button

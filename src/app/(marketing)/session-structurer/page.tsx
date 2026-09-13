@@ -12,7 +12,7 @@ export const metadata = buildPublicPageMetadata({
 export default function StructureWorkSessionPage() {
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="academy" />
+      <Navbar minimal publicNavigationActiveView="resources" />
       <main className="min-h-screen bg-background px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
         <section className="mx-auto w-full max-w-2xl rounded-[2rem] border border-dema-line bg-dema-paper p-6 shadow-sm sm:p-9">
           <StructureProblemSubmissionForm />

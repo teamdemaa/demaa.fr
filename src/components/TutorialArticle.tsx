@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Check, Copy } from "lucide-react";
 import CopyableTutorialTable from "@/components/CopyableTutorialTable";
 import Navbar from "@/components/Navbar";
 import NumberedSectionHeading from "@/components/NumberedSectionHeading";
+import ResourcesNavigation from "@/components/ResourcesNavigation";
 import { getPublishedCopyableModelBySlug } from "@/lib/copyable-model-catalog";
 import type { TutorialDefinition } from "@/lib/tutorial-catalog";
 
@@ -12,8 +13,9 @@ export default function TutorialArticle({ tutorial }: { tutorial: TutorialDefini
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="academy" />
+      <Navbar minimal publicNavigationActiveView="resources" />
       <main className="flex-1 bg-background">
+        <ResourcesNavigation activeView="tutorials" />
         <article className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
           <Link
             href="/tutoriels"

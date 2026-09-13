@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CopyableModelDetails from "@/components/CopyableModelDetails";
 import Navbar from "@/components/Navbar";
+import ResourcesNavigation from "@/components/ResourcesNavigation";
 import {
   getPublishedCopyableModelBySlug,
   getPublishedCopyableModelRouteParams,
@@ -40,18 +41,21 @@ export default async function ModelPage({ params, searchParams }: ModelPageProps
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="solutions" />
-      <main className="min-h-screen bg-background px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-        <CopyableModelDetails
-          backLink={source === "tutoriels"
-            ? { href: "/tutoriels", label: "Retour aux tutoriels" }
-            : source === "outils"
-              ? { href: "/outils#modeles", label: "Retour aux outils" }
-              : source === "organisation"
-                ? { href: "/tutoriels", label: "Retour aux tutoriels" }
-                : undefined}
-          model={model}
-        />
+      <Navbar minimal publicNavigationActiveView="resources" />
+      <main className="min-h-screen bg-background">
+        <ResourcesNavigation activeView="models" />
+        <div className="px-4 pb-20 pt-8 sm:px-6 lg:px-8">
+          <CopyableModelDetails
+            backLink={source === "tutoriels"
+              ? { href: "/tutoriels", label: "Retour aux tutoriels" }
+              : source === "outils"
+                ? { href: "/modeles", label: "Retour aux modèles" }
+                : source === "organisation"
+                  ? { href: "/tutoriels", label: "Retour aux tutoriels" }
+                  : undefined}
+            model={model}
+          />
+        </div>
       </main>
     </>
   );

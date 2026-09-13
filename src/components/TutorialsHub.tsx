@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import ResourcesNavigation from "@/components/ResourcesNavigation";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import TutorialLibrary from "@/components/TutorialLibrary";
 import { getPublishedTutorials } from "@/lib/tutorial-catalog";
@@ -8,8 +9,9 @@ export default function TutorialsHub() {
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="academy" />
+      <Navbar minimal publicNavigationActiveView="resources" />
       <main className="min-h-screen bg-background">
+        <ResourcesNavigation activeView="tutorials" />
         <header className="mx-auto w-full max-w-7xl px-4 pb-10 pt-12 text-center sm:px-6 md:pb-12 md:pt-16 lg:px-8">
           <h1
             aria-label="Mieux utiliser ses outils, étape par étape"

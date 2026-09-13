@@ -1,12 +1,11 @@
-import { BookOpen, Workflow, Wrench } from "lucide-react";
+import { LibraryBig, Workflow } from "lucide-react";
 import Link from "next/link";
 
-export type PublicActionPlanView = "solutions" | "academy" | "services";
+export type PublicActionPlanView = "resources" | "services";
 
 const navigationItems = [
   { view: "services", label: "Accompagnement", href: "/accompagnement", Icon: Workflow },
-  { view: "solutions", label: "Outils", href: "/outils", Icon: Wrench },
-  { view: "academy", label: "Tutoriels", href: "/tutoriels", Icon: BookOpen },
+  { view: "resources", label: "Ressources", href: "/outils", Icon: LibraryBig },
 ] as const;
 
 const tabClassName =
@@ -19,7 +18,7 @@ export default function PublicActionPlanNavigation({
 }) {
   return (
     <div
-      className="grid w-full grid-cols-3 gap-1 rounded-full border border-dema-line/70 bg-dema-paper p-1 shadow-[0_3px_12px_rgba(23,35,29,0.035)] xl:rounded-none xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none"
+      className="grid w-full grid-cols-2 gap-1 rounded-full border border-dema-line/70 bg-dema-paper p-1 shadow-[0_3px_12px_rgba(23,35,29,0.035)] xl:rounded-none xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none"
       aria-label="Navigation principale"
     >
       {navigationItems.map(({ view, label, href, Icon }) => {
@@ -29,7 +28,7 @@ export default function PublicActionPlanNavigation({
           <Link
             key={view}
             href={href}
-            aria-current={isActive ? "page" : undefined}
+            aria-current={isActive ? "location" : undefined}
             className={`${tabClassName} ${
               isActive
                 ? "bg-dema-sage text-dema-forest xl:bg-transparent xl:font-semibold"
