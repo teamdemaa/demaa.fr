@@ -24,6 +24,13 @@ describe("marketplace À reprendre", () => {
     ]);
 
     expect(marketplace).toContain("Informations déclaratives · disponibilité à confirmer");
+    expect(marketplace).toContain("Reprenez une entreprise qui fonctionne déjà.");
+    expect(marketplace).toContain('<span className="demaa-hero-title mt-2 block text-dema-forest">');
+    expect(marketplace).toContain("Entreprises de services à reprendre.");
+    expect(marketplace.indexOf("Reprenez une entreprise qui fonctionne déjà.")).toBeLessThan(
+      marketplace.indexOf("Entreprises de services à reprendre."),
+    );
+    expect(marketplace).not.toContain("La marketplace des PME de services à reprendre.");
     expect(marketplace).toContain("Demaa vérifie d’abord que l’opportunité est toujours disponible");
     expect(marketplace).toContain("Demander une mise en relation");
     expect(marketplace.indexOf("Votre projet en quelques mots")).toBeLessThan(marketplace.indexOf("Prénom et nom"));
