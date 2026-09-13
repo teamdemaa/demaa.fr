@@ -61,6 +61,9 @@ export const SOLUTION_RAIL_DISPLAY_ORDER: readonly VisibleSolutionSection[] = [
   "aids",
 ];
 
+const SOLUTION_GRID_CLASS_NAME =
+  "mt-4 grid max-w-full grid-cols-1 items-stretch gap-4 md:grid-cols-2 lg:grid-cols-3";
+
 const RESOURCE_ICONS = {
   tool: Gauge,
   software: Wrench,
@@ -73,13 +76,17 @@ const RESOURCE_ICONS = {
 
 function buildInitialRailState(sections: readonly RenderableSolutionSectionDto[]) {
   return Object.fromEntries(
-    sections.map(({ section, placements }) => [
-      section,
-      {
-        canNext: placements.length > 1,
-        canPrevious: false,
-      },
-    ]),
+    sections.flatMap(({ section, placements }) =>
+      section === "software"
+        ? []
+        : [[
+            section,
+            {
+              canNext: placements.length > 1,
+              canPrevious: false,
+            },
+          ]],
+    ),
   ) as Partial<Record<SolutionSection, RailState>>;
 }
 
@@ -353,6 +360,8 @@ export default function SystemSolutionsTab({
   );
 
   const updateRailState = useCallback((group: RenderableSolutionSectionDto) => {
+    if (group.section === "software") return;
+
     const rail = railRefs.current[group.section];
     if (!rail) return;
 
@@ -542,7 +551,8 @@ export default function SystemSolutionsTab({
                     </Link>
                   ) : null}
                 </div>
-                {railState?.canPrevious || railState?.canNext ? (
+                {group.section !== "software" &&
+                (railState?.canPrevious || railState?.canNext) ? (
                   <div className="flex shrink-0 items-center gap-2">
                     <button
                       type="button"
@@ -566,15 +576,24 @@ export default function SystemSolutionsTab({
                 ) : null}
               </div>
 
-              <div
-                ref={(node) => {
-                  railRefs.current[group.section] = node;
-                }}
-                onScroll={() => updateRailState(group)}
-                className={SOLUTION_RAIL_CLASS_NAME}
-              >
-                {group.placements.map(renderPlacementCard)}
-              </div>
+              {group.section === "software" ? (
+                <div
+                  className={SOLUTION_GRID_CLASS_NAME}
+                  data-solution-section-layout="grid"
+                >
+                  {group.placements.map(renderPlacementCard)}
+                </div>
+              ) : (
+                <div
+                  ref={(node) => {
+                    railRefs.current[group.section] = node;
+                  }}
+                  onScroll={() => updateRailState(group)}
+                  className={SOLUTION_RAIL_CLASS_NAME}
+                >
+                  {group.placements.map(renderPlacementCard)}
+                </div>
+              )}
             </section>
             {interstitialContent && group.section === interstitialAfterSection
               ? interstitialContent
