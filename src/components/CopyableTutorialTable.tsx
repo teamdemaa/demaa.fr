@@ -54,9 +54,9 @@ export default function CopyableTutorialTable({ fields }: { fields: readonly Tut
       : "Copier le tableau";
 
   return (
-    <div className="overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper">
-      <div className="flex items-center justify-between gap-4 border-b border-dema-line px-4 py-3 sm:px-5">
-        <p className="text-sm font-medium text-brand-blue">Structure minimale à reproduire</p>
+    <div className="min-w-0 max-w-full overflow-hidden rounded-[1.2rem] border border-dema-line bg-dema-paper">
+      <div className="flex min-w-0 items-center justify-between gap-4 border-b border-dema-line px-4 py-3 sm:px-5">
+        <p className="min-w-0 text-sm font-medium text-brand-blue">Structure minimale à reproduire</p>
         <button
           type="button"
           onClick={copyTable}
@@ -67,7 +67,7 @@ export default function CopyableTutorialTable({ fields }: { fields: readonly Tut
         </button>
         <span className="sr-only" aria-live="polite">{copyState === "idle" ? "" : buttonLabel}</span>
       </div>
-      <div className="overflow-x-auto">
+      <div className="max-w-full overflow-x-auto overscroll-x-contain">
         <table className="w-full min-w-[42rem] border-collapse text-left text-sm">
           <caption className="sr-only">Champs à reproduire dans le modèle</caption>
           <thead className="bg-dema-sage/30 text-brand-blue">

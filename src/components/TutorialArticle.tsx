@@ -14,9 +14,9 @@ export default function TutorialArticle({ tutorial }: { tutorial: TutorialDefini
   return (
     <>
       <Navbar minimal publicNavigationActiveView="resources" />
-      <main className="flex-1 bg-background">
+      <main className="min-w-0 max-w-full flex-1 overflow-x-clip bg-background">
         <ResourcesNavigation activeView="tutorials" />
-        <article className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+        <article className="mx-auto w-full min-w-0 max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
           <Link
             href="/tutoriels"
             className="inline-flex items-center gap-2 text-sm text-dema-muted transition hover:text-dema-forest"
@@ -40,8 +40,8 @@ export default function TutorialArticle({ tutorial }: { tutorial: TutorialDefini
             </p>
           </header>
 
-          <div className="mx-auto mt-14 grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
-            <div className="space-y-12">
+          <div className="mx-auto mt-14 grid min-w-0 max-w-5xl gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
+            <div className="min-w-0 space-y-12">
               <section aria-labelledby="tutorial-structure-title">
                 <NumberedSectionHeading
                   id="tutorial-structure-title"
