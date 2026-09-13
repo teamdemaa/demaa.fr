@@ -267,6 +267,7 @@ function OpportunityCard({ opportunity, onSelect }: { opportunity: RepriseOpport
 export default function RepriseMarketplaceClient({ opportunities }: { opportunities: readonly RepriseOpportunity[] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<CategoryFilter>("Toutes");
+  const [areFiltersVisible, setAreFiltersVisible] = useState(false);
   const [selectedOpportunity, setSelectedOpportunity] = useState<RepriseOpportunity | null>(null);
   const [estimateOpen, setEstimateOpen] = useState(false);
 
@@ -298,24 +299,50 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
             </h1>
             <p className="mx-auto mt-7 max-w-3xl text-base leading-7 text-dema-muted sm:text-lg">Des entreprises dont la valeur repose sur leurs clients, leurs contrats, leur équipe et leur savoir-faire, plutôt que sur un emplacement commercial.</p>
             <p className="mt-6 text-sm font-medium text-dema-forest">Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place</p>
-            <div className="mx-auto mt-10 flex max-w-3xl items-center gap-3 rounded-full border border-dema-line bg-dema-paper px-5 py-2 shadow-[0_12px_35px_rgba(23,35,29,0.045)]">
-              <Search className="h-5 w-5 shrink-0 text-dema-forest" aria-hidden="true" />
-              <label className="sr-only" htmlFor="reprise-search">Rechercher une activité ou une région</label>
-              <input id="reprise-search" value={query} onChange={(event) => setQuery(event.target.value)} className="min-h-12 w-full bg-transparent text-sm outline-none placeholder:text-dema-muted/70" placeholder="Activité, région…" />
+            <div className="demaa-search-shell mx-auto mt-10 max-w-3xl p-1.5">
+              <div className="relative">
+                <Search className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-dema-forest/42" aria-hidden="true" />
+                <label className="sr-only" htmlFor="reprise-search">Rechercher une activité ou une région</label>
+                <input id="reprise-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} className="w-full rounded-full bg-dema-paper py-4 pl-12 pr-16 text-sm text-brand-blue outline-none transition placeholder:text-brand-blue/30 focus:ring-2 focus:ring-dema-forest/20 sm:text-base md:py-5 md:pl-16 md:pr-20" placeholder="Activité, région…" />
+                <button
+                  type="button"
+                  onClick={() => setAreFiltersVisible((visible) => !visible)}
+                  aria-expanded={areFiltersVisible}
+                  aria-label={areFiltersVisible ? "Masquer les catégories" : "Afficher les catégories"}
+                  className={`absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full transition md:right-2.5 md:h-10 md:w-10 ${
+                    areFiltersVisible || category !== "Toutes"
+                      ? "bg-dema-sage text-dema-forest"
+                      : "bg-dema-canvas text-dema-muted"
+                  }`}
+                >
+                  <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+                </button>
+              </div>
             </div>
+            {areFiltersVisible ? (
+              <div className="mx-auto mt-4 max-w-3xl overflow-x-auto pb-1 soft-scroll" role="group" aria-label="Filtrer les opportunités par catégorie">
+                <div className="flex min-w-max justify-center gap-2 px-1">
+                  {categories.map((item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      onClick={() => {
+                        setCategory(item);
+                        setAreFiltersVisible(false);
+                      }}
+                      aria-pressed={category === item}
+                      className={`demaa-chip shrink-0 whitespace-nowrap ${category === item ? "demaa-chip-active" : ""}`}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
         </section>
 
-        <section className="border-y border-dema-line bg-dema-paper px-5 py-8 sm:px-8">
-          <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <span className="inline-flex items-center gap-2 text-sm font-medium"><SlidersHorizontal className="h-4 w-4 text-dema-forest" aria-hidden="true" />Filtrer les opportunités</span>
-            <div className="flex flex-wrap gap-2">
-              {categories.map((item) => <button key={item} type="button" onClick={() => setCategory(item)} aria-pressed={category === item} className={`rounded-full border px-4 py-2 text-xs font-medium transition ${category === item ? "border-dema-forest bg-dema-forest text-dema-paper" : "border-dema-line bg-dema-paper text-dema-muted hover:border-dema-forest/30 hover:text-brand-blue"}`}>{item}</button>)}
-            </div>
-          </div>
-        </section>
-
-        <section className="px-5 py-14 sm:px-8 sm:py-20">
+        <section className="border-t border-dema-line px-5 py-14 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-6xl">
             <div className="flex items-end justify-between gap-6"><div><h2 className="text-3xl font-medium tracking-[-0.04em] sm:text-5xl">Entreprises à reprendre</h2><p className="mt-3 text-sm text-dema-muted">{filtered.length} opportunité{filtered.length > 1 ? "s" : ""}</p></div></div>
             {filtered.length ? <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{filtered.map((opportunity) => <OpportunityCard key={opportunity.id} opportunity={opportunity} onSelect={() => setSelectedOpportunity(opportunity)} />)}</div> : <div className="mt-10 rounded-[1.75rem] border border-dema-line bg-dema-paper p-10 text-center"><p className="text-lg font-medium">Aucune opportunité ne correspond à cette recherche.</p><button className="mt-4 text-sm font-semibold text-dema-forest underline underline-offset-4" type="button" onClick={() => { setQuery(""); setCategory("Toutes"); }}>Réinitialiser les filtres</button></div>}
