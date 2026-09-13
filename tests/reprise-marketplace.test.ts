@@ -7,9 +7,9 @@ import {
 } from "@/lib/reprise-opportunities";
 
 describe("marketplace À reprendre", () => {
-  it("publishes the 30 sanitized opportunities without private contact data", () => {
-    expect(repriseOpportunities).toHaveLength(30);
-    expect(new Set(repriseOpportunities.map(({ id }) => id)).size).toBe(30);
+  it("publishes the 38 sanitized opportunities without private contact data", () => {
+    expect(repriseOpportunities).toHaveLength(38);
+    expect(new Set(repriseOpportunities.map(({ id }) => id)).size).toBe(38);
 
     const publicPayload = JSON.stringify(repriseOpportunities);
     expect(publicPayload).not.toContain("linkedin.com");
@@ -17,7 +17,17 @@ describe("marketplace À reprendre", () => {
     expect(publicPayload).not.toMatch(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/);
     expect(publicPayload).not.toMatch(/(?:\+33|0)[1-9](?:[ .-]?\d{2}){4}/);
     expect(publicPayload).not.toMatch(/à confirmer|mandat à confirmer|piste hors marché/i);
-    expect(repriseOpportunities.filter((opportunity) => opportunity.mapPosition)).toHaveLength(24);
+    expect(repriseOpportunities.filter((opportunity) => opportunity.mapPosition)).toHaveLength(26);
+    expect(repriseOpportunities.map(({ id }) => id)).toEqual(expect.arrayContaining([
+      "fitness-premium-herault",
+      "voyages-aventure-premium",
+      "second-oeuvre-renovation-france",
+      "communication-objet-textile-b2b",
+      "services-it-telecoms-manages",
+      "machines-speciales-b2b",
+      "chaudronnerie-maintenance-industrielle",
+      "travaux-publics-grand-ouest",
+    ]));
   });
 
   it("shows the opportunities with the most published information first", () => {

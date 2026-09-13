@@ -77,6 +77,14 @@ const repriseOpportunityListings: readonly RepriseOpportunityListing[] = [
   { id: "communication-media-calvados", activity: "Agence de communication et média", category: "Services professionnels", location: "Calvados", revenue: "3 M€", highlights: ["Deux marques", "Print et digital"], mapPosition: { label: "Calvados", latitude: 49.1829, longitude: -0.3707 } },
   { id: "forage-fondations-occitanie", activity: "Forage et fondations spéciales", category: "Services terrain", location: "Occitanie", revenue: "Plus de 3 M€", employees: "3 à 5 salariés", highlights: ["Activité technique spécialisée"], mapPosition: { label: "Occitanie", latitude: 43.6047, longitude: 1.4442 } },
   { id: "piscines-spas-bretagne", activity: "Construction de piscines et spas", category: "Services terrain", location: "Bretagne", revenue: "1,5 à 3 M€", employees: "6 à 9 salariés", highlights: ["50 ans d’activité", "Piscines, SAV et spas"], mapPosition: { label: "Bretagne", latitude: 48.1173, longitude: -1.6778 } },
+  { id: "fitness-premium-herault", activity: "Club de fitness premium", category: "Services terrain", location: "Hérault", revenue: "Plus de 210 k€", ebe: "Marge EBE supérieure à 23 %", highlights: ["410 abonnés récurrents", "Positionnement premium"], mapPosition: { label: "Hérault", latitude: 43.6108, longitude: 3.8767 } },
+  { id: "voyages-aventure-premium", activity: "Voyages d’aventure premium", category: "Services professionnels", location: "France · localisation non communiquée", revenue: "2 à 3 M€", ebe: "Marge EBE annoncée de 10 à 20 %", highlights: ["Voyages d’aventure", "Positionnement premium"] },
+  { id: "second-oeuvre-renovation-france", activity: "Second œuvre et rénovation", category: "Services terrain", location: "France · localisation non communiquée", revenue: "2 M€", ebe: "Marge EBE annoncée de 8 %", employees: "16 salariés", highlights: ["Second œuvre", "Activité de rénovation"] },
+  { id: "communication-objet-textile-b2b", activity: "Communication par l’objet et textile B2B", category: "Services professionnels", location: "France · localisation non communiquée", revenue: "2 à 3 M€", ebe: "Marge EBE annoncée de 5 à 10 %", highlights: ["Clientèle B2B", "Communication par l’objet et textile"] },
+  { id: "services-it-telecoms-manages", activity: "Services IT et télécoms managés", category: "Services professionnels", location: "France · localisation non communiquée", revenue: "500 k€", ebe: "130 k€ projeté", highlights: ["80 % de revenus récurrents", "Services managés"] },
+  { id: "machines-speciales-b2b", activity: "Conception de machines spéciales B2B", category: "Services terrain", location: "France · localisation non communiquée", revenue: "5 M€", ebe: "Marge EBE annoncée de 2 %", highlights: ["Machines spéciales", "Clientèle B2B"] },
+  { id: "chaudronnerie-maintenance-industrielle", activity: "Chaudronnerie et maintenance industrielle", category: "Services terrain", location: "France · localisation non communiquée", revenue: "1,7 M€", ebe: "Marge EBE annoncée de 12 %", highlights: ["Maintenance industrielle", "Savoir-faire technique"] },
+  { id: "travaux-publics-grand-ouest", activity: "Travaux publics", category: "Services terrain", location: "Grand Ouest", revenue: "Environ 4 M€", employees: "15 à 20 salariés", highlights: ["Activité de travaux publics", "Équipe structurée"], mapPosition: { label: "Grand Ouest", latitude: 47.2184, longitude: -1.5536 } },
 ] as const;
 
 type RepriseOpportunitySearchData = Pick<
@@ -88,7 +96,8 @@ const currentPublicationDate = "2026-09-12";
 const searchData = (
   region: RepriseOpportunityRegion,
   values: Omit<RepriseOpportunitySearchData, "publishedAt" | "region"> = {},
-): RepriseOpportunitySearchData => ({ publishedAt: currentPublicationDate, region, ...values });
+  publishedAt = currentPublicationDate,
+): RepriseOpportunitySearchData => ({ publishedAt, region, ...values });
 
 const repriseOpportunitySearchData: Record<string, RepriseOpportunitySearchData> = {
   "sols-murs-alpes-maritimes": searchData("Provence-Alpes-Côte d’Azur", { revenueMin: 1_600_000, revenueMax: 1_600_000, askingPriceMin: 190_000, askingPriceMax: 190_000 }),
@@ -121,6 +130,14 @@ const repriseOpportunitySearchData: Record<string, RepriseOpportunitySearchData>
   "communication-media-calvados": searchData("Normandie", { revenueMin: 3_000_000, revenueMax: 3_000_000 }),
   "forage-fondations-occitanie": searchData("Occitanie", { revenueMin: 3_000_000 }),
   "piscines-spas-bretagne": searchData("Bretagne", { revenueMin: 1_500_000, revenueMax: 3_000_000 }),
+  "fitness-premium-herault": searchData("Occitanie", { revenueMin: 210_000 }, "2026-09-13"),
+  "voyages-aventure-premium": searchData("France entière", { revenueMin: 2_000_000, revenueMax: 3_000_000 }, "2026-09-13"),
+  "second-oeuvre-renovation-france": searchData("France entière", { revenueMin: 2_000_000, revenueMax: 2_000_000 }, "2026-09-13"),
+  "communication-objet-textile-b2b": searchData("France entière", { revenueMin: 2_000_000, revenueMax: 3_000_000 }, "2026-09-13"),
+  "services-it-telecoms-manages": searchData("France entière", { revenueMin: 500_000, revenueMax: 500_000 }, "2026-09-13"),
+  "machines-speciales-b2b": searchData("France entière", { revenueMin: 5_000_000, revenueMax: 5_000_000 }, "2026-09-13"),
+  "chaudronnerie-maintenance-industrielle": searchData("France entière", { revenueMin: 1_700_000, revenueMax: 1_700_000 }, "2026-09-13"),
+  "travaux-publics-grand-ouest": searchData("Grand Ouest", { revenueMin: 4_000_000, revenueMax: 4_000_000 }, "2026-09-13"),
 };
 
 export const repriseOpportunities: readonly RepriseOpportunity[] = repriseOpportunityListings.map((opportunity) => ({
