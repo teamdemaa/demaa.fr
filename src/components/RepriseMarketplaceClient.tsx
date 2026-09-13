@@ -163,12 +163,12 @@ function OpportunityCard({ opportunity, onSelect }: { opportunity: RepriseOpport
   return (
     <button type="button" onClick={onSelect} className="group flex h-full min-h-[23rem] w-full flex-col rounded-[1.75rem] border border-dema-line bg-dema-paper p-6 text-left transition hover:-translate-y-0.5 hover:border-dema-forest/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 sm:p-7">
       <span className="flex items-start justify-between gap-4"><span className="flex h-12 w-12 items-center justify-center rounded-full bg-dema-sage text-dema-forest"><Building2 className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" /></span><ChevronRight className="mt-3 h-5 w-5 text-dema-muted transition group-hover:translate-x-1 group-hover:text-dema-forest" aria-hidden="true" /></span>
-      <span className="mt-6 text-[11px] font-semibold uppercase tracking-[0.14em] text-dema-forest">{opportunity.category}</span>
-      <h2 className="mt-3 text-2xl font-medium leading-tight tracking-[-0.035em]">{opportunity.activity}</h2>
+      <span className="mt-6 text-[11px] font-medium uppercase tracking-[0.14em] text-dema-forest">{opportunity.category}</span>
+      <h2 className="mt-3 text-2xl font-normal leading-tight tracking-[-0.035em]">{opportunity.activity}</h2>
       <span className="mt-4 inline-flex items-center gap-2 text-sm text-dema-muted"><MapPin className="h-4 w-4" aria-hidden="true" />{opportunity.location}</span>
       <dl className="mt-7 grid grid-cols-2 gap-4 border-t border-dema-line pt-5">
-        {opportunity.revenue ? <div><dt className="text-xs text-dema-muted">CA publié</dt><dd className="mt-1 text-sm font-semibold">{opportunity.revenue}</dd></div> : null}
-        {opportunity.employees ? <div><dt className="text-xs text-dema-muted">Équipe</dt><dd className="mt-1 line-clamp-2 text-sm font-semibold">{opportunity.employees}</dd></div> : null}
+        {opportunity.revenue ? <div><dt className="text-xs text-dema-muted">CA publié</dt><dd className="mt-1 text-sm font-medium">{opportunity.revenue}</dd></div> : null}
+        {opportunity.employees ? <div><dt className="text-xs text-dema-muted">Équipe</dt><dd className="mt-1 line-clamp-2 text-sm font-medium">{opportunity.employees}</dd></div> : null}
       </dl>
       <span className="mt-auto pt-7 text-xs text-dema-muted">Informations déclaratives · disponibilité à confirmer</span>
     </button>
