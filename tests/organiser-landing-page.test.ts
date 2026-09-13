@@ -20,6 +20,10 @@ describe("Outils and Tutoriels public journey", () => {
     expect(page).toContain('path: "/tutoriels"');
     expect(hub).toContain("Mieux utiliser ses outils");
     expect(hub).toContain("étape par étape");
+    expect(hub).toContain("gagner du temps et faire avancer votre entreprise");
+    expect(hub).not.toContain("Tutoriels pratiques");
+    expect(hub).not.toContain("modèles Demaa");
+    expect(page).not.toContain("modèles Demaa");
     expect(library).toContain("Rechercher un tutoriel");
     expect(library).toContain("SlidersHorizontal");
     expect(library).toContain('aria-label="Filtrer les tutoriels par thème"');

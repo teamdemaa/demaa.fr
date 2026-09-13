@@ -69,7 +69,7 @@ describe("system Solutions UI", () => {
     expect(markup).not.toMatch(/bientôt|placeholder/i);
   });
 
-  it("places the tool comparison action before the software rail arrows", () => {
+  it("places the Compare action below the software title and before the rail arrows", () => {
     const markup = renderToStaticMarkup(
       createElement(SystemSolutionsTab, {
         sections: publishedSolutionSectionsFixture,
@@ -77,10 +77,32 @@ describe("system Solutions UI", () => {
       }),
     );
 
-    expect(markup).toContain("Choisir ses outils");
-    expect(markup.indexOf("Choisir ses outils")).toBeLessThan(
+    expect(markup).toContain("Comparer");
+    expect(markup).not.toContain("Choisir ses outils");
+    expect(markup.indexOf("Outils")).toBeLessThan(markup.indexOf("Comparer"));
+    expect(markup.indexOf("Comparer")).toBeLessThan(
       markup.indexOf("Voir les solutions précédentes - Outils"),
     );
+  });
+
+  it("opens directly on the published comparison table without tool cards", async () => {
+    const [shellSource, routeSource, pageSource] = await Promise.all([
+      readSource("src/components/ToolComparisonContextShell.tsx"),
+      readSource("src/components/ToolComparisonRoute.tsx"),
+      readSource("src/app/(marketing)/solutions/[slug]/page.tsx"),
+    ]);
+
+    expect(shellSource).toContain("Comparer les fonctions essentielles");
+    expect(shellSource).toContain("<table");
+    expect(shellSource).not.toContain("ToolDecisionCard");
+    expect(shellSource).not.toContain("Logiciels à comparer");
+    expect(shellSource).not.toContain("Outils complémentaires");
+    expect(shellSource).not.toContain("Voir le détail");
+    expect(routeSource).toContain("if (!comparableView) notFound()");
+    expect(routeSource).toContain("comparison={comparableView}");
+    expect(pageSource).toContain("comparisonHref=");
+    expect(pageSource).toContain("isPublishedToolComparisonSystem");
+    expect(pageSource).not.toContain("getFirebaseToolComparisonViewForRevision");
   });
 
   it("inserts Resources after Tools and hides only the Services rail in the Plan", async () => {

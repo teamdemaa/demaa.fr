@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { enterpriseCatalogBySlug } from "@/lib/enterprise-annuaire";
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 import {
+  isPublishedToolComparisonSystem,
   isReviewedGenericToolComparisonSystem,
   REVIEWED_GENERIC_TOOL_COMPARISON_SYSTEM_SLUGS,
   TOOL_CAPABILITY_COMPARISON_REVIEWS,
@@ -422,5 +423,8 @@ describe("tool process comparison", () => {
       "restaurant",
       "gestionnaire-paie-independant",
     ]);
+    expect(isPublishedToolComparisonSystem("cabinet-comptable")).toBe(true);
+    expect(isPublishedToolComparisonSystem("batiment")).toBe(true);
+    expect(isPublishedToolComparisonSystem("cabinet-davocat")).toBe(false);
   });
 });

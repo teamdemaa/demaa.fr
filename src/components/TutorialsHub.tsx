@@ -11,9 +11,6 @@ export default function TutorialsHub() {
       <Navbar minimal publicNavigationActiveView="academy" />
       <main className="min-h-screen bg-background">
         <header className="mx-auto w-full max-w-7xl px-4 pb-10 pt-12 text-center sm:px-6 md:pb-12 md:pt-16 lg:px-8">
-          <p className="mb-5 text-xs font-medium uppercase tracking-[0.16em] text-dema-forest/60">
-            Tutoriels pratiques
-          </p>
           <h1
             aria-label="Mieux utiliser ses outils, étape par étape"
             className="text-balance font-light leading-[0.94] tracking-tight"
@@ -25,7 +22,7 @@ export default function TutorialsHub() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-balance text-base leading-7 text-dema-muted md:text-lg">
-            Des pas-à-pas concrets, construits autour des modèles Demaa que vous pouvez copier et adapter.
+            Des tutoriels concrets pour choisir, configurer et mieux utiliser vos outils, gagner du temps et faire avancer votre entreprise.
           </p>
         </header>
 

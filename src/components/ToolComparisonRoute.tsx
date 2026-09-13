@@ -8,6 +8,10 @@ import { getFirebaseToolComparisonViewForRevision } from "@/lib/firebase-tool-co
 import { filterPublicSystemRecommendationSections } from "@/lib/public-solution-section-visibility";
 import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
 import { getSystemDetailPageData } from "@/lib/system-detail-page";
+import {
+  buildSystemToolDecision,
+  selectComparableToolColumns,
+} from "@/lib/system-tool-decision";
 
 export default async function ToolComparisonRoute({
   slug,
@@ -31,23 +35,28 @@ export default async function ToolComparisonRoute({
       mergeRenderableSolutionSections(sections),
     ),
   );
+  const software = visibleSections.find(({ section }) => section === "software");
+
+  if (!software || software.placements.length < 2) notFound();
+
   const comparison = await getFirebaseToolComparisonViewForRevision({
     revision,
     systemSlug: slug,
     sections: visibleSections,
   });
-  const software = visibleSections.find(({ section }) => section === "software");
+  const comparableView = selectComparableToolColumns(
+    comparison,
+    buildSystemToolDecision(slug, software.placements).comparable,
+  );
 
-  if (!software || software.placements.length < 2) notFound();
+  if (!comparableView) notFound();
 
   return (
     <ToolComparisonContextShell
-      comparison={comparison}
+      comparison={comparableView}
       closeHref={`/solutions/${slug}`}
       closeWithBack={closeWithBack}
-      softwarePlacements={software.placements}
       systemName={data.system.name}
-      systemSlug={slug}
     />
   );
 }

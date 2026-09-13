@@ -466,3 +466,8 @@ export function isReviewedGenericToolComparisonSystem(
     (reviewedSlug) => reviewedSlug === systemSlug,
   );
 }
+
+export function isPublishedToolComparisonSystem(systemSlug: string): boolean {
+  return systemSlug === "cabinet-comptable" ||
+    isReviewedGenericToolComparisonSystem(systemSlug);
+}

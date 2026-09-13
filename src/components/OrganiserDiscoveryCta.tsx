@@ -16,7 +16,7 @@ export default function OrganiserDiscoveryCta() {
             Des tutoriels pour passer à l’action
           </h2>
           <p className="mt-3 text-sm leading-6 text-dema-muted sm:text-base sm:leading-7">
-            Suivez des pas-à-pas construits autour des modèles Demaa que vous pouvez copier et adapter.
+            Apprenez à choisir, configurer et mieux utiliser les outils utiles à votre entreprise.
           </p>
         </div>
         <Link

@@ -6,9 +6,9 @@ import {
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 import { getPublishedTutorials } from "@/lib/tutorial-catalog";
 
-const title = "Tutoriels Airtable pour organiser son entreprise | Demaa";
+const title = "Tutoriels pour mieux utiliser ses outils | Demaa";
 const description =
-  "Des tutoriels pratiques, étape par étape, pour utiliser Airtable avec des modèles Demaa prêts à copier.";
+  "Des tutoriels concrets pour choisir, configurer et mieux utiliser les outils de votre entreprise.";
 
 export const metadata = buildPublicPageMetadata({
   title,

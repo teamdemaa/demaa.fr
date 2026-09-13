@@ -17,6 +17,7 @@ import {
   buildSystemPageMetadata,
   getSystemDetailPageData,
 } from "@/lib/system-detail-page";
+import { isPublishedToolComparisonSystem } from "@/lib/tool-capability-comparison-data";
 
 type SolutionPageProps = {
   params: Promise<{ slug: string }>;
@@ -84,9 +85,6 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
   const visiblePublishedSolutionSections =
     filterPublicSystemRecommendationSections(publishedSolutionSections);
   const jsonLd = buildSystemPageJsonLd(data, visiblePublishedSolutionSections);
-  const softwarePlacementCount =
-    visibleSolutionSections.find(({ section }) => section === "software")
-      ?.placements.length ?? 0;
 
   if (!hasEditableOperationalSystemAsset(data.system.slug)) notFound();
   if (normalizeSystemDetailTab(getParamValue(resolvedSearchParams.tab)) === "process") {
@@ -102,6 +100,12 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
   if (legacyResource === "crm-suivi-commercial") {
     redirect("/modeles");
   }
+
+  const softwarePlacementCount =
+    visibleSolutionSections.find(({ section }) => section === "software")
+      ?.placements.length ?? 0;
+  const comparisonAvailable = softwarePlacementCount >= 2 &&
+    isPublishedToolComparisonSystem(data.system.slug);
 
   return (
     <>
@@ -122,7 +126,7 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
             headingAs="h1"
             solutionSections={visibleSolutionSections}
             comparisonHref={
-              softwarePlacementCount >= 2
+              comparisonAvailable
                 ? `/solutions/${data.system.slug}/comparatif-outils`
                 : undefined
             }
