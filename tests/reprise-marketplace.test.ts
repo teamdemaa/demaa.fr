@@ -57,6 +57,7 @@ describe("marketplace À reprendre", () => {
     expect(marketplace.indexOf('name="phone"')).toBeLessThan(marketplace.indexOf('name="company"'));
     expect(marketplace).not.toContain("(facultatif)");
     expect(marketplace).toContain("Obtenez une première estimation de votre entreprise");
+    expect(marketplace).toContain('leading-[1.02] tracking-[-0.045em]');
     expect(marketplace).toContain('className="border-t border-dema-line px-5 pb-14 pt-6 sm:px-8 sm:pb-20 sm:pt-10"');
     expect(marketplace).toContain('value={opportunity.revenue ?? "Non disponible"}');
     expect(marketplace).toContain('value={opportunity.askingPrice ?? "Non disponible"}');
