@@ -106,12 +106,14 @@ describe("system UX contract", () => {
     expect(printButtonSource).toContain("Imprimer le document");
     expect(printButtonSource).toContain("Télécharger le document");
     expect(printButtonSource).toContain("downloadHref");
+    expect(printButtonSource).toContain(") : !emailDelivery ? (");
     expect(printButtonSource).toContain("Recevoir le document");
     expect(processesPageSource).toContain("<SystemProcessesContent");
     expect(processesContentSource).toContain("data-system-processes");
     expect(processesContentSource).toContain("Vue d’ensemble");
     expect(processesContentSource).toContain("Processus complets");
-    expect(processesContentSource).toContain("/api/system-processes/pdf/");
+    expect(processesContentSource).not.toContain("downloadHref=");
+    expect(processesContentSource).toContain("emailDelivery={{ systemName, systemSlug }}");
     expect(processesContentSource).toContain("border-dema-forest/45");
     expect(processesContentSource).not.toContain('<span aria-hidden="true">•</span>');
     expect(processesContentSource).not.toContain("Solutions");

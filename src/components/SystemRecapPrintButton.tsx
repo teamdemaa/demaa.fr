@@ -50,7 +50,7 @@ export default function SystemRecapPrintButton({
               <Download className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" aria-hidden="true" />
               Télécharger le document
             </a>
-          ) : (
+          ) : !emailDelivery ? (
             <button
               type="button"
               onClick={handlePrint}
@@ -60,7 +60,7 @@ export default function SystemRecapPrintButton({
               <Printer className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" aria-hidden="true" />
               Imprimer le document
             </button>
-          )}
+          ) : null}
           {emailDelivery ? (
             <button
               type="button"
