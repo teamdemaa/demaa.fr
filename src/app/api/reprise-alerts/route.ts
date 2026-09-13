@@ -46,12 +46,14 @@ export async function POST(request: Request) {
     }
 
     const alert = await createRepriseAlert({ criteria, email, idempotencyKey });
-    const matchIds = getRepriseAlertMatches(repriseOpportunities, criteria).map((opportunity) => opportunity.id);
+    const currentMatches = getRepriseAlertMatches(repriseOpportunities, criteria);
+    const matchIds = currentMatches.map((opportunity) => opportunity.id);
     const notificationResults = await deliverRepriseAlertCreationNotifications({
       accessToken: alert.accessToken,
       alertId: alert.id,
       baseUrl: getCanonicalBaseUrl(request),
       criteria,
+      currentMatches,
       email,
     });
 

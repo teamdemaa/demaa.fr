@@ -25,7 +25,7 @@ describe("Demaa Partners page", () => {
 
   it("speaks to service company leaders about an operating partnership and keeps public terms out", async () => {
     const [landing, form] = await Promise.all([
-      readSource("src/components/DemaaStudioLandingPage.tsx"),
+      readSource("src/components/DemaaPartnersLandingPage.tsx"),
       readSource("src/components/StudioInterestForm.tsx"),
     ]);
 

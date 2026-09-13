@@ -1,4 +1,4 @@
-import DemaaPartnersLandingPage from "@/components/DemaaStudioLandingPage";
+import DemaaPartnersLandingPage from "@/components/DemaaPartnersLandingPage";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 const title = "Demaa Partners | Faire grandir la valeur de votre entreprise";

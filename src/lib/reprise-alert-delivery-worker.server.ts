@@ -23,6 +23,7 @@ type AlertNotificationInput = {
   alertId: string;
   baseUrl: string;
   criteria: RepriseAlertRecord["criteria"];
+  currentMatches?: readonly (typeof repriseOpportunities)[number][];
   email: string;
 };
 
@@ -35,6 +36,7 @@ export async function deliverRepriseAlertCreationNotifications(input: AlertNotif
         alertId: input.alertId,
         baseUrl: input.baseUrl,
         criteria: input.criteria,
+        currentMatches: input.currentMatches,
         email: input.email,
       }),
     },
@@ -86,6 +88,7 @@ export async function deliverNewRepriseAlertMatches(limit = 500) {
       alertId: alert.id,
       baseUrl,
       criteria: alert.criteria,
+      currentMatches: getRepriseAlertMatches(repriseOpportunities, alert.criteria),
       email: alert.email,
     }));
     const createdAt = Date.parse(alert.createdAt);

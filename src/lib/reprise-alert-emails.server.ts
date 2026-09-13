@@ -12,8 +12,11 @@ function escapeHtml(value: string) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+
 function formatAmount(value: number | null) {
-  return value === null ? "Non renseigné" : new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(value);
+  return value === null
+    ? "Non renseigné"
+    : new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(value);
 }
 
 function criteriaLines(criteria: RepriseAlertCriteria) {
@@ -27,8 +30,48 @@ function criteriaLines(criteria: RepriseAlertCriteria) {
   ];
 }
 
-function linkButton(href: string, label: string) {
-  return `<a href="${escapeHtml(href)}" style="display:inline-block;border-radius:999px;background:#315f46;color:#fff;padding:12px 20px;text-decoration:none;font-family:Arial,sans-serif;font-weight:600">${escapeHtml(label)}</a>`;
+function emailShell(title: string, content: string) {
+  return `<div style="margin:0;background:#f5f4f0;padding:28px 12px;font-family:Arial,sans-serif;color:#17231d"><div style="max-width:620px;margin:0 auto;overflow:hidden;border:1px solid #e1e3df;border-radius:22px;background:#ffffff"><div style="padding:30px 24px 16px"><p style="margin:0;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#315f46">Demaa · Alerte de reprise</p><h1 style="margin:14px 0 0;font-size:29px;line-height:1.18;font-weight:500;letter-spacing:-.03em;color:#17231d">${escapeHtml(title)}</h1></div><div style="padding:0 24px 30px">${content}</div></div><p style="max-width:620px;margin:16px auto 0;text-align:center;font-size:11px;line-height:1.6;color:#7c857f">Demaa · Entreprises de services à reprendre</p></div>`;
+}
+
+function linkButton(href: string, label: string, secondary = false) {
+  const background = secondary ? "#ffffff" : "#315f46";
+  const color = secondary ? "#315f46" : "#ffffff";
+  const border = secondary ? "1px solid #b9c8bf" : "1px solid #315f46";
+  return `<table role="presentation" cellspacing="0" cellpadding="0" border="0"><tr><td style="border-radius:999px;border:${border};background:${background}"><a href="${escapeHtml(href)}" style="display:inline-block;padding:12px 20px;font-size:14px;line-height:20px;font-weight:700;text-decoration:none;color:${color}">${escapeHtml(label)}</a></td></tr></table>`;
+}
+
+function fallbackLink(href: string) {
+  return `<p style="margin:14px 0 0;font-size:11px;line-height:1.6;color:#7c857f">Si le bouton ne fonctionne pas, ouvrez ce lien :<br><a href="${escapeHtml(href)}" style="color:#315f46;word-break:break-all">${escapeHtml(href)}</a></p>`;
+}
+
+function criteriaHtml(criteria: RepriseAlertCriteria) {
+  return `<div style="margin-top:24px;border:1px solid #e1e3df;border-radius:16px;background:#fafaf8;padding:18px"><p style="margin:0 0 10px;font-size:13px;font-weight:700;color:#17231d">Vos critères</p>${criteriaLines(criteria).map((line) => `<p style="margin:5px 0;font-size:13px;line-height:1.5;color:#66736b">${escapeHtml(line)}</p>`).join("")}</div>`;
+}
+
+function getOpportunityUrl(baseUrl: string, opportunity: RepriseOpportunity) {
+  return `${baseUrl}/a-reprendre?opportunite=${encodeURIComponent(opportunity.id)}`;
+}
+
+function opportunityListHtml(baseUrl: string, opportunity: RepriseOpportunity) {
+  const opportunityUrl = getOpportunityUrl(baseUrl, opportunity);
+  return `<div style="margin-top:12px;border:1px solid #e1e3df;border-radius:16px;padding:16px"><p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#315f46">${escapeHtml(opportunity.category)}</p><p style="margin:8px 0 0;font-size:17px;line-height:1.35;font-weight:600;color:#17231d">${escapeHtml(opportunity.activity)}</p><p style="margin:7px 0 0;font-size:13px;line-height:1.5;color:#66736b">${escapeHtml(opportunity.location)}</p><p style="margin:12px 0 0"><a href="${escapeHtml(opportunityUrl)}" style="font-size:13px;font-weight:700;color:#315f46;text-decoration:underline">Voir la fiche de l’entreprise</a></p></div>`;
+}
+
+function opportunityCardHtml(baseUrl: string, opportunity: RepriseOpportunity) {
+  const opportunityUrl = getOpportunityUrl(baseUrl, opportunity);
+  const metrics = [
+    ["Chiffre d’affaires", opportunity.revenue],
+    ["EBE ou rentabilité", opportunity.ebe],
+    ["Équipe", opportunity.employees],
+    ["Prix demandé", opportunity.askingPrice],
+  ].filter((entry): entry is [string, string] => Boolean(entry[1]));
+
+  return `<div style="margin-top:24px;border:1px solid #e1e3df;border-radius:18px;background:#fafaf8;padding:20px"><p style="margin:0;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#315f46">${escapeHtml(opportunity.category)}</p><h2 style="margin:9px 0 0;font-size:22px;line-height:1.3;font-weight:600;letter-spacing:-.02em;color:#17231d">${escapeHtml(opportunity.activity)}</h2><p style="margin:8px 0 0;font-size:14px;line-height:1.5;color:#66736b">${escapeHtml(opportunity.location)}</p>${metrics.length > 0 ? `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top:16px;border-top:1px solid #e1e3df">${metrics.map(([label, value]) => `<tr><td style="padding:10px 8px 10px 0;border-bottom:1px solid #e1e3df;font-size:12px;color:#7c857f">${escapeHtml(label)}</td><td style="padding:10px 0 10px 8px;border-bottom:1px solid #e1e3df;text-align:right;font-size:13px;font-weight:600;color:#17231d">${escapeHtml(value)}</td></tr>`).join("")}</table>` : ""}<div style="margin-top:20px">${linkButton(opportunityUrl, "Voir la fiche de l’entreprise")}</div>${fallbackLink(opportunityUrl)}</div>`;
+}
+
+function managementLinks(manageUrl: string, unsubscribeUrl: string) {
+  return `<div style="margin-top:26px;border-top:1px solid #e1e3df;padding-top:20px"><p style="margin:0;font-size:12px;line-height:1.7;color:#7c857f"><a href="${escapeHtml(manageUrl)}" style="font-weight:600;color:#56645c">Modifier mon alerte</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="${escapeHtml(unsubscribeUrl)}" style="color:#56645c">Supprimer mon alerte</a></p></div>`;
 }
 
 export async function sendRepriseAlertConfirmation(input: {
@@ -36,16 +79,44 @@ export async function sendRepriseAlertConfirmation(input: {
   alertId: string;
   baseUrl: string;
   criteria: RepriseAlertCriteria;
+  currentMatches?: readonly RepriseOpportunity[];
   email: string;
 }) {
   const manageUrl = `${input.baseUrl}/alertes-reprise/${input.alertId}?token=${encodeURIComponent(input.accessToken)}`;
   const unsubscribeUrl = `${manageUrl}&action=unsubscribe`;
+  const marketplaceUrl = `${input.baseUrl}/a-reprendre`;
   const lines = criteriaLines(input.criteria);
+  const currentMatches = input.currentMatches ?? [];
+  const displayedMatches = currentMatches.slice(0, 3);
+  const matchText = displayedMatches.flatMap((opportunity) => [
+    `- ${opportunity.activity} · ${opportunity.location}`,
+    `  Voir la fiche : ${getOpportunityUrl(input.baseUrl, opportunity)}`,
+  ]);
+  const matchHtml = displayedMatches.length > 0
+    ? `<div style="margin-top:26px"><h2 style="margin:0;font-size:19px;font-weight:600;color:#17231d">${currentMatches.length} entreprise${currentMatches.length > 1 ? "s" : ""} correspond${currentMatches.length > 1 ? "ent" : ""} déjà à votre recherche</h2>${displayedMatches.map((opportunity) => opportunityListHtml(input.baseUrl, opportunity)).join("")}${currentMatches.length > displayedMatches.length ? `<p style="margin:14px 0 0;font-size:13px;color:#66736b">Et ${currentMatches.length - displayedMatches.length} autre${currentMatches.length - displayedMatches.length > 1 ? "s" : ""} correspondance${currentMatches.length - displayedMatches.length > 1 ? "s" : ""} sur Demaa.</p>` : ""}</div>`
+    : `<p style="margin:24px 0 0;font-size:14px;line-height:1.7;color:#66736b">Aucune entreprise publiée ne correspond encore exactement à vos critères. Nous vous écrirons dès qu’une nouvelle opportunité conviendra.</p>`;
+
   await sendTransactionalEmail({
-    html: `<div style="max-width:620px;margin:0 auto;padding:32px 20px;font-family:Arial,sans-serif;color:#17231d"><p style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#315f46">Alerte de reprise</p><h1 style="font-size:28px;font-weight:500">Votre alerte est créée.</h1><p style="color:#66736b;line-height:1.6">Nous vous écrirons lorsqu’une nouvelle entreprise correspondra à votre recherche.</p><ul style="padding-left:20px;line-height:1.8">${lines.map((line) => `<li>${escapeHtml(line)}</li>`).join("")}</ul><p style="margin-top:28px">${linkButton(manageUrl, "Modifier mon alerte")}</p><p style="margin-top:24px;font-size:12px;color:#7c857f"><a href="${escapeHtml(unsubscribeUrl)}" style="color:#56645c">Supprimer mon alerte</a></p></div>`,
+    html: emailShell(
+      "Votre alerte est créée.",
+      `<p style="margin:0;font-size:15px;line-height:1.7;color:#66736b">Votre recherche est enregistrée. Chaque email contiendra un accès direct à la fiche de l’entreprise concernée.</p>${criteriaHtml(input.criteria)}${matchHtml}<div style="margin-top:24px">${linkButton(marketplaceUrl, "Voir les entreprises à reprendre")}</div>${fallbackLink(marketplaceUrl)}<div style="margin-top:14px">${linkButton(manageUrl, "Gérer mon alerte", true)}</div>${managementLinks(manageUrl, unsubscribeUrl)}`,
+    ),
     idempotencyKey: `reprise-alert-confirmation-${input.alertId}`,
-    subject: "Votre alerte de reprise est créée",
-    text: ["Votre alerte de reprise est créée.", "", "Nous vous écrirons lorsqu’une nouvelle entreprise correspondra à votre recherche.", "", ...lines, "", `Modifier mon alerte : ${manageUrl}`, `Supprimer mon alerte : ${unsubscribeUrl}`].join("\n"),
+    subject: currentMatches.length > 0
+      ? `Votre alerte est créée · ${currentMatches.length} correspondance${currentMatches.length > 1 ? "s" : ""}`
+      : "Votre alerte de reprise est créée",
+    text: [
+      "Votre alerte de reprise est créée.",
+      "",
+      "Votre recherche est enregistrée. Chaque email contiendra un accès direct à la fiche de l’entreprise concernée.",
+      "",
+      ...lines,
+      ...(matchText.length > 0 ? ["", "Entreprises correspondant déjà à votre recherche :", ...matchText] : ["", "Aucune entreprise publiée ne correspond encore exactement à vos critères."]),
+      "",
+      `Voir les entreprises à reprendre : ${marketplaceUrl}`,
+      `Modifier mon alerte : ${manageUrl}`,
+      `Supprimer mon alerte : ${unsubscribeUrl}`,
+    ].join("\n"),
     to: input.email,
   });
 }
@@ -74,15 +145,34 @@ export async function sendRepriseOpportunityMatch(input: {
   email: string;
   opportunity: RepriseOpportunity;
 }) {
-  const opportunityUrl = `${input.baseUrl}/a-reprendre?opportunite=${encodeURIComponent(input.opportunity.id)}`;
+  const opportunityUrl = getOpportunityUrl(input.baseUrl, input.opportunity);
   const manageUrl = `${input.baseUrl}/alertes-reprise/${input.alertId}?token=${encodeURIComponent(input.accessToken)}`;
   const unsubscribeUrl = `${manageUrl}&action=unsubscribe`;
-  const details = [input.opportunity.location, input.opportunity.revenue, input.opportunity.ebe].filter(Boolean).join(" · ");
+  const details = [
+    input.opportunity.location,
+    input.opportunity.revenue ? `Chiffre d’affaires : ${input.opportunity.revenue}` : null,
+    input.opportunity.ebe ? `EBE ou rentabilité : ${input.opportunity.ebe}` : null,
+    input.opportunity.employees ? `Équipe : ${input.opportunity.employees}` : null,
+    input.opportunity.askingPrice ? `Prix demandé : ${input.opportunity.askingPrice}` : null,
+  ].filter((detail): detail is string => Boolean(detail));
+
   await sendTransactionalEmail({
-    html: `<div style="max-width:620px;margin:0 auto;padding:32px 20px;font-family:Arial,sans-serif;color:#17231d"><p style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#315f46">Alerte de reprise</p><h1 style="font-size:28px;font-weight:500">Une nouvelle entreprise correspond à votre recherche.</h1><h2 style="margin-top:28px;font-size:21px;font-weight:500">${escapeHtml(input.opportunity.activity)}</h2><p style="color:#66736b;line-height:1.6">${escapeHtml(details)}</p><p style="margin-top:28px">${linkButton(opportunityUrl, "Voir l’opportunité")}</p><p style="margin-top:28px;font-size:12px;color:#7c857f"><a href="${escapeHtml(manageUrl)}" style="color:#56645c">Modifier mon alerte</a> · <a href="${escapeHtml(unsubscribeUrl)}" style="color:#56645c">Supprimer mon alerte</a></p></div>`,
+    html: emailShell(
+      "Une nouvelle entreprise correspond à votre recherche.",
+      `<p style="margin:0;font-size:15px;line-height:1.7;color:#66736b">Cette opportunité vient d’être publiée et correspond aux critères de votre alerte.</p>${opportunityCardHtml(input.baseUrl, input.opportunity)}${managementLinks(manageUrl, unsubscribeUrl)}`,
+    ),
     idempotencyKey: `reprise-alert-match-${input.alertId}-${input.opportunity.id}`,
-    subject: `Nouvelle opportunité : ${input.opportunity.activity}`,
-    text: ["Une nouvelle entreprise correspond à votre recherche.", "", input.opportunity.activity, details, "", `Voir l’opportunité : ${opportunityUrl}`, `Modifier mon alerte : ${manageUrl}`, `Supprimer mon alerte : ${unsubscribeUrl}`].join("\n"),
+    subject: `Nouvelle entreprise à reprendre · ${input.opportunity.activity}`,
+    text: [
+      "Une nouvelle entreprise correspond à votre recherche.",
+      "",
+      input.opportunity.activity,
+      ...details,
+      "",
+      `Voir la fiche de l’entreprise : ${opportunityUrl}`,
+      `Modifier mon alerte : ${manageUrl}`,
+      `Supprimer mon alerte : ${unsubscribeUrl}`,
+    ].join("\n"),
     to: input.email,
   });
 }

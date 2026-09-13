@@ -12,9 +12,9 @@ describe("marketing hero typography", () => {
     expect(satoshiHeroTitleClassName).toContain("text-brand-blue/62");
 
     for (const path of [
-      "src/components/ActionPlanHeroTitle.tsx",
-      "src/components/ApplicationMetierLandingPage.tsx",
-      "src/components/MentoratAutomationLandingPage.tsx",
+      "src/components/DemaaPartnersLandingPage.tsx",
+      "src/components/RepriseMarketplaceClient.tsx",
+      "src/components/TransmissionLandingPage.tsx",
     ]) {
       expect(source(path)).toContain("satoshiHeroTitleClassName");
     }
