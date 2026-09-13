@@ -36,7 +36,7 @@ describe("public qualification forms", () => {
     expectInOrder(source("src/components/SolutionReferralForm.tsx"), [
       "Votre besoin",
       "Cabinet ou entreprise",
-      "Prénom",
+      "Prénom et nom",
       "Adresse e-mail",
     ]);
     expectInOrder(source("src/components/StructureProblemSubmissionForm.tsx"), [
@@ -62,7 +62,7 @@ describe("public qualification forms", () => {
     expectInOrder(source("src/components/AcademyLiveRegistrationModal.tsx"), [
       "Créneau",
       "Entreprise",
-      "Nom et prénom",
+      "Prénom et nom",
       "E-mail professionnel",
     ]);
   });
@@ -76,12 +76,47 @@ describe("public qualification forms", () => {
     expectInOrder(source("src/components/ProviderProfileModal.tsx"), [
       "Expertise principale",
       "Présentez brièvement votre expérience",
-      "Nom et prénom",
+      "Prénom et nom",
       "Adresse e-mail",
     ]);
     expectInOrder(source("src/components/ServiceCallbackForm.tsx"), [
       '"Entreprise"',
       '"Numéro WhatsApp"',
+    ]);
+  });
+
+  it("uses one combined name field and never asks for identity first", () => {
+    const publicForms = [
+      source("src/components/AccountingRecommendationDialog.tsx"),
+      source("src/components/AcademyLiveRegistrationModal.tsx"),
+      source("src/components/BusinessEstimateControl.tsx"),
+      source("src/components/GuestDiagnosticControl.tsx"),
+      source("src/components/ProviderProfileModal.tsx"),
+      source("src/components/RepriseMarketplaceClient.tsx"),
+      source("src/components/SolutionReferralForm.tsx"),
+    ];
+
+    for (const form of publicForms) {
+      expect(form).not.toContain('name="firstName"');
+      expect(form).not.toContain('name="lastName"');
+      expect(form).not.toContain("Nom et prénom");
+    }
+
+    expectInOrder(source("src/components/AccountingRecommendationDialog.tsx"), [
+      'label="Email"',
+      'label="Numéro de téléphone"',
+      'label="Prénom et nom"',
+    ]);
+    expectInOrder(source("src/components/BusinessEstimateControl.tsx"), [
+      ">Email<",
+      ">Téléphone ",
+      ">Entreprise ",
+      ">Prénom et nom<",
+    ]);
+    expectInOrder(source("src/components/RepriseMarketplaceClient.tsx"), [
+      "Email",
+      "Téléphone",
+      "Prénom et nom",
     ]);
   });
 });

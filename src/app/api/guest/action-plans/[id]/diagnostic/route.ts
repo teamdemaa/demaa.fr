@@ -84,6 +84,7 @@ export async function POST(request: Request, context: RouteContext) {
       email,
       idempotencyKey: parsed.data.idempotencyKey,
       message: parsed.data.message?.trim() || null,
+      name: parsed.data.name?.trim() || null,
       phone,
       plan: state.actionPlan,
       request,

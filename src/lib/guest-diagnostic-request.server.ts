@@ -46,6 +46,7 @@ async function reserveIdempotency(input: {
   idempotencyKey: string;
   lastName: string | null;
   message: string | null;
+  name: string | null;
   phone: string | null;
   situation: string | null;
   now?: Date;
@@ -61,6 +62,7 @@ async function reserveIdempotency(input: {
     generationId: input.generationId,
     lastName: input.lastName,
     message: input.message,
+    ...(input.name ? { name: input.name } : {}),
     phone: input.phone,
     situation: input.situation,
   }));
@@ -95,6 +97,7 @@ export async function submitGuestDiagnosticRequest(input: {
   idempotencyKey: string;
   lastName?: string | null;
   message: string | null;
+  name?: string | null;
   phone: string | null;
   plan?: StoredGuestActionPlan | null;
   request: Request;
@@ -104,6 +107,7 @@ export async function submitGuestDiagnosticRequest(input: {
   const callbackAvailability = input.callbackAvailability?.trim() || null;
   const firstName = input.firstName?.trim() || null;
   const lastName = input.lastName?.trim() || null;
+  const name = input.name?.trim() || null;
   const reservation = await reserveIdempotency({
     callbackAvailability,
     email: input.email,
@@ -112,6 +116,7 @@ export async function submitGuestDiagnosticRequest(input: {
     idempotencyKey: input.idempotencyKey,
     lastName,
     message: input.message,
+    name,
     phone: input.phone,
     situation,
   });
@@ -127,7 +132,9 @@ export async function submitGuestDiagnosticRequest(input: {
   const lead = await submitLeadRequest({
     attribution: resolveLeadAttribution(input.request, input.attribution),
     channels: { email: true, resend: false, slack: false },
-    contact: { email: input.email, firstName, lastName, phone: input.phone },
+    contact: name
+      ? { email: input.email, name, phone: input.phone }
+      : { email: input.email, firstName, lastName, phone: input.phone },
     consents: [{
       capturedAt: submittedAt,
       granted: true,

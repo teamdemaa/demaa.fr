@@ -213,7 +213,7 @@ export default function ProviderProfileModal({
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="space-y-2 text-sm text-brand-blue">
-                  <span>Nom et prénom</span>
+                  <span>Prénom et nom</span>
                   <input required value={fullName} onChange={(event) => setFullName(event.target.value)} className="w-full rounded-xl border border-dema-line bg-white px-4 py-3 outline-none focus:border-dema-forest" />
                 </label>
                 <label className="space-y-2 text-sm text-brand-blue">

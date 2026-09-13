@@ -11,7 +11,7 @@ import SolutionReferralForm, {
 } from "@/components/SolutionReferralForm";
 
 const fields = {
-  firstName: " Maya ",
+  name: " Maya Martin ",
   email: " MAYA@CABINET-MARTIN.FR ",
   company: " Cabinet Martin ",
   need: " Déléguer les formalités de création. ",
@@ -27,7 +27,7 @@ describe("solution referral form", () => {
     }));
 
     expect(markup.match(/<(?:input|textarea)\b/g)).toHaveLength(4);
-    expect(markup).toContain("Prénom");
+    expect(markup).toContain("Prénom et nom");
     expect(markup).toContain("Adresse e-mail");
     expect(markup).toContain("maya@cabinet-martin.fr");
     expect(markup).toContain("Cabinet ou entreprise");
@@ -57,7 +57,7 @@ describe("solution referral form", () => {
     })).toEqual({
       company: "Cabinet Martin",
       email: "maya@cabinet-martin.fr",
-      firstName: "Maya",
+      firstName: "Maya Martin",
       idempotencyKey: "web:solution:12345678",
       marketingConsent: false,
       need: "Déléguer les formalités de création.",

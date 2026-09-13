@@ -96,7 +96,7 @@ async function handlePost(request: Request) {
 
   if (!fullName || !email || !company || !trainingSlug || !slotId) {
     return NextResponse.json(
-      { error: "Merci de compléter votre nom, votre e-mail professionnel, votre entreprise et le créneau." },
+      { error: "Merci de compléter vos prénom et nom, votre e-mail professionnel, votre entreprise et le créneau." },
       { status: 400 },
     );
   }

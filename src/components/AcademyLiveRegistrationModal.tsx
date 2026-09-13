@@ -92,7 +92,7 @@ export default function AcademyLiveRegistrationModal({
     const normalizedEmail = email.trim();
     const normalizedCompany = company.trim();
     if (!normalizedName || !normalizedCompany || !slotId || !isValidEmail(normalizedEmail)) {
-      setError("Merci de compléter votre nom, votre e-mail professionnel, votre entreprise et le créneau.");
+      setError("Merci de compléter vos prénom et nom, votre e-mail professionnel, votre entreprise et le créneau.");
       return;
     }
 
@@ -193,7 +193,7 @@ export default function AcademyLiveRegistrationModal({
                 <input id="academy-live-company" className="demaa-input" autoComplete="organization" value={company} onChange={(event) => setCompany(event.target.value)} required />
 
                 <label className="block text-sm font-medium text-brand-blue" htmlFor="academy-live-name">
-                  Nom et prénom
+                  Prénom et nom
                 </label>
                 <input id="academy-live-name" className="demaa-input" autoComplete="name" value={fullName} onChange={(event) => setFullName(event.target.value)} required />
 

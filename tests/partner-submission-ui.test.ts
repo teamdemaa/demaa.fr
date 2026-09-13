@@ -53,12 +53,12 @@ describe("solution proposal UI contract", () => {
       form.indexOf("Présentez brièvement votre expérience"),
     );
     expect(form.indexOf("Présentez brièvement votre expérience")).toBeLessThan(
-      form.indexOf("Nom et prénom"),
+      form.indexOf("Prénom et nom"),
     );
     expect(form.indexOf("Votre message")).toBeLessThan(
-      form.indexOf("Nom et prénom"),
+      form.indexOf("Prénom et nom"),
     );
-    expect(form.indexOf("Nom et prénom")).toBeLessThan(
+    expect(form.indexOf("Prénom et nom")).toBeLessThan(
       form.indexOf("Adresse e-mail"),
     );
     expect(form.indexOf("Site ou profil professionnel")).toBeLessThan(

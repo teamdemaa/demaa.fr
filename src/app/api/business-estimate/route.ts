@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     const message = normalizeText(body?.message, 1000, { multiline: true });
     const name = normalizeText(body?.name, 160);
     if (!name || !isValidEmail(email) || !idempotencyKey) {
-      return NextResponse.json({ error: "Merci de renseigner votre nom et une adresse email valide." }, { status: 400 });
+      return NextResponse.json({ error: "Merci de renseigner vos prénom et nom ainsi qu’une adresse email valide." }, { status: 400 });
     }
 
     const context = await resolveLeadContext({ source: "Demaa - Première estimation", sourceUrl: request.headers.get("referer") });

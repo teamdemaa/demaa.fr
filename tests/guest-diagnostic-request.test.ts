@@ -171,6 +171,23 @@ describe("guest diagnostic request", () => {
     }));
   });
 
+  it("stores a combined contact name without splitting it", async () => {
+    await submitGuestDiagnosticRequest({
+      attribution: null,
+      email: "owner@example.com",
+      idempotencyKey: "diagnostic-with-name-123456",
+      message: null,
+      name: "Maya Martin",
+      phone: null,
+      plan: null,
+      request: request(),
+    });
+
+    expect(mocks.submitLeadRequest).toHaveBeenCalledWith(expect.objectContaining({
+      contact: { email: "owner@example.com", name: "Maya Martin", phone: null },
+    }));
+  });
+
   it("rejects reuse of an idempotency key with different personal data", async () => {
     await submitGuestDiagnosticRequest({
       attribution: null,

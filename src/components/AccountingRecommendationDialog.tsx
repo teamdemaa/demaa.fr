@@ -21,8 +21,7 @@ type AccountingRecommendationDialogProps = {
 };
 
 const INITIAL_FORM = {
-  lastName: "",
-  firstName: "",
+  name: "",
   phone: "",
   email: "",
   website: "",
@@ -118,12 +117,11 @@ export default function AccountingRecommendationDialog({
     setError(null);
 
     if (
-      !formData.lastName.trim() ||
-      !formData.firstName.trim() ||
+      !formData.name.trim() ||
       !formData.phone.trim() ||
       !formData.email.trim()
     ) {
-      setError("Merci de remplir vos nom, prénom, téléphone et email.");
+      setError("Merci de remplir vos prénom et nom, téléphone et email.");
       return;
     }
 
@@ -139,8 +137,7 @@ export default function AccountingRecommendationDialog({
         body: JSON.stringify({
           attribution: getLeadAttributionPayload(),
           recommendationRequest: true,
-          lastName: formData.lastName,
-          firstName: formData.firstName,
+          name: formData.name,
           phone: formData.phone,
           email: formData.email,
           idempotencyKey,
@@ -264,18 +261,12 @@ export default function AccountingRecommendationDialog({
               <form className="mt-5 space-y-4" onSubmit={handleSubmit}>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <Field
-                    id={`${fieldId}-last-name`}
-                    label="Nom"
-                    value={formData.lastName}
-                    onChange={(value) => handleChange("lastName", value)}
-                    autoComplete="family-name"
-                  />
-                  <Field
-                    id={`${fieldId}-first-name`}
-                    label="Prénom"
-                    value={formData.firstName}
-                    onChange={(value) => handleChange("firstName", value)}
-                    autoComplete="given-name"
+                    id={`${fieldId}-email`}
+                    label="Email"
+                    value={formData.email}
+                    onChange={(value) => handleChange("email", value)}
+                    autoComplete="email"
+                    type="email"
                   />
                   <Field
                     id={`${fieldId}-phone`}
@@ -286,12 +277,11 @@ export default function AccountingRecommendationDialog({
                     type="tel"
                   />
                   <Field
-                    id={`${fieldId}-email`}
-                    label="Email"
-                    value={formData.email}
-                    onChange={(value) => handleChange("email", value)}
-                    autoComplete="email"
-                    type="email"
+                    id={`${fieldId}-name`}
+                    label="Prénom et nom"
+                    value={formData.name}
+                    onChange={(value) => handleChange("name", value)}
+                    autoComplete="name"
                   />
                 </div>
 

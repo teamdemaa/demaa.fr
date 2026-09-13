@@ -34,6 +34,7 @@ type AppointmentRequestBody = {
   firmNames?: unknown;
   lastName?: unknown;
   message?: unknown;
+  name?: unknown;
   phone?: unknown;
   recommendationRequest?: unknown;
   sourceUrl?: unknown;
@@ -82,6 +83,7 @@ export async function POST(request: Request) {
     const phone = normalizeText(body?.phone, 60);
     const firstName = normalizeText(body?.firstName, 100);
     const lastName = normalizeText(body?.lastName, 100);
+    const name = normalizeText(body?.name, 160);
     const systemSlug = normalizeText(body?.systemSlug, 160);
     const sourceUrl = normalizeText(body?.sourceUrl, 500);
     const recommendationRequest = body?.recommendationRequest === true;
@@ -98,10 +100,10 @@ export async function POST(request: Request) {
     const requestedSlugs = [...new Set([firmSlug, ...firmSlugs].filter(Boolean))];
 
     if (recommendationRequest) {
-      if (!firstName || !lastName || !email || !phone || !systemSlug) {
+      if ((!name && (!firstName || !lastName)) || !email || !phone || !systemSlug) {
         return NextResponse.json(
           {
-            error: "Merci de remplir vos nom, prénom, téléphone et email.",
+            error: "Merci de remplir vos prénom et nom, téléphone et email.",
           },
           { status: 400 },
         );
@@ -131,7 +133,9 @@ export async function POST(request: Request) {
       const lead = await submitLeadRequest({
         attribution: resolveLeadAttribution(request, body?.attribution),
         channels: { email: true, resend: true, slack: true },
-        contact: { email, firstName, lastName, phone },
+        contact: name
+          ? { email, name, phone }
+          : { email, firstName, lastName, phone },
         context,
         emoji: "📗",
         fields: [

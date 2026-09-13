@@ -30,6 +30,7 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain('value={opportunity.revenue ?? "Non disponible"}');
     expect(marketplace).toContain('value={opportunity.askingPrice ?? "Non disponible"}');
     expect(estimateControl).toContain("Vous n’avez pas besoin d’avoir tous les chiffres");
+    expect(estimateControl).toContain("createPortal(<EstimateDialog");
     expect(estimateControl).toContain('name="name"');
     expect(estimateControl).toContain('name="email"');
     expect(estimateControl).toContain('name="phone"');
@@ -40,7 +41,7 @@ describe("marketplace À reprendre", () => {
     expect(estimateControl).not.toContain('name="employees"');
     expect(buyerRoute).toContain('requestType: "reprise_interest"');
     expect(sellerRoute).toContain('requestType: "business_estimate_request"');
-    expect(sellerRoute).toContain("Merci de renseigner votre nom et une adresse email valide.");
+    expect(sellerRoute).toContain("Merci de renseigner vos prénom et nom ainsi qu’une adresse email valide.");
     expect(page).toContain('canonical: "/a-reprendre"');
   });
 });

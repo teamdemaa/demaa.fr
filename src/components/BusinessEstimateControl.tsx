@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { type FormEvent, useState } from "react";
+import { createPortal } from "react-dom";
 import DirectoryDetailDialogShell from "@/components/DirectoryDetailDialogShell";
 import { getLeadAttributionPayload, trackLeadConversion } from "@/lib/lead-attribution-client";
 import { clearLeadSubmissionKey, getLeadSubmissionKey } from "@/lib/lead-submission-client";
@@ -59,10 +60,10 @@ function EstimateDialog({ onClose }: { onClose: () => void }) {
           <h2 className="mt-3 text-3xl font-medium tracking-[-0.04em] sm:text-4xl">Parlons de votre entreprise.</h2>
           <p className="mt-4 max-w-xl text-sm leading-6 text-dema-muted">Vous n’avez pas besoin d’avoir tous les chiffres. Laissez-nous vos coordonnées et nous préparerons le reste ensemble pendant l’entretien.</p>
           <form onSubmit={handleSubmit} className="mt-7 grid gap-4 sm:grid-cols-2" noValidate>
-            <label className="block text-sm font-medium">Nom et prénom<input className={inputClassName} name="name" autoComplete="name" maxLength={160} required /></label>
             <label className="block text-sm font-medium">Email<input className={inputClassName} name="email" type="email" autoComplete="email" maxLength={160} required /></label>
             <label className="block text-sm font-medium">Téléphone <span className="font-normal text-dema-muted">(facultatif)</span><input className={inputClassName} name="phone" type="tel" autoComplete="tel" maxLength={40} /></label>
             <label className="block text-sm font-medium">Entreprise <span className="font-normal text-dema-muted">(facultatif)</span><input className={inputClassName} name="company" autoComplete="organization" maxLength={160} /></label>
+            <label className="block text-sm font-medium">Prénom et nom<input className={inputClassName} name="name" autoComplete="name" maxLength={160} required /></label>
             <label className="block text-sm font-medium sm:col-span-2">En quelques mots <span className="font-normal text-dema-muted">(facultatif)</span><textarea className={`${inputClassName} min-h-24 resize-y`} name="message" maxLength={1000} placeholder="Ce que vous souhaitez préparer ou comprendre." /></label>
             <label className="hidden" aria-hidden="true">Fax<input name="faxNumber" tabIndex={-1} autoComplete="off" /></label>
             {error ? <p className="text-sm font-medium text-red-700 sm:col-span-2" role="alert">{error}</p> : null}
@@ -77,5 +78,5 @@ function EstimateDialog({ onClose }: { onClose: () => void }) {
 
 export default function BusinessEstimateControl({ className = defaultButtonClassName, label = "Estimer mon entreprise" }: { className?: string; label?: string }) {
   const [open, setOpen] = useState(false);
-  return <><button type="button" onClick={() => setOpen(true)} className={className}>{label}</button>{open ? <EstimateDialog onClose={() => setOpen(false)} /> : null}</>;
+  return <><button type="button" onClick={() => setOpen(true)} className={className}>{label}</button>{open ? createPortal(<EstimateDialog onClose={() => setOpen(false)} />, document.body) : null}</>;
 }

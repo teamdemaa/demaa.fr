@@ -50,7 +50,7 @@ export async function POST(request: Request) {
     const opportunity = getRepriseOpportunity(opportunityId);
 
     if (!name || !isValidEmail(email) || !idempotencyKey || !opportunity) {
-      return NextResponse.json({ error: "Merci de renseigner votre nom et une adresse email valide." }, { status: 400 });
+      return NextResponse.json({ error: "Merci de renseigner vos prénom et nom ainsi qu’une adresse email valide." }, { status: 400 });
     }
 
     const context = await resolveLeadContext({
