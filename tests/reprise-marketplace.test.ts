@@ -41,7 +41,7 @@ describe("marketplace À reprendre", () => {
     ]);
 
     expect(marketplace).not.toContain("Informations déclaratives · disponibilité à confirmer");
-    expect(marketplace).toContain("Marketplace d’entreprises de services à reprendre");
+    expect(marketplace).not.toContain("Marketplace d’entreprises de services à reprendre");
     expect(marketplace).toContain("Reprenez une entreprise qui fonctionne déjà.");
     expect(marketplace).toContain('<header className="text-left sm:text-center">');
     expect(marketplace).not.toContain("ChevronRight");
