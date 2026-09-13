@@ -159,7 +159,10 @@ describe("Mise en place d’un système commercial et client", () => {
     expect(hub).toContain("<StructureNewsletterBlock />");
     expect(systemPage).toContain("<OrganiserDiscoveryCta />");
     expect(systemPage).not.toContain("MentoratAutomationCta");
-    expect(bridge).toContain("Des tutoriels pour passer à l’action");
+    expect(bridge).toContain("Des tutoriels pour mieux utiliser vos outils");
+    expect(bridge).toContain(
+      "Des pas-à-pas concrets pour prendre en main, configurer et utiliser vos outils au quotidien.",
+    );
     expect(bridge).toContain("Voir les tutoriels");
     expect(bridge).toContain('href="/tutoriels"');
     expect(sitemap).toContain("/accompagnement");

@@ -13,10 +13,10 @@ export default function OrganiserDiscoveryCta() {
             id="organiser-discovery-heading"
             className="text-2xl font-light leading-tight tracking-[-0.035em] text-brand-blue sm:text-3xl"
           >
-            Des tutoriels pour passer à l’action
+            Des tutoriels pour mieux utiliser vos outils
           </h2>
           <p className="mt-3 text-sm leading-6 text-dema-muted sm:text-base sm:leading-7">
-            Apprenez à choisir, configurer et mieux utiliser les outils utiles à votre entreprise.
+            Des pas-à-pas concrets pour prendre en main, configurer et utiliser vos outils au quotidien.
           </p>
         </div>
         <Link
