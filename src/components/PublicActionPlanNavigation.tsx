@@ -37,7 +37,7 @@ export default function PublicActionPlanNavigation({
             }`}
           >
             <Icon
-              className={`hidden h-4 w-4 shrink-0 transition sm:block ${
+              className={`h-4 w-4 shrink-0 transition ${
                 isActive
                   ? "stroke-[2.3]"
                   : "stroke-[1.8] group-hover:stroke-2"
