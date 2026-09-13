@@ -36,7 +36,7 @@ const serviceProfiles = [
   {
     title: "Entreprise à transmettre",
     text: "Un fonctionnement plus clair, documenté et moins dépendant du dirigeant.",
-    image: "/illustrations/accompagnement/entreprise-transmission-v4.png",
+    image: "/illustrations/accompagnement/entreprise-transmission-v6.png",
   },
 ] as const;
 

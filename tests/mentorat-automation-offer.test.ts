@@ -47,7 +47,7 @@ describe("accompagnement unifié", () => {
     expect(landing).toContain("/illustrations/accompagnement/flux-client-equipe-suivi-v4.png");
     expect(landing).toContain("/illustrations/accompagnement/services-terrain-v4.png");
     expect(landing).toContain("/illustrations/accompagnement/services-professionnels-v4.png");
-    expect(landing).toContain("/illustrations/accompagnement/entreprise-transmission-v4.png");
+    expect(landing).toContain("/illustrations/accompagnement/entreprise-transmission-v6.png");
     expect(sitemap).toContain("/accompagnement");
     expect(sitemap).not.toContain("`${base}/automatisation`");
     expect(sitemap).not.toContain("`${base}/sur-mesure`");
