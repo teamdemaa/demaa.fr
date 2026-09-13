@@ -62,7 +62,6 @@ export default async function TutorialPage({ params }: TutorialPageProps) {
       url: canonicalUrl,
       image: `${origin}${thumbnailPath}`,
       inLanguage: "fr-FR",
-      totalTime: `PT${tutorial.minutes}M`,
       datePublished: tutorial.publishedAt,
       dateModified: tutorial.updatedAt,
       tool: [{ "@type": "HowToTool", name: tutorial.tool }],

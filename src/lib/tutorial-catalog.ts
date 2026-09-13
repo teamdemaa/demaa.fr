@@ -28,7 +28,6 @@ export type TutorialDefinition = Readonly<{
   category: TutorialCategory;
   fields: readonly TutorialField[];
   keyPoints: readonly string[];
-  minutes: number;
   modelSlug: string;
   publishedAt: string;
   searchTerms: readonly string[];
@@ -49,7 +48,6 @@ const tutorials = [
       "Centralisez vos opportunités, visualisez leur étape et retrouvez immédiatement la prochaine action à mener.",
     category: "Clients & ventes",
     tool: "Airtable",
-    minutes: 25,
     modelSlug: "suivi-commercial-et-devis",
     publishedAt: "2026-09-12",
     updatedAt: "2026-09-12",
@@ -138,7 +136,6 @@ const tutorials = [
       "Réunissez les devis envoyés, leurs échéances et les relances à faire dans une vue quotidienne simple.",
     category: "Clients & ventes",
     tool: "Airtable",
-    minutes: 20,
     modelSlug: "suivi-commercial-et-devis",
     publishedAt: "2026-09-12",
     updatedAt: "2026-09-12",
@@ -199,7 +196,6 @@ const tutorials = [
       "Cadrez chaque mission vendue, ses livrables, son responsable et ses échéances sans multiplier les tableaux.",
     category: "Planning & opérations",
     tool: "Airtable",
-    minutes: 30,
     modelSlug: "projets-et-missions-clients",
     publishedAt: "2026-09-12",
     updatedAt: "2026-09-12",
@@ -260,7 +256,6 @@ const tutorials = [
       "Transformez les demandes terrain en interventions planifiées, affectées et suivies jusqu’au compte rendu.",
     category: "Planning & opérations",
     tool: "Airtable",
-    minutes: 30,
     modelSlug: "interventions-et-chantiers",
     publishedAt: "2026-09-12",
     updatedAt: "2026-09-12",

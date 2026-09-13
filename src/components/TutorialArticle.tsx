@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Check, Clock3, Copy } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Copy } from "lucide-react";
 import CopyableTutorialTable from "@/components/CopyableTutorialTable";
 import Navbar from "@/components/Navbar";
 import NumberedSectionHeading from "@/components/NumberedSectionHeading";
@@ -26,14 +26,9 @@ export default function TutorialArticle({ tutorial }: { tutorial: TutorialDefini
           <header className="mx-auto mt-8 max-w-5xl text-left">
             <div className="flex flex-wrap items-center gap-2 text-xs text-dema-muted">
               <span className="rounded-full bg-dema-sage/65 px-3 py-1 font-medium text-dema-forest">
-                Tutoriel · {tutorial.tool}
+                {tutorial.tool}
               </span>
               <span>{tutorial.category}</span>
-              <span aria-hidden="true">·</span>
-              <span className="inline-flex items-center gap-1.5">
-                <Clock3 className="h-3.5 w-3.5" aria-hidden="true" />
-                {tutorial.minutes} min
-              </span>
             </div>
             <h1 className="demaa-section-title mt-5 text-4xl leading-tight tracking-tight text-brand-blue sm:text-5xl lg:text-6xl">
               {tutorial.title}

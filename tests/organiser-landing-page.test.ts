@@ -28,7 +28,8 @@ describe("Outils and Tutoriels public journey", () => {
     expect(library).toContain("SlidersHorizontal");
     expect(library).toContain('aria-label="Filtrer les tutoriels par thème"');
     expect(library).toContain('aria-live="polite"');
-    expect(library).toContain("Tutoriel");
+    expect(library).not.toContain("<span>Tutoriel</span>");
+    expect(library).not.toContain("tutorial.minutes");
     expect(library).not.toContain('role="tablist"');
     expect(library).not.toContain("Modèles prêts à copier");
   });
@@ -94,6 +95,8 @@ describe("Outils and Tutoriels public journey", () => {
     expect(route).toContain('"@type": "HowTo"');
     expect(route).toContain('inLanguage: "fr-FR"');
     expect(route).toContain("image: `${origin}${thumbnailPath}`");
+    expect(route).not.toContain("totalTime");
+    expect(route).not.toContain("tutorial.minutes");
     expect(route).toContain('replace(/</g, "\\\\u003c")');
   });
 

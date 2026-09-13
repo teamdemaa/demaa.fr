@@ -113,13 +113,9 @@ export default function TutorialLibrary({
                     />
                   </div>
                   <div className="px-0.5 pb-1 pt-4">
-                    <div className="flex items-center gap-2 text-[0.68rem] font-medium uppercase tracking-[0.12em] text-dema-forest/65">
-                      <span>Tutoriel</span>
-                      <span aria-hidden="true">·</span>
-                      <span>{tutorial.tool}</span>
-                      <span aria-hidden="true">·</span>
-                      <span className="normal-case tracking-normal text-dema-muted">{tutorial.minutes} min</span>
-                    </div>
+                    <p className="text-[0.68rem] font-medium uppercase tracking-[0.12em] text-dema-forest/65">
+                      {tutorial.tool}
+                    </p>
                     <h2 className="mt-2 text-xl font-normal leading-tight tracking-[-0.02em] text-brand-blue transition-colors group-hover:text-dema-forest sm:text-2xl">
                       {tutorial.title}
                     </h2>
