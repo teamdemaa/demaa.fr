@@ -68,7 +68,7 @@ describe("canonical Services SEO and redirects", () => {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Accueil", item: "https://demaa.fr" },
-        { "@type": "ListItem", position: 2, name: "Automatisation des opérations terrain", item: "https://demaa.fr/accompagnement" },
+        { "@type": "ListItem", position: 2, name: "Automatisation des opérations terrain", item: "https://demaa.fr/automatisation" },
       ],
     });
 

@@ -15,7 +15,7 @@ async function readSource(path: string) {
 
 describe("Mise en place d’une automatisation terrain", () => {
   it("locks the one-month offer and its deliberately bounded scope", () => {
-    expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/accompagnement");
+    expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/automatisation");
     expect(AUTOMATION_OFFER.name).toBe("Automatisation terrain");
     expect(AUTOMATION_OFFER.serviceName).toBe("Automatisation des opérations terrain");
     expect(AUTOMATION_OFFER.price).toEqual({
@@ -87,9 +87,9 @@ describe("Mise en place d’une automatisation terrain", () => {
       readSource("src/app/(marketing)/automatisation/page.tsx"),
     ]);
 
-    expect(page).toContain("MentoratAutomationLandingPage");
-    expect(page).toContain("Automatisation & IA pour entreprises de services terrain");
-    expect(legacyPage).toContain('permanentRedirect("/accompagnement")');
+    expect(page).toContain("TransmissionLandingPage");
+    expect(page).toContain("Préparer son entreprise à la vente");
+    expect(legacyPage).toContain("MentoratAutomationLandingPage");
     expect(landing).toContain("content.hero.lead");
     expect(landing).toContain("content.hero.emphasis");
     expect(landing).toContain("content.sectors.items.map");
@@ -129,7 +129,7 @@ describe("Mise en place d’une automatisation terrain", () => {
       }),
     );
 
-    expect(markup).toContain("/accompagnement?source=modele-detail");
+    expect(markup).toContain("/automatisation?source=modele-detail");
     expect(markup).toContain("Découvrir la mise en place");
     expect(markup).toContain("l’intégrons dans un système que votre équipe peut réellement utiliser");
   });
@@ -143,7 +143,7 @@ describe("Mise en place d’une automatisation terrain", () => {
     );
 
     expect(markup).toContain(
-      "/accompagnement?source=organisation-content&amp;contentSlug=preparer-devis-propositions-commerciales",
+      "/automatisation?source=organisation-content&amp;contentSlug=preparer-devis-propositions-commerciales",
     );
     expect(markup).toContain("Vous préférez que nous le mettions en place pour vous ?");
   });
@@ -174,7 +174,7 @@ describe("Mise en place d’une automatisation terrain", () => {
     expect(bridge).toContain('href = "/tutoriels"');
     expect(bridge).toContain("href={href}");
     expect(sitemap).toContain("/accompagnement");
-    expect(sitemap).not.toContain("`${base}/automatisation`");
-    expect(nextConfig).toMatch(/source: '\/automatisation',[\s\S]*?destination: '\/accompagnement'/);
+    expect(sitemap).toContain("`${base}/automatisation`");
+    expect(nextConfig).not.toMatch(/source: '\/automatisation',[\s\S]*?destination: '\/accompagnement'/);
   });
 });

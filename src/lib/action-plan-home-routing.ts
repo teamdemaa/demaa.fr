@@ -38,7 +38,7 @@ const HOME_INTENTS = new Set([
   "team-demaa-profile",
 ]);
 
-export function buildDefaultHomeAccompagnementHref(
+export function buildDefaultHomeMarketplaceHref(
   searchParams: SearchInput,
 ) {
   const trackingParams = new URLSearchParams();
@@ -63,7 +63,7 @@ export function buildDefaultHomeAccompagnementHref(
 
   if (hasExplicitEntry) return null;
   const query = trackingParams.toString();
-  return `/accompagnement${query ? `?${query}` : ""}`;
+  return `/a-reprendre${query ? `?${query}` : ""}`;
 }
 
 export function shouldRedirectAuthenticatedHomeToPlans(input: {

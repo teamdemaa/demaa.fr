@@ -53,7 +53,7 @@ export default function Navbar({
                   ? "/en"
                   : anonymousLanding
                     ? "/"
-                    : "/accompagnement"}
+                    : "/a-reprendre"}
               aria-label={
                 adminControls
                   ? "Accueil administration"

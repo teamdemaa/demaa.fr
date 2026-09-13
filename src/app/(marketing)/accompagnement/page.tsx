@@ -1,52 +1,15 @@
-import MentoratAutomationLandingPage from "@/components/MentoratAutomationLandingPage";
-import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
-import {
-  AUTOMATION_ACCOMPANIMENT_PATH,
-  mentoratAutomationContent as content,
-} from "@/lib/mentorat-automation-content";
+import TransmissionLandingPage from "@/components/TransmissionLandingPage";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
-import { buildServicePageJsonLd, serializeServicesJsonLd } from "@/lib/services-seo";
 
-const title = "Automatisation & IA pour entreprises de services terrain | Demaa";
-const description = content.hero.description;
+const title = "Préparer son entreprise à la vente | Demaa";
+const description = "Demaa structure les processus, les outils et les informations de votre entreprise pour la rendre plus simple à présenter et à transmettre.";
 
 export const metadata = buildPublicPageMetadata({
   title,
   description,
-  path: AUTOMATION_ACCOMPANIMENT_PATH,
+  path: "/accompagnement",
 });
 
-function getAutomationService() {
-  const service = getCanonicalServiceBySlug("automatisation-processus");
-  if (!service) throw new Error("Automation accompaniment service must exist in the canonical catalog.");
-  return service;
-}
-
 export default function AccompagnementPage() {
-  const service = getAutomationService();
-  const jsonLd = [
-    ...buildServicePageJsonLd(service),
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: content.faq.map((item) => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: item.answer,
-        },
-      })),
-    },
-  ];
-
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: serializeServicesJsonLd(jsonLd) }}
-      />
-      <MentoratAutomationLandingPage />
-    </>
-  );
+  return <TransmissionLandingPage />;
 }

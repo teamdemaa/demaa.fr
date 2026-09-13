@@ -1,9 +1,10 @@
-import { LibraryBig, Workflow } from "lucide-react";
+import { Building2, LibraryBig, Workflow } from "lucide-react";
 import Link from "next/link";
 
-export type PublicActionPlanView = "resources" | "services";
+export type PublicActionPlanView = "marketplace" | "resources" | "services";
 
 const navigationItems = [
+  { view: "marketplace", label: "À reprendre", href: "/a-reprendre", Icon: Building2 },
   { view: "services", label: "Accompagnement", href: "/accompagnement", Icon: Workflow },
   { view: "resources", label: "Ressources", href: "/outils", Icon: LibraryBig },
 ] as const;
@@ -18,7 +19,7 @@ export default function PublicActionPlanNavigation({
 }) {
   return (
     <div
-      className="grid w-full grid-cols-2 gap-1 rounded-full border border-dema-line/70 bg-dema-paper p-1 shadow-[0_3px_12px_rgba(23,35,29,0.035)] xl:rounded-none xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none"
+      className="grid w-full grid-cols-3 gap-1 rounded-full border border-dema-line/70 bg-dema-paper p-1 shadow-[0_3px_12px_rgba(23,35,29,0.035)] xl:rounded-none xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none"
       aria-label="Navigation principale"
     >
       {navigationItems.map(({ view, label, href, Icon }) => {
@@ -36,7 +37,7 @@ export default function PublicActionPlanNavigation({
             }`}
           >
             <Icon
-              className={`h-4 w-4 shrink-0 transition ${
+              className={`hidden h-4 w-4 shrink-0 transition sm:block ${
                 isActive
                   ? "stroke-[2.3]"
                   : "stroke-[1.8] group-hover:stroke-2"

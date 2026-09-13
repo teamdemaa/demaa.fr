@@ -13,6 +13,7 @@ const directoryLinks = [
 ];
 
 const collaborationLinks = [
+  { label: "À reprendre", href: "/a-reprendre" },
   PUBLIC_SPECIALISTS_ENABLED
     ? { label: "Spécialistes", href: "/specialistes" }
     : { label: "Accompagnement", href: "/accompagnement" },
@@ -41,14 +42,14 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="space-y-4">
-            <Link href="/accompagnement" className="inline-flex">
+            <Link href="/a-reprendre" className="inline-flex">
               <DemaaWordmark
                 className="text-[2.55rem]"
                 colorClassName="text-brand-blue/56"
               />
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
-              Mettez de l’ordre dans votre entreprise. Et des systèmes pour que ça dure.
+              Achetez, structurez ou transmettez une PME de services.
             </p>
           </div>
 

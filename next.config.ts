@@ -133,11 +133,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/automatisation',
-        destination: '/accompagnement',
-        permanent: true,
-      },
-      {
         source: '/services',
         destination: process.env.NEXT_PUBLIC_DEMAA_SPECIALISTS_ENABLED === 'true'
           ? '/specialistes'
@@ -146,7 +141,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/services/automatisation-processus',
-        destination: '/accompagnement',
+        destination: '/automatisation',
         permanent: true,
       },
       {
@@ -156,7 +151,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/solutions/mentorat-automatisation-ia',
-        destination: '/accompagnement',
+        destination: '/automatisation',
         permanent: true,
       },
       {

@@ -39,7 +39,7 @@ describe("public route integrity", () => {
     const sitemap = await readSource("src/app/sitemap.ts");
 
     expect(sitemap).toContain('`${base}/accompagnement`');
-    expect(sitemap).not.toContain('`${base}/automatisation`');
+    expect(sitemap).toContain('`${base}/automatisation`');
     expect(sitemap).not.toContain('`${base}/application-metier`');
     expect(sitemap).toContain('`${base}/outils`');
     expect(sitemap).toContain('`${base}/tutoriels`');

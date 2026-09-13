@@ -156,7 +156,7 @@ const canonicalServiceDefinitions = deepFreeze([
   },
   {
     slug: "automatisation-processus", name: AUTOMATION_OFFER.serviceName, eyebrow: `Mise en place · ${AUTOMATION_OFFER.durationLabel}`,
-    detailHref: "/accompagnement",
+    detailHref: "/automatisation",
     summary: "Reliez les demandes, les interventions ou chantiers, les comptes rendus et la facturation sans ressaisir les mêmes informations.",
     description: "Nous analysons la circulation des informations entre le client, le bureau et le terrain, puis mettons en place l’automatisation prioritaire avec vos outils.",
     result: "Une automatisation terrain testée, documentée et prête à être utilisée par l’équipe.",

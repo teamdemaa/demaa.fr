@@ -55,9 +55,9 @@ describe("Demaa application navbar", () => {
     expect(sharedHomeSource).toContain("<Navbar");
     expect(solutionsSource).toContain('path: "/solutions"');
     expect(proxySource).toContain('if (pathname === "/")');
-    expect(proxySource).toContain("buildDefaultHomeAccompagnementHref(request.nextUrl.searchParams)");
-    expect(proxySource).toContain("NextResponse.redirect(new URL(accompagnementHref, request.url), 308)");
-    expect(navbarSource).toContain(': "/accompagnement"}');
+    expect(proxySource).toContain("buildDefaultHomeMarketplaceHref(request.nextUrl.searchParams)");
+    expect(proxySource).toContain("NextResponse.redirect(new URL(marketplaceHref, request.url), 308)");
+    expect(navbarSource).toContain(': "/a-reprendre"}');
     expect(nextConfigSource).toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/outils',/,
     );
@@ -66,7 +66,7 @@ describe("Demaa application navbar", () => {
     );
   });
 
-  it("uses Accompagnement and Ressources, then exposes three resource catalogues", async () => {
+  it("uses À reprendre, Accompagnement and Ressources, then exposes three resource catalogues", async () => {
     const [source, resources, tutorialsIndex, footer] = await Promise.all([
       readFile(
         new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
@@ -83,12 +83,16 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/components/Footer.tsx", import.meta.url), "utf8"),
     ]);
 
+    expect(source).toContain('label: "À reprendre", href: "/a-reprendre"');
     expect(source).toContain('label: "Accompagnement", href: "/accompagnement"');
     expect(source).toContain('label: "Ressources", href: "/outils"');
     expect(source).not.toContain('label: "Tutoriels"');
     expect(source).not.toContain('label: "Outils"');
     expect(source).not.toContain('label: "Sur mesure"');
     expect(source).not.toContain("PUBLIC_SPECIALISTS_ENABLED");
+    expect(source.indexOf('label: "À reprendre"')).toBeLessThan(
+      source.indexOf('label: "Accompagnement"'),
+    );
     expect(source.indexOf('label: "Accompagnement"')).toBeLessThan(
       source.indexOf('label: "Ressources"'),
     );
@@ -108,7 +112,7 @@ describe("Demaa application navbar", () => {
     expect(tutorialsIndex).toContain('path: "/tutoriels"');
     expect(tutorialsIndex).not.toContain("<Navbar");
     expect(tutorialsIndex).not.toContain("<ActionPlanNavbar");
-    expect(footer).toContain('<Link href="/accompagnement" className="inline-flex">');
+    expect(footer).toContain('<Link href="/a-reprendre" className="inline-flex">');
     expect(footer).toContain('{ label: "Accompagnement", href: "/accompagnement" }');
     expect(footer).not.toContain("Systèmes opérationnels");
     expect(footer).not.toContain("Annuaire financement");
