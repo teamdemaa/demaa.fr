@@ -106,6 +106,9 @@ describe("marketplace À reprendre", () => {
     expect(sellerActions).toContain("Transmettre mon entreprise");
     expect(sellerActions).toContain("Estimer mon entreprise");
     expect(sellerActions).toContain("bg-dema-forest");
+    expect(sellerActions).toContain("flex-col items-start justify-start");
+    expect(sellerActions).toContain("sm:items-center sm:justify-center");
+    expect(sellerActions).not.toContain("w-fit self-center");
     expect(saleDialog).toContain("Décrivez-nous d’abord votre entreprise et votre projet de transmission");
     expect(saleDialog).toContain("Votre entreprise et votre projet en quelques mots");
     expect(saleDialog.indexOf('name="message"')).toBeLessThan(saleDialog.indexOf('name="name"'));
