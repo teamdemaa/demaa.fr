@@ -61,6 +61,7 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain('value={opportunity.revenue ?? "Non disponible"}');
     expect(marketplace).toContain('value={opportunity.askingPrice ?? "Non disponible"}');
     expect(marketplace).toContain("Carte des opportunités");
+    expect(marketplace).toContain('<MapIcon className="h-4 w-4" strokeWidth={1.7} aria-hidden="true" />');
     expect(marketplace).toContain("Ajouter au comparatif");
     expect(marketplace).toContain("Comparer les entreprises");
     expect(estimateControl).toContain("Vous n’avez pas besoin d’avoir tous les chiffres");
