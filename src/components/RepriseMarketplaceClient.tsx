@@ -198,18 +198,11 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
       <main className="bg-dema-cream text-brand-blue">
         <section className="px-5 pb-6 pt-14 text-center sm:px-8 sm:pb-10 sm:pt-20 lg:pt-24">
           <div className="mx-auto max-w-6xl">
-            <h1
-              aria-label="Reprenez une entreprise qui fonctionne déjà. Entreprises de services à reprendre."
-              className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl text-left sm:text-center`}
-            >
-              <span aria-hidden="true">
-                <span className="block">Reprenez une entreprise qui fonctionne déjà.</span>
-                <span className="demaa-hero-title mt-2 block text-dema-forest">
-                  Entreprises de services à reprendre.
-                </span>
-              </span>
-            </h1>
-            <p className="mt-7 text-sm font-medium text-dema-forest">Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place</p>
+            <header className="text-left sm:text-center">
+              <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">Marketplace d’entreprises de services à reprendre</p>
+              <h1 className={`${satoshiHeroTitleClassName} mx-auto mt-4 max-w-5xl`}>Reprenez une entreprise qui fonctionne déjà.</h1>
+              <p className="mx-auto mt-6 max-w-4xl font-serif text-2xl font-light italic leading-tight tracking-[-0.025em] text-dema-forest sm:text-3xl">Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place</p>
+            </header>
             <div className="demaa-search-shell mx-auto mt-10 max-w-3xl p-1.5">
               <div className="relative">
                 <Search className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-dema-forest/42" aria-hidden="true" />

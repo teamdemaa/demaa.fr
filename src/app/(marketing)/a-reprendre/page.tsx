@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/a-reprendre" },
   openGraph: {
     title: "Reprenez une entreprise qui fonctionne déjà | Demaa",
-    description: "Entreprises de services à reprendre.",
+    description: "Marketplace d’entreprises de services à reprendre.",
     url: "/a-reprendre",
     siteName: "Demaa",
     locale: "fr_FR",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Reprenez une entreprise qui fonctionne déjà | Demaa",
-    description: "Entreprises de services à reprendre.",
+    description: "Marketplace d’entreprises de services à reprendre.",
   },
 };
 

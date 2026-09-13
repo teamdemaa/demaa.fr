@@ -39,13 +39,14 @@ describe("marketplace À reprendre", () => {
     ]);
 
     expect(marketplace).not.toContain("Informations déclaratives · disponibilité à confirmer");
+    expect(marketplace).toContain("Marketplace d’entreprises de services à reprendre");
     expect(marketplace).toContain("Reprenez une entreprise qui fonctionne déjà.");
-    expect(marketplace).toContain("mx-auto max-w-5xl text-left sm:text-center");
+    expect(marketplace).toContain('<header className="text-left sm:text-center">');
     expect(marketplace).not.toContain("ChevronRight");
-    expect(marketplace).toContain('<span className="demaa-hero-title mt-2 block text-dema-forest">');
-    expect(marketplace).toContain("Entreprises de services à reprendre.");
+    expect(marketplace).toContain("font-serif text-2xl font-light italic");
+    expect(marketplace).toContain("Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place");
     expect(marketplace.indexOf("Reprenez une entreprise qui fonctionne déjà.")).toBeLessThan(
-      marketplace.indexOf("Entreprises de services à reprendre."),
+      marketplace.indexOf("Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place"),
     );
     expect(marketplace).not.toContain("La marketplace des PME de services à reprendre.");
     expect(marketplace).toContain("Demaa vérifie d’abord que l’opportunité est toujours disponible");
