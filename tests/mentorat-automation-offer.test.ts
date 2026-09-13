@@ -38,12 +38,16 @@ describe("accompagnement unifié", () => {
     expect(landing).toContain("AUTOMATION_OFFER.price.label");
     expect(landing).toContain("Services terrain");
     expect(landing).toContain("Services professionnels");
+    expect(landing).toContain("Suivi client");
+    expect(landing).not.toContain('title: "Compte rendu"');
     expect(landing).toContain("30 %");
     expect(landing).toContain("AccompanimentContactControl");
     expect(landing).not.toContain("Application métier sur mesure");
     expect(landing).toContain("/illustrations/accompagnement/hero-entreprise-terrain-v3.png");
-    expect(landing).toContain("/illustrations/accompagnement/flux-client-bureau-terrain-v3.png");
-    expect(landing).toContain("/illustrations/accompagnement/metiers-terrain-v3.png");
+    expect(landing).toContain("/illustrations/accompagnement/flux-client-equipe-suivi-v4.png");
+    expect(landing).toContain("/illustrations/accompagnement/services-terrain-v4.png");
+    expect(landing).toContain("/illustrations/accompagnement/services-professionnels-v4.png");
+    expect(landing).toContain("/illustrations/accompagnement/entreprise-transmission-v4.png");
     expect(sitemap).toContain("/accompagnement");
     expect(sitemap).not.toContain("`${base}/automatisation`");
     expect(sitemap).not.toContain("`${base}/sur-mesure`");
