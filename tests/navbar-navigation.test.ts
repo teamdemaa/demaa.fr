@@ -92,7 +92,7 @@ describe("Demaa application navbar", () => {
     expect(source).not.toContain('label: "Outils"');
     expect(source).not.toContain('label: "Sur mesure"');
     expect(source).not.toContain("PUBLIC_SPECIALISTS_ENABLED");
-    expect(navbarSource).toContain("<BusinessEstimateControl className={publicCtaClassName} />");
+    expect(navbarSource).toContain("<BusinessEstimateControl className={publicCtaClassName} label={publicCtaLabel} />");
     expect(navbarSource).toContain("focus-visible:underline focus-visible:underline-offset-4");
     expect(navbarSource).not.toContain("border-dema-forest/18 bg-dema-paper");
     expect(estimateControl).toContain('label = "Estimer mon entreprise"');

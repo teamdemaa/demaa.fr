@@ -128,7 +128,7 @@ export default function Navbar({
                     {publicCtaLabel}
                   </Link>
                 ) : publicNavigationActiveView && publicNavigationActiveView !== "none" ? (
-                  <BusinessEstimateControl className={publicCtaClassName} />
+                  <BusinessEstimateControl className={publicCtaClassName} label={publicCtaLabel} />
                 ) : null)}
               </div>
             )}

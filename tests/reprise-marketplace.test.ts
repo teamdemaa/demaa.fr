@@ -65,6 +65,11 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain('<MapIcon className="h-4 w-4" strokeWidth={1.7} aria-hidden="true" />');
     expect(marketplace).toContain("Ajouter au comparatif");
     expect(marketplace).toContain("Recevoir les nouvelles opportunités");
+    expect(marketplace).toContain('publicCtaLabel="Vendre mon entreprise"');
+    expect(marketplace).toContain('label="Vendre mon entreprise"');
+    expect(marketplace.indexOf('label="Vendre mon entreprise"')).toBeLessThan(
+      marketplace.indexOf('id="reprise-search"'),
+    );
     expect(marketplace).toContain("<RepriseAlertDialog");
     expect(marketplace).toContain("Comparer les entreprises");
     expect(marketplace).not.toContain("Les entreprises sont présentées en colonnes et les critères en lignes");
