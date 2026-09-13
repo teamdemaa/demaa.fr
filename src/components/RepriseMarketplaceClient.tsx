@@ -198,7 +198,7 @@ export default function RepriseMarketplaceClient({ opportunities }: { opportunit
           <div className="mx-auto max-w-6xl">
             <h1
               aria-label="Reprenez une entreprise qui fonctionne déjà. Entreprises de services à reprendre."
-              className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}
+              className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl text-right sm:text-center`}
             >
               <span aria-hidden="true">
                 <span className="block">Reprenez une entreprise qui fonctionne déjà.</span>

@@ -25,6 +25,7 @@ describe("marketplace À reprendre", () => {
 
     expect(marketplace).toContain("Informations déclaratives · disponibilité à confirmer");
     expect(marketplace).toContain("Reprenez une entreprise qui fonctionne déjà.");
+    expect(marketplace).toContain("mx-auto max-w-5xl text-right sm:text-center");
     expect(marketplace).toContain('<span className="demaa-hero-title mt-2 block text-dema-forest">');
     expect(marketplace).toContain("Entreprises de services à reprendre.");
     expect(marketplace.indexOf("Reprenez une entreprise qui fonctionne déjà.")).toBeLessThan(
