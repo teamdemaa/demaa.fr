@@ -8,6 +8,7 @@ import SystemSolutionsTab from "@/components/SystemSolutionsTab";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 import type { ToolOutboundSurface } from "@/lib/tool-outbound-attribution";
 import type { System } from "@/lib/types";
+import { PUBLIC_LEADER_DAILY_TOOLS_ENABLED } from "@/lib/public-feature-flags";
 
 type SystemDetailContentProps = {
   system: System;
@@ -117,7 +118,7 @@ export default function SystemDetailContent({
           toolOutboundSurface={toolOutboundSurface}
           comparisonHref={comparisonHref}
         />
-        {!embedded ? <LeaderDailyRail /> : null}
+        {!embedded && PUBLIC_LEADER_DAILY_TOOLS_ENABLED ? <LeaderDailyRail /> : null}
       </div>
     </article>
   );

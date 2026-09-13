@@ -688,6 +688,7 @@ describe("system Solutions UI", () => {
     expect(detailSource).toContain("<SystemSolutionsTab");
     expect(detailSource).not.toContain("<SystemResourcesTab");
     expect(detailSource).toContain("Voir les processus du métier");
+    expect(detailSource).toContain("PUBLIC_LEADER_DAILY_TOOLS_ENABLED");
     expect(detailSource).toContain("<LeaderDailyRail />");
     expect(detailSource).not.toContain("StructureNewsletterBlock");
   });
@@ -710,10 +711,13 @@ describe("system Solutions UI", () => {
     expect(source).not.toContain("DirectoryDetailDialogShell");
   });
 
-  it("keeps the daily rail inside the solution kit without final promotional cards", async () => {
+  it("parks the daily rail behind a disabled public feature flag", async () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
+    const featureFlagsSource = await readSource("src/lib/public-feature-flags.ts");
 
+    expect(detailSource).toContain("!embedded && PUBLIC_LEADER_DAILY_TOOLS_ENABLED");
     expect(detailSource).toContain("<LeaderDailyRail />");
+    expect(featureFlagsSource).toContain("NEXT_PUBLIC_DEMAA_LEADER_DAILY_TOOLS_ENABLED");
     expect(detailSource).not.toContain("<SystemSolutionNextSteps");
     expect(detailSource).not.toContain("<SystemContextualCaseStudy");
   });
