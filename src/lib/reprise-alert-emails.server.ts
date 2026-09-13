@@ -1,6 +1,7 @@
 import "server-only";
 
 import type { RepriseAlertCriteria } from "@/lib/reprise-alerts";
+import { getRepriseOpportunityPath } from "@/lib/reprise-opportunity-seo";
 import type { RepriseOpportunity } from "@/lib/reprise-opportunities";
 import { sendTransactionalEmail } from "@/lib/transactional-email.server";
 
@@ -50,7 +51,7 @@ function criteriaHtml(criteria: RepriseAlertCriteria) {
 }
 
 function getOpportunityUrl(baseUrl: string, opportunity: RepriseOpportunity) {
-  return `${baseUrl}/a-reprendre?opportunite=${encodeURIComponent(opportunity.id)}`;
+  return `${baseUrl}${getRepriseOpportunityPath(opportunity)}`;
 }
 
 function opportunityListHtml(baseUrl: string, opportunity: RepriseOpportunity) {

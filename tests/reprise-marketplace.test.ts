@@ -56,8 +56,9 @@ describe("marketplace À reprendre", () => {
   });
 
   it("keeps the MVP transparent and separates buyer and seller requests", async () => {
-    const [marketplace, sellerActions, saleDialog, valuationDialog, map, buyerRoute, sellerRoute, page] = await Promise.all([
+    const [marketplace, opportunityDetail, sellerActions, saleDialog, valuationDialog, map, buyerRoute, sellerRoute, page] = await Promise.all([
       readFile(new URL("../src/components/RepriseMarketplaceClient.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/RepriseOpportunityDetail.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/BusinessSellerActions.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/BusinessSaleDialog.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/BusinessValuationDialog.tsx", import.meta.url), "utf8"),
@@ -78,19 +79,22 @@ describe("marketplace À reprendre", () => {
       marketplace.indexOf("Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place"),
     );
     expect(marketplace).not.toContain("La marketplace des PME de services à reprendre.");
-    expect(marketplace).toContain("Demaa vous recontacte avant de transmettre votre demande");
-    expect(marketplace).toContain("Demander une mise en relation");
-    expect(marketplace.indexOf("Votre projet en quelques mots")).toBeLessThan(marketplace.indexOf("Prénom et nom"));
-    expect(marketplace.indexOf('name="phone"')).toBeLessThan(marketplace.indexOf('name="company"'));
-    expect(marketplace).not.toContain("(facultatif)");
+    expect(opportunityDetail).toContain("Demaa vous recontacte avant de transmettre votre demande");
+    expect(opportunityDetail).toContain("Demander une mise en relation");
+    expect(opportunityDetail.indexOf("Votre projet en quelques mots")).toBeLessThan(opportunityDetail.indexOf("Prénom et nom"));
+    expect(opportunityDetail.indexOf('name="phone"')).toBeLessThan(opportunityDetail.indexOf('name="company"'));
+    expect(opportunityDetail).not.toContain("(facultatif)");
     expect(marketplace).toContain("Obtenez une première estimation de votre entreprise");
     expect(marketplace).toContain('leading-[1.02] tracking-[-0.045em]');
     expect(marketplace).toContain('className="border-t border-dema-line px-5 pb-14 pt-6 sm:px-8 sm:pb-20 sm:pt-10"');
-    expect(marketplace).toContain('value={opportunity.revenue ?? "Non disponible"}');
-    expect(marketplace).toContain('value={opportunity.askingPrice ?? "Non disponible"}');
+    expect(opportunityDetail).toContain('value={opportunity.revenue ?? "Non disponible"}');
+    expect(opportunityDetail).toContain('value={opportunity.askingPrice ?? "Non disponible"}');
     expect(marketplace).toContain("Carte des opportunités");
     expect(marketplace).toContain('<MapIcon className="h-4 w-4" strokeWidth={1.7} aria-hidden="true" />');
     expect(marketplace).toContain("Ajouter au comparatif");
+    expect(marketplace).toContain("getRepriseOpportunityPath(opportunity)");
+    expect(marketplace).toContain('aria-haspopup="dialog"');
+    expect(marketplace).toContain("event.preventDefault()");
     expect(marketplace).toContain("Recevoir les nouvelles opportunités");
     expect(marketplace).toContain('id="reprise-search-mobile"');
     expect(marketplace).toContain("transition-[grid-template-columns]");
@@ -150,6 +154,6 @@ describe("marketplace À reprendre", () => {
     expect(sellerRoute).toContain('requestType: "business_sale_request"');
     expect(sellerRoute).toContain('channels: { email: true, resend: false, slack: false }');
     expect(sellerRoute).toContain("Merci de présenter brièvement votre entreprise");
-    expect(page).toContain('canonical: "/a-reprendre"');
+    expect(page).toContain('path: "/a-reprendre"');
   });
 });

@@ -1,26 +1,20 @@
 import type { Metadata } from "next";
 import RepriseMarketplaceClient from "@/components/RepriseMarketplaceClient";
-import { repriseOpportunities } from "@/lib/reprise-opportunities";
+import {
+  buildRepriseMarketplaceJsonLd,
+  serializeRepriseJsonLd,
+} from "@/lib/reprise-opportunity-seo";
+import {
+  repriseOpportunities,
+  sortRepriseOpportunitiesByInformation,
+} from "@/lib/reprise-opportunities";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export const metadata: Metadata = {
-  title: "PME de services à reprendre | Demaa",
-  description:
-    "Découvrez des entreprises de services en activité, avec des clients, une équipe et un savoir-faire déjà en place.",
-  alternates: { canonical: "/a-reprendre" },
-  openGraph: {
-    title: "Reprenez une entreprise qui fonctionne déjà | Demaa",
-    description: "Découvrez des entreprises de services en activité, avec des clients, une équipe et un savoir-faire déjà en place.",
-    url: "/a-reprendre",
-    siteName: "Demaa",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Reprenez une entreprise qui fonctionne déjà | Demaa",
-    description: "Découvrez des entreprises de services en activité, avec des clients, une équipe et un savoir-faire déjà en place.",
-  },
-};
+export const metadata: Metadata = buildPublicPageMetadata({
+  title: "Entreprises à reprendre : PME de services | Demaa",
+  description: "Découvrez des entreprises à reprendre, en activité, avec des clients, une équipe et un savoir-faire déjà en place.",
+  path: "/a-reprendre",
+});
 
 export default async function RepriseMarketplacePage({
   searchParams,
@@ -28,5 +22,20 @@ export default async function RepriseMarketplacePage({
   searchParams: Promise<{ opportunite?: string | string[] }>;
 }) {
   const opportunity = (await searchParams).opportunite;
-  return <RepriseMarketplaceClient initialOpportunityId={typeof opportunity === "string" ? opportunity : undefined} opportunities={repriseOpportunities} />;
+  const sortedOpportunities = sortRepriseOpportunitiesByInformation(repriseOpportunities);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeRepriseJsonLd(buildRepriseMarketplaceJsonLd(sortedOpportunities)),
+        }}
+      />
+      <RepriseMarketplaceClient
+        initialOpportunityId={typeof opportunity === "string" ? opportunity : undefined}
+        opportunities={repriseOpportunities}
+      />
+    </>
+  );
 }

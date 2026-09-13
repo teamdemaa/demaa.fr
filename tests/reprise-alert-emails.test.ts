@@ -39,7 +39,7 @@ describe("reprise alert emails", () => {
     });
 
     const email = mocks.send.mock.calls[0][0];
-    const opportunityUrl = `https://demaa.fr/a-reprendre?opportunite=${opportunity.id}`;
+    const opportunityUrl = `https://demaa.fr/a-reprendre/${opportunity.id}`;
     expect(email.subject).toContain("1 correspondance");
     expect(email.html).toContain(`href="${opportunityUrl}"`);
     expect(email.html).toContain("Voir la fiche de l’entreprise");
@@ -58,7 +58,7 @@ describe("reprise alert emails", () => {
     });
 
     const email = mocks.send.mock.calls[0][0];
-    const opportunityUrl = `https://demaa.fr/a-reprendre?opportunite=${opportunity.id}`;
+    const opportunityUrl = `https://demaa.fr/a-reprendre/${opportunity.id}`;
     expect(email.subject).toBe(`Nouvelle entreprise à reprendre · ${opportunity.activity}`);
     expect(email.html).toContain(`href="${opportunityUrl}"`);
     expect(email.html).toContain(`>${opportunityUrl}</a>`);

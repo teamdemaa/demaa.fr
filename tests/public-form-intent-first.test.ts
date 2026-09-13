@@ -95,7 +95,7 @@ describe("public qualification forms", () => {
       source("src/components/AccompanimentContactControl.tsx"),
       source("src/components/GuestDiagnosticControl.tsx"),
       source("src/components/ProviderProfileModal.tsx"),
-      source("src/components/RepriseMarketplaceClient.tsx"),
+      source("src/components/RepriseOpportunityDetail.tsx"),
       source("src/components/SolutionReferralForm.tsx"),
     ];
 
@@ -128,7 +128,7 @@ describe("public qualification forms", () => {
     const sale = source("src/components/BusinessSaleDialog.tsx");
     expect(sale).not.toContain("(facultatif)");
     expect(sale.match(/required/g)?.length).toBeGreaterThanOrEqual(5);
-    expectInOrder(source("src/components/RepriseMarketplaceClient.tsx"), [
+    expectInOrder(source("src/components/RepriseOpportunityDetail.tsx"), [
       "Votre projet en quelques mots",
       "Prénom et nom",
       "Email",

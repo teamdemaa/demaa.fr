@@ -15,6 +15,8 @@ import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-director
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 import { getPublishedCopyableModels } from "@/lib/copyable-model-catalog";
 import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
+import { getRepriseOpportunityPath } from "@/lib/reprise-opportunity-seo";
+import { repriseOpportunities } from "@/lib/reprise-opportunities";
 import { getPublishedTutorials } from "@/lib/tutorial-catalog";
 
 export const dynamic = "force-dynamic";
@@ -25,6 +27,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // crawlers that every one of the 800+ URLs changed on every request.
   const siteUpdatedAt = new Date("2026-09-03T00:00:00.000Z");
   const toolsAndTutorialsUpdatedAt = new Date("2026-09-12T00:00:00.000Z");
+  const repriseUpdatedAt = new Date(Math.max(
+    ...repriseOpportunities.map((opportunity) => new Date(opportunity.publishedAt).getTime()),
+  ));
   const [tools, enterprises, accountingFirms] = await Promise.all([
     getUnifiedToolDirectory(),
     getEnterpriseCatalog(),
@@ -32,7 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${base}/a-reprendre`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 1 },
+    { url: `${base}/a-reprendre`, lastModified: repriseUpdatedAt, changeFrequency: "weekly", priority: 1 },
     { url: `${base}/outils`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
     ...(PUBLIC_SPECIALISTS_ENABLED
       ? [{ url: `${base}/specialistes`, lastModified: siteUpdatedAt, changeFrequency: "weekly" as const, priority: 0.94 }]
@@ -179,8 +184,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.82,
   }));
 
+  const repriseOpportunityEntries: MetadataRoute.Sitemap = repriseOpportunities.map((opportunity) => ({
+    url: `${base}${getRepriseOpportunityPath(opportunity)}`,
+    lastModified: new Date(opportunity.publishedAt),
+    changeFrequency: "weekly" as const,
+    priority: 0.86,
+  }));
+
   return [
     ...staticRoutes,
+    ...repriseOpportunityEntries,
     ...contentEntries,
     ...tutorialEntries,
     ...newsletterSitemapEntries,
