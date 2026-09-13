@@ -119,6 +119,8 @@ describe("marketplace À reprendre", () => {
     expect(valuationDialog).toContain("Fourchette basse");
     expect(valuationDialog).toContain("Estimation centrale");
     expect(valuationDialog).toContain("Fourchette haute");
+    expect(valuationDialog).toContain('label="Résultat annuel (EBE)"');
+    expect(valuationDialog).not.toContain('label="EBE retraité annuel"');
     expect(valuationDialog).toContain("Transmettre mon entreprise");
     expect(map).not.toContain("onLocationSelect");
     expect(map).not.toContain("Filtrer sur");

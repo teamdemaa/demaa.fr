@@ -90,11 +90,11 @@ export function calculateBusinessValuation(input: BusinessValuationInput): Busin
 
 function calculateFinancialBase(model: BusinessValuationModel, input: BusinessValuationInput) {
   if (model === "cabinet") {
-    const ebe = requirePositive(input.ebe, "L’EBE retraité est requis.");
+    const ebe = requirePositive(input.ebe, "Le résultat annuel (EBE) est requis.");
     const revenue = requirePositive(input.revenue, "Le chiffre d’affaires est requis.");
     return {
       central: ebe * 2.8 * 0.6 + revenue * 0.87 * 0.4,
-      methodLabel: "À partir de la rentabilité d’exploitation (EBE retraité), puis vérifiée par rapport au chiffre d’affaires.",
+      methodLabel: "Estimation fondée sur le résultat annuel de l’activité (EBE retraité), puis recoupée avec le chiffre d’affaires. L’EBE mesure ce que l’activité génère avant intérêts, impôts et amortissements.",
       financialAdjustment: 0,
       financialFactors: ["Point de départ : environ 2,8 fois l’EBE retraité", "Vérification : comparaison avec le chiffre d’affaires"],
     };
@@ -115,10 +115,12 @@ function calculateFinancialBase(model: BusinessValuationModel, input: BusinessVa
     };
   }
 
-  const ebe = requirePositive(input.ebe, "L’EBE retraité est requis.");
+  const ebe = requirePositive(input.ebe, "Le résultat annuel (EBE) est requis.");
   return {
     central: ebe * (model === "hybrid" ? 3.2 : 3),
-    methodLabel: model === "hybrid" ? "EBE retraité et récurrence des contrats" : "Multiple de l’EBE retraité",
+    methodLabel: model === "hybrid"
+      ? "Estimation fondée sur le résultat annuel de l’activité (EBE retraité) et la récurrence des contrats. L’EBE mesure ce que l’activité génère avant intérêts, impôts et amortissements."
+      : "Estimation fondée sur le résultat annuel de l’activité (EBE retraité). L’EBE mesure ce que l’activité génère avant intérêts, impôts et amortissements.",
     financialAdjustment: 0,
     financialFactors: [model === "hybrid" ? "Référence centrale de 3,2 fois l’EBE retraité" : "Référence centrale de 3 fois l’EBE retraité"],
   };
