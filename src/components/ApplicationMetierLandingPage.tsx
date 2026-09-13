@@ -153,8 +153,8 @@ export default function ApplicationMetierLandingPage({
                 {content.method.description}
               </p>
               <Image
-                src="/images/accompagnement/atelier-organisation-equipe.png"
-                alt="Trois membres d’une équipe cadrent ensemble les étapes d’un processus"
+                src="/images/sur-mesure/methode-logiciel-metier-sans-personne.webp"
+                alt="Des documents et des étapes de travail sont transformés en interface de logiciel métier"
                 width={1536}
                 height={1024}
                 sizes="(min-width: 1024px) 42vw, 100vw"
