@@ -19,11 +19,11 @@ export default function BusinessSellerActions({ variant = "hero" }: { variant?: 
     <>
       {variant === "hero" ? (
         <div className="mx-auto mt-8 flex max-w-xl flex-col justify-center gap-3 sm:flex-row">
-          <button type="button" className={`${primaryClassName} w-full sm:w-auto`} onClick={() => setView("sale")}>Vendre mon entreprise</button>
-          <button type="button" className={`${secondaryClassName} w-full sm:w-auto`} onClick={() => setView("valuation")}>Estimer mon entreprise</button>
+          <button type="button" className={`${primaryClassName} w-fit self-center`} onClick={() => setView("sale")}>Transmettre mon entreprise</button>
+          <button type="button" className={`${secondaryClassName} w-fit self-center`} onClick={() => setView("valuation")}>Estimer mon entreprise</button>
         </div>
       ) : (
-        <button type="button" className={`${primaryClassName} mt-8 w-full sm:w-auto`} onClick={() => setView("valuation")}>Estimer mon entreprise</button>
+        <button type="button" className={`${primaryClassName} mt-8 w-fit`} onClick={() => setView("valuation")}>Estimer mon entreprise</button>
       )}
       {view === "sale" ? createPortal(<BusinessSaleDialog onClose={() => setView(null)} valuationInput={valuation?.input} valuationResult={valuation?.result} />, document.body) : null}
       {view === "valuation" ? createPortal(<BusinessValuationDialog onClose={() => setView(null)} onContinue={(input, result) => { setValuation({ input, result }); setView("sale"); }} />, document.body) : null}

@@ -95,7 +95,7 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain("Faites glisser pour voir les autres entreprises");
     expect(marketplace).toContain('className="w-[8.5rem] sm:w-[11rem]"');
     expect(marketplace).toContain("{opportunity.activity}");
-    expect(sellerActions).toContain("Vendre mon entreprise");
+    expect(sellerActions).toContain("Transmettre mon entreprise");
     expect(sellerActions).toContain("Estimer mon entreprise");
     expect(sellerActions).toContain("bg-dema-forest");
     expect(saleDialog).toContain("Décrivez-nous d’abord votre entreprise et votre projet de transmission");
@@ -108,7 +108,7 @@ describe("marketplace À reprendre", () => {
     expect(valuationDialog).toContain("Fourchette basse");
     expect(valuationDialog).toContain("Estimation centrale");
     expect(valuationDialog).toContain("Fourchette haute");
-    expect(valuationDialog).toContain("Vendre mon entreprise");
+    expect(valuationDialog).toContain("Transmettre mon entreprise");
     expect(map).not.toContain("onLocationSelect");
     expect(map).not.toContain("Filtrer sur");
     expect(map).toContain("Voir la fiche");
