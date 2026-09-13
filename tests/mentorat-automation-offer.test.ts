@@ -41,6 +41,7 @@ describe("accompagnement unifié", () => {
     expect(landing).toContain("Suivi client");
     expect(landing).not.toContain('title: "Compte rendu"');
     expect(landing).toContain("30 %");
+    expect(landing).toContain("Chef de mission comptable, EM2A Expertise");
     expect(landing).toContain("AccompanimentContactControl");
     expect(landing).not.toContain("Application métier sur mesure");
     expect(landing).toContain("/illustrations/accompagnement/hero-entreprise-terrain-v3.png");
