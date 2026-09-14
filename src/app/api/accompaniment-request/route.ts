@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     const phone = normalizeText(body?.phone, 40);
     if (!message || !name || !isValidEmail(email) || !phone || !company || !idempotencyKey) return NextResponse.json({ error: "Merci de décrire votre priorité, puis de renseigner vos prénom et nom, votre email, votre téléphone et votre entreprise." }, { status: 400 });
 
-    const context = await resolveLeadContext({ source: "Demaa - Accompagnement", sourceUrl: request.headers.get("referer") });
+    const context = await resolveLeadContext({ source: "Demaa - Transmission", sourceUrl: request.headers.get("referer") });
     if (!context) return NextResponse.json({ error: "La page d’origine est introuvable." }, { status: 400 });
     await submitLeadRequest({
       attribution: resolveLeadAttribution(request, body?.attribution),
@@ -41,10 +41,10 @@ export async function POST(request: Request) {
       contact: { company, email, name, phone },
       context,
       emoji: "⚙️",
-      fields: [{ label: "Priorité décrite", value: message }, { label: "Accompagnement", value: "Structuration, automatisation, IA ou préparation à la transmission" }],
+      fields: [{ label: "Priorité décrite", value: message }, { label: "Préparation", value: "Structuration du fonctionnement prioritaire avant transmission" }],
       idempotencyKey,
       requestType: "accompaniment_request",
-      title: `Demande d’accompagnement - ${company}`,
+      title: `Préparation à la transmission - ${company}`,
     });
     return successResponse();
   } catch (error) {

@@ -1,5 +1,5 @@
 import { permanentRedirect } from "next/navigation";
 
 export default function StudioPage() {
-  permanentRedirect("/partners");
+  permanentRedirect("/transmettre");
 }

@@ -1,0 +1,130 @@
+import { NextResponse } from "next/server";
+import {
+  enforceRateLimit,
+  normalizeIdempotencyKey,
+  normalizeText,
+  readJsonBody,
+} from "@/lib/api-security";
+import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { resolveLeadAttribution } from "@/lib/lead-attribution-server";
+import { resolveLeadContext } from "@/lib/lead-context";
+import { submitLeadRequest } from "@/lib/lead-notifications";
+import { logOperationalError } from "@/lib/operational-log";
+import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
+
+type RepriseProjectBody = {
+  activity?: unknown;
+  attribution?: unknown;
+  budget?: unknown;
+  email?: unknown;
+  faxNumber?: unknown;
+  idempotencyKey?: unknown;
+  message?: unknown;
+  name?: unknown;
+  phone?: unknown;
+  region?: unknown;
+};
+
+function successResponse() {
+  return NextResponse.json(
+    { ok: true },
+    {
+      status: 202,
+      headers: { "Cache-Control": "private, no-store, max-age=0" },
+    },
+  );
+}
+
+export async function POST(request: Request) {
+  try {
+    const blockedHost = enforceAllowedHost(request);
+    if (blockedHost) return blockedHost;
+    const blockedOrigin = enforceSameOrigin(request);
+    if (blockedOrigin) return blockedOrigin;
+    const limited = await enforceRateLimit(request, {
+      keyPrefix: "reprise-project",
+      limit: 5,
+      windowMs: 30 * 60 * 1000,
+    });
+    if (limited) return limited;
+
+    const { data: body, response } = await readJsonBody<RepriseProjectBody>(
+      request,
+      12 * 1024,
+    );
+    if (response) return response;
+    if (normalizeText(body?.faxNumber, 200)) return successResponse();
+
+    const activity = normalizeText(body?.activity, 240);
+    const budget = normalizeText(body?.budget, 80);
+    const email = normalizeEmail(normalizeText(body?.email, 160));
+    const idempotencyKey = normalizeIdempotencyKey(body?.idempotencyKey);
+    const message = normalizeText(body?.message, 1600, { multiline: true });
+    const name = normalizeText(body?.name, 160);
+    const phone = normalizeText(body?.phone, 40);
+    const region = normalizeText(body?.region, 160);
+
+    if (
+      !activity ||
+      !region ||
+      !budget ||
+      !message ||
+      !name ||
+      !isValidEmail(email) ||
+      !phone ||
+      !idempotencyKey
+    )
+      return NextResponse.json(
+        {
+          error:
+            "Merci de décrire votre recherche, puis de renseigner vos coordonnées.",
+        },
+        { status: 400 },
+      );
+
+    const context = await resolveLeadContext({
+      source: "À reprendre - Projet de reprise",
+      sourceUrl: request.headers.get("referer"),
+    });
+    if (!context)
+      return NextResponse.json(
+        { error: "La page d’origine est introuvable." },
+        { status: 400 },
+      );
+
+    await submitLeadRequest({
+      attribution: resolveLeadAttribution(request, body?.attribution),
+      channels: { email: true, resend: false, slack: false },
+      contact: { email, name, phone },
+      context,
+      emoji: "🔎",
+      fields: [
+        { label: "Activité recherchée", value: activity },
+        { label: "Région", value: region },
+        { label: "Budget maximal", value: budget },
+        { label: "Projet du repreneur", value: message },
+        {
+          label: "Traitement attendu",
+          value:
+            "Recontacter le repreneur, préciser ses critères et rechercher des entreprises adaptées",
+        },
+      ],
+      idempotencyKey,
+      requestType: "reprise_project_request",
+      title: `Projet de reprise - ${activity}`,
+    });
+
+    return successResponse();
+  } catch (error) {
+    logOperationalError("reprise_project.route.failed", error, {
+      requestType: "reprise_project_request",
+    });
+    return NextResponse.json(
+      {
+        error:
+          "Impossible d’envoyer la demande pour le moment. Merci de réessayer.",
+      },
+      { status: 500 },
+    );
+  }
+}

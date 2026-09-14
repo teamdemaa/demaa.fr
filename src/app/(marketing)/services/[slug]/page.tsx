@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     return buildPublicPageMetadata({
       title: "Structuration, automatisation & IA | Demaa",
       description: "Demaa structure et automatise un fonctionnement prioritaire de votre entreprise.",
-      path: "/accompagnement",
+      path: "/transmettre",
     });
   }
   const service = getCanonicalServiceBySlug(slug);
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
 export default async function ServicePage({ params }: ServicePageProps) {
   const { slug } = await params;
   if (slug === "automatisation-ia" || slug === "automatisation-processus") {
-    permanentRedirect("/accompagnement#automatisation");
+    permanentRedirect("/transmettre#structuration");
   }
   const service = getCanonicalServiceBySlug(slug);
 
@@ -71,11 +71,11 @@ export default async function ServicePage({ params }: ServicePageProps) {
       <main className="min-h-screen min-w-0 max-w-full bg-dema-cream px-4 pb-20 pt-8 sm:px-6 lg:px-8">
         <div className="mx-auto min-w-0 max-w-5xl">
           <Link
-            href={PUBLIC_SPECIALISTS_ENABLED ? "/specialistes" : "/accompagnement"}
+            href={PUBLIC_SPECIALISTS_ENABLED ? "/specialistes" : "/transmettre"}
             className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            {PUBLIC_SPECIALISTS_ENABLED ? "Retour aux spécialistes" : "Retour à l’accompagnement"}
+            {PUBLIC_SPECIALISTS_ENABLED ? "Retour aux spécialistes" : "Retour à la transmission"}
           </Link>
           <CanonicalServiceDetails service={service} />
         </div>

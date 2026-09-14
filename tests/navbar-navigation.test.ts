@@ -66,7 +66,7 @@ describe("Demaa application navbar", () => {
     );
   });
 
-  it("uses À reprendre, Accompagnement and Ressources, then exposes three resource catalogues", async () => {
+  it("uses À reprendre, Vendre and Ressources, then exposes three resource catalogues", async () => {
     const [source, resources, tutorialsIndex, footer, navbarSource] = await Promise.all([
       readFile(
         new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
@@ -85,7 +85,7 @@ describe("Demaa application navbar", () => {
     ]);
 
     expect(source).toContain('label: "À reprendre", href: "/a-reprendre"');
-    expect(source).toContain('label: "Accompagnement", href: "/accompagnement"');
+    expect(source).toContain('label: "Vendre", href: "/transmettre"');
     expect(source).toContain('label: "Ressources", href: "/outils"');
     expect(source).not.toContain('label: "Tutoriels"');
     expect(source).not.toContain('label: "Outils"');
@@ -95,9 +95,9 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain("focus-visible:underline focus-visible:underline-offset-4");
     expect(navbarSource).not.toContain("border-dema-forest/18 bg-dema-paper");
     expect(source.indexOf('label: "À reprendre"')).toBeLessThan(
-      source.indexOf('label: "Accompagnement"'),
+      source.indexOf('label: "Vendre"'),
     );
-    expect(source.indexOf('label: "Accompagnement"')).toBeLessThan(
+    expect(source.indexOf('label: "Vendre"')).toBeLessThan(
       source.indexOf('label: "Ressources"'),
     );
     expect(resources.indexOf('label: "Outils"')).toBeLessThan(
@@ -117,7 +117,7 @@ describe("Demaa application navbar", () => {
     expect(tutorialsIndex).not.toContain("<Navbar");
     expect(tutorialsIndex).not.toContain("<ActionPlanNavbar");
     expect(footer).toContain('<Link href="/a-reprendre" className="inline-flex">');
-    expect(footer).toContain('{ label: "Accompagnement", href: "/accompagnement" }');
+    expect(footer).toContain('{ label: "Vendre", href: "/transmettre" }');
     expect(footer).not.toContain("Systèmes opérationnels");
     expect(footer).not.toContain("Annuaire financement");
     expect(footer).not.toContain("Annuaire fournisseurs");
@@ -228,7 +228,8 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain("empty:hidden xl:hidden");
     expect(actionPlanNavSource).toContain("Plan d’action");
     expect(actionPlanNavSource).toContain("Accompagnement");
-    expect(actionPlanNavSource).toContain('"/accompagnement"');
+    expect(actionPlanNavSource).toContain("Vendre");
+    expect(actionPlanNavSource).toContain('"/transmettre"');
     expect(actionPlanNavSource).not.toContain("Sur mesure");
     expect(actionPlanNavSource).not.toContain("PUBLIC_SPECIALISTS_ENABLED");
     expect(actionPlanNavSource).not.toContain('"/application-metier"');

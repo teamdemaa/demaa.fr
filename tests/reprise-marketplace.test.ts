@@ -78,17 +78,20 @@ describe("marketplace À reprendre", () => {
     expect(lyonCluster?.position.longitude).toBeCloseTo(4.5238);
   });
 
-  it("keeps the MVP transparent and separates buyer and seller requests", async () => {
-    const [marketplace, opportunityDetail, sellerActions, saleDialog, valuationDialog, map, buyerRoute, sellerRoute, page] = await Promise.all([
+  it("keeps buyer search focused and moves every seller action to Transmission", async () => {
+    const [marketplace, opportunityDetail, projectControl, sellerActions, saleDialog, valuationDialog, map, projectRoute, buyerRoute, sellerRoute, page, transmission] = await Promise.all([
       readFile(new URL("../src/components/RepriseMarketplaceClient.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/RepriseOpportunityDetail.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/RepriseProjectControl.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/BusinessSellerActions.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/BusinessSaleDialog.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/BusinessValuationDialog.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/RepriseOpportunityMap.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/api/reprise-project/route.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/app/api/reprise-interest/route.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/app/api/business-estimate/route.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/app/(marketing)/a-reprendre/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/TransmissionLandingPage.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(marketplace).not.toContain("Informations déclaratives · disponibilité à confirmer");
@@ -96,19 +99,24 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain("Reprenez une entreprise qui fonctionne déjà.");
     expect(marketplace).toContain('<header className="text-left sm:text-center">');
     expect(marketplace).not.toContain("ChevronRight");
-    expect(marketplace).toContain("font-serif text-2xl font-light italic");
-    expect(marketplace).toContain("Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place");
-    expect(marketplace.indexOf("Reprenez une entreprise qui fonctionne déjà.")).toBeLessThan(
-      marketplace.indexOf("Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place"),
-    );
+    expect(marketplace).not.toContain("font-serif text-2xl font-light italic");
+    expect(marketplace).not.toContain("Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place");
+    expect(marketplace.match(/<RepriseProjectControl \/>/g)).toHaveLength(2);
+    expect(projectControl).toContain("Confier ma recherche");
+    expect(projectControl).toContain("Confier ma recherche à Demaa");
+    expect(projectControl).toContain('fetch("/api/reprise-project"');
+    expect(projectControl.indexOf("Activité recherchée")).toBeLessThan(projectControl.indexOf("Prénom et nom"));
     expect(marketplace).not.toContain("La marketplace des PME de services à reprendre.");
     expect(opportunityDetail).toContain("Demaa vous recontacte avant de transmettre votre demande");
     expect(opportunityDetail).toContain("Demander une mise en relation");
     expect(opportunityDetail.indexOf("Votre projet en quelques mots")).toBeLessThan(opportunityDetail.indexOf("Prénom et nom"));
     expect(opportunityDetail.indexOf('name="phone"')).toBeLessThan(opportunityDetail.indexOf('name="company"'));
     expect(opportunityDetail).not.toContain("(facultatif)");
-    expect(marketplace).toContain("Obtenez une première estimation de votre entreprise");
-    expect(marketplace).toContain('leading-[1.02] tracking-[-0.045em]');
+    expect(marketplace).not.toContain("Obtenez une première estimation de votre entreprise");
+    expect(marketplace).toContain("Comment ça marche ?");
+    expect(marketplace).toContain("Vous nous confiez votre recherche");
+    expect(marketplace).toContain("Nous recherchons");
+    expect(marketplace).toContain("Nous organisons la mise en relation");
     expect(marketplace).toContain('className="border-t border-dema-line px-5 pb-14 pt-6 sm:px-8 sm:pb-20 sm:pt-10"');
     expect(opportunityDetail).toContain('value={opportunity.revenue ?? "Non disponible"}');
     expect(opportunityDetail).toContain('value={opportunity.askingPrice ?? "Non disponible"}');
@@ -128,10 +136,7 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).not.toContain('id="reprise-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} className="w-full rounded-full bg-dema-paper py-4 pl-12 pr-16 text-sm');
     expect(marketplace).not.toContain("placeholder:text-brand-blue/30 focus:ring-2");
     expect(marketplace).not.toContain("publicCtaLabel");
-    expect(marketplace).toContain("<BusinessSellerActions />");
-    expect(marketplace.indexOf("<BusinessSellerActions />")).toBeLessThan(
-      marketplace.indexOf('id="reprise-search"'),
-    );
+    expect(marketplace).not.toContain("BusinessSellerActions");
     expect(marketplace).toContain("<RepriseAlertDialog");
     expect(marketplace).toContain("useSyncExternalStore(subscribeToBrowserEnvironment, getBrowserSnapshot, getServerSnapshot)");
     expect(marketplace).toContain("const portalRoot = isBrowser ? document.body : null");
@@ -147,12 +152,14 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain("Faites glisser pour voir les autres entreprises");
     expect(marketplace).toContain('className="w-[8.5rem] sm:w-[11rem]"');
     expect(marketplace).toContain("{opportunity.activity}");
-    expect(sellerActions).toContain("Transmettre mon entreprise");
+    expect(sellerActions).toContain("Vendre mon entreprise");
     expect(sellerActions).toContain("Estimer mon entreprise");
     expect(sellerActions).toContain("bg-dema-forest");
     expect(sellerActions).toContain("flex-col items-start justify-start");
     expect(sellerActions).toContain("sm:items-center sm:justify-center");
     expect(sellerActions).not.toContain("w-fit self-center");
+    expect(transmission).toContain('<BusinessSellerActions variant="sale" />');
+    expect(transmission).toContain('<BusinessSellerActions variant="estimate" />');
     expect(saleDialog).toContain("Décrivez-nous d’abord votre entreprise et votre projet de transmission");
     expect(saleDialog).toContain("Votre entreprise et votre projet en quelques mots");
     expect(saleDialog.indexOf('name="message"')).toBeLessThan(saleDialog.indexOf('name="name"'));
@@ -165,13 +172,16 @@ describe("marketplace À reprendre", () => {
     expect(valuationDialog).toContain("Fourchette haute");
     expect(valuationDialog).toContain('label="Excédent brut d’exploitation annuel (EBE)"');
     expect(valuationDialog).not.toContain('label="Résultat annuel (EBE)"');
-    expect(valuationDialog).toContain("Transmettre mon entreprise");
+    expect(valuationDialog).toContain("Vendre mon entreprise");
     expect(map).not.toContain("onLocationSelect");
     expect(map).not.toContain("Filtrer sur");
     expect(map).toContain("Voir la fiche");
     expect(map).toContain("clusterRepriseMapLocations");
     expect(map).toContain("<foreignObject");
     expect(marketplace).toContain("setShowMobileMap(false); setSelectedOpportunity(opportunity)");
+    expect(projectRoute).toContain('requestType: "reprise_project_request"');
+    expect(projectRoute).toContain('channels: { email: true, resend: false, slack: false }');
+    expect(projectRoute).toContain("rechercher des entreprises adaptées");
     expect(buyerRoute).toContain('requestType: "reprise_interest"');
     expect(buyerRoute).toContain('channels: { email: true, resend: false, slack: false }');
     expect(buyerRoute).toContain("Merci de présenter brièvement votre projet");

@@ -28,7 +28,7 @@ function buildCtaHref({ contentSlug, modelSlug, systemSlug, variant }: MentoratA
   if (contentSlug) params.set("contentSlug", contentSlug);
   if (systemSlug) params.set("systemSlug", systemSlug);
   if (modelSlug) params.set("modelSlug", modelSlug);
-  return `${AUTOMATION_ACCOMPANIMENT_PATH}?${params.toString()}#automatisation`;
+  return `${AUTOMATION_ACCOMPANIMENT_PATH}?${params.toString()}#structuration`;
 }
 
 function getCopy({ modelSlug, systemName, variant }: MentoratAutomationCtaProps) {

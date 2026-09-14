@@ -51,16 +51,16 @@ function AccompanimentDialog({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <DirectoryDetailDialogShell ariaLabel="Parler de votre fonctionnement" maxWidthClassName="max-w-2xl" onClose={onClose}>
+    <DirectoryDetailDialogShell ariaLabel="Préparer la transmission" maxWidthClassName="max-w-2xl" onClose={onClose}>
       {state === "success" ? (
         <div className="py-8 text-center"><span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-dema-forest text-dema-paper"><Check className="h-5 w-5" aria-hidden="true" /></span><h2 className="mt-5 text-3xl font-medium tracking-[-0.04em]">Demande envoyée.</h2><p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-dema-muted">Nous vous recontactons pour comprendre votre priorité et préparer un premier échange utile.</p></div>
       ) : (
         <>
-          <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">Accompagnement</p>
-          <h2 className="mt-3 text-3xl font-normal tracking-[-0.04em] sm:text-4xl">Parlons de votre fonctionnement.</h2>
-          <p className="mt-4 max-w-xl text-sm leading-6 text-dema-muted">Décrivez d’abord ce qui vous fait perdre du temps ou dépend trop de vous. Nous regarderons ensuite ce qu’il faut structurer, automatiser ou préparer.</p>
+          <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">Préparation</p>
+          <h2 className="mt-3 text-3xl font-normal tracking-[-0.04em] sm:text-4xl">Parlons de votre entreprise.</h2>
+          <p className="mt-4 max-w-xl text-sm leading-6 text-dema-muted">Décrivez ce qui dépend encore trop de vous. Nous regarderons le fonctionnement à structurer en priorité.</p>
           <form onSubmit={handleSubmit} className="mt-7 grid gap-4 sm:grid-cols-2" noValidate>
-            <label className="block text-sm font-medium sm:col-span-2">Qu’aimeriez-vous améliorer, automatiser ou préparer ?<textarea className={`${inputClassName} min-h-28 resize-y`} name="message" maxLength={1200} placeholder="Par exemple : demandes clients, devis, planning, comptes rendus, facturation ou transmission." required /></label>
+            <label className="block text-sm font-medium sm:col-span-2">Que faut-il structurer avant la transmission ?<textarea className={`${inputClassName} min-h-28 resize-y`} name="message" maxLength={1200} placeholder="Par exemple : demandes clients, devis, planning, responsabilités, facturation ou savoir-faire." required /></label>
             <label className="block text-sm font-medium">Prénom et nom<input className={inputClassName} name="name" autoComplete="name" maxLength={160} required /></label>
             <label className="block text-sm font-medium">Email<input className={inputClassName} name="email" type="email" autoComplete="email" maxLength={160} required /></label>
             <label className="block text-sm font-medium">Téléphone<input className={inputClassName} name="phone" type="tel" autoComplete="tel" maxLength={40} required /></label>

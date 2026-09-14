@@ -1,13 +1,14 @@
 export const AUTOMATION_OFFER = {
-  durationLabel: "1 mois",
-  name: "Système prioritaire",
+  durationLabel: "6 mois",
+  name: "Accompagnement sur 6 mois",
   serviceName: "Structuration, automatisation & IA",
   packageSlug: "automatisation-essentielle",
   price: {
-    amountMinor: 300000,
+    amountMinor: 150000,
     currency: "EUR",
-    label: "À partir de 3 000 € HT",
+    label: "1 500 € HT / mois",
   },
+  commitmentLabel: "Engagement initial de 6 mois, soit 9 000 € HT.",
   summary:
-    "Un mois pour structurer et automatiser un fonctionnement prioritaire de votre entreprise.",
+    "Six mois pour rendre progressivement l’entreprise plus autonome, mieux structurée et plus simple à transmettre.",
 } as const;

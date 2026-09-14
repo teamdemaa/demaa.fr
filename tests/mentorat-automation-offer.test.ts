@@ -10,55 +10,86 @@ async function readSource(path: string) {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-describe("accompagnement unifié", () => {
-  it("locks a bounded one-month starting offer", () => {
-    expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/accompagnement");
+describe("transmission unifiée", () => {
+  it("locks a renewable six-month accompaniment", () => {
+    expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/transmettre");
     expect(AUTOMATION_OFFER).toMatchObject({
-      durationLabel: "1 mois",
-      name: "Système prioritaire",
+      durationLabel: "6 mois",
+      name: "Accompagnement sur 6 mois",
       serviceName: "Structuration, automatisation & IA",
-      price: { amountMinor: 300000, currency: "EUR", label: "À partir de 3 000 € HT" },
+      price: {
+        amountMinor: 150000,
+        currency: "EUR",
+        label: "1 500 € HT / mois",
+      },
+      commitmentLabel: "Engagement initial de 6 mois, soit 9 000 € HT.",
     });
   });
 
-  it("combines daily operations, automation and transmission on one page", async () => {
-    const [landing, page, legacyPage, sitemap] = await Promise.all([
-      readSource("src/components/TransmissionLandingPage.tsx"),
-      readSource("src/app/(marketing)/accompagnement/page.tsx"),
-      readSource("src/app/(marketing)/automatisation/page.tsx"),
-      readSource("src/app/sitemap.ts"),
-    ]);
+  it("combines transmission preparation and concrete structuring on one page", async () => {
+    const [landing, page, accompaniment, automation, sitemap] =
+      await Promise.all([
+        readSource("src/components/TransmissionLandingPage.tsx"),
+        readSource("src/app/(marketing)/transmettre/page.tsx"),
+        readSource("src/app/(marketing)/accompagnement/page.tsx"),
+        readSource("src/app/(marketing)/automatisation/page.tsx"),
+        readSource("src/app/sitemap.ts"),
+      ]);
+
     expect(page).toContain("TransmissionLandingPage");
-    expect(page).toContain("Structuration, automatisation & IA");
-    expect(legacyPage).toContain('permanentRedirect("/accompagnement#automatisation")');
-    expect(landing).toContain("Une entreprise qui fonctionne mieux");
-    expect(landing).toContain("Et dépend moins de vous");
-    expect(landing).toContain("automatisation et l’IA");
-    expect(landing).toContain("piloter ou à transmettre");
+    expect(page).toContain('path: "/transmettre"');
+    expect(accompaniment).toContain('permanentRedirect("/transmettre")');
+    expect(automation).toContain(
+      'permanentRedirect("/transmettre#structuration")',
+    );
+    expect(landing).toContain(
+      "Préparez votre entreprise pour mieux la vendre.",
+    );
+    expect(landing).toContain(
+      "Une entreprise rentable n’est pas toujours facile à transmettre.",
+    );
+    expect(landing).toContain(
+      "Nous structurons ce qui dépend encore trop de vous.",
+    );
+    expect(landing).toContain('id="structuration"');
     expect(landing).toContain("AUTOMATION_OFFER.price.label");
-    expect(landing).toContain("Services terrain");
-    expect(landing).toContain("Services professionnels");
-    expect(landing).toContain("Suivi client");
-    expect(landing).not.toContain('title: "Compte rendu"');
-    expect(landing).toContain("30 %");
-    expect(landing).toContain("Chef de mission comptable, EM2A Expertise");
+    expect(landing).toContain(
+      "Je peux m’absenter sans que l’activité s’arrête.",
+    );
+    expect(landing).toContain("Dirigeant, EM2A Expertise");
+    expect(landing).toContain("un véritable");
+    expect(landing).toContain("actif qu’un");
+    expect(landing).toContain("acheteur peut comprendre, reprendre et valoriser");
+    expect(landing).not.toContain("30 %");
+    expect(landing).not.toContain("Chef de mission comptable");
     expect(landing).toContain("AccompanimentContactControl");
-    expect(landing).not.toContain("Application métier sur mesure");
-    expect(landing).toContain("/illustrations/accompagnement/hero-entreprise-terrain-v5.png");
-    expect(landing).toContain("/illustrations/accompagnement/flux-client-equipe-suivi-v6.png");
-    expect(landing).toContain("/illustrations/accompagnement/services-terrain-v5.png");
-    expect(landing).toContain("/illustrations/accompagnement/services-professionnels-v5.png");
-    expect(landing).toContain("/illustrations/accompagnement/entreprise-transmission-v7.png");
-    expect(sitemap).toContain("/accompagnement");
+    expect(landing).toContain('<BusinessSellerActions variant="sale" />');
+    expect(landing).toContain('<BusinessSellerActions variant="estimate" />');
+    expect(sitemap).toContain("/transmettre");
+    expect(sitemap).not.toContain("`${base}/accompagnement`");
     expect(sitemap).not.toContain("`${base}/automatisation`");
-    expect(sitemap).not.toContain("`${base}/sur-mesure`");
   });
 
-  it("uses the canonical accompaniment route from contextual calls to action", () => {
-    const modelMarkup = renderToStaticMarkup(createElement(MentoratAutomationCta, { modelSlug: "structure-google-drive-entreprise", variant: "modele" }));
-    const organisationMarkup = renderToStaticMarkup(createElement(MentoratAutomationCta, { contentSlug: "preparer-devis-propositions-commerciales", variant: "organisation" }));
-    expect(modelMarkup).toContain("/accompagnement?source=modele-detail&amp;modelSlug=structure-google-drive-entreprise#automatisation");
-    expect(organisationMarkup).toContain("/accompagnement?source=organisation-content&amp;contentSlug=preparer-devis-propositions-commerciales#automatisation");
+  it("uses the transmission route from contextual calls to action", () => {
+    const modelMarkup = renderToStaticMarkup(
+      createElement(MentoratAutomationCta, {
+        modelSlug: "structure-google-drive-entreprise",
+        variant: "modele",
+      }),
+    );
+    const organisationMarkup = renderToStaticMarkup(
+      createElement(MentoratAutomationCta, {
+        contentSlug: "preparer-devis-propositions-commerciales",
+        variant: "organisation",
+      }),
+    );
+
+    expect(modelMarkup).toContain(
+      "/transmettre?source=modele-detail&amp;modelSlug=structure-google-drive-entreprise#structuration",
+    );
+    expect(organisationMarkup).toContain(
+      "/transmettre?source=organisation-content&amp;contentSlug=preparer-devis-propositions-commerciales#structuration",
+    );
   });
 
   it("keeps the Tools bridge educational and separate from the offer", async () => {

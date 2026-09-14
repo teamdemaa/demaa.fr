@@ -179,9 +179,9 @@ describe("service callback request route", () => {
       fields: [
         { label: "Service", value: "Structuration, automatisation & IA" },
         { label: "Slug du service", value: "automatisation-processus" },
-        { label: "Forfait", value: "Système prioritaire" },
+        { label: "Forfait", value: "Accompagnement sur 6 mois" },
         { label: "Slug du forfait", value: "automatisation-essentielle" },
-        { label: "Prix de référence", value: "À partir de 3 000 € HT" },
+        { label: "Prix de référence", value: "1 500 € HT / mois" },
         { label: "Numéro WhatsApp", value: "+33 6 12 34 56 78" },
         { label: "Locale", value: "fr" },
         { label: "Marché", value: "fr-fr" },

@@ -75,9 +75,12 @@ export default function ActionPlanNavbar({
       >
         {displayedItems.map(({ view, labels, Icon }) => {
           const usesResourcesParent = routeNavigation && view === "solutions";
+          const usesTransmissionRoute = routeNavigation && localeCode === "fr" && view === "services";
           const label = usesResourcesParent
-            ? localeCode === "en" ? "Resources" : "Ressources"
-            : labels[localeCode];
+    ? localeCode === "en" ? "Resources" : "Ressources"
+    : usesTransmissionRoute
+      ? "Vendre"
+    : labels[localeCode];
           const DisplayIcon = usesResourcesParent ? LibraryBig : Icon;
           const isActive = activeView === view;
           const className = `${tabClassName} ${isActive ? "bg-dema-sage text-dema-forest xl:bg-transparent xl:font-semibold" : "text-dema-muted hover:text-brand-blue"}`;
@@ -105,7 +108,7 @@ export default function ActionPlanNavbar({
               ? "/"
               : view === "academy"
                 ? "/tutoriels"
-                : "/accompagnement";
+                : "/transmettre";
           const usesPublicRoute = routeNavigation
             || (localeCode === "fr" && (view === "solutions" || view === "academy" || view === "services"));
 

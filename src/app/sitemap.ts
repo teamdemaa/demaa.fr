@@ -42,10 +42,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...(PUBLIC_SPECIALISTS_ENABLED
       ? [{ url: `${base}/specialistes`, lastModified: siteUpdatedAt, changeFrequency: "weekly" as const, priority: 0.94 }]
       : []),
-    { url: `${base}/accompagnement`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${base}/transmettre`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.85 },
     { url: `${base}/modeles`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/session-structurer`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${base}/partners`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.65 },
     { url: `${base}/annuaire-outils`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/aides-et-subventions`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-reseaux-pro`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },

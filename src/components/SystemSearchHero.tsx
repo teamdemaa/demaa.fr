@@ -12,6 +12,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import { CornerDownLeft, Search, SlidersHorizontal } from "lucide-react";
+import HorizontalScrollHint from "@/components/HorizontalScrollHint";
 import { trackSystemJourneyEvent } from "@/lib/kit-analytics-client";
 import { ALL_SECTORS_LABEL } from "@/lib/public-sectors";
 import { getSystemIcon } from "@/lib/system-icon";
@@ -354,11 +355,16 @@ export default function SystemSearchHero({
                 <h2 className="demaa-catalog-section-title text-brand-blue/85">
                   {section.title}
                 </h2>
-                <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {section.systems.map((system) => (
-                    <SystemDirectoryCard key={system.id} system={system} />
-                  ))}
-                </div>
+                <HorizontalScrollHint
+                  className="-mx-4 mt-3 overflow-x-auto px-4 pb-4 pt-1 soft-scroll md:-mx-8 md:px-8"
+                  controlsClassName="absolute right-0 -top-10 z-10 flex items-center gap-1.5"
+                >
+                  <div className="flex gap-4">
+                    {section.systems.map((system) => (
+                      <SystemDirectoryCard key={system.id} system={system} />
+                    ))}
+                  </div>
+                </HorizontalScrollHint>
               </section>
             ))}
           </div>
@@ -382,7 +388,7 @@ function SystemDirectoryCard({ system }: { system: System }) {
   return (
     <Link
       href={`/solutions/${system.slug}`}
-      className="demaa-card group relative flex aspect-square w-full flex-col overflow-hidden rounded-[1.2rem] p-4 sm:p-5 [content-visibility:auto] [contain-intrinsic-size:15rem_15rem]"
+      className="demaa-card group relative flex aspect-square w-[74vw] max-w-[15rem] shrink-0 flex-col overflow-hidden rounded-[1.2rem] p-4 sm:w-[15rem] sm:p-5 [content-visibility:auto] [contain-intrinsic-size:15rem_15rem]"
     >
       <span className="relative z-10 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper sm:h-10 sm:w-10">
         {icon}

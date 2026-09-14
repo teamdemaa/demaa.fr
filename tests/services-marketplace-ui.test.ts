@@ -151,13 +151,13 @@ describe("canonical Accompagnement catalog", () => {
       cta: { kind: "callback", label: "Envoyer ma demande" },
     });
     expect(automation?.packages.map(({ slug, pricing }) => [slug, pricing.amountMinor])).toEqual([
-      ["automatisation-essentielle", 300000],
+      ["automatisation-essentielle", 150000],
     ]);
     expect(automation?.packages[0]).toMatchObject({
-      name: "Système prioritaire",
+      name: "Accompagnement sur 6 mois",
       pricing: {
-        label: "À partir de 3 000 € HT",
-        mode: "starting",
+        label: "1 500 € HT / mois",
+        mode: "fixed",
       },
     });
     expect(automation?.packages[0]?.pricing.note).toContain("analyse");
@@ -219,7 +219,7 @@ describe("canonical Accompagnement catalog", () => {
     expect(markup).not.toContain("Assistant digital");
     expect(markup).not.toContain("Recruter un alternant");
     expect(markup).not.toContain("Expert-comptable");
-    expect(markup).toContain("À partir de 3 000 € HT");
+    expect(markup).toContain("1 500 € HT / mois");
     expect(markup).toContain("À partir de 4 500 € HT");
     expect(markup).not.toContain("750 € HT / mois");
     expect(markup).not.toContain("550 € HT / jour");
