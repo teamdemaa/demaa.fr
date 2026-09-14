@@ -50,6 +50,8 @@ describe("seller and accompaniment pages", () => {
     expect(landing).not.toContain("entreprise-presentee-repreneurs-v1.png");
     expect(landing).toContain('<BusinessSellerActions variant="hero" />');
     expect(landing).toContain('href="/accompagnement"');
+    expect(landing).toContain("Accompagnement à la mise en vente");
+    expect(landing).toContain("Être accompagné");
     expect(landing).not.toContain("AUTOMATION_OFFER");
     expect(landing).not.toContain("1 500");
   });
@@ -92,7 +94,10 @@ describe("seller and accompaniment pages", () => {
     );
     expect(landing).toContain("Accompagnement facultatif");
     expect(landing).toContain(
-      '<AccompanimentContactControl label="Préparer mon entreprise" />',
+      '<AccompanimentContactControl label="Être accompagné" />',
+    );
+    expect(landing).toContain(
+      "← Retour à vendre",
     );
     expect(
       landing.indexOf("Je peux m’absenter sans que l’activité s’arrête."),

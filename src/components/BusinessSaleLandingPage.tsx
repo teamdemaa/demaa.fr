@@ -132,7 +132,7 @@ export default function BusinessSaleLandingPage() {
           <div className="mx-auto grid max-w-6xl gap-8 text-dema-paper lg:grid-cols-[1fr_0.72fr] lg:items-end lg:gap-20">
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-sage">
-                En option
+                Accompagnement à la mise en vente
               </p>
               <h2 className="demaa-marketing-section-title mt-4 max-w-3xl text-dema-paper">
                 Votre entreprise dépend encore beaucoup de vous ?
@@ -146,7 +146,7 @@ export default function BusinessSaleLandingPage() {
               href="/accompagnement"
               className="inline-flex min-h-12 w-fit items-center justify-center gap-2 rounded-full bg-dema-paper px-7 py-3 text-sm font-semibold text-dema-forest transition hover:bg-dema-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-paper/50"
             >
-              Découvrir l’accompagnement
+              Être accompagné
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>

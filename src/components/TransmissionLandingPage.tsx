@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import {
   BarChart3,
   Check,
@@ -166,11 +167,19 @@ export default function TransmissionLandingPage() {
       <main className="overflow-x-clip bg-dema-cream text-brand-blue">
         <section className="border-b border-dema-line px-5 pb-16 pt-14 text-left sm:px-8 sm:pb-20 sm:pt-20 sm:text-center lg:pt-24">
           <div className="mx-auto max-w-6xl">
+            <div className="mb-8 flex justify-start">
+              <Link
+                href="/transmettre"
+                className="text-sm text-dema-muted underline decoration-dema-line underline-offset-4 transition hover:text-dema-forest"
+              >
+                ← Retour à vendre
+              </Link>
+            </div>
             <h1 className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}>
               Préparez votre entreprise pour mieux la vendre.
             </h1>
             <div className="mx-auto mt-8 flex justify-start sm:justify-center">
-              <AccompanimentContactControl label="Préparer mon entreprise" />
+              <AccompanimentContactControl label="Être accompagné" />
             </div>
             <Image
               src="/illustrations/accompagnement/hero-preparer-vente-v2.png"
@@ -380,7 +389,7 @@ export default function TransmissionLandingPage() {
               <div className="mt-7">
                 <AccompanimentContactControl
                   className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-dema-paper px-7 py-3 text-sm font-semibold text-dema-forest transition hover:bg-dema-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-paper/50"
-                  label="Préparer mon entreprise"
+                  label="Être accompagné"
                 />
               </div>
             </div>
