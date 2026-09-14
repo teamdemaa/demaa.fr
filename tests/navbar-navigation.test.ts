@@ -112,6 +112,9 @@ describe("Demaa application navbar", () => {
     expect(resources).not.toContain("rounded-full border border-dema-line");
     expect(source).toContain("leading-tight");
     expect(source).not.toContain("leading-none");
+    expect(navbarSource).toContain("https://wa.me/33782842435");
+    expect(navbarSource).toContain("Écrire à Demaa sur WhatsApp au +33 7 82 84 24 35");
+    expect(navbarSource).toContain("<span>WhatsApp</span>");
     expect(tutorialsIndex).toContain("TutorialsHub");
     expect(tutorialsIndex).toContain('path: "/tutoriels"');
     expect(tutorialsIndex).not.toContain("<Navbar");
