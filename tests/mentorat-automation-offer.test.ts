@@ -63,7 +63,7 @@ describe("accompagnement de structuration", () => {
     expect(landing).toContain("Tableau de bord adapté à l’activité");
     expect(landing).toContain("Dossier de fonctionnement utilisable par un repreneur");
     expect(landing).toContain("Rôles, responsabilités et règles de décision");
-    expect(landing).toContain(
+    expect(landing).not.toContain(
       "/illustrations/accompagnement/hero-preparer-vente-v2.png",
     );
     expect(landing).toContain("/illustrations/accompagnement/equipe-autonome-v1.png");
@@ -82,7 +82,7 @@ describe("accompagnement de structuration", () => {
     expect(landing).not.toContain("30 %");
     expect(landing).not.toContain("Chef de mission comptable");
     expect(landing).toContain("AccompanimentContactControl");
-    expect(landing).toContain('<AccompanimentContactControl label="Préparer mon entreprise" />');
+    expect(landing).toContain('<AccompanimentContactControl label="Être accompagné" />');
     expect(landing).toContain('<BusinessSellerActions variant="estimate" />');
     expect(sitemap).toContain("/transmettre");
     expect(sitemap).toContain("`${base}/accompagnement`");

@@ -182,13 +182,13 @@ export default function TransmissionLandingPage() {
               <AccompanimentContactControl label="Être accompagné" />
             </div>
             <Image
-              src="/illustrations/accompagnement/hero-preparer-vente-v2.png"
-              alt="Un dirigeant de terrain présente à une acheteuse une entreprise structurée autour de son équipe, de ses processus et de ses indicateurs."
+              src="/illustrations/accompagnement/equipe-autonome-v1.png"
+              alt="Une équipe structure son fonctionnement pendant que le dirigeant prend du recul."
               width={1774}
               height={887}
               sizes="(max-width: 767px) 92vw, 48rem"
               preload
-              className="-ml-[20%] mr-auto mt-10 h-auto w-[120%] max-w-none object-contain sm:mx-auto sm:mt-12 sm:w-full sm:max-w-3xl"
+              className="mx-auto mt-10 h-auto w-full object-contain sm:mt-12 sm:max-w-3xl"
             />
           </div>
         </section>
@@ -318,15 +318,7 @@ export default function TransmissionLandingPage() {
         </section>
 
         <section className="border-y border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20">
-          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-12">
-            <Image
-              src="/illustrations/accompagnement/equipe-autonome-v1.png"
-              alt="Une équipe travaille de façon autonome pendant que le dirigeant peut prendre du recul."
-              width={1774}
-              height={887}
-              sizes="(max-width: 1023px) 92vw, 44vw"
-              className="h-auto w-full -translate-x-[5%] object-contain"
-            />
+          <div className="mx-auto max-w-5xl">
             <blockquote>
               <h2 className="demaa-marketing-section-title text-dema-forest">
                 « Je peux m’absenter sans que l’activité s’arrête. »
