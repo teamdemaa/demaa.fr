@@ -16,10 +16,11 @@ describe("Tools hub positioning", () => {
     for (const hidden of ["Restauration", "Commerce & retail", "Santé, bien-être & esthétique"]) expect(TOOLS_HUB_SECTOR_ORDER).not.toContain(hidden);
   });
 
-  it("uses a responsive grid instead of horizontal card scrolling", () => {
+  it("keeps compact horizontally scrollable cards on mobile", () => {
     const source = readFileSync("src/components/SystemSearchHero.tsx", "utf8");
-    expect(source).toContain("sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4");
-    expect(source).not.toContain("HorizontalScrollHint");
+    expect(source).toContain("HorizontalScrollHint");
+    expect(source).toContain("w-[74vw] max-w-[15rem]");
+    expect(source).not.toContain("sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4");
     expect(source).not.toContain("restaurant");
   });
 });

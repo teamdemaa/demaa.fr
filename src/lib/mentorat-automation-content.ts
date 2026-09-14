@@ -1,6 +1,6 @@
 import { AUTOMATION_OFFER } from "@/lib/automation-offer";
 
-export const AUTOMATION_ACCOMPANIMENT_PATH = "/accompagnement";
+export const AUTOMATION_ACCOMPANIMENT_PATH = "/transmettre";
 
 export const mentoratAutomationContent = {
   hero: {
@@ -91,17 +91,15 @@ export const mentoratAutomationContent = {
     ],
   },
   proof: {
-    value: "30 %",
+    value: "Je peux m’absenter sans que l’activité s’arrête.",
     quote:
-      "En mettant en place ces systèmes, nous avons gagné environ 30 % de temps. Maîtriser les outils et savoir les relier a vraiment changé notre manière de travailler.",
-    attribution: "Chef de mission comptable",
-    note:
-      "Résultat constaté chez ce client sur le travail automatisé. Le gain dépend du fonctionnement, du volume et des tâches concernées.",
+      "Les responsabilités sont claires, les méthodes sont documentées et l’équipe sait quoi faire. L’entreprise ne repose plus uniquement sur moi : c’est devenu un véritable actif qu’un acheteur peut comprendre, reprendre et valoriser.",
+    attribution: "Dirigeant",
   },
   offer: {
     duration: AUTOMATION_OFFER.durationLabel,
     price: AUTOMATION_OFFER.price.label,
-    title: "Un mois pour automatiser ce qui vous fait perdre du temps.",
+    title: "Six mois pour structurer et automatiser durablement votre entreprise.",
     scope:
       "Nous examinons l’ensemble de votre fonctionnement, puis nous choisissons avec vous ce qu’il faut mettre en place en premier. Nous réalisons cette automatisation en entier.",
   },
@@ -137,9 +135,9 @@ export const mentoratAutomationContent = {
         "Non. Nous l’utilisons seulement lorsqu’elle apporte un gain concret, par exemple pour classer une demande, résumer des notes ou préparer un compte rendu. Une automatisation simple suffit souvent pour le reste.",
     },
     {
-      question: "Que peut-on automatiser en un mois ?",
+      question: "Que peut-on structurer en six mois ?",
       answer:
-        "Nous regardons toutes les possibilités, puis choisissons avec vous ce qui peut être mis en place correctement pendant le mois.",
+        "Nous priorisons les fonctionnements qui créent le plus de dépendance ou de perte de temps, puis les structurons progressivement avec votre équipe pendant les six mois.",
     },
     {
       question: "Combien de temps cela demande-t-il à notre équipe ?",

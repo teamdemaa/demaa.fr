@@ -1,88 +1,342 @@
-import Image from "next/image";
-import { CalendarCheck2, Check, ChevronDown, ClipboardCheck, FileCheck2, Gauge, Inbox, MessagesSquare, Network, ReceiptText, UsersRound } from "lucide-react";
+import {
+  BarChart3,
+  Check,
+  ClipboardCheck,
+  FileCheck2,
+  Laptop,
+  Megaphone,
+  Network,
+  Target,
+  UsersRound,
+  Workflow,
+} from "lucide-react";
 import AccompanimentContactControl from "@/components/AccompanimentContactControl";
+import BusinessSellerActions from "@/components/BusinessSellerActions";
 import Navbar from "@/components/Navbar";
 import { AUTOMATION_OFFER } from "@/lib/automation-offer";
 import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
 
+const assetQualities = [
+  "Une rentabilité plus lisible",
+  "Une équipe plus autonome",
+  "Des processus documentés et transmissibles",
+] as const;
+
 const systems = [
-  { icon: Network, title: "Commercial et clients", text: "Demandes, devis, relances et suivi client." },
-  { icon: ClipboardCheck, title: "Missions et opérations", text: "Interventions, chantiers ou missions, avec les bonnes informations." },
-  { icon: FileCheck2, title: "Administration et finance", text: "Documents, facturation, échéances et données utiles." },
-  { icon: UsersRound, title: "Équipe", text: "Rôles, savoir-faire et transmission des informations." },
-  { icon: Gauge, title: "Pilotage", text: "Chiffres utiles, rythme de suivi et décisions." },
-] as const;
-
-const flow = [
-  { icon: Inbox, title: "Demande", text: "Appel, email ou formulaire" },
-  { icon: FileCheck2, title: "Devis", text: "Informations prêtes à utiliser" },
-  { icon: CalendarCheck2, title: "Planning", text: "Travail et échéances organisés" },
-  { icon: ClipboardCheck, title: "Mission, intervention ou chantier", text: "Les bonnes informations au bon moment" },
-  { icon: ReceiptText, title: "Facturation", text: "Éléments transmis sans ressaisie" },
-  { icon: MessagesSquare, title: "Suivi client", text: "Relance, retour et prochaine action" },
-] as const;
-
-const serviceProfiles = [
   {
-    title: "Services terrain",
-    text: "Maintenance, installation, dépannage, BTP, entretien ou propreté.",
-    image: "/illustrations/accompagnement/services-terrain-v5.png",
+    icon: Network,
+    title: "Commercial et clients",
+    text: "Demandes, offres, relances et suivi client.",
   },
   {
-    title: "Services professionnels",
-    text: "Cabinets, agences, conseil, informatique, recrutement ou formation.",
-    image: "/illustrations/accompagnement/services-professionnels-v5.png",
+    icon: ClipboardCheck,
+    title: "Missions et opérations",
+    text: "Interventions, chantiers ou missions, avec les bonnes informations.",
   },
   {
-    title: "Entreprise à transmettre",
-    text: "Un fonctionnement plus clair, documenté et moins dépendant du dirigeant.",
-    image: "/illustrations/accompagnement/entreprise-transmission-v7.png",
+    icon: FileCheck2,
+    title: "Administration et finance",
+    text: "Documents, facturation, échéances et données utiles.",
+  },
+  {
+    icon: UsersRound,
+    title: "Équipe et responsabilités",
+    text: "Rôles, savoir-faire et décisions qui ne reposent plus sur une seule personne.",
+  },
+  {
+    icon: BarChart3,
+    title: "Pilotage",
+    text: "Chiffres utiles, rythme de suivi et décisions.",
   },
 ] as const;
 
-const faq = [
-  { question: "À qui s’adresse cet accompagnement ?", answer: "Aux entreprises de services, sur le terrain comme au bureau, dont le fonctionnement repose encore sur beaucoup de ressaisies, de relances ou de connaissances gardées par quelques personnes." },
-  { question: "Faut-il préparer la vente de l’entreprise ?", answer: "Non. Structurer un système aide d’abord l’équipe et le dirigeant au quotidien. Si une transmission est prévue, le même travail rend aussi l’entreprise plus simple à expliquer et à reprendre." },
-  { question: "Utilisez-vous toujours de l’IA ?", answer: "Non. Nous utilisons l’IA seulement lorsqu’elle apporte un gain concret, par exemple pour classer une demande, résumer des notes ou préparer un document. Une automatisation simple suffit souvent." },
-  { question: "Faut-il changer nos outils ?", answer: "Pas nécessairement. Nous conservons ce qui fonctionne et proposons un changement seulement lorsqu’un outil bloque réellement le travail." },
-  { question: "Que peut-on mettre en place en un mois ?", answer: "Nous regardons l’ensemble du fonctionnement, puis choisissons avec vous un périmètre prioritaire qui peut être construit, testé et transmis correctement pendant le mois." },
+const steps = [
+  [
+    "01",
+    "Comprendre",
+    "L’activité, les chiffres, l’équipe et ce qui repose encore sur le dirigeant.",
+  ],
+  [
+    "02",
+    "Choisir",
+    "Le fonctionnement prioritaire à rendre plus clair et plus autonome.",
+  ],
+  [
+    "03",
+    "Structurer",
+    "Les processus, responsabilités, outils, automatisations et contrôles utiles.",
+  ],
+  [
+    "04",
+    "Documenter et transmettre",
+    "Un fonctionnement compris par l’équipe et plus facile à présenter à un repreneur.",
+  ],
 ] as const;
 
-const primaryButtonClassName = "inline-flex min-h-12 items-center justify-center rounded-full bg-dema-forest px-7 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35";
+const included = [
+  "Diagnostic initial de l’entreprise",
+  "Priorités de structuration définies avec vous",
+  "Mise en place progressive des processus et responsabilités",
+  "Outils et automatisations utiles",
+  "Points de travail réguliers avec le dirigeant et l’équipe",
+  "Documentation et transmission des savoir-faire",
+] as const;
+
+const specialists = [
+  {
+    icon: Workflow,
+    title: "Automatisation & IA",
+    text: "Pour supprimer les ressaisies et faire circuler les informations entre les outils.",
+  },
+  {
+    icon: UsersRound,
+    title: "Assistant digital",
+    text: "Pour prendre en charge les tâches récurrentes et faire vivre le nouveau fonctionnement.",
+  },
+  {
+    icon: Laptop,
+    title: "Application métier",
+    text: "Pour centraliser un processus lorsque les outils existants ne suffisent plus.",
+  },
+  {
+    icon: BarChart3,
+    title: "Pilotage financier",
+    text: "Pour fiabiliser les indicateurs et éclairer les décisions importantes.",
+  },
+  {
+    icon: Target,
+    title: "Prospection ciblée",
+    text: "Pour construire un flux d’opportunités qualifiées et mieux suivi.",
+  },
+  {
+    icon: Megaphone,
+    title: "Publicité et marketing",
+    text: "Pour renforcer la visibilité et l’acquisition lorsque l’entreprise est prête.",
+  },
+] as const;
 
 export default function TransmissionLandingPage() {
   return (
     <>
       <Navbar minimal publicNavigationActiveView="services" />
       <main className="overflow-x-clip bg-dema-cream text-brand-blue">
-        <section className="px-5 pb-14 pt-14 sm:px-8 sm:pb-20 sm:pt-20 lg:pt-24">
-          <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[minmax(0,1.06fr)_minmax(24rem,0.94fr)] lg:gap-12">
-            <div className="text-left">
-              <h1 className={`${satoshiHeroTitleClassName} max-w-5xl`}>Une entreprise qui fonctionne mieux. <span className="demaa-section-title block text-dema-forest">Et dépend moins de vous.</span></h1>
-              <p className="mt-7 max-w-3xl text-base leading-7 text-dema-muted sm:text-lg sm:leading-8">Nous structurons et automatisons un fonctionnement prioritaire pour faire gagner du temps à votre équipe et rendre l’entreprise plus simple à piloter ou à transmettre.</p>
-              <div className="mt-8"><AccompanimentContactControl className={primaryButtonClassName} /></div>
+        <section className="border-b border-dema-line px-5 pb-16 pt-14 text-left sm:px-8 sm:pb-20 sm:pt-20 sm:text-center lg:pt-24">
+          <div className="mx-auto max-w-6xl">
+            <h1 className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}>
+              Préparez votre entreprise pour mieux la vendre.
+            </h1>
+            <div className="mt-8">
+              <BusinessSellerActions variant="sale" />
             </div>
-            <Image src="/illustrations/accompagnement/hero-entreprise-terrain-v5.png" alt="" aria-hidden="true" width={1536} height={1024} sizes="(max-width: 1023px) 92vw, 42vw" preload className="h-auto w-full object-contain" />
           </div>
         </section>
 
-        <section className="border-y border-dema-line bg-dema-paper px-5 py-14 sm:px-8 sm:py-16"><div className="mx-auto max-w-6xl"><h2 className="demaa-marketing-section-title max-w-4xl">Un système clair, de la demande au suivi client.</h2><p className="mt-5 max-w-3xl text-base leading-7 text-dema-muted">Demandes, devis, planning, missions, interventions ou chantiers, facturation et suivi client : les informations avancent sans être recopiées partout.</p><ol className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">{flow.map(({ icon: Icon, title, text }) => <li key={title} className="rounded-[1.4rem] border border-dema-line bg-dema-cream/45 p-5"><span className="flex h-12 w-12 items-center justify-center rounded-full bg-dema-sage text-dema-forest"><Icon className="h-5 w-5" strokeWidth={1.6} aria-hidden="true" /></span><h3 className="mt-5 text-base font-medium leading-snug">{title}</h3><p className="mt-2 text-xs leading-5 text-dema-muted">{text}</p></li>)}</ol></div></section>
+        <section className="px-5 py-16 sm:px-8 sm:py-20">
+          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.8fr)] lg:items-start lg:gap-20">
+            <div>
+              <h2 className="demaa-marketing-section-title max-w-3xl">
+                Une entreprise rentable n’est pas toujours facile à transmettre.
+              </h2>
+              <p className="mt-5 max-w-3xl text-base leading-7 text-dema-muted">
+                Lorsque les décisions, les clients, les méthodes et les chiffres
+                reposent encore sur le dirigeant, le repreneur voit surtout une
+                entreprise difficile à comprendre et à reprendre.
+              </p>
+            </div>
+            <ul className="divide-y divide-dema-line border-y border-dema-line">
+              {assetQualities.map((item) => (
+                <li key={item} className="flex gap-3 py-4 text-sm leading-6">
+                  <Check
+                    className="mt-1 h-4 w-4 shrink-0 text-dema-forest"
+                    aria-hidden="true"
+                  />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
-        <section className="px-5 py-16 sm:px-8 sm:py-20"><div className="mx-auto max-w-6xl"><div className="max-w-4xl"><h2 className="demaa-marketing-section-title">Nous structurons ce qui fait tourner votre entreprise.</h2><p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">Un système à la fois, en partant de ce qui fait perdre le plus de temps ou dépend le plus de vous.</p></div><div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">{systems.map(({ icon: Icon, title, text }) => <article key={title} className="rounded-[1.5rem] border border-dema-line bg-dema-paper p-6"><span className="flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest"><Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" /></span><h3 className="mt-5 text-lg font-medium leading-snug tracking-[-0.02em]">{title}</h3><p className="mt-3 text-sm leading-6 text-dema-muted">{text}</p></article>)}</div></div></section>
+        <section className="border-y border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="demaa-marketing-section-title max-w-4xl">
+              Nous structurons ce qui dépend encore trop de vous.
+            </h2>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              {systems.map(({ icon: Icon, title, text }) => (
+                <article
+                  key={title}
+                  className="rounded-[1.5rem] border border-dema-line bg-dema-cream p-6"
+                >
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                    <Icon
+                      className="h-5 w-5"
+                      strokeWidth={1.7}
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <h3 className="mt-5 text-lg font-medium leading-snug tracking-[-0.02em]">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-dema-muted">
+                    {text}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
-        <section id="automatisation" className="scroll-mt-24 bg-dema-forest px-5 py-16 text-dema-paper sm:px-8 sm:py-20"><div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20"><div><h2 className="demaa-marketing-section-title">Nous ne vous laissons pas avec un rapport.</h2><p className="mt-6 max-w-xl text-base leading-7 text-dema-paper/72">Nous observons, simplifions, documentons et mettons en place avec votre équipe. L’automatisation et l’IA prennent le répétitif lorsque cela apporte un vrai gain.</p></div><ol className="divide-y divide-dema-paper/18 border-y border-dema-paper/18">{[["01", "Comprendre", "Votre activité, vos outils et les pertes de temps."], ["02", "Choisir", "Le système prioritaire et le résultat attendu."], ["03", "Mettre en place", "Les étapes, outils, automatisations et contrôles utiles."], ["04", "Tester et transmettre", "Un fonctionnement utilisé par l’équipe et documenté simplement."]].map(([number, title, text]) => <li key={number} className="grid grid-cols-[3rem_1fr] gap-4 py-5"><span className="demaa-section-title text-2xl text-dema-sage">{number}</span><span><strong className="block font-medium text-dema-paper">{title}</strong><span className="mt-1 block text-sm leading-6 text-dema-paper/65">{text}</span></span></li>)}</ol></div></section>
+        <section
+          id="structuration"
+          className="scroll-mt-24 bg-dema-forest px-5 py-16 text-dema-paper sm:px-8 sm:py-20"
+        >
+          <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:items-start lg:gap-20">
+            <h2 className="demaa-marketing-section-title text-dema-paper">
+              Comment ça marche ?
+            </h2>
+            <ol className="divide-y divide-dema-paper/18 border-y border-dema-paper/18">
+              {steps.map(([number, title, text]) => (
+                <li
+                  key={number}
+                  className="grid grid-cols-[3rem_1fr] gap-4 py-5"
+                >
+                  <span className="font-serif text-2xl italic text-dema-sage">
+                    {number}
+                  </span>
+                  <span>
+                    <strong className="block font-medium text-dema-paper">
+                      {title}
+                    </strong>
+                    <span className="mt-1 block text-sm leading-6 text-dema-paper/65">
+                      {text}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
 
-        <section className="px-5 py-16 sm:px-8 sm:py-20"><div className="mx-auto grid max-w-6xl gap-8 sm:gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-center"><div><h2 className="demaa-marketing-section-title">Du client à l’équipe. De la mission au suivi client.</h2><p className="mt-6 max-w-2xl text-base leading-7 text-dema-muted">Vos équipes gardent la relation client, leur savoir-faire et les décisions importantes. Les informations utiles avancent jusqu’à la facturation, puis au suivi client.</p></div><div className="grid gap-2 sm:hidden" aria-hidden="true"><div className="relative aspect-[4/3] overflow-hidden"><Image src="/illustrations/accompagnement/flux-client-equipe-suivi-v6.png" alt="" fill sizes="calc(200vw - 5rem)" loading="eager" className="object-cover object-left" /></div><div className="relative aspect-[4/3] overflow-hidden"><Image src="/illustrations/accompagnement/flux-client-equipe-suivi-v6.png" alt="" fill sizes="calc(200vw - 5rem)" loading="eager" className="object-cover object-right" /></div></div><Image src="/illustrations/accompagnement/flux-client-equipe-suivi-v6.png" alt="" aria-hidden="true" width={2046} height={768} sizes="(max-width: 1023px) 92vw, 52vw" className="hidden h-auto w-full object-contain sm:block" /></div></section>
+        <section className="border-y border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end lg:gap-16">
+              <h2 className="demaa-marketing-section-title">
+                Un écosystème de spécialistes mobilisés au bon moment.
+              </h2>
+              <div className="max-w-2xl">
+                <p className="text-base leading-7 text-dema-muted">
+                  Nous pilotons le plan et mobilisons la compétence utile lorsque
+                  l’entreprise en a réellement besoin.
+                </p>
+                <p className="mt-3 text-xs leading-5 text-dema-muted">
+                  (Ces interventions sont proposées séparément. Leur périmètre et
+                  leur tarif sont validés avant le démarrage)
+                </p>
+              </div>
+            </div>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {specialists.map(({ icon: Icon, title, text }) => (
+                <article
+                  key={title}
+                  className="rounded-[1.5rem] border border-dema-line bg-dema-cream p-6"
+                >
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+                    <Icon
+                      className="h-5 w-5"
+                      strokeWidth={1.7}
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <h3 className="mt-5 text-lg font-medium leading-snug tracking-[-0.02em]">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-dema-muted">
+                    {text}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
-        <section className="border-y border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20"><div className="mx-auto max-w-6xl"><h2 className="demaa-marketing-section-title">La même logique, adaptée à votre métier.</h2><div className="mt-10 grid gap-5 md:grid-cols-3">{serviceProfiles.map((item) => <article key={item.title} className="border-t border-dema-line pt-5"><div className="relative aspect-square overflow-hidden" aria-hidden="true"><Image src={item.image} alt="" fill sizes="(max-width: 767px) 92vw, 30vw" className="object-contain" /></div><h3 className="mt-5 text-lg font-medium">{item.title}</h3><p className="mt-3 text-sm leading-6 text-dema-muted">{item.text}</p></article>)}</div></div></section>
+        <section className="px-5 py-16 sm:px-8 sm:py-20">
+          <div className="mx-auto grid max-w-6xl gap-12 rounded-[2rem] bg-dema-forest p-7 text-dema-paper sm:p-10 lg:grid-cols-[1fr_0.88fr] lg:gap-16 lg:p-12">
+            <div>
+              <h2 className="demaa-marketing-section-title text-dema-paper">
+                Six mois pour rendre votre entreprise plus autonome et
+                transmissible.
+              </h2>
+              <p className="mt-5 max-w-2xl text-base leading-7 text-dema-paper/72">
+                Nous avançons chaque mois sur les priorités qui renforcent la
+                valeur de l’entreprise et réduisent sa dépendance au dirigeant.
+              </p>
+              <p className="mt-8 text-sm font-medium uppercase tracking-[0.12em] text-dema-sage">
+                {AUTOMATION_OFFER.durationLabel}
+              </p>
+              <p className="demaa-section-title mt-3 text-4xl text-dema-paper">
+                {AUTOMATION_OFFER.price.label}
+              </p>
+              <p className="mt-3 text-sm text-dema-paper/65">
+                {AUTOMATION_OFFER.commitmentLabel}
+              </p>
+            </div>
+            <div>
+              <ul className="divide-y divide-dema-paper/18 border-y border-dema-paper/18">
+                {included.map((item) => (
+                  <li
+                    key={item}
+                    className="flex gap-3 py-3 text-sm leading-6 text-dema-paper/78"
+                  >
+                    <Check
+                      className="mt-1 h-4 w-4 shrink-0 text-dema-sage"
+                      aria-hidden="true"
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-7">
+                <AccompanimentContactControl
+                  className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-dema-paper px-7 py-3 text-sm font-semibold text-dema-forest transition hover:bg-dema-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-paper/50"
+                  label="Préparer mon entreprise"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
 
-        <section id="tarif" className="px-5 py-16 sm:px-8 sm:py-20"><div className="mx-auto grid max-w-6xl gap-12 rounded-[2rem] bg-dema-forest p-7 text-dema-paper sm:p-10 lg:grid-cols-[1fr_0.88fr] lg:gap-16 lg:p-12"><div><h2 className="demaa-marketing-section-title">Un mois pour mettre en place un système prioritaire.</h2><p className="mt-5 max-w-2xl text-base leading-7 text-dema-paper/72">Nous examinons l’ensemble du fonctionnement, choisissons avec vous le périmètre le plus utile, puis le construisons et le testons en entier.</p><p className="demaa-section-title mt-8 text-4xl text-dema-paper">{AUTOMATION_OFFER.price.label}</p></div><div><ul className="divide-y divide-dema-paper/18 border-y border-dema-paper/18">{["Analyse du fonctionnement actuel", "Liste des améliorations et automatisations possibles", "Choix du périmètre prioritaire", "Construction et connexion avec les outils", "Tests et ajustements avec l’équipe", "Documentation et prise en main"].map((item) => <li key={item} className="flex gap-3 py-3 text-sm leading-6 text-dema-paper/78"><Check className="mt-1 h-4 w-4 shrink-0 text-dema-sage" aria-hidden="true" />{item}</li>)}</ul><div className="mt-7"><AccompanimentContactControl className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-dema-paper px-7 py-3 text-sm font-semibold text-dema-forest transition hover:bg-dema-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-paper/50" /></div></div></div></section>
+        <section className="border-y border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20">
+          <blockquote className="mx-auto max-w-5xl">
+            <h2 className="demaa-marketing-section-title max-w-4xl text-dema-forest">
+              « Je peux m’absenter sans que l’activité s’arrête. »
+            </h2>
+            <div className="mt-8 border-t border-dema-line pt-7 sm:mt-10 sm:pt-8">
+              <p className="text-lg leading-8">
+                Les responsabilités sont claires, les méthodes sont
+                documentées et l’équipe sait quoi faire. L’entreprise ne repose
+                plus uniquement sur moi : c’est devenu un véritable actif qu’un
+                acheteur peut comprendre, reprendre et valoriser.
+              </p>
+              <footer className="mt-5 text-sm text-dema-muted">
+                Dirigeant, EM2A Expertise
+              </footer>
+            </div>
+          </blockquote>
+        </section>
 
-        <section className="border-y border-dema-line bg-dema-paper px-5 py-16 sm:px-8 sm:py-20"><div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-[0.38fr_1.62fr] md:items-center md:gap-14"><p className="demaa-section-title whitespace-nowrap text-7xl text-dema-forest sm:text-8xl">30 %</p><blockquote className="border-t border-dema-line pt-7 md:border-l md:border-t-0 md:pl-10 md:pt-0"><p className="text-lg leading-8">“En mettant en place ces systèmes, nous avons gagné environ 30 % de temps. Maîtriser les outils et savoir les relier a vraiment changé notre manière de travailler.”</p><footer className="mt-5 text-sm text-dema-muted">Chef de mission comptable, EM2A Expertise</footer><p className="mt-3 text-xs leading-5 text-dema-muted">Résultat constaté chez ce client sur le travail automatisé. Le gain dépend du fonctionnement, du volume et des tâches concernées.</p></blockquote></div></section>
-
-        <section id="faq" className="px-5 py-16 sm:px-8 sm:py-20"><div className="mx-auto max-w-5xl"><h2 className="demaa-marketing-section-title">Avant de commencer</h2><div className="mt-9 divide-y divide-dema-line border-y border-dema-line">{faq.map((item) => <details key={item.question} className="group py-5"><summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-base font-medium marker:hidden"><span>{item.question}</span><ChevronDown className="h-4 w-4 shrink-0 text-dema-forest transition group-open:rotate-180" aria-hidden="true" /></summary><p className="mt-3 max-w-3xl pr-9 text-sm leading-6 text-dema-muted">{item.answer}</p></details>)}</div></div></section>
-
-        <section className="border-t border-dema-line bg-dema-paper px-5 py-16 text-center sm:px-8 sm:py-20"><div className="mx-auto max-w-3xl"><h2 className="demaa-marketing-section-title">Qu’est-ce qui vous fait perdre du temps ou dépend encore de vous ?</h2><p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-dema-muted">Faisons le point sur ce qu’il faut structurer, automatiser ou préparer en premier.</p><div className="mt-8"><AccompanimentContactControl className={primaryButtonClassName} /></div></div></section>
+        <section className="px-5 py-16 text-center sm:px-8 sm:py-20">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="demaa-marketing-section-title">
+              Obtenez une première estimation de votre entreprise.
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-dema-muted">
+              Renseignez votre activité et quelques chiffres pour obtenir une
+              première fourchette indicative.
+            </p>
+            <BusinessSellerActions variant="estimate" />
+          </div>
+        </section>
       </main>
     </>
   );

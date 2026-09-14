@@ -8,7 +8,7 @@ const AUTOMATION_PACKAGE = [{
   name: AUTOMATION_OFFER.name,
   pricing: {
     label: AUTOMATION_OFFER.price.label,
-    note: "Un mois pour construire et tester l’automatisation terrain prioritaire définie avec vous.",
+    note: AUTOMATION_OFFER.commitmentLabel,
   },
   slug: AUTOMATION_OFFER.packageSlug,
   summary: AUTOMATION_OFFER.summary,

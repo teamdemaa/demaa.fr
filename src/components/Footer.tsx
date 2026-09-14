@@ -16,8 +16,7 @@ const collaborationLinks = [
   { label: "À reprendre", href: "/a-reprendre" },
   PUBLIC_SPECIALISTS_ENABLED
     ? { label: "Spécialistes", href: "/specialistes" }
-    : { label: "Accompagnement", href: "/accompagnement" },
-  { label: "Demaa Partners", href: "/partners" },
+    : { label: "Vendre", href: "/transmettre" },
   { label: "Annonces", href: "/opportunites" },
   { label: "Rejoindre Team Demaa", href: "/opportunites?intent=team-demaa-profile" },
   { label: "Nous contacter", href: "mailto:team@demaa.fr" },
@@ -49,7 +48,7 @@ export default function Footer() {
               />
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
-              Achetez, structurez ou transmettez une PME de services.
+              Reprenez ou vendez une PME de services.
             </p>
           </div>
 

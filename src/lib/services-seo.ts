@@ -79,8 +79,8 @@ export function buildServicePageJsonLd(serviceEntry: CanonicalService) {
       ? [{
           "@type": "ListItem",
           position: 2,
-          name: PUBLIC_SPECIALISTS_ENABLED ? "Spécialistes" : "Accompagnement",
-          item: `${origin}${PUBLIC_SPECIALISTS_ENABLED ? "/specialistes" : "/accompagnement"}`,
+          name: PUBLIC_SPECIALISTS_ENABLED ? "Spécialistes" : "Transmettre",
+          item: `${origin}${PUBLIC_SPECIALISTS_ENABLED ? "/specialistes" : "/transmettre"}`,
         }]
       : []),
     {

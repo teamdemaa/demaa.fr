@@ -11,7 +11,7 @@ const BusinessValuationDialog = dynamic(() => import("@/components/BusinessValua
 const primaryClassName = "inline-flex min-h-12 items-center justify-center rounded-full bg-dema-forest px-7 py-3 text-sm font-semibold text-dema-paper transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35";
 const secondaryClassName = "inline-flex min-h-12 items-center justify-center rounded-full border border-dema-forest/25 bg-dema-paper px-7 py-3 text-sm font-medium text-dema-forest transition hover:border-dema-forest/45 hover:bg-dema-sage/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25";
 
-export default function BusinessSellerActions({ variant = "hero" }: { variant?: "hero" | "estimate" }) {
+export default function BusinessSellerActions({ variant = "hero" }: { variant?: "hero" | "sale" | "estimate" }) {
   const [view, setView] = useState<"sale" | "valuation" | null>(null);
   const [valuation, setValuation] = useState<{ input: BusinessValuationInput; result: BusinessValuationResult }>();
 
@@ -19,9 +19,11 @@ export default function BusinessSellerActions({ variant = "hero" }: { variant?: 
     <>
       {variant === "hero" ? (
         <div className="mx-auto mt-8 flex max-w-xl flex-col items-start justify-start gap-3 sm:flex-row sm:items-center sm:justify-center">
-          <button type="button" className={`${primaryClassName} w-fit`} onClick={() => setView("sale")}>Transmettre mon entreprise</button>
+          <button type="button" className={`${primaryClassName} w-fit`} onClick={() => setView("sale")}>Vendre mon entreprise</button>
           <button type="button" className={`${secondaryClassName} w-fit`} onClick={() => setView("valuation")}>Estimer mon entreprise</button>
         </div>
+      ) : variant === "sale" ? (
+        <button type="button" className={primaryClassName} onClick={() => setView("sale")}>Vendre mon entreprise</button>
       ) : (
         <button type="button" className={`${primaryClassName} mt-8 w-fit`} onClick={() => setView("valuation")}>Estimer mon entreprise</button>
       )}

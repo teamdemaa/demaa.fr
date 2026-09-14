@@ -96,6 +96,7 @@ describe("public qualification forms", () => {
       source("src/components/GuestDiagnosticControl.tsx"),
       source("src/components/ProviderProfileModal.tsx"),
       source("src/components/RepriseOpportunityDetail.tsx"),
+      source("src/components/RepriseProjectControl.tsx"),
       source("src/components/SolutionReferralForm.tsx"),
     ];
 
@@ -119,7 +120,7 @@ describe("public qualification forms", () => {
       ">Entreprise<",
     ]);
     expectInOrder(source("src/components/AccompanimentContactControl.tsx"), [
-      "Qu’aimeriez-vous améliorer, automatiser ou préparer ?",
+      "Que faut-il structurer avant la transmission ?",
       ">Prénom et nom<",
       ">Email<",
       ">Téléphone<",
@@ -134,6 +135,15 @@ describe("public qualification forms", () => {
       "Email",
       "Téléphone",
       "Entreprise",
+    ]);
+    expectInOrder(source("src/components/RepriseProjectControl.tsx"), [
+      "Activité recherchée",
+      "Région",
+      "Budget maximal",
+      "Votre projet en quelques mots",
+      "Prénom et nom",
+      "Email",
+      "Téléphone",
     ]);
     expectInOrder(source("src/components/GuestDiagnosticControl.tsx"), [
       "Qu’est-ce qui vous prend trop de temps aujourd’hui ?",

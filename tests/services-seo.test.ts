@@ -51,11 +51,11 @@ describe("canonical Services SEO and redirects", () => {
     expect(buildServicePageJsonLd(automation)[1]).toMatchObject({
       offers: [
         {
-          name: "Système prioritaire",
-          price: "3000.00",
+          name: "Accompagnement sur 6 mois",
+          price: "1500.00",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
-            price: "3000.00",
+            price: "1500.00",
             priceCurrency: "EUR",
             valueAddedTaxIncluded: false,
           },
@@ -67,7 +67,7 @@ describe("canonical Services SEO and redirects", () => {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Accueil", item: "https://demaa.fr" },
-        { "@type": "ListItem", position: 2, name: "Structuration, automatisation & IA", item: "https://demaa.fr/accompagnement" },
+        { "@type": "ListItem", position: 2, name: "Structuration, automatisation & IA", item: "https://demaa.fr/transmettre" },
       ],
     });
 

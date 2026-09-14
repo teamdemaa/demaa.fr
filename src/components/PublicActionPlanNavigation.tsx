@@ -5,7 +5,7 @@ export type PublicActionPlanView = "marketplace" | "resources" | "services";
 
 const navigationItems = [
   { view: "marketplace", label: "À reprendre", href: "/a-reprendre", Icon: Building2 },
-  { view: "services", label: "Accompagnement", href: "/accompagnement", Icon: Workflow },
+  { view: "services", label: "Vendre", href: "/transmettre", Icon: Workflow },
   { view: "resources", label: "Ressources", href: "/outils", Icon: LibraryBig },
 ] as const;
 

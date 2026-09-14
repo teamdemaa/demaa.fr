@@ -31,7 +31,7 @@ describe("Specialists public index", () => {
     expect(markup).toContain("Logiciel métier sur mesure");
     expect(markup).toContain("Assistant digital");
     expect(markup).not.toContain("Expert-comptable");
-    expect(markup).toContain("À partir de 3 000 € HT");
+    expect(markup).toContain("1 500 € HT / mois");
     expect(markup).not.toContain("Sur devis");
     expect(markup).not.toContain("550 € HT / jour");
     expect(markup).toContain("À partir de 650 € HT / mois");

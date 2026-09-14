@@ -18,12 +18,12 @@ describe("public route integrity", () => {
     expect(sectorPages).not.toContain('href: "/organisation"');
     expect(sectorPages).not.toContain('href: "/structuration"');
     expect(sectorPages).toContain('href: "/outils"');
-    expect(sectorPages).toContain('href: "/accompagnement"');
+    expect(sectorPages).toContain('href: "/transmettre"');
     expect(sectorPages).not.toContain('href: "/application-metier"');
     expect(sectorPages).not.toContain('href: "/systemes"');
     expect(sectorPages).not.toContain('href: "/services"');
     expect(validator).toContain('"/outils"');
-    expect(validator).toContain('"/accompagnement"');
+    expect(validator).toContain('"/transmettre"');
     expect(validator).not.toContain('"/application-metier"');
     expect(validator).not.toContain('"/systemes"');
     expect(validator).not.toContain('"/services"');
@@ -38,7 +38,7 @@ describe("public route integrity", () => {
   it("publishes the three strategic hubs and keeps secondary offers out of the sitemap", async () => {
     const sitemap = await readSource("src/app/sitemap.ts");
 
-    expect(sitemap).toContain('`${base}/accompagnement`');
+    expect(sitemap).toContain('`${base}/transmettre`');
     expect(sitemap).not.toContain('`${base}/automatisation`');
     expect(sitemap).not.toContain('`${base}/application-metier`');
     expect(sitemap).toContain('`${base}/outils`');
@@ -52,14 +52,14 @@ describe("public route integrity", () => {
     expect(sitemap).not.toContain('`${base}/systemes`');
   });
 
-  it("returns retained service details to Accompagnement while Specialists is parked", async () => {
+  it("returns retained service details to Transmettre while Specialists is parked", async () => {
     const servicePage = await readSource(
       "src/app/(marketing)/services/[slug]/page.tsx",
     );
 
-    expect(servicePage).toContain('PUBLIC_SPECIALISTS_ENABLED ? "/specialistes" : "/accompagnement"');
+    expect(servicePage).toContain('PUBLIC_SPECIALISTS_ENABLED ? "/specialistes" : "/transmettre"');
     expect(servicePage).not.toContain('href="/services"');
-    expect(servicePage).toContain('PUBLIC_SPECIALISTS_ENABLED ? "Retour aux spécialistes" : "Retour à l’accompagnement"');
+    expect(servicePage).toContain('PUBLIC_SPECIALISTS_ENABLED ? "Retour aux spécialistes" : "Retour à la transmission"');
   });
 
   it("delivers live-session métier resources through the canonical Solutions routes", async () => {

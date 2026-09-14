@@ -60,7 +60,7 @@ export default function BusinessSaleDialog({
   }
 
   return (
-    <DirectoryDetailDialogShell ariaLabel="Transmettre mon entreprise" maxWidthClassName="max-w-2xl" onClose={onClose}>
+    <DirectoryDetailDialogShell ariaLabel="Vendre mon entreprise" maxWidthClassName="max-w-2xl" onClose={onClose}>
       {state === "success" ? (
         <div className="py-8 text-center">
           <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-dema-forest text-dema-paper"><Check className="h-5 w-5" aria-hidden="true" /></span>
@@ -70,7 +70,7 @@ export default function BusinessSaleDialog({
       ) : (
         <>
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">Projet de transmission</p>
-          <h2 className="mt-3 text-3xl font-medium tracking-[-0.04em] sm:text-4xl">Transmettre mon entreprise.</h2>
+          <h2 className="mt-3 text-3xl font-medium tracking-[-0.04em] sm:text-4xl">Vendre mon entreprise.</h2>
           <p className="mt-4 max-w-xl text-sm leading-6 text-dema-muted">Décrivez-nous d’abord votre entreprise et votre projet de transmission.</p>
           {valuationResult ? (
             <div className="mt-6 rounded-2xl bg-dema-sage/55 p-4 text-sm text-brand-blue">
