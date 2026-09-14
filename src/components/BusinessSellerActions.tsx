@@ -19,11 +19,11 @@ export default function BusinessSellerActions({ variant = "hero" }: { variant?: 
     <>
       {variant === "hero" ? (
         <div className="mx-auto mt-8 flex max-w-xl flex-col items-start justify-start gap-3 sm:flex-row sm:items-center sm:justify-center">
-          <button type="button" className={`${primaryClassName} w-fit`} onClick={() => setView("sale")}>Vendre mon entreprise</button>
+          <button type="button" className={`${primaryClassName} w-fit`} onClick={() => setView("sale")}>Présenter mon entreprise</button>
           <button type="button" className={`${secondaryClassName} w-fit`} onClick={() => setView("valuation")}>Estimer mon entreprise</button>
         </div>
       ) : variant === "sale" ? (
-        <button type="button" className={primaryClassName} onClick={() => setView("sale")}>Vendre mon entreprise</button>
+        <button type="button" className={primaryClassName} onClick={() => setView("sale")}>Présenter mon entreprise</button>
       ) : (
         <button type="button" className={`${primaryClassName} mt-8 w-fit`} onClick={() => setView("valuation")}>Estimer mon entreprise</button>
       )}

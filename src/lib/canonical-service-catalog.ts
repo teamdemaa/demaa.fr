@@ -156,7 +156,7 @@ const canonicalServiceDefinitions = deepFreeze([
   },
   {
     slug: "automatisation-processus", name: AUTOMATION_OFFER.serviceName, eyebrow: `Accompagnement · ${AUTOMATION_OFFER.durationLabel}`,
-    detailHref: "/transmettre",
+    detailHref: "/accompagnement",
     summary: "Structurez et automatisez un fonctionnement prioritaire pour gagner du temps et rendre l’entreprise plus simple à piloter ou à transmettre.",
     description: "Nous analysons la circulation des informations, clarifions le système prioritaire, puis mettons en place les processus, outils, automatisations et usages utiles de l’IA avec votre équipe.",
     result: "Un système testé, documenté et moins dépendant des ressaisies ou d’une seule personne.",

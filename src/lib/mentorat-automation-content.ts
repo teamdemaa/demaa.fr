@@ -1,6 +1,6 @@
 import { AUTOMATION_OFFER } from "@/lib/automation-offer";
 
-export const AUTOMATION_ACCOMPANIMENT_PATH = "/transmettre";
+export const AUTOMATION_ACCOMPANIMENT_PATH = "/accompagnement";
 
 export const mentoratAutomationContent = {
   hero: {

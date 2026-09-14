@@ -22,7 +22,7 @@ vi.mock("@/lib/request-guard", () => ({ enforceAllowedHost: mocks.enforceAllowed
 import { POST } from "@/app/api/accompaniment-request/route";
 
 function request(overrides: Record<string, unknown> = {}) {
-  return new Request("https://demaa.fr/api/accompaniment-request", { method: "POST", headers: { "Content-Type": "application/json", Origin: "https://demaa.fr", Referer: "https://demaa.fr/transmettre" }, body: JSON.stringify({ attribution: { version: 1 }, company: "Atelier Martin", email: "direction@example.com", faxNumber: "", idempotencyKey: "accomp:12345678", message: "Nous ressaisissons les demandes clients et les comptes rendus.", name: "Camille Martin", phone: "+33 6 12 34 56 78", ...overrides }) });
+  return new Request("https://demaa.fr/api/accompaniment-request", { method: "POST", headers: { "Content-Type": "application/json", Origin: "https://demaa.fr", Referer: "https://demaa.fr/accompagnement" }, body: JSON.stringify({ attribution: { version: 1 }, company: "Atelier Martin", email: "direction@example.com", faxNumber: "", idempotencyKey: "accomp:12345678", message: "Nous ressaisissons les demandes clients et les comptes rendus.", name: "Camille Martin", phone: "+33 6 12 34 56 78", ...overrides }) });
 }
 
 describe("accompaniment request route", () => {
@@ -32,7 +32,7 @@ describe("accompaniment request route", () => {
     mocks.enforceSameOrigin.mockReturnValue(null);
     mocks.enforceRateLimit.mockResolvedValue(null);
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
-    mocks.resolveLeadContext.mockResolvedValue({ source: "Demaa - Transmission", sourceUrl: "https://demaa.fr/transmettre" });
+    mocks.resolveLeadContext.mockResolvedValue({ source: "Demaa - Accompagnement", sourceUrl: "https://demaa.fr/accompagnement" });
     mocks.submitLeadRequest.mockResolvedValue({ duplicate: false, leadId: "lead-1" });
   });
 

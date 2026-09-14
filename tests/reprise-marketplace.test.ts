@@ -91,7 +91,7 @@ describe("marketplace À reprendre", () => {
       readFile(new URL("../src/app/api/reprise-interest/route.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/app/api/business-estimate/route.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/app/(marketing)/a-reprendre/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/components/TransmissionLandingPage.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/BusinessSaleLandingPage.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(marketplace).not.toContain("Informations déclaratives · disponibilité à confirmer");
@@ -152,14 +152,14 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain("Faites glisser pour voir les autres entreprises");
     expect(marketplace).toContain('className="w-[8.5rem] sm:w-[11rem]"');
     expect(marketplace).toContain("{opportunity.activity}");
-    expect(sellerActions).toContain("Vendre mon entreprise");
+    expect(sellerActions).toContain("Présenter mon entreprise");
     expect(sellerActions).toContain("Estimer mon entreprise");
     expect(sellerActions).toContain("bg-dema-forest");
     expect(sellerActions).toContain("flex-col items-start justify-start");
     expect(sellerActions).toContain("sm:items-center sm:justify-center");
     expect(sellerActions).not.toContain("w-fit self-center");
     expect(transmission).toContain('<BusinessSellerActions variant="hero" />');
-    expect(transmission).toContain('<BusinessSellerActions variant="estimate" />');
+    expect(transmission).toContain('<BusinessSellerActions variant="sale" />');
     expect(saleDialog).toContain("Décrivez-nous d’abord votre entreprise et votre projet de vente");
     expect(saleDialog).toContain("Votre entreprise et votre projet en quelques mots");
     expect(saleDialog.indexOf('name="message"')).toBeLessThan(saleDialog.indexOf('name="name"'));
@@ -172,7 +172,7 @@ describe("marketplace À reprendre", () => {
     expect(valuationDialog).toContain("Fourchette haute");
     expect(valuationDialog).toContain('label="Excédent brut d’exploitation annuel (EBE)"');
     expect(valuationDialog).not.toContain('label="Résultat annuel (EBE)"');
-    expect(valuationDialog).toContain("Vendre mon entreprise");
+    expect(valuationDialog).toContain("Présenter mon entreprise");
     expect(map).not.toContain("onLocationSelect");
     expect(map).not.toContain("Filtrer sur");
     expect(map).toContain("Voir la fiche");

@@ -1,9 +1,9 @@
-import TransmissionLandingPage from "@/components/TransmissionLandingPage";
+import BusinessSaleLandingPage from "@/components/BusinessSaleLandingPage";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-const title = "Vendre ou transmettre son entreprise | Demaa";
+const title = "Vendre son entreprise | Demaa";
 const description =
-  "Préparez une entreprise plus claire, plus autonome et plus simple à vendre ou à transmettre, puis présentez votre projet à Demaa.";
+  "Demaa présente gratuitement votre entreprise à des repreneurs dont le projet peut correspondre, puis organise les premières mises en relation.";
 
 export const metadata = buildPublicPageMetadata({
   title,
@@ -12,5 +12,5 @@ export const metadata = buildPublicPageMetadata({
 });
 
 export default function TransmettrePage() {
-  return <TransmissionLandingPage />;
+  return <BusinessSaleLandingPage />;
 }

@@ -10,9 +10,9 @@ async function readSource(path: string) {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-describe("transmission unifiée", () => {
+describe("accompagnement de structuration", () => {
   it("locks a six-month accompaniment", () => {
-    expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/transmettre");
+    expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/accompagnement");
     expect(AUTOMATION_OFFER).toMatchObject({
       durationLabel: "6 mois",
       name: "Accompagnement sur 6 mois",
@@ -26,7 +26,7 @@ describe("transmission unifiée", () => {
     });
   });
 
-  it("combines transmission preparation and concrete structuring on one page", async () => {
+  it("publishes transmission preparation and concrete structuring on its own page", async () => {
     const [landing, page, accompaniment, automation, sitemap] =
       await Promise.all([
         readSource("src/components/TransmissionLandingPage.tsx"),
@@ -36,11 +36,12 @@ describe("transmission unifiée", () => {
         readSource("src/app/sitemap.ts"),
       ]);
 
-    expect(page).toContain("TransmissionLandingPage");
+    expect(page).toContain("BusinessSaleLandingPage");
     expect(page).toContain('path: "/transmettre"');
-    expect(accompaniment).toContain('permanentRedirect("/transmettre")');
+    expect(accompaniment).toContain("TransmissionLandingPage");
+    expect(accompaniment).toContain('path: "/accompagnement"');
     expect(automation).toContain(
-      'permanentRedirect("/transmettre#structuration")',
+      'permanentRedirect("/accompagnement#structuration")',
     );
     expect(landing).toContain(
       "Préparez votre entreprise pour mieux la vendre.",
@@ -81,14 +82,14 @@ describe("transmission unifiée", () => {
     expect(landing).not.toContain("30 %");
     expect(landing).not.toContain("Chef de mission comptable");
     expect(landing).toContain("AccompanimentContactControl");
-    expect(landing).toContain('<BusinessSellerActions variant="hero" />');
+    expect(landing).toContain('<AccompanimentContactControl label="Préparer mon entreprise" />');
     expect(landing).toContain('<BusinessSellerActions variant="estimate" />');
     expect(sitemap).toContain("/transmettre");
-    expect(sitemap).not.toContain("`${base}/accompagnement`");
+    expect(sitemap).toContain("`${base}/accompagnement`");
     expect(sitemap).not.toContain("`${base}/automatisation`");
   });
 
-  it("uses the transmission route from contextual calls to action", () => {
+  it("uses the accompaniment route from contextual calls to action", () => {
     const modelMarkup = renderToStaticMarkup(
       createElement(MentoratAutomationCta, {
         modelSlug: "structure-google-drive-entreprise",
@@ -103,10 +104,10 @@ describe("transmission unifiée", () => {
     );
 
     expect(modelMarkup).toContain(
-      "/transmettre?source=modele-detail&amp;modelSlug=structure-google-drive-entreprise#structuration",
+      "/accompagnement?source=modele-detail&amp;modelSlug=structure-google-drive-entreprise#structuration",
     );
     expect(organisationMarkup).toContain(
-      "/transmettre?source=organisation-content&amp;contentSlug=preparer-devis-propositions-commerciales#structuration",
+      "/accompagnement?source=organisation-content&amp;contentSlug=preparer-devis-propositions-commerciales#structuration",
     );
   });
 
