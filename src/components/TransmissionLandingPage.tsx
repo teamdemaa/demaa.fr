@@ -169,7 +169,9 @@ export default function TransmissionLandingPage() {
             <h1 className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}>
               Préparez votre entreprise pour mieux la vendre.
             </h1>
-            <BusinessSellerActions variant="hero" />
+            <div className="mx-auto mt-8 flex justify-start sm:justify-center">
+              <AccompanimentContactControl label="Préparer mon entreprise" />
+            </div>
             <Image
               src="/illustrations/accompagnement/hero-preparer-vente-v2.png"
               alt="Un dirigeant de terrain présente à une acheteuse une entreprise structurée autour de son équipe, de ses processus et de ses indicateurs."
@@ -338,7 +340,10 @@ export default function TransmissionLandingPage() {
         <section className="px-5 py-16 sm:px-8 sm:py-20">
           <div className="mx-auto grid max-w-6xl gap-12 rounded-[2rem] bg-dema-forest p-7 text-dema-paper sm:p-10 lg:grid-cols-[1fr_0.88fr] lg:gap-16 lg:p-12">
             <div>
-              <h2 className="demaa-marketing-section-title text-dema-paper">
+              <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-sage">
+                Accompagnement facultatif
+              </p>
+              <h2 className="demaa-marketing-section-title mt-4 text-dema-paper">
                 Six mois pour construire les systèmes qui libèrent le dirigeant
                 et rassurent l’acheteur.
               </h2>

@@ -17,6 +17,7 @@ const collaborationLinks = [
   PUBLIC_SPECIALISTS_ENABLED
     ? { label: "Spécialistes", href: "/specialistes" }
     : { label: "Vendre", href: "/transmettre" },
+  { label: "Préparer mon entreprise", href: "/accompagnement" },
   { label: "Annonces", href: "/opportunites" },
   { label: "Rejoindre Team Demaa", href: "/opportunites?intent=team-demaa-profile" },
   { label: "Nous contacter", href: "mailto:team@demaa.fr" },

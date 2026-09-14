@@ -147,7 +147,7 @@ export default function BusinessValuationDialog({ onClose, onContinue }: { onClo
               <ul className="mt-4 space-y-2">{result.factors.map((factor) => <li key={factor} className="flex gap-2 text-sm leading-6 text-dema-muted"><Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" />{factor}</li>)}</ul>
             </div>
             <p className="mt-5 text-xs leading-5 text-dema-muted">Cette estimation constitue un ordre de grandeur. Le prix final dépend notamment de la trésorerie, des dettes, des risques et des conditions de la transmission.</p>
-            <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:items-center"><button className={secondaryButtonClassName} type="button" onClick={() => setStep(1)}>Modifier mes réponses</button><button className={`${primaryButtonClassName} sm:ml-auto`} type="button" onClick={() => onContinue(buildInput(), result)}>Vendre mon entreprise</button></div>
+            <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:items-center"><button className={secondaryButtonClassName} type="button" onClick={() => setStep(1)}>Modifier mes réponses</button><button className={`${primaryButtonClassName} sm:ml-auto`} type="button" onClick={() => onContinue(buildInput(), result)}>Présenter mon entreprise</button></div>
           </div>
         ) : null}
       </div>
