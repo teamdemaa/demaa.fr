@@ -99,7 +99,9 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain("Reprenez une entreprise qui fonctionne déjà.");
     expect(marketplace).toContain('<header className="text-left sm:text-center">');
     expect(marketplace).not.toContain("ChevronRight");
-    expect(marketplace).toContain("font-serif text-2xl font-light italic");
+    expect(marketplace).toContain(
+      "text-base leading-7 text-dema-muted sm:text-lg sm:leading-8",
+    );
     expect(marketplace).toContain("Vous ne partez pas de zéro : des clients, un savoir-faire et une activité déjà lancée.");
     expect(marketplace.match(/<RepriseProjectControl \/>/g)).toHaveLength(2);
     expect(projectControl).toContain("Confier ma recherche");

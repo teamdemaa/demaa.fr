@@ -41,7 +41,7 @@ describe("seller and accompaniment pages", () => {
       "Nous vous aidons à vendre votre entreprise.",
     );
     expect(landing).toContain(
-      "Nous présentons gratuitement votre entreprise à des repreneurs qui",
+      "On présente votre entreprise à des repreneurs, gratuitement, puis",
     );
     expect(landing).toContain("Votre entreprise, présentée à sa juste valeur.");
     expect(landing).toContain("Comprendre votre entreprise");

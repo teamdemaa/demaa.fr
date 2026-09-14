@@ -61,9 +61,8 @@ export default function BusinessSaleLandingPage() {
               Nous vous aidons à vendre votre entreprise.
             </h1>
             <p className="mx-auto mt-6 max-w-3xl text-base leading-7 text-dema-muted sm:text-lg sm:leading-8">
-              Nous présentons gratuitement votre entreprise à des repreneurs qui
-              nous ont confié leur recherche, puis nous organisons la mise en
-              relation lorsqu’un projet correspond.
+              On présente votre entreprise à des repreneurs, gratuitement, puis
+              on organise la mise en relation lorsqu’un projet correspond.
             </p>
             <BusinessSellerActions variant="hero" />
           </div>
