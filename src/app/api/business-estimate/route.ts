@@ -56,7 +56,7 @@ export async function POST(request: Request) {
     } catch {
       return NextResponse.json({ error: "L’estimation jointe est incomplète. Merci de la recalculer." }, { status: 400 });
     }
-    const context = await resolveLeadContext({ source: "Demaa - Projet de transmission", sourceUrl: request.headers.get("referer") });
+    const context = await resolveLeadContext({ source: "Demaa - Projet de vente", sourceUrl: request.headers.get("referer") });
     if (!context) return NextResponse.json({ error: "La page d’origine est introuvable." }, { status: 400 });
 
     await submitLeadRequest({
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
       emoji: "🏢",
       fields: [
         { label: "Entreprise", value: company },
-        { label: "Projet de transmission", value: message },
+        { label: "Projet de vente", value: message },
         ...(valuation ? [
           { label: "Activité retenue pour l’estimation", value: valuation.activityLabel },
           { label: "Méthode de valorisation", value: valuation.methodLabel },
@@ -76,7 +76,7 @@ export async function POST(request: Request) {
       ],
       idempotencyKey,
       requestType: "business_sale_request",
-      title: `Projet de transmission - ${company}`,
+      title: `Projet de vente - ${company}`,
     });
     return successResponse();
   } catch (error) {

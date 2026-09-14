@@ -39,34 +39,43 @@ describe("canonical Transmission page", () => {
       "Préparez votre entreprise pour mieux la vendre.",
     );
     expect(landing).toContain(
-      "Une entreprise rentable n’est pas toujours facile à transmettre.",
+      "Une entreprise peut être rentable et pourtant difficile à",
+    );
+    expect(landing).toContain(
+      "Rendre votre entreprise moins dépendante de vous, plus simple à",
     );
     expect(landing).toContain("Une rentabilité plus lisible");
     expect(landing).toContain("Une équipe plus autonome");
     expect(landing).toContain("Des processus documentés et transmissibles");
+    expect(landing).toContain("Prioriser");
+    expect(landing).toContain("Préparer la transmission");
     expect(landing).toContain(
-      "Nous structurons ce qui dépend encore trop de vous.",
-    );
-    expect(landing).toContain(
-      "Six mois pour rendre votre entreprise plus autonome et",
+      "Six mois pour construire les systèmes qui libèrent le dirigeant",
     );
     expect(landing).toContain("AUTOMATION_OFFER.price.label");
     expect(landing).toContain(
-      "Un écosystème de spécialistes mobilisés au bon moment.",
+      "Les bons spécialistes, lorsque le plan l’exige.",
     );
     expect(landing.indexOf('title: "Automatisation & IA"')).toBeLessThan(
       landing.indexOf('title: "Assistant digital"'),
     );
     expect(landing).toContain("Assistant digital");
     expect(landing).toContain("Prospection ciblée");
-    expect(landing).toContain("Publicité et marketing");
+    expect(landing).toContain("Publicité & marketing");
     expect(landing).toContain(
       "(Ces interventions sont proposées séparément. Leur périmètre et",
     );
     expect(landing).toContain(
       "Obtenez une première estimation de votre entreprise.",
     );
-    expect(landing.match(/variant="sale"/g)).toHaveLength(1);
+    expect(landing.match(/variant="hero"/g)).toHaveLength(1);
+    expect(
+      landing.indexOf("Je peux m’absenter sans que l’activité s’arrête."),
+    ).toBeLessThan(
+      landing.indexOf(
+        "Six mois pour construire les systèmes qui libèrent le dirigeant",
+      ),
+    );
     expect(landing).not.toContain(
       "Où en êtes-vous dans votre projet de transmission ?",
     );

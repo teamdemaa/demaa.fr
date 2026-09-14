@@ -10,5 +10,5 @@ export const AUTOMATION_OFFER = {
   },
   commitmentLabel: "Engagement initial de 6 mois, soit 9 000 € HT.",
   summary:
-    "Six mois pour rendre progressivement l’entreprise plus autonome, mieux structurée et plus simple à transmettre.",
+    "Six mois pour rendre progressivement l’entreprise plus autonome, mieux structurée et plus simple à vendre.",
 } as const;

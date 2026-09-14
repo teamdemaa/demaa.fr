@@ -99,8 +99,8 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain("Reprenez une entreprise qui fonctionne déjà.");
     expect(marketplace).toContain('<header className="text-left sm:text-center">');
     expect(marketplace).not.toContain("ChevronRight");
-    expect(marketplace).not.toContain("font-serif text-2xl font-light italic");
-    expect(marketplace).not.toContain("Entreprises en activité · Clients existants · Équipe ou savoir-faire déjà en place");
+    expect(marketplace).toContain("font-serif text-2xl font-light italic");
+    expect(marketplace).toContain("Vous ne partez pas de zéro : des clients, un savoir-faire et une activité déjà lancée.");
     expect(marketplace.match(/<RepriseProjectControl \/>/g)).toHaveLength(2);
     expect(projectControl).toContain("Confier ma recherche");
     expect(projectControl).toContain("Confier ma recherche à Demaa");
@@ -158,9 +158,9 @@ describe("marketplace À reprendre", () => {
     expect(sellerActions).toContain("flex-col items-start justify-start");
     expect(sellerActions).toContain("sm:items-center sm:justify-center");
     expect(sellerActions).not.toContain("w-fit self-center");
-    expect(transmission).toContain('<BusinessSellerActions variant="sale" />');
+    expect(transmission).toContain('<BusinessSellerActions variant="hero" />');
     expect(transmission).toContain('<BusinessSellerActions variant="estimate" />');
-    expect(saleDialog).toContain("Décrivez-nous d’abord votre entreprise et votre projet de transmission");
+    expect(saleDialog).toContain("Décrivez-nous d’abord votre entreprise et votre projet de vente");
     expect(saleDialog).toContain("Votre entreprise et votre projet en quelques mots");
     expect(saleDialog.indexOf('name="message"')).toBeLessThan(saleDialog.indexOf('name="name"'));
     expect(saleDialog.indexOf('name="name"')).toBeLessThan(saleDialog.indexOf('name="email"'));
@@ -189,6 +189,9 @@ describe("marketplace À reprendre", () => {
     expect(sellerRoute).toContain('requestType: "business_sale_request"');
     expect(sellerRoute).toContain('channels: { email: true, resend: false, slack: false }');
     expect(sellerRoute).toContain("Merci de présenter brièvement votre entreprise");
+    expect(sellerRoute).toContain('source: "Demaa - Projet de vente"');
+    expect(sellerRoute).toContain('{ label: "Projet de vente", value: message }');
+    expect(sellerRoute).not.toContain("Projet de transmission");
     expect(page).toContain('path: "/a-reprendre"');
   });
 });

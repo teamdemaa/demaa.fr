@@ -11,7 +11,7 @@ async function readSource(path: string) {
 }
 
 describe("transmission unifiée", () => {
-  it("locks a renewable six-month accompaniment", () => {
+  it("locks a six-month accompaniment", () => {
     expect(AUTOMATION_ACCOMPANIMENT_PATH).toBe("/transmettre");
     expect(AUTOMATION_OFFER).toMatchObject({
       durationLabel: "6 mois",
@@ -46,10 +46,28 @@ describe("transmission unifiée", () => {
       "Préparez votre entreprise pour mieux la vendre.",
     );
     expect(landing).toContain(
-      "Une entreprise rentable n’est pas toujours facile à transmettre.",
+      "Une entreprise peut être rentable et pourtant difficile à",
     );
     expect(landing).toContain(
-      "Nous structurons ce qui dépend encore trop de vous.",
+      "Rendre votre entreprise moins dépendante de vous, plus simple à",
+    );
+    expect(landing).toContain("Prioriser");
+    expect(landing).toContain("Préparer la transmission");
+    expect(landing).toContain("Les systèmes que nous mettons réellement en place.");
+    expect(landing).toContain("Pilotage commercial & clients");
+    expect(landing).toContain("Opérations & qualité");
+    expect(landing).toContain("Pilotage de gestion");
+    expect(landing).toContain("Équipe & transmission");
+    expect(landing).toContain("Pipeline et étapes de vente configurés");
+    expect(landing).toContain("Tableau de bord adapté à l’activité");
+    expect(landing).toContain("Dossier de fonctionnement utilisable par un repreneur");
+    expect(landing).toContain("Rôles, responsabilités et règles de décision");
+    expect(landing).toContain(
+      "/illustrations/accompagnement/hero-preparer-vente-v2.png",
+    );
+    expect(landing).toContain("/illustrations/accompagnement/equipe-autonome-v1.png");
+    expect(landing).toContain(
+      "/illustrations/accompagnement/pilotage-transmissible-v1.png",
     );
     expect(landing).toContain('id="structuration"');
     expect(landing).toContain("AUTOMATION_OFFER.price.label");
@@ -63,7 +81,7 @@ describe("transmission unifiée", () => {
     expect(landing).not.toContain("30 %");
     expect(landing).not.toContain("Chef de mission comptable");
     expect(landing).toContain("AccompanimentContactControl");
-    expect(landing).toContain('<BusinessSellerActions variant="sale" />');
+    expect(landing).toContain('<BusinessSellerActions variant="hero" />');
     expect(landing).toContain('<BusinessSellerActions variant="estimate" />');
     expect(sitemap).toContain("/transmettre");
     expect(sitemap).not.toContain("`${base}/accompagnement`");

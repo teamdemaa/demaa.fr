@@ -69,9 +69,9 @@ export default function BusinessSaleDialog({
         </div>
       ) : (
         <>
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">Projet de transmission</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-dema-forest">Projet de vente</p>
           <h2 className="mt-3 text-3xl font-medium tracking-[-0.04em] sm:text-4xl">Vendre mon entreprise.</h2>
-          <p className="mt-4 max-w-xl text-sm leading-6 text-dema-muted">Décrivez-nous d’abord votre entreprise et votre projet de transmission.</p>
+          <p className="mt-4 max-w-xl text-sm leading-6 text-dema-muted">Décrivez-nous d’abord votre entreprise et votre projet de vente.</p>
           {valuationResult ? (
             <div className="mt-6 rounded-2xl bg-dema-sage/55 p-4 text-sm text-brand-blue">
               <span className="block text-xs font-medium uppercase tracking-[0.12em] text-dema-forest">Estimation jointe</span>
@@ -79,7 +79,7 @@ export default function BusinessSaleDialog({
             </div>
           ) : null}
           <form onSubmit={handleSubmit} className="mt-7 grid gap-4 sm:grid-cols-2" noValidate>
-            <label className="block text-sm font-medium sm:col-span-2">Votre entreprise et votre projet en quelques mots<textarea className={`${inputClassName} min-h-28 resize-y`} name="message" maxLength={1200} placeholder="Par exemple : activité, taille de l’équipe, chiffre d’affaires approximatif et projet de transmission." required /></label>
+            <label className="block text-sm font-medium sm:col-span-2">Votre entreprise et votre projet en quelques mots<textarea className={`${inputClassName} min-h-28 resize-y`} name="message" maxLength={1200} placeholder="Par exemple : activité, taille de l’équipe, chiffre d’affaires approximatif et calendrier de vente." required /></label>
             <label className="block text-sm font-medium">Prénom et nom<input className={inputClassName} name="name" autoComplete="name" maxLength={160} required /></label>
             <label className="block text-sm font-medium">Email<input className={inputClassName} name="email" type="email" autoComplete="email" maxLength={160} required /></label>
             <label className="block text-sm font-medium">Téléphone<input className={inputClassName} name="phone" type="tel" autoComplete="tel" maxLength={40} required /></label>
