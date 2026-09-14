@@ -79,8 +79,8 @@ export async function buildSocialImage() {
               color: brandImageMuted,
             }}
           >
-            Demaa aide les dirigeants à mettre en place des systèmes simples,
-            des automatisations et des usages IA adaptés à leur entreprise.
+            Des PME de services à reprendre. Votre entreprise présentée
+            gratuitement à des repreneurs.
           </span>
         </div>
       </div>

@@ -17,7 +17,7 @@ describe("solution proposal UI contract", () => {
       readSource("src/app/sitemap.ts"),
     ]);
 
-    expect(footer).toContain('{ label: "Rejoindre Team Demaa", href: "/opportunites?intent=team-demaa-profile" }');
+    expect(footer).not.toContain("Rejoindre Team Demaa");
     expect(page).toContain(
       'permanentRedirect("/opportunites?intent=team-demaa-profile")',
     );

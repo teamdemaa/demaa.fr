@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import HomeTabsClient from "@/components/HomeTabsClient";
 import OrganiserDiscoveryCta from "@/components/OrganiserDiscoveryCta";
 import ResourcesNavigation from "@/components/ResourcesNavigation";
-import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import {
   enterpriseToSystem,
   type EnterpriseDefinition,
@@ -33,9 +32,6 @@ export default function SystemsHubPage({
           <div className="pt-4">
             <OrganiserDiscoveryCta />
           </div>
-        </div>
-        <div className="px-4 pb-16 pt-16 sm:px-6 lg:px-8">
-          <StructureNewsletterBlock />
         </div>
       </main>
     </>

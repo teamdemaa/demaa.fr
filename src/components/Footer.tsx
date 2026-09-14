@@ -2,32 +2,21 @@ import Link from "next/link";
 import { UserRound } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 import { isGuestProductEnabled } from "@/lib/guest-action-plan-security.server";
-import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
 
-const directoryLinks = [
-  { label: "Annuaire outils", href: "/annuaire-outils" },
-  { label: "Aides et subventions", href: "/aides-et-subventions" },
-  { label: "Annuaire réseaux professionnels", href: "/annuaire-reseaux-pro" },
-  { label: "Annuaire newsletters", href: "/annuaire-newsletters" },
-  { label: "Annuaire experts-comptables", href: "/annuaire-experts-comptables" },
-];
-
-const collaborationLinks = [
+const marketplaceLinks = [
   { label: "À reprendre", href: "/a-reprendre" },
-  PUBLIC_SPECIALISTS_ENABLED
-    ? { label: "Spécialistes", href: "/specialistes" }
-    : { label: "Vendre", href: "/transmettre" },
-  { label: "Préparer mon entreprise", href: "/accompagnement" },
-  { label: "Annonces", href: "/opportunites" },
-  { label: "Rejoindre Team Demaa", href: "/opportunites?intent=team-demaa-profile" },
-  { label: "Nous contacter", href: "mailto:team@demaa.fr" },
+  { label: "Vendre", href: "/transmettre" },
 ];
 
 const resourceLinks = [
-  { label: "Outils", href: "/outils" },
+  { label: "Méthodes", href: "/tutoriels" },
   { label: "Modèles à copier", href: "/modeles" },
-  { label: "Tutoriels", href: "/tutoriels" },
-  { label: "Contenus", href: "/contenus" },
+  { label: "Outils", href: "/outils" },
+];
+
+const demaaLinks = [
+  { label: "Accompagnement", href: "/accompagnement" },
+  { label: "Nous contacter", href: "mailto:team@demaa.fr" },
 ];
 
 export default function Footer() {
@@ -55,10 +44,10 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              Collaborer avec Demaa
+              Reprendre ou vendre
             </h3>
             <ul className="space-y-3">
-              {collaborationLinks.map((link) => (
+              {marketplaceLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass}>{link.label}</Link>
                 </li>
@@ -81,10 +70,10 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              Annuaires
+              Demaa
             </h3>
             <ul className="space-y-3">
-              {directoryLinks.map((link) => (
+              {demaaLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass}>{link.label}</Link>
                 </li>

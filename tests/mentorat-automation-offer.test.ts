@@ -1,8 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { createElement } from "react";
-import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import MentoratAutomationCta from "@/components/MentoratAutomationCta";
 import { AUTOMATION_OFFER } from "@/lib/automation-offer";
 import { AUTOMATION_ACCOMPANIMENT_PATH } from "@/lib/mentorat-automation-content";
 
@@ -89,28 +86,6 @@ describe("accompagnement de structuration", () => {
     expect(sitemap).not.toContain("`${base}/automatisation`");
   });
 
-  it("uses the accompaniment route from contextual calls to action", () => {
-    const modelMarkup = renderToStaticMarkup(
-      createElement(MentoratAutomationCta, {
-        modelSlug: "structure-google-drive-entreprise",
-        variant: "modele",
-      }),
-    );
-    const organisationMarkup = renderToStaticMarkup(
-      createElement(MentoratAutomationCta, {
-        contentSlug: "preparer-devis-propositions-commerciales",
-        variant: "organisation",
-      }),
-    );
-
-    expect(modelMarkup).toContain(
-      "/accompagnement?source=modele-detail&amp;modelSlug=structure-google-drive-entreprise#structuration",
-    );
-    expect(organisationMarkup).toContain(
-      "/accompagnement?source=organisation-content&amp;contentSlug=preparer-devis-propositions-commerciales#structuration",
-    );
-  });
-
   it("keeps the Tools bridge educational and separate from the offer", async () => {
     const [hub, systemPage, bridge] = await Promise.all([
       readSource("src/components/SystemsHubPage.tsx"),
@@ -119,6 +94,7 @@ describe("accompagnement de structuration", () => {
     ]);
     expect(hub).toContain("<OrganiserDiscoveryCta />");
     expect(hub).not.toContain("MentoratAutomationCta");
+    expect(hub).not.toContain("StructureNewsletterBlock");
     expect(systemPage).toContain('eyebrow="Bonus"');
     expect(bridge).toContain("Des tutoriels pour mieux utiliser vos outils");
     expect(bridge).toContain('href = "/tutoriels"');

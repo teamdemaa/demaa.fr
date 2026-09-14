@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Demaa",
     short_name: "Demaa",
-    description: "Gagnez du temps grâce à des systèmes simples et adaptés à votre entreprise.",
+    description: "Reprendre ou vendre une PME de services avec Demaa.",
     start_url: "/",
     scope: "/",
     display: "standalone",

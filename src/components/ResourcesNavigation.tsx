@@ -4,9 +4,9 @@ import Link from "next/link";
 export type ResourcesView = "models" | "tools" | "tutorials";
 
 const resourceItems = [
-  { view: "tools", label: "Outils", href: "/outils", Icon: Wrench },
+  { view: "tutorials", label: "Méthodes", href: "/tutoriels", Icon: BookOpen },
   { view: "models", label: "Modèles", href: "/modeles", Icon: Copy },
-  { view: "tutorials", label: "Tutoriels", href: "/tutoriels", Icon: BookOpen },
+  { view: "tools", label: "Outils", href: "/outils", Icon: Wrench },
 ] as const;
 
 export default function ResourcesNavigation({

@@ -86,7 +86,7 @@ describe("Demaa application navbar", () => {
 
     expect(source).toContain('label: "À reprendre", href: "/a-reprendre"');
     expect(source).toContain('label: "Vendre", href: "/transmettre"');
-    expect(source).toContain('label: "Ressources", href: "/outils"');
+    expect(source).toContain('label: "Ressources", href: "/tutoriels"');
     expect(source).not.toContain('label: "Tutoriels"');
     expect(source).not.toContain('label: "Outils"');
     expect(source).not.toContain('label: "Sur mesure"');
@@ -100,11 +100,11 @@ describe("Demaa application navbar", () => {
     expect(source.indexOf('label: "Vendre"')).toBeLessThan(
       source.indexOf('label: "Ressources"'),
     );
-    expect(resources.indexOf('label: "Outils"')).toBeLessThan(
+    expect(resources.indexOf('label: "Méthodes"')).toBeLessThan(
       resources.indexOf('label: "Modèles"'),
     );
     expect(resources.indexOf('label: "Modèles"')).toBeLessThan(
-      resources.indexOf('label: "Tutoriels"'),
+      resources.indexOf('label: "Outils"'),
     );
     expect(resources).toContain('aria-label="Ressources"');
     expect(resources).toContain("border-b-2");

@@ -27,7 +27,7 @@ export default function TutorialLibrary({
         tutorial.title,
         tutorial.summary,
         tutorial.category,
-        tutorial.tool,
+        tutorial.format === "practice" ? tutorial.tool : "méthode",
         ...tutorial.searchTerms,
         ...tutorial.keyPoints,
       ])
@@ -46,10 +46,10 @@ export default function TutorialLibrary({
             />
             <input
               type="search"
-              aria-label="Rechercher dans les tutoriels"
+              aria-label="Rechercher dans les méthodes"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Rechercher un tutoriel…"
+              placeholder="Rechercher une méthode…"
               className="demaa-search-control"
             />
             <button
@@ -69,7 +69,7 @@ export default function TutorialLibrary({
         </div>
 
         {areFiltersVisible ? (
-          <div className="mt-4 overflow-x-auto pb-1 soft-scroll" role="group" aria-label="Filtrer les tutoriels par thème">
+          <div className="mt-4 overflow-x-auto pb-1 soft-scroll" role="group" aria-label="Filtrer les méthodes par thème">
             <div className="flex min-w-max gap-2 px-1">
               {[ALL_CATEGORIES, ...TUTORIAL_CATEGORIES].map((category) => (
                 <button
@@ -88,12 +88,12 @@ export default function TutorialLibrary({
           </div>
         ) : null}
         <p className="sr-only" aria-live="polite">
-          {filteredTutorials.length} {filteredTutorials.length > 1 ? "tutoriels trouvés" : "tutoriel trouvé"}
+          {filteredTutorials.length} {filteredTutorials.length > 1 ? "méthodes trouvées" : "méthode trouvée"}
         </p>
       </div>
 
       {filteredTutorials.length > 0 ? (
-        <section aria-label="Tutoriels" className="px-4 py-14 sm:px-6 md:py-16 lg:px-8">
+        <section aria-label="Méthodes" className="px-4 py-14 sm:px-6 md:py-16 lg:px-8">
           <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2">
             {filteredTutorials.map((tutorial, index) => (
               <Link
@@ -102,19 +102,29 @@ export default function TutorialLibrary({
                 className="group block rounded-[1.25rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-4"
               >
                 <article className="transition-transform duration-200 ease-out group-hover:-translate-y-px motion-reduce:transform-none">
-                  <div className="relative aspect-video overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper">
-                    <Image
-                      src={tutorial.thumbnail}
-                      alt={`Aperçu du tutoriel : ${tutorial.title}`}
-                      fill
-                      loading={index < 2 ? "eager" : "lazy"}
-                      sizes="(min-width: 768px) 50vw, 100vw"
-                      className="object-cover transition duration-300 group-hover:scale-[1.01]"
-                    />
-                  </div>
+                  {tutorial.format === "method" ? (
+                    <div className="relative flex aspect-video items-center justify-start overflow-hidden rounded-[1.25rem] border border-dema-forest/10 bg-dema-sage/45 p-6 sm:p-8">
+                      <p className="max-w-[88%] text-left font-serif text-2xl italic leading-tight text-dema-forest sm:text-3xl">
+                        {tutorial.thumbnailStatement}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="relative aspect-video overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-paper">
+                      <Image
+                        src={tutorial.thumbnail}
+                        alt={`Aperçu de la mise en pratique : ${tutorial.title}`}
+                        fill
+                        loading={index < 2 ? "eager" : "lazy"}
+                        sizes="(min-width: 768px) 50vw, 100vw"
+                        className="object-cover transition duration-300 group-hover:scale-[1.01]"
+                      />
+                    </div>
+                  )}
                   <div className="px-0.5 pb-1 pt-4">
                     <p className="text-[0.68rem] font-medium uppercase tracking-[0.12em] text-dema-forest/65">
-                      {tutorial.tool}
+                      {tutorial.format === "method"
+                        ? `${tutorial.category} · ${tutorial.readingMinutes} min`
+                        : `${tutorial.tool} · ${tutorial.topic}`}
                     </p>
                     <h2 className="mt-2 text-xl font-normal leading-tight tracking-[-0.02em] text-brand-blue transition-colors group-hover:text-dema-forest sm:text-2xl">
                       {tutorial.title}
@@ -131,7 +141,7 @@ export default function TutorialLibrary({
       ) : (
         <section className="mx-auto mt-12 w-full max-w-4xl px-4 sm:px-6" aria-live="polite">
           <div className="rounded-[1.25rem] border border-dashed border-dema-line bg-dema-paper px-6 py-14 text-center">
-            <h2 className="text-xl font-medium text-brand-blue">Aucun tutoriel trouvé</h2>
+            <h2 className="text-xl font-medium text-brand-blue">Aucune méthode trouvée</h2>
             <p className="mt-2 text-sm text-dema-muted">Essayez un mot plus simple ou un autre thème.</p>
           </div>
         </section>

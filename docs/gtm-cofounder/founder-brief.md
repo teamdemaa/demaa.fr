@@ -2,15 +2,15 @@
 
 ## Positionnement actuel
 
-- [validé] Demaa relie les deux moments d’une même histoire : reprendre une PME de services qui fonctionne déjà, ou préparer une PME pour mieux la vendre.
+- [validé] Demaa relie les deux côtés d’une même opération : reprendre une PME de services ou présenter son entreprise à des repreneurs.
 - [validé] La priorité repreneur reste la marketplace **À reprendre**.
 - [validé] La cible couvre les services terrain et les services professionnels, dont la valeur repose sur les clients, les contrats, l’équipe et le savoir-faire.
 
 ## Les trois portes publiques
 
 - **À reprendre** : consulter les entreprises, demander une mise en relation sur une fiche ou décrire un projet de reprise pour que Demaa recherche des entreprises adaptées.
-- **Vendre** : présenter son projet de cession, obtenir une première estimation et structurer ce qui dépend encore trop du dirigeant.
-- **Ressources** : avancer seul avec les outils, modèles et tutoriels.
+- **Vendre** : présenter gratuitement son entreprise à des repreneurs et obtenir une première estimation.
+- **Ressources** : avancer seul avec les méthodes, modèles et outils.
 
 ## À reprendre
 
@@ -23,13 +23,12 @@
 
 ## Vendre
 
-- [validé] Les anciennes pages Accompagnement, Partners, Studio et Automatisation convergent vers une page canonique : `/transmettre`.
-- [validé] La promesse principale est : **Préparez votre entreprise pour mieux la vendre.**
-- [validé] Le header ne contient ni sous-titre ni appel à l’action secondaire. Son seul appel à l’action est **Vendre mon entreprise**.
-- [validé] La page associe la vision stratégique de l’ancienne page Partners au contenu concret de l’accompagnement : dépendance au dirigeant, rentabilité lisible, équipe autonome et processus transmissibles.
-- [validé] Demaa choisit avec l’entreprise un fonctionnement prioritaire, puis clarifie les processus, les responsabilités, les outils, les automatisations et la documentation utiles.
-- [validé] L’offre est un accompagnement de six mois à 1 500 euros HT par mois, soit 9 000 euros HT sur la période.
-- [validé] **Estimer mon entreprise** apparaît dans une section dédiée de la page, pas dans le header.
+- [validé] La promesse principale est : **Nous vous aidons à vendre votre entreprise.**
+- [validé] Demaa présente gratuitement l’entreprise à des repreneurs et organise la mise en relation lorsqu’un projet correspond.
+- [validé] **Vendre mon entreprise** et **Estimer mon entreprise** sont les deux actions de la page.
+- [validé] L’accompagnement à la préparation de la vente reste facultatif et dispose de sa propre page `/accompagnement`.
+- [validé] L’offre d’accompagnement dure six mois à 1 500 euros HT par mois, soit 9 000 euros HT sur la période.
+- [validé] Les pages historiques Partners, Studio et Automatisation redirigent vers `/accompagnement`.
 - [validé] L’application métier sur mesure n’est plus une porte publique principale.
 
 ## Marketplace MVP
@@ -42,7 +41,8 @@
 
 ## Ressources et Outils
 
-- [validé] Ressources contient Outils, Modèles et Tutoriels.
+- [validé] Ressources contient Méthodes, Modèles et Outils.
+- [validé] Les modèles restent des ressources autonomes : aucune relance commerciale n’est ajoutée à l’index ou aux fiches.
 - [validé] Le hub Outils reste centré sur les systèmes des entreprises de services. Conseil et services aux entreprises arrive en premier, BTP et services techniques en deuxième.
 - [validé] Les secteurs éloignés du positionnement ne sont plus montrés dans le hub, mais leurs pages historiques restent conservées.
 

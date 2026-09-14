@@ -47,11 +47,11 @@ export default async function ModelPage({ params, searchParams }: ModelPageProps
         <div className="px-4 pb-20 pt-8 sm:px-6 lg:px-8">
           <CopyableModelDetails
             backLink={source === "tutoriels"
-              ? { href: "/tutoriels", label: "Retour aux tutoriels" }
+              ? { href: "/tutoriels", label: "Retour aux méthodes" }
               : source === "outils"
                 ? { href: "/modeles", label: "Retour aux modèles" }
                 : source === "organisation"
-                  ? { href: "/tutoriels", label: "Retour aux tutoriels" }
+                  ? { href: "/tutoriels", label: "Retour aux méthodes" }
                   : undefined}
             model={model}
           />

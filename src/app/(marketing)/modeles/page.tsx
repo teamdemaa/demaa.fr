@@ -1,8 +1,6 @@
 import CopyableModelsIndex from "@/components/CopyableModelsIndex";
-import MentoratAutomationCta from "@/components/MentoratAutomationCta";
 import Navbar from "@/components/Navbar";
 import ResourcesNavigation from "@/components/ResourcesNavigation";
-import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import {
   getPublishedCopyableModels,
   getPublishedCopyableModelsForSystemSlug,
@@ -59,12 +57,6 @@ export default async function ModelsPage({ searchParams }: ModelsPageProps) {
           models={models}
           systemName={enterprise?.name}
         />
-        <div className="mx-auto w-full max-w-7xl px-4 pt-16 sm:px-6 lg:px-8">
-          <MentoratAutomationCta variant="modele" />
-        </div>
-        <div className="px-4 pb-16 pt-16 sm:px-6 lg:px-8">
-          <StructureNewsletterBlock />
-        </div>
       </main>
     </>
   );

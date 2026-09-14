@@ -1,4 +1,4 @@
-import { BarChart3, BookOpenText, CalendarDays, CheckSquare2, Compass, Settings2 } from "lucide-react";
+import { BarChart3, BookOpenText, CalendarDays, CheckSquare2, Compass } from "lucide-react";
 
 const workspaceSections = [
   { label: "Pilotage", Icon: Compass },
@@ -33,10 +33,6 @@ export default function NotionWorkspacePreview() {
           <span>Objectifs, indicateurs, décisions et prochaines tâches reliés.</span>
         </div>
 
-        <div className="mt-4 flex items-center gap-2 text-xs text-black/45">
-          <Settings2 className="h-4 w-4" aria-hidden="true" />
-          Six bases canoniques, sans double saisie.
-        </div>
       </div>
     </div>
   );

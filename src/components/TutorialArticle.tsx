@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check, Copy } from "lucide-react";
 import CopyableTutorialTable from "@/components/CopyableTutorialTable";
+import MethodArticle from "@/components/MethodArticle";
 import Navbar from "@/components/Navbar";
 import NumberedSectionHeading from "@/components/NumberedSectionHeading";
 import ResourcesNavigation from "@/components/ResourcesNavigation";
@@ -9,20 +10,24 @@ import { getPublishedCopyableModelBySlug } from "@/lib/copyable-model-catalog";
 import type { TutorialDefinition } from "@/lib/tutorial-catalog";
 
 export default function TutorialArticle({ tutorial }: { tutorial: TutorialDefinition }) {
+  if (tutorial.format === "method") {
+    return <MethodArticle method={tutorial} />;
+  }
+
   const model = getPublishedCopyableModelBySlug(tutorial.modelSlug);
 
   return (
     <>
       <Navbar minimal publicNavigationActiveView="resources" />
       <main className="min-w-0 max-w-full flex-1 overflow-x-clip bg-background">
-        <ResourcesNavigation activeView="tutorials" />
+        <ResourcesNavigation activeView="models" />
         <article className="mx-auto w-full min-w-0 max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
           <Link
-            href="/tutoriels"
+            href="/modeles"
             className="inline-flex items-center gap-2 text-sm text-dema-muted transition hover:text-dema-forest"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Retour aux tutoriels
+            Retour aux modèles
           </Link>
 
           <header className="mx-auto mt-8 max-w-5xl text-left">
@@ -126,7 +131,7 @@ export default function TutorialArticle({ tutorial }: { tutorial: TutorialDefini
                     {model.description}
                   </p>
                   <Link
-                    href={`/modeles/${model.slug}?from=tutoriels`}
+                    href={`/modeles/${model.slug}`}
                     className="demaa-secondary-button mt-6 min-h-11 gap-2 px-5"
                   >
                     Copier le modèle

@@ -7,7 +7,7 @@ async function readSource(path: string) {
 
 describe("copyable model public routes", () => {
   it("gives Models its own resource catalogue without duplicating it in Outils", async () => {
-    const [page, toolsPage, toolsHub, resources, navbar, footer, modelsIndex, modelCard] = await Promise.all([
+    const [page, toolsPage, toolsHub, resources, navbar, footer, modelsIndex, modelCard, platformBadge] = await Promise.all([
       readSource("src/app/(marketing)/modeles/page.tsx"),
       readSource("src/app/(marketing)/outils/page.tsx"),
       readSource("src/components/SystemsHubPage.tsx"),
@@ -16,30 +16,32 @@ describe("copyable model public routes", () => {
       readSource("src/components/Footer.tsx"),
       readSource("src/components/CopyableModelsIndex.tsx"),
       readSource("src/components/CopyableModelCard.tsx"),
+      readSource("src/components/ModelPlatformBadge.tsx"),
     ]);
 
     expect(page).toContain('<Navbar minimal publicNavigationActiveView="resources" />');
     expect(page).toContain('<ResourcesNavigation activeView="models" />');
     expect(page).not.toContain("OrganiserSectionNavigation");
-    expect(page).toContain("<StructureNewsletterBlock />");
+    expect(page).not.toContain("StructureNewsletterBlock");
+    expect(page).not.toContain("MentoratAutomationCta");
     expect(page).not.toContain("<ModelProcessesBridge />");
     expect(toolsPage).toContain("<SystemsHubPage enterprises={enterprises} />");
     expect(page).toContain('path: "/modeles"');
     expect(navbar).toContain('label: "Ressources"');
-    expect(navbar).toContain('href: "/outils"');
+    expect(navbar).toContain('href: "/tutoriels"');
     expect(toolsHub).not.toContain("getPublishedCopyableModels");
     expect(toolsHub).not.toContain("ToolsModelsSection");
     expect(toolsHub).toContain('<ResourcesNavigation activeView="tools" />');
     expect(resources).toContain('label: "Outils"');
     expect(resources).toContain('label: "Modèles"');
-    expect(resources).toContain('label: "Tutoriels"');
+    expect(resources).toContain('label: "Méthodes"');
     expect(page).toContain('fromOrganisation={source === "organisation"}');
     expect(modelsIndex).toContain('href="/tutoriels"');
-    expect(modelsIndex).toContain("Retour aux tutoriels");
+    expect(modelsIndex).toContain("Retour aux méthodes");
     expect(modelsIndex).toContain("`/modeles/${model.slug}?from=tutoriels`");
     expect(footer).toContain('{ label: "Modèles à copier", href: "/modeles" }');
     expect(footer).toContain('{ label: "Outils", href: "/outils" }');
-    expect(footer).toContain('{ label: "Tutoriels", href: "/tutoriels" }');
+    expect(footer).toContain('{ label: "Méthodes", href: "/tutoriels" }');
     expect(modelsIndex).toContain('style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}');
     expect(modelsIndex).toContain("block text-brand-blue/62");
     expect(modelsIndex).toContain("demaa-hero-title block text-dema-forest");
@@ -49,19 +51,25 @@ describe("copyable model public routes", () => {
     expect(modelsIndex).toContain('title: "Les fondamentaux"');
     expect(modelsIndex).toContain('title: "La réalisation du travail"');
     expect(modelsIndex).toContain('title: "Le développement de l’entreprise"');
-    expect(modelsIndex).toContain("grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3");
-    expect(modelsIndex).not.toContain("SOLUTION_RAIL_CLASS_NAME");
+    expect(modelsIndex).toContain("snap-x snap-mandatory overflow-x-auto");
+    expect(modelsIndex).toContain("w-[82vw] max-w-[21rem] shrink-0 snap-start");
+    expect(modelsIndex).not.toContain("grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3");
     expect(modelsIndex).toContain("titleLevel={3}");
+    expect(modelsIndex).toContain("ModelPracticeGuides");
+    expect(modelsIndex).toContain("getPublishedPracticeTutorials");
     expect(modelsIndex).not.toContain("Des processus concrets pour se projeter vraiment");
-    expect(modelCard).toContain("line-clamp-3");
+    expect(modelCard).toContain("line-clamp-2");
+    expect(modelCard).not.toContain("<Copy ");
+    expect(modelCard).not.toContain('from "lucide-react"');
+    expect(platformBadge).not.toContain("<svg");
     expect(modelCard).toContain("transition-colors duration-150");
     expect(modelCard).not.toContain("hover:-translate-y");
     expect(modelCard).not.toContain("hover:shadow-");
-    expect(footer.indexOf('{ label: "Outils"')).toBeLessThan(
+    expect(footer.indexOf('{ label: "Méthodes"')).toBeLessThan(
       footer.indexOf('{ label: "Modèles à copier"'),
     );
     expect(footer.indexOf('{ label: "Modèles à copier"')).toBeLessThan(
-      footer.indexOf('{ label: "Tutoriels"'),
+      footer.indexOf('{ label: "Outils"'),
     );
   });
 
@@ -79,7 +87,7 @@ describe("copyable model public routes", () => {
 
     expect(page).toContain('source === "organisation"');
     expect(page).toContain('source === "tutoriels"');
-    expect(page).toContain('{ href: "/tutoriels", label: "Retour aux tutoriels" }');
+    expect(page).toContain('{ href: "/tutoriels", label: "Retour aux méthodes" }');
     expect(page).toContain('{ href: "/modeles", label: "Retour aux modèles" }');
     expect(page).toContain('<Navbar minimal publicNavigationActiveView="resources" />');
     expect(page).toContain('<ResourcesNavigation activeView="models" />');
@@ -91,14 +99,15 @@ describe("copyable model public routes", () => {
     expect(details).toContain("DriveFolderTreePreview");
     expect(details).toContain("DriveFolderTemplateCreator");
     expect(details).toContain("NotionWorkspacePreview");
-    expect(notionPreview).toContain("Six bases canoniques");
-    expect(driveCreator).toContain("Créer automatiquement dans mon Drive");
-    expect(driveCreator).toContain("Copier la liste des dossiers");
-    expect(driveCreator).toContain("Premier exercice comptable");
+    expect(notionPreview).not.toContain("Six bases canoniques");
+    expect(driveCreator).toContain("Créer dans mon Drive");
+    expect(driveCreator).toContain("Copier la structure");
     expect(driveCreator).toContain("creation_cleanup");
-    expect(driveCreator).toContain("aucun dossier n’est créé");
+    expect(driveCreator).toContain('type="hidden" name="rootName"');
+    expect(driveCreator).toContain('type="hidden" name="year"');
     expect(driveCreator).toContain('type="hidden" name="sectionIds"');
-    expect(driveCreator).not.toContain("Domaines à créer");
+    expect(driveCreator).not.toContain("Dossiers à créer");
+    expect(driveCreator).not.toContain("La première option");
     expect(copyLink).toContain("Copier gratuitement");
     expect(copyLink).toContain("demaa-secondary-button");
     expect(copyLink).toContain("w-full");
@@ -111,14 +120,29 @@ describe("copyable model public routes", () => {
     expect(details).toContain('variant === "page" && backLink');
     expect(details).toContain('href={backLink.href}');
     expect(details).not.toContain('<Link href="/modeles"');
-    expect(details).toContain("MentoratAutomationCta");
-    expect(details).toContain('variant="modele"');
+    expect(details).not.toContain("MentoratAutomationCta");
+    expect(details).toContain("ModelPracticeGuides");
+    expect(details).toContain("getPublishedPracticeTutorialsForModel");
     expect(details).not.toContain("Faire adapter ce modèle");
     expect(details).not.toContain("550 € HT / jour");
     expect(details).not.toContain("model.relatedOrganiserSlug");
     expect(details).not.toContain("Le flux couvert");
     expect(details).not.toContain("Structure incluse");
     expect(details).not.toContain("Modèle gratuit · Copie dans votre propre espace");
+  });
+
+  it("keeps Drive focused on files and points to the separate pilotage model", async () => {
+    const [catalog, preview] = await Promise.all([
+      readSource("src/lib/copyable-model-catalog.ts"),
+      readSource("src/components/DriveFolderTreePreview.tsx"),
+    ]);
+
+    expect(catalog).toContain("Classez les documents administratifs, clients, équipe et communication");
+    expect(preview).toContain("Drive classe les fichiers.");
+    expect(preview).toContain('href="/modeles/pilotage-entreprise-notion"');
+    expect(preview).not.toContain("Exemples à ajouter si nécessaire");
+    expect(preview).not.toContain("COMPANY_DRIVE_DOSSIER_GUIDES");
+    expect(preview).not.toContain("Pas de dossier « Modèles » général");
   });
 
   it("keeps the copy route guarded and destination-driven", async () => {

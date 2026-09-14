@@ -4,11 +4,11 @@ import {
   serializePublicJsonLd,
 } from "@/lib/public-index-json-ld";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
-import { getPublishedTutorials } from "@/lib/tutorial-catalog";
+import { getPublishedMethods } from "@/lib/tutorial-catalog";
 
-const title = "Tutoriels pour mieux utiliser ses outils | Demaa";
+const title = "Méthodes pour reprendre, structurer ou vendre | Demaa";
 const description =
-  "Des tutoriels concrets pour choisir, configurer et mieux utiliser les outils de votre entreprise.";
+  "Des méthodes courtes, documentées et directement applicables pour reprendre, structurer ou vendre une entreprise.";
 
 export const metadata = buildPublicPageMetadata({
   title,
@@ -17,9 +17,9 @@ export const metadata = buildPublicPageMetadata({
 });
 
 export default function TutorialsPage() {
-  const tutorials = getPublishedTutorials();
+  const tutorials = getPublishedMethods();
   const jsonLd = buildPublicIndexJsonLd({
-    name: "Tutoriels",
+    name: "Méthodes",
     description,
     path: "/tutoriels",
     items: tutorials.map((tutorial) => ({

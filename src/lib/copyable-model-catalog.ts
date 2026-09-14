@@ -47,7 +47,7 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
   {
     slug: "structure-google-drive-entreprise",
     title: "Structure Google Drive pour organiser son entreprise",
-    description: "Rangez vos fichiers dans cinq domaines simples : à classer, administration et finance, dossiers clients, équipe et communication. Gardez uniquement les domaines utiles ; le pilotage et les tâches restent dans Notion ou votre outil métier.",
+    description: "Classez les documents administratifs, clients, équipe et communication dans une arborescence commune.",
     seoTitle: "Structure Google Drive pour organiser son entreprise | Demaa",
     seoDescription: "Créez gratuitement dans Google Drive une structure de dossiers pragmatique pour organiser les documents de votre entreprise.",
     category: "Organisation",
@@ -56,7 +56,7 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
     featuredRank: 1,
     workflowStart: "Les documents sont dispersés ou rangés différemment par chaque personne",
     workflowEnd: "Chaque document a un emplacement clair, partagé et durable",
-    benefits: ["Retrouver les documents plus vite", "Choisir uniquement les domaines utiles", "Archiver dans chaque domaine sans multiplier les copies"],
+    benefits: ["Retrouver les documents plus vite", "Donner un emplacement clair à chaque fichier", "Séparer les documents administratifs, clients et équipe"],
     includedSections: ["À classer", "Administration & finance", "Dossiers clients", "Équipe (facultatif)", "Communication"],
     searchTerms: ["drive", "google drive", "dossiers", "arborescence", "classement", "documents", "organisation"],
     compatibleSystemSlugs: "all",
@@ -65,7 +65,7 @@ const copyableModelDefinitions: readonly CopyableModelDefinition[] = [
   {
     slug: "pilotage-entreprise-notion",
     title: "Pilotage simple de son entreprise dans Notion",
-    description: "Regroupez le cap, les objectifs, les indicateurs, les décisions, les tâches, les réunions et les procédures dans un cockpit léger pour TPE.",
+    description: "Regroupez les objectifs, les indicateurs, les décisions, les tâches, les réunions et les procédures au même endroit.",
     seoTitle: "Modèle Notion de pilotage d’entreprise à copier | Demaa",
     seoDescription: "Copiez gratuitement un modèle Notion simple pour piloter les objectifs, indicateurs, décisions, tâches, réunions et procédures d’une TPE.",
     category: "Pilotage",

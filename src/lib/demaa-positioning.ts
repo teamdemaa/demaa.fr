@@ -1,4 +1,4 @@
-export const DEMAA_HOME_TITLE = "Demaa : organisez votre entreprise avec des systèmes simples";
+export const DEMAA_HOME_TITLE = "Demaa : reprendre ou vendre une PME de services";
 
 export const DEMAA_HOME_DESCRIPTION =
-  "Demaa aide les dirigeants de TPE à mettre de l’ordre dans leur entreprise et à installer des systèmes simples dans leurs outils actuels.";
+  "Découvrez des PME de services à reprendre ou présentez gratuitement votre entreprise à des repreneurs.";

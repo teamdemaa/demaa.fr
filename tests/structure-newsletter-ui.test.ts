@@ -63,9 +63,8 @@ describe("Organiser newsletter public contract", () => {
   it("renders the same component at the approved editorial surfaces only", () => {
     const approved = [
       "src/components/AcademyIndexClient.tsx",
-      "src/components/SystemsHubPage.tsx",
       "src/components/OrganiserHub.tsx",
-      "src/app/(marketing)/modeles/page.tsx",
+      "src/components/TutorialsHub.tsx",
     ];
 
     for (const path of approved) {
@@ -76,6 +75,12 @@ describe("Organiser newsletter public contract", () => {
     expect(academyIndex).toContain("!embedded || showStructureNewsletter");
     expect(component).toContain("mx-auto w-full max-w-4xl");
     expect(read("src/components/SystemDetailContent.tsx")).not.toContain(
+      "StructureNewsletterBlock",
+    );
+    expect(read("src/components/SystemsHubPage.tsx")).not.toContain(
+      "StructureNewsletterBlock",
+    );
+    expect(read("src/app/(marketing)/modeles/page.tsx")).not.toContain(
       "StructureNewsletterBlock",
     );
     expect(read("src/app/(marketing)/organiser/page.tsx")).not.toContain(

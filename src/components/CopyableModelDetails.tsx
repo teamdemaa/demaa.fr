@@ -5,13 +5,14 @@ import CopyableModelCopyLink from "@/components/CopyableModelCopyLink";
 import DocumentModelPreview from "@/components/DocumentModelPreview";
 import DriveFolderTemplateCreator from "@/components/DriveFolderTemplateCreator";
 import DriveFolderTreePreview from "@/components/DriveFolderTreePreview";
-import MentoratAutomationCta from "@/components/MentoratAutomationCta";
+import ModelPracticeGuides from "@/components/ModelPracticeGuides";
 import ModelPlatformBadge from "@/components/ModelPlatformBadge";
 import NotionWorkspacePreview from "@/components/NotionWorkspacePreview";
 import type { CopyableModelDefinition } from "@/lib/copyable-model-catalog";
 import { getDocumentModelBySlug } from "@/lib/document-models";
 import { buildCompanyDriveFolderTemplate } from "@/lib/drive-folder-templates";
 import { isGoogleDriveTemplateConfigured } from "@/lib/google-drive-template.server";
+import { getPublishedPracticeTutorialsForModel } from "@/lib/tutorial-catalog";
 
 export default function CopyableModelDetails({
   backLink,
@@ -30,6 +31,7 @@ export default function CopyableModelDetails({
     ? buildCompanyDriveFolderTemplate(currentYear)
     : null;
   const Heading = variant === "modal" ? "h2" : "h1";
+  const practiceTutorials = getPublishedPracticeTutorialsForModel(model.slug);
 
   return (
     <article className={variant === "page" ? "mx-auto w-full max-w-6xl" : "w-full"}>
@@ -89,9 +91,12 @@ export default function CopyableModelDetails({
         </div>
       </div>
 
-      <div className="mt-8">
-        <MentoratAutomationCta modelSlug={model.slug} variant="modele" />
-      </div>
+      {practiceTutorials.length > 0 ? (
+        <div className="mt-8 rounded-[1.35rem] border border-dema-line bg-white p-6 sm:p-8">
+          <ModelPracticeGuides compact tutorials={practiceTutorials} />
+        </div>
+      ) : null}
+
     </article>
   );
 }

@@ -1,6 +1,10 @@
+import { METHOD_ARTICLES, type MethodDefinition } from "@/lib/method-catalog";
+
 export const TUTORIAL_CATEGORIES = [
-  "Clients & ventes",
-  "Planning & opérations",
+  "Vendre",
+  "Reprendre",
+  "Structurer",
+  "Mise en pratique",
 ] as const;
 
 export type TutorialCategory = (typeof TUTORIAL_CATEGORIES)[number];
@@ -24,8 +28,10 @@ export type TutorialStep = Readonly<{
   title: string;
 }>;
 
-export type TutorialDefinition = Readonly<{
-  category: TutorialCategory;
+export type PracticeTutorialDefinition = Readonly<{
+  format: "practice";
+  category: "Mise en pratique";
+  topic: "Clients & ventes" | "Planning & opérations";
   fields: readonly TutorialField[];
   keyPoints: readonly string[];
   modelSlug: string;
@@ -40,13 +46,17 @@ export type TutorialDefinition = Readonly<{
   updatedAt: string;
 }>;
 
-const tutorials = [
+export type TutorialDefinition = MethodDefinition | PracticeTutorialDefinition;
+
+const practiceTutorials = [
   {
+    format: "practice",
     slug: "creer-pipeline-commercial-airtable",
     title: "Créer un pipeline commercial dans Airtable",
     summary:
       "Centralisez vos opportunités, visualisez leur étape et retrouvez immédiatement la prochaine action à mener.",
-    category: "Clients & ventes",
+    category: "Mise en pratique",
+    topic: "Clients & ventes",
     tool: "Airtable",
     modelSlug: "suivi-commercial-et-devis",
     publishedAt: "2026-09-12",
@@ -54,7 +64,7 @@ const tutorials = [
     thumbnail: "/images/organiser/thumbnails/creer-pipeline-commercial-airtable.png?v=20260912-tutorials",
     searchTerms: ["pipeline", "commercial", "crm", "prospect", "vente", "airtable"],
     keyPoints: [
-      "Une opportunité correspond à une vente potentielle, pas à un simple contact.",
+      "Une opportunité correspond à une vente potentielle qualifiée.",
       "Chaque ligne doit avoir une étape, un responsable et une prochaine action datée.",
       "La vue Pipeline sert à décider quoi faire, la grille sert à fiabiliser les données.",
       "Le modèle Demaa est déjà structuré : copiez-le avant de l’adapter.",
@@ -74,7 +84,7 @@ const tutorials = [
         title: "Copier le modèle et repérer les cinq tables",
         paragraphs: [
           "Ouvrez le modèle Demaa puis cliquez sur « Copier la base ». Vous récupérez les tables Entreprises, Contacts, Opportunités, Devis et Activités & relances dans votre espace Airtable.",
-          "Commencez dans la table Opportunités. Les autres tables enrichissent le suivi, mais vous n’avez pas besoin de les personnaliser toutes dès le premier jour.",
+          "Commencez dans la table Opportunités. Personnalisez les autres tables au fur et à mesure de vos besoins.",
         ],
         screenshot: {
           src: "/images/tutoriels/creer-pipeline-commercial-airtable/opportunites.png",
@@ -101,7 +111,7 @@ const tutorials = [
         title: "Créer la vue Pipeline groupée par étape",
         paragraphs: [
           "Ajoutez une vue Kanban dans la table Opportunités et choisissez le champ Étape comme regroupement. Chaque carte doit au minimum afficher le nom de l’opportunité, l’entreprise, le montant et la prochaine action.",
-          "Cette vue n’est pas un tableau décoratif : elle doit permettre de repérer en moins d’une minute les opportunités bloquées ou sans prochaine action.",
+          "Cette vue doit permettre de repérer en moins d’une minute les opportunités bloquées ou dépourvues de prochaine action.",
         ],
         screenshot: {
           src: "/images/tutoriels/creer-pipeline-commercial-airtable/pipeline.png",
@@ -130,11 +140,13 @@ const tutorials = [
     ],
   },
   {
+    format: "practice",
     slug: "suivre-devis-relances-airtable",
     title: "Suivre ses devis et ses relances dans Airtable",
     summary:
       "Réunissez les devis envoyés, leurs échéances et les relances à faire dans une vue quotidienne simple.",
-    category: "Clients & ventes",
+    category: "Mise en pratique",
+    topic: "Clients & ventes",
     tool: "Airtable",
     modelSlug: "suivi-commercial-et-devis",
     publishedAt: "2026-09-12",
@@ -190,11 +202,13 @@ const tutorials = [
     ],
   },
   {
+    format: "practice",
     slug: "organiser-projets-missions-clients-airtable",
     title: "Organiser ses projets et missions clients dans Airtable",
     summary:
       "Cadrez chaque mission vendue, ses livrables, son responsable et ses échéances sans multiplier les tableaux.",
-    category: "Planning & opérations",
+    category: "Mise en pratique",
+    topic: "Planning & opérations",
     tool: "Airtable",
     modelSlug: "projets-et-missions-clients",
     publishedAt: "2026-09-12",
@@ -250,11 +264,13 @@ const tutorials = [
     ],
   },
   {
+    format: "practice",
     slug: "planifier-interventions-chantiers-airtable",
     title: "Planifier ses interventions et chantiers dans Airtable",
     summary:
       "Transformez les demandes terrain en interventions planifiées, affectées et suivies jusqu’au compte rendu.",
-    category: "Planning & opérations",
+    category: "Mise en pratique",
+    topic: "Planning & opérations",
     tool: "Airtable",
     modelSlug: "interventions-et-chantiers",
     publishedAt: "2026-09-12",
@@ -299,7 +315,7 @@ const tutorials = [
       {
         title: "Construire les vues Calendrier et À confirmer",
         paragraphs: [
-          "La vue Calendrier affiche les interventions par date de début. La vue À confirmer filtre celles qui n’ont pas encore d’équipe ou dont le créneau n’est pas validé.",
+          "La vue Calendrier affiche les interventions par date de début. La vue À confirmer regroupe les interventions encore à affecter ou à valider.",
         ],
       },
       {
@@ -310,7 +326,28 @@ const tutorials = [
       },
     ],
   },
-] as const satisfies readonly TutorialDefinition[];
+] as const satisfies readonly PracticeTutorialDefinition[];
+
+const tutorials: readonly TutorialDefinition[] = [
+  ...METHOD_ARTICLES,
+  ...practiceTutorials,
+];
+
+export function getPublishedMethods(): MethodDefinition[] {
+  return METHOD_ARTICLES.map((method) => ({ ...method }));
+}
+
+export function getPublishedPracticeTutorials(): PracticeTutorialDefinition[] {
+  return practiceTutorials.map((tutorial) => ({ ...tutorial }));
+}
+
+export function getPublishedPracticeTutorialsForModel(
+  modelSlug: string,
+): PracticeTutorialDefinition[] {
+  return getPublishedPracticeTutorials().filter(
+    (tutorial) => tutorial.modelSlug === modelSlug,
+  );
+}
 
 export function getPublishedTutorials(): TutorialDefinition[] {
   return tutorials.map((tutorial) => ({ ...tutorial }));

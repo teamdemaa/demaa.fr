@@ -26,7 +26,7 @@ describe("seller and accompaniment pages", () => {
     expect(accompaniment).toContain("TransmissionLandingPage");
     expect(studio).toContain('permanentRedirect("/accompagnement")');
     expect(footer).toContain('{ label: "Vendre", href: "/transmettre" }');
-    expect(footer).toContain('{ label: "Préparer mon entreprise", href: "/accompagnement" }');
+    expect(footer).toContain('{ label: "Accompagnement", href: "/accompagnement" }');
     expect(navbar).toContain('label: "Vendre", href: "/transmettre"');
     expect(navbar).not.toContain('label: "Demaa Partners"');
     expect(sitemap).toContain("`${base}/transmettre`");

@@ -7,16 +7,18 @@
 - Conserver trois portes publiques : **À reprendre · Vendre · Ressources**.
 - Garder le header de chaque landing page très léger, avec une promesse et un seul appel à l’action.
 - Sur **À reprendre**, préserver la marketplace existante et permettre au repreneur de décrire sa recherche à Demaa.
-- Sur **Vendre**, réunir cession, estimation et préparation opérationnelle de l’entreprise.
-- Présenter une seule offre de structuration : un accompagnement de six mois à 1 500 euros HT par mois.
-- Garder Ressources organisé en **Outils · Modèles · Tutoriels**.
+- Sur **Vendre**, présenter gratuitement l’entreprise aux repreneurs et proposer une estimation.
+- Garder la préparation opérationnelle comme accompagnement facultatif sur `/accompagnement`.
+- Présenter une seule offre d’accompagnement : six mois à 1 500 euros HT par mois.
+- Garder Ressources organisé en **Méthodes · Modèles · Outils**.
+- Laisser les ressources utilisables seules, sans relance commerciale systématique.
 
 ## Terminé quand
 
 - La navigation publique et le footer utilisent partout **À reprendre · Vendre · Ressources**.
-- `/accompagnement`, `/partners` et `/studio` redirigent vers `/transmettre`, tandis que `/automatisation` redirige vers `/transmettre#structuration`.
+- `/partners`, `/studio` et `/automatisation` redirigent vers `/accompagnement`.
 - Le header de `/a-reprendre` ne contient que le titre et **Décrire mon projet de reprise**.
-- Les actions **Vendre mon entreprise** et **Estimer mon entreprise** apparaissent uniquement sur `/transmettre`.
+- Les actions **Vendre mon entreprise** et **Estimer mon entreprise** apparaissent sur `/transmettre`.
 - Le nouveau formulaire repreneur transmet activité, région, budget, projet et coordonnées à Demaa par email.
 - La carte fonctionne sur ordinateur et mobile sans révéler d’adresse précise.
 - Le comparatif affiche les informations disponibles et “Non disponible” lorsqu’elles manquent.
@@ -44,3 +46,5 @@
 - 2026-09-14 : les pages Accompagnement et Partners fusionnent dans `/transmettre`, avec la cession, l’estimation et une offre de structuration bornée.
 - 2026-09-14 : `/a-reprendre` conserve sa marketplace et ajoute un parcours global pour décrire un projet de reprise.
 - 2026-09-14 : l’offre de structuration devient un accompagnement de six mois à 1 500 euros HT par mois.
+- 2026-09-14 : la présentation aux repreneurs est gratuite ; l’accompagnement à la préparation reste facultatif et séparé.
+- 2026-09-14 : les modèles et méthodes ne portent plus de relance commerciale automatique vers l’accompagnement.

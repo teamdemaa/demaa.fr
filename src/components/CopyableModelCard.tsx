@@ -1,6 +1,5 @@
 "use client";
 
-import { Copy } from "lucide-react";
 import Link from "next/link";
 import ModelPlatformBadge from "@/components/ModelPlatformBadge";
 import type { CopyableModelDefinition } from "@/lib/copyable-model-catalog";
@@ -25,21 +24,16 @@ export default function CopyableModelCard({
         platform: model.platform,
         surface: "catalogue",
       })}
-      className="group flex h-full min-h-72 flex-col rounded-[1.35rem] border border-dema-line bg-dema-paper p-5 transition-colors duration-150 hover:border-dema-forest/20 hover:bg-dema-sage/10 sm:p-6"
+      className="group flex h-full min-h-64 flex-col rounded-[1.35rem] border border-dema-line bg-dema-paper p-5 transition-colors duration-150 hover:border-dema-forest/20 hover:bg-dema-sage/10 sm:p-6"
     >
       <div>
-        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-dema-sage/65 text-dema-forest">
-          <Copy className="h-4 w-4" aria-hidden="true" />
-        </span>
-      </div>
-      <div className="mt-8">
         <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest/70">{model.category}</p>
         {titleLevel === 3 ? (
           <h3 className={titleClassName}>{model.title}</h3>
         ) : (
           <h2 className={titleClassName}>{model.title}</h2>
         )}
-        <p className="demaa-catalog-card-description mt-3 line-clamp-3 text-dema-muted">{model.description}</p>
+        <p className="demaa-catalog-card-description mt-3 line-clamp-2 text-dema-muted">{model.description}</p>
       </div>
       <div className="mt-auto flex items-center justify-between gap-3 pt-7">
         <ModelPlatformBadge platform={model.platform} />

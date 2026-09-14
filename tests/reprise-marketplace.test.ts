@@ -162,6 +162,8 @@ describe("marketplace À reprendre", () => {
     expect(sellerActions).not.toContain("w-fit self-center");
     expect(transmission).toContain('<BusinessSellerActions variant="hero" />');
     expect(transmission).toContain('<BusinessSellerActions variant="sale" />');
+    expect(sellerActions).toContain('get("intent") === "valuation"');
+    expect(sellerActions).toContain('variant !== "sale"');
     expect(saleDialog).toContain("Décrivez-nous d’abord votre entreprise et votre projet de vente");
     expect(saleDialog).toContain("Votre entreprise et votre projet en quelques mots");
     expect(saleDialog.indexOf('name="message"')).toBeLessThan(saleDialog.indexOf('name="name"'));

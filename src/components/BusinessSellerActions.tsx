@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { BusinessValuationInput, BusinessValuationResult } from "@/lib/business-valuation";
 
@@ -14,6 +14,16 @@ const secondaryClassName = "inline-flex min-h-12 items-center justify-center rou
 export default function BusinessSellerActions({ variant = "hero" }: { variant?: "hero" | "sale" | "estimate" }) {
   const [view, setView] = useState<"sale" | "valuation" | null>(null);
   const [valuation, setValuation] = useState<{ input: BusinessValuationInput; result: BusinessValuationResult }>();
+
+  useEffect(() => {
+    if (
+      variant !== "sale"
+      && new URLSearchParams(window.location.search).get("intent") === "valuation"
+    ) {
+      const timeout = window.setTimeout(() => setView("valuation"), 0);
+      return () => window.clearTimeout(timeout);
+    }
+  }, [variant]);
 
   return (
     <>

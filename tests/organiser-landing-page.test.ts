@@ -6,12 +6,16 @@ import {
   ARCHIVED_ACADEMY_DESTINATION,
 } from "@/lib/academy-course-routes";
 import { getPublishedCopyableModelBySlug } from "@/lib/copyable-model-catalog";
-import { getPublishedTutorials } from "@/lib/tutorial-catalog";
+import {
+  getPublishedMethods,
+  getPublishedPracticeTutorials,
+  getPublishedTutorials,
+} from "@/lib/tutorial-catalog";
 
 const read = (path: string) => readFileSync(path, "utf8");
 
-describe("Outils, Modèles and Tutoriels public journey", () => {
-  it("publishes one focused tutorial library with the shared resource navigation", () => {
+describe("Méthodes, Modèles and Outils public journey", () => {
+  it("publishes one focused method library with the shared resource navigation", () => {
     const page = read("src/app/(marketing)/tutoriels/page.tsx");
     const hub = read("src/components/TutorialsHub.tsx");
     const library = read("src/components/TutorialLibrary.tsx");
@@ -19,8 +23,10 @@ describe("Outils, Modèles and Tutoriels public journey", () => {
     expect(page).toContain("<TutorialsHub />");
     expect(page).toContain('path: "/tutoriels"');
     expect(hub).toContain('<ResourcesNavigation activeView="tutorials" />');
-    expect(hub).toContain("Des tutoriels concrets pour choisir, configurer et");
-    expect(hub).toContain("mieux utiliser vos outils");
+    expect(hub).toContain("getPublishedMethods");
+    expect(hub).not.toContain("getPublishedTutorials");
+    expect(hub).toContain("Des méthodes concrètes pour reprendre,");
+    expect(hub).toContain("structurer ou vendre");
     expect(hub).toContain("demaa-hero-title block text-dema-forest");
     expect(hub).not.toContain("demaa-hero-title block font-normal");
     expect(hub).not.toContain("étape par étape");
@@ -28,11 +34,11 @@ describe("Outils, Modèles and Tutoriels public journey", () => {
     expect(hub).not.toContain("Tutoriels pratiques");
     expect(hub).not.toContain("modèles Demaa");
     expect(page).not.toContain("modèles Demaa");
-    expect(library).toContain("Rechercher un tutoriel");
+    expect(library).toContain("Rechercher une méthode");
     expect(library).toContain("SlidersHorizontal");
     expect(library).toContain('className="demaa-search-control"');
     expect(library).not.toContain("focus:ring-2 focus:ring-dema-forest/20");
-    expect(library).toContain('aria-label="Filtrer les tutoriels par thème"');
+    expect(library).toContain('aria-label="Filtrer les méthodes par thème"');
     expect(library).toContain('aria-live="polite"');
     expect(library).not.toContain("<span>Tutoriel</span>");
     expect(library).not.toContain("tutorial.minutes");
@@ -40,30 +46,47 @@ describe("Outils, Modèles and Tutoriels public journey", () => {
     expect(library).not.toContain("Modèles prêts à copier");
   });
 
-  it("launches four real Airtable tutorials linked to existing Demaa models", () => {
+  it("publishes five concise methods and keeps four Airtable implementations", () => {
     const tutorials = getPublishedTutorials();
-    expect(tutorials).toHaveLength(4);
-    expect(tutorials.map(({ title }) => title)).toEqual([
+    const methods = getPublishedMethods();
+    const practiceTutorials = getPublishedPracticeTutorials();
+
+    expect(tutorials).toHaveLength(9);
+    expect(methods.map(({ title }) => title)).toEqual([
+      "Votre entreprise peut-elle fonctionner un mois sans vous ?",
+      "Comment présenter son entreprise à un repreneur en une page ?",
+      "Comment obtenir une première estimation réaliste de son entreprise ?",
+      "Les 10 questions à poser avant d’étudier une entreprise à reprendre",
+      "Que transmettre à un repreneur ?",
+    ]);
+    expect(methods.every(({ readingMinutes }) => readingMinutes >= 5 && readingMinutes <= 7)).toBe(true);
+    expect(methods.every(({ action, sources, cta }) => (
+      Number.parseInt(action.duration, 10) <= 30
+      && sources.length >= 2
+      && cta.href.startsWith("/")
+    ))).toBe(true);
+
+    expect(practiceTutorials.map(({ title }) => title)).toEqual([
       "Créer un pipeline commercial dans Airtable",
       "Suivre ses devis et ses relances dans Airtable",
       "Organiser ses projets et missions clients dans Airtable",
       "Planifier ses interventions et chantiers dans Airtable",
     ]);
-    expect(tutorials.every(({ tool }) => tool === "Airtable")).toBe(true);
-    expect(tutorials.every(({ fields, steps }) => fields.length >= 7 && steps.length === 5)).toBe(true);
-    expect(tutorials.map(({ modelSlug }) => modelSlug)).toEqual([
+    expect(practiceTutorials.every(({ tool }) => tool === "Airtable")).toBe(true);
+    expect(practiceTutorials.every(({ fields, steps }) => fields.length >= 7 && steps.length === 5)).toBe(true);
+    expect(practiceTutorials.map(({ modelSlug }) => modelSlug)).toEqual([
       "suivi-commercial-et-devis",
       "suivi-commercial-et-devis",
       "projets-et-missions-clients",
       "interventions-et-chantiers",
     ]);
-    expect(tutorials.every(({ modelSlug }) => (
+    expect(practiceTutorials.every(({ modelSlug }) => (
       getPublishedCopyableModelBySlug(modelSlug) !== null
     ))).toBe(true);
     expect(new Set(tutorials.map(({ slug }) => slug)).size).toBe(tutorials.length);
     expect(new Set(tutorials.map(({ title }) => title)).size).toBe(tutorials.length);
 
-    for (const tutorial of tutorials) {
+    for (const tutorial of practiceTutorials) {
       expect(Date.parse(tutorial.publishedAt)).not.toBeNaN();
       expect(Date.parse(tutorial.updatedAt)).not.toBeNaN();
       expect(Date.parse(tutorial.updatedAt)).toBeGreaterThanOrEqual(
@@ -79,7 +102,7 @@ describe("Outils, Modèles and Tutoriels public journey", () => {
   });
 
   it("uses official Demaa thumbnails and real screenshots only where they explain a key step", () => {
-    const firstTutorial = getPublishedTutorials()[0]!;
+    const firstTutorial = getPublishedTutorials().find((tutorial) => tutorial.format === "practice")!;
     const article = read("src/components/TutorialArticle.tsx");
     const thumbnailCatalog = read("src/lib/organiser-thumbnail-catalog.ts");
 
@@ -92,15 +115,17 @@ describe("Outils, Modèles and Tutoriels public journey", () => {
     expect(article).toContain("step.screenshot");
   });
 
-  it("exposes tutorial-specific sharing metadata and complete structured data", () => {
+  it("exposes method and implementation structured data", () => {
     const route = read("src/app/(marketing)/tutoriels/[slug]/page.tsx");
 
     expect(route).toContain("socialImage:");
     expect(route).toContain("url: tutorial.thumbnail");
     expect(route).toContain('"@type": "BreadcrumbList"');
+    expect(route).toContain('"@type": "Article"');
     expect(route).toContain('"@type": "HowTo"');
     expect(route).toContain('inLanguage: "fr-FR"');
-    expect(route).toContain("image: `${origin}${thumbnailPath}`");
+    expect(route).toContain('citation: tutorial.sources.map(({ url }) => url)');
+    expect(route).toContain('image: `${origin}${tutorial.thumbnail.split("?")[0]}`');
     expect(route).not.toContain("totalTime");
     expect(route).not.toContain("tutorial.minutes");
     expect(route).toContain('replace(/</g, "\\\\u003c")');

@@ -4,7 +4,9 @@ import { ArrowLeft, Search } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import CopyableModelCard from "@/components/CopyableModelCard";
+import ModelPracticeGuides from "@/components/ModelPracticeGuides";
 import type { CopyableModelDefinition } from "@/lib/copyable-model-catalog";
+import { getPublishedPracticeTutorials } from "@/lib/tutorial-catalog";
 
 const MODEL_GROUPS = [
   {
@@ -66,6 +68,13 @@ export default function CopyableModelsIndex({
       return model ? [model] : [];
     }),
   })).filter((group) => group.models.length > 0);
+  const visibleModelSlugs = new Set(filteredModels.map(({ slug }) => slug));
+  const visiblePracticeTutorials = getPublishedPracticeTutorials().filter(
+    ({ modelSlug }) => visibleModelSlugs.has(modelSlug),
+  );
+  const modelTitles = Object.fromEntries(
+    models.map(({ slug, title }) => [slug, title]),
+  );
 
   return (
     <>
@@ -76,7 +85,7 @@ export default function CopyableModelsIndex({
             className="mb-10 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Retour aux tutoriels
+            Retour aux méthodes
           </Link>
         ) : null}
 
@@ -126,21 +135,35 @@ export default function CopyableModelsIndex({
                 >
                   {group.title}
                 </h2>
-                <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {group.models.map((model) => (
-                    <div key={model.slug} className="min-w-0">
-                      <CopyableModelCard
-                        href={fromOrganisation
-                          ? `/modeles/${model.slug}?from=tutoriels`
-                          : undefined}
-                        model={model}
-                        titleLevel={3}
-                      />
-                    </div>
-                  ))}
+                <div
+                  className="soft-scroll -mx-4 mt-6 snap-x snap-mandatory overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0"
+                  role="region"
+                  aria-label={`Parcourir les modèles : ${group.title}`}
+                >
+                  <div className="flex min-w-max gap-4">
+                    {group.models.map((model) => (
+                      <div key={model.slug} className="w-[82vw] max-w-[21rem] shrink-0 snap-start sm:w-[20rem] lg:w-[21rem]">
+                        <CopyableModelCard
+                          href={fromOrganisation
+                            ? `/modeles/${model.slug}?from=tutoriels`
+                            : undefined}
+                          model={model}
+                          titleLevel={3}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </section>
             ))}
+            {visiblePracticeTutorials.length > 0 ? (
+              <div className="border-t border-dema-line pt-12">
+                <ModelPracticeGuides
+                  modelTitles={modelTitles}
+                  tutorials={visiblePracticeTutorials}
+                />
+              </div>
+            ) : null}
           </div>
         ) : (
           <div className="mx-auto mt-10 max-w-2xl rounded-[1.25rem] border border-dema-line bg-white p-8 text-center">

@@ -8,17 +8,17 @@ const readSource = (path: string) => readFile(
 );
 
 describe("Demaa positioning", () => {
-  it("uses one canonical systems promise across home metadata", async () => {
+  it("uses the marketplace promise across home metadata", async () => {
     const [layout, homePage] = await Promise.all([
       readSource("src/app/layout.tsx"),
       readSource("src/app/(application)/page.tsx"),
     ]);
 
     expect(DEMAA_HOME_TITLE).toBe(
-      "Demaa : organisez votre entreprise avec des systèmes simples",
+      "Demaa : reprendre ou vendre une PME de services",
     );
     expect(DEMAA_HOME_DESCRIPTION).toBe(
-      "Demaa aide les dirigeants de TPE à mettre de l’ordre dans leur entreprise et à installer des systèmes simples dans leurs outils actuels.",
+      "Découvrez des PME de services à reprendre ou présentez gratuitement votre entreprise à des repreneurs.",
     );
     expect(layout).toContain("title: DEMAA_HOME_TITLE");
     expect(layout).toContain("description: DEMAA_HOME_DESCRIPTION");

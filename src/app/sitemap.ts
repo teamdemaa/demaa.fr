@@ -26,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Keep sitemap modification dates stable. Using the request time would tell
   // crawlers that every one of the 800+ URLs changed on every request.
   const siteUpdatedAt = new Date("2026-09-03T00:00:00.000Z");
-  const toolsAndTutorialsUpdatedAt = new Date("2026-09-12T00:00:00.000Z");
+  const toolsAndTutorialsUpdatedAt = new Date("2026-09-14T00:00:00.000Z");
   const repriseUpdatedAt = new Date(Math.max(
     ...repriseOpportunities.map((opportunity) => new Date(opportunity.publishedAt).getTime()),
   ));
@@ -79,7 +79,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(tutorial.updatedAt),
       changeFrequency: "monthly" as const,
       priority: 0.82,
-      images: [`${base}${tutorial.thumbnail.split("?")[0]}`],
+      ...(tutorial.format === "practice"
+        ? { images: [`${base}${tutorial.thumbnail.split("?")[0]}`] }
+        : {}),
     }),
   );
 

@@ -164,11 +164,11 @@ describe("canonical content catalog", () => {
     });
   });
 
-  it("exposes the hub in the footer without restoring legacy Courses entries", () => {
+  it("keeps the content hub indexed without adding another footer entry", () => {
     const footer = readFileSync(resolve(process.cwd(), "src/components/Footer.tsx"), "utf8");
     const sitemap = readFileSync(resolve(process.cwd(), "src/app/sitemap.ts"), "utf8");
-    expect(footer).toContain('{ label: "Contenus", href: "/contenus" }');
-    expect(footer).toContain('{ label: "Tutoriels", href: "/tutoriels" }');
+    expect(footer).not.toContain('{ label: "Contenus", href: "/contenus" }');
+    expect(footer).toContain('{ label: "Méthodes", href: "/tutoriels" }');
     expect(sitemap).toContain("`${base}/contenus`");
     expect(sitemap).toContain("`${base}/contenus/${entry.slug}`");
     expect(sitemap).not.toContain("courseContentEntries");
