@@ -109,10 +109,10 @@ export default function RepriseOpportunityDetail({
 }) {
   const Heading = headingLevel;
   const metrics = [
-    ...(opportunity.revenue ? [{ label: "Chiffre d’affaires", value: opportunity.revenue }] : []),
-    ...(opportunity.ebe ? [{ label: "EBE / rentabilité", value: opportunity.ebe }] : []),
-    ...(opportunity.employees ? [{ label: "Équipe", value: opportunity.employees }] : []),
-    ...(opportunity.askingPrice ? [{ label: "Prix demandé", value: opportunity.askingPrice }] : []),
+    { label: "Chiffre d’affaires", value: opportunity.revenue ?? "ND" },
+    { label: "EBE / rentabilité", value: opportunity.ebe ?? "ND" },
+    { label: "Équipe", value: opportunity.employees ?? "ND" },
+    { label: "Prix demandé", value: opportunity.askingPrice ?? "ND" },
   ];
 
   return (
@@ -121,11 +121,9 @@ export default function RepriseOpportunityDetail({
       <Heading className="mt-3 text-3xl font-normal tracking-[-0.04em] sm:text-4xl">{opportunity.activity}</Heading>
       <p className="mt-4 inline-flex items-center gap-2 text-sm text-dema-muted"><MapPin className="h-4 w-4" aria-hidden="true" />{opportunity.location}</p>
       {opportunity.presentation ? <p className="mt-6 text-base leading-7 text-dema-muted">{opportunity.presentation}</p> : null}
-      {metrics.length ? (
-        <dl className="mt-7 grid gap-3 sm:grid-cols-2">
-          {metrics.map((metric) => <Metric key={metric.label} label={metric.label} value={metric.value} />)}
-        </dl>
-      ) : null}
+      <dl className="mt-7 grid gap-3 sm:grid-cols-2">
+        {metrics.map((metric) => <Metric key={metric.label} label={metric.label} value={metric.value} />)}
+      </dl>
       <div className="mt-7 border-b border-dema-line pb-7">
         <h3 className="text-sm font-medium">À savoir</h3>
         <ul className="mt-3 space-y-2 text-sm leading-6 text-dema-muted">

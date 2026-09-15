@@ -14,7 +14,6 @@ describe("marketplace À reprendre", () => {
 
     const publicPayload = JSON.stringify(repriseOpportunities);
     expect(publicPayload).not.toContain("linkedin.com");
-    expect(publicPayload).not.toContain('"ND"');
     expect(publicPayload).not.toMatch(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/);
     expect(publicPayload).not.toMatch(/(?:\+33|0)[1-9](?:[ .-]?\d{2}){4}/);
     expect(publicPayload).not.toMatch(/à confirmer|mandat à confirmer|piste hors marché/i);
@@ -129,6 +128,12 @@ describe("marketplace À reprendre", () => {
     expect(opportunityDetail).toContain("À savoir");
     expect(opportunityDetail).toContain("opportunity.presentation");
     expect(opportunityDetail).toContain("Informations indicatives, à confirmer dans le cadre des audits.");
+    expect(marketplace).toContain('value: opportunity.revenue ?? "ND"');
+    expect(marketplace).toContain('value: opportunity.employees ?? "ND"');
+    expect(opportunityDetail).toContain('value: opportunity.revenue ?? "ND"');
+    expect(opportunityDetail).toContain('value: opportunity.ebe ?? "ND"');
+    expect(opportunityDetail).toContain('value: opportunity.employees ?? "ND"');
+    expect(opportunityDetail).toContain('value: opportunity.askingPrice ?? "ND"');
     expect(opportunityDetail).not.toContain("Non disponible");
     expect(opportunityDetail).not.toContain("publié");
     expect(marketplace).toContain("Carte des opportunités");

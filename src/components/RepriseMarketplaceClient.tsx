@@ -32,8 +32,8 @@ type CardProps = { opportunity: RepriseOpportunity; isCompared: boolean; onCompa
 
 function OpportunityCard({ opportunity, isCompared, onCompare, onPreview, onSelect }: CardProps) {
   const cardMetrics = [
-    ...(opportunity.revenue ? [{ label: "Chiffre d’affaires", value: opportunity.revenue }] : []),
-    ...(opportunity.employees ? [{ label: "Équipe", value: opportunity.employees }] : []),
+    { label: "Chiffre d’affaires", value: opportunity.revenue ?? "ND" },
+    { label: "Équipe", value: opportunity.employees ?? "ND" },
   ];
 
   function handleOpportunityClick(event: MouseEvent<HTMLAnchorElement>) {
@@ -49,16 +49,14 @@ function OpportunityCard({ opportunity, isCompared, onCompare, onPreview, onSele
         <span className="mt-6 text-[11px] font-medium uppercase tracking-[0.14em] text-dema-forest">{opportunity.category}</span>
         <h2 className="mt-3 text-2xl font-normal leading-tight tracking-[-0.035em]">{opportunity.activity}</h2>
         <span className="mt-4 inline-flex items-center gap-2 text-sm text-dema-muted"><MapPin className="h-4 w-4" aria-hidden="true" />{opportunity.location}</span>
-        {cardMetrics.length ? (
-          <dl className={`mt-7 grid gap-4 border-t border-dema-line pt-5 ${cardMetrics.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
-            {cardMetrics.map((metric) => (
-              <div key={metric.label}>
-                <dt className="text-xs text-dema-muted">{metric.label}</dt>
-                <dd className="mt-1 line-clamp-2 text-sm font-normal">{metric.value}</dd>
-              </div>
-            ))}
-          </dl>
-        ) : null}
+        <dl className="mt-7 grid grid-cols-2 gap-4 border-t border-dema-line pt-5">
+          {cardMetrics.map((metric) => (
+            <div key={metric.label}>
+              <dt className="text-xs text-dema-muted">{metric.label}</dt>
+              <dd className="mt-1 line-clamp-2 text-sm font-normal">{metric.value}</dd>
+            </div>
+          ))}
+        </dl>
       </Link>
       <button
         type="button"
@@ -128,7 +126,7 @@ function ComparisonDialog({ opportunities, onClose, onOpenOpportunity }: { oppor
                 <th scope="row" className="sticky left-0 z-10 w-[8.5rem] border-b border-r border-dema-line bg-dema-paper px-3 py-3.5 text-left align-top text-[11px] font-medium leading-4 text-brand-blue sm:w-[11rem] sm:px-5 sm:py-4 sm:text-sm sm:leading-5">{label}</th>
                 {opportunities.map((opportunity) => (
                   <td key={opportunity.id} className="w-[11.5rem] border-b border-r border-dema-line bg-dema-paper px-3 py-3.5 align-top text-xs leading-5 text-dema-muted last:border-r-0 sm:w-[17rem] sm:px-5 sm:py-4 sm:text-sm sm:leading-6">
-                    <span className={!resolve(opportunity) ? "text-dema-muted/65" : "text-brand-blue"}>{resolve(opportunity) || "—"}</span>
+                    <span className={!resolve(opportunity) ? "text-dema-muted/65" : "text-brand-blue"}>{resolve(opportunity) || "ND"}</span>
                   </td>
                 ))}
               </tr>
