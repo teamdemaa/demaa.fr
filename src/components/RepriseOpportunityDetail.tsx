@@ -108,25 +108,32 @@ export default function RepriseOpportunityDetail({
   opportunity: RepriseOpportunity;
 }) {
   const Heading = headingLevel;
+  const metrics = [
+    ...(opportunity.revenue ? [{ label: "Chiffre d’affaires", value: opportunity.revenue }] : []),
+    ...(opportunity.ebe ? [{ label: "EBE / rentabilité", value: opportunity.ebe }] : []),
+    ...(opportunity.employees ? [{ label: "Équipe", value: opportunity.employees }] : []),
+    ...(opportunity.askingPrice ? [{ label: "Prix demandé", value: opportunity.askingPrice }] : []),
+  ];
 
   return (
     <>
       <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">{opportunity.category}</p>
       <Heading className="mt-3 text-3xl font-normal tracking-[-0.04em] sm:text-4xl">{opportunity.activity}</Heading>
       <p className="mt-4 inline-flex items-center gap-2 text-sm text-dema-muted"><MapPin className="h-4 w-4" aria-hidden="true" />{opportunity.location}</p>
-      <dl className="mt-7 grid gap-3 sm:grid-cols-2">
-        <Metric label="Chiffre d’affaires publié" value={opportunity.revenue ?? "Non disponible"} />
-        <Metric label="EBE ou rentabilité publiée" value={opportunity.ebe ?? "Non disponible"} />
-        <Metric label="Équipe publiée" value={opportunity.employees ?? "Non disponible"} />
-        <Metric label="Prix demandé publié" value={opportunity.askingPrice ?? "Non disponible"} />
-      </dl>
+      {opportunity.presentation ? <p className="mt-6 text-base leading-7 text-dema-muted">{opportunity.presentation}</p> : null}
+      {metrics.length ? (
+        <dl className="mt-7 grid gap-3 sm:grid-cols-2">
+          {metrics.map((metric) => <Metric key={metric.label} label={metric.label} value={metric.value} />)}
+        </dl>
+      ) : null}
       <div className="mt-7 border-b border-dema-line pb-7">
-        <h3 className="text-sm font-medium">Ce qui est communiqué</h3>
+        <h3 className="text-sm font-medium">À savoir</h3>
         <ul className="mt-3 space-y-2 text-sm leading-6 text-dema-muted">
           {opportunity.highlights.map((highlight) => (
             <li key={highlight} className="flex gap-2"><Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" /><span>{highlight}</span></li>
           ))}
         </ul>
+        <p className="mt-4 text-xs leading-5 text-dema-muted/80">Informations indicatives, à confirmer dans le cadre des audits.</p>
       </div>
       <BuyerRequestForm opportunity={opportunity} />
     </>

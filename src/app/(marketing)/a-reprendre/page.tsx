@@ -11,8 +11,8 @@ import {
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 export const metadata: Metadata = buildPublicPageMetadata({
-  title: "Entreprises à reprendre : PME de services | Demaa",
-  description: "Découvrez des entreprises à reprendre, en activité, avec des clients, une équipe et un savoir-faire déjà en place.",
+  title: "PME B2B rentables à reprendre | Demaa",
+  description: "Découvrez des PME B2B rentables à reprendre dans les services, les activités techniques, l’industrie et les logiciels métier.",
   path: "/a-reprendre",
 });
 

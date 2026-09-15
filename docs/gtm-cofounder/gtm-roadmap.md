@@ -6,7 +6,7 @@
 
 - Conserver trois portes publiques : **À reprendre · Vendre · Ressources**.
 - Garder le header de chaque landing page très léger, avec une promesse et un seul appel à l’action.
-- Sur **À reprendre**, préserver la marketplace existante et permettre au repreneur de décrire sa recherche à Demaa.
+- Sur **À reprendre**, concentrer la marketplace sur les PME B2B rentables et permettre au repreneur de décrire sa recherche à Demaa.
 - Sur **Vendre**, présenter gratuitement l’entreprise aux repreneurs et proposer une estimation.
 - Garder la préparation opérationnelle comme accompagnement facultatif sur `/accompagnement`.
 - Présenter une seule offre d’accompagnement : six mois à 1 500 euros HT par mois.
@@ -27,6 +27,10 @@
 
 ## Ensuite
 
+- Requalifier le stock existant avec quatre conditions obligatoires : B2B, verticale retenue, entreprise in bonis et rentabilité documentée.
+- Auditer manuellement 100 annonces du C.R.A., 100 de Transentreprise et 100 de Fusacq afin de mesurer le taux de passage réel et les doublons avant toute automatisation.
+- Tester l'estimation de marché actuelle : 3 500–4 000 annonces brutes à examiner, 1 050–1 500 dossiers financièrement qualifiables, puis 700–1 100 opportunités uniques après déduplication ; utiliser 900 comme point central interne, jamais comme compteur public avant ingestion réelle.
+- Demander un accord de flux ou de republication aux trois sources prioritaires ; publier à défaut uniquement une synthèse originale, factuelle, datée et reliée à la source lorsque ses règles l’autorisent.
 - Mesurer chaque semaine : vues de fiches, ouvertures du formulaire global, projets envoyés, demandes par entreprise, mises en relation, réponses et rendez-vous.
 - Contacter rapidement chaque demande qualifiée et documenter le motif lorsqu’une mise en relation n’aboutit pas.
 - Ajouter des informations aux fiches uniquement lorsqu’elles sont fiables et utiles à la décision.
@@ -48,3 +52,4 @@
 - 2026-09-14 : l’offre de structuration devient un accompagnement de six mois à 1 500 euros HT par mois.
 - 2026-09-14 : la présentation aux repreneurs est gratuite ; l’accompagnement à la préparation reste facultatif et séparé.
 - 2026-09-14 : les modèles et méthodes ne portent plus de relance commerciale automatique vers l’accompagnement.
+- 2026-09-15 : **À reprendre** se recentre sur les PME B2B rentables ; le C.R.A., Transentreprise et Fusacq deviennent les trois sources à auditer en priorité.

@@ -8,7 +8,7 @@ import { repriseOpportunities, repriseOpportunityRegions } from "@/lib/reprise-o
 
 describe("alertes de reprise", () => {
   it("provides normalized publication and financial data for every opportunity", () => {
-    expect(repriseOpportunities).toHaveLength(38);
+    expect(repriseOpportunities).toHaveLength(26);
     for (const opportunity of repriseOpportunities) {
       expect(repriseOpportunityRegions).toContain(opportunity.region);
       expect(Number.isFinite(Date.parse(opportunity.publishedAt))).toBe(true);
@@ -32,7 +32,7 @@ describe("alertes de reprise", () => {
   });
 
   it("includes missing numeric data only when requested", () => {
-    const opportunity = repriseOpportunities.find((item) => item.id === "regie-publicitaire-grand-ouest")!;
+    const opportunity = repriseOpportunities.find((item) => item.id === "logiciels-crm-sage-ebp")!;
     const strict = parseRepriseAlertCriteria({ budgetMax: 500_000, categories: [], includeMissing: false, query: "", regions: [], revenueMin: null })!;
     expect(matchesRepriseAlert(opportunity, strict)).toBe(false);
     expect(matchesRepriseAlert(opportunity, { ...strict, includeMissing: true })).toBe(true);

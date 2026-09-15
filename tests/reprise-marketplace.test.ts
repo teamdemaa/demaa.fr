@@ -8,9 +8,9 @@ import {
 import { clusterRepriseMapLocations } from "@/lib/reprise-map-layout";
 
 describe("marketplace À reprendre", () => {
-  it("publishes the 38 sanitized opportunities without private contact data", () => {
-    expect(repriseOpportunities).toHaveLength(38);
-    expect(new Set(repriseOpportunities.map(({ id }) => id)).size).toBe(38);
+  it("publishes the 26 in-scope opportunities without private contact data", () => {
+    expect(repriseOpportunities).toHaveLength(26);
+    expect(new Set(repriseOpportunities.map(({ id }) => id)).size).toBe(26);
 
     const publicPayload = JSON.stringify(repriseOpportunities);
     expect(publicPayload).not.toContain("linkedin.com");
@@ -18,12 +18,11 @@ describe("marketplace À reprendre", () => {
     expect(publicPayload).not.toMatch(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/);
     expect(publicPayload).not.toMatch(/(?:\+33|0)[1-9](?:[ .-]?\d{2}){4}/);
     expect(publicPayload).not.toMatch(/à confirmer|mandat à confirmer|piste hors marché/i);
-    expect(repriseOpportunities.filter((opportunity) => opportunity.mapPosition)).toHaveLength(26);
+    expect(publicPayload).not.toMatch(/annonc|non communiquée|signalée/i);
+    expect(repriseOpportunities.filter((opportunity) => opportunity.presentation)).toHaveLength(21);
+    expect(repriseOpportunities.filter((opportunity) => opportunity.mapPosition)).toHaveLength(17);
     expect(repriseOpportunities.map(({ id }) => id)).toEqual(expect.arrayContaining([
-      "fitness-premium-herault",
-      "voyages-aventure-premium",
       "second-oeuvre-renovation-france",
-      "communication-objet-textile-b2b",
       "services-it-telecoms-manages",
       "machines-speciales-b2b",
       "chaudronnerie-maintenance-industrielle",
@@ -72,10 +71,9 @@ describe("marketplace À reprendre", () => {
     expect(lyonCluster?.locations.map(({ id }) => id)).toEqual(expect.arrayContaining([
       "relation-client-lyon",
       "nettoyage-industriel-rhone-alpes",
-      "maintenance-piscines-auvergne-rhone-alpes",
     ]));
-    expect(lyonCluster?.position.latitude).toBeCloseTo(45.676);
-    expect(lyonCluster?.position.longitude).toBeCloseTo(4.5238);
+    expect(lyonCluster?.position.latitude).toBeCloseTo(45.764);
+    expect(lyonCluster?.position.longitude).toBeCloseTo(4.8357);
   });
 
   it("keeps buyer search focused and moves every seller action to Transmission", async () => {
@@ -120,8 +118,19 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain("Nous recherchons");
     expect(marketplace).toContain("Nous organisons la mise en relation");
     expect(marketplace).toContain('className="border-t border-dema-line px-5 pb-14 pt-6 sm:px-8 sm:pb-20 sm:pt-10"');
-    expect(opportunityDetail).toContain('value={opportunity.revenue ?? "Non disponible"}');
-    expect(opportunityDetail).toContain('value={opportunity.askingPrice ?? "Non disponible"}');
+    expect(marketplace).toContain('label: "Chiffre d’affaires"');
+    expect(marketplace).toContain('["À savoir"');
+    expect(marketplace).not.toContain("CA publié");
+    expect(marketplace).not.toContain("Éléments communiqués");
+    expect(opportunityDetail).toContain('label: "Chiffre d’affaires"');
+    expect(opportunityDetail).toContain('label: "EBE / rentabilité"');
+    expect(opportunityDetail).toContain('label: "Équipe"');
+    expect(opportunityDetail).toContain('label: "Prix demandé"');
+    expect(opportunityDetail).toContain("À savoir");
+    expect(opportunityDetail).toContain("opportunity.presentation");
+    expect(opportunityDetail).toContain("Informations indicatives, à confirmer dans le cadre des audits.");
+    expect(opportunityDetail).not.toContain("Non disponible");
+    expect(opportunityDetail).not.toContain("publié");
     expect(marketplace).toContain("Carte des opportunités");
     expect(marketplace).toContain('<MapIcon className="h-4 w-4" strokeWidth={1.7} aria-hidden="true" />');
     expect(marketplace).toContain("Ajouter au comparatif");

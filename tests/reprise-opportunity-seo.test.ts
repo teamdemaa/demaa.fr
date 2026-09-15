@@ -13,8 +13,8 @@ describe("SEO des entreprises à reprendre", () => {
   it("gives every opportunity a stable page URL", () => {
     const paths = repriseOpportunities.map(getRepriseOpportunityPath);
 
-    expect(paths).toHaveLength(38);
-    expect(new Set(paths).size).toBe(38);
+    expect(paths).toHaveLength(26);
+    expect(new Set(paths).size).toBe(26);
     expect(paths[0]).toBe(`/a-reprendre/${repriseOpportunities[0].id}`);
   });
 
@@ -23,7 +23,7 @@ describe("SEO des entreprises à reprendre", () => {
     const itemList = jsonLd.find((item) => item["@type"] === "ItemList");
 
     expect(itemList).toMatchObject({
-      numberOfItems: 38,
+      numberOfItems: 26,
       itemListElement: expect.arrayContaining([
         expect.objectContaining({
           name: repriseOpportunities[0].activity,
@@ -39,7 +39,7 @@ describe("SEO des entreprises à reprendre", () => {
     const jsonLd = buildRepriseOpportunityJsonLd(opportunity);
     const page = jsonLd.find((item) => item["@type"] === "WebPage");
 
-    expect(description).toContain(opportunity.activity);
+    expect(description.toLocaleLowerCase("fr")).toContain(opportunity.activity.toLocaleLowerCase("fr"));
     expect(description).toContain(opportunity.location);
     expect(page).toMatchObject({
       datePublished: opportunity.publishedAt,

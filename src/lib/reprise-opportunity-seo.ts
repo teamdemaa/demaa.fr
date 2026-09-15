@@ -14,10 +14,12 @@ export function getRepriseOpportunityDescription(opportunity: RepriseOpportunity
         ? `à ${opportunity.location.slice(2)}`
         : `à ${opportunity.location}`;
   const revenue = opportunity.revenue
-    ? ` Chiffre d’affaires publié : ${opportunity.revenue}.`
+    ? ` Chiffre d’affaires : ${opportunity.revenue}.`
     : "";
+  const introduction = opportunity.presentation
+    ?? `${opportunity.activity} à reprendre ${location}.`;
 
-  return `${opportunity.activity} à reprendre ${location}.${revenue} Consultez les informations disponibles et demandez une mise en relation.`;
+  return `${introduction}${revenue} Consultez les informations disponibles et demandez une mise en relation.`;
 }
 
 export function buildRepriseMarketplaceJsonLd(opportunities: readonly RepriseOpportunity[]) {
@@ -29,8 +31,8 @@ export function buildRepriseMarketplaceJsonLd(opportunities: readonly RepriseOpp
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       "@id": `${marketplaceUrl}#collection`,
-      name: "PME de services à reprendre | Demaa",
-      description: "Découvrez des entreprises de services en activité, avec des clients, une équipe et un savoir-faire déjà en place.",
+      name: "PME B2B rentables à reprendre | Demaa",
+      description: "Découvrez des PME B2B rentables à reprendre dans les services, les activités techniques, l’industrie et les logiciels métier.",
       url: marketplaceUrl,
       isPartOf: { "@id": `${origin}/#website` },
       mainEntity: { "@id": `${marketplaceUrl}#opportunities` },
@@ -91,6 +93,7 @@ export function buildRepriseOpportunityJsonLd(opportunity: RepriseOpportunity) {
         description: [
           opportunity.category,
           opportunity.location,
+          opportunity.presentation,
           opportunity.revenue,
           opportunity.ebe,
           opportunity.employees,

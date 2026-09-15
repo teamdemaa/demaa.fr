@@ -4,7 +4,8 @@
 
 - [validé] Demaa relie les deux côtés d’une même opération : reprendre une PME de services ou présenter son entreprise à des repreneurs.
 - [validé] La priorité repreneur reste la marketplace **À reprendre**.
-- [validé] La cible couvre les services terrain et les services professionnels, dont la valeur repose sur les clients, les contrats, l’équipe et le savoir-faire.
+- [validé] La cible publique de **À reprendre** est désormais resserrée sur les PME B2B rentables : services récurrents, activités techniques, industrie légère et logiciels métier.
+- [validé] La thèse détaillée, les exclusions, les sources et le plan de constitution du stock sont documentés dans [`reprise-target-thesis.md`](./reprise-target-thesis.md).
 
 ## Les trois portes publiques
 
@@ -14,6 +15,7 @@
 
 ## À reprendre
 
+- [validé] La promesse principale est : **Reprenez une PME B2B rentable.**
 - [validé] Le header reste volontairement minimal : une promesse et un seul appel à l’action, **Décrire mon projet de reprise**.
 - [validé] La recherche, les filtres, la carte, le comparatif et les fiches existantes restent inchangés.
 - [validé] Une demande liée à une entreprise précise conserve l’appel à l’action **Demander une mise en relation**.
@@ -33,7 +35,8 @@
 
 ## Marketplace MVP
 
-- [validé] 38 opportunités assainies sont publiées avec les informations disponibles.
+- [validé] 26 opportunités alignées avec la nouvelle thèse sont publiées avec les informations disponibles ; 12 anciennes fiches B2C ou hors périmètre ont été retirées.
+- [à faire] Requalifier les 26 opportunités existantes avant d’élargir le stock : preuve de rentabilité, statut in bonis et source canonique conservée.
 - [validé] Demaa ne publie pas les coordonnées sources et traite manuellement les mises en relation.
 - [validé] Les demandes produisent une notification email à Demaa. Slack n’est pas nécessaire pour ce parcours.
 - [validé] La localisation affichée reste approximative, à l’échelle de la région ou du département. Les opportunités nationales sans zone précise restent dans la liste, sans faux point sur la carte.
