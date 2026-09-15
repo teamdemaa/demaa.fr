@@ -102,7 +102,7 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain(
       "text-base leading-7 text-dema-muted sm:text-lg sm:leading-8",
     );
-    expect(marketplace).toContain("Services B2B récurrents, activités techniques, industrie et logiciels métier.");
+    expect(marketplace).toContain("Des PME sélectionnées, avec des clients, un savoir-faire et une activité déjà lancée pour accélérer votre croissance externe ou entreprendre par la reprise.");
     expect(marketplace.match(/<RepriseProjectControl \/>/g)).toHaveLength(2);
     expect(projectControl).toContain("Confier ma recherche");
     expect(projectControl).toContain("Confier ma recherche à Demaa");
