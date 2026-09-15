@@ -1,7 +1,7 @@
 # Backlog central Demaa
 
-Dernière consolidation : 13 septembre 2026 pour le lot SEO de la marketplace
-`À reprendre`. Le reste de l'historique conserve sa date de consolidation
+Dernière consolidation : 15 septembre 2026 pour le futur module de gestion des
+annonces de reprise. Le reste de l'historique conserve sa date de consolidation
 initiale du 24 août 2026.
 
 Backlog de pilotage :
@@ -17,6 +17,92 @@ contrôlée. La tête `origin/main` vérifiée lors de cette consolidation est
 Ce document remplace les listes d'actions dispersées dans les chats Demaa. Il
 distingue ce qui est déjà livré, ce qui est prêt mais non publié et ce qui reste
 à réaliser.
+
+## Gestion Firebase des annonces de reprise — différée
+
+État au 15 septembre 2026 : la conception a été cadrée, mais le code public et
+le back-office ne sont pas déployés. Une collection `reprise_listings` a déjà
+été initialisée dans le projet Firebase de production avec 26 documents issus
+du catalogue actuellement préparé. Ces documents ne sont consommés par aucune
+page de l'application et leurs champs privés de source et de contact sont
+vides. Ils devront être contrôlés et rapprochés du catalogue courant avant
+toute reprise du chantier ; ne pas les recréer ni les écraser aveuglément.
+
+### Objectif
+
+Remplacer à terme le stock statique de `/a-reprendre` par une gestion dédiée des
+entreprises à vendre, sans mélanger ce catalogue avec l'ancien module générique
+`Opportunités`. Donner à l'équipe un historique clair de la provenance de
+chaque annonce et des contacts disponibles, tout en ne publiant que les
+informations destinées aux repreneurs.
+
+### Périmètre fonctionnel
+
+- [ ] Définir un modèle `reprise_listings` dédié avec, côté public : activité,
+  secteur, localisation, chiffres disponibles, prix, résumé, points clés,
+  statut de publication et dates de suivi.
+- [ ] Conserver côté serveur uniquement : plateforme source, URL et référence
+  source, nom du contact, e-mail, téléphone, notes internes, date de dernière
+  vérification et preuve ou référence de l'autorisation de diffusion.
+- [ ] Produire une projection publique explicite qui exclut systématiquement
+  les coordonnées, notes et références internes, y compris dans les API, les
+  données structurées et le HTML rendu.
+- [ ] Créer `/admin/annonces` avec recherche, filtres, compteurs, création,
+  modification et statuts `brouillon`, `publiée`, `en pause`, `vendue` et
+  `archivée`.
+- [ ] Permettre depuis l'admin d'ouvrir la source, de voir les coordonnées
+  disponibles, de repérer les fiches incomplètes ou anciennes et de retrouver
+  les demandes reçues pour chaque annonce.
+- [ ] Relier chaque formulaire `reprise_interest` à l'identifiant immuable de
+  l'annonce et conserver un instantané minimal de l'annonce au moment de la
+  demande, afin que l'historique reste compréhensible après une modification.
+- [ ] Faire lire à `/a-reprendre`, aux fiches, au sitemap et aux e-mails
+  d'alerte uniquement les annonces publiées dans Firebase. Prévoir une stratégie
+  de disponibilité et de cache qui n'expose jamais une annonce privée.
+- [ ] Ne retirer ou rediriger l'ancien module `/opportunites` qu'après inventaire
+  de ses usages internes : candidatures, profils Team Demaa et liens existants
+  ne doivent pas être cassés par la migration.
+
+### Reprise et import des données
+
+- [ ] Commencer par inventorier les 26 documents déjà présents dans Firebase,
+  puis les comparer champ par champ au catalogue statique en vigueur à cette
+  date.
+- [ ] Recréer un outil de migration idempotent : aperçu par défaut, confirmation
+  explicite du projet pour écrire, création des absents, détection des écarts et
+  aucun écrasement automatique d'un document différent.
+- [ ] Enregistrer la provenance et les contacts uniquement à partir des
+  plateformes avec lesquelles Demaa peut travailler, puis vérifier le droit de
+  republier les informations visibles avant de passer une annonce en `publiée`.
+- [ ] Ajouter une date de contrôle et un indicateur d'information manquante ; ne
+  pas inventer de chiffre, de contact ou de description.
+- [ ] Ne communiquer aucun objectif public de volume (`250`, `900`, etc.) avant
+  que l'import réel et dédoublonné ne permette de le justifier.
+
+### Vérifications obligatoires avant mise en production
+
+- [ ] Tester l'authentification Team sur toutes les opérations d'administration
+  et interdire les écritures publiques directes dans Firestore.
+- [ ] Tester la confidentialité de chaque champ interne, la création, la
+  modification, les changements de statut et la non-publication des brouillons.
+- [ ] Tester le parcours complet : annonce publiée, fiche publique, formulaire
+  repreneur, demande visible dans l'admin et retour vers la bonne annonce.
+- [ ] Tester le sitemap, les métadonnées, les alertes e-mail, les anciennes URL
+  et les redirections retenues.
+- [ ] Faire une recette mobile et desktop, puis contrôler les données de
+  production après déploiement avant de retirer le catalogue statique.
+
+### Critères de clôture
+
+1. une annonce peut être suivie de sa source jusqu'aux demandes reçues sans que
+   les données privées n'apparaissent publiquement ;
+2. seuls les statuts explicitement publiés alimentent la marketplace, les
+   fiches, le sitemap et les alertes ;
+3. la migration est rejouable sans perte ni duplication et les 26 documents
+   existants ont été rapprochés manuellement ;
+4. les parcours historiques liés à `/opportunites` ont été conservés ou migrés
+   par une décision documentée ;
+5. les tests et la recette de production sont verts.
 
 ## SEO Marketplace `À reprendre` — socle livré, croissance au backlog
 
