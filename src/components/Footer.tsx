@@ -4,7 +4,7 @@ import DemaaWordmark from "@/components/DemaaWordmark";
 import { isGuestProductEnabled } from "@/lib/guest-action-plan-security.server";
 
 const marketplaceLinks = [
-  { label: "À reprendre", href: "/a-reprendre" },
+  { label: "Reprendre", href: "/a-reprendre" },
   { label: "Vendre", href: "/transmettre" },
 ];
 

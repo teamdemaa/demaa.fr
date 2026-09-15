@@ -21,15 +21,6 @@ export default function MethodArticle({ method }: { method: MethodDefinition }) 
           </Link>
 
           <header className="mx-auto mt-8 max-w-5xl text-left">
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-dema-muted">
-              <span className="rounded-full bg-dema-sage/65 px-3 py-1 font-medium text-dema-forest">
-                {method.category}
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <Clock3 className="h-3.5 w-3.5" aria-hidden="true" />
-                {method.readingMinutes} min de lecture
-              </span>
-            </div>
             <h1 className="demaa-section-title mt-5 max-w-4xl text-4xl leading-[1.02] tracking-tight text-brand-blue sm:text-5xl lg:text-6xl">
               {method.title}
             </h1>

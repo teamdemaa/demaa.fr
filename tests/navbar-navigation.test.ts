@@ -66,7 +66,7 @@ describe("Demaa application navbar", () => {
     );
   });
 
-  it("uses À reprendre, Vendre and Ressources, then exposes three resource catalogues", async () => {
+  it("uses Reprendre, Vendre and Ressources, then exposes three resource catalogues", async () => {
     const [source, resources, tutorialsIndex, footer, navbarSource] = await Promise.all([
       readFile(
         new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
@@ -84,7 +84,7 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(source).toContain('label: "À reprendre", href: "/a-reprendre"');
+    expect(source).toContain('label: "Reprendre", href: "/a-reprendre"');
     expect(source).toContain('label: "Vendre", href: "/transmettre"');
     expect(source).toContain('label: "Ressources", href: "/tutoriels"');
     expect(source).not.toContain('label: "Tutoriels"');
@@ -94,7 +94,7 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).not.toContain("BusinessEstimateControl");
     expect(navbarSource).toContain("focus-visible:underline focus-visible:underline-offset-4");
     expect(navbarSource).not.toContain("border-dema-forest/18 bg-dema-paper");
-    expect(source.indexOf('label: "À reprendre"')).toBeLessThan(
+    expect(source.indexOf('label: "Reprendre"')).toBeLessThan(
       source.indexOf('label: "Vendre"'),
     );
     expect(source.indexOf('label: "Vendre"')).toBeLessThan(

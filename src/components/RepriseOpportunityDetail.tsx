@@ -131,7 +131,6 @@ export default function RepriseOpportunityDetail({
             <li key={highlight} className="flex gap-2"><Check className="mt-1 h-4 w-4 shrink-0 text-dema-forest" aria-hidden="true" /><span>{highlight}</span></li>
           ))}
         </ul>
-        <p className="mt-4 text-xs leading-5 text-dema-muted/80">Informations indicatives, à confirmer dans le cadre des audits.</p>
       </div>
       <BuyerRequestForm opportunity={opportunity} />
     </>

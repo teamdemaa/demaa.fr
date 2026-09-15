@@ -127,7 +127,7 @@ describe("marketplace À reprendre", () => {
     expect(opportunityDetail).toContain('label: "Prix demandé"');
     expect(opportunityDetail).toContain("À savoir");
     expect(opportunityDetail).toContain("opportunity.presentation");
-    expect(opportunityDetail).toContain("Informations indicatives, à confirmer dans le cadre des audits.");
+    expect(opportunityDetail).not.toContain("Informations indicatives, à confirmer dans le cadre des audits.");
     expect(marketplace).toContain('value: opportunity.revenue ?? "ND"');
     expect(marketplace).toContain('value: opportunity.employees ?? "ND"');
     expect(opportunityDetail).toContain('value: opportunity.revenue ?? "ND"');
