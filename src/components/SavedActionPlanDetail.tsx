@@ -15,7 +15,6 @@ import {
 } from "@/components/SavedActionPlanControls";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import ActionPlanServicesPanel from "@/components/ActionPlanServicesPanel";
-import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import CompanyPilotagePanel from "@/components/CompanyPilotagePanel";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
 import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
@@ -658,18 +657,6 @@ export default function SavedActionPlanDetail({
               ...appContext,
               view: "academy",
               academyContentSlug,
-            })}
-          />
-        ) : null}
-        {activeTab === "opportunities" ? (
-          <OpportunitiesPanel
-            initialEmail={initialEmail}
-            localeCode={interfaceLocaleCode}
-            initialOpportunityId={appContext.opportunityId}
-            onOpportunityChange={(opportunityId) => navigateAppContext({
-              ...appContext,
-              view: "opportunities",
-              opportunityId,
             })}
           />
         ) : null}

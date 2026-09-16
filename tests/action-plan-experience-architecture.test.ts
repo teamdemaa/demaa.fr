@@ -265,9 +265,8 @@ describe("action plan experience architecture", () => {
     expect(guestExperience).toContain('appContext.planSection === "solutions"');
     expect(guestExperience).toContain('activeTab === "services"');
     expect(guestExperience).toContain('activeTab === "academy"');
-    expect(guestExperience).toContain('activeTab === "opportunities"');
-    expect(guestExperience).toContain("<OpportunitiesPanel");
-    expect(guestExperience).toContain("demoMode={isDemoMode}");
+    expect(guestExperience).not.toContain('activeTab === "opportunities"');
+    expect(guestExperience).not.toContain("<OpportunitiesPanel");
     expect(guestExperience).toContain("workspace={prePlanWorkspace}");
     expect(guestExperience).toContain("onWorkspaceChange={setPrePlanWorkspace}");
     expect(guestExperience).not.toContain("<ActionPlanSaveControl");

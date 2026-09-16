@@ -53,15 +53,14 @@ describe("action plan app context", () => {
     });
     expect(parseActionPlanAppContext(new URLSearchParams(
       "intent=opportunity&opportunityId=mission-btp",
-    ))).toMatchObject({
-      view: "opportunities",
+    ))).toEqual({
+      view: "plan",
       planSection: "actions",
-      opportunityId: "mission-btp",
     });
     expect(parseActionPlanAppContext(new URLSearchParams(
       "intent=team-demaa-profile",
     ))).toEqual({
-      view: "opportunities",
+      view: "plan",
       planSection: "actions",
     });
     for (const intent of ["structure", "structure-problem"]) {
@@ -74,29 +73,28 @@ describe("action plan app context", () => {
     }
   });
 
-  it("exposes Opportunities as an embedded application view", () => {
+  it("retires Opportunities from the embedded application", () => {
     expect(parseActionPlanAppContext(new URLSearchParams(
       "view=opportunities&opportunity=mission-btp",
     ))).toEqual({
-      view: "opportunities",
+      view: "plan",
       planSection: "actions",
-      opportunityId: "mission-btp",
     });
   });
 
-  it("redirects historical Opportunities contexts to the direct route", () => {
+  it("redirects historical Opportunities contexts to Reprendre", () => {
     expect(buildLegacyOpportunitiesHref(new URLSearchParams(
       "view=opportunities&opportunity=mission-btp",
-    ))).toBe("/opportunites?opportunity=mission-btp");
+    ))).toBe("/a-reprendre");
     expect(buildLegacyOpportunitiesHref(new URLSearchParams(
       "intent=opportunity&opportunityId=mission-btp",
-    ))).toBe("/opportunites?intent=opportunity&opportunityId=mission-btp");
+    ))).toBe("/a-reprendre");
     expect(buildLegacyOpportunitiesHref(new URLSearchParams(
       "intent=team-demaa-profile&expertiseId=e-commerce",
-    ))).toBe("/opportunites?intent=team-demaa-profile&expertiseId=e-commerce");
+    ))).toBe("/a-reprendre");
     expect(buildLegacyOpportunitiesHref(new URLSearchParams(
       "view=opportunities&intent=opportunity-submit&draftToken=invalid",
-    ))).toBe("/opportunites");
+    ))).toBe("/a-reprendre");
     expect(buildLegacyOpportunitiesHref(new URLSearchParams(
       "view=academy",
     ))).toBeNull();

@@ -74,7 +74,7 @@ describe("customer-space safe return intents", () => {
       kind: "opportunity-submit",
     });
     expect(opportunityDraftReturnTo).toBe(
-      `/opportunites?intent=opportunity-submit&draftToken=${draftToken}`,
+      `/a-reprendre?intent=opportunity-submit&draftToken=${draftToken}`,
     );
     expect(parseCustomerAccessIntent(opportunityDraftReturnTo)).toEqual({
       draftToken,
@@ -161,7 +161,7 @@ describe("customer-space safe return intents", () => {
       "/?intent=structure",
     );
     expect(getSafeCustomerReturnTo("/rejoindre-team-demaa?intent=team-demaa-profile")).toBe(
-      "/opportunites?intent=team-demaa-profile",
+      "/a-reprendre?intent=team-demaa-profile",
     );
   });
 });

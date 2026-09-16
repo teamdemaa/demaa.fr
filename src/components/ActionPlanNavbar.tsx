@@ -1,12 +1,12 @@
 "use client";
 
-import { BookOpen, BriefcaseBusiness, LibraryBig, ListChecks, Workflow, Wrench } from "lucide-react";
+import { BookOpen, LibraryBig, ListChecks, Workflow, Wrench } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 
-export type ActionPlanView = "plan" | "solutions" | "services" | "academy" | "opportunities";
+export type ActionPlanView = "plan" | "solutions" | "services" | "academy";
 
 const tabClassName =
   "group relative inline-flex min-h-11 min-w-0 items-center justify-center gap-1 rounded-full px-1 text-xs font-medium leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
@@ -16,7 +16,6 @@ const navigationItems = {
   solutions: { view: "solutions", labels: { fr: "Outils", en: "Tools" }, Icon: Wrench },
   services: { view: "services" as const, labels: { fr: "Accompagnement", en: "Support" }, Icon: Workflow },
   academy: { view: "academy", labels: { fr: "Tutoriels", en: "Tutorials" }, Icon: BookOpen },
-  opportunities: { view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness },
 } as const;
 
 const publicNavigationOrder: readonly ActionPlanView[] = [

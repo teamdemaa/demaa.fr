@@ -16,7 +16,6 @@ import ActionPlanResult from "@/components/ActionPlanResult";
 import ActionPlanSystemPanel from "@/components/ActionPlanSystemPanel";
 import ActionPlanServicesPanel from "@/components/ActionPlanServicesPanel";
 import ActionPlanUtilityActions from "@/components/ActionPlanUtilityActions";
-import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import CompanyPilotagePanel, {
   type CompanyFiguresEntryRequest,
 } from "@/components/CompanyPilotagePanel";
@@ -1107,19 +1106,6 @@ export default function ActionPlanExperience({
               })}
             />
           ) : null}
-          {activeTab === "opportunities" ? (
-            <OpportunitiesPanel
-              initialEmail={initialEmail}
-              demoMode={isDemoMode}
-              localeCode={contentLocaleCode}
-              initialOpportunityId={appContext.opportunityId}
-              onOpportunityChange={(opportunityId) => navigateAppContext({
-                ...appContext,
-                view: "opportunities",
-                opportunityId,
-              })}
-            />
-          ) : null}
         </div>
       </main>
     );
@@ -1298,19 +1284,6 @@ export default function ActionPlanExperience({
                 ...appContext,
                 view: "academy",
                 academyContentSlug,
-              })}
-            />
-          ) : null}
-          {activeTab === "opportunities" ? (
-            <OpportunitiesPanel
-              initialEmail={initialEmail}
-              demoMode={isDemoMode}
-              localeCode={contentLocaleCode}
-              initialOpportunityId={appContext.opportunityId}
-              onOpportunityChange={(opportunityId) => navigateAppContext({
-                ...appContext,
-                view: "opportunities",
-                opportunityId,
               })}
             />
           ) : null}

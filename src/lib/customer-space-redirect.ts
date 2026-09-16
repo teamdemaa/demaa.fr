@@ -91,7 +91,7 @@ export function buildCustomerIntentReturnTo(
   const pathname = intent.kind === "opportunity"
     || intent.kind === "opportunity-submit"
     || intent.kind === "team-demaa-profile"
-    ? "/opportunites"
+    ? "/a-reprendre"
     : localeCode === "en"
       ? "/en"
       : "/";
@@ -211,9 +211,7 @@ export function getSafeCustomerReturnTo(value?: string | null) {
 
   if (candidate === "/" || candidate.startsWith("/?")) return candidate;
   if (candidate === "/opportunites" || candidate.startsWith("/opportunites?")) {
-    return candidate.includes(`${INTENT_PARAM}=`) && !hasParsedIntent
-      ? "/opportunites"
-      : candidate;
+    return "/a-reprendre";
   }
   if (candidate === "/plans") return candidate;
   if (

@@ -19,7 +19,7 @@ describe("shared action plan page configuration", () => {
     expect(getActionPlanPageConfig({
       localeCode: "fr",
       marketCode: "fr-fr",
-    }).visibleViews).toEqual(["plan", "services", "academy", "opportunities"]);
+    }).visibleViews).toEqual(["plan", "services", "academy"]);
 
     const englishInFrance = getActionPlanPageConfig({
       localeCode: "en",
@@ -38,8 +38,8 @@ describe("shared action plan page configuration", () => {
 
   it("falls back to the plan view when a surface is not published", () => {
     expect(constrainActionPlanView(
-      "opportunities",
-      ["plan", "services", "academy"],
+      "academy",
+      ["plan", "services"],
     )).toBe("plan");
   });
 });

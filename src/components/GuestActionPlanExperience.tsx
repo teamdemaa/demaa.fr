@@ -12,7 +12,6 @@ import DemaaWordmark from "@/components/DemaaWordmark";
 import GuestActionPlanDelivery from "@/components/GuestActionPlanDelivery";
 import GuestActionPlanResult from "@/components/GuestActionPlanResult";
 import GuestDiagnosticControl from "@/components/GuestDiagnosticControl";
-import OpportunitiesPanel from "@/components/OpportunitiesPanel";
 import { useActionPlanAppContext } from "@/hooks/useActionPlanAppContext";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import type { ActionPlanAppContext } from "@/lib/action-plan-app-context";
@@ -488,16 +487,6 @@ export default function GuestActionPlanExperience({
           />
         ) : null}
 
-        {appContext.view === "opportunities" ? (
-          <OpportunitiesPanel
-            initialOpportunityId={appContext.opportunityId}
-            localeCode={contentLocaleCode}
-            onOpportunityChange={(opportunityId) => navigateAppContext({
-              ...appContext,
-              opportunityId,
-            })}
-          />
-        ) : null}
       </div>
     </main>
   );

@@ -176,12 +176,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/rejoindre-le-reseau',
-        destination: '/opportunites?intent=team-demaa-profile',
+        destination: '/a-reprendre',
         permanent: true,
       },
       {
         source: '/rejoindre-team-demaa',
-        destination: '/opportunites?intent=team-demaa-profile',
+        destination: '/a-reprendre',
         permanent: true,
       },
       {
@@ -221,7 +221,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/partenaires',
-        destination: '/opportunites?intent=team-demaa-profile',
+        destination: '/a-reprendre',
         permanent: true,
       },
       {
@@ -391,12 +391,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/opportunites-b2b',
-        destination: '/opportunites',
+        destination: '/a-reprendre',
         permanent: true,
       },
       {
         source: '/opportunites/0034',
-        destination: '/opportunites',
+        destination: '/a-reprendre',
         permanent: true,
       },
       {

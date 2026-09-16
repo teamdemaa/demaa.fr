@@ -94,7 +94,7 @@ export default function TutorialLibrary({
 
       {filteredTutorials.length > 0 ? (
         <section aria-label="Méthodes" className="px-4 py-14 sm:px-6 md:py-16 lg:px-8">
-          <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2">
+          <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
             {filteredTutorials.map((tutorial, index) => (
               <Link
                 key={tutorial.slug}
@@ -115,7 +115,7 @@ export default function TutorialLibrary({
                         alt={`Aperçu de la mise en pratique : ${tutorial.title}`}
                         fill
                         loading={index < 2 ? "eager" : "lazy"}
-                        sizes="(min-width: 768px) 50vw, 100vw"
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                         className="object-cover transition duration-300 group-hover:scale-[1.01]"
                       />
                     </div>

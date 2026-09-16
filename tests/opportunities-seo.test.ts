@@ -84,9 +84,9 @@ describe("Annonces SEO structured data", () => {
     );
   });
 
-  it("wires the structured data into the public Annonces page", async () => {
+  it("does not wire legacy Annonces structured data into a public page", async () => {
     const source = await readSource("src/app/(marketing)/opportunites/page.tsx");
-    expect(source).toContain("application/ld+json");
-    expect(source).toContain("buildOpportunitiesJsonLd(opportunities)");
+    expect(source).toContain('permanentRedirect("/a-reprendre")');
+    expect(source).not.toContain("application/ld+json");
   });
 });

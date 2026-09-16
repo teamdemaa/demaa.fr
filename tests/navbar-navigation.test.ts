@@ -242,7 +242,7 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain("Outils");
     expect(actionPlanNavSource).toContain('"/outils"');
     expect(actionPlanNavSource).toContain("Ressources");
-    expect(actionPlanNavSource).toContain("Annonces");
+    expect(actionPlanNavSource).not.toContain("Annonces");
     expect(actionPlanNavSource).not.toContain('label: "Système"');
     expect(actionPlanNavSource).toContain("const publicNavigationOrder: readonly ActionPlanView[]");
     expect(actionPlanNavSource).toContain("const embeddedNavigationOrder: readonly ActionPlanView[]");
@@ -284,10 +284,10 @@ describe("Demaa application navbar", () => {
     expect(experienceSource).toContain("<ActionPlanNavbar");
     expect(experienceSource).toContain("workspace={prePlanWorkspace}");
     expect(experienceSource).toContain('activeTab === "services"');
-    expect(experienceSource).toContain('activeTab === "opportunities"');
+    expect(experienceSource).not.toContain('activeTab === "opportunities"');
     expect(experienceSource).toContain("<ActionPlanAcademyPanel");
     expect(experienceSource).toContain("<ActionPlanCoachingControl");
-    expect(experienceSource).toContain("<OpportunitiesPanel");
+    expect(experienceSource).not.toContain("<OpportunitiesPanel");
     expect(experienceSource).not.toContain('aria-label="Votre résultat"');
   });
 });

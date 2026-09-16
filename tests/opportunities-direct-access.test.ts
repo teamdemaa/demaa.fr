@@ -6,39 +6,27 @@ const readSource = (path: string) => readFile(
   "utf8",
 );
 
-describe("Opportunities direct-link access", () => {
-  it("keeps Annonces directly accessible without exposing it in the main navigation", async () => {
-    const [navigation, footer, sitemap, page] = await Promise.all([
-      readSource("src/components/ActionPlanNavbar.tsx"),
-      readSource("src/components/Footer.tsx"),
-      readSource("src/app/sitemap.ts"),
+describe("legacy Opportunities retirement", () => {
+  it("redirects the old public page to Reprendre and removes it from the sitemap", async () => {
+    const [page, sitemap, route] = await Promise.all([
       readSource("src/app/(marketing)/opportunites/page.tsx"),
+      readSource("src/app/sitemap.ts"),
+      readSource("src/app/api/opportunities/route.ts"),
     ]);
 
-    expect(navigation).toContain('{ view: "opportunities", labels: { fr: "Annonces", en: "Opportunities" }, Icon: BriefcaseBusiness }');
-    expect(navigation).toContain('"services",\n  "solutions",\n  "academy"');
-    expect(navigation).not.toContain('  "opportunities",');
-    expect(footer).not.toContain('{ label: "Annonces", href: "/opportunites" }');
-    expect(sitemap).toContain("`${base}/opportunites`");
-    expect(page).toContain("export default async function OpportunitiesPage");
-    expect(page).toContain("<PublicOpportunitiesClient");
-    expect(page).toContain('initialEmail=""');
-    expect(page).not.toContain("CUSTOMER_SPACE_COOKIE");
-    expect(page).not.toContain("getIdentityFromCustomerSessionToken");
-    expect(page).not.toContain("robots: { index: false, follow: true }");
-    expect(await readSource("src/components/PublicOpportunitiesClient.tsx"))
-      .toMatch(/\.get\(\s*"opportunity"/);
+    expect(page).toContain('permanentRedirect("/a-reprendre")');
+    expect(page).not.toContain("PublicOpportunitiesClient");
+    expect(sitemap).not.toContain("`${base}/opportunites`");
+    expect(route).toContain("status: 404");
   });
 
-  it("keeps authentication return flows on the canonical direct route", async () => {
+  it("redirects historical Team Demaa entry points to Reprendre", async () => {
     const [redirects, joinPage] = await Promise.all([
-      readSource("src/lib/customer-space-redirect.ts"),
+      readSource("next.config.ts"),
       readSource("src/app/(marketing)/rejoindre-team-demaa/page.tsx"),
     ]);
 
-    expect(redirects).toContain('? "/opportunites"');
-    expect(joinPage).toContain(
-      'permanentRedirect("/opportunites?intent=team-demaa-profile")',
-    );
+    expect(redirects).toContain("destination: '/a-reprendre'");
+    expect(joinPage).toContain('permanentRedirect("/a-reprendre")');
   });
 });

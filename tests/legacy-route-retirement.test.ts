@@ -27,12 +27,12 @@ describe("legacy public route retirement", () => {
         }),
         expect.objectContaining({
           source: "/opportunites-b2b",
-          destination: "/opportunites",
+          destination: "/a-reprendre",
           permanent: true,
         }),
         expect.objectContaining({
           source: "/opportunites/0034",
-          destination: "/opportunites",
+          destination: "/a-reprendre",
           permanent: true,
         }),
         expect.objectContaining({
