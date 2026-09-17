@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { CircleUserRound, MessageCircle } from "lucide-react";
+import { CircleUserRound } from "lucide-react";
 import type { ReactNode } from "react";
 import AdminLogoutButton from "@/components/AdminLogoutButton";
 import CustomerLogoutButton from "@/components/CustomerLogoutButton";
@@ -11,9 +11,6 @@ import PublicActionPlanNavigation, {
 } from "@/components/PublicActionPlanNavigation";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
-
-const WHATSAPP_CONTACT_HREF =
-  "https://wa.me/33782842435?text=Bonjour%20Demaa%2C%20je%20souhaite%20%C3%A9changer%20au%20sujet%20de%20mon%20projet.";
 
 export default function Navbar({
   adminControls = false,
@@ -42,9 +39,6 @@ export default function Navbar({
     "inline-flex min-h-10 shrink-0 items-center px-1 text-xs font-medium text-dema-forest transition hover:text-brand-blue focus-visible:outline-none focus-visible:underline sm:min-h-11 sm:text-sm";
   const publicCtaClassName =
     "inline-flex min-h-10 shrink-0 items-center whitespace-nowrap px-1 text-xs font-medium text-dema-forest transition hover:text-brand-blue focus-visible:outline-none focus-visible:underline focus-visible:underline-offset-4 sm:min-h-11 sm:text-sm";
-  const whatsappCtaClassName =
-    "inline-flex min-h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-dema-forest px-3 text-xs font-medium text-dema-paper transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/30 focus-visible:ring-offset-2 focus-visible:ring-offset-dema-cream sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
-
   return (
     <>
       <nav
@@ -131,17 +125,6 @@ export default function Navbar({
                   >
                     {publicCtaLabel}
                   </Link>
-                ) : publicNavigationActiveView !== undefined ? (
-                  <a
-                    href={WHATSAPP_CONTACT_HREF}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={whatsappCtaClassName}
-                    aria-label="Écrire à Demaa sur WhatsApp au +33 7 82 84 24 35"
-                  >
-                    <MessageCircle className="h-4 w-4" aria-hidden="true" />
-                    <span>WhatsApp</span>
-                  </a>
                 ) : null)}
               </div>
             )}

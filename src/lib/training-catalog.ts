@@ -79,7 +79,7 @@ const demaaTrainings = [
       "Automobile & réparation",
       "Associations & événements",
     ],
-    href: "https://wa.me/33782842435",
+    href: "mailto:team@demaa.fr",
     cta: "Demander la formation",
     format: "1 jour · 950 EUR",
   },
