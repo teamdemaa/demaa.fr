@@ -43,8 +43,8 @@ describe("SINI editorial preview", () => {
     expect(sitemap).not.toContain("/apercu-sini");
     expect(proxy).toContain('if (pathname === "/")');
     await Promise.all([
-      access(new URL("../public/sini-preview/coast.png", import.meta.url)),
-      access(new URL("../public/sini-preview/architecture.png", import.meta.url)),
+      access(new URL("../public/sini-preview/coast.webp", import.meta.url)),
+      access(new URL("../public/sini-preview/architecture.webp", import.meta.url)),
     ]);
   });
 });
