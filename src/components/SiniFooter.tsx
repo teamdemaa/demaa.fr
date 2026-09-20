@@ -3,7 +3,7 @@ import Link from "next/link";
 const journeyLinks = [
   { label: "Reprendre", href: "/" },
   { label: "Vendre", href: "/transmettre" },
-  { label: "Conseil", href: "/conseil" },
+  { label: "Conseils", href: "/conseil" },
 ] as const;
 
 const informationLinks = [

@@ -14,7 +14,7 @@ describe("Demaa application navbar", () => {
 
     expect(navigation).toContain('label: "Reprendre", href: "/a-reprendre"');
     expect(navigation).toContain('label: "Vendre", href: "/transmettre"');
-    expect(navigation).toContain('label: "Conseil", href: "/conseil"');
+    expect(navigation).toContain('label: "Conseils", href: "/conseil"');
     expect(navigation).toContain('const siniNavigationItems = [\n  { view: "marketplace", label: "Reprendre", href: "/"');
     expect(navigation).toContain('variant = "legacy"');
     expect(navbar).toContain('publicNavigationVariant = "legacy"');

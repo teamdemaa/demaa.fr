@@ -14,7 +14,7 @@ describe("sini public footer", () => {
     expect(footer).toContain('data-brand="sini"');
     expect(footer).toContain('{ label: "Reprendre", href: "/" }');
     expect(footer).toContain('{ label: "Vendre", href: "/transmettre" }');
-    expect(footer).toContain('{ label: "Conseil", href: "/conseil" }');
+    expect(footer).toContain('{ label: "Conseils", href: "/conseil" }');
     expect(footer).toContain('href="mailto:contact@sini.fr"');
     expect(footer).not.toMatch(/Demaa|DEMAA|demaa\.fr/);
   });

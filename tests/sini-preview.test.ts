@@ -11,7 +11,7 @@ describe("SINI editorial preview", () => {
     expect(markup).toContain("La suite d’une entreprise se construit ensemble.");
     expect(markup).toContain("Reprendre");
     expect(markup).toContain("Transmettre");
-    expect(markup).toContain("Conseil");
+    expect(markup).toContain("Conseils");
     expect(markup).toContain('href="/a-reprendre"');
     expect(markup).toContain('href="/transmettre"');
     expect(markup).toContain('href="/accompagnement"');

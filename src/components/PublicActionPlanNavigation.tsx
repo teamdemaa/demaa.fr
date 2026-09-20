@@ -12,7 +12,7 @@ const navigationItems = [
 const siniNavigationItems = [
   { view: "marketplace", label: "Reprendre", href: "/", Icon: Building2 },
   { view: "services", label: "Vendre", href: "/transmettre", Icon: Workflow },
-  { view: "advice", label: "Conseil", href: "/conseil", Icon: BookOpen },
+  { view: "advice", label: "Conseils", href: "/conseil", Icon: BookOpen },
 ] as const;
 
 const tabClassName =

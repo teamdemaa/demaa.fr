@@ -21,7 +21,7 @@ const pillarIcons = [Compass, ShieldCheck, Waypoints, Handshake] as const;
 
 const copy = {
   fr: {
-    nav: ["Reprendre", "Vendre", "Conseil"],
+    nav: ["Reprendre", "Vendre", "Conseils"],
     contact: "Parler d’un projet",
     heroEyebrow: "REPRISE · TRANSMISSION · CONTINUITÉ",
     heroTitle: "La suite d’une entreprise se construit ensemble.",
@@ -45,7 +45,7 @@ const copy = {
     journeys: [
       { title: "Reprendre", body: "Découvrir des entreprises existantes et préciser votre projet de reprise.", action: "Explorer les opportunités", imageAlt: "Deux professionnels examinent un dossier d’entreprise" },
       { title: "Vendre", body: "Présenter votre entreprise et ouvrir le dialogue avec des repreneurs pertinents.", action: "Découvrir la transmission", imageAlt: "Une équipe au travail dans un commerce" },
-      { title: "Conseil", body: "Des méthodes pour clarifier vos décisions et préparer le passage de relais.", action: "Lire les méthodes", imageAlt: "Deux professionnels travaillent ensemble dans un atelier" },
+      { title: "Conseils", body: "Des méthodes pour clarifier vos décisions et préparer le passage de relais.", action: "Lire les méthodes", imageAlt: "Deux professionnels travaillent ensemble dans un atelier" },
     ],
     guidesEyebrow: "POUR ALLER PLUS LOIN",
     guidesTitle: "Des repères pour décider.",
