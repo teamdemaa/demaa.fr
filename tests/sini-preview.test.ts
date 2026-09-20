@@ -1,7 +1,7 @@
 import { access, readFile } from "node:fs/promises";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import SiniPreviewPage, { metadata } from "@/app/apercu-sini/page";
+import SiniPreviewPage, { generateMetadata } from "@/app/apercu-sini/page";
 
 describe("SINI editorial preview", () => {
   it("renders the French journey without replacing the existing homepage", async () => {
@@ -39,7 +39,12 @@ describe("SINI editorial preview", () => {
     const sitemap = await readFile(new URL("../src/app/sitemap.ts", import.meta.url), "utf8");
     const proxy = await readFile(new URL("../src/proxy.ts", import.meta.url), "utf8");
 
-    expect(metadata.robots).toMatchObject({ index: false, follow: false });
+    const frMetadata = await generateMetadata({ searchParams: Promise.resolve({ lang: "fr" }) });
+    const enMetadata = await generateMetadata({ searchParams: Promise.resolve({ lang: "en" }) });
+    expect(frMetadata.robots).toMatchObject({ index: false, follow: false });
+    expect(enMetadata.robots).toMatchObject({ index: false, follow: false });
+    expect(enMetadata.title).toContain("editorial preview");
+    expect(enMetadata.openGraph).toMatchObject({ locale: "en_GB" });
     expect(sitemap).not.toContain("/apercu-sini");
     expect(proxy).toContain('if (pathname === "/")');
     await Promise.all([

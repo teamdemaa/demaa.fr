@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Compass, Handshake, ShieldCheck, Waypoints } from "lucide-react";
+import { SiniPreviewHtmlLang } from "./preview-html-lang";
 
 type Locale = "fr" | "en";
 
@@ -140,19 +141,20 @@ const copy = {
 const darkButton = "inline-flex min-h-11 items-center justify-center gap-3 rounded-full bg-[#252622] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#4b5345] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6b735c] focus-visible:ring-offset-2";
 const eyebrow = "text-[10px] font-medium uppercase tracking-[0.19em] text-[#677064]";
 
-export const metadata: Metadata = {
-  title: "SINI — aperçu de la future page d’accueil",
-  description: "Prévisualisation non publiée de SINI : reprendre, transmettre et préparer la suite d’une entreprise.",
-  robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
-  openGraph: {
-    title: "SINI — aperçu",
-    description: "Prévisualisation non publiée de SINI.",
-    siteName: "SINI",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: { card: "summary", title: "SINI — aperçu" },
-};
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ lang?: string | string[] }> }): Promise<Metadata> {
+  const english = (await searchParams).lang === "en";
+  const title = english ? "SINI — editorial preview" : "SINI — aperçu de la future page d’accueil";
+  const description = english
+    ? "Unpublished SINI preview: acquiring, transferring and preparing the next chapter of a business."
+    : "Prévisualisation non publiée de SINI : reprendre, transmettre et préparer la suite d’une entreprise.";
+  return {
+    title,
+    description,
+    robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
+    openGraph: { title, description, siteName: "SINI", locale: english ? "en_GB" : "fr_FR", type: "website" },
+    twitter: { card: "summary", title, description },
+  };
+}
 
 function PreviewNav({ locale }: { locale: Locale }) {
   return (
@@ -176,6 +178,7 @@ export default async function SiniPreviewPage({
 
   return (
     <div lang={locale} className="min-h-screen bg-[#faf8f4] font-sans text-[#262822] [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-4 [&_a:focus-visible]:outline-[#536653]">
+      <SiniPreviewHtmlLang locale={locale} />
       <div className="border-b border-[#e8e2d9] bg-[#efece5] px-5 py-2 text-center text-[10px] font-medium uppercase tracking-[0.2em] text-[#727367]">
         {t.preview}
       </div>
