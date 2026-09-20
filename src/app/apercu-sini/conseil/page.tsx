@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import SiniAdviceLibrary from "@/components/SiniAdviceLibrary";
+import { satoshiHeroTitleClassName } from "@/lib/marketing-hero-style";
 import { getPublishedMethods } from "@/lib/tutorial-catalog";
 
 export const metadata: Metadata = {
@@ -15,12 +16,11 @@ export default function SiniAdvicePage() {
     <>
       <Navbar minimal publicNavigationActiveView="advice" publicNavigationVariant="sini" />
       <main className="min-h-screen bg-sini-background text-[#17283e]">
-        <header className="mx-auto w-full max-w-7xl px-4 pb-10 pt-12 text-center sm:px-6 md:pb-12 md:pt-16 lg:px-8">
-          <h1 className="mx-auto max-w-5xl text-balance font-light leading-[0.94] tracking-tight" style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}>
-            <span className="block text-[#8198ad]">Des méthodes concrètes pour reprendre,</span>
-            <span className="block font-serif italic text-[#17283e]">préparer ou transmettre.</span>
+        <header className="mx-auto w-full max-w-6xl px-5 pb-10 pt-14 text-left sm:px-8 sm:pb-12 sm:pt-20 lg:pt-24">
+          <h1 className={`${satoshiHeroTitleClassName} max-w-5xl`}>
+            Des méthodes concrètes pour reprendre, préparer ou transmettre.
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[#627181] sm:text-lg">
+          <p className="mt-6 max-w-3xl text-base leading-7 text-[#627181] sm:text-lg sm:leading-8">
             Chaque méthode répond à une question précise, cite ses sources et propose une action réalisable.
           </p>
         </header>

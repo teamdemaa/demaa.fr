@@ -15,7 +15,7 @@ describe("SINI near-white background", () => {
       source("../src/app/apercu-sini/conseil/[slug]/page.tsx"),
     ]);
 
-    expect(styles).toContain("--color-sini-background: #fcfdff");
+    expect(styles).toContain("--color-sini-background: #ffffff");
     expect(navbar).toContain("bg-sini-background/95");
     expect(tabs).toContain("bg-sini-background p-1");
     expect(tabs).toContain("bg-[#dce8f1]/30");
