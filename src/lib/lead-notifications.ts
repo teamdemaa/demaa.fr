@@ -48,6 +48,7 @@ type LeadSubmission = {
   fields?: LeadField[];
   idempotencyKey?: string | null;
   marketingConsent?: LeadMarketingConsent | null;
+  notificationEmail?: string;
   requestType: string;
   title: string;
 };
@@ -131,7 +132,7 @@ function buildSlackBlocks(input: LeadSubmission, leadId: string, retry = false) 
 async function sendInternalLeadEmail(input: LeadSubmission, leadId: string) {
   const apiKey = process.env.RESEND_API_KEY?.trim();
   const from = process.env.RESEND_FROM_EMAIL?.trim();
-  const to = process.env.LEAD_NOTIFICATION_EMAIL?.trim() || "team@demaa.fr";
+  const to = input.notificationEmail?.trim() || process.env.LEAD_NOTIFICATION_EMAIL?.trim() || "team@demaa.fr";
 
   if (!apiKey || !from) {
     throw new Error("Resend internal email configuration is missing.");

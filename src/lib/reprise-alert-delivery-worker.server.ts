@@ -17,11 +17,13 @@ import {
 import { repriseOpportunities } from "@/lib/reprise-opportunities";
 import { logOperationalError, logOperationalEvent } from "@/lib/operational-log";
 import { getCanonicalOrigin } from "@/lib/site-url";
+import type { FormBrand } from "@/lib/form-brand.server";
 
 type AlertNotificationInput = {
   accessToken: string;
   alertId: string;
   baseUrl: string;
+  brand: FormBrand;
   criteria: RepriseAlertRecord["criteria"];
   currentMatches?: readonly (typeof repriseOpportunities)[number][];
   email: string;
@@ -35,6 +37,7 @@ export async function deliverRepriseAlertCreationNotifications(input: AlertNotif
         accessToken: input.accessToken,
         alertId: input.alertId,
         baseUrl: input.baseUrl,
+        brand: input.brand,
         criteria: input.criteria,
         currentMatches: input.currentMatches,
         email: input.email,
@@ -44,6 +47,7 @@ export async function deliverRepriseAlertCreationNotifications(input: AlertNotif
       channel: "internal_notification" as const,
       send: () => sendInternalRepriseAlertCreated({
         alertId: input.alertId,
+        brand: input.brand,
         criteria: input.criteria,
         email: input.email,
       }),
@@ -80,13 +84,13 @@ export async function deliverNewRepriseAlertMatches(limit = 500) {
     opportunityId?: string;
     status: "failed" | "sent";
   }> = [];
-  const baseUrl = getCanonicalOrigin();
-
   for (const alert of alerts) {
+    const baseUrl = alert.brand === "sini" ? "https://gosini.fr" : getCanonicalOrigin();
     results.push(...await deliverRepriseAlertCreationNotifications({
       accessToken: getRepriseAlertAccessToken(alert.id),
       alertId: alert.id,
       baseUrl,
+      brand: alert.brand,
       criteria: alert.criteria,
       currentMatches: getRepriseAlertMatches(repriseOpportunities, alert.criteria),
       email: alert.email,
@@ -103,6 +107,7 @@ export async function deliverNewRepriseAlertMatches(limit = 500) {
           accessToken: getRepriseAlertAccessToken(alert.id),
           alertId: alert.id,
           baseUrl,
+          brand: alert.brand,
           email: alert.email,
           opportunity,
         });

@@ -7,6 +7,7 @@ import { submitLeadRequest } from "@/lib/lead-notifications";
 import { logOperationalError } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { calculateBusinessValuation, normalizeBusinessValuationInput, type BusinessValuationResult } from "@/lib/business-valuation";
+import { getFormBrand, withFormSubjectBrand } from "@/lib/form-brand.server";
 
 type BusinessEstimateBody = {
   attribution?: unknown;
@@ -56,7 +57,8 @@ export async function POST(request: Request) {
     } catch {
       return NextResponse.json({ error: "L’estimation jointe est incomplète. Merci de la recalculer." }, { status: 400 });
     }
-    const context = await resolveLeadContext({ source: "Demaa - Projet de vente", sourceUrl: request.headers.get("referer") });
+    const brand = getFormBrand(request);
+    const context = await resolveLeadContext({ source: brand === "sini" ? "sini - Projet de vente" : "Demaa - Projet de vente", sourceUrl: request.headers.get("referer") });
     if (!context) return NextResponse.json({ error: "La page d’origine est introuvable." }, { status: 400 });
 
     await submitLeadRequest({
@@ -75,8 +77,9 @@ export async function POST(request: Request) {
         ] : []),
       ],
       idempotencyKey,
+      notificationEmail: brand === "sini" ? "team@demaa.fr" : undefined,
       requestType: "business_sale_request",
-      title: `Projet de vente - ${company}`,
+      title: withFormSubjectBrand(brand, `Projet de vente - ${company}`),
     });
     return successResponse();
   } catch (error) {

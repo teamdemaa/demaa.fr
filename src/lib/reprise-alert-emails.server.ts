@@ -4,6 +4,8 @@ import type { RepriseAlertCriteria } from "@/lib/reprise-alerts";
 import { getRepriseOpportunityPath } from "@/lib/reprise-opportunity-seo";
 import type { RepriseOpportunity } from "@/lib/reprise-opportunities";
 import { sendTransactionalEmail } from "@/lib/transactional-email.server";
+import type { FormBrand } from "@/lib/form-brand.server";
+import { withFormSubjectBrand } from "@/lib/form-brand.server";
 
 function escapeHtml(value: string) {
   return value
@@ -31,8 +33,10 @@ function criteriaLines(criteria: RepriseAlertCriteria) {
   ];
 }
 
-function emailShell(title: string, content: string) {
-  return `<div style="margin:0;background:#f5f4f0;padding:28px 12px;font-family:Arial,sans-serif;color:#17231d"><div style="max-width:620px;margin:0 auto;overflow:hidden;border:1px solid #e1e3df;border-radius:22px;background:#ffffff"><div style="padding:30px 24px 16px"><p style="margin:0;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#315f46">Demaa · Alerte de reprise</p><h1 style="margin:14px 0 0;font-size:29px;line-height:1.18;font-weight:500;letter-spacing:-.03em;color:#17231d">${escapeHtml(title)}</h1></div><div style="padding:0 24px 30px">${content}</div></div><p style="max-width:620px;margin:16px auto 0;text-align:center;font-size:11px;line-height:1.6;color:#7c857f">Demaa · Entreprises de services à reprendre</p></div>`;
+function emailShell(brand: FormBrand, title: string, content: string) {
+  const name = brand === "sini" ? "sini" : "Demaa";
+  const accent = brand === "sini" ? "#285376" : "#315f46";
+  return `<div style="margin:0;background:#f5f4f0;padding:28px 12px;font-family:Arial,sans-serif;color:#17231d"><div style="max-width:620px;margin:0 auto;overflow:hidden;border:1px solid #e1e3df;border-radius:22px;background:#ffffff"><div style="padding:30px 24px 16px"><p style="margin:0;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:${accent}">${name} · Alerte de reprise</p><h1 style="margin:14px 0 0;font-size:29px;line-height:1.18;font-weight:500;letter-spacing:-.03em;color:#17231d">${escapeHtml(title)}</h1></div><div style="padding:0 24px 30px">${content}</div></div><p style="max-width:620px;margin:16px auto 0;text-align:center;font-size:11px;line-height:1.6;color:#7c857f">${name} · Entreprises de services à reprendre</p></div>`;
 }
 
 function linkButton(href: string, label: string, secondary = false) {
@@ -79,6 +83,7 @@ export async function sendRepriseAlertConfirmation(input: {
   accessToken: string;
   alertId: string;
   baseUrl: string;
+  brand: FormBrand;
   criteria: RepriseAlertCriteria;
   currentMatches?: readonly RepriseOpportunity[];
   email: string;
@@ -99,13 +104,14 @@ export async function sendRepriseAlertConfirmation(input: {
 
   await sendTransactionalEmail({
     html: emailShell(
+      input.brand,
       "Votre alerte est créée.",
       `<p style="margin:0;font-size:15px;line-height:1.7;color:#66736b">Votre recherche est enregistrée. Chaque email contiendra un accès direct à la fiche de l’entreprise concernée.</p>${criteriaHtml(input.criteria)}${matchHtml}<div style="margin-top:24px">${linkButton(marketplaceUrl, "Voir les entreprises à reprendre")}</div>${fallbackLink(marketplaceUrl)}<div style="margin-top:14px">${linkButton(manageUrl, "Gérer mon alerte", true)}</div>${managementLinks(manageUrl, unsubscribeUrl)}`,
     ),
     idempotencyKey: `reprise-alert-confirmation-${input.alertId}`,
-    subject: currentMatches.length > 0
+    subject: withFormSubjectBrand(input.brand, currentMatches.length > 0
       ? `Votre alerte est créée · ${currentMatches.length} correspondance${currentMatches.length > 1 ? "s" : ""}`
-      : "Votre alerte de reprise est créée",
+      : "Votre alerte de reprise est créée"),
     text: [
       "Votre alerte de reprise est créée.",
       "",
@@ -124,6 +130,7 @@ export async function sendRepriseAlertConfirmation(input: {
 
 export async function sendInternalRepriseAlertCreated(input: {
   alertId: string;
+  brand: FormBrand;
   criteria: RepriseAlertCriteria;
   email: string;
 }) {
@@ -133,7 +140,7 @@ export async function sendInternalRepriseAlertCreated(input: {
     html: `<div style="font-family:Arial,sans-serif;color:#17231d"><h1 style="font-size:22px">Nouvelle alerte de reprise</h1><p><strong>Email :</strong> ${escapeHtml(input.email)}</p><ul>${lines.map((line) => `<li>${escapeHtml(line)}</li>`).join("")}</ul><p>Référence : ${escapeHtml(input.alertId)}</p></div>`,
     idempotencyKey: `reprise-alert-internal-${input.alertId}`,
     replyTo: input.email,
-    subject: "Nouvelle alerte de reprise",
+    subject: withFormSubjectBrand(input.brand, "Nouvelle alerte de reprise"),
     text: ["Nouvelle alerte de reprise", `Email : ${input.email}`, ...lines, `Référence : ${input.alertId}`].join("\n"),
     to,
   });
@@ -143,6 +150,7 @@ export async function sendRepriseOpportunityMatch(input: {
   accessToken: string;
   alertId: string;
   baseUrl: string;
+  brand: FormBrand;
   email: string;
   opportunity: RepriseOpportunity;
 }) {
@@ -159,11 +167,12 @@ export async function sendRepriseOpportunityMatch(input: {
 
   await sendTransactionalEmail({
     html: emailShell(
+      input.brand,
       "Une nouvelle entreprise correspond à votre recherche.",
       `<p style="margin:0;font-size:15px;line-height:1.7;color:#66736b">Cette opportunité vient d’être publiée et correspond aux critères de votre alerte.</p>${opportunityCardHtml(input.baseUrl, input.opportunity)}${managementLinks(manageUrl, unsubscribeUrl)}`,
     ),
     idempotencyKey: `reprise-alert-match-${input.alertId}-${input.opportunity.id}`,
-    subject: `Nouvelle entreprise à reprendre · ${input.opportunity.activity}`,
+    subject: withFormSubjectBrand(input.brand, `Nouvelle entreprise à reprendre · ${input.opportunity.activity}`),
     text: [
       "Une nouvelle entreprise correspond à votre recherche.",
       "",

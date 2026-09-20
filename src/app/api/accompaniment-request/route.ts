@@ -6,6 +6,7 @@ import { resolveLeadContext } from "@/lib/lead-context";
 import { submitLeadRequest } from "@/lib/lead-notifications";
 import { logOperationalError } from "@/lib/operational-log";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
+import { getFormBrand, withFormSubjectBrand } from "@/lib/form-brand.server";
 
 type AccompanimentRequestBody = { attribution?: unknown; company?: unknown; email?: unknown; faxNumber?: unknown; idempotencyKey?: unknown; message?: unknown; name?: unknown; phone?: unknown };
 
@@ -33,7 +34,8 @@ export async function POST(request: Request) {
     const phone = normalizeText(body?.phone, 40);
     if (!message || !name || !isValidEmail(email) || !phone || !company || !idempotencyKey) return NextResponse.json({ error: "Merci de décrire votre priorité, puis de renseigner vos prénom et nom, votre email, votre téléphone et votre entreprise." }, { status: 400 });
 
-    const context = await resolveLeadContext({ source: "Demaa - Transmission", sourceUrl: request.headers.get("referer") });
+    const brand = getFormBrand(request);
+    const context = await resolveLeadContext({ source: brand === "sini" ? "sini - Transmission" : "Demaa - Transmission", sourceUrl: request.headers.get("referer") });
     if (!context) return NextResponse.json({ error: "La page d’origine est introuvable." }, { status: 400 });
     await submitLeadRequest({
       attribution: resolveLeadAttribution(request, body?.attribution),
@@ -43,8 +45,9 @@ export async function POST(request: Request) {
       emoji: "⚙️",
       fields: [{ label: "Priorité décrite", value: message }, { label: "Préparation", value: "Structuration du fonctionnement prioritaire avant transmission" }],
       idempotencyKey,
+      notificationEmail: brand === "sini" ? "team@demaa.fr" : undefined,
       requestType: "accompaniment_request",
-      title: `Préparation à la transmission - ${company}`,
+      title: withFormSubjectBrand(brand, `Préparation à la transmission - ${company}`),
     });
     return successResponse();
   } catch (error) {

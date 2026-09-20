@@ -61,10 +61,35 @@ describe("POST /api/reprise-alerts", () => {
     expect(mocks.deliverCreationNotifications).toHaveBeenCalledWith(expect.objectContaining({
       accessToken: "token",
       alertId: "alert-1",
+      brand: "demaa",
       email: "alex@example.com",
     }));
     expect(JSON.stringify(mocks.createRepriseAlert.mock.calls)).not.toContain("phone");
     expect(JSON.stringify(mocks.createRepriseAlert.mock.calls)).not.toContain("company");
+  });
+
+  it("records SINI provenance and returns alert links on gosini.fr", async () => {
+    const siniRequest = new Request("https://demaa.fr/api/reprise-alerts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://demaa.fr",
+        "x-sini-form": "1",
+        "x-sini-site-origin": "https://gosini.fr",
+      },
+      body: JSON.stringify({
+        criteria: { budgetMax: null, categories: [], includeMissing: true, query: "", regions: [], revenueMin: null },
+        email: "alex@example.com",
+        idempotencyKey: "reprise-alert:87654321",
+      }),
+    });
+
+    expect((await POST(siniRequest)).status).toBe(202);
+    expect(mocks.createRepriseAlert).toHaveBeenCalledWith(expect.objectContaining({ brand: "sini" }));
+    expect(mocks.deliverCreationNotifications).toHaveBeenCalledWith(expect.objectContaining({
+      baseUrl: "https://gosini.fr",
+      brand: "sini",
+    }));
   });
 
   it("rejects an invalid email", async () => {

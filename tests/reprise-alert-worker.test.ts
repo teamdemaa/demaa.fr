@@ -77,6 +77,7 @@ describe("reprise alert delivery worker", () => {
       accessToken: "secure-token",
       alertId: "alert-1",
       baseUrl: "https://demaa.fr",
+      brand: "demaa",
       criteria: { budgetMax: null, categories: [], includeMissing: true, query: "", regions: [], revenueMin: null },
       email: "alex@example.com",
     });
@@ -101,6 +102,7 @@ describe("reprise alert delivery worker", () => {
       accessToken: "secure-token",
       alertId: "alert-1",
       baseUrl: "https://demaa.fr",
+      brand: "demaa",
       criteria: { budgetMax: null, categories: [], includeMissing: true, query: "", regions: [], revenueMin: null },
       email: "alex@example.com",
     })).toEqual([

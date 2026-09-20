@@ -13,6 +13,7 @@ import { createRepriseAlert } from "@/lib/reprise-alert-storage.server";
 import { repriseOpportunities } from "@/lib/reprise-opportunities";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
+import { getFormBaseUrl, getFormBrand } from "@/lib/form-brand.server";
 
 export const runtime = "nodejs";
 
@@ -45,13 +46,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Vérifiez les critères et votre adresse email." }, { status: 400 });
     }
 
-    const alert = await createRepriseAlert({ criteria, email, idempotencyKey });
+    const brand = getFormBrand(request);
+    const alert = await createRepriseAlert({ brand, criteria, email, idempotencyKey });
     const currentMatches = getRepriseAlertMatches(repriseOpportunities, criteria);
     const matchIds = currentMatches.map((opportunity) => opportunity.id);
     const notificationResults = await deliverRepriseAlertCreationNotifications({
       accessToken: alert.accessToken,
       alertId: alert.id,
-      baseUrl: getCanonicalBaseUrl(request),
+      baseUrl: getFormBaseUrl(brand) ?? getCanonicalBaseUrl(request),
+      brand,
       criteria,
       currentMatches,
       email,

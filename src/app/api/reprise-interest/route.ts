@@ -12,6 +12,7 @@ import { submitLeadRequest } from "@/lib/lead-notifications";
 import { logOperationalError } from "@/lib/operational-log";
 import { getRepriseOpportunity } from "@/lib/reprise-opportunities";
 import { enforceAllowedHost, enforceSameOrigin } from "@/lib/request-guard";
+import { getFormBrand, withFormSubjectBrand } from "@/lib/form-brand.server";
 
 type RepriseInterestBody = {
   attribution?: unknown;
@@ -55,8 +56,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Merci de présenter brièvement votre projet, puis de renseigner vos prénom et nom, votre email, votre téléphone et votre entreprise." }, { status: 400 });
     }
 
+    const brand = getFormBrand(request);
     const context = await resolveLeadContext({
-      source: `À reprendre - ${opportunity.activity}`,
+      source: `${brand === "sini" ? "sini" : "À reprendre"} - ${opportunity.activity}`,
       sourceUrl: request.headers.get("referer"),
     });
     if (!context) return NextResponse.json({ error: "L’opportunité est introuvable." }, { status: 400 });
@@ -76,8 +78,9 @@ export async function POST(request: Request) {
         { label: "Traitement attendu", value: "Recontacter le repreneur, puis transmettre la demande au contact source" },
       ],
       idempotencyKey,
+      notificationEmail: brand === "sini" ? "team@demaa.fr" : undefined,
       requestType: "reprise_interest",
-      title: `Demande de mise en relation - ${opportunity.activity}`,
+      title: withFormSubjectBrand(brand, `Demande de mise en relation - ${opportunity.activity}`),
     });
 
     return successResponse();

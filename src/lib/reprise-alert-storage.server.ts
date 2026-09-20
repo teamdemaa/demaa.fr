@@ -5,12 +5,14 @@ import { getAdminFirestore } from "@/lib/firebase-admin";
 import { buildLeadIdempotencyHash } from "@/lib/lead-idempotency";
 import type { RepriseAlertCriteria } from "@/lib/reprise-alerts";
 import type { RepriseOpportunityCategory, RepriseOpportunityRegion } from "@/lib/reprise-opportunities";
+import type { FormBrand } from "@/lib/form-brand.server";
 
 const ALERTS_COLLECTION = "reprise_alerts";
 const DELIVERIES_COLLECTION = "reprise_alert_deliveries";
 
 type StoredRepriseAlert = {
   access_token_hash: string;
+  brand?: FormBrand;
   created_at: string;
   criteria: {
     budget_max: number | null;
@@ -26,6 +28,7 @@ type StoredRepriseAlert = {
 };
 
 export type RepriseAlertRecord = Readonly<{
+  brand: FormBrand;
   createdAt: string;
   criteria: RepriseAlertCriteria;
   email: string;
@@ -79,6 +82,7 @@ function deserializeCriteria(criteria: StoredRepriseAlert["criteria"]): RepriseA
 
 function toRecord(id: string, data: StoredRepriseAlert): RepriseAlertRecord {
   return {
+    brand: data.brand === "sini" ? "sini" : "demaa",
     createdAt: data.created_at,
     criteria: deserializeCriteria(data.criteria),
     email: data.email,
@@ -87,6 +91,7 @@ function toRecord(id: string, data: StoredRepriseAlert): RepriseAlertRecord {
 }
 
 export async function createRepriseAlert(input: {
+  brand?: FormBrand;
   criteria: RepriseAlertCriteria;
   email: string;
   idempotencyKey: string;
@@ -101,6 +106,7 @@ export async function createRepriseAlert(input: {
     if (snapshot.exists) return false;
     transaction.create(ref, {
       access_token_hash: hash(accessToken),
+      brand: input.brand ?? "demaa",
       created_at: now,
       criteria: serializeCriteria(input.criteria),
       email: input.email,

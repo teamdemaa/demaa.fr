@@ -33,6 +33,7 @@ describe("reprise alert emails", () => {
       accessToken: "secure-token",
       alertId: "alert-1",
       baseUrl: "https://demaa.fr",
+      brand: "demaa",
       criteria,
       currentMatches: [opportunity],
       email: "alex@example.com",
@@ -53,6 +54,7 @@ describe("reprise alert emails", () => {
       accessToken: "secure-token",
       alertId: "alert-1",
       baseUrl: "https://demaa.fr",
+      brand: "demaa",
       email: "alex@example.com",
       opportunity,
     });
@@ -66,5 +68,24 @@ describe("reprise alert emails", () => {
     expect(email.text).toContain(`Voir la fiche de l’entreprise : ${opportunityUrl}`);
     expect(email.text).toContain("Modifier mon alerte");
     expect(email.text).toContain("Supprimer mon alerte");
+  });
+
+  it("brands SINI alerts and keeps every destination on gosini.fr", async () => {
+    const opportunity = repriseOpportunities[0];
+    await sendRepriseAlertConfirmation({
+      accessToken: "secure-token",
+      alertId: "alert-1",
+      baseUrl: "https://gosini.fr",
+      brand: "sini",
+      criteria,
+      currentMatches: [opportunity],
+      email: "alex@example.com",
+    });
+
+    const email = mocks.send.mock.calls[0][0];
+    expect(email.subject).toMatch(/^sini · /);
+    expect(email.html).toContain("sini · Alerte de reprise");
+    expect(email.html).toContain("https://gosini.fr/a-reprendre/");
+    expect(email.html).not.toContain("demaa.fr");
   });
 });
