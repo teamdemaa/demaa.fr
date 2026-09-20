@@ -48,7 +48,7 @@ export default async function RepriseOpportunityPage({ params }: RepriseOpportun
           __html: serializeRepriseJsonLd(buildRepriseOpportunityJsonLd(opportunity)),
         }}
       />
-      <Navbar minimal publicNavigationActiveView="marketplace" />
+      <Navbar minimal publicNavigationActiveView="marketplace" publicNavigationVariant="sini" />
       <main className="bg-dema-cream px-5 py-12 text-brand-blue sm:px-8 sm:py-16">
         <article className="mx-auto max-w-3xl rounded-[2rem] border border-dema-line bg-dema-paper p-6 sm:p-10">
           <RepriseOpportunityDetail headingLevel="h1" opportunity={opportunity} />

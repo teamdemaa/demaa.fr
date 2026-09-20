@@ -36,7 +36,7 @@ const frequentlyAskedQuestions = [
   {
     question: "Mes informations restent-elles confidentielles ?",
     answer:
-      "Oui. Votre demande est d’abord étudiée par Demaa. Les informations sensibles de votre entreprise ne sont pas publiées automatiquement ni transmises sans échange préalable avec vous.",
+      "Oui. Votre demande est d’abord étudiée par notre équipe. Les informations sensibles de votre entreprise ne sont pas publiées automatiquement ni transmises sans échange préalable avec vous.",
   },
   {
     question: "Quels types d’entreprises pouvez-vous présenter ?",
@@ -53,7 +53,7 @@ const frequentlyAskedQuestions = [
 export default function BusinessSaleLandingPage() {
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="services" />
+      <Navbar minimal publicNavigationActiveView="services" publicNavigationVariant="sini" />
       <main className="overflow-x-clip bg-dema-cream text-brand-blue">
         <section className="border-b border-dema-line px-5 pb-14 pt-14 text-left sm:px-8 sm:pb-20 sm:pt-20 sm:text-center lg:pt-24">
           <div className="mx-auto max-w-6xl">

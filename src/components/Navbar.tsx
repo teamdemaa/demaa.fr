@@ -22,6 +22,7 @@ export default function Navbar({
   publicCtaHref,
   publicCtaLabel,
   publicNavigationActiveView,
+  publicNavigationVariant = "legacy",
 }: {
   adminControls?: boolean;
   anonymousLanding?: boolean;
@@ -32,6 +33,7 @@ export default function Navbar({
   publicCtaHref?: string;
   publicCtaLabel?: string;
   publicNavigationActiveView?: PublicActionPlanView | "none";
+  publicNavigationVariant?: "legacy" | "sini";
 }) {
   const accountAccessClassName =
     "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
@@ -64,14 +66,20 @@ export default function Navbar({
               }
               className="z-50 inline-flex shrink-0 cursor-pointer items-center"
             >
-              <DemaaWordmark className="text-[1.2rem] sm:text-[1.7rem]" />
+              {publicNavigationVariant === "sini" ? (
+                <span className="font-sans text-[1.2rem] font-medium tracking-[0.24em] text-brand-blue sm:text-[1.7rem]" aria-label="SINI">
+                  SINI
+                </span>
+              ) : (
+                <DemaaWordmark className="text-[1.2rem] sm:text-[1.7rem]" />
+              )}
             </Link>
             <div
               id="action-plan-navbar-desktop"
               className="absolute left-1/2 top-1/2 hidden w-[min(40vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden xl:block"
             >
               {publicNavigationActiveView !== undefined ? (
-                <PublicActionPlanNavigation activeView={publicNavigationActiveView} />
+                <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} />
               ) : null}
             </div>
             {adminControls ? (
@@ -134,7 +142,7 @@ export default function Navbar({
             className="pb-3 empty:hidden xl:hidden"
           >
             {publicNavigationActiveView !== undefined ? (
-              <PublicActionPlanNavigation activeView={publicNavigationActiveView} />
+              <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} />
             ) : null}
           </div>
         </div>

@@ -2,6 +2,28 @@ import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 
 describe("Demaa application navbar", () => {
+  it("keeps the SINI preview scoped to the three transaction journeys", async () => {
+    const [navigation, navbar, marketplace, listing, sale, accompaniment] = await Promise.all([
+      readFile(new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/RepriseMarketplaceClient.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/app/(marketing)/a-reprendre/[slug]/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/BusinessSaleLandingPage.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/TransmissionLandingPage.tsx", import.meta.url), "utf8"),
+    ]);
+
+    expect(navigation).toContain('label: "Reprendre", href: "/a-reprendre"');
+    expect(navigation).toContain('label: "Transmettre", href: "/transmettre"');
+    expect(navigation).toContain('label: "Accompagnement", href: "/accompagnement"');
+    expect(navigation).toContain('variant = "legacy"');
+    expect(navbar).toContain('publicNavigationVariant = "legacy"');
+    expect(navbar).toContain('publicNavigationVariant === "sini"');
+    expect(marketplace).toContain('publicNavigationActiveView="marketplace" publicNavigationVariant="sini"');
+    expect(listing).toContain('publicNavigationActiveView="marketplace" publicNavigationVariant="sini"');
+    expect(sale).toContain('publicNavigationActiveView="services" publicNavigationVariant="sini"');
+    expect(accompaniment).toContain('publicNavigationActiveView="accompaniment" publicNavigationVariant="sini"');
+  });
+
   it("removes the historical centered two-column selector everywhere", async () => {
     const source = await readFile(
       new URL("../src/components/Navbar.tsx", import.meta.url),
