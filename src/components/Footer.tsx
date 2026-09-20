@@ -3,19 +3,19 @@ import { UserRound } from "lucide-react";
 import DemaaWordmark from "@/components/DemaaWordmark";
 import { isGuestProductEnabled } from "@/lib/guest-action-plan-security.server";
 
-const marketplaceLinks = [
-  { label: "Reprendre", href: "/a-reprendre" },
-  { label: "Vendre", href: "/transmettre" },
+const hubLinks = [
+  { label: "Academy", href: "/academie" },
+  { label: "Solutions", href: "/solutions" },
+  { label: "Spécialistes", href: "/specialistes" },
 ];
 
 const resourceLinks = [
-  { label: "Méthodes", href: "/tutoriels" },
+  { label: "Méthodes", href: "/academie" },
   { label: "Modèles à copier", href: "/modeles" },
   { label: "Outils", href: "/outils" },
 ];
 
 const demaaLinks = [
-  { label: "Accompagnement", href: "/accompagnement" },
   { label: "Nous contacter", href: "mailto:team@demaa.fr" },
 ];
 
@@ -31,23 +31,23 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="space-y-4">
-            <Link href="/a-reprendre" className="inline-flex">
+            <Link href="/" className="inline-flex">
               <DemaaWordmark
                 className="text-[2.55rem]"
                 colorClassName="text-brand-blue/56"
               />
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
-              Reprenez ou vendez une PME de services.
+              Des ressources utiles pour faire fonctionner son entreprise.
             </p>
           </div>
 
           <div>
             <h3 className="text-lg font-semibold mb-6">
-              Reprendre ou vendre
+              Explorer Demaa
             </h3>
             <ul className="space-y-3">
-              {marketplaceLinks.map((link) => (
+              {hubLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass}>{link.label}</Link>
                 </li>

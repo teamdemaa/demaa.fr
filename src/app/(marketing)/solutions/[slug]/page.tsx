@@ -111,7 +111,7 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="resources" />
+      <Navbar minimal publicNavigationActiveView="solutions" />
       <main className="min-h-screen bg-background pb-20">
         <ResourcesNavigation activeView="tools" />
         <script

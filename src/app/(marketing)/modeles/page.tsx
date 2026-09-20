@@ -49,7 +49,7 @@ export default async function ModelsPage({ searchParams }: ModelsPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializePublicJsonLd(jsonLd) }}
       />
-      <Navbar minimal publicNavigationActiveView="resources" />
+      <Navbar minimal publicNavigationActiveView="academy" />
       <main className="min-h-screen bg-background">
         <ResourcesNavigation activeView="models" />
         <CopyableModelsIndex

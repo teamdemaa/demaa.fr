@@ -51,7 +51,7 @@ export default async function ContentPage({ params }: ContentPageProps) {
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="resources" />
+      <Navbar minimal publicNavigationActiveView="academy" />
       <main className="flex-1 bg-background">
         <script
           type="application/ld+json"

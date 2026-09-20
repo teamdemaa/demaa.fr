@@ -22,7 +22,7 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/app/(marketing)/systemes/[slug]/loading.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(pageSource).toContain('<Navbar minimal publicNavigationActiveView="resources" />');
+    expect(pageSource).toContain('<Navbar minimal publicNavigationActiveView="solutions" />');
     expect(pageSource).toContain('<ResourcesNavigation activeView="tools" />');
     expect(loadingSource).toContain("<Navbar minimal />");
     expect(pageSource.indexOf("<Navbar minimal publicNavigationActiveView=")).toBeLessThan(pageSource.indexOf("<main"));
@@ -34,7 +34,7 @@ describe("Demaa application navbar", () => {
     expect(pageSource).not.toContain("/?view=system");
   });
 
-  it("keeps the application root out of search results and one URL for each public universe", async () => {
+  it("uses the canonical root as the public DEMAA hub", async () => {
     const [homeSource, sharedHomeSource, solutionsSource, nextConfigSource, proxySource, navbarSource] = await Promise.all([
       readFile(new URL("../src/app/(application)/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanHomeView.tsx", import.meta.url), "utf8"),
@@ -44,20 +44,15 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(homeSource).not.toContain(
-      'export { default, metadata } from "@/app/(marketing)/systemes/page"',
-    );
-    expect(homeSource).not.toContain('canonical: "/"');
-    expect(homeSource).toContain("robots: { index: false, follow: false }");
-    expect(homeSource).toContain("<ActionPlanHomeView");
+    expect(homeSource).toContain('path: "/"');
+    expect(homeSource).toContain('title: "Academy"');
+    expect(homeSource).toContain('title: "Solutions"');
+    expect(homeSource).toContain('title: "Spécialistes"');
+    expect(homeSource).toContain("<Footer />");
     expect(sharedHomeSource).toContain("<GuestActionPlanExperience");
-    expect(sharedHomeSource).toContain("if (!guestProductEnabled)");
-    expect(sharedHomeSource).toContain("<Navbar");
     expect(solutionsSource).toContain('path: "/solutions"');
-    expect(proxySource).toContain('if (pathname === "/")');
-    expect(proxySource).toContain("buildDefaultHomeMarketplaceHref(request.nextUrl.searchParams)");
-    expect(proxySource).toContain("NextResponse.redirect(new URL(marketplaceHref, request.url), 308)");
-    expect(navbarSource).toContain(': "/a-reprendre"}');
+    expect(proxySource).not.toContain("buildDefaultHomeMarketplaceHref");
+    expect(navbarSource).toContain(': "/"}');
     expect(nextConfigSource).toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/outils',/,
     );
@@ -66,7 +61,7 @@ describe("Demaa application navbar", () => {
     );
   });
 
-  it("uses Reprendre, Vendre and Ressources, then exposes three resource catalogues", async () => {
+  it("uses Academy, Solutions and Spécialistes, then exposes three resource catalogues", async () => {
     const [source, resources, tutorialsIndex, footer, navbarSource] = await Promise.all([
       readFile(
         new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
@@ -84,9 +79,9 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(source).toContain('label: "Reprendre", href: "/a-reprendre"');
-    expect(source).toContain('label: "Vendre", href: "/transmettre"');
-    expect(source).toContain('label: "Ressources", href: "/tutoriels"');
+    expect(source).toContain('label: "Academy", href: "/academie"');
+    expect(source).toContain('label: "Solutions", href: "/solutions"');
+    expect(source).toContain('label: "Spécialistes", href: "/specialistes"');
     expect(source).not.toContain('label: "Tutoriels"');
     expect(source).not.toContain('label: "Outils"');
     expect(source).not.toContain('label: "Sur mesure"');
@@ -94,11 +89,11 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).not.toContain("BusinessEstimateControl");
     expect(navbarSource).toContain("focus-visible:underline focus-visible:underline-offset-4");
     expect(navbarSource).not.toContain("border-dema-forest/18 bg-dema-paper");
-    expect(source.indexOf('label: "Reprendre"')).toBeLessThan(
-      source.indexOf('label: "Vendre"'),
+    expect(source.indexOf('label: "Academy"')).toBeLessThan(
+      source.indexOf('label: "Solutions"'),
     );
-    expect(source.indexOf('label: "Vendre"')).toBeLessThan(
-      source.indexOf('label: "Ressources"'),
+    expect(source.indexOf('label: "Solutions"')).toBeLessThan(
+      source.indexOf('label: "Spécialistes"'),
     );
     expect(resources.indexOf('label: "Méthodes"')).toBeLessThan(
       resources.indexOf('label: "Modèles"'),
@@ -119,8 +114,8 @@ describe("Demaa application navbar", () => {
     expect(tutorialsIndex).toContain('path: "/tutoriels"');
     expect(tutorialsIndex).not.toContain("<Navbar");
     expect(tutorialsIndex).not.toContain("<ActionPlanNavbar");
-    expect(footer).toContain('<Link href="/a-reprendre" className="inline-flex">');
-    expect(footer).toContain('{ label: "Vendre", href: "/transmettre" }');
+    expect(footer).toContain('<Link href="/" className="inline-flex">');
+    expect(footer).toContain('{ label: "Academy", href: "/academie" }');
     expect(footer).not.toContain("Systèmes opérationnels");
     expect(footer).not.toContain("Annuaire financement");
     expect(footer).not.toContain("Annuaire fournisseurs");
@@ -187,7 +182,8 @@ describe("Demaa application navbar", () => {
       "utf8",
     );
 
-    expect(homeSource).toContain("loadActionPlanHomePage");
+    expect(homeSource).not.toContain("loadActionPlanHomePage");
+    expect(homeSource).not.toContain("ActionPlanHomeView");
     const guestLoader = sharedPagesSource.slice(
       sharedPagesSource.indexOf("if (isGuestProductEnabled())"),
       sharedPagesSource.indexOf("const identity =", sharedPagesSource.indexOf("if (isGuestProductEnabled())")),
@@ -196,7 +192,7 @@ describe("Demaa application navbar", () => {
     expect(guestLoader).not.toContain("paths.latest");
     expect(guestLoader).toContain("guestProductEnabled: true");
     expect(sharedPagesSource).toContain("shouldRedirectAuthenticatedHomeToPlans");
-    expect(homeSource).toContain("planTab?: string | string[]");
+    expect(homeSource).toContain("title: \"Academy\"");
     expect(plansSource).toContain("copy.plansHeading");
     expect(plansSource).toContain("config.paths.new");
     expect(sharedPagesSource).toContain("getActionPlanIndexPageForIdentity");

@@ -41,7 +41,7 @@ export default function SpecialistsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializePublicJsonLd(jsonLd) }}
       />
-      <Navbar minimal publicNavigationActiveView="services" />
+      <Navbar minimal publicNavigationActiveView="specialists" />
       <main className="min-h-screen min-w-0 bg-dema-cream">
         <header className="mx-auto w-full max-w-7xl px-4 pb-10 pt-12 text-center sm:px-6 md:pb-12 md:pt-16 lg:px-8">
           <h1

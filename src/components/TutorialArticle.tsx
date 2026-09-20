@@ -18,7 +18,7 @@ export default function TutorialArticle({ tutorial }: { tutorial: TutorialDefini
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="resources" />
+      <Navbar minimal publicNavigationActiveView="academy" />
       <main className="min-w-0 max-w-full flex-1 overflow-x-clip bg-background">
         <ResourcesNavigation activeView="models" />
         <article className="mx-auto w-full min-w-0 max-w-6xl px-4 py-8 sm:px-6 sm:py-12">

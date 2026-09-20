@@ -64,7 +64,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
         }}
       />
       {PUBLIC_SPECIALISTS_ENABLED ? (
-        <Navbar publicNavigationActiveView="services" />
+        <Navbar publicNavigationActiveView="specialists" />
       ) : (
         <Navbar />
       )}

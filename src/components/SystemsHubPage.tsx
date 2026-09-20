@@ -24,7 +24,7 @@ export default function SystemsHubPage({
 
   return (
     <>
-      <Navbar publicNavigationActiveView="resources" />
+      <Navbar publicNavigationActiveView="solutions" />
       <main className="flex-1 min-h-screen w-full bg-dema-cream">
         <ResourcesNavigation activeView="tools" />
         <HomeTabsClient systems={systems} sectorLabelsBySlug={sectorLabelsBySlug} />

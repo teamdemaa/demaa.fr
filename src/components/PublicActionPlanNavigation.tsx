@@ -1,12 +1,12 @@
-import { Building2, LibraryBig, Workflow } from "lucide-react";
+import { BookOpen, BriefcaseBusiness, Wrench } from "lucide-react";
 import Link from "next/link";
 
-export type PublicActionPlanView = "marketplace" | "resources" | "services";
+export type PublicActionPlanView = "academy" | "solutions" | "specialists";
 
 const navigationItems = [
-  { view: "marketplace", label: "Reprendre", href: "/a-reprendre", Icon: Building2 },
-  { view: "services", label: "Vendre", href: "/transmettre", Icon: Workflow },
-  { view: "resources", label: "Ressources", href: "/tutoriels", Icon: LibraryBig },
+  { view: "academy", label: "Academy", href: "/academie", Icon: BookOpen },
+  { view: "solutions", label: "Solutions", href: "/solutions", Icon: Wrench },
+  { view: "specialists", label: "Spécialistes", href: "/specialistes", Icon: BriefcaseBusiness },
 ] as const;
 
 const tabClassName =

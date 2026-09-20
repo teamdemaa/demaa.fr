@@ -9,7 +9,7 @@ export default function TutorialsHub() {
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="resources" />
+      <Navbar minimal publicNavigationActiveView="academy" />
       <main className="min-h-screen bg-background">
         <ResourcesNavigation activeView="tutorials" />
         <header className="mx-auto w-full max-w-7xl px-4 pb-10 pt-12 text-center sm:px-6 md:pb-12 md:pt-16 lg:px-8">

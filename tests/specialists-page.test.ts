@@ -59,7 +59,7 @@ describe("Specialists public index", () => {
 
     expect(pageSource).toContain('path: "/specialistes"');
     expect(pageSource).toContain("if (!PUBLIC_SPECIALISTS_ENABLED) notFound()");
-    expect(pageSource).toContain('publicNavigationActiveView="services"');
+    expect(pageSource).toContain('publicNavigationActiveView="specialists"');
     expect(pageSource).toContain("Faites avancer votre entreprise");
     expect(pageSource).toContain("avec le bon spécialiste");
     expect(pageSource).not.toContain("Choisissez le sujet que vous souhaitez mettre en place ou déléguer.");

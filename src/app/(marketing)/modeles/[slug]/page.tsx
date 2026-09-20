@@ -41,7 +41,7 @@ export default async function ModelPage({ params, searchParams }: ModelPageProps
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="resources" />
+      <Navbar minimal publicNavigationActiveView="academy" />
       <main className="min-h-screen bg-background">
         <ResourcesNavigation activeView="models" />
         <div className="px-4 pb-20 pt-8 sm:px-6 lg:px-8">
