@@ -148,7 +148,7 @@ describe("Academy SEO, redirects and assets", () => {
     );
   });
 
-  it("archives every former Academy namespace behind Tutoriels", async () => {
+  it("keeps the canonical Academy route and redirects only legacy entry points", async () => {
     const redirects = await nextConfig.redirects?.();
     expect(redirects).toBeDefined();
 
@@ -156,23 +156,22 @@ describe("Academy SEO, redirects and assets", () => {
       expect(redirects).toContainEqual(redirect);
     }
 
-    expect(ACADEMY_PERMANENT_REDIRECTS).toHaveLength(10);
-    for (const source of [
-      "/cours",
-      "/cours/:path*",
-      "/academy",
-      "/academy/:path*",
-      "/academie",
-      "/academie/:path*",
-      "/organiser",
-      "/organiser/:path*",
-    ]) {
+    expect(ACADEMY_PERMANENT_REDIRECTS).toHaveLength(7);
+    for (const source of ["/cours", "/cours/:path*"]) {
       expect(redirects).toContainEqual({
         source,
         destination: ARCHIVED_ACADEMY_DESTINATION,
         permanent: true,
       });
     }
+    for (const source of ["/academy", "/academy/:path*", "/organiser"]) {
+      expect(redirects).toContainEqual({
+        source,
+        destination: "/academie",
+        permanent: true,
+      });
+    }
+    expect(redirects).not.toContainEqual(expect.objectContaining({ source: "/academie" }));
     expect(redirects).toContainEqual(
       expect.objectContaining({
         source: "/cours/facture-electronique",

@@ -58,7 +58,7 @@ describe("Organiser navigation", () => {
 
     expect(organiserPage).toContain("<OrganiserHub");
     expect(source("src/lib/academy-course-routes.ts")).toContain(
-      'source: "/organiser/:path*"',
+      'source: "/organiser"',
     );
     expect(guestPlan).toContain('router.push("/outils")');
     expect(organiserPage).not.toContain("<OrganiserWorkspace");

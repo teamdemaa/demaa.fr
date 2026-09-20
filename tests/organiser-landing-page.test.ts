@@ -146,7 +146,7 @@ describe("Méthodes, Modèles and Outils public journey", () => {
     expect(visibility).toContain('section === "software"');
   });
 
-  it("archives the former Organisation catalogue while preserving its source", () => {
+  it("keeps the former Organisation catalogue accessible through Academy", () => {
     const sitemap = read("src/app/sitemap.ts");
     expect(getArchivedOrganisationContent()).toHaveLength(20);
     expect(existsSync("src/components/OrganiserHub.tsx")).toBe(true);
@@ -155,13 +155,11 @@ describe("Méthodes, Modèles and Outils public journey", () => {
     expect(sitemap).not.toContain("getPublicOrganiserContent");
     expect(ACADEMY_PERMANENT_REDIRECTS).toContainEqual({
       source: "/organiser",
-      destination: ARCHIVED_ACADEMY_DESTINATION,
+      destination: "/academie",
       permanent: true,
     });
-    expect(ACADEMY_PERMANENT_REDIRECTS).toContainEqual({
-      source: "/organiser/:path*",
-      destination: ARCHIVED_ACADEMY_DESTINATION,
-      permanent: true,
-    });
+    expect(ACADEMY_PERMANENT_REDIRECTS).not.toContainEqual(
+      expect.objectContaining({ source: "/organiser/:path*" }),
+    );
   });
 });

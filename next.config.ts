@@ -113,11 +113,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/solutions',
-        destination: '/outils',
-        permanent: true,
-      },
-      {
         source: '/annuaire-logiciels',
         destination: '/annuaire-outils',
         permanent: true,
