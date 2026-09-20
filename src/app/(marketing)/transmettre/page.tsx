@@ -1,15 +1,24 @@
+import type { Metadata } from "next";
 import BusinessSaleLandingPage from "@/components/BusinessSaleLandingPage";
-import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-const title = "Vendre son entreprise | Demaa";
+const title = "Vendre son entreprise | sini";
 const description =
-  "Demaa présente gratuitement votre entreprise à des repreneurs dont le projet peut correspondre, puis organise les premières mises en relation.";
+  "Présentez gratuitement votre entreprise à des repreneurs dont le projet peut correspondre et organisez les premières mises en relation avec sini.";
 
-export const metadata = buildPublicPageMetadata({
+export const metadata: Metadata = {
   title,
   description,
-  path: "/transmettre",
-});
+  robots: { index: false, follow: false },
+  openGraph: {
+    title,
+    description,
+    url: "/transmettre",
+    siteName: "sini",
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: { card: "summary", title, description },
+};
 
 export default function TransmettrePage() {
   return <BusinessSaleLandingPage />;

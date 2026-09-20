@@ -198,7 +198,7 @@ function RepriseProjectDialog({ onClose }: { onClose: () => void }) {
               >
                 {state === "submitting"
                   ? "Envoi…"
-                  : "Confier ma recherche à Demaa"}
+                  : "Confier ma recherche à sini"}
               </button>
             </div>
             <p className="text-xs leading-5 text-dema-muted sm:col-span-2">

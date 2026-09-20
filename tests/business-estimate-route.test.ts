@@ -85,7 +85,7 @@ describe("business sale request route", () => {
     mocks.enforceRateLimit.mockResolvedValue(null);
     mocks.resolveLeadAttribution.mockReturnValue({ conversion: {} });
     mocks.resolveLeadContext.mockResolvedValue({
-      source: "Demaa - Projet de vente",
+      source: "sini - Projet de vente",
       sourceUrl: "https://demaa.fr/transmettre",
     });
     mocks.submitLeadRequest.mockResolvedValue({
@@ -99,7 +99,7 @@ describe("business sale request route", () => {
 
     expect(response.status).toBe(202);
     expect(mocks.resolveLeadContext).toHaveBeenCalledWith({
-      source: "Demaa - Projet de vente",
+      source: "sini - Projet de vente",
       sourceUrl: "https://demaa.fr/transmettre",
     });
     expect(mocks.submitLeadRequest).toHaveBeenCalledWith(

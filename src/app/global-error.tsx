@@ -20,7 +20,7 @@ export default function GlobalError({
         <main className="mx-auto flex min-h-screen w-full max-w-3xl items-center px-4 py-16 md:px-8">
           <section className="demaa-surface w-full rounded-[1.15rem] p-6 text-center md:p-8">
             <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">
-              Demaa
+              sini
             </p>
             <h1 className="mt-4 text-[2.4rem] font-light leading-[1.02] tracking-tight text-brand-blue/44 md:text-[3rem]">
               <span className="demaa-hero-title text-brand-blue/86">Une erreur</span>

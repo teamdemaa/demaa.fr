@@ -102,11 +102,11 @@ describe("marketplace À reprendre", () => {
     expect(marketplace).toContain("Des PME sélectionnées, avec des clients, un savoir-faire et une activité déjà lancée pour accélérer votre croissance externe ou entreprendre par la reprise.");
     expect(marketplace.match(/<RepriseProjectControl \/>/g)).toHaveLength(2);
     expect(projectControl).toContain("Confier ma recherche");
-    expect(projectControl).toContain("Confier ma recherche à Demaa");
+    expect(projectControl).toContain("Confier ma recherche à sini");
     expect(projectControl).toContain('fetch("/api/reprise-project"');
     expect(projectControl.indexOf("Activité recherchée")).toBeLessThan(projectControl.indexOf("Prénom et nom"));
     expect(marketplace).not.toContain("La marketplace des PME de services à reprendre.");
-    expect(opportunityDetail).toContain("Demaa vous recontacte avant de transmettre votre demande");
+    expect(opportunityDetail).toContain("Nous vous recontactons avant de transmettre votre demande");
     expect(opportunityDetail).toContain("Demander une mise en relation");
     expect(opportunityDetail.indexOf("Votre projet en quelques mots")).toBeLessThan(opportunityDetail.indexOf("Prénom et nom"));
     expect(opportunityDetail.indexOf('name="phone"')).toBeLessThan(opportunityDetail.indexOf('name="company"'));
@@ -207,7 +207,7 @@ describe("marketplace À reprendre", () => {
     expect(sellerRoute).toContain('requestType: "business_sale_request"');
     expect(sellerRoute).toContain('channels: { email: true, resend: false, slack: false }');
     expect(sellerRoute).toContain("Merci de présenter brièvement votre entreprise");
-    expect(sellerRoute).toContain('source: "Demaa - Projet de vente"');
+    expect(sellerRoute).toContain('source: "sini - Projet de vente"');
     expect(sellerRoute).toContain('{ label: "Projet de vente", value: message }');
     expect(sellerRoute).not.toContain("Projet de transmission");
     expect(page).toContain('path: "/a-reprendre"');

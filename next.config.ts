@@ -88,6 +88,11 @@ const nextConfig: NextConfig = {
     return [
       ...ACADEMY_PERMANENT_REDIRECTS,
       {
+        source: '/apercu-sini',
+        destination: '/',
+        permanent: false,
+      },
+      {
         source: '/mon-espace',
         destination: '/plans/latest',
         permanent: true,

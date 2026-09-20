@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import { getCanonicalOrigin } from "@/lib/site-url";
+import SiniFooter from "@/components/SiniFooter";
 import "./globals.css";
 
 const satoshi = localFont({
@@ -53,9 +53,9 @@ const gambetta = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Page introuvable | Demaa",
+  title: "Page introuvable | sini",
   description: "La page demandée n’existe pas ou a été déplacée.",
-  metadataBase: new URL(getCanonicalOrigin()),
+  robots: { index: false, follow: false },
 };
 
 export default function GlobalNotFound() {
@@ -65,7 +65,7 @@ export default function GlobalNotFound() {
       className={`${satoshi.variable} ${gambetta.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-background font-sans text-foreground">
-        <Navbar minimal />
+        <Navbar minimal publicNavigationActiveView="none" publicNavigationVariant="sini" />
         <main className="flex min-h-screen items-center bg-dema-cream px-4 py-16 text-brand-blue md:px-8">
           <section className="mx-auto w-full max-w-3xl rounded-[1.15rem] border border-dema-line/70 bg-dema-paper p-6 text-center shadow-[0_6px_18px_rgba(23,35,29,0.024)] md:p-8">
             <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-dema-forest">
@@ -84,6 +84,7 @@ export default function GlobalNotFound() {
             </Link>
           </section>
         </main>
+        <SiniFooter />
       </body>
     </html>
   );

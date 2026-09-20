@@ -16,6 +16,7 @@ describe("global not found route", () => {
     expect(page).toContain("<html");
     expect(page).toContain("<body");
     expect(page).toContain("Page introuvable");
-    expect(page).toContain("metadataBase: new URL(getCanonicalOrigin())");
+    expect(page).toContain('title: "Page introuvable | sini"');
+    expect(page).toContain("<SiniFooter />");
   });
 });

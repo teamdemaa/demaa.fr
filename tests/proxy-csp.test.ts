@@ -7,24 +7,24 @@ import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
 const originalVercelEnv = process.env.VERCEL_ENV;
 const originalEnglishBetaEnabled = process.env.DEMAA_ENGLISH_BETA_ENABLED;
 const originalDemaaPreviewHosts = process.env.DEMAA_PREVIEW_HOSTS;
+const originalSiniFormsEnabled = process.env.SINI_FORMS_ENABLED;
 
 afterEach(() => {
   process.env.VERCEL_ENV = originalVercelEnv;
   process.env.DEMAA_ENGLISH_BETA_ENABLED = originalEnglishBetaEnabled;
   process.env.DEMAA_PREVIEW_HOSTS = originalDemaaPreviewHosts;
+  process.env.SINI_FORMS_ENABLED = originalSiniFormsEnabled;
 });
 
 describe("proxy content security policy", () => {
-  it("opens À reprendre from the canonical root and preserves campaign parameters", () => {
+  it("keeps Reprendre directly on the canonical root and preserves campaign parameters", () => {
     const response = proxy(new NextRequest(
       "https://demaa.fr/?utm_campaign=lancement&utm_source=newsletter",
       { headers: { host: "demaa.fr" } },
     ));
 
-    expect(response.status).toBe(308);
-    expect(response.headers.get("location")).toBe(
-      "https://demaa.fr/a-reprendre?utm_campaign=lancement&utm_source=newsletter",
-    );
+    expect(response.status).toBe(200);
+    expect(response.headers.get("location")).toBeNull();
   });
 
   it("keeps the parked Specialists universe private and out of search results", () => {
@@ -46,20 +46,21 @@ describe("proxy content security policy", () => {
     expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
   });
 
-  it("forwards the centrally resolved locale only when the beta flag is enabled", () => {
+  it("keeps the inherited English pages archived even if the old beta flag is enabled", () => {
     process.env.DEMAA_ENGLISH_BETA_ENABLED = "true";
     const english = proxy(new NextRequest("https://demaa.fr/en", {
       headers: { host: "demaa.fr" },
     }));
-    expect(english.status).toBe(200);
+    expect(english.status).toBe(404);
     expect(english.headers.get("content-language")).toBe("en");
-    expect(english.headers.get("x-middleware-request-x-demaa-locale")).toBe("en");
+    expect(english.headers.get("x-robots-tag")).toBe("noindex, nofollow");
 
     const french = proxy(new NextRequest("https://demaa.fr/solutions", {
       headers: { host: "demaa.fr", "x-demaa-locale": "en" },
     }));
     expect(french.headers.get("content-language")).toBe("fr");
-    expect(french.headers.get("x-middleware-request-x-demaa-locale")).toBe("fr");
+    expect(french.status).toBe(404);
+    expect(french.headers.get("x-robots-tag")).toBe("noindex, nofollow");
   });
 
   it("allows the active embeds and Firebase Google Auth while preserving the policy", () => {
@@ -88,7 +89,7 @@ describe("proxy content security policy", () => {
     expect(policy).toContain("object-src 'none'");
   });
 
-  it("allows only the same-origin Firebase helper iframe on its dedicated path", () => {
+  it("archives the inherited Firebase helper iframe", () => {
     const helperPolicy = buildContentSecurityPolicy({ allowSameOriginFraming: true });
     expect(helperPolicy).toContain("frame-ancestors 'self'");
     expect(helperPolicy).not.toContain("frame-ancestors 'none'");
@@ -98,13 +99,12 @@ describe("proxy content security policy", () => {
         headers: { host: "demaa.fr" },
       }),
     );
-    expect(response.headers.get("content-security-policy")).toContain(
-      "frame-ancestors 'self'",
-    );
+    expect(response.status).toBe(404);
+    expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
   });
 
   it.each(["demaa.co", "www.demaa.co", "www.demaa.fr"])(
-    "redirects %s to the canonical domain while preserving path and query",
+    "does not claim the separate DEMAA host %s for SINI",
     (host) => {
       const response = proxy(
         new NextRequest(`https://${host}/systemes/restaurant?tab=solutions`, {
@@ -112,14 +112,12 @@ describe("proxy content security policy", () => {
         }),
       );
 
-      expect(response.status).toBe(308);
-      expect(response.headers.get("location")).toBe(
-        "https://demaa.fr/systemes/restaurant?tab=solutions",
-      );
+      expect(response.status).toBe(404);
+      expect(response.headers.get("location")).toBeNull();
     },
   );
 
-  it("redirects a legacy API request without dropping its query", () => {
+  it("archives DEMAA-only APIs instead of exposing them on sini", () => {
     const response = proxy(
       new NextRequest("https://demaa.co/api/systeme-kit/request?source=legacy", {
         headers: { host: "demaa.co" },
@@ -127,13 +125,11 @@ describe("proxy content security policy", () => {
       }),
     );
 
-    expect(response.status).toBe(308);
-    expect(response.headers.get("location")).toBe(
-      "https://demaa.fr/api/systeme-kit/request?source=legacy",
-    );
+    expect(response.status).toBe(404);
+    expect(response.headers.get("location")).toBeNull();
   });
 
-  it("lets Vercel production cron requests reach their secret-protected handlers", () => {
+  it("blocks inherited demaa cron handlers in the sini deployment", () => {
     process.env.VERCEL_ENV = "production";
     const response = proxy(
       new NextRequest(
@@ -147,12 +143,12 @@ describe("proxy content security policy", () => {
       ),
     );
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(404);
     expect(response.headers.get("location")).toBeNull();
-    expect(response.headers.get("x-middleware-next")).toBe("1");
+    expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
   });
 
-  it("keeps an explicitly allowed stable Preview alias on its own origin", () => {
+  it("does not expose archived admin pages on an allowed Preview alias", () => {
     process.env.VERCEL_ENV = "preview";
     process.env.DEMAA_PREVIEW_HOSTS = "demaa-d094-preview.vercel.app";
     const response = proxy(
@@ -161,12 +157,12 @@ describe("proxy content security policy", () => {
       }),
     );
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(404);
     expect(response.headers.get("location")).toBeNull();
-    expect(response.headers.get("x-middleware-next")).toBe("1");
+    expect(response.headers.get("x-middleware-next")).toBeNull();
   });
 
-  it("still redirects an unlisted Vercel Preview host", () => {
+  it("does not choose a canonical domain for an unlisted Preview host before SINI has one", () => {
     process.env.VERCEL_ENV = "preview";
     process.env.DEMAA_PREVIEW_HOSTS = "demaa-d094-preview.vercel.app";
     const response = proxy(
@@ -175,23 +171,19 @@ describe("proxy content security policy", () => {
       }),
     );
 
-    expect(response.status).toBe(308);
-    expect(response.headers.get("location")).toBe(
-      "https://demaa.fr/admin/demandes",
-    );
+    expect(response.status).toBe(404);
+    expect(response.headers.get("location")).toBeNull();
   });
 
-  it("redirects a retired legacy path before applying the canonical 404 policy", () => {
+  it("applies the retired-path 404 without redirecting to DEMAA", () => {
     const response = proxy(
       new NextRequest("https://demaa.co/structuration?source=legacy", {
         headers: { host: "demaa.co" },
       }),
     );
 
-    expect(response.status).toBe(308);
-    expect(response.headers.get("location")).toBe(
-      "https://demaa.fr/structuration?source=legacy",
-    );
+    expect(response.status).toBe(404);
+    expect(response.headers.get("location")).toBeNull();
   });
 
   it.each([
@@ -209,7 +201,7 @@ describe("proxy content security policy", () => {
     expect(response.headers.get("x-middleware-rewrite")).toBeNull();
   });
 
-  it("serves only published copyable model detail paths", () => {
+  it("archives the copyable model detail pages without deleting their source", () => {
     const publishedSlugs = [
       "suivi-commercial-et-devis",
       "projets-et-missions-clients",
@@ -232,9 +224,79 @@ describe("proxy content security policy", () => {
     );
 
     expect(published.map((response) => response.status)).toEqual(
-      publishedSlugs.map(() => 200),
+      publishedSlugs.map(() => 404),
     );
     expect(unknown.status).toBe(404);
     expect(unknown.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+  });
+
+  it("exposes only the sini journeys and hides inherited public hubs", () => {
+    for (const pathname of ["/", "/transmettre", "/conseil", "/conseil/entreprise-fonctionner-sans-dirigeant", "/a-reprendre/exemple", "/accompagnement", "/mentions-legales", "/icon", "/opengraph-image"]) {
+      const response = proxy(new NextRequest(`https://preview.vercel.app${pathname}`));
+      expect(response.status).toBe(200);
+    }
+    for (const pathname of ["/academie", "/solutions/restaurant", "/tutoriels", "/studio", "/sitemap.xml"]) {
+      const response = proxy(new NextRequest(`https://preview.vercel.app${pathname}`));
+      expect(response.status).toBe(404);
+      expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+    }
+  });
+
+  it("keeps the six sini form APIs unavailable until dedicated services are configured", async () => {
+    delete process.env.SINI_FORMS_ENABLED;
+    for (const pathname of [
+      "/api/accompaniment-request",
+      "/api/business-estimate",
+      "/api/reprise-alerts",
+      "/api/reprise-alerts/example",
+      "/api/reprise-interest",
+      "/api/reprise-project",
+    ]) {
+      const response = proxy(new NextRequest(`https://sini-three.vercel.app${pathname}`, {
+        method: "POST",
+      }));
+      expect(response.status).toBe(503);
+      expect(response.headers.get("cache-control")).toContain("no-store");
+      expect((await response.json()).error).toContain("pas encore ouvertes");
+    }
+  });
+
+  it("requires a distinct canonical domain, sender and database before enabling submissions", () => {
+    const keys = [
+      "SINI_FORMS_ENABLED", "SINI_SITE_URL", "SITE_URL", "SINI_CANONICAL_HOST",
+      "LEAD_NOTIFICATION_EMAIL", "RESEND_API_KEY", "RESEND_FROM_EMAIL",
+      "FIREBASE_PROJECT_ID", "FIREBASE_CLIENT_EMAIL", "FIREBASE_PRIVATE_KEY",
+    ] as const;
+    const original = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
+    try {
+      process.env.SINI_FORMS_ENABLED = "true";
+      process.env.SINI_SITE_URL = "https://sini.example";
+      process.env.SITE_URL = "https://sini.example";
+      process.env.SINI_CANONICAL_HOST = "sini.example";
+      process.env.LEAD_NOTIFICATION_EMAIL = "contact@sini.example";
+      process.env.RESEND_API_KEY = "test-key";
+      process.env.RESEND_FROM_EMAIL = "contact@sini.example";
+      process.env.FIREBASE_CLIENT_EMAIL = "service@sini.example";
+      process.env.FIREBASE_PRIVATE_KEY = "test-key";
+      process.env.FIREBASE_PROJECT_ID = "demaa-dde32";
+      const request = new NextRequest("https://preview.vercel.app/api/reprise-interest", { method: "POST" });
+      expect(proxy(request).status).toBe(503);
+      process.env.FIREBASE_PROJECT_ID = "sini-test-project";
+      expect(proxy(request).status).toBe(200);
+    } finally {
+      for (const key of keys) {
+        const value = original[key];
+        if (value === undefined) delete process.env[key];
+        else process.env[key] = value;
+      }
+    }
+  });
+
+  it("never exposes inherited admin, auth and unrelated API routes", () => {
+    for (const pathname of ["/admin", "/auth", "/api/systeme-kit/request", "/api/admin/session"]) {
+      const response = proxy(new NextRequest(`https://preview.vercel.app${pathname}`));
+      expect(response.status).toBe(404);
+      expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+    }
   });
 });

@@ -51,15 +51,15 @@ describe("action plan persistence boundaries", () => {
     expect(sharedPages).not.toContain("getOwnedActionPlansForIdentity");
   });
 
-  it("registers action plan retention cleanup and documents the exact lifecycle", () => {
+  it("keeps archived plan retention logic without describing it as a sini feature", () => {
     const maintenance = source("src/lib/operational-maintenance.ts");
     const privacy = source("src/app/(marketing)/politique-de-confidentialite/page.tsx");
 
     expect(maintenance).toContain(
       '{ collection: "action_plans", field: "retention_expires_at"',
     );
-    expect(privacy).toContain("30 jours maximum");
-    expect(privacy).toContain("jusqu&apos;à 3 ans");
+    expect(privacy).not.toContain("Plans publics générés");
+    expect(privacy).not.toContain("Plans sauvegardés");
     expect(privacy).toContain("Firebase");
   });
 });

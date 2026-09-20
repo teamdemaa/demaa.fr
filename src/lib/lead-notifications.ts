@@ -131,9 +131,9 @@ function buildSlackBlocks(input: LeadSubmission, leadId: string, retry = false) 
 async function sendInternalLeadEmail(input: LeadSubmission, leadId: string) {
   const apiKey = process.env.RESEND_API_KEY?.trim();
   const from = process.env.RESEND_FROM_EMAIL?.trim();
-  const to = process.env.LEAD_NOTIFICATION_EMAIL?.trim() || "team@demaa.fr";
+  const to = process.env.LEAD_NOTIFICATION_EMAIL?.trim();
 
-  if (!apiKey || !from) {
+  if (!apiKey || !from || !to) {
     throw new Error("Resend internal email configuration is missing.");
   }
 

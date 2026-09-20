@@ -3,12 +3,13 @@ import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
 import { isVercelPreviewHost } from "@/lib/site-url";
 import { getExplicitInterfaceLocaleFromPathname } from "@/lib/international-context";
 import { getPublishedCopyableModelBySlug } from "@/lib/copyable-model-catalog";
-import { buildDefaultHomeMarketplaceHref } from "@/lib/action-plan-home-routing";
 import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
 
-const CANONICAL_HOST = "demaa.fr";
-const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
-const LEGACY_HOSTS = new Set(["demaa.co", "www.demaa.co", "www.demaa.fr"]);
+const configuredSiniHost = process.env.SINI_CANONICAL_HOST?.trim().toLowerCase();
+const CANONICAL_HOST = configuredSiniHost && /^[a-z0-9.-]+$/.test(configuredSiniHost)
+  ? configuredSiniHost
+  : null;
+const LEGACY_HOSTS = new Set(CANONICAL_HOST ? [`www.${CANONICAL_HOST}`] : []);
 const RETIRED_EXACT_PATHS = new Set([
   "/annuaire-services",
   "/cockpit-preview",
@@ -28,6 +29,71 @@ const RETIRED_PATH_PREFIXES = [
   "/annuaire-services/",
   "/ressources/",
 ];
+// The old DEMAA pages remain in source control and in the DEMAA worktree, but
+// must not become public pages of the separate sini preview deployment.
+const SINI_PAGE_PREFIXES = [
+  "/a-reprendre",
+  "/transmettre",
+  "/conseil",
+  "/accompagnement",
+  "/alertes-reprise",
+  "/mentions-legales",
+  "/politique-de-confidentialite",
+];
+const SINI_API_PATHS = new Set([
+  "/api/accompaniment-request",
+  "/api/business-estimate",
+  "/api/reprise-alerts",
+  "/api/reprise-interest",
+  "/api/reprise-project",
+]);
+const SINI_INTERNAL_PREFIXES = ["/_next"];
+const SINI_BRAND_ASSETS = new Set([
+  "/opengraph-image",
+  "/twitter-image",
+  "/icon",
+  "/apple-icon",
+  "/manifest.webmanifest",
+  "/robots.txt",
+]);
+const SINI_LEGACY_ROOT_PARAMS = [
+  "academy", "intent", "new", "opportunity", "opportunityId", "planTab",
+  "resource", "resourceSlug", "section", "system", "systemSlug", "systemTab",
+  "toolSource", "view",
+];
+
+function isSiniRoute(pathname: string) {
+  if (pathname === "/") return true;
+  if (pathname === "/sitemap.xml") return false;
+  if (pathname === "/api/cron" || pathname.startsWith("/api/cron/")) return false;
+  if (SINI_BRAND_ASSETS.has(pathname)) return true;
+  if (SINI_PAGE_PREFIXES.some((path) => pathname === path || pathname.startsWith(`${path}/`))) return true;
+  if (SINI_API_PATHS.has(pathname) || pathname.startsWith("/api/reprise-alerts/")) return true;
+  if (SINI_INTERNAL_PREFIXES.some((path) => pathname === path || pathname.startsWith(`${path}/`))) return true;
+  // Static assets remain available to archived source modules and active pages.
+  return /\.[a-z0-9]{2,12}$/i.test(pathname);
+}
+
+function siniFormsConfigured() {
+  if (process.env.SINI_FORMS_ENABLED !== "true") return false;
+  const siteUrl = process.env.SINI_SITE_URL?.trim();
+  const sharedSiteUrl = process.env.SITE_URL?.trim();
+  const expectedHost = process.env.SINI_CANONICAL_HOST?.trim().toLowerCase();
+  if (!siteUrl || siteUrl !== sharedSiteUrl || !expectedHost || expectedHost.endsWith(".vercel.app")) return false;
+  try {
+    const url = new URL(siteUrl);
+    if (url.protocol !== "https:" || url.host.toLowerCase() !== expectedHost) return false;
+  } catch {
+    return false;
+  }
+  if (!process.env.LEAD_NOTIFICATION_EMAIL?.trim()
+    || !process.env.RESEND_API_KEY?.trim()
+    || !process.env.RESEND_FROM_EMAIL?.trim()) return false;
+  const firebaseProjectId = process.env.FIREBASE_PROJECT_ID?.trim();
+  return Boolean(firebaseProjectId && firebaseProjectId !== "demaa-dde32"
+    && (process.env.FIREBASE_SERVICE_ACCOUNT_KEY?.trim()
+      || (process.env.FIREBASE_CLIENT_EMAIL?.trim() && process.env.FIREBASE_PRIVATE_KEY?.trim())));
+}
 const CONTENT_SECURITY_POLICY = buildContentSecurityPolicy({
   allowUnsafeEval: process.env.NODE_ENV === "development",
 });
@@ -63,14 +129,14 @@ export function proxy(request: NextRequest) {
         && !isVercelProductionCronRequest
       );
 
-    if (shouldRedirect) {
+    if (shouldRedirect && CANONICAL_HOST) {
       const url = request.nextUrl.clone();
       url.protocol = "https:";
       url.host = CANONICAL_HOST;
 
       return withContentSecurityPolicy(
         NextResponse.redirect(
-          `${CANONICAL_ORIGIN}${url.pathname}${url.search}`,
+          `https://${CANONICAL_HOST}${url.pathname}${url.search}`,
           308,
         ),
         localeCode,
@@ -78,11 +144,47 @@ export function proxy(request: NextRequest) {
     }
   }
 
-  if (pathname === "/") {
-    const marketplaceHref = buildDefaultHomeMarketplaceHref(request.nextUrl.searchParams);
-    if (marketplaceHref) {
+  if (pathname === "/a-reprendre" || pathname === "/apercu-sini") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+    return withContentSecurityPolicy(NextResponse.redirect(url, 308), localeCode);
+  }
+
+  if (pathname === "/apercu-sini/conseil" || pathname.startsWith("/apercu-sini/conseil/")) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname.replace(/^\/apercu-sini\/conseil/, "/conseil");
+    return withContentSecurityPolicy(NextResponse.redirect(url, 308), localeCode);
+  }
+
+  if (pathname === "/" && SINI_LEGACY_ROOT_PARAMS.some((key) => request.nextUrl.searchParams.has(key))) {
+    const url = request.nextUrl.clone();
+    for (const key of SINI_LEGACY_ROOT_PARAMS) url.searchParams.delete(key);
+    return withContentSecurityPolicy(NextResponse.redirect(url, 307), localeCode);
+  }
+
+  if (!isSiniRoute(pathname)) {
+    return withContentSecurityPolicy(
+      new NextResponse(null, {
+        status: 404,
+        headers: { "X-Robots-Tag": "noindex, nofollow" },
+      }),
+      localeCode,
+    );
+  }
+
+  if (SINI_API_PATHS.has(pathname) || pathname.startsWith("/api/reprise-alerts/")) {
+    if (!siniFormsConfigured()) {
       return withContentSecurityPolicy(
-        NextResponse.redirect(new URL(marketplaceHref, request.url), 308),
+        NextResponse.json(
+          { error: "Les demandes ne sont pas encore ouvertes sur sini." },
+          {
+            status: 503,
+            headers: {
+              "Cache-Control": "private, no-store, max-age=0",
+              "X-Robots-Tag": "noindex, nofollow",
+            },
+          },
+        ),
         localeCode,
       );
     }

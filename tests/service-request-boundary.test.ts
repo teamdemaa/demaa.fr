@@ -64,7 +64,7 @@ describe("service request backend boundaries", () => {
     expect(maintenance).toContain('{ collection: "service_request_rate_limits", field: "expires_at"');
   });
 
-  it("schedules immediate delivery after accepted requests and keeps a cron fallback", () => {
+  it("keeps the inherited delivery code but does not schedule its cron in sini", () => {
     const routes = [source("src/app/api/solution-referral/route.ts")];
     for (const route of routes) {
       expect(route).toContain("scheduleServiceSolutionDeliveries();");
@@ -77,9 +77,7 @@ describe("service request backend boundaries", () => {
     const vercelConfig = JSON.parse(source("vercel.json")) as {
       crons?: Array<{ path: string; schedule: string }>;
     };
-    expect(vercelConfig.crons).toContainEqual({
-      path: "/api/cron/service-request-deliveries",
-      schedule: "0 10 * * *",
-    });
+    expect(vercelConfig.crons).toBeUndefined();
+    expect(source("src/proxy.ts")).toContain('pathname.startsWith("/api/cron/")');
   });
 });

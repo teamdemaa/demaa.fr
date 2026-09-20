@@ -1,6 +1,6 @@
 import { buildSocialImage, brandImageContentType, socialImageSize } from "@/app/brand-image-utils";
 
-export const alt = "Gagnez du temps grâce à des systèmes adaptés à votre entreprise";
+export const alt = "sini — reprendre, vendre et préparer la suite d’une entreprise";
 export const size = socialImageSize;
 export const contentType = brandImageContentType;
 

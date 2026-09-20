@@ -2,33 +2,15 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Demaa",
-    short_name: "Demaa",
-    description: "Reprendre ou vendre une PME de services avec Demaa.",
+    name: "sini",
+    short_name: "sini",
+    description: "Reprendre, vendre et préparer la suite d’une entreprise.",
     start_url: "/",
     scope: "/",
     display: "standalone",
-    background_color: "#315f46",
-    theme_color: "#315f46",
+    background_color: "#fbfcfe",
+    theme_color: "#244a68",
     lang: "fr",
     orientation: "portrait-primary",
-    icons: [
-      {
-        src: "/pwa/demaa-192.png",
-        sizes: "192x192",
-        type: "image/png",
-      },
-      {
-        src: "/pwa/demaa-512.png",
-        sizes: "512x512",
-        type: "image/png",
-      },
-      {
-        src: "/pwa/demaa-maskable-512.png",
-        sizes: "512x512",
-        type: "image/png",
-        purpose: "maskable",
-      },
-    ],
   };
 }

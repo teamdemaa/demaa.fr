@@ -56,7 +56,7 @@ export async function POST(request: Request) {
     } catch {
       return NextResponse.json({ error: "L’estimation jointe est incomplète. Merci de la recalculer." }, { status: 400 });
     }
-    const context = await resolveLeadContext({ source: "Demaa - Projet de vente", sourceUrl: request.headers.get("referer") });
+    const context = await resolveLeadContext({ source: "sini - Projet de vente", sourceUrl: request.headers.get("referer") });
     if (!context) return NextResponse.json({ error: "La page d’origine est introuvable." }, { status: 400 });
 
     await submitLeadRequest({

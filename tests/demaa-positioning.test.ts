@@ -8,7 +8,7 @@ const readSource = (path: string) => readFile(
 );
 
 describe("Demaa positioning", () => {
-  it("uses the marketplace promise across home metadata", async () => {
+  it("keeps inherited demaa copy separate from the sini layout and homepage", async () => {
     const [layout, homePage] = await Promise.all([
       readSource("src/app/layout.tsx"),
       readSource("src/app/(application)/page.tsx"),
@@ -20,10 +20,10 @@ describe("Demaa positioning", () => {
     expect(DEMAA_HOME_DESCRIPTION).toBe(
       "Découvrez des PME de services à reprendre ou présentez gratuitement votre entreprise à des repreneurs.",
     );
-    expect(layout).toContain("title: DEMAA_HOME_TITLE");
-    expect(layout).toContain("description: DEMAA_HOME_DESCRIPTION");
-    expect(homePage).toContain("title: DEMAA_HOME_TITLE");
-    expect(homePage).toContain("description: DEMAA_HOME_DESCRIPTION");
+    expect(layout).toContain('const siteTitle = "sini — reprendre ou vendre une entreprise"');
+    expect(layout).not.toContain("title: DEMAA_HOME_TITLE");
+    expect(homePage).toContain('title: "Entreprises à reprendre | sini"');
+    expect(homePage).toContain('robots: { index: false, follow: false }');
     expect(homePage).not.toContain("Un plan d’action concret pour votre entreprise");
   });
 });

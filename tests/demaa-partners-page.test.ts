@@ -18,11 +18,12 @@ describe("seller and accompaniment pages", () => {
         readSource("src/app/sitemap.ts"),
       ]);
 
-    expect(page).toContain('path: "/transmettre"');
-    expect(page).toContain("buildPublicPageMetadata");
+    expect(page).toContain('url: "/transmettre"');
+    expect(page).toContain('const title = "Vendre son entreprise | sini"');
+    expect(page).toContain('robots: { index: false, follow: false }');
     expect(page).toContain("BusinessSaleLandingPage");
     expect(partners).toContain('permanentRedirect("/accompagnement")');
-    expect(accompaniment).toContain('path: "/accompagnement"');
+    expect(accompaniment).toContain('const title = "Préparer son entreprise à la vente | sini"');
     expect(accompaniment).toContain("TransmissionLandingPage");
     expect(studio).toContain('permanentRedirect("/accompagnement")');
     expect(footer).toContain('{ label: "Vendre", href: "/transmettre" }');

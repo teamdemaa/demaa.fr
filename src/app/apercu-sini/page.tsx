@@ -6,11 +6,11 @@ import { SiniPreviewHtmlLang } from "./preview-html-lang";
 
 type Locale = "fr" | "en";
 
-const journeyPaths = ["/a-reprendre", "/transmettre", "/accompagnement"] as const;
+const journeyPaths = ["/a-reprendre", "/transmettre", "/apercu-sini/conseil"] as const;
 const guidePaths = [
-  "/tutoriels/premiere-estimation-realiste-entreprise",
-  "/tutoriels/presenter-entreprise-repreneur-une-page",
-  "/tutoriels/entreprise-fonctionner-sans-dirigeant",
+  "/apercu-sini/conseil/premiere-estimation-realiste-entreprise",
+  "/apercu-sini/conseil/presenter-entreprise-repreneur-une-page",
+  "/apercu-sini/conseil/entreprise-fonctionner-sans-dirigeant",
 ] as const;
 const journeyImages = [
   "/images/structuration-sectors/cabinets-comptables.jpg",
@@ -21,8 +21,7 @@ const pillarIcons = [Compass, ShieldCheck, Waypoints, Handshake] as const;
 
 const copy = {
   fr: {
-    preview: "Aperçu éditorial · non publié",
-    nav: ["Reprendre", "Transmettre", "Accompagnement"],
+    nav: ["Reprendre", "Vendre", "Conseil"],
     contact: "Parler d’un projet",
     heroEyebrow: "REPRISE · TRANSMISSION · CONTINUITÉ",
     heroTitle: "La suite d’une entreprise se construit ensemble.",
@@ -45,8 +44,8 @@ const copy = {
     journeysTitle: "À chaque projet, son point de départ.",
     journeys: [
       { title: "Reprendre", body: "Découvrir des entreprises existantes et préciser votre projet de reprise.", action: "Explorer les opportunités", imageAlt: "Deux professionnels examinent un dossier d’entreprise" },
-      { title: "Transmettre", body: "Présenter votre entreprise et ouvrir le dialogue avec des repreneurs pertinents.", action: "Découvrir la transmission", imageAlt: "Une équipe au travail dans un commerce" },
-      { title: "Se faire accompagner", body: "Rendre le fonctionnement de votre entreprise plus lisible avant le passage de relais.", action: "Voir l’accompagnement", imageAlt: "Deux professionnels travaillent ensemble dans un atelier" },
+      { title: "Vendre", body: "Présenter votre entreprise et ouvrir le dialogue avec des repreneurs pertinents.", action: "Découvrir la transmission", imageAlt: "Une équipe au travail dans un commerce" },
+      { title: "Conseil", body: "Des méthodes pour clarifier vos décisions et préparer le passage de relais.", action: "Lire les méthodes", imageAlt: "Deux professionnels travaillent ensemble dans un atelier" },
     ],
     guidesEyebrow: "POUR ALLER PLUS LOIN",
     guidesTitle: "Des repères pour décider.",
@@ -79,8 +78,7 @@ const copy = {
     footerNote: "Aperçu de conception : formulaires, données et cadre légal demeurent ceux du site actuel.",
   },
   en: {
-    preview: "Editorial preview · not published",
-    nav: ["Acquire", "Transfer", "Advisory"],
+    nav: ["Acquire", "Sell", "Advice"],
     contact: "Discuss a project",
     heroEyebrow: "ACQUISITION · TRANSFER · CONTINUITY",
     heroTitle: "The next chapter of a business is built together.",
@@ -103,8 +101,8 @@ const copy = {
     journeysTitle: "Every project starts somewhere.",
     journeys: [
       { title: "Acquire", body: "Discover existing businesses and define your acquisition project.", action: "Explore opportunities", imageAlt: "Two professionals reviewing a business dossier" },
-      { title: "Transfer", body: "Present your business and open a conversation with relevant buyers.", action: "Explore the transfer path", imageAlt: "A team working in a local business" },
-      { title: "Get support", body: "Make your business easier to understand before handing it over.", action: "See advisory", imageAlt: "Two professionals working together in a workshop" },
+      { title: "Sell", body: "Present your business and open a conversation with relevant buyers.", action: "Explore the transfer path", imageAlt: "A team working in a local business" },
+      { title: "Advice", body: "Practical methods to make decisions and prepare a handover.", action: "Read the methods", imageAlt: "Two professionals working together in a workshop" },
     ],
     guidesEyebrow: "GO FURTHER",
     guidesTitle: "Guidance for better decisions.",
@@ -179,10 +177,6 @@ export default async function SiniPreviewPage({
   return (
     <div lang={locale} className="min-h-screen bg-[#faf8f4] font-sans text-[#262822] [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-4 [&_a:focus-visible]:outline-[#536653]">
       <SiniPreviewHtmlLang locale={locale} />
-      <div className="border-b border-[#e8e2d9] bg-[#efece5] px-5 py-2 text-center text-[10px] font-medium uppercase tracking-[0.2em] text-[#727367]">
-        {t.preview}
-      </div>
-
       <header className="relative z-10 border-b border-[#e7e1d8] bg-[#faf8f4]">
         <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 py-4 md:px-10 xl:px-16">
           <Link href={locale === "en" ? "/apercu-sini?lang=en" : "/apercu-sini"} aria-label={locale === "fr" ? "Accueil SINI" : "SINI home"} className="shrink-0 text-[1.35rem] font-medium tracking-[0.31em] text-[#252622] sm:text-[1.55rem]">
@@ -213,7 +207,7 @@ export default async function SiniPreviewPage({
             </div>
           </div>
           <div className="relative min-h-[390px] overflow-hidden bg-[#d7c6b5] lg:min-h-full">
-            <Image src="/images/structuration-sectors/cabinets-comptables.jpg" alt={t.heroImageAlt} fill preload sizes="(min-width: 1024px) 49vw, 100vw" className="object-cover object-[center_42%] grayscale-[0.12] sepia-[0.17]" />
+            <Image src="/images/structuration-sectors/cabinets-comptables.jpg" alt={t.heroImageAlt} fill preload loading="eager" sizes="(min-width: 1024px) 49vw, 100vw" className="object-cover object-[center_42%] grayscale-[0.12] sepia-[0.17]" />
             <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-[#d3b89e]/35 via-transparent to-[#20221d]/15" />
             <p className="absolute right-5 top-7 max-w-28 text-right text-[10px] font-medium leading-4 tracking-[0.15em] text-white drop-shadow-md md:right-10">{t.heroImageNote}</p>
           </div>

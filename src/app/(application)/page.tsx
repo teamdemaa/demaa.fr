@@ -1,27 +1,29 @@
 import type { Metadata } from "next";
 import { permanentRedirect } from "next/navigation";
 import ActionPlanHomeView from "@/components/ActionPlanHomeView";
+import RepriseMarketplaceClient from "@/components/RepriseMarketplaceClient";
+import SiniFooter from "@/components/SiniFooter";
 import { buildDefaultHomeMarketplaceHref } from "@/lib/action-plan-home-routing";
 import { loadActionPlanHomePage } from "@/lib/action-plan-pages.server";
-import { DEMAA_HOME_DESCRIPTION, DEMAA_HOME_TITLE } from "@/lib/demaa-positioning";
+import { repriseOpportunities } from "@/lib/reprise-opportunities";
 import { buildLegacySolutionsRedirect } from "@/lib/organiser-navigation";
 
 export const metadata: Metadata = {
-  title: DEMAA_HOME_TITLE,
-  description: DEMAA_HOME_DESCRIPTION,
+  title: "Entreprises à reprendre | sini",
+  description: "Découvrez des entreprises à reprendre et préparez une transmission avec méthode.",
   robots: { index: false, follow: false },
   openGraph: {
-    title: DEMAA_HOME_TITLE,
-    description: DEMAA_HOME_DESCRIPTION,
-    url: "/organiser",
-    siteName: "Demaa",
+    title: "Entreprises à reprendre | sini",
+    description: "Découvrez des entreprises à reprendre et préparez une transmission avec méthode.",
+    url: "/",
+    siteName: "sini",
     locale: "fr_FR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: DEMAA_HOME_TITLE,
-    description: DEMAA_HOME_DESCRIPTION,
+    title: "Entreprises à reprendre | sini",
+    description: "Découvrez des entreprises à reprendre et préparez une transmission avec méthode.",
   },
 };
 
@@ -33,6 +35,7 @@ export default async function HomePage({
     academy?: string | string[];
     new?: string | string[];
     opportunity?: string | string[];
+    opportunite?: string | string[];
     opportunityId?: string | string[];
     planTab?: string | string[];
     section?: string | string[];
@@ -49,7 +52,14 @@ export default async function HomePage({
   const organiserRedirect = buildLegacySolutionsRedirect(query);
   if (organiserRedirect) permanentRedirect(organiserRedirect);
   const defaultMarketplaceHref = buildDefaultHomeMarketplaceHref(query);
-  if (defaultMarketplaceHref) permanentRedirect(defaultMarketplaceHref);
+  if (defaultMarketplaceHref) {
+    return (
+      <>
+        <RepriseMarketplaceClient initialOpportunityId={typeof query.opportunite === "string" ? query.opportunite : undefined} opportunities={repriseOpportunities} />
+        <SiniFooter />
+      </>
+    );
+  }
 
   return (
     <ActionPlanHomeView

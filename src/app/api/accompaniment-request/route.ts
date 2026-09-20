@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     const phone = normalizeText(body?.phone, 40);
     if (!message || !name || !isValidEmail(email) || !phone || !company || !idempotencyKey) return NextResponse.json({ error: "Merci de décrire votre priorité, puis de renseigner vos prénom et nom, votre email, votre téléphone et votre entreprise." }, { status: 400 });
 
-    const context = await resolveLeadContext({ source: "Demaa - Transmission", sourceUrl: request.headers.get("referer") });
+    const context = await resolveLeadContext({ source: "sini - Transmission", sourceUrl: request.headers.get("referer") });
     if (!context) return NextResponse.json({ error: "La page d’origine est introuvable." }, { status: 400 });
     await submitLeadRequest({
       attribution: resolveLeadAttribution(request, body?.attribution),

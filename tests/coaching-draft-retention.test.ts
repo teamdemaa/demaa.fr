@@ -95,21 +95,21 @@ describe("coaching draft retention", () => {
     expect(result).toEqual({ deleted: 0, operations: 19 });
   });
 
-  it("documents the temporary draft and its retention without naming its access mechanism", () => {
+  it("does not describe archived coaching drafts in sini's privacy notice", () => {
     const privacy = readFileSync(
       "src/app/(marketing)/politique-de-confidentialite/page.tsx",
       "utf8",
     );
 
-    expect(privacy).toContain(
+    expect(privacy).not.toContain(
       "Brouillon de message destiné à un spécialiste avant connexion",
     );
-    expect(privacy).toContain("utilisable pendant 60 minutes maximum");
-    expect(privacy).toContain("des brouillons temporaires");
-    expect(privacy).toContain(
+    expect(privacy).not.toContain("utilisable pendant 60 minutes maximum");
+    expect(privacy).not.toContain("des brouillons temporaires");
+    expect(privacy).not.toContain(
       "Brouillon de proposition d&apos;annonce avant connexion",
     );
-    expect(privacy).toContain("utilisable pendant 2 heures maximum");
+    expect(privacy).not.toContain("utilisable pendant 2 heures maximum");
     expect(privacy).not.toContain("draftToken");
     expect(privacy).not.toContain("jeton du brouillon");
   });

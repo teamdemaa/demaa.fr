@@ -436,7 +436,7 @@ export const METHOD_ARTICLES = [
       },
     ],
     cta: {
-      href: "/a-reprendre",
+      href: "/",
       label: "Voir les entreprises",
       title: "Vous cherchez une entreprise à reprendre ?",
       description: "Consultez les opportunités et confiez-nous vos critères pour être contacté lorsqu’un projet correspond.",

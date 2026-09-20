@@ -45,12 +45,14 @@ export default function Navbar({
     <>
       <nav
         data-minimal={minimal ? "true" : undefined}
-        className="sticky top-0 z-40 bg-dema-cream/92 py-1 backdrop-blur-md"
+        className={`sticky top-0 z-40 py-1 backdrop-blur-md ${publicNavigationVariant === "sini" ? "bg-sini-background/95" : "bg-dema-cream/92"}`}
       >
         <div className="mx-auto w-full px-3 sm:px-6 md:px-10 lg:px-24">
           <div className="relative flex items-center justify-between py-3 md:min-h-16 md:py-4">
             <Link
-              href={adminControls
+              href={publicNavigationVariant === "sini"
+                ? "/"
+                : adminControls
                 ? "/admin"
                 : localeCode === "en"
                   ? "/en"
@@ -67,8 +69,8 @@ export default function Navbar({
               className="z-50 inline-flex shrink-0 cursor-pointer items-center"
             >
               {publicNavigationVariant === "sini" ? (
-                <span className="font-sans text-[1.2rem] font-medium tracking-[0.24em] text-brand-blue sm:text-[1.7rem]" aria-label="SINI">
-                  SINI
+                <span className="font-sans text-[1.2rem] font-medium tracking-[0.24em] text-[#17283e] sm:text-[1.7rem]" aria-label="sini">
+                  sini
                 </span>
               ) : (
                 <DemaaWordmark className="text-[1.2rem] sm:text-[1.7rem]" />

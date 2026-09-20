@@ -163,7 +163,7 @@ const frequentlyAskedQuestions = [
 export default function TransmissionLandingPage() {
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="accompaniment" publicNavigationVariant="sini" />
+      <Navbar minimal publicNavigationActiveView="advice" publicNavigationVariant="sini" />
       <main className="overflow-x-clip bg-dema-cream text-brand-blue">
         <section className="border-b border-dema-line px-5 pb-16 pt-14 text-left sm:px-8 sm:pb-20 sm:pt-20 sm:text-center lg:pt-24">
           <div className="mx-auto max-w-6xl">

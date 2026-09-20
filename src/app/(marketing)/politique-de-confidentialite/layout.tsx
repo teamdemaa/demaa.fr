@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
-
-export const metadata: Metadata = buildPublicPageMetadata({
-  title: "Politique de confidentialité - Demaa",
-  description: "Politique de confidentialité du site demaa.fr.",
-  path: "/politique-de-confidentialite",
-});
+export const metadata: Metadata = {
+  title: "Politique de confidentialité - sini",
+  description: "Comment sini traite les données de contact et de reprise.",
+  robots: { index: false, follow: false },
+};
 
 export default function PrivacyPolicyLayout({
   children,

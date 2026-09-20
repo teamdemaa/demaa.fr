@@ -4,14 +4,14 @@ import { describe, expect, it } from "vitest";
 import SiniPreviewPage, { generateMetadata } from "@/app/apercu-sini/page";
 
 describe("SINI editorial preview", () => {
-  it("renders the French journey without replacing the existing homepage", async () => {
+  it("keeps the former French editorial preview available as source content", async () => {
     const markup = renderToStaticMarkup(await SiniPreviewPage({ searchParams: Promise.resolve({ lang: "fr" }) }));
 
     expect(markup).toContain('lang="fr"');
     expect(markup).toContain("La suite d’une entreprise se construit ensemble.");
     expect(markup).toContain("Reprendre");
     expect(markup).toContain("Transmettre");
-    expect(markup).toContain("Accompagnement");
+    expect(markup).toContain("Conseil");
     expect(markup).toContain('href="/a-reprendre"');
     expect(markup).toContain('href="/transmettre"');
     expect(markup).toContain('href="/accompagnement"');
@@ -28,7 +28,7 @@ describe("SINI editorial preview", () => {
     expect(markup).toContain("The next chapter of a business is built together.");
     expect(markup).toContain("Acquire");
     expect(markup).toContain("Transfer");
-    expect(markup).toContain("Advisory");
+    expect(markup).toContain("Advice");
     expect(markup).toContain('href="/apercu-sini?lang=fr"');
     expect(markup).toMatch(/<a aria-current="page"[^>]*href="\/apercu-sini\?lang=en"/);
     expect(markup).toContain("Coastal landscape at sunset");
@@ -46,7 +46,7 @@ describe("SINI editorial preview", () => {
     expect(enMetadata.title).toContain("editorial preview");
     expect(enMetadata.openGraph).toMatchObject({ locale: "en_GB" });
     expect(sitemap).not.toContain("/apercu-sini");
-    expect(proxy).toContain('if (pathname === "/")');
+    expect(proxy).toContain('pathname === "/apercu-sini"');
     await Promise.all([
       access(new URL("../public/sini-preview/coast.webp", import.meta.url)),
       access(new URL("../public/sini-preview/architecture.webp", import.meta.url)),

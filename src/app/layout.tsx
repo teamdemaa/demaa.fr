@@ -1,14 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import CookieConsentManager from "@/components/CookieConsentManager";
-import { DEMAA_HOME_DESCRIPTION, DEMAA_HOME_TITLE } from "@/lib/demaa-positioning";
-import { getCanonicalOrigin } from "@/lib/site-url";
-import { PUBLIC_SOCIAL_IMAGE } from "@/lib/public-page-metadata";
-import {
-  buildSiteIdentityJsonLd,
-  serializePublicJsonLd,
-} from "@/lib/public-index-json-ld";
+
+const siteTitle = "sini — reprendre ou vendre une entreprise";
+const siteDescription = "Des entreprises à reprendre, un parcours pour vendre et des méthodes pour préparer la suite.";
+const configuredSiniUrl = process.env.SINI_SITE_URL?.trim();
+const previewHost = process.env.VERCEL_URL?.trim();
+const metadataOrigin = configuredSiniUrl
+  ? configuredSiniUrl
+  : previewHost && /^[a-z0-9.-]+\.vercel\.app$/i.test(previewHost)
+    ? `https://${previewHost}`
+    : "http://localhost:3000";
 
 const satoshi = localFont({
   src: [
@@ -58,42 +60,35 @@ const gambetta = localFont({
 });
 
 export const metadata: Metadata = {
-  title: DEMAA_HOME_TITLE,
-  description: DEMAA_HOME_DESCRIPTION,
-  metadataBase: new URL(getCanonicalOrigin()),
+  metadataBase: new URL(metadataOrigin),
+  title: siteTitle,
+  description: siteDescription,
+  robots: { index: false, follow: false },
   openGraph: {
-    title: DEMAA_HOME_TITLE,
-    description: DEMAA_HOME_DESCRIPTION,
-    siteName: "Demaa",
+    title: siteTitle,
+    description: siteDescription,
+    siteName: "sini",
     locale: "fr_FR",
     type: "website",
-    images: [PUBLIC_SOCIAL_IMAGE],
   },
   twitter: {
-    card: "summary_large_image",
-    title: DEMAA_HOME_TITLE,
-    description: DEMAA_HOME_DESCRIPTION,
-    images: ["/twitter-image"],
+    card: "summary",
+    title: siteTitle,
+    description: siteDescription,
   },
-  applicationName: "Demaa",
-  manifest: "/manifest.webmanifest",
+  applicationName: "sini",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Demaa",
+    title: "sini",
   },
   formatDetection: {
     telephone: false,
   },
-  verification: {
-    other: {
-      "facebook-domain-verification": "q8v7yql2wdk1p643wdls8vnr4e8b4h",
-    },
-  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#315f46",
+  themeColor: "#244a68",
   viewportFit: "cover",
 };
 
@@ -114,15 +109,8 @@ export default function RootLayout({
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-background text-foreground font-sans"
       >
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: serializePublicJsonLd(buildSiteIdentityJsonLd()),
-          }}
-        />
         {children}
         {modal}
-        <CookieConsentManager />
       </body>
     </html>
   );

@@ -2,27 +2,20 @@ import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import manifest from "@/app/manifest";
 
-describe("installable Demaa app", () => {
-  it("exposes a standalone French manifest with the required icons", () => {
+describe("sini app manifest", () => {
+  it("does not reuse demaa branding or icons before sini assets are ready", () => {
     const value = manifest();
     expect(value).toMatchObject({
-      name: "Demaa",
-      short_name: "Demaa",
+      name: "sini",
+      short_name: "sini",
       start_url: "/",
       scope: "/",
       display: "standalone",
       lang: "fr",
-      background_color: "#315f46",
-      theme_color: "#315f46",
+      background_color: "#fbfcfe",
+      theme_color: "#244a68",
     });
-    expect(value.icons).toEqual(expect.arrayContaining([
-      expect.objectContaining({ src: "/pwa/demaa-192.png", sizes: "192x192" }),
-      expect.objectContaining({ src: "/pwa/demaa-512.png", sizes: "512x512" }),
-      expect.objectContaining({
-        src: "/pwa/demaa-maskable-512.png",
-        purpose: "maskable",
-      }),
-    ]));
+    expect(value.icons).toBeUndefined();
   });
 
   it("ships every icon referenced by the manifest", () => {

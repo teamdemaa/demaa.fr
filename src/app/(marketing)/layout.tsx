@@ -1,4 +1,4 @@
-import Footer from "@/components/Footer";
+import SiniFooter from "@/components/SiniFooter";
 
 export default function MarketingLayout({
   children,
@@ -6,7 +6,7 @@ export default function MarketingLayout({
   return (
     <>
       {children}
-      <Footer />
+      <SiniFooter />
     </>
   );
 }

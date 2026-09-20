@@ -13,15 +13,16 @@ describe("Demaa application navbar", () => {
     ]);
 
     expect(navigation).toContain('label: "Reprendre", href: "/a-reprendre"');
-    expect(navigation).toContain('label: "Transmettre", href: "/transmettre"');
-    expect(navigation).toContain('label: "Accompagnement", href: "/accompagnement"');
+    expect(navigation).toContain('label: "Vendre", href: "/transmettre"');
+    expect(navigation).toContain('label: "Conseil", href: "/conseil"');
+    expect(navigation).toContain('const siniNavigationItems = [\n  { view: "marketplace", label: "Reprendre", href: "/"');
     expect(navigation).toContain('variant = "legacy"');
     expect(navbar).toContain('publicNavigationVariant = "legacy"');
     expect(navbar).toContain('publicNavigationVariant === "sini"');
     expect(marketplace).toContain('publicNavigationActiveView="marketplace" publicNavigationVariant="sini"');
     expect(listing).toContain('publicNavigationActiveView="marketplace" publicNavigationVariant="sini"');
     expect(sale).toContain('publicNavigationActiveView="services" publicNavigationVariant="sini"');
-    expect(accompaniment).toContain('publicNavigationActiveView="accompaniment" publicNavigationVariant="sini"');
+    expect(accompaniment).toContain('publicNavigationActiveView="advice" publicNavigationVariant="sini"');
   });
 
   it("removes the historical centered two-column selector everywhere", async () => {
@@ -76,9 +77,9 @@ describe("Demaa application navbar", () => {
     expect(sharedHomeSource).toContain("if (!guestProductEnabled)");
     expect(sharedHomeSource).toContain("<Navbar");
     expect(solutionsSource).toContain('path: "/solutions"');
-    expect(proxySource).toContain('if (pathname === "/")');
-    expect(proxySource).toContain("buildDefaultHomeMarketplaceHref(request.nextUrl.searchParams)");
-    expect(proxySource).toContain("NextResponse.redirect(new URL(marketplaceHref, request.url), 308)");
+    expect(homeSource).toContain("<RepriseMarketplaceClient initialOpportunityId=");
+    expect(homeSource).toContain("<SiniFooter />");
+    expect(proxySource).toContain('if (pathname === "/") return true;');
     expect(navbarSource).toContain(': "/a-reprendre"}');
     expect(nextConfigSource).toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/outils',/,
@@ -244,7 +245,8 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).not.toContain("showDiagnostic");
     expect(navbarSource).not.toContain("buildDiagnosticOrganisationHref");
     expect(navbarSource).not.toContain("DiagnosticOrganisationLink");
-    expect(navbarSource).toContain('className="sticky top-0 z-40 bg-dema-cream/92');
+    expect(navbarSource).toContain('"bg-dema-cream/92"');
+    expect(navbarSource).toContain('"bg-sini-background/95"');
     expect(navbarSource).not.toContain('className="sticky top-0 z-40 border-b');
     expect(navbarSource).not.toContain("fixed inset-x-0 bottom-0");
     expect(navbarSource).toContain('className="pb-3 empty:hidden xl:hidden"');
@@ -302,7 +304,7 @@ describe("Demaa application navbar", () => {
     expect(layoutSource).toContain('viewportFit: "cover"');
     expect(layoutSource).not.toContain("<Footer");
     expect(layoutSource).not.toContain("GoogleRedirectSessionConsumer");
-    expect(marketingLayoutSource).toContain("<Footer />");
+    expect(marketingLayoutSource).toContain("<SiniFooter />");
     expect(experienceSource).toContain("<ActionPlanNavbar");
     expect(experienceSource).toContain("workspace={prePlanWorkspace}");
     expect(experienceSource).toContain('activeTab === "services"');

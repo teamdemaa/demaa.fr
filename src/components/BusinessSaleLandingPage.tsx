@@ -54,7 +54,7 @@ export default function BusinessSaleLandingPage() {
   return (
     <>
       <Navbar minimal publicNavigationActiveView="services" publicNavigationVariant="sini" />
-      <main className="overflow-x-clip bg-dema-cream text-brand-blue">
+      <main className="overflow-x-clip bg-sini-background text-brand-blue">
         <section className="border-b border-dema-line px-5 pb-14 pt-14 text-left sm:px-8 sm:pb-20 sm:pt-20 sm:text-center lg:pt-24">
           <div className="mx-auto max-w-6xl">
             <h1 className={`${satoshiHeroTitleClassName} mx-auto max-w-5xl`}>
@@ -127,23 +127,23 @@ export default function BusinessSaleLandingPage() {
           </div>
         </section>
 
-        <section className="border-b border-dema-line bg-dema-forest px-5 py-14 sm:px-8 sm:py-20">
-          <div className="mx-auto grid max-w-6xl gap-8 text-dema-paper lg:grid-cols-[1fr_0.72fr] lg:items-end lg:gap-20">
+        <section className="border-b border-dema-line bg-[#f3f8fc] px-5 py-14 sm:px-8 sm:py-20">
+          <div className="mx-auto grid max-w-6xl gap-8 text-brand-blue lg:grid-cols-[1fr_0.72fr] lg:items-end lg:gap-20">
             <div>
-              <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-sage">
+              <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">
                 Accompagnement à la mise en vente
               </p>
-              <h2 className="demaa-marketing-section-title mt-4 max-w-3xl text-dema-paper">
+              <h2 className="demaa-marketing-section-title mt-4 max-w-3xl text-brand-blue">
                 Votre entreprise dépend encore beaucoup de vous ?
               </h2>
-              <p className="mt-5 max-w-3xl text-base leading-7 text-dema-paper/72">
+              <p className="mt-5 max-w-3xl text-base leading-7 text-dema-muted">
                 Nous pouvons aussi vous aider à la structurer avant la vente.
                 Cet accompagnement est facultatif et facturé séparément.
               </p>
             </div>
             <Link
               href="/accompagnement"
-              className="inline-flex min-h-12 w-fit items-center justify-center gap-2 rounded-full bg-dema-paper px-7 py-3 text-sm font-semibold text-dema-forest transition hover:bg-dema-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-paper/50"
+              className="inline-flex min-h-12 w-fit items-center justify-center gap-2 rounded-full bg-dema-forest px-7 py-3 text-sm font-semibold text-white transition hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
             >
               Être accompagné
               <ArrowRight className="h-4 w-4" aria-hidden="true" />

@@ -1,9 +1,9 @@
 import { ImageResponse } from "next/og";
 
-const brandImageBackground = "#fafafa";
-const brandImageGreen = "#315f46";
-const brandImageText = "#17231d";
-const brandImageMuted = "#6f756e";
+const brandImageBackground = "#fbfcfe";
+const brandImageBlue = "#244a68";
+const brandImageText = "#17283e";
+const brandImageMuted = "#627181";
 
 export const socialImageSize = {
   width: 1200,
@@ -11,6 +11,32 @@ export const socialImageSize = {
 };
 
 export const brandImageContentType = "image/png";
+
+export function buildSiniIcon(width: number) {
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: Math.round(width * 0.28),
+          background: brandImageBlue,
+          color: brandImageBackground,
+          fontFamily: "Arial, sans-serif",
+          fontSize: Math.round(width * 0.68),
+          fontWeight: 400,
+          lineHeight: 1,
+        }}
+      >
+        s
+      </div>
+    ),
+    { width, height: width },
+  );
+}
 
 export async function buildSocialImage() {
   return new ImageResponse(
@@ -40,28 +66,22 @@ export async function buildSocialImage() {
             maxWidth: "940px",
           }}
         >
-          <span
-            style={{
-              fontFamily: "Georgia, serif",
-              fontSize: 96,
-              lineHeight: 0.98,
-              fontStyle: "italic",
-              letterSpacing: "-0.06em",
-              color: brandImageGreen,
-            }}
-          >
-            Gagnez du temps
+          <span style={{ fontSize: 48, letterSpacing: "0.18em", color: brandImageBlue }}>
+            sini
           </span>
           <span
             style={{
-              fontSize: 98,
-              lineHeight: 0.98,
+              fontSize: 86,
+              lineHeight: 1.05,
               fontWeight: 300,
-              letterSpacing: "-0.06em",
+              letterSpacing: "-0.055em",
               color: brandImageText,
             }}
           >
-            grâce à vos systèmes
+            Reprendre. Vendre.
+          </span>
+          <span style={{ fontSize: 70, lineHeight: 1.1, fontWeight: 300, letterSpacing: "-0.05em", color: brandImageBlue }}>
+            Préparer la suite.
           </span>
         </div>
 
@@ -79,8 +99,7 @@ export async function buildSocialImage() {
               color: brandImageMuted,
             }}
           >
-            Des PME de services à reprendre. Votre entreprise présentée
-            gratuitement à des repreneurs.
+            Des entreprises à reprendre et des méthodes pour préparer leur transmission.
           </span>
         </div>
       </div>

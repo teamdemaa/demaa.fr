@@ -1,12 +1,12 @@
 import LegalPageLayout from "@/components/LegalPageLayout";
 import { LEGAL, LEGAL_COPY } from "@/lib/legal";
-import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
+import type { Metadata } from "next";
 
-export const metadata = buildPublicPageMetadata({
-  title: "Mentions légales - Demaa",
-  description: "Mentions légales du site demaa.fr.",
-  path: "/mentions-legales",
-});
+export const metadata: Metadata = {
+  title: "Mentions légales - sini",
+  description: "Mentions légales du site sini.",
+  robots: { index: false, follow: false },
+};
 
 function LegalSection({
   title,
@@ -72,7 +72,7 @@ export default function MentionsLegalesPage() {
 
       <LegalSection title="3. Activité du site">
             <p>
-              {LEGAL.domain} propose des contenus, outils gratuits, ressources, formulaires de contact, sessions stratégiques et accompagnements autour de l&apos;organisation, des process et de l&apos;automatisation.
+              sini présente des opportunités de reprise d&apos;entreprises, un parcours pour les personnes qui souhaitent vendre et des contenus de conseil. Les formulaires de contact et d&apos;alerte ne seront ouverts qu&apos;après la configuration des services nécessaires.
             </p>
             <p>
               Les informations publiées sur le site sont fournies à titre informatif. Elles ne constituent pas un conseil juridique, fiscal, comptable ou financier individualisé.
@@ -99,7 +99,7 @@ export default function MentionsLegalesPage() {
 
       <LegalSection title="6. Liens externes">
             <p>
-              Le site peut contenir des liens vers des sites tiers, outils ou services externes. Demaa ne contrôle pas leur contenu ni leurs politiques et décline toute responsabilité à leur sujet.
+              Le site peut contenir des liens vers des sites tiers. Leur contenu et leurs politiques de confidentialité relèvent de leurs éditeurs respectifs.
             </p>
       </LegalSection>
 

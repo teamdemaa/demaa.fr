@@ -67,7 +67,7 @@ function BuyerRequestForm({ opportunity }: { opportunity: RepriseOpportunity }) 
           <Check className="h-5 w-5" aria-hidden="true" />
         </span>
         <h3 className="mt-4 text-xl font-medium">Demande envoyée.</h3>
-        <p className="mt-2 text-sm leading-6 text-dema-muted">Demaa vous recontacte avant de transmettre votre demande à la personne concernée.</p>
+        <p className="mt-2 text-sm leading-6 text-dema-muted">Nous vous recontactons avant de transmettre votre demande à la personne concernée.</p>
       </div>
     );
   }

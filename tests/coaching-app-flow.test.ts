@@ -96,7 +96,8 @@ describe("unified app and coaching", () => {
       "Entrez votre adresse e-mail pour recevoir un lien sécurisé et continuer dans l’application.",
     );
     expect(coachingControl).toContain('new URLSearchParams({ intent: "coaching", tab: accessIntent.tab })');
-    expect(appNavigation).toContain("Annonces");
+    expect(appNavigation).toContain('usesTransmissionRoute');
+    expect(appNavigation).toContain('? "Vendre"');
     expect(appNavigation).not.toContain('label: "Coaching"');
   });
 
