@@ -37,7 +37,6 @@ export default async function SiniAdviceArticlePage({ params }: Props) {
           <header className="mx-auto mt-8 max-w-5xl">
             <p className="text-[10px] font-medium tracking-[0.17em] text-[#597391]">sini · {method.category} · {method.readingMinutes} min</p>
             <h1 className="mt-5 max-w-4xl font-serif text-4xl leading-[1.02] tracking-tight sm:text-5xl lg:text-6xl">{method.title}</h1>
-            <p className="mt-5 max-w-3xl text-base leading-7 text-[#627181] sm:text-lg">{method.summary}</p>
           </header>
 
           <div className="mx-auto mt-12 grid min-w-0 max-w-5xl gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
