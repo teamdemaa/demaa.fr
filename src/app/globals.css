@@ -3,17 +3,17 @@
 @theme inline {
   --color-brand-blue: #17283e;
   --color-brand-coral: #597391;
-  --color-background: #fbfcfe;
+  --color-background: #ffffff;
   --color-foreground: #17283e;
-  --color-dema-cream: #fbfcfe;
+  --color-dema-cream: #ffffff;
   --color-dema-paper: #ffffff;
   --color-dema-forest: #244a68;
   --color-dema-sage: #e7eef4;
   --color-dema-line: #d8e0e7;
   --color-dema-muted: #627181;
-  --color-dema-canvas: #f7f9fb;
+  --color-dema-canvas: #ffffff;
   --color-dema-positive: #edf3f8;
-  --color-sini-background: #fcfdff; /* almost white, with a barely visible cool tint */
+  --color-sini-background: #ffffff;
   --font-sans: var(--font-satoshi), "Avenir Next", "Avenir", "Segoe UI", Arial, sans-serif;
   --font-serif: var(--font-gambetta), Georgia, serif;
 }
