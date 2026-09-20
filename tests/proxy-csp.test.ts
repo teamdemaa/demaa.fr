@@ -242,8 +242,8 @@ describe("proxy content security policy", () => {
     }
   });
 
-  it("keeps the six sini form APIs unavailable until dedicated services are configured", async () => {
-    delete process.env.SINI_FORMS_ENABLED;
+  it("keeps the six sini form APIs unavailable until the shared delivery backend is enabled", async () => {
+    delete process.env.SINI_DEMAA_FORM_BACKEND_ENABLED;
     for (const pathname of [
       "/api/accompaniment-request",
       "/api/business-estimate",
@@ -261,34 +261,19 @@ describe("proxy content security policy", () => {
     }
   });
 
-  it("requires a distinct canonical domain, sender and database before enabling submissions", () => {
-    const keys = [
-      "SINI_FORMS_ENABLED", "SINI_SITE_URL", "SITE_URL", "SINI_CANONICAL_HOST",
-      "LEAD_NOTIFICATION_EMAIL", "RESEND_API_KEY", "RESEND_FROM_EMAIL",
-      "FIREBASE_PROJECT_ID", "FIREBASE_CLIENT_EMAIL", "FIREBASE_PRIVATE_KEY",
-    ] as const;
-    const original = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
+  it("relays only the allowed sini form APIs to the shared DEMAA backend", () => {
+    const original = process.env.SINI_DEMAA_FORM_BACKEND_ENABLED;
     try {
-      process.env.SINI_FORMS_ENABLED = "true";
-      process.env.SINI_SITE_URL = "https://sini.example";
-      process.env.SITE_URL = "https://sini.example";
-      process.env.SINI_CANONICAL_HOST = "sini.example";
-      process.env.LEAD_NOTIFICATION_EMAIL = "contact@sini.example";
-      process.env.RESEND_API_KEY = "test-key";
-      process.env.RESEND_FROM_EMAIL = "contact@sini.example";
-      process.env.FIREBASE_CLIENT_EMAIL = "service@sini.example";
-      process.env.FIREBASE_PRIVATE_KEY = "test-key";
-      process.env.FIREBASE_PROJECT_ID = "demaa-dde32";
-      const request = new NextRequest("https://preview.vercel.app/api/reprise-interest", { method: "POST" });
-      expect(proxy(request).status).toBe(503);
-      process.env.FIREBASE_PROJECT_ID = "sini-test-project";
-      expect(proxy(request).status).toBe(200);
+      process.env.SINI_DEMAA_FORM_BACKEND_ENABLED = "true";
+      const response = proxy(new NextRequest("https://gosini.fr/api/reprise-interest?source=listing", {
+        method: "POST",
+        headers: { Origin: "https://gosini.fr" },
+      }));
+      expect(response.status).toBe(200);
+      expect(response.headers.get("x-middleware-rewrite")).toBe("https://demaa.fr/api/reprise-interest?source=listing");
     } finally {
-      for (const key of keys) {
-        const value = original[key];
-        if (value === undefined) delete process.env[key];
-        else process.env[key] = value;
-      }
+      if (original === undefined) delete process.env.SINI_DEMAA_FORM_BACKEND_ENABLED;
+      else process.env.SINI_DEMAA_FORM_BACKEND_ENABLED = original;
     }
   });
 

@@ -47,6 +47,7 @@ const SINI_API_PATHS = new Set([
   "/api/reprise-interest",
   "/api/reprise-project",
 ]);
+const SINI_DEMAA_FORM_BACKEND_ORIGIN = "https://demaa.fr";
 const SINI_INTERNAL_PREFIXES = ["/_next"];
 const SINI_BRAND_ASSETS = new Set([
   "/opengraph-image",
@@ -74,25 +75,12 @@ function isSiniRoute(pathname: string) {
   return /\.[a-z0-9]{2,12}$/i.test(pathname);
 }
 
-function siniFormsConfigured() {
-  if (process.env.SINI_FORMS_ENABLED !== "true") return false;
-  const siteUrl = process.env.SINI_SITE_URL?.trim();
-  const sharedSiteUrl = process.env.SITE_URL?.trim();
-  const expectedHost = process.env.SINI_CANONICAL_HOST?.trim().toLowerCase();
-  if (!siteUrl || siteUrl !== sharedSiteUrl || !expectedHost || expectedHost.endsWith(".vercel.app")) return false;
-  try {
-    const url = new URL(siteUrl);
-    if (url.protocol !== "https:" || url.host.toLowerCase() !== expectedHost) return false;
-  } catch {
-    return false;
-  }
-  if (!process.env.LEAD_NOTIFICATION_EMAIL?.trim()
-    || !process.env.RESEND_API_KEY?.trim()
-    || !process.env.RESEND_FROM_EMAIL?.trim()) return false;
-  const firebaseProjectId = process.env.FIREBASE_PROJECT_ID?.trim();
-  return Boolean(firebaseProjectId && firebaseProjectId !== "demaa-dde32"
-    && (process.env.FIREBASE_SERVICE_ACCOUNT_KEY?.trim()
-      || (process.env.FIREBASE_CLIENT_EMAIL?.trim() && process.env.FIREBASE_PRIVATE_KEY?.trim())));
+function isSiniFormApi(pathname: string) {
+  return SINI_API_PATHS.has(pathname) || pathname.startsWith("/api/reprise-alerts/");
+}
+
+function siniFormsRelayEnabled() {
+  return process.env.SINI_DEMAA_FORM_BACKEND_ENABLED === "true";
 }
 const CONTENT_SECURITY_POLICY = buildContentSecurityPolicy({
   allowUnsafeEval: process.env.NODE_ENV === "development",
@@ -172,22 +160,35 @@ export function proxy(request: NextRequest) {
     );
   }
 
-  if (SINI_API_PATHS.has(pathname) || pathname.startsWith("/api/reprise-alerts/")) {
-    if (!siniFormsConfigured()) {
+  if (isSiniFormApi(pathname)) {
+    if (siniFormsRelayEnabled()) {
+      const target = new URL(`${pathname}${request.nextUrl.search}`, SINI_DEMAA_FORM_BACKEND_ORIGIN);
+      const headers = new Headers(request.headers);
+      headers.set("host", "demaa.fr");
+      headers.set("origin", SINI_DEMAA_FORM_BACKEND_ORIGIN);
+      headers.set("x-forwarded-host", "demaa.fr");
+      headers.set("x-forwarded-proto", "https");
+      headers.set("x-sini-form", "1");
+      headers.set("x-sini-site-origin", "https://gosini.fr");
       return withContentSecurityPolicy(
-        NextResponse.json(
-          { error: "Les demandes ne sont pas encore ouvertes sur sini." },
-          {
-            status: 503,
-            headers: {
-              "Cache-Control": "private, no-store, max-age=0",
-              "X-Robots-Tag": "noindex, nofollow",
-            },
-          },
-        ),
+        NextResponse.rewrite(target, { request: { headers } }),
         localeCode,
       );
     }
+
+    return withContentSecurityPolicy(
+      NextResponse.json(
+        { error: "Les demandes ne sont pas encore ouvertes sur sini." },
+        {
+          status: 503,
+          headers: {
+            "Cache-Control": "private, no-store, max-age=0",
+            "X-Robots-Tag": "noindex, nofollow",
+          },
+        },
+      ),
+      localeCode,
+    );
   }
 
   if (pathname === "/specialistes" && !PUBLIC_SPECIALISTS_ENABLED) {
