@@ -177,6 +177,19 @@ export default function BusinessSaleLandingPage() {
           </div>
         </section>
 
+        <section className="border-b border-dema-line px-5 py-16 text-left sm:px-8 sm:py-20 sm:text-center">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="demaa-marketing-section-title">
+              Obtenez une première estimation de votre entreprise.
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-dema-muted">
+              Renseignez votre activité et quelques chiffres pour obtenir une
+              première fourchette indicative.
+            </p>
+            <BusinessSellerActions variant="estimate" />
+          </div>
+        </section>
+
         <section className="px-5 py-16 text-left sm:px-8 sm:py-20 sm:text-center">
           <div className="mx-auto max-w-4xl">
             <h2 className="demaa-marketing-section-title">
