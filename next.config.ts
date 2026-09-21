@@ -140,16 +140,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/opportunites/:path*',
-        destination: 'https://gosini.fr',
-        permanent: true,
-      },
-      {
-        source: '/opportunites',
-        destination: 'https://gosini.fr',
-        permanent: true,
-      },
-      {
         source: '/alertes-reprise/:path*',
         destination: 'https://gosini.fr',
         permanent: true,
