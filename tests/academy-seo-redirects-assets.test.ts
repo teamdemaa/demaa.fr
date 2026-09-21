@@ -57,7 +57,12 @@ describe("Academy SEO, redirects and assets", () => {
     for (const card of cards) {
       expect(card.href).toMatch(/^\/academie\//);
       expect(card.image).toMatch(/^\/images\/academy\/covers\/.+-v\d+\.png$/);
-      expect(existsSync(resolve(process.cwd(), "public", card.image!.slice(1)))).toBe(true);
+      const assetPath = resolve(process.cwd(), "public", card.image!.slice(1));
+      expect(existsSync(assetPath)).toBe(true);
+      expect(readPngDimensions(readFileSync(assetPath))).toEqual({
+        width: 1536,
+        height: 864,
+      });
     }
   });
 
