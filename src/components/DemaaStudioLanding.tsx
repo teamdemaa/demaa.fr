@@ -205,14 +205,17 @@ function ProjectsContent() {
       </section>
       <section className="mx-auto max-w-[1160px] px-5 py-24 sm:px-8 lg:py-32">
         <div className="grid gap-x-5 gap-y-16 md:grid-cols-3">
-          {DEMAA_STUDIO_PROJECTS.map((project, index) => (
-            <a key={project.name} href={project.href} target="_blank" rel="noreferrer" className="group border-t border-[#cfc6ba] pt-4">
-              <div className={`flex h-64 items-end border border-[#ded6cb] p-7 ${index === 1 ? "bg-[#e9dfd1]" : index === 2 ? "bg-[#d8c2ad]" : "bg-[#e7e9e3]"}`}>
-                <Image src={project.logo} alt="" width={190} height={70} className="h-auto max-h-14 w-auto max-w-[11rem] object-contain object-left" />
+          {DEMAA_STUDIO_PROJECTS.map((project, index) => {
+            const colors = ["bg-[#e7e9e3]", "bg-[#e9dfd1]", "bg-[#d8c2ad]", "bg-[#eee6dd]"];
+            const card = <>
+              <div className={`flex h-64 items-end border border-[#ded6cb] p-7 ${colors[index % colors.length]}`}>
+                {project.logo ? <Image src={project.logo} alt="" width={190} height={70} className="h-auto max-h-14 w-auto max-w-[11rem] object-contain object-left" /> : <span className="font-serif text-4xl leading-none tracking-[-0.05em] text-[#413a35]">{project.name}</span>}
               </div>
-              <div className="mt-5 flex items-start justify-between gap-4"><div><h2 className="text-base font-medium tracking-[0.05em]">{project.name}</h2><p className="mt-1 text-sm text-[#676057]">{project.sector}</p><p className="mt-5 max-w-sm text-sm leading-6 text-[#5d574f]">{project.problem}</p></div><ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-[#5c554d] transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" /></div>
-            </a>
-          ))}
+              <div className="mt-5 flex items-start justify-between gap-4"><div><h2 className="text-base font-medium tracking-[0.05em]">{project.name}</h2><p className="mt-1 text-sm text-[#676057]">{project.sector}</p><p className="mt-5 max-w-sm text-sm leading-6 text-[#5d574f]">{project.problem}</p></div>{project.href ? <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-[#5c554d] transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" /> : null}</div>
+            </>;
+
+            return project.href ? <a key={project.name} href={project.href} target="_blank" rel="noreferrer" className="group border-t border-[#cfc6ba] pt-4">{card}</a> : <article key={project.name} className="border-t border-[#cfc6ba] pt-4">{card}</article>;
+          })}
         </div>
       </section>
     </>
