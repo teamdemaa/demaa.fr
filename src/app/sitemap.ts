@@ -15,6 +15,7 @@ import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-director
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 import { getPublishedCopyableModels } from "@/lib/copyable-model-catalog";
 import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
+import { getAcademyPreviewCards } from "@/lib/academy-preview-catalog";
 
 export const dynamic = "force-dynamic";
 
@@ -59,6 +60,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...(entry.media.slides?.[0]
         ? { images: [`${base}${entry.media.slides[0]}`] }
         : {}),
+    }),
+  );
+
+  const academyEntries: MetadataRoute.Sitemap = getAcademyPreviewCards().map(
+    (entry) => ({
+      url: `${base}${entry.href}`,
+      lastModified: toolsAndTutorialsUpdatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.82,
+      ...(entry.image ? { images: [`${base}${entry.image}`] } : {}),
     }),
   );
 
@@ -165,6 +176,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
+    ...academyEntries,
     ...contentEntries,
     ...newsletterSitemapEntries,
     ...toolEntries,

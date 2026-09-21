@@ -1,10 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { getArchivedOrganisationContent } from "@/lib/content-catalog";
-import {
-  ACADEMY_PERMANENT_REDIRECTS,
-  ARCHIVED_ACADEMY_DESTINATION,
-} from "@/lib/academy-course-routes";
+import { ACADEMY_PERMANENT_REDIRECTS } from "@/lib/academy-course-routes";
 import { getPublishedCopyableModelBySlug } from "@/lib/copyable-model-catalog";
 import {
   getPublishedMethods,
@@ -163,18 +160,27 @@ describe("Méthodes, Modèles and Outils public journey", () => {
     );
   });
 
-  it("gives Academy the same searchable entry pattern as Solutions", () => {
+  it("uses the approved Academy article library and its illustrated editorial grid", () => {
     const hub = read("src/components/OrganiserHub.tsx");
-    const search = read("src/components/AcademySearchHub.tsx");
+    const library = read("src/components/AcademyPreviewLibrary.tsx");
+    const catalog = read("src/lib/academy-preview-catalog.ts");
+    const detail = read("src/app/(marketing)/academie/[slug]/page.tsx");
+    const sitemap = read("src/app/sitemap.ts");
 
-    expect(hub).toContain("<AcademySearchHub courses={courses} />");
-    expect(hub).toContain("ACADEMY_REFERENCE_ARTWORK");
-    expect(hub).toContain("comprendre-chiffre-affaires-benefice-v4.png");
-    expect(hub).toContain("fixer-ses-prix-sans-vendre-a-perte-v4.png");
-    expect(search).toContain("Organiser et piloter son entreprise,");
-    expect(search).toContain("un sujet à la fois.");
-    expect(search).toContain('className="demaa-search-shell p-1.5"');
-    expect(search).toContain("SlidersHorizontal");
-    expect(search).toContain("Rechercher une méthode, un sujet...");
+    expect(hub).toContain("AcademyPreviewLibrary");
+    expect(hub).toContain("Organiser et piloter son entreprise,");
+    expect(library).toContain('placeholder="Rechercher un sujet…"');
+    expect(library).toContain('aria-label="Contenus de l’Académie"');
+    expect(library).toContain('href={card.href}');
+    expect(library).toContain('grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3');
+    expect(catalog).toContain('href: `/academie/${course.identity.slug}`');
+    expect(catalog).toContain('href: `/academie/${tutorial.slug}`');
+    expect(catalog).toContain('href: `/academie/${entry.slug}`');
+    expect(catalog).toContain("/images/academy/covers/");
+    expect(detail).toContain('"@type": "Article"');
+    expect(detail).toContain('path: `/academie/${slug}`');
+    expect(detail).not.toContain("AcademyCoursePlayer");
+    expect(detail).not.toContain("robots:");
+    expect(sitemap).toContain("getAcademyPreviewCards");
   });
 });

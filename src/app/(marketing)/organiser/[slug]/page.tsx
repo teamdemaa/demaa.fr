@@ -13,6 +13,13 @@ import {
   buildAcademyContentMetadata,
   serializeAcademyContentJsonLd,
 } from "@/lib/academy-content-seo";
+import { getAcademyPreviewCards } from "@/lib/academy-preview-catalog";
+
+function academyDestination(slug: string) {
+  return getAcademyPreviewCards().some(({ href }) => href === `/academie/${slug}`)
+    ? `/academie/${slug}`
+    : null;
+}
 
 export function generateStaticParams() {
   return getAllAcademyContent().map((content) => ({ slug: content.identity.slug }));
@@ -23,6 +30,8 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = await props.params;
   const canonicalSlug = getCanonicalAcademySlugForLegacySlug(slug);
+  const destination = academyDestination(canonicalSlug ?? slug);
+  if (destination) permanentRedirect(destination);
   if (canonicalSlug) permanentRedirect(`/organiser/${canonicalSlug}`);
   const content = getAcademyContentBySlug(slug);
 
@@ -36,6 +45,8 @@ export default async function OrganiserContentPage(
 ) {
   const { slug } = await props.params;
   const canonicalSlug = getCanonicalAcademySlugForLegacySlug(slug);
+  const destination = academyDestination(canonicalSlug ?? slug);
+  if (destination) permanentRedirect(destination);
   if (canonicalSlug) permanentRedirect(`/organiser/${canonicalSlug}`);
   const content = getAcademyContentBySlug(slug);
 

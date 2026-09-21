@@ -6,10 +6,9 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("server-only", () => ({}));
 
 import nextConfig from "../next.config";
-import { generateMetadata } from "@/app/(marketing)/organiser/[slug]/page";
+import { generateMetadata as generateAcademyMetadata } from "@/app/(marketing)/academie/[slug]/page";
 import {
   buildAcademyContentJsonLd,
-  buildAcademyContentMetadata,
   serializeAcademyContentJsonLd,
 } from "@/lib/academy-content-seo";
 import {
@@ -17,6 +16,7 @@ import {
   getAcademyFundamentals,
   getAllAcademyContent,
 } from "@/lib/academy-course-content";
+import { getAcademyPreviewCards } from "@/lib/academy-preview-catalog";
 import {
   ACADEMY_PERMANENT_REDIRECTS,
   ARCHIVED_ACADEMY_DESTINATION,
@@ -49,23 +49,29 @@ function readPngDimensions(buffer: Buffer) {
 }
 
 describe("Academy SEO, redirects and assets", () => {
-  it("uses every short title and exact canonical URL in route metadata", async () => {
-    for (const content of getAllAcademyContent()) {
-      const expectedTitle = `${content.identity.shortTitle} | Organisation Demaa`;
-      const expectedCanonical = `https://demaa.fr/organiser/${content.identity.slug}`;
-      const metadata = buildAcademyContentMetadata(content);
-      const routeMetadata = await generateMetadata({
-        params: Promise.resolve({ slug: content.identity.slug }),
+  it("publishes the complete, unique illustrated Academy article set", () => {
+    const cards = getAcademyPreviewCards();
+
+    expect(cards).toHaveLength(13);
+    expect(new Set(cards.map((card) => card.href)).size).toBe(cards.length);
+    for (const card of cards) {
+      expect(card.href).toMatch(/^\/academie\//);
+      expect(card.image).toMatch(/^\/images\/academy\/covers\/.+-v3\.png$/);
+      expect(existsSync(resolve(process.cwd(), "public", card.image!.slice(1)))).toBe(true);
+    }
+  });
+
+  it("uses indexable Academy article URLs and exact canonical metadata", async () => {
+    for (const card of getAcademyPreviewCards()) {
+      const slug = card.href.slice("/academie/".length);
+      const routeMetadata = await generateAcademyMetadata({
+        params: Promise.resolve({ slug }),
       });
 
-      expect(metadata.title).toBe(expectedTitle);
-      expect(metadata.alternates?.canonical).toBe(expectedCanonical);
-      expect(metadata.openGraph?.url).toBe(expectedCanonical);
-      expect(metadata.robots).toEqual(
-        content.processGuide ? undefined : { index: false, follow: true },
-      );
-      expect(routeMetadata.title).toBe(expectedTitle);
-      expect(routeMetadata.alternates?.canonical).toBe(expectedCanonical);
+      expect(routeMetadata.title).toBe(`${card.title} | Académie Demaa`);
+      expect(routeMetadata.alternates?.canonical).toBe(`/academie/${slug}`);
+      expect(routeMetadata.openGraph?.url).toBe(`/academie/${slug}`);
+      expect(routeMetadata.robots).toBeUndefined();
     }
   });
 
