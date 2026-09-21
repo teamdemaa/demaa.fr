@@ -162,7 +162,7 @@ describe("Academy SEO, redirects and assets", () => {
       expect(redirects).toContainEqual(redirect);
     }
 
-    expect(ACADEMY_PERMANENT_REDIRECTS).toHaveLength(7);
+    expect(ACADEMY_PERMANENT_REDIRECTS).toHaveLength(18);
     for (const source of ["/cours", "/cours/:path*"]) {
       expect(redirects).toContainEqual({
         source,
@@ -178,6 +178,16 @@ describe("Academy SEO, redirects and assets", () => {
       });
     }
     expect(redirects).not.toContainEqual(expect.objectContaining({ source: "/academie" }));
+    expect(redirects).toContainEqual({
+      source: "/organiser/piloter-sa-tresorerie",
+      destination: "/academie/piloter-sa-tresorerie",
+      permanent: true,
+    });
+    expect(redirects).toContainEqual({
+      source: "/organiser/entreprise-rentable-sans-tresorerie",
+      destination: "/academie/piloter-sa-tresorerie",
+      permanent: true,
+    });
     expect(redirects).toContainEqual(
       expect.objectContaining({
         source: "/cours/facture-electronique",

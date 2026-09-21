@@ -75,6 +75,61 @@ export const ACADEMY_PERMANENT_REDIRECTS = [
     destination: "/academie",
     permanent: true,
   },
+  {
+    source: "/organiser/piloter-sa-tresorerie",
+    destination: "/academie/piloter-sa-tresorerie",
+    permanent: true,
+  },
+  {
+    source: "/organiser/comprendre-chiffre-affaires-benefice",
+    destination: "/academie/comprendre-chiffre-affaires-benefice",
+    permanent: true,
+  },
+  {
+    source: "/organiser/fixer-ses-prix-sans-vendre-a-perte",
+    destination: "/academie/fixer-ses-prix-sans-vendre-a-perte",
+    permanent: true,
+  },
+  {
+    source: "/organiser/construire-systeme-marketing-vente",
+    destination: "/academie/construire-systeme-marketing-vente",
+    permanent: true,
+  },
+  {
+    source: "/organiser/transformer-demande-en-client",
+    destination: "/academie/transformer-demande-en-client",
+    permanent: true,
+  },
+  {
+    source: "/organiser/deleguer-sans-perdre-le-controle",
+    destination: "/academie/deleguer-sans-perdre-le-controle",
+    permanent: true,
+  },
+  {
+    source: "/organiser/construire-offre-facile-a-acheter",
+    destination: "/academie/construire-offre-facile-a-acheter",
+    permanent: true,
+  },
+  {
+    source: "/organiser/livrer-prestation-sans-tout-reinventer",
+    destination: "/academie/livrer-prestation-sans-tout-reinventer",
+    permanent: true,
+  },
+  {
+    source: "/organiser/entreprise-rentable-sans-tresorerie",
+    destination: "/academie/piloter-sa-tresorerie",
+    permanent: true,
+  },
+  {
+    source: "/organiser/difference-chiffre-affaires-benefice",
+    destination: "/academie/comprendre-chiffre-affaires-benefice",
+    permanent: true,
+  },
+  {
+    source: "/organiser/transformer-une-demande-en-client",
+    destination: "/academie/transformer-demande-en-client",
+    permanent: true,
+  },
 ] as const;
 
 export type AcademyContentSlug = (typeof ACADEMY_CONTENT_SLUGS)[number];
