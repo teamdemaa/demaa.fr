@@ -63,13 +63,13 @@ describe("Organiser newsletter public contract", () => {
   it("renders the same component at the approved editorial surfaces only", () => {
     const approved = [
       "src/components/AcademyIndexClient.tsx",
-      "src/components/OrganiserHub.tsx",
       "src/components/TutorialsHub.tsx",
     ];
 
     for (const path of approved) {
       expect(read(path)).toContain("<StructureNewsletterBlock />");
     }
+    expect(read("src/components/OrganiserHub.tsx")).not.toContain("StructureNewsletterBlock");
 
     const academyIndex = read("src/components/AcademyIndexClient.tsx");
     expect(academyIndex).toContain("!embedded || showStructureNewsletter");

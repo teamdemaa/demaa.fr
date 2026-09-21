@@ -143,7 +143,7 @@ describe("Méthodes, Modèles and Outils public journey", () => {
     expect(toolsHub).not.toContain("ToolsModelsSection");
     expect(toolsHub).not.toContain("getPublishedCopyableModels");
     expect(toolsHub).not.toContain("getEnterpriseCatalog");
-    expect(visibility).toContain('section === "software"');
+    expect(visibility).toContain("filterPublicSolutionSections(sections)");
   });
 
   it("keeps the former Organisation catalogue accessible through Academy", () => {

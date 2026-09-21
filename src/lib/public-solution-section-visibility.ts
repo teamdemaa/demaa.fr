@@ -17,9 +17,8 @@ export function filterPublicSolutionSections<
 }
 
 /**
- * Public métier pages now focus on tools and software. The other sections stay
- * in the registry and in private action-plan payloads so they can be repackaged
- * later without losing the curated data.
+ * Public métier pages expose each selected solution family. Recruitment and
+ * training are excluded until their editorial catalogue is ready.
  */
 const HIDDEN_RECOMMENDATION_CATEGORY = /\b(?:formation|recrutement)\b/i;
 
@@ -27,7 +26,6 @@ export function filterPublicSystemRecommendationSections(
   sections: readonly RenderableSolutionSectionDto[],
 ): RenderableSolutionSectionDto[] {
   return filterPublicSolutionSections(sections)
-    .filter(({ section }) => section === "software")
     .map((group) => ({
       ...group,
       placements: group.placements.filter(

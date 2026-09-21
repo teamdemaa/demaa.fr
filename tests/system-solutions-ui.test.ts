@@ -129,7 +129,7 @@ describe("system Solutions UI", () => {
     expect(aidsSource).toContain("solutionSections: payload.solutionSections");
   });
 
-  it("keeps Services out of public system recommendations without removing the payload section", async () => {
+  it("keeps reviewed Services in public system recommendations", async () => {
     const servicesSection = {
       section: "services" as const,
       placements: [],
@@ -142,7 +142,7 @@ describe("system Solutions UI", () => {
     expect(filterPublicSystemRecommendationSections([
       softwareSection,
       servicesSection,
-    ])).toEqual([softwareSection]);
+    ])).toEqual([softwareSection, servicesSection]);
 
     const pageSource = await readSource("src/app/(marketing)/solutions/[slug]/page.tsx");
     const recapSource = await readSource(
@@ -191,13 +191,16 @@ describe("system Solutions UI", () => {
     expect(visibleSection?.placements).toEqual([visiblePlacement]);
   });
 
-  it("enforces the public exclusions across every métier selection", () => {
+  it("keeps only recruitment and training recommendations out of public métier pages", () => {
     for (const system of enterpriseCatalog) {
       const visibleSections = filterPublicSystemRecommendationSections(
         getRenderableSolutionSectionsForSystem(system.slug),
       );
 
-      expect(visibleSections.map(({ section }) => section)).not.toContain("services");
+      expect(visibleSections.every(({ section }) => (
+        ["software", "services", "providers", "financing", "networks", "aids"]
+          .includes(section)
+      ))).toBe(true);
       expect(
         visibleSections.flatMap(({ placements }) =>
           placements.map(({ resource }) => resource.displayCategory ?? ""),
@@ -210,9 +213,9 @@ describe("system Solutions UI", () => {
     }
   });
 
-  it("builds the focused public rail sequence while keeping hidden registry data and SEO published-only", async () => {
+  it("builds every reviewed public rail while keeping unreviewed registry data out of SEO", async () => {
     const revision = parseFirebaseSolutionRegistryRevision(snapshot);
-    const expectedPublicOrder = ["software"] as const;
+    const expectedPublicOrder = ["software", "services", "providers", "financing", "networks", "aids"] as const;
 
     for (const system of enterpriseCatalog) {
       const selectedSections = selectRenderableSolutionSectionsFromRevision(
@@ -244,16 +247,23 @@ describe("system Solutions UI", () => {
       composePublicSolutionSectionsForSystem(systemSlug, selectedSections),
     );
     expect(visibleSections.map(({ section }) => section)).toEqual(expectedPublicOrder);
-    expect(visibleSections.find(({ section }) => section === "providers")).toBeUndefined();
+    expect(visibleSections.find(({ section }) => section === "providers")).toBeDefined();
     expect(selectedSections.map(({ section }) => section)).toContain("networks");
-    expect(visibleSections.map(({ section }) => section)).not.toEqual(
+    expect(visibleSections.map(({ section }) => section)).toEqual(
       expect.arrayContaining(["networks", "aids"]),
     );
 
     const markup = renderToStaticMarkup(
       createElement(SystemSolutionsTab, { sections: visibleSections }),
     );
-    const expectedHeadings = ["Outils et logiciels"];
+    const expectedHeadings = [
+      "Outils et logiciels",
+      "Accompagnement",
+      "Fournisseurs",
+      "Banque &amp; Financement",
+      "Réseaux professionnels",
+      "Aides &amp; Subventions",
+    ];
     for (const [index, heading] of expectedHeadings.entries()) {
       expect(markup).toContain(heading);
       if (index > 0) {
@@ -261,10 +271,6 @@ describe("system Solutions UI", () => {
           .toBeLessThan(markup.indexOf(heading));
       }
     }
-    expect(markup).not.toContain("Réseaux professionnels");
-    expect(markup).not.toContain("Aides &amp; Subventions");
-    expect(markup).not.toContain("Fournisseurs");
-    expect(markup).not.toContain("Banque &amp; Financement");
     expect(markup).not.toContain("Financement et aides");
 
     const publishedSections = selectRenderableSolutionSectionsFromRevision(
