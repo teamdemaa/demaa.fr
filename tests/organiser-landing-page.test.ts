@@ -162,4 +162,16 @@ describe("Méthodes, Modèles and Outils public journey", () => {
       expect.objectContaining({ source: "/organiser/:path*" }),
     );
   });
+
+  it("gives Academy the same searchable entry pattern as Solutions", () => {
+    const hub = read("src/components/OrganiserHub.tsx");
+    const search = read("src/components/AcademySearchHub.tsx");
+
+    expect(hub).toContain("<AcademySearchHub courses={courses} />");
+    expect(search).toContain("Organiser et piloter son entreprise,");
+    expect(search).toContain("un sujet à la fois.");
+    expect(search).toContain('className="demaa-search-shell p-1.5"');
+    expect(search).toContain("SlidersHorizontal");
+    expect(search).toContain("Rechercher une méthode, un sujet...");
+  });
 });

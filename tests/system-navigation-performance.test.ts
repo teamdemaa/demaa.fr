@@ -46,19 +46,19 @@ describe("system navigation performance contract", () => {
     expect(detailSource).not.toContain("router.back()");
   });
 
-  it("uses the focused Outils wording on the directory", async () => {
+  it("uses wording that covers every public solution family", async () => {
     const [pageSource, searchSource] = await Promise.all([
       readSource("src/app/(marketing)/outils/page.tsx"),
       readSource("src/components/SystemSearchHero.tsx"),
     ]);
 
     expect(pageSource).toContain(
-      "Outils et logiciels adaptés à votre activité | Demaa",
+      "Outils et solutions adaptés à votre activité | Demaa",
     );
     expect(searchSource).toContain(
-      'aria-label="Outils et logiciels adaptés à votre activité"',
+      'aria-label="Outils et solutions adaptés à votre activité"',
     );
-    expect(searchSource).toContain("Outils et logiciels");
+    expect(searchSource).toContain("Outils et solutions");
     expect(searchSource).not.toContain(
       "Des outils et partenaires utiles, sélectionnés selon votre métier.",
     );

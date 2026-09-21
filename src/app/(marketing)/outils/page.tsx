@@ -6,9 +6,9 @@ import {
 } from "@/lib/public-index-json-ld";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-const title = "Outils et logiciels adaptés à votre activité | Demaa";
+const title = "Outils et solutions adaptés à votre activité | Demaa";
 const description =
-  "Choisissez votre activité pour découvrir et comparer les logiciels utiles à votre entreprise.";
+  "Choisissez votre activité pour découvrir les outils, fournisseurs, financements et réseaux utiles à votre entreprise.";
 
 export const metadata = buildPublicPageMetadata({
   title,
@@ -19,7 +19,7 @@ export const metadata = buildPublicPageMetadata({
 export default async function ToolsPage() {
   const enterprises = await getEnterpriseCatalog();
   const jsonLd = buildPublicIndexJsonLd({
-    name: "Outils",
+    name: "Outils et solutions",
     description,
     path: "/outils",
     items: enterprises.map((enterprise) => ({
