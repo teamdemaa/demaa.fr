@@ -20,8 +20,9 @@ Ce document fige le point de départ avant la mise en place de la couche
    `Opportunités`.
 2. `Découvrir l'Académie` est un lien éditorial vers `/academie`, jamais un
    quatrième onglet de cette navigation.
-3. Les trois onglets sont d'abord des ancres de la page `/studio` afin de ne
-   pas créer quatre sites à maintenir.
+3. Les trois onglets sont trois pages dédiées : `/studio`, `/projets` et
+   `/opportunites`. Elles partagent une même navigation et une même direction
+   visuelle, sans dupliquer l'Académie.
 4. Toute nouvelle proposition visuelle est validée en préproduction avant un
    déploiement de production.
 5. Les modifications de routes publiques demandent une vérification du
@@ -31,4 +32,3 @@ Ce document fige le point de départ avant la mise en place de la couche
 
 - Branche : `archive/demaa-baseline-2026-09-21`
 - Tag : `demaa-baseline-2026-09-21`
-

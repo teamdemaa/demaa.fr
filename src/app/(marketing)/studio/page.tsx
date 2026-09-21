@@ -9,5 +9,5 @@ export const metadata = buildPublicPageMetadata({
 });
 
 export default function StudioPage() {
-  return <DemaaStudioLanding />;
+  return <DemaaStudioLanding view="studio" />;
 }

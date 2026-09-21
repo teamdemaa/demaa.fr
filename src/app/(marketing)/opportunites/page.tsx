@@ -1,5 +1,12 @@
-import { permanentRedirect } from "next/navigation";
+import DemaaStudioLanding from "@/components/DemaaStudioLanding";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-export default async function OpportunitiesPage() {
-  permanentRedirect("https://gosini.fr");
+export const metadata = buildPublicPageMetadata({
+  title: "Opportunités | Demaa",
+  description: "Les opportunités que le studio Demaa choisit d’explorer, de construire ou d’accompagner.",
+  path: "/opportunites",
+});
+
+export default function OpportunitiesPage() {
+  return <DemaaStudioLanding view="opportunites" />;
 }
