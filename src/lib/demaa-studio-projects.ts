@@ -7,7 +7,7 @@ type DemaaStudioProject = {
   status: string;
 };
 
-export const DEMAA_STUDIO_PROJECTS = [
+export const DEMAA_STUDIO_PROJECTS: readonly DemaaStudioProject[] = [
   {
     name: "Tiimora",
     href: "https://www.tiimora.com/",
@@ -107,4 +107,4 @@ export const DEMAA_STUDIO_PROJECTS = [
     problem: "Rassembler les programmes immobiliers d’Afrique de l’Ouest pour les rendre comparables et accessibles.",
     status: "Projet en cours",
   },
-] as const satisfies readonly DemaaStudioProject[];
+];
