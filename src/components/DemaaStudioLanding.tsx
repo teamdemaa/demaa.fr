@@ -124,10 +124,7 @@ function StudioContent() {
         <div className="mx-auto grid min-h-[min(700px,calc(100vh-118px))] max-w-[1440px] lg:grid-cols-[minmax(0,1.04fr)_minmax(420px,.96fr)]">
           <div className="flex items-center px-5 py-20 sm:px-10 lg:px-[max(3rem,calc((100vw-1160px)/2))] lg:pr-16">
             <div className="max-w-[590px]">
-              <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-[#756d64]">
-                Des idées. Des personnes. Des opportunités.
-              </p>
-              <h1 className="mt-5 max-w-[680px] font-serif text-[clamp(3.55rem,6.5vw,6.3rem)] font-normal leading-[0.9] tracking-[-0.055em] text-[#191816]">
+              <h1 className="max-w-[680px] font-serif text-[clamp(3.55rem,6.5vw,6.3rem)] font-normal leading-[0.9] tracking-[-0.055em] text-[#191816]">
                 Construire des entreprises solides et rentables.
               </h1>
               <p className="mt-7 max-w-[530px] text-[15px] leading-7 text-[#514c45] sm:text-base">
