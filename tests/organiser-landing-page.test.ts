@@ -168,6 +168,9 @@ describe("Méthodes, Modèles and Outils public journey", () => {
     const search = read("src/components/AcademySearchHub.tsx");
 
     expect(hub).toContain("<AcademySearchHub courses={courses} />");
+    expect(hub).toContain("ACADEMY_REFERENCE_ARTWORK");
+    expect(hub).toContain("comprendre-chiffre-affaires-benefice-v4.png");
+    expect(hub).toContain("fixer-ses-prix-sans-vendre-a-perte-v4.png");
     expect(search).toContain("Organiser et piloter son entreprise,");
     expect(search).toContain("un sujet à la fois.");
     expect(search).toContain('className="demaa-search-shell p-1.5"');

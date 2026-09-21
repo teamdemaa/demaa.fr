@@ -121,7 +121,10 @@ export default function AcademySearchHub({
                       fill
                       priority={index < 3}
                       sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                      className="object-cover transition duration-300 group-hover:scale-[1.01]"
+                      className="object-contain p-4 transition duration-300 group-hover:scale-[1.01] sm:p-5"
+                      style={{
+                        filter: "brightness(0) saturate(100%) invert(28%) sepia(20%) saturate(1080%) hue-rotate(103deg) brightness(86%) contrast(88%)",
+                      }}
                     />
                   </div>
                   <div className="px-0.5 pb-1 pt-5">
