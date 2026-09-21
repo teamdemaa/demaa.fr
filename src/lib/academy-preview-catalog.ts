@@ -31,7 +31,8 @@ function modelFor(slug: string) {
 }
 
 function academyCoverPath(slug: string) {
-  return `/images/academy/covers/${slug}-v3.png`;
+  const version = slug === "construire-systeme-marketing-vente" ? "v4" : "v3";
+  return `/images/academy/covers/${slug}-${version}.png`;
 }
 
 export function getAcademyPreviewCards(): AcademyPreviewCard[] {
