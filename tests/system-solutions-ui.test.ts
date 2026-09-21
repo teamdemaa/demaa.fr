@@ -129,7 +129,7 @@ describe("system Solutions UI", () => {
     expect(aidsSource).toContain("solutionSections: payload.solutionSections");
   });
 
-  it("keeps reviewed Services in public system recommendations", async () => {
+  it("keeps specialist services out of public system recommendations", async () => {
     const servicesSection = {
       section: "services" as const,
       placements: [],
@@ -142,7 +142,7 @@ describe("system Solutions UI", () => {
     expect(filterPublicSystemRecommendationSections([
       softwareSection,
       servicesSection,
-    ])).toEqual([softwareSection, servicesSection]);
+    ])).toEqual([softwareSection]);
 
     const pageSource = await readSource("src/app/(marketing)/solutions/[slug]/page.tsx");
     const recapSource = await readSource(
@@ -213,9 +213,9 @@ describe("system Solutions UI", () => {
     }
   });
 
-  it("builds every reviewed public rail while keeping unreviewed registry data out of SEO", async () => {
+  it("builds public solution rails without specialist services or legacy models", async () => {
     const revision = parseFirebaseSolutionRegistryRevision(snapshot);
-    const expectedPublicOrder = ["software", "services", "providers", "financing", "networks", "aids"] as const;
+    const expectedPublicOrder = ["software", "providers", "financing", "networks", "aids"] as const;
 
     for (const system of enterpriseCatalog) {
       const selectedSections = selectRenderableSolutionSectionsFromRevision(
@@ -258,9 +258,8 @@ describe("system Solutions UI", () => {
     );
     const expectedHeadings = [
       "Outils et logiciels",
-      "Accompagnement",
       "Fournisseurs",
-      "Banque &amp; Financement",
+      "Banque, financement &amp; assurance",
       "Réseaux professionnels",
       "Aides &amp; Subventions",
     ];
@@ -741,13 +740,15 @@ describe("system Solutions UI", () => {
     expect(source).not.toContain("DirectoryDetailDialogShell");
   });
 
-  it("parks the daily rail behind a disabled public feature flag", async () => {
+  it("publishes the daily rail on the public solution journeys", async () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
+    const hubSource = await readSource("src/components/SystemsHubPage.tsx");
     const featureFlagsSource = await readSource("src/lib/public-feature-flags.ts");
 
     expect(detailSource).toContain("!embedded && PUBLIC_LEADER_DAILY_TOOLS_ENABLED");
     expect(detailSource).toContain("<LeaderDailyRail />");
-    expect(featureFlagsSource).toContain("NEXT_PUBLIC_DEMAA_LEADER_DAILY_TOOLS_ENABLED");
+    expect(hubSource).toContain("<LeaderDailyRail />");
+    expect(featureFlagsSource).toContain("PUBLIC_LEADER_DAILY_TOOLS_ENABLED = true");
     expect(detailSource).not.toContain("<SystemSolutionNextSteps");
     expect(detailSource).not.toContain("<SystemContextualCaseStudy");
   });

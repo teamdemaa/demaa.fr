@@ -36,50 +36,23 @@ describe("system kit page audit contract", () => {
       "costructor",
       "progbat",
       "vertuoza",
-      "automatisation-processus",
-      "application-metier",
-      "coach-business",
-      "assistance-administrative",
-      "formalites-entreprise",
-      "gestion-reseaux-sociaux",
-      "publicite-en-ligne",
-      "prospection-ciblee",
-      "recruter-un-alternant",
     ]);
     expect(orders.get("marchand-de-biens")).toEqual([
       "apimo",
       "modelo",
       "pipedrive",
-      "automatisation-processus",
-      "application-metier",
-      "coach-business",
-      "assistance-administrative",
-      "formalites-entreprise",
-      "gestion-reseaux-sociaux",
-      "publicite-en-ligne",
-      "prospection-ciblee",
-      "recruter-un-alternant",
     ]);
     expect(orders.get("chasseur-immobilier")).toEqual([
       "apimo",
       "modelo",
       "pipedrive",
-      "automatisation-processus",
-      "application-metier",
-      "coach-business",
-      "assistance-administrative",
-      "formalites-entreprise",
-      "gestion-reseaux-sociaux",
-      "publicite-en-ligne",
-      "prospection-ciblee",
-      "recruter-un-alternant",
     ]);
     expect([...orders.values()].some((order) => order.includes("netty"))).toBe(false);
     expect(orders.get("cabinet-comptable")).not.toContain("legal-formalist");
     expect(orders.get("cabinet-davocat")).not.toContain("formalites-juridiques");
-    expect(orders.get("cabinet-davocat")).toContain("automatisation-processus");
-    expect(orders.get("cabinet-davocat")).toContain("gestion-reseaux-sociaux");
-    expect(orders.get("cabinet-davocat")).toContain("prospection-ciblee");
+    expect(orders.get("cabinet-davocat")).not.toContain("automatisation-processus");
+    expect(orders.get("cabinet-davocat")).not.toContain("gestion-reseaux-sociaux");
+    expect(orders.get("cabinet-davocat")).not.toContain("prospection-ciblee");
     expect([...orders.entries()].filter(([, order]) => order.includes("chartered-accountant")))
       .toHaveLength(0);
   });

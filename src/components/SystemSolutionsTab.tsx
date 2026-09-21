@@ -54,7 +54,6 @@ export const SOLUTION_UI_WORKING_LABELS: Readonly<
 
 export const SOLUTION_RAIL_DISPLAY_ORDER: readonly VisibleSolutionSection[] = [
   "software",
-  "services",
   "providers",
   "financing",
   "networks",

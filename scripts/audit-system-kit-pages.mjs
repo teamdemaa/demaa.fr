@@ -22,7 +22,7 @@ const canonicalServiceVisibilityPath = resolve(
 );
 
 const PUBLIC_SOLUTION_SECTION_VISIBILITY = readJson(publicSolutionVisibilityPath);
-const SOLUTION_SECTION_ORDER = ["software", "services", "providers", "networks"]
+const SOLUTION_SECTION_ORDER = ["software", "providers", "financing", "networks", "aids"]
   .filter((section) => PUBLIC_SOLUTION_SECTION_VISIBILITY[section]);
 const ACCOUNTING_FIRM_SYSTEM_SLUGS = new Set(["cabinet-comptable", "expert-comptable"]);
 const FORMALITIES_PROFESSIONAL_SYSTEM_SLUGS = new Set([

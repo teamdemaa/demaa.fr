@@ -225,7 +225,6 @@ describe("canonical Services composition in every system", () => {
 
     expect(sections.map(({ section }) => section)).toEqual([
       "software",
-      "services",
       "providers",
       "financing",
       "aids",

@@ -1,6 +1,6 @@
 {
   "software": true,
-  "services": true,
+  "services": false,
   "providers": true,
   "financing": true,
   "aids": true,

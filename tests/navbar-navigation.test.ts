@@ -57,7 +57,7 @@ describe("Demaa application navbar", () => {
     );
   });
 
-  it("uses Academy, Solutions and Spécialistes, then exposes three resource catalogues", async () => {
+  it("uses Académie, Solutions and Spécialistes, then exposes three resource catalogues", async () => {
     const [source, resources, tutorialsIndex, footer, navbarSource] = await Promise.all([
       readFile(
         new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
@@ -75,7 +75,7 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(source).toContain('label: "Academy", href: "/academie"');
+    expect(source).toContain('label: "Académie", href: "/academie"');
     expect(source).toContain('label: "Solutions", href: "/solutions"');
     expect(source).toContain('label: "Spécialistes", href: "/specialistes"');
     expect(source).not.toContain('label: "Tutoriels"');
@@ -85,7 +85,7 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).not.toContain("BusinessEstimateControl");
     expect(navbarSource).toContain("focus-visible:underline focus-visible:underline-offset-4");
     expect(navbarSource).not.toContain("border-dema-forest/18 bg-dema-paper");
-    expect(source.indexOf('label: "Academy"')).toBeLessThan(
+    expect(source.indexOf('label: "Académie"')).toBeLessThan(
       source.indexOf('label: "Solutions"'),
     );
     expect(source.indexOf('label: "Solutions"')).toBeLessThan(
@@ -111,7 +111,7 @@ describe("Demaa application navbar", () => {
     expect(tutorialsIndex).not.toContain("<Navbar");
     expect(tutorialsIndex).not.toContain("<ActionPlanNavbar");
     expect(footer).toContain('<Link href="/" className="inline-flex">');
-    expect(footer).toContain('{ label: "Academy", href: "/academie" }');
+    expect(footer).toContain('{ label: "Académie", href: "/academie" }');
     expect(footer).not.toContain("Systèmes opérationnels");
     expect(footer).not.toContain("Annuaire financement");
     expect(footer).not.toContain("Annuaire fournisseurs");

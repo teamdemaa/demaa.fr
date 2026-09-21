@@ -51,7 +51,6 @@ describe("public action-plan system route", () => {
     expect(response.status).toBe(200);
     expect(sectionNames).toEqual([
       "software",
-      "services",
       "providers",
       "financing",
       "aids",

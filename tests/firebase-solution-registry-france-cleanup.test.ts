@@ -230,8 +230,8 @@ describe("Firebase Solutions France cleanup candidate", () => {
     expect(slugs).toContain("ivoirnet");
   });
 
-  it("shows canonical Services and produces a reversible dry-run plan", () => {
-    expect(modules.visibility.services).toBe(true);
+  it("keeps canonical Services for Specialists and produces a reversible dry-run plan", () => {
+    expect(modules.visibility.services).toBe(false);
     const plan = modules.buildPlan(candidate);
     expect(plan.writes).toHaveLength(847);
     expect(plan.writeBatches.map((batch) => batch.length)).toEqual([400, 400, 47]);

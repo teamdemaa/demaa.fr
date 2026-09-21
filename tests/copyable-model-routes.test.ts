@@ -26,7 +26,7 @@ describe("copyable model public routes", () => {
     expect(page).not.toContain("<ModelProcessesBridge />");
     expect(toolsPage).toContain("<SystemsHubPage enterprises={enterprises} />");
     expect(page).toContain('path: "/modeles"');
-    expect(navbar).toContain('label: "Academy"');
+    expect(navbar).toContain('label: "Académie"');
     expect(navbar).toContain('href: "/academie"');
     expect(toolsHub).not.toContain("getPublishedCopyableModels");
     expect(toolsHub).not.toContain("ToolsModelsSection");

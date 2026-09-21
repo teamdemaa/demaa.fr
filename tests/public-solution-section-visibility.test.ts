@@ -8,7 +8,7 @@ import {
 import type { SolutionSection } from "@/lib/solution-registry-dto";
 
 describe("public Solution section visibility", () => {
-  it("shows every reviewed solution family while keeping legacy models out of solution pages", () => {
+  it("keeps specialist services and legacy models out of solution pages", () => {
     const sections = [
       { section: "software", value: "Outils" },
       { section: "services", value: "Prestations" },
@@ -22,11 +22,10 @@ describe("public Solution section visibility", () => {
       value: string;
     }>[];
 
-    expect(PUBLIC_SOLUTION_SECTION_VISIBILITY.services).toBe(true);
-    expect(isPublicSolutionSectionVisible("services")).toBe(true);
+    expect(PUBLIC_SOLUTION_SECTION_VISIBILITY.services).toBe(false);
+    expect(isPublicSolutionSectionVisible("services")).toBe(false);
     expect(filterPublicSolutionSections(sections).map(({ section }) => section)).toEqual([
       "software",
-      "services",
       "providers",
       "financing",
       "aids",
@@ -34,7 +33,7 @@ describe("public Solution section visibility", () => {
     ]);
     expect(PUBLIC_SOLUTION_SECTION_VISIBILITY).toEqual({
       software: true,
-      services: true,
+      services: false,
       providers: true,
       financing: true,
       aids: true,
