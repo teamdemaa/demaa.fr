@@ -114,14 +114,18 @@ export default async function AcademyMethodPage({ params }: Props) {
             </div>
           ) : null}
 
-          <div className="mx-auto mt-12 grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
-            <div className="min-w-0 space-y-12">
+          <div className="mx-auto mt-10 grid max-w-5xl gap-12 sm:mt-12 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-16">
+            <div className="min-w-0 space-y-14 sm:space-y-16">
               {course?.lessons.map((lesson, index) => (
                 <section key={lesson.id} aria-labelledby={`academy-lesson-${lesson.id}`}>
                   <p className="text-xs font-medium uppercase tracking-[0.13em] text-dema-forest">{String(index + 1).padStart(2, "0")} · {lesson.eyebrow}</p>
                   <h2 id={`academy-lesson-${lesson.id}`} className="mt-3 font-serif text-2xl leading-tight sm:text-3xl">{lesson.title}</h2>
                   <p className="mt-5 text-base leading-8 text-dema-muted">{lesson.body}</p>
-                  <div className="mt-7 overflow-hidden rounded-[1.25rem] border border-dema-line">
+                  <div
+                    className={lesson.visual.type === "story"
+                      ? "mt-7"
+                      : "mt-7 border-y border-dema-line py-5 sm:py-6"}
+                  >
                     <AcademyLessonVisual lesson={lesson} eager={index === 0} />
                   </div>
                   <p className="mt-6 border-l-2 border-dema-forest/35 pl-4 text-sm leading-7 text-dema-forest">À retenir : {lesson.takeaway}</p>

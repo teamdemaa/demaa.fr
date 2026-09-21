@@ -414,8 +414,8 @@ function StepsVisual({ data }: { data: Record<string, unknown> }) {
     <div>
       <div className="divide-y divide-dema-forest/15">
         {steps.map((step, index) => (
-          <div key={`${text(step.title)}-${index}`} className="grid grid-cols-[2rem_1fr] gap-3 py-4 first:pt-0 last:pb-0">
-            <span className="text-sm font-semibold text-dema-forest">
+          <div key={`${text(step.title)}-${index}`} className="grid grid-cols-[2.5rem_minmax(0,1fr)] gap-3 py-3.5 first:pt-0 last:pb-0 sm:grid-cols-[2.75rem_minmax(0,1fr)] sm:gap-4 sm:py-4">
+            <span className="tabular-nums text-sm font-semibold text-dema-forest">
               {text(step.number) || String(index + 1).padStart(2, "0")}
             </span>
             <div>
