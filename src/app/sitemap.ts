@@ -16,6 +16,7 @@ import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 import { getPublishedCopyableModels } from "@/lib/copyable-model-catalog";
 import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
 import { getAcademyPreviewCards } from "@/lib/academy-preview-catalog";
+import { DEMAA_STUDIO_PROJECTS } from "@/lib/demaa-studio-projects";
 
 export const dynamic = "force-dynamic";
 
@@ -75,6 +76,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...(entry.image ? { images: [`${base}${entry.image}`] } : {}),
     }),
   );
+
+  const studioProjectEntries: MetadataRoute.Sitemap = DEMAA_STUDIO_PROJECTS.map((project) => ({
+    url: `${base}/projets/${project.slug}`,
+    lastModified: siteUpdatedAt,
+    changeFrequency: "monthly" as const,
+    priority: 0.75,
+  }));
 
   const newsletterEntries = getAllNewsletters();
   const newsletterSitemapEntries: MetadataRoute.Sitemap = newsletterEntries.map((entry) => ({
@@ -179,6 +187,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
+    ...studioProjectEntries,
     ...academyEntries,
     ...contentEntries,
     ...newsletterSitemapEntries,
