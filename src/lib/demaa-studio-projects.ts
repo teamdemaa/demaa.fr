@@ -29,6 +29,12 @@ export const DEMAA_STUDIO_PROJECTS: readonly DemaaStudioProject[] = [
     solution: "Un espace commun pour centraliser les demandes, les documents et les prochaines actions.",
   },
   {
+    slug: "sini", name: "Sini", href: "https://gosini.fr/", sector: "Reprise & transmission", status: "Version en ligne",
+    summary: "Une plateforme pour reprendre, transmettre et faire avancer les projets d’entreprise avec méthode.",
+    problem: "Reprendre ou transmettre une PME reste complexe : les informations, les opportunités et les étapes sont rarement réunies dans un parcours lisible.",
+    solution: "Sini rassemble opportunités, conseils et outils de préparation pour aider les dirigeants et repreneurs à avancer avec clarté.",
+  },
+  {
     slug: "oryka", name: "Oryka", href: "https://pointage-2.vercel.app/", logo: "/portfolio/oryka-logo.svg", sector: "Équipes terrain", status: "Version en ligne",
     summary: "Un outil de pointage et de suivi pensé pour les équipes qui travaillent sur le terrain.",
     problem: "Les présences, les plannings et le suivi des chantiers restent souvent éparpillés.",
