@@ -4,6 +4,7 @@ import DemaaWordmark from "@/components/DemaaWordmark";
 import { isGuestProductEnabled } from "@/lib/guest-action-plan-security.server";
 
 const hubLinks = [
+  { label: "Studio", href: "/studio" },
   { label: "Académie", href: "/academie" },
   { label: "Solutions", href: "/solutions" },
   { label: "Spécialistes", href: "/specialistes" },
