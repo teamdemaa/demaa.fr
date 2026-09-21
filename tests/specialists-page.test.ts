@@ -9,7 +9,7 @@ import SpecialistsCatalog from "@/components/SpecialistsCatalog";
 import { getSpecialistSections } from "@/lib/specialist-catalog";
 
 describe("Specialists public index", () => {
-  it("renders the seven published offers in the approved three sections", () => {
+  it("renders the eight published offers in the approved three sections", () => {
     const sections = getSpecialistSections();
     const markup = renderToStaticMarkup(
       createElement(SpecialistsCatalog, { sections }),
@@ -20,16 +20,18 @@ describe("Specialists public index", () => {
       "Structurer et piloter",
       "Développer l’activité",
     ]);
-    expect(sections.flatMap((section) => section.services)).toHaveLength(7);
+    expect(sections.flatMap((section) => section.services)).toHaveLength(8);
     expect(sections[0]?.services.map((service) => service.name)).toEqual([
       "Structuration, automatisation & IA",
       "Logiciel métier sur mesure",
       "Assistant digital",
     ]);
-    expect(markup.match(/<article/g)).toHaveLength(7);
+    expect(markup.match(/<article/g)).toHaveLength(8);
     expect(markup).toContain("Structuration, automatisation &amp; IA");
     expect(markup).toContain("Logiciel métier sur mesure");
     expect(markup).toContain("Assistant digital");
+    expect(markup).toContain("Recruter un alternant");
+    expect(markup).toContain("association partenaire");
     expect(markup).not.toContain("Expert-comptable");
     expect(markup).toContain("1 500 € HT / mois");
     expect(markup).not.toContain("Sur devis");

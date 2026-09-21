@@ -34,7 +34,7 @@ const specialistSectionDefinitions = [
     id: "developper-l-activite",
     title: "Développer l’activité",
     description: "Activez les bons leviers d’acquisition avec un périmètre et des responsabilités clairement définis.",
-    slugs: ["publicite-en-ligne", "gestion-reseaux-sociaux", "prospection-ciblee"],
+    slugs: ["recruter-un-alternant", "publicite-en-ligne", "gestion-reseaux-sociaux", "prospection-ciblee"],
   },
 ] as const satisfies readonly SpecialistSectionDefinition[];
 
