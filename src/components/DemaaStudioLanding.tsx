@@ -49,14 +49,14 @@ const viewLinks: ReadonlyArray<{ href: string; label: string; view: StudioView }
 
 function StudioTabs({ activeView }: { activeView: StudioView }) {
   return (
-    <nav aria-label="Navigation du Studio" className="overflow-x-auto no-scrollbar">
-      <div className="inline-flex min-w-max items-center rounded-full bg-[#eee9e2] p-1">
+    <nav aria-label="Navigation du Studio" className="flex justify-center overflow-x-auto no-scrollbar">
+      <div className="flex w-full min-w-[20rem] max-w-[31rem] items-center rounded-full bg-[#eee9e2] p-1">
         {viewLinks.map((link) => (
           <Link
             key={link.view}
             href={link.href}
             aria-current={link.view === activeView ? "page" : undefined}
-            className={`rounded-full px-4 py-2 text-xs font-medium transition sm:px-5 ${
+            className={`flex flex-1 items-center justify-center rounded-full px-3 py-2 text-center text-xs font-medium transition sm:px-5 ${
               link.view === activeView
                 ? "bg-[#191816] text-white"
                 : "text-[#4d4841] hover:bg-white/70"
