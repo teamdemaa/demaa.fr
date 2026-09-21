@@ -28,7 +28,7 @@ describe("Organiser navigation", () => {
     })).toBe(
       "/solutions/restaurant?resource=lightspeed&toolSource=action_recommendation",
     );
-    expect(buildSolutionsHref()).toBe("/outils");
+    expect(buildSolutionsHref()).toBe("/solutions");
   });
 
   it("migrates every legacy Solutions entry to the Solutions directory", () => {
@@ -60,7 +60,7 @@ describe("Organiser navigation", () => {
     expect(source("src/lib/academy-course-routes.ts")).toContain(
       'source: "/organiser"',
     );
-    expect(guestPlan).toContain('router.push("/outils")');
+    expect(guestPlan).toContain('router.push("/solutions")');
     expect(organiserPage).not.toContain("<OrganiserWorkspace");
     expect(organiserPage).not.toContain("<ActionPlanSystemPanel");
     expect(companyPilotage).not.toContain('{ key: "solutions"');

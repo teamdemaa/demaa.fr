@@ -77,6 +77,12 @@ export function proxy(request: NextRequest) {
     }
   }
 
+  if (pathname === "/") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/academie";
+    return withContentSecurityPolicy(NextResponse.redirect(url, 308), localeCode);
+  }
+
   if (pathname === "/specialistes" && !PUBLIC_SPECIALISTS_ENABLED) {
     return withContentSecurityPolicy(
       new NextResponse(null, {

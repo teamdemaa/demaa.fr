@@ -48,7 +48,7 @@ describe("SEO des entreprises à reprendre", () => {
     expect(serializeRepriseJsonLd({ value: "</script>" })).not.toContain("</script>");
   });
 
-  it("pre-renders detail pages and publishes them in the sitemap", async () => {
+  it("keeps archived detail-page source while excluding it from the public sitemap", async () => {
     const [detailPage, marketplacePage, sitemap] = await Promise.all([
       readFile(new URL("../src/app/(marketing)/a-reprendre/[slug]/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/(marketing)/a-reprendre/page.tsx", import.meta.url), "utf8"),
@@ -59,7 +59,7 @@ describe("SEO des entreprises à reprendre", () => {
     expect(detailPage).toContain("dynamicParams = false");
     expect(detailPage).toContain('headingLevel="h1"');
     expect(marketplacePage).toContain("buildRepriseMarketplaceJsonLd");
-    expect(sitemap).toContain("repriseOpportunityEntries");
-    expect(sitemap).toContain("getRepriseOpportunityPath(opportunity)");
+    expect(sitemap).not.toContain("repriseOpportunityEntries");
+    expect(sitemap).not.toContain("getRepriseOpportunityPath(opportunity)");
   });
 });

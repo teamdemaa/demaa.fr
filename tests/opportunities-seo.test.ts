@@ -86,7 +86,7 @@ describe("Annonces SEO structured data", () => {
 
   it("does not wire legacy Annonces structured data into a public page", async () => {
     const source = await readSource("src/app/(marketing)/opportunites/page.tsx");
-    expect(source).toContain('permanentRedirect("/a-reprendre")');
+    expect(source).toContain('permanentRedirect("https://gosini.fr")');
     expect(source).not.toContain("application/ld+json");
   });
 });

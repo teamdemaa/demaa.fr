@@ -23,7 +23,7 @@ describe("accompagnement de structuration", () => {
     });
   });
 
-  it("publishes transmission preparation and concrete structuring on its own page", async () => {
+  it("keeps transmission and structuring source archived outside the public DEMAA sitemap", async () => {
     const [landing, page, accompaniment, automation, sitemap] =
       await Promise.all([
         readSource("src/components/TransmissionLandingPage.tsx"),
@@ -81,8 +81,8 @@ describe("accompagnement de structuration", () => {
     expect(landing).toContain("AccompanimentContactControl");
     expect(landing).toContain('<AccompanimentContactControl label="Être accompagné" />');
     expect(landing).toContain('<BusinessSellerActions variant="estimate" />');
-    expect(sitemap).toContain("/transmettre");
-    expect(sitemap).toContain("`${base}/accompagnement`");
+    expect(sitemap).not.toContain("`${base}/transmettre`");
+    expect(sitemap).not.toContain("`${base}/accompagnement`");
     expect(sitemap).not.toContain("`${base}/automatisation`");
   });
 
@@ -97,6 +97,6 @@ describe("accompagnement de structuration", () => {
     expect(hub).not.toContain("StructureNewsletterBlock");
     expect(systemPage).toContain('eyebrow="Bonus"');
     expect(bridge).toContain("Des tutoriels pour mieux utiliser vos outils");
-    expect(bridge).toContain('href = "/tutoriels"');
+    expect(bridge).toContain('href = "/academie"');
   });
 });

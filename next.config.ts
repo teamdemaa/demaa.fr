@@ -87,6 +87,78 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       ...ACADEMY_PERMANENT_REDIRECTS,
+      // Former DEMAA acquisition, sale and transmission surfaces are retained
+      // in source control but now live under SINI.
+      {
+        source: '/a-reprendre/:path*',
+        destination: 'https://gosini.fr',
+        permanent: true,
+      },
+      {
+        source: '/a-reprendre',
+        destination: 'https://gosini.fr',
+        permanent: true,
+      },
+      {
+        source: '/vendre/:path*',
+        destination: 'https://gosini.fr/transmettre',
+        permanent: true,
+      },
+      {
+        source: '/vendre',
+        destination: 'https://gosini.fr/transmettre',
+        permanent: true,
+      },
+      {
+        source: '/transmettre/:path*',
+        destination: 'https://gosini.fr/conseil',
+        permanent: true,
+      },
+      {
+        source: '/transmettre',
+        destination: 'https://gosini.fr/conseil',
+        permanent: true,
+      },
+      {
+        source: '/accompagnement/:path*',
+        destination: 'https://gosini.fr/conseil',
+        permanent: true,
+      },
+      {
+        source: '/accompagnement',
+        destination: 'https://gosini.fr/conseil',
+        permanent: true,
+      },
+      {
+        source: '/tutoriels/:path*',
+        destination: 'https://gosini.fr/conseil',
+        permanent: true,
+      },
+      {
+        source: '/tutoriels',
+        destination: 'https://gosini.fr/conseil',
+        permanent: true,
+      },
+      {
+        source: '/opportunites/:path*',
+        destination: 'https://gosini.fr',
+        permanent: true,
+      },
+      {
+        source: '/opportunites',
+        destination: 'https://gosini.fr',
+        permanent: true,
+      },
+      {
+        source: '/alertes-reprise/:path*',
+        destination: 'https://gosini.fr',
+        permanent: true,
+      },
+      {
+        source: '/alertes-reprise',
+        destination: 'https://gosini.fr',
+        permanent: true,
+      },
       {
         source: '/mon-espace',
         destination: '/plans/latest',
@@ -99,17 +171,27 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/organisation',
-        destination: '/tutoriels',
+        destination: '/academie',
         permanent: true,
       },
       {
         source: '/structuration',
-        destination: '/tutoriels',
+        destination: '/academie',
         permanent: true,
       },
       {
         source: '/structurer',
-        destination: '/tutoriels',
+        destination: '/academie',
+        permanent: true,
+      },
+      {
+        source: '/outils',
+        destination: '/solutions',
+        permanent: true,
+      },
+      {
+        source: '/session-structurer',
+        destination: '/academie',
         permanent: true,
       },
       {
@@ -129,29 +211,27 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/services',
-        destination: process.env.NEXT_PUBLIC_DEMAA_SPECIALISTS_ENABLED === 'true'
-          ? '/specialistes'
-          : '/accompagnement',
+        destination: '/specialistes',
         permanent: true,
       },
       {
         source: '/services/automatisation-processus',
-        destination: '/automatisation',
+        destination: '/specialistes',
         permanent: true,
       },
       {
         source: '/application-metier',
-        destination: '/sur-mesure',
+        destination: '/specialistes',
         permanent: true,
       },
       {
         source: '/solutions/mentorat-automatisation-ia',
-        destination: '/automatisation',
+        destination: '/specialistes',
         permanent: true,
       },
       {
         source: '/systemes',
-        destination: '/outils',
+        destination: '/solutions',
         permanent: true,
       },
       {
@@ -161,22 +241,22 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/systemes-operationnels',
-        destination: '/outils',
+        destination: '/solutions',
         permanent: true,
       },
       {
         source: '/kits-operationnels',
-        destination: '/outils',
+        destination: '/solutions',
         permanent: true,
       },
       {
         source: '/rejoindre-le-reseau',
-        destination: '/a-reprendre',
+        destination: 'https://gosini.fr',
         permanent: true,
       },
       {
         source: '/rejoindre-team-demaa',
-        destination: '/a-reprendre',
+        destination: 'https://gosini.fr',
         permanent: true,
       },
       {
@@ -216,7 +296,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/partenaires',
-        destination: '/a-reprendre',
+        destination: 'https://gosini.fr',
         permanent: true,
       },
       {
@@ -351,7 +431,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/ressources',
-        destination: '/tutoriels',
+        destination: '/academie',
         permanent: true,
       },
       {
@@ -386,12 +466,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/opportunites-b2b',
-        destination: '/a-reprendre',
+        destination: 'https://gosini.fr',
         permanent: true,
       },
       {
         source: '/opportunites/0034',
-        destination: '/a-reprendre',
+        destination: 'https://gosini.fr',
         permanent: true,
       },
       {

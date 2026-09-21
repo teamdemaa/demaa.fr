@@ -5,8 +5,8 @@ async function readSource(path: string) {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-describe("seller and accompaniment pages", () => {
-  it("keeps Vendre as the main seller destination and publishes Accompagnement separately", async () => {
+describe("archived seller and accompaniment pages", () => {
+  it("keeps former DEMAA acquisition and sale pages in source while removing them from public navigation", async () => {
     const [page, partners, accompaniment, studio, footer, navbar, sitemap] =
       await Promise.all([
         readSource("src/app/(marketing)/transmettre/page.tsx"),
@@ -21,16 +21,16 @@ describe("seller and accompaniment pages", () => {
     expect(page).toContain('path: "/transmettre"');
     expect(page).toContain("buildPublicPageMetadata");
     expect(page).toContain("BusinessSaleLandingPage");
-    expect(partners).toContain('permanentRedirect("/accompagnement")');
+    expect(partners).toContain('permanentRedirect("https://gosini.fr")');
     expect(accompaniment).toContain('path: "/accompagnement"');
     expect(accompaniment).toContain("TransmissionLandingPage");
-    expect(studio).toContain('permanentRedirect("/accompagnement")');
-    expect(footer).toContain('{ label: "Vendre", href: "/transmettre" }');
-    expect(footer).toContain('{ label: "Accompagnement", href: "/accompagnement" }');
-    expect(navbar).toContain('label: "Vendre", href: "/transmettre"');
+    expect(studio).toContain('permanentRedirect("/specialistes")');
+    expect(footer).not.toContain('{ label: "Vendre", href: "/transmettre" }');
+    expect(footer).not.toContain('{ label: "Accompagnement", href: "/accompagnement" }');
+    expect(navbar).not.toContain('label: "Vendre", href: "/transmettre"');
     expect(navbar).not.toContain('label: "Demaa Partners"');
-    expect(sitemap).toContain("`${base}/transmettre`");
-    expect(sitemap).toContain("`${base}/accompagnement`");
+    expect(sitemap).not.toContain("`${base}/transmettre`");
+    expect(sitemap).not.toContain("`${base}/accompagnement`");
     expect(sitemap).not.toContain("`${base}/partners`");
   });
 

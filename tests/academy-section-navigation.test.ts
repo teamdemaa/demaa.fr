@@ -6,14 +6,14 @@ import {
 import { PUBLIC_EDITORIAL_VISIBILITY } from "@/lib/public-editorial-visibility";
 
 describe("Academy content sections", () => {
-  it("publishes only the fifteen process guides in Organiser while preserving historical content", () => {
+  it("publishes illustrated Academy courses alongside the guides while preserving historical content", () => {
     const fundamentals = getAcademyFundamentals();
     const caseStudies = getAcademyCaseStudies();
     const processGuides = caseStudies.filter((content) => content.processGuide);
     const historicalCases = caseStudies.filter((content) => !content.processGuide);
 
     expect(PUBLIC_EDITORIAL_VISIBILITY.academyTutorials).toBe(true);
-    expect(PUBLIC_EDITORIAL_VISIBILITY.academyFormations).toBe(false);
+    expect(PUBLIC_EDITORIAL_VISIBILITY.academyFormations).toBe(true);
     expect(caseStudies).toHaveLength(21);
     expect(processGuides).toHaveLength(15);
     expect(historicalCases).toHaveLength(6);
@@ -22,7 +22,7 @@ describe("Academy content sections", () => {
     expect(fundamentals.every((content) => content.kind === "course")).toBe(true);
   });
 
-  it("preserves the five historical formation themes outside the public Organiser index", () => {
+  it("preserves the Academy formation themes", () => {
     const categoriesBySlug = Object.fromEntries(
       getAcademyFundamentals().map((content) => [
         content.identity.slug,

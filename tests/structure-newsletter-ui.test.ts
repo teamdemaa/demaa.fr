@@ -57,7 +57,7 @@ describe("Organiser newsletter public contract", () => {
     expect(component).toContain("<StructureProblemSubmissionForm onClose={closeProblem} />");
     expect(directPage).toContain("<StructureProblemSubmissionForm />");
     expect(directPage).toContain('path: "/session-structurer"');
-    expect(read("src/app/sitemap.ts")).toContain("`${base}/session-structurer`");
+    expect(read("src/app/sitemap.ts")).not.toContain("`${base}/session-structurer`");
   });
 
   it("renders the same component at the approved editorial surfaces only", () => {

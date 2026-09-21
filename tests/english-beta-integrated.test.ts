@@ -27,7 +27,7 @@ describe("English beta integrated release boundaries", () => {
     const footer = source("src/components/Footer.tsx");
     const sitemap = source("src/app/sitemap.ts");
 
-    expect(page).toContain('permanentRedirect("/a-reprendre")');
+    expect(page).toContain('permanentRedirect("https://gosini.fr")');
     expect(footer).not.toContain('href: "/opportunites"');
     expect(sitemap).not.toContain("`${base}/opportunites`");
   });

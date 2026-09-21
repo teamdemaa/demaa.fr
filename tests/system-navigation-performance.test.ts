@@ -41,8 +41,8 @@ describe("system navigation performance contract", () => {
     expect(searchSource).not.toContain("prefetch={false}");
     expect(searchSource).not.toContain("useLinkStatus");
     expect(searchSource).not.toContain("SystemDirectoryCardPendingOverlay");
-    expect(detailSource).toMatch(/<Link\s+href="\/outils"/);
-    expect(detailSource).toContain("Retour aux outils");
+    expect(detailSource).toMatch(/<Link\s+href="\/solutions"/);
+    expect(detailSource).toContain("Retour aux solutions");
     expect(detailSource).not.toContain("router.back()");
   });
 

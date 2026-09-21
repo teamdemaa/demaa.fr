@@ -17,34 +17,34 @@ describe("public route integrity", () => {
     expect(sectorPages).not.toContain('href: "/annuaire-services"');
     expect(sectorPages).not.toContain('href: "/organisation"');
     expect(sectorPages).not.toContain('href: "/structuration"');
-    expect(sectorPages).toContain('href: "/outils"');
-    expect(sectorPages).toContain('href: "/accompagnement"');
+    expect(sectorPages).toContain('href: "/solutions"');
+    expect(sectorPages).toContain('href: "/specialistes"');
     expect(sectorPages).not.toContain('href: "/application-metier"');
     expect(sectorPages).not.toContain('href: "/systemes"');
     expect(sectorPages).not.toContain('href: "/services"');
-    expect(validator).toContain('"/outils"');
-    expect(validator).toContain('"/transmettre"');
-    expect(validator).toContain('"/accompagnement"');
+    expect(validator).toContain('"/solutions"');
+    expect(validator).toContain('"/specialistes"');
     expect(validator).not.toContain('"/application-metier"');
     expect(validator).not.toContain('"/systemes"');
     expect(validator).not.toContain('"/services"');
     expect(validator).not.toContain('"/organisation"');
-    expect(sectorPage).toContain('href="/outils"');
+    expect(sectorPage).toContain('href="/solutions"');
     expect(sectorPage).not.toContain('href="/systemes"');
     expect(academyRoutes).toContain(
-      'source: "/cours/obligations-finances-entreprise",\n    destination: "/outils"',
+      'source: "/cours/obligations-finances-entreprise",\n    destination: "/solutions"',
     );
   });
 
   it("publishes the three strategic hubs and keeps secondary offers out of the sitemap", async () => {
     const sitemap = await readSource("src/app/sitemap.ts");
 
-    expect(sitemap).toContain('`${base}/transmettre`');
-    expect(sitemap).toContain('`${base}/accompagnement`');
+    expect(sitemap).toContain('`${base}/academie`');
+    expect(sitemap).toContain('`${base}/solutions`');
+    expect(sitemap).toContain('`${base}/specialistes`');
     expect(sitemap).not.toContain('`${base}/automatisation`');
     expect(sitemap).not.toContain('`${base}/application-metier`');
-    expect(sitemap).toContain('`${base}/outils`');
-    expect(sitemap).toContain('`${base}/tutoriels`');
+    expect(sitemap).not.toContain('`${base}/outils`');
+    expect(sitemap).not.toContain('`${base}/tutoriels`');
     expect(sitemap).not.toContain('`${base}/organiser`');
     expect(sitemap).not.toContain('`${base}/organiser/processus`');
     expect(sitemap).not.toContain('`${base}/services`');
@@ -54,14 +54,14 @@ describe("public route integrity", () => {
     expect(sitemap).not.toContain('`${base}/systemes`');
   });
 
-  it("returns retained service details to Accompagnement while Specialists is parked", async () => {
+  it("returns retained service details to Specialists", async () => {
     const servicePage = await readSource(
       "src/app/(marketing)/services/[slug]/page.tsx",
     );
 
-    expect(servicePage).toContain('PUBLIC_SPECIALISTS_ENABLED ? "/specialistes" : "/accompagnement"');
+    expect(servicePage).toContain('href="/specialistes"');
     expect(servicePage).not.toContain('href="/services"');
-    expect(servicePage).toContain('PUBLIC_SPECIALISTS_ENABLED ? "Retour aux spécialistes" : "Retour à l’accompagnement"');
+    expect(servicePage).toContain("Retour aux spécialistes");
   });
 
   it("delivers live-session métier resources through the canonical Solutions routes", async () => {

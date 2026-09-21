@@ -153,7 +153,7 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
                 : "border-transparent text-brand-blue/55 hover:text-dema-forest"
             }`}
           >
-            Tutoriel
+            Guides
           </button>
           <button
             ref={modelsTabRef}
@@ -247,7 +247,7 @@ export default function OrganiserLibrary({ guides, models, processes }: Organise
           ) : null}
 
           {filteredProcesses.length || filteredGuides.length ? (
-        <section id="cas-concrets" aria-label="Cas concrets" className="scroll-mt-24 px-4 py-14 sm:px-6 md:py-16 lg:px-8">
+        <section id="guides" aria-label="Guides pratiques" className="scroll-mt-24 px-4 py-14 sm:px-6 md:py-16 lg:px-8">
           <div className="mx-auto w-full max-w-7xl">
             <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
               {filteredGuides.map((guide, index) => {

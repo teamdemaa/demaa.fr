@@ -15,14 +15,14 @@ afterEach(() => {
 });
 
 describe("proxy content security policy", () => {
-  it("keeps the canonical root available as the DEMAA hub", () => {
+  it("starts DEMAA directly in the Academy while preserving campaign parameters", () => {
     const response = proxy(new NextRequest(
       "https://demaa.fr/?utm_campaign=lancement&utm_source=newsletter",
       { headers: { host: "demaa.fr" } },
     ));
 
-    expect(response.status).toBe(200);
-    expect(response.headers.get("location")).toBeNull();
+    expect(response.status).toBe(308);
+    expect(response.headers.get("location")).toBe("https://demaa.fr/academie?utm_campaign=lancement&utm_source=newsletter");
   });
 
   it("keeps the parked Specialists universe private and out of search results", () => {

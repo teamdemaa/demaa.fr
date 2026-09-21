@@ -68,11 +68,11 @@ export default function SystemDetailContent({
     >
       {!embedded ? (
         <Link
-          href="/outils"
+          href="/solutions"
           className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          Retour aux outils
+          Retour aux solutions
         </Link>
       ) : null}
 

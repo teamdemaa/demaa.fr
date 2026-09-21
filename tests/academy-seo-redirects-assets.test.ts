@@ -181,7 +181,7 @@ describe("Academy SEO, redirects and assets", () => {
     );
     expect(redirects).toContainEqual({
       source: "/cours/obligations-finances-entreprise",
-      destination: "/outils",
+      destination: "/solutions",
       permanent: true,
     });
   });

@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import HomeTabsClient from "@/components/HomeTabsClient";
 import OrganiserDiscoveryCta from "@/components/OrganiserDiscoveryCta";
-import ResourcesNavigation from "@/components/ResourcesNavigation";
 import {
   enterpriseToSystem,
   type EnterpriseDefinition,
@@ -26,7 +25,6 @@ export default function SystemsHubPage({
     <>
       <Navbar publicNavigationActiveView="solutions" />
       <main className="flex-1 min-h-screen w-full bg-dema-cream">
-        <ResourcesNavigation activeView="tools" />
         <HomeTabsClient systems={systems} sectorLabelsBySlug={sectorLabelsBySlug} />
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="pt-4">

@@ -356,7 +356,7 @@ export default function GuestActionPlanExperience({
     } catch {
       // Ignore a malformed referrer and use the stable public fallback.
     }
-    router.push("/outils");
+    router.push("/solutions");
   }
 
   if (isGenerating) return <ActionPlanGenerationScreen localeCode={contentLocaleCode} />;

@@ -1,5 +1,5 @@
 import { permanentRedirect } from "next/navigation";
 
 export default function PartnersPage() {
-  permanentRedirect("/accompagnement");
+  permanentRedirect("https://gosini.fr");
 }

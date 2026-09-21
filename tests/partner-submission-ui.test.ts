@@ -16,7 +16,7 @@ describe("legacy opportunities retirement", () => {
       readSource("src/app/sitemap.ts"),
     ]);
 
-    expect(page).toContain('permanentRedirect("/a-reprendre")');
+    expect(page).toContain('permanentRedirect("https://gosini.fr")');
     expect(nextConfig).not.toContain("/opportunites?intent=team-demaa-profile");
     expect(sitemap).not.toContain("`${base}/rejoindre-team-demaa`");
   });

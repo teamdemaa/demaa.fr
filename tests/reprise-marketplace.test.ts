@@ -207,7 +207,7 @@ describe("marketplace À reprendre", () => {
     expect(sellerRoute).toContain('requestType: "business_sale_request"');
     expect(sellerRoute).toContain('channels: { email: true, resend: false, slack: false }');
     expect(sellerRoute).toContain("Merci de présenter brièvement votre entreprise");
-    expect(sellerRoute).toContain('source: "Demaa - Projet de vente"');
+    expect(sellerRoute).toContain('brand === "sini" ? "sini - Projet de vente" : "Demaa - Projet de vente"');
     expect(sellerRoute).toContain('{ label: "Projet de vente", value: message }');
     expect(sellerRoute).not.toContain("Projet de transmission");
     expect(page).toContain('path: "/a-reprendre"');

@@ -1,6 +1,5 @@
 import CopyableModelsIndex from "@/components/CopyableModelsIndex";
 import Navbar from "@/components/Navbar";
-import ResourcesNavigation from "@/components/ResourcesNavigation";
 import {
   getPublishedCopyableModels,
   getPublishedCopyableModelsForSystemSlug,
@@ -51,7 +50,6 @@ export default async function ModelsPage({ searchParams }: ModelsPageProps) {
       />
       <Navbar minimal publicNavigationActiveView="academy" />
       <main className="min-h-screen bg-background">
-        <ResourcesNavigation activeView="models" />
         <CopyableModelsIndex
           fromOrganisation={source === "organisation"}
           models={models}

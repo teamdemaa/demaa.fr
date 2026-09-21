@@ -37,7 +37,7 @@ export const LEGACY_ACADEMY_SLUG_ALIASES = {
   "transformer-une-demande-en-client": "transformer-demande-en-client",
 } as const;
 
-export const ARCHIVED_ACADEMY_DESTINATION = "/tutoriels";
+export const ARCHIVED_ACADEMY_DESTINATION = "/academie";
 
 export const ACADEMY_PERMANENT_REDIRECTS = [
   {
@@ -47,7 +47,7 @@ export const ACADEMY_PERMANENT_REDIRECTS = [
   },
   {
     source: "/cours/obligations-finances-entreprise",
-    destination: "/outils",
+    destination: "/solutions",
     permanent: true,
   },
   {

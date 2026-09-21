@@ -15,9 +15,6 @@ import { getToolDirectorySlug, hasStandaloneToolPage } from "@/lib/tool-director
 import { getUnifiedToolDirectory } from "@/lib/tool-directory-firestore";
 import { getPublishedCopyableModels } from "@/lib/copyable-model-catalog";
 import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
-import { getRepriseOpportunityPath } from "@/lib/reprise-opportunity-seo";
-import { repriseOpportunities } from "@/lib/reprise-opportunities";
-import { getPublishedTutorials } from "@/lib/tutorial-catalog";
 
 export const dynamic = "force-dynamic";
 
@@ -27,9 +24,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // crawlers that every one of the 800+ URLs changed on every request.
   const siteUpdatedAt = new Date("2026-09-03T00:00:00.000Z");
   const toolsAndTutorialsUpdatedAt = new Date("2026-09-14T00:00:00.000Z");
-  const repriseUpdatedAt = new Date(Math.max(
-    ...repriseOpportunities.map((opportunity) => new Date(opportunity.publishedAt).getTime()),
-  ));
   const [tools, enterprises, accountingFirms] = await Promise.all([
     getUnifiedToolDirectory(),
     getEnterpriseCatalog(),
@@ -37,21 +31,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${base}/a-reprendre`, lastModified: repriseUpdatedAt, changeFrequency: "weekly", priority: 1 },
-    { url: `${base}/outils`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
+    { url: `${base}/academie`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 1 },
+    { url: `${base}/solutions`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.95 },
     ...(PUBLIC_SPECIALISTS_ENABLED
       ? [{ url: `${base}/specialistes`, lastModified: siteUpdatedAt, changeFrequency: "weekly" as const, priority: 0.94 }]
       : []),
-    { url: `${base}/transmettre`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.85 },
-    { url: `${base}/accompagnement`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.75 },
     { url: `${base}/modeles`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/session-structurer`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/annuaire-outils`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
     { url: `${base}/aides-et-subventions`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-reseaux-pro`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-newsletters`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/annuaire-experts-comptables`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${base}/tutoriels`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.93 },
     { url: `${base}/contenus`, lastModified: siteUpdatedAt, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/mentions-legales`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
     { url: `${base}/conditions-d-utilisation`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
@@ -68,18 +58,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.78,
       ...(entry.media.slides?.[0]
         ? { images: [`${base}${entry.media.slides[0]}`] }
-        : {}),
-    }),
-  );
-
-  const tutorialEntries: MetadataRoute.Sitemap = getPublishedTutorials().map(
-    (tutorial) => ({
-      url: `${base}/tutoriels/${tutorial.slug}`,
-      lastModified: new Date(tutorial.updatedAt),
-      changeFrequency: "monthly" as const,
-      priority: 0.82,
-      ...(tutorial.format === "practice"
-        ? { images: [`${base}${tutorial.thumbnail.split("?")[0]}`] }
         : {}),
     }),
   );
@@ -185,18 +163,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.82,
   }));
 
-  const repriseOpportunityEntries: MetadataRoute.Sitemap = repriseOpportunities.map((opportunity) => ({
-    url: `${base}${getRepriseOpportunityPath(opportunity)}`,
-    lastModified: new Date(opportunity.publishedAt),
-    changeFrequency: "weekly" as const,
-    priority: 0.86,
-  }));
-
   return [
     ...staticRoutes,
-    ...repriseOpportunityEntries,
     ...contentEntries,
-    ...tutorialEntries,
     ...newsletterSitemapEntries,
     ...toolEntries,
     ...freeToolEntries,

@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, LibraryBig, ListChecks, Workflow, Wrench } from "lucide-react";
+import { BookOpen, ListChecks, Workflow, Wrench } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -13,14 +13,15 @@ const tabClassName =
 
 const navigationItems = {
   plan: { view: "plan", labels: { fr: "Plan d’action", en: "Action plan" }, Icon: ListChecks },
-  solutions: { view: "solutions", labels: { fr: "Outils", en: "Tools" }, Icon: Wrench },
-  services: { view: "services" as const, labels: { fr: "Accompagnement", en: "Support" }, Icon: Workflow },
-  academy: { view: "academy", labels: { fr: "Tutoriels", en: "Tutorials" }, Icon: BookOpen },
+  solutions: { view: "solutions", labels: { fr: "Solutions", en: "Solutions" }, Icon: Wrench },
+  services: { view: "services" as const, labels: { fr: "Spécialistes", en: "Specialists" }, Icon: Workflow },
+  academy: { view: "academy", labels: { fr: "Academy", en: "Academy" }, Icon: BookOpen },
 } as const;
 
 const publicNavigationOrder: readonly ActionPlanView[] = [
-  "services",
+  "academy",
   "solutions",
+  "services",
 ];
 
 const embeddedNavigationOrder: readonly ActionPlanView[] = [
@@ -73,14 +74,8 @@ export default function ActionPlanNavbar({
         aria-label={localeCode === "en" ? "Main navigation" : "Navigation principale"}
       >
         {displayedItems.map(({ view, labels, Icon }) => {
-          const usesResourcesParent = routeNavigation && view === "solutions";
-          const usesTransmissionRoute = routeNavigation && localeCode === "fr" && view === "services";
-          const label = usesResourcesParent
-    ? localeCode === "en" ? "Resources" : "Ressources"
-    : usesTransmissionRoute
-      ? "Vendre"
-    : labels[localeCode];
-          const DisplayIcon = usesResourcesParent ? LibraryBig : Icon;
+          const label = labels[localeCode];
+          const DisplayIcon = Icon;
           const isActive = activeView === view;
           const className = `${tabClassName} ${isActive ? "bg-dema-sage text-dema-forest xl:bg-transparent xl:font-semibold" : "text-dema-muted hover:text-brand-blue"}`;
           const content = (
@@ -102,12 +97,12 @@ export default function ActionPlanNavbar({
           const routeHref = localeCode === "en"
             ? `/en?view=${view}`
             : view === "solutions"
-              ? "/outils"
+              ? "/solutions"
               : view === "plan"
               ? "/"
               : view === "academy"
-                ? "/tutoriels"
-                : "/transmettre";
+                ? "/academie"
+                : "/specialistes";
           const usesPublicRoute = routeNavigation
             || (localeCode === "fr" && (view === "solutions" || view === "academy" || view === "services"));
 

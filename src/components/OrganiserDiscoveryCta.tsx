@@ -13,7 +13,7 @@ export default function OrganiserDiscoveryCta({
   ctaLabel = "Voir les tutoriels",
   description = "Des pas-à-pas concrets pour prendre en main, configurer et utiliser vos outils au quotidien.",
   eyebrow,
-  href = "/tutoriels",
+  href = "/academie",
   title = "Des tutoriels pour mieux utiliser vos outils",
 }: OrganiserDiscoveryCtaProps = {}) {
   return (

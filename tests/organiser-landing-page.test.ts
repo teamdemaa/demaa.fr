@@ -131,7 +131,7 @@ describe("Méthodes, Modèles and Outils public journey", () => {
     expect(route).toContain('replace(/</g, "\\\\u003c")');
   });
 
-  it("keeps Outils limited to software while Models has its own catalogue", () => {
+  it("uses Solutions as the public entry point for the existing métier catalogue", () => {
     const toolsPage = read("src/app/(marketing)/outils/page.tsx");
     const toolsHub = read("src/components/SystemsHubPage.tsx");
     const visibility = read("src/lib/public-solution-section-visibility.ts");
@@ -139,7 +139,7 @@ describe("Méthodes, Modèles and Outils public journey", () => {
     expect(toolsPage).toContain('path: "/outils"');
     expect(toolsPage).toContain("<SystemsHubPage enterprises={enterprises} />");
     expect(toolsHub).toContain("<HomeTabsClient");
-    expect(toolsHub).toContain('<ResourcesNavigation activeView="tools" />');
+    expect(toolsHub).not.toContain("ResourcesNavigation");
     expect(toolsHub).not.toContain("ToolsModelsSection");
     expect(toolsHub).not.toContain("getPublishedCopyableModels");
     expect(toolsHub).not.toContain("getEnterpriseCatalog");

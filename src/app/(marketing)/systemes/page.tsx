@@ -1,5 +1,5 @@
 import { permanentRedirect } from "next/navigation";
 
 export default async function SystemsPage() {
-  permanentRedirect("/outils");
+  permanentRedirect("/solutions");
 }

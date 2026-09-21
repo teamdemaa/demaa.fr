@@ -22,32 +22,32 @@ describe("legacy public route retirement", () => {
         }),
         expect.objectContaining({
           source: "/ressources",
-          destination: "/tutoriels",
+          destination: "/academie",
           permanent: true,
         }),
         expect.objectContaining({
           source: "/opportunites-b2b",
-          destination: "/a-reprendre",
+          destination: "https://gosini.fr",
           permanent: true,
         }),
         expect.objectContaining({
           source: "/opportunites/0034",
-          destination: "/a-reprendre",
+          destination: "https://gosini.fr",
           permanent: true,
         }),
         expect.objectContaining({
           source: "/organisation",
-          destination: "/tutoriels",
+          destination: "/academie",
           permanent: true,
         }),
         expect.objectContaining({
           source: "/structuration",
-          destination: "/tutoriels",
+          destination: "/academie",
           permanent: true,
         }),
         expect.objectContaining({
           source: "/structurer",
-          destination: "/tutoriels",
+          destination: "/academie",
           permanent: true,
         }),
         expect.objectContaining({

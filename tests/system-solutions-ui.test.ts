@@ -69,7 +69,7 @@ describe("system Solutions UI", () => {
     expect(markup).not.toMatch(/bientôt|placeholder/i);
   });
 
-  it("places Compare below the software title and renders tools as a non-scrollable grid", () => {
+  it("places Compare below the software title and renders every solution family as a horizontal rail", () => {
     const markup = renderToStaticMarkup(
       createElement(SystemSolutionsTab, {
         sections: publishedSolutionSectionsFixture,
@@ -80,12 +80,11 @@ describe("system Solutions UI", () => {
     expect(markup).toContain("Comparer");
     expect(markup).not.toContain("Choisir ses outils");
     expect(markup.indexOf("Outils")).toBeLessThan(markup.indexOf("Comparer"));
-    expect(markup).toContain('data-solution-section-layout="grid"');
-    expect(markup).toContain("grid-cols-1");
-    expect(markup).toContain("md:grid-cols-2");
-    expect(markup).toContain("lg:grid-cols-3");
-    expect(markup).not.toContain("Voir les solutions précédentes - Outils");
-    expect(markup).not.toContain("Voir les solutions suivantes - Outils");
+    expect(markup).toContain('data-solution-section-layout="rail"');
+    expect(markup).toContain("grid-flow-col");
+    expect(markup).toContain("overflow-x-auto");
+    expect(markup).toContain("Voir les solutions précédentes - Outils");
+    expect(markup).toContain("Voir les solutions suivantes - Outils");
   });
 
   it("opens directly on the published comparison table without tool cards", async () => {

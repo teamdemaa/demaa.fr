@@ -10,9 +10,8 @@ const hubLinks = [
 ];
 
 const resourceLinks = [
-  { label: "Méthodes", href: "/academie" },
-  { label: "Modèles à copier", href: "/modeles" },
-  { label: "Outils", href: "/outils" },
+  { label: "Guides pratiques", href: "/academie#guides" },
+  { label: "Modèles associés", href: "/modeles" },
 ];
 
 const demaaLinks = [
