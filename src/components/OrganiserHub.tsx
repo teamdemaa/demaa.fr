@@ -72,13 +72,7 @@ export default function OrganiserHub() {
           </h1>
         </header>
 
-        <section id="cours" aria-labelledby="academy-courses-title" className="mx-auto w-full max-w-7xl px-4 pb-14 sm:px-6 md:pb-16 lg:px-8">
-          <div className="mb-7 flex flex-col gap-2 sm:mb-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-dema-forest">Academy</p>
-            <h2 id="academy-courses-title" className="text-2xl font-light tracking-[-0.035em] text-brand-blue sm:text-3xl">
-              Les essentiels pour piloter avec plus de clarté.
-            </h2>
-          </div>
+        <section id="cours" aria-label="Cours Academy" className="mx-auto w-full max-w-7xl px-4 pb-14 sm:px-6 md:pb-16 lg:px-8">
           <div className="grid grid-cols-1 gap-x-8 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
             {courses.map((course, index) => {
               const { card } = course.identity;
