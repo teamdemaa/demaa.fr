@@ -50,7 +50,7 @@ export default function Navbar({
         <div className="mx-auto w-full px-3 sm:px-6 md:px-10 lg:px-24">
           <div className="relative flex items-center justify-between py-3 md:min-h-16 md:py-4">
             <Link
-              href={publicNavigationVariant === "demaa" ? "/solutions" : adminControls
+              href={publicNavigationVariant === "demaa" ? "/accompagnement" : adminControls
                 ? "/admin"
                 : localeCode === "en"
                   ? "/en"
