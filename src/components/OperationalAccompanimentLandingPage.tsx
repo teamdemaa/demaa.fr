@@ -39,7 +39,7 @@ const frequentlyAskedQuestions = [
 export default function OperationalAccompanimentLandingPage() {
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="services" publicNavigationVariant="demaa" />
+      <Navbar minimal publicNavigationActiveView="accompagnement" publicNavigationVariant="demaa" />
       <main className="min-h-screen overflow-x-clip bg-dema-cream text-brand-blue">
         <section className="border-b border-dema-line px-5 pb-16 pt-14 sm:px-8 sm:pb-20 sm:pt-20 lg:pt-24">
           <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[0.94fr_1.06fr] lg:gap-16">

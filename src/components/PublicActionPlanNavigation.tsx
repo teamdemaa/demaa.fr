@@ -1,7 +1,7 @@
 import { BookOpen, Building2, Handshake, LibraryBig, Workflow } from "lucide-react";
 import Link from "next/link";
 
-export type PublicActionPlanView = "marketplace" | "resources" | "services" | "academy" | "solutions" | "specialists";
+export type PublicActionPlanView = "marketplace" | "resources" | "services" | "accompagnement" | "academy" | "solutions" | "specialists";
 
 const navigationItems = [
   { view: "marketplace", label: "Reprendre", href: "/a-reprendre", Icon: Building2 },
@@ -12,7 +12,7 @@ const navigationItems = [
 // The Specialists directory remains available by direct link but is not part
 // of the public DEMAA navigation while it is being curated.
 const demaaNavigationItems = [
-  { view: "services", label: "Accompagnement", href: "/accompagnement", Icon: Handshake },
+  { view: "accompagnement", label: "Accompagnement", href: "/accompagnement", Icon: Handshake },
   { view: "solutions", label: "Solutions", href: "/solutions", Icon: Workflow },
   { view: "academy", label: "Tutoriels", href: "/academie", Icon: BookOpen },
 ] as const;
