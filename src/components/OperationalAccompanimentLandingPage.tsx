@@ -3,24 +3,24 @@ import AccompanimentContactControl from "@/components/AccompanimentContactContro
 import Navbar from "@/components/Navbar";
 
 const deliverables = [
-  { title: "Un suivi partagé", text: "Demandes, clients, devis, projets ou interventions." },
-  { title: "Des informations accessibles", text: "Documents, décisions et contexte au même endroit." },
-  { title: "Des responsabilités claires", text: "Chaque personne sait ce qu’elle a à faire et ce qui vient ensuite." },
-  { title: "Des routines qui tiennent", text: "Règles, modèles et automatisations simples pour ne pas repartir de zéro." },
+  { title: "Un point d’entrée unique", text: "Les demandes et les informations utiles arrivent au même endroit." },
+  { title: "Un suivi lisible", text: "Chacun voit où en est le travail et ce qui doit se passer ensuite." },
+  { title: "Des rôles clairs", text: "L’équipe sait qui fait quoi, sans devoir vous demander à chaque étape." },
+  { title: "Des règles simples", text: "Les documents, modèles et habitudes utiles sont en place pour que cela tienne." },
 ] as const;
 
 const weeks = [
   { number: "01", title: "Comprendre", text: "On observe ce qui bloque et on choisit un seul périmètre prioritaire." },
-  { number: "02", title: "Installer", text: "On configure les espaces, les données et les règles utiles." },
-  { number: "03", title: "Faire circuler", text: "On prépare les modèles, les consignes et les automatisations simples." },
-  { number: "04", title: "Faire tenir", text: "L’équipe teste avec ses cas réels ; on ajuste et on transmet." },
+  { number: "02", title: "Organiser", text: "On réunit les informations, les étapes et les règles utiles au même endroit." },
+  { number: "03", title: "Configurer", text: "On met en place les documents, les modèles et les automatisations simples." },
+  { number: "04", title: "Tester et transmettre", text: "L’équipe teste avec ses cas réels ; on ajuste et on transmet." },
 ] as const;
 
 const frequentlyAskedQuestions = [
   { question: "Faut-il déjà savoir quels outils utiliser ?", answer: "Non. Le diagnostic sert précisément à choisir ce qu’il faut simplifier, conserver ou mettre en place." },
   { question: "Faut-il tout changer ?", answer: "Non. Nous partons de ce qui existe. Un nouvel outil n’est retenu que s’il débloque réellement le travail." },
   { question: "Qu’attend-on de nous ?", answer: "Vous nous montrez le fonctionnement réel, validez les décisions et faites tester l’équipe. On prend en charge la structuration et la mise en place." },
-  { question: "Que reste-t-il à la fin des quatre semaines ?", answer: "Un premier système utilisé par l’équipe : les informations utiles, les responsabilités, les modèles et les routines sont installés sur le périmètre choisi." },
+  { question: "Que reste-t-il à la fin des quatre semaines ?", answer: "Un flux prioritaire que l’équipe peut utiliser : les informations utiles, les responsabilités, les modèles et les routines sont installés sur le périmètre choisi." },
 ] as const;
 
 export default function OperationalAccompanimentLandingPage() {
@@ -63,14 +63,14 @@ export default function OperationalAccompanimentLandingPage() {
 
         <section className="border-b border-dema-line bg-dema-cream px-5 py-24 sm:px-8 sm:py-28 lg:py-32">
           <div className="mx-auto max-w-6xl">
-            <h2 className="max-w-3xl text-4xl font-light leading-tight tracking-[-0.04em] sm:text-5xl">Ce que vous repartez avec.</h2>
+            <h2 className="max-w-4xl text-4xl font-light leading-tight tracking-[-0.04em] sm:text-5xl">Dans quatre semaines, ce flux ne repose plus uniquement sur vous.</h2>
             <div className="mt-14 grid gap-px overflow-hidden rounded-[1.75rem] border border-dema-line bg-dema-line sm:grid-cols-2">{deliverables.map((deliverable) => <article key={deliverable.title} className="bg-dema-paper p-9 sm:p-10"><h3 className="text-xl font-medium tracking-[-0.03em]">{deliverable.title}</h3><p className="mt-4 max-w-md text-sm leading-7 text-dema-muted">{deliverable.text}</p></article>)}</div>
           </div>
         </section>
 
         <section className="border-b border-dema-line bg-dema-paper px-5 py-24 sm:px-8 sm:py-28 lg:py-32">
           <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-            <div><h2 className="text-4xl font-light leading-tight tracking-[-0.04em] sm:text-5xl">Du fonctionnement réel à une première version qui tient.</h2></div>
+            <div><h2 className="text-4xl font-light leading-tight tracking-[-0.04em] sm:text-5xl">Comment on l’installe avec vous.</h2></div>
             <ol className="divide-y divide-dema-line border-y border-dema-line">{weeks.map((week) => <li key={week.number} className="grid gap-4 py-6 sm:grid-cols-[4rem_12rem_1fr] sm:gap-6"><span className="text-2xl font-light text-dema-forest/60">{week.number}</span><h3 className="text-xl font-medium tracking-[-0.03em]">{week.title}</h3><p className="max-w-2xl text-sm leading-7 text-dema-muted">{week.text}</p></li>)}</ol>
           </div>
         </section>
@@ -84,7 +84,7 @@ export default function OperationalAccompanimentLandingPage() {
 
         <section className="bg-dema-forest px-5 py-24 text-dema-paper sm:px-8 sm:py-28 lg:py-32">
           <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-16">
-            <div><p className="text-xs font-medium uppercase tracking-[0.16em] text-dema-sage">Accompagnement de quatre semaines</p><h2 className="mt-4 max-w-3xl text-4xl font-light leading-tight tracking-[-0.04em] sm:text-5xl">On installe une première version avec vous.</h2><p className="mt-7 text-5xl font-light tracking-[-0.05em] text-dema-paper sm:text-6xl">3 500 € HT</p><p className="mt-6 max-w-2xl text-base leading-7 text-dema-paper/72">Mise en place, documentation, tests avec l’équipe et transmission inclus. Décrivez ce qui vous revient sans cesse : nous vous dirons franchement si cet accompagnement est adapté.</p></div>
+            <div><p className="text-xs font-medium uppercase tracking-[0.16em] text-dema-sage">Accompagnement de quatre semaines</p><h2 className="mt-4 max-w-3xl text-4xl font-light leading-tight tracking-[-0.04em] sm:text-5xl">Quatre semaines pour installer un système de travail clair.</h2><p className="mt-7 text-5xl font-light tracking-[-0.05em] text-dema-paper sm:text-6xl">3 500 € HT</p><p className="mt-6 max-w-2xl text-base leading-7 text-dema-paper/72">Un flux prioritaire, les informations utiles réunies, des responsabilités claires et un fonctionnement testé avec votre équipe. Décrivez ce qui vous revient sans cesse : nous vous dirons franchement si cet accompagnement est adapté.</p></div>
             <div className="flex flex-col items-start gap-3 lg:items-end"><AccompanimentContactControl className="inline-flex min-h-12 items-center justify-center rounded-full bg-dema-paper px-7 py-3 text-sm font-semibold text-brand-blue transition hover:bg-dema-sage" label="Réserver un diagnostic offert" /><p className="text-xs text-dema-paper/65">30 minutes · Sans engagement</p></div>
           </div>
         </section>

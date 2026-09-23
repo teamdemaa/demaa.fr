@@ -16,10 +16,14 @@ describe("landing d’accompagnement", () => {
     expect(landing).toContain("Le problème n’est pas le manque d’outils. C’est l’absence d’un fonctionnement partagé.");
     expect(landing).toContain("On commence par ce qui vous revient trop souvent.");
     expect(landing).toContain("on part de votre fonctionnement et de vos outils actuels");
-    expect(landing).toContain("Ce que vous repartez avec.");
+    expect(landing).toContain("Dans quatre semaines, ce flux ne repose plus uniquement sur vous.");
+    expect(landing).toContain("Comment on l’installe avec vous.");
+    expect(landing).toContain("Quatre semaines pour installer un système de travail clair.");
     expect(landing).toContain("3 500 € HT");
     expect(landing).toContain('label="Réserver un diagnostic offert"');
     expect(landing).not.toContain("Votre entreprise ne doit plus tenir dans votre tête.");
     expect(landing).not.toContain("Le moment où cela bloque");
+    expect(landing).not.toContain("Ce que vous repartez avec.");
+    expect(landing).not.toContain("une première version qui tient");
   });
 });
