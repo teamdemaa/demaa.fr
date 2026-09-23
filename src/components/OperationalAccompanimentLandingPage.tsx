@@ -32,7 +32,7 @@ const weeks = [
 const frequentlyAskedQuestions = [
   { question: "Faut-il déjà savoir quels outils utiliser ?", answer: "Non. Le diagnostic sert précisément à choisir ce qu’il faut simplifier, conserver ou mettre en place." },
   { question: "Faut-il tout changer ?", answer: "Non. Nous partons de ce qui existe. Un nouvel outil n’est retenu que s’il débloque réellement le travail." },
-  { question: "Qu’attend-on de nous ?", answer: "Vous nous montrez le fonctionnement réel, validez les décisions et faites tester l’équipe. Demaa prend en charge la structuration et la mise en place." },
+  { question: "Qu’attend-on de nous ?", answer: "Vous nous montrez le fonctionnement réel, validez les décisions et faites tester l’équipe. On prend en charge la structuration et la mise en place." },
   { question: "Que reste-t-il à la fin des quatre semaines ?", answer: "Un premier système utilisé par l’équipe : les informations utiles, les responsabilités, les modèles et les routines sont installés sur le périmètre choisi." },
 ] as const;
 
@@ -45,7 +45,7 @@ export default function OperationalAccompanimentLandingPage() {
           <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[0.94fr_1.06fr] lg:gap-16">
             <div>
               <h1 className="max-w-3xl text-5xl font-light leading-[0.98] tracking-[-0.05em] sm:text-6xl lg:text-7xl">Votre entreprise ne doit plus tenir dans votre tête.</h1>
-              <p className="mt-7 max-w-2xl text-lg leading-8 text-dema-muted sm:text-xl">En quatre semaines, Demaa installe le système qui permet à votre équipe de retrouver l’information, suivre le travail et faire avancer les priorités sans tout vous redemander.</p>
+              <p className="mt-7 max-w-2xl text-lg leading-8 text-dema-muted sm:text-xl">En quatre semaines, on installe le système qui permet à votre équipe de retrouver l’information, suivre le travail et faire avancer les priorités sans tout vous redemander.</p>
               <div className="mt-9 flex flex-col items-start gap-3">
                 <AccompanimentContactControl label="Faire le point gratuitement" />
                 <p className="text-xs text-dema-muted">Diagnostic de 30 minutes · Sans engagement</p>
@@ -78,7 +78,7 @@ export default function OperationalAccompanimentLandingPage() {
               <p className="text-xs font-medium uppercase tracking-[0.16em] text-dema-sage">Ce que nous faisons</p>
               <h2 className="mt-4 max-w-3xl text-4xl font-light leading-tight tracking-[-0.04em] sm:text-5xl">Pas un audit. Pas un tableau de plus.</h2>
               <p className="mt-5 max-w-2xl text-lg leading-8 text-dema-paper/72">Un fonctionnement qui existe vraiment le lundi suivant.</p>
-              <p className="mt-7 max-w-2xl text-base leading-7 text-dema-paper/72">Vous connaissez votre activité et vous validez les décisions. Demaa structure, configure, documente et teste le fonctionnement avec vos vrais cas.</p>
+              <p className="mt-7 max-w-2xl text-base leading-7 text-dema-paper/72">Vous connaissez votre activité et vous validez les décisions. On structure, configure, documente et teste le fonctionnement avec vos vrais cas.</p>
               <ul className="mt-8 divide-y divide-dema-paper/18 border-y border-dema-paper/18">{outcomes.map((item) => <li key={item} className="flex gap-3 py-4 text-sm leading-6 text-dema-paper/82"><Check className="mt-1 h-4 w-4 shrink-0 text-dema-sage" aria-hidden="true" />{item}</li>)}</ul>
             </div>
             <figure className="overflow-hidden rounded-[2rem] bg-dema-paper p-3 sm:p-5"><Image src="/images/accompagnement/atelier-organisation-equipe.png" alt="Une équipe travaille ensemble sur son fonctionnement." width={1536} height={1024} sizes="(min-width: 1024px) 50vw, 100vw" className="h-auto w-full mix-blend-multiply" /></figure>
