@@ -11,6 +11,7 @@ import PublicActionPlanNavigation, {
 } from "@/components/PublicActionPlanNavigation";
 import type { InterfaceLocaleCode } from "@/lib/international-context";
 import { getLocalizedActionPlanPath } from "@/lib/action-plan-localization";
+import { DEMAA_DEFAULT_PUBLIC_PATH } from "@/lib/demaa-public-routes";
 
 export default function Navbar({
   adminControls = false,
@@ -22,7 +23,7 @@ export default function Navbar({
   publicCtaHref,
   publicCtaLabel,
   publicNavigationActiveView,
-  publicNavigationVariant = "legacy",
+  publicNavigationVariant = "demaa",
 }: {
   adminControls?: boolean;
   anonymousLanding?: boolean;
@@ -50,13 +51,11 @@ export default function Navbar({
         <div className="mx-auto w-full px-3 sm:px-6 md:px-10 lg:px-24">
           <div className="relative flex items-center justify-between py-3 md:min-h-16 md:py-4">
             <Link
-              href={publicNavigationVariant === "demaa" ? "/accompagnement" : adminControls
+              href={adminControls
                 ? "/admin"
                 : localeCode === "en"
                   ? "/en"
-                  : anonymousLanding
-                    ? "/"
-                    : "/a-reprendre"}
+                  : DEMAA_DEFAULT_PUBLIC_PATH}
               aria-label={
                 adminControls
                   ? "Accueil administration"

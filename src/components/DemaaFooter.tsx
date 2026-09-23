@@ -1,16 +1,11 @@
 import Link from "next/link";
 import DemaaWordmark from "@/components/DemaaWordmark";
+import { DEMAA_DEFAULT_PUBLIC_PATH, DEMAA_PUBLIC_NAVIGATION } from "@/lib/demaa-public-routes";
 
-const exploreLinks = [
-  { label: "Académie", href: "/academie" },
-  { label: "Solutions", href: "/solutions" },
-  { label: "Spécialistes", href: "/specialistes" },
-];
+const exploreLinks = DEMAA_PUBLIC_NAVIGATION.map(({ label, href }) => ({ label, href }));
 
 const usefulLinks = [
-  { label: "Modèles", href: "/modeles" },
-  { label: "Annuaire des outils", href: "/annuaire-outils" },
-  { label: "Outils gratuits", href: "/outils" },
+  { label: "Nous contacter", href: "mailto:team@demaa.fr" },
 ];
 
 const legalLinks = [
@@ -49,16 +44,15 @@ export default function DemaaFooter() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="space-y-4 lg:col-span-2">
-            <Link href="/solutions" className="inline-flex" aria-label="Demaa, aller aux solutions">
+            <Link href={DEMAA_DEFAULT_PUBLIC_PATH} className="inline-flex" aria-label="Demaa, aller à l’accompagnement">
               <DemaaWordmark className="text-[2.55rem]" colorClassName="text-brand-blue/56" />
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
               Des repères concrets pour organiser et piloter votre entreprise.
             </p>
-            <a href="mailto:team@demaa.fr" className={linkClass}>Nous contacter</a>
           </div>
           <FooterLinks title="Explorer" links={exploreLinks} />
-          <FooterLinks title="À utiliser" links={usefulLinks} />
+          <FooterLinks title="Contact" links={usefulLinks} />
           <FooterLinks title="Légal" links={legalLinks} />
         </div>
         <div className="mt-16 border-t border-neutral-200 pt-8 text-xs text-gray-500">

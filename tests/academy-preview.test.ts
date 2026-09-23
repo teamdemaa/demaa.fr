@@ -13,12 +13,12 @@ describe("DEMAA Academy editorial preview", () => {
     expect(cards).toHaveLength(4);
     expect(new Set(cards.map(({ href }) => href)).size).toBe(cards.length);
     expect(cards.map(({ href }) => href)).toEqual([
-      "/academie/creer-pipeline-commercial-airtable",
-      "/academie/suivre-devis-relances-airtable",
-      "/academie/organiser-projets-missions-clients-airtable",
-      "/academie/planifier-interventions-chantiers-airtable",
+      "/tutoriels/creer-pipeline-commercial-airtable",
+      "/tutoriels/suivre-devis-relances-airtable",
+      "/tutoriels/organiser-projets-missions-clients-airtable",
+      "/tutoriels/planifier-interventions-chantiers-airtable",
     ]);
-    expect(cards.every(({ href, format }) => href.startsWith("/academie/") && format === "Méthode")).toBe(true);
+    expect(cards.every(({ href, format }) => href.startsWith("/tutoriels/") && format === "Méthode")).toBe(true);
   });
 
   it("shows only real, available models beside related learning items", () => {
@@ -50,7 +50,7 @@ describe("DEMAA Academy editorial preview", () => {
     const markup = renderToStaticMarkup(createElement(AcademyPreviewLibrary, {
       cards: getAcademyPreviewCards(),
     }));
-    expect(markup).toContain('href="/academie/creer-pipeline-commercial-airtable"');
+    expect(markup).toContain('href="/tutoriels/creer-pipeline-commercial-airtable"');
     expect(markup).not.toContain("Modèle associé");
     expect(markup).not.toContain('href="/ressources');
   });

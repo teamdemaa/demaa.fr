@@ -4,6 +4,10 @@ import { isVercelPreviewHost } from "@/lib/site-url";
 import { getExplicitInterfaceLocaleFromPathname } from "@/lib/international-context";
 import { getPublishedCopyableModelBySlug } from "@/lib/copyable-model-catalog";
 import { buildDefaultHomeMarketplaceHref } from "@/lib/action-plan-home-routing";
+import {
+  DEMAA_DEFAULT_PUBLIC_PATH,
+  isArchivedDemaaPublicPath,
+} from "@/lib/demaa-public-routes";
 
 const CANONICAL_HOST = "demaa.fr";
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
@@ -80,9 +84,9 @@ export function proxy(request: NextRequest) {
   if (pathname === "/") {
     const marketplaceHref = buildDefaultHomeMarketplaceHref(request.nextUrl.searchParams);
     if (marketplaceHref) {
-      const solutionsHref = marketplaceHref.replace(/^\/a-reprendre(?=\?|$)/, "/solutions");
+      const publicHomeHref = marketplaceHref.replace(/^\/a-reprendre(?=\?|$)/, DEMAA_DEFAULT_PUBLIC_PATH);
       return withContentSecurityPolicy(
-        NextResponse.redirect(new URL(solutionsHref, request.url), 308),
+        NextResponse.redirect(new URL(publicHomeHref, request.url), 308),
         localeCode,
       );
     }
@@ -140,10 +144,14 @@ export function proxy(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-demaa-locale", localeCode);
-  return withContentSecurityPolicy(
+  const response = withContentSecurityPolicy(
     NextResponse.next({ request: { headers: requestHeaders } }),
     localeCode,
   );
+  if (isArchivedDemaaPublicPath(pathname)) {
+    response.headers.set("X-Robots-Tag", "noindex, follow");
+  }
+  return response;
 }
 
 export const config = {

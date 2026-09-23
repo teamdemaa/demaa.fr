@@ -27,8 +27,7 @@ describe("copyable model public routes", () => {
     expect(page).not.toContain("<ModelProcessesBridge />");
     expect(toolsPage).toContain("<SystemsHubPage enterprises={enterprises} />");
     expect(page).toContain('path: "/modeles"');
-    expect(navbar).toContain('label: "Ressources"');
-    expect(navbar).toContain('href: "/tutoriels"');
+    expect(navbar).toContain("DEMAA_PUBLIC_NAVIGATION");
     expect(toolsHub).not.toContain("getPublishedCopyableModels");
     expect(toolsHub).not.toContain("ToolsModelsSection");
     expect(toolsHub).toContain('<ResourcesNavigation activeView="tools" />');
@@ -39,9 +38,7 @@ describe("copyable model public routes", () => {
     expect(modelsIndex).toContain('href="/tutoriels"');
     expect(modelsIndex).toContain("Retour aux méthodes");
     expect(modelsIndex).toContain("`/modeles/${model.slug}?from=tutoriels`");
-    expect(footer).toContain('{ label: "Modèles à copier", href: "/modeles" }');
-    expect(footer).toContain('{ label: "Outils", href: "/outils" }');
-    expect(footer).toContain('{ label: "Méthodes", href: "/tutoriels" }');
+    expect(footer).toContain("<DemaaFooter />");
     expect(modelsIndex).toContain('style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}');
     expect(modelsIndex).toContain("block text-brand-blue/62");
     expect(modelsIndex).toContain("demaa-hero-title block text-dema-forest");
@@ -65,12 +62,6 @@ describe("copyable model public routes", () => {
     expect(modelCard).toContain("transition-colors duration-150");
     expect(modelCard).not.toContain("hover:-translate-y");
     expect(modelCard).not.toContain("hover:shadow-");
-    expect(footer.indexOf('{ label: "Méthodes"')).toBeLessThan(
-      footer.indexOf('{ label: "Modèles à copier"'),
-    );
-    expect(footer.indexOf('{ label: "Modèles à copier"')).toBeLessThan(
-      footer.indexOf('{ label: "Outils"'),
-    );
   });
 
   it("supports a full detail page and an intercepted modal with the same content", async () => {

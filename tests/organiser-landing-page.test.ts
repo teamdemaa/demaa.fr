@@ -15,35 +15,17 @@ import {
 const read = (path: string) => readFileSync(path, "utf8");
 
 describe("Méthodes, Modèles and Outils public journey", () => {
-  it("publishes one focused method library with the shared resource navigation", () => {
+  it("publishes the four retained Airtable tutorials from one public library", () => {
     const page = read("src/app/(marketing)/tutoriels/page.tsx");
     const hub = read("src/components/TutorialsHub.tsx");
     const library = read("src/components/TutorialLibrary.tsx");
 
-    expect(page).toContain("<TutorialsHub />");
+    expect(page).toContain("<AcademyPreviewLibrary cards={cards} />");
     expect(page).toContain('path: "/tutoriels"');
-    expect(hub).toContain('<ResourcesNavigation activeView="tutorials" />');
+    expect(page).toContain("Organiser et piloter son entreprise,");
+    expect(page).toContain("un sujet à la fois.");
     expect(hub).toContain("getPublishedMethods");
-    expect(hub).not.toContain("getPublishedTutorials");
-    expect(hub).toContain("Des méthodes concrètes pour reprendre,");
-    expect(hub).toContain("structurer ou vendre");
-    expect(hub).toContain("demaa-hero-title block text-dema-forest");
-    expect(hub).not.toContain("demaa-hero-title block font-normal");
-    expect(hub).not.toContain("étape par étape");
-    expect(hub).not.toContain("gagner du temps et faire avancer votre entreprise");
-    expect(hub).not.toContain("Tutoriels pratiques");
-    expect(hub).not.toContain("modèles Demaa");
-    expect(page).not.toContain("modèles Demaa");
     expect(library).toContain("Rechercher une méthode");
-    expect(library).toContain("SlidersHorizontal");
-    expect(library).toContain('className="demaa-search-control"');
-    expect(library).not.toContain("focus:ring-2 focus:ring-dema-forest/20");
-    expect(library).toContain('aria-label="Filtrer les méthodes par thème"');
-    expect(library).toContain('aria-live="polite"');
-    expect(library).not.toContain("<span>Tutoriel</span>");
-    expect(library).not.toContain("tutorial.minutes");
-    expect(library).not.toContain('role="tablist"');
-    expect(library).not.toContain("Modèles prêts à copier");
   });
 
   it("publishes five concise methods and keeps four Airtable implementations", () => {

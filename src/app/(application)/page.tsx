@@ -5,6 +5,7 @@ import { buildDefaultHomeMarketplaceHref } from "@/lib/action-plan-home-routing"
 import { loadActionPlanHomePage } from "@/lib/action-plan-pages.server";
 import { DEMAA_HOME_DESCRIPTION, DEMAA_HOME_TITLE } from "@/lib/demaa-positioning";
 import { buildLegacySolutionsRedirect } from "@/lib/organiser-navigation";
+import { DEMAA_DEFAULT_PUBLIC_PATH } from "@/lib/demaa-public-routes";
 
 export const metadata: Metadata = {
   title: DEMAA_HOME_TITLE,
@@ -50,7 +51,7 @@ export default async function HomePage({
   if (organiserRedirect) permanentRedirect(organiserRedirect);
   const defaultMarketplaceHref = buildDefaultHomeMarketplaceHref(query);
   if (defaultMarketplaceHref) {
-    permanentRedirect(defaultMarketplaceHref.replace(/^\/a-reprendre(?=\?|$)/, "/solutions"));
+    permanentRedirect(defaultMarketplaceHref.replace(/^\/a-reprendre(?=\?|$)/, DEMAA_DEFAULT_PUBLIC_PATH));
   }
 
   return (

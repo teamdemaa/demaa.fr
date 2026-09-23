@@ -30,7 +30,7 @@ export function getAcademyPreviewCards(): AcademyPreviewCard[] {
   return getPublishedPracticeTutorials().map((tutorial) => ({
     category: tutorial.topic,
     format: "Méthode",
-    href: `/academie/${tutorial.slug}`,
+    href: `/tutoriels/${tutorial.slug}`,
     image: academyCoverPath(tutorial.slug),
     imageAlt: "",
     ...modelFor(tutorial.modelSlug),

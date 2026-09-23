@@ -35,13 +35,14 @@ describe("Demaa application navbar", () => {
   });
 
   it("keeps the application root out of search results and one URL for each public universe", async () => {
-    const [homeSource, sharedHomeSource, solutionsSource, nextConfigSource, proxySource, navbarSource] = await Promise.all([
+    const [homeSource, sharedHomeSource, solutionsSource, nextConfigSource, proxySource, navbarSource, publicRoutesSource] = await Promise.all([
       readFile(new URL("../src/app/(application)/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanHomeView.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/(marketing)/solutions/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/proxy.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/lib/demaa-public-routes.ts", import.meta.url), "utf8"),
     ]);
 
     expect(homeSource).not.toContain(
@@ -56,9 +57,12 @@ describe("Demaa application navbar", () => {
     expect(solutionsSource).toContain('path: "/solutions"');
     expect(proxySource).toContain('if (pathname === "/")');
     expect(proxySource).toContain("buildDefaultHomeMarketplaceHref(request.nextUrl.searchParams)");
-    expect(proxySource).toContain("NextResponse.redirect(new URL(solutionsHref, request.url), 308)");
-    expect(homeSource).toContain('defaultMarketplaceHref.replace(/^\\/a-reprendre(?=\\?|$)/, "/solutions")');
-    expect(navbarSource).toContain(': "/a-reprendre"}');
+    expect(proxySource).toContain("NextResponse.redirect(new URL(publicHomeHref, request.url), 308)");
+    expect(proxySource).toContain("DEMAA_DEFAULT_PUBLIC_PATH");
+    expect(homeSource).toContain("DEMAA_DEFAULT_PUBLIC_PATH");
+    expect(navbarSource).toContain("href={adminControls");
+    expect(navbarSource).toContain(": DEMAA_DEFAULT_PUBLIC_PATH}");
+    expect(publicRoutesSource).toContain('export const DEMAA_DEFAULT_PUBLIC_PATH = "/accompagnement"');
     expect(nextConfigSource).toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/outils',/,
     );
@@ -67,65 +71,46 @@ describe("Demaa application navbar", () => {
     );
   });
 
-  it("uses Reprendre, Vendre and Ressources, then exposes three resource catalogues", async () => {
-    const [source, resources, tutorialsIndex, footer, navbarSource] = await Promise.all([
+  it("uses only the three current Demaa destinations in public navigation and the footer", async () => {
+    const [source, publicRoutes, tutorialsIndex, footer, switcher, navbarSource] = await Promise.all([
       readFile(
         new URL("../src/components/PublicActionPlanNavigation.tsx", import.meta.url),
         "utf8",
       ),
-      readFile(
-        new URL("../src/components/ResourcesNavigation.tsx", import.meta.url),
-        "utf8",
-      ),
+      readFile(new URL("../src/lib/demaa-public-routes.ts", import.meta.url), "utf8"),
       readFile(
         new URL("../src/app/(marketing)/tutoriels/page.tsx", import.meta.url),
         "utf8",
       ),
       readFile(new URL("../src/components/LegacyFooter.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/MarketingFooterSwitcher.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(source).toContain('label: "Reprendre", href: "/a-reprendre"');
-    expect(source).toContain('label: "Vendre", href: "/transmettre"');
-    expect(source).toContain('label: "Ressources", href: "/tutoriels"');
-    expect(source).toContain('label: "Tutoriels", href: "/academie"');
-    expect(source).toContain('label: "Accompagnement", href: "/accompagnement"');
-    expect(source).not.toContain('label: "Outils"');
-    expect(source).not.toContain('label: "Sur mesure"');
-    expect(source).not.toContain("PUBLIC_SPECIALISTS_ENABLED");
+    expect(source).toContain("DEMAA_PUBLIC_NAVIGATION");
+    expect(publicRoutes).toContain('label: "Accompagnement", href: "/accompagnement"');
+    expect(publicRoutes).toContain('label: "Solutions", href: "/solutions"');
+    expect(publicRoutes).toContain('label: "Tutoriels", href: "/tutoriels"');
+    expect(publicRoutes).not.toContain('label: "Reprendre"');
+    expect(publicRoutes).not.toContain('label: "Vendre"');
+    expect(publicRoutes).not.toContain('label: "Spécialistes"');
     expect(navbarSource).not.toContain("BusinessEstimateControl");
     expect(navbarSource).toContain("focus-visible:underline focus-visible:underline-offset-4");
     expect(navbarSource).not.toContain("border-dema-forest/18 bg-dema-paper");
-    expect(source.indexOf('label: "Reprendre"')).toBeLessThan(
-      source.indexOf('label: "Vendre"'),
-    );
-    expect(source.indexOf('label: "Vendre"')).toBeLessThan(
-      source.indexOf('label: "Ressources"'),
-    );
-    expect(resources.indexOf('label: "Méthodes"')).toBeLessThan(
-      resources.indexOf('label: "Modèles"'),
-    );
-    expect(resources.indexOf('label: "Modèles"')).toBeLessThan(
-      resources.indexOf('label: "Outils"'),
-    );
-    expect(resources).toContain('aria-label="Ressources"');
-    expect(resources).toContain("border-b-2");
-    expect(resources).toContain("border-dema-forest text-dema-forest");
-    expect(resources).not.toContain("rounded-full border border-dema-line");
     expect(source).toContain("leading-tight");
     expect(source).not.toContain("leading-none");
     expect(navbarSource).not.toContain("wa.me");
     expect(navbarSource).not.toContain("Écrire à Demaa sur WhatsApp au +33 7 82 84 24 35");
     expect(navbarSource).not.toContain("<span>WhatsApp</span>");
-    expect(tutorialsIndex).toContain("TutorialsHub");
+    expect(tutorialsIndex).toContain("AcademyPreviewLibrary");
     expect(tutorialsIndex).toContain('path: "/tutoriels"');
-    expect(tutorialsIndex).not.toContain("<Navbar");
+    expect(tutorialsIndex).toContain("<Navbar");
     expect(tutorialsIndex).not.toContain("<ActionPlanNavbar");
-    expect(footer).toContain('<Link href="/a-reprendre" className="inline-flex">');
-    expect(footer).toContain('{ label: "Vendre", href: "/transmettre" }');
-    expect(footer).not.toContain("Systèmes opérationnels");
-    expect(footer).not.toContain("Annuaire financement");
-    expect(footer).not.toContain("Annuaire fournisseurs");
+    expect(footer).toContain("<DemaaFooter />");
+    expect(footer).not.toContain("Reprendre");
+    expect(footer).not.toContain("Vendre");
+    expect(switcher).toContain("return <DemaaFooter />");
+    expect(switcher).not.toContain("LegacyFooter");
   });
 
   it("replaces the sign-in action with account access once a session is active", async () => {

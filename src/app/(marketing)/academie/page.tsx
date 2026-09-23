@@ -1,8 +1,5 @@
-import type { Metadata } from "next";
-export { default } from "@/app/apercu-academie/page";
+import { permanentRedirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Tutoriels | Demaa",
-  description: "Quatre tutoriels concrets pour organiser le suivi commercial, les projets et les interventions dans Airtable.",
-  robots: { index: false, follow: false },
-};
+export default function AcademiePage() {
+  permanentRedirect("/tutoriels");
+}

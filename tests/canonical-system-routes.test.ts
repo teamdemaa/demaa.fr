@@ -65,7 +65,7 @@ describe("canonical system detail routes", () => {
     expect(violations).toEqual([]);
   });
 
-  it("uses the canonical namespace in metadata and sitemap builders", async () => {
+  it("uses the canonical namespace in metadata while keeping noindex detail pages out of the sitemap", async () => {
     const [detailSource, sitemapSource] = await Promise.all([
       readFile(path.join(root, "src/lib/system-detail-page.ts"), "utf8"),
       readFile(path.join(root, "src/app/sitemap.ts"), "utf8"),
@@ -73,7 +73,7 @@ describe("canonical system detail routes", () => {
 
     expect(detailSource).toContain('const url = `/solutions/${data.system.slug}`');
     expect(detailSource).toContain('`${origin}/solutions/${data.system.slug}`');
-    expect(sitemapSource).toContain('`${base}/solutions/${enterprise.slug}`');
+    expect(sitemapSource).not.toContain('`${base}/solutions/${enterprise.slug}`');
     expect(sitemapSource).not.toContain('`${base}/kit-operationnel/${enterprise.slug}`');
   });
 });

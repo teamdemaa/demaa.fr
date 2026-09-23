@@ -15,7 +15,7 @@ afterEach(() => {
 });
 
 describe("proxy content security policy", () => {
-  it("opens Solutions from the canonical root and preserves campaign parameters", () => {
+  it("opens Accompagnement from the canonical root and preserves campaign parameters", () => {
     const response = proxy(new NextRequest(
       "https://demaa.fr/?utm_campaign=lancement&utm_source=newsletter",
       { headers: { host: "demaa.fr" } },
@@ -23,8 +23,17 @@ describe("proxy content security policy", () => {
 
     expect(response.status).toBe(308);
     expect(response.headers.get("location")).toBe(
-      "https://demaa.fr/solutions?utm_campaign=lancement&utm_source=newsletter",
+      "https://demaa.fr/accompagnement?utm_campaign=lancement&utm_source=newsletter",
     );
+  });
+
+  it("keeps archived public paths accessible but out of search indexes", () => {
+    const response = proxy(new NextRequest("https://demaa.fr/a-reprendre", {
+      headers: { host: "demaa.fr" },
+    }));
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("x-robots-tag")).toBe("noindex, follow");
   });
 
   it("allows the Specialists universe on the public DEMAA route", () => {

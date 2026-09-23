@@ -51,7 +51,7 @@ describe("public guest action-plan experience", () => {
 
     expect(pages.match(/redirectRetiredCustomerRoute\(/g)).toHaveLength(5);
     expect(footer).toContain("const showCustomerLogin = !isGuestProductEnabled()");
-    expect(legacyFooter).toContain("{showCustomerLogin ? (");
+    expect(legacyFooter).toContain("<DemaaFooter />");
     expect(signInPage).toContain('if (isGuestProductEnabled()) redirect("/")');
     expect(googlePage).toContain('if (isGuestProductEnabled()) redirect("/")');
     expect(interceptedSignIn).toContain('if (isGuestProductEnabled()) redirect("/")');
