@@ -69,7 +69,7 @@ describe("system Solutions UI", () => {
     expect(markup).not.toMatch(/bientôt|placeholder/i);
   });
 
-  it("places Compare below the software title and renders tools as a non-scrollable grid", () => {
+  it("places Compare below the software title and renders tools in the same horizontal rail as the other sections", () => {
     const markup = renderToStaticMarkup(
       createElement(SystemSolutionsTab, {
         sections: publishedSolutionSectionsFixture,
@@ -80,12 +80,10 @@ describe("system Solutions UI", () => {
     expect(markup).toContain("Comparer");
     expect(markup).not.toContain("Choisir ses outils");
     expect(markup.indexOf("Outils")).toBeLessThan(markup.indexOf("Comparer"));
-    expect(markup).toContain('data-solution-section-layout="grid"');
-    expect(markup).toContain("grid-cols-1");
-    expect(markup).toContain("md:grid-cols-2");
-    expect(markup).toContain("lg:grid-cols-3");
-    expect(markup).not.toContain("Voir les solutions précédentes - Outils");
-    expect(markup).not.toContain("Voir les solutions suivantes - Outils");
+    expect(markup).toContain('data-solution-section-layout="rail"');
+    expect(markup).toContain("overflow-x-auto");
+    expect(markup).toContain("Voir les solutions précédentes - Outils et logiciels");
+    expect(markup).toContain("Voir les solutions suivantes - Outils et logiciels");
   });
 
   it("opens directly on the published comparison table without tool cards", async () => {
@@ -130,7 +128,7 @@ describe("system Solutions UI", () => {
     expect(aidsSource).toContain("solutionSections: payload.solutionSections");
   });
 
-  it("keeps Services out of public system recommendations without removing the payload section", async () => {
+  it("keeps Services out of public métier recommendations without removing the payload section", async () => {
     const servicesSection = {
       section: "services" as const,
       placements: [],
@@ -151,7 +149,8 @@ describe("system Solutions UI", () => {
     );
     const apiSource = await readSource("src/app/api/action-plan/system/[slug]/route.ts");
 
-    expect(pageSource).toContain("filterPublicSystemRecommendationSections");
+    expect(pageSource).toContain("filterSolutionsPreviewSections");
+    expect(pageSource).toContain("composeCanonicalServicesForSystem");
     expect(recapSource).toContain("filterPublicSystemRecommendationSections");
     expect(apiSource).toContain("composePublicSolutionSectionsForSystem");
     expect(apiSource).not.toContain("filterPublicSystemRecommendationSections");
@@ -686,8 +685,8 @@ describe("system Solutions UI", () => {
     );
     expect(pageSource).toContain("await connection()");
     expect(pageSource).toContain("solutionSections={visibleSolutionSections}");
-    expect(pageSource).toContain("filterPublicSystemRecommendationSections");
-    expect(pageSource).toContain("composePublicSolutionSectionsForSystem");
+    expect(pageSource).toContain("filterSolutionsPreviewSections");
+    expect(pageSource).toContain("composeCanonicalServicesForSystem");
     expect(pageSource).not.toContain("getRenderableExpertiseSectionForSystem");
     expect(pageSource).not.toContain("getMigrationSafe");
     expect(detailSource).not.toMatch(/solution-registry\.(?:server|contract)/);
@@ -736,13 +735,14 @@ describe("system Solutions UI", () => {
     expect(source).not.toContain("DirectoryDetailDialogShell");
   });
 
-  it("parks the daily rail behind a disabled public feature flag", async () => {
+  it("shows the daily rail when the Solutions route explicitly enables it", async () => {
     const detailSource = await readSource("src/components/SystemDetailContent.tsx");
     const featureFlagsSource = await readSource("src/lib/public-feature-flags.ts");
 
-    expect(detailSource).toContain("!embedded && PUBLIC_LEADER_DAILY_TOOLS_ENABLED");
+    expect(detailSource).toContain("!embedded && (PUBLIC_LEADER_DAILY_TOOLS_ENABLED || showDailyTools)");
     expect(detailSource).toContain("<LeaderDailyRail />");
     expect(featureFlagsSource).toContain("NEXT_PUBLIC_DEMAA_LEADER_DAILY_TOOLS_ENABLED");
+    expect(await readSource("src/app/(marketing)/solutions/[slug]/page.tsx")).toContain("showDailyTools");
     expect(detailSource).not.toContain("<SystemSolutionNextSteps");
     expect(detailSource).not.toContain("<SystemContextualCaseStudy");
   });
@@ -831,7 +831,9 @@ describe("system Solutions UI", () => {
     expect(gate).toContain("JSON-LD");
     expect(gate).toContain("published-only");
     expect(pageSource).toContain(
-      "buildSystemPageJsonLd(data, visiblePublishedSolutionSections)",
+      "buildSystemPageJsonLd(data, publishedVisibleSolutionSections)",
     );
+    expect(pageSource).toContain('process.env.NODE_ENV === "development"');
+    expect(pageSource).toContain("mergeRenderableSolutionSections(displaySolutionSections)");
   });
 });

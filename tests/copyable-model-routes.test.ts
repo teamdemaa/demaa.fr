@@ -13,7 +13,7 @@ describe("copyable model public routes", () => {
       readSource("src/components/SystemsHubPage.tsx"),
       readSource("src/components/ResourcesNavigation.tsx"),
       readSource("src/components/PublicActionPlanNavigation.tsx"),
-      readSource("src/components/Footer.tsx"),
+      readSource("src/components/LegacyFooter.tsx"),
       readSource("src/components/CopyableModelsIndex.tsx"),
       readSource("src/components/CopyableModelCard.tsx"),
       readSource("src/components/ModelPlatformBadge.tsx"),

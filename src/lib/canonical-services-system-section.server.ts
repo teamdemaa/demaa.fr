@@ -8,6 +8,7 @@ import { isCanonicalServiceEligibleForSystem } from "@/lib/canonical-service-eli
 import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
 import { enterpriseCatalogBySlug } from "@/lib/enterprise-annuaire";
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
+import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
 import { filterPublicSolutionSections } from "@/lib/public-solution-section-visibility";
 import type { SolutionSection } from "@/lib/solution-registry-dto";
 import type {
@@ -57,6 +58,33 @@ function buildFinancePlacements(
       displayCategory: item.family,
       ctaLabel: item.cta,
       interaction: { interactionMode: "external_link", href: item.href },
+    },
+  }));
+}
+
+function buildSupplierPlacements(
+  systemSlug: string,
+): readonly RenderableSolutionPlacementDto[] {
+  const sectorLabel = enterpriseCatalogBySlug[systemSlug]?.sectorLabel;
+  return getRecommendedSuppliersForSystem(systemSlug, sectorLabel).map((supplier, index) => ({
+    placementId: `catalog:${systemSlug}:providers:${supplier.slug}`,
+    systemSlug,
+    rank: index + 1,
+    section: "providers",
+    usage: supplier.bestFor,
+    fitRationale: supplier.shortDescription,
+    fitConstraints: supplier.eligibility ? [supplier.eligibility] : [],
+    resource: {
+      resourceSlug: supplier.slug,
+      resourceType: "provider",
+      name: supplier.name,
+      description: supplier.shortDescription,
+      displayCategory: supplier.category,
+      ctaLabel: "Voir la fiche fournisseur",
+      interaction: {
+        interactionMode: "detail",
+        href: `/annuaire-fournisseurs/${supplier.slug}?retourSysteme=${encodeURIComponent(systemSlug)}`,
+      },
     },
   }));
 }
@@ -146,6 +174,18 @@ export function composeCanonicalServicesForSystem(
     "services",
     [...buildCanonicalServicePlacements(systemSlug)],
   );
+  // These suppliers already have public detail pages. Use the existing
+  // métier recommendations, not unpublished Firebase provider placements.
+  const existingProviders = placementsBySection.get("providers") ?? [];
+  const existingProviderSlugs = new Set(
+    existingProviders.map(({ resource }) => resource.resourceSlug),
+  );
+  placementsBySection.set("providers", [
+    ...existingProviders,
+    ...buildSupplierPlacements(systemSlug).filter(
+      ({ resource }) => !existingProviderSlugs.has(resource.resourceSlug),
+    ),
+  ]);
   placementsBySection.set("financing", [...buildFinancePlacements(systemSlug)]);
   placementsBySection.set("aids", [...buildAidPlacements(systemSlug)]);
 

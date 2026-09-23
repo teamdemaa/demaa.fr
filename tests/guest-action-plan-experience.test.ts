@@ -43,6 +43,7 @@ describe("public guest action-plan experience", () => {
   it("removes customer entry points while keeping the rollback code behind the flag", () => {
     const pages = source("src/lib/action-plan-pages.server.ts");
     const footer = source("src/components/Footer.tsx");
+    const legacyFooter = source("src/components/LegacyFooter.tsx");
     const signInPage = source("src/app/(auth)/connexion/page.tsx");
     const googlePage = source("src/app/(auth)/auth/google/page.tsx");
     const interceptedSignIn = source("src/app/@modal/(.)connexion/page.tsx");
@@ -50,7 +51,7 @@ describe("public guest action-plan experience", () => {
 
     expect(pages.match(/redirectRetiredCustomerRoute\(/g)).toHaveLength(5);
     expect(footer).toContain("const showCustomerLogin = !isGuestProductEnabled()");
-    expect(footer).toContain("{showCustomerLogin ? (");
+    expect(legacyFooter).toContain("{showCustomerLogin ? (");
     expect(signInPage).toContain('if (isGuestProductEnabled()) redirect("/")');
     expect(googlePage).toContain('if (isGuestProductEnabled()) redirect("/")');
     expect(interceptedSignIn).toContain('if (isGuestProductEnabled()) redirect("/")');

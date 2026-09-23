@@ -25,6 +25,9 @@ type SystemDetailContentProps = {
   onResourceSlugChange?: (resourceSlug: string | undefined) => void;
   headerActions?: ReactNode;
   comparisonHref?: string;
+  backHref?: string;
+  backLabel?: string;
+  showDailyTools?: boolean;
 };
 
 const EMPTY_SOLUTION_SECTIONS: readonly RenderableSolutionSectionDto[] = [];
@@ -44,6 +47,9 @@ export default function SystemDetailContent({
   onResourceSlugChange,
   headerActions,
   comparisonHref,
+  backHref = "/outils",
+  backLabel = "Retour aux outils",
+  showDailyTools = false,
 }: SystemDetailContentProps) {
   const [localSelectedSolutionIds, setLocalSelectedSolutionIds] = useState<Set<string>>(
     () => new Set(),
@@ -68,11 +74,11 @@ export default function SystemDetailContent({
     >
       {!embedded ? (
         <Link
-          href="/outils"
+          href={backHref}
           className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          Retour aux outils
+          {backLabel}
         </Link>
       ) : null}
 
@@ -106,7 +112,7 @@ export default function SystemDetailContent({
           toolOutboundSurface={toolOutboundSurface}
           comparisonHref={comparisonHref}
         />
-        {!embedded && PUBLIC_LEADER_DAILY_TOOLS_ENABLED ? <LeaderDailyRail /> : null}
+        {!embedded && (PUBLIC_LEADER_DAILY_TOOLS_ENABLED || showDailyTools) ? <LeaderDailyRail /> : null}
       </div>
     </article>
   );

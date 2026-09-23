@@ -6,6 +6,16 @@ async function readSource(path: string) {
 }
 
 describe("directory card copy", () => {
+  it("describes suppliers as independent references without a partnership flag", async () => {
+    const [catalog, detail] = await Promise.all([
+      readSource("src/lib/supplier-catalog.ts"),
+      readSource("src/components/SupplierDetailContent.tsx"),
+    ]);
+    expect(catalog).not.toContain("partner?: boolean");
+    expect(detail).toContain("référencement indépendant, sans accord commercial avec Demaa");
+    expect(detail).not.toContain("supplier.partner");
+  });
+
   it("keeps one explanatory paragraph on tool, supplier and network cards", async () => {
     const [toolSource, supplierSource, networkSource] = await Promise.all([
       readSource("src/components/ToolDirectoryClient.tsx"),

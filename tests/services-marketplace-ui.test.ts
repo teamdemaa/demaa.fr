@@ -49,7 +49,8 @@ describe("canonical Accompagnement catalog", () => {
     expect(generateStaticParams()).toEqual(
       CANONICAL_SERVICE_SLUGS
         .filter((slug) => !["application-metier", "automatisation-ia", "automatisation-processus", "expert-comptable"].includes(slug))
-        .map((slug) => ({ slug })),
+        .map((slug) => ({ slug }))
+        .concat({ slug: "automatisation-ia" }),
     );
     expect(getCanonicalServiceBySlug("expert-comptable")).toBeNull();
     expect(getCanonicalServiceRecordBySlug("expert-comptable")?.name)

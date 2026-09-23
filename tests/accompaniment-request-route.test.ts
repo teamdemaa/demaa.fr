@@ -43,7 +43,7 @@ describe("accompaniment request route", () => {
       channels: { email: true, resend: false, slack: false },
       contact: { company: "Atelier Martin", email: "direction@example.com", name: "Camille Martin", phone: "+33 6 12 34 56 78" },
       requestType: "accompaniment_request",
-      fields: expect.arrayContaining([{ label: "Priorité décrite", value: "Nous ressaisissons les demandes clients et les comptes rendus." }]),
+      fields: expect.arrayContaining([{ label: "Fonctionnement à installer", value: "Nous ressaisissons les demandes clients et les comptes rendus." }]),
     }));
   });
 

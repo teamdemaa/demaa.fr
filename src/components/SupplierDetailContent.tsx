@@ -77,12 +77,10 @@ export default function SupplierDetailContent({
               <span className="font-medium text-brand-blue">Famille</span>
               {` · ${supplier.family}`}
             </p>
-            {supplier.partner ? (
-              <p>
-                <span className="font-medium text-brand-blue">Statut</span>
-                {" · partenaire"}
-              </p>
-            ) : null}
+            <p>
+              <span className="font-medium text-brand-blue">Statut</span>
+              {" · référencement indépendant, sans accord commercial avec Demaa"}
+            </p>
           </div>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             {primaryCta}

@@ -22,6 +22,9 @@ import type { System } from "@/lib/types";
 type SystemSearchHeroProps = {
   systems: System[];
   sectorLabelsBySlug: Record<string, string>;
+  destinationBasePath?: string;
+  heroTitle?: string;
+  heroAccent?: string;
 };
 
 type SystemSuggestion = {
@@ -38,6 +41,9 @@ const MAX_SUGGESTIONS = 6;
 export default function SystemSearchHero({
   systems,
   sectorLabelsBySlug,
+  destinationBasePath = "/solutions",
+  heroTitle = "Outils et logiciels",
+  heroAccent = "adaptés à votre activité",
 }: SystemSearchHeroProps) {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -161,7 +167,7 @@ export default function SystemSearchHero({
 
     trackSelection(index, "keyboard");
     setIsOpen(false);
-    router.push(`/solutions/${suggestion.slug}`);
+    router.push(`${destinationBasePath}/${suggestion.slug}`);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -212,13 +218,13 @@ export default function SystemSearchHero({
           <h1
             className="text-balance font-light leading-[0.94] tracking-tight"
             style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}
-            aria-label="Outils et logiciels adaptés à votre activité"
+            aria-label={`${heroTitle} ${heroAccent}`}
           >
             <span className="block font-sans font-light not-italic text-brand-blue/62 md:whitespace-nowrap">
-              Outils et logiciels
+              {heroTitle}
             </span>
             <span className="demaa-hero-title block text-dema-forest" aria-hidden="true">
-              adaptés à votre activité
+              {heroAccent}
             </span>
           </h1>
         </div>
@@ -308,7 +314,7 @@ export default function SystemSearchHero({
                   <Link
                     key={suggestion.slug}
                     id={`system-search-suggestion-${suggestion.slug}`}
-                    href={`/solutions/${suggestion.slug}`}
+                    href={`${destinationBasePath}/${suggestion.slug}`}
                     prefetch
                     onClick={() => trackSelection(index, "click")}
                     onMouseEnter={() => setActiveIndex(index)}
@@ -330,7 +336,7 @@ export default function SystemSearchHero({
                       </p>
                     </div>
                     <span className="inline-flex shrink-0 items-center gap-2 text-xs text-dema-muted md:text-sm">
-                      Voir les outils
+                      Voir les solutions
                       {activeIndex === index ? (
                         <CornerDownLeft className="h-3.5 w-3.5" aria-hidden="true" />
                       ) : null}
@@ -361,7 +367,7 @@ export default function SystemSearchHero({
                 >
                   <div className="flex gap-4">
                     {section.systems.map((system) => (
-                      <SystemDirectoryCard key={system.id} system={system} />
+                      <SystemDirectoryCard key={system.id} system={system} destinationBasePath={destinationBasePath} />
                     ))}
                   </div>
                 </HorizontalScrollHint>
@@ -379,7 +385,7 @@ export default function SystemSearchHero({
   );
 }
 
-function SystemDirectoryCard({ system }: { system: System }) {
+function SystemDirectoryCard({ system, destinationBasePath }: { system: System; destinationBasePath: string }) {
   const icon = createElement(getSystemIcon(system), {
     className: "h-4 w-4",
     "aria-hidden": true,
@@ -387,7 +393,7 @@ function SystemDirectoryCard({ system }: { system: System }) {
 
   return (
     <Link
-      href={`/solutions/${system.slug}`}
+      href={`${destinationBasePath}/${system.slug}`}
       className="demaa-card group relative flex aspect-square w-[74vw] max-w-[15rem] shrink-0 flex-col overflow-hidden rounded-[1.2rem] p-4 sm:w-[15rem] sm:p-5 [content-visibility:auto] [contain-intrinsic-size:15rem_15rem]"
     >
       <span className="relative z-10 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dema-sage text-dema-forest transition group-hover:bg-dema-forest group-hover:text-dema-paper sm:h-10 sm:w-10">

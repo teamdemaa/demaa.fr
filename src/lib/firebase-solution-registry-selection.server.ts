@@ -54,14 +54,18 @@ export function selectRenderableSolutionSectionsFromRevision(
     if (
       placement.systemSlug !== systemSlug ||
       placement.editorialStatus !== "selected" ||
-      (requiresPublished && placement.status !== "published")
+      (requiresPublished && (
+        placement.status !== "published" || placement.publicationBlockers.length > 0
+      ))
     ) return [];
     const resource = resources.get(placement.resourceSlug);
     if (
       !resource ||
       BLOCKED_EXTERNAL_RESOURCE_SLUGS.has(resource.resourceSlug) ||
       resource.commercialRelationship !== placement.commercialRelationship ||
-      (requiresPublished && resource.status !== "published")
+      (requiresPublished && (
+        resource.status !== "published" || resource.publicationBlockers.length > 0
+      ))
     ) return [];
     if (![
       "external_link",

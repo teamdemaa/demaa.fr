@@ -71,16 +71,6 @@ export const ACADEMY_PERMANENT_REDIRECTS = [
     permanent: true,
   },
   {
-    source: "/academie",
-    destination: ARCHIVED_ACADEMY_DESTINATION,
-    permanent: true,
-  },
-  {
-    source: "/academie/:path*",
-    destination: ARCHIVED_ACADEMY_DESTINATION,
-    permanent: true,
-  },
-  {
     source: "/organiser",
     destination: ARCHIVED_ACADEMY_DESTINATION,
     permanent: true,

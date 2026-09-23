@@ -165,7 +165,7 @@ describe("canonical content catalog", () => {
   });
 
   it("keeps the content hub indexed without adding another footer entry", () => {
-    const footer = readFileSync(resolve(process.cwd(), "src/components/Footer.tsx"), "utf8");
+    const footer = readFileSync(resolve(process.cwd(), "src/components/LegacyFooter.tsx"), "utf8");
     const sitemap = readFileSync(resolve(process.cwd(), "src/app/sitemap.ts"), "utf8");
     expect(footer).not.toContain('{ label: "Contenus", href: "/contenus" }');
     expect(footer).toContain('{ label: "Méthodes", href: "/tutoriels" }');
