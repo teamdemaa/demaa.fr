@@ -120,7 +120,7 @@ describe("public qualification forms", () => {
       ">Entreprise<",
     ]);
     expectInOrder(source("src/components/AccompanimentContactControl.tsx"), [
-      "Que faut-il structurer avant la transmission ?",
+      "Qu’est-ce qui vous fait perdre le plus de temps aujourd’hui ?",
       ">Prénom et nom<",
       ">Email<",
       ">Téléphone<",

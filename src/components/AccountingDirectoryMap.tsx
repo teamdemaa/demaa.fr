@@ -393,3 +393,6 @@ function getPreviewStyle(position: CityPosition) {
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
 }
+
+// Share the existing France map geometry with other specialist directories.
+export { departmentPaths, MAP_VIEWBOX, getCityPosition };

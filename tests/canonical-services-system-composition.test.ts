@@ -11,6 +11,7 @@ import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
 import { enterpriseCatalog } from "@/lib/enterprise-annuaire";
 import { getRecommendedAidsForSystem } from "@/lib/aid-recommendations";
 import { getRecommendedFinanceForSystem } from "@/lib/finance-recommendations";
+import { getRecommendedSuppliersForSystem } from "@/lib/supplier-recommendations";
 import type { RenderableSolutionSectionDto } from "@/lib/system-solutions-ui-dto";
 
 const sectionsWithLegacyReferral = [
@@ -195,9 +196,21 @@ describe("canonical Services composition in every system", () => {
   it("uses the existing recommendation engines instead of exposing whole catalogs", () => {
     for (const system of enterpriseCatalog) {
       const sections = composeCanonicalServicesForSystem(system.slug, []);
+      const providers = sections.find(({ section }) => section === "providers");
       const financing = sections.find(({ section }) => section === "financing");
       const aids = sections.find(({ section }) => section === "aids");
 
+      const recommendedSuppliers = getRecommendedSuppliersForSystem(
+        system.slug,
+        system.sectorLabel,
+      );
+      expect(providers?.placements.map(({ resource }) => resource.resourceSlug))
+        .toEqual(recommendedSuppliers.map(({ slug }) => slug));
+      expect(providers?.placements.every(({ resource }) =>
+        resource.interaction.interactionMode === "detail" &&
+        resource.interaction.href ===
+          `/annuaire-fournisseurs/${resource.resourceSlug}?retourSysteme=${system.slug}`
+      )).toBe(true);
       expect(financing?.placements.map(({ resource }) => resource.resourceSlug))
         .toEqual(getRecommendedFinanceForSystem(system.slug).map(
           ({ slug }) => `financing-${slug}`,
@@ -261,6 +274,12 @@ describe("canonical Services composition in every system", () => {
     expect(serialized).not.toContain("referral_form");
     expect(serialized).not.toContain("firebase:test");
     expect(sections.find(({ section }) => section === "providers")?.placements
-      .map(({ resource }) => resource.resourceSlug)).toEqual(["provider-test"]);
+      .map(({ resource }) => resource.resourceSlug)).toEqual([
+        "provider-test",
+        ...getRecommendedSuppliersForSystem(
+          "cabinet-comptable",
+          "Conseil & services aux entreprises",
+        ).map(({ slug }) => slug),
+      ]);
   });
 });

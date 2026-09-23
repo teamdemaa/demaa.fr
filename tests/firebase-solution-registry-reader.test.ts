@@ -98,6 +98,36 @@ describe("Firebase Solutions reader", () => {
       .toHaveLength(0);
   });
 
+  it("never exposes a published placement or resource with unresolved blockers", () => {
+    const revision = modules.parse(snapshot);
+    const target = revision.placements.find(({ placement }) => placement.status === "published");
+    expect(target).toBeDefined();
+    const systemSlug = target!.placement.systemSlug;
+    const resourceSlug = target!.placement.resourceSlug;
+    const publishedIds = (candidate: typeof revision) => modules.selectSections(
+      candidate,
+      systemSlug,
+      { publishedOnly: true },
+    ).flatMap(({ placements }) => placements.map(({ placementId }) => placementId));
+    expect(publishedIds(revision)).toContain(target!.placement.placementId);
+
+    const blockedPlacement = {
+      ...revision,
+      placements: revision.placements.map((entry) => entry === target
+        ? { ...entry, placement: { ...entry.placement, publicationBlockers: ["Review pending"] } }
+        : entry),
+    };
+    expect(publishedIds(blockedPlacement)).not.toContain(target!.placement.placementId);
+
+    const blockedResource = {
+      ...revision,
+      resources: revision.resources.map((entry) => entry.resource.resourceSlug === resourceSlug
+        ? { ...entry, resource: { ...entry.resource, publicationBlockers: ["Review pending"] } }
+        : entry),
+    };
+    expect(publishedIds(blockedResource)).not.toContain(target!.placement.placementId);
+  });
+
   it("accepts a complete published remote revision", async () => {
     const published = publishLevierOnly(modules.parse(snapshot));
     const revision = await modules.loadRevision({

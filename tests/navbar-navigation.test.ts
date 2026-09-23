@@ -22,8 +22,8 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/app/(marketing)/systemes/[slug]/loading.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(pageSource).toContain('<Navbar minimal publicNavigationActiveView="resources" />');
-    expect(pageSource).toContain('<ResourcesNavigation activeView="tools" />');
+    expect(pageSource).toContain('<Navbar minimal publicNavigationActiveView="solutions" publicNavigationVariant="demaa" />');
+    expect(pageSource).not.toContain('<ResourcesNavigation activeView="tools" />');
     expect(loadingSource).toContain("<Navbar minimal />");
     expect(pageSource.indexOf("<Navbar minimal publicNavigationActiveView=")).toBeLessThan(pageSource.indexOf("<main"));
     expect(loadingSource.indexOf("<Navbar minimal />")).toBeLessThan(loadingSource.indexOf("<main"));
@@ -56,7 +56,8 @@ describe("Demaa application navbar", () => {
     expect(solutionsSource).toContain('path: "/solutions"');
     expect(proxySource).toContain('if (pathname === "/")');
     expect(proxySource).toContain("buildDefaultHomeMarketplaceHref(request.nextUrl.searchParams)");
-    expect(proxySource).toContain("NextResponse.redirect(new URL(marketplaceHref, request.url), 308)");
+    expect(proxySource).toContain("NextResponse.redirect(new URL(solutionsHref, request.url), 308)");
+    expect(homeSource).toContain('defaultMarketplaceHref.replace(/^\\/a-reprendre(?=\\?|$)/, "/solutions")');
     expect(navbarSource).toContain(': "/a-reprendre"}');
     expect(nextConfigSource).toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/outils',/,
@@ -80,14 +81,15 @@ describe("Demaa application navbar", () => {
         new URL("../src/app/(marketing)/tutoriels/page.tsx", import.meta.url),
         "utf8",
       ),
-      readFile(new URL("../src/components/Footer.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/components/LegacyFooter.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(source).toContain('label: "Reprendre", href: "/a-reprendre"');
     expect(source).toContain('label: "Vendre", href: "/transmettre"');
     expect(source).toContain('label: "Ressources", href: "/tutoriels"');
-    expect(source).not.toContain('label: "Tutoriels"');
+    expect(source).toContain('label: "Tutoriels", href: "/academie"');
+    expect(source).toContain('label: "Accompagnement", href: "/accompagnement"');
     expect(source).not.toContain('label: "Outils"');
     expect(source).not.toContain('label: "Sur mesure"');
     expect(source).not.toContain("PUBLIC_SPECIALISTS_ENABLED");

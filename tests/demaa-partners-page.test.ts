@@ -13,7 +13,7 @@ describe("seller and accompaniment pages", () => {
         readSource("src/app/(marketing)/partners/page.tsx"),
         readSource("src/app/(marketing)/accompagnement/page.tsx"),
         readSource("src/app/(marketing)/studio/page.tsx"),
-        readSource("src/components/Footer.tsx"),
+        readSource("src/components/LegacyFooter.tsx"),
         readSource("src/components/PublicActionPlanNavigation.tsx"),
         readSource("src/app/sitemap.ts"),
       ]);
@@ -23,7 +23,7 @@ describe("seller and accompaniment pages", () => {
     expect(page).toContain("BusinessSaleLandingPage");
     expect(partners).toContain('permanentRedirect("/accompagnement")');
     expect(accompaniment).toContain('path: "/accompagnement"');
-    expect(accompaniment).toContain("TransmissionLandingPage");
+    expect(accompaniment).toContain("OperationalAccompanimentLandingPage");
     expect(studio).toContain('permanentRedirect("/accompagnement")');
     expect(footer).toContain('{ label: "Vendre", href: "/transmettre" }');
     expect(footer).toContain('{ label: "Accompagnement", href: "/accompagnement" }');

@@ -36,3 +36,31 @@ export function filterPublicSystemRecommendationSections(
       ),
     }));
 }
+
+// Staging-only category layout for the DEMAA Solutions migration. Callers must
+// first use the published-only registry selector; visibility alone is not an
+// editorial approval. Services belong to the separate Specialists journey,
+// and models are taught in Academy rather than listed as standalone offers.
+const PREVIEW_SOLUTION_SECTIONS = new Set<SolutionSection>([
+  "software",
+  "providers",
+  "financing",
+  "aids",
+  "networks",
+]);
+
+export function filterSolutionsPreviewSections(
+  sections: readonly RenderableSolutionSectionDto[],
+): RenderableSolutionSectionDto[] {
+  return sections
+    .filter(({ section }) => PREVIEW_SOLUTION_SECTIONS.has(section))
+    .map((group) => ({
+      ...group,
+      placements: group.section === "software"
+        ? group.placements.filter(({ resource }) =>
+            !HIDDEN_RECOMMENDATION_CATEGORY.test(resource.displayCategory ?? "")
+          )
+        : group.placements,
+    }))
+    .filter(({ placements }) => placements.length > 0);
+}

@@ -156,14 +156,12 @@ describe("Academy SEO, redirects and assets", () => {
       expect(redirects).toContainEqual(redirect);
     }
 
-    expect(ACADEMY_PERMANENT_REDIRECTS).toHaveLength(10);
+    expect(ACADEMY_PERMANENT_REDIRECTS).toHaveLength(8);
     for (const source of [
       "/cours",
       "/cours/:path*",
       "/academy",
       "/academy/:path*",
-      "/academie",
-      "/academie/:path*",
       "/organiser",
       "/organiser/:path*",
     ]) {

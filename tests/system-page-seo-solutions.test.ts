@@ -201,19 +201,21 @@ describe("system page SEO published Outils boundary", () => {
       "utf8",
     );
 
-    expect(pageSource.match(/getActiveFirebaseSolutionRegistryRevision\(\)/g)).toHaveLength(2);
+    expect(pageSource.match(/getActiveFirebaseSolutionRegistryRevision\(\)/g)).toHaveLength(1);
     expect(pageSource.match(/selectRenderableSolutionSectionsFromRevision\(/g))
-      .toHaveLength(3);
-    expect(pageSource.match(/publishedOnly: true/g)).toHaveLength(2);
+      .toHaveLength(5);
+    expect(pageSource.match(/publishedOnly: true/g)).toHaveLength(3);
+    expect(pageSource).toContain(').filter(({ section }) => section === "software")');
+    expect(pageSource).toContain('...publishedSolutionSections.filter(({ section }) => section !== "software")');
+    expect(pageSource).toContain('...existingPublicSoftwareSections');
+    expect(pageSource).toContain('existingVisibleSoftwareSections.find(({ section }) => section === "software")');
     expect(pageSource).toContain("buildSystemPageMetadata(");
-    expect(pageSource).toContain(
-      "filterPublicSystemRecommendationSections(",
-    );
-    expect(pageSource).toContain(
-      "buildSystemPageJsonLd(data, visiblePublishedSolutionSections)",
-    );
-    expect(pageSource).toContain("composePublicSolutionSectionsForSystem(");
-    expect(pageSource).not.toContain("composeCanonicalServicesForSystem(");
+    expect(pageSource).toContain("filterSolutionsPreviewSections(");
+    expect(pageSource).toContain("buildSystemPageJsonLd(data, publishedVisibleSolutionSections)");
+    expect(pageSource).toContain('process.env.NODE_ENV === "development"');
+    expect(pageSource).toContain('process.env.VERCEL_ENV === "preview"');
+    expect(pageSource).toContain("composeCanonicalServicesForSystem(");
+    expect(pageSource).toContain('process.env.NODE_ENV !== "development"');
     expect(pageSource).toContain('JSON.stringify(jsonLd).replace(/</g, "\\\\u003c")');
     expect(detailSource).not.toContain("data.detail.tools");
   });

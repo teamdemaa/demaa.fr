@@ -35,7 +35,7 @@ describe("accompagnement de structuration", () => {
 
     expect(page).toContain("BusinessSaleLandingPage");
     expect(page).toContain('path: "/transmettre"');
-    expect(accompaniment).toContain("TransmissionLandingPage");
+    expect(accompaniment).toContain("OperationalAccompanimentLandingPage");
     expect(accompaniment).toContain('path: "/accompagnement"');
     expect(automation).toContain(
       'permanentRedirect("/accompagnement#structuration")',

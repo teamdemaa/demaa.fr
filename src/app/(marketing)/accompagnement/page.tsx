@@ -1,9 +1,9 @@
-import TransmissionLandingPage from "@/components/TransmissionLandingPage";
+import OperationalAccompanimentLandingPage from "@/components/OperationalAccompanimentLandingPage";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
-const title = "Préparer son entreprise à la vente | Demaa";
+const title = "Votre entreprise ne doit plus tenir dans votre tête | Demaa";
 const description =
-  "Un accompagnement de six mois pour structurer les processus, les responsabilités, les outils et le pilotage de votre entreprise avant sa vente.";
+  "En quatre semaines, Demaa installe un système de travail partagé : clients, informations, tâches, procédures et routines.";
 
 export const metadata = buildPublicPageMetadata({
   title,
@@ -12,5 +12,5 @@ export const metadata = buildPublicPageMetadata({
 });
 
 export default function AccompagnementPage() {
-  return <TransmissionLandingPage />;
+  return <OperationalAccompanimentLandingPage />;
 }

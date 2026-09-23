@@ -24,7 +24,7 @@ describe("English beta integrated release boundaries", () => {
 
   it("retires the legacy Opportunities page from public discovery", () => {
     const page = source("src/app/(marketing)/opportunites/page.tsx");
-    const footer = source("src/components/Footer.tsx");
+    const footer = source("src/components/LegacyFooter.tsx");
     const sitemap = source("src/app/sitemap.ts");
 
     expect(page).toContain('permanentRedirect("/a-reprendre")');

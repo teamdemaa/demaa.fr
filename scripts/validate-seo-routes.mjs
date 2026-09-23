@@ -185,7 +185,9 @@ for (const relativePath of legacyToolQueryMatches) {
   );
 }
 
-const legacyResourcesDetailMatches = collectLegacyMatches(/\/ressources\/[A-Za-z0-9_-]+/);
+// Match root-relative app links, not third-party URLs such as
+// https://www.cci.fr/ressources/ceder-votre-entreprise.
+const legacyResourcesDetailMatches = collectLegacyMatches(/["'`]\/ressources\/[A-Za-z0-9_-]+/);
 for (const relativePath of legacyResourcesDetailMatches) {
   addUnique(
     errors,

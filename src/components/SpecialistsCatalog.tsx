@@ -5,7 +5,7 @@ import { useState } from "react";
 import {
   Bot,
   Calculator,
-  ClipboardCheck,
+  ArrowUpRight,
   Compass,
   Laptop,
   Megaphone,
@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import type { CanonicalService } from "@/lib/canonical-service-catalog";
 import GuestDiagnosticControl from "@/components/GuestDiagnosticControl";
-import type { SpecialistSection } from "@/lib/specialist-catalog";
+import type { SpecialistDirectory, SpecialistSection } from "@/lib/specialist-catalog";
 import { LIBRARY_CARD_TITLE_CLASSNAME } from "@/lib/library-card-ui";
 
 const ICONS: Partial<Record<CanonicalService["slug"], LucideIcon>> = {
@@ -69,6 +69,28 @@ function SpecialistCard({ service }: { service: CanonicalService }) {
   );
 }
 
+function DirectoryCard({ directory }: { directory: SpecialistDirectory }) {
+  const Icon = directory.kind === "coach" ? Compass : Calculator;
+
+  return (
+    <article className="min-w-0">
+      <Link
+        href={directory.href}
+        className="group flex h-full min-h-60 flex-col rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 transition hover:-translate-y-0.5 hover:border-dema-forest/30 hover:shadow-[0_12px_30px_rgba(23,35,29,0.065)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 sm:p-6"
+      >
+        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-dema-sage text-dema-forest">
+          <Icon className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
+        </span>
+        <h3 className={`mt-5 ${LIBRARY_CARD_TITLE_CLASSNAME}`}>{directory.title}</h3>
+        <p className="mt-3 text-sm leading-6 text-dema-muted">{directory.description}</p>
+        <span className="mt-auto inline-flex items-center gap-1 pt-6 text-sm font-medium text-brand-blue/70">
+          Voir l’annuaire <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+        </span>
+      </Link>
+    </article>
+  );
+}
+
 export default function SpecialistsCatalog({
   sections,
 }: {
@@ -84,15 +106,14 @@ export default function SpecialistsCatalog({
           onClick={() => setDiagnosticOpen(true)}
           className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-dema-forest px-7 text-sm font-semibold text-white transition hover:bg-[#284f3a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-2"
         >
-          <ClipboardCheck className="h-4 w-4 shrink-0" aria-hidden="true" />
-          <span>Diagnostic des besoins</span>
+          <span>Discutons de vos besoins</span>
         </button>
       </div>
       <GuestDiagnosticControl
         access={null}
         collectName
         dialogDescription="Une session de 30 à 45 minutes : nous identifions les besoins de votre entreprise pour vous guider vers le bon spécialiste."
-        dialogTitle="Diagnostic des besoins"
+        dialogTitle="Discutons de vos besoins"
         onClose={() => setDiagnosticOpen(false)}
         onOpen={() => setDiagnosticOpen(true)}
         open={diagnosticOpen}
@@ -111,7 +132,10 @@ export default function SpecialistsCatalog({
             <p className="mt-3 max-w-3xl text-sm leading-6 text-dema-muted sm:text-base">
               {section.description}
             </p>
-            <div className="mt-6 grid min-w-0 grid-cols-1 items-stretch gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className={`mt-6 grid min-w-0 grid-cols-1 items-stretch gap-4 md:grid-cols-2 ${section.id === "piloter-et-s-entourer" ? "xl:grid-cols-4" : "lg:grid-cols-3"}`}>
+              {section.directories.map((directory) => (
+                <DirectoryCard key={directory.href} directory={directory} />
+              ))}
               {section.services.map((service) => (
                 <SpecialistCard key={service.slug} service={service} />
               ))}

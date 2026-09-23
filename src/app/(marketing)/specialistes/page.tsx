@@ -1,5 +1,4 @@
 import Navbar from "@/components/Navbar";
-import { notFound } from "next/navigation";
 import SpecialistsCatalog from "@/components/SpecialistsCatalog";
 import StructureNewsletterBlock from "@/components/StructureNewsletterBlock";
 import { getSpecialistSections } from "@/lib/specialist-catalog";
@@ -8,31 +7,32 @@ import {
   serializePublicJsonLd,
 } from "@/lib/public-index-json-ld";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
-import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
 
 const title = "Spécialistes pour structurer et développer votre entreprise | Demaa";
 const description =
   "Trouvez la prestation adaptée pour automatiser, structurer, administrer ou développer votre entreprise, avec un périmètre clair avant de démarrer.";
 
-export const metadata = buildPublicPageMetadata({
+export const metadata = {
+  ...buildPublicPageMetadata({
   title,
   description,
   path: "/specialistes",
-});
+  }),
+  robots: { index: false, follow: false },
+};
 
 export default function SpecialistsPage() {
-  if (!PUBLIC_SPECIALISTS_ENABLED) notFound();
-
   const sections = getSpecialistSections();
   const services = sections.flatMap((section) => section.services);
+  const directories = sections.flatMap((section) => section.directories);
   const jsonLd = buildPublicIndexJsonLd({
     name: "Spécialistes",
     description,
     path: "/specialistes",
-    items: services.map((service) => ({
-      name: service.name,
-      path: service.detailHref,
-    })),
+    items: [
+      ...directories.map((directory) => ({ name: directory.title, path: directory.href })),
+      ...services.map((service) => ({ name: service.name, path: service.detailHref })),
+    ],
   });
 
   return (
@@ -41,7 +41,7 @@ export default function SpecialistsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializePublicJsonLd(jsonLd) }}
       />
-      <Navbar minimal publicNavigationActiveView="services" />
+      <Navbar minimal publicNavigationActiveView="specialists" publicNavigationVariant="demaa" />
       <main className="min-h-screen min-w-0 bg-dema-cream">
         <header className="mx-auto w-full max-w-7xl px-4 pb-10 pt-12 text-center sm:px-6 md:pb-12 md:pt-16 lg:px-8">
           <h1

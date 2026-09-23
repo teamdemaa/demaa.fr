@@ -9,35 +9,38 @@ import SpecialistsCatalog from "@/components/SpecialistsCatalog";
 import { getSpecialistSections } from "@/lib/specialist-catalog";
 
 describe("Specialists public index", () => {
-  it("renders the seven published offers in the approved three sections", () => {
+  it("groups coaches and accountants as directories instead of isolated offers", () => {
     const sections = getSpecialistSections();
     const markup = renderToStaticMarkup(
       createElement(SpecialistsCatalog, { sections }),
     );
 
     expect(sections.map((section) => section.title)).toEqual([
-      "Digitaliser et automatiser",
-      "Structurer et piloter",
+      "Automatisation & IA",
+      "Piloter & s’entourer",
       "Développer l’activité",
     ]);
     expect(sections.flatMap((section) => section.services)).toHaveLength(7);
     expect(sections[0]?.services.map((service) => service.name)).toEqual([
-      "Structuration, automatisation & IA",
+      "Automatisation & IA",
       "Logiciel métier sur mesure",
-      "Assistant digital",
     ]);
-    expect(markup.match(/<article/g)).toHaveLength(7);
-    expect(markup).toContain("Structuration, automatisation &amp; IA");
+    expect(markup.match(/<article/g)).toHaveLength(9);
+    expect(markup).toContain("Automatisation &amp; IA");
     expect(markup).toContain("Logiciel métier sur mesure");
     expect(markup).toContain("Assistant digital");
-    expect(markup).not.toContain("Expert-comptable");
-    expect(markup).toContain("1 500 € HT / mois");
-    expect(markup).not.toContain("Sur devis");
-    expect(markup).not.toContain("550 € HT / jour");
+    expect(markup).toContain("Trouver un coach business");
+    expect(markup).toContain("/annuaire-coachs");
+    expect(markup).toContain("Trouver un expert-comptable");
+    expect(markup).toContain("/annuaire-experts-comptables");
+    expect(markup).toContain("Formalités d’entreprise");
+    expect(markup).not.toContain("1 500 € HT / mois");
+    expect(markup).not.toContain("750 € HT / mois");
+    expect(markup).toContain("550 € HT / jour");
     expect(markup).toContain("À partir de 650 € HT / mois");
     expect(markup).toContain("900 € HT / mois");
     expect(markup).toContain("1 200 € HT / mois");
-    expect(markup).toContain("Diagnostic des besoins");
+    expect(markup).toContain("Discutons de vos besoins");
     expect(markup).not.toContain("Rechercher une expertise…");
     expect(markup).not.toContain("Afficher les catégories");
     expect(markup).not.toContain("Filtrer les spécialistes par besoin");
@@ -47,7 +50,7 @@ describe("Specialists public index", () => {
     expect(markup).not.toContain("Partenaire");
   });
 
-  it("keeps the Specialists implementation parked behind its publication flag", async () => {
+  it("keeps the Specialists navigation and cards coherent", async () => {
     const pageSource = await readFile(
       new URL("../src/app/(marketing)/specialistes/page.tsx", import.meta.url),
       "utf8",
@@ -58,8 +61,7 @@ describe("Specialists public index", () => {
     );
 
     expect(pageSource).toContain('path: "/specialistes"');
-    expect(pageSource).toContain("if (!PUBLIC_SPECIALISTS_ENABLED) notFound()");
-    expect(pageSource).toContain('publicNavigationActiveView="services"');
+    expect(pageSource).toContain('publicNavigationActiveView="specialists"');
     expect(pageSource).toContain("Faites avancer votre entreprise");
     expect(pageSource).toContain("avec le bon spécialiste");
     expect(pageSource).not.toContain("Choisissez le sujet que vous souhaitez mettre en place ou déléguer.");

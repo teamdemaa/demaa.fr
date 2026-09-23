@@ -113,11 +113,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/solutions',
-        destination: '/outils',
-        permanent: true,
-      },
-      {
         source: '/annuaire-logiciels',
         destination: '/annuaire-outils',
         permanent: true,
@@ -186,13 +181,18 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/systeme-marketing',
-        destination: '/services/coach-business',
+        destination: '/annuaire-coachs',
         permanent: true,
       },
       {
         source: '/marketing-ethique',
-        destination: '/services/coach-business',
+        destination: '/annuaire-coachs',
         permanent: true,
+      },
+      {
+        source: '/services/coach-business',
+        destination: '/annuaire-coachs',
+        permanent: false,
       },
       {
         source: '/services/expert-comptable',

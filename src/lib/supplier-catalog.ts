@@ -38,7 +38,6 @@ export type DemaaSupplier = {
   usefulFor: string[];
   href: string;
   cta: SupplierCta;
-  partner?: boolean;
   markets?: readonly string[];
   eligibility?: string;
 };

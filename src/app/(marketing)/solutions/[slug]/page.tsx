@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
+import { cache } from "react";
 import { connection } from "next/server";
 import { notFound, redirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
-import ResourcesNavigation from "@/components/ResourcesNavigation";
 import OrganiserDiscoveryCta from "@/components/OrganiserDiscoveryCta";
 import SystemDetailContent from "@/components/SystemDetailContent";
-import { composePublicSolutionSectionsForSystem } from "@/lib/canonical-services-system-section.server";
+import { composeCanonicalServicesForSystem } from "@/lib/canonical-services-system-section.server";
 import { hasEditableOperationalSystemAsset } from "@/lib/editable-operational-system-assets.server";
 import { getActiveFirebaseSolutionRegistryRevision } from "@/lib/firebase-solution-registry.server";
+import localRegistrySnapshot from "@/lib/firebase-solution-registry.catalog-enrichment.snapshot.generated.json";
+import reviewedPilotCandidate from "../../../../../docs/research/d091-tools/pilot-candidate-revision.generated.json";
+import { parseFirebaseSolutionRegistryRevision } from "@/lib/firebase-solution-registry-contract";
 import { selectRenderableSolutionSectionsFromRevision } from "@/lib/firebase-solution-registry-selection.server";
-import { filterPublicSystemRecommendationSections } from "@/lib/public-solution-section-visibility";
+import { filterSolutionsPreviewSections } from "@/lib/public-solution-section-visibility";
 import { mergeRenderableSolutionSections } from "@/lib/system-solutions-ui-dto";
 import { normalizeSystemDetailTab } from "@/lib/system-detail-tabs";
 import {
@@ -33,12 +36,28 @@ function getParamValue(value?: string | string[]) {
   return Array.isArray(value) ? value[0] : value;
 }
 
+const getRegistryForPage = cache(async function getRegistryForPage() {
+  try {
+    return { revision: await getActiveFirebaseSolutionRegistryRevision(), source: "active" as const };
+  } catch (error) {
+    if (process.env.NODE_ENV !== "development") throw error;
+    return {
+      revision: parseFirebaseSolutionRegistryRevision(localRegistrySnapshot),
+      source: "local-snapshot" as const,
+    };
+  }
+});
+
+// The reviewed pilot is visible only on Vercel preview deployments. It does
+// not change the active Firebase pointer or the production publication gate.
+const reviewedPilotRevision = parseFirebaseSolutionRegistryRevision(reviewedPilotCandidate);
+
 export async function generateMetadata({ params }: SolutionPageProps): Promise<Metadata> {
   await connection();
   const { slug } = await params;
-  const [data, revision] = await Promise.all([
+  const [data, registry] = await Promise.all([
     getSystemDetailPageData(slug),
-    getActiveFirebaseSolutionRegistryRevision(),
+    getRegistryForPage(),
   ]);
 
   if (!data) {
@@ -50,10 +69,9 @@ export async function generateMetadata({ params }: SolutionPageProps): Promise<M
 
   return buildSystemPageMetadata(
     data,
-    filterPublicSystemRecommendationSections(
-      selectRenderableSolutionSectionsFromRevision(revision, slug, {
-        publishedOnly: true,
-      }),
+    filterSolutionsPreviewSections(
+      composeCanonicalServicesForSystem(slug,
+        selectRenderableSolutionSectionsFromRevision(registry.revision, slug, { publishedOnly: true })),
     ),
   );
 }
@@ -61,31 +79,63 @@ export async function generateMetadata({ params }: SolutionPageProps): Promise<M
 export default async function SolutionPage({ params, searchParams }: SolutionPageProps) {
   await connection();
   const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
-  const [data, revision] = await Promise.all([
+  const [data, registry] = await Promise.all([
     getSystemDetailPageData(slug),
-    getActiveFirebaseSolutionRegistryRevision(),
+    getRegistryForPage(),
   ]);
 
   if (!data) notFound();
 
-  const solutionSections = selectRenderableSolutionSectionsFromRevision(
-    revision,
-    slug,
-  );
   const publishedSolutionSections = selectRenderableSolutionSectionsFromRevision(
-    revision,
+    registry.revision,
     slug,
     { publishedOnly: true },
   );
-  const visibleSolutionSections = filterPublicSystemRecommendationSections(
-    composePublicSolutionSectionsForSystem(
-      slug,
-      mergeRenderableSolutionSections(solutionSections),
+  // This is the same selected software set already visible on the current
+  // public site. Keep that existing exposure while moving the métier page;
+  // newly surfaced providers and other categories still require publication.
+  const existingPublicSoftwareSections = selectRenderableSolutionSectionsFromRevision(
+    registry.revision,
+    slug,
+  ).filter(({ section }) => section === "software");
+  const existingPublicSoftwareSlugs = new Set(
+    existingPublicSoftwareSections.flatMap(({ placements }) =>
+      placements.map(({ resource }) => resource.resourceSlug)
     ),
   );
-  const visiblePublishedSolutionSections =
-    filterPublicSystemRecommendationSections(publishedSolutionSections);
-  const jsonLd = buildSystemPageJsonLd(data, visiblePublishedSolutionSections);
+  const isReviewedPilotPreview = process.env.VERCEL_ENV === "preview";
+  // Keep production on the active, published registry. The protected preview
+  // may add independently reviewed tools from the unpublished pilot candidate.
+  const reviewedPilotSections = isReviewedPilotPreview
+    ? selectRenderableSolutionSectionsFromRevision(reviewedPilotRevision, slug, { publishedOnly: true })
+      .filter(({ section }) => section === "software")
+      .map((group) => ({
+        ...group,
+        placements: group.placements.filter(({ resource }) =>
+          !existingPublicSoftwareSlugs.has(resource.resourceSlug)
+        ),
+      }))
+    : [];
+  const displaySolutionSections = process.env.NODE_ENV === "development"
+    ? selectRenderableSolutionSectionsFromRevision(registry.revision, slug)
+    : mergeRenderableSolutionSections([
+        ...publishedSolutionSections.filter(({ section }) => section !== "software"),
+        ...existingPublicSoftwareSections,
+        ...reviewedPilotSections,
+      ]);
+  const visibleSolutionSections = filterSolutionsPreviewSections(
+    composeCanonicalServicesForSystem(
+      slug,
+      mergeRenderableSolutionSections(displaySolutionSections),
+    ),
+  );
+  const publishedVisibleSolutionSections = filterSolutionsPreviewSections(
+    composeCanonicalServicesForSystem(
+      slug,
+      mergeRenderableSolutionSections(publishedSolutionSections),
+    ),
+  );
+  const jsonLd = buildSystemPageJsonLd(data, publishedVisibleSolutionSections);
 
   if (!hasEditableOperationalSystemAsset(data.system.slug)) notFound();
   if (normalizeSystemDetailTab(getParamValue(resolvedSearchParams.tab)) === "process") {
@@ -102,8 +152,11 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
     redirect("/modeles");
   }
 
+  const existingVisibleSoftwareSections = filterSolutionsPreviewSections(
+    existingPublicSoftwareSections,
+  );
   const softwarePlacementCount =
-    visibleSolutionSections.find(({ section }) => section === "software")
+    existingVisibleSoftwareSections.find(({ section }) => section === "software")
       ?.placements.length ?? 0;
   const comparisonAvailable = softwarePlacementCount >= 2 &&
     isPublishedToolComparisonSystem(data.system.slug);
@@ -111,9 +164,8 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="resources" />
+      <Navbar minimal publicNavigationActiveView="solutions" publicNavigationVariant="demaa" />
       <main className="min-h-screen bg-background pb-20">
-        <ResourcesNavigation activeView="tools" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -121,12 +173,20 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
           }}
         />
         <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-3 sm:px-6 lg:px-8">
+          {registry.source === "local-snapshot" ? (
+            <p className="mb-6 rounded-xl border border-dema-line bg-dema-paper px-4 py-3 text-sm text-dema-muted" role="status">
+              Aperçu local : données du snapshot éditorial. Le registre actif peut différer.
+            </p>
+          ) : null}
           <SystemDetailContent
             system={data.system}
             intro={buildSystemPageIntro(data)}
             initialResourceSlug={getParamValue(resolvedSearchParams.resource)}
             headingAs="h1"
             solutionSections={visibleSolutionSections}
+            backHref="/solutions"
+            backLabel="Toutes les solutions"
+            showDailyTools
             comparisonHref={
               comparisonAvailable
                 ? `/solutions/${data.system.slug}/comparatif-outils`

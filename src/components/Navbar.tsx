@@ -22,6 +22,7 @@ export default function Navbar({
   publicCtaHref,
   publicCtaLabel,
   publicNavigationActiveView,
+  publicNavigationVariant = "legacy",
 }: {
   adminControls?: boolean;
   anonymousLanding?: boolean;
@@ -32,6 +33,7 @@ export default function Navbar({
   publicCtaHref?: string;
   publicCtaLabel?: string;
   publicNavigationActiveView?: PublicActionPlanView | "none";
+  publicNavigationVariant?: "legacy" | "demaa";
 }) {
   const accountAccessClassName =
     "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
@@ -48,7 +50,7 @@ export default function Navbar({
         <div className="mx-auto w-full px-3 sm:px-6 md:px-10 lg:px-24">
           <div className="relative flex items-center justify-between py-3 md:min-h-16 md:py-4">
             <Link
-              href={adminControls
+              href={publicNavigationVariant === "demaa" ? "/solutions" : adminControls
                 ? "/admin"
                 : localeCode === "en"
                   ? "/en"
@@ -71,7 +73,7 @@ export default function Navbar({
               className="absolute left-1/2 top-1/2 hidden w-[min(40vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden xl:block"
             >
               {publicNavigationActiveView !== undefined ? (
-                <PublicActionPlanNavigation activeView={publicNavigationActiveView} />
+                <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} />
               ) : null}
             </div>
             {adminControls ? (
@@ -134,7 +136,7 @@ export default function Navbar({
             className="pb-3 empty:hidden xl:hidden"
           >
             {publicNavigationActiveView !== undefined ? (
-              <PublicActionPlanNavigation activeView={publicNavigationActiveView} />
+              <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} />
             ) : null}
           </div>
         </div>

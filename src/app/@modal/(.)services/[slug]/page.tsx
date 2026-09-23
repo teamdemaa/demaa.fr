@@ -4,6 +4,7 @@ import ServiceRouteDialog from "@/components/ServiceRouteDialog";
 import {
   getCanonicalServiceBySlug,
   getCanonicalServiceDetailRouteParams,
+  getCanonicalServiceRecordBySlug,
 } from "@/lib/canonical-service-catalog";
 
 type ServiceModalPageProps = {
@@ -11,11 +12,13 @@ type ServiceModalPageProps = {
 };
 
 export function generateStaticParams() {
-  return getCanonicalServiceDetailRouteParams();
+  return [...getCanonicalServiceDetailRouteParams(), { slug: "automatisation-ia" }];
 }
 export default async function ServiceModalPage({ params }: ServiceModalPageProps) {
   const { slug } = await params;
-  const service = getCanonicalServiceBySlug(slug);
+  const service = slug === "automatisation-ia"
+    ? getCanonicalServiceRecordBySlug(slug)
+    : getCanonicalServiceBySlug(slug);
   if (!service || service.detailHref !== `/services/${service.slug}`) notFound();
 
   return (

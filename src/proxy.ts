@@ -4,7 +4,6 @@ import { isVercelPreviewHost } from "@/lib/site-url";
 import { getExplicitInterfaceLocaleFromPathname } from "@/lib/international-context";
 import { getPublishedCopyableModelBySlug } from "@/lib/copyable-model-catalog";
 import { buildDefaultHomeMarketplaceHref } from "@/lib/action-plan-home-routing";
-import { PUBLIC_SPECIALISTS_ENABLED } from "@/lib/public-feature-flags";
 
 const CANONICAL_HOST = "demaa.fr";
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
@@ -81,21 +80,12 @@ export function proxy(request: NextRequest) {
   if (pathname === "/") {
     const marketplaceHref = buildDefaultHomeMarketplaceHref(request.nextUrl.searchParams);
     if (marketplaceHref) {
+      const solutionsHref = marketplaceHref.replace(/^\/a-reprendre(?=\?|$)/, "/solutions");
       return withContentSecurityPolicy(
-        NextResponse.redirect(new URL(marketplaceHref, request.url), 308),
+        NextResponse.redirect(new URL(solutionsHref, request.url), 308),
         localeCode,
       );
     }
-  }
-
-  if (pathname === "/specialistes" && !PUBLIC_SPECIALISTS_ENABLED) {
-    return withContentSecurityPolicy(
-      new NextResponse(null, {
-        status: 404,
-        headers: { "X-Robots-Tag": "noindex, nofollow" },
-      }),
-      localeCode,
-    );
   }
 
   if (

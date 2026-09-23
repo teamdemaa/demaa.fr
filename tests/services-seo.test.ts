@@ -7,6 +7,9 @@ import {
   generateMetadata,
   generateStaticParams,
 } from "@/app/(marketing)/services/[slug]/page";
+import ServiceModalPage, {
+  generateStaticParams as generateServiceModalStaticParams,
+} from "@/app/@modal/(.)services/[slug]/page";
 import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
 import {
   buildServicePageJsonLd,
@@ -18,7 +21,7 @@ async function readSource(path: string) {
 }
 
 describe("canonical Services SEO and redirects", () => {
-  it("publishes seven generic detail routes and keeps dedicated or hidden offers out", async () => {
+  it("publishes the day-rate automation detail without exposing the hidden accounting offer", async () => {
     expect(generateStaticParams()).toEqual([
       { slug: "coach-business" },
       { slug: "assistance-administrative" },
@@ -27,6 +30,7 @@ describe("canonical Services SEO and redirects", () => {
       { slug: "publicite-en-ligne" },
       { slug: "prospection-ciblee" },
       { slug: "recruter-un-alternant" },
+      { slug: "automatisation-ia" },
     ]);
     await expect(generateMetadata({
       params: Promise.resolve({ slug: "ancienne-offre" }),
@@ -37,6 +41,18 @@ describe("canonical Services SEO and redirects", () => {
     await expect(generateMetadata({
       params: Promise.resolve({ slug: "expert-comptable" }),
     })).rejects.toMatchObject({ digest: "NEXT_HTTP_ERROR_FALLBACK;404" });
+    expect((await generateMetadata({ params: Promise.resolve({ slug: "automatisation-ia" }) })).robots)
+      .toMatchObject({ index: false, follow: true });
+  });
+
+  it("opens the same automation offer from Specialists in the intercepted modal", async () => {
+    expect(generateServiceModalStaticParams()).toContainEqual({ slug: "automatisation-ia" });
+    await expect(ServiceModalPage({ params: Promise.resolve({ slug: "automatisation-ia" }) })).resolves.toMatchObject({
+      props: { ariaLabel: "Détails de Automatisation & IA" },
+    });
+    await expect(ServiceModalPage({ params: Promise.resolve({ slug: "expert-comptable" }) })).rejects.toMatchObject({
+      digest: "NEXT_HTTP_ERROR_FALLBACK;404",
+    });
   });
 
   it("emits direct Demaa offers without attributing third-party accounting fees to Demaa", () => {
@@ -109,7 +125,8 @@ describe("canonical Services SEO and redirects", () => {
     expect(detailSource).not.toContain("dynamicParams = false");
     expect(nextConfig).toContain("source: '/systeme-marketing'");
     expect(nextConfig).toContain("source: '/marketing-ethique'");
-    expect(nextConfig).toContain("destination: '/services/coach-business'");
+    expect(nextConfig).toContain("source: '/services/coach-business'");
+    expect(nextConfig).toContain("destination: '/annuaire-coachs'");
     expect(nextConfig).toContain("source: '/services/expert-comptable'");
     expect(nextConfig).toContain("source: '/annuaire-services/expert-comptable'");
     expect(nextConfig).toContain("destination: '/annuaire-experts-comptables'");

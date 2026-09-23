@@ -49,7 +49,9 @@ export default async function HomePage({
   const organiserRedirect = buildLegacySolutionsRedirect(query);
   if (organiserRedirect) permanentRedirect(organiserRedirect);
   const defaultMarketplaceHref = buildDefaultHomeMarketplaceHref(query);
-  if (defaultMarketplaceHref) permanentRedirect(defaultMarketplaceHref);
+  if (defaultMarketplaceHref) {
+    permanentRedirect(defaultMarketplaceHref.replace(/^\/a-reprendre(?=\?|$)/, "/solutions"));
+  }
 
   return (
     <ActionPlanHomeView

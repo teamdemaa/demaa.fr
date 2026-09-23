@@ -51,23 +51,22 @@ function AccompanimentDialog({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <DirectoryDetailDialogShell ariaLabel="Préparer la transmission" maxWidthClassName="max-w-2xl" onClose={onClose}>
+    <DirectoryDetailDialogShell ariaLabel="Réserver un diagnostic offert" maxWidthClassName="max-w-2xl" onClose={onClose}>
       {state === "success" ? (
         <div className="py-8 text-center"><span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-dema-forest text-dema-paper"><Check className="h-5 w-5" aria-hidden="true" /></span><h2 className="mt-5 text-3xl font-medium tracking-[-0.04em]">Demande envoyée.</h2><p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-dema-muted">Nous vous recontactons pour comprendre votre priorité et préparer un premier échange utile.</p></div>
       ) : (
         <>
-          <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest">Préparation</p>
-          <h2 className="mt-3 text-3xl font-normal tracking-[-0.04em] sm:text-4xl">Parlons de votre entreprise.</h2>
-          <p className="mt-4 max-w-xl text-sm leading-6 text-dema-muted">Décrivez ce qui dépend encore trop de vous. Nous regarderons le fonctionnement à structurer en priorité.</p>
+          <h2 className="text-3xl font-normal tracking-[-0.04em] sm:text-4xl">Réserver un diagnostic offert.</h2>
+          <p className="mt-4 max-w-xl text-sm leading-6 text-dema-muted">Décrivez ce qui vous fait perdre le plus de temps. Nous regarderons le premier fonctionnement à remettre en ordre, sans engagement.</p>
           <form onSubmit={handleSubmit} className="mt-7 grid gap-4 sm:grid-cols-2" noValidate>
-            <label className="block text-sm font-medium sm:col-span-2">Que faut-il structurer avant la transmission ?<textarea className={`${inputClassName} min-h-28 resize-y`} name="message" maxLength={1200} placeholder="Par exemple : demandes clients, devis, planning, responsabilités, facturation ou savoir-faire." required /></label>
+            <label className="block text-sm font-medium sm:col-span-2">Qu’est-ce qui vous fait perdre le plus de temps aujourd’hui ?<textarea className={`${inputClassName} min-h-28 resize-y`} name="message" maxLength={1200} placeholder="Par exemple : demandes clients, devis, relances, projets, planning, responsabilités ou informations dispersées." required /></label>
             <label className="block text-sm font-medium">Prénom et nom<input className={inputClassName} name="name" autoComplete="name" maxLength={160} required /></label>
             <label className="block text-sm font-medium">Email<input className={inputClassName} name="email" type="email" autoComplete="email" maxLength={160} required /></label>
             <label className="block text-sm font-medium">Téléphone<input className={inputClassName} name="phone" type="tel" autoComplete="tel" maxLength={40} required /></label>
             <label className="block text-sm font-medium">Entreprise<input className={inputClassName} name="company" autoComplete="organization" maxLength={160} required /></label>
             <label className="hidden" aria-hidden="true">Fax<input name="faxNumber" tabIndex={-1} autoComplete="off" /></label>
             {error ? <p className="text-sm font-medium text-red-700 sm:col-span-2" role="alert">{error}</p> : null}
-            <div className="sm:col-span-2"><button className={`${defaultButtonClassName} w-full sm:w-auto`} disabled={state === "submitting"} type="submit">{state === "submitting" ? "Envoi…" : "Prendre rendez-vous"}</button></div>
+            <div className="sm:col-span-2"><button className={`${defaultButtonClassName} w-full sm:w-auto`} disabled={state === "submitting"} type="submit">{state === "submitting" ? "Envoi…" : "Demander mon diagnostic"}</button></div>
             <p className="text-xs leading-5 text-dema-muted sm:col-span-2">Vos informations servent uniquement à préparer cet échange. Consultez notre <Link href="/politique-de-confidentialite" className="underline underline-offset-2">politique de confidentialité</Link>.</p>
           </form>
         </>

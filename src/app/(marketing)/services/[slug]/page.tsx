@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import {
   getCanonicalServiceBySlug,
   getCanonicalServiceDetailRouteParams,
+  getCanonicalServiceRecordBySlug,
 } from "@/lib/canonical-service-catalog";
 import {
   buildServicePageJsonLd,
@@ -20,38 +21,45 @@ type ServicePageProps = {
 };
 
 export function generateStaticParams() {
-  return getCanonicalServiceDetailRouteParams();
+  return [...getCanonicalServiceDetailRouteParams(), { slug: "automatisation-ia" }];
 }
 
 export async function generateMetadata({ params }: ServicePageProps): Promise<Metadata> {
   const { slug } = await params;
-  if (slug === "automatisation-ia" || slug === "automatisation-processus") {
+  if (slug === "automatisation-processus") {
     return buildPublicPageMetadata({
       title: "Structuration, automatisation & IA | Demaa",
       description: "Demaa structure et automatise un fonctionnement prioritaire de votre entreprise.",
       path: "/accompagnement",
     });
   }
-  const service = getCanonicalServiceBySlug(slug);
+  const service = slug === "automatisation-ia"
+    ? getCanonicalServiceRecordBySlug(slug)
+    : getCanonicalServiceBySlug(slug);
 
   if (!service || service.detailHref !== `/services/${service.slug}`) notFound();
 
   const title = `${service.name} | Services Demaa`;
   const canonical = service.detailHref;
 
-  return buildPublicPageMetadata({
+  return {
+    ...buildPublicPageMetadata({
     title,
     description: service.summary,
     path: canonical,
-  });
+    }),
+    ...(slug === "automatisation-ia" ? { robots: { index: false, follow: true } } : {}),
+  };
 }
 
 export default async function ServicePage({ params }: ServicePageProps) {
   const { slug } = await params;
-  if (slug === "automatisation-ia" || slug === "automatisation-processus") {
+  if (slug === "automatisation-processus") {
     permanentRedirect("/accompagnement#structuration");
   }
-  const service = getCanonicalServiceBySlug(slug);
+  const service = slug === "automatisation-ia"
+    ? getCanonicalServiceRecordBySlug(slug)
+    : getCanonicalServiceBySlug(slug);
 
   if (!service || service.detailHref !== `/services/${service.slug}`) notFound();
 
@@ -63,19 +71,19 @@ export default async function ServicePage({ params }: ServicePageProps) {
           __html: serializeServicesJsonLd(buildServicePageJsonLd(service)),
         }}
       />
-      {PUBLIC_SPECIALISTS_ENABLED ? (
-        <Navbar publicNavigationActiveView="services" />
+      {PUBLIC_SPECIALISTS_ENABLED || slug === "automatisation-ia" ? (
+        <Navbar minimal publicNavigationActiveView="specialists" publicNavigationVariant="demaa" />
       ) : (
         <Navbar />
       )}
       <main className="min-h-screen min-w-0 max-w-full bg-dema-cream px-4 pb-20 pt-8 sm:px-6 lg:px-8">
         <div className="mx-auto min-w-0 max-w-5xl">
           <Link
-            href={PUBLIC_SPECIALISTS_ENABLED ? "/specialistes" : "/accompagnement"}
+            href={PUBLIC_SPECIALISTS_ENABLED || slug === "automatisation-ia" ? "/specialistes" : "/accompagnement"}
             className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-dema-muted transition hover:text-dema-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            {PUBLIC_SPECIALISTS_ENABLED ? "Retour aux spécialistes" : "Retour à l’accompagnement"}
+            {PUBLIC_SPECIALISTS_ENABLED || slug === "automatisation-ia" ? "Retour aux spécialistes" : "Retour à l’accompagnement"}
           </Link>
           <CanonicalServiceDetails service={service} />
         </div>

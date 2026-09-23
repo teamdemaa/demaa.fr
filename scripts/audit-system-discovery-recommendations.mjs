@@ -176,7 +176,10 @@ function validateCatalog(items, catalogLabel) {
 
     try {
       const url = new URL(item.href);
-      if (url.protocol !== "https:") {
+      const archivedDemaaTrainingEmail = catalogLabel === "formation"
+        && HIDDEN_TRAINING_SLUGS.has(item.slug)
+        && url.href === "mailto:team@demaa.fr";
+      if (url.protocol !== "https:" && !archivedDemaaTrainingEmail) {
         errors.push(`${label}: le lien doit utiliser HTTPS (${item.href}).`);
       }
     } catch {
