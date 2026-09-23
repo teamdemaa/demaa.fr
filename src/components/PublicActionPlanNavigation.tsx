@@ -1,33 +1,19 @@
-import { BookOpen, Building2, Handshake, LibraryBig, Workflow } from "lucide-react";
 import Link from "next/link";
+import { DEMAA_PUBLIC_NAVIGATION } from "@/lib/demaa-public-routes";
 
 export type PublicActionPlanView = "marketplace" | "resources" | "services" | "accompagnement" | "academy" | "solutions" | "specialists";
-
-const navigationItems = [
-  { view: "marketplace", label: "Reprendre", href: "/a-reprendre", Icon: Building2 },
-  { view: "services", label: "Vendre", href: "/transmettre", Icon: Workflow },
-  { view: "resources", label: "Ressources", href: "/tutoriels", Icon: LibraryBig },
-] as const;
-
-// The Specialists directory remains available by direct link but is not part
-// of the public DEMAA navigation while it is being curated.
-const demaaNavigationItems = [
-  { view: "accompagnement", label: "Accompagnement", href: "/accompagnement", Icon: Handshake },
-  { view: "solutions", label: "Solutions", href: "/solutions", Icon: Workflow },
-  { view: "academy", label: "Tutoriels", href: "/academie", Icon: BookOpen },
-] as const;
 
 const tabClassName =
   "group relative inline-flex min-h-11 min-w-0 items-center justify-center gap-1 rounded-full px-1 text-xs font-medium leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
 
 export default function PublicActionPlanNavigation({
   activeView,
-  variant = "legacy",
+  variant = "demaa",
 }: {
   activeView: PublicActionPlanView | "none";
   variant?: "legacy" | "demaa";
 }) {
-  const items = variant === "demaa" ? demaaNavigationItems : navigationItems;
+  const items = DEMAA_PUBLIC_NAVIGATION;
   return (
     <div
       className={`grid w-full grid-cols-3 gap-1 rounded-full border border-dema-line/70 bg-dema-paper p-1 shadow-[0_3px_12px_rgba(23,35,29,0.035)] ${variant === "legacy" ? "xl:rounded-none xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none" : ""}`}

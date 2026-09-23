@@ -81,7 +81,7 @@ describe("accompagnement de structuration", () => {
     expect(landing).toContain("AccompanimentContactControl");
     expect(landing).toContain('<AccompanimentContactControl label="Être accompagné" />');
     expect(landing).toContain('<BusinessSellerActions variant="estimate" />');
-    expect(sitemap).toContain("/transmettre");
+    expect(sitemap).not.toContain("/transmettre");
     expect(sitemap).toContain("`${base}/accompagnement`");
     expect(sitemap).not.toContain("`${base}/automatisation`");
   });

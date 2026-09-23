@@ -2,22 +2,22 @@ import { describe, expect, it } from "vitest";
 import { usesDemaaFooter } from "@/lib/demaa-footer-routes";
 
 describe("DEMAA marketing footer routing", () => {
-  it("shows the DEMAA footer throughout the new editorial and directory routes", () => {
+  it("shows the Demaa footer throughout every marketing route", () => {
     for (const pathname of [
       "/academie", "/academie/piloter-sa-tresorerie", "/solutions",
       "/solutions/batiment", "/solutions/batiment/comparatif-outils",
       "/specialistes", "/annuaire-coachs", "/annuaire-experts-comptables/cabinets",
       "/services/automatisation-ia", "/modeles", "/outils/generation-de-qr-code",
       "/systemes/batiment/processus", "/annuaire-fournisseurs/batiment",
+      "/a-reprendre", "/a-reprendre/une-pme", "/transmettre", "/tutoriels", "/accompagnement",
     ]) {
       expect(usesDemaaFooter(pathname), pathname).toBe(true);
     }
   });
 
-  it("leaves reprise, transmission and legal pages on their existing footer", () => {
+  it("does not select a footer before a pathname is available", () => {
     for (const pathname of [
-      null, "/", "/a-reprendre", "/a-reprendre/une-pme", "/transmettre",
-      "/tutoriels", "/accompagnement", "/mentions-legales", "/solutions-archive",
+      null,
     ]) {
       expect(usesDemaaFooter(pathname), String(pathname)).toBe(false);
     }

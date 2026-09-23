@@ -164,13 +164,13 @@ describe("canonical content catalog", () => {
     });
   });
 
-  it("keeps the content hub indexed without adding another footer entry", () => {
+  it("keeps the content hub archived without adding another footer entry", () => {
     const footer = readFileSync(resolve(process.cwd(), "src/components/LegacyFooter.tsx"), "utf8");
     const sitemap = readFileSync(resolve(process.cwd(), "src/app/sitemap.ts"), "utf8");
     expect(footer).not.toContain('{ label: "Contenus", href: "/contenus" }');
-    expect(footer).toContain('{ label: "Méthodes", href: "/tutoriels" }');
-    expect(sitemap).toContain("`${base}/contenus`");
-    expect(sitemap).toContain("`${base}/contenus/${entry.slug}`");
+    expect(footer).toContain("<DemaaFooter />");
+    expect(sitemap).not.toContain("`${base}/contenus`");
+    expect(sitemap).not.toContain("`${base}/contenus/${entry.slug}`");
     expect(sitemap).not.toContain("courseContentEntries");
     expect(sitemap).not.toMatch(/from ["']@\/lib\/course-content["']/);
   });

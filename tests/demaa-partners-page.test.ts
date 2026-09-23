@@ -6,7 +6,7 @@ async function readSource(path: string) {
 }
 
 describe("seller and accompaniment pages", () => {
-  it("keeps Vendre as the main seller destination and publishes Accompagnement separately", async () => {
+  it("archives Vendre and keeps Accompagnement as the public destination", async () => {
     const [page, partners, accompaniment, studio, footer, navbar, sitemap] =
       await Promise.all([
         readSource("src/app/(marketing)/transmettre/page.tsx"),
@@ -25,11 +25,10 @@ describe("seller and accompaniment pages", () => {
     expect(accompaniment).toContain('path: "/accompagnement"');
     expect(accompaniment).toContain("OperationalAccompanimentLandingPage");
     expect(studio).toContain('permanentRedirect("/accompagnement")');
-    expect(footer).toContain('{ label: "Vendre", href: "/transmettre" }');
-    expect(footer).toContain('{ label: "Accompagnement", href: "/accompagnement" }');
-    expect(navbar).toContain('label: "Vendre", href: "/transmettre"');
+    expect(footer).toContain("<DemaaFooter />");
+    expect(navbar).toContain("DEMAA_PUBLIC_NAVIGATION");
     expect(navbar).not.toContain('label: "Demaa Partners"');
-    expect(sitemap).toContain("`${base}/transmettre`");
+    expect(sitemap).not.toContain("`${base}/transmettre`");
     expect(sitemap).toContain("`${base}/accompagnement`");
     expect(sitemap).not.toContain("`${base}/partners`");
   });

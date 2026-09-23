@@ -37,6 +37,7 @@ export async function generateMetadata({ params }: TutorialPageProps): Promise<M
           },
         }
       : {}),
+    ...(tutorial.format === "practice" ? {} : { robots: { index: false, follow: true } }),
   });
 }
 

@@ -1,14 +1,11 @@
-import TutorialsHub from "@/components/TutorialsHub";
-import {
-  buildPublicIndexJsonLd,
-  serializePublicJsonLd,
-} from "@/lib/public-index-json-ld";
+import Navbar from "@/components/Navbar";
+import AcademyPreviewLibrary from "@/components/AcademyPreviewLibrary";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
-import { getPublishedMethods } from "@/lib/tutorial-catalog";
+import { getAcademyPreviewCards } from "@/lib/academy-preview-catalog";
 
-const title = "Méthodes pour reprendre, structurer ou vendre | Demaa";
+const title = "Tutoriels pour organiser et piloter son entreprise | Demaa";
 const description =
-  "Des méthodes courtes, documentées et directement applicables pour reprendre, structurer ou vendre une entreprise.";
+  "Quatre tutoriels concrets pour organiser le suivi commercial, les projets et les interventions dans Airtable.";
 
 export const metadata = buildPublicPageMetadata({
   title,
@@ -17,24 +14,19 @@ export const metadata = buildPublicPageMetadata({
 });
 
 export default function TutorialsPage() {
-  const tutorials = getPublishedMethods();
-  const jsonLd = buildPublicIndexJsonLd({
-    name: "Méthodes",
-    description,
-    path: "/tutoriels",
-    items: tutorials.map((tutorial) => ({
-      name: tutorial.title,
-      path: `/tutoriels/${tutorial.slug}`,
-    })),
-  });
-
+  const cards = getAcademyPreviewCards();
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: serializePublicJsonLd(jsonLd) }}
-      />
-      <TutorialsHub />
+      <Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />
+      <main className="min-h-screen bg-background">
+        <header className="mx-auto w-full max-w-7xl px-4 pb-10 pt-12 text-center sm:px-6 md:pb-12 md:pt-16 lg:px-8">
+          <h1 className="text-balance font-light leading-[0.94] tracking-tight" style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}>
+            <span className="block text-brand-blue/62">Organiser et piloter son entreprise,</span>
+            <span className="demaa-hero-title block text-dema-forest">un sujet à la fois.</span>
+          </h1>
+        </header>
+        <AcademyPreviewLibrary cards={cards} />
+      </main>
     </>
   );
 }
