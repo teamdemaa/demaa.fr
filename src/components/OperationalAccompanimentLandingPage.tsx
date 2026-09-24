@@ -1,4 +1,5 @@
 import Image from "next/image";
+import AccompanimentCaseStudies from "@/components/AccompanimentCaseStudies";
 import AccompanimentContactControl from "@/components/AccompanimentContactControl";
 import Navbar from "@/components/Navbar";
 
@@ -67,6 +68,8 @@ export default function OperationalAccompanimentLandingPage() {
             <div className="mt-14 grid gap-px overflow-hidden rounded-[1.75rem] border border-dema-line bg-dema-line sm:grid-cols-2">{deliverables.map((deliverable) => <article key={deliverable.title} className="bg-dema-paper p-9 sm:p-10"><h3 className="text-xl font-medium tracking-[-0.03em]">{deliverable.title}</h3><p className="mt-4 max-w-md text-sm leading-7 text-dema-muted">{deliverable.text}</p></article>)}</div>
           </div>
         </section>
+
+        <AccompanimentCaseStudies />
 
         <section className="border-b border-dema-line bg-dema-paper px-5 py-24 sm:px-8 sm:py-28 lg:py-32">
           <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
