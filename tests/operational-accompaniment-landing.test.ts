@@ -17,6 +17,7 @@ describe("landing d’accompagnement", () => {
     expect(landing).toContain("On commence par ce qui vous revient trop souvent.");
     expect(landing).toContain("on part de votre fonctionnement et de vos outils actuels");
     expect(landing).toContain("Dans quatre semaines, ce flux ne repose plus uniquement sur vous.");
+    expect(landing).toContain("AccompanimentCaseStudies");
     expect(landing).toContain("Comment on l’installe avec vous.");
     expect(landing).toContain("Quatre semaines pour installer un système de travail clair.");
     expect(landing).toContain("3 500 € HT");
