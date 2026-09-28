@@ -191,8 +191,8 @@ function ProjectsContent() {
           {DEMAA_STUDIO_PROJECTS.map((project, index) => {
             const colors = ["bg-[#e7e9e3]", "bg-[#e9dfd1]", "bg-[#d8c2ad]", "bg-[#eee6dd]"];
             const card = <>
-              <div className={`flex h-64 items-end border border-[#ded6cb] p-7 ${colors[index % colors.length]}`}>
-                {project.logo ? <Image src={project.logo} alt="" width={190} height={70} className="h-auto max-h-14 w-auto max-w-[11rem] object-contain object-left" /> : <span className="font-serif text-4xl leading-none tracking-[-0.05em] text-[#413a35]">{project.name}</span>}
+              <div className={`relative flex h-64 items-end overflow-hidden border border-[#ded6cb] p-7 ${colors[index % colors.length]}`}>
+                {project.documentedSeries ? <Image src={project.documentedSeries.cover} alt={project.documentedSeries.coverAlt} fill sizes="(max-width: 767px) calc(100vw - 40px), 360px" className={`object-cover ${project.documentedSeries.coverPosition ?? ""}`} /> : project.logo ? <Image src={project.logo} alt="" width={190} height={70} className="h-auto max-h-14 w-auto max-w-[11rem] object-contain object-left" /> : <span className="font-serif text-4xl leading-none tracking-[-0.05em] text-[#413a35]">{project.name}</span>}
               </div>
               <div className="mt-5 flex items-start justify-between gap-4"><div><h2 className="text-base font-medium tracking-[0.05em]">{project.name}</h2><p className="mt-1 text-sm text-[#676057]">{project.sector}</p><p className="mt-5 max-w-sm text-sm leading-6 text-[#5d574f]">{project.summary}</p></div><ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-[#5c554d] transition group-hover:translate-x-0.5" aria-hidden="true" /></div>
             </>;
@@ -264,6 +264,21 @@ export function DemaaStudioProjectPage({ project }: { project: DemaaStudioProjec
           {project.objective ? <article className="bg-[#fbfaf7] p-7 sm:p-10"><p className="text-[10px] font-medium uppercase tracking-[0.18em] text-[#a36e58]">Objectif actuel</p><p className="mt-6 text-xl leading-8 tracking-[-0.025em] text-[#302c27]">{project.objective}</p></article> : null}
         </div>
       </section>
+      {project.documentedSeries ? <section className="mx-auto max-w-[960px] px-5 pb-20 sm:px-8 lg:pb-28" aria-labelledby="documented-series-title">
+        <div className="border-t border-[#ddd7ce] pt-10">
+          <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-[#a36e58]">{project.documentedSeries.category} · {project.documentedSeries.season}</p>
+          <h2 id="documented-series-title" className="mt-4 font-serif text-[clamp(2.7rem,5vw,4.5rem)] leading-[0.95] tracking-[-0.05em]">Le parcours de création</h2>
+          <p className="mt-5 max-w-[650px] text-sm leading-7 text-[#5d574f]">Cette série documentera les choix et les étapes du projet. Les épisodes sont prévus, mais pas encore publiés.</p>
+          <figure className="mt-8">
+            <div className="relative aspect-video overflow-hidden bg-[#eee9e2]"><Image src={project.documentedSeries.cover} alt={project.documentedSeries.coverAlt} fill sizes="(max-width: 960px) calc(100vw - 40px), 960px" className={`object-cover ${project.documentedSeries.coverPosition ?? ""}`} /></div>
+            <figcaption className="mt-2 text-xs text-[#756d64]">Visuel de concept du projet</figcaption>
+          </figure>
+          <p className="mt-8 text-sm text-[#5d574f]">Fournisseur{project.documentedSeries.suppliers.length > 1 ? "s" : ""} mentionné{project.documentedSeries.suppliers.length > 1 ? "s" : ""} : {project.documentedSeries.suppliers.join(" · ")}</p>
+          <ol className="mt-6 divide-y divide-[#ddd7ce] border-y border-[#ddd7ce]">
+            {project.documentedSeries.plannedEpisodes.map((episode, index) => <li key={episode} className="flex items-start gap-5 py-4 text-sm sm:gap-8"><span className="w-7 shrink-0 text-[#a36e58]">0{index + 1}</span><span className="flex-1">{episode}</span><span className="shrink-0 text-[#756d64]">À venir</span></li>)}
+          </ol>
+        </div>
+      </section> : null}
       <Close />
     </main>
   );
