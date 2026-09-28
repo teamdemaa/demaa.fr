@@ -10,6 +10,15 @@ export type DemaaStudioProject = {
   solution: string;
   need?: string;
   objective?: string;
+  documentedSeries?: {
+    season: string;
+    category: string;
+    cover: string;
+    coverAlt: string;
+    coverPosition?: string;
+    suppliers: readonly string[];
+    plannedEpisodes: readonly string[];
+  };
 };
 
 export type DemaaStudioOpportunity = {
@@ -71,10 +80,25 @@ export const DEMAA_STUDIO_PROJECTS: readonly DemaaStudioProject[] = [
     solution: "Un système qui organise la donnée puis la rend lisible dans une expérience éditoriale.",
   },
   {
-    slug: "dumaan-food", name: "Dumaan Food", sector: "FoodTech", status: "Projet en cours",
-    summary: "Des plats ouest-africains prêts à déguster, pensés pour le quotidien.",
+    slug: "dumaan-food", name: "Dumaan", sector: "Food", status: "Projet en cours",
+    summary: "Une offre de plats ouest-africains prêts à déguster, pensée pour le quotidien.",
     problem: "Les personnes qui aiment la cuisine ouest-africaine trouvent peu de repas pratiques sans compromis sur le goût et la qualité.",
     solution: "Une marque de plats prêts à déguster, fidèle aux goûts et adaptée aux rythmes de vie actuels.",
+    documentedSeries: {
+      season: "Saison 2",
+      category: "Lancer une marque · Food",
+      cover: "/images/studio/dumaan-brand-concept.webp",
+      coverAlt: "Visuel de concept Dumaan avec plats ouest-africains et interface mobile",
+      coverPosition: "object-[center_58%]",
+      suppliers: ["Mansa Pastel"],
+      plannedEpisodes: [
+        "Définir le concept, la cible et le modèle économique",
+        "Construire le menu, sourcer et tester les recettes",
+        "Créer l’identité, l’offre et les emballages",
+        "Organiser la production, l’hygiène et la livraison",
+        "Lancer, recueillir les retours et ajuster",
+      ],
+    },
   },
   {
     slug: "natural-mande", name: "Natural Mandé", sector: "Commerce B2B2C", status: "Projet en cours",
@@ -109,10 +133,25 @@ export const DEMAA_STUDIO_PROJECTS: readonly DemaaStudioProject[] = [
     solution: "Levier transforme les données financières en scénarios, indicateurs et décisions actionnables.",
   },
   {
-    slug: "mnd", name: "MND", sector: "À clarifier", status: "Projet en étude",
-    summary: "Un projet en cours de cadrage au sein du studio.",
-    problem: "Le besoin et le périmètre restent à préciser avant toute exécution.",
-    solution: "Le Studio prend le temps de définir une proposition solide avant de lui donner une forme publique.",
+    slug: "mnd", name: "MND", sector: "E-commerce", status: "Projet en étude",
+    summary: "Un projet de marque pour rendre des produits africains plus faciles à découvrir et à acheter au quotidien.",
+    problem: "Les produits recherchés sont souvent dispersés et difficiles à retrouver dans une offre simple et lisible.",
+    solution: "Explorer une sélection e-commerce autour des usages du quotidien : cuisiner, infuser et partager.",
+    documentedSeries: {
+      season: "Saison 1",
+      category: "Lancer une marque · E-commerce",
+      cover: "/images/studio/mnd-brand-concept.webp",
+      coverAlt: "Maquette de la boutique MND et de ses produits",
+      coverPosition: "object-top",
+      suppliers: ["Kama", "Natural Mandé"],
+      plannedEpisodes: [
+        "Décider quoi construire et comment",
+        "Trouver les bons fournisseurs",
+        "Transformer un produit en offre",
+        "Préparer les premières ventes",
+        "Vendre, apprendre et ajuster",
+      ],
+    },
   },
   {
     slug: "lafiasso", name: "Lafiasso", sector: "Immobilier", status: "Projet en cours",
