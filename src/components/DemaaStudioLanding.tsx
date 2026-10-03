@@ -61,7 +61,7 @@ function StudioContent() {
       <div className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-dema-cream/85 via-dema-cream/25 to-transparent lg:block" />
       <div className={`${sectionClass} pb-16 pt-[320px] sm:pt-[400px] lg:py-20`}>
         <h1 className="demaa-hero-title max-w-[760px] text-[clamp(2.8rem,5.5vw,5.7rem)] leading-[1.02] tracking-[-0.045em] lg:mt-6">On crée des entreprises sur des marchés qu’on connaît de l’intérieur.</h1>
-        <p className="mt-7 max-w-[520px] text-base leading-7 text-brand-blue/80">Nous créons des entreprises sur des marchés que nous connaissons et partageons des ressources pour entreprendre.</p>
+        <p className="mt-7 max-w-[520px] text-base leading-7 text-brand-blue/80">DEMAA est un studio d’entreprises : nous créons plusieurs sociétés, les faisons grandir, puis en revendons certaines et gardons les autres pour leurs revenus.</p>
         <div className="mt-9 flex flex-wrap gap-4"><Link href="/projets" className={contactClass}>Voir les projets <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div>
       </div>
     </section>
