@@ -1,9 +1,8 @@
-import Link from "next/link";
 import ResourcesNavigation from "@/components/ResourcesNavigation";
 import Navbar from "@/components/Navbar";
 import AcademyPreviewLibrary from "@/components/AcademyPreviewLibrary";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
-import { getAcademyPreviewCards, getAcademyPracticeCards } from "@/lib/academy-preview-catalog";
+import { getAcademyPreviewCards } from "@/lib/academy-preview-catalog";
 
 const title = "Academy — cours pratiques pour entrepreneurs | Demaa";
 const description =
@@ -29,11 +28,6 @@ export default function TutorialsPage() {
           </h1>
         </header>
         <AcademyPreviewLibrary cards={cards} />
-        <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8" aria-labelledby="pratiques-airtable">
-          <h2 id="pratiques-airtable" className="demaa-section-title text-3xl">Mettre en pratique avec Airtable</h2>
-          <p className="mt-3 text-dema-muted">Les tutoriels pour construire vos tableaux de suivi, quand vous avez choisi votre fonctionnement.</p>
-          <ul className="mt-6 grid gap-4 md:grid-cols-2">{getAcademyPracticeCards().map(card => <li key={card.href}><Link href={card.href} className="block border-t border-dema-line py-4 text-lg text-dema-forest underline decoration-dema-line underline-offset-4">{card.title}</Link></li>)}</ul>
-        </section>
       </main>
     </>
   );

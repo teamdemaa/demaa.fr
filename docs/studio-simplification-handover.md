@@ -56,3 +56,7 @@ Validation : 45 tests ciblés passent, ESLint des fichiers modifiés passe. La s
 La revue React conserve les textes côté serveur, ne transmet que les cartes à la recherche, utilise des clés stables et des champs de recherche accessibles, et garde le JSON-LD sérialisé par le helper existant. Le build final isolé `.next-academy-final` permet de préparer la nouvelle version sans modifier l’aperçu existant pendant la compilation.
 
 Contrôles finaux : build de production et TypeScript réussis ; 27 pages et fichiers renvoient HTTP 200, le proxy bloque explicitement les cours inconnus avec HTTP 404 et noindex pour éviter le statut 200 du rendu en streaming. Recherche (résultat, résultat vide, filtre Organisation), téléchargement réel d’un support CSV, rubrique Solutions et fiche Cabinet comptable vérifiés dans le navigateur. Article mobile testé en 390 × 844, largeur de page égale au viewport. Le serveur local final utilise `.next-academy-final` sur le port 3013 avec les flags locaux déjà décrits.
+
+## Simplification finale de la page Academy
+
+Les deux textes introductifs de l’en-tête et la section « Mettre en pratique avec Airtable » ont été retirés à la demande de l’utilisateur. L’index affiche les dix cours ; les anciens tutoriels restent accessibles à leurs URL et depuis les modèles existants.
