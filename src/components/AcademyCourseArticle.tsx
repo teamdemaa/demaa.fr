@@ -38,7 +38,6 @@ export default function AcademyCourseArticle({ course }: { course: AcademyCourse
             <p className="text-sm uppercase tracking-widest text-dema-muted">Le cours suivant</p>
             <h2 className="mt-3 text-2xl font-normal leading-snug text-dema-forest">{next.title}</h2>
             <Link href={`/tutoriels/${next.slug}`} className="mt-5 inline-flex min-h-12 items-center rounded-full bg-dema-forest px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest focus-visible:ring-offset-4">Lire le cours suivant <span aria-hidden="true" className="ml-3">→</span></Link>
-            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-dema-muted"><Link href="/modeles" className="underline underline-offset-4">Tous les modèles</Link><Link href="/solutions" className="underline underline-offset-4">Solutions par activité</Link></div>
           </footer>
         </div>
       </article>

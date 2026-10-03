@@ -7,8 +7,7 @@ export const DEMAA_PUBLIC_NAVIGATION = [
 ] as const;
 
 export const DEMAA_RESOURCE_NAVIGATION = [
-  { label: "Solutions par activité", href: "/solutions", description: "Des outils, fournisseurs et ressources adaptés à votre activité." },
-  { label: "Academy", href: "/tutoriels", description: "Des cours pratiques et des modèles pour structurer votre entreprise." },
+  { label: "Academy", href: "/tutoriels", description: "Des cours pratiques pour structurer votre entreprise." },
 ] as const;
 
 export const DEMAA_DIRECTORY_NAVIGATION = [
