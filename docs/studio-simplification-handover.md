@@ -24,3 +24,9 @@ Le site utilise `public/images/studio/dumaan-restauration-v2.webp`. L’ancienne
 43 tests ciblés, ESLint et build de production avec TypeScript réussis. Contrôle navigateur de Studio, du menu, de la page de recrutement sans images/statuts et de l’affichage mobile. Prévisualisation : http://localhost:3013/studio.
 
 La production demaa.fr n’est pas modifiée. Les limites Firebase de la livraison précédente restent applicables : vérifier les fiches métier et sessions avec le registre actif en préproduction. Les contacts mailto et paiements ne sont pas exercés.
+
+## Ajustement final de navigation
+
+Le menu retenu est désormais Studio, Opportunités, Academy. Solutions reste accessible comme « Outils et ressources par activité ». « Nous contacter » est le CTA par défaut des en-têtes publics. Les projets du deck restent conservés ; le deck n'a pas été modifié.
+
+Une fiche Solutions peut utiliser le snapshot sous `next start` uniquement avec `DEMAA_LOCAL_SOLUTIONS_PREVIEW=true`, un hôte localhost/loopback, et sans indicateurs Vercel. Les déploiements conservent l'obligation du registre actif Firebase. Le bandeau « Aperçu local » reste visible. Les tests couvrent notamment le refus du fallback sur demaa.fr et sur Vercel.

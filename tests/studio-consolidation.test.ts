@@ -23,7 +23,7 @@ describe("Studio consolidation publication", () => {
 
   it("keeps three public universes and retires the accompaniment offer", () => {
     expect(DEMAA_PUBLIC_NAVIGATION.map(({ label, href }) => [label, href])).toEqual([
-      ["Studio", "/studio"], ["Solutions", "/solutions"], ["Academy", "/tutoriels"],
+      ["Studio", "/studio"], ["Opportunités", "/studio/opportunites"], ["Academy", "/tutoriels"],
     ]);
     expect(DEMAA_RESOURCE_NAVIGATION.some(({ href }) => String(href) === "/accompagnement")).toBe(false);
     expect(readFileSync("src/app/(marketing)/accompagnement/page.tsx", "utf8")).toContain('permanentRedirect("/tutoriels")');

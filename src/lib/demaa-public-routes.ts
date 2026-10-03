@@ -2,12 +2,12 @@ export const DEMAA_DEFAULT_PUBLIC_PATH = "/studio";
 
 export const DEMAA_PUBLIC_NAVIGATION = [
   { view: "studio", label: "Studio", href: "/studio" },
-  { view: "solutions", label: "Solutions", href: "/solutions" },
+  { view: "opportunites", label: "Opportunités", href: "/studio/opportunites" },
   { view: "academy", label: "Academy", href: "/tutoriels" },
 ] as const;
 
 export const DEMAA_RESOURCE_NAVIGATION = [
-  { label: "Solutions", href: "/solutions", description: "Des outils, fournisseurs et ressources adaptés à votre activité." },
+  { label: "Outils et ressources par activité", href: "/solutions", description: "Des outils, fournisseurs et ressources adaptés à votre activité." },
   { label: "Academy", href: "/tutoriels", description: "Des tutoriels et méthodes pour apprendre et mettre en pratique." },
 ] as const;
 
