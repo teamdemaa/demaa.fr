@@ -8,6 +8,7 @@ export type AcademyPreviewCard = Readonly<{
   href: string;
   image: string | null;
   imageAlt: string;
+  imageCaption?: string;
   modelHref?: string;
   modelTitle?: string;
   searchTerms: readonly string[];
@@ -44,7 +45,8 @@ export function getAcademyPreviewCards(): AcademyPreviewCard[] {
     format: ACADEMY_LEARNING_LABEL,
     href: `/tutoriels/${course.slug}`,
     image: course.image,
-    imageAlt: "",
+    imageAlt: course.imageAlt,
+    imageCaption: course.imageCaption,
     searchTerms: [course.objective, course.intro],
     summary: course.objective,
     title: course.title,

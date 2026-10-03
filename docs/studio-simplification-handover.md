@@ -60,3 +60,11 @@ Contrôles finaux : build de production et TypeScript réussis ; 27 pages et fic
 ## Simplification finale de la page Academy
 
 Les deux textes introductifs de l’en-tête et la section « Mettre en pratique avec Airtable » ont été retirés à la demande de l’utilisateur. L’index affiche les dix cours ; les anciens tutoriels restent accessibles à leurs URL et depuis les modèles existants.
+
+### Paysages Academy — 3 octobre 2026
+- Dix miniatures remplacées : huit entrées Afrique (Siby/Mali, Santo Antão/Cap-Vert, Sine-Saloum/Sénégal, Haut Atlas/Maroc, Sossusvlei/Namibie), deux ailleurs (Vestrahorn/Islande et Dolomites/Italie). Sept visuels distincts.
+- Aucun satellite ni ancienne photo d’Hombori. Pour le Mali : visuel généré réaliste, explicitement légendé « Inspiré de Siby · Mali », signalé IA dans les articles. Les références Siby Tourisme ne sont pas réutilisées faute de licence vérifiée.
+- Six photographies sous licence Unsplash, sources et crédits consignés dans academy-landscape-selection-v2.json et liés depuis les articles. Recadrage 1600×900 WebP ; originaux précédents conservés pour retour arrière.
+- Lieu discret sous chaque miniature ; mêmes visuels et légendes dans les articles. Texte des cours conservé.
+- Validation : ESLint, huit tests ciblés, build Next/TypeScript, dix articles et sept fichiers HTTP 200 avec crédits, vérification visuelle dans navigateur local. Capture : output/consolidation-demaa-2026-10-03/academy-paysages-v2.png.
+- Preview local : port 3013. Aucune publication en production.

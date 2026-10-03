@@ -22,7 +22,10 @@ export default function AcademyCourseArticle({ course }: { course: AcademyCourse
           <p className="text-xs uppercase tracking-[0.14em] text-dema-forest">{ACADEMY_LEARNING_LABEL} · {course.category}</p>
           <h1 className="demaa-section-title mt-4 text-balance text-4xl leading-tight tracking-tight sm:text-5xl">{course.title}</h1>
           <p className="mt-6 text-lg leading-relaxed text-dema-muted">{course.objective}</p>
-          <div className="relative mt-8 aspect-video overflow-hidden rounded-2xl"><Image src={course.image} alt="" fill sizes="(min-width: 896px) 848px, 100vw" className="object-cover" /></div>
+          <figure className="mt-8">
+            <div className="relative aspect-video overflow-hidden rounded-2xl"><Image src={course.image} alt={course.imageAlt} fill sizes="(min-width: 896px) 848px, 100vw" className="object-cover" /></div>
+            <figcaption className="mt-3 flex flex-wrap justify-between gap-x-6 gap-y-2 text-xs text-dema-muted"><span>{course.imageCaption}</span>{course.imageSource ? <a href={course.imageSource} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Photo : {course.imageCredit} · Unsplash</a> : <span>{course.imageCredit}</span>}</figcaption>
+          </figure>
         </header>
         <div className="mx-auto max-w-2xl text-base leading-8">
           <p className="mt-10">{course.intro}</p>

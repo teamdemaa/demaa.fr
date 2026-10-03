@@ -3,7 +3,7 @@
     "slug": "organiser-entreprise-sans-tout-porter",
     "title": "Tout repose sur moi : par quoi commencer pour organiser mon entreprise ?",
     "category": "Organisation",
-    "image": "/images/academy/paysages/chemin-v1.webp",
+    "image": "/images/academy/paysages/siby-inspire-v1.webp",
     "objective": "Choisir un fonctionnement à clarifier cette semaine et décider qui fait quoi.",
     "intro": "Quand toutes les décisions reviennent au dirigeant, ajouter un logiciel ne suffit pas. Commencez par rendre visible le travail qui revient chaque semaine. Votre premier objectif est de supprimer une dépendance précise : une commande qui attend votre accord, un document que vous seul retrouvez, une consigne à répéter.",
     "steps": [
@@ -51,13 +51,17 @@
       "Quantité et livraison confirmées",
       "Créer un registre unique",
       "À définir"
-    ]
+    ],
+    "imageCaption": "Inspiré de Siby · Mali",
+    "imageAlt": "Inspiré de Siby · Mali",
+    "imageCredit": "Paysage généré par IA, inspiré des reliefs du Mandé",
+    "imageSource": null
   },
   {
     "slug": "choisir-premiers-clients",
     "title": "Mon offre pourrait intéresser beaucoup de monde : à qui vendre en premier ?",
     "category": "Offre et clients",
-    "image": "/images/academy/paysages/terrasses-v1.webp",
+    "image": "/images/academy/paysages/santo-antao-v1.webp",
     "objective": "Choisir un premier segment de clients accessible et vérifier son besoin.",
     "intro": "Une offre peut convenir à plusieurs publics sans pouvoir être vendue de la même façon à tous. Pour commencer, choisissez un groupe dont le problème est fréquent, dont vous pouvez rencontrer les membres et pour lequel votre offre apporte un bénéfice précis. Ce choix est une hypothèse de départ, pas une décision définitive.",
     "steps": [
@@ -101,13 +105,17 @@
       "Visites hors service",
       "À vérifier auprès de cinq contacts",
       "Tester un lot préparé"
-    ]
+    ],
+    "imageCaption": "Santo Antão · Cap-Vert",
+    "imageAlt": "Santo Antão · Cap-Vert",
+    "imageCredit": "Dominique Josse",
+    "imageSource": "https://unsplash.com/photos/i010CaxDLEM"
   },
   {
     "slug": "clarifier-offre-commerciale",
     "title": "Les clients ne comprennent pas mon offre : comment la rendre claire ?",
     "category": "Offre et clients",
-    "image": "/images/academy/paysages/horizon-v1.webp",
+    "image": "/images/academy/paysages/sine-saloum-v1.webp",
     "objective": "Écrire une offre compréhensible avec un périmètre, un résultat et une prochaine étape.",
     "intro": "Une offre claire aide le client à savoir si elle répond à son problème. Elle doit expliquer pour qui elle est conçue, ce qui est livré et comment commencer. Une liste de fonctionnalités ou de prestations ne suffit pas si le résultat attendu reste flou.",
     "steps": [
@@ -151,13 +159,17 @@
       "Conditionnement 2,5 kg",
       "Préparation des plats",
       "Demander les références disponibles"
-    ]
+    ],
+    "imageCaption": "Sine-Saloum · Sénégal",
+    "imageAlt": "Sine-Saloum · Sénégal",
+    "imageCredit": "Anton Lecock",
+    "imageSource": "https://unsplash.com/photos/LEpilI_K4fs"
   },
   {
     "slug": "tester-demande-avant-investir",
     "title": "Les gens aiment mon idée : comment savoir s’ils achèteraient ?",
     "category": "Offre et clients",
-    "image": "/images/academy/paysages/rivage-v1.webp",
+    "image": "/images/academy/paysages/atlas-v1.webp",
     "objective": "Tester un engagement concret avant de produire ou d’investir davantage.",
     "intro": "Un compliment indique que votre présentation plaît. Il ne prouve pas qu’un client paiera. Pour tester la demande, exposez une offre précise à des personnes concernées et observez ce qu’elles font. Commencez avec un test petit, réalisable et annoncé honnêtement.",
     "steps": [
@@ -201,13 +213,17 @@
       "Commander un lot",
       "À renseigner",
       "À décider après le test"
-    ]
+    ],
+    "imageCaption": "Haut Atlas · Maroc",
+    "imageAlt": "Haut Atlas · Maroc",
+    "imageCredit": "Patrick Ogilvie",
+    "imageSource": "https://unsplash.com/photos/KHcyx3gGtJI"
   },
   {
     "slug": "repondre-objection-prix",
     "title": "Les clients trouvent mon prix trop élevé : dois-je le baisser ?",
     "category": "Vente",
-    "image": "/images/academy/paysages/horizon-v1.webp",
+    "image": "/images/academy/paysages/sossusvlei-v1.webp",
     "objective": "Identifier la vraie objection et comparer une remise à une adaptation de l’offre.",
     "intro": "« Trop cher » peut signifier que le budget manque, que le bénéfice n’est pas compris ou que le client compare une offre différente. Avant de changer le prix, clarifiez la comparaison. Une baisse systématique peut dégrader votre marge sans résoudre la raison du refus.",
     "steps": [
@@ -251,13 +267,17 @@
       "60 €",
       "Format réduit à chiffrer",
       "À renseigner"
-    ]
+    ],
+    "imageCaption": "Sossusvlei · Namibie",
+    "imageAlt": "Sossusvlei · Namibie",
+    "imageCredit": "NIR HIMI",
+    "imageSource": "https://unsplash.com/photos/uBst6NH7l9c"
   },
   {
     "slug": "organiser-premiere-prospection",
     "title": "Où trouver mes premiers clients et comment organiser ma prospection ?",
     "category": "Vente",
-    "image": "/images/academy/paysages/chemin-v1.webp",
+    "image": "/images/academy/paysages/siby-inspire-v1.webp",
     "objective": "Construire une petite liste ciblée et une routine de contact tenable.",
     "intro": "Vos premiers clients ne viennent pas forcément du canal qui touche le plus de monde. Cherchez un lieu où votre cible est identifiable et accessible : réseau professionnel, quartier, annuaire spécialisé ou communauté. Une prospection organisée relie chaque contact à un besoin et à une prochaine action.",
     "steps": [
@@ -303,13 +323,17 @@
       "À définir",
       "À renseigner",
       "Proposer un échange"
-    ]
+    ],
+    "imageCaption": "Inspiré de Siby · Mali",
+    "imageAlt": "Inspiré de Siby · Mali",
+    "imageCredit": "Paysage généré par IA, inspiré des reliefs du Mandé",
+    "imageSource": null
   },
   {
     "slug": "suivre-prospects-et-relances",
     "title": "J’oublie mes relances : comment suivre mes prospects simplement ?",
     "category": "Vente",
-    "image": "/images/academy/paysages/rivage-v1.webp",
+    "image": "/images/academy/paysages/vestrahorn-v1.webp",
     "objective": "Tenir une liste commerciale avec une prochaine action datée pour chaque échange actif.",
     "intro": "Un suivi commercial utile ne se limite pas à stocker des noms. Il doit vous dire quoi faire ensuite. Commencez avec un tableau partagé ou un carnet structuré, puis choisissez un outil si le volume le justifie. La règle essentielle : un contact actif possède un responsable et une prochaine action.",
     "steps": [
@@ -355,13 +379,17 @@
       "Responsable commercial",
       "Confirmer réception du devis",
       "À définir"
-    ]
+    ],
+    "imageCaption": "Vestrahorn · Islande",
+    "imageAlt": "Vestrahorn · Islande",
+    "imageCredit": "Luca Micheli",
+    "imageSource": "https://unsplash.com/photos/ruWkmt3nU58"
   },
   {
     "slug": "centraliser-commandes",
     "title": "Les commandes arrivent de partout : comment éviter les erreurs ?",
     "category": "Organisation",
-    "image": "/images/academy/paysages/terrasses-v1.webp",
+    "image": "/images/academy/paysages/santo-antao-v1.webp",
     "objective": "Créer un registre unique et une règle de confirmation pour chaque commande.",
     "intro": "Vous pouvez recevoir les demandes par plusieurs canaux, mais leur traitement doit converger vers un même registre. Le risque apparaît quand une commande reste dans un message, change sans trace ou arrive incomplète à la personne qui prépare. Clarifiez le passage de la demande à la commande confirmée.",
     "steps": [
@@ -409,13 +437,17 @@
       "À confirmer",
       "Responsable commandes",
       "Aucune"
-    ]
+    ],
+    "imageCaption": "Santo Antão · Cap-Vert",
+    "imageAlt": "Santo Antão · Cap-Vert",
+    "imageCredit": "Dominique Josse",
+    "imageSource": "https://unsplash.com/photos/i010CaxDLEM"
   },
   {
     "slug": "deleguer-sans-tout-corriger",
     "title": "Je dois tout corriger : comment mieux déléguer ?",
     "category": "Organisation",
-    "image": "/images/academy/paysages/chemin-v1.webp",
+    "image": "/images/academy/paysages/dolomites-v1.webp",
     "objective": "Transmettre une tâche avec un résultat observable et des limites de décision claires.",
     "intro": "Déléguer une tâche sans expliquer la qualité attendue pousse chacun à interpréter la consigne. Commencez par une tâche récurrente et assez stable. La personne doit savoir pourquoi elle la réalise, ce qui est attendu et quand vous solliciter. Vérifiez aussi qu’elle dispose du temps et des moyens nécessaires.",
     "steps": [
@@ -459,13 +491,17 @@
       "Mise en forme standard",
       "Quantité incohérente",
       "Relire le premier bon ensemble"
-    ]
+    ],
+    "imageCaption": "Dolomites · Italie",
+    "imageAlt": "Dolomites · Italie",
+    "imageCredit": "Markus Spiske",
+    "imageSource": "https://unsplash.com/photos/bhaXeiBGWw4"
   },
   {
     "slug": "piloter-entreprise-chaque-semaine",
     "title": "Je travaille beaucoup : comment savoir si l’entreprise avance ?",
     "category": "Pilotage",
-    "image": "/images/academy/paysages/horizon-v1.webp",
+    "image": "/images/academy/paysages/sine-saloum-v1.webp",
     "objective": "Mettre en place une revue hebdomadaire avec quelques indicateurs reliés à des décisions.",
     "intro": "Le temps passé ne dit pas à lui seul si l’activité progresse. Choisissez un objectif pour les prochaines semaines et quelques mesures qui vous aideront à décider. Un tableau de bord est utile seulement si les chiffres sont fiables, compris et suivis d’une action.",
     "steps": [
@@ -513,6 +549,10 @@
       "À renseigner",
       "Analyser la première erreur",
       "Responsable opérations"
-    ]
+    ],
+    "imageCaption": "Sine-Saloum · Sénégal",
+    "imageAlt": "Sine-Saloum · Sénégal",
+    "imageCredit": "Anton Lecock",
+    "imageSource": "https://unsplash.com/photos/LEpilI_K4fs"
   }
 ]

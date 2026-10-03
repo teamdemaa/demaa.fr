@@ -1,0 +1,72 @@
+[
+  {
+    "file": "public/images/academy/paysages/siby-inspire-v1.webp",
+    "caption": "Inspiré de Siby · Mali",
+    "credit": "Paysage généré par IA, inspiré des reliefs du Mandé",
+    "source": null,
+    "kind": "generated",
+    "license": null,
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/santo-antao-v1.webp",
+    "caption": "Santo Antão · Cap-Vert",
+    "credit": "Dominique Josse",
+    "source": "https://unsplash.com/photos/i010CaxDLEM",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/sine-saloum-v1.webp",
+    "caption": "Sine-Saloum · Sénégal",
+    "credit": "Anton Lecock",
+    "source": "https://unsplash.com/photos/LEpilI_K4fs",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/atlas-v1.webp",
+    "caption": "Haut Atlas · Maroc",
+    "credit": "Patrick Ogilvie",
+    "source": "https://unsplash.com/photos/KHcyx3gGtJI",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/sossusvlei-v1.webp",
+    "caption": "Sossusvlei · Namibie",
+    "credit": "NIR HIMI",
+    "source": "https://unsplash.com/photos/uBst6NH7l9c",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/vestrahorn-v1.webp",
+    "caption": "Vestrahorn · Islande",
+    "credit": "Luca Micheli",
+    "source": "https://unsplash.com/photos/ruWkmt3nU58",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/dolomites-v1.webp",
+    "caption": "Dolomites · Italie",
+    "credit": "Markus Spiske",
+    "source": "https://unsplash.com/photos/bhaXeiBGWw4",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  }
+]
