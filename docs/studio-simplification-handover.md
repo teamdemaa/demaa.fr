@@ -80,3 +80,7 @@ Les deux textes introductifs de l’en-tête et la section « Mettre en pratique
 
 ### Remplacement du paysage violet
 - Vestrahorn remplacé par Kirkjufell en Islande, photographié par Nicolas Lafargue (Unsplash) : verts naturels, herbes beige et ciel gris. Aucun doublon ajouté ; légende à 50 % d’opacité conservée.
+
+### CTA de fin de cours
+- « Le cours suivant » présente le titre et un bouton « Lire le cours suivant » vers le prochain article, en reprenant le style des CTA existants.
+- « Tous les modèles » et « Solutions par activité » restent secondaires pour naviguer vers les ressources. Le lien de contact est retiré de ce bloc ; le contact global reste accessible dans la navigation et le pied de page du site.
