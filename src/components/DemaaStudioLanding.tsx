@@ -69,7 +69,7 @@ function StudioContent() {
     <section className="border-y border-dema-line">
       <div className={`${sectionClass} grid gap-10 lg:grid-cols-2`}>
         <div><p className={eyebrowClass}>Notre point de départ</p><h2 className={`${titleClass} mt-5`}>Le terrain avant tout.</h2></div>
-        <div><p className="text-lg leading-8 text-brand-blue/85">Nous partons de problèmes que nous connaissons de près. Une équipe partagée réunit finance, opérations, technologie et développement commercial pour faire avancer chaque projet.</p><p className="mt-5 text-base leading-7 text-dema-muted">Nous cherchons des entreprises solides, capables d’atteindre la rentabilité. Nous concentrons nos moyens sur les projets qui montrent du potentiel.</p><ul className="mt-8 grid grid-cols-2 gap-x-5 gap-y-4 border-t border-dema-line pt-5">{DEMAA_STUDIO_POLES.map((pole) => <li key={pole} className="text-sm font-medium">{pole}</li>)}</ul></div>
+        <div><p className="text-lg leading-8 text-brand-blue/85">Nous partons de problèmes que nous connaissons de près. Une équipe partagée réunit finance, opérations, technologie et développement commercial pour faire avancer chaque projet.</p><ul className="mt-8 grid grid-cols-2 gap-x-5 gap-y-4 border-t border-dema-line pt-5">{DEMAA_STUDIO_POLES.map((pole) => <li key={pole} className="text-sm font-medium">{pole}</li>)}</ul></div>
       </div>
     </section>
     <section className={sectionClass}>
