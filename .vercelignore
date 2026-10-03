@@ -1,5 +1,6 @@
 .git
 .next
+.next-*
 .next-build
 .next-build-webpack
 .next-build-verify
@@ -8,6 +9,7 @@ node_modules
 data
 generated
 outputs
+output
 tmp
 *.xlsx
 *.tsbuildinfo
