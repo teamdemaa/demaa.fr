@@ -68,3 +68,7 @@ Les deux textes introductifs de l’en-tête et la section « Mettre en pratique
 - Lieu discret sous chaque miniature ; mêmes visuels et légendes dans les articles. Texte des cours conservé.
 - Validation : ESLint, huit tests ciblés, build Next/TypeScript, dix articles et sept fichiers HTTP 200 avec crédits, vérification visuelle dans navigateur local. Capture : output/consolidation-demaa-2026-10-03/academy-paysages-v2.png.
 - Preview local : port 3013. Aucune publication en production.
+
+### Légendes sur les photos
+- À la demande de l’utilisateur, le lieu apparaît désormais en blanc en bas à droite de la photo, sur un dégradé discret, dans les miniatures et les articles.
+- Libellé Mali : « Siby · Mali ». La nature générée et l’inspiration des reliefs du Mandé restent précisées dans le crédit de l’article et le manifeste.

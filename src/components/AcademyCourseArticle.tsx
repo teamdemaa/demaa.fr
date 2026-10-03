@@ -23,8 +23,8 @@ export default function AcademyCourseArticle({ course }: { course: AcademyCourse
           <h1 className="demaa-section-title mt-4 text-balance text-4xl leading-tight tracking-tight sm:text-5xl">{course.title}</h1>
           <p className="mt-6 text-lg leading-relaxed text-dema-muted">{course.objective}</p>
           <figure className="mt-8">
-            <div className="relative aspect-video overflow-hidden rounded-2xl"><Image src={course.image} alt={course.imageAlt} fill sizes="(min-width: 896px) 848px, 100vw" className="object-cover" /></div>
-            <figcaption className="mt-3 flex flex-wrap justify-between gap-x-6 gap-y-2 text-xs text-dema-muted"><span>{course.imageCaption}</span>{course.imageSource ? <a href={course.imageSource} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Photo : {course.imageCredit} · Unsplash</a> : <span>{course.imageCredit}</span>}</figcaption>
+            <div className="relative aspect-video overflow-hidden rounded-2xl"><Image src={course.image} alt={course.imageAlt} fill sizes="(min-width: 896px) 848px, 100vw" className="object-cover" /><span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-4 pb-3 pt-8 text-right text-xs text-white">{course.imageCaption}</span></div>
+            <figcaption className="mt-3 text-xs text-dema-muted">{course.imageSource ? <a href={course.imageSource} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Photo : {course.imageCredit} · Unsplash</a> : <span>{course.imageCredit}</span>}</figcaption>
           </figure>
         </header>
         <div className="mx-auto max-w-2xl text-base leading-8">

@@ -51,9 +51,9 @@ export default function AcademyPreviewLibrary({ cards }: { cards: readonly Acade
                     ) : (
                       <p className="max-w-[88%] font-serif text-2xl italic leading-tight text-dema-forest sm:text-3xl">{card.category}</p>
                     )}
+                    {card.imageCaption ? <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-4 pb-3 pt-8 text-right text-xs text-white">{card.imageCaption}</span> : null}
                   </div>
                   <div className="px-0.5 pt-4">
-                    {card.imageCaption ? <p className="mb-4 text-xs text-dema-muted">{card.imageCaption}</p> : null}
                     <p className="text-[0.68rem] font-medium uppercase tracking-[0.12em] text-dema-forest/65">{card.format} · {card.category}</p>
                     <h2 className="mt-2 text-xl font-normal leading-tight tracking-[-0.02em] text-brand-blue transition-colors group-hover:text-dema-forest sm:text-2xl">{card.title}</h2>
                   </div>
