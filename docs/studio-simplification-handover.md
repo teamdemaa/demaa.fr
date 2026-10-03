@@ -77,3 +77,6 @@ Les deux textes introductifs de l’en-tête et la section « Mettre en pratique
 - Chaque cours a désormais son propre visuel : dix fichiers et dix empreintes SHA-256 distinctes.
 - Les répétitions de Siby, Santo Antão et Sine-Saloum sont remplacées par trois photographies Unsplash : Spitzkoppe (NIR HIMI), Boa Vista (Jonas Fesser), La Digue (iMike Stettler).
 - Lieux sur les photos en bas à droite et crédits dans les articles conservés. Sources et licence consignées dans le manifeste.
+
+### Remplacement du paysage violet
+- Vestrahorn remplacé par Kirkjufell en Islande, photographié par Nicolas Lafargue (Unsplash) : verts naturels, herbes beige et ciel gris. Aucun doublon ajouté ; légende à 50 % d’opacité conservée.

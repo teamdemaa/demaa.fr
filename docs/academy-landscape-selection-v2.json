@@ -98,5 +98,15 @@
     "license": "https://unsplash.com/license",
     "changes": "Recadrage 16:9 et conversion WebP",
     "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/kirkjufell-v1.webp",
+    "caption": "Kirkjufell · Islande",
+    "credit": "Nicolas Lafargue",
+    "source": "https://unsplash.com/photos/JnZ0iPdXTzg",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP. Remplace Vestrahorn violet.",
+    "date": "2026-10-03"
   }
 ]
