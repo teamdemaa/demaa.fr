@@ -3,11 +3,11 @@ export const DEMAA_DEFAULT_PUBLIC_PATH = "/studio";
 export const DEMAA_PUBLIC_NAVIGATION = [
   { view: "studio", label: "Studio", href: "/studio" },
   { view: "opportunites", label: "Opportunités", href: "/studio/opportunites" },
-  { view: "academy", label: "Academy", href: "/tutoriels" },
+  { view: "academy", label: "Apprentissages", href: "/tutoriels" },
 ] as const;
 
 export const DEMAA_RESOURCE_NAVIGATION = [
-  { label: "Academy", href: "/tutoriels", description: "Des cours pratiques pour structurer votre entreprise." },
+  { label: "Apprentissages", href: "/tutoriels", description: "Des cours pratiques pour structurer votre entreprise." },
 ] as const;
 
 export const DEMAA_DIRECTORY_NAVIGATION = [
