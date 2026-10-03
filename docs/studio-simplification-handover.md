@@ -30,3 +30,29 @@ La production demaa.fr n’est pas modifiée. Les limites Firebase de la livrais
 Le menu retenu est désormais Studio, Opportunités, Academy. Solutions reste accessible comme « Outils et ressources par activité ». « Nous contacter » est le CTA par défaut des en-têtes publics. Les projets du deck restent conservés ; le deck n'a pas été modifié.
 
 Une fiche Solutions peut utiliser le snapshot sous `next start` uniquement avec `DEMAA_LOCAL_SOLUTIONS_PREVIEW=true`, un hôte localhost/loopback, et sans indicateurs Vercel. Les déploiements conservent l'obligation du registre actif Firebase. Le bandeau « Aperçu local » reste visible. Les tests couvrent notamment le refus du fallback sur demaa.fr et sur Vercel.
+
+
+## Academy consolidée le 3 octobre 2026
+
+La navigation secondaire est Cours, Modèles, Solutions. Le menu principal reste Studio, Opportunités, Academy et conserve Nous contacter. Les dix cours partent de problèmes d’entrepreneurs et privilégient organisation et structuration : étapes, exemple fictif, exercice, support CSV, critères de vérification et piège à éviter. Les sujets ne sont pas présentés comme un classement de questions les plus fréquentes, faute d’étude de fréquence.
+
+1. Tout repose sur moi : par quoi commencer pour organiser mon entreprise ?
+2. Mon offre pourrait intéresser beaucoup de monde : à qui vendre en premier ?
+3. Les clients ne comprennent pas mon offre : comment la rendre claire ?
+4. Les gens aiment mon idée : comment savoir s’ils achèteraient ?
+5. Les clients trouvent mon prix trop élevé : dois-je le baisser ?
+6. Où trouver mes premiers clients et comment organiser ma prospection ?
+7. J’oublie mes relances : comment suivre mes prospects simplement ?
+8. Les commandes arrivent de partout : comment éviter les erreurs ?
+9. Je dois tout corriger : comment mieux déléguer ?
+10. Je travaille beaucoup : comment savoir si l’entreprise avance ?
+
+Les anciennes pages et données ne sont pas supprimées : les quatre tutoriels Airtable restent dans une section complémentaire, les cinq anciennes méthodes restent accessibles à leurs URL et les modèles existants restent dans leur catalogue. Les dix nouveaux supports sont accessibles dans Modèles et directement depuis les exercices. Les fichiers sont des CSV UTF-8 avec BOM, séparateur point-virgule, une ligne d’exemple fictif et une ligne vide. Le chemin `/downloads/academy/` évite la redirection historique de `/academy`.
+
+Les quatre paysages ont été générés avec imagegen puis optimisés en WebP 1600 × 900. Ils sont réutilisés dans les dix cartes et les en-têtes des cours, sans filtre d’illustration ni texte dans l’image. Assets : `public/images/academy/paysages/`. Sources éditoriales : `src/lib/academy-courses-data.json`. Aucun changement du deck Canva ni publication de production.
+
+Validation : 45 tests ciblés passent, ESLint des fichiers modifiés passe. La suite globale lancée avant l’actualisation des assertions de navigation a donné 1703 tests passants, 8 tests en échec et 6 ignorés ; deux échecs liés au nouveau parcours ont depuis été corrigés et revérifiés dans les tests ciblés. D’autres échecs concernent des assertions de l’ancien accompagnement, l’ancien footer, la sélection Solutions, des imports `client-only` et des délais de test. La suite globale n’est pas déclarée verte.
+
+La revue React conserve les textes côté serveur, ne transmet que les cartes à la recherche, utilise des clés stables et des champs de recherche accessibles, et garde le JSON-LD sérialisé par le helper existant. Le build final isolé `.next-academy-final` permet de préparer la nouvelle version sans modifier l’aperçu existant pendant la compilation.
+
+Contrôles finaux : build de production et TypeScript réussis ; 27 pages et fichiers renvoient HTTP 200, le proxy bloque explicitement les cours inconnus avec HTTP 404 et noindex pour éviter le statut 200 du rendu en streaming. Recherche (résultat, résultat vide, filtre Organisation), téléchargement réel d’un support CSV, rubrique Solutions et fiche Cabinet comptable vérifiés dans le navigateur. Article mobile testé en 390 × 844, largeur de page égale au viewport. Le serveur local final utilise `.next-academy-final` sur le port 3013 avec les flags locaux déjà décrits.

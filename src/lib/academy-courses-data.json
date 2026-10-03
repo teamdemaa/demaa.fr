@@ -1,0 +1,518 @@
+[
+  {
+    "slug": "organiser-entreprise-sans-tout-porter",
+    "title": "Tout repose sur moi : par quoi commencer pour organiser mon entreprise ?",
+    "category": "Organisation",
+    "image": "/images/academy/paysages/chemin-v1.webp",
+    "objective": "Choisir un fonctionnement à clarifier cette semaine et décider qui fait quoi.",
+    "intro": "Quand toutes les décisions reviennent au dirigeant, ajouter un logiciel ne suffit pas. Commencez par rendre visible le travail qui revient chaque semaine. Votre premier objectif est de supprimer une dépendance précise : une commande qui attend votre accord, un document que vous seul retrouvez, une consigne à répéter.",
+    "steps": [
+      {
+        "title": "Observer une semaine réelle",
+        "body": "Notez les tâches effectuées, les demandes reçues et les interruptions. Pour chaque tâche, indiquez sa fréquence, le temps approximatif et la personne qui sait la réaliser. Utilisez des faits : « vérifier les trois commandes du jour », plutôt que « gérer les opérations »."
+      },
+      {
+        "title": "Choisir le premier blocage",
+        "body": "Repérez ce qui revient souvent et provoque de l’attente ou des erreurs. Choisissez un seul sujet dont la résolution facilitera le reste. Une priorité utile tient en une phrase : « Toute commande complète doit pouvoir être préparée sans me demander les informations. »"
+      },
+      {
+        "title": "Définir un responsable et un résultat",
+        "body": "Pour ce sujet, nommez une personne responsable, même si c’est encore vous. Écrivez ce qui déclenche le travail, les informations nécessaires, les étapes et ce qui signifie que le travail est terminé. Précisez les exceptions qui nécessitent votre décision."
+      },
+      {
+        "title": "Installer une routine courte",
+        "body": "Rangez les informations au même endroit et fixez un point de dix minutes à une fréquence adaptée au volume. Regardez les éléments bloqués et attribuez à chacun une prochaine action avec une date. Le point sert à décider, pas à raconter toute la semaine."
+      },
+      {
+        "title": "Vérifier avant d’étendre",
+        "body": "Après une semaine, demandez si une autre personne peut suivre la consigne sans vous solliciter. Comptez les demandes de clarification et les erreurs. Corrigez la consigne avant de documenter un autre fonctionnement. Une procédure utilisée vaut mieux que dix documents oubliés."
+      }
+    ],
+    "example": "Exemple fictif : une petite activité de restauration reçoit ses commandes par téléphone et messages. La dirigeante commence par un registre unique, une heure limite de confirmation et une personne chargée de vérifier les quantités. Elle ne documente pas encore toute la cuisine.",
+    "exercise": "Pendant 30 minutes, listez dix tâches récurrentes. Entourez le blocage le plus fréquent, puis remplissez une ligne du modèle. Testez cette règle pendant cinq jours de travail.",
+    "checks": [
+      "Le blocage est décrit avec un cas réel.",
+      "Un responsable et une prochaine action sont nommés.",
+      "Le résultat attendu est vérifiable."
+    ],
+    "mistake": "Vouloir tout formaliser immédiatement. Commencez par le fonctionnement qui cause le plus de friction.",
+    "columns": [
+      "Tâche récurrente",
+      "Déclencheur",
+      "Responsable",
+      "Résultat attendu",
+      "Prochaine action",
+      "Date de revue"
+    ],
+    "row": [
+      "Confirmer les commandes",
+      "Demande complète reçue",
+      "Responsable commandes",
+      "Quantité et livraison confirmées",
+      "Créer un registre unique",
+      "À définir"
+    ]
+  },
+  {
+    "slug": "choisir-premiers-clients",
+    "title": "Mon offre pourrait intéresser beaucoup de monde : à qui vendre en premier ?",
+    "category": "Offre et clients",
+    "image": "/images/academy/paysages/terrasses-v1.webp",
+    "objective": "Choisir un premier segment de clients accessible et vérifier son besoin.",
+    "intro": "Une offre peut convenir à plusieurs publics sans pouvoir être vendue de la même façon à tous. Pour commencer, choisissez un groupe dont le problème est fréquent, dont vous pouvez rencontrer les membres et pour lequel votre offre apporte un bénéfice précis. Ce choix est une hypothèse de départ, pas une décision définitive.",
+    "steps": [
+      {
+        "title": "Décrire trois groupes concrets",
+        "body": "Écrivez trois segments en précisant leur activité, leur taille et la situation qui déclenche le besoin. « Petits restaurants qui préparent chaque matin leurs légumes » permet de chercher des contacts. « Tous les professionnels » ne vous aide pas à agir."
+      },
+      {
+        "title": "Comparer le besoin et l’accès",
+        "body": "Pour chaque groupe, notez le problème observable, sa fréquence, la solution actuelle et comment joindre cinq personnes. Séparez les faits des suppositions. Un groupe facile à contacter et confronté à un problème fréquent est un bon candidat pour un premier test."
+      },
+      {
+        "title": "Interroger sur la situation actuelle",
+        "body": "Demandez à cinq personnes de raconter la dernière fois qu’elles ont rencontré le problème : ce qu’elles ont fait, le temps perdu et ce qu’elles ont déjà essayé. Évitez « est-ce que mon idée vous plaît ? ». Notez leurs mots et les différences entre les situations."
+      },
+      {
+        "title": "Choisir une cible pour le test",
+        "body": "Retenez le groupe qui cumule un besoin clair, une possibilité d’achat et un accès réaliste. Formulez une promesse adaptée à ce groupe. Définissez ce qui doit être vérifié dans les prochaines conversations avant de chercher un autre public."
+      }
+    ],
+    "example": "Exemple fictif : une offre de légumes préparés peut servir les particuliers, les traiteurs et les restaurants. L’équipe commence par cinq restaurants proches, car elle peut observer leur préparation quotidienne et tester une livraison régulière.",
+    "exercise": "Remplissez trois lignes du modèle. Pour la cible retenue, écrivez cinq noms de contacts et préparez trois questions sur leur fonctionnement actuel.",
+    "checks": [
+      "La cible est assez précise pour trouver des contacts.",
+      "Le problème s’appuie sur des situations racontées.",
+      "Le premier test vise un seul groupe."
+    ],
+    "mistake": "Choisir une cible uniquement parce que le marché paraît grand. Un public accessible permet d’apprendre plus vite.",
+    "columns": [
+      "Segment",
+      "Problème fréquent",
+      "Solution actuelle",
+      "Accès aux contacts",
+      "Faits recueillis",
+      "Prochain test"
+    ],
+    "row": [
+      "Restaurants de quartier",
+      "Préparation longue des légumes",
+      "Découpe sur place",
+      "Visites hors service",
+      "À vérifier auprès de cinq contacts",
+      "Tester un lot préparé"
+    ]
+  },
+  {
+    "slug": "clarifier-offre-commerciale",
+    "title": "Les clients ne comprennent pas mon offre : comment la rendre claire ?",
+    "category": "Offre et clients",
+    "image": "/images/academy/paysages/horizon-v1.webp",
+    "objective": "Écrire une offre compréhensible avec un périmètre, un résultat et une prochaine étape.",
+    "intro": "Une offre claire aide le client à savoir si elle répond à son problème. Elle doit expliquer pour qui elle est conçue, ce qui est livré et comment commencer. Une liste de fonctionnalités ou de prestations ne suffit pas si le résultat attendu reste flou.",
+    "steps": [
+      {
+        "title": "Partir du problème du client",
+        "body": "Reprenez une difficulté exprimée pendant une conversation récente. Décrivez-la dans ses mots, sans vocabulaire interne. Vérifiez que le problème est assez important pour qu’il cherche une solution et que vous savez effectivement y répondre."
+      },
+      {
+        "title": "Formuler la promesse",
+        "body": "Écrivez : « Pour [client dans une situation précise], nous proposons [livrable] afin de [bénéfice concret]. » Ne promettez que ce que vous maîtrisez. Un livrable vérifiable est plus clair qu’une transformation vague comme « développer votre potentiel »."
+      },
+      {
+        "title": "Préciser ce qui est inclus",
+        "body": "Indiquez les quantités, le format, les délais et les conditions pratiques. Ajoutez les exclusions qui évitent les malentendus. Le client doit comprendre ce qu’il reçoit et les informations qu’il doit vous transmettre."
+      },
+      {
+        "title": "Rendre la décision facile",
+        "body": "Terminez par une seule prochaine étape : demander un devis, réserver un essai ou envoyer les informations nécessaires. Présentez le prix ou la façon dont il sera déterminé. Testez la phrase auprès de trois personnes : demandez-leur ce qu’elles pensent recevoir."
+      }
+    ],
+    "example": "Exemple fictif : « Nous fournissons aux restaurants des légumes lavés et coupés, en sachets de 2,5 kg, livrés selon un créneau convenu. Vous choisissez les références et les quantités avant l’heure limite. » Le format et l’usage deviennent visibles.",
+    "exercise": "Réécrivez votre offre en cinq lignes. Faites-la lire sans autre explication et demandez : « À qui s’adresse cette offre ? Que reçoit-on ? Comment commence-t-on ? » Corrigez les points mal compris.",
+    "checks": [
+      "La cible et le besoin apparaissent dès la première phrase.",
+      "Le livrable et les limites sont explicites.",
+      "Une seule prochaine étape est proposée."
+    ],
+    "mistake": "Multiplier les promesses ou cacher les contraintes. La clarté évite aussi les mauvaises attentes.",
+    "columns": [
+      "Client visé",
+      "Problème",
+      "Livrable",
+      "Inclus",
+      "Non inclus",
+      "Prochaine étape"
+    ],
+    "row": [
+      "Restaurant indépendant",
+      "Temps de préparation",
+      "Légumes lavés et coupés",
+      "Conditionnement 2,5 kg",
+      "Préparation des plats",
+      "Demander les références disponibles"
+    ]
+  },
+  {
+    "slug": "tester-demande-avant-investir",
+    "title": "Les gens aiment mon idée : comment savoir s’ils achèteraient ?",
+    "category": "Offre et clients",
+    "image": "/images/academy/paysages/rivage-v1.webp",
+    "objective": "Tester un engagement concret avant de produire ou d’investir davantage.",
+    "intro": "Un compliment indique que votre présentation plaît. Il ne prouve pas qu’un client paiera. Pour tester la demande, exposez une offre précise à des personnes concernées et observez ce qu’elles font. Commencez avec un test petit, réalisable et annoncé honnêtement.",
+    "steps": [
+      {
+        "title": "Écrire ce que le test doit apprendre",
+        "body": "Choisissez une hypothèse : une cible rencontre ce problème, accepte ce format ou est prête à payer ce prix. Testez un point principal à la fois. Décidez avant de commencer quelle observation vous conduira à continuer, adapter ou arrêter."
+      },
+      {
+        "title": "Préparer une offre réellement réalisable",
+        "body": "Définissez un premier lot, une démonstration ou une prestation pilote que vous pouvez livrer. Expliquez le contenu, le prix, le délai et les limites. Ne présentez pas un prototype comme un produit déjà disponible."
+      },
+      {
+        "title": "Demander une action qui compte",
+        "body": "Proposez une commande, un rendez-vous de démonstration ou un essai avec une date. Distinguez ces niveaux d’engagement : un rendez-vous n’équivaut pas à un achat. Consignez la réponse exacte et les conditions demandées, plutôt que votre impression."
+      },
+      {
+        "title": "Comparer les résultats au seuil choisi",
+        "body": "Relisez les réponses, les refus et les objections. Si les personnes acceptent seulement après une modification importante, votre offre initiale reste à revoir. Faites un second test en changeant un seul élément pour comprendre ce qui améliore le résultat."
+      }
+    ],
+    "example": "Exemple fictif : une équipe propose un lot pilote à dix restaurateurs et fixe comme signal de poursuite trois commandes au prix annoncé. Deux rendez-vous et plusieurs compliments ne valident pas ce seuil. L’équipe analyse les freins avant de produire davantage.",
+    "exercise": "Définissez une hypothèse, dix contacts, une action demandée et votre seuil de décision. Contactez d’abord trois personnes pour vérifier que la proposition est comprise.",
+    "checks": [
+      "Le prix, le contenu et le délai sont visibles.",
+      "L’action observée est distinguée d’un simple intérêt.",
+      "Un seuil de décision est défini avant le test."
+    ],
+    "mistake": "Compter les likes comme des achats ou changer votre seuil après les résultats.",
+    "columns": [
+      "Hypothèse",
+      "Contact",
+      "Offre testée",
+      "Action demandée",
+      "Réponse observée",
+      "Décision"
+    ],
+    "row": [
+      "Trois commandes sur dix contacts",
+      "Restaurant A",
+      "Lot pilote au prix annoncé",
+      "Commander un lot",
+      "À renseigner",
+      "À décider après le test"
+    ]
+  },
+  {
+    "slug": "repondre-objection-prix",
+    "title": "Les clients trouvent mon prix trop élevé : dois-je le baisser ?",
+    "category": "Vente",
+    "image": "/images/academy/paysages/horizon-v1.webp",
+    "objective": "Identifier la vraie objection et comparer une remise à une adaptation de l’offre.",
+    "intro": "« Trop cher » peut signifier que le budget manque, que le bénéfice n’est pas compris ou que le client compare une offre différente. Avant de changer le prix, clarifiez la comparaison. Une baisse systématique peut dégrader votre marge sans résoudre la raison du refus.",
+    "steps": [
+      {
+        "title": "Demander ce qui sert de comparaison",
+        "body": "Posez une question calme : « Par rapport à quelle solution ou à quel budget ? » Notez l’offre concurrente, son périmètre et les contraintes du client. Ne supposez pas qu’un refus traduit forcément un mauvais prix."
+      },
+      {
+        "title": "Rendre la valeur concrète",
+        "body": "Expliquez ce qui est inclus et le problème traité. Quand vous utilisez une économie de temps ou d’argent, appuyez-la sur des données du client ou indiquez clairement qu’il s’agit d’une estimation. Évitez les promesses de rentabilité sans mesure."
+      },
+      {
+        "title": "Revoir le périmètre avant la remise",
+        "body": "Proposez un format plus petit, une fréquence différente ou moins d’options si cela répond au besoin. Chiffrez les coûts variables et le temps nécessaires pour livrer. Vérifiez que le prix conserve une contribution suffisante pour couvrir les autres charges."
+      },
+      {
+        "title": "Encadrer toute concession",
+        "body": "Si vous accordez une remise, explicitez sa raison, sa durée et sa contrepartie réaliste. Notez le prix final et le périmètre accepté. Analysez plusieurs objections avant de modifier votre tarif général."
+      }
+    ],
+    "example": "Exemple fictif simplifié, hors taxes : à 100 € avec 60 € de coûts variables, la contribution est de 40 €. Une remise de 10 € la ramène à 30 €. Pour garder 400 € de contribution, il faudrait environ quatorze ventes au lieu de dix, à coûts constants. Ce calcul ne représente pas le bénéfice net.",
+    "exercise": "Reprenez trois objections récentes. Pour chacune, notez la comparaison, la réponse donnée et une adaptation de périmètre possible. Calculez la contribution avant et après une remise.",
+    "checks": [
+      "La comparaison et le budget sont compris.",
+      "La proposition précise le périmètre.",
+      "L’effet de la remise sur la contribution est calculé."
+    ],
+    "mistake": "Baisser le prix avant de connaître le frein, ou confondre contribution et bénéfice.",
+    "columns": [
+      "Client",
+      "Comparaison ou budget",
+      "Prix proposé",
+      "Coûts variables",
+      "Alternative de périmètre",
+      "Réponse"
+    ],
+    "row": [
+      "Client A",
+      "À clarifier",
+      "100 €",
+      "60 €",
+      "Format réduit à chiffrer",
+      "À renseigner"
+    ]
+  },
+  {
+    "slug": "organiser-premiere-prospection",
+    "title": "Où trouver mes premiers clients et comment organiser ma prospection ?",
+    "category": "Vente",
+    "image": "/images/academy/paysages/chemin-v1.webp",
+    "objective": "Construire une petite liste ciblée et une routine de contact tenable.",
+    "intro": "Vos premiers clients ne viennent pas forcément du canal qui touche le plus de monde. Cherchez un lieu où votre cible est identifiable et accessible : réseau professionnel, quartier, annuaire spécialisé ou communauté. Une prospection organisée relie chaque contact à un besoin et à une prochaine action.",
+    "steps": [
+      {
+        "title": "Choisir une cible et un canal",
+        "body": "Reprenez un segment précis. Choisissez un canal principal pendant deux semaines afin de pouvoir comparer les résultats. Vérifiez que votre approche est adaptée au contexte et respecte les préférences des personnes contactées."
+      },
+      {
+        "title": "Préparer une liste courte et utile",
+        "body": "Pour vingt contacts, notez le nom, l’activité, la raison pour laquelle votre offre peut être pertinente et le moyen de contact. Écartez les contacts pour lesquels vous ne pouvez pas expliquer cette pertinence. La qualité de la liste compte davantage que son volume."
+      },
+      {
+        "title": "Écrire un message centré sur un problème",
+        "body": "Présentez-vous, mentionnez une difficulté plausible de cette activité et expliquez ce que vous proposez en une phrase. Demandez une petite prochaine étape, par exemple un échange de dix minutes. Personnalisez avec un fait réel, sans inventer de familiarité."
+      },
+      {
+        "title": "Installer deux créneaux et mesurer",
+        "body": "Réservez deux créneaux courts par semaine pour contacter puis relancer. Consignez les réponses, les échanges utiles et les commandes. Quand les réponses sont faibles, examinez séparément la cible, le message et le canal. Respectez un refus et ne poursuivez pas les relances."
+      }
+    ],
+    "example": "Exemple fictif : une entreprise de préparation alimentaire choisit vingt restaurants proches. Elle les rencontre hors des heures de service avec une fiche simple, puis note les besoins et les créneaux de rappel convenus. Elle ne lance pas simultanément cinq campagnes.",
+    "exercise": "Choisissez dix contacts pour votre première semaine. Écrivez un message de quatre phrases et bloquez deux créneaux dans votre agenda. À la fin, comparez contacts, réponses et échanges qualifiés.",
+    "checks": [
+      "Chaque contact appartient à la cible choisie.",
+      "Le message propose une action facile à accepter.",
+      "Les réponses et les refus sont consignés."
+    ],
+    "mistake": "Passer plus de temps à créer une grande base qu’à parler à des clients pertinents.",
+    "columns": [
+      "Contact",
+      "Cible",
+      "Raison du contact",
+      "Canal",
+      "Date du contact",
+      "Réponse",
+      "Prochaine action"
+    ],
+    "row": [
+      "Restaurant A",
+      "Restaurant indépendant",
+      "Préparation quotidienne",
+      "Visite hors service",
+      "À définir",
+      "À renseigner",
+      "Proposer un échange"
+    ]
+  },
+  {
+    "slug": "suivre-prospects-et-relances",
+    "title": "J’oublie mes relances : comment suivre mes prospects simplement ?",
+    "category": "Vente",
+    "image": "/images/academy/paysages/rivage-v1.webp",
+    "objective": "Tenir une liste commerciale avec une prochaine action datée pour chaque échange actif.",
+    "intro": "Un suivi commercial utile ne se limite pas à stocker des noms. Il doit vous dire quoi faire ensuite. Commencez avec un tableau partagé ou un carnet structuré, puis choisissez un outil si le volume le justifie. La règle essentielle : un contact actif possède un responsable et une prochaine action.",
+    "steps": [
+      {
+        "title": "Regrouper les échanges actifs",
+        "body": "Rassemblez les contacts depuis vos messages, notes et devis. Gardez les informations nécessaires : interlocuteur, besoin, dernier échange, statut, prochaine action et date. Limitez les données conservées à ce qui sert effectivement au suivi."
+      },
+      {
+        "title": "Définir des étapes observables",
+        "body": "Utilisez quelques étapes simples : à contacter, besoin confirmé, proposition envoyée, gagné, perdu. Définissez le fait qui permet de passer à l’étape suivante. « Besoin confirmé » signifie qu’un échange a établi le problème, pas que vous pensez le connaître."
+      },
+      {
+        "title": "Écrire la prochaine action après chaque échange",
+        "body": "Notez une action précise : « appeler jeudi pour vérifier les quantités » ou « envoyer le devis avec deux formats ». Fixez une date et une personne responsable. Un commentaire comme « relancer bientôt » ne permet pas d’organiser la journée."
+      },
+      {
+        "title": "Revoir les échéances régulièrement",
+        "body": "Ouvrez la liste à heure fixe selon votre volume. Traitez les actions arrivées à échéance et clôturez les contacts qui ont refusé. Après une relance, mettez à jour la suite. Gardez les motifs de perte pour identifier un problème récurrent dans l’offre."
+      }
+    ],
+    "example": "Exemple fictif : après avoir envoyé un devis mardi, le commercial note « vendredi : confirmer réception et répondre aux questions ». Si le client demande de revenir le mois suivant, il remplace la date au lieu de multiplier les rappels.",
+    "exercise": "Reprenez cinq prospects réellement actifs. Attribuez à chacun une étape, un responsable et une prochaine action datée. Programmez un point de quinze minutes cette semaine.",
+    "checks": [
+      "Aucun contact actif ne reste sans prochaine action.",
+      "Les étapes correspondent à des faits.",
+      "Les refus sont clôturés et respectés."
+    ],
+    "mistake": "Ajouter trop de statuts et de champs. Gardez ceux qui changent une décision ou une action.",
+    "columns": [
+      "Contact",
+      "Besoin",
+      "Étape",
+      "Dernier échange",
+      "Responsable",
+      "Prochaine action",
+      "Échéance"
+    ],
+    "row": [
+      "Client A",
+      "Quantités régulières",
+      "Proposition envoyée",
+      "À renseigner",
+      "Responsable commercial",
+      "Confirmer réception du devis",
+      "À définir"
+    ]
+  },
+  {
+    "slug": "centraliser-commandes",
+    "title": "Les commandes arrivent de partout : comment éviter les erreurs ?",
+    "category": "Organisation",
+    "image": "/images/academy/paysages/terrasses-v1.webp",
+    "objective": "Créer un registre unique et une règle de confirmation pour chaque commande.",
+    "intro": "Vous pouvez recevoir les demandes par plusieurs canaux, mais leur traitement doit converger vers un même registre. Le risque apparaît quand une commande reste dans un message, change sans trace ou arrive incomplète à la personne qui prépare. Clarifiez le passage de la demande à la commande confirmée.",
+    "steps": [
+      {
+        "title": "Définir les informations obligatoires",
+        "body": "Listez ce qu’il faut pour livrer sans deviner : client, produit ou prestation, quantité, date, lieu, contraintes et conditions convenues. Séparez les champs obligatoires des détails utiles. Une demande incomplète reste à compléter."
+      },
+      {
+        "title": "Créer une référence unique",
+        "body": "Donnez un numéro à chaque commande et enregistrez-la au même endroit, quel que soit son canal d’arrivée. Indiquez qui saisit la demande et qui vérifie sa complétude. Évitez de laisser plusieurs copies concurrentes être modifiées en parallèle."
+      },
+      {
+        "title": "Confirmer puis transmettre",
+        "body": "Récapitulez au client les éléments retenus et les conditions applicables. Faites passer la commande à la préparation après confirmation, selon votre fonctionnement. La personne qui prépare doit retrouver la dernière version et savoir à qui signaler un blocage."
+      },
+      {
+        "title": "Tracer les changements et contrôler la sortie",
+        "body": "Quand une quantité ou une date change, notez la modification, sa validation et prévenez les personnes concernées. Avant livraison, contrôlez la référence, les quantités et le destinataire. Consignez l’erreur éventuelle pour corriger la règle, pas seulement la commande."
+      }
+    ],
+    "example": "Exemple fictif : un traiteur reçoit une commande sur un réseau social. Il la saisit sous CMD-001, confirme les quantités au client et transmet la référence à la préparation. Toute modification revient dans le registre avant d’être exécutée.",
+    "exercise": "Prenez trois commandes récentes, dont une modifiée. Reconstituez leur parcours dans le modèle et repérez le moment où une information aurait pu se perdre.",
+    "checks": [
+      "Chaque commande possède une référence unique.",
+      "La préparation utilise la version confirmée.",
+      "Les changements sont transmis aux personnes concernées."
+    ],
+    "mistake": "Confondre le canal de réception avec le système de suivi. Un message seul ne décrit pas tout le parcours.",
+    "columns": [
+      "Référence",
+      "Client",
+      "Produit ou prestation",
+      "Quantité",
+      "Date prévue",
+      "Confirmation",
+      "Responsable",
+      "Modification"
+    ],
+    "row": [
+      "CMD-001",
+      "Client A",
+      "Lot de légumes",
+      "À préciser",
+      "À définir",
+      "À confirmer",
+      "Responsable commandes",
+      "Aucune"
+    ]
+  },
+  {
+    "slug": "deleguer-sans-tout-corriger",
+    "title": "Je dois tout corriger : comment mieux déléguer ?",
+    "category": "Organisation",
+    "image": "/images/academy/paysages/chemin-v1.webp",
+    "objective": "Transmettre une tâche avec un résultat observable et des limites de décision claires.",
+    "intro": "Déléguer une tâche sans expliquer la qualité attendue pousse chacun à interpréter la consigne. Commencez par une tâche récurrente et assez stable. La personne doit savoir pourquoi elle la réalise, ce qui est attendu et quand vous solliciter. Vérifiez aussi qu’elle dispose du temps et des moyens nécessaires.",
+    "steps": [
+      {
+        "title": "Choisir une tâche délimitée",
+        "body": "Retenez une tâche avec un début et une fin identifiables. Décrivez le résultat livré et les erreurs qui ont réellement posé problème. Évitez de déléguer d’un seul coup un domaine vague comme « s’occuper des clients »."
+      },
+      {
+        "title": "Montrer un exemple et des critères",
+        "body": "Présentez un travail correctement réalisé, puis expliquez trois à cinq critères de qualité. Décrivez les étapes utiles, les informations d’entrée et les outils accessibles. Demandez à la personne de reformuler ce qu’elle va faire pour repérer les ambiguïtés."
+      },
+      {
+        "title": "Préciser ce qui peut être décidé",
+        "body": "Distinguez les décisions autonomes et les cas qui nécessitent votre validation. Fixez un seuil concret lorsque cela aide : modification de délai, exception de quantité ou remise hors cadre. N’exigez pas votre accord sur chaque détail si vous voulez transférer la responsabilité."
+      },
+      {
+        "title": "Organiser un essai et un retour",
+        "body": "Faites un premier essai avec un point de contrôle avant la livraison finale. Comparez le résultat aux critères convenus. Corrigez la consigne si elle était ambiguë et prévoyez un nouveau contrôle selon le risque. Réduisez les points de contrôle quand la tâche est maîtrisée."
+      }
+    ],
+    "example": "Exemple fictif : la responsable délègue la préparation des bons de livraison. Elle fournit un exemple, les quatre champs obligatoires et la règle pour une quantité incohérente. Le premier bon est relu ensemble ; ensuite, seuls les cas exceptionnels remontent.",
+    "exercise": "Choisissez une tâche à déléguer. Remplissez la fiche, préparez un exemple correct et faites reformuler la consigne. Convenez d’un premier essai et d’une date de retour.",
+    "checks": [
+      "Le résultat attendu est observable.",
+      "La personne connaît sa marge de décision.",
+      "Un premier contrôle et un retour sont prévus."
+    ],
+    "mistake": "Corriger silencieusement le travail à la place de la personne. Expliquez le critère manquant et faites améliorer le résultat.",
+    "columns": [
+      "Tâche",
+      "Résultat attendu",
+      "Critères de qualité",
+      "Décisions autonomes",
+      "Cas à valider",
+      "Premier contrôle"
+    ],
+    "row": [
+      "Préparer un bon de livraison",
+      "Bon complet avant départ",
+      "Référence client quantités date",
+      "Mise en forme standard",
+      "Quantité incohérente",
+      "Relire le premier bon ensemble"
+    ]
+  },
+  {
+    "slug": "piloter-entreprise-chaque-semaine",
+    "title": "Je travaille beaucoup : comment savoir si l’entreprise avance ?",
+    "category": "Pilotage",
+    "image": "/images/academy/paysages/horizon-v1.webp",
+    "objective": "Mettre en place une revue hebdomadaire avec quelques indicateurs reliés à des décisions.",
+    "intro": "Le temps passé ne dit pas à lui seul si l’activité progresse. Choisissez un objectif pour les prochaines semaines et quelques mesures qui vous aideront à décider. Un tableau de bord est utile seulement si les chiffres sont fiables, compris et suivis d’une action.",
+    "steps": [
+      {
+        "title": "Choisir un objectif observable",
+        "body": "Définissez ce que vous voulez améliorer et à quelle date : obtenir des commandes régulières, réduire les erreurs de préparation ou raccourcir le délai de réponse. Notez la situation de départ pour pouvoir comparer. Ne choisissez pas dix priorités simultanément."
+      },
+      {
+        "title": "Retenir trois à cinq mesures",
+        "body": "Associez une mesure de résultat, une mesure d’activité et une mesure de qualité. Par exemple : commandes confirmées, conversations avec des clients ciblés et commandes sans erreur. Définissez exactement ce qui compte, la période et la source du chiffre."
+      },
+      {
+        "title": "Préparer une revue courte",
+        "body": "À la même heure chaque semaine, relevez les chiffres et comparez-les à la période précédente. Signalez les données manquantes plutôt que de les remplacer par une estimation invisible. Avec de petits volumes, examinez aussi les cas individuels : un pourcentage seul peut être trompeur."
+      },
+      {
+        "title": "Décider une action puis vérifier",
+        "body": "Pour chaque écart important, formulez une hypothèse et une action avec un responsable et une date. La semaine suivante, regardez si l’action a été réalisée et si le résultat évolue. Un changement de chiffre ne prouve pas à lui seul que votre action en est la cause."
+      }
+    ],
+    "example": "Exemple fictif : cinq commandes sur vingt échanges représentent 25 %, mais les contacts n’ont pas tous la même maturité. L’équipe regarde aussi les devis en attente et les motifs de refus. Elle décide de clarifier le format proposé, puis observe les prochains échanges.",
+    "exercise": "Choisissez un objectif à quatre semaines. Définissez trois indicateurs, leur source et leur fréquence. Faites une première revue de vingt minutes et terminez par une seule action prioritaire.",
+    "checks": [
+      "Les définitions et sources des indicateurs sont écrites.",
+      "Les chiffres concernent la même période.",
+      "La revue se termine par une action datée."
+    ],
+    "mistake": "Accumuler des indicateurs flatteurs sans décision, ou lire une variation isolée comme une tendance certaine.",
+    "columns": [
+      "Objectif",
+      "Indicateur",
+      "Définition",
+      "Source",
+      "Période",
+      "Valeur",
+      "Action décidée",
+      "Responsable"
+    ],
+    "row": [
+      "Réduire les erreurs",
+      "Commandes sans erreur",
+      "Commande livrée conforme à la confirmation",
+      "Registre des commandes",
+      "Semaine à préciser",
+      "À renseigner",
+      "Analyser la première erreur",
+      "Responsable opérations"
+    ]
+  }
+]

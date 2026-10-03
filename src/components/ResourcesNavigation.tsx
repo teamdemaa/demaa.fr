@@ -1,12 +1,13 @@
 import { BookOpen, Copy, Wrench } from "lucide-react";
 import Link from "next/link";
+import { ACADEMY_LEARNING_LABEL } from "@/lib/academy-learning-label";
 
 export type ResourcesView = "models" | "tools" | "tutorials";
 
 const resourceItems = [
-  { view: "tutorials", label: "Méthodes", href: "/tutoriels", Icon: BookOpen },
+  { view: "tutorials", label: ACADEMY_LEARNING_LABEL, href: "/tutoriels", Icon: BookOpen },
   { view: "models", label: "Modèles", href: "/modeles", Icon: Copy },
-  { view: "tools", label: "Outils", href: "/outils", Icon: Wrench },
+  { view: "tools", label: "Solutions", href: "/solutions", Icon: Wrench },
 ] as const;
 
 export default function ResourcesNavigation({

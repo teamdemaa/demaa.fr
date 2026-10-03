@@ -4,12 +4,12 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { readFile } from "node:fs/promises";
 import sharp from "sharp";
 import AcademyPreviewLibrary from "@/components/AcademyPreviewLibrary";
-import { getAcademyPreviewCards } from "@/lib/academy-preview-catalog";
+import { getAcademyPracticeCards } from "@/lib/academy-preview-catalog";
 import { getPublishedCopyableModelBySlug } from "@/lib/copyable-model-catalog";
 
 describe("DEMAA Academy editorial preview", () => {
   it("publishes only the four approved Airtable tutorials", () => {
-    const cards = getAcademyPreviewCards();
+    const cards = getAcademyPracticeCards();
     expect(cards).toHaveLength(4);
     expect(new Set(cards.map(({ href }) => href)).size).toBe(cards.length);
     expect(cards.map(({ href }) => href)).toEqual([
@@ -22,7 +22,7 @@ describe("DEMAA Academy editorial preview", () => {
   });
 
   it("shows only real, available models beside related learning items", () => {
-    const modelCards = getAcademyPreviewCards().filter((card) => card.modelHref);
+    const modelCards = getAcademyPracticeCards().filter((card) => card.modelHref);
     expect(modelCards.length).toBeGreaterThan(0);
     for (const card of modelCards) {
       const slug = card.modelHref?.split("/").at(-1);
@@ -32,7 +32,7 @@ describe("DEMAA Academy editorial preview", () => {
   });
 
   it("gives every card a distinct 16:9 cover on the approved light background", async () => {
-    const cards = getAcademyPreviewCards();
+    const cards = getAcademyPracticeCards();
     const images = cards.map(({ image }) => image);
     expect(images.every((image) => image?.startsWith("/images/academy/covers/") && image.endsWith("-v3.png"))).toBe(true);
     expect(new Set(images).size).toBe(4);
@@ -48,7 +48,7 @@ describe("DEMAA Academy editorial preview", () => {
 
   it("keeps model links off the cards and sends readers to a method detail", () => {
     const markup = renderToStaticMarkup(createElement(AcademyPreviewLibrary, {
-      cards: getAcademyPreviewCards(),
+      cards: getAcademyPracticeCards(),
     }));
     expect(markup).toContain('href="/tutoriels/creer-pipeline-commercial-airtable"');
     expect(markup).not.toContain("Modèle associé");

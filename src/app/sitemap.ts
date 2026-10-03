@@ -1,3 +1,4 @@
+import { ACADEMY_COURSES } from "@/lib/academy-courses";
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 import { getPublishedPracticeTutorials } from "@/lib/tutorial-catalog";
@@ -43,5 +44,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...DEMAA_DIRECTORY_NAVIGATION.map(({ href }) => ({ url: `${base}${href}`, changeFrequency: "monthly" as const, priority: 0.6 })),
     ...staticRoutes,
     ...tutorialEntries,
+    ...ACADEMY_COURSES.map(course => ({ url: `${base}/tutoriels/${course.slug}`, lastModified: new Date("2026-10-03T00:00:00.000Z"), changeFrequency: "monthly" as const, priority: 0.82, images: [`${base}${course.image}`] })),
   ];
 }

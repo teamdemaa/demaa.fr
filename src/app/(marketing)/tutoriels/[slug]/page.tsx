@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import AcademyCourseArticle from "@/components/AcademyCourseArticle";
+import { ACADEMY_COURSES, getAcademyCourse } from "@/lib/academy-courses";
 import TutorialArticle from "@/components/TutorialArticle";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 import { getCanonicalOrigin } from "@/lib/site-url";
@@ -12,12 +14,16 @@ type TutorialPageProps = Readonly<{
   params: Promise<{ slug: string }>;
 }>;
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
-  return getPublishedTutorialRouteParams();
+  return [...getPublishedTutorialRouteParams(), ...ACADEMY_COURSES.map(({ slug }) => ({ slug }))];
 }
 
 export async function generateMetadata({ params }: TutorialPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const course = getAcademyCourse(slug);
+  if (course) return buildPublicPageMetadata({ title: `${course.title} | Demaa`, description: course.objective, path: `/tutoriels/${slug}`, type: "article", socialImage: { url: course.image, alt: course.title, width: 1600, height: 900 } });
   const tutorial = getPublishedTutorialBySlug(slug);
   if (!tutorial) return {};
 
@@ -43,6 +49,8 @@ export async function generateMetadata({ params }: TutorialPageProps): Promise<M
 
 export default async function TutorialPage({ params }: TutorialPageProps) {
   const { slug } = await params;
+  const course = getAcademyCourse(slug);
+  if (course) return <AcademyCourseArticle course={course} />;
   const tutorial = getPublishedTutorialBySlug(slug);
   if (!tutorial) notFound();
 

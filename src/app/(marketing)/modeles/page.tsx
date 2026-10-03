@@ -1,3 +1,4 @@
+import AcademyWorksheets from "@/components/AcademyWorksheets";
 import CopyableModelsIndex from "@/components/CopyableModelsIndex";
 import Navbar from "@/components/Navbar";
 import ResourcesNavigation from "@/components/ResourcesNavigation";
@@ -49,7 +50,7 @@ export default async function ModelsPage({ searchParams }: ModelsPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializePublicJsonLd(jsonLd) }}
       />
-      <Navbar minimal publicNavigationActiveView="resources" />
+      <Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />
       <main className="min-h-screen bg-background">
         <ResourcesNavigation activeView="models" />
         <CopyableModelsIndex
@@ -57,6 +58,7 @@ export default async function ModelsPage({ searchParams }: ModelsPageProps) {
           models={models}
           systemName={enterprise?.name}
         />
+        {!enterprise ? <AcademyWorksheets /> : null}
       </main>
     </>
   );

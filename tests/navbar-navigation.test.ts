@@ -22,8 +22,8 @@ describe("Demaa application navbar", () => {
       readFile(new URL("../src/app/(marketing)/systemes/[slug]/loading.tsx", import.meta.url), "utf8"),
     ]);
 
-    expect(pageSource).toContain('<Navbar minimal publicNavigationActiveView="solutions" publicNavigationVariant="demaa" />');
-    expect(pageSource).not.toContain('<ResourcesNavigation activeView="tools" />');
+    expect(pageSource).toContain('<Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />');
+    expect(pageSource).toContain('<ResourcesNavigation activeView="tools" />');
     expect(loadingSource).toContain("<Navbar minimal />");
     expect(pageSource.indexOf("<Navbar minimal publicNavigationActiveView=")).toBeLessThan(pageSource.indexOf("<main"));
     expect(loadingSource.indexOf("<Navbar minimal />")).toBeLessThan(loadingSource.indexOf("<main"));

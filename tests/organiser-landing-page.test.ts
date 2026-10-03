@@ -22,8 +22,8 @@ describe("Méthodes, Modèles and Outils public journey", () => {
 
     expect(page).toContain("<AcademyPreviewLibrary cards={cards} />");
     expect(page).toContain('path: "/tutoriels"');
-    expect(page).toContain("Organiser et piloter son entreprise,");
-    expect(page).toContain("un sujet à la fois.");
+    expect(page).toContain("Structurer son entreprise,");
+    expect(page).toContain("une question à la fois.");
     expect(hub).toContain("getPublishedMethods");
     expect(library).toContain("Rechercher une méthode");
   });

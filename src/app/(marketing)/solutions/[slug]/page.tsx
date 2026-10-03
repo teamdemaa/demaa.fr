@@ -1,3 +1,4 @@
+import ResourcesNavigation from "@/components/ResourcesNavigation";
 import type { Metadata } from "next";
 import { cache } from "react";
 import { connection } from "next/server";
@@ -167,8 +168,9 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="solutions" publicNavigationVariant="demaa" />
+      <Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />
       <main className="min-h-screen bg-background pb-20">
+        <ResourcesNavigation activeView="tools" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
