@@ -3,7 +3,7 @@
     "slug": "organiser-entreprise-sans-tout-porter",
     "title": "Tout repose sur moi : par quoi commencer pour organiser mon entreprise ?",
     "category": "Organisation",
-    "image": "/images/academy/paysages/siby-inspire-v1.webp",
+    "image": "/images/academy/paysages/siby-photo-v1.webp",
     "objective": "Choisir un fonctionnement à clarifier cette semaine et décider qui fait quoi.",
     "intro": "Quand toutes les décisions reviennent au dirigeant, ajouter un logiciel ne suffit pas. Commencez par rendre visible le travail qui revient chaque semaine. Votre premier objectif est de supprimer une dépendance précise : une commande qui attend votre accord, un document que vous seul retrouvez, une consigne à répéter.",
     "steps": [
@@ -53,9 +53,11 @@
       "À définir"
     ],
     "imageCaption": "Siby · Mali",
-    "imageAlt": "Siby · Mali",
-    "imageCredit": "Paysage généré par IA, inspiré des reliefs du Mandé",
-    "imageSource": null
+    "imageAlt": "Falaises et végétation près de Siby, au Mali",
+    "imageCredit": "Ralf Steinberger",
+    "imageSource": "https://commons.wikimedia.org/wiki/File:Colourful_mountains_near_Siby,_Mali,_Africa._(34880635756).jpg",
+    "imageProvider": "Wikimedia Commons",
+    "imageLicense": "https://creativecommons.org/licenses/by/2.0/"
   },
   {
     "slug": "choisir-premiers-clients",
@@ -109,7 +111,9 @@
     "imageCaption": "Santo Antão · Cap-Vert",
     "imageAlt": "Santo Antão · Cap-Vert",
     "imageCredit": "Dominique Josse",
-    "imageSource": "https://unsplash.com/photos/i010CaxDLEM"
+    "imageSource": "https://unsplash.com/photos/i010CaxDLEM",
+    "imageProvider": "Unsplash",
+    "imageLicense": null
   },
   {
     "slug": "clarifier-offre-commerciale",
@@ -163,7 +167,9 @@
     "imageCaption": "Sine-Saloum · Sénégal",
     "imageAlt": "Sine-Saloum · Sénégal",
     "imageCredit": "Anton Lecock",
-    "imageSource": "https://unsplash.com/photos/LEpilI_K4fs"
+    "imageSource": "https://unsplash.com/photos/LEpilI_K4fs",
+    "imageProvider": "Unsplash",
+    "imageLicense": null
   },
   {
     "slug": "tester-demande-avant-investir",
@@ -217,7 +223,9 @@
     "imageCaption": "Haut Atlas · Maroc",
     "imageAlt": "Haut Atlas · Maroc",
     "imageCredit": "Patrick Ogilvie",
-    "imageSource": "https://unsplash.com/photos/KHcyx3gGtJI"
+    "imageSource": "https://unsplash.com/photos/KHcyx3gGtJI",
+    "imageProvider": "Unsplash",
+    "imageLicense": null
   },
   {
     "slug": "repondre-objection-prix",
@@ -271,7 +279,9 @@
     "imageCaption": "Sossusvlei · Namibie",
     "imageAlt": "Sossusvlei · Namibie",
     "imageCredit": "NIR HIMI",
-    "imageSource": "https://unsplash.com/photos/uBst6NH7l9c"
+    "imageSource": "https://unsplash.com/photos/uBst6NH7l9c",
+    "imageProvider": "Unsplash",
+    "imageLicense": null
   },
   {
     "slug": "organiser-premiere-prospection",
@@ -327,7 +337,9 @@
     "imageCaption": "Spitzkoppe · Namibie",
     "imageAlt": "Spitzkoppe · Namibie",
     "imageCredit": "NIR HIMI",
-    "imageSource": "https://unsplash.com/photos/tuwB_4ifg48"
+    "imageSource": "https://unsplash.com/photos/tuwB_4ifg48",
+    "imageProvider": "Unsplash",
+    "imageLicense": null
   },
   {
     "slug": "suivre-prospects-et-relances",
@@ -383,7 +395,9 @@
     "imageCaption": "Kirkjufell · Islande",
     "imageAlt": "Kirkjufell · Islande",
     "imageCredit": "Nicolas Lafargue",
-    "imageSource": "https://unsplash.com/photos/JnZ0iPdXTzg"
+    "imageSource": "https://unsplash.com/photos/JnZ0iPdXTzg",
+    "imageProvider": "Unsplash",
+    "imageLicense": null
   },
   {
     "slug": "centraliser-commandes",
@@ -441,7 +455,9 @@
     "imageCaption": "Boa Vista · Cap-Vert",
     "imageAlt": "Boa Vista · Cap-Vert",
     "imageCredit": "Jonas Fesser",
-    "imageSource": "https://unsplash.com/photos/SIgmaMh_J0E"
+    "imageSource": "https://unsplash.com/photos/SIgmaMh_J0E",
+    "imageProvider": "Unsplash",
+    "imageLicense": null
   },
   {
     "slug": "deleguer-sans-tout-corriger",
@@ -495,7 +511,9 @@
     "imageCaption": "Dolomites · Italie",
     "imageAlt": "Dolomites · Italie",
     "imageCredit": "Markus Spiske",
-    "imageSource": "https://unsplash.com/photos/bhaXeiBGWw4"
+    "imageSource": "https://unsplash.com/photos/bhaXeiBGWw4",
+    "imageProvider": "Unsplash",
+    "imageLicense": null
   },
   {
     "slug": "piloter-entreprise-chaque-semaine",
@@ -553,6 +571,8 @@
     "imageCaption": "La Digue · Seychelles",
     "imageAlt": "La Digue · Seychelles",
     "imageCredit": "iMike Stettler",
-    "imageSource": "https://unsplash.com/photos/fDMEIoR7iUA"
+    "imageSource": "https://unsplash.com/photos/fDMEIoR7iUA",
+    "imageProvider": "Unsplash",
+    "imageLicense": null
   }
 ]

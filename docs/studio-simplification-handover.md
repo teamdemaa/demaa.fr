@@ -84,3 +84,8 @@ Les deux textes introductifs de l’en-tête et la section « Mettre en pratique
 ### CTA de fin de cours
 - « Le cours suivant » présente le titre et un bouton « Lire le cours suivant » vers le prochain article, en reprenant le style des CTA existants.
 - « Tous les modèles » et « Solutions par activité » restent secondaires pour naviguer vers les ressources. Le lien de contact est retiré de ce bloc ; le contact global reste accessible dans la navigation et le pied de page du site.
+
+### Photo réelle de Siby
+- Le visuel généré est remplacé par la photographie « Colourful mountains near Siby, Mali, Africa » de Ralf Steinberger (12 avril 2009), Wikimedia Commons, CC BY 2.0.
+- Recadrage déterministe sur les falaises et la végétation, sans ajout ni génération. Crédit, source, licence et mention du recadrage visibles dans l’article. Lieu sur l’image conservé à 50 % d’opacité.
+- Les dix cours utilisent désormais dix photographies réelles différentes. Les anciens assets restent disponibles pour retour arrière.

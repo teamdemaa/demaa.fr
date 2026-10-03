@@ -108,5 +108,15 @@
     "license": "https://unsplash.com/license",
     "changes": "Recadrage 16:9 et conversion WebP. Remplace Vestrahorn violet.",
     "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/siby-photo-v1.webp",
+    "caption": "Siby · Mali",
+    "credit": "Ralf Steinberger",
+    "source": "https://commons.wikimedia.org/wiki/File:Colourful_mountains_near_Siby,_Mali,_Africa._(34880635756).jpg",
+    "kind": "photograph",
+    "license": "https://creativecommons.org/licenses/by/2.0/",
+    "changes": "Recadrage sur les falaises (x=0,y=0,1950×1097), réduction 1600×900, conversion WebP. Remplace le visuel généré.",
+    "date": "2026-10-03"
   }
 ]

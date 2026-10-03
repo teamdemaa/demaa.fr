@@ -24,7 +24,7 @@ export default function AcademyCourseArticle({ course }: { course: AcademyCourse
           <p className="mt-6 text-lg leading-relaxed text-dema-muted">{course.objective}</p>
           <figure className="mt-8">
             <div className="relative aspect-video overflow-hidden rounded-2xl"><Image src={course.image} alt={course.imageAlt} fill sizes="(min-width: 896px) 848px, 100vw" className="object-cover" /><span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-4 pb-3 pt-8 text-right text-xs text-white/50">{course.imageCaption}</span></div>
-            <figcaption className="mt-3 text-xs text-dema-muted">{course.imageSource ? <a href={course.imageSource} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Photo : {course.imageCredit} · Unsplash</a> : <span>{course.imageCredit}</span>}</figcaption>
+            <figcaption className="mt-3 text-xs text-dema-muted">{course.imageSource ? <a href={course.imageSource} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Photo : {course.imageCredit} · {course.imageProvider}</a> : <span>{course.imageCredit}</span>}{course.imageLicense ? <> · <a href={course.imageLicense} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">CC BY 2.0</a> · Photo recadrée</> : null}</figcaption>
           </figure>
         </header>
         <div className="mx-auto max-w-2xl text-base leading-8">
