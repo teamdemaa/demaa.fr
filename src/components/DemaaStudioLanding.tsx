@@ -58,7 +58,7 @@ function StudioContent() {
   return <>
     <section className="relative isolate flex min-h-[640px] items-center overflow-hidden lg:min-h-[760px]">
       <Image src="/images/studio/cover.webp" alt="" fill preload sizes="100vw" className="-z-20 object-cover object-[68%_center]" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-dema-cream via-dema-cream/90 to-dema-cream/10 lg:via-dema-cream/60" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-dema-cream/75 via-dema-cream/35 to-transparent lg:from-dema-cream/85 lg:via-dema-cream/25" />
       <div className={`${sectionClass} py-20`}>
         <p className={eyebrowClass}>Studio d’entreprises · Afrique & Europe</p>
         <h1 className="demaa-hero-title mt-6 max-w-[760px] text-[clamp(2.8rem,5.5vw,5.7rem)] leading-[1.02] tracking-[-0.045em]">On crée des entreprises sur des marchés qu’on connaît de l’intérieur.</h1>
