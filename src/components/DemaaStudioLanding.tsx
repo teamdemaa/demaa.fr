@@ -75,7 +75,6 @@ function StudioContent() {
     <section className={sectionClass}>
       <p className={eyebrowClass}>Les projets prioritaires</p><div className="mt-5 flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><h2 className={titleClass}>Trois projets à faire grandir.</h2><Link href="/projets" className="inline-flex items-center gap-3 text-sm font-medium underline underline-offset-8">Tous les projets <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div>
       <div className="mt-12 grid gap-12 sm:grid-cols-2 lg:grid-cols-3">{DEMAA_PRIORITY_STUDIO_PROJECTS.map((project) => <ProjectCard key={project.slug} project={project} />)}</div>
-      <p className="mt-6 text-xs leading-5 text-dema-muted">Les visuels illustrent les concepts des projets.</p>
     </section>
     <section className="bg-dema-sage">
       <div className={sectionClass}>
@@ -112,7 +111,7 @@ function ProjectsContent() {
   const otherProjects = DEMAA_PUBLISHED_STUDIO_PROJECTS.filter(({ portfolio }) => portfolio === "other");
   return <>
     <section className={sectionClass}><p className={eyebrowClass}>Nos projets</p><h1 className={`${titleClass} mt-5 max-w-4xl`}>Des entreprises que nous construisons.</h1><p className="mt-6 max-w-2xl text-base leading-7 text-dema-muted">Tiimora, Dumaan et MND : trois besoins concrets, trois façons d’y répondre.</p></section>
-    <section className={`${sectionClass} !pt-0`} aria-label="Projets du Studio"><div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">{DEMAA_PRIORITY_STUDIO_PROJECTS.map((project) => <ProjectCard key={project.slug} project={project} />)}</div><p className="mt-8 text-xs text-dema-muted">Les visuels illustrent les concepts des projets.</p></section>
+    <section className={`${sectionClass} !pt-0`} aria-label="Projets du Studio"><div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">{DEMAA_PRIORITY_STUDIO_PROJECTS.map((project) => <ProjectCard key={project.slug} project={project} />)}</div></section>
     <section className="border-t border-dema-line"><div className={sectionClass}><h2 className="text-3xl font-medium">Autres initiatives et partenaires</h2><div className="mt-8 grid gap-8 sm:grid-cols-2">{otherProjects.map((project) => <Link key={project.slug} href={`/projets/${project.slug}`} className="border-t border-dema-line pt-5"><h3 className="text-xl font-medium">{project.name}</h3><p className="mt-3 text-sm leading-6 text-dema-muted">{project.summary}</p></Link>)}</div></div></section>
     <BuildTogetherSection /><ResourcesSection />
   </>;
