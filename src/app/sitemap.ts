@@ -1,3 +1,4 @@
+import { getPublishedCopyableModels } from "@/lib/copyable-model-catalog";
 import { ACADEMY_COURSES } from "@/lib/academy-courses";
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
@@ -11,10 +12,11 @@ export const dynamic = "force-dynamic";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = getCanonicalBaseUrl();
   // Keep sitemap modification dates stable. Using the request time would tell
-  // crawlers that every one of the 800+ URLs changed on every request.
+  // crawlers that the entire catalog changed on every request.
   const siteUpdatedAt = new Date("2026-09-03T00:00:00.000Z");
   const toolsAndTutorialsUpdatedAt = new Date("2026-09-14T00:00:00.000Z");
   const staticRoutes: MetadataRoute.Sitemap = [
+    { url: `${base}/modeles`, lastModified: new Date("2026-10-03T00:00:00.000Z"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/solutions`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/tutoriels`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.93 },
     { url: `${base}/mentions-legales`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },
@@ -43,6 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...DEMAA_PUBLISHED_STUDIO_PROJECTS.map((project) => ({ url: `${base}/projets/${project.slug}`, changeFrequency: "monthly" as const, priority: 0.75 })),
     ...DEMAA_DIRECTORY_NAVIGATION.map(({ href }) => ({ url: `${base}${href}`, changeFrequency: "monthly" as const, priority: 0.6 })),
     ...staticRoutes,
+    ...getPublishedCopyableModels().map(model => ({ url: `${base}/modeles/${model.slug}`, changeFrequency: "monthly" as const, priority: 0.7 })),
     ...tutorialEntries,
     ...ACADEMY_COURSES.map(course => ({ url: `${base}/tutoriels/${course.slug}`, lastModified: new Date("2026-10-03T00:00:00.000Z"), changeFrequency: "monthly" as const, priority: 0.82, images: [`${base}${course.image}`] })),
   ];

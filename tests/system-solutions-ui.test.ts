@@ -833,7 +833,7 @@ describe("system Solutions UI", () => {
     expect(pageSource).toContain(
       "buildSystemPageJsonLd(data, publishedVisibleSolutionSections)",
     );
-    expect(pageSource).toContain('process.env.NODE_ENV === "development"');
+    expect(pageSource).toContain("allowsLocalSolutionsSnapshot(host, process.env)");
     expect(pageSource).toContain("mergeRenderableSolutionSections(displaySolutionSections)");
   });
 });

@@ -89,7 +89,7 @@ describe("Demaa application navbar", () => {
 
     expect(source).toContain("DEMAA_PUBLIC_NAVIGATION");
     expect(publicRoutes).not.toContain('href: "/accompagnement"');
-    expect(publicRoutes).toContain('label: "Outils et ressources par activité", href: "/solutions"');
+    expect(publicRoutes).toContain('label: "Solutions par activité", href: "/solutions"');
     expect(publicRoutes).toContain('label: "Academy", href: "/tutoriels"');
     expect(publicRoutes).not.toContain('label: "Reprendre"');
     expect(publicRoutes).not.toContain('label: "Vendre"');

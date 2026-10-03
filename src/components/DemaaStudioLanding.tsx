@@ -46,7 +46,7 @@ function ResourcesSection() {
   return <section id="ressources" className="border-t border-dema-line bg-dema-paper">
     <div className={sectionClass}>
       <p className={eyebrowClass}>Ressources</p><h2 className={`${titleClass} mt-5 max-w-3xl`}>Des ressources pour faire avancer votre entreprise.</h2>
-      <p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">Trouvez des solutions adaptées à votre activité et apprenez à les utiliser avec nos tutoriels et méthodes.</p>
+      <p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">Découvrez les cours, modèles et solutions de l’Academy pour structurer votre entreprise.</p>
       <div className="mt-10 grid gap-8 md:grid-cols-2">
         {DEMAA_RESOURCE_NAVIGATION.map(({ label, href, description }) => <Link key={href} href={href} className="group border-t border-dema-line pt-5"><div className="flex items-center justify-between gap-4"><h3 className="text-xl font-medium">{label}</h3><ArrowRight className="h-4 w-4 shrink-0 transition group-hover:translate-x-1" aria-hidden="true" /></div><p className="mt-3 max-w-sm text-sm leading-6 text-dema-muted">{description}</p></Link>)}
       </div>

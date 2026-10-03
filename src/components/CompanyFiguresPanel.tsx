@@ -43,7 +43,7 @@ export default function CompanyFiguresPanel({
   const [to, setTo] = useState<CompanyMonth>(currentMonth);
   const [metrics, setMetrics] = useState<CompanyMonthlyMetric[]>([]);
   const [loading, setLoading] = useState(authenticated);
-  const [error, setError] = useState<string | null>(null);
+  const [requestError, setError] = useState<string | null>(null);
   const [comparison, setComparison] = useState<Comparison>("revenue-expenses");
   const [selectedPeriod, setSelectedPeriod] = useState<CompanyMonth>(
     initialEntryPeriod ?? currentMonth,
@@ -57,19 +57,7 @@ export default function CompanyFiguresPanel({
   }, [from, to]);
 
   const loadMetrics = useCallback(async () => {
-    if (!authenticated) {
-      setMetrics([]);
-      setError(null);
-      setLoading(false);
-      return;
-    }
-    if (!periods.length) {
-      setError("Choisissez une période valide de 24 mois maximum.");
-      setLoading(false);
-      return;
-    }
-    setLoading(true);
-    setError(null);
+    if (!authenticated || !periods.length) return;
     try {
       const response = await fetch(`/api/company/pilotage/metrics?from=${from}&to=${to}`, { cache: "no-store" });
       const body = await response.json().catch(() => null) as { metrics?: CompanyMonthlyMetric[]; error?: string } | null;
@@ -82,7 +70,19 @@ export default function CompanyFiguresPanel({
     }
   }, [authenticated, from, periods.length, to]);
 
-  useEffect(() => { void loadMetrics(); }, [loadMetrics]);
+  const error = periods.length ? requestError : "Choisissez une période valide de 24 mois maximum.";
+  const [loadingRange, setLoadingRange] = useState({ authenticated, from, to });
+  if (loadingRange.authenticated !== authenticated || loadingRange.from !== from || loadingRange.to !== to) {
+    setLoadingRange({ authenticated, from, to });
+    setLoading(authenticated && periods.length > 0);
+    setError(null);
+    if (!authenticated) setMetrics([]);
+  }
+  useEffect(() => {
+    let active = true;
+    void Promise.resolve().then(() => { if (active) return loadMetrics(); });
+    return () => { active = false; };
+  }, [loadMetrics]);
 
   function changePreset(value: RangePreset) {
     setPreset(value);
@@ -124,7 +124,7 @@ export default function CompanyFiguresPanel({
         {preset === "custom" ? <><label className="text-sm font-medium text-dema-ink">Du<input type="month" value={from} onChange={(event) => setFrom(event.target.value as CompanyMonth)} className="mt-1 block rounded-xl border border-dema-line bg-white px-3 py-2 text-sm" /></label><label className="text-sm font-medium text-dema-ink">Au<input type="month" value={to} onChange={(event) => setTo(event.target.value as CompanyMonth)} className="mt-1 block rounded-xl border border-dema-line bg-white px-3 py-2 text-sm" /></label></> : null}
         <button type="button" onClick={() => openMetricEntry(currentMonth)} className="inline-flex items-center gap-2 rounded-full bg-dema-forest px-4 py-2.5 text-sm font-semibold text-white"><Plus className="h-4 w-4" aria-hidden="true" />Saisir un mois</button>
       </div>
-      {error ? <div role="alert" className="mt-5 rounded-xl bg-red-50 p-4 text-sm text-red-700"><p>{error}</p><button type="button" onClick={() => void loadMetrics()} className="mt-2 font-semibold underline">Réessayer</button></div> : null}
+      {error ? <div role="alert" className="mt-5 rounded-xl bg-red-50 p-4 text-sm text-red-700"><p>{error}</p><button type="button" onClick={() => { setLoading(true); setError(null); void loadMetrics(); }} className="mt-2 font-semibold underline">Réessayer</button></div> : null}
       {loading ? <div role="status" className="mt-8 flex items-center gap-2 text-sm text-dema-muted"><LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />Chargement des chiffres…</div> : null}
       {!loading && periods.length ? (
         <>

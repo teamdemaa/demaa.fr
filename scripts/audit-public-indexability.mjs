@@ -35,7 +35,7 @@ function getTitle(html) {
   return html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]?.trim() ?? "";
 }
 
-export function inspectPublicHtml(html, expectedCanonical) {
+export function inspectPublicHtml(html, expectedCanonical, robotsHeader = "") {
   const failures = [];
   const title = getTitle(html);
   const description = getMetaContent(html, "name", "description");
@@ -46,7 +46,7 @@ export function inspectPublicHtml(html, expectedCanonical) {
 
   if (!title) failures.push("title manquant");
   if (!description) failures.push("meta description manquante");
-  if (robots.includes("noindex")) failures.push("page déclarée noindex");
+  if (robots.includes("noindex") || robotsHeader.toLowerCase().includes("noindex")) failures.push("page déclarée noindex");
   if (!canonical) failures.push("canonical manquante");
   if (canonical && canonical !== expectedCanonical) {
     failures.push(`canonical inattendue (${canonical})`);
@@ -88,7 +88,7 @@ async function inspectSitemapUrl(publicUrl, baseUrl) {
   }
 
   const html = await response.text();
-  return inspectPublicHtml(html, publicUrl);
+  return inspectPublicHtml(html, publicUrl, response.headers.get("x-robots-tag") ?? "");
 }
 
 async function inspectRedirect(baseUrl, source, expectedDestination) {
@@ -125,8 +125,11 @@ export async function runPublicIndexabilityAudit(
   });
 
   const redirects = [
-    ["/", "/solutions"],
-    ["/rejoindre-team-demaa", "/opportunites?intent=team-demaa-profile"],
+    ["/", "/studio"],
+    ["/rejoindre-team-demaa", "/a-reprendre"],
+    ["/accompagnement", "/tutoriels"],
+    ["/partners", "/tutoriels"],
+    ["/automatisation", "/tutoriels"],
   ];
   for (const [source, destination] of redirects) {
     const issues = await inspectRedirect(normalizedBaseUrl, source, destination);

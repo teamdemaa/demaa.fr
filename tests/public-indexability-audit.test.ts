@@ -23,6 +23,12 @@ describe("public indexability audit", () => {
     expect(inspectPublicHtml(html, "https://demaa.co/page")).toEqual([]);
   });
 
+  it("rejects an HTTP noindex header even when HTML metadata allows indexing", () => {
+    const html = '<title>Page</title><meta name="description" content="Description"><meta property="og:image" content="/image"><link rel="canonical" href="https://demaa.fr/modeles"><h1>Modèles</h1>';
+    expect(inspectPublicHtml(html, "https://demaa.fr/modeles", "noindex, follow"))
+      .toEqual(["page déclarée noindex"]);
+  });
+
   it("reports every missing indexability signal", () => {
     const failures = inspectPublicHtml(
       '<meta name="robots" content="noindex"><h1>Un</h1><h1>Deux</h1>',

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 import { ArrowLeft, KeyRound, LoaderCircle, Mail } from "lucide-react";
+import { useBrowserSnapshot } from "@/hooks/useBrowserSnapshot";
 import GoogleCustomerSignInButton from "@/components/GoogleCustomerSignInButton";
 import {
   AdminSessionExchangeError,
@@ -66,6 +67,10 @@ function getFirebaseAuthErrorCode(error: unknown) {
     : "";
 }
 
+function readGoogleEnabled() {
+  return hasFirebaseGoogleAuthConfiguration() && isFirebaseGoogleAuthAllowedOnCurrentHost();
+}
+
 export default function CustomerSpaceAccessForm({
   accessKind = "customer",
   choiceTitle = "Accédez à votre espace",
@@ -99,15 +104,9 @@ export default function CustomerSpaceAccessForm({
     useState<ProgressiveAccessStep>("choice");
   const emailId = useId();
   const passwordId = useId();
-  const [googleEnabled, setGoogleEnabled] = useState(false);
+  const googleEnabled = useBrowserSnapshot(readGoogleEnabled) ?? false;
   const accountCreationAllowed = accessKind === "customer";
 
-  useEffect(() => {
-    setGoogleEnabled(
-      hasFirebaseGoogleAuthConfiguration()
-      && isFirebaseGoogleAuthAllowedOnCurrentHost(),
-    );
-  }, []);
 
   function updateDraft(update: Partial<CustomerSpaceAccessDraft>) {
     const nextDraft = { ...activeDraft, ...update };

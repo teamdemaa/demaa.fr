@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       contact: { company, email, name, phone },
       context,
       emoji: "⚙️",
-      fields: [{ label: "Fonctionnement à installer", value: message }, { label: "Offre", value: "Accompagnement Demaa — système de travail en quatre semaines" }],
+      fields: [{ label: "Fonctionnement à installer", value: message }, { label: "Offre", value: "Accompagnement Demaa · système de travail en quatre semaines" }],
       idempotencyKey,
       requestType: "accompaniment_request",
       title: `Diagnostic Demaa - ${company}`,

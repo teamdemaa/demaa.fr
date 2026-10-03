@@ -4,7 +4,7 @@ import AcademyPreviewLibrary from "@/components/AcademyPreviewLibrary";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 import { getAcademyPreviewCards } from "@/lib/academy-preview-catalog";
 
-const title = "Academy — cours pratiques pour entrepreneurs | Demaa";
+const title = "Academy · cours pratiques pour entrepreneurs | Demaa";
 const description =
   "Des cours concrets, des modèles et des solutions pour structurer, organiser et piloter son entreprise.";
 

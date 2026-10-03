@@ -2,7 +2,7 @@
 
 import { Check, LoaderCircle } from "lucide-react";
 import Link from "next/link";
-import { type FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useState } from "react";
 import {
   getLeadAttributionPayload,
   trackLeadConversion,
@@ -54,13 +54,10 @@ export default function StructureProblemSubmissionForm({
   const [problemForm, setProblemForm] = useState(EMPTY_PROBLEM_FORM);
   const [problemSubmitting, setProblemSubmitting] = useState(false);
   const [problemError, setProblemError] = useState<string | null>(null);
-  const [problemEmail, setProblemEmail] = useState("");
+  const [problemEmailDraft, setProblemEmail] = useState<string | null>(null);
+  const problemEmail = problemEmailDraft ?? email ?? "";
   const [problemSent, setProblemSent] = useState(false);
 
-  useEffect(() => {
-    if (!email) return;
-    setProblemEmail((current) => current || email);
-  }, [email]);
 
   function updateProblemField<Field extends keyof ProblemForm>(
     field: Field,

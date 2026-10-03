@@ -1,5 +1,6 @@
 "use client";
 
+import { useBrowserSnapshot } from "@/hooks/useBrowserSnapshot";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
@@ -129,28 +130,35 @@ export default function SavedActionPlanDetail({
   const saveConflictRef = useRef(false);
   const lastAttemptedSaveRef = useRef<PendingSave | null>(null);
   const latestSaveRef = useRef<PendingSave>({
-    plan: currentPlan,
-    title: planTitle.trim() || confirmedTitleRef.current,
-    workspace,
+    plan,
+    title: initialTitle,
+    workspace: initialWorkspace,
   });
-  latestSaveRef.current = {
-    plan: currentPlan,
-    title: planTitle.trim() || confirmedTitleRef.current,
-    workspace,
-  };
-
+  // Keep the unload recovery payload in sync after React commits the draft.
   useEffect(() => {
-    const recovery = readActionPlanSaveRecovery(planId);
-    if (!recovery) return;
-    setCurrentPlan(recovery.plan);
-    setPlanTitle(recovery.title);
-    setWorkspace(recovery.workspace);
-    if (recovery.authenticationRequired && !initialIsAuthenticated) {
-      setSaveState("error");
-      setSaveError(messages.sessionExpired);
-      setAuthenticationRequired(true);
+    latestSaveRef.current = {
+      plan: currentPlan,
+      title: planTitle.trim() || confirmedTitleRef.current,
+      workspace,
+    };
+  }, [currentPlan, planTitle, workspace]);
+
+  const readRecovery = useCallback(() => readActionPlanSaveRecovery(planId), [planId]);
+  const recovery = useBrowserSnapshot(readRecovery);
+  const [recoveryApplied, setRecoveryApplied] = useState(false);
+  if (!recoveryApplied && recovery !== undefined) {
+    setRecoveryApplied(true);
+    if (recovery) {
+      setCurrentPlan(recovery.plan);
+      setPlanTitle(recovery.title);
+      setWorkspace(recovery.workspace);
+      if (recovery.authenticationRequired && !initialIsAuthenticated) {
+        setSaveState("error");
+        setSaveError(messages.sessionExpired);
+        setAuthenticationRequired(true);
+      }
     }
-  }, [initialIsAuthenticated, messages.sessionExpired, planId]);
+  }
 
   useEffect(() => {
     if (!visibleViews || visibleViews.includes("academy")) {

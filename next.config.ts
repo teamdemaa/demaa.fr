@@ -88,6 +88,9 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       ...ACADEMY_PERMANENT_REDIRECTS,
+      { source: "/accompagnement", destination: "/tutoriels", permanent: true },
+      { source: "/partners", destination: "/tutoriels", permanent: true },
+      { source: "/automatisation", destination: "/tutoriels", permanent: true },
       {
         source: '/mon-espace',
         destination: '/plans/latest',

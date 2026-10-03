@@ -55,6 +55,12 @@ export default function AccountingAppointmentDialog({
 
   function handleChange(field: keyof typeof INITIAL_FORM, value: string) {
     setFormData((current) => ({ ...current, [field]: value }));
+    if (field === "companyName") {
+      setSelectedCompany(null);
+      setCompanySuggestions([]);
+      setCompanySearchError(null);
+      setIsCompanyLoading(false);
+    }
     if (error) setError(null);
   }
 
@@ -67,6 +73,7 @@ export default function AccountingAppointmentDialog({
     setSelectedCompany(null);
     setCompanySuggestions([]);
     setCompanySearchError(null);
+    setIsCompanyLoading(false);
   }, []);
   const dialogRef = useAccessibleDialog({
     isOpen,
@@ -146,9 +153,6 @@ export default function AccountingAppointmentDialog({
     const query = formData.companyName.trim();
 
     if (!isOpen || selectedCompany || query.length < 2) {
-      setCompanySuggestions([]);
-      setCompanySearchError(null);
-      setIsCompanyLoading(false);
       return;
     }
 
@@ -326,9 +330,8 @@ export default function AccountingAppointmentDialog({
                           type="button"
                           className="block w-full border-b border-dema-line/70 px-4 py-3 text-left last:border-b-0 hover:bg-dema-sage/55"
                           onClick={() => {
-                            setSelectedCompany(company);
-                            setCompanySuggestions([]);
                             handleChange("companyName", company.name);
+                            setSelectedCompany(company);
                           }}
                         >
                           <span className="block text-sm font-semibold text-brand-blue">

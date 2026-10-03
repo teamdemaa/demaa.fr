@@ -17,7 +17,7 @@ export default function OpportunityAdminClient({
   expertises: readonly ExpertiseCatalogEntry[];
 }) {
   const [opportunities, setOpportunities] = useState<PublicOpportunity[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [editingOpportunity, setEditingOpportunity] =
@@ -42,8 +42,6 @@ export default function OpportunityAdminClient({
   }
 
   const load = useCallback(async () => {
-    setError(null);
-    setIsLoading(true);
     try {
       const payload = await request("/api/admin/opportunities");
       setOpportunities(payload?.opportunities ?? []);
@@ -56,7 +54,9 @@ export default function OpportunityAdminClient({
   }, []);
 
   useEffect(() => {
-    void load();
+    let active = true;
+    void Promise.resolve().then(() => { if (active) return load(); });
+    return () => { active = false; };
   }, [load]);
 
   async function create(event: FormEvent<HTMLFormElement>) {

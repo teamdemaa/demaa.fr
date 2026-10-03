@@ -126,11 +126,11 @@ export const METHOD_ARTICLES = [
       "Faites-vous accompagner lorsque les responsabilités sont contestées, que plusieurs métiers doivent être réorganisés ou que la délégation touche des pouvoirs juridiques, bancaires ou réglementés.",
     sources: [
       {
-        label: "Bpifrance Création — Diagnostiquer l’entreprise à reprendre",
+        label: "Bpifrance Création · Diagnostiquer l’entreprise à reprendre",
         url: "https://bpifrance-creation.fr/encyclopedie/reprendre-entreprise-etapes/diagnostiquer-evaluer/diagnostiquer-lentreprise-a",
       },
       {
-        label: "INPI — Tracer et protéger le savoir-faire",
+        label: "INPI · Tracer et protéger le savoir-faire",
         url: "https://www.inpi.fr/actualites/dossiers-thematiques/6-outils-et-services-pour-tracer-votre-savoir-faire-et-garder-votre-avantage-concurrentiel",
       },
     ],
@@ -221,14 +221,14 @@ export const METHOD_ARTICLES = [
       result: "Vous obtenez une base qualifiante à diffuser après contrôle des chiffres et retrait des éléments identifiants.",
     },
     professionalHelp:
-      "Faites relire la présentation lorsqu’elle comporte un retraitement financier, des informations sensibles ou un périmètre de cession encore à définir — titres, branche d’activité ou actifs.",
+      "Faites relire la présentation lorsqu’elle comporte un retraitement financier, des informations sensibles ou un périmètre de cession encore à définir : titres, branche d’activité ou actifs.",
     sources: [
       {
-        label: "CCI — Réaliser les diagnostics de son entreprise",
+        label: "CCI · Réaliser les diagnostics de son entreprise",
         url: "https://www.cci.fr/ressources/ceder-votre-entreprise/realiser-les-diagnostics-de-votre-entreprise/pre-diagnostic-transmission-en-ligne",
       },
       {
-        label: "Bpifrance Création — Réussir sa reprise-transmission",
+        label: "Bpifrance Création · Réussir sa reprise-transmission",
         url: "https://bpifrance-creation.fr/boiteaoutils/reussir-reprise-transmission-guide-complet",
       },
     ],
@@ -313,15 +313,15 @@ export const METHOD_ARTICLES = [
       "Faites intervenir un expert-comptable ou un évaluateur pour valider les retraitements, choisir les méthodes et traiter dette, trésorerie et besoin en fonds de roulement. Un conseil juridique doit préciser le périmètre et les conséquences de l’opération.",
     sources: [
       {
-        label: "Bpifrance Création — Évaluation d’entreprise",
+        label: "Bpifrance Création · Évaluation d’entreprise",
         url: "https://bpifrance-creation.fr/encyclopedie/reprendre-entreprise-etapes/diagnostiquer-evaluer/evaluation-dentreprise",
       },
       {
-        label: "Bpifrance Création — Méthodes d’évaluation",
+        label: "Bpifrance Création · Méthodes d’évaluation",
         url: "https://bpifrance-creation.fr/encyclopedie/reprendre-entreprise-etapes/diagnostiquer-evaluer/methode-devaluation-dentreprise",
       },
       {
-        label: "Bpifrance Création — Diagnostic financier d’une reprise",
+        label: "Bpifrance Création · Diagnostic financier d’une reprise",
         url: "https://bpifrance-creation.fr/encyclopedie/reprendre-entreprise-etapes/diagnostiquer-evaluer/diagnostic-financier-reprise-dun",
       },
     ],
@@ -427,11 +427,11 @@ export const METHOD_ARTICLES = [
       "Dès qu’un intérêt sérieux se confirme, faites cadrer les audits financier, juridique, fiscal, social et opérationnel par les professionnels adaptés. Les réponses initiales orientent le périmètre de leur travail.",
     sources: [
       {
-        label: "Bpifrance Création — Diagnostiquer l’entreprise à reprendre",
+        label: "Bpifrance Création · Diagnostiquer l’entreprise à reprendre",
         url: "https://bpifrance-creation.fr/encyclopedie/reprendre-entreprise-etapes/diagnostiquer-evaluer/diagnostiquer-lentreprise-a",
       },
       {
-        label: "Bpifrance Création — Diagnostic financier d’une reprise",
+        label: "Bpifrance Création · Diagnostic financier d’une reprise",
         url: "https://bpifrance-creation.fr/encyclopedie/reprendre-entreprise-etapes/diagnostiquer-evaluer/diagnostic-financier-reprise-dun",
       },
     ],
@@ -523,19 +523,19 @@ export const METHOD_ARTICLES = [
       "Faites cadrer par vos conseils le transfert des contrats, des données personnelles, des droits de propriété intellectuelle, des autorisations et des pouvoirs. Ils doivent être cohérents avec l’acte de cession et son calendrier.",
     sources: [
       {
-        label: "Bpifrance Création — Transmettre son entreprise étape par étape",
+        label: "Bpifrance Création · Transmettre son entreprise étape par étape",
         url: "https://bpifrance-creation.fr/moment-de-vie/transmettre-entreprise-etape-etape",
       },
       {
-        label: "INPI — Tracer et protéger le savoir-faire",
+        label: "INPI · Tracer et protéger le savoir-faire",
         url: "https://www.inpi.fr/actualites/dossiers-thematiques/6-outils-et-services-pour-tracer-votre-savoir-faire-et-garder-votre-avantage-concurrentiel",
       },
       {
-        label: "CNIL — Vente de fichiers clients : les règles",
+        label: "CNIL · Vente de fichiers clients : les règles",
         url: "https://www.cnil.fr/fr/vente-de-fichiers-clients-la-cnil-rappelle-les-regles",
       },
       {
-        label: "Service Public — Rédiger l’acte définitif de cession",
+        label: "Service Public · Rédiger l’acte définitif de cession",
         url: "https://entreprendre.service-public.fr/vosdroits/F36101",
       },
     ],

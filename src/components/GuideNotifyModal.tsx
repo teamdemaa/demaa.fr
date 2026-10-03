@@ -3,6 +3,7 @@
 import { Check, LoaderCircle, X } from "lucide-react";
 import Link from "next/link";
 import { type FormEvent, useEffect, useRef, useState } from "react";
+import { useBrowserSnapshot } from "@/hooks/useBrowserSnapshot";
 import CustomerSpaceAccessForm from "@/components/CustomerSpaceAccessForm";
 import {
   getLeadAttributionPayload,
@@ -33,6 +34,10 @@ function getErrorMessage(response: Response, payload: NotifyPayload) {
   return "Impossible d’enregistrer votre inscription pour le moment. Réessayez dans quelques instants.";
 }
 
+function readCurrentUrl() {
+  return window.location.href;
+}
+
 export default function GuideNotifyModal({
   onClose,
   resource,
@@ -42,7 +47,12 @@ export default function GuideNotifyModal({
   const successRef = useRef<HTMLDivElement>(null);
   const trackedOpenRef = useRef(false);
   const { email, loading: identityLoading } = useCustomerIdentity();
-  const [returnTo, setReturnTo] = useState("/");
+  const currentUrl = useBrowserSnapshot(readCurrentUrl);
+  const returnUrl = new URL(currentUrl ?? "/", "https://demaa.fr");
+  returnUrl.searchParams.set("intent", "guide-notify");
+  returnUrl.searchParams.set("systemSlug", systemSlug);
+  returnUrl.searchParams.set("resourceSlug", resource.resourceSlug);
+  const returnTo = `${returnUrl.pathname}${returnUrl.search}`;
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -98,13 +108,6 @@ export default function GuideNotifyModal({
     };
   }, [onClose]);
 
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    url.searchParams.set("intent", "guide-notify");
-    url.searchParams.set("systemSlug", systemSlug);
-    url.searchParams.set("resourceSlug", resource.resourceSlug);
-    setReturnTo(`${url.pathname}${url.search}`);
-  }, [resource.resourceSlug, systemSlug]);
 
   useEffect(() => {
     if (!trackedOpenRef.current) {

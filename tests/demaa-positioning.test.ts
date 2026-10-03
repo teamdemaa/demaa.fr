@@ -15,7 +15,7 @@ describe("Demaa positioning", () => {
     ]);
 
     expect(DEMAA_HOME_TITLE).toBe(
-      "Demaa — Studio d’entreprises",
+      "Demaa · Studio d’entreprises",
     );
     expect(DEMAA_HOME_DESCRIPTION).toBe(
       "Nous créons des entreprises sur des marchés que nous connaissons de l’intérieur. Découvrez les projets, la méthode et les ressources du Studio Demaa.",

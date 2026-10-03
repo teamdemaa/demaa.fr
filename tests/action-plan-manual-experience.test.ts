@@ -32,8 +32,8 @@ describe("manual action plan experience", () => {
     expect(experience).toContain("Connectez-vous pour renseigner votre stratégie");
     expect(experience).not.toContain('planSection === "figures" && !isAuthenticated');
     expect(experience).toContain('demo === "blank"');
-    expect(experience).toContain("const storedSystemId = readGuestSelectedSystemId() ?? \"\"");
-    expect(experience).toContain("savedSystemIds: storedSystemId ? [storedSystemId] : []");
+    expect(experience).toContain("useBrowserSnapshot(readGuestSelectedSystemId)");
+    expect(experience).toContain("savedSystemIds: demoSystemId ? [demoSystemId] : []");
     expect(systemPanel).toContain("Choisissez votre activité");
     expect(systemPanel).toContain("if (!selectedSystemId)");
   });

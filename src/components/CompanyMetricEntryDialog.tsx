@@ -1,7 +1,7 @@
 "use client";
 
 import { LoaderCircle, X } from "lucide-react";
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 import { useAccessibleDialog } from "@/components/useAccessibleDialog";
 import {
   companyMonthSchema,
@@ -48,8 +48,9 @@ export default function CompanyMetricEntryDialog({
   const [conflictCurrent, setConflictCurrent] = useState<CompanyMonthlyMetric | null>(null);
   const dialogRef = useAccessibleDialog({ isOpen: open, onClose });
 
-  useEffect(() => {
-    if (!open) return;
+  const [draftSource, setDraftSource] = useState({ open: false, initialPeriod, metricsByPeriod });
+  if (open && (!draftSource.open || draftSource.initialPeriod !== initialPeriod || draftSource.metricsByPeriod !== metricsByPeriod)) {
+    setDraftSource({ open, initialPeriod, metricsByPeriod });
     const draft = getCompanyMetricEntryDraft(
       initialPeriod,
       metricsByPeriod,
@@ -61,7 +62,8 @@ export default function CompanyMetricEntryDialog({
     setExpectedRevision(draft.expectedRevision);
     setConflictCurrent(null);
     setError(null);
-  }, [initialPeriod, metricsByPeriod, open]);
+  }
+  if (!open && draftSource.open) setDraftSource({ open, initialPeriod, metricsByPeriod });
 
   if (!open) return null;
 

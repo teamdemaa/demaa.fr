@@ -4,7 +4,7 @@ export const PUBLIC_SOCIAL_IMAGE = {
   url: "/opengraph-image",
   width: 1200,
   height: 630,
-  alt: "Demaa — Studio d’entreprises",
+  alt: "Demaa · Studio d’entreprises",
 } as const;
 
 export type PublicPageMetadataInput = {

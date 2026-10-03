@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, LoaderCircle, Mic, X } from "lucide-react";
+import { useBrowserSnapshot } from "@/hooks/useBrowserSnapshot";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
@@ -162,6 +163,14 @@ function updateSolutionSelection(
   };
 }
 
+function readDemo() {
+  return process.env.NODE_ENV === "development" ? new URLSearchParams(window.location.search).get("demo") : null;
+}
+
+function readReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 export default function ActionPlanExperience({
   systemOptions,
   initialEmail = "",
@@ -209,7 +218,10 @@ export default function ActionPlanExperience({
     : initialAppContext;
   const [situation, setSituation] = useState("");
   const [exampleIndex, setExampleIndex] = useState(0);
-  const [animatedPlaceholder, setAnimatedPlaceholder] = useState("");
+  const [typedPlaceholder, setAnimatedPlaceholder] = useState({ index: 0, text: "" });
+  const reducedMotion = useBrowserSnapshot(readReducedMotion) ?? false;
+  const animatedPlaceholder = reducedMotion ? uiCopy.examples[exampleIndex]
+    : typedPlaceholder.index === exampleIndex ? typedPlaceholder.text : "";
   const [plan, setPlan] = useState<EditableActionPlan | null>(
     initialExperienceState.plan,
   );
@@ -226,7 +238,7 @@ export default function ActionPlanExperience({
   const { context: appContext, navigate: navigateAppContext } =
     useActionPlanAppContext(resolvedInitialAppContext);
   const activeTab = appContext.view;
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [isGeneratingRequest, setIsGenerating] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(initialIsAuthenticated);
   const [accessPromptOpen, setAccessPromptOpen] = useState(
     Boolean(activeInitialAccessIntent && !initialIsAuthenticated),
@@ -259,15 +271,20 @@ export default function ActionPlanExperience({
   );
   const [error, setError] = useState<string | null>(null);
   const [isDemoMode, setIsDemoMode] = useState(false);
+  const isGenerating = isGeneratingRequest || Boolean(queuedGenerationDraft && isAuthenticated && !isDemoMode);
   const resultTitleRef = useRef<HTMLHeadingElement | null>(null);
   const requestControllerRef = useRef<AbortController | null>(null);
   const autoSaveControllerRef = useRef<AbortController | null>(null);
   const autoSaveRunningRef = useRef(false);
   const accessIntentHandledRef = useRef(false);
-  const guestSystemPreferenceHydratedRef = useRef(false);
+  const [guestPreferenceApplied, setGuestPreferenceApplied] = useState(false);
+  const storedSystemId = useBrowserSnapshot(readGuestSelectedSystemId);
   const autoSaveAttemptRef = useRef("");
   const manualAccessPromptHandledRef = useRef(false);
-  const generationIntentHandledRef = useRef(false);
+  const [generationIntentHandled, setGenerationIntentHandled] = useState(false);
+  const storedGenerationDraft = useBrowserSnapshot(readActionPlanGenerationDraft);
+  const demo = useBrowserSnapshot(readDemo);
+  const [demoApplied, setDemoApplied] = useState(false);
 
   useEffect(() => {
     if (!activeInitialAccessIntent || !initialIsAuthenticated) return;
@@ -504,21 +521,16 @@ export default function ActionPlanExperience({
     setAccessPromptOpen(true);
   }
 
-  useEffect(() => {
-    if (guestSystemPreferenceHydratedRef.current) return;
-    guestSystemPreferenceHydratedRef.current = true;
-
-    const storedSystemId = readGuestSelectedSystemId();
-    if (
-      !storedSystemId
-      || !systemOptions.some((option) => option.id === storedSystemId)
-    ) return;
-
-    setSelectedSystemId((current) => current || storedSystemId);
-    setPrePlanWorkspace((current) => current.selectedSystemId
-      ? current
-      : { ...current, selectedSystemId: storedSystemId });
-  }, [systemOptions]);
+  if (!guestPreferenceApplied && storedSystemId !== undefined) {
+    setGuestPreferenceApplied(true);
+    if (storedSystemId && systemOptions.some((option) => option.id === storedSystemId)) {
+      setSelectedSystemId((current) => current || storedSystemId);
+      setPrePlanWorkspace((current) => current.selectedSystemId ? current : {
+        ...current, selectedSystemId: storedSystemId,
+        savedSystemIds: current.savedSystemIds.includes(storedSystemId) ? current.savedSystemIds : [...current.savedSystemIds, storedSystemId],
+      });
+    }
+  }
 
   useEffect(() => {
     if (
@@ -529,25 +541,29 @@ export default function ActionPlanExperience({
     writeGuestSelectedSystemId(selectedSystemId);
   }, [selectedSystemId, systemOptions]);
 
-  useEffect(() => {
-    const systemId = appContext.systemId;
-    if (!systemId || !systemOptions.some((option) => option.id === systemId)) return;
-    setSelectedSystemId(systemId);
-    setPrePlanWorkspace((current) => ({
-      ...current,
-      selectedSystemId: systemId,
-      savedSystemIds: current.savedSystemIds.includes(systemId)
-        ? current.savedSystemIds
-        : [...current.savedSystemIds, systemId],
-    }));
-    setWorkspace((current) => current ? {
-      ...current,
-      selectedSystemId: systemId,
-      savedSystemIds: current.savedSystemIds.includes(systemId)
-        ? current.savedSystemIds
-        : [...current.savedSystemIds, systemId],
-    } : current);
-  }, [appContext.systemId, systemOptions]);
+  const [appliedSystemId, setAppliedSystemId] = useState(initialAppContext.systemId);
+  const contextSystemId = appContext.systemId;
+  if (contextSystemId !== appliedSystemId) {
+    setAppliedSystemId(contextSystemId);
+    const systemId = contextSystemId;
+    if (systemId && systemOptions.some((option) => option.id === systemId)) {
+      setSelectedSystemId(systemId);
+      setPrePlanWorkspace((current) => ({
+        ...current,
+        selectedSystemId: systemId,
+        savedSystemIds: current.savedSystemIds.includes(systemId)
+          ? current.savedSystemIds
+          : [...current.savedSystemIds, systemId],
+      }));
+      setWorkspace((current) => current ? {
+        ...current,
+        selectedSystemId: systemId,
+        savedSystemIds: current.savedSystemIds.includes(systemId)
+          ? current.savedSystemIds
+          : [...current.savedSystemIds, systemId],
+      } : current);
+    }
+  }
 
   useEffect(() => {
     if (accessIntentHandledRef.current) return;
@@ -582,11 +598,9 @@ export default function ActionPlanExperience({
     if (situation) return;
 
     const example = uiCopy.examples[exampleIndex];
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let timeout: number;
 
-    if (prefersReducedMotion) {
-      setAnimatedPlaceholder(example);
+    if (reducedMotion) {
       timeout = window.setTimeout(() => {
         setExampleIndex((current) => (current + 1) % uiCopy.examples.length);
       }, 5_500);
@@ -594,11 +608,10 @@ export default function ActionPlanExperience({
     }
 
     let cursor = 0;
-    setAnimatedPlaceholder("");
 
     const typeNextCharacter = () => {
       cursor += 1;
-      setAnimatedPlaceholder(example.slice(0, cursor));
+      setAnimatedPlaceholder({ index: exampleIndex, text: example.slice(0, cursor) });
       timeout = window.setTimeout(
         cursor < example.length
           ? typeNextCharacter
@@ -609,7 +622,7 @@ export default function ActionPlanExperience({
 
     timeout = window.setTimeout(typeNextCharacter, 180);
     return () => window.clearTimeout(timeout);
-  }, [exampleIndex, situation, uiCopy.examples]);
+  }, [exampleIndex, reducedMotion, situation, uiCopy.examples]);
 
   useEffect(
     () => () => {
@@ -707,62 +720,47 @@ export default function ActionPlanExperience({
     workspace,
   ]);
 
-  useEffect(() => {
-    if (process.env.NODE_ENV !== "development") return;
-    const demo = new URLSearchParams(window.location.search).get("demo");
-
-    if (demo === "blank") {
-      const storedSystemId = readGuestSelectedSystemId() ?? "";
+  if (!demoApplied && demo !== undefined) {
+    setDemoApplied(true);
+    if (demo === "blank" || demo === "plan") {
       setIsDemoMode(true);
-      setSituation("");
-      setPlan(createManualActionPlan());
+      setSituation(demo === "plan" ? ACTION_PLAN_DEMO_SITUATION : "");
+      setPlan(demo === "plan" ? ACTION_PLAN_DEMO : createManualActionPlan());
       setGeneration(null);
-      setWorkspace({
-        ...createManualActionPlanWorkspaceState(),
-        selectedSystemId: storedSystemId,
-        savedSystemIds: storedSystemId ? [storedSystemId] : [],
+      const demoSystemId = demo === "plan" ? ACTION_PLAN_DEMO.systemId : storedSystemId ?? "";
+      setWorkspace(demo === "plan" ? createActionPlanWorkspaceState(ACTION_PLAN_DEMO) : {
+        ...createManualActionPlanWorkspaceState(), selectedSystemId: demoSystemId,
+        savedSystemIds: demoSystemId ? [demoSystemId] : [],
       });
-      setSelectedSystemId(storedSystemId);
-      navigateAppContext({ view: "plan", planSection: "actions" }, "replace");
-      return;
+      setSelectedSystemId(demoSystemId);
     }
-
-    if (demo !== "plan") return;
-
-    setIsDemoMode(true);
-    setSituation(ACTION_PLAN_DEMO_SITUATION);
-    setPlan(ACTION_PLAN_DEMO);
-    setGeneration(null);
-    setWorkspace(createActionPlanWorkspaceState(ACTION_PLAN_DEMO));
-    setSelectedSystemId(ACTION_PLAN_DEMO.systemId);
-    navigateAppContext({ view: "plan", planSection: "actions" }, "replace");
-  }, [navigateAppContext]);
-
+  }
   useEffect(() => {
-    if (!initialGenerationIntent || generationIntentHandledRef.current) return;
-    generationIntentHandledRef.current = true;
-    const draft = readActionPlanGenerationDraft();
+    if (isDemoMode) navigateAppContext({ view: "plan", planSection: "actions" }, "replace");
+  }, [isDemoMode, navigateAppContext]);
+
+  if (initialGenerationIntent && !generationIntentHandled && storedGenerationDraft !== undefined) {
+    setGenerationIntentHandled(true);
+    const draft = storedGenerationDraft;
     if (!draft) {
       setError(uiCopy.expired);
-      return;
-    }
-    setSituation(draft.situation);
-    setGenerationDraft(draft);
-    if (isAuthenticated) {
-      setQueuedGenerationDraft(draft);
     } else {
-      setAccessDraft((current) => ({ ...current, mode: "signin", password: "" }));
-      setAccessPromptOpen(true);
+      setSituation(draft.situation);
+      setGenerationDraft(draft);
+      setError(null);
+      if (isAuthenticated) setQueuedGenerationDraft(draft);
+      else {
+        setAccessDraft((current) => ({ ...current, mode: "signin", password: "" }));
+        setAccessPromptOpen(true);
+      }
     }
-  }, [initialGenerationIntent, isAuthenticated, uiCopy.expired]);
+  }
 
   useEffect(() => {
     if (!queuedGenerationDraft || !isAuthenticated || isDemoMode) return;
     requestControllerRef.current?.abort();
     const controller = new AbortController();
     requestControllerRef.current = controller;
-    setIsGenerating(true);
-    setError(null);
 
     void runAuthenticatedActionPlanGeneration(
       queuedGenerationDraft,

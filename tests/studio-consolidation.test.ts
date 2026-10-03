@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { NextRequest } from "next/server";
 import { proxy } from "@/proxy";
+import { getPublishedCopyableModelRouteParams } from "@/lib/copyable-model-catalog";
 import { ARCHIVED_STUDIO_PROJECTS } from "@/lib/demaa-studio-archive";
 import { DEMAA_STUDIO_PROJECTS, DEMAA_PUBLISHED_STUDIO_PROJECTS, DEMAA_PRIORITY_STUDIO_PROJECTS, getDemaaStudioProject } from "@/lib/demaa-studio-projects";
 import { DEMAA_DIRECTORY_NAVIGATION, DEMAA_PUBLIC_NAVIGATION, DEMAA_RESOURCE_NAVIGATION } from "@/lib/demaa-public-routes";
@@ -45,6 +46,12 @@ describe("Studio consolidation publication", () => {
         expect(response.headers.get("x-robots-tag"), path).toBeNull();
       }
     }
+    for (const path of ["/modeles", ...getPublishedCopyableModelRouteParams().map(({ slug }) => `/modeles/${slug}`)]) {
+      const response = proxy(request(path));
+      expect(response.status, path).toBe(200);
+      expect(response.headers.get("x-robots-tag"), path).toBeNull();
+    }
+    expect(proxy(request("/modeles/unknown-model")).status).toBe(404);
     expect(proxy(request("/annuaire-newsletters")).headers.get("x-robots-tag")).toBe("noindex, follow");
     expect(proxy(request("/annuaire-outils-retired")).headers.get("x-robots-tag")).toBe("noindex, follow");
   });

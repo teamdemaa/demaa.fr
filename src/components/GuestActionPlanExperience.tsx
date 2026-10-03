@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, LoaderCircle, Mic, X } from "lucide-react";
+import { useBrowserSnapshot } from "@/hooks/useBrowserSnapshot";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useEffect, useRef, useState } from "react";
 import ActionPlanAcademyPanel from "@/components/ActionPlanAcademyPanel";
@@ -87,6 +88,10 @@ async function waitForGuestGeneration(
   return state;
 }
 
+function readReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 export default function GuestActionPlanExperience({
   contentLocaleCode,
   focusedDiagnostic = false,
@@ -113,12 +118,17 @@ export default function GuestActionPlanExperience({
   const appContext = normalizeGuestContext(rawAppContext);
   const [situation, setSituation] = useState("");
   const [exampleIndex, setExampleIndex] = useState(0);
-  const [animatedPlaceholder, setAnimatedPlaceholder] = useState("");
+  const [typedPlaceholder, setAnimatedPlaceholder] = useState({ index: 0, text: "" });
+  const reducedMotion = useBrowserSnapshot(readReducedMotion) ?? false;
+  const animatedPlaceholder = reducedMotion ? uiCopy.examples[exampleIndex]
+    : typedPlaceholder.index === exampleIndex ? typedPlaceholder.text : "";
   const [actionPlan, setActionPlan] = useState<GuestActionPlan | null>(null);
   const [access, setAccess] = useState<GuestAccess | null>(null);
   const [generationState, setGenerationState] = useState<GuestGenerationState | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [isRestoring, setIsRestoring] = useState(true);
+  const storedAccess = useBrowserSnapshot(readGuestAccess);
+  const [restoreFinished, setRestoreFinished] = useState(false);
+  const isRestoring = storedAccess === undefined || (storedAccess !== null && !restoreFinished);
   const [error, setError] = useState<string | null>(null);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const [, setWorkspace] = useState<ActionPlanWorkspaceState>(() => ({
@@ -128,7 +138,8 @@ export default function GuestActionPlanExperience({
   }));
   const [selectedSystemId, setSelectedSystemId] = useState(initialAppContext.systemId ?? "");
   const requestControllerRef = useRef<AbortController | null>(null);
-  const guestSystemPreferenceHydratedRef = useRef(false);
+  const [guestPreferenceApplied, setGuestPreferenceApplied] = useState(false);
+  const storedSystemId = useBrowserSnapshot(readGuestSelectedSystemId);
 
   const situationDictation = useSpeechDictation({
     continuous: true,
@@ -144,44 +155,41 @@ export default function GuestActionPlanExperience({
     marketCode: marketCodeAtCreation,
   }), [contentLocaleCode, marketCodeAtCreation]);
 
-  useEffect(() => {
-    if (guestSystemPreferenceHydratedRef.current) return;
-    guestSystemPreferenceHydratedRef.current = true;
-    const storedSystemId = readGuestSelectedSystemId();
-    if (!storedSystemId || !systemOptions.some(({ id }) => id === storedSystemId)) return;
-    setSelectedSystemId((current) => current || storedSystemId);
-    setWorkspace((current) => current.selectedSystemId ? current : {
-      ...current,
-      selectedSystemId: storedSystemId,
-      savedSystemIds: [storedSystemId],
-    });
-  }, [systemOptions]);
+  if (!guestPreferenceApplied && storedSystemId !== undefined) {
+    setGuestPreferenceApplied(true);
+    if (storedSystemId && systemOptions.some((option) => option.id === storedSystemId)) {
+      setSelectedSystemId((current) => current || storedSystemId);
+      setWorkspace((current) => current.selectedSystemId ? current : {
+        ...current, selectedSystemId: storedSystemId,
+        savedSystemIds: current.savedSystemIds.includes(storedSystemId) ? current.savedSystemIds : [...current.savedSystemIds, storedSystemId],
+      });
+    }
+  }
 
   useEffect(() => {
     if (!selectedSystemId || !systemOptions.some(({ id }) => id === selectedSystemId)) return;
     writeGuestSelectedSystemId(selectedSystemId);
   }, [selectedSystemId, systemOptions]);
 
-  useEffect(() => {
-    const systemId = appContext.systemId;
-    if (!systemId || !systemOptions.some(({ id }) => id === systemId)) return;
-    setSelectedSystemId(systemId);
-    setWorkspace((current) => ({
-      ...current,
-      selectedSystemId: systemId,
-      savedSystemIds: current.savedSystemIds.includes(systemId)
-        ? current.savedSystemIds
-        : [...current.savedSystemIds, systemId],
-    }));
-  }, [appContext.systemId, systemOptions]);
+  const [appliedSystemId, setAppliedSystemId] = useState(initialAppContext.systemId);
+  const contextSystemId = appContext.systemId;
+  if (contextSystemId !== appliedSystemId) {
+    setAppliedSystemId(contextSystemId);
+    if (contextSystemId && systemOptions.some((option) => option.id === contextSystemId)) {
+      setSelectedSystemId(contextSystemId);
+      setWorkspace((current) => ({
+        ...current, selectedSystemId: contextSystemId,
+        savedSystemIds: current.savedSystemIds.includes(contextSystemId)
+          ? current.savedSystemIds : [...current.savedSystemIds, contextSystemId],
+      }));
+    }
+  }
 
   useEffect(() => {
     if (situation) return;
     const example = uiCopy.examples[exampleIndex];
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let timeout = 0;
     if (reducedMotion) {
-      setAnimatedPlaceholder(example);
       timeout = window.setTimeout(
         () => setExampleIndex((current) => (current + 1) % uiCopy.examples.length),
         5_500,
@@ -189,10 +197,9 @@ export default function GuestActionPlanExperience({
       return () => window.clearTimeout(timeout);
     }
     let cursor = 0;
-    setAnimatedPlaceholder("");
     const typeNextCharacter = () => {
       cursor += 1;
-      setAnimatedPlaceholder(example.slice(0, cursor));
+      setAnimatedPlaceholder({ index: exampleIndex, text: example.slice(0, cursor) });
       timeout = window.setTimeout(
         cursor < example.length
           ? typeNextCharacter
@@ -202,15 +209,10 @@ export default function GuestActionPlanExperience({
     };
     timeout = window.setTimeout(typeNextCharacter, 180);
     return () => window.clearTimeout(timeout);
-  }, [exampleIndex, situation, uiCopy.examples]);
+  }, [exampleIndex, reducedMotion, situation, uiCopy.examples]);
 
   useEffect(() => {
-    const storedAccess = readGuestAccess();
-    if (!storedAccess) {
-      setIsRestoring(false);
-      return;
-    }
-    setAccess(storedAccess);
+    if (!storedAccess) return;
     const controller = new AbortController();
     requestControllerRef.current = controller;
     void readGuestActionPlan(storedAccess, controller.signal)
@@ -242,11 +244,11 @@ export default function GuestActionPlanExperience({
       })
       .finally(() => {
         if (requestControllerRef.current === controller) requestControllerRef.current = null;
-        setIsRestoring(false);
+        setRestoreFinished(true);
         setIsGenerating(false);
       });
     return () => controller.abort();
-  }, [uiCopy.generationFailed]);
+  }, [storedAccess, uiCopy.generationFailed]);
 
   useEffect(() => () => requestControllerRef.current?.abort(), []);
 
