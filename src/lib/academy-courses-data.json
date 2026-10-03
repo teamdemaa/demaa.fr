@@ -3,7 +3,7 @@
     "slug": "organiser-entreprise-sans-tout-porter",
     "title": "Tout repose sur moi : par quoi commencer pour organiser mon entreprise ?",
     "category": "Organisation",
-    "image": "/images/academy/paysages/siby-photo-v1.webp",
+    "image": "/images/academy/paysages/siby-inspire-v1.webp",
     "objective": "Choisir un fonctionnement à clarifier cette semaine et décider qui fait quoi.",
     "intro": "Quand toutes les décisions reviennent au dirigeant, ajouter un logiciel ne suffit pas. Commencez par rendre visible le travail qui revient chaque semaine. Votre premier objectif est de supprimer une dépendance précise : une commande qui attend votre accord, un document que vous seul retrouvez, une consigne à répéter.",
     "steps": [
@@ -53,11 +53,11 @@
       "À définir"
     ],
     "imageCaption": "Siby · Mali",
-    "imageAlt": "Falaises et végétation près de Siby, au Mali",
-    "imageCredit": "Ralf Steinberger",
-    "imageSource": "https://commons.wikimedia.org/wiki/File:Colourful_mountains_near_Siby,_Mali,_Africa._(34880635756).jpg",
-    "imageProvider": "Wikimedia Commons",
-    "imageLicense": "https://creativecommons.org/licenses/by/2.0/"
+    "imageAlt": "Paysage de falaises et de végétation",
+    "imageCredit": "",
+    "imageSource": null,
+    "imageProvider": "",
+    "imageLicense": null
   },
   {
     "slug": "choisir-premiers-clients",
