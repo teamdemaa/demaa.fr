@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 import { getPublishedPracticeTutorials } from "@/lib/tutorial-catalog";
 
+import { DEMAA_PUBLISHED_STUDIO_PROJECTS } from "@/lib/demaa-studio-projects";
+import { DEMAA_DIRECTORY_NAVIGATION } from "@/lib/demaa-public-routes";
+
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -34,6 +37,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   );
 
   return [
+    { url: `${base}/studio`, lastModified: new Date("2026-10-03T00:00:00.000Z"), changeFrequency: "monthly", priority: 1 },
+    { url: `${base}/projets`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${base}/studio/opportunites`, changeFrequency: "monthly", priority: 0.7 },
+    ...DEMAA_PUBLISHED_STUDIO_PROJECTS.map((project) => ({ url: `${base}/projets/${project.slug}`, changeFrequency: "monthly" as const, priority: 0.75 })),
+    ...DEMAA_DIRECTORY_NAVIGATION.map(({ href }) => ({ url: `${base}${href}`, changeFrequency: "monthly" as const, priority: 0.6 })),
     ...staticRoutes,
     ...tutorialEntries,
   ];

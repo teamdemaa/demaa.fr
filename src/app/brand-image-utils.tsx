@@ -1,9 +1,9 @@
 import { ImageResponse } from "next/og";
 
-const brandImageBackground = "#fafafa";
-const brandImageGreen = "#315f46";
-const brandImageText = "#17231d";
-const brandImageMuted = "#6f756e";
+const brandImageBackground = "#F5F1EA";
+const brandImageGreen = "#79553E";
+const brandImageText = "#171411";
+const brandImageMuted = "#716B64";
 
 export const socialImageSize = {
   width: 1200,
@@ -50,7 +50,7 @@ export async function buildSocialImage() {
               color: brandImageGreen,
             }}
           >
-            Gagnez du temps
+            Demaa
           </span>
           <span
             style={{
@@ -61,7 +61,7 @@ export async function buildSocialImage() {
               color: brandImageText,
             }}
           >
-            grâce à vos systèmes
+            Studio d’entreprises
           </span>
         </div>
 
@@ -79,8 +79,8 @@ export async function buildSocialImage() {
               color: brandImageMuted,
             }}
           >
-            Des PME de services à reprendre. Votre entreprise présentée
-            gratuitement à des repreneurs.
+            Des entreprises construites sur des marchés que nous connaissons
+            de l’intérieur.
           </span>
         </div>
       </div>

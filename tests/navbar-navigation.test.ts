@@ -62,7 +62,7 @@ describe("Demaa application navbar", () => {
     expect(homeSource).toContain("DEMAA_DEFAULT_PUBLIC_PATH");
     expect(navbarSource).toContain("href={adminControls");
     expect(navbarSource).toContain(": DEMAA_DEFAULT_PUBLIC_PATH}");
-    expect(publicRoutesSource).toContain('export const DEMAA_DEFAULT_PUBLIC_PATH = "/accompagnement"');
+    expect(publicRoutesSource).toContain('export const DEMAA_DEFAULT_PUBLIC_PATH = "/studio"');
     expect(nextConfigSource).toMatch(
       /source: '\/systemes',[\s\S]*?destination: '\/outils',/,
     );
@@ -89,7 +89,7 @@ describe("Demaa application navbar", () => {
 
     expect(source).toContain("DEMAA_PUBLIC_NAVIGATION");
     expect(publicRoutes).toContain('label: "Accompagnement", href: "/accompagnement"');
-    expect(publicRoutes).toContain('label: "Solutions", href: "/solutions"');
+    expect(publicRoutes).toContain('label: "Solutions par activité", href: "/solutions"');
     expect(publicRoutes).toContain('label: "Tutoriels", href: "/tutoriels"');
     expect(publicRoutes).not.toContain('label: "Reprendre"');
     expect(publicRoutes).not.toContain('label: "Vendre"');

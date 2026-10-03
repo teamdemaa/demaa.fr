@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { DEMAA_PUBLIC_NAVIGATION } from "@/lib/demaa-public-routes";
 
-export type PublicActionPlanView = "marketplace" | "resources" | "services" | "accompagnement" | "academy" | "solutions" | "specialists";
+export type PublicActionPlanView = "studio" | "projets" | "opportunites" | "marketplace" | "resources" | "services" | "accompagnement" | "academy" | "solutions" | "specialists";
 
 const tabClassName =
-  "group relative inline-flex min-h-11 min-w-0 items-center justify-center gap-1 rounded-full px-1 text-xs font-medium leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:gap-2 xl:rounded-none xl:px-3 xl:text-sm";
+  "group relative inline-flex min-h-11 min-w-0 items-center justify-center gap-1 rounded-full px-1 text-xs font-medium leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:gap-2 xl:px-3 xl:text-sm";
 
 export default function PublicActionPlanNavigation({
   activeView,

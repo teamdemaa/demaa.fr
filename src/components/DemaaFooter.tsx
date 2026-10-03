@@ -1,6 +1,6 @@
 import Link from "next/link";
 import DemaaWordmark from "@/components/DemaaWordmark";
-import { DEMAA_DEFAULT_PUBLIC_PATH, DEMAA_PUBLIC_NAVIGATION } from "@/lib/demaa-public-routes";
+import { DEMAA_DEFAULT_PUBLIC_PATH, DEMAA_PUBLIC_NAVIGATION, DEMAA_RESOURCE_NAVIGATION, DEMAA_DIRECTORY_NAVIGATION } from "@/lib/demaa-public-routes";
 
 const exploreLinks = DEMAA_PUBLIC_NAVIGATION.map(({ label, href }) => ({ label, href }));
 
@@ -15,7 +15,7 @@ const legalLinks = [
   { label: "Cookies", href: "/politique-de-cookies" },
 ];
 
-const linkClass = "text-sm text-neutral-500 transition-colors hover:text-neutral-950";
+const linkClass = "text-sm text-dema-muted transition-colors hover:text-brand-blue";
 
 function FooterLinks({
   title,
@@ -40,22 +40,23 @@ function FooterLinks({
 
 export default function DemaaFooter() {
   return (
-    <footer data-site-footer data-footer-variant="demaa" className="mt-auto border-t border-neutral-200 bg-white py-16 text-neutral-950">
+    <footer data-site-footer data-footer-variant="demaa" className="mt-auto border-t border-dema-line bg-dema-paper py-16 text-brand-blue">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-6">
           <div className="space-y-4 lg:col-span-2">
-            <Link href={DEMAA_DEFAULT_PUBLIC_PATH} className="inline-flex" aria-label="Demaa, aller à l’accompagnement">
-              <DemaaWordmark className="text-[2.55rem]" colorClassName="text-brand-blue/56" />
+            <Link href={DEMAA_DEFAULT_PUBLIC_PATH} className="inline-flex" aria-label="Demaa, aller au Studio">
+              <DemaaWordmark className="text-[2.55rem]" colorClassName="text-brand-blue" />
             </Link>
-            <p className="demaa-section-title max-w-xs text-lg leading-snug text-neutral-500">
-              Des repères concrets pour organiser et piloter votre entreprise.
+            <p className="demaa-section-title max-w-xs text-lg leading-snug text-dema-muted">
+              Des entreprises construites avec méthode, patience et intention.
             </p>
           </div>
           <FooterLinks title="Explorer" links={exploreLinks} />
-          <FooterLinks title="Contact" links={usefulLinks} />
-          <FooterLinks title="Légal" links={legalLinks} />
+          <FooterLinks title="Ressources" links={DEMAA_RESOURCE_NAVIGATION} />
+          <FooterLinks title="Annuaires" links={DEMAA_DIRECTORY_NAVIGATION} />
+          <div className="space-y-8"><FooterLinks title="Contact" links={usefulLinks} /><FooterLinks title="Légal" links={legalLinks} /></div>
         </div>
-        <div className="mt-16 border-t border-neutral-200 pt-8 text-xs text-gray-500">
+        <div className="mt-16 border-t border-dema-line pt-8 text-xs text-dema-muted">
           <p>© {new Date().getFullYear()} Demaa. Tous droits réservés.</p>
         </div>
       </div>

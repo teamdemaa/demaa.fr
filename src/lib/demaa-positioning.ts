@@ -1,4 +1,4 @@
-export const DEMAA_HOME_TITLE = "Demaa : reprendre ou vendre une PME de services";
+export const DEMAA_HOME_TITLE = "Demaa — Studio d’entreprises";
 
 export const DEMAA_HOME_DESCRIPTION =
-  "Découvrez des PME de services à reprendre ou présentez gratuitement votre entreprise à des repreneurs.";
+  "Nous créons des entreprises sur des marchés que nous connaissons de l’intérieur. Découvrez les projets, la méthode et les ressources du Studio Demaa.";

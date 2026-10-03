@@ -51,6 +51,7 @@ const firebaseAuthHelperHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ["@google-cloud/firestore", "google-gax"],
   allowedDevOrigins: ['127.0.0.1'],
   devIndicators: false,
   distDir: process.env.DEMAA_BUILD_DIST_DIR || '.next',
