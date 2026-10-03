@@ -68,5 +68,35 @@
     "license": "https://unsplash.com/license",
     "changes": "Recadrage 16:9 et conversion WebP",
     "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/spitzkoppe-v1.webp",
+    "caption": "Spitzkoppe · Namibie",
+    "credit": "NIR HIMI",
+    "source": "https://unsplash.com/photos/tuwB_4ifg48",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/boa-vista-v1.webp",
+    "caption": "Boa Vista · Cap-Vert",
+    "credit": "Jonas Fesser",
+    "source": "https://unsplash.com/photos/SIgmaMh_J0E",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/la-digue-v1.webp",
+    "caption": "La Digue · Seychelles",
+    "credit": "iMike Stettler",
+    "source": "https://unsplash.com/photos/fDMEIoR7iUA",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
   }
 ]

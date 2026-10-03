@@ -72,3 +72,8 @@ Les deux textes introductifs de l’en-tête et la section « Mettre en pratique
 ### Légendes sur les photos
 - À la demande de l’utilisateur, le lieu apparaît désormais en blanc en bas à droite de la photo, sur un dégradé discret, dans les miniatures et les articles.
 - Libellé Mali : « Siby · Mali ». La nature générée et l’inspiration des reliefs du Mandé restent précisées dans le crédit de l’article et le manifeste.
+
+### Suppression des doublons de miniatures
+- Chaque cours a désormais son propre visuel : dix fichiers et dix empreintes SHA-256 distinctes.
+- Les répétitions de Siby, Santo Antão et Sine-Saloum sont remplacées par trois photographies Unsplash : Spitzkoppe (NIR HIMI), Boa Vista (Jonas Fesser), La Digue (iMike Stettler).
+- Lieux sur les photos en bas à droite et crédits dans les articles conservés. Sources et licence consignées dans le manifeste.

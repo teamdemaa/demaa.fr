@@ -277,7 +277,7 @@
     "slug": "organiser-premiere-prospection",
     "title": "Où trouver mes premiers clients et comment organiser ma prospection ?",
     "category": "Vente",
-    "image": "/images/academy/paysages/siby-inspire-v1.webp",
+    "image": "/images/academy/paysages/spitzkoppe-v1.webp",
     "objective": "Construire une petite liste ciblée et une routine de contact tenable.",
     "intro": "Vos premiers clients ne viennent pas forcément du canal qui touche le plus de monde. Cherchez un lieu où votre cible est identifiable et accessible : réseau professionnel, quartier, annuaire spécialisé ou communauté. Une prospection organisée relie chaque contact à un besoin et à une prochaine action.",
     "steps": [
@@ -324,10 +324,10 @@
       "À renseigner",
       "Proposer un échange"
     ],
-    "imageCaption": "Siby · Mali",
-    "imageAlt": "Siby · Mali",
-    "imageCredit": "Paysage généré par IA, inspiré des reliefs du Mandé",
-    "imageSource": null
+    "imageCaption": "Spitzkoppe · Namibie",
+    "imageAlt": "Spitzkoppe · Namibie",
+    "imageCredit": "NIR HIMI",
+    "imageSource": "https://unsplash.com/photos/tuwB_4ifg48"
   },
   {
     "slug": "suivre-prospects-et-relances",
@@ -389,7 +389,7 @@
     "slug": "centraliser-commandes",
     "title": "Les commandes arrivent de partout : comment éviter les erreurs ?",
     "category": "Organisation",
-    "image": "/images/academy/paysages/santo-antao-v1.webp",
+    "image": "/images/academy/paysages/boa-vista-v1.webp",
     "objective": "Créer un registre unique et une règle de confirmation pour chaque commande.",
     "intro": "Vous pouvez recevoir les demandes par plusieurs canaux, mais leur traitement doit converger vers un même registre. Le risque apparaît quand une commande reste dans un message, change sans trace ou arrive incomplète à la personne qui prépare. Clarifiez le passage de la demande à la commande confirmée.",
     "steps": [
@@ -438,10 +438,10 @@
       "Responsable commandes",
       "Aucune"
     ],
-    "imageCaption": "Santo Antão · Cap-Vert",
-    "imageAlt": "Santo Antão · Cap-Vert",
-    "imageCredit": "Dominique Josse",
-    "imageSource": "https://unsplash.com/photos/i010CaxDLEM"
+    "imageCaption": "Boa Vista · Cap-Vert",
+    "imageAlt": "Boa Vista · Cap-Vert",
+    "imageCredit": "Jonas Fesser",
+    "imageSource": "https://unsplash.com/photos/SIgmaMh_J0E"
   },
   {
     "slug": "deleguer-sans-tout-corriger",
@@ -501,7 +501,7 @@
     "slug": "piloter-entreprise-chaque-semaine",
     "title": "Je travaille beaucoup : comment savoir si l’entreprise avance ?",
     "category": "Pilotage",
-    "image": "/images/academy/paysages/sine-saloum-v1.webp",
+    "image": "/images/academy/paysages/la-digue-v1.webp",
     "objective": "Mettre en place une revue hebdomadaire avec quelques indicateurs reliés à des décisions.",
     "intro": "Le temps passé ne dit pas à lui seul si l’activité progresse. Choisissez un objectif pour les prochaines semaines et quelques mesures qui vous aideront à décider. Un tableau de bord est utile seulement si les chiffres sont fiables, compris et suivis d’une action.",
     "steps": [
@@ -550,9 +550,9 @@
       "Analyser la première erreur",
       "Responsable opérations"
     ],
-    "imageCaption": "Sine-Saloum · Sénégal",
-    "imageAlt": "Sine-Saloum · Sénégal",
-    "imageCredit": "Anton Lecock",
-    "imageSource": "https://unsplash.com/photos/LEpilI_K4fs"
+    "imageCaption": "La Digue · Seychelles",
+    "imageAlt": "La Digue · Seychelles",
+    "imageCredit": "iMike Stettler",
+    "imageSource": "https://unsplash.com/photos/fDMEIoR7iUA"
   }
 ]
