@@ -41,7 +41,7 @@ export default function Navbar({
   const connectionLinkClassName =
     "inline-flex min-h-10 shrink-0 items-center px-1 text-xs font-medium text-dema-forest transition hover:text-brand-blue focus-visible:outline-none focus-visible:underline sm:min-h-11 sm:text-sm";
   const publicCtaClassName =
-    "inline-flex min-h-10 shrink-0 items-center whitespace-nowrap px-1 text-xs font-medium text-dema-forest transition hover:text-brand-blue focus-visible:outline-none focus-visible:underline focus-visible:underline-offset-4 sm:min-h-11 sm:text-sm";
+    "inline-flex min-h-10 shrink-0 items-center whitespace-nowrap px-1 text-xs font-medium text-brand-blue transition hover:text-brand-blue/70 focus-visible:outline-none focus-visible:underline focus-visible:underline-offset-4 sm:min-h-11 sm:text-sm";
   return (
     <>
       <nav
