@@ -63,7 +63,7 @@ function StudioContent() {
         <p className={eyebrowClass}>Studio d’entreprises · Afrique & Europe</p>
         <h1 className="demaa-hero-title mt-6 max-w-[760px] text-[clamp(2.8rem,5.5vw,5.7rem)] leading-[1.02] tracking-[-0.045em]">On crée des entreprises sur des marchés qu’on connaît de l’intérieur.</h1>
         <p className="mt-7 max-w-[520px] text-base leading-7 text-brand-blue/80">Nous créons des entreprises sur des marchés que nous connaissons et partageons des ressources pour entreprendre.</p>
-        <div className="mt-9 flex flex-wrap gap-4"><Link href="/projets" className={contactClass}>Voir les projets <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link><a href="mailto:team@demaa.fr" className="inline-flex min-h-12 items-center border-b border-brand-blue px-1 text-sm font-medium">Nous contacter</a></div>
+        <div className="mt-9 flex flex-wrap gap-4"><Link href="/projets" className={contactClass}>Voir les projets <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div>
       </div>
     </section>
     <section className="border-y border-dema-line">
