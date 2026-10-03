@@ -20,7 +20,7 @@ const primaryProjects: readonly DemaaStudioProject[] = [
     summary: "Des pastels, préparations de mafé et légumes découpés surgelés pour les restaurants et traiteurs.",
     problem: "La préparation de recettes ouest-africaines demande du temps et une régularité d’approvisionnement que les équipes doivent assurer chaque semaine.",
     solution: "Des pastels, préparations de mafé et légumes découpés surgelés, conditionnés pour les cuisines professionnelles.",
-    image: "/images/studio/dumaan-restauration-v3.webp", imageAlt: "Visuel de concept Dumaan : livraison de grands conditionnements surgelés de pastels, mafé et légumes découpés à une restauratrice",
+    image: "/images/studio/dumaan-restauration-v4.webp", imageAlt: "Visuel de concept Dumaan : livraison de grands conditionnements surgelés de pastels, mafé et légumes découpés à une restauratrice",
   },
   {
     slug: "mnd", name: "MND", sector: "Média & commerce", pole: "E-commerce", portfolio: "priority", status: "En test",
