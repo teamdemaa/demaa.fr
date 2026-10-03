@@ -1,0 +1,72 @@
+[
+  {
+    "file": "cover.webp",
+    "source": "Original local image prepared for DEMAA deck",
+    "original": "exec-4bc35100-efe3-4afe-8a07-683d52f8954c.png",
+    "sourceSha256": "2c6b23f1ace77507e8a48f49c87efdb5aa98be7635c8d2b99bf19a03ee5f49a0",
+    "role": "Editorial cover; person is not identified as a founder"
+  },
+  {
+    "file": "tiimora.webp",
+    "source": "Original local image prepared for DEMAA deck",
+    "original": "tiimora-concept-v2.png",
+    "sourceSha256": "174942a64ac311f1e71a385853cec77fe7c10396e0c4b49077c641f62cae48a5",
+    "role": "Project concept illustration"
+  },
+  {
+    "file": "dumaan.webp",
+    "source": "Original local image prepared for DEMAA deck",
+    "original": "dumaan-livraison-restaurants-v3.png",
+    "sourceSha256": "c2813742338bfd35a0248d8a493fee4b4d7873ac8e2b4141fd8d0969d286fc6a",
+    "role": "Project concept illustration"
+  },
+  {
+    "file": "mnd.webp",
+    "source": "Original local image prepared for DEMAA deck",
+    "original": "mnd-lifestyle-v2.png",
+    "sourceSha256": "97760bb89648d19935e1f9dbf17918a9f6ff230e5f6b6d3c25148e7b51ea427d",
+    "role": "Project concept illustration"
+  },
+  {
+    "file": "jago.webp",
+    "source": "Canva deck v2 browser export",
+    "original": "37c0fd09f33f6f96.png",
+    "sourceSha256": "c4dc053f8221c3b86a1480b42a78b00a1821de8d2176678aae5d14d2cf575a70",
+    "role": "Project concept illustration"
+  },
+  {
+    "file": "kahe.webp",
+    "source": "Canva deck v2 browser export",
+    "original": "0e72eb3731e45919.png",
+    "sourceSha256": "85da5deddea590e9174f0cd59f5cb91a52c8499ff22e27e1d3775c30d538560a",
+    "role": "Project concept illustration"
+  },
+  {
+    "file": "lafiasso.webp",
+    "source": "Canva deck v2 browser export",
+    "original": "0c65e2763e7f9f79.png",
+    "sourceSha256": "5bf4de20752d0e9ca481e5038da744f99d86325f710f189a346819de2b4077d8",
+    "role": "Project concept illustration"
+  },
+  {
+    "file": "tendera.webp",
+    "source": "Original local image prepared for DEMAA deck",
+    "original": "tendera-concept-v3.png",
+    "sourceSha256": "62f5540ae9e77d5e5bedf228172abcfc8a405fec47e2373b722be20941b961e0",
+    "role": "Project concept illustration"
+  },
+  {
+    "file": "mandya.webp",
+    "source": "Original local image prepared for DEMAA deck",
+    "original": "mandya-concept.png",
+    "sourceSha256": "6c14c4498e64515d42ce285e23788846d8ae8620b7b3f7e3b620f641331d2efd",
+    "role": "Project concept illustration"
+  },
+  {
+    "file": "djaty.webp",
+    "source": "Original local image prepared for DEMAA deck",
+    "original": "djaty-concept-v3.png",
+    "sourceSha256": "f1f80854799b5100c5930cc7a2463537168a64966f22dfec35557c81c156e789",
+    "role": "Project concept illustration"
+  }
+]
