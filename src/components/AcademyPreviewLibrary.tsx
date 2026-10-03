@@ -45,9 +45,9 @@ export default function AcademyPreviewLibrary({ cards }: { cards: readonly Acade
             {results.map((card) => (
               <article key={card.href} className="min-w-0">
                 <Link href={card.href} className="group block rounded-[1.25rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-4">
-                  <div className="relative flex aspect-video items-center overflow-hidden rounded-[1.25rem] border border-dema-forest/10 bg-dema-sage/45 p-6 sm:p-8">
+                  <div className="relative flex aspect-video items-center overflow-hidden rounded-[1.25rem] border border-dema-line bg-dema-cream p-6 sm:p-8">
                     {card.image ? (
-                      <Image src={card.image} alt={card.imageAlt} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                      <Image src={card.image} alt={card.imageAlt} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="demaa-tutorial-thumbnail object-contain" />
                     ) : (
                       <p className="max-w-[88%] font-serif text-2xl italic leading-tight text-dema-forest sm:text-3xl">{card.category}</p>
                     )}

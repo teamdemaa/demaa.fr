@@ -18,6 +18,11 @@
 }
 
 @layer components {
+  .demaa-tutorial-thumbnail {
+    filter: grayscale(1) sepia(0.45) saturate(0.7) contrast(1.06);
+    mix-blend-mode: multiply;
+  }
+
   .demaa-brand-logo {
     font-family: var(--font-serif);
     font-style: italic;
