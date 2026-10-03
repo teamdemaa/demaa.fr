@@ -39,7 +39,9 @@ describe("public route integrity", () => {
   it("publishes the three strategic hubs and keeps secondary offers out of the sitemap", async () => {
     const sitemap = await readSource("src/app/sitemap.ts");
 
-    expect(sitemap).toContain('`${base}/accompagnement`');
+    expect(sitemap).not.toContain('`${base}/accompagnement`');
+    expect(sitemap).toContain('`${base}/studio`');
+    expect(sitemap).toContain('`${base}/solutions`');
     expect(sitemap).not.toContain('`${base}/automatisation`');
     expect(sitemap).not.toContain('`${base}/application-metier`');
     expect(sitemap).not.toContain('`${base}/outils`');

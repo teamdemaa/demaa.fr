@@ -1,11 +1,11 @@
-import { existsSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { NextRequest } from "next/server";
 import { proxy } from "@/proxy";
 import { ARCHIVED_STUDIO_PROJECTS } from "@/lib/demaa-studio-archive";
 import { DEMAA_STUDIO_PROJECTS, DEMAA_PUBLISHED_STUDIO_PROJECTS, DEMAA_PRIORITY_STUDIO_PROJECTS, getDemaaStudioProject } from "@/lib/demaa-studio-projects";
-import { DEMAA_DIRECTORY_NAVIGATION } from "@/lib/demaa-public-routes";
+import { DEMAA_DIRECTORY_NAVIGATION, DEMAA_PUBLIC_NAVIGATION, DEMAA_RESOURCE_NAVIGATION } from "@/lib/demaa-public-routes";
 
 function request(path: string) {
   return new NextRequest(`https://demaa.fr${path}`, { headers: { host: "demaa.fr" } });
@@ -19,6 +19,14 @@ describe("Studio consolidation publication", () => {
     expect(getDemaaStudioProject("unknown-project")).toBeUndefined();
     expect(getDemaaStudioProject("jagoya")?.name).toBe("Jago");
     expect(DEMAA_PRIORITY_STUDIO_PROJECTS.map(({ name }) => name)).toEqual(["Tiimora", "Dumaan", "MND"]);
+  });
+
+  it("keeps three public universes and retires the accompaniment offer", () => {
+    expect(DEMAA_PUBLIC_NAVIGATION.map(({ label, href }) => [label, href])).toEqual([
+      ["Studio", "/studio"], ["Solutions", "/solutions"], ["Academy", "/tutoriels"],
+    ]);
+    expect(DEMAA_RESOURCE_NAVIGATION.some(({ href }) => String(href) === "/accompagnement")).toBe(false);
+    expect(readFileSync("src/app/(marketing)/accompagnement/page.tsx", "utf8")).toContain('permanentRedirect("/tutoriels")');
   });
 
   it("provides an existing local image or logo for each published project that specifies one", () => {

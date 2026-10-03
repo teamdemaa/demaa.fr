@@ -35,7 +35,7 @@ function ProjectCard({ project }: { project: DemaaStudioProject }) {
       <div className="relative aspect-[4/3] overflow-hidden bg-dema-sage">
         {project.image ? <Image src={project.image} alt={project.imageAlt ?? project.name} fill sizes="(max-width: 639px) calc(100vw - 40px), (max-width: 1023px) 45vw, 380px" className="object-cover transition duration-500 group-hover:scale-[1.03]" /> : project.logo ? <div className="flex h-full items-center justify-center p-10"><Image src={project.logo} alt="" width={210} height={80} className="max-h-20 w-auto max-w-full object-contain" /></div> : <div className="flex h-full items-center justify-center p-8 font-serif text-4xl">{project.name}</div>}
       </div>
-      <p className={`${eyebrowClass} mt-5`}>{project.pole} · {project.status}</p>
+      <p className={`${eyebrowClass} mt-5`}>{project.pole}</p>
       <div className="mt-2 flex items-center justify-between gap-4"><h3 className="text-2xl font-medium tracking-tight">{project.name}</h3><ArrowRight className="h-5 w-5 shrink-0 transition group-hover:translate-x-1" aria-hidden="true" /></div>
       <p className="mt-3 text-sm leading-6 text-dema-muted">{project.summary}</p>
     </Link>
@@ -46,8 +46,8 @@ function ResourcesSection() {
   return <section id="ressources" className="border-t border-dema-line bg-dema-paper">
     <div className={sectionClass}>
       <p className={eyebrowClass}>Ressources</p><h2 className={`${titleClass} mt-5 max-w-3xl`}>Des ressources pour faire avancer votre entreprise.</h2>
-      <p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">Nos solutions par activité, tutoriels et accompagnements restent accessibles pour vous aider à organiser le travail et passer à l’action.</p>
-      <div className="mt-10 grid gap-8 md:grid-cols-3">
+      <p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">Trouvez des solutions adaptées à votre activité et apprenez à les utiliser avec nos tutoriels et méthodes.</p>
+      <div className="mt-10 grid gap-8 md:grid-cols-2">
         {DEMAA_RESOURCE_NAVIGATION.map(({ label, href, description }) => <Link key={href} href={href} className="group border-t border-dema-line pt-5"><div className="flex items-center justify-between gap-4"><h3 className="text-xl font-medium">{label}</h3><ArrowRight className="h-4 w-4 shrink-0 transition group-hover:translate-x-1" aria-hidden="true" /></div><p className="mt-3 max-w-sm text-sm leading-6 text-dema-muted">{description}</p></Link>)}
       </div>
     </div>
@@ -62,7 +62,7 @@ function StudioContent() {
       <div className={`${sectionClass} py-20`}>
         <p className={eyebrowClass}>Studio d’entreprises · Afrique & Europe</p>
         <h1 className="demaa-hero-title mt-6 max-w-[760px] text-[clamp(2.8rem,5.5vw,5.7rem)] leading-[1.02] tracking-[-0.045em]">On crée des entreprises sur des marchés qu’on connaît de l’intérieur.</h1>
-        <p className="mt-7 max-w-[520px] text-base leading-7 text-brand-blue/80">Nous identifions des opportunités, testons les idées sur le terrain et construisons des entreprises avec méthode, patience et intention.</p>
+        <p className="mt-7 max-w-[520px] text-base leading-7 text-brand-blue/80">Nous créons des entreprises sur des marchés que nous connaissons et partageons des ressources pour entreprendre.</p>
         <div className="mt-9 flex flex-wrap gap-4"><Link href="/projets" className={contactClass}>Voir les projets <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link><a href="mailto:team@demaa.fr" className="inline-flex min-h-12 items-center border-b border-brand-blue px-1 text-sm font-medium">Nous contacter</a></div>
       </div>
     </section>
@@ -95,28 +95,44 @@ function StudioContent() {
         <article className="border-t border-dema-line pt-6"><h3 className="text-2xl font-medium">Oumou Gory</h3><p className="mt-2 text-sm text-dema-forest">Développement & opérations</p><p className="mt-5 max-w-lg text-base leading-7 text-dema-muted">Spécialiste du lancement et de la structuration de projets, Oumou a été directrice pays chez Heetch et consultante senior chez Deloitte et PwC.</p></article>
       </div>
     </section>
-    <ContactSection /><ResourcesSection />
+    <BuildTogetherSection /><ResourcesSection />
   </>;
+}
+
+function BuildTogetherSection() {
+  return <section className="border-t border-dema-line"><div className={sectionClass}>
+    <p className={eyebrowClass}>Construire avec nous</p>
+    <h2 className={`${titleClass} mt-5 max-w-3xl`}>Un marché que vous connaissez. Une entreprise à construire.</h2>
+    <p className="mt-6 max-w-2xl text-base leading-7 text-dema-muted">Vous connaissez le terrain et souhaitez porter un projet ? Découvrez les pistes sur lesquelles nous aimerions construire avec vous.</p>
+    <Link href="/studio/opportunites" className={`${contactClass} mt-8`}>Découvrir les pistes <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+  </div></section>;
 }
 
 function ProjectsContent() {
-  const studioProjects = DEMAA_PUBLISHED_STUDIO_PROJECTS.filter(({ portfolio }) => portfolio !== "other");
   const otherProjects = DEMAA_PUBLISHED_STUDIO_PROJECTS.filter(({ portfolio }) => portfolio === "other");
   return <>
-    <section className={sectionClass}><p className={eyebrowClass}>Le portefeuille</p><h1 className={`${titleClass} mt-5 max-w-4xl`}>Des projets concrets, des marchés que l’on connaît.</h1><p className="mt-6 max-w-2xl text-base leading-7 text-dema-muted">Trois priorités et des concepts à tester progressivement. Chaque projet avance à son rythme, avec un besoin et une offre propres.</p><ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3">{DEMAA_STUDIO_POLES.map((pole) => <li key={pole} className="text-sm text-dema-forest">{pole}</li>)}</ul></section>
-    <section className={`${sectionClass} !pt-0`} aria-label="Projets du Studio"><div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">{studioProjects.map((project) => <ProjectCard key={project.slug} project={project} />)}</div><p className="mt-8 text-xs text-dema-muted">Les visuels illustrent les concepts des projets.</p></section>
-    <section className="border-t border-dema-line"><div className={sectionClass}><h2 className={titleClass}>Autres projets et partenaires</h2><p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">Retrouvez aussi les outils et initiatives présentés par Demaa.</p><div className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">{otherProjects.map((project) => <ProjectCard key={project.slug} project={project} />)}</div></div></section>
-    <ContactSection /><ResourcesSection />
+    <section className={sectionClass}><p className={eyebrowClass}>Nos projets</p><h1 className={`${titleClass} mt-5 max-w-4xl`}>Des entreprises que nous construisons.</h1><p className="mt-6 max-w-2xl text-base leading-7 text-dema-muted">Tiimora, Dumaan et MND : trois besoins concrets, trois façons d’y répondre.</p></section>
+    <section className={`${sectionClass} !pt-0`} aria-label="Projets du Studio"><div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">{DEMAA_PRIORITY_STUDIO_PROJECTS.map((project) => <ProjectCard key={project.slug} project={project} />)}</div><p className="mt-8 text-xs text-dema-muted">Les visuels illustrent les concepts des projets.</p></section>
+    <section className="border-t border-dema-line"><div className={sectionClass}><h2 className="text-3xl font-medium">Autres initiatives et partenaires</h2><div className="mt-8 grid gap-8 sm:grid-cols-2">{otherProjects.map((project) => <Link key={project.slug} href={`/projets/${project.slug}`} className="border-t border-dema-line pt-5"><h3 className="text-xl font-medium">{project.name}</h3><p className="mt-3 text-sm leading-6 text-dema-muted">{project.summary}</p></Link>)}</div></div></section>
+    <BuildTogetherSection /><ResourcesSection />
   </>;
 }
 
+const founderProfiles: Record<string, string> = {
+  jagoya: "Commerce de gros, distribution ou développement de marques africaines.",
+  tendera: "BTP, appels d’offres ou développement de produits numériques.",
+  kahe: "Café, restauration et gestion d’un lieu accueillant.",
+  mandya: "Bien-être, soins et exploitation d’un spa.",
+  lafiasso: "Immobilier et connaissance du terrain en Afrique de l’Ouest.",
+  djaty: "Rénovation, coordination de travaux et relation avec les propriétaires.",
+};
+
 function OpportunitiesContent() {
+  const ideas = DEMAA_PUBLISHED_STUDIO_PROJECTS.filter(({ portfolio }) => portfolio === "pipeline");
   return <>
-    <section className={sectionClass}><p className={eyebrowClass}>Collaborer avec Demaa</p><h1 className={`${titleClass} mt-5 max-w-4xl`}>Construisons la suite ensemble.</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-dema-muted">Vous connaissez un marché, développez un produit ou souhaitez contribuer à un projet ? Parlons de ce que nous pouvons construire ensemble.</p><div className="mt-12 grid gap-10 md:grid-cols-3">{[
-      ["Porter un projet", "Une expérience du terrain, un besoin identifié et l’envie de construire une entreprise."],
-      ["Contribuer à l’exécution", "Technologie, contenu, développement commercial ou opérations : partager une expertise utile aux projets."],
-      ["Créer un partenariat", "Tester une offre, apporter un savoir-faire ou relier un projet à ses premiers clients."],
-    ].map(([title, description]) => <article key={title} className="border-t border-dema-line pt-6"><h2 className="text-2xl font-medium">{title}</h2><p className="mt-4 text-base leading-7 text-dema-muted">{description}</p></article>)}</div><a href="mailto:team@demaa.fr?subject=Collaborer%20avec%20Demaa" className={`${contactClass} mt-12`}>Parlons de votre contribution <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a><Link href="/projets" className="ml-0 mt-6 flex w-fit items-center gap-3 text-sm underline underline-offset-8 sm:ml-6 sm:inline-flex">Découvrir les projets <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></section>
+    <section className={sectionClass}><p className={eyebrowClass}>Construire avec nous</p><h1 className={`${titleClass} mt-5 max-w-4xl`}>Des idées à porter ensemble.</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-dema-muted">Nous cherchons des personnes qui connaissent ces marchés et souhaitent construire une entreprise avec nous. Voici les pistes dont nous pouvons discuter.</p>
+    <div className="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2">{ideas.map((project) => <article key={project.slug} className="border-t border-dema-line pt-6"><h2 className="text-2xl font-medium">{project.name}</h2><p className="mt-4 text-base leading-7 text-dema-muted">{project.summary}</p><p className="mt-5 text-sm leading-6"><span className="font-medium">Votre expérience : </span>{founderProfiles[project.slug]}</p><a href={`mailto:team@demaa.fr?subject=${encodeURIComponent(`Porter le projet ${project.name}`)}`} className="mt-6 inline-flex min-h-11 items-center gap-3 text-sm underline underline-offset-8">Parlons de ce projet <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a></article>)}</div>
+    <p className="mt-10 max-w-2xl text-sm leading-6 text-dema-muted">Une première conversation pour confronter l’idée à votre expérience et explorer ce que nous pourrions construire ensemble.</p></section>
     <ResourcesSection />
   </>;
 }
@@ -127,8 +143,8 @@ export default function DemaaStudioLanding({ view }: { view: StudioView }) {
 
 export function DemaaStudioProjectPage({ project }: { project: DemaaStudioProject }) {
   return <><StudioHeader view="projets" /><main className="min-h-screen bg-dema-cream text-brand-blue">
-    <section className={sectionClass}><Link href="/projets" className="text-sm underline underline-offset-8">← Tous les projets</Link><div className="mt-12 grid items-center gap-10 lg:grid-cols-2"><div><p className={eyebrowClass}>{project.pole} · {project.status}</p><h1 className={`${titleClass} mt-5`}>{project.name}</h1><p className="mt-6 text-lg leading-8 text-dema-muted">{project.summary}</p>{project.href ? <a href={project.href} target="_blank" rel="noopener noreferrer" className={`${contactClass} mt-8`}>Visiter le site <ArrowUpRight className="h-4 w-4" aria-hidden="true" /><span className="sr-only"> (nouvel onglet)</span></a> : null}</div>{project.image ? <figure><div className="relative aspect-[4/3] overflow-hidden bg-dema-sage"><Image src={project.image} alt={project.imageAlt ?? project.name} fill sizes="(max-width: 1023px) 90vw, 560px" className="object-cover" /></div><figcaption className="mt-3 text-xs text-dema-muted">Visuel de concept du projet</figcaption></figure> : null}</div></section>
+    <section className={sectionClass}><Link href="/projets" className="text-sm underline underline-offset-8">← Tous les projets</Link><div className="mt-12 grid items-center gap-10 lg:grid-cols-2"><div><p className={eyebrowClass}>{project.pole}</p><h1 className={`${titleClass} mt-5`}>{project.name}</h1><p className="mt-6 text-lg leading-8 text-dema-muted">{project.summary}</p>{project.href ? <a href={project.href} target="_blank" rel="noopener noreferrer" className={`${contactClass} mt-8`}>Visiter le site <ArrowUpRight className="h-4 w-4" aria-hidden="true" /><span className="sr-only"> (nouvel onglet)</span></a> : null}</div>{project.portfolio === "priority" && project.image ? <figure><div className="relative aspect-[4/3] overflow-hidden bg-dema-sage"><Image src={project.image} alt={project.imageAlt ?? project.name} fill sizes="(max-width: 1023px) 90vw, 560px" className="object-cover" /></div><figcaption className="mt-3 text-xs text-dema-muted">Visuel de concept du projet</figcaption></figure> : null}</div></section>
     <section className={`${sectionClass} !pt-0`}><div className="grid gap-10 border-t border-dema-line pt-10 md:grid-cols-2"><article><h2 className="text-2xl font-medium">Le besoin</h2><p className="mt-5 text-base leading-7 text-dema-muted">{project.problem}</p></article><article><h2 className="text-2xl font-medium">La réponse</h2><p className="mt-5 text-base leading-7 text-dema-muted">{project.solution}</p></article></div>{project.need ? <p className="mt-8 text-base leading-7 text-dema-muted">{project.need}</p> : null}</section>
-    <ContactSection /><ResourcesSection />
+    {project.portfolio === "pipeline" ? <BuildTogetherSection /> : <ContactSection />}<ResourcesSection />
   </main></>;
 }

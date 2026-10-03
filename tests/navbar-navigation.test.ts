@@ -88,16 +88,16 @@ describe("Demaa application navbar", () => {
     ]);
 
     expect(source).toContain("DEMAA_PUBLIC_NAVIGATION");
-    expect(publicRoutes).toContain('label: "Accompagnement", href: "/accompagnement"');
-    expect(publicRoutes).toContain('label: "Solutions par activité", href: "/solutions"');
-    expect(publicRoutes).toContain('label: "Tutoriels", href: "/tutoriels"');
+    expect(publicRoutes).not.toContain('href: "/accompagnement"');
+    expect(publicRoutes).toContain('label: "Solutions", href: "/solutions"');
+    expect(publicRoutes).toContain('label: "Academy", href: "/tutoriels"');
     expect(publicRoutes).not.toContain('label: "Reprendre"');
     expect(publicRoutes).not.toContain('label: "Vendre"');
     expect(publicRoutes).not.toContain('label: "Spécialistes"');
     expect(navbarSource).not.toContain("BusinessEstimateControl");
     expect(navbarSource).toContain("focus-visible:underline focus-visible:underline-offset-4");
     expect(navbarSource).not.toContain("border-dema-forest/18 bg-dema-paper");
-    expect(source).toContain("leading-tight");
+    expect(source).toContain("min-h-11");
     expect(source).not.toContain("leading-none");
     expect(navbarSource).not.toContain("wa.me");
     expect(navbarSource).not.toContain("Écrire à Demaa sur WhatsApp au +33 7 82 84 24 35");

@@ -68,5 +68,12 @@
     "original": "djaty-concept-v3.png",
     "sourceSha256": "f1f80854799b5100c5930cc7a2463537168a64966f22dfec35557c81c156e789",
     "role": "Project concept illustration"
+  },
+  {
+    "file": "dumaan-restauration-v2.webp",
+    "source": "AI-assisted edit of original Dumaan concept at user request",
+    "original": "exec-9250e2f5-438b-47ca-8de6-3fa44bf1bc05.png",
+    "sourceSha256": "cb37441eff445bb6780055064685179246c4b0913f41f8a25ccded9bf544a60d",
+    "role": "Concept illustration of bulk frozen restaurant packs; illustrated 2 L and 2.5 kg sizes are not a confirmed commercial specification"
   }
 ]

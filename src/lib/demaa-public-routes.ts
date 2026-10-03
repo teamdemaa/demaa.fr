@@ -1,17 +1,14 @@
-import { Building2, Layers, UsersRound, type LucideIcon } from "lucide-react";
-
 export const DEMAA_DEFAULT_PUBLIC_PATH = "/studio";
 
 export const DEMAA_PUBLIC_NAVIGATION = [
-  { view: "studio", label: "Studio", href: "/studio", Icon: Building2 },
-  { view: "projets", label: "Projets", href: "/projets", Icon: Layers },
-  { view: "opportunites", label: "Opportunités", href: "/studio/opportunites", Icon: UsersRound },
-] as const satisfies readonly { view: "studio" | "projets" | "opportunites"; label: string; href: string; Icon: LucideIcon }[];
+  { view: "studio", label: "Studio", href: "/studio" },
+  { view: "solutions", label: "Solutions", href: "/solutions" },
+  { view: "academy", label: "Academy", href: "/tutoriels" },
+] as const;
 
 export const DEMAA_RESOURCE_NAVIGATION = [
-  { label: "Solutions par activité", href: "/solutions", description: "Outils, fournisseurs, financements et ressources adaptés à votre métier." },
-  { label: "Tutoriels", href: "/tutoriels", description: "Des vidéos et méthodes pour apprendre et mettre en pratique." },
-  { label: "Accompagnement", href: "/accompagnement", description: "Un accompagnement pour organiser le travail et structurer votre entreprise." },
+  { label: "Solutions", href: "/solutions", description: "Des outils, fournisseurs et ressources adaptés à votre activité." },
+  { label: "Academy", href: "/tutoriels", description: "Des tutoriels et méthodes pour apprendre et mettre en pratique." },
 ] as const;
 
 export const DEMAA_DIRECTORY_NAVIGATION = [

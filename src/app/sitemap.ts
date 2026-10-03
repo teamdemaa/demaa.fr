@@ -14,7 +14,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUpdatedAt = new Date("2026-09-03T00:00:00.000Z");
   const toolsAndTutorialsUpdatedAt = new Date("2026-09-14T00:00:00.000Z");
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${base}/accompagnement`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.75 },
     { url: `${base}/solutions`, lastModified: siteUpdatedAt, changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/tutoriels`, lastModified: toolsAndTutorialsUpdatedAt, changeFrequency: "weekly", priority: 0.93 },
     { url: `${base}/mentions-legales`, lastModified: siteUpdatedAt, changeFrequency: "yearly", priority: 0.3 },

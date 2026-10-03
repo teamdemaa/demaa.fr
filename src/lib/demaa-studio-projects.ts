@@ -16,11 +16,11 @@ const primaryProjects: readonly DemaaStudioProject[] = [
     image: "/images/studio/tiimora.webp", imageAlt: "Visuel de concept du logiciel Tiimora sur ordinateur et mobile",
   },
   {
-    slug: "dumaan-food", name: "Dumaan", sector: "Restauration professionnelle", pole: "Concepts franchisés", portfolio: "priority", status: "En test",
-    summary: "Des légumes et plats ouest-africains surgelés pour les restaurants et traiteurs.",
+    slug: "dumaan-food", name: "Dumaan", sector: "Restauration professionnelle", pole: "Alimentation B2B", portfolio: "priority", status: "En test",
+    summary: "Des pastels, préparations de mafé et légumes découpés surgelés pour les restaurants et traiteurs.",
     problem: "La préparation de recettes ouest-africaines demande du temps et une régularité d’approvisionnement que les équipes doivent assurer chaque semaine.",
-    solution: "Des légumes découpés et des plats prêts à cuisiner, produits en cuisine partagée et livrés aux professionnels.",
-    image: "/images/studio/dumaan.webp", imageAlt: "Visuel de concept Dumaan : livraison de plats conditionnés à une restauratrice",
+    solution: "Des pastels, préparations de mafé et légumes découpés surgelés, conditionnés pour les cuisines professionnelles.",
+    image: "/images/studio/dumaan-restauration-v2.webp", imageAlt: "Visuel de concept Dumaan : livraison de grands conditionnements surgelés de pastels, mafé et légumes découpés à une restauratrice",
   },
   {
     slug: "mnd", name: "MND", sector: "Média & commerce", pole: "E-commerce", portfolio: "priority", status: "En test",

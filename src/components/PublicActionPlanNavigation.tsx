@@ -3,56 +3,19 @@ import { DEMAA_PUBLIC_NAVIGATION } from "@/lib/demaa-public-routes";
 
 export type PublicActionPlanView = "studio" | "projets" | "opportunites" | "marketplace" | "resources" | "services" | "accompagnement" | "academy" | "solutions" | "specialists";
 
-const tabClassName =
-  "group relative inline-flex min-h-11 min-w-0 items-center justify-center gap-1 rounded-full px-1 text-xs font-medium leading-tight transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/25 xl:gap-2 xl:px-3 xl:text-sm";
-
-export default function PublicActionPlanNavigation({
-  activeView,
-  variant = "demaa",
-}: {
+export default function PublicActionPlanNavigation({ activeView }: {
   activeView: PublicActionPlanView | "none";
   variant?: "legacy" | "demaa";
 }) {
-  const items = DEMAA_PUBLIC_NAVIGATION;
+  const currentView = activeView === "projets" || activeView === "opportunites" ? "studio" : activeView;
   return (
-    <div
-      className={`grid w-full grid-cols-3 gap-1 rounded-full border border-dema-line/70 bg-dema-paper p-1 shadow-[0_3px_12px_rgba(23,35,29,0.035)] ${variant === "legacy" ? "xl:rounded-none xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none" : ""}`}
-      aria-label="Navigation principale"
-    >
-      {items.map(({ view, label, href, Icon }) => {
-        const isActive = activeView === view;
-
-        return (
-          <Link
-            key={view}
-            href={href}
-            aria-current={isActive ? "location" : undefined}
-            className={`${tabClassName} ${variant === "demaa" ? "xl:rounded-full" : ""} ${
-              isActive
-                ? variant === "demaa" ? "bg-dema-sage text-dema-forest font-semibold" : "bg-dema-sage text-dema-forest xl:bg-transparent xl:font-semibold"
-                : "text-dema-muted hover:text-brand-blue"
-            }`}
-          >
-            <Icon
-              className={`h-4 w-4 shrink-0 transition ${
-                isActive
-                  ? "stroke-[2.3]"
-                  : "stroke-[1.8] group-hover:stroke-2"
-              }`}
-              aria-hidden="true"
-            />
-            <span className="max-w-full truncate">{label}</span>
-            {variant === "legacy" ? (
-              <span
-                aria-hidden="true"
-                className={`pointer-events-none absolute inset-x-3 bottom-0 hidden h-0.5 origin-center rounded-full bg-dema-forest transition-[transform,opacity] duration-200 xl:block ${
-                  isActive ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
-                }`}
-              />
-            ) : null}
-          </Link>
-        );
-      })}
+    <div className="flex w-full items-center justify-center gap-8 sm:gap-10" aria-label="Navigation principale">
+      {DEMAA_PUBLIC_NAVIGATION.map(({ view, label, href }) => (
+        <Link key={view} href={href} aria-current={currentView === view ? "page" : undefined}
+          className={`inline-flex min-h-11 items-center border-b px-1 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dema-forest ${currentView === view ? "border-dema-forest text-brand-blue" : "border-transparent text-dema-muted hover:border-dema-line hover:text-dema-forest"}`}>
+          {label}
+        </Link>
+      ))}
     </div>
   );
 }

@@ -1,5 +1,7 @@
 # Demaa — version consolidée du 3 octobre 2026
 
+> La navigation et la présentation ont ensuite été simplifiées : voir [la livraison de simplification](studio-simplification-handover.md).
+
 ## Version et périmètre
 
 Branche : `codex/demaa-consolidation`, construite sur `origin/main` à la révision `18dfdd474eaaf8d893a83e294218d0aa4f3ef2ee`.

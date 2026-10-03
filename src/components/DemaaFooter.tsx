@@ -1,8 +1,12 @@
 import Link from "next/link";
 import DemaaWordmark from "@/components/DemaaWordmark";
-import { DEMAA_DEFAULT_PUBLIC_PATH, DEMAA_PUBLIC_NAVIGATION, DEMAA_RESOURCE_NAVIGATION, DEMAA_DIRECTORY_NAVIGATION } from "@/lib/demaa-public-routes";
+import { DEMAA_DEFAULT_PUBLIC_PATH, DEMAA_RESOURCE_NAVIGATION, DEMAA_DIRECTORY_NAVIGATION } from "@/lib/demaa-public-routes";
 
-const exploreLinks = DEMAA_PUBLIC_NAVIGATION.map(({ label, href }) => ({ label, href }));
+const exploreLinks = [
+  { label: "Studio", href: "/studio" },
+  { label: "Nos projets", href: "/projets" },
+  { label: "Construire avec nous", href: "/studio/opportunites" },
+];
 
 const usefulLinks = [
   { label: "Nous contacter", href: "mailto:team@demaa.fr" },
