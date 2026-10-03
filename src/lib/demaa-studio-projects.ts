@@ -13,7 +13,7 @@ const primaryProjects: readonly DemaaStudioProject[] = [
     summary: "Le logiciel opérationnel des cabinets comptables : clients, demandes, documents et échéances au même endroit.",
     problem: "Les demandes clients, les pièces et les échéances sont dispersées. Leur suivi repose trop souvent sur des relances manuelles.",
     solution: "Un espace commun pour suivre les clients, les prochaines actions et les échéances fiscales et sociales.",
-    image: "/images/studio/tiimora.webp", imageAlt: "Visuel de concept du logiciel Tiimora sur ordinateur et mobile",
+    image: "/images/studio/tiimora-v3.webp", imageAlt: "Interface actuelle de Tiimora sur ordinateur et mobile, avec des données de démonstration",
   },
   {
     slug: "dumaan-food", name: "Dumaan", sector: "Restauration professionnelle", pole: "Alimentation B2B", portfolio: "priority", status: "En test",
