@@ -7,7 +7,7 @@ export default function PublicActionPlanNavigation({ activeView }: {
   activeView: PublicActionPlanView | "none";
   variant?: "legacy" | "demaa";
 }) {
-  const currentView = activeView === "projets" ? "studio" : activeView;
+  const currentView = activeView;
   return (
     <div className="flex w-full items-center justify-center gap-8 sm:gap-10" aria-label="Navigation principale">
       {DEMAA_PUBLIC_NAVIGATION.map(({ view, label, href }) => (

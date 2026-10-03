@@ -88,9 +88,10 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       ...ACADEMY_PERMANENT_REDIRECTS,
+      { source: "/tutoriels/:path*", destination: "/studio", permanent: false },
       // Temporarily hide these catalogs while preserving their implementation.
-      { source: "/modeles/:path*", destination: "/tutoriels", permanent: false },
-      { source: "/solutions/:path*", destination: "/tutoriels", permanent: false },
+      { source: "/modeles/:path*", destination: "/studio", permanent: false },
+      { source: "/solutions/:path*", destination: "/studio", permanent: false },
       { source: "/accompagnement", destination: "/tutoriels", permanent: true },
       { source: "/partners", destination: "/tutoriels", permanent: true },
       { source: "/automatisation", destination: "/tutoriels", permanent: true },

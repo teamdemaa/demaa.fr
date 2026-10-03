@@ -8,7 +8,6 @@ import {
   DEMAA_STUDIO_POLES,
   type DemaaStudioProject,
 } from "@/lib/demaa-studio-projects";
-import { DEMAA_RESOURCE_NAVIGATION } from "@/lib/demaa-public-routes";
 
 export type StudioView = "studio" | "projets" | "opportunites";
 const sectionClass = "mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 lg:px-16 lg:py-24";
@@ -42,16 +41,9 @@ function ProjectCard({ project }: { project: DemaaStudioProject }) {
   </article>;
 }
 
+// Learning content is retained but temporarily hidden from public pages.
 function ResourcesSection() {
-  return <section id="ressources" className="border-t border-dema-line bg-dema-paper">
-    <div className={sectionClass}>
-      <p className={eyebrowClass}>Ressources</p><h2 className={`${titleClass} mt-5 max-w-3xl`}>On partage nos apprentissages.</h2>
-      <p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">Découvrez nos apprentissages pour structurer votre entreprise.</p>
-      <div className="mt-10 grid gap-8 md:grid-cols-2">
-        {DEMAA_RESOURCE_NAVIGATION.map(({ label, href, description }) => <Link key={href} href={href} className="group border-t border-dema-line pt-5"><div className="flex items-center justify-between gap-4"><h3 className="text-xl font-medium">{label}</h3><ArrowRight className="h-4 w-4 shrink-0 transition group-hover:translate-x-1" aria-hidden="true" /></div><p className="mt-3 max-w-sm text-sm leading-6 text-dema-muted">{description}</p></Link>)}
-      </div>
-    </div>
-  </section>;
+  return null;
 }
 
 function StudioContent() {
@@ -72,7 +64,7 @@ function StudioContent() {
       </div>
     </section>
     <section className={sectionClass}>
-      <p className={eyebrowClass}>Les projets prioritaires</p><div className="mt-5 flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><h2 className={titleClass}>Trois projets à faire grandir.</h2><Link href="/projets" className="inline-flex items-center gap-3 text-sm font-medium underline underline-offset-8">Tous les projets <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div>
+      <div className="mt-5 flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><h2 className={titleClass}>Nos projets</h2><Link href="/projets" className="inline-flex items-center gap-3 text-sm font-medium underline underline-offset-8">Tous les projets <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div>
       <div className="mt-12 grid gap-12 sm:grid-cols-2 lg:grid-cols-3">{DEMAA_PRIORITY_STUDIO_PROJECTS.map((project) => <ProjectCard key={project.slug} project={project} />)}</div>
     </section>
     <section className="bg-dema-sage">
