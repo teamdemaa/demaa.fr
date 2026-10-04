@@ -5,7 +5,7 @@ import AcademyPreviewLibrary from "@/components/AcademyPreviewLibrary";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 import { getAcademyPreviewCards } from "@/lib/academy-preview-catalog";
 
-const title = "Apprentissages du Studio | Demaa";
+const title = "Apprentissages du Studio | DEMAA";
 const description =
   "Des cas concrets et des méthodes pour construire et développer une entreprise.";
 

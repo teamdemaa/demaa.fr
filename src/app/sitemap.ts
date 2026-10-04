@@ -2,7 +2,7 @@ import { LEARNING_PROJECT_SERIES } from "@/lib/academy-project-series";
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 
-import { DEMAA_DIRECTORY_NAVIGATION } from "@/lib/demaa-public-routes";
+
 
 export const dynamic = "force-dynamic";
 
@@ -21,11 +21,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 
   return [
-    { url: `${base}/studio`, lastModified: new Date("2026-10-03T00:00:00.000Z"), changeFrequency: "monthly", priority: 1 },
+    { url: `${base}/studio`, lastModified: new Date("2026-10-04T00:00:00.000Z"), changeFrequency: "monthly", priority: 1 },
     { url: `${base}/equipe`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${base}/projets`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/studio/opportunites`, changeFrequency: "monthly", priority: 0.7 },
-    ...DEMAA_DIRECTORY_NAVIGATION.map(({ href }) => ({ url: `${base}${href}`, changeFrequency: "monthly" as const, priority: 0.6 })),
     { url: `${base}/tutoriels`, changeFrequency: "monthly", priority: 0.8 },
     ...LEARNING_PROJECT_SERIES.map(project => ({ url: `${base}/tutoriels/${project.slug}`, changeFrequency: "monthly" as const, priority: 0.7 })),
     ...staticRoutes,

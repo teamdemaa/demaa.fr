@@ -6,8 +6,8 @@ describe("installable Demaa app", () => {
   it("exposes a standalone French manifest with the required icons", () => {
     const value = manifest();
     expect(value).toMatchObject({
-      name: "Demaa",
-      short_name: "Demaa",
+      name: "DEMAA",
+      short_name: "DEMAA",
       start_url: "/",
       scope: "/",
       display: "standalone",

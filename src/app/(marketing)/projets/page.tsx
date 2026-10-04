@@ -2,8 +2,8 @@ import DemaaStudioLanding from "@/components/DemaaStudioLanding";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 export const metadata = buildPublicPageMetadata({
-  title: "Projets | Demaa",
-  description: "Les projets et entreprises construits par le studio Demaa.",
+  title: "Projets | DEMAA",
+  description: "Les projets et entreprises construits par le studio DEMAA.",
   path: "/projets",
 });
 

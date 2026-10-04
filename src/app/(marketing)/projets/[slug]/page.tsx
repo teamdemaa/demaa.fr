@@ -19,13 +19,13 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = getDemaaStudioProject(slug);
-  if (!project) return { title: "Projet introuvable | Demaa" };
+  if (!project) return { title: "Projet introuvable | DEMAA" };
 
   return buildPublicPageMetadata({
-    title: `${project.name} | Projets Demaa`,
+    title: `${project.name} | Projets DEMAA`,
     description: project.summary,
     path: `/projets/${project.slug}`,
-    keywords: [project.name, project.sector, "Demaa Studio"],
+    keywords: [project.name, project.sector, "DEMAA Studio"],
   });
 }
 

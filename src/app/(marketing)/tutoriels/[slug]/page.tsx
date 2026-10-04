@@ -25,14 +25,14 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: TutorialPageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = getLearningProjectSeries(slug);
-  if (project) return buildPublicPageMetadata({ title: `${project.name} · Apprentissages | Demaa`, description: project.description, path: `/tutoriels/${slug}` });
+  if (project) return buildPublicPageMetadata({ title: `${project.name} · Apprentissages | DEMAA`, description: project.description, path: `/tutoriels/${slug}` });
   const course = getAcademyCourse(slug);
-  if (course) return buildPublicPageMetadata({ title: `${course.title} | Demaa`, description: course.objective, path: `/tutoriels/${slug}`, type: "article", socialImage: { url: course.image, alt: course.title, width: 1600, height: 900 } });
+  if (course) return buildPublicPageMetadata({ title: `${course.title} | DEMAA`, description: course.objective, path: `/tutoriels/${slug}`, type: "article", socialImage: { url: course.image, alt: course.title, width: 1600, height: 900 } });
   const tutorial = getPublishedTutorialBySlug(slug);
   if (!tutorial) return {};
 
   return buildPublicPageMetadata({
-    title: `${tutorial.title} | Demaa`,
+    title: `${tutorial.title} | DEMAA`,
     description: tutorial.summary,
     path: `/tutoriels/${tutorial.slug}`,
     type: "article",
@@ -75,8 +75,8 @@ export default async function TutorialPage({ params }: TutorialPageProps) {
         datePublished: tutorial.publishedAt,
         dateModified: tutorial.updatedAt,
         citation: tutorial.sources.map(({ url }) => url),
-        author: { "@type": "Organization", name: "Demaa" },
-        publisher: { "@type": "Organization", name: "Demaa" },
+        author: { "@type": "Organization", name: "DEMAA" },
+        publisher: { "@type": "Organization", name: "DEMAA" },
       }
     : {
         "@context": "https://schema.org",

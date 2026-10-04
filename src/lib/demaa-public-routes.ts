@@ -25,7 +25,6 @@ export const DEMAA_ARCHIVED_PUBLIC_PATH_PREFIXES = [
 ] as const;
 
 export function isArchivedDemaaPublicPath(pathname: string): boolean {
-  if (DEMAA_DIRECTORY_NAVIGATION.some(({ href }) => pathname === href || pathname.startsWith(`${href}/`))) return false;
   return DEMAA_ARCHIVED_PUBLIC_PATH_PREFIXES.some((prefix) =>
     pathname === prefix || pathname.startsWith(`${prefix}/`) || (prefix.endsWith("-") && pathname.startsWith(prefix)),
   );

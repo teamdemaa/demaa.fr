@@ -19,7 +19,7 @@ describe("public page metadata", () => {
       title: "Titre de test | Demaa",
       description: "Description de test.",
       url: "/page-test",
-      siteName: "Demaa",
+      siteName: "DEMAA",
       locale: "fr_FR",
       type: "article",
       images: [PUBLIC_SOCIAL_IMAGE],

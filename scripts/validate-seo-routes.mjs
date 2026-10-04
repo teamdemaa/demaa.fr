@@ -151,9 +151,9 @@ if (/slug:\s*"[^"]+"/.test(sectorPagesSource)) {
 }
 
 const sitemapSource = readFile(ROUTE_FILES.sitemap);
-// The public sitemap exposes Studio, project series and selected directories.
+// The public sitemap exposes Studio and project series.
 // Sector hubs remain available as legacy routes without being promoted in this sitemap.
-for (const source of ["DEMAA_DIRECTORY_NAVIGATION.map", "LEARNING_PROJECT_SERIES.map"]) {
+for (const source of ["LEARNING_PROJECT_SERIES.map"]) {
   if (!sitemapSource.includes(source)) {
     addUnique(errors, `Sitemap is missing the consolidated published source: ${source}.`);
   }

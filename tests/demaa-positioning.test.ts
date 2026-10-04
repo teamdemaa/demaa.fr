@@ -15,10 +15,10 @@ describe("Demaa positioning", () => {
     ]);
 
     expect(DEMAA_HOME_TITLE).toBe(
-      "Demaa · Studio d’entreprises",
+      "DEMAA · Studio d’entreprises",
     );
     expect(DEMAA_HOME_DESCRIPTION).toBe(
-      "Nous créons des entreprises sur des marchés que nous connaissons de l’intérieur. Découvrez les projets, la méthode et les ressources du Studio Demaa.",
+      "On crée des entreprises sur des marchés qu’on connaît de l’intérieur. Découvrez les projets, la méthode et les ressources du Studio DEMAA.",
     );
     expect(layout).toContain("title: DEMAA_HOME_TITLE");
     expect(layout).toContain("description: DEMAA_HOME_DESCRIPTION");
