@@ -39,7 +39,7 @@ export default function LearningSubscription() {
       </div>
       <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true"><label htmlFor="learning-website">Site internet</label><input id="learning-website" tabIndex={-1} autoComplete="off" value={website} onChange={event => setWebsite(event.target.value)} /></div>
       {error ? <p id="learning-error" role="alert" className="mt-3 text-sm text-brand-coral">{error}</p> : null}
-      <p className="mt-3 text-xs leading-5 text-dema-muted">En vous abonnant, vous acceptez de recevoir les apprentissages de DEMAA par e-mail. Désinscription en un clic. <Link href="/politique-de-confidentialite" className="underline underline-offset-4">Confidentialité</Link></p>
+      <p className="mt-3 text-xs leading-5 text-dema-muted">Les apprentissages de DEMAA par e-mail. Désinscription à tout moment. <Link href="/politique-de-confidentialite" className="underline underline-offset-4">Confidentialité</Link></p>
     </form>}
   </section>;
 }
