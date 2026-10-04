@@ -1,6 +1,6 @@
 import Link from "next/link";
 import DemaaWordmark from "@/components/DemaaWordmark";
-import { DEMAA_DEFAULT_PUBLIC_PATH } from "@/lib/demaa-public-routes";
+import { DEMAA_DEFAULT_PUBLIC_PATH, DEMAA_RESOURCE_NAVIGATION } from "@/lib/demaa-public-routes";
 
 const exploreLinks = [
   { label: "Studio", href: "/studio" },
@@ -46,7 +46,7 @@ export default function DemaaFooter() {
   return (
     <footer data-site-footer data-footer-variant="demaa" className="mt-auto border-t border-dema-line bg-dema-paper py-16 text-brand-blue">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="space-y-4 lg:col-span-2">
             <Link href={DEMAA_DEFAULT_PUBLIC_PATH} className="inline-flex" aria-label="Demaa, aller au Studio">
               <DemaaWordmark className="text-[2.55rem]" colorClassName="text-brand-blue" />
@@ -56,6 +56,7 @@ export default function DemaaFooter() {
             </p>
           </div>
           <FooterLinks title="Explorer" links={exploreLinks} />
+          <FooterLinks title="Apprentissages" links={DEMAA_RESOURCE_NAVIGATION} />
           <div className="space-y-8"><FooterLinks title="Contact" links={usefulLinks} /><FooterLinks title="Légal" links={legalLinks} /></div>
         </div>
         <div className="mt-16 border-t border-dema-line pt-8 text-xs text-dema-muted">

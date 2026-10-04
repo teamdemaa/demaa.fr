@@ -41,9 +41,8 @@ function ProjectCard({ project }: { project: DemaaStudioProject }) {
   </article>;
 }
 
-// Learning content is retained but temporarily hidden from public pages.
 function ResourcesSection() {
-  return null;
+  return <section className="border-t border-dema-line"><div className={sectionClass}><h2 className={titleClass}>On partage nos apprentissages.</h2><p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">Des cas concrets pour expliquer comment nous abordons la création et le développement d’entreprises.</p><Link href="/tutoriels" className={`${contactClass} mt-8`}>Découvrir les apprentissages <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div></section>;
 }
 
 function StudioContent() {

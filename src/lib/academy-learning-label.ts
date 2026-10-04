@@ -1,1 +1,1 @@
-export const ACADEMY_LEARNING_LABEL = "Cours";
+export const ACADEMY_LEARNING_LABEL = "Apprentissage";

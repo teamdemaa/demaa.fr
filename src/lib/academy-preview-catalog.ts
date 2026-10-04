@@ -4,7 +4,7 @@ import { getPublishedPracticeTutorials } from "@/lib/tutorial-catalog";
 
 export type AcademyPreviewCard = Readonly<{
   category: string;
-  format: "Méthode" | "Cours";
+  format: "Méthode" | "Cours" | "Apprentissage";
   href: string;
   image: string | null;
   imageAlt: string;

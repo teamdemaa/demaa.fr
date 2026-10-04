@@ -1,3 +1,4 @@
+import { ACADEMY_COURSES } from "@/lib/academy-courses";
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
 
@@ -24,6 +25,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/projets`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/studio/opportunites`, changeFrequency: "monthly", priority: 0.7 },
     ...DEMAA_DIRECTORY_NAVIGATION.map(({ href }) => ({ url: `${base}${href}`, changeFrequency: "monthly" as const, priority: 0.6 })),
+    { url: `${base}/tutoriels`, changeFrequency: "monthly", priority: 0.8 },
+    ...ACADEMY_COURSES.map(course => ({ url: `${base}/tutoriels/${course.slug}`, changeFrequency: "monthly" as const, priority: 0.7 })),
     ...staticRoutes,
   ];
 }
