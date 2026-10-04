@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { GET } from "@/app/[...notFound]/route";
+import { GET } from "@/app/[...catchAll]/route";
 import sitemap from "@/app/sitemap";
 import { DEMAA_DIRECTORY_NAVIGATION } from "@/lib/demaa-public-routes";
 
