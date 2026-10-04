@@ -127,9 +127,9 @@ export async function runPublicIndexabilityAudit(
   const redirects = [
     ["/", "/studio"],
     ["/rejoindre-team-demaa", "/a-reprendre"],
-    ["/accompagnement", "/tutoriels"],
-    ["/partners", "/tutoriels"],
-    ["/automatisation", "/tutoriels"],
+    ["/accompagnement", "/studio"],
+    ["/partners", "/studio"],
+    ["/automatisation", "/studio"],
   ];
   for (const [source, destination] of redirects) {
     const issues = await inspectRedirect(normalizedBaseUrl, source, destination);
