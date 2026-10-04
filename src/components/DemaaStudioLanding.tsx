@@ -23,7 +23,7 @@ function ContactSection() {
   return <section className="bg-brand-blue text-dema-paper">
     <div className={`${sectionClass} flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-end`}>
       <div><p className="text-xs uppercase tracking-[0.18em] text-dema-paper/70">Et après ?</p><h2 className={`${titleClass} mt-5 max-w-2xl`}>Construisons ce qui compte.</h2></div>
-      <a href="mailto:team@demaa.fr" className="inline-flex min-h-12 shrink-0 items-center gap-3 rounded-full bg-dema-paper px-6 py-3 text-sm font-medium text-brand-blue transition hover:bg-dema-sage">Nous contacter <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>
+      <a href="mailto:team@demaa.fr" className="inline-flex min-h-12 shrink-0 items-center gap-3 rounded-full bg-dema-paper px-6 py-3 text-sm font-medium text-brand-blue transition hover:bg-dema-sage">Contact <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>
     </div>
   </section>;
 }
@@ -42,7 +42,7 @@ function ProjectCard({ project }: { project: DemaaStudioProject }) {
 }
 
 function ResourcesSection() {
-  return <section className="border-t border-dema-line"><div className={sectionClass}><h2 className={titleClass}>On partage nos apprentissages.</h2><p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">Des cas concrets pour expliquer comment nous abordons la création et le développement d’entreprises.</p><Link href="/tutoriels" className={`${contactClass} mt-8`}>Découvrir les apprentissages <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div></section>;
+  return <section className="border-t border-dema-line"><div className={sectionClass}><h2 className={titleClass}>On partage nos apprentissages.</h2><p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">Des cas concrets pour expliquer comment on aborde la création et le développement d’entreprises.</p><Link href="/tutoriels" className={`${contactClass} mt-8`}>Découvrir les apprentissages <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div></section>;
 }
 
 function StudioContent() {
@@ -52,14 +52,14 @@ function StudioContent() {
       <div className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-dema-cream/85 via-dema-cream/25 to-transparent lg:block" />
       <div className={`${sectionClass} pb-16 pt-[320px] sm:pt-[400px] lg:py-20`}>
         <h1 className="demaa-hero-title max-w-[760px] text-[clamp(2.8rem,5.5vw,5.7rem)] leading-[1.02] tracking-[-0.045em] lg:mt-6">On crée des entreprises sur des marchés qu’on connaît de l’intérieur.</h1>
-        <p className="mt-7 max-w-[520px] text-base leading-7 text-brand-blue/80">DEMAA est un studio d’entreprises : nous créons plusieurs sociétés, les faisons grandir, puis en revendons certaines et gardons les autres pour leurs revenus.</p>
+        <p className="mt-7 max-w-[520px] text-base leading-7 text-brand-blue/80">DEMAA est un studio d’entreprises : on crée plusieurs sociétés, on les fait grandir, puis on en revend certaines et on garde les autres pour leurs revenus.</p>
         <div className="mt-9 flex flex-wrap gap-4"><Link href="/projets" className={contactClass}>Voir les projets <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div>
       </div>
     </section>
     <section className="border-y border-dema-line">
       <div className={`${sectionClass} grid gap-10 lg:grid-cols-2`}>
         <div><p className={eyebrowClass}>Notre point de départ</p><h2 className={`${titleClass} mt-5`}>Le terrain avant tout.</h2></div>
-        <div><p className="text-lg leading-8 text-brand-blue/85">Nous partons de problèmes que nous connaissons de près. Une équipe partagée réunit finance, opérations, technologie et développement commercial pour faire avancer chaque projet.</p><ul className="mt-8 grid grid-cols-2 gap-x-5 gap-y-4 border-t border-dema-line pt-5">{DEMAA_STUDIO_POLES.map((pole) => <li key={pole} className="text-sm font-medium">{pole}</li>)}</ul></div>
+        <div><p className="text-lg leading-8 text-brand-blue/85">On part de problèmes qu’on connaît de près. Une équipe partagée réunit finance, opérations, technologie et développement commercial pour faire avancer chaque projet.</p><ul className="mt-8 grid grid-cols-2 gap-x-5 gap-y-4 border-t border-dema-line pt-5">{DEMAA_STUDIO_POLES.map((pole) => <li key={pole} className="text-sm font-medium">{pole}</li>)}</ul></div>
       </div>
     </section>
     <section className={sectionClass}>
@@ -83,9 +83,9 @@ function StudioContent() {
 
 function BuildTogetherSection() {
   return <section className="border-t border-dema-line"><div className={sectionClass}>
-    <p className={eyebrowClass}>Construire avec nous</p>
+    <p className={eyebrowClass}>Construire ensemble</p>
     <h2 className={`${titleClass} mt-5 max-w-3xl`}>Un marché que vous connaissez. Une entreprise à construire.</h2>
-    <p className="mt-6 max-w-2xl text-base leading-7 text-dema-muted">Vous connaissez le terrain et souhaitez porter un projet ? Découvrez les pistes sur lesquelles nous aimerions construire avec vous.</p>
+    <p className="mt-6 max-w-2xl text-base leading-7 text-dema-muted">Vous connaissez le terrain et souhaitez porter un projet ? Découvrez les pistes sur lesquelles on aimerait construire avec vous.</p>
     <Link href="/studio/opportunites" className={`${contactClass} mt-8`}>Découvrir les pistes <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
   </div></section>;
 }
@@ -117,9 +117,9 @@ const founderProfiles: Record<string, string> = {
 function OpportunitiesContent() {
   const ideas = DEMAA_PUBLISHED_STUDIO_PROJECTS.filter(({ portfolio }) => portfolio === "pipeline");
   return <>
-    <section className={sectionClass}><p className={eyebrowClass}>Construire avec nous</p><h1 className={`${titleClass} mt-5 max-w-4xl`}>Des idées à porter ensemble.</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-dema-muted">Nous cherchons des personnes qui connaissent ces marchés et souhaitent construire une entreprise avec nous. Voici les pistes dont nous pouvons discuter.</p>
+    <section className={sectionClass}><p className={eyebrowClass}>Construire ensemble</p><h1 className={`${titleClass} mt-5 max-w-4xl`}>Des idées à porter ensemble.</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-dema-muted">On cherche des personnes qui connaissent ces marchés et souhaitent construire une entreprise ensemble. Voici les pistes dont on peut discuter.</p>
     <div className="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2">{ideas.map((project) => <article key={project.slug} className="border-t border-dema-line pt-6"><h2 className="text-2xl font-medium">{project.name}</h2><p className="mt-4 text-base leading-7 text-dema-muted">{project.summary}</p><p className="mt-5 text-sm leading-6"><span className="font-medium">Votre expérience : </span>{founderProfiles[project.slug]}</p><a href={`mailto:team@demaa.fr?subject=${encodeURIComponent(`Porter le projet ${project.name}`)}`} className="mt-6 inline-flex min-h-11 items-center gap-3 text-sm underline underline-offset-8">Parlons de ce projet <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a></article>)}</div>
-    <p className="mt-10 max-w-2xl text-sm leading-6 text-dema-muted">Une première conversation pour confronter l’idée à votre expérience et explorer ce que nous pourrions construire ensemble.</p></section>
+    <p className="mt-10 max-w-2xl text-sm leading-6 text-dema-muted">Une première conversation pour confronter l’idée à votre expérience et explorer ce qu’on pourrait construire ensemble.</p></section>
     <ResourcesSection />
   </>;
 }
