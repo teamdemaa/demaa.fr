@@ -100,7 +100,12 @@ function BuildTogetherSection() {
 function ProjectsContent() {
   const otherProjects = DEMAA_PUBLISHED_STUDIO_PROJECTS.filter(({ portfolio, slug }) => portfolio === "pipeline" || slug === "mnd");
   return <>
-    <section className={sectionClass}><h1 className={`${titleClass} mt-5 max-w-4xl`}>Des entreprises que nous construisons.</h1></section>
+    <header className="mx-auto w-full max-w-7xl px-4 pb-10 pt-12 text-center sm:px-6 md:pb-12 md:pt-16 lg:px-8">
+      <h1 className="text-balance font-light leading-[0.94] tracking-tight" style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}>
+        <span className="block text-brand-blue/62">Des entreprises</span>
+        <span className="demaa-hero-title block text-dema-forest">que nous construisons.</span>
+      </h1>
+    </header>
     <section className={`${sectionClass} !pt-0`} aria-label="Projets du Studio"><div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">{DEMAA_PRIORITY_STUDIO_PROJECTS.map((project) => <ProjectCard key={project.slug} project={project} />)}</div></section>
     <section className="border-t border-dema-line"><div className={sectionClass}><h2 className="text-3xl font-medium">Les autres projets</h2><div className="mt-8 grid gap-8 sm:grid-cols-2">{otherProjects.map((project) => <article key={project.slug} className="border-t border-dema-line pt-5"><h3 className="text-xl font-medium">{project.name}</h3><p className="mt-3 text-sm leading-6 text-dema-muted">{project.summary}</p></article>)}</div></div></section>
     <BuildTogetherSection /><ResourcesSection />
