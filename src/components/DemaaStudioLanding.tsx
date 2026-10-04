@@ -16,7 +16,7 @@ const eyebrowClass = "text-xs font-medium uppercase tracking-[0.18em] text-dema-
 const contactClass = "inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-brand-blue px-6 py-3 text-sm font-medium text-dema-paper transition hover:bg-dema-forest";
 
 function StudioHeader({ view }: { view: StudioView }) {
-  return <Navbar publicNavigationActiveView={view} publicCtaHref="mailto:team@demaa.fr" publicCtaLabel="Nous contacter" />;
+  return <Navbar publicNavigationActiveView={view} />;
 }
 
 function ContactSection() {

@@ -20,8 +20,8 @@ export default function Navbar({
   minimal = false,
   localeCode = "fr",
   publicCta,
-  publicCtaHref = "mailto:team@demaa.fr",
-  publicCtaLabel = "Nous contacter",
+  publicCtaHref = "",
+  publicCtaLabel = "",
   publicNavigationActiveView,
   publicNavigationVariant = "demaa",
 }: {
