@@ -34,6 +34,10 @@ describe("Academy practical courses", () => {
   it("returns a real 404 for unknown courses and accepts current and legacy routes", () => {
     const unknown = proxy(new NextRequest("https://demaa.fr/tutoriels/cours-inexistant"));
     expect(unknown.status).toBe(404);
+    for (const course of archivedCourses) {
+      expect(proxy(new NextRequest(`https://demaa.fr/tutoriels/${course.slug}`)).status).toBe(404);
+      expect(getAcademyCourse(course.slug)).toBeDefined();
+    }
     expect(unknown.headers.get("X-Robots-Tag")).toBe("noindex, nofollow");
     for (const slug of [...ACADEMY_COURSES.map(c => c.slug), "creer-pipeline-commercial-airtable"]) {
       expect(proxy(new NextRequest(`https://demaa.fr/tutoriels/${slug}`)).status).toBe(200);
