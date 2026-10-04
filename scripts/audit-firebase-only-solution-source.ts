@@ -26,7 +26,7 @@ const [
     read("src/lib/firebase-solution-registry.server.ts"),
     read("package.json"),
     read("src/lib/canonical-services-system-section.server.ts"),
-    read("src/app/(marketing)/solutions/[slug]/page.tsx"),
+    read("src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx"),
     read("src/components/ToolComparisonRoute.tsx"),
   ]);
 const artifact = JSON.parse(artifactSource);

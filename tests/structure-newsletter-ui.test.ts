@@ -52,7 +52,7 @@ describe("Organiser newsletter public contract", () => {
   });
 
   it("reuses the same submission form in the modal and on a shareable page", () => {
-    const directPage = read("src/app/(marketing)/session-structurer/page.tsx");
+    const directPage = read("src/archived-resource-routes/(marketing)/session-structurer/page.tsx");
 
     expect(component).toContain("<StructureProblemSubmissionForm onClose={closeProblem} />");
     expect(directPage).toContain("<StructureProblemSubmissionForm />");
@@ -80,10 +80,10 @@ describe("Organiser newsletter public contract", () => {
     expect(read("src/components/SystemsHubPage.tsx")).not.toContain(
       "StructureNewsletterBlock",
     );
-    expect(read("src/app/(marketing)/modeles/page.tsx")).not.toContain(
+    expect(read("src/archived-resource-routes/(marketing)/modeles/page.tsx")).not.toContain(
       "StructureNewsletterBlock",
     );
-    expect(read("src/app/(marketing)/organiser/page.tsx")).not.toContain(
+    expect(read("src/archived-resource-routes/(marketing)/organiser/page.tsx")).not.toContain(
       "OrganiserLandingPage",
     );
     const sharedPageLoader = read("src/lib/action-plan-pages.server.ts");
@@ -92,7 +92,7 @@ describe("Organiser newsletter public contract", () => {
     expect(sharedPageLoader).toContain('input.localeCode === "fr"');
 
     const academyCourseFiles = [
-      "src/app/(marketing)/organiser/[slug]/page.tsx",
+      "src/archived-resource-routes/(marketing)/organiser/[slug]/page.tsx",
       "src/components/AcademyCourseReader.tsx",
     ].filter((path) => {
       try {

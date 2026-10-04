@@ -1,0 +1,122 @@
+import LearningProjectSeries from "@/components/LearningProjectSeries";
+import { LEARNING_PROJECT_SERIES, getLearningProjectSeries } from "@/lib/academy-project-series";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import AcademyCourseArticle from "@/components/AcademyCourseArticle";
+import { ACADEMY_COURSES, getAcademyCourse } from "@/lib/academy-courses";
+import TutorialArticle from "@/components/TutorialArticle";
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
+import { getCanonicalOrigin } from "@/lib/site-url";
+import {
+  getPublishedTutorialBySlug,
+  getPublishedTutorialRouteParams,
+} from "@/lib/tutorial-catalog";
+
+type TutorialPageProps = Readonly<{
+  params: Promise<{ slug: string }>;
+}>;
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return [...LEARNING_PROJECT_SERIES.map(({ slug }) => ({ slug })), ...getPublishedTutorialRouteParams(), ...ACADEMY_COURSES.map(({ slug }) => ({ slug }))];
+}
+
+export async function generateMetadata({ params }: TutorialPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const project = getLearningProjectSeries(slug);
+  if (project) return buildPublicPageMetadata({ title: `${project.name} · Apprentissages | DEMAA`, description: project.description, path: `/tutoriels/${slug}` });
+  const course = getAcademyCourse(slug);
+  if (course) return buildPublicPageMetadata({ title: `${course.title} | DEMAA`, description: course.objective, path: `/tutoriels/${slug}`, type: "article", socialImage: { url: course.image, alt: course.title, width: 1600, height: 900 } });
+  const tutorial = getPublishedTutorialBySlug(slug);
+  if (!tutorial) return {};
+
+  return buildPublicPageMetadata({
+    title: `${tutorial.title} | DEMAA`,
+    description: tutorial.summary,
+    path: `/tutoriels/${tutorial.slug}`,
+    type: "article",
+    keywords: [...tutorial.searchTerms, tutorial.category],
+    ...(tutorial.format === "practice"
+      ? {
+          socialImage: {
+            alt: `Aperçu de la mise en pratique : ${tutorial.title}`,
+            height: 900,
+            url: tutorial.thumbnail,
+            width: 1600,
+          },
+        }
+      : {}),
+    ...(tutorial.format === "practice" ? {} : { robots: { index: false, follow: true } }),
+  });
+}
+
+export default async function TutorialPage({ params }: TutorialPageProps) {
+  const { slug } = await params;
+  const project = getLearningProjectSeries(slug);
+  if (project) return <LearningProjectSeries project={project} />;
+  const course = getAcademyCourse(slug);
+  if (course) return <AcademyCourseArticle course={course} />;
+  const tutorial = getPublishedTutorialBySlug(slug);
+  if (!tutorial) notFound();
+
+  const origin = getCanonicalOrigin();
+  const canonicalUrl = `${origin}/tutoriels/${tutorial.slug}`;
+  const parentName = tutorial.format === "method" ? "Méthodes" : "Modèles";
+  const parentUrl = tutorial.format === "method" ? "/tutoriels" : "/modeles";
+  const articleJsonLd = tutorial.format === "method"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: tutorial.title,
+        description: tutorial.summary,
+        url: canonicalUrl,
+        inLanguage: "fr-FR",
+        datePublished: tutorial.publishedAt,
+        dateModified: tutorial.updatedAt,
+        citation: tutorial.sources.map(({ url }) => url),
+        author: { "@type": "Organization", name: "DEMAA" },
+        publisher: { "@type": "Organization", name: "DEMAA" },
+      }
+    : {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        name: tutorial.title,
+        description: tutorial.summary,
+        url: canonicalUrl,
+        image: `${origin}${tutorial.thumbnail.split("?")[0]}`,
+        inLanguage: "fr-FR",
+        datePublished: tutorial.publishedAt,
+        dateModified: tutorial.updatedAt,
+        tool: [{ "@type": "HowToTool", name: tutorial.tool }],
+        step: tutorial.steps.map((step, index) => ({
+          "@type": "HowToStep",
+          position: index + 1,
+          name: step.title,
+          text: step.paragraphs.join(" "),
+          url: `${canonicalUrl}#tutorial-step-${index + 1}`,
+        })),
+      };
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Accueil", item: origin },
+        { "@type": "ListItem", position: 2, name: parentName, item: `${origin}${parentUrl}` },
+        { "@type": "ListItem", position: 3, name: tutorial.title, item: canonicalUrl },
+      ],
+    },
+    articleJsonLd,
+  ];
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
+      <TutorialArticle tutorial={tutorial} />
+    </>
+  );
+}

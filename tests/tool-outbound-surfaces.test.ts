@@ -14,7 +14,7 @@ describe("tool outbound surfaces", () => {
       source("components/ToolDirectoryClient.tsx"),
       source("components/SoftwareDetailContent.tsx"),
       source("components/SystemSolutionsTab.tsx"),
-      source("app/(marketing)/systemes/[slug]/recapitulatif/page.tsx"),
+      source("archived-resource-routes/(marketing)/systemes/[slug]/recapitulatif/page.tsx"),
     ]);
 
     expect(directory).toContain('surface="tool_directory"');
@@ -29,7 +29,7 @@ describe("tool outbound surfaces", () => {
       source("components/ActionPlanExperience.tsx"),
       source("components/SavedActionPlanDetail.tsx"),
       source("lib/action-plan-app-context.ts"),
-      source("app/(marketing)/solutions/[slug]/page.tsx"),
+      source("archived-resource-routes/(marketing)/solutions/[slug]/page.tsx"),
       source("components/SystemDetailContent.tsx"),
     ]);
 

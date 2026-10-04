@@ -52,7 +52,7 @@ describe("Specialists public index", () => {
 
   it("keeps the Specialists navigation and cards coherent", async () => {
     const pageSource = await readFile(
-      new URL("../src/app/(marketing)/specialistes/page.tsx", import.meta.url),
+      new URL("../src/archived-resource-routes/(marketing)/specialistes/page.tsx", import.meta.url),
       "utf8",
     );
     const cardsSource = await readFile(

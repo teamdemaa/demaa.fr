@@ -52,7 +52,7 @@ describe("Organiser navigation", () => {
   });
 
   it("renders one Organisation hub without a separate process library", () => {
-    const organiserPage = source("src/app/(marketing)/organiser/page.tsx");
+    const organiserPage = source("src/archived-resource-routes/(marketing)/organiser/page.tsx");
     const companyPilotage = source("src/components/CompanyPilotagePanel.tsx");
     const guestPlan = source("src/components/GuestActionPlanExperience.tsx");
 

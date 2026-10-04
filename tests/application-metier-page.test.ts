@@ -8,8 +8,8 @@ async function readSource(path: string) {
 describe("Application métier landing page", () => {
   it("publishes Sur mesure as the canonical route and redirects the retained alias", async () => {
     const [pageSource, legacyPageSource, catalogSource] = await Promise.all([
-      readSource("src/app/(marketing)/sur-mesure/page.tsx"),
-      readSource("src/app/(marketing)/application-metier/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/sur-mesure/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/application-metier/page.tsx"),
       readSource("src/lib/canonical-service-catalog.ts"),
     ]);
 

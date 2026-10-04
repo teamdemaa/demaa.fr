@@ -49,7 +49,7 @@ describe("system navigation performance contract", () => {
 
   it("uses the focused Solutions wording on the directory", async () => {
     const [pageSource, searchSource] = await Promise.all([
-      readSource("src/app/(marketing)/solutions/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/solutions/page.tsx"),
       readSource("src/components/SystemSearchHero.tsx"),
     ]);
 

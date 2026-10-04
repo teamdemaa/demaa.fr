@@ -18,11 +18,18 @@ try {
     try { await fetch(`${origin}/favicon.ico`); ready = true; break; } catch { await new Promise(resolve => setTimeout(resolve, 100)); }
   }
   if (!ready) throw new Error(`Production server did not start. ${logs.slice(-1000)}`);
-  const checks = [["/studio", 200], ["/projets", 200], ["/equipe", 200], ["/tutoriels", 200], ["/verification-404-cloture", 404], ["/tutoriels/organiser-entreprise-sans-tout-porter", 404]];
+  const checks = [["/studio", 200], ["/projets", 200], ["/equipe", 200], ["/tutoriels", 200], ["/tutoriels/jago", 200], ["/tutoriels/dumaan", 200], ["/tutoriels/tiimora", 200], ["/verification-404-cloture", 404], ["/tutoriels/organiser-entreprise-sans-tout-porter", 404]];
   for (const [route, expected] of checks) {
     const response = await fetch(`${origin}${route}`);
     if (response.status !== expected) throw new Error(`${route}: expected HTTP ${expected}, received ${response.status}`);
     console.log(`${route}: HTTP ${response.status}`);
+  }
+  for (const route of ["/solutions", "/solutions/restaurant", "/modeles", "/annuaire-outils", "/annuaire-fournisseurs", "/annuaire-financement", "/aides-et-subventions", "/annuaire-reseaux-pro", "/apercu-solutions", "/projets/dumaan"]) {
+    const response = await fetch(`${origin}${route}`, { redirect: "manual" });
+    const expected = route.startsWith("/projets/") ? "/projets" : "/studio";
+    const target = new URL(response.headers.get("location") ?? "/", origin);
+    if (response.status !== 307 || target.pathname !== expected) throw new Error(`${route}: invalid archived-route redirect (${response.status}, ${target.pathname})`);
+    console.log(`${route}: HTTP 307 → ${expected}`);
   }
 } finally {
   child.kill("SIGTERM");

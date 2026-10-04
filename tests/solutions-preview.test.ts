@@ -23,9 +23,9 @@ describe("DEMAA Solutions preview", () => {
     expect(tools.map(({ resource }) => resource.resourceSlug)).toEqual([
       "pennylane", "myunisoft", "acd", "silae", "dext", "rca", "lefebvre-dalloz",
     ]);
-    expect(readFileSync("src/app/(marketing)/solutions/[slug]/page.tsx", "utf8"))
+    expect(readFileSync("src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx", "utf8"))
       .toContain('process.env.VERCEL_ENV === "preview"');
-    expect(readFileSync("src/app/(marketing)/solutions/[slug]/page.tsx", "utf8"))
+    expect(readFileSync("src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx", "utf8"))
       .not.toContain("Outils du lot pilote en vérification avant publication");
   });
 
@@ -59,7 +59,7 @@ describe("DEMAA Solutions preview", () => {
   });
 
   it("restores the complete métier selector, including previously hidden sectors", () => {
-    const source = readFileSync("src/app/apercu-solutions/page.tsx", "utf8");
+    const source = readFileSync("src/archived-resource-routes/apercu-solutions/page.tsx", "utf8");
     expect(source).toContain("getEnterpriseCatalog()");
     expect(source).not.toContain("toolsHubSectorLabels");
     expect(enterpriseCatalog.some(({ sectorLabel }) => sectorLabel === "Restauration")).toBe(true);

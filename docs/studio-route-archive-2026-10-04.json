@@ -1,0 +1,208 @@
+[
+  {
+    "source": "src/app/(marketing)/annuaire-recrutement",
+    "archive": "src/archived-resource-routes/(marketing)/annuaire-recrutement",
+    "files": 2
+  },
+  {
+    "source": "src/app/(marketing)/organiser",
+    "archive": "src/archived-resource-routes/(marketing)/organiser",
+    "files": 6
+  },
+  {
+    "source": "src/app/(marketing)/annuaire-outils",
+    "archive": "src/archived-resource-routes/(marketing)/annuaire-outils",
+    "files": 3
+  },
+  {
+    "source": "src/app/(marketing)/annuaire-experts-comptables",
+    "archive": "src/archived-resource-routes/(marketing)/annuaire-experts-comptables",
+    "files": 3
+  },
+  {
+    "source": "src/app/(marketing)/sur-mesure",
+    "archive": "src/archived-resource-routes/(marketing)/sur-mesure",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/automatisation",
+    "archive": "src/archived-resource-routes/(marketing)/automatisation",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/annuaire-coachs",
+    "archive": "src/archived-resource-routes/(marketing)/annuaire-coachs",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/specialistes",
+    "archive": "src/archived-resource-routes/(marketing)/specialistes",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/systemes",
+    "archive": "src/archived-resource-routes/(marketing)/systemes",
+    "files": 5
+  },
+  {
+    "source": "src/app/(marketing)/annuaire-reseaux-pro",
+    "archive": "src/archived-resource-routes/(marketing)/annuaire-reseaux-pro",
+    "files": 2
+  },
+  {
+    "source": "src/app/(marketing)/modeles",
+    "archive": "src/archived-resource-routes/(marketing)/modeles",
+    "files": 2
+  },
+  {
+    "source": "src/app/(marketing)/outils",
+    "archive": "src/archived-resource-routes/(marketing)/outils",
+    "files": 19
+  },
+  {
+    "source": "src/app/(marketing)/alertes-reprise",
+    "archive": "src/archived-resource-routes/(marketing)/alertes-reprise",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/kits-operationnels",
+    "archive": "src/archived-resource-routes/(marketing)/kits-operationnels",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/solutions",
+    "archive": "src/archived-resource-routes/(marketing)/solutions",
+    "files": 3
+  },
+  {
+    "source": "src/app/(marketing)/annuaire-formations",
+    "archive": "src/archived-resource-routes/(marketing)/annuaire-formations",
+    "files": 2
+  },
+  {
+    "source": "src/app/(marketing)/academie",
+    "archive": "src/archived-resource-routes/(marketing)/academie",
+    "files": 2
+  },
+  {
+    "source": "src/app/(marketing)/application-metier",
+    "archive": "src/archived-resource-routes/(marketing)/application-metier",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/secteurs",
+    "archive": "src/archived-resource-routes/(marketing)/secteurs",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/rejoindre-team-demaa",
+    "archive": "src/archived-resource-routes/(marketing)/rejoindre-team-demaa",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/session-structurer",
+    "archive": "src/archived-resource-routes/(marketing)/session-structurer",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/partners",
+    "archive": "src/archived-resource-routes/(marketing)/partners",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/aides-et-subventions",
+    "archive": "src/archived-resource-routes/(marketing)/aides-et-subventions",
+    "files": 2
+  },
+  {
+    "source": "src/app/(marketing)/annuaire-fournisseurs",
+    "archive": "src/archived-resource-routes/(marketing)/annuaire-fournisseurs",
+    "files": 2
+  },
+  {
+    "source": "src/app/(marketing)/annuaire-newsletters",
+    "archive": "src/archived-resource-routes/(marketing)/annuaire-newsletters",
+    "files": 2
+  },
+  {
+    "source": "src/app/(marketing)/a-reprendre",
+    "archive": "src/archived-resource-routes/(marketing)/a-reprendre",
+    "files": 2
+  },
+  {
+    "source": "src/app/(marketing)/contenus",
+    "archive": "src/archived-resource-routes/(marketing)/contenus",
+    "files": 2
+  },
+  {
+    "source": "src/app/(marketing)/transmettre",
+    "archive": "src/archived-resource-routes/(marketing)/transmettre",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/accompagnement",
+    "archive": "src/archived-resource-routes/(marketing)/accompagnement",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/services",
+    "archive": "src/archived-resource-routes/(marketing)/services",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/annuaire-financement",
+    "archive": "src/archived-resource-routes/(marketing)/annuaire-financement",
+    "files": 2
+  },
+  {
+    "source": "src/app/apercu-solutions",
+    "archive": "src/archived-resource-routes/apercu-solutions",
+    "files": 2
+  },
+  {
+    "source": "src/app/apercu-academie",
+    "archive": "src/archived-resource-routes/apercu-academie",
+    "files": 1
+  },
+  {
+    "source": "src/app/(context)",
+    "archive": "src/archived-resource-routes/(context)",
+    "files": 1
+  },
+  {
+    "source": "src/app/@modal/(.)modeles",
+    "archive": "src/archived-resource-routes/@modal/(.)modeles",
+    "files": 1
+  },
+  {
+    "source": "src/app/@modal/(.)services",
+    "archive": "src/archived-resource-routes/@modal/(.)services",
+    "files": 1
+  },
+  {
+    "source": "src/app/@modal/(.)solutions",
+    "archive": "src/archived-resource-routes/@modal/(.)solutions",
+    "files": 1
+  },
+  {
+    "source": "src/app/@modal/(.)systemes",
+    "archive": "src/archived-resource-routes/@modal/(.)systemes",
+    "files": 1
+  },
+  {
+    "source": "src/app/@modal/(.)annuaire-outils",
+    "archive": "src/archived-resource-routes/@modal/(.)annuaire-outils",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/projets/[slug]",
+    "archive": "src/archived-resource-routes/(marketing)/projets/[slug]",
+    "files": 1
+  },
+  {
+    "source": "src/app/(marketing)/tutoriels/[slug]/page.tsx",
+    "archive": "src/archived-resource-routes/(marketing)/tutoriels/[slug]/page.tsx",
+    "files": 1,
+    "note": "Historical article renderer archived; active route only publishes project series."
+  }
+]

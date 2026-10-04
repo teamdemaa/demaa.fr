@@ -18,8 +18,8 @@ describe("Demaa application navbar", () => {
 
   it("keeps the navbar on solution detail and loading states", async () => {
     const [pageSource, loadingSource] = await Promise.all([
-      readFile(new URL("../src/app/(marketing)/solutions/[slug]/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/(marketing)/systemes/[slug]/loading.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/archived-resource-routes/(marketing)/systemes/[slug]/loading.tsx", import.meta.url), "utf8"),
     ]);
 
     expect(pageSource).toContain('<Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />');
@@ -38,7 +38,7 @@ describe("Demaa application navbar", () => {
     const [homeSource, sharedHomeSource, solutionsSource, nextConfigSource, proxySource, navbarSource, publicRoutesSource] = await Promise.all([
       readFile(new URL("../src/app/(application)/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/ActionPlanHomeView.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/(marketing)/solutions/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/archived-resource-routes/(marketing)/solutions/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/proxy.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/components/Navbar.tsx", import.meta.url), "utf8"),
@@ -46,7 +46,7 @@ describe("Demaa application navbar", () => {
     ]);
 
     expect(homeSource).not.toContain(
-      'export { default, metadata } from "@/app/(marketing)/systemes/page"',
+      'export { default, metadata } from "@/archived-resource-routes/(marketing)/systemes/page"',
     );
     expect(homeSource).not.toContain('canonical: "/"');
     expect(homeSource).toContain("robots: { index: false, follow: false }");

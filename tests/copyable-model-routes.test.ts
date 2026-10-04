@@ -8,8 +8,8 @@ async function readSource(path: string) {
 describe("copyable model public routes", () => {
   it("gives Models its own resource catalogue without duplicating it in Outils", async () => {
     const [page, toolsPage, toolsHub, resources, navbar, footer, modelsIndex, modelCard, platformBadge] = await Promise.all([
-      readSource("src/app/(marketing)/modeles/page.tsx"),
-      readSource("src/app/(marketing)/outils/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/modeles/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/outils/page.tsx"),
       readSource("src/components/SystemsHubPage.tsx"),
       readSource("src/components/ResourcesNavigation.tsx"),
       readSource("src/components/PublicActionPlanNavigation.tsx"),
@@ -66,8 +66,8 @@ describe("copyable model public routes", () => {
 
   it("supports a full detail page and an intercepted modal with the same content", async () => {
     const [page, modal, details, copyLink, preview, driveCreator, notionPreview, dialog] = await Promise.all([
-      readSource("src/app/(marketing)/modeles/[slug]/page.tsx"),
-      readSource("src/app/@modal/(.)modeles/[slug]/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/modeles/[slug]/page.tsx"),
+      readSource("src/archived-resource-routes/@modal/(.)modeles/[slug]/page.tsx"),
       readSource("src/components/CopyableModelDetails.tsx"),
       readSource("src/components/CopyableModelCopyLink.tsx"),
       readSource("src/components/DocumentModelPreview.tsx"),

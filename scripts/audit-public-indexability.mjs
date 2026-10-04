@@ -126,7 +126,7 @@ export async function runPublicIndexabilityAudit(
 
   const redirects = [
     ["/", "/studio"],
-    ["/rejoindre-team-demaa", "/a-reprendre"],
+    ["/rejoindre-team-demaa", "/studio"],
     ["/accompagnement", "/studio"],
     ["/partners", "/studio"],
     ["/automatisation", "/studio"],

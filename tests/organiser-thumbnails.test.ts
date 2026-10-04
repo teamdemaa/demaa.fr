@@ -86,11 +86,11 @@ describe("Organisation thumbnails", () => {
       "utf8",
     );
     const guideArticle = readFileSync(
-      "src/app/(marketing)/contenus/[slug]/page.tsx",
+      "src/archived-resource-routes/(marketing)/contenus/[slug]/page.tsx",
       "utf8",
     );
     const socialPreview = readFileSync(
-      "src/app/(marketing)/organiser/[slug]/opengraph-image.tsx",
+      "src/archived-resource-routes/(marketing)/organiser/[slug]/opengraph-image.tsx",
       "utf8",
     );
 

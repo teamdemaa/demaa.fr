@@ -27,9 +27,9 @@ describe("accompagnement de structuration", () => {
     const [landing, page, accompaniment, automation, sitemap] =
       await Promise.all([
         readSource("src/components/TransmissionLandingPage.tsx"),
-        readSource("src/app/(marketing)/transmettre/page.tsx"),
-        readSource("src/app/(marketing)/accompagnement/page.tsx"),
-        readSource("src/app/(marketing)/automatisation/page.tsx"),
+        readSource("src/archived-resource-routes/(marketing)/transmettre/page.tsx"),
+        readSource("src/archived-resource-routes/(marketing)/accompagnement/page.tsx"),
+        readSource("src/archived-resource-routes/(marketing)/automatisation/page.tsx"),
         readSource("src/app/sitemap.ts"),
       ]);
 
@@ -89,7 +89,7 @@ describe("accompagnement de structuration", () => {
   it("keeps the Tools bridge educational and separate from the offer", async () => {
     const [hub, systemPage, bridge] = await Promise.all([
       readSource("src/components/SystemsHubPage.tsx"),
-      readSource("src/app/(marketing)/solutions/[slug]/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx"),
       readSource("src/components/OrganiserDiscoveryCta.tsx"),
     ]);
     expect(hub).toContain("<OrganiserDiscoveryCta />");

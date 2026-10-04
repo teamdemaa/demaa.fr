@@ -193,7 +193,7 @@ describe("system page SEO published Outils boundary", () => {
 
   it("feeds metadata and JSON-LD from the same server-only selector", async () => {
     const pageSource = await readFile(
-      new URL("../src/app/(marketing)/solutions/[slug]/page.tsx", import.meta.url),
+      new URL("../src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx", import.meta.url),
       "utf8",
     );
     const detailSource = await readFile(
