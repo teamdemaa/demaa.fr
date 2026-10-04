@@ -6,11 +6,11 @@ const exploreLinks = [
   { label: "Studio", href: "/studio" },
   { label: "Nos projets", href: "/projets" },
   { label: "L’équipe", href: "/equipe" },
-  { label: "Construire avec nous", href: "/studio/opportunites" },
+  { label: "Construire ensemble", href: "/studio/opportunites" },
 ];
 
 const usefulLinks = [
-  { label: "Nous contacter", href: "mailto:team@demaa.fr" },
+  { label: "Contact", href: "mailto:team@demaa.fr" },
 ];
 
 const legalLinks = [
