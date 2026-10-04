@@ -11,7 +11,7 @@ async function readSource(relativePath: string) {
 describe("legacy opportunities retirement", () => {
   it("redirects former public Team Demaa entry points to Reprendre", async () => {
     const [page, nextConfig, sitemap] = await Promise.all([
-      readSource("src/app/(marketing)/rejoindre-team-demaa/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/rejoindre-team-demaa/page.tsx"),
       readSource("next.config.ts"),
       readSource("src/app/sitemap.ts"),
     ]);

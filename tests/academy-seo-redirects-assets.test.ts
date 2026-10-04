@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("server-only", () => ({}));
 
 import nextConfig from "../next.config";
-import { generateMetadata } from "@/app/(marketing)/organiser/[slug]/page";
+import { generateMetadata } from "@/archived-resource-routes/(marketing)/organiser/[slug]/page";
 import {
   buildAcademyContentJsonLd,
   buildAcademyContentMetadata,

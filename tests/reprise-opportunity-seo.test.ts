@@ -50,8 +50,8 @@ describe("SEO des entreprises à reprendre", () => {
 
   it("pre-renders detail pages while keeping the archived marketplace out of the sitemap", async () => {
     const [detailPage, marketplacePage, sitemap] = await Promise.all([
-      readFile(new URL("../src/app/(marketing)/a-reprendre/[slug]/page.tsx", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/(marketing)/a-reprendre/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/archived-resource-routes/(marketing)/a-reprendre/[slug]/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/archived-resource-routes/(marketing)/a-reprendre/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/app/sitemap.ts", import.meta.url), "utf8"),
     ]);
 

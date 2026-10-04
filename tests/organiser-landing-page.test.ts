@@ -98,7 +98,7 @@ describe("Méthodes, Modèles and Outils public journey", () => {
   });
 
   it("exposes method and implementation structured data", () => {
-    const route = read("src/app/(marketing)/tutoriels/[slug]/page.tsx");
+    const route = read("src/archived-resource-routes/(marketing)/tutoriels/[slug]/page.tsx");
 
     expect(route).toContain("socialImage:");
     expect(route).toContain("url: tutorial.thumbnail");
@@ -114,7 +114,7 @@ describe("Méthodes, Modèles and Outils public journey", () => {
   });
 
   it("keeps Outils limited to software while Models has its own catalogue", () => {
-    const toolsPage = read("src/app/(marketing)/outils/page.tsx");
+    const toolsPage = read("src/archived-resource-routes/(marketing)/outils/page.tsx");
     const toolsHub = read("src/components/SystemsHubPage.tsx");
     const visibility = read("src/lib/public-solution-section-visibility.ts");
 

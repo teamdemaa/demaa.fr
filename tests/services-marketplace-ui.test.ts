@@ -12,7 +12,7 @@ import {
   submitCallbackRequest,
   validateCallbackFields,
 } from "@/components/ServiceCallbackForm";
-import { generateStaticParams } from "@/app/(marketing)/services/[slug]/page";
+import { generateStaticParams } from "@/archived-resource-routes/(marketing)/services/[slug]/page";
 import {
   CANONICAL_SERVICE_SLUGS,
   HIDDEN_CANONICAL_SERVICE_SLUGS,
@@ -313,8 +313,8 @@ describe("canonical Accompagnement catalog", () => {
 
   it("keeps legacy catalogs out of every canonical public Services module", async () => {
     const publicModules = await Promise.all([
-      "src/app/(marketing)/services/[slug]/page.tsx",
-      "src/app/@modal/(.)services/[slug]/page.tsx",
+      "src/archived-resource-routes/(marketing)/services/[slug]/page.tsx",
+      "src/archived-resource-routes/@modal/(.)services/[slug]/page.tsx",
       "src/components/CanonicalServiceDetails.tsx",
       "src/components/ServicesCatalog.tsx",
       "src/lib/services-seo.ts",
@@ -331,7 +331,7 @@ describe("canonical Accompagnement catalog", () => {
     const [layout, modalDefault, modalPage, routeDialog, systemSolutions, serviceDetails, actionPlanServices] = await Promise.all([
       readSource("src/app/layout.tsx"),
       readSource("src/app/@modal/default.tsx"),
-      readSource("src/app/@modal/(.)services/[slug]/page.tsx"),
+      readSource("src/archived-resource-routes/@modal/(.)services/[slug]/page.tsx"),
       readSource("src/components/ServiceRouteDialog.tsx"),
       readSource("src/components/SystemSolutionsTab.tsx"),
       readSource("src/components/CanonicalServiceDetails.tsx"),

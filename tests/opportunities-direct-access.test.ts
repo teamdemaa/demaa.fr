@@ -23,7 +23,7 @@ describe("legacy Opportunities retirement", () => {
   it("redirects historical Team Demaa entry points to Reprendre", async () => {
     const [redirects, joinPage] = await Promise.all([
       readSource("next.config.ts"),
-      readSource("src/app/(marketing)/rejoindre-team-demaa/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/rejoindre-team-demaa/page.tsx"),
     ]);
 
     expect(redirects).toContain("destination: '/a-reprendre'");

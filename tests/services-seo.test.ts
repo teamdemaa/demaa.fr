@@ -6,10 +6,10 @@ vi.mock("server-only", () => ({}));
 import {
   generateMetadata,
   generateStaticParams,
-} from "@/app/(marketing)/services/[slug]/page";
+} from "@/archived-resource-routes/(marketing)/services/[slug]/page";
 import ServiceModalPage, {
   generateStaticParams as generateServiceModalStaticParams,
-} from "@/app/@modal/(.)services/[slug]/page";
+} from "@/archived-resource-routes/@modal/(.)services/[slug]/page";
 import { getCanonicalServiceBySlug } from "@/lib/canonical-service-catalog";
 import {
   buildServicePageJsonLd,
@@ -113,7 +113,7 @@ describe("canonical Services SEO and redirects", () => {
 
   it("owns canonical metadata and the relevant permanent redirects", async () => {
     const [detailSource, nextConfig, proxy, sitemap] = await Promise.all([
-      readSource("src/app/(marketing)/services/[slug]/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/services/[slug]/page.tsx"),
       readSource("next.config.ts"),
       readSource("src/proxy.ts"),
       readSource("src/app/sitemap.ts"),

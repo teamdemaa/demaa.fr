@@ -9,9 +9,9 @@ describe("seller and accompaniment pages", () => {
   it("keeps Studio public and redirects retired accompaniment to Academy", async () => {
     const [page, partners, accompaniment, studio, footer, navbar, sitemap] =
       await Promise.all([
-        readSource("src/app/(marketing)/transmettre/page.tsx"),
-        readSource("src/app/(marketing)/partners/page.tsx"),
-        readSource("src/app/(marketing)/accompagnement/page.tsx"),
+        readSource("src/archived-resource-routes/(marketing)/transmettre/page.tsx"),
+        readSource("src/archived-resource-routes/(marketing)/partners/page.tsx"),
+        readSource("src/archived-resource-routes/(marketing)/accompagnement/page.tsx"),
         readSource("src/app/(marketing)/studio/page.tsx"),
         readSource("src/components/LegacyFooter.tsx"),
         readSource("src/components/PublicActionPlanNavigation.tsx"),

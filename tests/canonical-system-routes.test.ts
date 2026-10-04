@@ -20,13 +20,13 @@ async function collectSourceFiles(directory: string): Promise<string[]> {
 
 describe("canonical system detail routes", () => {
   it("serves métier pages from the public Solutions namespace", async () => {
-    await expect(access(path.join(root, "src/app/(marketing)/solutions/[slug]/page.tsx"))).resolves.toBeUndefined();
-    await expect(access(path.join(root, "src/app/(marketing)/systemes/[slug]/page.tsx"))).resolves.toBeUndefined();
+    await expect(access(path.join(root, "src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx"))).resolves.toBeUndefined();
+    await expect(access(path.join(root, "src/archived-resource-routes/(marketing)/systemes/[slug]/page.tsx"))).resolves.toBeUndefined();
     await expect(
-      access(path.join(root, "src/app/(marketing)/systemes/[slug]/recapitulatif/page.tsx")),
+      access(path.join(root, "src/archived-resource-routes/(marketing)/systemes/[slug]/recapitulatif/page.tsx")),
     ).resolves.toBeUndefined();
     await expect(
-      access(path.join(root, "src/app/(marketing)/systemes/[slug]/processus/page.tsx")),
+      access(path.join(root, "src/archived-resource-routes/(marketing)/systemes/[slug]/processus/page.tsx")),
     ).resolves.toBeUndefined();
     await expect(access(path.join(root, "src/app/kit-operationnel/[slug]/page.tsx"))).rejects.toThrow();
   });

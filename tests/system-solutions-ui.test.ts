@@ -90,7 +90,7 @@ describe("system Solutions UI", () => {
     const [shellSource, routeSource, pageSource] = await Promise.all([
       readSource("src/components/ToolComparisonContextShell.tsx"),
       readSource("src/components/ToolComparisonRoute.tsx"),
-      readSource("src/app/(marketing)/solutions/[slug]/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx"),
     ]);
 
     expect(shellSource).toContain("Comparer les fonctions essentielles");
@@ -143,9 +143,9 @@ describe("system Solutions UI", () => {
       servicesSection,
     ])).toEqual([softwareSection]);
 
-    const pageSource = await readSource("src/app/(marketing)/solutions/[slug]/page.tsx");
+    const pageSource = await readSource("src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx");
     const recapSource = await readSource(
-      "src/app/(marketing)/systemes/[slug]/recapitulatif/page.tsx",
+      "src/archived-resource-routes/(marketing)/systemes/[slug]/recapitulatif/page.tsx",
     );
     const apiSource = await readSource("src/app/api/action-plan/system/[slug]/route.ts");
 
@@ -669,7 +669,7 @@ describe("system Solutions UI", () => {
   });
 
   it("keeps the registry server-side and crosses RSC with public DTOs only", async () => {
-    const pageSource = await readSource("src/app/(marketing)/solutions/[slug]/page.tsx");
+    const pageSource = await readSource("src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx");
     const comparisonRouteSource = await readSource(
       "src/components/ToolComparisonRoute.tsx",
     );
@@ -742,7 +742,7 @@ describe("system Solutions UI", () => {
     expect(detailSource).toContain("!embedded && (PUBLIC_LEADER_DAILY_TOOLS_ENABLED || showDailyTools)");
     expect(detailSource).toContain("<LeaderDailyRail />");
     expect(featureFlagsSource).toContain("NEXT_PUBLIC_DEMAA_LEADER_DAILY_TOOLS_ENABLED");
-    expect(await readSource("src/app/(marketing)/solutions/[slug]/page.tsx")).toContain("showDailyTools");
+    expect(await readSource("src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx")).toContain("showDailyTools");
     expect(detailSource).not.toContain("<SystemSolutionNextSteps");
     expect(detailSource).not.toContain("<SystemContextualCaseStudy");
   });
@@ -825,7 +825,7 @@ describe("system Solutions UI", () => {
 
   it("keeps the W6 SEO and JSON-LD integration gate explicit", async () => {
     const gate = await readSource("docs/system-solutions-ui-w6-integration-gate.md");
-    const pageSource = await readSource("src/app/(marketing)/solutions/[slug]/page.tsx");
+    const pageSource = await readSource("src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx");
 
     expect(gate).toContain("bloqué avant W6");
     expect(gate).toContain("JSON-LD");

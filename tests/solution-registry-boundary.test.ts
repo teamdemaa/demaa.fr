@@ -152,7 +152,7 @@ describe("Solutions server and DTO boundaries", () => {
 
   it("keeps the public System route on Firebase without legacy runtime selectors", () => {
     const pageSource = readFileSync(
-      `${root}/app/(marketing)/solutions/[slug]/page.tsx`,
+      `${root}/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx`,
       "utf8",
     );
     const firebaseSelector = readFileSync(

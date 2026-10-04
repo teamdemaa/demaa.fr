@@ -9,7 +9,7 @@ describe("public route integrity", () => {
   it("keeps every sector hub link on an active public route", async () => {
     const [sectorPages, sectorPage, academyRoutes, validator] = await Promise.all([
       readSource("src/lib/sector-pages.ts"),
-      readSource("src/app/(marketing)/secteurs/[slug]/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/secteurs/[slug]/page.tsx"),
       readSource("src/lib/academy-course-routes.ts"),
       readSource("scripts/validate-sector-editorial-links.mjs"),
     ]);
@@ -58,7 +58,7 @@ describe("public route integrity", () => {
 
   it("returns the Automation detail to Specialists while retaining older service fallbacks", async () => {
     const servicePage = await readSource(
-      "src/app/(marketing)/services/[slug]/page.tsx",
+      "src/archived-resource-routes/(marketing)/services/[slug]/page.tsx",
     );
 
     expect(servicePage).toContain('PUBLIC_SPECIALISTS_ENABLED || slug === "automatisation-ia" ? "/specialistes" : "/accompagnement"');
@@ -75,10 +75,10 @@ describe("public route integrity", () => {
 
   it("uses canonical Solutions links from retained operational and hidden legacy screens", async () => {
     const sources = await Promise.all([
-      readSource("src/app/(marketing)/annuaire-recrutement/page.tsx"),
-      readSource("src/app/(marketing)/annuaire-recrutement/[slug]/page.tsx"),
-      readSource("src/app/(marketing)/annuaire-formations/page.tsx"),
-      readSource("src/app/(marketing)/annuaire-formations/[slug]/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/annuaire-recrutement/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/annuaire-recrutement/[slug]/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/annuaire-formations/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/annuaire-formations/[slug]/page.tsx"),
       readSource("src/app/(marketing)/suivi-kits/page.tsx"),
     ]);
 

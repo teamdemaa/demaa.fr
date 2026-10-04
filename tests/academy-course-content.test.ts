@@ -110,8 +110,8 @@ describe("academy course content", () => {
 
   it("contains no old Academy video implementation in public routes", () => {
     const files = [
-      "src/app/(marketing)/organiser/page.tsx",
-      "src/app/(marketing)/organiser/[slug]/page.tsx",
+      "src/archived-resource-routes/(marketing)/organiser/page.tsx",
+      "src/archived-resource-routes/(marketing)/organiser/[slug]/page.tsx",
       "src/app/sitemap.ts",
       "src/app/robots.ts",
     ];

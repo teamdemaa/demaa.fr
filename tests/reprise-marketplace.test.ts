@@ -87,7 +87,7 @@ describe("marketplace À reprendre", () => {
       readFile(new URL("../src/app/api/reprise-project/route.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/app/api/reprise-interest/route.ts", import.meta.url), "utf8"),
       readFile(new URL("../src/app/api/business-estimate/route.ts", import.meta.url), "utf8"),
-      readFile(new URL("../src/app/(marketing)/a-reprendre/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../src/archived-resource-routes/(marketing)/a-reprendre/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../src/components/BusinessSaleLandingPage.tsx", import.meta.url), "utf8"),
     ]);
 

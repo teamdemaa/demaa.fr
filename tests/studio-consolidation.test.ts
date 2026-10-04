@@ -27,7 +27,7 @@ describe("Studio consolidation publication", () => {
       ["Studio", "/studio"], ["Projets", "/projets"], ["Apprentissages", "/tutoriels"],
     ]);
     expect(DEMAA_RESOURCE_NAVIGATION.some(({ href }) => String(href) === "/accompagnement")).toBe(false);
-    expect(readFileSync("src/app/(marketing)/accompagnement/page.tsx", "utf8")).toContain('permanentRedirect("/tutoriels")');
+    expect(readFileSync("src/archived-resource-routes/(marketing)/accompagnement/page.tsx", "utf8")).toContain('permanentRedirect("/tutoriels")');
   });
 
   it("provides an existing local image or logo for each published project that specifies one", () => {
@@ -38,7 +38,7 @@ describe("Studio consolidation publication", () => {
     expect(existsSync(resolve("public/images/studio/cover.webp"))).toBe(true);
   });
 
-  it("keeps retained directories accessible but outside search indexes", () => {
+  it("marks archived directory requests outside search indexes before configuration redirects", () => {
     for (const { href } of DEMAA_DIRECTORY_NAVIGATION) {
       for (const path of [href, `${href}/example-detail`]) {
         const response = proxy(request(path));

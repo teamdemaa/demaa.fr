@@ -26,7 +26,7 @@ describe("system UX contract", () => {
       "src/app/api/systeme-kit/open/[resourceSlug]/route.ts",
     );
     const pageSource = await readSource(
-      "src/app/(marketing)/solutions/[slug]/page.tsx",
+      "src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx",
     );
 
     expect(detailSource).not.toContain("Voir le système");
@@ -90,9 +90,9 @@ describe("system UX contract", () => {
       globalStyles,
     ] = await Promise.all([
       readSource("src/components/SystemRecapPrintButton.tsx"),
-      readSource("src/app/(marketing)/systemes/[slug]/processus/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/systemes/[slug]/processus/page.tsx"),
       readSource("src/components/SystemProcessesContent.tsx"),
-      readSource("src/app/@modal/(.)systemes/[slug]/processus/page.tsx"),
+      readSource("src/archived-resource-routes/@modal/(.)systemes/[slug]/processus/page.tsx"),
       readSource("src/components/SystemProcessesRouteDialog.tsx"),
       readSource("src/components/SystemProcessesEmailDialog.tsx"),
       readSource("src/app/api/system-processes/email/route.ts"),
@@ -165,7 +165,7 @@ describe("system UX contract", () => {
   it("keeps the public métier page linear and exposes processes once through the discovery card", async () => {
     const [detailSource, pageSource] = await Promise.all([
       readSource("src/components/SystemDetailContent.tsx"),
-      readSource("src/app/(marketing)/solutions/[slug]/page.tsx"),
+      readSource("src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx"),
     ]);
 
     expect(detailSource).not.toContain('role="tablist"');
