@@ -11,7 +11,7 @@ export default function DemaaWordmark({
     <span
       className={`demaa-brand-logo inline-flex items-center leading-none tracking-tight ${colorClassName} ${className}`.trim()}
     >
-      Demaa
+      DEMAA
     </span>
   );
 }
