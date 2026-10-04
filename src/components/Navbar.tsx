@@ -69,7 +69,7 @@ export default function Navbar({
             </Link>
             <div
               id="action-plan-navbar-desktop"
-              className="absolute left-1/2 top-1/2 hidden w-[min(40vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden xl:block"
+              className="absolute left-1/2 top-1/2 hidden w-[min(60vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden md:block"
             >
               {publicNavigationActiveView !== undefined ? (
                 <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} />
@@ -132,7 +132,7 @@ export default function Navbar({
           </div>
           <div
             id="action-plan-navbar-mobile"
-            className="pb-3 empty:hidden xl:hidden"
+            className="pb-3 empty:hidden md:hidden"
           >
             {publicNavigationActiveView !== undefined ? (
               <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} />
