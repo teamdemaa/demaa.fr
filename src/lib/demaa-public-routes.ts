@@ -1,9 +1,11 @@
+export const DEMAA_LEARNING_VISIBLE = false;
+
 export const DEMAA_DEFAULT_PUBLIC_PATH = "/studio";
 
 export const DEMAA_PUBLIC_NAVIGATION = [
   { view: "studio", label: "Studio", href: "/studio" },
   { view: "projets", label: "Projets", href: "/projets" },
-  { view: "academy", label: "Apprentissages", href: "/tutoriels" },
+  ...(DEMAA_LEARNING_VISIBLE ? [{ view: "academy", label: "Apprentissages", href: "/tutoriels" } as const] : []),
 ] as const;
 
 export const DEMAA_RESOURCE_NAVIGATION = [
