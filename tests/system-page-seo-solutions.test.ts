@@ -212,10 +212,10 @@ describe("system page SEO published Outils boundary", () => {
     expect(pageSource).toContain("buildSystemPageMetadata(");
     expect(pageSource).toContain("filterSolutionsPreviewSections(");
     expect(pageSource).toContain("buildSystemPageJsonLd(data, publishedVisibleSolutionSections)");
-    expect(pageSource).toContain('process.env.NODE_ENV === "development"');
+    expect(pageSource).toContain("allowsLocalSolutionsSnapshot(host, process.env)");
     expect(pageSource).toContain('process.env.VERCEL_ENV === "preview"');
     expect(pageSource).toContain("composeCanonicalServicesForSystem(");
-    expect(pageSource).toContain('process.env.NODE_ENV !== "development"');
+    expect(pageSource).toContain('registry.source === "local-snapshot"');
     expect(pageSource).toContain('JSON.stringify(jsonLd).replace(/</g, "\\\\u003c")');
     expect(detailSource).not.toContain("data.detail.tools");
   });

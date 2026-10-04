@@ -4,12 +4,12 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Demaa",
     short_name: "Demaa",
-    description: "Reprendre ou vendre une PME de services avec Demaa.",
+    description: "Un studio d’entreprises, des projets et des ressources pour construire avec méthode.",
     start_url: "/",
     scope: "/",
     display: "standalone",
-    background_color: "#315f46",
-    theme_color: "#315f46",
+    background_color: "#F5F1EA",
+    theme_color: "#F5F1EA",
     lang: "fr",
     orientation: "portrait-primary",
     icons: [

@@ -18,16 +18,16 @@ export default function TutorialArticle({ tutorial }: { tutorial: TutorialDefini
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="resources" />
+      <Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />
       <main className="min-w-0 max-w-full flex-1 overflow-x-clip bg-background">
-        <ResourcesNavigation activeView="models" />
+        <ResourcesNavigation activeView="tutorials" />
         <article className="mx-auto w-full min-w-0 max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
           <Link
-            href="/modeles"
+            href="/tutoriels"
             className="inline-flex items-center gap-2 text-sm text-dema-muted transition hover:text-dema-forest"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Retour aux modèles
+            Retour aux cours
           </Link>
 
           <header className="mx-auto mt-8 max-w-5xl text-left">

@@ -2,7 +2,7 @@
 
 import { Check, LoaderCircle } from "lucide-react";
 import Link from "next/link";
-import { type FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useState } from "react";
 import {
   getLeadAttributionPayload,
   trackLeadConversion,
@@ -44,15 +44,12 @@ function responseError(response: Response, payload: ApiResponse) {
 export default function StudioInterestForm() {
   const { email: knownEmail } = useCustomerIdentity();
   const [fields, setFields] = useState(EMPTY_FIELDS);
-  const [email, setEmail] = useState("");
+  const [emailDraft, setEmail] = useState<string | null>(null);
+  const email = emailDraft ?? knownEmail ?? "";
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSent, setIsSent] = useState(false);
 
-  useEffect(() => {
-    if (!knownEmail) return;
-    setEmail((current) => current || knownEmail);
-  }, [knownEmail]);
 
   function updateField<Field extends keyof PartnersInterestFields>(
     field: Field,

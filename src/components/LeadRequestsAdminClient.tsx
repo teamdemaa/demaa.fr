@@ -59,9 +59,6 @@ export default function LeadRequestsAdminClient() {
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async (cursor: string | null, append: boolean) => {
-    if (append) setIsLoadingMore(true);
-    else setIsLoading(true);
-    setError(null);
     try {
       const params = new URLSearchParams({ limit: "30" });
       if (cursor) params.set("cursor", cursor);
@@ -87,8 +84,9 @@ export default function LeadRequestsAdminClient() {
   }, [source, status]);
 
   useEffect(() => {
-    setDetail(null);
-    void load(null, false);
+    let active = true;
+    void Promise.resolve().then(() => { if (active) return load(null, false); });
+    return () => { active = false; };
   }, [load]);
 
   async function openDetail(request: AdminRequestSummary) {
@@ -136,7 +134,7 @@ export default function LeadRequestsAdminClient() {
       <div className="flex flex-wrap gap-3">
         <label className="text-sm text-brand-blue">
           Source
-          <select value={source} onChange={(event) => setSource(event.target.value as typeof source)} className="ml-2 min-h-10 rounded-xl border border-dema-line bg-white px-3">
+          <select value={source} onChange={(event) => { setDetail(null); setError(null); setIsLoading(true); setSource(event.target.value as typeof source); }} className="ml-2 min-h-10 rounded-xl border border-dema-line bg-white px-3">
             <option value="">Toutes</option>
             <option value="lead">Formulaires</option>
             <option value="service">Services</option>
@@ -145,7 +143,7 @@ export default function LeadRequestsAdminClient() {
         </label>
         <label className="text-sm text-brand-blue">
           Statut
-          <select value={status} onChange={(event) => setStatus(event.target.value as typeof status)} className="ml-2 min-h-10 rounded-xl border border-dema-line bg-white px-3">
+          <select value={status} onChange={(event) => { setDetail(null); setError(null); setIsLoading(true); setStatus(event.target.value as typeof status); }} className="ml-2 min-h-10 rounded-xl border border-dema-line bg-white px-3">
             <option value="">Tous</option>
             {Object.entries(STATUS_LABELS).map(([value, label]) => (
               <option key={value} value={value}>{label}</option>
@@ -237,7 +235,7 @@ export default function LeadRequestsAdminClient() {
             </article>
           ))}
           {nextCursor ? (
-            <button type="button" disabled={isLoadingMore} onClick={() => void load(nextCursor, true)} className="mx-auto flex min-h-11 items-center justify-center rounded-full border border-dema-line bg-white px-5 text-sm text-dema-forest disabled:opacity-60">
+            <button type="button" disabled={isLoadingMore} onClick={() => { setIsLoadingMore(true); setError(null); void load(nextCursor, true); }} className="mx-auto flex min-h-11 items-center justify-center rounded-full border border-dema-line bg-white px-5 text-sm text-dema-forest disabled:opacity-60">
               {isLoadingMore ? "Chargement…" : "Afficher plus"}
             </button>
           ) : null}

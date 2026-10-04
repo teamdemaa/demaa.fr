@@ -1,0 +1,77 @@
+{
+  "slug": "structurer-go-to-market-jago",
+  "title": "Comment structurer un go-to-market ? Le cas Jago",
+  "category": "Go-to-market",
+  "image": "/images/academy/paysages/siby-inspire-v1.webp",
+  "objective": "Choisir un premier marché, construire une offre testable et organiser les premières ventes.",
+  "intro": "Un go-to-market est un plan pour amener une offre à ses premiers clients : à qui vendre, quel problème résoudre, comment atteindre ces personnes et comment vérifier que la vente fonctionne. Jago est un projet de plateforme de vente en gros reliant des marques africaines à des revendeurs. Ce cas propose une méthode de lancement à tester. Il ne décrit pas des résultats déjà obtenus par Jago.",
+  "steps": [
+    {
+      "title": "Choisir un segment et une zone de départ",
+      "body": "Ne démarrez pas avec « toutes les marques africaines et tous les revendeurs ». Pour Jago, une hypothèse serait de réunir des marques de produits alimentaires conditionnés et des épiceries spécialisées dans une seule ville. Comparez trois segments selon la fréquence de réassort, la facilité à joindre les acheteurs et la complexité logistique. Retenez un segment pour le premier test, avec une liste de vingt revendeurs identifiables."
+    },
+    {
+      "title": "Vérifier le problème avant de présenter la plateforme",
+      "body": "Rencontrez dix revendeurs. Demandez comment ils ont passé leur dernière commande, quelles références manquent, combien de temps prend le réassort et ce qui les empêcherait de changer de fournisseur. Demandez aussi aux marques leurs minimums de commande, délais, stocks et modalités de paiement. Documentez des commandes récentes et des contraintes concrètes. Un compliment sur le concept ne valide pas la demande."
+    },
+    {
+      "title": "Construire une offre qui tient une promesse précise",
+      "body": "Choisissez quelques références disponibles et affichez prix, quantités minimales, délais, frais de livraison et conditions de paiement. La promesse à tester pourrait être « réassort de références sélectionnées avec des conditions claires ». Calculez pour chaque commande le revenu attendu moins les coûts de préparation, livraison, paiement et traitement des incidents. Ne promettez aucun délai que les marques et la logistique ne peuvent tenir."
+    },
+    {
+      "title": "Tester la transaction manuellement",
+      "body": "Une plateforme à deux côtés doit d’abord réussir à faire se rencontrer une offre et une demande compatibles. Recrutez quelques marques adaptées aux besoins observés, puis proposez un catalogue court aux revendeurs. Un tableau partagé et un échange direct peuvent suffire pour tester une première commande. Suivez la confirmation du stock, la validation du paiement, la livraison et les réclamations. Automatisez seulement ce qui se répète."
+    },
+    {
+      "title": "Organiser un canal commercial et un suivi simple",
+      "body": "Commencez par contacter individuellement les revendeurs du segment choisi. Utilisez un message qui cite une référence pertinente, les conditions de commande et une prochaine étape précise. Dans le suivi, notez le contact, son besoin, les références proposées, la dernière interaction et la prochaine action datée. Testez un canal à la fois afin de distinguer un problème de ciblage, d’offre ou de message."
+    },
+    {
+      "title": "Décider à partir des commandes et du réachat",
+      "body": "Chaque semaine, regardez les revendeurs contactés, les conversations qualifiées, les premières commandes, les commandes livrées correctement et les réachats après leur cycle normal de réassort. Séparez volume et marge : une commande obtenue à perte ne prouve pas un modèle durable. Définissez avant le test les conditions pour continuer, ajuster ou arrêter. Élargissez la zone ou le catalogue seulement lorsque le premier fonctionnement est reproductible."
+    }
+  ],
+  "example": "Illustration hypothétique, sans résultat réel attribué à Jago : trois marques proposent douze références à un groupe de revendeurs d’une même ville. Pendant quatre semaines, une personne centralise les demandes et vérifie les stocks avant chaque confirmation. Le test cherche à comprendre ce qui empêche une première commande puis un réassort, pas à maximiser le nombre d’inscriptions.",
+  "exercise": "Rédigez une page avec votre segment, son problème observé, votre promesse, les conditions de vente, le canal choisi et le responsable du test. Ajoutez les vingt premiers contacts et vos critères de décision. Pour Jago, distinguez les actions côté marques et côté revendeurs : chacun doit savoir ce qu’il gagne et ce qu’il doit fournir.",
+  "checks": [
+    "Le premier segment et la zone de départ sont explicitement définis.",
+    "Les conditions de vente et les coûts de traitement d’une commande sont connus.",
+    "Chaque prospect a une prochaine action et un responsable.",
+    "Le test mesure les commandes réalisées et le réachat, pas seulement les inscriptions."
+  ],
+  "mistake": "Construire une plateforme complète ou dépenser en acquisition avant de savoir faire réussir une transaction et un réassort.",
+  "columns": [
+    "Segment",
+    "Zone",
+    "Problème observé",
+    "Promesse",
+    "Références",
+    "Conditions de vente",
+    "Coûts par commande",
+    "Canal",
+    "Responsable",
+    "Prochaine action",
+    "Date",
+    "Critère pour continuer"
+  ],
+  "row": [
+    "Épiceries spécialisées (hypothèse)",
+    "Une ville à choisir",
+    "À vérifier en entretien",
+    "À tester",
+    "",
+    "",
+    "",
+    "Contact direct",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "imageCaption": "Siby · Mali",
+  "imageAlt": "Paysage de falaises et de végétation",
+  "imageCredit": "",
+  "imageSource": null,
+  "imageProvider": "",
+  "imageLicense": null
+}

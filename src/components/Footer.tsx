@@ -1,7 +1,5 @@
-import MarketingFooterSwitcher from "@/components/MarketingFooterSwitcher";
-import { isGuestProductEnabled } from "@/lib/guest-action-plan-security.server";
+import DemaaFooter from "@/components/DemaaFooter";
 
 export default function Footer() {
-  const showCustomerLogin = !isGuestProductEnabled();
-  return <MarketingFooterSwitcher showCustomerLogin={showCustomerLogin} />;
+  return <DemaaFooter />;
 }

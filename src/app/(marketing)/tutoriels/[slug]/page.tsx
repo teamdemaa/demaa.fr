@@ -1,5 +1,9 @@
+import LearningProjectSeries from "@/components/LearningProjectSeries";
+import { LEARNING_PROJECT_SERIES, getLearningProjectSeries } from "@/lib/academy-project-series";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import AcademyCourseArticle from "@/components/AcademyCourseArticle";
+import { ACADEMY_COURSES, getAcademyCourse } from "@/lib/academy-courses";
 import TutorialArticle from "@/components/TutorialArticle";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 import { getCanonicalOrigin } from "@/lib/site-url";
@@ -12,12 +16,18 @@ type TutorialPageProps = Readonly<{
   params: Promise<{ slug: string }>;
 }>;
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
-  return getPublishedTutorialRouteParams();
+  return [...LEARNING_PROJECT_SERIES.map(({ slug }) => ({ slug })), ...getPublishedTutorialRouteParams(), ...ACADEMY_COURSES.map(({ slug }) => ({ slug }))];
 }
 
 export async function generateMetadata({ params }: TutorialPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const project = getLearningProjectSeries(slug);
+  if (project) return buildPublicPageMetadata({ title: `${project.name} · Apprentissages | Demaa`, description: project.description, path: `/tutoriels/${slug}` });
+  const course = getAcademyCourse(slug);
+  if (course) return buildPublicPageMetadata({ title: `${course.title} | Demaa`, description: course.objective, path: `/tutoriels/${slug}`, type: "article", socialImage: { url: course.image, alt: course.title, width: 1600, height: 900 } });
   const tutorial = getPublishedTutorialBySlug(slug);
   if (!tutorial) return {};
 
@@ -43,6 +53,10 @@ export async function generateMetadata({ params }: TutorialPageProps): Promise<M
 
 export default async function TutorialPage({ params }: TutorialPageProps) {
   const { slug } = await params;
+  const project = getLearningProjectSeries(slug);
+  if (project) return <LearningProjectSeries project={project} />;
+  const course = getAcademyCourse(slug);
+  if (course) return <AcademyCourseArticle course={course} />;
   const tutorial = getPublishedTutorialBySlug(slug);
   if (!tutorial) notFound();
 

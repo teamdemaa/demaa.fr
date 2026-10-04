@@ -1,0 +1,122 @@
+[
+  {
+    "file": "public/images/academy/paysages/siby-inspire-v1.webp",
+    "caption": "Siby · Mali",
+    "credit": "Paysage généré par IA, inspiré des reliefs du Mandé",
+    "source": null,
+    "kind": "generated",
+    "license": null,
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/santo-antao-v1.webp",
+    "caption": "Santo Antão · Cap-Vert",
+    "credit": "Dominique Josse",
+    "source": "https://unsplash.com/photos/i010CaxDLEM",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/sine-saloum-v1.webp",
+    "caption": "Sine-Saloum · Sénégal",
+    "credit": "Anton Lecock",
+    "source": "https://unsplash.com/photos/LEpilI_K4fs",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/atlas-v1.webp",
+    "caption": "Haut Atlas · Maroc",
+    "credit": "Patrick Ogilvie",
+    "source": "https://unsplash.com/photos/KHcyx3gGtJI",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/sossusvlei-v1.webp",
+    "caption": "Sossusvlei · Namibie",
+    "credit": "NIR HIMI",
+    "source": "https://unsplash.com/photos/uBst6NH7l9c",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/vestrahorn-v1.webp",
+    "caption": "Vestrahorn · Islande",
+    "credit": "Luca Micheli",
+    "source": "https://unsplash.com/photos/ruWkmt3nU58",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/dolomites-v1.webp",
+    "caption": "Dolomites · Italie",
+    "credit": "Markus Spiske",
+    "source": "https://unsplash.com/photos/bhaXeiBGWw4",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/spitzkoppe-v1.webp",
+    "caption": "Spitzkoppe · Namibie",
+    "credit": "NIR HIMI",
+    "source": "https://unsplash.com/photos/tuwB_4ifg48",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/boa-vista-v1.webp",
+    "caption": "Boa Vista · Cap-Vert",
+    "credit": "Jonas Fesser",
+    "source": "https://unsplash.com/photos/SIgmaMh_J0E",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/la-digue-v1.webp",
+    "caption": "La Digue · Seychelles",
+    "credit": "iMike Stettler",
+    "source": "https://unsplash.com/photos/fDMEIoR7iUA",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/kirkjufell-v1.webp",
+    "caption": "Kirkjufell · Islande",
+    "credit": "Nicolas Lafargue",
+    "source": "https://unsplash.com/photos/JnZ0iPdXTzg",
+    "kind": "photograph",
+    "license": "https://unsplash.com/license",
+    "changes": "Recadrage 16:9 et conversion WebP. Remplace Vestrahorn violet.",
+    "date": "2026-10-03"
+  },
+  {
+    "file": "public/images/academy/paysages/siby-photo-v1.webp",
+    "caption": "Siby · Mali",
+    "credit": "Ralf Steinberger",
+    "source": "https://commons.wikimedia.org/wiki/File:Colourful_mountains_near_Siby,_Mali,_Africa._(34880635756).jpg",
+    "kind": "photograph",
+    "license": "https://creativecommons.org/licenses/by/2.0/",
+    "changes": "Recadrage sur les falaises (x=0,y=0,1950×1097), réduction 1600×900, conversion WebP. Remplace le visuel généré.",
+    "date": "2026-10-03"
+  }
+]

@@ -15,7 +15,7 @@ afterEach(() => {
 });
 
 describe("proxy content security policy", () => {
-  it("opens Accompagnement from the canonical root and preserves campaign parameters", () => {
+  it("opens Studio from the canonical root and preserves campaign parameters", () => {
     const response = proxy(new NextRequest(
       "https://demaa.fr/?utm_campaign=lancement&utm_source=newsletter",
       { headers: { host: "demaa.fr" } },
@@ -23,7 +23,7 @@ describe("proxy content security policy", () => {
 
     expect(response.status).toBe(308);
     expect(response.headers.get("location")).toBe(
-      "https://demaa.fr/accompagnement?utm_campaign=lancement&utm_source=newsletter",
+      "https://demaa.fr/studio?utm_campaign=lancement&utm_source=newsletter",
     );
   });
 
@@ -245,5 +245,16 @@ describe("proxy content security policy", () => {
     );
     expect(unknown.status).toBe(404);
     expect(unknown.headers.get("x-robots-tag")).toBe("noindex, nofollow");
+  });
+});
+
+describe("learning project routes", () => {
+  it.each(["jago", "dumaan", "tiimora"])("allows the published %s series", (slug) => {
+    const response = proxy(new NextRequest(`https://demaa.fr/tutoriels/${slug}`, { headers: { host: "demaa.fr" } }));
+    expect(response.status).toBe(200);
+  });
+  it("rejects an unpublished series", () => {
+    const response = proxy(new NextRequest("https://demaa.fr/tutoriels/unpublished-series", { headers: { host: "demaa.fr" } }));
+    expect(response.status).toBe(404);
   });
 });

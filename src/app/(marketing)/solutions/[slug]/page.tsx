@@ -1,6 +1,9 @@
+import ResourcesNavigation from "@/components/ResourcesNavigation";
 import type { Metadata } from "next";
 import { cache } from "react";
 import { connection } from "next/server";
+import { headers } from "next/headers";
+import { allowsLocalSolutionsSnapshot } from "@/lib/local-solutions-preview";
 import { notFound, redirect } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import OrganiserDiscoveryCta from "@/components/OrganiserDiscoveryCta";
@@ -40,7 +43,8 @@ const getRegistryForPage = cache(async function getRegistryForPage() {
   try {
     return { revision: await getActiveFirebaseSolutionRegistryRevision(), source: "active" as const };
   } catch (error) {
-    if (process.env.NODE_ENV !== "development") throw error;
+    const host = (await headers()).get("host") ?? "";
+    if (!allowsLocalSolutionsSnapshot(host, process.env)) throw error;
     return {
       revision: parseFirebaseSolutionRegistryRevision(localRegistrySnapshot),
       source: "local-snapshot" as const,
@@ -116,7 +120,7 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
         ),
       }))
     : [];
-  const displaySolutionSections = process.env.NODE_ENV === "development"
+  const displaySolutionSections = registry.source === "local-snapshot"
     ? selectRenderableSolutionSectionsFromRevision(registry.revision, slug)
     : mergeRenderableSolutionSections([
         ...publishedSolutionSections.filter(({ section }) => section !== "software"),
@@ -164,8 +168,9 @@ export default async function SolutionPage({ params, searchParams }: SolutionPag
 
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="solutions" publicNavigationVariant="demaa" />
+      <Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />
       <main className="min-h-screen bg-background pb-20">
+        <ResourcesNavigation activeView="tools" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

@@ -2,6 +2,7 @@
 
 import { ChevronRight, LoaderCircle, Mic } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useBrowserSnapshot } from "@/hooks/useBrowserSnapshot";
 import { useSpeechDictation } from "@/hooks/useSpeechDictation";
 import { getLeadAttributionPayload } from "@/lib/lead-attribution-client";
 import { clearLeadSubmissionKey, getLeadSubmissionKey } from "@/lib/lead-submission-client";
@@ -84,6 +85,11 @@ function clearCoachingDraftFromUrl() {
   );
 }
 
+function readStoredMessage() {
+  try { return window.sessionStorage.getItem("demaa_coaching_message_draft") ?? ""; }
+  catch { return ""; }
+}
+
 export default function CoachingPanel({
   initialDraftToken,
   onRequireAccess,
@@ -132,7 +138,9 @@ function CoachingMessageForm({
   localeCode: "fr" | "en";
   marketCode: string;
 }) {
-  const [message, setMessage] = useState("");
+  const [messageDraft, setMessage] = useState<string | null>(null);
+  const storedMessage = useBrowserSnapshot(readStoredMessage);
+  const message = messageDraft ?? storedMessage ?? "";
   const [messages, setMessages] = useState<CoachingMessage[]>([]);
   const [access, setAccess] = useState<CoachingAccess | null>(
     isAuthenticated ? null : { canSend: true, freeStatus: "available" },
@@ -163,7 +171,6 @@ function CoachingMessageForm({
   const cancelMessageDictation = messageDictation.cancel;
 
   const loadMessages = useCallback(async (quiet = false) => {
-    if (!quiet) setStatus("loading");
     try {
       const response = await fetch("/api/coaching-request", {
         cache: "no-store",
@@ -183,15 +190,14 @@ function CoachingMessageForm({
   }, []);
 
   useEffect(() => {
-    const draft = window.sessionStorage.getItem("demaa_coaching_message_draft");
-    if (draft) setMessage(draft);
     if (!isAuthenticated) return;
 
-    void loadMessages();
+    let active = true;
+    void Promise.resolve().then(() => { if (active) return loadMessages(); });
     const interval = window.setInterval(() => {
       if (document.visibilityState === "visible") void loadMessages(true);
     }, 30_000);
-    return () => window.clearInterval(interval);
+    return () => { active = false; window.clearInterval(interval); };
   }, [isAuthenticated, loadMessages]);
 
   useEffect(() => {

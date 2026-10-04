@@ -14,7 +14,7 @@ import { getPublishedPracticeTutorials } from "@/lib/tutorial-catalog";
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return getAcademyPreviewCards().map(({ href }) => ({ slug: href.slice("/academie/".length) }));
+  return getAcademyPreviewCards().filter(({ href }) => href.startsWith("/academie/")).map(({ href }) => ({ slug: href.slice("/academie/".length) }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

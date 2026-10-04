@@ -1,23 +1,28 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-brand-blue: #17231d;
-  --color-brand-coral: #3f6f52;
-  --color-background: #fafafa;
-  --color-foreground: #17231d;
-  --color-dema-cream: #fafafa;
-  --color-dema-paper: #ffffff;
-  --color-dema-forest: #315f46;
-  --color-dema-sage: #f1f3f0;
-  --color-dema-line: #eceeed;
-  --color-dema-muted: #6f756e;
-  --color-dema-canvas: #f7f8f6;
+  --color-brand-blue: #171411;
+  --color-brand-coral: #8B6852;
+  --color-background: #F5F1EA;
+  --color-foreground: #171411;
+  --color-dema-cream: #F5F1EA;
+  --color-dema-paper: #FFFCF7;
+  --color-dema-forest: #79553E;
+  --color-dema-sage: #EAE2D7;
+  --color-dema-line: #D3CCC3;
+  --color-dema-muted: #716B64;
+  --color-dema-canvas: #F0EAE1;
   --color-dema-positive: #eaf3ed;
   --font-sans: var(--font-satoshi), "Avenir Next", "Avenir", "Segoe UI", Arial, sans-serif;
   --font-serif: var(--font-gambetta), Georgia, serif;
 }
 
 @layer components {
+  .demaa-tutorial-thumbnail {
+    filter: grayscale(1) sepia(0.45) saturate(0.7) contrast(1.06);
+    mix-blend-mode: multiply;
+  }
+
   .demaa-brand-logo {
     font-family: var(--font-serif);
     font-style: italic;
@@ -99,7 +104,7 @@
   }
 
   .demaa-accordion:hover {
-    border-color: rgb(49 95 70 / 0.14);
+    border-color: rgb(121 85 62 / 0.14);
   }
 
   .demaa-accordion summary {
@@ -119,7 +124,7 @@
   }
 
   .demaa-chip {
-    @apply min-h-9 whitespace-nowrap rounded-full bg-dema-sage px-3.5 py-1.5 text-xs text-brand-blue/58 transition hover:bg-[#ebeee9] hover:text-brand-blue/72 md:min-h-10 md:px-4 md:text-sm;
+    @apply min-h-9 whitespace-nowrap rounded-full bg-dema-sage px-3.5 py-1.5 text-xs text-brand-blue/58 transition hover:bg-[#E1D7CA] hover:text-brand-blue/72 md:min-h-10 md:px-4 md:text-sm;
   }
 
   .demaa-chip-active {
@@ -163,7 +168,7 @@
   }
 
   .demaa-primary-button {
-    @apply inline-flex items-center justify-center rounded-full bg-dema-forest px-4 py-2 text-sm font-semibold text-dema-paper shadow-[0_4px_12px_rgba(49,95,70,0.08)] transition hover:bg-[#284f3a];
+    @apply inline-flex items-center justify-center rounded-full bg-dema-forest px-4 py-2 text-sm font-semibold text-dema-paper shadow-[0_4px_12px_rgba(49,95,70,0.08)] transition hover:bg-[#60412D];
   }
 
   .demaa-secondary-button {
@@ -439,4 +444,8 @@ body::-webkit-scrollbar-thumb {
     color: inherit;
     text-decoration: none;
   }
+}
+
+@layer base {
+  :focus-visible { outline: 2px solid var(--color-dema-forest); outline-offset: 4px; }
 }

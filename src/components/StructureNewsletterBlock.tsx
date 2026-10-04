@@ -27,7 +27,8 @@ function responseError(response: Response, payload: ApiResponse, fallback: strin
 
 export default function StructureNewsletterBlock() {
   const { email } = useCustomerIdentity();
-  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterEmailDraft, setNewsletterEmail] = useState<string | null>(null);
+  const newsletterEmail = newsletterEmailDraft ?? email ?? "";
   const [newsletterHoneypot, setNewsletterHoneypot] = useState("");
   const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
   const [newsletterError, setNewsletterError] = useState<string | null>(null);
@@ -68,10 +69,6 @@ export default function StructureNewsletterBlock() {
     }
   }, [newsletterEmail, newsletterHoneypot, newsletterSubmitting]);
 
-  useEffect(() => {
-    if (!email) return;
-    setNewsletterEmail((current) => current || email);
-  }, [email]);
 
   useEffect(() => {
     const intent = new URLSearchParams(window.location.search).get("intent");

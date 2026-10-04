@@ -1,0 +1,30 @@
+[
+  {
+    "file": "/images/academy/paysages/chemin-v1.webp",
+    "generator": "imagegen",
+    "date": "2026-10-03",
+    "prompt": "Use case: photorealistic-natural. Asset type: Demaa Academy website landscape thumbnail, wide 16:9 photograph. Primary request: A narrow sandy footpath winding through low dunes and dry grasses, warm ivory sky, quiet natural landscape. Style: realistic understated editorial photography, fine natural texture, restrained saturation, ivory sand earthy brown and muted olive palette. Composition: landscape fills frame with clear foreground and horizon, elegant calm light. No people, buildings, text, logos, watermarks, collage or illustration.",
+    "processing": "sharp resize cover 1600x900 WebP quality 82"
+  },
+  {
+    "file": "/images/academy/paysages/terrasses-v1.webp",
+    "generator": "imagegen",
+    "date": "2026-10-03",
+    "prompt": "Use case: photorealistic-natural. Asset type: Demaa Academy website landscape thumbnail, wide 16:9 photograph. Primary request: Wide view of cultivated terraced fields, muted olive vegetation and warm brown earth, soft morning haze, subtle repeated lines. Style: realistic understated editorial photography, fine natural texture, restrained saturation, ivory sand earthy brown and muted olive palette. Composition: landscape fills frame with clear foreground and horizon, elegant calm light. No people, buildings, text, logos, watermarks, collage or illustration.",
+    "processing": "sharp resize cover 1600x900 WebP quality 82"
+  },
+  {
+    "file": "/images/academy/paysages/rivage-v1.webp",
+    "generator": "imagegen",
+    "date": "2026-10-03",
+    "prompt": "Use case: photorealistic-natural. Asset type: Demaa Academy website landscape thumbnail, wide 16:9 photograph. Primary request: A quiet coastal inlet with pale sand and still water, distant rocky coastline, warm diffused morning light. Style: realistic understated editorial photography, fine natural texture, restrained saturation, ivory sand earthy brown and muted olive palette. Composition: landscape fills frame with clear foreground and horizon, elegant calm light. No people, buildings, text, logos, watermarks, collage or illustration.",
+    "processing": "sharp resize cover 1600x900 WebP quality 82"
+  },
+  {
+    "file": "/images/academy/paysages/horizon-v1.webp",
+    "generator": "imagegen",
+    "date": "2026-10-03",
+    "prompt": "Use case: photorealistic-natural. Asset type: Demaa Academy website landscape thumbnail, wide 16:9 photograph. Primary request: Open rolling hills with a single soft horizon, warm ochre earth and sparse grass, pale cloudy sky. Style: realistic understated editorial photography, fine natural texture, restrained saturation, ivory sand earthy brown and muted olive palette. Composition: landscape fills frame with clear foreground and horizon, elegant calm light. No people, buildings, text, logos, watermarks, collage or illustration.",
+    "processing": "sharp resize cover 1600x900 WebP quality 82"
+  }
+]

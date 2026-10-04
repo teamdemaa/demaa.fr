@@ -5,13 +5,13 @@ type DemaaWordmarkProps = {
 
 export default function DemaaWordmark({
   className = "",
-  colorClassName = "text-brand-blue/56",
+  colorClassName = "text-brand-blue",
 }: DemaaWordmarkProps) {
   return (
     <span
       className={`demaa-brand-logo inline-flex items-center leading-none tracking-tight ${colorClassName} ${className}`.trim()}
     >
-      Demaa
+      DEMAA
     </span>
   );
 }

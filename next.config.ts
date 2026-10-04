@@ -51,6 +51,7 @@ const firebaseAuthHelperHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ["@google-cloud/firestore", "google-gax"],
   allowedDevOrigins: ['127.0.0.1'],
   devIndicators: false,
   distDir: process.env.DEMAA_BUILD_DIST_DIR || '.next',
@@ -87,6 +88,13 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       ...ACADEMY_PERMANENT_REDIRECTS,
+      { source: "/projets/:slug", destination: "/projets", permanent: false },
+      // Temporarily hide these catalogs while preserving their implementation.
+      { source: "/modeles/:path*", destination: "/studio", permanent: false },
+      { source: "/solutions/:path*", destination: "/studio", permanent: false },
+      { source: "/accompagnement", destination: "/studio", permanent: true },
+      { source: "/partners", destination: "/studio", permanent: true },
+      { source: "/automatisation", destination: "/studio", permanent: true },
       {
         source: '/mon-espace',
         destination: '/plans/latest',

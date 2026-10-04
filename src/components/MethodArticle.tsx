@@ -8,7 +8,7 @@ import type { MethodDefinition } from "@/lib/method-catalog";
 export default function MethodArticle({ method }: { method: MethodDefinition }) {
   return (
     <>
-      <Navbar minimal publicNavigationActiveView="resources" />
+      <Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />
       <main className="min-w-0 max-w-full flex-1 overflow-x-clip bg-background">
         <ResourcesNavigation activeView="tutorials" />
         <article className="mx-auto w-full min-w-0 max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
@@ -17,7 +17,7 @@ export default function MethodArticle({ method }: { method: MethodDefinition }) 
             className="inline-flex items-center gap-2 text-sm text-dema-muted transition hover:text-dema-forest"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Retour aux méthodes
+            Retour aux cours
           </Link>
 
           <header className="mx-auto mt-8 max-w-5xl text-left">

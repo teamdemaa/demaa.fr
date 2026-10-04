@@ -19,7 +19,7 @@ describe("copyable model public routes", () => {
       readSource("src/components/ModelPlatformBadge.tsx"),
     ]);
 
-    expect(page).toContain('<Navbar minimal publicNavigationActiveView="resources" />');
+    expect(page).toContain('<Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />');
     expect(page).toContain('<ResourcesNavigation activeView="models" />');
     expect(page).not.toContain("OrganiserSectionNavigation");
     expect(page).not.toContain("StructureNewsletterBlock");
@@ -31,12 +31,12 @@ describe("copyable model public routes", () => {
     expect(toolsHub).not.toContain("getPublishedCopyableModels");
     expect(toolsHub).not.toContain("ToolsModelsSection");
     expect(toolsHub).toContain('<ResourcesNavigation activeView="tools" />');
-    expect(resources).toContain('label: "Outils"');
-    expect(resources).toContain('label: "Modèles"');
-    expect(resources).toContain('label: "Méthodes"');
+    expect(resources).not.toContain('label: "Solutions"');
+    expect(resources).not.toContain('label: "Modèles"');
+    expect(resources).toContain("return null");
     expect(page).toContain('fromOrganisation={source === "organisation"}');
     expect(modelsIndex).toContain('href="/tutoriels"');
-    expect(modelsIndex).toContain("Retour aux méthodes");
+    expect(modelsIndex).toContain("Retour aux cours");
     expect(modelsIndex).toContain("`/modeles/${model.slug}?from=tutoriels`");
     expect(footer).toContain("<DemaaFooter />");
     expect(modelsIndex).toContain('style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}');
@@ -78,9 +78,9 @@ describe("copyable model public routes", () => {
 
     expect(page).toContain('source === "organisation"');
     expect(page).toContain('source === "tutoriels"');
-    expect(page).toContain('{ href: "/tutoriels", label: "Retour aux méthodes" }');
+    expect(page).toContain('{ href: "/tutoriels", label: "Retour aux cours" }');
     expect(page).toContain('{ href: "/modeles", label: "Retour aux modèles" }');
-    expect(page).toContain('<Navbar minimal publicNavigationActiveView="resources" />');
+    expect(page).toContain('<Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />');
     expect(page).toContain('<ResourcesNavigation activeView="models" />');
     expect(modal).toContain('<CopyableModelDetails model={model} variant="modal" />');
     expect(page).toContain("export const dynamicParams = false");

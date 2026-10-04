@@ -33,7 +33,7 @@ export default function CoachingAdminClient() {
   const [recommendationCatalog, setRecommendationCatalog] = useState<CoachingRecommendationCatalogOption[]>([]);
   const [recommendationSlug, setRecommendationSlug] = useState("");
   const [recommendationNeedKey, setRecommendationNeedKey] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -61,8 +61,6 @@ export default function CoachingAdminClient() {
   }
 
   const loadConversations = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
     try {
       const payload = await request("/api/admin/coaching");
       setConversations(payload?.conversations ?? []);
@@ -76,7 +74,9 @@ export default function CoachingAdminClient() {
   }, []);
 
   useEffect(() => {
-    void loadConversations();
+    let active = true;
+    void Promise.resolve().then(() => { if (active) return loadConversations(); });
+    return () => { active = false; };
   }, [loadConversations]);
 
   async function selectConversation(id: string) {

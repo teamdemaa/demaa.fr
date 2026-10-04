@@ -1,12 +1,14 @@
+import { LEARNING_PROJECT_SERIES } from "@/lib/academy-project-series";
 import { getPublishedCopyableModelBySlug } from "@/lib/copyable-model-catalog";
 import { getPublishedPracticeTutorials } from "@/lib/tutorial-catalog";
 
 export type AcademyPreviewCard = Readonly<{
   category: string;
-  format: "Méthode";
+  format: "Méthode" | "Cours" | "Apprentissage" | "Projet";
   href: string;
   image: string | null;
   imageAlt: string;
+  imageCaption?: string;
   modelHref?: string;
   modelTitle?: string;
   searchTerms: readonly string[];
@@ -23,10 +25,7 @@ function academyCoverPath(slug: string) {
   return `/images/academy/covers/${slug}-v3.png`;
 }
 
-export function getAcademyPreviewCards(): AcademyPreviewCard[] {
-  // The public Tutorials surface deliberately starts with four Airtable
-  // walkthroughs. The broader Academy catalog remains in the repository for
-  // later editorial review; it is not published through this surface.
+export function getAcademyPracticeCards(): AcademyPreviewCard[] {
   return getPublishedPracticeTutorials().map((tutorial) => ({
     category: tutorial.topic,
     format: "Méthode",
@@ -37,5 +36,19 @@ export function getAcademyPreviewCards(): AcademyPreviewCard[] {
     searchTerms: tutorial.searchTerms,
     summary: tutorial.summary,
     title: tutorial.title,
+  }));
+}
+
+export function getAcademyPreviewCards(): AcademyPreviewCard[] {
+  return LEARNING_PROJECT_SERIES.map(project => ({
+    category: String(project.number).padStart(2, "0"),
+    format: "Projet",
+    href: `/tutoriels/${project.slug}`,
+    image: project.image,
+    imageAlt: project.imageAlt,
+    imageCaption: project.imageCaption,
+    searchTerms: [project.description],
+    summary: project.description,
+    title: project.name,
   }));
 }

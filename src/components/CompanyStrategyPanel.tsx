@@ -55,8 +55,6 @@ export default function CompanyStrategyPanel({
   const conflictKeysRef = useRef(new Set<CompanyStrategyAnswerKey>());
 
   const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
     try {
       let response = await fetch("/api/company/pilotage/strategy", { cache: "no-store" });
       let body = await response.json().catch(() => null) as { cycle?: CompanyStrategyCycle | null; error?: string } | null;
@@ -81,7 +79,9 @@ export default function CompanyStrategyPanel({
 
   useEffect(() => {
     if (!authenticated) return;
-    void load();
+    let active = true;
+    void Promise.resolve().then(() => { if (active) return load(); });
+    return () => { active = false; };
   }, [authenticated, load]);
 
   const flush = useCallback(async () => {
@@ -216,7 +216,7 @@ export default function CompanyStrategyPanel({
 
   const hasConflicts = Object.keys(conflicts).length > 0;
   if (loading) return <p role="status" className="flex items-center gap-2 py-8 text-sm text-dema-muted"><LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />Chargement de la stratégie…</p>;
-  if (error && !cycle) return <div role="alert" className="rounded-xl bg-red-50 p-4 text-sm text-red-700"><p>{error}</p><button type="button" onClick={() => void load()} className="mt-2 font-semibold underline">Réessayer</button></div>;
+  if (error && !cycle) return <div role="alert" className="rounded-xl bg-red-50 p-4 text-sm text-red-700"><p>{error}</p><button type="button" onClick={() => { setLoading(true); setError(null); void load(); }} className="mt-2 font-semibold underline">Réessayer</button></div>;
   if (!answers) return null;
 
   return (

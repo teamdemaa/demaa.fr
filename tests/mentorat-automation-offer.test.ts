@@ -23,7 +23,7 @@ describe("accompagnement de structuration", () => {
     });
   });
 
-  it("publishes transmission preparation and concrete structuring on its own page", async () => {
+  it("retains archived offer content while redirecting accompaniment to Academy", async () => {
     const [landing, page, accompaniment, automation, sitemap] =
       await Promise.all([
         readSource("src/components/TransmissionLandingPage.tsx"),
@@ -35,8 +35,8 @@ describe("accompagnement de structuration", () => {
 
     expect(page).toContain("BusinessSaleLandingPage");
     expect(page).toContain('path: "/transmettre"');
-    expect(accompaniment).toContain("OperationalAccompanimentLandingPage");
-    expect(accompaniment).toContain('path: "/accompagnement"');
+    expect(accompaniment).not.toContain("OperationalAccompanimentLandingPage");
+    expect(accompaniment).toContain('permanentRedirect("/tutoriels")');
     expect(automation).toContain(
       'permanentRedirect("/accompagnement#structuration")',
     );
@@ -82,7 +82,7 @@ describe("accompagnement de structuration", () => {
     expect(landing).toContain('<AccompanimentContactControl label="Être accompagné" />');
     expect(landing).toContain('<BusinessSellerActions variant="estimate" />');
     expect(sitemap).not.toContain("/transmettre");
-    expect(sitemap).toContain("`${base}/accompagnement`");
+    expect(sitemap).not.toContain("`${base}/accompagnement`");
     expect(sitemap).not.toContain("`${base}/automatisation`");
   });
 

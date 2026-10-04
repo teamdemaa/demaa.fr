@@ -95,7 +95,7 @@ describe("action plan experience architecture", () => {
     expect(utilityActions).not.toContain('plan.version !== "manual"');
     expect(utilityActions).toContain("localeCode={localeCode}");
     expect(utilityActions).toContain("Nouveau plan");
-    expect(experience).toContain('demo !== "plan"');
+    expect(experience).toContain('demo === "plan"');
     expect(experience).toContain("ACTION_PLAN_DEMO");
     expect(experience).toContain('demo === "blank"');
     expect(uiCopy).toContain("Commencer avec un plan vierge");

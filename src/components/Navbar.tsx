@@ -20,8 +20,8 @@ export default function Navbar({
   minimal = false,
   localeCode = "fr",
   publicCta,
-  publicCtaHref,
-  publicCtaLabel,
+  publicCtaHref = "",
+  publicCtaLabel = "",
   publicNavigationActiveView,
   publicNavigationVariant = "demaa",
 }: {
@@ -41,7 +41,7 @@ export default function Navbar({
   const connectionLinkClassName =
     "inline-flex min-h-10 shrink-0 items-center px-1 text-xs font-medium text-dema-forest transition hover:text-brand-blue focus-visible:outline-none focus-visible:underline sm:min-h-11 sm:text-sm";
   const publicCtaClassName =
-    "inline-flex min-h-10 shrink-0 items-center whitespace-nowrap px-1 text-xs font-medium text-dema-forest transition hover:text-brand-blue focus-visible:outline-none focus-visible:underline focus-visible:underline-offset-4 sm:min-h-11 sm:text-sm";
+    "inline-flex min-h-10 shrink-0 items-center whitespace-nowrap px-1 text-xs font-medium text-brand-blue transition hover:text-brand-blue/70 focus-visible:outline-none focus-visible:underline focus-visible:underline-offset-4 sm:min-h-11 sm:text-sm";
   return (
     <>
       <nav
@@ -69,7 +69,7 @@ export default function Navbar({
             </Link>
             <div
               id="action-plan-navbar-desktop"
-              className="absolute left-1/2 top-1/2 hidden w-[min(40vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden xl:block"
+              className="absolute left-1/2 top-1/2 hidden w-[min(60vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden md:block"
             >
               {publicNavigationActiveView !== undefined ? (
                 <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} />
@@ -132,7 +132,7 @@ export default function Navbar({
           </div>
           <div
             id="action-plan-navbar-mobile"
-            className="pb-3 empty:hidden xl:hidden"
+            className="pb-3 empty:hidden md:hidden"
           >
             {publicNavigationActiveView !== undefined ? (
               <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} />

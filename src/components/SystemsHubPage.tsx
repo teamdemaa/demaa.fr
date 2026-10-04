@@ -26,9 +26,9 @@ export default function SystemsHubPage({
 
   return (
     <>
-      <Navbar publicNavigationActiveView={variant === "demaa" ? "solutions" : "resources"} publicNavigationVariant={variant} />
+      <Navbar publicNavigationActiveView={variant === "demaa" ? "academy" : "resources"} publicNavigationVariant={variant} />
       <main className="flex-1 min-h-screen w-full bg-dema-cream">
-        {variant === "legacy" ? <ResourcesNavigation activeView="tools" /> : null}
+        <ResourcesNavigation activeView="tools" />
         <HomeTabsClient systems={systems} sectorLabelsBySlug={sectorLabelsBySlug} heroTitle={variant === "demaa" ? "Des solutions adaptées" : undefined} heroAccent={variant === "demaa" ? "à votre activité" : undefined} />
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           {variant === "legacy" ? <div className="pt-4"><OrganiserDiscoveryCta /></div> : null}

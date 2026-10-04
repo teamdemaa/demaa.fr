@@ -1,3 +1,6 @@
+import { getLearningProjectSeries } from "@/lib/academy-project-series";
+import { getAcademyCourse } from "@/lib/academy-courses";
+import { getPublishedTutorialBySlug } from "@/lib/tutorial-catalog";
 import { NextResponse, type NextRequest } from "next/server";
 import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
 import { isVercelPreviewHost } from "@/lib/site-url";
@@ -117,6 +120,19 @@ export function proxy(request: NextRequest) {
         },
       }),
     );
+  }
+
+  if (pathname.startsWith("/tutoriels/")) {
+    const slug = pathname.slice("/tutoriels/".length);
+    if (!getLearningProjectSeries(slug) && !getAcademyCourse(slug) && !getPublishedTutorialBySlug(slug)) {
+      return withContentSecurityPolicy(
+        new NextResponse(null, {
+          status: 404,
+          headers: { "X-Robots-Tag": "noindex, nofollow" },
+        }),
+        localeCode,
+      );
+    }
   }
 
   if (pathname.startsWith("/modeles/")) {

@@ -2,6 +2,7 @@
 
 import DemaaFooter from "@/components/DemaaFooter";
 
-export default function MarketingFooterSwitcher(_: { showCustomerLogin: boolean }) {
+export default function MarketingFooterSwitcher(props: { showCustomerLogin: boolean }) {
+  void props;
   return <DemaaFooter />;
 }

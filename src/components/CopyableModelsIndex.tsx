@@ -85,7 +85,7 @@ export default function CopyableModelsIndex({
             className="mb-10 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Retour aux méthodes
+            Retour aux cours
           </Link>
         ) : null}
 

@@ -1,6 +1,6 @@
 import { buildSocialImage, brandImageContentType, socialImageSize } from "@/app/brand-image-utils";
 
-export const alt = "Gagnez du temps grâce à des systèmes adaptés à votre entreprise";
+export const alt = "Demaa · Studio d’entreprises";
 export const size = socialImageSize;
 export const contentType = brandImageContentType;
 

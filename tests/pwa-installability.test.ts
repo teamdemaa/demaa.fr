@@ -12,8 +12,8 @@ describe("installable Demaa app", () => {
       scope: "/",
       display: "standalone",
       lang: "fr",
-      background_color: "#315f46",
-      theme_color: "#315f46",
+      background_color: "#F5F1EA",
+      theme_color: "#F5F1EA",
     });
     expect(value.icons).toEqual(expect.arrayContaining([
       expect.objectContaining({ src: "/pwa/demaa-192.png", sizes: "192x192" }),

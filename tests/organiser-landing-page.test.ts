@@ -20,10 +20,10 @@ describe("Méthodes, Modèles and Outils public journey", () => {
     const hub = read("src/components/TutorialsHub.tsx");
     const library = read("src/components/TutorialLibrary.tsx");
 
-    expect(page).toContain("<AcademyPreviewLibrary cards={cards} />");
+    expect(page).toContain("<AcademyPreviewLibrary cards={cards} showControls={false} />");
     expect(page).toContain('path: "/tutoriels"');
-    expect(page).toContain("Organiser et piloter son entreprise,");
-    expect(page).toContain("un sujet à la fois.");
+    expect(page).toContain("On partage");
+    expect(page).toContain("nos apprentissages.");
     expect(hub).toContain("getPublishedMethods");
     expect(library).toContain("Rechercher une méthode");
   });
