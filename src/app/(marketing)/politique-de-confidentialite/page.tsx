@@ -1,10 +1,12 @@
+import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 import LegalPageLayout from "@/components/LegalPageLayout";
 import { LEGAL, LEGAL_COPY } from "@/lib/legal";
 
-export const metadata = {
-  title: "Politique de confidentialité - Demaa",
+export const metadata = buildPublicPageMetadata({
+  title: "Politique de confidentialité - DEMAA",
   description: "Politique de confidentialité du site demaa.fr.",
-};
+  path: "/politique-de-confidentialite",
+});
 
 function PrivacySection({
   title,

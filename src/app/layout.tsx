@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: DEMAA_HOME_TITLE,
     description: DEMAA_HOME_DESCRIPTION,
-    siteName: "Demaa",
+    siteName: "DEMAA",
     locale: "fr_FR",
     type: "website",
     images: [PUBLIC_SOCIAL_IMAGE],
@@ -75,12 +75,12 @@ export const metadata: Metadata = {
     description: DEMAA_HOME_DESCRIPTION,
     images: ["/twitter-image"],
   },
-  applicationName: "Demaa",
+  applicationName: "DEMAA",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Demaa",
+    title: "DEMAA",
   },
   formatDetection: {
     telephone: false,

@@ -3,8 +3,8 @@ import { LEGAL, LEGAL_COPY } from "@/lib/legal";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 export const metadata = buildPublicPageMetadata({
-  title: "Conditions d’utilisation - Demaa",
-  description: "Conditions d’utilisation du site et des services Demaa.",
+  title: "Conditions d’utilisation - DEMAA",
+  description: "Conditions d’utilisation du site et des services DEMAA.",
   path: "/conditions-d-utilisation",
 });
 

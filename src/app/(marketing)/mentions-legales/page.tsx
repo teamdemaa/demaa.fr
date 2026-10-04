@@ -3,7 +3,7 @@ import { LEGAL, LEGAL_COPY } from "@/lib/legal";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 export const metadata = buildPublicPageMetadata({
-  title: "Mentions légales - Demaa",
+  title: "Mentions légales - DEMAA",
   description: "Mentions légales du site demaa.fr.",
   path: "/mentions-legales",
 });

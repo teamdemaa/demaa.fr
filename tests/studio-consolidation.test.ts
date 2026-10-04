@@ -38,12 +38,12 @@ describe("Studio consolidation publication", () => {
     expect(existsSync(resolve("public/images/studio/cover.webp"))).toBe(true);
   });
 
-  it("reactivates only selected directories while leaving other archived routes out of indexes", () => {
+  it("keeps retained directories accessible but outside search indexes", () => {
     for (const { href } of DEMAA_DIRECTORY_NAVIGATION) {
       for (const path of [href, `${href}/example-detail`]) {
         const response = proxy(request(path));
         expect(response.status, path).toBe(200);
-        expect(response.headers.get("x-robots-tag"), path).toBeNull();
+        expect(response.headers.get("x-robots-tag"), path).toBe("noindex, follow");
       }
     }
     for (const path of ["/modeles", ...getPublishedCopyableModelRouteParams().map(({ slug }) => `/modeles/${slug}`)]) {

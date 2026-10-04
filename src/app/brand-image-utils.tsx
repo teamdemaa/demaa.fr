@@ -50,7 +50,7 @@ export async function buildSocialImage() {
               color: brandImageGreen,
             }}
           >
-            Demaa
+            DEMAA
           </span>
           <span
             style={{
@@ -79,7 +79,7 @@ export async function buildSocialImage() {
               color: brandImageMuted,
             }}
           >
-            Des entreprises construites sur des marchés que nous connaissons
+            Des entreprises construites sur des marchés qu’on connaît
             de l’intérieur.
           </span>
         </div>

@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Demaa",
-    short_name: "Demaa",
+    name: "DEMAA",
+    short_name: "DEMAA",
     description: "Un studio d’entreprises, des projets et des ressources pour construire avec méthode.",
     start_url: "/",
     scope: "/",

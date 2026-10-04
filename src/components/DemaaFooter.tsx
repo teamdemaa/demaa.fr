@@ -49,7 +49,7 @@ export default function DemaaFooter() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="space-y-4 lg:col-span-2">
-            <Link href={DEMAA_DEFAULT_PUBLIC_PATH} className="inline-flex" aria-label="Demaa, aller au Studio">
+            <Link href={DEMAA_DEFAULT_PUBLIC_PATH} className="inline-flex" aria-label="DEMAA, aller au Studio">
               <DemaaWordmark className="text-[2.55rem]" colorClassName="text-brand-blue" />
             </Link>
             <p className="demaa-section-title max-w-xs text-lg leading-snug text-dema-muted">
@@ -61,7 +61,7 @@ export default function DemaaFooter() {
           <div className="space-y-8"><FooterLinks title="Contact" links={usefulLinks} /><FooterLinks title="Légal" links={legalLinks} /></div>
         </div>
         <div className="mt-16 border-t border-dema-line pt-8 text-xs text-dema-muted">
-          <p>© {new Date().getFullYear()} Demaa. Tous droits réservés.</p>
+          <p>© {new Date().getFullYear()} DEMAA. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

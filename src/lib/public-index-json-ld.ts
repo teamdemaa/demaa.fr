@@ -14,14 +14,14 @@ export function buildSiteIdentityJsonLd() {
       {
         "@type": "Organization",
         "@id": `${origin}/#organization`,
-        name: "Demaa",
+        name: "DEMAA",
         url: origin,
         logo: `${origin}/icon.svg`,
       },
       {
         "@type": "WebSite",
         "@id": `${origin}/#website`,
-        name: "Demaa",
+        name: "DEMAA",
         url: origin,
         inLanguage: "fr-FR",
         publisher: { "@id": `${origin}/#organization` },
