@@ -102,8 +102,8 @@ function ProjectsContent() {
   return <>
     <header className="mx-auto w-full max-w-7xl px-4 pb-10 pt-12 text-center sm:px-6 md:pb-12 md:pt-16 lg:px-8">
       <h1 className="text-balance font-light leading-[0.94] tracking-tight" style={{ fontSize: "clamp(2.4rem, 6.8vw, 4.6rem)" }}>
-        <span className="block text-brand-blue/62">Des entreprises</span>
-        <span className="demaa-hero-title block text-dema-forest">que nous construisons.</span>
+        <span className="block text-brand-blue/62">Les entreprises</span>
+        <span className="demaa-hero-title block text-dema-forest">qu’on construit.</span>
       </h1>
     </header>
     <section className={`${sectionClass} !pt-0`} aria-label="Projets du Studio"><div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">{DEMAA_PRIORITY_STUDIO_PROJECTS.map((project) => <ProjectCard key={project.slug} project={project} />)}</div></section>
