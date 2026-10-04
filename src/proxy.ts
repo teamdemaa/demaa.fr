@@ -1,3 +1,4 @@
+import { getLearningProjectSeries } from "@/lib/academy-project-series";
 import { getAcademyCourse } from "@/lib/academy-courses";
 import { getPublishedTutorialBySlug } from "@/lib/tutorial-catalog";
 import { NextResponse, type NextRequest } from "next/server";
@@ -123,7 +124,7 @@ export function proxy(request: NextRequest) {
 
   if (pathname.startsWith("/tutoriels/")) {
     const slug = pathname.slice("/tutoriels/".length);
-    if (!getAcademyCourse(slug) && !getPublishedTutorialBySlug(slug)) {
+    if (!getLearningProjectSeries(slug) && !getAcademyCourse(slug) && !getPublishedTutorialBySlug(slug)) {
       return withContentSecurityPolicy(
         new NextResponse(null, {
           status: 404,

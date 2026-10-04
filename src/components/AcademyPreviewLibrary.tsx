@@ -9,7 +9,7 @@ import { matchesSearchQuery } from "@/lib/search";
 
 const ALL = "Tous";
 
-export default function AcademyPreviewLibrary({ cards }: { cards: readonly AcademyPreviewCard[] }) {
+export default function AcademyPreviewLibrary({ cards, showControls = true }: { cards: readonly AcademyPreviewCard[]; showControls?: boolean }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState(ALL);
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -21,7 +21,7 @@ export default function AcademyPreviewLibrary({ cards }: { cards: readonly Acade
 
   return (
     <div>
-      <div className="mx-auto w-full max-w-4xl px-4 sm:px-6">
+      {showControls && <div className="mx-auto w-full max-w-4xl px-4 sm:px-6">
         <div className="demaa-search-shell">
           <div className="relative">
             <Search className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-dema-forest/42" aria-hidden="true" />
@@ -37,7 +37,7 @@ export default function AcademyPreviewLibrary({ cards }: { cards: readonly Acade
           </div>
         ) : null}
         <p className="sr-only" aria-live="polite">{results.length} contenus trouvés</p>
-      </div>
+      </div>}
 
       {results.length ? (
         <section aria-label="Apprentissages" className="px-4 py-14 sm:px-6 md:py-16 lg:px-8">
@@ -54,8 +54,9 @@ export default function AcademyPreviewLibrary({ cards }: { cards: readonly Acade
                     {card.imageCaption ? <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-4 pb-3 pt-8 text-right text-xs text-white/50">{card.imageCaption}</span> : null}
                   </div>
                   <div className="px-0.5 pt-4">
-                    <p className="text-[0.68rem] font-medium uppercase tracking-[0.12em] text-dema-forest/65">{card.format} · {card.category}</p>
+                    <p className="text-[0.68rem] font-medium uppercase tracking-[0.12em] text-dema-forest/65">{card.format}{card.format === "Projet" ? " " : " · "}{card.category}</p>
                     <h2 className="mt-2 text-xl font-normal leading-tight tracking-[-0.02em] text-brand-blue transition-colors group-hover:text-dema-forest sm:text-2xl">{card.title}</h2>
+                    {card.format === "Projet" && <p className="mt-3 text-sm leading-6 text-dema-muted">{card.summary}</p>}
                   </div>
                 </Link>
               </article>

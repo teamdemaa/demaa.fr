@@ -28,7 +28,7 @@ export default function TutorialsPage() {
             <span className="demaa-hero-title block text-dema-forest">nos apprentissages.</span>
           </h1>
         </header>
-        <AcademyPreviewLibrary cards={cards} />
+        <AcademyPreviewLibrary cards={cards} showControls={false} />
         <div className="mx-auto max-w-4xl px-5 pb-16"><LearningSubscription /></div>
       </main>
     </>

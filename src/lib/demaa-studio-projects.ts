@@ -23,14 +23,14 @@ const primaryProjects: readonly DemaaStudioProject[] = [
     image: "/images/studio/dumaan-restauration-v3.webp", imageAlt: "Visuel de concept Dumaan : livraison de grands conditionnements surgelés de pastels, mafé et légumes découpés à une restauratrice",
   },
   {
-    slug: "mnd", name: "MND", sector: "Média & commerce", pole: "E-commerce", portfolio: "priority", status: "En test",
-    summary: "Découvrir les produits ouest-africains et les commander simplement, en lots pensés pour leurs usages.",
+    slug: "mnd", name: "MND", sector: "Média & commerce", pole: "Média & commerce", portfolio: "other", status: "En test",
+    summary: "Un média pour découvrir les produits et les usages ouest-africains, avec une activité e-commerce dans un second temps.",
     problem: "Les produits sont dispersés et leurs usages parfois difficiles à découvrir. Composer une recette complète demande plusieurs achats.",
     solution: "Du contenu pour découvrir les produits et des lots réunissant une recette et ses ingrédients, puis des sélections autour du style, du soin et de la maison.",
     image: "/images/studio/mnd.webp", imageAlt: "Visuel de concept MND : préparation d’un repas avec du fonio et du bissap",
   },
   {
-    slug: "jagoya", name: "Jago", sector: "Commerce B2B", pole: "Tech & services", portfolio: "pipeline", status: "En test",
+    slug: "jagoya", name: "Jago", sector: "Commerce B2B", pole: "Tech & services", portfolio: "priority", status: "En test",
     summary: "Une plateforme de vente en gros qui relie les marques africaines aux revendeurs.",
     problem: "Les marques africaines accèdent difficilement aux revendeurs et doivent organiser seules la présentation de leur offre et les commandes.",
     solution: "Une plateforme B2B pour découvrir les marques, comparer leurs produits et commander en gros.",
@@ -85,7 +85,7 @@ export const DEMAA_STUDIO_PROJECTS: readonly DemaaStudioProject[] = [
 ];
 
 export const DEMAA_PUBLISHED_STUDIO_PROJECTS = DEMAA_STUDIO_PROJECTS.filter(({ portfolio }) => portfolio !== "archive");
-export const DEMAA_PRIORITY_STUDIO_PROJECTS = primaryProjects.filter(({ portfolio }) => portfolio === "priority");
+export const DEMAA_PRIORITY_STUDIO_PROJECTS = ["jagoya", "dumaan-food", "tiimora"].map(slug => primaryProjects.find(project => project.slug === slug)!);
 export const DEMAA_STUDIO_POLES = ["Tech & services", "Concepts franchisés", "E-commerce", "Immobilier"] as const;
 
 export function getDemaaStudioProject(slug: string) {

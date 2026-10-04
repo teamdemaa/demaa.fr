@@ -98,7 +98,7 @@ function BuildTogetherSection() {
 }
 
 function ProjectsContent() {
-  const otherProjects = DEMAA_PUBLISHED_STUDIO_PROJECTS.filter(({ portfolio }) => portfolio === "pipeline");
+  const otherProjects = DEMAA_PUBLISHED_STUDIO_PROJECTS.filter(({ portfolio, slug }) => portfolio === "pipeline" || slug === "mnd");
   return <>
     <section className={sectionClass}><h1 className={`${titleClass} mt-5 max-w-4xl`}>Des entreprises que nous construisons.</h1></section>
     <section className={`${sectionClass} !pt-0`} aria-label="Projets du Studio"><div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">{DEMAA_PRIORITY_STUDIO_PROJECTS.map((project) => <ProjectCard key={project.slug} project={project} />)}</div></section>

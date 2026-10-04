@@ -7,7 +7,7 @@ export const DEMAA_PUBLIC_NAVIGATION = [
 ] as const;
 
 export const DEMAA_RESOURCE_NAVIGATION = [
-  { label: "Apprentissages", href: "/tutoriels", description: "Des cours pratiques pour structurer votre entreprise." },
+  { label: "Apprentissages", href: "/tutoriels", description: "Les apprentissages de nos projets, épisode après épisode." },
 ] as const;
 
 export const DEMAA_DIRECTORY_NAVIGATION = [
