@@ -151,14 +151,14 @@ if (/slug:\s*"[^"]+"/.test(sectorPagesSource)) {
 }
 
 const sitemapSource = readFile(ROUTE_FILES.sitemap);
-// The consolidated public sitemap exposes Studio and Academy, with selected directories.
+// The public sitemap exposes Studio, project series and selected directories.
 // Sector hubs remain available as legacy routes without being promoted in this sitemap.
-for (const source of ["DEMAA_DIRECTORY_NAVIGATION.map", "DEMAA_PUBLISHED_STUDIO_PROJECTS.map", "ACADEMY_COURSES.map", "getPublishedCopyableModels().map"]) {
+for (const source of ["DEMAA_DIRECTORY_NAVIGATION.map", "LEARNING_PROJECT_SERIES.map"]) {
   if (!sitemapSource.includes(source)) {
     addUnique(errors, `Sitemap is missing the consolidated published source: ${source}.`);
   }
 }
-for (const retired of ["/accompagnement", "/partners", "/automatisation"]) {
+for (const retired of ["/accompagnement", "/partners", "/automatisation", "/modeles", "/solutions", "/projets/${"]) {
   if (sitemapSource.includes("${base}" + retired)) {
     addUnique(errors, `Sitemap should not expose retired ${retired} URLs.`);
   }
