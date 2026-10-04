@@ -171,7 +171,8 @@
     "verify:firebase-solutions-supplier-expansion-emulator": "npx --yes firebase-tools emulators:exec --only firestore --project demo-demaa-solutions --config firebase.solutions-emulator.json \"vite-node --config vite.firebase-registry.config.ts scripts/verify-firebase-solution-registry-emulator.ts --revision=supplier-expansion\"",
     "verify:firebase-solutions-catalog-enrichment-emulator": "npx --yes firebase-tools emulators:exec --only firestore --project demo-demaa-solutions --config firebase.solutions-emulator.json \"vite-node --config vite.firebase-registry.config.ts scripts/verify-firebase-solution-registry-emulator.ts --revision=catalog-enrichment\"",
     "verify:firebase-solutions-prelaunch-closeout-emulator": "npx --yes firebase-tools emulators:exec --only firestore --project demo-demaa-solutions --config firebase.solutions-emulator.json \"vite-node --config vite.firebase-registry.config.ts scripts/verify-firebase-solution-registry-emulator.ts --revision=prelaunch-closeout\"",
-    "register:operational-assets": "node scripts/register-operational-system-assets.mjs"
+    "register:operational-assets": "node scripts/register-operational-system-assets.mjs",
+    "verify:public-runtime": "node scripts/verify-public-runtime.mjs"
   },
   "dependencies": {
     "@fillout/react": "^3.1.2",
