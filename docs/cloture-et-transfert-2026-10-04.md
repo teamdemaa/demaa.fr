@@ -3,7 +3,7 @@
 ## Périmètre
 DEMAA : Studio, Projets, Apprentissages, Équipe et pages légales. Les cinq annuaires restent conservés mais retirés du sitemap et désindexés, détails compris. Les anciens modèles et solutions restent conservés pendant la transition.
 
-Les textes SEO, l’identité structurée, les aperçus de partage et le manifest utilisent DEMAA. Le sitemap conserve des dates significatives stables. Le fallback HTTP non streamé sert une véritable 404, y compris en présence des routes parallèles de modales.
+Les textes SEO, l’identité structurée, les aperçus de partage et le manifest utilisent DEMAA. Le sitemap conserve des dates significatives stables. Le catch-all global des modales est remplacé par des sorties explicites vers les pages publiques : il masquait les routes introuvables dans le routeur déployé. La convention global-not-found gère désormais les URL sans route. Un contrôle HTTP après build vérifie les 404 et les pages publiques réelles.
 
 ## Projet destinataire
 Une copie Git indépendante est préparée dans `../demaa-ressources`, nom provisoire, port 3014. Elle conserve les sources, données versionnées, assets, API, accès administrateur et dépendances partagées pour éviter de casser les parcours. Les pages Studio/Projets/Équipe/Apprentissages sont retirées de ce projet. Solutions et Modèles sont réactivés ; les annuaires sont accessibles depuis son interface. Les tâches cron de DEMAA ne sont pas dupliquées.

@@ -29,3 +29,6 @@ jobs:
 
       - name: Build production application
         run: npm run build:vercel
+
+      - name: Verify public HTTP runtime
+        run: npm run verify:public-runtime
