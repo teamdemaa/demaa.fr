@@ -19,12 +19,12 @@ describe("Studio consolidation publication", () => {
     expect(getDemaaStudioProject("awamali")).toBeUndefined();
     expect(getDemaaStudioProject("unknown-project")).toBeUndefined();
     expect(getDemaaStudioProject("jagoya")?.name).toBe("Jago");
-    expect(DEMAA_PRIORITY_STUDIO_PROJECTS.map(({ name }) => name)).toEqual(["Tiimora", "Dumaan", "MND"]);
+    expect(DEMAA_PRIORITY_STUDIO_PROJECTS.map(({ name }) => name)).toEqual(["Jago", "Dumaan", "Tiimora"]);
   });
 
   it("keeps three public universes and retires the accompaniment offer", () => {
     expect(DEMAA_PUBLIC_NAVIGATION.map(({ label, href }) => [label, href])).toEqual([
-      ["Studio", "/studio"], ["Opportunités", "/studio/opportunites"], ["Academy", "/tutoriels"],
+      ["Studio", "/studio"], ["Projets", "/projets"], ["Apprentissages", "/tutoriels"],
     ]);
     expect(DEMAA_RESOURCE_NAVIGATION.some(({ href }) => String(href) === "/accompagnement")).toBe(false);
     expect(readFileSync("src/app/(marketing)/accompagnement/page.tsx", "utf8")).toContain('permanentRedirect("/tutoriels")');

@@ -41,7 +41,8 @@ describe("public route integrity", () => {
 
     expect(sitemap).not.toContain('`${base}/accompagnement`');
     expect(sitemap).toContain('`${base}/studio`');
-    expect(sitemap).toContain('`${base}/solutions`');
+    expect(sitemap).not.toContain('`${base}/solutions`');
+    expect(sitemap).toContain('`${base}/projets`');
     expect(sitemap).not.toContain('`${base}/automatisation`');
     expect(sitemap).not.toContain('`${base}/application-metier`');
     expect(sitemap).not.toContain('`${base}/outils`');

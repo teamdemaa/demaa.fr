@@ -31,9 +31,9 @@ describe("copyable model public routes", () => {
     expect(toolsHub).not.toContain("getPublishedCopyableModels");
     expect(toolsHub).not.toContain("ToolsModelsSection");
     expect(toolsHub).toContain('<ResourcesNavigation activeView="tools" />');
-    expect(resources).toContain('label: "Solutions"');
-    expect(resources).toContain('label: "Modèles"');
-    expect(resources).toContain('label: ACADEMY_LEARNING_LABEL');
+    expect(resources).not.toContain('label: "Solutions"');
+    expect(resources).not.toContain('label: "Modèles"');
+    expect(resources).toContain("return null");
     expect(page).toContain('fromOrganisation={source === "organisation"}');
     expect(modelsIndex).toContain('href="/tutoriels"');
     expect(modelsIndex).toContain("Retour aux cours");

@@ -89,8 +89,9 @@ describe("Demaa application navbar", () => {
 
     expect(source).toContain("DEMAA_PUBLIC_NAVIGATION");
     expect(publicRoutes).not.toContain('href: "/accompagnement"');
-    expect(publicRoutes).toContain('label: "Solutions par activité", href: "/solutions"');
-    expect(publicRoutes).toContain('label: "Academy", href: "/tutoriels"');
+    expect(publicRoutes).not.toContain('href: "/solutions"');
+    expect(publicRoutes).toContain('label: "Projets", href: "/projets"');
+    expect(publicRoutes).toContain('label: "Apprentissages", href: "/tutoriels"');
     expect(publicRoutes).not.toContain('label: "Reprendre"');
     expect(publicRoutes).not.toContain('label: "Vendre"');
     expect(publicRoutes).not.toContain('label: "Spécialistes"');
@@ -212,10 +213,10 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).toContain('className="sticky top-0 z-40 bg-dema-cream/92');
     expect(navbarSource).not.toContain('className="sticky top-0 z-40 border-b');
     expect(navbarSource).not.toContain("fixed inset-x-0 bottom-0");
-    expect(navbarSource).toContain('className="pb-3 empty:hidden xl:hidden"');
-    expect(navbarSource).toContain("w-[min(40vw,36rem)]");
-    expect(navbarSource).toContain("empty:hidden xl:block");
-    expect(navbarSource).toContain("empty:hidden xl:hidden");
+    expect(navbarSource).toContain('className="pb-3 empty:hidden md:hidden"');
+    expect(navbarSource).toContain("w-[min(60vw,36rem)]");
+    expect(navbarSource).toContain("empty:hidden md:block");
+    expect(navbarSource).toContain("empty:hidden md:hidden");
     expect(actionPlanNavSource).toContain("Plan d’action");
     expect(actionPlanNavSource).toContain("Accompagnement");
     expect(actionPlanNavSource).toContain("Vendre");
@@ -254,7 +255,7 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).toContain("scale-x-100 opacity-100");
     expect(actionPlanNavSource).toContain("scale-x-0 opacity-0");
     expect(actionPlanNavSource).not.toContain("rounded-[1.45rem] border");
-    expect(actionPlanNavSource).not.toContain("xl:hidden");
+    expect(actionPlanNavSource).not.toContain("md:hidden");
     expect(actionPlanNavSource).not.toContain('activeView === "system" ? "plan"');
     expect(actionPlanNavSource).toContain('fr: "Accompagnement"');
     expect(actionPlanNavSource).not.toContain('label: "Coaching"');

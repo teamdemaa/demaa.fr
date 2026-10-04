@@ -4,15 +4,22 @@ import { describe, expect, it } from "vitest";
 import { readFile } from "node:fs/promises";
 import sharp from "sharp";
 import { ACADEMY_COURSES, academyWorksheetHref, getAcademyCourse } from "@/lib/academy-courses";
+import archivedCourses from "@/lib/academy-courses-data.json";
+import { LEARNING_PROJECT_SERIES } from "@/lib/academy-project-series";
 import { getAcademyPreviewCards } from "@/lib/academy-preview-catalog";
 import { getPublishedTutorialBySlug } from "@/lib/tutorial-catalog";
 
 describe("Academy practical courses", () => {
-  it("publishes ten unique questions without replacing existing tutorial routes", () => {
-    expect(ACADEMY_COURSES).toHaveLength(10);
-    expect(new Set(ACADEMY_COURSES.map(c => c.slug)).size).toBe(10);
-    expect(getAcademyPreviewCards().map(c => c.href)).toEqual(ACADEMY_COURSES.map(c => `/tutoriels/${c.slug}`));
-    for (const course of ACADEMY_COURSES) {
+  it("publishes three project series while preserving the ten archived courses", () => {
+    expect(archivedCourses).toHaveLength(10);
+    expect(LEARNING_PROJECT_SERIES.map(p => p.name)).toEqual(["Jago", "Dumaan", "Tiimora"]);
+    for (const project of LEARNING_PROJECT_SERIES) {
+      expect(project.episodes.map(e => e.title)).toEqual(["Stratégie", "Plan d’action", "Update 1", "Update 2", "Update 3"]);
+      expect(project.episodes.every(e => !e.href)).toBe(true);
+    }
+    expect(new Set(archivedCourses.map(c => c.slug)).size).toBe(10);
+    expect(getAcademyPreviewCards().map(c => c.href)).toEqual(LEARNING_PROJECT_SERIES.map(c => `/tutoriels/${c.slug}`));
+    for (const course of archivedCourses) {
       expect(course.title.endsWith("?")).toBe(true);
       expect(getPublishedTutorialBySlug(course.slug)).toBeNull();
       expect(course.steps.length).toBeGreaterThanOrEqual(4);
