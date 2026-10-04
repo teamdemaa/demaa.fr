@@ -77,13 +77,6 @@ function StudioContent() {
         ].map(([title, description], index) => <li key={title} className="border-t border-brand-blue/20 pt-5"><span className="text-xs text-dema-muted">0{index + 1}</span><h3 className="mt-4 text-xl font-medium">{title}</h3><p className="mt-3 text-sm leading-6 text-dema-muted">{description}</p></li>)}</ol>
       </div>
     </section>
-    <section className={sectionClass}>
-      <p className={eyebrowClass}>Les fondatrices</p><h2 className={`${titleClass} mt-5`}>Deux parcours complémentaires.</h2>
-      <div className="mt-12 grid gap-10 md:grid-cols-2">
-        <article className="border-t border-dema-line pt-6"><h3 className="text-2xl font-medium">Aïssata Gory</h3><p className="mt-2 text-sm text-dema-forest">Finance & pilotage</p><p className="mt-5 max-w-lg text-base leading-7 text-dema-muted">Directrice financière et entrepreneure, Aïssata apporte son expérience de la gestion financière et de la comptabilité, notamment chez CBRE et Transdev.</p></article>
-        <article className="border-t border-dema-line pt-6"><h3 className="text-2xl font-medium">Oumou Gory</h3><p className="mt-2 text-sm text-dema-forest">Développement & opérations</p><p className="mt-5 max-w-lg text-base leading-7 text-dema-muted">Spécialiste du lancement et de la structuration de projets, Oumou a été directrice pays chez Heetch et consultante senior chez Deloitte et PwC.</p></article>
-      </div>
-    </section>
     <BuildTogetherSection /><ResourcesSection />
   </>;
 }
