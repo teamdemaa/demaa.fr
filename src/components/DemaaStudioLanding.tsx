@@ -29,15 +29,15 @@ function ContactSection() {
 }
 
 function ProjectCard({ project }: { project: DemaaStudioProject }) {
-  return <article className="group min-w-0">
-    <Link href={`/projets/${project.slug}`} className="block">
+  return <article className="min-w-0">
+    <div>
       <div className="relative aspect-[4/3] overflow-hidden bg-dema-sage">
-        {project.image ? <Image src={project.image} alt={project.imageAlt ?? project.name} fill sizes="(max-width: 639px) calc(100vw - 40px), (max-width: 1023px) 45vw, 380px" className="object-cover transition duration-500 group-hover:scale-[1.03]" /> : project.logo ? <div className="flex h-full items-center justify-center p-10"><Image src={project.logo} alt="" width={210} height={80} className="max-h-20 w-auto max-w-full object-contain" /></div> : <div className="flex h-full items-center justify-center p-8 font-serif text-4xl">{project.name}</div>}
+        {project.image ? <Image src={project.image} alt={project.imageAlt ?? project.name} fill sizes="(max-width: 639px) calc(100vw - 40px), (max-width: 1023px) 45vw, 380px" className="object-cover" /> : project.logo ? <div className="flex h-full items-center justify-center p-10"><Image src={project.logo} alt="" width={210} height={80} className="max-h-20 w-auto max-w-full object-contain" /></div> : <div className="flex h-full items-center justify-center p-8 font-serif text-4xl">{project.name}</div>}
       </div>
       <p className={`${eyebrowClass} mt-5`}>{project.pole}</p>
-      <div className="mt-2 flex items-center justify-between gap-4"><h3 className="text-2xl font-medium tracking-tight">{project.name}</h3><ArrowRight className="h-5 w-5 shrink-0 transition group-hover:translate-x-1" aria-hidden="true" /></div>
+      <div className="mt-2 flex items-center justify-between gap-4"><h3 className="text-2xl font-medium tracking-tight">{project.name}</h3></div>
       <p className="mt-3 text-sm leading-6 text-dema-muted">{project.summary}</p>
-    </Link>
+    </div>
   </article>;
 }
 
@@ -103,7 +103,7 @@ function ProjectsContent() {
   return <>
     <section className={sectionClass}><h1 className={`${titleClass} mt-5 max-w-4xl`}>Des entreprises que nous construisons.</h1></section>
     <section className={`${sectionClass} !pt-0`} aria-label="Projets du Studio"><div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">{DEMAA_PRIORITY_STUDIO_PROJECTS.map((project) => <ProjectCard key={project.slug} project={project} />)}</div></section>
-    <section className="border-t border-dema-line"><div className={sectionClass}><h2 className="text-3xl font-medium">Les autres projets</h2><div className="mt-8 grid gap-8 sm:grid-cols-2">{otherProjects.map((project) => <Link key={project.slug} href={`/projets/${project.slug}`} className="border-t border-dema-line pt-5"><h3 className="text-xl font-medium">{project.name}</h3><p className="mt-3 text-sm leading-6 text-dema-muted">{project.summary}</p></Link>)}</div></div></section>
+    <section className="border-t border-dema-line"><div className={sectionClass}><h2 className="text-3xl font-medium">Les autres projets</h2><div className="mt-8 grid gap-8 sm:grid-cols-2">{otherProjects.map((project) => <article key={project.slug} className="border-t border-dema-line pt-5"><h3 className="text-xl font-medium">{project.name}</h3><p className="mt-3 text-sm leading-6 text-dema-muted">{project.summary}</p></article>)}</div></div></section>
     <BuildTogetherSection /><ResourcesSection />
   </>;
 }
