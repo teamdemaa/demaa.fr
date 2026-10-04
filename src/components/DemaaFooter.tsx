@@ -5,6 +5,7 @@ import { DEMAA_DEFAULT_PUBLIC_PATH, DEMAA_RESOURCE_NAVIGATION } from "@/lib/dema
 const exploreLinks = [
   { label: "Studio", href: "/studio" },
   { label: "Nos projets", href: "/projets" },
+  { label: "L’équipe", href: "/equipe" },
   { label: "Construire avec nous", href: "/studio/opportunites" },
 ];
 
