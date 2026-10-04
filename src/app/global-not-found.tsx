@@ -53,7 +53,7 @@ const gambetta = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Page introuvable | Demaa",
+  title: "Page introuvable | DEMAA",
   description: "La page demandée n’existe pas ou a été déplacée.",
   metadataBase: new URL(getCanonicalOrigin()),
 };

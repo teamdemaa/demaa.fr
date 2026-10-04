@@ -3,8 +3,8 @@ import { LEGAL, LEGAL_COPY } from "@/lib/legal";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
 
 export const metadata = buildPublicPageMetadata({
-  title: "CGV - Demaa",
-  description: "Conditions générales de vente des prestations proposées par Demaa.",
+  title: "CGV - DEMAA",
+  description: "Conditions générales de vente des prestations proposées par DEMAA.",
   path: "/cgv",
 });
 
