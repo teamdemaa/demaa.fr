@@ -15,7 +15,11 @@ const definitions = [
 // A missing URL keeps announced episodes non-clickable until publication.
 const episodeTitles = ["La genèse du projet", "Stratégie", "Plan d’action", "Update 1", "Update 2", "Update 3"];
 export const LEARNING_PROJECT_SERIES = definitions.map((project, index) => {
-  const photo = landscapes[project.landscape];
+  const photo = project.slug === "tiimora" ? {
+    image: "/images/studio/tiimora-bureau.webp",
+    imageAlt: "Visuel Tiimora : bureau d’un cabinet comptable avec le suivi des clients à l’écran",
+    imageCaption: "", imageCredit: "", imageSource: "", imageProvider: "", imageLicense: null,
+  } : landscapes[project.landscape];
   return { ...project, number: index + 1, image: photo.image, imageAlt: photo.imageAlt,
     imageCaption: photo.imageCaption, imageCredit: photo.imageCredit, imageSource: photo.imageSource,
     imageProvider: photo.imageProvider, imageLicense: photo.imageLicense, episodes: episodeTitles.map((title, number): LearningEpisode => {
