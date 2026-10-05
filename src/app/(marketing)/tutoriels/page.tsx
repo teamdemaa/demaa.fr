@@ -1,10 +1,10 @@
-import Link from "next/link";
 import { publishedArticles } from "@/lib/publications.server";
 import LearningSubscription from "@/components/LearningSubscription";
 import ResourcesNavigation from "@/components/ResourcesNavigation";
 import Navbar from "@/components/Navbar";
 import AcademyPreviewLibrary from "@/components/AcademyPreviewLibrary";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
+import landscapes from "@/lib/academy-courses-data.json";
 import { getAcademyPreviewCards } from "@/lib/academy-preview-catalog";
 
 const title = "Apprentissages du Studio | DEMAA";
@@ -20,8 +20,17 @@ export const metadata = buildPublicPageMetadata({
 export const dynamic = "force-dynamic";
 
 export default async function TutorialsPage() {
-  const cards = getAcademyPreviewCards();
+  const projectCards = getAcademyPreviewCards();
   const studioArticles = (await publishedArticles()).filter(article => article.project === "demaa");
+  const studioCards = [1, 2, 0].flatMap(number => studioArticles.filter(article => article.number === number)).map((article, index) => ({
+    format: "Approche" as const, category: "", title: article.title,
+    href: `/tutoriels/demaa/${article.slug}`,
+    image: landscapes[[5, 4, 7][index]].image,
+    imageAlt: landscapes[[5, 4, 7][index]].imageAlt,
+    imageCaption: landscapes[[5, 4, 7][index]].imageCaption,
+    summary: "", searchTerms: [],
+  }));
+  const cards = [...projectCards, ...studioCards];
   return (
     <>
       <Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />
@@ -34,7 +43,6 @@ export default async function TutorialsPage() {
           </h1>
         </header>
         <AcademyPreviewLibrary cards={cards} showControls={false} />
-        {studioArticles.length > 0 && <section aria-labelledby="studio-learning-title" className="mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 lg:px-8"><h2 id="studio-learning-title" className="demaa-section-title mb-8 text-4xl sm:text-5xl">Dans le Studio</h2><div className="border-t border-dema-line">{[1, 2, 0].flatMap(number => studioArticles.filter(article => article.number === number)).map(article => <Link key={article.slug} href={`/tutoriels/demaa/${article.slug}`} className="flex items-center justify-between gap-6 border-b border-dema-line py-6 text-xl text-brand-blue sm:text-2xl"><span>{article.title}</span><span aria-hidden="true">→</span></Link>)}</div></section>}
         <div className="mx-auto max-w-4xl px-5 pb-16"><LearningSubscription /></div>
       </main>
     </>

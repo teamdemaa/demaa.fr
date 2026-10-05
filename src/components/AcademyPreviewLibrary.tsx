@@ -54,7 +54,7 @@ export default function AcademyPreviewLibrary({ cards, showControls = true }: { 
                     {card.imageCaption ? <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-4 pb-3 pt-8 text-right text-xs text-white/50">{card.imageCaption}</span> : null}
                   </div>
                   <div className="px-0.5 pt-4">
-                    <p className="text-[0.68rem] font-medium uppercase tracking-[0.12em] text-dema-forest/65">{card.format}{card.format === "Projet" ? " " : " · "}{card.category}</p>
+                    <p className="text-[0.68rem] font-medium uppercase tracking-[0.12em] text-dema-forest/65">{card.format}{card.category ? `${card.format === "Projet" ? " " : " · "}${card.category}` : ""}</p>
                     <h2 className="mt-2 text-xl font-normal leading-tight tracking-[-0.02em] text-brand-blue transition-colors group-hover:text-dema-forest sm:text-2xl">{card.title}</h2>
                     {card.format === "Projet" && <p className="mt-3 text-sm leading-6 text-dema-muted">{card.summary}</p>}
                   </div>
