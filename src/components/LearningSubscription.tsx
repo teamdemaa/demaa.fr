@@ -33,7 +33,7 @@ export default function LearningSubscription() {
     {state === "done" ? <p role="status" className="mt-6 text-dema-forest">Merci, votre inscription est confirmée.</p> : <form onSubmit={subscribe} aria-busy={state === "sending"} className="mt-6 w-full max-w-xl">
       <label className="sr-only" htmlFor="learning-email">Votre adresse e-mail</label>
       <div className="mt-2 flex flex-col gap-3 sm:flex-row">
-        <input id="learning-email" type="email" autoComplete="email" required value={email} onChange={event => setEmail(event.target.value)} className="min-h-12 min-w-0 flex-1 rounded-xl border border-dema-line bg-dema-paper px-4" placeholder="vous@exemple.fr" aria-describedby={error ? "learning-error" : undefined} />
+        <input id="learning-email" type="email" autoComplete="email" required value={email} onChange={event => setEmail(event.target.value)} className="min-h-12 min-w-0 flex-1 rounded-xl border border-dema-line bg-dema-paper px-4 transition-colors focus:border-dema-forest/60 focus-visible:outline-none!" placeholder="vous@exemple.fr" aria-describedby={error ? "learning-error" : undefined} />
         <button type="submit" disabled={state === "sending"} className="min-h-12 rounded-full bg-brand-blue px-6 text-sm font-medium text-dema-paper disabled:opacity-60">{state === "sending" ? "Inscription…" : "S’abonner"}</button>
       </div>
       <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true"><label htmlFor="learning-website">Site internet</label><input id="learning-website" tabIndex={-1} autoComplete="off" value={website} onChange={event => setWebsite(event.target.value)} /></div>
