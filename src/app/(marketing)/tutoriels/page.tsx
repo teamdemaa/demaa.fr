@@ -4,7 +4,7 @@ import ResourcesNavigation from "@/components/ResourcesNavigation";
 import Navbar from "@/components/Navbar";
 import AcademyPreviewLibrary from "@/components/AcademyPreviewLibrary";
 import { buildPublicPageMetadata } from "@/lib/public-page-metadata";
-import landscapes from "@/lib/academy-courses-data.json";
+import { getApproachLandscape } from "@/lib/academy-project-series";
 import { getAcademyPreviewCards } from "@/lib/academy-preview-catalog";
 
 const title = "Apprentissages du Studio | DEMAA";
@@ -25,9 +25,9 @@ export default async function TutorialsPage() {
   const studioCards = [1, 2, 0].flatMap(number => studioArticles.filter(article => article.number === number)).map((article) => ({
     format: "Approche" as const, category: "", title: article.title,
     href: `/tutoriels/demaa/${article.slug}`,
-    image: landscapes[({ 0: 7, 1: 5, 2: 4 } as Record<number, number>)[article.number]].image,
-    imageAlt: landscapes[({ 0: 7, 1: 5, 2: 4 } as Record<number, number>)[article.number]].imageAlt,
-    imageCaption: landscapes[({ 0: 7, 1: 5, 2: 4 } as Record<number, number>)[article.number]].imageCaption,
+    image: getApproachLandscape(article.number)!.image,
+    imageAlt: getApproachLandscape(article.number)!.imageAlt,
+    imageCaption: getApproachLandscape(article.number)!.imageCaption,
     summary: "", searchTerms: [],
   }));
   const cards = [...projectCards, ...studioCards];
