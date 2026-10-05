@@ -28,8 +28,8 @@ export default function LearningSubscription() {
     }
   }
 
-  return <section aria-label="S’abonner aux apprentissages" className="rounded-2xl bg-dema-sage/45 p-6 text-left sm:p-8">
-    <h2 className="demaa-section-title text-3xl leading-tight">Nos apprentissages, par e-mail.</h2>
+  return <section aria-label="S’abonner aux apprentissages" className="rounded-2xl bg-dema-sage/45 p-6 text-left [container-type:inline-size] sm:p-8">
+    <h2 className="demaa-section-title whitespace-nowrap text-[clamp(1rem,7cqw,1.875rem)] leading-tight">Nos apprentissages, par e-mail.</h2>
     {state === "done" ? <p role="status" className="mt-6 text-dema-forest">Merci, votre inscription est confirmée.</p> : <form onSubmit={subscribe} aria-busy={state === "sending"} className="mt-6 w-full max-w-xl">
       <label className="sr-only" htmlFor="learning-email">Votre adresse e-mail</label>
       <div className="mt-2 flex flex-col gap-3 sm:flex-row">
