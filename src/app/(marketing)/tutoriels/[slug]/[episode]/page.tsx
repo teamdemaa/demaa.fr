@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import PublicationArticleContent from "@/components/PublicationArticleContent";
+import PublicationReading from "@/components/PublicationReading";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import { publishedArticle } from "@/lib/publications.server";
@@ -43,8 +44,9 @@ export default async function EpisodePage({ params }: Props) {
           </figure>}
         </header>
         <div className="space-y-6 text-lg leading-8 text-brand-blue/85 sm:text-xl sm:leading-9">
-          <PublicationArticleContent text={article.text} />
+          <PublicationArticleContent text={article.text} framework={slug !== "demaa" && (article.number === 1 || article.number === 2) ? { kind: article.number === 1 ? "strategy" : "plan", project: slug } : undefined} />
         </div>
+        <PublicationReading project={slug} number={article.number} />
       </article>
     </main>
   </>;
