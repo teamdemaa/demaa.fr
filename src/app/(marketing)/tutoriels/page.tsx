@@ -20,7 +20,7 @@ export const metadata = buildPublicPageMetadata({
 export const dynamic = "force-dynamic";
 
 export default async function TutorialsPage() {
-  const cards = getAcademyPreviewCards();
+  const projectCards = getAcademyPreviewCards();
   const studioArticles = (await publishedArticles()).filter(article => article.project === "demaa");
   const studioCards = [1, 2, 0].flatMap(number => studioArticles.filter(article => article.number === number)).map((article, index) => ({
     format: "Studio" as const, category: "", title: article.title,
@@ -30,6 +30,7 @@ export default async function TutorialsPage() {
     imageCaption: landscapes[[3, 4, 9][index]].imageCaption,
     summary: "", searchTerms: [],
   }));
+  const cards = [...projectCards, ...studioCards];
   return (
     <>
       <Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />
@@ -41,7 +42,7 @@ export default async function TutorialsPage() {
             <span className="demaa-hero-title block text-dema-forest">nos apprentissages.</span>
           </h1>
         </header>
-        <AcademyPreviewLibrary cards={[...cards, ...studioCards]} showControls={false} />
+        <AcademyPreviewLibrary cards={cards} showControls={false} />
         <div className="mx-auto max-w-4xl px-5 pb-16"><LearningSubscription /></div>
       </main>
     </>
