@@ -62,7 +62,7 @@ export default function PublicationFrameworkMap({ kind, project }: { kind: "stra
   return <section aria-label={kind === "strategy" ? "Le cadre APOP" : "Les actions à tester"} className="my-8 rounded-2xl border border-[#d8c9ba] bg-[#f0e9df] p-4 text-brand-blue sm:p-6">
     <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
       <h2 className="text-lg font-medium">{kind === "strategy" ? "APOP | Cadre go-to-market" : "Le plan d’action"}</h2>
-      {kind === "strategy" && <span className="text-[10px] uppercase tracking-[0.15em] text-[#795642]">L’audience d’abord</span>}
+      {kind === "strategy" && <span className="text-[10px] uppercase tracking-[0.15em] text-[#795642]">Audience first</span>}
     </div>
     <ol className={`grid gap-3 ${kind === "strategy" ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
       {stages.map((stage, index) => <li key={stage.title} className="rounded-xl border border-[#d8c9ba] bg-[#faf7f2] p-4">
