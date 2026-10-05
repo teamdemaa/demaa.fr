@@ -3,20 +3,20 @@ import { createHash } from "node:crypto";
 import { getAdminFirestore, hasFirebaseAdminConfiguration } from "@/lib/firebase-admin";
 import { encodePublication, decodePublication } from "@/lib/publication-storage.server";
 import seeds from "@/lib/learning-episodes-data.json";
-import { DraftSchema, ArticleSchema, EPISODE_TITLES, PROJECTS, publicationSlot, type ArticleDraft, type Publication, type PublicationRecord } from "@/lib/publication-contract";
+import { DraftSchema, ArticleSchema, publicationTitles, PROJECTS, publicationSlot, type ArticleDraft, type Publication, type PublicationRecord } from "@/lib/publication-contract";
 
 export class PublicationConflict extends Error {}
 export function publicationRef(id: string) { return getAdminFirestore().collection("studioPublications").doc(id); }
 export function initialPublication(project: string, number: number): PublicationRecord {
   const slot = publicationSlot(project, number);
   const seed = seeds.find(s => s.project === project && s.number === number);
-  const draft = seed ? { title: seed.title, description: seed.description, text: seed.paragraphs.join("\n\n") } : { title: EPISODE_TITLES[number], description: "", text: "" };
+  const draft = seed ? { title: seed.title, description: seed.description, text: seed.paragraphs.join("\n\n") } : { title: publicationTitles(project)[number], description: "", text: "" };
   return { id: slot.id, project: slot.project, number, revision: 0, draft, published: seed ? { ...draft, ...slot, publishedAt: "2026-10-05T00:00:00.000Z" } : null };
 }
 export async function listPublications(): Promise<PublicationRecord[]> {
   const docs = hasFirebaseAdminConfiguration() ? await getAdminFirestore().collection("studioPublications").get() : null;
   const stored = new Map(docs?.docs.map(d => [d.id, decodePublication(d.id, d.data())]));
-  return PROJECTS.flatMap(project => EPISODE_TITLES.map((_, number) => stored.get(`${project}-${number}`) ?? initialPublication(project, number)));
+  return PROJECTS.flatMap(project => publicationTitles(project).map((_, number) => stored.get(`${project}-${number}`) ?? initialPublication(project, number)));
 }
 export async function publishedArticles(): Promise<Publication[]> {
   return (await listPublications()).flatMap(r => r.published ? [r.published] : []);

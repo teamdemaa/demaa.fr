@@ -20,7 +20,7 @@ beforeEach(() => {
 });
 describe("Studio publication lifecycle", () => {
   it("encrypts private records and rejects tampering or swapping document identities", () => {
-    const record = { ...initialPublication("dumaan", 1), draft };
+    const record = { ...initialPublication("dumaan", 3), draft };
     const stored = encodePublication(record);
     expect(JSON.stringify(stored)).not.toContain(draft.text);
     expect(decodePublication(record.id, stored)).toEqual(record);
@@ -28,15 +28,15 @@ describe("Studio publication lifecycle", () => {
     expect(() => decodePublication(record.id, { ...stored, payload: stored.payload.slice(0, -8) + "AAAAAAAA" })).toThrow();
   });
   it("never exposes a draft, keeps edits private, and withdraws without deleting content", async () => {
-    await changePublication({ project: "dumaan", number: 1, revision: 0, action: "save", draft }, "admin");
-    expect((await publishedArticles()).some(a => a.project === "dumaan")).toBe(false);
-    await changePublication({ project: "dumaan", number: 1, revision: 1, action: "publish" }, "admin");
-    await changePublication({ project: "dumaan", number: 1, revision: 2, action: "save", draft: { ...draft, title: "Nouvelle version privée" } }, "admin");
-    expect((await publishedArticles()).find(a => a.project === "dumaan")?.title).toBe(draft.title);
-    await changePublication({ project: "dumaan", number: 1, revision: 3, action: "unpublish" }, "admin");
-    expect((await publishedArticles()).some(a => a.project === "dumaan")).toBe(false);
-    expect(decodePublication("dumaan-1", fake.records.get("dumaan-1")!).draft).toEqual({ ...draft, title: "Nouvelle version privée" });
-    expect(fake.records.has("dumaan-1/history/4")).toBe(true);
+    await changePublication({ project: "dumaan", number: 3, revision: 0, action: "save", draft }, "admin");
+    expect((await publishedArticles()).some(a => a.project === "dumaan" && a.number === 3)).toBe(false);
+    await changePublication({ project: "dumaan", number: 3, revision: 1, action: "publish" }, "admin");
+    await changePublication({ project: "dumaan", number: 3, revision: 2, action: "save", draft: { ...draft, title: "Nouvelle version privée" } }, "admin");
+    expect((await publishedArticles()).find(a => a.project === "dumaan" && a.number === 3)?.title).toBe(draft.title);
+    await changePublication({ project: "dumaan", number: 3, revision: 3, action: "unpublish" }, "admin");
+    expect((await publishedArticles()).some(a => a.project === "dumaan" && a.number === 3)).toBe(false);
+    expect(decodePublication("dumaan-3", fake.records.get("dumaan-3")!).draft).toEqual({ ...draft, title: "Nouvelle version privée" });
+    expect(fake.records.has("dumaan-3/history/4")).toBe(true);
   });
   it("saves incomplete drafts but refuses their publication", async () => {
     const saved = await changePublication({ project: "dumaan", number: 0, revision: 0, action: "save", draft: { title: "", description: "", text: "Quelques notes" } }, "admin");
@@ -44,8 +44,8 @@ describe("Studio publication lifecycle", () => {
     await expect(changePublication({ project: "dumaan", number: 0, revision: 1, action: "publish" }, "admin")).rejects.toThrow();
   });
   it("rejects concurrent stale revisions", async () => {
-    await changePublication({ project: "dumaan", number: 1, revision: 0, action: "save", draft }, "admin");
-    await expect(changePublication({ project: "dumaan", number: 1, revision: 0, action: "save", draft }, "admin")).rejects.toBeInstanceOf(PublicationConflict);
+    await changePublication({ project: "dumaan", number: 3, revision: 0, action: "save", draft }, "admin");
+    await expect(changePublication({ project: "dumaan", number: 3, revision: 0, action: "save", draft }, "admin")).rejects.toBeInstanceOf(PublicationConflict);
   });
   it("rejects invalid slots and incomplete articles", () => {
     expect(() => publicationSlot("other", 0)).toThrow(); expect(() => publicationSlot("jago", -1)).toThrow(); expect(() => publicationSlot("jago", 6)).toThrow();
@@ -57,7 +57,7 @@ describe("Studio publication lifecycle", () => {
   });
   it("requires publication, preparation, test and explicit confirmation before sending", async () => {
     vi.stubGlobal("fetch", vi.fn());
-    await expect(runPublicationNewsletter("dumaan", 1, "test", "admin@example.com")).rejects.toThrow("Publie");
+    await expect(runPublicationNewsletter("dumaan", 3, "test", "admin@example.com")).rejects.toThrow("Publie");
     await expect(runPublicationNewsletter("jago", 0, "send", "admin@example.com")).rejects.toThrow("Confirme");
     await expect(runPublicationNewsletter("jago", 0, "send", "admin@example.com", "jago-0")).rejects.toThrow("Prépare");
     expect(fetch).not.toHaveBeenCalled();

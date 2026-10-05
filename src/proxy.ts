@@ -1,4 +1,4 @@
-import { EPISODE_SLUGS } from "@/lib/publication-contract";
+import { publicationRouteAllowed } from "@/lib/publication-contract";
 import { getLearningProjectSeries } from "@/lib/academy-project-series";
 import { NextResponse, type NextRequest } from "next/server";
 import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
@@ -124,7 +124,7 @@ export function studioProxy(request: NextRequest) {
   if (pathname.startsWith("/tutoriels/")) {
     const slug = pathname.slice("/tutoriels/".length);
     const [projectSlug, episodeSlug, extra] = slug.split("/");
-    const validEpisode = episodeSlug && !extra && getLearningProjectSeries(projectSlug) && EPISODE_SLUGS.some(slug => slug === episodeSlug);
+    const validEpisode = episodeSlug && !extra && publicationRouteAllowed(projectSlug, episodeSlug);
     if (!getLearningProjectSeries(slug) && !validEpisode) {
       return withContentSecurityPolicy(
         new NextResponse(null, {
