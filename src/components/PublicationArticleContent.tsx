@@ -9,6 +9,7 @@ export default function PublicationArticleContent({ text, framework }: { text: s
   const insertion = framework ? paragraphs.findIndex(p => p === (framework.kind === "strategy" ? "Audience" : "Attirer")) : -1;
   return <>{paragraphs.map((paragraph, i) => <Fragment key={i}>
     {framework && i === (insertion < 0 ? 1 : insertion) && <PublicationFrameworkMap {...framework} />}
+    {framework?.project === "demaa" && paragraph === "2. Le plan d’action" && <PublicationFrameworkMap kind="plan" project="demaa" />}
     {articleHeading(paragraph) ? <h2 className="pt-5 text-2xl font-medium leading-tight text-brand-blue sm:text-3xl">{paragraph}</h2> : <p><InlineText text={paragraph} /></p>}
   </Fragment>)}</>;
 }

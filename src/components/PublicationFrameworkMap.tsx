@@ -29,10 +29,36 @@ const apop: readonly Stage[] = [
   { title: "Promotion", items: ["Comment trouve-t-on nos clients ?", "Contenu et ressources utiles", "Publicité et partenariats", "Réseau et recommandations"] },
 ];
 
+const projectApop: Record<string, readonly Stage[]> = {
+  jago: [
+    { title: "Audience", items: ["Qui rencontre cette difficulté ?", "Boutiques, épiceries, revendeurs et e-commerçants", "Produits africains en gros, besoins récurrents", "Volumes et fréquence à comparer entre commerces"] },
+    { title: "Positionnement", items: ["Quelle promesse veut-on porter ?", "Faciliter l’approvisionnement en produits africains", "Fournisseurs adaptés à la demande", "Relation commerciale et commande accompagnées"] },
+    { title: "Offre", items: ["Qu’est-ce qu’on vend ? À quel prix ?", "Demande produit, quantité, fréquence et destination", "Tarifs et conditions clairs, suivi de commande", "Abonnement fournisseurs et modalités à tester"] },
+    { title: "Promotion", items: ["Comment trouve-t-on nos clients ?", "Réseau de boutiques et d’épiceries", "Introductions entre commerçants", "Partenariats avec réseaux de commerces"] },
+  ],
+  dumaan: [
+    { title: "Audience", items: ["Qui rencontre cette difficulté ?", "Familles et personnes actives", "Repas ouest-africains à la maison", "Temps disponible et préparations longues"] },
+    { title: "Positionnement", items: ["Quelle promesse veut-on porter ?", "Faciliter la préparation des repas du quotidien", "Prendre en charge les étapes les plus longues", "Garder les saveurs et le plaisir de cuisiner"] },
+    { title: "Offre", items: ["Qu’est-ce qu’on vend ? À quel prix ?", "Pastels prêts à cuire, légumes et bases de plats", "Préparations surgelées pour les familles", "Gamme, portions et prix à tester"] },
+    { title: "Promotion", items: ["Comment trouve-t-on nos clients ?", "Vidéo signature « On mange quoi ce soir ? »", "Publicité dès le démarrage", "Dégustations et relais locaux"] },
+  ],
+  tiimora: [
+    { title: "Audience", items: ["Qui rencontre cette difficulté ?", "Cabinets comptables de 3 à 20 salariés", "Demandes, documents, relances et échéances", "Deux cabinets pilotes pour observer les usages"] },
+    { title: "Positionnement", items: ["Quelle promesse veut-on porter ?", "Centraliser le suivi opérationnel du cabinet", "Autour des outils de production existants", "Moins de relances, plus de visibilité"] },
+    { title: "Offre", items: ["Qu’est-ce qu’on vend ? À quel prix ?", "Demandes clients et échéances", "Prix de test : 199 € par mois", "Installation accompagnée, frais à valider"] },
+    { title: "Promotion", items: ["Comment trouve-t-on nos clients ?", "Contenus et ressources pratiques sur LinkedIn", "Publicité LinkedIn dès le démarrage", "Consultants, formateurs et réseaux de cabinets"] },
+  ],
+};
+const genericPlan: readonly Stage[] = [
+  { title: "Attirer", items: ["Contenu signature, contenu utile", "Publicité, ressources pratiques, partenariats"] },
+  { title: "Convertir", items: ["Offre claire, page de présentation", "Preuves, cas clients, démo et suivi"] },
+  { title: "Fidéliser", items: ["Prise en main, première valeur obtenue", "Réponses aux questions, suivi des usages"] },
+];
+
 export default function PublicationFrameworkMap({ kind, project }: { kind: "strategy" | "plan"; project: string }) {
-  const stages = kind === "strategy" ? apop : plans[project];
+  const stages = kind === "strategy" ? (project === "demaa" ? apop : projectApop[project]) : (project === "demaa" ? genericPlan : plans[project]);
   if (!stages) return null;
-  const layers = transverse[project];
+  const layers = project === "demaa" ? ["Newsletter, contenus utiles, e-mails", "Avis, témoignages, introductions"] : transverse[project];
   return <section aria-label={kind === "strategy" ? "Le cadre APOP" : "Les actions à tester"} className="my-8 rounded-2xl border border-[#d8c9ba] bg-[#f0e9df] p-4 text-brand-blue sm:p-6">
     <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
       <h2 className="text-lg font-medium">{kind === "strategy" ? "APOP | Go-to-market framework" : "Le plan d’action"}</h2>
