@@ -50,7 +50,7 @@ function withContentSecurityPolicy(
   return response;
 }
 
-export function proxy(request: NextRequest) {
+export function studioProxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const host = request.headers.get("host")?.toLowerCase();
   const localeCode = getExplicitInterfaceLocaleFromPathname(pathname) ?? "fr";
@@ -167,6 +167,22 @@ export function proxy(request: NextRequest) {
   );
   if (isArchivedDemaaPublicPath(pathname)) {
     response.headers.set("X-Robots-Tag", "noindex, follow");
+  }
+  return response;
+}
+
+export async function proxy(request: NextRequest) {
+  const response = studioProxy(request);
+  if (response.headers.get("x-middleware-next") === "1") {
+    const match = request.nextUrl.pathname.match(/^\/tutoriels\/([^/]+)\/([^/]+)$/);
+    if (match) {
+      try {
+        const { publishedArticle } = await import("@/lib/publications.server");
+        if (!await publishedArticle(match[1], match[2])) return withContentSecurityPolicy(new NextResponse(null, { status: 404, headers: { "X-Robots-Tag": "noindex, nofollow" } }), "fr");
+      } catch {
+        return withContentSecurityPolicy(new NextResponse(null, { status: 503, headers: { "X-Robots-Tag": "noindex, nofollow", "Retry-After": "60" } }), "fr");
+      }
+    }
   }
   return response;
 }

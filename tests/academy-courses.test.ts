@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { proxy } from "@/proxy";
+import { studioProxy as proxy } from "@/proxy";
 import { describe, expect, it } from "vitest";
 import { readFile } from "node:fs/promises";
 import sharp from "sharp";
