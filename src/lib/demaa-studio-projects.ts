@@ -20,7 +20,7 @@ const primaryProjects: readonly DemaaStudioProject[] = [
     summary: "Des préparations ouest-africaines pour simplifier les repas du quotidien des familles.",
     problem: "Préparer les repas chaque soir demande du temps et de l’énergie aux familles.",
     solution: "Des préparations prêtes à cuisiner, avec des formats adaptés aux repas à la maison.",
-    image: "/images/studio/dumaan-restauration-v3.webp", imageAlt: "Visuel de concept Dumaan : livraison de grands conditionnements surgelés de pastels, mafé et légumes découpés à une restauratrice",
+    image: "/images/studio/dumaan-familles.webp", imageAlt: "Visuel de concept Dumaan : préparation de pastels au thon à la maison, avec un sachet Dumaan et une boisson à l’hibiscus",
   },
   {
     slug: "mnd", name: "MND", sector: "Média & commerce", pole: "Média & commerce", portfolio: "other", status: "En test",
