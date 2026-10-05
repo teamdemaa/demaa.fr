@@ -25,9 +25,9 @@ export default async function TutorialsPage() {
   const studioCards = [1, 2, 0].flatMap(number => studioArticles.filter(article => article.number === number)).map((article, index) => ({
     format: "Approche" as const, category: "", title: article.title,
     href: `/tutoriels/demaa/${article.slug}`,
-    image: landscapes[[3, 4, 9][index]].image,
-    imageAlt: landscapes[[3, 4, 9][index]].imageAlt,
-    imageCaption: landscapes[[3, 4, 9][index]].imageCaption,
+    image: landscapes[[5, 4, 9][index]].image,
+    imageAlt: landscapes[[5, 4, 9][index]].imageAlt,
+    imageCaption: landscapes[[5, 4, 9][index]].imageCaption,
     summary: "", searchTerms: [],
   }));
   const cards = [...projectCards, ...studioCards];
