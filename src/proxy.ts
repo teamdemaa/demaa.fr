@@ -1,3 +1,4 @@
+import { getLearningEpisode } from "@/lib/learning-episodes";
 import { getLearningProjectSeries } from "@/lib/academy-project-series";
 import { NextResponse, type NextRequest } from "next/server";
 import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
@@ -122,7 +123,9 @@ export function proxy(request: NextRequest) {
 
   if (pathname.startsWith("/tutoriels/")) {
     const slug = pathname.slice("/tutoriels/".length);
-    if (!getLearningProjectSeries(slug)) {
+    const [projectSlug, episodeSlug, extra] = slug.split("/");
+    const validEpisode = episodeSlug && !extra && getLearningEpisode(projectSlug, episodeSlug);
+    if (!getLearningProjectSeries(slug) && !validEpisode) {
       return withContentSecurityPolicy(
         new NextResponse(null, {
           status: 404,

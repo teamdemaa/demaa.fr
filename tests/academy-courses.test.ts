@@ -16,7 +16,7 @@ describe("Academy practical courses", () => {
     for (const project of LEARNING_PROJECT_SERIES) {
       expect(project.episodes.map(e => e.number)).toEqual([0, 1, 2, 3, 4, 5]);
       expect(project.episodes.map(e => e.title)).toEqual(["La genèse du projet", "Stratégie", "Plan d’action", "Update 1", "Update 2", "Update 3"]);
-      expect(project.episodes.every(e => !e.href)).toBe(true);
+      expect(project.episodes.filter(e => e.href).map(e => e.number)).toEqual(project.slug === "jago" ? [0] : []);
     }
     expect(new Set(archivedCourses.map(c => c.slug)).size).toBe(10);
     expect(getAcademyPreviewCards().map(c => c.href)).toEqual(LEARNING_PROJECT_SERIES.map(c => `/tutoriels/${c.slug}`));

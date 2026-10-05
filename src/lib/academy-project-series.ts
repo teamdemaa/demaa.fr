@@ -1,3 +1,4 @@
+import { PUBLISHED_LEARNING_EPISODES } from "@/lib/learning-episodes";
 import landscapes from "@/lib/academy-courses-data.json";
 
 export type LearningEpisode = Readonly<{ number: number; title: string; href?: string }>;
@@ -13,7 +14,10 @@ export const LEARNING_PROJECT_SERIES = definitions.map((project, index) => {
   const photo = landscapes[project.landscape];
   return { ...project, number: index + 1, image: photo.image, imageAlt: photo.imageAlt,
     imageCaption: photo.imageCaption, imageCredit: photo.imageCredit, imageSource: photo.imageSource,
-    imageProvider: photo.imageProvider, imageLicense: photo.imageLicense, episodes: episodeTitles.map((title, index): LearningEpisode => ({ number: index, title })) };
+    imageProvider: photo.imageProvider, imageLicense: photo.imageLicense, episodes: episodeTitles.map((title, number): LearningEpisode => {
+      const article = PUBLISHED_LEARNING_EPISODES.find(article => article.project === project.slug && article.number === number);
+      return { number, title, ...(article ? { href: `/tutoriels/${project.slug}/${article.slug}` } : {}) };
+    }) };
 });
 export type LearningProjectSeries = (typeof LEARNING_PROJECT_SERIES)[number];
 export function getLearningProjectSeries(slug: string) {
