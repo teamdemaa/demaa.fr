@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 const SECTIONS = [
+  { href: "/admin/publications", label: "Publications", description: "Écrire les épisodes, les publier et préparer leur newsletter." },
   {
     href: "/admin/demandes",
     label: "Demandes",

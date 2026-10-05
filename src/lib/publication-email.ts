@@ -1,0 +1,7 @@
+import { articleParagraphs, type Publication } from "@/lib/publication-contract";
+export function escapePublicationHtml(value: string) { return value.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!); }
+export function publicationEmail(article: Publication, test = false) {
+  const url = `https://demaa.fr/tutoriels/${article.project}/${article.slug}`;
+  const unsubscribe = test ? '<span>Aperçu de test : le lien de désinscription sera ajouté par Resend lors de l’envoi aux abonnés.</span>' : '<a href="{{{RESEND_UNSUBSCRIBE_URL}}}">Se désinscrire</a>';
+  return { subject: article.title, text: `${article.title}\n\n${article.text}\n\nLire sur DEMAA : ${url}\n\n${test ? "E-mail de test." : "Désinscription : {{{RESEND_UNSUBSCRIBE_URL}}}"}`, html: `<div style="background:#f5f1e9;padding:32px 20px;color:#191712"><div style="max-width:620px;margin:auto;font-family:Arial,sans-serif;font-size:16px;line-height:1.8"><p style="letter-spacing:2px">DEMAA · ${escapePublicationHtml(article.project.toUpperCase())} · EP${String(article.number).padStart(2, "0")}</p><h1 style="font-family:Georgia,serif;font-weight:normal;font-size:36px">${escapePublicationHtml(article.title)}</h1>${articleParagraphs(article.text).map(p => `<p>${escapePublicationHtml(p).replace(/\n/g, "<br>")}</p>`).join("")}<p><a href="${url}" style="color:#191712">Lire sur DEMAA →</a></p><p style="font-size:12px;color:#777">${unsubscribe}</p></div></div>` };
+}

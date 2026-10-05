@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { NextRequest } from "next/server";
 
-import { proxy } from "@/proxy";
+import { studioProxy as proxy } from "@/proxy";
 import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
 
 const originalVercelEnv = process.env.VERCEL_ENV;

@@ -2,7 +2,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { NextRequest } from "next/server";
-import { proxy } from "@/proxy";
+import { studioProxy as proxy } from "@/proxy";
 import { getPublishedCopyableModelRouteParams } from "@/lib/copyable-model-catalog";
 import { ARCHIVED_STUDIO_PROJECTS } from "@/lib/demaa-studio-archive";
 import { DEMAA_STUDIO_PROJECTS, DEMAA_PUBLISHED_STUDIO_PROJECTS, DEMAA_PRIORITY_STUDIO_PROJECTS, getDemaaStudioProject } from "@/lib/demaa-studio-projects";
