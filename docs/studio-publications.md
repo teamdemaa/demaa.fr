@@ -28,6 +28,17 @@ Un retour de déploiement conserve les données Firebase. Revenir à une version
 
 ## Périmètre
 
-Jago, Dumaan et Tiimora : EP00 à EP05. Jago EP00 est amorcé par le texte validé Pourquoi Jago existe.
-Texte simple, sans éditeur riche ni médias incorporés. Les visuels existants des projets sont conservés.
+Jago, Dumaan et Tiimora : EP00 à EP05. Genèse, stratégie et plan d’action sont amorcés par les neuf articles prêts de la base Notion Contenus éditoriaux DEMAA. Update 1 à 3 restent indisponibles.
+Une rubrique Le Studio dans l’éditeur gère trois articles transversaux : Pourquoi on construit DEMAA, Notre système Go-to-Market, Comment on pilote notre exécution dans Airtable.
+Texte avec paragraphes, gras **Markdown**, retours à la ligne et intertitres des cadres GTM ; sans éditeur riche ni médias incorporés. Les visuels existants des projets sont conservés.
 Publication et diffusion sont deux actions distinctes. Aucune diffusion aux abonnés n’est effectuée pendant la livraison.
+
+## Import Notion du 5 octobre 2026
+
+Source : base Contenus éditoriaux DEMAA, collection 9c4c24da-4635-462d-b323-21936ff9071f, vue Ordre de publication (Ordre ≤ 12).
+Douze articles Prêt repris, à partir de la propriété Article. Les posts LinkedIn ne sont pas publiés sur le site.
+Les anciennes versions de la page parent et Archive — Où suivre la suite des projets ne sont pas importées.
+Les sourceUrl/sourceImportedAt de chaque article figurent dans learning-episodes-data.json pour traçabilité ; seuls titre, résumé et contenu sont affichés.
+L’import amorce les versions initiales, sans écraser les révisions déjà enregistrées dans Firebase. Il n’y a pas de synchronisation automatique avec Notion.
+Le titre de la propriété Contenu prévaut pour les articles du Studio ; cela harmonise Comment on pilote notre exécution dans Airtable avec le libellé demandé.
+Aucune base Airtable privée ni capture de données clients n’est publiée.
