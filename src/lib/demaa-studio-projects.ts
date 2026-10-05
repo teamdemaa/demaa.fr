@@ -85,7 +85,7 @@ export const DEMAA_STUDIO_PROJECTS: readonly DemaaStudioProject[] = [
 ];
 
 export const DEMAA_PUBLISHED_STUDIO_PROJECTS = DEMAA_STUDIO_PROJECTS.filter(({ portfolio }) => portfolio !== "archive");
-export const DEMAA_PRIORITY_STUDIO_PROJECTS = ["jagoya", "dumaan-food", "tiimora"].map(slug => primaryProjects.find(project => project.slug === slug)!);
+export const DEMAA_PRIORITY_STUDIO_PROJECTS = ["jagoya", "tiimora", "dumaan-food"].map(slug => primaryProjects.find(project => project.slug === slug)!);
 export const DEMAA_STUDIO_POLES = ["Tech & services", "Concepts franchisés", "E-commerce", "Immobilier"] as const;
 
 export function getDemaaStudioProject(slug: string) {

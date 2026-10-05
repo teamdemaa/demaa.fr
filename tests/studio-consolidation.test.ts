@@ -19,7 +19,7 @@ describe("Studio consolidation publication", () => {
     expect(getDemaaStudioProject("awamali")).toBeUndefined();
     expect(getDemaaStudioProject("unknown-project")).toBeUndefined();
     expect(getDemaaStudioProject("jagoya")?.name).toBe("Jago");
-    expect(DEMAA_PRIORITY_STUDIO_PROJECTS.map(({ name }) => name)).toEqual(["Jago", "Dumaan", "Tiimora"]);
+    expect(DEMAA_PRIORITY_STUDIO_PROJECTS.map(({ name }) => name)).toEqual(["Jago", "Tiimora", "Dumaan"]);
   });
 
   it("keeps three public universes and retires the accompaniment offer", () => {

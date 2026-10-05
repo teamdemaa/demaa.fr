@@ -184,7 +184,7 @@
       "Recommandation",
       "Une famille satisfaite peut faire découvrir Dumaan à ses proches.",
       "On regardera si ces recommandations amènent de nouveaux essais, puis de nouveaux achats.",
-      "Les résultats de ce premier test guideront la suite. Les restaurants et traiteurs restent une possibilité à explorer plus tard."
+      "Les retours sur les premiers repas et les nouvelles commandes guideront les prochains formats et produits."
     ],
     "sourceUrl": "https://app.notion.com/p/3f007d787523818298e6c7843a278053",
     "sourceImportedAt": "2026-10-05",
@@ -198,13 +198,13 @@
     "description": "Du travail avec les cabinets comptables aux premiers pilotes : pourquoi Tiimora se concentre sur les demandes clients et les échéances.",
     "paragraphs": [
       "Tiimora vient directement du travail qu’on fait avec des cabinets d’expertise comptable.",
-      "On les accompagne sur des sujets de structuration, de process et d’organisation. Et assez vite, on s’est rendu compte qu’une partie importante de leur charge quotidienne ne venait pas uniquement de la production comptable, mais de tout ce qu’il y a autour.",
+      "On les accompagne sur des sujets de structuration, de processus et d’organisation. Et assez vite, on s’est rendu compte qu’une partie importante de leur charge quotidienne ne venait pas uniquement de la production comptable, mais de tout ce qu’il y a autour.",
       "Demander les bonnes informations aux clients, récupérer les documents, relancer, suivre les échéances, répartir les tâches, vérifier ce qui a été fait et ne rien oublier.",
       "Une seule relance ne représente pas grand-chose. Mais répétée sur des dizaines ou des centaines de dossiers, elle finit par prendre beaucoup de temps et surtout beaucoup de place dans la tête.",
       "Avant de penser à construire un logiciel, on a commencé par bricoler des systèmes avec Airtable, Fillout, Make et d’autres outils. On automatisait certaines relances, on créait des formulaires, on centralisait des informations et on essayait surtout d’éviter que tout repose sur la mémoire d’une personne.",
       "Et les mêmes besoins revenaient d’un cabinet à l’autre.",
       "Pendant ce temps, les outils de production comptable ont beaucoup évolué. Des solutions comme Pennylane couvrent très bien une grande partie de la production, mais cela ne fait pas disparaître tout ce qui se passe autour.",
-      "Un cabinet peut avoir un très bon outil comptable et continuer à gérer ses relances, certaines demandes clients, ses tâches ou ses process entre les mails, les tableaux, l’agenda, WhatsApp et la mémoire des collaborateurs.",
+      "Un cabinet peut avoir un très bon outil comptable et continuer à gérer ses relances, certaines demandes clients, ses tâches ou ses processus entre les mails, les tableaux, l’agenda, WhatsApp et la mémoire des collaborateurs.",
       "C’est cet espace que Tiimora cherche à couvrir.",
       "On commence volontairement avec un périmètre assez resserré : les demandes clients et les échéances.",
       "La première promesse est simple : moins de relances faites à la main, moins de choses à garder en tête et plus de visibilité sur ce qui doit être fait.",
@@ -232,9 +232,8 @@
       "Pris séparément, ce ne sont pas de gros problèmes. Répétés sur des dizaines ou des centaines de dossiers, ils prennent du temps et créent de la charge mentale.",
       "Deux cabinets pilotes testent déjà Tiimora, ce qui nous permet de confronter cette hypothèse à des usages réels.",
       "Positionnement",
-      "**Pour les cabinets d’expertise comptable de 3 à 20 salariés qui perdent du temps dans les relances clients et le suivi des échéances, Tiimora est un logiciel opérationnel qui centralise et automatise une partie de ce travail autour des outils de production comptable existants. Contrairement à un suivi dispersé entre mails, tableaux, agendas, messages et mémoire des collaborateurs, Tiimora rassemble cette couche opérationnelle dans un même système.**",
-      "Tiimora ne cherche pas à remplacer Pennylane, Silae ou les autres outils métier.",
-      "Il vient autour.",
+      "Tiimora aide les cabinets comptables de 3 à 20 salariés à suivre les demandes clients, les documents et les échéances au même endroit, avec leurs outils de production habituels.",
+      "Il centralise le suivi opérationnel et automatise une partie des relances, en complément de Pennylane, Silae et des autres outils métier.",
       "La promesse de départ est simple : moins de relances manuelles, moins de choses à garder en tête, plus de visibilité.",
       "Offre",
       "Qu’est-ce qu’on propose aujourd’hui ?",
@@ -290,9 +289,7 @@
       "La confiance compte beaucoup dans ce marché.",
       "Un cabinet pilote, un client satisfait ou un partenaire de confiance peut créer une introduction beaucoup plus forte qu’un message froid.",
       "On veut donc prendre chaque bonne interaction au sérieux, même quand elle ne débouche pas immédiatement sur une vente.",
-      "Ce qu’on veut valider au départ tient en quelques questions :",
-      "- est-ce que le problème déclenche réellement une décision d’achat ?\n- est-ce que le cabinet adopte le produit ?\n- quels usages deviennent récurrents ?\n- quel niveau de prix et d’accompagnement est acceptable ?",
-      "C’est à partir de ces réponses qu’on élargira le produit et le go-to-market."
+      "On suit le passage des ressources au diagnostic, puis à l’installation, et l’utilisation régulière du premier processus. Les retours des cabinets permettent d’ajuster l’accompagnement et de choisir les prochains usages à développer."
     ],
     "sourceUrl": "https://app.notion.com/p/3f007d78752381f59c14ceb5cce8d131",
     "sourceImportedAt": "2026-10-05",
@@ -331,7 +328,7 @@
       "Cette première série nous a permis de poser Jago, Tiimora et Dumaan, leurs stratégies go-to-market, leurs plans d’action et la manière dont on organise les tests derrière.",
       "À partir de maintenant, on va surtout construire.",
       "Les mises à jour détaillées seront regroupées sur le site DEMAA : ce qui avance, ce qui change, les résultats des tests et les décisions importantes.",
-      "Sur LinkedIn, je reviendrai surtout lorsqu’il y aura quelque chose d’utile à partager : un résultat, un changement d’hypothèse, un besoin, un recrutement, un partenaire que l’on cherche ou un apprentissage qui mérite d’être rendu public."
+      "Sur LinkedIn, on reviendra surtout lorsqu’il y aura quelque chose d’utile à partager : un résultat, un changement d’hypothèse, un besoin, un recrutement, un partenaire que l’on cherche ou un apprentissage qui mérite d’être rendu public."
     ],
     "sourceUrl": "https://app.notion.com/p/3f007d78752381d28759df2b4d98c738",
     "sourceImportedAt": "2026-10-05",

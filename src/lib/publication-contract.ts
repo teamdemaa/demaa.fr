@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const PROJECTS = ["jago", "dumaan", "tiimora", "demaa"] as const;
+export const PROJECTS = ["jago", "tiimora", "dumaan", "demaa"] as const;
 export const EPISODE_TITLES = ["La genèse du projet", "Stratégie", "Plan d’action", "Update 1", "Update 2", "Update 3"] as const;
 export const EPISODE_SLUGS = ["la-genese", "strategie", "plan-action", "update-1", "update-2", "update-3"] as const;
 export const DraftSchema = z.object({
