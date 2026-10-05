@@ -22,7 +22,7 @@ export const dynamic = "force-dynamic";
 export default async function TutorialsPage() {
   const projectCards = getAcademyPreviewCards();
   const studioArticles = (await publishedArticles()).filter(article => article.project === "demaa");
-  const studioCards = [1, 2, 0].flatMap(number => studioArticles.filter(article => article.number === number)).map((article) => ({
+  const studioCards = [0, 1, 2].flatMap(number => studioArticles.filter(article => article.number === number)).map((article) => ({
     format: "Approche" as const, category: "", title: article.title,
     href: `/tutoriels/demaa/${article.slug}`,
     image: getApproachLandscape(article.number)!.image,
@@ -30,7 +30,7 @@ export default async function TutorialsPage() {
     imageCaption: getApproachLandscape(article.number)!.imageCaption,
     summary: "", searchTerms: [],
   }));
-  const cards = [...projectCards, ...studioCards];
+  const cards = [...studioCards, ...projectCards];
   return (
     <>
       <Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />
