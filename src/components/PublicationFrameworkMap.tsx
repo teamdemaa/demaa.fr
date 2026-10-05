@@ -43,7 +43,7 @@ export default function PublicationFrameworkMap({ kind, project }: { kind: "stra
         <span aria-hidden="true" className="text-xs text-[#795642]">{kind === "strategy" ? ["A", "P", "O", "P"][index] : `0${index + 1}`}</span>
         <h3 className="mt-1 text-base font-medium">{stage.title}</h3>
         {kind === "plan" && <p className="mt-3 border-b border-[#d8c9ba] pb-3 text-base font-medium leading-6">{["Créer l’attention et la confiance", "Faciliter la décision", "Délivrer la promesse et donner envie de rester"][index]}</p>}
-        {kind === "strategy" && <p className="mt-3 border-b border-[#d8c9ba] pb-3 text-base font-medium leading-6">{stage.items[0]}</p>}
+        {kind === "strategy" && <p className="mt-3 border-b border-[#d8c9ba] pb-3 text-base font-normal leading-6 text-brand-blue/65">{stage.items[0]}</p>}
         <ul className="mt-3 list-disc space-y-2 pl-4 text-base leading-6 text-brand-blue/80">{(kind === "strategy" ? stage.items.slice(1) : stage.items).map(item => <li key={item}>{item}</li>)}</ul>
       </li>)}
     </ol>
