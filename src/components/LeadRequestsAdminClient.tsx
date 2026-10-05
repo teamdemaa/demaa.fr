@@ -150,6 +150,7 @@ export default function LeadRequestsAdminClient() {
             ))}
           </select>
         </label>
+        <Link href="/admin/publications" className="inline-flex min-h-10 items-center rounded-full border border-dema-line bg-white px-4 text-sm text-dema-forest">Publications</Link>
         <Link href="/admin/opportunites" className="ml-auto inline-flex min-h-10 items-center rounded-full border border-dema-line bg-white px-4 text-sm text-dema-forest">
           Annonces
         </Link>

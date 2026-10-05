@@ -83,6 +83,9 @@ export async function syncResendNewsletterContact(input: { email: string }) {
     unsubscribed: false,
   });
 
+  const segmentId = process.env.RESEND_NEWSLETTER_SEGMENT_ID?.trim();
+  if (segmentId) await resendRequest(`/contacts/${encodeURIComponent(email)}/segments/${encodeURIComponent(segmentId)}`, { method: "POST" });
+
   return { email };
 }
 

@@ -1,4 +1,4 @@
-import { PUBLISHED_LEARNING_EPISODES } from "@/lib/learning-episodes";
+import { publishedArticles } from "@/lib/publications.server";
 import { LEARNING_PROJECT_SERIES } from "@/lib/academy-project-series";
 import type { MetadataRoute } from "next";
 import { getCanonicalBaseUrl } from "@/lib/site-url";
@@ -26,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/studio/opportunites`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/tutoriels`, changeFrequency: "monthly", priority: 0.8 },
     ...LEARNING_PROJECT_SERIES.map(project => ({ url: `${base}/tutoriels/${project.slug}`, changeFrequency: "monthly" as const, priority: 0.7 })),
-    ...PUBLISHED_LEARNING_EPISODES.map(article => ({ url: `${base}/tutoriels/${article.project}/${article.slug}`, changeFrequency: "monthly" as const, priority: 0.7 })),
+    ...(await publishedArticles()).map(article => ({ url: `${base}/tutoriels/${article.project}/${article.slug}`, changeFrequency: "monthly" as const, priority: 0.7 })),
     ...staticRoutes,
   ];
 }
