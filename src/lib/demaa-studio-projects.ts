@@ -16,10 +16,10 @@ const primaryProjects: readonly DemaaStudioProject[] = [
     image: "/images/studio/tiimora-v3.webp", imageAlt: "Interface actuelle de Tiimora sur ordinateur et mobile, avec des données de démonstration",
   },
   {
-    slug: "dumaan-food", name: "Dumaan", sector: "Restauration professionnelle", pole: "Alimentation B2B", portfolio: "priority", status: "En test",
-    summary: "Des pastels, préparations de mafé et légumes découpés surgelés pour les restaurants et traiteurs.",
-    problem: "La préparation de recettes ouest-africaines demande du temps et une régularité d’approvisionnement que les équipes doivent assurer chaque semaine.",
-    solution: "Des pastels, préparations de mafé et légumes découpés surgelés, conditionnés pour les cuisines professionnelles.",
+    slug: "dumaan-food", name: "Dumaan", sector: "Repas du quotidien", pole: "Alimentation", portfolio: "priority", status: "En test",
+    summary: "Des préparations ouest-africaines pour simplifier les repas du quotidien des familles.",
+    problem: "Préparer les repas chaque soir demande du temps et de l’énergie aux familles.",
+    solution: "Des préparations prêtes à cuisiner, avec des formats adaptés aux repas à la maison.",
     image: "/images/studio/dumaan-restauration-v3.webp", imageAlt: "Visuel de concept Dumaan : livraison de grands conditionnements surgelés de pastels, mafé et légumes découpés à une restauratrice",
   },
   {
@@ -31,10 +31,10 @@ const primaryProjects: readonly DemaaStudioProject[] = [
   },
   {
     slug: "jagoya", name: "Jago", sector: "Commerce B2B", pole: "Tech & services", portfolio: "priority", status: "En test",
-    summary: "Une plateforme de vente en gros qui relie les marques africaines aux revendeurs.",
-    problem: "Les marques africaines accèdent difficilement aux revendeurs et doivent organiser seules la présentation de leur offre et les commandes.",
-    solution: "Une plateforme B2B pour découvrir les marques, comparer leurs produits et commander en gros.",
-    image: "/images/studio/jago.webp", imageAlt: "Visuel de concept Jago : présentation de produits africains et d’un catalogue B2B",
+    summary: "Un service d’approvisionnement en produits africains en gros pour les boutiques, épiceries et revendeurs.",
+    problem: "Trouver les produits et les fournisseurs adaptés, puis organiser une commande en gros, demande de nombreux échanges.",
+    solution: "Jago recueille les besoins, recherche les fournisseurs adaptés et gère la relation commerciale et le suivi des commandes.",
+    image: "/images/studio/jago-approvisionnement.webp", imageAlt: "Visuel Jago : rangement de produits africains dans une réserve professionnelle",
   },
   {
     slug: "tendera", name: "Tendera", sector: "BTP", pole: "Tech & services", portfolio: "pipeline", status: "Concept en préparation",

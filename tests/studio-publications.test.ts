@@ -19,6 +19,14 @@ beforeEach(() => {
   vi.stubEnv("RESEND_API_KEY", "test"); vi.stubEnv("RESEND_FROM_EMAIL", "test@example.com"); vi.stubEnv("RESEND_NEWSLETTER_SEGMENT_ID", "segment-newsletter");
 });
 describe("Studio publication lifecycle", () => {
+  it("hides the Studio GTM article while retaining its editable publication", async () => {
+    const record = initialPublication("demaa", 1);
+    expect(record.published).not.toBeNull();
+    fake.records.set(record.id, encodePublication(record));
+    expect((await publishedArticles()).some(a => a.project === "demaa" && a.number === 1)).toBe(false);
+    expect(decodePublication(record.id, fake.records.get(record.id)!).published).toEqual(record.published);
+    expect((await publishedArticles()).some(a => a.project === "jago" && a.number === 1)).toBe(true);
+  });
   it("encrypts private records and rejects tampering or swapping document identities", () => {
     const record = { ...initialPublication("dumaan", 3), draft };
     const stored = encodePublication(record);
