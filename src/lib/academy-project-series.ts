@@ -3,8 +3,8 @@ import landscapes from "@/lib/academy-courses-data.json";
 
 export type LearningEpisode = Readonly<{ number: number; title: string; href?: string }>;
 const definitions = [
-  { slug: "jago", name: "Jago", description: "Relier les acheteurs professionnels aux fournisseurs de produits africains en gros.", landscape: 0 },
-  { slug: "dumaan", name: "Dumaan", description: "Faire gagner du temps sur les préparations ouest-africaines, pour les familles et les professionnels.", landscape: 2 },
+  { slug: "jago", name: "Jago", description: "Faciliter l’approvisionnement en produits africains des boutiques, épiceries et revendeurs.", landscape: 0 },
+  { slug: "dumaan", name: "Dumaan", description: "Simplifier les repas du quotidien avec des préparations ouest-africaines pour les familles.", landscape: 2 },
   { slug: "tiimora", name: "Tiimora", description: "Réunir les clients, les demandes, les documents et les échéances des cabinets comptables.", landscape: 1 },
 ];
 
