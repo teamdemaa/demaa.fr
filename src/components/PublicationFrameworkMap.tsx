@@ -23,10 +23,10 @@ const transverse: Record<string, readonly [string, string]> = {
   dumaan: ["Menus de la semaine, idées de repas", "Bouche-à-oreille, parrainage"],
 };
 const apop: readonly Stage[] = [
-  { title: "Audience", items: ["Qui rencontre cette difficulté ?", "Segment prioritaire", "Contexte et besoins", "Difficulté et signaux de demande"] },
-  { title: "Positionnement", items: ["Quelle promesse veut-on porter ?", "Problème prioritaire", "Résultat attendu et différence", "Message clé"] },
-  { title: "Offre", items: ["Qu’est-ce qu’on vend ? À quel prix ?", "Produit et périmètre", "Prix et modalités", "Preuves et réassurance"] },
-  { title: "Promotion", items: ["Comment trouve-t-on nos clients ?", "Contenu et ressources utiles", "Publicité et partenariats", "Réseau et recommandations"] },
+  { title: "Audience", items: ["Qui rencontre cette difficulté ?", "Préciser les segments à tester", "Décrire le contexte et le problème", "Identifier les signes de demande"] },
+  { title: "Positionnement", items: ["Quelle promesse veut-on porter ?", "Formuler le résultat attendu", "Décrire les alternatives actuelles", "Préciser la valeur et la différence"] },
+  { title: "Offre", items: ["Qu’est-ce qu’on vend ? À quel prix ?", "Définir le produit et l’accompagnement", "Préciser le prix et les conditions", "Identifier les preuves à apporter"] },
+  { title: "Promotion", items: ["Comment trouve-t-on nos clients ?", "Choisir les canaux adaptés à l’audience", "Préciser le rôle du contenu, du réseau et des partenaires", "Définir les premiers tests de diffusion"] },
 ];
 
 const projectApop: Record<string, readonly Stage[]> = {
@@ -50,15 +50,15 @@ const projectApop: Record<string, readonly Stage[]> = {
   ],
 };
 const genericPlan: readonly Stage[] = [
-  { title: "Attirer", items: ["Contenu signature, contenu utile", "Publicité, ressources pratiques, partenariats"] },
-  { title: "Convertir", items: ["Offre claire, page de présentation", "Preuves, cas clients, démo et suivi"] },
-  { title: "Fidéliser", items: ["Prise en main, première valeur obtenue", "Réponses aux questions, suivi des usages"] },
+  { title: "Attirer", items: ["Comment toucher les bonnes personnes ?", "Préciser le contenu, les canaux et les partenaires", "Choisir les premières actions et leur rythme"] },
+  { title: "Convertir", items: ["Quelle prochaine étape proposer ?", "Définir une offre claire et les preuves utiles", "Préciser le parcours : demande, démo ou commande"] },
+  { title: "Fidéliser", items: ["Comment donner envie de revenir ?", "Prévoir la prise en main et les réponses aux questions", "Définir le suivi de l’usage, de la satisfaction et du réachat"] },
 ];
 
 export default function PublicationFrameworkMap({ kind, project }: { kind: "strategy" | "plan"; project: string }) {
   const stages = kind === "strategy" ? (project === "demaa" ? apop : projectApop[project]) : (project === "demaa" ? genericPlan : plans[project]);
   if (!stages) return null;
-  const layers = project === "demaa" ? ["Newsletter, contenus utiles, e-mails", "Avis, témoignages, introductions"] : transverse[project];
+  const layers = project === "demaa" ? ["Comment rester utile avant, pendant et après l’achat ? Préciser les contenus et les moments de contact.", "Comment faciliter les recommandations ? Préciser les occasions de recueillir des avis et des introductions."] : transverse[project];
   return <section aria-label={kind === "strategy" ? "Le cadre APOP" : "Les actions à tester"} className="my-8 rounded-2xl border border-[#d8c9ba] bg-[#f0e9df] p-4 text-brand-blue sm:p-6">
     <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
       <h2 className="text-lg font-medium">{kind === "strategy" ? "APOP | Go-to-market framework" : "Le plan d’action"}</h2>
@@ -68,7 +68,7 @@ export default function PublicationFrameworkMap({ kind, project }: { kind: "stra
       {stages.map((stage, index) => <li key={stage.title} className="rounded-xl border border-[#d8c9ba] bg-[#faf7f2] p-4">
         <span aria-hidden="true" className="text-xs text-[#795642]">{kind === "strategy" ? ["A", "P", "O", "P"][index] : `0${index + 1}`}</span>
         <h3 className="mt-1 text-base font-medium">{stage.title}</h3>
-        {kind === "plan" && <p className="mt-3 border-b border-[#d8c9ba] pb-3 text-base font-medium leading-6">{["Créer l’attention et la confiance", "Faciliter la décision", "Délivrer la promesse et donner envie de rester"][index]}</p>}
+        {kind === "plan" && project !== "demaa" && <p className="mt-3 border-b border-[#d8c9ba] pb-3 text-base font-medium leading-6">{["Créer l’attention et la confiance", "Faciliter la décision", "Délivrer la promesse et donner envie de rester"][index]}</p>}
         {kind === "strategy" && <p className="mt-3 border-b border-[#d8c9ba] pb-3 text-base font-normal leading-6 text-brand-blue/65">{stage.items[0]}</p>}
         <ul className="mt-3 list-disc space-y-2 pl-4 text-base leading-6 text-brand-blue/80">{(kind === "strategy" ? stage.items.slice(1) : stage.items).map(item => <li key={item}>{item}</li>)}</ul>
       </li>)}
