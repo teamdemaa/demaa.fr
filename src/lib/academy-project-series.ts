@@ -8,12 +8,12 @@ const definitions = [
 ];
 
 // A missing URL keeps announced episodes non-clickable until publication.
-const episodeTitles = ["Stratégie", "Plan d’action", "Update 1", "Update 2", "Update 3"];
+const episodeTitles = ["La genèse du projet", "Stratégie", "Plan d’action", "Update 1", "Update 2", "Update 3"];
 export const LEARNING_PROJECT_SERIES = definitions.map((project, index) => {
   const photo = landscapes[project.landscape];
   return { ...project, number: index + 1, image: photo.image, imageAlt: photo.imageAlt,
     imageCaption: photo.imageCaption, imageCredit: photo.imageCredit, imageSource: photo.imageSource,
-    imageProvider: photo.imageProvider, imageLicense: photo.imageLicense, episodes: episodeTitles.map((title, index): LearningEpisode => ({ number: index + 1, title })) };
+    imageProvider: photo.imageProvider, imageLicense: photo.imageLicense, episodes: episodeTitles.map((title, index): LearningEpisode => ({ number: index, title })) };
 });
 export type LearningProjectSeries = (typeof LEARNING_PROJECT_SERIES)[number];
 export function getLearningProjectSeries(slug: string) {

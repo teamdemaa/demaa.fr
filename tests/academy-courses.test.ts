@@ -14,7 +14,8 @@ describe("Academy practical courses", () => {
     expect(archivedCourses).toHaveLength(10);
     expect(LEARNING_PROJECT_SERIES.map(p => p.name)).toEqual(["Jago", "Dumaan", "Tiimora"]);
     for (const project of LEARNING_PROJECT_SERIES) {
-      expect(project.episodes.map(e => e.title)).toEqual(["Stratégie", "Plan d’action", "Update 1", "Update 2", "Update 3"]);
+      expect(project.episodes.map(e => e.number)).toEqual([0, 1, 2, 3, 4, 5]);
+      expect(project.episodes.map(e => e.title)).toEqual(["La genèse du projet", "Stratégie", "Plan d’action", "Update 1", "Update 2", "Update 3"]);
       expect(project.episodes.every(e => !e.href)).toBe(true);
     }
     expect(new Set(archivedCourses.map(c => c.slug)).size).toBe(10);
