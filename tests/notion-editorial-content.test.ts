@@ -6,22 +6,22 @@ import articles from "@/lib/learning-episodes-data.json";
 import { publicationSlot, publicationRouteAllowed, publicationTitles } from "@/lib/publication-contract";
 import { publicationEmail } from "@/lib/publication-email";
 describe("Notion editorial import", () => {
-  it("imports the twelve ready articles and leaves all project updates unpublished", () => {
-    expect(articles).toHaveLength(12);
-    expect(new Set(articles.map(a => `${a.project}-${a.number}`)).size).toBe(12);
+  it("imports thirteen ready articles and leaves all project updates unpublished", () => {
+    expect(articles).toHaveLength(13);
+    expect(new Set(articles.map(a => `${a.project}-${a.number}`)).size).toBe(13);
     for (const project of ["jago", "dumaan", "tiimora", "demaa"]) {
-      expect(articles.filter(a => a.project === project).map(a => a.number)).toEqual([0, 1, 2]);
+      expect(articles.filter(a => a.project === project).map(a => a.number)).toEqual(project === "demaa" ? [0, 1, 2, 3] : [0, 1, 2]);
     }
     expect(articles.every(a => a.sourceStatus === "Prêt" && a.paragraphs.length > 10 && a.sourceUrl.startsWith("https://app.notion.com/p/"))).toBe(true);
     expect(articles.some(a => a.title.includes("Où suivre"))).toBe(false);
   });
-  it("supports only the three Studio article slots", () => {
-    expect(publicationTitles("demaa")).toHaveLength(3);
+  it("supports four Studio article slots", () => {
+    expect(publicationTitles("demaa")).toHaveLength(4);
     for (const article of articles) {
       expect(publicationSlot(article.project, article.number).slug).toBe(article.slug);
       expect(publicationRouteAllowed(article.project, article.slug)).toBe(true);
     }
-    expect(() => publicationSlot("demaa", 3)).toThrow();
+    expect(() => publicationSlot("demaa", 4)).toThrow();
     expect(publicationRouteAllowed("demaa", "strategie")).toBe(false);
   });
   it("renders GTM headings and emphasis while escaping authored HTML", () => {

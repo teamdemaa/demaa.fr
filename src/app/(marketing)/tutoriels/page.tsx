@@ -22,7 +22,7 @@ export const dynamic = "force-dynamic";
 export default async function TutorialsPage() {
   const projectCards = getAcademyPreviewCards();
   const studioArticles = (await publishedArticles()).filter(article => article.project === "demaa");
-  const studioCards = [0, 1, 2].flatMap(number => studioArticles.filter(article => article.number === number)).map((article) => ({
+  const studioCards = [3, 0, 1, 2].flatMap(number => studioArticles.filter(article => article.number === number)).map((article) => ({
     format: "Approche" as const, category: "", title: article.title,
     href: `/tutoriels/demaa/${article.slug}`,
     image: getApproachLandscape(article.number)!.image,

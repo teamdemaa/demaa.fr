@@ -19,6 +19,13 @@ beforeEach(() => {
   vi.stubEnv("RESEND_API_KEY", "test"); vi.stubEnv("RESEND_FROM_EMAIL", "test@example.com"); vi.stubEnv("RESEND_NEWSLETTER_SEGMENT_ID", "segment-newsletter");
 });
 describe("Studio publication lifecycle", () => {
+  it("adds the opening article without changing existing studio identities", async () => {
+    expect(publicationSlot("demaa", 0).slug).toBe("pourquoi-demaa");
+    expect(publicationSlot("demaa", 1).slug).toBe("systeme-go-to-market");
+    expect(publicationSlot("demaa", 2).slug).toBe("execution-airtable");
+    expect(publicationSlot("demaa", 3).slug).toBe("on-construit-un-studio");
+    expect((await publishedArticles()).find(a => a.project === "demaa" && a.number === 3)?.text).toContain("Certaines réponses restent des hypothèses");
+  });
   it("hides the execution article while keeping the GTM article visible and both editable", async () => {
     const record = initialPublication("demaa", 2);
     expect(record.published).not.toBeNull();

@@ -1,5 +1,9 @@
 type Reading = { author: string; title: string; href: string; context: string };
 const readings: Record<string, Reading[]> = {
+  "demaa-3": [
+    { author: "Seth Godin", title: "The smallest viable audience", href: "https://seths.blog/2022/05/the-smallest-viable-audience/", context: "Sur le choix des personnes que l’on veut servir et la valeur qu’on peut leur apporter." },
+    { author: "Steve Blank", title: "Customer Development is not a Focus Group", href: "https://steveblank.com/2009/11/30/customer-development-is-not-a-focus-group/", context: "Sur les hypothèses de départ et leur confrontation au marché." },
+  ],
   "jago-0": [{ author: "Ndidi Okonkwo Nwuneli", title: "Food Entrepreneurs in Africa", href: "https://www.routledge.com/Food-Entrepreneurs-in-Africa-Scaling-Resilient-Agriculture-Businesses/Nwuneli/p/book/9780367631123", context: "Pour approfondir les enjeux de commercialisation et de développement des entreprises alimentaires africaines." }],
   "jago-1": [{ author: "Paul Graham", title: "Do Things that Don’t Scale", href: "https://paulgraham.com/ds.html", context: "Sur le travail manuel et l’attention aux premiers clients au démarrage." }],
   "dumaan-1": [{ author: "Seth Godin", title: "The smallest viable audience", href: "https://seths.blog/2022/05/the-smallest-viable-audience/", context: "Sur le choix d’une audience précise que l’on peut réellement servir." }],

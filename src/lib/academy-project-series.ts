@@ -3,7 +3,7 @@ import landscapes from "@/lib/academy-courses-data.json";
 
 export type LearningEpisode = Readonly<{ number: number; title: string; href?: string }>;
 export function getApproachLandscape(number: number) {
-  const index = ({ 0: 7, 1: 5, 2: 4 } as Record<number, number>)[number];
+  const index = ({ 0: 7, 1: 5, 2: 4, 3: 0 } as Record<number, number>)[number];
   return index === undefined ? undefined : landscapes[index];
 }
 const definitions = [
