@@ -39,6 +39,7 @@ export default function Navbar({
   publicNavigationActiveView?: PublicActionPlanView | "none";
   publicNavigationVariant?: "legacy" | "demaa";
 }) {
+  const inlineStudioNavigation = !adminControls && !anonymousLanding && publicNavigationActiveView !== undefined;
   const accountAccessClassName =
     "inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-dema-forest/15 bg-dema-paper px-3 text-xs font-medium text-dema-forest transition hover:border-dema-forest/28 hover:bg-dema-sage/45 sm:min-h-11 sm:gap-2 sm:px-4 sm:text-sm";
   const connectionLinkClassName =
@@ -72,7 +73,7 @@ export default function Navbar({
             </Link>
             <div
               id="action-plan-navbar-desktop"
-              className={overlayHero ? "mx-3 min-w-0 flex-1 empty:hidden [&>div]:gap-2 [&_a]:px-0 [&_a]:text-xs [&_a]:text-[#463c34] sm:[&>div]:gap-8 sm:[&_a]:text-sm md:absolute md:left-1/2 md:top-1/2 md:mx-0 md:w-[min(60vw,36rem)] md:-translate-x-1/2 md:-translate-y-1/2" : "absolute left-1/2 top-1/2 hidden w-[min(60vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden md:block"}
+              className={inlineStudioNavigation ? "mx-2 min-w-0 flex-1 empty:hidden [&>div]:gap-2 [&_a]:px-0 [&_a]:text-[13px] [&_a]:text-[#463c34] sm:[&>div]:gap-8 sm:[&_a]:text-[15px] md:absolute md:left-1/2 md:top-1/2 md:mx-0 md:w-[min(60vw,36rem)] md:-translate-x-1/2 md:-translate-y-1/2" : "absolute left-1/2 top-1/2 hidden w-[min(60vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden md:block"}
             >
               {publicNavigationActiveView !== undefined ? (
                 <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} localeCode={localeCode} />
@@ -136,7 +137,7 @@ export default function Navbar({
           </div>
           <div
             id="action-plan-navbar-mobile"
-            className={overlayHero ? "hidden" : "pb-3 empty:hidden md:hidden"}
+            className={inlineStudioNavigation ? "hidden" : "pb-3 empty:hidden md:hidden"}
           >
             {publicNavigationActiveView !== undefined ? (
               <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} localeCode={localeCode} />
