@@ -16,7 +16,7 @@ const primaryProjects: readonly DemaaStudioProject[] = [
     image: "/images/studio/tiimora-bureau.webp", imageAlt: "Visuel Tiimora : bureau d’un cabinet comptable avec le suivi des clients à l’écran",
   },
   {
-    slug: "dumaan-food", name: "Dumaan", sector: "Repas du quotidien", pole: "Alimentation", portfolio: "priority", status: "En test",
+    slug: "dumaan-food", name: "Dumaan", sector: "Repas du quotidien", pole: "Food", portfolio: "priority", status: "En test",
     summary: "Des préparations ouest-africaines pour simplifier les repas du quotidien des familles.",
     problem: "Préparer les repas chaque soir demande du temps et de l’énergie aux familles.",
     solution: "Des préparations prêtes à cuisiner, avec des formats adaptés aux repas à la maison.",
