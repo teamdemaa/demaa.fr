@@ -19,6 +19,7 @@ export default function Navbar({
   anonymousLanding = false,
   isAuthenticated = false,
   minimal = false,
+  overlayHero = false,
   localeCode = "fr",
   publicCta,
   publicCtaHref = "",
@@ -30,6 +31,7 @@ export default function Navbar({
   anonymousLanding?: boolean;
   isAuthenticated?: boolean;
   minimal?: boolean;
+  overlayHero?: boolean;
   localeCode?: InterfaceLocaleCode;
   publicCta?: ReactNode;
   publicCtaHref?: string;
@@ -47,7 +49,7 @@ export default function Navbar({
     <>
       <nav
         data-minimal={minimal ? "true" : undefined}
-        className="sticky top-0 z-40 bg-dema-cream/92 py-1 backdrop-blur-md"
+        className={overlayHero ? "absolute inset-x-0 top-0 z-40 bg-transparent py-1 [&_a]:text-[#463c34]" : "sticky top-0 z-40 bg-dema-cream/92 py-1 backdrop-blur-md"}
       >
         <div className="mx-auto w-full px-3 sm:px-6 md:px-10 lg:px-24">
           <div className="relative flex items-center justify-between py-3 md:min-h-16 md:py-4">
@@ -70,7 +72,7 @@ export default function Navbar({
             </Link>
             <div
               id="action-plan-navbar-desktop"
-              className="absolute left-1/2 top-1/2 hidden w-[min(60vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden md:block"
+              className={overlayHero ? "mx-3 min-w-0 flex-1 empty:hidden [&>div]:gap-2 [&_a]:px-0 [&_a]:text-xs [&_a]:text-[#463c34] sm:[&>div]:gap-8 sm:[&_a]:text-sm md:absolute md:left-1/2 md:top-1/2 md:mx-0 md:w-[min(60vw,36rem)] md:-translate-x-1/2 md:-translate-y-1/2" : "absolute left-1/2 top-1/2 hidden w-[min(60vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden md:block"}
             >
               {publicNavigationActiveView !== undefined ? (
                 <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} localeCode={localeCode} />
@@ -134,7 +136,7 @@ export default function Navbar({
           </div>
           <div
             id="action-plan-navbar-mobile"
-            className="pb-3 empty:hidden md:hidden"
+            className={overlayHero ? "hidden" : "pb-3 empty:hidden md:hidden"}
           >
             {publicNavigationActiveView !== undefined ? (
               <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} localeCode={localeCode} />
