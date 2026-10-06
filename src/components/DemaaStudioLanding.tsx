@@ -16,7 +16,7 @@ const eyebrowClass = "text-xs font-medium uppercase tracking-[0.18em] text-dema-
 const contactClass = "inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-brand-blue px-6 py-3 text-sm font-medium text-dema-paper transition hover:bg-dema-forest";
 
 function StudioHeader({ view }: { view: StudioView }) {
-  return <Navbar publicNavigationActiveView={view} />;
+  return <Navbar overlayHero={view === "studio"} publicNavigationActiveView={view} />;
 }
 
 function ContactSection() {
@@ -48,12 +48,12 @@ function ResourcesSection() {
 function StudioContent() {
   return <>
     <section className="relative isolate overflow-hidden lg:flex lg:min-h-[760px] lg:items-center">
-      <div className="absolute inset-x-0 top-0 -z-20 h-[280px] sm:h-[360px] lg:inset-0 lg:h-auto"><Image src="/images/studio/cover.webp" alt="" fill preload sizes="100vw" className="object-cover object-[68%_35%] lg:object-[68%_center]" /></div>
+      <div className="absolute inset-x-0 top-0 -z-20 h-[300px] sm:h-[400px] lg:inset-0 lg:h-auto"><Image src="/images/studio/cover-mobile.webp" alt="" fill sizes="100vw" className="object-cover object-[75%_center] lg:hidden" /><Image src="/images/studio/cover.webp" alt="" fill preload sizes="100vw" className="hidden object-cover object-[68%_center] lg:block" /></div>
       <div className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-dema-cream/85 via-dema-cream/25 to-transparent lg:block" />
-      <div className={`${sectionClass} pb-16 pt-[320px] sm:pt-[400px] lg:py-20`}>
-        <h1 className="demaa-hero-title max-w-[760px] text-[clamp(2.8rem,5.5vw,5.7rem)] leading-[1.02] tracking-[-0.045em] lg:mt-6">On crée des entreprises sur des marchés qu’on connaît de l’intérieur.</h1>
-        <p className="mt-7 max-w-[520px] text-base leading-7 text-brand-blue/80">DEMAA est un studio d’entreprises : on crée plusieurs sociétés, on les fait grandir, puis on en revend certaines et on garde les autres pour leurs revenus.</p>
-        <div className="mt-9 flex flex-wrap gap-4"><Link href="/projets" className={contactClass}>Voir les projets <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div>
+      <div className={`${sectionClass} pb-16 pt-[328px] sm:pt-[440px] lg:py-20`}>
+        <h1 className="demaa-hero-title max-w-[760px] text-[clamp(2.8rem,5.5vw,5.7rem)] leading-[1.02] tracking-[-0.045em] lg:mt-6">On crée des entreprises<br />sur des marchés qu’on connaît de l’intérieur.</h1>
+        <p className="mt-5 max-w-[520px] text-base leading-7 text-brand-blue/80 sm:mt-7">DEMAA est un studio d’entreprises : on crée plusieurs sociétés, on les fait grandir, puis on en revend certaines et on garde les autres pour leurs revenus.</p>
+        <div className="mt-6 flex flex-wrap gap-4 sm:mt-9"><Link href="/projets" className={contactClass}>Voir les projets <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div>
       </div>
     </section>
     <section className="border-y border-dema-line">
