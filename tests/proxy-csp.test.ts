@@ -250,11 +250,11 @@ describe("proxy content security policy", () => {
 
 describe("learning project routes", () => {
   it.each(["jago", "dumaan", "tiimora"])("allows the published %s series", (slug) => {
-    const response = proxy(new NextRequest(`https://demaa.fr/tutoriels/${slug}`, { headers: { host: "demaa.fr" } }));
+    const response = proxy(new NextRequest(`https://demaa.fr/apprentissages/${slug}`, { headers: { host: "demaa.fr" } }));
     expect(response.status).toBe(200);
   });
   it("rejects an unpublished series", () => {
-    const response = proxy(new NextRequest("https://demaa.fr/tutoriels/unpublished-series", { headers: { host: "demaa.fr" } }));
+    const response = proxy(new NextRequest("https://demaa.fr/apprentissages/unpublished-series", { headers: { host: "demaa.fr" } }));
     expect(response.status).toBe(404);
   });
 });

@@ -34,8 +34,8 @@ export async function POST(request: Request) {
     else {
       await changePublication({ ...body, action: body.action as "save" | "publish" | "unpublish" }, admin.uid);
       message = body.action === "publish" ? "Article publié sur le site. Aucun e-mail envoyé." : body.action === "unpublish" ? "Article retiré du site. Son contenu est conservé." : message;
-      revalidatePath(`/tutoriels/${body.project}`);
-      revalidatePath(`/tutoriels/${body.project}`, "layout");
+      revalidatePath(`/apprentissages/${body.project}`);
+      revalidatePath(`/apprentissages/${body.project}`, "layout");
       revalidatePath("/sitemap.xml");
     }
     return json({ message, publications: await listPublications(), newsletterReady: newsletterReady() });

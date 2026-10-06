@@ -106,7 +106,7 @@ export default function ActionPlanNavbar({
               : view === "plan"
               ? "/"
               : view === "academy"
-                ? "/tutoriels"
+                ? "/apprentissages"
                 : "/transmettre";
           const usesPublicRoute = routeNavigation
             || (localeCode === "fr" && (view === "solutions" || view === "academy" || view === "services"));

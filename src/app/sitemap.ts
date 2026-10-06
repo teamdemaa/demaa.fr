@@ -24,9 +24,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/equipe`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${base}/projets`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/studio/opportunites`, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${base}/tutoriels`, changeFrequency: "monthly", priority: 0.8 },
-    ...LEARNING_PROJECT_SERIES.map(project => ({ url: `${base}/tutoriels/${project.slug}`, changeFrequency: "monthly" as const, priority: 0.7 })),
-    ...(await publishedArticles()).map(article => ({ url: `${base}/tutoriels/${article.project}/${article.slug}`, changeFrequency: "monthly" as const, priority: 0.7 })),
+    { url: `${base}/apprentissages`, changeFrequency: "monthly", priority: 0.8 },
+    ...LEARNING_PROJECT_SERIES.map(project => ({ url: `${base}/apprentissages/${project.slug}`, changeFrequency: "monthly" as const, priority: 0.7 })),
+    ...(await publishedArticles()).map(article => ({ url: `${base}/apprentissages/${article.project}/${article.slug}`, changeFrequency: "monthly" as const, priority: 0.7 })),
     ...staticRoutes,
   ];
 }

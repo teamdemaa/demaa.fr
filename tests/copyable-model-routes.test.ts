@@ -35,7 +35,7 @@ describe("copyable model public routes", () => {
     expect(resources).not.toContain('label: "Modèles"');
     expect(resources).toContain("return null");
     expect(page).toContain('fromOrganisation={source === "organisation"}');
-    expect(modelsIndex).toContain('href="/tutoriels"');
+    expect(modelsIndex).toContain('href="/apprentissages"');
     expect(modelsIndex).toContain("Retour aux cours");
     expect(modelsIndex).toContain("`/modeles/${model.slug}?from=tutoriels`");
     expect(footer).toContain("<DemaaFooter />");

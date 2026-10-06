@@ -79,7 +79,7 @@ describe("Demaa application navbar", () => {
       ),
       readFile(new URL("../src/lib/demaa-public-routes.ts", import.meta.url), "utf8"),
       readFile(
-        new URL("../src/app/(marketing)/tutoriels/page.tsx", import.meta.url),
+        new URL("../src/app/(marketing)/apprentissages/page.tsx", import.meta.url),
         "utf8",
       ),
       readFile(new URL("../src/components/LegacyFooter.tsx", import.meta.url), "utf8"),
@@ -91,7 +91,7 @@ describe("Demaa application navbar", () => {
     expect(publicRoutes).not.toContain('href: "/accompagnement"');
     expect(publicRoutes).not.toContain('href: "/solutions"');
     expect(publicRoutes).toContain('label: "Projets", href: "/projets"');
-    expect(publicRoutes).toContain('label: "Apprentissages", href: "/tutoriels"');
+    expect(publicRoutes).toContain('label: "Apprentissages", href: "/apprentissages"');
     expect(publicRoutes).not.toContain('label: "Reprendre"');
     expect(publicRoutes).not.toContain('label: "Vendre"');
     expect(publicRoutes).not.toContain('label: "Spécialistes"');
@@ -104,7 +104,7 @@ describe("Demaa application navbar", () => {
     expect(navbarSource).not.toContain("Écrire à Demaa sur WhatsApp au +33 7 82 84 24 35");
     expect(navbarSource).not.toContain("<span>WhatsApp</span>");
     expect(tutorialsIndex).toContain("AcademyPreviewLibrary");
-    expect(tutorialsIndex).toContain('path: "/tutoriels"');
+    expect(tutorialsIndex).toContain('path: "/apprentissages"');
     expect(tutorialsIndex).toContain("<Navbar");
     expect(tutorialsIndex).not.toContain("<ActionPlanNavbar");
     expect(footer).toContain("<DemaaFooter />");
@@ -226,7 +226,7 @@ describe("Demaa application navbar", () => {
     expect(actionPlanNavSource).not.toContain('"/application-metier"');
     expect(actionPlanNavSource).not.toContain('label: "Services"');
     expect(actionPlanNavSource).toContain("Tutoriels");
-    expect(actionPlanNavSource).toContain('"/tutoriels"');
+    expect(actionPlanNavSource).toContain('"/apprentissages"');
     expect(actionPlanNavSource).toContain("Outils");
     expect(actionPlanNavSource).toContain('"/outils"');
     expect(actionPlanNavSource).toContain("Ressources");

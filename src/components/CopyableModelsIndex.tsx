@@ -81,7 +81,7 @@ export default function CopyableModelsIndex({
       <section className="mx-auto w-full max-w-7xl px-4 pb-20 pt-12 sm:px-6 md:pt-16 lg:px-8">
         {fromOrganisation ? (
           <Link
-            href="/tutoriels"
+            href="/apprentissages"
             className="mb-10 inline-flex items-center gap-2 text-sm font-medium text-dema-muted transition hover:text-dema-forest"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />

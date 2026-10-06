@@ -9,7 +9,7 @@ describe("DEMAA marketing footer routing", () => {
       "/specialistes", "/annuaire-coachs", "/annuaire-experts-comptables/cabinets",
       "/services/automatisation-ia", "/modeles", "/outils/generation-de-qr-code",
       "/systemes/batiment/processus", "/annuaire-fournisseurs/batiment",
-      "/a-reprendre", "/a-reprendre/une-pme", "/transmettre", "/tutoriels", "/accompagnement",
+      "/a-reprendre", "/a-reprendre/une-pme", "/transmettre", "/apprentissages", "/accompagnement",
     ]) {
       expect(usesDemaaFooter(pathname), pathname).toBe(true);
     }

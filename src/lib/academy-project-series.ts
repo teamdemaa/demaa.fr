@@ -8,8 +8,8 @@ export function getApproachLandscape(number: number) {
 }
 const definitions = [
   { slug: "jago", name: "Jago", description: "Faciliter l’approvisionnement en produits africains des boutiques, épiceries et revendeurs.", landscape: 0 },
-  { slug: "dumaan", name: "Dumaan", description: "Simplifier les repas du quotidien avec des préparations ouest-africaines pour les familles.", landscape: 2 },
   { slug: "tiimora", name: "Tiimora", description: "Réunir les clients, les demandes, les documents et les échéances des cabinets comptables.", landscape: 1 },
+  { slug: "dumaan", name: "Dumaan", description: "Simplifier les repas du quotidien avec des préparations ouest-africaines pour les familles.", landscape: 2 },
 ];
 
 // A missing URL keeps announced episodes non-clickable until publication.
@@ -28,5 +28,5 @@ export function getLearningProjectSeries(slug: string) {
 }
 
 export function withPublishedEpisodes(project: LearningProjectSeries, numbers: readonly number[]) {
-  return { ...project, episodes: project.episodes.map(episode => ({ ...episode, ...(numbers.includes(episode.number) ? { href: `/tutoriels/${project.slug}/${EPISODE_SLUGS[episode.number]}` } : {}) })) };
+  return { ...project, episodes: project.episodes.map(episode => ({ ...episode, ...(numbers.includes(episode.number) ? { href: `/apprentissages/${project.slug}/${EPISODE_SLUGS[episode.number]}` } : {}) })) };
 }

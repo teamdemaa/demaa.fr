@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: SeriesPageProps): Promise<Met
   return buildPublicPageMetadata({
     title: `${project.name} · Apprentissages | DEMAA`,
     description: project.description,
-    path: `/tutoriels/${slug}`,
+    path: `/apprentissages/${slug}`,
   });
 }
 
