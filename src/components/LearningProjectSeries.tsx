@@ -8,7 +8,7 @@ export default function LearningProjectSeries({ project }: { project: Series }) 
   return <>
     <Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />
     <main className="mx-auto max-w-4xl px-5 py-12">
-      <Link href="/tutoriels" className="text-sm text-dema-muted underline underline-offset-4">Tous les apprentissages</Link>
+      <Link href="/apprentissages" className="text-sm text-dema-muted underline underline-offset-4">Tous les apprentissages</Link>
       <header className="mt-8">
         <p className="text-xs uppercase tracking-widest text-dema-muted">Projet {String(project.number).padStart(2, "0")}</p>
         <h1 className="demaa-section-title mt-3 text-5xl sm:text-6xl">{project.name}</h1>

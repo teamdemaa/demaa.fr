@@ -87,6 +87,7 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      { source: "/tutoriels/:path*", destination: "/apprentissages/:path*", permanent: true },
       ...ACADEMY_PERMANENT_REDIRECTS,
       { source: "/projets/:slug", destination: "/projets", permanent: false },
       // Archived product routes are preserved outside the Next.js router.
@@ -135,17 +136,17 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/organisation',
-        destination: '/tutoriels',
+        destination: '/apprentissages',
         permanent: true,
       },
       {
         source: '/structuration',
-        destination: '/tutoriels',
+        destination: '/apprentissages',
         permanent: true,
       },
       {
         source: '/structurer',
-        destination: '/tutoriels',
+        destination: '/apprentissages',
         permanent: true,
       },
       {
@@ -392,7 +393,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/ressources',
-        destination: '/tutoriels',
+        destination: '/apprentissages',
         permanent: true,
       },
       {

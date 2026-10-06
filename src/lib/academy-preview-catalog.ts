@@ -29,7 +29,7 @@ export function getAcademyPracticeCards(): AcademyPreviewCard[] {
   return getPublishedPracticeTutorials().map((tutorial) => ({
     category: tutorial.topic,
     format: "Méthode",
-    href: `/tutoriels/${tutorial.slug}`,
+    href: `/apprentissages/${tutorial.slug}`,
     image: academyCoverPath(tutorial.slug),
     imageAlt: "",
     ...modelFor(tutorial.modelSlug),
@@ -43,7 +43,7 @@ export function getAcademyPreviewCards(): AcademyPreviewCard[] {
   return LEARNING_PROJECT_SERIES.map(project => ({
     category: String(project.number).padStart(2, "0"),
     format: "Projet",
-    href: `/tutoriels/${project.slug}`,
+    href: `/apprentissages/${project.slug}`,
     image: project.image,
     imageAlt: project.imageAlt,
     imageCaption: project.imageCaption,

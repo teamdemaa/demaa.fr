@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props) {
   const { slug, episode } = await params;
   const article = await publishedArticle(slug, episode);
   if (!article) notFound();
-  return buildPublicPageMetadata({ title: `${article.title} | DEMAA`, description: article.description, path: `/tutoriels/${slug}/${episode}`, type: "article" });
+  return buildPublicPageMetadata({ title: `${article.title} | DEMAA`, description: article.description, path: `/apprentissages/${slug}/${episode}`, type: "article" });
 }
 export default async function EpisodePage({ params }: Props) {
   const { slug, episode } = await params;
@@ -30,7 +30,7 @@ export default async function EpisodePage({ params }: Props) {
   return <>
     <Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />
     <main className="mx-auto max-w-4xl px-5 py-12 sm:py-16">
-      <Link href={slug === "demaa" ? "/tutoriels" : `/tutoriels/${slug}`} className="text-sm text-dema-muted underline underline-offset-4">{slug === "demaa" ? "← Les apprentissages" : `← Les épisodes de ${project!.name}`}</Link>
+      <Link href={slug === "demaa" ? "/apprentissages" : `/apprentissages/${slug}`} className="text-sm text-dema-muted underline underline-offset-4">{slug === "demaa" ? "← Les apprentissages" : `← Les épisodes de ${project!.name}`}</Link>
       <article className="mx-auto mt-10 max-w-[680px]">
         <header className="mb-10 sm:mb-14">
           <p className="text-xs uppercase tracking-[0.18em] text-dema-muted">{slug === "demaa" ? "Approche" : `${project!.name} · EP${String(article.number).padStart(2, "0")}`}</p>

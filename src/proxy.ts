@@ -121,8 +121,8 @@ export function studioProxy(request: NextRequest) {
     );
   }
 
-  if (pathname.startsWith("/tutoriels/")) {
-    const slug = pathname.slice("/tutoriels/".length);
+  if (pathname.startsWith("/apprentissages/")) {
+    const slug = pathname.slice("/apprentissages/".length);
     const [projectSlug, episodeSlug, extra] = slug.split("/");
     const validEpisode = episodeSlug && !extra && publicationRouteAllowed(projectSlug, episodeSlug);
     if (!getLearningProjectSeries(slug) && !validEpisode) {
@@ -174,7 +174,7 @@ export function studioProxy(request: NextRequest) {
 export async function proxy(request: NextRequest) {
   const response = studioProxy(request);
   if (response.headers.get("x-middleware-next") === "1") {
-    const match = request.nextUrl.pathname.match(/^\/tutoriels\/([^/]+)\/([^/]+)$/);
+    const match = request.nextUrl.pathname.match(/^\/apprentissages\/([^/]+)\/([^/]+)$/);
     if (match) {
       try {
         const { publishedArticle } = await import("@/lib/publications.server");

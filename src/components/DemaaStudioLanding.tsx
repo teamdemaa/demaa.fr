@@ -42,7 +42,7 @@ function ProjectCard({ project }: { project: DemaaStudioProject }) {
 }
 
 function ResourcesSection() {
-  return <section className="border-t border-dema-line"><div className={sectionClass}><h2 className={titleClass}>On partage nos apprentissages.</h2><p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">Des cas concrets pour expliquer comment on aborde la création et le développement d’entreprises.</p><Link href="/tutoriels" className={`${contactClass} mt-8`}>Découvrir les apprentissages <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div></section>;
+  return <section className="border-t border-dema-line"><div className={sectionClass}><h2 className={titleClass}>On partage nos apprentissages.</h2><p className="mt-5 max-w-2xl text-base leading-7 text-dema-muted">Des cas concrets pour expliquer comment on aborde la création et le développement d’entreprises.</p><Link href="/apprentissages" className={`${contactClass} mt-8`}>Découvrir les apprentissages <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div></section>;
 }
 
 function StudioContent() {

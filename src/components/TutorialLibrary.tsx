@@ -98,7 +98,7 @@ export default function TutorialLibrary({
             {filteredTutorials.map((tutorial, index) => (
               <Link
                 key={tutorial.slug}
-                href={`/tutoriels/${tutorial.slug}`}
+                href={`/apprentissages/${tutorial.slug}`}
                 className="group block rounded-[1.25rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dema-forest/35 focus-visible:ring-offset-4"
               >
                 <article className="transition-transform duration-200 ease-out group-hover:-translate-y-px motion-reduce:transform-none">

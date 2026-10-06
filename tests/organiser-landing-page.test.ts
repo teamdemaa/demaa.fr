@@ -16,12 +16,12 @@ const read = (path: string) => readFileSync(path, "utf8");
 
 describe("Méthodes, Modèles and Outils public journey", () => {
   it("publishes the four retained Airtable tutorials from one public library", () => {
-    const page = read("src/app/(marketing)/tutoriels/page.tsx");
+    const page = read("src/app/(marketing)/apprentissages/page.tsx");
     const hub = read("src/components/TutorialsHub.tsx");
     const library = read("src/components/TutorialLibrary.tsx");
 
     expect(page).toContain("<AcademyPreviewLibrary cards={cards} showControls={false} />");
-    expect(page).toContain('path: "/tutoriels"');
+    expect(page).toContain('path: "/apprentissages"');
     expect(page).toContain("On partage");
     expect(page).toContain("nos apprentissages.");
     expect(hub).toContain("getPublishedMethods");

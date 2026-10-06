@@ -18,7 +18,7 @@ try {
     try { await fetch(`${origin}/favicon.ico`); ready = true; break; } catch { await new Promise(resolve => setTimeout(resolve, 100)); }
   }
   if (!ready) throw new Error(`Production server did not start. ${logs.slice(-1000)}`);
-  const checks = [["/studio", 200], ["/projets", 200], ["/equipe", 200], ["/tutoriels", 200], ["/tutoriels/jago", 200], ["/tutoriels/dumaan", 200], ["/tutoriels/tiimora", 200], ["/verification-404-cloture", 404], ["/tutoriels/organiser-entreprise-sans-tout-porter", 404]];
+  const checks = [["/studio", 200], ["/projets", 200], ["/equipe", 200], ["/apprentissages", 200], ["/apprentissages/jago", 200], ["/apprentissages/dumaan", 200], ["/apprentissages/tiimora", 200], ["/verification-404-cloture", 404], ["/apprentissages/organiser-entreprise-sans-tout-porter", 404]];
   for (const [route, expected] of checks) {
     const response = await fetch(`${origin}${route}`);
     if (response.status !== expected) throw new Error(`${route}: expected HTTP ${expected}, received ${response.status}`);

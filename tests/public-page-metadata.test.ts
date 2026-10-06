@@ -42,7 +42,7 @@ describe("public page metadata", () => {
     const metadata = buildPublicPageMetadata({
       title: "Tutoriel | Demaa",
       description: "Description du tutoriel.",
-      path: "/tutoriels/exemple",
+      path: "/apprentissages/exemple",
       type: "article",
       socialImage,
     });

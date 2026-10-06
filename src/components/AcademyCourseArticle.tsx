@@ -9,14 +9,14 @@ import { ACADEMY_LEARNING_LABEL, academyWorksheetHref, type AcademyCourse } from
 
 export default function AcademyCourseArticle({ course }: { course: AcademyCourse }) {
   const origin = getCanonicalOrigin();
-  const jsonLd = { "@context": "https://schema.org", "@type": "Article", headline: course.title, description: course.objective, url: `${origin}/tutoriels/${course.slug}`, image: `${origin}${course.image}`, inLanguage: "fr-FR", datePublished: "2026-10-03", dateModified: "2026-10-03", author: { "@type": "Organization", name: "Demaa" } };
+  const jsonLd = { "@context": "https://schema.org", "@type": "Article", headline: course.title, description: course.objective, url: `${origin}/apprentissages/${course.slug}`, image: `${origin}${course.image}`, inLanguage: "fr-FR", datePublished: "2026-10-03", dateModified: "2026-10-03", author: { "@type": "Organization", name: "Demaa" } };
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializePublicJsonLd(jsonLd) }} />
     <Navbar minimal publicNavigationActiveView="academy" publicNavigationVariant="demaa" />
     <main className="min-w-0 bg-background">
       <ResourcesNavigation activeView="tutorials" />
       <article className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-        <Link href="/tutoriels" className="text-sm text-dema-muted underline underline-offset-4">Tous les apprentissages</Link>
+        <Link href="/apprentissages" className="text-sm text-dema-muted underline underline-offset-4">Tous les apprentissages</Link>
         <header className="mt-8">
           <p className="text-xs uppercase tracking-[0.14em] text-dema-forest">{ACADEMY_LEARNING_LABEL} · {course.category}</p>
           <h1 className="demaa-section-title mt-4 text-balance text-4xl leading-tight tracking-tight sm:text-5xl">{course.title}</h1>

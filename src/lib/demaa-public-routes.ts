@@ -3,11 +3,11 @@ export const DEMAA_DEFAULT_PUBLIC_PATH = "/studio";
 export const DEMAA_PUBLIC_NAVIGATION = [
   { view: "studio", label: "Studio", href: "/studio" },
   { view: "projets", label: "Projets", href: "/projets" },
-  { view: "academy", label: "Apprentissages", href: "/tutoriels" },
+  { view: "academy", label: "Apprentissages", href: "/apprentissages" },
 ] as const;
 
 export const DEMAA_RESOURCE_NAVIGATION = [
-  { label: "Apprentissages", href: "/tutoriels", description: "Les apprentissages de nos projets, épisode après épisode." },
+  { label: "Apprentissages", href: "/apprentissages", description: "Les apprentissages de nos projets, épisode après épisode." },
 ] as const;
 
 export const DEMAA_DIRECTORY_NAVIGATION = [

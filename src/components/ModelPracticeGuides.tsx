@@ -31,7 +31,7 @@ export default function ModelPracticeGuides({
         {tutorials.map((tutorial) => (
           <Link
             key={tutorial.slug}
-            href={`/tutoriels/${tutorial.slug}`}
+            href={`/apprentissages/${tutorial.slug}`}
             className="rounded-[1.25rem] border border-dema-line bg-dema-paper p-5 transition-colors hover:border-dema-forest/20 hover:bg-dema-sage/10 sm:p-6"
           >
             <p className="text-xs font-medium uppercase tracking-[0.14em] text-dema-forest/70">

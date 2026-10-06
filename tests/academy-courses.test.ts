@@ -12,14 +12,14 @@ import { getPublishedTutorialBySlug } from "@/lib/tutorial-catalog";
 describe("Academy practical courses", () => {
   it("publishes three project series while preserving the ten archived courses", () => {
     expect(archivedCourses).toHaveLength(10);
-    expect(LEARNING_PROJECT_SERIES.map(p => p.name)).toEqual(["Jago", "Dumaan", "Tiimora"]);
+    expect(LEARNING_PROJECT_SERIES.map(p => p.name)).toEqual(["Jago", "Tiimora", "Dumaan"]);
     for (const project of LEARNING_PROJECT_SERIES) {
       expect(project.episodes.map(e => e.number)).toEqual([0, 1, 2, 3, 4, 5]);
       expect(project.episodes.map(e => e.title)).toEqual(["La genèse du projet", "Stratégie", "Plan d’action", "Update 1", "Update 2", "Update 3"]);
       expect(project.episodes.every(e => !e.href)).toBe(true);
     }
     expect(new Set(archivedCourses.map(c => c.slug)).size).toBe(10);
-    expect(getAcademyPreviewCards().map(c => c.href)).toEqual(LEARNING_PROJECT_SERIES.map(c => `/tutoriels/${c.slug}`));
+    expect(getAcademyPreviewCards().map(c => c.href)).toEqual(LEARNING_PROJECT_SERIES.map(c => `/apprentissages/${c.slug}`));
     for (const course of archivedCourses) {
       expect(course.title.endsWith("?")).toBe(true);
       expect(getPublishedTutorialBySlug(course.slug)).toBeNull();
@@ -33,16 +33,16 @@ describe("Academy practical courses", () => {
   });
 
   it("returns a real 404 for archived courses and only accepts project series", () => {
-    const unknown = proxy(new NextRequest("https://demaa.fr/tutoriels/cours-inexistant"));
+    const unknown = proxy(new NextRequest("https://demaa.fr/apprentissages/cours-inexistant"));
     expect(unknown.status).toBe(404);
     for (const course of archivedCourses) {
-      expect(proxy(new NextRequest(`https://demaa.fr/tutoriels/${course.slug}`)).status).toBe(404);
+      expect(proxy(new NextRequest(`https://demaa.fr/apprentissages/${course.slug}`)).status).toBe(404);
       expect(getAcademyCourse(course.slug)).toBeDefined();
     }
-    for (const { slug } of LEARNING_PROJECT_SERIES) expect(proxy(new NextRequest(`https://demaa.fr/tutoriels/${slug}`)).status).toBe(200);
+    for (const { slug } of LEARNING_PROJECT_SERIES) expect(proxy(new NextRequest(`https://demaa.fr/apprentissages/${slug}`)).status).toBe(200);
     expect(unknown.headers.get("X-Robots-Tag")).toBe("noindex, nofollow");
     for (const slug of [...ACADEMY_COURSES.map(c => c.slug), "creer-pipeline-commercial-airtable"]) {
-      expect(proxy(new NextRequest(`https://demaa.fr/tutoriels/${slug}`)).status).toBe(404);
+      expect(proxy(new NextRequest(`https://demaa.fr/apprentissages/${slug}`)).status).toBe(404);
     }
   });
 

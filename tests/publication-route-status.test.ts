@@ -4,7 +4,7 @@ const mocks = vi.hoisted(() => ({ publishedArticle: vi.fn() }));
 vi.mock("@/lib/publications.server", () => mocks);
 import { proxy } from "@/proxy";
 beforeEach(() => { mocks.publishedArticle.mockReset(); });
-const request = () => new NextRequest("https://demaa.fr/tutoriels/jago/strategie", { headers: { host: "demaa.fr" } });
+const request = () => new NextRequest("https://demaa.fr/apprentissages/jago/strategie", { headers: { host: "demaa.fr" } });
 it("returns HTTP 404 before rendering unpublished episodes", async () => {
   mocks.publishedArticle.mockResolvedValue(undefined);
   expect((await proxy(request())).status).toBe(404);

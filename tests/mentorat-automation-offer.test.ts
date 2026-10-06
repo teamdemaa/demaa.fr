@@ -97,6 +97,6 @@ describe("accompagnement de structuration", () => {
     expect(hub).not.toContain("StructureNewsletterBlock");
     expect(systemPage).toContain('eyebrow="Bonus"');
     expect(bridge).toContain("Des tutoriels pour mieux utiliser vos outils");
-    expect(bridge).toContain('href = "/tutoriels"');
+    expect(bridge).toContain('href = "/apprentissages"');
   });
 });
