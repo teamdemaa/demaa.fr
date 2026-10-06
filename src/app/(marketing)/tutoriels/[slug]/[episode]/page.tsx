@@ -44,7 +44,7 @@ export default async function EpisodePage({ params }: Props) {
           </figure>}
         </header>
         <div className="space-y-6 text-lg leading-8 text-brand-blue/85 sm:text-xl sm:leading-9">
-          <PublicationArticleContent text={article.text} framework={(slug === "demaa" ? article.number === 1 : (article.number === 1 || article.number === 2)) ? { kind: article.number === 1 ? "strategy" : "plan", project: slug } : undefined} />
+          <PublicationArticleContent text={article.text} genesisProject={article.number === 0 ? slug : undefined} framework={(slug === "demaa" ? article.number === 1 : (article.number === 1 || article.number === 2)) ? { kind: article.number === 1 ? "strategy" : "plan", project: slug } : undefined} />
         </div>
         <PublicationReading project={slug} number={article.number} />
       </article>

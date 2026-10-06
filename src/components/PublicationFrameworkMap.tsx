@@ -37,7 +37,7 @@ const projectApop: Record<string, readonly Stage[]> = {
     { title: "Promotion", items: ["Comment trouve-t-on nos clients ?", "Réseau de boutiques et d’épiceries", "Introductions entre commerçants", "Partenariats avec réseaux de commerces"] },
   ],
   dumaan: [
-    { title: "Audience", items: ["Qui rencontre cette difficulté ?", "Familles et personnes actives", "Repas ouest-africains à la maison", "Temps disponible et préparations longues"] },
+    { title: "Audience", items: ["Qui rencontre cette difficulté ?", "Familles et personnes actives en priorité", "Repas ouest-africains à la maison", "Tests de certaines préparations auprès de restaurants et traiteurs"] },
     { title: "Positionnement", items: ["Quelle promesse veut-on porter ?", "Faciliter la préparation des repas du quotidien", "Prendre en charge les étapes les plus longues", "Garder les saveurs et le plaisir de cuisiner"] },
     { title: "Offre", items: ["Qu’est-ce qu’on vend ? À quel prix ?", "Pastels prêts à cuire, légumes et bases de plats", "Préparations surgelées pour les familles", "Gamme, portions et prix à tester"] },
     { title: "Promotion", items: ["Comment trouve-t-on nos clients ?", "Vidéo signature « On mange quoi ce soir ? »", "Publicité dès le démarrage", "Dégustations et relais locaux"] },
