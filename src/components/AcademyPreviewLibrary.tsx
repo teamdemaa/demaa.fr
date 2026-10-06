@@ -9,7 +9,8 @@ import { matchesSearchQuery } from "@/lib/search";
 
 const ALL = "Tous";
 
-export default function AcademyPreviewLibrary({ cards, showControls = true }: { cards: readonly AcademyPreviewCard[]; showControls?: boolean }) {
+export default function AcademyPreviewLibrary({ cards, showControls = true, localeCode = "fr" }: { cards: readonly AcademyPreviewCard[]; showControls?: boolean; localeCode?: "fr" | "en" }) {
+  const en = localeCode === "en";
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState(ALL);
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -40,7 +41,7 @@ export default function AcademyPreviewLibrary({ cards, showControls = true }: { 
       </div>}
 
       {results.length ? (
-        <section aria-label="Apprentissages" className={`px-4 sm:px-6 lg:px-8 ${showControls ? "py-14 md:py-16" : "pb-14 pt-0 md:pb-16"}`}>
+        <section aria-label={en ? "Insights" : "Apprentissages"} className={`px-4 sm:px-6 lg:px-8 ${showControls ? "py-14 md:py-16" : "pb-14 pt-0 md:pb-16"}`}>
           <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
             {results.map((card) => (
               <article key={card.href} className="min-w-0">
@@ -54,7 +55,7 @@ export default function AcademyPreviewLibrary({ cards, showControls = true }: { 
                     {card.imageCaption ? <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-4 pb-3 pt-8 text-right text-xs text-white/50">{card.imageCaption}</span> : null}
                   </div>
                   <div className="px-0.5 pt-4">
-                    <p className="text-[0.68rem] font-medium uppercase tracking-[0.12em] text-dema-forest/65">{card.format}{card.category ? `${card.format === "Projet" ? " " : " · "}${card.category}` : ""}</p>
+                    <p className="text-[0.68rem] font-medium uppercase tracking-[0.12em] text-dema-forest/65">{en ? ({ Projet: "Venture", Approche: "Approach", Méthode: "Method", Cours: "Course", Apprentissage: "Insight" }[card.format]) : card.format}{card.category ? `${card.format === "Projet" ? " " : " · "}${card.category}` : ""}</p>
                     <h2 className="mt-2 text-xl font-normal leading-tight tracking-[-0.02em] text-brand-blue transition-colors group-hover:text-dema-forest sm:text-2xl">{card.title}</h2>
                     {card.format === "Projet" && <p className="mt-3 text-sm leading-6 text-dema-muted">{card.summary}</p>}
                   </div>

@@ -23,7 +23,7 @@ export function buildSiteIdentityJsonLd() {
         "@id": `${origin}/#website`,
         name: "DEMAA",
         url: origin,
-        inLanguage: "fr-FR",
+        inLanguage: ["fr-FR", "en-GB"],
         publisher: { "@id": `${origin}/#organization` },
       },
     ],

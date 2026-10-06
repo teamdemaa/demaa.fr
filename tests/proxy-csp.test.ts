@@ -47,7 +47,7 @@ describe("proxy content security policy", () => {
 
   it("keeps the English beta disabled by default and marks its response", () => {
     delete process.env.DEMAA_ENGLISH_BETA_ENABLED;
-    const response = proxy(new NextRequest("https://demaa.fr/en", {
+    const response = proxy(new NextRequest("https://demaa.fr/en/plans", {
       headers: { host: "demaa.fr" },
     }));
     expect(response.status).toBe(404);
@@ -57,7 +57,7 @@ describe("proxy content security policy", () => {
 
   it("forwards the centrally resolved locale only when the beta flag is enabled", () => {
     process.env.DEMAA_ENGLISH_BETA_ENABLED = "true";
-    const english = proxy(new NextRequest("https://demaa.fr/en", {
+    const english = proxy(new NextRequest("https://demaa.fr/en/plans", {
       headers: { host: "demaa.fr" },
     }));
     expect(english.status).toBe(200);

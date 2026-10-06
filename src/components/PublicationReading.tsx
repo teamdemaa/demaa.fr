@@ -11,15 +11,23 @@ const readings: Record<string, Reading[]> = {
   "demaa-2": [{ author: "Strategyzer", title: "Validate Your Ideas with the Test Card", href: "https://www.strategyzer.com/library/validate-your-ideas-with-the-test-card", context: "Pour relier une hypothèse, un test, une mesure et un critère de décision." }],
 };
 
-export default function PublicationReading({ project, number }: { project: string; number: number }) {
+export default function PublicationReading({ project, number, localeCode = "fr" }: { project: string; number: number; localeCode?: "fr" | "en" }) {
+  const en = localeCode === "en";
+  const contexts: Record<string, string[]> = {
+    "demaa-3": ["On choosing the people we want to serve and the value we can offer them.", "On testing early hypotheses against the market."],
+    "jago-0": ["Further reading on bringing African food products to market and growing food businesses."],
+    "jago-1": ["On doing the manual work and giving early customers close attention."],
+    "dumaan-1": ["On choosing a specific audience we can genuinely serve."],
+    "tiimora-1": ["On alternatives, differentiated value and the customers who care about it."],
+  };
   const items = readings[`${project}-${number}`];
   if (!items) return null;
-  return <aside aria-label="Pour approfondir" className="mt-12 border-t border-[#d8c9ba] pt-6">
-    <h2 className="text-lg font-medium">Pour approfondir</h2>
+  return <aside aria-label={en ? "Further reading" : "Pour approfondir"} className="mt-12 border-t border-[#d8c9ba] pt-6">
+    <h2 className="text-lg font-medium">{en ? "Further reading" : "Pour approfondir"}</h2>
     <ul className="mt-4 space-y-4 text-base leading-7 text-dema-muted">
-      {items.map(item => <li key={item.href}>
+      {items.map((item, index) => <li key={item.href}>
         <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-brand-blue underline underline-offset-4">{item.author} · {item.title}</a>
-        <p className="mt-1">{item.context}</p>
+        <p className="mt-1">{en ? contexts[`${project}-${number}`]?.[index] : item.context}</p>
       </li>)}
     </ul>
   </aside>;
