@@ -30,5 +30,5 @@ export function publicationRouteAllowed(project: string, slug: string) {
 export function articleParagraphs(text: string) { return text.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean); }
 
 export function articleHeading(text: string) {
-  return ["Signal à valider", "Audience", "Positionnement", "Offre", "Promotion", "Attirer", "Convertir", "Fidéliser", "Nurture", "Relation", "Recommandation", "Ce qui fera choisir l’ICP", "Ce qui fera choisir le profil de client idéal", "Deux couches restent actives partout", "1. La stratégie : APOP", "2. Le plan d’action", "Et maintenant ?"].includes(text);
+  return ["Signal à valider", "Ce qu’on veut vérifier", "Indicateurs à suivre", "Audience", "Positionnement", "Offre", "Promotion", "Attirer", "Convertir", "Fidéliser", "Nurture", "Relation", "Recommandation", "Ce qui fera choisir l’ICP", "Ce qui fera choisir le profil de client idéal", "Deux couches restent actives partout", "1. La stratégie : APOP", "2. Le plan d’action", "Et maintenant ?"].includes(text);
 }

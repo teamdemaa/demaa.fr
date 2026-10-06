@@ -56,7 +56,7 @@
       "Promotion",
       "On commence avec notre réseau de boutiques et d’épiceries, les introductions et les partenariats avec des réseaux de commerces.",
       "L’objectif est de discuter avec les commerces, de recueillir leurs besoins et de voir quelles demandes on peut réellement traiter.",
-      "Signal à valider",
+      "Ce qu’on veut vérifier",
       "Est-ce que les demandes deviennent des commandes et est-ce que les clients reviennent pour s’approvisionner à nouveau ?",
       "On suit aussi les produits demandés, les offres auxquelles on arrive à répondre et les points qui ralentissent la commande. On compare ces signaux entre les types de commerces pour décider où concentrer les efforts."
     ],
@@ -95,7 +95,9 @@
       "Recommandation",
       "Un commerce peut nous présenter à un autre. Un fournisseur peut nous orienter vers un producteur ou une offre complémentaire.",
       "Ces introductions font partie du travail de terrain, même avant une première commande.",
-      "On suit surtout les demandes qualifiées, les commandes et le retour des clients."
+      "On suit surtout les demandes qualifiées, les commandes et le retour des clients.",
+      "Indicateurs à suivre",
+      "Demandes qualifiées, offres présentées, commandes et fréquence de réapprovisionnement, par type de commerce."
     ],
     "sourceUrl": "https://app.notion.com/p/3f007d7875238162985af1e425db2cc8",
     "sourceImportedAt": "2026-10-05",
@@ -115,11 +117,11 @@
       "Qu’est-ce qu’on peut préparer en amont pour faciliter le repas, tout en gardant les saveurs et le plaisir de cuisiner ?",
       "Au début, on a pensé aux restaurants et aux traiteurs, parce que certaines préparations leur prennent beaucoup de temps.",
       "Mais en avançant, on s’est davantage intéressés au quotidien des familles. Rentrer du travail, trouver une idée de repas et recommencer chaque préparation depuis zéro : c’est ce problème qu’on veut traiter en premier.",
-      "Dumaan se concentre donc aujourd’hui sur les particuliers, en commençant par les familles qui veulent cuisiner ouest-africain plus facilement.",
+      "On explore d’abord les besoins des familles qui veulent cuisiner ouest-africain plus facilement.",
       "Des pastels prêts à cuire, des légumes découpés ou certaines bases déjà préparées sont des pistes. Les produits exacts, les formats et les prix restent à ajuster avec les premiers tests.",
       "Pour des pastels, il faut préparer la pâte, la farce et former les pièces. Pouvoir démarrer avec ces étapes déjà réalisées change concrètement le temps nécessaire pour préparer le repas.",
       "On cherche surtout les préparations qui font gagner assez de temps pour être utilisées régulièrement.",
-      "La piste des restaurants et traiteurs pourra venir ensuite, si les produits et les usages s’y prêtent.",
+      "Certaines préparations seront aussi testées auprès de restaurants et de traiteurs, pour comparer les besoins et les usages.",
       "Pour commencer, on regardera ce que les familles achètent, comment elles l’utilisent et ce qu’elles rachètent. C’est ce qui nous dira où Dumaan leur simplifie vraiment le quotidien."
     ],
     "sourceUrl": "https://app.notion.com/p/3f007d7875238162a80fc9d0efd2c3b1",
@@ -136,7 +138,7 @@
       "Dumaan part d’un problème quotidien : vouloir cuisiner des plats ouest-africains quand le temps manque pour les préparations les plus longues.",
       "On utilise la même méthode APOP : Audience, Positionnement, Offre, Promotion.",
       "Audience",
-      "On commence par les familles et les personnes actives qui veulent retrouver ces plats à la maison, avec moins de préparation.",
+      "Les familles et les personnes actives qui veulent retrouver ces plats à la maison, avec moins de préparation, sont notre première hypothèse.",
       "La question est concrète : « On mange quoi ce soir ? » Il faut trouver une idée, réunir les ingrédients et préparer le repas, souvent après une journée déjà chargée.",
       "On veut comprendre quelles étapes prennent le plus de temps et ce que les familles seraient prêtes à acheter pour les alléger.",
       "Positionnement",
@@ -150,9 +152,9 @@
       "Promotion",
       "On teste une vidéo signature « On mange quoi ce soir ? », diffusée en publicité, des dégustations et des relais locaux.",
       "On ajuste les messages et le budget à partir des premières demandes et commandes.",
-      "La piste professionnelle reste possible pour plus tard. Le premier test est centré sur les familles.",
-      "Signal à valider",
-      "Est-ce que les familles achètent, utilisent les produits et les rachètent pour les repas du quotidien ?"
+      "Les familles restent prioritaires. On teste aussi certaines préparations auprès de restaurants et de traiteurs, pour comparer les besoins et les usages.",
+      "Ce qu’on veut vérifier",
+      "Quels produits répondent à un besoin régulier chez les familles et les professionnels, au point d’être utilisés puis rachetés ?"
     ],
     "sourceUrl": "https://app.notion.com/p/3f007d78752381d0bc55e07ee42c84b9",
     "sourceImportedAt": "2026-10-05",
@@ -165,7 +167,7 @@
     "title": "Le plan d’action de Dumaan",
     "description": "Dégustations, premiers achats, idées de repas et réachat : le plan d’action de Dumaan pour tester son utilité auprès des familles.",
     "paragraphs": [
-      "Le premier plan d’action de Dumaan est centré sur les familles.",
+      "Le premier plan d’action de Dumaan est centré sur les familles. Des tests sur certaines préparations auprès de restaurants et de traiteurs permettront aussi de comparer les besoins et les usages.",
       "On garde la même structure : Attirer, Convertir, Fidéliser, avec Relation et Recommandation en transverse.",
       "Attirer",
       "On veut parler aux familles de leur quotidien : « On mange quoi ce soir ? », le temps disponible et les préparations qu’elles repoussent faute de temps.",
@@ -184,7 +186,9 @@
       "Recommandation",
       "Une famille satisfaite peut faire découvrir Dumaan à ses proches.",
       "On regardera si ces recommandations amènent de nouveaux essais, puis de nouveaux achats.",
-      "Les retours sur les premiers repas et les nouvelles commandes guideront les prochains formats et produits."
+      "Les retours sur les premiers repas et les nouvelles commandes guideront les prochains formats et produits.",
+      "Indicateurs à suivre",
+      "Premières commandes, produits utilisés, réachat et fréquence de commande, par type de client."
     ],
     "sourceUrl": "https://app.notion.com/p/3f007d787523818298e6c7843a278053",
     "sourceImportedAt": "2026-10-05",
@@ -247,7 +251,7 @@
       "- Du contenu utile sur LinkedIn : demandes clients, pièces manquantes et responsabilités.\n- La publicité LinkedIn pour diffuser ces ressources dès le démarrage.\n- Des introductions et des partenariats avec consultants en organisation, formateurs et réseaux de cabinets.",
       "Une ressource pratique ouvre la discussion, puis on propose un diagnostic des processus ou une démo adaptée au besoin du cabinet.",
       "Les deux cabinets pilotes doivent également nous aider à produire des cas concrets si les résultats sont suffisamment bons.",
-      "Signal à valider",
+      "Ce qu’on veut vérifier",
       "Ce qu’on veut observer :",
       "- est-ce que le problème déclenche réellement une décision d’achat ?\n- est-ce que les cabinets adoptent Tiimora dans leur quotidien ?\n- est-ce que le produit enlève réellement du travail manuel ?\n- quels usages deviennent récurrents ?\n- quel niveau de prix et d’accompagnement est acceptable ?",
       "C’est à partir de ces signaux qu’on élargira le produit et le go-to-market."
@@ -289,7 +293,9 @@
       "La confiance compte beaucoup dans ce marché.",
       "Un cabinet pilote, un client satisfait ou un partenaire de confiance peut créer une introduction beaucoup plus forte qu’un message froid.",
       "On veut donc prendre chaque bonne interaction au sérieux, même quand elle ne débouche pas immédiatement sur une vente.",
-      "On suit le passage des ressources au diagnostic, puis à l’installation, et l’utilisation régulière du premier processus. Les retours des cabinets permettent d’ajuster l’accompagnement et de choisir les prochains usages à développer."
+      "On suit le passage des ressources au diagnostic, puis à l’installation, et l’utilisation régulière du premier processus. Les retours des cabinets permettent d’ajuster l’accompagnement et de choisir les prochains usages à développer.",
+      "Indicateurs à suivre",
+      "Demandes de diagnostic ou de démo, installations, utilisation régulière du premier processus et temps consacré aux relances."
     ],
     "sourceUrl": "https://app.notion.com/p/3f007d78752381f59c14ceb5cce8d131",
     "sourceImportedAt": "2026-10-05",
@@ -371,7 +377,7 @@
       "Quels canaux sont les plus adaptés à chaque segment ?",
       "LinkedIn, prospection ciblée, partenaires, publicité, terrain, contenu, événements : le mix dépend du projet.",
       "À ce stade, on choisit les canaux.",
-      "Signal à valider",
+      "Ce qu’on veut vérifier",
       "Après APOP, on ajoute une question simple :",
       "**qu’est-ce qu’on doit observer pour penser que cette stratégie fonctionne ?**",
       "Cela peut être une demande qualifiée, une mise en relation qui avance, un achat, un réachat, une activation, une rétention, un prix accepté ou un autre comportement suffisamment concret.",
