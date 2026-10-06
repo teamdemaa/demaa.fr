@@ -1,3 +1,4 @@
+import { isEnglishStudioPath } from "@/lib/studio-language-routes";
 import { publicationRouteAllowed } from "@/lib/publication-contract";
 import { getLearningProjectSeries } from "@/lib/academy-project-series";
 import { NextResponse, type NextRequest } from "next/server";
@@ -96,6 +97,7 @@ export function studioProxy(request: NextRequest) {
 
   if (
     localeCode === "en"
+    && !isEnglishStudioPath(pathname)
     && process.env.DEMAA_ENGLISH_BETA_ENABLED !== "true"
   ) {
     return withContentSecurityPolicy(
@@ -174,6 +176,15 @@ export function studioProxy(request: NextRequest) {
 export async function proxy(request: NextRequest) {
   const response = studioProxy(request);
   if (response.headers.get("x-middleware-next") === "1") {
+    const englishMatch = request.nextUrl.pathname.match(/^\/en\/insights\/([^/]+)\/([^/]+)$/);
+    if (englishMatch) {
+      try {
+        const { englishPublishedArticle } = await import("@/lib/english-publications.server");
+        if (!await englishPublishedArticle(englishMatch[1], englishMatch[2])) return withContentSecurityPolicy(new NextResponse(null, { status: 404, headers: { "X-Robots-Tag": "noindex, nofollow" } }), "en");
+      } catch {
+        return withContentSecurityPolicy(new NextResponse(null, { status: 503, headers: { "X-Robots-Tag": "noindex, nofollow", "Retry-After": "60" } }), "en");
+      }
+    }
     const match = request.nextUrl.pathname.match(/^\/apprentissages\/([^/]+)\/([^/]+)$/);
     if (match) {
       try {

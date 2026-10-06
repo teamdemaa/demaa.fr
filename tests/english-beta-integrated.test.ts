@@ -17,8 +17,7 @@ describe("English beta integrated release boundaries", () => {
     expect(layout).toContain("ENGLISH_BETA_DESCRIPTION");
     expect(layout).toContain('url: "/twitter-image"');
     expect(layout).toContain("robots: { follow: false, index: false }");
-    expect(page).toContain('canonical: "/en"');
-    expect(page).toContain('languages: { fr: "/", en: "/en" }');
+    expect(page).toContain('permanentRedirect("/en/studio")');
     expect(copy).not.toContain("Structurez votre entreprise");
   });
 

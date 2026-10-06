@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { studioLanguagePaths } from "./studio-language-routes";
 
 export const PUBLIC_SOCIAL_IMAGE = {
   url: "/opengraph-image",
@@ -31,20 +32,23 @@ export function buildPublicPageMetadata({
   robots,
   socialImage,
 }: PublicPageMetadataInput): Metadata {
-  const resolvedSocialImage = socialImage ?? PUBLIC_SOCIAL_IMAGE;
+  const english = path.startsWith("/en/");
+  const languages = studioLanguagePaths(path);
+  const englishImage = { url: "/images/studio/cover.webp", alt: "DEMAA · Venture studio" };
+  const resolvedSocialImage = socialImage ?? (english ? englishImage : PUBLIC_SOCIAL_IMAGE);
 
   return {
     title,
     description,
     ...(keywords ? { keywords } : {}),
     ...(robots ? { robots } : {}),
-    alternates: { canonical: path },
+    alternates: { canonical: path, ...(languages ? { languages } : {}) },
     openGraph: {
       title,
       description,
       url: path,
       siteName: "DEMAA",
-      locale: "fr_FR",
+      locale: english ? "en_GB" : "fr_FR",
       type,
       images: [resolvedSocialImage],
     },
@@ -52,7 +56,7 @@ export function buildPublicPageMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [socialImage?.url ?? "/twitter-image"],
+      images: [socialImage?.url ?? (english ? englishImage.url : "/twitter-image")],
     },
   };
 }

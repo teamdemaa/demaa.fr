@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import localFont from "next/font/local";
 import "./globals.css";
 import CookieConsentManager from "@/components/CookieConsentManager";
@@ -97,17 +98,18 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   modal,
 }: Readonly<{
   children: React.ReactNode;
   modal: React.ReactNode;
 }>) {
+  const locale = (await headers()).get("x-demaa-locale") === "en" ? "en" : "fr";
   return (
     <html
       suppressHydrationWarning
-      lang="fr"
+      lang={locale}
       className={`${satoshi.variable} ${gambetta.variable} h-full antialiased`}
     >
       <body

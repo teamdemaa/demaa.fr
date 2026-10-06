@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import StudioLanguageSwitch from "@/components/StudioLanguageSwitch";
 import { CircleUserRound } from "lucide-react";
 import type { ReactNode } from "react";
 import AdminLogoutButton from "@/components/AdminLogoutButton";
@@ -72,7 +73,7 @@ export default function Navbar({
               className="absolute left-1/2 top-1/2 hidden w-[min(60vw,36rem)] -translate-x-1/2 -translate-y-1/2 empty:hidden md:block"
             >
               {publicNavigationActiveView !== undefined ? (
-                <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} />
+                <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} localeCode={localeCode} />
               ) : null}
             </div>
             {adminControls ? (
@@ -119,6 +120,7 @@ export default function Navbar({
                 id="action-plan-navbar-specialist"
                 className="shrink-0 empty:hidden"
               >
+                {!adminControls && !anonymousLanding && <StudioLanguageSwitch />}
                 {publicCta ?? (publicCtaHref && publicCtaLabel ? (
                   <Link
                     href={publicCtaHref}
@@ -135,7 +137,7 @@ export default function Navbar({
             className="pb-3 empty:hidden md:hidden"
           >
             {publicNavigationActiveView !== undefined ? (
-              <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} />
+              <PublicActionPlanNavigation activeView={publicNavigationActiveView} variant={publicNavigationVariant} localeCode={localeCode} />
             ) : null}
           </div>
         </div>

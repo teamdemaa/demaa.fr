@@ -6,32 +6,12 @@ function source(path: string) {
 }
 
 describe("hidden English beta foundation", () => {
-  it("keeps /en server-flagged and out of indexing before product activation", () => {
+  it("opens the English Studio while keeping legacy plan routes isolated", () => {
     const page = source("src/app/(english)/en/page.tsx");
     const layout = source("src/app/(english)/en/layout.tsx");
-    expect(page).toContain("isEnglishBetaEnabled()");
-    expect(page).toContain("notFound()");
-    expect(page).toContain("robots: { follow: false, index: false }");
-    expect(page).toContain('canonical: "/en"');
-    expect(page).toContain('loadActionPlanHomePage({ localeCode: "en"');
+    expect(page).toContain('permanentRedirect("/en/studio")');
+    expect(page).not.toContain("ActionPlanHomeView");
     expect(layout).toContain('<DocumentLocale localeCode="en"');
-    expect(layout).toContain('document.documentElement.lang="en"');
-  });
-
-  it("reuses the shared guest action-plan experience and English system projection", () => {
-    const page = source("src/app/(english)/en/page.tsx");
-    const sharedHome = source("src/components/ActionPlanHomeView.tsx");
-    const config = source("src/lib/action-plan-page-config.ts");
-    const localization = source("src/lib/action-plan-localization.ts");
-    expect(page).toContain("<ActionPlanHomeView");
-    expect(sharedHome).toContain("<GuestActionPlanExperience");
-    expect(sharedHome).toContain("contentLocaleCode={config.localeCode}");
-    expect(sharedHome).toContain("marketCodeAtCreation={config.marketCode}");
-    expect(sharedHome).toContain("getActionPlanSystemOptionsForContext");
-    expect(config).toContain('"global-en-beta": ["plan", "services", "academy"]');
-    expect(localization).toContain("ENGLISH_ACTION_PLAN_SYSTEM_IDS");
-    expect(localization).toContain('"formation-en-ligne"');
-    expect(sharedHome).not.toContain("generateActionPlanWithMetadata");
   });
 
   it("keeps English plans in the same authenticated company plan space", () => {
