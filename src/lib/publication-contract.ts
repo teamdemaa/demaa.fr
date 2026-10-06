@@ -17,8 +17,8 @@ export type ArticleDraft = z.infer<typeof ArticleSchema>;
 export type Publication = ArticleDraft & { project: typeof PROJECTS[number]; number: number; slug: string; publishedAt?: string };
 export type Newsletter = { status: "preparing" | "prepared" | "sending" | "sent" | "uncertain"; broadcastId?: string; version: string; testedVersion?: string; testedAt?: string };
 export type PublicationRecord = { id: string; project: typeof PROJECTS[number]; number: number; revision: number; draft: ArticleDraft; published: Publication | null; updatedAt?: string; newsletter?: Newsletter };
-export const STUDIO_ARTICLE_TITLES = ["Pourquoi on construit DEMAA", "Notre système Go-to-Market", "Comment on pilote notre exécution dans Airtable"] as const;
-export const STUDIO_ARTICLE_SLUGS = ["pourquoi-demaa", "systeme-go-to-market", "execution-airtable"] as const;
+export const STUDIO_ARTICLE_TITLES = ["Pourquoi on construit DEMAA", "Notre système Go-to-Market", "Comment on pilote notre exécution dans Airtable", "On construit un studio d’entreprises"] as const;
+export const STUDIO_ARTICLE_SLUGS = ["pourquoi-demaa", "systeme-go-to-market", "execution-airtable", "on-construit-un-studio"] as const;
 export function publicationTitles(project: string): readonly string[] { return project === "demaa" ? STUDIO_ARTICLE_TITLES : EPISODE_TITLES; }
 export function publicationSlot(project: unknown, number: unknown) {
   if (!PROJECTS.includes(project as typeof PROJECTS[number]) || !Number.isInteger(number) || Number(number) < 0 || Number(number) >= publicationTitles(String(project)).length) throw new Error("Projet ou épisode invalide.");
