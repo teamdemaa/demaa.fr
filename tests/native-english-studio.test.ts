@@ -67,6 +67,7 @@ describe("native English Studio", () => {
     expect(generic).toContain("Who faces this problem?");
     expect(generic).toContain("What next step should we offer?");
     expect(generic).not.toContain("€199");
-    expect(html("tiimora", 0)).toContain("tiimora-interface.webp");
+    expect(html("tiimora", 0)).toContain("tiimora-admin-dispersee.webp");
+    expect(html("tiimora", 0)).not.toContain("tiimora-interface.webp");
   });
 });

@@ -11,7 +11,6 @@ const genesisVisuals: Record<string, ArticleVisual[]> = {
   dumaan: [{ after: "Des pastels prêts à cuire, des légumes découpés ou certaines bases déjà préparées sont des pistes.", src: "/images/studio/dumaan-familles.webp", alt: "Préparation de pastels Dumaan dans une cuisine familiale", caption: "Dumaan : des préparations pour simplifier le repas à la maison. Visuel de concept.", width: 1536, height: 1024 }],
   tiimora: [
     { after: "Un cabinet peut avoir un très bon outil comptable", src: "/images/studio/tiimora-admin-dispersee.webp", alt: "Demandes dispersées entre e-mails, WhatsApp, fichiers Excel et post-it", caption: "Demandes, pièces et relances dispersées : le suivi quotidien qui a fait émerger Tiimora. Illustration.", width: 1672, height: 941 },
-    { after: "La première promesse est simple", src: "/images/studio/tiimora-interface.webp", alt: "Interface Tiimora : demandes à traiter, en cours et en attente client, et tâches de l’équipe", caption: "Dans Tiimora, les demandes clients, les documents et les tâches de l’équipe sont réunis dans un même suivi.", width: 1200, height: 800 },
   ],
 };
 export default function PublicationArticleContent({ text, framework, genesisProject }: { text: string; framework?: { kind: "strategy" | "plan"; project: string }; genesisProject?: string }) {

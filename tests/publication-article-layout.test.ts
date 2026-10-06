@@ -19,9 +19,9 @@ describe("Publication illustrations and reading order", () => {
     for (const project of ["jago", "dumaan", "tiimora"]) {
       const article = articles.find(a => a.project === project && a.number === 0)!;
       const html = renderToStaticMarkup(createElement(PublicationArticleContent, { text: article.paragraphs.join("\n\n"), genesisProject: project }));
-      expect((html.match(/<figure/g) ?? []).length).toBe(project === "tiimora" ? 2 : 1);
+      expect((html.match(/<figure/g) ?? []).length).toBe(1);
       for (const paragraph of article.paragraphs) expect(html).toContain(paragraph);
-      if (project === "tiimora") expect(html.indexOf("tiimora-admin-dispersee")).toBeLessThan(html.indexOf("tiimora-interface"));
+      if (project === "tiimora") { expect(html).toContain("tiimora-admin-dispersee"); expect(html).not.toContain("tiimora-interface"); }
     }
   });
   it("keeps family priority without postponing professional tests", () => {
