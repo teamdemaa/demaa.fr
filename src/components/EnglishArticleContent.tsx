@@ -10,7 +10,6 @@ const visuals: Record<string, readonly { after: string; src: string; alt: string
   dumaan: [{ after: "Ready-to-cook pastels, chopped vegetables and pre-prepared dish bases", src: "/images/studio/dumaan-familles.webp", alt: "Preparing Dumaan pastels in a family kitchen", caption: "Dumaan: food preparations that make meals at home easier. Concept image.", width: 1536, height: 1024 }],
   tiimora: [
     { after: "A firm can have excellent accounting software", src: "/images/studio/tiimora-admin-dispersee.webp", alt: "Requests scattered across email, WhatsApp, Excel files and sticky notes", caption: "Requests, documents and reminders scattered across tools: the daily follow-up that inspired Tiimora. Illustration.", width: 1672, height: 941 },
-    { after: "The initial promise is simple:", src: "/images/studio/tiimora-interface.webp", alt: "Tiimora interface: client requests and team tasks in one place", caption: "Tiimora brings client requests, documents and team tasks into one shared workflow. The interface shown is in French.", width: 1200, height: 800 },
   ],
 };
 export default function EnglishArticleContent({ paragraphs, project, number }: { paragraphs: readonly string[]; project: string; number: number }) {

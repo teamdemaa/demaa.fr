@@ -21,7 +21,7 @@ describe("Publication illustrations and reading order", () => {
       const html = renderToStaticMarkup(createElement(PublicationArticleContent, { text: article.paragraphs.join("\n\n"), genesisProject: project }));
       expect((html.match(/<figure/g) ?? []).length).toBe(project === "tiimora" ? 2 : 1);
       for (const paragraph of article.paragraphs) expect(html).toContain(paragraph);
-      if (project === "tiimora") expect(html.indexOf("tiimora-admin-dispersee")).toBeLessThan(html.indexOf("tiimora-interface"));
+      if (project === "tiimora") { expect(html).toContain("tiimora-admin-dispersee"); expect(html).not.toContain("tiimora-interface"); }
     }
   });
   it("keeps family priority without postponing professional tests", () => {
