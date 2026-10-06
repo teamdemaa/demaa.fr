@@ -30,7 +30,7 @@
     "number": 1,
     "slug": "strategy",
     "sourceSlug": "strategie",
-    "sourceVersion": "a06e372d2d128c1be07ce5486eb4aefd65161c7347478af6a0c1e71a7074cab7",
+    "sourceVersion": "8c49c14f82d0a9c9c843e7e2cf75b61ed7f65131eaa6c5daaa0a8b5b0abc354e",
     "title": "How we’re building Jago’s go-to-market strategy",
     "description": "Starting with shops’ wholesale needs, finding suitable suppliers and managing the relationship: Jago’s go-to-market strategy.",
     "paragraphs": [
@@ -68,7 +68,7 @@
     "number": 2,
     "slug": "action-plan",
     "sourceSlug": "plan-action",
-    "sourceVersion": "c5f06ca3e0c0db55f5c270e2949db7edb2c44d1c873344cd564d5ebb14596b99",
+    "sourceVersion": "73b8f403dbc0a709ce7edbfd831833b79b7698fa32168ec8ceca1ec561981f1e",
     "title": "Jago’s action plan",
     "description": "Shop networks, specific requests, clear offers and order follow-up: Jago’s action plan.",
     "paragraphs": [
@@ -194,7 +194,7 @@
     "number": 0,
     "slug": "origins",
     "sourceSlug": "la-genese",
-    "sourceVersion": "6f3c1c0395004fdf598ccabe151c28187d44e15a575c7a60a346239aa7ec125d",
+    "sourceVersion": "b443a1421adc450e035a3221b003aadcc148d04f19bb281270b6a67517d03613",
     "title": "Why we’re building Tiimora",
     "description": "From working with accounting firms to the first pilots: why Tiimora focuses on client requests and deadlines.",
     "paragraphs": [
@@ -219,7 +219,7 @@
     "number": 1,
     "slug": "strategy",
     "sourceSlug": "strategie",
-    "sourceVersion": "978105bd80df6e3a6fc84096273b0180cecd6688a79ef4d59547b10df01ef10e",
+    "sourceVersion": "9303509364fafe27d387171e184843adfc6cb47443efb4bc6f9019cc8a714339",
     "title": "How we’re building Tiimora’s go-to-market strategy",
     "description": "Audience, positioning, a test offer and channels: Tiimora’s go-to-market strategy for accounting firms with 3 to 20 employees.",
     "paragraphs": [
@@ -258,7 +258,7 @@
     "number": 2,
     "slug": "action-plan",
     "sourceSlug": "plan-action",
-    "sourceVersion": "57895a54e5965d7cd9972572f894532a6b42ab0dfc0c748310924327129cb73a",
+    "sourceVersion": "5b9e31348f42526e6906f9f891a8a9e3c685d8a93bfd9375630a2369eb8daa23",
     "title": "Tiimora’s action plan",
     "description": "Demos, onboarding and recurring use: Tiimora’s action plan to acquire and retain its first accounting firms.",
     "paragraphs": [
@@ -298,7 +298,7 @@
     "number": 0,
     "slug": "why-demaa",
     "sourceSlug": "pourquoi-demaa",
-    "sourceVersion": "6e82e3fc3c9604884d618347d2f1a387390a142c9b7d857a67c4f9cbb2baef9c",
+    "sourceVersion": "10e860f3ff0b119fd85a6f2504aea5536caecfe925a79a0db3236ea1ed12fe08",
     "title": "Why we’re building DEMAA",
     "description": "Why DEMAA shares resources to test opportunities, build profitable businesses and invest with discipline.",
     "paragraphs": [
@@ -336,12 +336,12 @@
     "number": 1,
     "slug": "go-to-market-system",
     "sourceSlug": "systeme-go-to-market",
-    "sourceVersion": "7197cc9df1d16a93f29b67e114532cc98a9c0ec78363192bd6ad92e3a4bef9da",
+    "sourceVersion": "572a5c3c011d82c625d3f3dbb3b98479821c319a6207ff773fbda08c0cf5db87",
     "title": "Our go-to-market system",
     "description": "Our go-to-market system: APOP for strategy, Attract, Convert, Retain for action, with Nurturing and Referrals throughout.",
     "paragraphs": [
       "As we built several ventures, we needed a common approach to structure decisions without applying the same tactics to every market.",
-      "We organised it into two layers: strategy, then the action plan.",
+      "We organised it into two parts: strategy, then the action plan.",
       "1. Strategy: APOP",
       "Audience",
       "Who do we want to serve?",
@@ -386,7 +386,7 @@
       "Retain",
       "What needs to happen for a customer to stay, buy again or reuse the product?",
       "We look at actual use, experience, repeat purchases, retention and the value delivered.",
-      "Two layers run throughout",
+      "Two approaches run throughout",
       "Nurturing",
       "Keep being useful before, during and after the sale.",
       "Someone who isn’t ready today may be ready later.",
@@ -404,7 +404,7 @@
     "number": 3,
     "slug": "building-a-venture-studio",
     "sourceSlug": "on-construit-un-studio",
-    "sourceVersion": "eac7a68f3e9744d90f7f4fb669b5101106d47f153099b51d23da2530f4022378",
+    "sourceVersion": "da48635acd0d31ede662ade236b2997cfcd0105dfc3c399e57508e469e33e640",
     "title": "We’re building a venture studio",
     "description": "Why we’re building a venture studio, how we start with audiences and how we test the first strategies for Jago, Tiimora and Dumaan.",
     "paragraphs": [
