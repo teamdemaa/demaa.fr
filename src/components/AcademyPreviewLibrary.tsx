@@ -40,7 +40,7 @@ export default function AcademyPreviewLibrary({ cards, showControls = true }: { 
       </div>}
 
       {results.length ? (
-        <section aria-label="Apprentissages" className="px-4 py-14 sm:px-6 md:py-16 lg:px-8">
+        <section aria-label="Apprentissages" className={`px-4 sm:px-6 lg:px-8 ${showControls ? "py-14 md:py-16" : "pb-14 pt-0 md:pb-16"}`}>
           <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
             {results.map((card) => (
               <article key={card.href} className="min-w-0">
