@@ -16,7 +16,7 @@ const primaryProjects: readonly DemaaStudioProject[] = [
     image: "/images/studio/tiimora-bureau.webp", imageAlt: "Visuel Tiimora : bureau d’un cabinet comptable avec le suivi des clients à l’écran",
   },
   {
-    slug: "dumaan-food", name: "Dumaan", sector: "Repas du quotidien", pole: "Food", portfolio: "priority", status: "En test",
+    slug: "dumaan-food", name: "Dumaan", href: "https://www.dumaan.com/", sector: "Repas du quotidien", pole: "Food", portfolio: "priority", status: "En test",
     summary: "Des préparations ouest-africaines pour simplifier les repas du quotidien des familles.",
     problem: "Préparer les repas chaque soir demande du temps et de l’énergie aux familles.",
     solution: "Des préparations prêtes à cuisiner, avec des formats adaptés aux repas à la maison.",
@@ -30,7 +30,7 @@ const primaryProjects: readonly DemaaStudioProject[] = [
     image: "/images/studio/mnd.webp", imageAlt: "Visuel de concept MND : préparation d’un repas avec du fonio et du bissap",
   },
   {
-    slug: "jagoya", name: "Jago", sector: "Commerce B2B", pole: "Tech & services", portfolio: "priority", status: "En test",
+    slug: "jagoya", name: "Jago", href: "https://www.hijago.com/", sector: "Commerce B2B", pole: "Tech & services", portfolio: "priority", status: "En test",
     summary: "Un service d’approvisionnement en produits africains en gros pour les boutiques, épiceries et revendeurs.",
     problem: "Trouver les produits et les fournisseurs adaptés, puis organiser une commande en gros, demande de nombreux échanges.",
     solution: "Jago recueille les besoins, recherche les fournisseurs adaptés et gère la relation commerciale et le suivi des commandes.",
