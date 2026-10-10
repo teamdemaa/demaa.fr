@@ -37,6 +37,7 @@ function ProjectCard({ project }: { project: DemaaStudioProject }) {
       <p className={`${eyebrowClass} mt-5`}>{project.pole}</p>
       <div className="mt-2 flex items-center justify-between gap-4"><h3 className="text-2xl font-medium tracking-tight">{project.name}</h3></div>
       <p className="mt-3 text-sm leading-6 text-dema-muted">{project.summary}</p>
+      {project.href && <a href={project.href} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm underline underline-offset-4">Visiter le site <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>}
     </div>
   </article>;
 }
