@@ -120,11 +120,11 @@ describe("Organiser process guides", () => {
 
   it("reuses the YouTube thumbnail for Open Graph and X", async () => {
     const openGraphSource = readFileSync(
-      "src/archived-resource-routes/(marketing)/organiser/[slug]/opengraph-image.tsx",
+      "src/app/(marketing)/organiser/[slug]/opengraph-image.tsx",
       "utf8",
     );
     const twitterSource = readFileSync(
-      "src/archived-resource-routes/(marketing)/organiser/[slug]/twitter-image.tsx",
+      "src/app/(marketing)/organiser/[slug]/twitter-image.tsx",
       "utf8",
     );
 
@@ -136,7 +136,7 @@ describe("Organiser process guides", () => {
     expect(twitterSource).toContain('from "./opengraph-image"');
 
     const { default: renderOpenGraphImage } = await import(
-      "@/archived-resource-routes/(marketing)/organiser/[slug]/opengraph-image"
+      "@/app/(marketing)/organiser/[slug]/opengraph-image"
     );
     const image = await renderOpenGraphImage({
       params: Promise.resolve({ slug: "organiser-entreprise-plomberie" }),
@@ -148,7 +148,7 @@ describe("Organiser process guides", () => {
     expect(imageBuffer.readUInt32BE(20)).toBe(720);
 
     const { GET: renderStableProcessMap } = await import(
-      "@/archived-resource-routes/(marketing)/organiser/[slug]/process-map.png/route"
+      "@/app/(marketing)/organiser/[slug]/process-map.png/route"
     );
     const stableImage = await renderStableProcessMap(
       new Request("https://demaa.co/organiser/organiser-entreprise-plomberie/process-map.png"),

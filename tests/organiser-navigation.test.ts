@@ -52,12 +52,12 @@ describe("Organiser navigation", () => {
   });
 
   it("renders one Organisation hub without a separate process library", () => {
-    const organiserPage = source("src/archived-resource-routes/(marketing)/organiser/page.tsx");
+    const organiserPage = source("src/app/(marketing)/organiser/page.tsx");
     const companyPilotage = source("src/components/CompanyPilotagePanel.tsx");
     const guestPlan = source("src/components/GuestActionPlanExperience.tsx");
 
     expect(organiserPage).toContain("<OrganiserHub");
-    expect(source("src/lib/academy-course-routes.ts")).toContain(
+    expect(source("src/lib/academy-course-routes.ts")).not.toContain(
       'source: "/organiser/:path*"',
     );
     expect(guestPlan).toContain('router.push("/outils")');

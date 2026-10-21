@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("server-only", () => ({}));
 
 import nextConfig from "../next.config";
-import { generateMetadata } from "@/archived-resource-routes/(marketing)/organiser/[slug]/page";
+import { generateMetadata } from "@/app/(marketing)/organiser/[slug]/page";
 import {
   buildAcademyContentJsonLd,
   buildAcademyContentMetadata,
@@ -156,14 +156,12 @@ describe("Academy SEO, redirects and assets", () => {
       expect(redirects).toContainEqual(redirect);
     }
 
-    expect(ACADEMY_PERMANENT_REDIRECTS).toHaveLength(8);
+    expect(ACADEMY_PERMANENT_REDIRECTS).toHaveLength(6);
     for (const source of [
       "/cours",
       "/cours/:path*",
       "/academy",
       "/academy/:path*",
-      "/organiser",
-      "/organiser/:path*",
     ]) {
       expect(redirects).toContainEqual({
         source,

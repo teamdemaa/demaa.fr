@@ -75,10 +75,10 @@ describe("public route integrity", () => {
 
   it("uses canonical Solutions links from retained operational and hidden legacy screens", async () => {
     const sources = await Promise.all([
-      readSource("src/archived-resource-routes/(marketing)/annuaire-recrutement/page.tsx"),
-      readSource("src/archived-resource-routes/(marketing)/annuaire-recrutement/[slug]/page.tsx"),
-      readSource("src/archived-resource-routes/(marketing)/annuaire-formations/page.tsx"),
-      readSource("src/archived-resource-routes/(marketing)/annuaire-formations/[slug]/page.tsx"),
+      readSource("src/app/(marketing)/annuaire-recrutement/page.tsx"),
+      readSource("src/app/(marketing)/annuaire-recrutement/[slug]/page.tsx"),
+      readSource("src/app/(marketing)/annuaire-formations/page.tsx"),
+      readSource("src/app/(marketing)/annuaire-formations/[slug]/page.tsx"),
       readSource("src/app/(marketing)/suivi-kits/page.tsx"),
     ]);
 

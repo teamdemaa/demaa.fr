@@ -25,7 +25,6 @@ const RETIRED_EXACT_PATHS = new Set([
   "/organisation-automatisation",
   "/opportunites-b2b",
   "/opportunites/0034",
-  "/ressources",
   "/structuration",
   "/sw.js",
 ]);

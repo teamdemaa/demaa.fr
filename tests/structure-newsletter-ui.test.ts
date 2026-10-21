@@ -80,10 +80,10 @@ describe("Organiser newsletter public contract", () => {
     expect(read("src/components/SystemsHubPage.tsx")).not.toContain(
       "StructureNewsletterBlock",
     );
-    expect(read("src/archived-resource-routes/(marketing)/modeles/page.tsx")).not.toContain(
+    expect(read("src/app/(marketing)/modeles/page.tsx")).not.toContain(
       "StructureNewsletterBlock",
     );
-    expect(read("src/archived-resource-routes/(marketing)/organiser/page.tsx")).not.toContain(
+    expect(read("src/app/(marketing)/organiser/page.tsx")).not.toContain(
       "OrganiserLandingPage",
     );
     const sharedPageLoader = read("src/lib/action-plan-pages.server.ts");
@@ -92,7 +92,7 @@ describe("Organiser newsletter public contract", () => {
     expect(sharedPageLoader).toContain('input.localeCode === "fr"');
 
     const academyCourseFiles = [
-      "src/archived-resource-routes/(marketing)/organiser/[slug]/page.tsx",
+      "src/app/(marketing)/organiser/[slug]/page.tsx",
       "src/components/AcademyCourseReader.tsx",
     ].filter((path) => {
       try {
