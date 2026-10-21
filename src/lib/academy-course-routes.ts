@@ -70,16 +70,6 @@ export const ACADEMY_PERMANENT_REDIRECTS = [
     destination: ARCHIVED_ACADEMY_DESTINATION,
     permanent: true,
   },
-  {
-    source: "/organiser",
-    destination: ARCHIVED_ACADEMY_DESTINATION,
-    permanent: true,
-  },
-  {
-    source: "/organiser/:path*",
-    destination: ARCHIVED_ACADEMY_DESTINATION,
-    permanent: true,
-  },
 ] as const;
 
 export type AcademyContentSlug = (typeof ACADEMY_CONTENT_SLUGS)[number];

@@ -114,7 +114,7 @@ describe("Méthodes, Modèles and Outils public journey", () => {
   });
 
   it("keeps Outils limited to software while Models has its own catalogue", () => {
-    const toolsPage = read("src/archived-resource-routes/(marketing)/outils/page.tsx");
+    const toolsPage = read("src/app/(marketing)/outils/page.tsx");
     const toolsHub = read("src/components/SystemsHubPage.tsx");
     const visibility = read("src/lib/public-solution-section-visibility.ts");
 
@@ -128,19 +128,19 @@ describe("Méthodes, Modèles and Outils public journey", () => {
     expect(visibility).toContain('section === "software"');
   });
 
-  it("archives the former Organisation catalogue while preserving its source", () => {
+  it("restores the Organisation catalogue outside the Studio navigation", () => {
     const sitemap = read("src/app/sitemap.ts");
     expect(getArchivedOrganisationContent()).toHaveLength(20);
     expect(existsSync("src/components/OrganiserHub.tsx")).toBe(true);
     expect(existsSync("src/components/OrganiserLibrary.tsx")).toBe(true);
     expect(sitemap).not.toContain("getPublishedOrganisationContent");
     expect(sitemap).not.toContain("getPublicOrganiserContent");
-    expect(ACADEMY_PERMANENT_REDIRECTS).toContainEqual({
+    expect(ACADEMY_PERMANENT_REDIRECTS).not.toContainEqual({
       source: "/organiser",
       destination: ARCHIVED_ACADEMY_DESTINATION,
       permanent: true,
     });
-    expect(ACADEMY_PERMANENT_REDIRECTS).toContainEqual({
+    expect(ACADEMY_PERMANENT_REDIRECTS).not.toContainEqual({
       source: "/organiser/:path*",
       destination: ARCHIVED_ACADEMY_DESTINATION,
       permanent: true,

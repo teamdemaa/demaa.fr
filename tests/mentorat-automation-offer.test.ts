@@ -89,7 +89,7 @@ describe("accompagnement de structuration", () => {
   it("keeps the Tools bridge educational and separate from the offer", async () => {
     const [hub, systemPage, bridge] = await Promise.all([
       readSource("src/components/SystemsHubPage.tsx"),
-      readSource("src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx"),
+      readSource("src/app/(marketing)/solutions/[slug]/page.tsx"),
       readSource("src/components/OrganiserDiscoveryCta.tsx"),
     ]);
     expect(hub).toContain("<OrganiserDiscoveryCta />");

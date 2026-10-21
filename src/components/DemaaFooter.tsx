@@ -7,6 +7,7 @@ const exploreLinks = [
   { label: "Nos projets", href: "/projets" },
   { label: "L’équipe", href: "/equipe" },
   { label: "Construire ensemble", href: "/studio/opportunites" },
+  { label: "Nos ressources", href: "/ressources" },
 ];
 
 const usefulLinks = [

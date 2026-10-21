@@ -23,9 +23,9 @@ describe("DEMAA Solutions preview", () => {
     expect(tools.map(({ resource }) => resource.resourceSlug)).toEqual([
       "pennylane", "myunisoft", "acd", "silae", "dext", "rca", "lefebvre-dalloz",
     ]);
-    expect(readFileSync("src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx", "utf8"))
+    expect(readFileSync("src/app/(marketing)/solutions/[slug]/page.tsx", "utf8"))
       .toContain('process.env.VERCEL_ENV === "preview"');
-    expect(readFileSync("src/archived-resource-routes/(marketing)/solutions/[slug]/page.tsx", "utf8"))
+    expect(readFileSync("src/app/(marketing)/solutions/[slug]/page.tsx", "utf8"))
       .not.toContain("Outils du lot pilote en vérification avant publication");
   });
 

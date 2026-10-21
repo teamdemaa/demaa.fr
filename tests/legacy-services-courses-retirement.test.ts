@@ -8,7 +8,7 @@ const retiredPaths = [
   "src/app/cours/page.tsx",
   "src/app/marketing-ethique/page.tsx",
   "src/app/systeme-marketing/page.tsx",
-  "src/archived-resource-routes/(marketing)/solutions/mentorat-automatisation-ia/page.tsx",
+  "src/app/(marketing)/solutions/mentorat-automatisation-ia/page.tsx",
   "src/app/@modal/(.)sur-mesure/page.tsx",
   "src/components/EthicalMarketingLandingPage.tsx",
   "src/components/ServicesMarketplace.tsx",
