@@ -19,7 +19,8 @@ export async function listPublications(): Promise<PublicationRecord[]> {
   return PROJECTS.flatMap(project => publicationTitles(project).map((_, number) => stored.get(`${project}-${number}`) ?? initialPublication(project, number)));
 }
 export async function publishedArticles(): Promise<Publication[]> {
-  return (await listPublications()).flatMap(r => r.published && !(r.project === "demaa" && r.number === 2) ? [r.published] : []);
+  // Public articles are temporarily hidden; drafts and publications remain stored.
+  return [];
 }
 export async function publishedArticle(project: string, slug: string) {
   return (await publishedArticles()).find(p => p.project === project && p.slug === slug);

@@ -22,8 +22,8 @@ export default function LearningProjectSeries({ project }: { project: Series }) 
         </figure>
       </header>
       <section className="mt-10 border-t border-dema-line py-8" aria-labelledby="episodes-title">
-        <h2 id="episodes-title" className="text-2xl font-medium">Les épisodes</h2>
-        {project.episodes.length ? <ol className="mt-5 divide-y divide-dema-line">{project.episodes.map(episode => <li key={episode.number}>{episode.href ? <Link href={episode.href} className="block py-5">EP{String(episode.number).padStart(2, "0")} · {episode.title}</Link> : <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-5"><span>EP{String(episode.number).padStart(2, "0")} · {episode.title}</span><span className="text-sm text-dema-muted">Bientôt disponible</span></div>}</li>)}</ol> : <p className="mt-4 text-dema-muted">Les premiers épisodes seront publiés ici.</p>}
+        <h2 id="episodes-title" className="text-2xl font-medium">Updates</h2>
+        <ol className="mt-5 divide-y divide-dema-line">{Array.from({ length: 5 }, (_, i) => <li key={i} className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-5"><span>Update {i + 1}</span><span className="text-sm text-dema-muted">Bientôt disponible</span></li>)}</ol>
       </section>
       <LearningSubscription />
     </main>
